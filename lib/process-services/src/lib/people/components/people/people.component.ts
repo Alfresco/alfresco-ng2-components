@@ -22,7 +22,7 @@ import { PeopleSearchComponent } from '../people-search/people-search.component'
 import { share } from 'rxjs/operators';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
-import { CommonModule } from '@angular/common';
+
 import { MatCardModule } from '@angular/material/card';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,15 +32,14 @@ import { DataColumnComponent, DataColumnListComponent } from '@alfresco/adf-core
 @Component({
     selector: 'adf-people',
     imports: [
-        CommonModule,
-        MatCardModule,
-        TranslatePipe,
-        MatIconModule,
-        PeopleSearchComponent,
-        PeopleListComponent,
-        DataColumnListComponent,
-        DataColumnComponent
-    ],
+    MatCardModule,
+    TranslatePipe,
+    MatIconModule,
+    PeopleSearchComponent,
+    PeopleListComponent,
+    DataColumnListComponent,
+    DataColumnComponent
+],
     templateUrl: './people.component.html',
     styleUrls: ['./people.component.scss'],
     encapsulation: ViewEncapsulation.None

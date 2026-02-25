@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgIf } from '@angular/common';
+
 import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
@@ -31,7 +31,7 @@ declare const pdfjsLib: { PasswordResponses: { NEED_PASSWORD: number; INCORRECT_
     selector: 'adf-pdf-viewer-password-dialog',
     templateUrl: './pdf-viewer-password-dialog.html',
     styleUrls: ['./pdf-viewer-password-dialog.scss'],
-    imports: [MatDialogModule, IconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, TranslatePipe, NgIf, MatButtonModule],
+    imports: [MatDialogModule, IconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, TranslatePipe, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class PdfPasswordDialogComponent implements OnInit {

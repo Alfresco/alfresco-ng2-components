@@ -23,7 +23,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { ReportParameterDetailsModel } from '../../../../diagram/models/report/report-parameter-details.model';
 import { isAfter } from 'date-fns';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -40,7 +40,7 @@ interface DateRangeProps {
 
 @Component({
     selector: 'adf-date-range-widget',
-    imports: [CommonModule, TranslatePipe, ReactiveFormsModule, MatGridListModule, MatFormFieldModule, MatInputModule, MatDatepickerModule],
+    imports: [TranslatePipe, ReactiveFormsModule, MatGridListModule, MatFormFieldModule, MatInputModule, MatDatepickerModule],
     templateUrl: './date-range.widget.html',
     styleUrls: ['./date-range.widget.scss'],
     providers: [

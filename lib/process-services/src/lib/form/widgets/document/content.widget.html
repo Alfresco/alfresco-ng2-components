@@ -1,22 +1,29 @@
-<mat-card appearance="outlined" class="adf-content-container" *ngIf="content">
-    <mat-card-content *ngIf="showDocumentContent">
-        <div *ngIf="content.isThumbnailSupported()" >
+@if (content) {
+  <mat-card appearance="outlined" class="adf-content-container">
+    @if (showDocumentContent) {
+      <mat-card-content>
+        @if (content.isThumbnailSupported()) {
+          <div >
             <img id="thumbnailPreview" class="adf-img-upload-widget" [src]="content.thumbnailUrl" alt="{{content.name}}">
-        </div>
-        <div *ngIf="!content.isThumbnailSupported()">
+          </div>
+        }
+        @if (!content.isThumbnailSupported()) {
+          <div>
             <mat-icon>image</mat-icon>
             <div id="unsupported-thumbnail" class="adf-content-widget-preview-text">{{ 'FORM.PREVIEW.IMAGE_NOT_AVAILABLE' | translate }}
             </div>
-        </div>
+          </div>
+        }
         <div class="mdl-card__supporting-text upload-widget__content-text">{{content.name | translate }}</div>
-    </mat-card-content>
-
+      </mat-card-content>
+    }
     <mat-card-actions>
-        <button mat-icon-button id="view" (click)="openViewer(content)">
-            <mat-icon class="mat-24">zoom_in</mat-icon>
-        </button>
-        <button mat-icon-button id="download" (click)="download(content)">
-            <mat-icon class="mat-24">file_download</mat-icon>
-        </button>
+      <button mat-icon-button id="view" (click)="openViewer(content)">
+        <mat-icon class="mat-24">zoom_in</mat-icon>
+      </button>
+      <button mat-icon-button id="download" (click)="download(content)">
+        <mat-icon class="mat-24">file_download</mat-icon>
+      </button>
     </mat-card-actions>
-</mat-card>
+  </mat-card>
+}

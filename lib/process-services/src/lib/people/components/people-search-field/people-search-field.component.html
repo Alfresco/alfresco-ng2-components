@@ -1,33 +1,39 @@
 <mat-form-field class="adf-search-text-container">
-    <input
-        matInput
-        placeholder="{{ searchPlaceholder }}"
-        type="text"
-        id="userSearchText"
-        [value]=""
-        [formControl]="searchUser"
-        data-automation-id="adf-people-search-input">
+  <input
+    matInput
+    placeholder="{{ searchPlaceholder }}"
+    type="text"
+    id="userSearchText"
+    [value]=""
+    [formControl]="searchUser"
+    data-automation-id="adf-people-search-input">
 </mat-form-field>
-<ng-container *ngIf="users$ | async; let users">
-    <div class="adf-search-list-container" id="search-people-list" *ngIf="users.length > 0">
-        <adf-people-list [users]="users" (clickRow)="onRowClick($event)">
-            <data-columns>
-                <data-column key="firstName">
-                    <ng-template let-entry="$implicit">
-                            <div *ngIf="!entry.row.obj.pictureId" class="adf-people-pic">
-                                {{getInitialUserName(entry.row.obj.firstName, entry.row.obj.lastName)}}</div>
-                            <div>
-                                <img [alt]="getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, ' ')" *ngIf="entry.row.obj.pictureId" class="adf-people-img"
-                                    [src]="peopleProcessService.getUserImage(entry.row.obj.id.toString())"/>
-                            </div>
-                    </ng-template>
-                </data-column>
-                <data-column key="email" class="adf-full-width">
-                    <ng-template let-entry="$implicit">
-                        <div [attr.data-automation-id]="'adf-people-full-name-'+ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, '-')" class="adf-people-full-name">{{ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, ' ') }}</div>
-                    </ng-template>
-                </data-column>
-            </data-columns>
-        </adf-people-list>
+@if (users$ | async; as users) {
+  @if (users.length > 0) {
+    <div class="adf-search-list-container" id="search-people-list">
+      <adf-people-list [users]="users" (clickRow)="onRowClick($event)">
+        <data-columns>
+          <data-column key="firstName">
+            <ng-template let-entry="$implicit">
+              @if (!entry.row.obj.pictureId) {
+                <div class="adf-people-pic">
+                {{getInitialUserName(entry.row.obj.firstName, entry.row.obj.lastName)}}</div>
+              }
+              <div>
+                @if (entry.row.obj.pictureId) {
+                  <img [alt]="getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, ' ')" class="adf-people-img"
+                    [src]="peopleProcessService.getUserImage(entry.row.obj.id.toString())"/>
+                }
+              </div>
+            </ng-template>
+          </data-column>
+          <data-column key="email" class="adf-full-width">
+            <ng-template let-entry="$implicit">
+              <div [attr.data-automation-id]="'adf-people-full-name-'+ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, '-')" class="adf-people-full-name">{{ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, ' ') }}</div>
+            </ng-template>
+          </data-column>
+        </data-columns>
+      </adf-people-list>
     </div>
-</ng-container>
+  }
+}

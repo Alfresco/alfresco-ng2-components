@@ -32,7 +32,7 @@ import { QueriesApi, SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-
 import { NotificationService } from '@alfresco/adf-core';
 import { debounceTime, finalize, map, mergeMap, take } from 'rxjs/operators';
 import { SitesService } from '../../common/services/sites.service';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -51,17 +51,16 @@ interface VisibilityOption {
 @Component({
     selector: 'adf-library-dialog',
     imports: [
-        CommonModule,
-        MatDialogModule,
-        TranslatePipe,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        AutoFocusDirective,
-        MatRadioModule,
-        FormsModule,
-        MatButtonModule
-    ],
+    MatDialogModule,
+    TranslatePipe,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    AutoFocusDirective,
+    MatRadioModule,
+    FormsModule,
+    MatButtonModule
+],
     styleUrls: ['./library.dialog.scss'],
     templateUrl: './library.dialog.html',
     encapsulation: ViewEncapsulation.None,

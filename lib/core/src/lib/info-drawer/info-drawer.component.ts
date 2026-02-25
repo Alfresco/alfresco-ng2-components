@@ -28,7 +28,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
-import { CommonModule } from '@angular/common';
+
 import {
     InfoDrawerButtonsDirective,
     InfoDrawerContentDirective,
@@ -59,16 +59,15 @@ export class InfoDrawerTabComponent {
 @Component({
     selector: 'adf-info-drawer',
     imports: [
-        CommonModule,
-        InfoDrawerLayoutComponent,
-        TranslatePipe,
-        MatTabsModule,
-        IconModule,
-        InfoDrawerButtonsDirective,
-        InfoDrawerTitleDirective,
-        InfoDrawerContentDirective,
-        InfoDrawerTabComponent
-    ],
+    InfoDrawerLayoutComponent,
+    TranslatePipe,
+    MatTabsModule,
+    IconModule,
+    InfoDrawerButtonsDirective,
+    InfoDrawerTitleDirective,
+    InfoDrawerContentDirective,
+    InfoDrawerTabComponent
+],
     templateUrl: './info-drawer.component.html',
     styleUrls: ['./info-drawer.component.scss'],
     encapsulation: ViewEncapsulation.None,

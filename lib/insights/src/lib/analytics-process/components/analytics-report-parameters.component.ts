@@ -36,7 +36,7 @@ import { ReportParameterDetailsModel } from '../../diagram/models/report/report-
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import { AnalyticsService } from '../services/analytics.service';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -109,21 +109,20 @@ export interface ReportFormValues {
 @Component({
     selector: 'adf-analytics-report-parameters',
     imports: [
-        CommonModule,
-        TranslatePipe,
-        MatIconModule,
-        ReactiveFormsModule,
-        ToolbarComponent,
-        ToolbarTitleComponent,
-        MatFormFieldModule,
-        MatInputModule,
-        MatMenuModule,
-        ...WIDGET_DIRECTIVES,
-        MatDialogModule,
-        FormsModule,
-        MatButtonModule,
-        ButtonsMenuComponent
-    ],
+    TranslatePipe,
+    MatIconModule,
+    ReactiveFormsModule,
+    ToolbarComponent,
+    ToolbarTitleComponent,
+    MatFormFieldModule,
+    MatInputModule,
+    MatMenuModule,
+    ...WIDGET_DIRECTIVES,
+    MatDialogModule,
+    FormsModule,
+    MatButtonModule,
+    ButtonsMenuComponent
+],
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }

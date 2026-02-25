@@ -22,7 +22,7 @@ import { Component, ElementRef, inject, OnInit, ViewChild, ViewEncapsulation } f
 import { Observable, from } from 'rxjs';
 import { ProcessContentService } from '../../services/process-content.service';
 import { mergeMap, map } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,7 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'upload-widget',
-    imports: [CommonModule, TranslatePipe, MatListModule, MatButtonModule, MatIconModule, ErrorWidgetComponent],
+    imports: [TranslatePipe, MatListModule, MatButtonModule, MatIconModule, ErrorWidgetComponent],
     templateUrl: './upload.widget.html',
     styleUrls: ['./upload.widget.scss'],
     host: {

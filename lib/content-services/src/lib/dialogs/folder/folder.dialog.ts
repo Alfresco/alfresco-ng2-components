@@ -23,7 +23,7 @@ import { Node } from '@alfresco/js-api';
 import { TranslationService, NotificationService } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './folder-name.validators';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -34,15 +34,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'adf-folder-dialog',
     imports: [
-        CommonModule,
-        MatDialogModule,
-        TranslatePipe,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        AutoFocusDirective,
-        MatButtonModule
-    ],
+    MatDialogModule,
+    TranslatePipe,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    AutoFocusDirective,
+    MatButtonModule
+],
     templateUrl: './folder.dialog.html',
     styleUrls: ['./folder.dialog.scss'],
     encapsulation: ViewEncapsulation.None,

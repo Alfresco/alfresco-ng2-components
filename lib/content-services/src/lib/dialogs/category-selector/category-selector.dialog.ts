@@ -20,7 +20,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { Subject } from 'rxjs';
 import { Category } from '@alfresco/js-api';
 import { CategoriesManagementComponent, CategoriesManagementMode } from '../../category';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -31,7 +31,7 @@ export interface CategorySelectorDialogOptions {
 
 @Component({
     selector: 'adf-category-selector-dialog',
-    imports: [CommonModule, MatDialogModule, TranslatePipe, CategoriesManagementComponent, MatButtonModule],
+    imports: [MatDialogModule, TranslatePipe, CategoriesManagementComponent, MatButtonModule],
     templateUrl: './category-selector.dialog.html',
     styleUrls: ['./category-selector.dialog.scss'],
     encapsulation: ViewEncapsulation.None

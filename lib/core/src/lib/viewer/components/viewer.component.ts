@@ -16,7 +16,7 @@
  */
 
 import { A11yModule } from '@angular/cdk/a11y';
-import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
     Component,
     ContentChild,
@@ -73,22 +73,21 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
     host: { class: 'adf-viewer' },
     encapsulation: ViewEncapsulation.None,
     imports: [
-        NgIf,
-        A11yModule,
-        ToolbarComponent,
-        ToolbarTitleComponent,
-        MatButtonModule,
-        TranslatePipe,
-        IconModule,
-        MatMenuModule,
-        ToolbarDividerComponent,
-        ViewerRenderComponent,
-        NgTemplateOutlet,
-        ViewerToolbarComponent,
-        ViewerSidebarComponent,
-        ViewerToolbarActionsComponent,
-        ViewerToolbarCustomActionsComponent
-    ],
+    A11yModule,
+    ToolbarComponent,
+    ToolbarTitleComponent,
+    MatButtonModule,
+    TranslatePipe,
+    IconModule,
+    MatMenuModule,
+    ToolbarDividerComponent,
+    ViewerRenderComponent,
+    NgTemplateOutlet,
+    ViewerToolbarComponent,
+    ViewerSidebarComponent,
+    ViewerToolbarActionsComponent,
+    ViewerToolbarCustomActionsComponent
+],
     providers: [ViewUtilService]
 })
 export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {

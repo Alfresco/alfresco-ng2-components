@@ -18,7 +18,7 @@
 import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit, inject } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { AppConfigService } from '../../../app-config/app-config.service';
-import { CommonModule } from '@angular/common';
+
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
@@ -27,7 +27,7 @@ import { IconModule } from '../../../icon/icon.module';
 
 @Component({
     selector: 'adf-layout-header',
-    imports: [CommonModule, MatToolbarModule, MatButtonModule, IconModule, RouterModule, TranslatePipe],
+    imports: [MatToolbarModule, MatButtonModule, IconModule, RouterModule, TranslatePipe],
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     encapsulation: ViewEncapsulation.None,

@@ -19,7 +19,7 @@ import { Component, EventEmitter, OnInit, Output, ViewEncapsulation, inject } fr
 import { TagService } from '../services/tag.service';
 import { IconModule, PaginationModel } from '@alfresco/adf-core';
 import { TagEntry } from '@alfresco/js-api';
-import { CommonModule } from '@angular/common';
+
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -29,7 +29,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
  */
 @Component({
     selector: 'adf-tag-list',
-    imports: [CommonModule, MatChipsModule, MatButtonModule, IconModule],
+    imports: [MatChipsModule, MatButtonModule, IconModule],
     templateUrl: './tag-list.component.html',
     styleUrls: ['./tag-list.component.scss'],
     encapsulation: ViewEncapsulation.None,

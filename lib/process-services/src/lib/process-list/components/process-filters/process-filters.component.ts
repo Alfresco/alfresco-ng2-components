@@ -22,7 +22,7 @@ import { AppsProcessService } from '../../../services/apps-process.service';
 import { IconModel } from '../../../app-list/icon.model';
 import { NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { CommonModule, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -30,7 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-process-instance-filters',
-    imports: [CommonModule, TranslatePipe, MatButtonModule, MatIconModule],
+    imports: [TranslatePipe, MatButtonModule, MatIconModule],
     templateUrl: './process-filters.component.html',
     styleUrls: ['./process-filters.component.scss'],
     encapsulation: ViewEncapsulation.None

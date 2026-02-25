@@ -1,125 +1,127 @@
-<ng-container *ngIf="(loadingRoot$ | async) === false; else loadingSpinner">
-    <ng-container *ngIf="!this.isEmpty(); else emptyContent">
-        <div class="adf-tree-row adf-tree-header" *ngIf="displayName">
-            <div class="adf-tree-cell adf-tree-cell-header" data-automation-id="tree-header-display-name">
-                <span class="adf-tree-cell-value">
-                    {{ displayName | translate }}
-                </span>
-            </div>
+@if ((loadingRoot$ | async) === false) {
+  @if (!this.isEmpty()) {
+    @if (displayName) {
+      <div class="adf-tree-row adf-tree-header">
+        <div class="adf-tree-cell adf-tree-cell-header" data-automation-id="tree-header-display-name">
+          <span class="adf-tree-cell-value">
+            {{ displayName | translate }}
+          </span>
         </div>
-        <mat-tree
-            class="adf-tree-body"
-            [dataSource]="treeService"
-            [treeControl]="treeService.treeControl">
-            <mat-tree-node
-                class="adf-tree-load-more-row"
-                [attr.data-automation-id]="'loadMoreSubnodes_' + node.parentId"
-                *matTreeNodeDef="let node when isLoadMoreNode"
-                matTreeNodePadding>
-                <div class="adf-tree-expand-collapse-container">
-                    <button class="adf-tree-load-more-button" mat-icon-button (click)="loadMoreSubnodes(node)">
-                        <mat-progress-spinner
-                            color="primary"
-                            mode="indeterminate"
-                            [diameter]="24"
-                            *ngIf="node.isLoading; else loadMoreIcon"
-                        />
-                        <ng-template #loadMoreIcon>
-                            <mat-icon adf-icon="chevron_right" aria-hidden="true" />
-                        </ng-template>
-                    </button>
-                </div>
-                <div class="adf-tree-cell">
-                    <span
-                        class="adf-tree-cell-value"
-                        tabindex="0"
-                        role="button"
-                        (keyup.enter)="loadMoreSubnodes(node)"
-                        (click)="loadMoreSubnodes(node)">
-                        {{ 'ADF-TREE.LOAD-MORE-BUTTON' | translate: { name: loadMoreSuffix } }}
-                    </span>
-                </div>
-            </mat-tree-node>
-            <mat-tree-node
-                class="adf-tree-row"
-                [attr.data-automation-id]="'node_' + node.id"
-                *matTreeNodeDef="let node"
-                matTreeNodePadding
-                [adf-context-menu]="contextMenuOptions"
-                [adf-context-menu-enabled]="!!contextMenuOptions"
-                (contextmenu)="contextMenuSource = node"
-            >
-                <div class="adf-tree-expand-collapse-container">
-                    <button 
-                        *ngIf="node.hasChildren"
-                        class="adf-tree-expand-collapse-button"
-                        (click)="expandCollapseNode(node)"
-                        mat-icon-button
-                    >
-                        <mat-progress-spinner
-                            color="primary"
-                            mode="indeterminate"
-                            [diameter]="24"
-                            *ngIf="node.isLoading; else expandCollapseIcon"
-                        />
-                        <ng-template #expandCollapseIcon>
-                            <mat-icon [adf-icon]="expandCollapseIconValue(node)" aria-hidden="true" />
-                        </ng-template>
-                    </button>
-                </div>
-                <ng-container *ngIf="selectableNodes">
-                    <mat-checkbox *ngIf="node.hasChildren; else noChildrenNodeCheckbox"
-                                  color="primary"
-                                  [id]="node.id"
-                                  [checked]="descendantsAllSelected(node)"
-                                  [indeterminate]="descendantsPartiallySelected(node)"
-                                  (change)="onNodeSelected(node)"
-                                  data-automation-id="has-children-node-checkbox" />
-                    <ng-template #noChildrenNodeCheckbox>
-                        <mat-checkbox
-                            color="primary"
-                            [id]="node.id"
-                            [checked]="treeNodesSelection.isSelected(node)"
-                            (change)="onNodeSelected(node)"
-                            data-automation-id="no-children-node-checkbox" />
-                    </ng-template>
-                </ng-container>
-                <div class="adf-tree-cell">
-                    <span
-                        class="adf-tree-cell-value"
-                        [class.adf-tree-clickable-cell-value]="node.hasChildren"
-                        tabindex="0"
-                        role="button"
-                        (keyup.enter)="expandCollapseNode(node)"
-                        (click)="expandCollapseNode(node)">
-                        {{ node.nodeName }}
-                    </span>
-                </div>
-                <div class="adf-tree-actions">
-                    <button mat-icon-button
-                            [matMenuTriggerFor]="menu"
-                            [attr.id]="'action_menu_right_' + node.id">
-                        <mat-icon adf-icon="more_vert" />
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <ng-template
-                            [ngTemplateOutlet]="nodeActionsMenuTemplate"
-                            [ngTemplateOutletContext]="{ node: node }" />
-                    </mat-menu>
-                </div>
-            </mat-tree-node>
-        </mat-tree>
-    </ng-container>
-</ng-container>
-
-<ng-template #emptyContent>
+      </div>
+    }
+    <mat-tree
+      class="adf-tree-body"
+      [dataSource]="treeService"
+      [treeControl]="treeService.treeControl">
+      <mat-tree-node
+        class="adf-tree-load-more-row"
+        [attr.data-automation-id]="'loadMoreSubnodes_' + node.parentId"
+        *matTreeNodeDef="let node when isLoadMoreNode"
+        matTreeNodePadding>
+        <div class="adf-tree-expand-collapse-container">
+          <button class="adf-tree-load-more-button" mat-icon-button (click)="loadMoreSubnodes(node)">
+            @if (node.isLoading) {
+              <mat-progress-spinner
+                color="primary"
+                mode="indeterminate"
+                [diameter]="24"
+                />
+            } @else {
+              <mat-icon adf-icon="chevron_right" aria-hidden="true" />
+            }
+          </button>
+        </div>
+        <div class="adf-tree-cell">
+          <span
+            class="adf-tree-cell-value"
+            tabindex="0"
+            role="button"
+            (keyup.enter)="loadMoreSubnodes(node)"
+            (click)="loadMoreSubnodes(node)">
+            {{ 'ADF-TREE.LOAD-MORE-BUTTON' | translate: { name: loadMoreSuffix } }}
+          </span>
+        </div>
+      </mat-tree-node>
+      <mat-tree-node
+        class="adf-tree-row"
+        [attr.data-automation-id]="'node_' + node.id"
+        *matTreeNodeDef="let node"
+        matTreeNodePadding
+        [adf-context-menu]="contextMenuOptions"
+        [adf-context-menu-enabled]="!!contextMenuOptions"
+        (contextmenu)="contextMenuSource = node"
+        >
+        <div class="adf-tree-expand-collapse-container">
+          @if (node.hasChildren) {
+            <button
+              class="adf-tree-expand-collapse-button"
+              (click)="expandCollapseNode(node)"
+              mat-icon-button
+              >
+              @if (node.isLoading) {
+                <mat-progress-spinner
+                  color="primary"
+                  mode="indeterminate"
+                  [diameter]="24"
+                  />
+              } @else {
+                <mat-icon [adf-icon]="expandCollapseIconValue(node)" aria-hidden="true" />
+              }
+            </button>
+          }
+        </div>
+        @if (selectableNodes) {
+          @if (node.hasChildren) {
+            <mat-checkbox
+              color="primary"
+              [id]="node.id"
+              [checked]="descendantsAllSelected(node)"
+              [indeterminate]="descendantsPartiallySelected(node)"
+              (change)="onNodeSelected(node)"
+              data-automation-id="has-children-node-checkbox" />
+          } @else {
+            <mat-checkbox
+              color="primary"
+              [id]="node.id"
+              [checked]="treeNodesSelection.isSelected(node)"
+              (change)="onNodeSelected(node)"
+              data-automation-id="no-children-node-checkbox" />
+          }
+        }
+        <div class="adf-tree-cell">
+          <span
+            class="adf-tree-cell-value"
+            [class.adf-tree-clickable-cell-value]="node.hasChildren"
+            tabindex="0"
+            role="button"
+            (keyup.enter)="expandCollapseNode(node)"
+            (click)="expandCollapseNode(node)">
+            {{ node.nodeName }}
+          </span>
+        </div>
+        <div class="adf-tree-actions">
+          <button mat-icon-button
+            [matMenuTriggerFor]="menu"
+            [attr.id]="'action_menu_right_' + node.id">
+            <mat-icon adf-icon="more_vert" />
+          </button>
+          <mat-menu #menu="matMenu">
+            <ng-template
+              [ngTemplateOutlet]="nodeActionsMenuTemplate"
+              [ngTemplateOutletContext]="{ node: node }" />
+          </mat-menu>
+        </div>
+      </mat-tree-node>
+    </mat-tree>
+  } @else {
     <ng-template [ngTemplateOutlet]="emptyContentTemplate" />
-</ng-template>
+  }
+} @else {
+  <div class="adf-tree-loading-spinner-container">
+    <mat-progress-spinner
+      color="primary"
+      mode="indeterminate" />
+  </div>
+}
 
-<ng-template #loadingSpinner>
-    <div class="adf-tree-loading-spinner-container">
-        <mat-progress-spinner
-            color="primary"
-            mode="indeterminate" />
-    </div>
-</ng-template>
+

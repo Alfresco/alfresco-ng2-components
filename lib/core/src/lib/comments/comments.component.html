@@ -1,35 +1,40 @@
 <div class="adf-comments-container">
-    <div id="comment-header" class="adf-comments-header adf-comments-divider">
-        {{'COMMENTS.HEADER' | translate: { count: comments?.length } }}
+  <div id="comment-header" class="adf-comments-header adf-comments-divider">
+    {{'COMMENTS.HEADER' | translate: { count: comments?.length } }}
+  </div>
+  @if (!readOnly) {
+    <div class="adf-comments-input-container adf-comments-divider">
+      <mat-form-field class="adf-comments-input-form-field">
+        <mat-label>{{ 'COMMENTS.ADD' | translate }}</mat-label>
+        <textarea
+          #commentInput
+          matInput
+          id="comment-input"
+          class="adf-text-text-area"
+          [attr.aria-label]='("COMMENTS.ADD" | translate) + "*"'
+          [formControl]="commentControl"
+          (keydown.escape)="clearMessage($event)"
+          >
+        </textarea>
+        @if (commentControl.invalid && commentControl.touched) {
+          <mat-error>{{ 'COMMENTS.EMPTY_ERROR' | translate }}</mat-error>
+        }
+      </mat-form-field>
+      <div class="adf-comments-input-actions">
+        <button
+          mat-button
+          data-automation-id="comments-input-add"
+          color="primary"
+          (click)="addComment()"
+          [disabled]="commentControl.invalid"
+          >
+          {{ 'COMMENTS.ADD' | translate }}
+        </button>
+      </div>
     </div>
-    <div *ngIf="!readOnly" class="adf-comments-input-container adf-comments-divider">
-            <mat-form-field class="adf-comments-input-form-field">
-                <mat-label>{{ 'COMMENTS.ADD' | translate }}</mat-label>
-                <textarea
-                    #commentInput
-                    matInput
-                    id="comment-input"
-                    class="adf-text-text-area"
-                    [attr.aria-label]='("COMMENTS.ADD" | translate) + "*"'
-                    [formControl]="commentControl"
-                    (keydown.escape)="clearMessage($event)"
-                >
-                </textarea>
-                <mat-error *ngIf="commentControl.invalid && commentControl.touched">{{ 'COMMENTS.EMPTY_ERROR' | translate }}</mat-error>
-            </mat-form-field>
+  }
 
-            <div class="adf-comments-input-actions">
-                <button
-                    mat-button
-                    data-automation-id="comments-input-add"
-                    color="primary"
-                    (click)="addComment()"
-                    [disabled]="commentControl.invalid"
-                >
-                    {{ 'COMMENTS.ADD' | translate }}
-                </button>
-            </div>
-    </div>
-
-    <adf-comment-list *ngIf="comments?.length > 0" [comments]="comments" />
+  @if (comments?.length > 0) {
+    <adf-comment-list [comments]="comments" />
+  }
 </div>

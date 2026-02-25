@@ -36,7 +36,7 @@ import { PaginationComponentInterface } from './pagination-component.interface';
 import { RequestPaginationModel } from '../models/request-pagination.model';
 import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
 import { PaginationModel } from '../models/pagination.model';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -49,7 +49,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     styleUrls: ['./infinite-pagination.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    imports: [CommonModule, MatButtonModule, MatProgressBarModule, TranslatePipe]
+    imports: [MatButtonModule, MatProgressBarModule, TranslatePipe]
 })
 export class InfinitePaginationComponent implements OnInit, PaginationComponentInterface {
     private readonly cdr = inject(ChangeDetectorRef);

@@ -1,6 +1,14 @@
 <div @tooltip class="adf-tooltip-card" [style.width.px]="width">
-    <img *ngIf="image " [src]="image" [width]="width" alt="{{text}}">
-    <hr *ngIf="image" />
-    <p *ngIf="text">{{text}}</p>
-    <div *ngIf="htmlContent" [innerHTML]="sanitizedHtmlContent()" class="adf-tooltip-card-content"></div>
+  @if (image ) {
+    <img [src]="image" [width]="width" alt="{{text}}">
+  }
+  @if (image) {
+    <hr />
+  }
+  @if (text) {
+    <p>{{text}}</p>
+  }
+  @if (htmlContent) {
+    <div [innerHTML]="sanitizedHtmlContent()" class="adf-tooltip-card-content"></div>
+  }
 </div>

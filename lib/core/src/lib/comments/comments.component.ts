@@ -19,7 +19,7 @@ import { CommentModel } from '../models/comment.model';
 import { Component, ElementRef, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -30,15 +30,14 @@ import { CommentListComponent } from './comment-list';
 @Component({
     selector: 'adf-comments',
     imports: [
-        CommonModule,
-        TranslatePipe,
-        MatFormFieldModule,
-        MatInputModule,
-        FormsModule,
-        MatButtonModule,
-        CommentListComponent,
-        ReactiveFormsModule
-    ],
+    TranslatePipe,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
+    CommentListComponent,
+    ReactiveFormsModule
+],
     templateUrl: './comments.component.html',
     styleUrls: ['./comments.component.scss'],
     encapsulation: ViewEncapsulation.None

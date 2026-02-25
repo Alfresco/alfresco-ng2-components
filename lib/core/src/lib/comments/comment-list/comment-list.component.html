@@ -1,17 +1,23 @@
- <mat-list class="adf-comment-list">
-    <mat-list-item *ngFor="let comment of comments"
-                  (click)="selectComment(comment)"
-                  class="adf-comment-list-item">
-        <div class="adf-comment-img-container">
-            <div *ngIf="!comment.hasAvatarPicture" class="adf-comment-user-icon">{{ comment.userInitials }}</div>
-            <img *ngIf="comment.hasAvatarPicture" class="adf-people-img"
-                 [alt]="'COMMENTS.PROFILE_IMAGE' | translate"
-                 [src]="getUserImage(comment.createdBy.id.toString())" />
-        </div>
-        <div class="adf-comment-contents">
-            <div matLine class="adf-comment-user-name">{{ comment.userDisplayName }}</div>
-            <div matLine class="adf-comment-message">{{ comment.message }}</div>
-            <div matLine class="adf-comment-message-time">{{ comment.created | adfTimeAgo }}</div>
-        </div>
+<mat-list class="adf-comment-list">
+  @for (comment of comments; track comment) {
+    <mat-list-item
+      (click)="selectComment(comment)"
+      class="adf-comment-list-item">
+      <div class="adf-comment-img-container">
+        @if (!comment.hasAvatarPicture) {
+          <div class="adf-comment-user-icon">{{ comment.userInitials }}</div>
+        }
+        @if (comment.hasAvatarPicture) {
+          <img class="adf-people-img"
+            [alt]="'COMMENTS.PROFILE_IMAGE' | translate"
+            [src]="getUserImage(comment.createdBy.id.toString())" />
+        }
+      </div>
+      <div class="adf-comment-contents">
+        <div matLine class="adf-comment-user-name">{{ comment.userDisplayName }}</div>
+        <div matLine class="adf-comment-message">{{ comment.message }}</div>
+        <div matLine class="adf-comment-message-time">{{ comment.created | adfTimeAgo }}</div>
+      </div>
     </mat-list-item>
+  }
 </mat-list>

@@ -1,13 +1,15 @@
 <header mat-dialog-title id="adf-select-app-dialog-title">{{'APP.DIALOG.TITLE' | translate}}</header>
 <section mat-dialog-content>
 
-    <mat-select id="adf-select-app-dialog-dropdown" placeholder="{{'APP.DIALOG.LIST' | translate}}" [(value)]="selectedProcess" >
-        <mat-option *ngFor="let currentProcessApp of processApps" [value]="currentProcessApp">
-            {{ currentProcessApp.name }}
-        </mat-option>
-    </mat-select>
+  <mat-select id="adf-select-app-dialog-dropdown" placeholder="{{'APP.DIALOG.LIST' | translate}}" [(value)]="selectedProcess" >
+    @for (currentProcessApp of processApps; track currentProcessApp) {
+      <mat-option [value]="currentProcessApp">
+        {{ currentProcessApp.name }}
+      </mat-option>
+    }
+  </mat-select>
 
 </section>
 <footer mat-dialog-actions class="adf-select-apps-dialog-actions">
-    <button mat-button (click)="onStart()">{{'APP.DIALOG.START' | translate}}</button>
+  <button mat-button (click)="onStart()">{{'APP.DIALOG.START' | translate}}</button>
 </footer>

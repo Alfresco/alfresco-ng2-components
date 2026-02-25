@@ -1,36 +1,40 @@
 <form [formGroup]="form" novalidate (ngSubmit)="apply(form.value, form.valid)">
-    <mat-form-field>
-        <input matInput
-                (input)="forcePlaceholder($event)"
-                [formControl]="from"
-                [errorStateMatcher]="matcher"
-                placeholder="{{ 'SEARCH.FILTER.RANGE.FROM-DATE' | translate }}"
-                [matDatetimepicker]="fromDatetimePicker"
-                [max]="fromMaxDatetime"
-                (dateChange)="onChangedHandler($event, from)"
-                data-automation-id="datetime-range-from-input">
-        <mat-datetimepicker-toggle matSuffix [for]="fromDatetimePicker" data-automation-id="datetime-range-from-date-toggle" />
-        <mat-datetimepicker #fromDatetimePicker color="accent" type="datetime" />
-        <mat-error *ngIf="from.invalid" data-automation-id="datetime-range-from-error">
-            {{ getFromValidationMessage() | translate: { requiredFormat: datetimePickerFormat } }}
-        </mat-error>
-    </mat-form-field>
+  <mat-form-field>
+    <input matInput
+      (input)="forcePlaceholder($event)"
+      [formControl]="from"
+      [errorStateMatcher]="matcher"
+      placeholder="{{ 'SEARCH.FILTER.RANGE.FROM-DATE' | translate }}"
+      [matDatetimepicker]="fromDatetimePicker"
+      [max]="fromMaxDatetime"
+      (dateChange)="onChangedHandler($event, from)"
+      data-automation-id="datetime-range-from-input">
+    <mat-datetimepicker-toggle matSuffix [for]="fromDatetimePicker" data-automation-id="datetime-range-from-date-toggle" />
+    <mat-datetimepicker #fromDatetimePicker color="accent" type="datetime" />
+    @if (from.invalid) {
+      <mat-error data-automation-id="datetime-range-from-error">
+        {{ getFromValidationMessage() | translate: { requiredFormat: datetimePickerFormat } }}
+      </mat-error>
+    }
+  </mat-form-field>
 
-    <mat-form-field>
-        <input matInput
-                (input)="forcePlaceholder($event)"
-                [formControl]="to"
-                [errorStateMatcher]="matcher"
-                placeholder="{{ 'SEARCH.FILTER.RANGE.TO-DATE' | translate }}"
-                [matDatetimepicker]="toDatetimePicker"
-                [min]="from.value"
-                [max]="maxDatetime"
-                (dateChange)="onChangedHandler($event, to)"
-                data-automation-id="datetime-range-to-input">
-        <mat-datetimepicker-toggle matSuffix [for]="toDatetimePicker" data-automation-id="datetime-range-to-date-toggle" />
-        <mat-datetimepicker #toDatetimePicker color="accent" type="datetime" />
-        <mat-error *ngIf="to.invalid" data-automation-id="datetime-range-to-error">
-            {{ getToValidationMessage() | translate: { requiredFormat: datetimePickerFormat } }}
-        </mat-error>
-    </mat-form-field>
+  <mat-form-field>
+    <input matInput
+      (input)="forcePlaceholder($event)"
+      [formControl]="to"
+      [errorStateMatcher]="matcher"
+      placeholder="{{ 'SEARCH.FILTER.RANGE.TO-DATE' | translate }}"
+      [matDatetimepicker]="toDatetimePicker"
+      [min]="from.value"
+      [max]="maxDatetime"
+      (dateChange)="onChangedHandler($event, to)"
+      data-automation-id="datetime-range-to-input">
+    <mat-datetimepicker-toggle matSuffix [for]="toDatetimePicker" data-automation-id="datetime-range-to-date-toggle" />
+    <mat-datetimepicker #toDatetimePicker color="accent" type="datetime" />
+    @if (to.invalid) {
+      <mat-error data-automation-id="datetime-range-to-error">
+        {{ getToValidationMessage() | translate: { requiredFormat: datetimePickerFormat } }}
+      </mat-error>
+    }
+  </mat-form-field>
 </form>

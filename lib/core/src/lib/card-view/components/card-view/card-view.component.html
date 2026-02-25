@@ -1,15 +1,17 @@
 <div class="adf-property-list">
-    <div *ngFor="let property of properties" class="adf-property-container">
-        <div [attr.data-automation-id]="'header-'+property.key" class="adf-property">
-            <adf-card-view-item-dispatcher
-                [property]="property"
-                [editable]="editable"
-                [displayEmpty]="displayEmpty"
-                [displayNoneOption]="property['displayNoneOption'] !== undefined ? property['displayNoneOption'] : displayNoneOption"
-                [displayClearAction]="displayClearAction"
-                [copyToClipboardAction]="copyToClipboardAction"
-                [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
-                [multiValueSeparator]="multiValueSeparator" />
-        </div>
+  @for (property of properties; track property) {
+    <div class="adf-property-container">
+      <div [attr.data-automation-id]="'header-'+property.key" class="adf-property">
+        <adf-card-view-item-dispatcher
+          [property]="property"
+          [editable]="editable"
+          [displayEmpty]="displayEmpty"
+          [displayNoneOption]="property['displayNoneOption'] !== undefined ? property['displayNoneOption'] : displayNoneOption"
+          [displayClearAction]="displayClearAction"
+          [copyToClipboardAction]="copyToClipboardAction"
+          [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
+          [multiValueSeparator]="multiValueSeparator" />
+      </div>
     </div>
+  }
 </div>

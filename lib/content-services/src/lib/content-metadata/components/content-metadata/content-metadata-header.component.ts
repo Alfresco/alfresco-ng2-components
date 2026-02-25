@@ -16,14 +16,14 @@
  */
 
 import { IconModule } from '@alfresco/adf-core';
-import { CommonModule } from '@angular/common';
+
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     standalone: true,
-    imports: [CommonModule, IconModule, MatExpansionModule, TranslatePipe],
+    imports: [IconModule, MatExpansionModule, TranslatePipe],
     selector: 'adf-content-metadata-header',
     encapsulation: ViewEncapsulation.None,
     styles: [
@@ -46,11 +46,13 @@ import { TranslatePipe } from '@ngx-translate/core';
     ],
     template: `
         <ng-container>
-            <mat-icon [adf-icon]="expanded ? 'expand_more' : 'chevron_right'" />
-            <mat-panel-title *ngIf="title" class="adf-metadata-properties-title" [title]="title | translate">{{ title | translate }}</mat-panel-title>
-            <ng-content />
+          <mat-icon [adf-icon]="expanded ? 'expand_more' : 'chevron_right'" />
+          @if (title) {
+            <mat-panel-title class="adf-metadata-properties-title" [title]="title | translate">{{ title | translate }}</mat-panel-title>
+          }
+          <ng-content />
         </ng-container>
-    `
+        `
 })
 export class ContentMetadataHeaderComponent {
     @Input() title: string = null;

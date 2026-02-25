@@ -24,7 +24,7 @@ import { DateCloudFilterType } from '../../../../../models/date-cloud-filter.mod
 import { BaseEditTaskFilterCloudComponent, DropdownOption } from '../base-edit-task-filter-cloud.component';
 import { set } from 'date-fns';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
@@ -43,22 +43,21 @@ import { TaskAssignmentFilterCloudComponent } from '../../task-assignment-filter
 @Component({
     selector: 'adf-cloud-edit-task-filter',
     imports: [
-        CommonModule,
-        TranslatePipe,
-        MatExpansionModule,
-        MatButtonModule,
-        MatProgressSpinnerModule,
-        MatFormFieldModule,
-        ReactiveFormsModule,
-        MatSelectModule,
-        MatInputModule,
-        MatDatepickerModule,
-        IconModule,
-        MatCheckboxModule,
-        DateRangeFilterComponent,
-        PeopleCloudComponent,
-        TaskAssignmentFilterCloudComponent
-    ],
+    TranslatePipe,
+    MatExpansionModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatInputModule,
+    MatDatepickerModule,
+    IconModule,
+    MatCheckboxModule,
+    DateRangeFilterComponent,
+    PeopleCloudComponent,
+    TaskAssignmentFilterCloudComponent
+],
     templateUrl: './edit-task-filter-cloud.component.html',
     styleUrls: ['./edit-task-filter-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

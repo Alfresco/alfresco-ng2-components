@@ -1,40 +1,50 @@
 <form [formGroup]="form" novalidate (ngSubmit)="apply(form.value, form.valid)">
 
-    <mat-form-field>
-        <input
-            matInput [formControl]="from" [errorStateMatcher]="matcher"
-            placeholder="{{ 'SEARCH.FILTER.RANGE.FROM' | translate }}"
-            autocomplete="off"
-            data-automation-id="number-range-from-input">
-        <mat-error *ngIf="from.hasError('pattern') || from.hasError('min')" data-automation-id="number-range-from-error-invalid">
-            {{ 'SEARCH.FILTER.VALIDATION.INVALID-FORMAT' | translate }}
-        </mat-error>
-        <mat-error *ngIf="from.hasError('required')" data-automation-id="number-range-from-error-required">
-            {{ 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' | translate }}
-        </mat-error>
-    </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput [formControl]="from" [errorStateMatcher]="matcher"
+      placeholder="{{ 'SEARCH.FILTER.RANGE.FROM' | translate }}"
+      autocomplete="off"
+      data-automation-id="number-range-from-input">
+    @if (from.hasError('pattern') || from.hasError('min')) {
+      <mat-error data-automation-id="number-range-from-error-invalid">
+        {{ 'SEARCH.FILTER.VALIDATION.INVALID-FORMAT' | translate }}
+      </mat-error>
+    }
+    @if (from.hasError('required')) {
+      <mat-error data-automation-id="number-range-from-error-required">
+        {{ 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' | translate }}
+      </mat-error>
+    }
+  </mat-form-field>
 
-    <mat-form-field>
-        <input
-            matInput [formControl]="to" [errorStateMatcher]="matcher"
-            placeholder="{{ 'SEARCH.FILTER.RANGE.TO' | translate }}"
-            autocomplete="off"
-            data-automation-id="number-range-to-input">
-        <mat-error *ngIf="to.hasError('pattern') || to.hasError('min')" data-automation-id="number-range-to-error-invalid">
-            {{ 'SEARCH.FILTER.VALIDATION.INVALID-FORMAT' | translate }}
-        </mat-error>
-        <mat-error *ngIf="to.hasError('required')" data-automation-id="number-range-to-error-required">
-            {{ 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' | translate }}
-        </mat-error>
-    </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput [formControl]="to" [errorStateMatcher]="matcher"
+      placeholder="{{ 'SEARCH.FILTER.RANGE.TO' | translate }}"
+      autocomplete="off"
+      data-automation-id="number-range-to-input">
+    @if (to.hasError('pattern') || to.hasError('min')) {
+      <mat-error data-automation-id="number-range-to-error-invalid">
+        {{ 'SEARCH.FILTER.VALIDATION.INVALID-FORMAT' | translate }}
+      </mat-error>
+    }
+    @if (to.hasError('required')) {
+      <mat-error data-automation-id="number-range-to-error-required">
+        {{ 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' | translate }}
+      </mat-error>
+    }
+  </mat-form-field>
 
 
-    <div class="adf-facet-buttons" *ngIf="!settings?.hideDefaultAction">
-        <button mat-button color="primary" type="button" (click)="clear()" data-automation-id="number-range-btn-clear">
-            {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
-        </button>
-        <button mat-button color="primary" type="submit" [disabled]="!form.valid" data-automation-id="number-range-btn-apply">
-            {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
-        </button>
+  @if (!settings?.hideDefaultAction) {
+    <div class="adf-facet-buttons">
+      <button mat-button color="primary" type="button" (click)="clear()" data-automation-id="number-range-btn-clear">
+        {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
+      </button>
+      <button mat-button color="primary" type="submit" [disabled]="!form.valid" data-automation-id="number-range-btn-apply">
+        {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
+      </button>
     </div>
+  }
 </form>

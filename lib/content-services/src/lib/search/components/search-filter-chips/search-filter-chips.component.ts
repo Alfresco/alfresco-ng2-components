@@ -19,7 +19,7 @@ import { Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation } from 
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { FacetField, SearchCategory, TabbedFacetField } from '../../models';
-import { CommonModule } from '@angular/common';
+
 import { MatChipsModule } from '@angular/material/chips';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SearchFacetChipTabbedComponent } from './search-facet-chip-tabbed/search-facet-chip-tabbed.component';
@@ -29,7 +29,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-filter-chips',
-    imports: [CommonModule, MatChipsModule, TranslatePipe, SearchFacetChipTabbedComponent, SearchFacetChipComponent, SearchWidgetChipComponent],
+    imports: [MatChipsModule, TranslatePipe, SearchFacetChipTabbedComponent, SearchFacetChipComponent, SearchWidgetChipComponent],
     templateUrl: './search-filter-chips.component.html',
     styleUrls: ['./search-filter-chips.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -18,12 +18,12 @@
 import { Component, Input, ViewChild, OnInit, OnDestroy, ViewEncapsulation, OnChanges, SimpleChanges } from '@angular/core';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { Direction } from '@angular/cdk/bidi';
-import { CommonModule } from '@angular/common';
+
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
     selector: 'adf-layout-container',
-    imports: [CommonModule, MatSidenavModule],
+    imports: [MatSidenavModule],
     templateUrl: './layout-container.component.html',
     styleUrls: ['./layout-container.component.scss'],
     encapsulation: ViewEncapsulation.None,

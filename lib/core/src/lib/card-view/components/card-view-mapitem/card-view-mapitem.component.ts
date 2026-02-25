@@ -18,12 +18,12 @@
 import { Component, Input } from '@angular/core';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { BaseCardView } from '../base-card-view';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-card-view-mapitem',
-    imports: [CommonModule, TranslatePipe],
+    imports: [TranslatePipe],
     templateUrl: './card-view-mapitem.component.html',
     styleUrls: ['./card-view-mapitem.component.scss']
 })

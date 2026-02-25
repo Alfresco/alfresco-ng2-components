@@ -20,7 +20,7 @@ import { of } from 'rxjs';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { Component } from '@angular/core';
 import { InheritPermissionDirective } from './inherited-button.directive';
-import { NgIf } from '@angular/common';
+
 import { NoopAuthModule } from '@alfresco/adf-core';
 
 const fakeNodeWithInherit: any = { id: 'fake-id', permissions: { isInheritanceEnabled: true }, allowableOperations: ['updatePermissions'] };
@@ -30,10 +30,12 @@ const fakeNodeWithInheritNoPermission: any = { id: 'fake-id', permissions: { isI
 @Component({
     template: `
         <button id="sample-button-permission" adf-inherit-permission [nodeId]="nodeId" (updated)="onUpdate($event)">PERMISSION</button>
-        <span id="update-notification" *ngIf="updatedNode"> NODE UPDATED </span>
-    `,
+        @if (updatedNode) {
+          <span id="update-notification"> NODE UPDATED </span>
+        }
+        `,
     standalone: true,
-    imports: [InheritPermissionDirective, NgIf]
+    imports: [InheritPermissionDirective]
 })
 class SimpleInheritedPermissionTestComponent {
     message: string = '';

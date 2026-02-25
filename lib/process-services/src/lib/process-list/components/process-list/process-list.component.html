@@ -1,39 +1,42 @@
 <adf-datatable
-    [data]="data"
-    [rows]="rows"
-    [columns]="columns"
-    [sorting]="sorting"
-    [loading]="isLoading"
-    [isResizingEnabled]="isResizingEnabled"
-    [blurOnResize]="blurOnResize"
-    [stickyHeader]="stickyHeader"
-    [selectionMode]="selectionMode"
-    [multiselect]="multiselect"
-    [resolverFn]="resolverFn"
-    [contextMenu]="showContextMenu"
-    (showRowContextMenu)="onShowRowContextMenu($event)"
-    (rowClick)="onRowClick($event)"
-    (row-keyup)="onRowKeyUp($any($event))"
-    (row-select)="onRowCheckboxToggle($any($event))"
-    (row-unselect)="onRowCheckboxToggle($any($event))"
->
-    <adf-loading-content-template>
-        <ng-template>
-            <mat-progress-spinner
-                *ngIf="!customLoadingContent"
-                class="adf-process-list-loading-margin"
-                color="primary"
-                mode="indeterminate" />
-            <ng-content select="adf-custom-loading-content-template" />
-        </ng-template>
-    </adf-loading-content-template>
-    <adf-no-content-template>
-        <ng-template>
-                <adf-empty-content *ngIf="!customEmptyContent"
-                    icon="assessment"
-                    [title]="(requestNode ? 'ADF_PROCESS_LIST.LIST.TITLE' : 'ADF_PROCESS_LIST.FILTERS.MESSAGES.NONE') | translate"
-                    [subtitle]="'ADF_PROCESS_LIST.LIST.SUBTITLE'| translate" />
-            <ng-content select="adf-custom-empty-content-template" />
-        </ng-template>
-    </adf-no-content-template>
+  [data]="data"
+  [rows]="rows"
+  [columns]="columns"
+  [sorting]="sorting"
+  [loading]="isLoading"
+  [isResizingEnabled]="isResizingEnabled"
+  [blurOnResize]="blurOnResize"
+  [stickyHeader]="stickyHeader"
+  [selectionMode]="selectionMode"
+  [multiselect]="multiselect"
+  [resolverFn]="resolverFn"
+  [contextMenu]="showContextMenu"
+  (showRowContextMenu)="onShowRowContextMenu($event)"
+  (rowClick)="onRowClick($event)"
+  (row-keyup)="onRowKeyUp($any($event))"
+  (row-select)="onRowCheckboxToggle($any($event))"
+  (row-unselect)="onRowCheckboxToggle($any($event))"
+  >
+  <adf-loading-content-template>
+    <ng-template>
+      @if (!customLoadingContent) {
+        <mat-progress-spinner
+          class="adf-process-list-loading-margin"
+          color="primary"
+          mode="indeterminate" />
+      }
+      <ng-content select="adf-custom-loading-content-template" />
+    </ng-template>
+  </adf-loading-content-template>
+  <adf-no-content-template>
+    <ng-template>
+      @if (!customEmptyContent) {
+        <adf-empty-content
+          icon="assessment"
+          [title]="(requestNode ? 'ADF_PROCESS_LIST.LIST.TITLE' : 'ADF_PROCESS_LIST.FILTERS.MESSAGES.NONE') | translate"
+          [subtitle]="'ADF_PROCESS_LIST.LIST.SUBTITLE'| translate" />
+      }
+      <ng-content select="adf-custom-empty-content-template" />
+    </ng-template>
+  </adf-no-content-template>
 </adf-datatable>

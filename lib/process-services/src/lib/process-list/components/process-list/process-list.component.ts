@@ -44,7 +44,7 @@ import {
     ProcessInstanceQueryRepresentationState,
     ResultListDataRepresentationProcessInstanceRepresentation
 } from '@alfresco/js-api';
-import { CommonModule } from '@angular/common';
+
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -71,14 +71,13 @@ export const processPresetsDefaultModel = {
 @Component({
     selector: 'adf-process-instance-list',
     imports: [
-        CommonModule,
-        MatProgressSpinnerModule,
-        EmptyContentComponent,
-        TranslatePipe,
-        DataTableComponent,
-        LoadingContentTemplateDirective,
-        NoContentTemplateDirective
-    ],
+    MatProgressSpinnerModule,
+    EmptyContentComponent,
+    TranslatePipe,
+    DataTableComponent,
+    LoadingContentTemplateDirective,
+    NoContentTemplateDirective
+],
     styleUrls: ['./process-list.component.css'],
     templateUrl: './process-list.component.html'
 })

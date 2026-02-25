@@ -1,49 +1,53 @@
 <mat-chip [attr.data-automation-id]="'search-filter-chip-tabbed-' + tabbedFacet.label"
-          [disableRipple]="true"
-          class="adf-search-filter-chip-tabbed"
-          [class.adf-search-toggle-chip]="displayValue || menuTrigger.menuOpen"
-          [disabled]="!isPopulated"
-          tabindex="0"
-          [matMenuTriggerFor]="menu"
-          (menuOpened)="onMenuOpen()"
-          (keydown.enter)="onEnterKeydown()"
-          (keydown.escape)="onEscKeydown()"
-          [attr.title]="displayValue"
-          #menuTrigger="matMenuTrigger">
+  [disableRipple]="true"
+  class="adf-search-filter-chip-tabbed"
+  [class.adf-search-toggle-chip]="displayValue || menuTrigger.menuOpen"
+  [disabled]="!isPopulated"
+  tabindex="0"
+  [matMenuTriggerFor]="menu"
+  (menuOpened)="onMenuOpen()"
+  (keydown.enter)="onEnterKeydown()"
+  (keydown.escape)="onEscKeydown()"
+  [attr.title]="displayValue"
+  #menuTrigger="matMenuTrigger">
 
-    <span class="adf-search-filter-placeholder">{{ tabbedFacet.label | translate }}:</span>
+  <span class="adf-search-filter-placeholder">{{ tabbedFacet.label | translate }}:</span>
 
-    <span class="adf-search-filter-ellipsis adf-filter-value" *ngIf="displayValue; else showAny">
-        &nbsp; {{ displayValue | translate }}
+  @if (displayValue) {
+    <span class="adf-search-filter-ellipsis adf-filter-value">
+      &nbsp; {{ displayValue | translate }}
     </span>
-    <ng-template #showAny><span class="adf-search-filter-ellipsis adf-filter-value">&nbsp;{{ 'SEARCH.FILTER.ANY' | translate }}</span></ng-template>
-    <mat-icon class="adf-search-filter-chip-icon" *ngIf="isPopulated; else disabledIcon" [adf-icon]="chipIcon" />
-    <ng-template #disabledIcon>
-        <mat-icon adf-icon="remove" />
-    </ng-template>
+  } @else {
+    <span class="adf-search-filter-ellipsis adf-filter-value">&nbsp;{{ 'SEARCH.FILTER.ANY' | translate }}</span>
+  }
+  @if (isPopulated) {
+    <mat-icon class="adf-search-filter-chip-icon" [adf-icon]="chipIcon" />
+  } @else {
+    <mat-icon adf-icon="remove" />
+  }
 </mat-chip>
 
 <mat-menu #menu="matMenu" class="adf-search-widget-extra-width" backdropClass="adf-search-filter-chip-menu" (closed)="onClosed()">
-    <div #menuContainer [attr.data-automation-id]="'search-field-' + tabbedFacet.label">
-        <adf-search-filter-menu-card (click)="$event.stopPropagation()"
-                                     (keydown.tab)="$event.stopPropagation();"
-                                     (keydown.shift.tab)="$event.stopPropagation()"
-                                     (close)="menuTrigger.closeMenu()">
-            <ng-container ngProjectAs="filter-title">
-                {{ tabbedFacet.label | translate }}
-            </ng-container>
-            <ng-container ngProjectAs="filter-content">
-                <adf-search-facet-tabbed-content [tabbedFacet]="tabbedFacet" (isPopulated)="onIsPopulatedEventChange($event)"
-                                                 [onReset$]="reset$" [onApply$]="apply$" (displayValue$)="displayValue = $event" />
-            </ng-container>
-            <ng-container ngProjectAs="filter-actions">
-                <button mat-button class="adf-search-action-button" (click)="onRemove()" id="cancel-filter-button">
-                    {{ 'SEARCH.FILTER.BUTTONS.CLEAR' | translate }}
-                </button>
-                <button mat-flat-button class="adf-search-action-button" color="primary" (click)="onApply()" id="apply-filter-button">
-                    {{ 'SEARCH.FILTER.BUTTONS.APPLY' | translate }}
-                </button>
-            </ng-container>
-        </adf-search-filter-menu-card>
-    </div>
+  <div #menuContainer [attr.data-automation-id]="'search-field-' + tabbedFacet.label">
+    <adf-search-filter-menu-card (click)="$event.stopPropagation()"
+      (keydown.tab)="$event.stopPropagation();"
+      (keydown.shift.tab)="$event.stopPropagation()"
+      (close)="menuTrigger.closeMenu()">
+      <ng-container ngProjectAs="filter-title">
+        {{ tabbedFacet.label | translate }}
+      </ng-container>
+      <ng-container ngProjectAs="filter-content">
+        <adf-search-facet-tabbed-content [tabbedFacet]="tabbedFacet" (isPopulated)="onIsPopulatedEventChange($event)"
+          [onReset$]="reset$" [onApply$]="apply$" (displayValue$)="displayValue = $event" />
+      </ng-container>
+      <ng-container ngProjectAs="filter-actions">
+        <button mat-button class="adf-search-action-button" (click)="onRemove()" id="cancel-filter-button">
+          {{ 'SEARCH.FILTER.BUTTONS.CLEAR' | translate }}
+        </button>
+        <button mat-flat-button class="adf-search-action-button" color="primary" (click)="onApply()" id="apply-filter-button">
+          {{ 'SEARCH.FILTER.BUTTONS.APPLY' | translate }}
+        </button>
+      </ng-container>
+    </adf-search-filter-menu-card>
+  </div>
 </mat-menu>

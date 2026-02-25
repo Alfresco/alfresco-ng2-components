@@ -17,8 +17,8 @@
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Component } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component, DOCUMENT } from '@angular/core';
+
 import { NodeSharedDirective } from './content-node-share.directive';
 import { NoopAuthModule } from '@alfresco/adf-core';
 import { MatNativeDatetimeModule } from '@mat-datetimepicker/core';

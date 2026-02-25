@@ -1,55 +1,58 @@
 <adf-datatable
-        [rows]="rows"
-        [columns]="columns"
-        [data]="dataAdapter"
-        [stickyHeader]="stickyHeader"
-        [loading]="isLoading$ | async"
-        [sorting]="formattedSorting"
-        [selectionMode]="selectionMode"
-        [multiselect]="multiselect"
-        [actions]="showActions"
-        [actionsPosition]="actionsPosition"
-        [contextMenu]="showContextMenu"
-        [showMainDatatableActions]="showMainDatatableActions"
-        [showProvidedActions]="showProvidedActions"
-        [isResizingEnabled]="isResizingEnabled"
-        (showRowActionsMenu)="onShowRowActionsMenu($event)"
-        (showRowContextMenu)="onShowRowContextMenu($event)"
-        (executeRowAction)="onExecuteRowAction($event)"
-        (rowClick)="onRowClick($any($event))"
-        (row-select)="onRowSelect($any($event))"
-        (row-unselect)="onRowUnselect($any($event))"
-        (row-keyup)="onRowKeyUp($any($event))"
-        (sorting-changed)="onSortingChanged($any($event))"
-        (columnOrderChanged)="onColumnOrderChanged($event)"
-        (columnsWidthChanged)="onColumnsWidthChanged($event)"
-        >
-        <adf-loading-content-template>
-            <ng-template>
-                <mat-progress-spinner
-                    *ngIf="!customLoadingContent"
-                    class="adf-cloud-process-list-loading-margin"
-                    [color]="'primary'"
-                    [mode]="'indeterminate'" />
-                <ng-content select="adf-custom-loading-content-template" />
-            </ng-template>
-        </adf-loading-content-template>
-        <adf-no-content-template>
-            <ng-template>
-                <adf-empty-content *ngIf="!emptyCustomContent"
-                    icon="assessment"
-                    [title]="'ADF_CLOUD_PROCESS_LIST.MESSAGES.TITLE' | translate"
-                    [subtitle]="'ADF_CLOUD_PROCESS_LIST.MESSAGES.SUBTITLE'| translate" />
-                <ng-content select="adf-custom-empty-content-template" />
-            </ng-template>
-        </adf-no-content-template>
+  [rows]="rows"
+  [columns]="columns"
+  [data]="dataAdapter"
+  [stickyHeader]="stickyHeader"
+  [loading]="isLoading$ | async"
+  [sorting]="formattedSorting"
+  [selectionMode]="selectionMode"
+  [multiselect]="multiselect"
+  [actions]="showActions"
+  [actionsPosition]="actionsPosition"
+  [contextMenu]="showContextMenu"
+  [showMainDatatableActions]="showMainDatatableActions"
+  [showProvidedActions]="showProvidedActions"
+  [isResizingEnabled]="isResizingEnabled"
+  (showRowActionsMenu)="onShowRowActionsMenu($event)"
+  (showRowContextMenu)="onShowRowContextMenu($event)"
+  (executeRowAction)="onExecuteRowAction($event)"
+  (rowClick)="onRowClick($any($event))"
+  (row-select)="onRowSelect($any($event))"
+  (row-unselect)="onRowUnselect($any($event))"
+  (row-keyup)="onRowKeyUp($any($event))"
+  (sorting-changed)="onSortingChanged($any($event))"
+  (columnOrderChanged)="onColumnOrderChanged($event)"
+  (columnsWidthChanged)="onColumnsWidthChanged($event)"
+  >
+  <adf-loading-content-template>
+    <ng-template>
+      @if (!customLoadingContent) {
+        <mat-progress-spinner
+          class="adf-cloud-process-list-loading-margin"
+          [color]="'primary'"
+          [mode]="'indeterminate'" />
+      }
+      <ng-content select="adf-custom-loading-content-template" />
+    </ng-template>
+  </adf-loading-content-template>
+  <adf-no-content-template>
+    <ng-template>
+      @if (!emptyCustomContent) {
+        <adf-empty-content
+          icon="assessment"
+          [title]="'ADF_CLOUD_PROCESS_LIST.MESSAGES.TITLE' | translate"
+          [subtitle]="'ADF_CLOUD_PROCESS_LIST.MESSAGES.SUBTITLE'| translate" />
+      }
+      <ng-content select="adf-custom-empty-content-template" />
+    </ng-template>
+  </adf-no-content-template>
 
-        <adf-main-menu-datatable-template>
-            <ng-template let-mainMenuTrigger>
-                <adf-datatable-column-selector
-                    [columns]="columns"
-                    [mainMenuTrigger]="mainMenuTrigger"
-                    (submitColumnsVisibility)="onColumnsVisibilityChange($event)" />
-            </ng-template>
-        </adf-main-menu-datatable-template>
+  <adf-main-menu-datatable-template>
+    <ng-template let-mainMenuTrigger>
+      <adf-datatable-column-selector
+        [columns]="columns"
+        [mainMenuTrigger]="mainMenuTrigger"
+        (submitColumnsVisibility)="onColumnsVisibilityChange($event)" />
+    </ng-template>
+  </adf-main-menu-datatable-template>
 </adf-datatable>

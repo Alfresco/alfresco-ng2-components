@@ -18,9 +18,9 @@
 /* eslint-disable @angular-eslint/no-input-rename, @typescript-eslint/no-use-before-define, @angular-eslint/no-input-rename */
 
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
-import { ChangeDetectorRef, DestroyRef, Directive, ElementRef, forwardRef, inject, Input, NgZone, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, DestroyRef, Directive, ElementRef, forwardRef, inject, Input, NgZone, OnDestroy, DOCUMENT } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DOCUMENT } from '@angular/common';
+
 import { fromEvent, merge, Observable, of, Subject, Subscription } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { SearchComponentInterface } from '../common/interface/search-component.interface';

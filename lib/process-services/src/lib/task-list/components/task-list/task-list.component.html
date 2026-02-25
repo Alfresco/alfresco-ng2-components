@@ -1,5 +1,5 @@
-<adf-datatable
-    *ngIf="requestNode; else noMessagesTemplate"
+@if (requestNode) {
+  <adf-datatable
     [data]="data"
     [rows]="rows"
     [columns]="columns"
@@ -16,27 +16,30 @@
     (row-unselect)="onRowUnselect($any($event))"
     (rowClick)="onRowClick($any($event))"
     (row-keyup)="onRowKeyUp($any($event))"
->
+    >
     <adf-loading-content-template>
-        <ng-template>
-            <!--Add your custom loading template here-->
-            <mat-progress-spinner *ngIf="!customLoadingContent" class="adf-task-list-loading-margin" color="primary" mode="indeterminate" />
-            <ng-content select="adf-custom-loading-content-template" />
-        </ng-template>
+      <ng-template>
+        <!--Add your custom loading template here-->
+        @if (!customLoadingContent) {
+          <mat-progress-spinner class="adf-task-list-loading-margin" color="primary" mode="indeterminate" />
+        }
+        <ng-content select="adf-custom-loading-content-template" />
+      </ng-template>
     </adf-loading-content-template>
     <adf-no-content-template>
-        <ng-template>
-            <adf-empty-content
-                *ngIf="!customEmptyContent"
-                icon="assignment"
-                [title]="'ADF_TASK_LIST.LIST.MESSAGES.TITLE' | translate"
-                [subtitle]="'ADF_TASK_LIST.LIST.MESSAGES.SUBTITLE' | translate"
+      <ng-template>
+        @if (!customEmptyContent) {
+          <adf-empty-content
+            icon="assignment"
+            [title]="'ADF_TASK_LIST.LIST.MESSAGES.TITLE' | translate"
+            [subtitle]="'ADF_TASK_LIST.LIST.MESSAGES.SUBTITLE' | translate"
             />
-            <ng-content select="adf-custom-empty-content-template" />
-        </ng-template>
+        }
+        <ng-content select="adf-custom-empty-content-template" />
+      </ng-template>
     </adf-no-content-template>
-</adf-datatable>
+  </adf-datatable>
+} @else {
+  <div>{{ 'ADF_TASK_LIST.FILTERS.MESSAGES.NONE' | translate }}</div>
+}
 
-<ng-template #noMessagesTemplate>
-    <div>{{ 'ADF_TASK_LIST.FILTERS.MESSAGES.NONE' | translate }}</div>
-</ng-template>

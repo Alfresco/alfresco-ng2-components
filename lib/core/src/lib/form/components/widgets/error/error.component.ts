@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { NgIf } from '@angular/common';
+
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ErrorMessageModel } from '../core';
@@ -52,7 +52,7 @@ import { IconModule } from '../../../../icon/icon.module';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, IconModule, TranslatePipe],
+    imports: [IconModule, TranslatePipe],
     encapsulation: ViewEncapsulation.None
 })
 export class ErrorWidgetComponent extends WidgetComponent implements OnChanges {

@@ -1,53 +1,60 @@
 <div class="adf-people-widget {{field.className}}"
-     [class.adf-invalid]="!field.isValid && isTouched()"
-     [class.adf-readonly]="field.readOnly"
-     id="people-widget-content">
-    <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label>
-    <mat-form-field
-        class="adf-people-widget-field">
-        <mat-chip-grid #chipGrid [attr.aria-label]="'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECTED_PEOPLE' | translate">
-            <mat-chip-row
-                *ngFor="let user of selectedUsers"
-                (removed)="onRemove(user)"
-                [disabled]="field.readOnly"
-                [attr.data-automation-id]="'adf-people-widget-chip-' + user.id"
-                class="adf-people-widget-field-chip">
-                {{ getDisplayName(user) }}
-                <button matChipRemove [attr.aria-label]="'remove ' + user.firstName">
-                    <mat-icon>close</mat-icon>
-                </button>
-            </mat-chip-row>
-            <input #inputValue
-                   matInput
-                   class="adf-input"
-                   [matChipInputFor]="chipGrid"
-                   data-automation-id="adf-people-search-input"
-                   type="text"
-                   [disabled]="!multiSelect && selectedUsers.length > 0 || field.readOnly"
-                   [id]="field.id"
-                   [formControl]="searchTerm"
-                   [placeholder]="selectedUsers.length > 0 ? '' : field.placeholder"
-                   [matAutocomplete]="auto"
-                   (blur)="markAsTouched()"
-                   [title]="field.tooltip">
-        </mat-chip-grid>
+  [class.adf-invalid]="!field.isValid && isTouched()"
+  [class.adf-readonly]="field.readOnly"
+  id="people-widget-content">
+  <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label>
+  <mat-form-field
+    class="adf-people-widget-field">
+    <mat-chip-grid #chipGrid [attr.aria-label]="'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECTED_PEOPLE' | translate">
+      @for (user of selectedUsers; track user) {
+        <mat-chip-row
+          (removed)="onRemove(user)"
+          [disabled]="field.readOnly"
+          [attr.data-automation-id]="'adf-people-widget-chip-' + user.id"
+          class="adf-people-widget-field-chip">
+          {{ getDisplayName(user) }}
+          <button matChipRemove [attr.aria-label]="'remove ' + user.firstName">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-chip-row>
+      }
+      <input #inputValue
+        matInput
+        class="adf-input"
+        [matChipInputFor]="chipGrid"
+        data-automation-id="adf-people-search-input"
+        type="text"
+        [disabled]="!multiSelect && selectedUsers.length > 0 || field.readOnly"
+        [id]="field.id"
+        [formControl]="searchTerm"
+        [placeholder]="selectedUsers.length > 0 ? '' : field.placeholder"
+        [matAutocomplete]="auto"
+        (blur)="markAsTouched()"
+        [title]="field.tooltip">
+    </mat-chip-grid>
 
-        <mat-autocomplete class="adf-people-widget-list"
-                          #auto="matAutocomplete"
-                          (optionSelected)="onItemSelect($event.option.value)"
-                          [displayWith]="getDisplayName">
-            <mat-option *ngFor="let user of users$ | async; let i = index" [value]="user" [disabled]="isUserAlreadySelected(user)">
-                <div class="adf-people-widget-row" id="adf-people-widget-user-{{i}}">
-                    <div [outerHTML]="user | usernameInitials:'adf-people-widget-pic'"></div>
-                    <div *ngIf="user.pictureId" class="adf-people-widget-image-row">
-                        <img id="adf-people-widget-pic-{{i}}" class="adf-people-widget-image"
-                             [alt]="getDisplayName(user)" [src]="peopleProcessService.getUserImage(user.id.toString())"/>
-                    </div>
-                    <span class="adf-people-label-name">{{getDisplayName(user)}}</span>
-                </div>
-            </mat-option>
-        </mat-autocomplete>
-    </mat-form-field>
-    <error-widget [error]="field.validationSummary" />
-    <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
+    <mat-autocomplete class="adf-people-widget-list"
+      #auto="matAutocomplete"
+      (optionSelected)="onItemSelect($event.option.value)"
+      [displayWith]="getDisplayName">
+      @for (user of users$ | async; track user; let i = $index) {
+        <mat-option [value]="user" [disabled]="isUserAlreadySelected(user)">
+          <div class="adf-people-widget-row" id="adf-people-widget-user-{{i}}">
+            <div [outerHTML]="user | usernameInitials:'adf-people-widget-pic'"></div>
+            @if (user.pictureId) {
+              <div class="adf-people-widget-image-row">
+                <img id="adf-people-widget-pic-{{i}}" class="adf-people-widget-image"
+                  [alt]="getDisplayName(user)" [src]="peopleProcessService.getUserImage(user.id.toString())"/>
+              </div>
+            }
+            <span class="adf-people-label-name">{{getDisplayName(user)}}</span>
+          </div>
+        </mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+  <error-widget [error]="field.validationSummary" />
+  @if (isInvalidFieldRequired() && isTouched()) {
+    <error-widget required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
+  }
 </div>

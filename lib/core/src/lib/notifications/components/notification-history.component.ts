@@ -37,7 +37,7 @@ import { MatButton, MatButtonModule, MatIconButton } from '@angular/material/but
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatListModule } from '@angular/material/list';
-import { NgForOf, NgIf } from '@angular/common';
+
 import { InitialUsernamePipe, TimeAgoPipe } from '../../pipes';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -49,18 +49,16 @@ import { IconModule } from '../../icon/icon.module';
     templateUrl: 'notification-history.component.html',
     styleUrls: ['./notification-history.component.scss'],
     imports: [
-        MatButtonModule,
-        MatMenuModule,
-        TranslatePipe,
-        IconModule,
-        MatBadgeModule,
-        MatListModule,
-        NgIf,
-        NgForOf,
-        TimeAgoPipe,
-        InitialUsernamePipe,
-        MatSnackBarModule
-    ],
+    MatButtonModule,
+    MatMenuModule,
+    TranslatePipe,
+    IconModule,
+    MatBadgeModule,
+    MatListModule,
+    TimeAgoPipe,
+    InitialUsernamePipe,
+    MatSnackBarModule
+],
     encapsulation: ViewEncapsulation.None
 })
 export class NotificationHistoryComponent implements OnInit, AfterViewInit {

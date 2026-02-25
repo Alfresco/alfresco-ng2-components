@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { inject, provideAppInitializer } from '@angular/core';
+import { inject, provideAppInitializer, DOCUMENT } from '@angular/core';
 import {
     FlagsOverrideToken,
     FeaturesServiceToken,
@@ -28,7 +28,7 @@ import {
 import { StorageFeaturesService } from '../services/storage-features.service';
 import { DebugFeaturesService } from '../services/debug-features.service';
 import { QaFeaturesHelper } from '../services/qa-features.helper';
-import { DOCUMENT } from '@angular/common';
+
 
 /**
  *

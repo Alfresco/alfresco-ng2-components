@@ -1,88 +1,94 @@
 <div
-    data-automation-id="adf-dialog-container"
-    class="adf-dialog-container {{ dialogSize }}"
->
-    <div
-        mat-dialog-title
-        data-automation-id="adf-dialog-header"
-        class="adf-dialog-header"
-        [ngClass]="{ 'adf-centered-header': data.headerIcon }"
+  data-automation-id="adf-dialog-container"
+  class="adf-dialog-container {{ dialogSize }}"
+  >
+  <div
+    mat-dialog-title
+    data-automation-id="adf-dialog-header"
+    class="adf-dialog-header"
+    [ngClass]="{ 'adf-centered-header': data.headerIcon }"
     >
-        <div class="adf-dialog-title-container" [ngClass]="{ 'adf-centered-title': data.headerIcon }">
-            <mat-icon
-                *ngIf="data.headerIcon"
-                color="primary"
-                class="adf-dialog-header-icon"
-                [adf-icon]="data.headerIcon"
-            />
-            <h2 class="adf-dialog-title">{{ data.title | translate }}</h2>
-        </div>
-        <button
-            *ngIf="!isCloseButtonHidden"
-            mat-icon-button
-            mat-dialog-close
-            title="{{'CLOSE' | translate }}"
-            data-automation-id="adf-dialog-close-button"
+    <div class="adf-dialog-title-container" [ngClass]="{ 'adf-centered-title': data.headerIcon }">
+      @if (data.headerIcon) {
+        <mat-icon
+          color="primary"
+          class="adf-dialog-header-icon"
+          [adf-icon]="data.headerIcon"
+          />
+      }
+      <h2 class="adf-dialog-title">{{ data.title | translate }}</h2>
+    </div>
+    @if (!isCloseButtonHidden) {
+      <button
+        mat-icon-button
+        mat-dialog-close
+        title="{{'CLOSE' | translate }}"
+        data-automation-id="adf-dialog-close-button"
         >
-            <mat-icon adf-icon="close" />
-        </button>
-    </div>
+        <mat-icon adf-icon="close" />
+      </button>
+    }
+  </div>
 
-    <div
-        [ngTemplateOutlet]="data.descriptionTemplate"
-        [ngClass]="{ 'adf-description': data.description || data.descriptionTemplate }"
+  <div
+    [ngTemplateOutlet]="data.descriptionTemplate"
+    [ngClass]="{ 'adf-description': data.description || data.descriptionTemplate }"
     >
-        <ng-container>{{ data.description | translate }}</ng-container>
-    </div>
+    <ng-container>{{ data.description | translate }}</ng-container>
+  </div>
 
-    <mat-dialog-content *ngIf="data.contentTemplate || data.contentComponent || data.contentText" class="adf-dialog-content">
-        <ng-container [ngTemplateOutlet]="data.contentTemplate" />
-        <ng-container *ngComponentOutlet="data.contentComponent; injector: dataInjector" />
-        <ng-container>{{ data.contentText | translate }}</ng-container>
+  @if (data.contentTemplate || data.contentComponent || data.contentText) {
+    <mat-dialog-content class="adf-dialog-content">
+      <ng-container [ngTemplateOutlet]="data.contentTemplate" />
+      <ng-container *ngComponentOutlet="data.contentComponent; injector: dataInjector" />
+      <ng-container>{{ data.contentText | translate }}</ng-container>
     </mat-dialog-content>
+  }
 
-    <mat-dialog-actions
-        class="adf-dialog-actions"
-        [ngClass]="{ 'adf-additional-actions': data.actionsTemplate || additionalActionButtons }"
+  <mat-dialog-actions
+    class="adf-dialog-actions"
+    [ngClass]="{ 'adf-additional-actions': data.actionsTemplate || additionalActionButtons }"
     >
-        <div class="adf-additional-actions-container">
-            <ng-container *ngIf="!additionalActionButtons && data.actionsTemplate">
-                <ng-container [ngTemplateOutlet]="data.actionsTemplate" />
-            </ng-container>
+    <div class="adf-additional-actions-container">
+      @if (!additionalActionButtons && data.actionsTemplate) {
+        <ng-container [ngTemplateOutlet]="data.actionsTemplate" />
+      }
 
-            <ng-container *ngIf="!data.actionsTemplate && additionalActionButtons">
-                <button
-                    *ngFor="let additionalButton of additionalActionButtons"
-                    mat-button
-                    color="primary"
-                    class="{{ additionalButton.class }}"
-                    (click)="additionalButton.onClick()"
-                >
-                    {{ additionalButton.title | translate }}
-                </button>
-            </ng-container>
-        </div>
-
-        <div class="adf-main-actions-container">
-            <button
-                *ngIf="!isCancelButtonHidden"
-                mat-stroked-button
-                color="primary"
-                mat-dialog-close
-                data-automation-id="adf-dialog-actions-cancel"
+      @if (!data.actionsTemplate && additionalActionButtons) {
+        @for (additionalButton of additionalActionButtons; track additionalButton) {
+          <button
+            mat-button
+            color="primary"
+            class="{{ additionalButton.class }}"
+            (click)="additionalButton.onClick()"
             >
-                {{ cancelButtonTitle | translate }}
-            </button>
+            {{ additionalButton.title | translate }}
+          </button>
+        }
+      }
+    </div>
 
-            <button
-                mat-flat-button
-                color="primary"
-                data-automation-id="adf-dialog-actions-confirm"
-                [disabled]="isConfirmButtonDisabled$ | async"
-                (click)="onConfirm()"
-            >
-                {{ confirmButtonTitle | translate }}
-            </button>
-        </div>
-    </mat-dialog-actions>
+    <div class="adf-main-actions-container">
+      @if (!isCancelButtonHidden) {
+        <button
+          mat-stroked-button
+          color="primary"
+          mat-dialog-close
+          data-automation-id="adf-dialog-actions-cancel"
+          >
+          {{ cancelButtonTitle | translate }}
+        </button>
+      }
+
+      <button
+        mat-flat-button
+        color="primary"
+        data-automation-id="adf-dialog-actions-confirm"
+        [disabled]="isConfirmButtonDisabled$ | async"
+        (click)="onConfirm()"
+        >
+        {{ confirmButtonTitle | translate }}
+      </button>
+    </div>
+  </mat-dialog-actions>
 </div>

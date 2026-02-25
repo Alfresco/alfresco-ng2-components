@@ -1,23 +1,25 @@
 <mat-chip-listbox>
-    <ng-container *ngIf="facetFiltersService.selectedBuckets.length">
-        <mat-chip-option *ngIf="clearAll && facetFiltersService.selectedBuckets.length > 1"
-            data-automation-id="reset-filter"
-            color="primary"
-            selected
-            class="adf-search-chip-list-item"
-            title="{{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.TOOLTIP' | translate }}"
-            (click)="facetFiltersService.resetAllSelectedBuckets()">
-            {{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.LABEL' | translate }}
-        </mat-chip-option>
-
-        <mat-chip-option
-            data-automation-id="chip-list-entry"
-            class="adf-search-chip-list-item"
-            *ngFor="let selection of facetFiltersService.selectedBuckets"
-            [removable]="true"
-            (removed)="facetFiltersService.unselectFacetBucket(selection.field, selection.bucket)">
-            {{ (selection.bucket.display || selection.bucket.label) | translate }}
-            <mat-icon class="adf-search-chip-list-item-remove" adf-icon="cancel" matChipRemove />
-        </mat-chip-option>
-    </ng-container>
+  @if (facetFiltersService.selectedBuckets.length) {
+    @if (clearAll && facetFiltersService.selectedBuckets.length > 1) {
+      <mat-chip-option
+        data-automation-id="reset-filter"
+        color="primary"
+        selected
+        class="adf-search-chip-list-item"
+        title="{{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.TOOLTIP' | translate }}"
+        (click)="facetFiltersService.resetAllSelectedBuckets()">
+        {{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.LABEL' | translate }}
+      </mat-chip-option>
+    }
+    @for (selection of facetFiltersService.selectedBuckets; track selection) {
+      <mat-chip-option
+        data-automation-id="chip-list-entry"
+        class="adf-search-chip-list-item"
+        [removable]="true"
+        (removed)="facetFiltersService.unselectFacetBucket(selection.field, selection.bucket)">
+        {{ (selection.bucket.display || selection.bucket.label) | translate }}
+        <mat-icon class="adf-search-chip-list-item-remove" adf-icon="cancel" matChipRemove />
+      </mat-chip-option>
+    }
+  }
 </mat-chip-listbox>

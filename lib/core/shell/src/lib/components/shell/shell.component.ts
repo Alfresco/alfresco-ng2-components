@@ -104,7 +104,7 @@ export class ShellLayoutComponent implements OnInit {
             )
             .subscribe((event: NavigationEnd) => {
                 this.minimizeSidenav = this.shellService.minimizeSidenavConditions.some((el) => {
-                    const previousNavigation = this.router.getCurrentNavigation()?.previousNavigation?.finalUrl;
+                    const previousNavigation = this.router.currentNavigation()?.previousNavigation?.finalUrl;
                     const previousPath = previousNavigation ? this.router.serializeUrl(previousNavigation) : '';
                     return event.urlAfterRedirects.includes(el) && !previousPath.includes(el);
                 });

@@ -18,7 +18,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
-import { CommonModule } from '@angular/common';
+
 import { MatMenuModule } from '@angular/material/menu';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { IconModule } from '../../../icon/icon.module';
@@ -52,7 +52,7 @@ describe('SidebarActionMenuComponent', () => {
 });
 
 @Component({
-    imports: [CommonModule, SidebarActionMenuComponent, IconModule, MatMenuModule],
+    imports: [SidebarActionMenuComponent, IconModule, MatMenuModule],
     // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
     template: `
         <adf-sidebar-action-menu [expanded]="expanded" [title]="title">

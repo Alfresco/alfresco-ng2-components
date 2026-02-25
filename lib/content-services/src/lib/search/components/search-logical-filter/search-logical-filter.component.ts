@@ -22,7 +22,7 @@ import { SearchQueryBuilderService } from '../../services/search-query-builder.s
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TranslationService } from '@alfresco/adf-core';
-import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
@@ -43,7 +43,7 @@ export interface LogicalSearchCondition extends LogicalSearchConditionEnumValued
 
 @Component({
     selector: 'adf-search-logical-filter',
-    imports: [CommonModule, MatFormFieldModule, TranslatePipe, FormsModule],
+    imports: [MatFormFieldModule, TranslatePipe, FormsModule],
     templateUrl: './search-logical-filter.component.html',
     styleUrls: ['./search-logical-filter.component.scss'],
     encapsulation: ViewEncapsulation.None

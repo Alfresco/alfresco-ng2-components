@@ -1,111 +1,134 @@
 <form>
-    <mat-form-field
-        [subscriptSizing]="formFieldSubscriptSizing"
-        class="adf-people-cloud adf-form-field-input"
-        [class.adf-invalid]="hasError() && isDirty()"
+  <mat-form-field
+    [subscriptSizing]="formFieldSubscriptSizing"
+    class="adf-people-cloud adf-form-field-input"
+    [class.adf-invalid]="hasError() && isDirty()"
     >
-        <mat-label *ngIf="!title">
-            <span>{{label}}</span>
-        </mat-label>
-        <mat-label *ngIf="title">{{ title | translate }}</mat-label>
+    @if (!title) {
+      <mat-label>
+        <span>{{label}}</span>
+      </mat-label>
+    }
+    @if (title) {
+      <mat-label>{{ title | translate }}</mat-label>
+    }
 
-        <mat-chip-grid [required]="required" #userMultipleChipList data-automation-id="adf-cloud-people-chip-list">
-            <mat-chip-row
-                *ngFor="let user of selectedUsers"
-                [removable]="!user.readonly"
-                [attr.data-automation-id]="'adf-people-cloud-chip-' + user.username"
-                (removed)="onRemove(user)"
-                [disabled]="isReadonly() || isValidationLoading()"
-                title="{{ (user.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}"
-                [matTooltip]="showFullNameOnHover ? (user | fullName : true) : user.email"
+    <mat-chip-grid [required]="required" #userMultipleChipList data-automation-id="adf-cloud-people-chip-list">
+      @for (user of selectedUsers; track user) {
+        <mat-chip-row
+          [removable]="!user.readonly"
+          [attr.data-automation-id]="'adf-people-cloud-chip-' + user.username"
+          (removed)="onRemove(user)"
+          [disabled]="isReadonly() || isValidationLoading()"
+          title="{{ (user.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}"
+          [matTooltip]="showFullNameOnHover ? (user | fullName : true) : user.email"
+          >
+          {{ user | fullName }}
+          @if (!(user.readonly || readOnly)) {
+            <mat-icon matChipRemove [attr.data-automation-id]="'adf-people-cloud-chip-remove-icon-' + user.username" adf-icon="cancel" />
+          }
+        </mat-chip-row>
+      }
+      <input
+        matInput
+        [disabled]="isReadonly()"
+        [formControl]="searchUserCtrl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="userMultipleChipList"
+        [required]="required"
+        [placeholder]="placeholder"
+        [disabled]="isReadonly() || isValidationLoading()"
+        (focus)="setFocus(true)"
+        (blur)="setFocus(false); markAsTouched()"
+        class="adf-cloud-input"
+        data-automation-id="adf-people-cloud-search-input"
+        #userInput
+        />
+    </mat-chip-grid>
+
+    <mat-autocomplete
+      autoActiveFirstOption
+      class="adf-people-cloud-list"
+      #auto="matAutocomplete"
+      (optionSelected)="onSelect($event.option.value)"
+      [displayWith]="getDisplayName"
+      >
+      @if ((searchUsers$ | async)?.length) {
+        @for (user of searchUsers$ | async; track user; let i = $index) {
+          <mat-option [value]="user" class="adf-people-cloud-option-active">
+            <div class="adf-people-cloud-row" id="adf-people-cloud-user-{{ user.username }}" data-automation-id="adf-people-cloud-row">
+              <div [outerHTML]="user | usernameInitials : 'adf-people-cloud-pic'"></div>
+              <span class="adf-people-label-name"> {{ user | fullName : true }}</span>
+            </div>
+          </mat-option>
+        }
+      } @else {
+        @if (searchUserCtrl.hasError('searchTypingError') && !searchLoading) {
+          <mat-option
+            disabled
+            class="adf-people-cloud-option-not-active"
+            data-automation-id="adf-people-cloud-no-results"
             >
-                {{ user | fullName }}
-                <mat-icon matChipRemove *ngIf="!(user.readonly || readOnly)" [attr.data-automation-id]="'adf-people-cloud-chip-remove-icon-' + user.username" adf-icon="cancel" />
-            </mat-chip-row>
-            <input
-                matInput
-                [disabled]="isReadonly()"
-                [formControl]="searchUserCtrl"
-                [matAutocomplete]="auto"
-                [matChipInputFor]="userMultipleChipList"
-                [required]="required"
-                [placeholder]="placeholder"
-                [disabled]="isReadonly() || isValidationLoading()"
-                (focus)="setFocus(true)"
-                (blur)="setFocus(false); markAsTouched()"
-                class="adf-cloud-input"
-                data-automation-id="adf-people-cloud-search-input"
-                #userInput
-            />
-        </mat-chip-grid>
+            <span> {{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName: searchedValue } }}</span>
+          </mat-option>
+        }
+      }
+    </mat-autocomplete>
+  </mat-form-field>
 
-        <mat-autocomplete
-            autoActiveFirstOption
-            class="adf-people-cloud-list"
-            #auto="matAutocomplete"
-            (optionSelected)="onSelect($event.option.value)"
-            [displayWith]="getDisplayName"
-        >
-            <ng-container *ngIf="(searchUsers$ | async)?.length; else noResults">
-                <mat-option *ngFor="let user of searchUsers$ | async; let i = index" [value]="user" class="adf-people-cloud-option-active">
-                    <div class="adf-people-cloud-row" id="adf-people-cloud-user-{{ user.username }}" data-automation-id="adf-people-cloud-row">
-                        <div [outerHTML]="user | usernameInitials : 'adf-people-cloud-pic'"></div>
-                        <span class="adf-people-label-name"> {{ user | fullName : true }}</span>
-                    </div>
-                </mat-option>
-            </ng-container>
-            <ng-template #noResults>
-                <mat-option
-                    *ngIf="searchUserCtrl.hasError('searchTypingError') && !searchLoading"
-                    disabled
-                    class="adf-people-cloud-option-not-active"
-                    data-automation-id="adf-people-cloud-no-results"
-                >
-                    <span> {{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName: searchedValue } }}</span>
-                </mat-option>
-            </ng-template>
-        </mat-autocomplete>
-    </mat-form-field>
+  @if (validationLoading) {
+    <mat-progress-bar mode="indeterminate" />
+  }
 
-    <mat-progress-bar *ngIf="validationLoading" mode="indeterminate" />
-
-    <div class="adf-error-container adf-error-messages-container" *ngIf="showErrors">
-        <mat-error *ngIf="hasPreselectError() && !isValidationLoading()" [@transitionMessages]="subscriptAnimationState" class="adf-error">
-            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
-            <div class="adf-error-text">{{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName: validateUsersMessage } }}</div>
+  @if (showErrors) {
+    <div class="adf-error-container adf-error-messages-container">
+      @if (hasPreselectError() && !isValidationLoading()) {
+        <mat-error [@transitionMessages]="subscriptAnimationState" class="adf-error">
+          <mat-icon class="adf-error-icon" adf-icon="error_outline" />
+          <div class="adf-error-text">{{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName: validateUsersMessage } }}</div>
         </mat-error>
-        <mat-error *ngIf="searchUserCtrl.hasError('pattern')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
-            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
-            <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_PATTERN' | translate : { pattern: getValidationPattern() } }}</div>
+      }
+      @if (searchUserCtrl.hasError('pattern')) {
+        <mat-error [@transitionMessages]="subscriptAnimationState" class="adf-error">
+          <mat-icon class="adf-error-icon" adf-icon="error_outline" />
+          <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_PATTERN' | translate : { pattern: getValidationPattern() } }}</div>
         </mat-error>
-        <mat-error *ngIf="searchUserCtrl.hasError('maxlength')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
-            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
-            <div class="adf-error-text">
-                {{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MAX_LENGTH' | translate : { requiredLength: getValidationMaxLength() } }}
-            </div>
+      }
+      @if (searchUserCtrl.hasError('maxlength')) {
+        <mat-error [@transitionMessages]="subscriptAnimationState" class="adf-error">
+          <mat-icon class="adf-error-icon" adf-icon="error_outline" />
+          <div class="adf-error-text">
+            {{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MAX_LENGTH' | translate : { requiredLength: getValidationMaxLength() } }}
+          </div>
         </mat-error>
-        <mat-error *ngIf="searchUserCtrl.hasError('minlength')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
-            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
-            <div class="adf-error-text">
-                {{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MIN_LENGTH' | translate : { requiredLength: getValidationMinLength() } }}
-            </div>
+      }
+      @if (searchUserCtrl.hasError('minlength')) {
+        <mat-error [@transitionMessages]="subscriptAnimationState" class="adf-error">
+          <mat-icon class="adf-error-icon" adf-icon="error_outline" />
+          <div class="adf-error-text">
+            {{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MIN_LENGTH' | translate : { requiredLength: getValidationMinLength() } }}
+          </div>
         </mat-error>
+      }
+      @if ((searchUserCtrl.hasError('required') || userChipsCtrl.hasError('required')) && isDirty()) {
         <mat-error
-            *ngIf="(searchUserCtrl.hasError('required') || userChipsCtrl.hasError('required')) && isDirty()"
-            [@transitionMessages]="subscriptAnimationState"
-            class="adf-error"
-        >
-            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
-            <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.REQUIRED' | translate }}</div>
+          [@transitionMessages]="subscriptAnimationState"
+          class="adf-error"
+          >
+          <mat-icon class="adf-error-icon" adf-icon="error_outline" />
+          <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.REQUIRED' | translate }}</div>
         </mat-error>
+      }
+      @if (searchUserCtrl.hasError('searchTypingError') && !this.isFocused) {
         <mat-error
-            *ngIf="searchUserCtrl.hasError('searchTypingError') && !this.isFocused"
-            [@transitionMessages]="subscriptAnimationState"
-            data-automation-id="invalid-users-typing-error"
-            class="adf-error"
-        >
-            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
-            <div class="adf-error-text">{{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName: searchedValue } }}</div>
+          [@transitionMessages]="subscriptAnimationState"
+          data-automation-id="invalid-users-typing-error"
+          class="adf-error"
+          >
+          <mat-icon class="adf-error-icon" adf-icon="error_outline" />
+          <div class="adf-error-text">{{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName: searchedValue } }}</div>
         </mat-error>
+      }
     </div>
+  }
 </form>

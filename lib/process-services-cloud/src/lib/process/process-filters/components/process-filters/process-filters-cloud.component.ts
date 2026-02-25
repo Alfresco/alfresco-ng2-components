@@ -26,13 +26,13 @@ import { ProcessListCloudService } from '../../../process-list/services/process-
 import { ProcessFilterCloudAdapter } from '../../../process-list/models/process-cloud-query-request.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslatePipe } from '@ngx-translate/core';
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule } from '@angular/material/list';
 
 @Component({
     selector: 'adf-cloud-process-filters',
-    imports: [TranslatePipe, IconModule, NgIf, MatProgressSpinnerModule, NgForOf, MatListModule, AsyncPipe],
+    imports: [TranslatePipe, IconModule, MatProgressSpinnerModule, MatListModule, AsyncPipe],
     templateUrl: './process-filters-cloud.component.html',
     styleUrls: ['./process-filters-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

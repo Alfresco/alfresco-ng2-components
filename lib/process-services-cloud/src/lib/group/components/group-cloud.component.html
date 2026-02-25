@@ -1,86 +1,106 @@
 <form>
-    <mat-form-field class="adf-cloud-group adf-form-field-input" [class.adf-invalid]="hasError() && isDirty()">
-        @if (label || required) { <mat-label><span>{{label}}</span></mat-label> }
-        <mat-chip-grid [required]="required" #groupChipList data-automation-id="adf-cloud-group-chip-list">
-            <mat-chip-row
-                *ngFor="let group of selectedGroups"
-                [removable]="!(group.readonly)"
-                [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name"
-                (removed)="onRemove(group)"
-                [disabled]="readOnly || isValidationLoading()"
-                title="{{ (group.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}">
-                {{group.name}}
-                <mat-icon *ngIf="!(group.readonly || readOnly)" matChipRemove [attr.data-automation-id]="'adf-cloud-group-chip-remove-icon-' + group.name" adf-icon="cancel" />
-            </mat-chip-row>
-            <input [disabled]="readOnly || isValidationLoading()" matInput
-                   [formControl]="searchGroupsControl"
-                   [matAutocomplete]="auto"
-                   [matChipInputFor]="groupChipList"
-                   [placeholder]="title | translate"
-                   [required]="required"
-                   (focus)="setFocus(true)"
-                   (blur)="setFocus(false); markAsTouched()"
-                   class="adf-group-input"
-                   data-automation-id="adf-cloud-group-search-input" #groupInput>
-        </mat-chip-grid>
+  <mat-form-field class="adf-cloud-group adf-form-field-input" [class.adf-invalid]="hasError() && isDirty()">
+    @if (label || required) { <mat-label><span>{{label}}</span></mat-label> }
+    <mat-chip-grid [required]="required" #groupChipList data-automation-id="adf-cloud-group-chip-list">
+      @for (group of selectedGroups; track group) {
+        <mat-chip-row
+          [removable]="!(group.readonly)"
+          [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name"
+          (removed)="onRemove(group)"
+          [disabled]="readOnly || isValidationLoading()"
+          title="{{ (group.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}">
+          {{group.name}}
+          @if (!(group.readonly || readOnly)) {
+            <mat-icon matChipRemove [attr.data-automation-id]="'adf-cloud-group-chip-remove-icon-' + group.name" adf-icon="cancel" />
+          }
+        </mat-chip-row>
+      }
+      <input [disabled]="readOnly || isValidationLoading()" matInput
+        [formControl]="searchGroupsControl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="groupChipList"
+        [placeholder]="title | translate"
+        [required]="required"
+        (focus)="setFocus(true)"
+        (blur)="setFocus(false); markAsTouched()"
+        class="adf-group-input"
+        data-automation-id="adf-cloud-group-search-input" #groupInput>
+    </mat-chip-grid>
 
-        <mat-autocomplete
-            autoActiveFirstOption
-            #auto="matAutocomplete"
-            class="adf-cloud-group-list"
-            (optionSelected)="onSelect($event.option.value)"
-            [displayWith]="getDisplayName"
-            data-automation-id="adf-cloud-group-autocomplete">
-            <ng-container *ngIf="(searchGroups$ | async)?.length else noResults">
-                <mat-option *ngFor="let group of searchGroups$ | async; let i = index" [value]="group"
-                            [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name"
-                            class="adf-cloud-group-option-active">
-                    <div
-                        class="adf-cloud-group-row"
-                        id="adf-group-{{i}}"
-                        data-automation-id="adf-cloud-group-row">
-                        <button class="adf-group-short-name" mat-fab>{{getGroupNameInitials(group)}}</button>
-                        <span>{{group.name}}</span>
-                    </div>
-                </mat-option>
-            </ng-container>
-            <ng-template #noResults>
-                <mat-option *ngIf="searchGroupsControl.hasError('searchTypingError') && !searchLoading" disabled
-                            class="adf-cloud-group-option-not-active"
-                            data-automation-id="adf-cloud-group-no-results">
-                    <span> {{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate }}</span>
-                </mat-option>
-            </ng-template>
-        </mat-autocomplete>
-    </mat-form-field>
-    <mat-progress-bar *ngIf="validationLoading" mode="indeterminate" />
+    <mat-autocomplete
+      autoActiveFirstOption
+      #auto="matAutocomplete"
+      class="adf-cloud-group-list"
+      (optionSelected)="onSelect($event.option.value)"
+      [displayWith]="getDisplayName"
+      data-automation-id="adf-cloud-group-autocomplete">
+      @if ((searchGroups$ | async)?.length) {
+        @for (group of searchGroups$ | async; track group; let i = $index) {
+          <mat-option [value]="group"
+            [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name"
+            class="adf-cloud-group-option-active">
+            <div
+              class="adf-cloud-group-row"
+              id="adf-group-{{i}}"
+              data-automation-id="adf-cloud-group-row">
+              <button class="adf-group-short-name" mat-fab>{{getGroupNameInitials(group)}}</button>
+              <span>{{group.name}}</span>
+            </div>
+          </mat-option>
+        }
+      } @else {
+        @if (searchGroupsControl.hasError('searchTypingError') && !searchLoading) {
+          <mat-option disabled
+            class="adf-cloud-group-option-not-active"
+            data-automation-id="adf-cloud-group-no-results">
+            <span> {{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate }}</span>
+          </mat-option>
+        }
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+  @if (validationLoading) {
+    <mat-progress-bar mode="indeterminate" />
+  }
 
-    <div class="adf-error-container adf-error-messages-container">
-        <mat-error *ngIf="hasPreselectError() &&  !isValidationLoading()" [@transitionMessages]="subscriptAnimationState" class="adf-error">
-            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
-            <div class="adf-error-text">{{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate }}</div>
-        </mat-error>
-        <mat-error *ngIf="searchGroupsControl.hasError('pattern')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
-            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
-            <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_PATTERN' | translate: { pattern: getValidationPattern() } }}</div>
-            </mat-error>
-        <mat-error *ngIf="searchGroupsControl.hasError('maxlength')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
-            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
-            <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MAX_LENGTH' | translate: { requiredLength: getValidationMaxLength() } }}</div>
-        </mat-error>
-        <mat-error *ngIf="searchGroupsControl.hasError('minlength')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
-            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
-            <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MIN_LENGTH' | translate: { requiredLength: getValidationMinLength() } }}</div>
-        </mat-error>
-        <mat-error *ngIf="(searchGroupsControl.hasError('required') || groupChipsCtrl.hasError('required')) && isDirty()"
-            [@transitionMessages]="subscriptAnimationState" class="adf-error">
-            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
-            <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.REQUIRED' | translate }} </div>
-        </mat-error>
-        <mat-error *ngIf="searchGroupsControl.hasError('searchTypingError') && !this.isFocused"
-            data-automation-id="invalid-groups-typing-error" [@transitionMessages]="subscriptAnimationState" class="adf-error">
-            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
-            <div class="adf-error-text">{{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate }}</div>
-        </mat-error>
-    </div>
+  <div class="adf-error-container adf-error-messages-container">
+    @if (hasPreselectError() &&  !isValidationLoading()) {
+      <mat-error [@transitionMessages]="subscriptAnimationState" class="adf-error">
+        <mat-icon class="adf-error-icon" adf-icon="error_outline" />
+        <div class="adf-error-text">{{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate }}</div>
+      </mat-error>
+    }
+    @if (searchGroupsControl.hasError('pattern')) {
+      <mat-error [@transitionMessages]="subscriptAnimationState" class="adf-error">
+        <mat-icon class="adf-error-icon" adf-icon="error_outline" />
+        <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_PATTERN' | translate: { pattern: getValidationPattern() } }}</div>
+      </mat-error>
+    }
+    @if (searchGroupsControl.hasError('maxlength')) {
+      <mat-error [@transitionMessages]="subscriptAnimationState" class="adf-error">
+        <mat-icon class="adf-error-icon" adf-icon="error_outline" />
+        <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MAX_LENGTH' | translate: { requiredLength: getValidationMaxLength() } }}</div>
+      </mat-error>
+    }
+    @if (searchGroupsControl.hasError('minlength')) {
+      <mat-error [@transitionMessages]="subscriptAnimationState" class="adf-error">
+        <mat-icon class="adf-error-icon" adf-icon="error_outline" />
+        <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MIN_LENGTH' | translate: { requiredLength: getValidationMinLength() } }}</div>
+      </mat-error>
+    }
+    @if ((searchGroupsControl.hasError('required') || groupChipsCtrl.hasError('required')) && isDirty()) {
+      <mat-error
+        [@transitionMessages]="subscriptAnimationState" class="adf-error">
+        <mat-icon class="adf-error-icon" adf-icon="error_outline" />
+        <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.REQUIRED' | translate }} </div>
+      </mat-error>
+    }
+    @if (searchGroupsControl.hasError('searchTypingError') && !this.isFocused) {
+      <mat-error
+        data-automation-id="invalid-groups-typing-error" [@transitionMessages]="subscriptAnimationState" class="adf-error">
+        <mat-icon class="adf-error-icon" adf-icon="error_outline" />
+        <div class="adf-error-text">{{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate }}</div>
+      </mat-error>
+    }
+  </div>
 </form>

@@ -1,42 +1,45 @@
 <div
-    class="adf-multiline-text-widget {{ field.className }}"
-    [class.adf-invalid]="!field.isValid && isTouched()"
-    [class.adf-readonly]="field.readOnly"
->
-    <mat-form-field
-        floatPlaceholder="never"
-        class="adf-form-field-input"
-        [floatLabel]="field.placeholder ? 'always' : null"
+  class="adf-multiline-text-widget {{ field.className }}"
+  [class.adf-invalid]="!field.isValid && isTouched()"
+  [class.adf-readonly]="field.readOnly"
+  >
+  <mat-form-field
+    floatPlaceholder="never"
+    class="adf-form-field-input"
+    [floatLabel]="field.placeholder ? 'always' : null"
     >
-        @if(field.name || field.required) {
-        <mat-label class="adf-label" [attr.for]="field.id"> {{ field.name | translate }} </mat-label>
-        }
-        <textarea
-            matInput
-            class="adf-input"
-            [cdkTextareaAutosize]="true"
-            type="text"
-            rows="3"
-            [id]="field.id"
-            [required]="field.required"
-            [(ngModel)]="field.value"
-            (ngModelChange)="onFieldChanged(field)"
-            [disabled]="field.readOnly || readOnly"
-            [placeholder]="field.placeholder"
-            [title]="field.tooltip"
-            (blur)="markAsTouched()"
-        >
-        </textarea>
-    </mat-form-field>
-    <div *ngIf="field.maxLength > 0" class="adf-multiline-word-counter">
-        <span class="adf-multiline-word-counter-value">{{ field?.value?.length || 0 }}/{{ field.maxLength }}</span>
+    @if(field.name || field.required) {
+      <mat-label class="adf-label" [attr.for]="field.id"> {{ field.name | translate }} </mat-label>
+    }
+    <textarea
+      matInput
+      class="adf-input"
+      [cdkTextareaAutosize]="true"
+      type="text"
+      rows="3"
+      [id]="field.id"
+      [required]="field.required"
+      [(ngModel)]="field.value"
+      (ngModelChange)="onFieldChanged(field)"
+      [disabled]="field.readOnly || readOnly"
+      [placeholder]="field.placeholder"
+      [title]="field.tooltip"
+      (blur)="markAsTouched()"
+      >
+    </textarea>
+  </mat-form-field>
+  @if (field.maxLength > 0) {
+    <div class="adf-multiline-word-counter">
+      <span class="adf-multiline-word-counter-value">{{ field?.value?.length || 0 }}/{{ field.maxLength }}</span>
     </div>
-    <div class="adf-error-messages-container">
-        <error-widget [error]="field.validationSummary" />
-        <error-widget
-            *ngIf="isInvalidFieldRequired() && isTouched()"
-            class="adf-multiline-required-message"
-            required="{{ 'FORM.FIELD.REQUIRED' | translate }}"
+  }
+  <div class="adf-error-messages-container">
+    <error-widget [error]="field.validationSummary" />
+    @if (isInvalidFieldRequired() && isTouched()) {
+      <error-widget
+        class="adf-multiline-required-message"
+        required="{{ 'FORM.FIELD.REQUIRED' | translate }}"
         />
-    </div>
+    }
+  </div>
 </div>

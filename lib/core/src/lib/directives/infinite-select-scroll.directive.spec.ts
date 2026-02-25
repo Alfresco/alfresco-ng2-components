@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directive';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
@@ -26,12 +26,14 @@ import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 @Component({
     template: ` <mat-select adf-infinite-select-scroll (scrollEnd)="load()">
-        <mat-option *ngFor="let option of options; let idx = index">
-            {{ option.text }}
-        </mat-option>
-    </mat-select>`,
+          @for (option of options; track option; let idx = $index) {
+            <mat-option>
+              {{ option.text }}
+            </mat-option>
+          }
+        </mat-select>`,
     standalone: true,
-    imports: [MatSelectModule, InfiniteSelectScrollDirective, CommonModule]
+    imports: [MatSelectModule, InfiniteSelectScrollDirective]
 })
 class TestComponent {
     options = new Array(50).fill({ text: 'dummy' });

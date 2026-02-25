@@ -64,7 +64,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProcessVariableFilterModel } from '../../../models/process-variable-filter.model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { PaginatedList } from '@alfresco/js-api';
 import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
 
@@ -75,17 +75,16 @@ const PRESET_KEY = 'adf-cloud-process-list.presets';
 @Component({
     selector: 'adf-cloud-process-list',
     imports: [
-        DataTableComponent,
-        MatProgressSpinnerModule,
-        TranslatePipe,
-        ColumnsSelectorComponent,
-        MainMenuDataTableTemplateDirective,
-        EmptyContentComponent,
-        NoContentTemplateDirective,
-        LoadingContentTemplateDirective,
-        NgIf,
-        AsyncPipe
-    ],
+    DataTableComponent,
+    MatProgressSpinnerModule,
+    TranslatePipe,
+    ColumnsSelectorComponent,
+    MainMenuDataTableTemplateDirective,
+    EmptyContentComponent,
+    NoContentTemplateDirective,
+    LoadingContentTemplateDirective,
+    AsyncPipe
+],
     templateUrl: './process-list-cloud.component.html',
     styleUrls: ['./process-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

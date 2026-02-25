@@ -22,11 +22,11 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { AspectListComponent } from './aspect-list.component';
 import { AutoFocusDirective } from '../directives/auto-focus.directive';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'adf-aspect-list-dialog',
-    imports: [CommonModule, MatDialogModule, TranslatePipe, MatButtonModule, AspectListComponent, AutoFocusDirective],
+    imports: [MatDialogModule, TranslatePipe, MatButtonModule, AspectListComponent, AutoFocusDirective],
     templateUrl: './aspect-list-dialog.component.html',
     styleUrls: ['./aspect-list-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None

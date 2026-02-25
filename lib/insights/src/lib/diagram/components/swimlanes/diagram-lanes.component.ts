@@ -19,11 +19,11 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DiagramLaneComponent } from './diagram-lane.component';
-import { NgForOf, NgIf } from '@angular/common';
+
 
 @Component({
     selector: 'diagram-lanes',
-    imports: [DiagramLaneComponent, NgIf, NgForOf],
+    imports: [DiagramLaneComponent],
     templateUrl: './diagram-lanes.component.html'
 })
 export class DiagramLanesComponent {

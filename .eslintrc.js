@@ -81,8 +81,7 @@ module.exports = {
                 '@typescript-eslint/prefer-optional-chain': 'error',
                 '@typescript-eslint/prefer-readonly': 'error',
                 '@typescript-eslint/no-inferrable-types': 'off',
-                '@typescript-eslint/no-require-imports': 'off',
-                '@typescript-eslint/no-var-requires': 'error',
+                '@typescript-eslint/no-require-imports': 'error',
                 '@typescript-eslint/naming-convention': [
                     'error',
                     {
@@ -104,8 +103,6 @@ module.exports = {
                 '@typescript-eslint/no-empty-function': 'off',
                 'prefer-arrow/prefer-arrow-functions': 'off',
                 'prefer-promise-reject-errors': 'error',
-                'brace-style': 'off',
-                '@typescript-eslint/brace-style': 'error',
                 'comma-dangle': 'error',
                 'default-case': 'error',
                 'import/order': 'off',

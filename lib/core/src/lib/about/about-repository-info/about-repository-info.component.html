@@ -1,16 +1,22 @@
 <div>
-    <article *ngIf="licenseEntries">
-        <header>{{ 'ABOUT.LICENSE.TITLE' | translate }}</header>
-        <adf-about-license-list [data]="licenseEntries" />
+  @if (licenseEntries) {
+    <article>
+      <header>{{ 'ABOUT.LICENSE.TITLE' | translate }}</header>
+      <adf-about-license-list [data]="licenseEntries" />
     </article>
+  }
 
-    <article *ngIf="statusEntries">
-        <header>{{ 'ABOUT.STATUS.TITLE' | translate }}</header>
-        <adf-about-status-list [data]="statusEntries" />
+  @if (statusEntries) {
+    <article>
+      <header>{{ 'ABOUT.STATUS.TITLE' | translate }}</header>
+      <adf-about-status-list [data]="statusEntries" />
     </article>
+  }
 
-    <article *ngIf="data?.modules">
-        <header>{{ 'ABOUT.MODULES.TITLE' | translate }}</header>
-        <adf-about-module-list [data]="data.modules" />
+  @if (data?.modules) {
+    <article>
+      <header>{{ 'ABOUT.MODULES.TITLE' | translate }}</header>
+      <adf-about-module-list [data]="data.modules" />
     </article>
+  }
 </div>

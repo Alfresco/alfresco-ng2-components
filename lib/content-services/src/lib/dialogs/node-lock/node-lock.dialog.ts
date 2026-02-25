@@ -20,7 +20,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { differenceInSeconds } from 'date-fns';
 import { NodeBodyLock, Node, NodeEntry, NodesApi } from '@alfresco/js-api';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,16 +32,15 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 @Component({
     selector: 'adf-node-lock',
     imports: [
-        CommonModule,
-        TranslatePipe,
-        MatDialogModule,
-        ReactiveFormsModule,
-        MatCheckboxModule,
-        MatFormFieldModule,
-        MatDatetimepickerModule,
-        MatInputModule,
-        MatButtonModule
-    ],
+    TranslatePipe,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatDatetimepickerModule,
+    MatInputModule,
+    MatButtonModule
+],
     templateUrl: './node-lock.dialog.html',
     encapsulation: ViewEncapsulation.None
 })

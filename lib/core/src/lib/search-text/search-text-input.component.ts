@@ -16,7 +16,7 @@
  */
 
 import { Direction } from '@angular/cdk/bidi';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
     Component,
     DestroyRef,
@@ -50,7 +50,7 @@ import { IconModule } from '../icon/icon.module';
     styleUrls: ['./search-text-input.component.scss'],
     animations: [searchAnimation],
     encapsulation: ViewEncapsulation.None,
-    imports: [MatButtonModule, IconModule, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, SearchTriggerDirective, NgIf, NgClass],
+    imports: [MatButtonModule, IconModule, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, SearchTriggerDirective, NgClass],
     host: {
         class: 'adf-search-text-input'
     }

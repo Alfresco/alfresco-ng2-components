@@ -1,15 +1,19 @@
 <div mat-menu class="mat-mdc-menu-panel mdc-menu-surface mdc-menu-surface--open" @panelAnimation>
-    <div id="adf-context-menu-content" class="mat-mdc-menu-content">
-        <ng-container *ngFor="let link of links">
-            <button *ngIf="link.model?.visible"
-                    [attr.data-automation-id]="'context-' + (link.title || link.model?.title | translate)"
-                    mat-menu-item
-                    [disabled]="link.model?.disabled"
-                    [title]="link.model?.tooltip | translate"
-                    (click)="onMenuItemClick($event, link)">
-                <mat-icon *ngIf="link.model?.icon" [adf-icon]="link.model.icon" />
-                <span>{{ link.title || link.model?.title | translate }}</span>
-            </button>
-        </ng-container>
-    </div>
+  <div id="adf-context-menu-content" class="mat-mdc-menu-content">
+    @for (link of links; track link) {
+      @if (link.model?.visible) {
+        <button
+          [attr.data-automation-id]="'context-' + (link.title || link.model?.title | translate)"
+          mat-menu-item
+          [disabled]="link.model?.disabled"
+          [title]="link.model?.tooltip | translate"
+          (click)="onMenuItemClick($event, link)">
+          @if (link.model?.icon) {
+            <mat-icon [adf-icon]="link.model.icon" />
+          }
+          <span>{{ link.title || link.model?.title | translate }}</span>
+        </button>
+      }
+    }
+  </div>
 </div>

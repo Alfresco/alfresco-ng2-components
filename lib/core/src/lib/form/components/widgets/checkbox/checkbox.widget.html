@@ -1,24 +1,25 @@
 <div [ngClass]="field.className"
-     [class.adf-invalid]="!field.isValid && isTouched()" class="adf-checkbox-widget-container"
->
-    <mat-checkbox [id]="field.id"
-                  color="primary"
-                  class="adf-checkbox"
-                  [required]="isRequired()"
-                  [disabled]="field.readOnly || readOnly"
-                  [(ngModel)]="field.value"
-                  (ngModelChange)="onFieldChanged(field)"
-                  [title]="field.tooltip"
-                  (click)="markAsTouched()"
-                  >
-        {{ field.name | translate }}
-        <span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
-    </mat-checkbox>
-    <div class="adf-error-messages-container">
-        <error-widget [error]="field.validationSummary" />
-        <error-widget
-            *ngIf="isInvalidFieldRequired() && isTouched()"
-            required="{{ 'FORM.FIELD.REQUIRED' | translate }}"
+  [class.adf-invalid]="!field.isValid && isTouched()" class="adf-checkbox-widget-container"
+  >
+  <mat-checkbox [id]="field.id"
+    color="primary"
+    class="adf-checkbox"
+    [required]="isRequired()"
+    [disabled]="field.readOnly || readOnly"
+    [(ngModel)]="field.value"
+    (ngModelChange)="onFieldChanged(field)"
+    [title]="field.tooltip"
+    (click)="markAsTouched()"
+    >
+    {{ field.name | translate }}
+    <span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
+  </mat-checkbox>
+  <div class="adf-error-messages-container">
+    <error-widget [error]="field.validationSummary" />
+    @if (isInvalidFieldRequired() && isTouched()) {
+      <error-widget
+        required="{{ 'FORM.FIELD.REQUIRED' | translate }}"
         />
-    </div>
+    }
+  </div>
 </div>

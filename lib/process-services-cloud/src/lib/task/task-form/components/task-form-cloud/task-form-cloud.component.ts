@@ -24,13 +24,13 @@ import { DropdownCloudWidgetComponent } from '../../../../form/components/widget
 import { FormCloudDisplayModeConfiguration } from '../../../../services/form-fields.interfaces';
 import { TaskCloudService } from '../../../services/task-cloud.service';
 import { TaskDetailsCloudModel } from '../../../models/task-details-cloud.model';
-import { CommonModule } from '@angular/common';
+
 import { UserTaskCloudButtonsComponent } from '../user-task-cloud-buttons/user-task-cloud-buttons.component';
 import { FormCustomOutcomesComponent } from '../../../../form/components/form-cloud-custom-outcomes.component';
 
 @Component({
     selector: 'adf-cloud-task-form',
-    imports: [CommonModule, UserTaskCloudButtonsComponent, FormCustomOutcomesComponent, FormCloudComponent],
+    imports: [UserTaskCloudButtonsComponent, FormCustomOutcomesComponent, FormCloudComponent],
     templateUrl: './task-form-cloud.component.html',
     styleUrls: ['./task-form-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

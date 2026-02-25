@@ -21,7 +21,7 @@ import { ServiceTaskFilterCloudModel, TaskFilterAction, TaskFilterProperties } f
 import { ServiceTaskFilterCloudService } from '../../../services/service-task-filter-cloud.service';
 import { BaseEditTaskFilterCloudComponent, DropdownOption } from '../base-edit-task-filter-cloud.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
@@ -40,22 +40,21 @@ import { TaskAssignmentFilterCloudComponent } from '../../task-assignment-filter
 @Component({
     selector: 'adf-cloud-edit-service-task-filter',
     imports: [
-        CommonModule,
-        TranslatePipe,
-        MatExpansionModule,
-        MatButtonModule,
-        MatProgressSpinnerModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatInputModule,
-        MatDatepickerModule,
-        IconModule,
-        MatCheckboxModule,
-        DateRangeFilterComponent,
-        PeopleCloudComponent,
-        TaskAssignmentFilterCloudComponent
-    ],
+    TranslatePipe,
+    MatExpansionModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatDatepickerModule,
+    IconModule,
+    MatCheckboxModule,
+    DateRangeFilterComponent,
+    PeopleCloudComponent,
+    TaskAssignmentFilterCloudComponent
+],
     templateUrl: './edit-service-task-filter-cloud.component.html',
     styleUrls: ['./edit-service-task-filter-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

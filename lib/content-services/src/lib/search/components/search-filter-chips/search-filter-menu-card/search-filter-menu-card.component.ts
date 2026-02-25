@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatDividerModule } from '@angular/material/divider';
@@ -24,7 +24,7 @@ import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search-filter-menu-card',
-    imports: [CommonModule, MatButtonModule, TranslatePipe, IconModule, MatDividerModule],
+    imports: [MatButtonModule, TranslatePipe, IconModule, MatDividerModule],
     templateUrl: './search-filter-menu-card.component.html',
     styleUrls: ['./search-filter-menu-card.component.scss'],
     encapsulation: ViewEncapsulation.None

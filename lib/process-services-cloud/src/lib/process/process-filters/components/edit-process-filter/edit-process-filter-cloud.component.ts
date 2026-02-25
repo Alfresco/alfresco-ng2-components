@@ -41,7 +41,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { NgForOf, NgIf } from '@angular/common';
+
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -80,21 +80,19 @@ interface ProcessFilterFormProps {
 @Component({
     selector: 'adf-cloud-edit-process-filter',
     imports: [
-        MatProgressSpinnerModule,
-        TranslatePipe,
-        MatButtonModule,
-        NgForOf,
-        NgIf,
-        MatExpansionModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        MatDatepickerModule,
-        IconModule,
-        DateRangeFilterComponent,
-        PeopleCloudComponent
-    ],
+    MatProgressSpinnerModule,
+    TranslatePipe,
+    MatButtonModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatDatepickerModule,
+    IconModule,
+    DateRangeFilterComponent,
+    PeopleCloudComponent
+],
     templateUrl: './edit-process-filter-cloud.component.html',
     styleUrls: ['./edit-process-filter-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -19,7 +19,7 @@
 
 import { Component } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
-import { CommonModule } from '@angular/common';
+
 import { DiagramSendTaskComponent } from './diagram-send-task.component';
 import { DiagramCamelTaskComponent } from './diagram-camel-task.component';
 import { DiagramMuleTaskComponent } from './diagram-mule-task.component';
@@ -32,16 +32,15 @@ import { DiagramServiceTaskComponent } from './diagram-service-task.component';
 @Component({
     selector: 'diagram-container-service-task',
     imports: [
-        CommonModule,
-        DiagramSendTaskComponent,
-        DiagramCamelTaskComponent,
-        DiagramMuleTaskComponent,
-        DiagramAlfrescoPublishTaskComponent,
-        DiagramRestCallTaskComponent,
-        DiagramGoogleDrivePublishTaskComponent,
-        DiagramBoxPublishTaskComponent,
-        DiagramServiceTaskComponent
-    ],
+    DiagramSendTaskComponent,
+    DiagramCamelTaskComponent,
+    DiagramMuleTaskComponent,
+    DiagramAlfrescoPublishTaskComponent,
+    DiagramRestCallTaskComponent,
+    DiagramGoogleDrivePublishTaskComponent,
+    DiagramBoxPublishTaskComponent,
+    DiagramServiceTaskComponent
+],
     templateUrl: './diagram-container-service-task.component.html'
 })
 export class DiagramContainerServiceTaskComponent extends DiagramElement {}

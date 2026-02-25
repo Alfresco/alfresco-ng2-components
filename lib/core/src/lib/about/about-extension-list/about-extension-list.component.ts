@@ -17,7 +17,7 @@
 
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { ExtensionRef } from '@alfresco/adf-extensions';
-import { CommonModule } from '@angular/common';
+
 import { MatTableModule } from '@angular/material/table';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -26,7 +26,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     templateUrl: './about-extension-list.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, MatTableModule, TranslatePipe]
+    imports: [MatTableModule, TranslatePipe]
 })
 export class AboutExtensionListComponent {
     columns = [

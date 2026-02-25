@@ -50,7 +50,7 @@ import { taskPresetsDefaultModel } from '../../models/task-preset.model';
 import { TaskListService } from '../../services/tasklist.service';
 import { finalize } from 'rxjs/operators';
 import { TaskQueryRepresentation, TaskRepresentation } from '@alfresco/js-api';
-import { CommonModule } from '@angular/common';
+
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -60,14 +60,13 @@ export const PRESET_KEY = 'adf-task-list.presets';
 @Component({
     selector: 'adf-tasklist',
     imports: [
-        CommonModule,
-        MatProgressSpinnerModule,
-        EmptyContentComponent,
-        TranslatePipe,
-        DataTableComponent,
-        LoadingContentTemplateDirective,
-        NoContentTemplateDirective
-    ],
+    MatProgressSpinnerModule,
+    EmptyContentComponent,
+    TranslatePipe,
+    DataTableComponent,
+    LoadingContentTemplateDirective,
+    NoContentTemplateDirective
+],
     templateUrl: './task-list.component.html',
     styleUrls: ['./task-list.component.css']
 })

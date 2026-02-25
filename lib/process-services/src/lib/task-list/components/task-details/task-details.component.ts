@@ -48,7 +48,7 @@ import { catchError, share } from 'rxjs/operators';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation, TaskQueryRepresentation, TaskRepresentation } from '@alfresco/js-api';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { AttachFormComponent } from '../attach-form/attach-form.component';
 import { PeopleComponent, PeopleSearchComponent } from '../../../people';
@@ -63,21 +63,20 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'adf-task-details',
     imports: [
-        CommonModule,
-        TranslatePipe,
-        TaskFormComponent,
-        AttachFormComponent,
-        PeopleSearchComponent,
-        TaskHeaderComponent,
-        PeopleComponent,
-        TaskCommentsComponent,
-        ChecklistComponent,
-        MatDialogModule,
-        MatButtonModule,
-        InfoDrawerTabComponent,
-        InfoDrawerComponent,
-        MatCardModule
-    ],
+    TranslatePipe,
+    TaskFormComponent,
+    AttachFormComponent,
+    PeopleSearchComponent,
+    TaskHeaderComponent,
+    PeopleComponent,
+    TaskCommentsComponent,
+    ChecklistComponent,
+    MatDialogModule,
+    MatButtonModule,
+    InfoDrawerTabComponent,
+    InfoDrawerComponent,
+    MatCardModule
+],
     providers: [
         {
             provide: ADF_COMMENTS_SERVICE,

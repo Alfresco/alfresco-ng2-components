@@ -19,7 +19,7 @@ import { Component, EventEmitter, inject, Input, Output, ViewEncapsulation } fro
 import { CommentModel } from '../../models/comment.model';
 import { CommentsService } from '../interfaces/comments-service.interface';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
-import { CommonModule } from '@angular/common';
+
 import { MatListModule } from '@angular/material/list';
 import { MatLineModule } from '@angular/material/core';
 import { TimeAgoPipe } from '../../pipes';
@@ -27,7 +27,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-comment-list',
-    imports: [CommonModule, MatListModule, MatLineModule, TimeAgoPipe, TranslatePipe],
+    imports: [MatListModule, MatLineModule, TimeAgoPipe, TranslatePipe],
     templateUrl: './comment-list.component.html',
     styleUrls: ['./comment-list.component.scss'],
     encapsulation: ViewEncapsulation.None

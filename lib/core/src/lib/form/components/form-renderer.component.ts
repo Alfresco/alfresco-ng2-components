@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, Injector, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -51,22 +51,20 @@ import { IconModule } from '../../icon/icon.module';
         }
     ],
     imports: [
-        NgIf,
-        MatTabsModule,
-        NgForOf,
-        NgTemplateOutlet,
-        TranslatePipe,
-        MatButtonModule,
-        IconModule,
-        NgStyle,
-        FormFieldComponent,
-        FormsModule,
-        NgClass,
-        HeaderWidgetComponent,
-        FormSectionComponent,
-        RepeatWidgetComponent,
-        MatTooltipModule
-    ],
+    MatTabsModule,
+    NgTemplateOutlet,
+    TranslatePipe,
+    MatButtonModule,
+    IconModule,
+    NgStyle,
+    FormFieldComponent,
+    FormsModule,
+    NgClass,
+    HeaderWidgetComponent,
+    FormSectionComponent,
+    RepeatWidgetComponent,
+    MatTooltipModule
+],
     encapsulation: ViewEncapsulation.None
 })
 export class FormRendererComponent<T> implements OnInit, OnDestroy {

@@ -20,7 +20,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { NodeEntry, PermissionElement } from '@alfresco/js-api';
 import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
 import { MemberModel } from '../../models/member.model';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DataColumnComponent, DataColumnListComponent, DataTableComponent, DateColumnHeaderComponent, IconModule } from '@alfresco/adf-core';
@@ -32,20 +32,19 @@ import { UserRoleColumnComponent } from '../user-role-column/user-role-column.co
 @Component({
     selector: 'adf-add-permission-dialog',
     imports: [
-        CommonModule,
-        MatDialogModule,
-        MatButtonModule,
-        TranslatePipe,
-        DataTableComponent,
-        DataColumnListComponent,
-        DataColumnComponent,
-        DateColumnHeaderComponent,
-        IconModule,
-        AddPermissionPanelComponent,
-        UserIconColumnComponent,
-        UserNameColumnComponent,
-        UserRoleColumnComponent
-    ],
+    MatDialogModule,
+    MatButtonModule,
+    TranslatePipe,
+    DataTableComponent,
+    DataColumnListComponent,
+    DataColumnComponent,
+    DateColumnHeaderComponent,
+    IconModule,
+    AddPermissionPanelComponent,
+    UserIconColumnComponent,
+    UserNameColumnComponent,
+    UserRoleColumnComponent
+],
     templateUrl: './add-permission-dialog.component.html',
     styleUrls: ['./add-permission-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None

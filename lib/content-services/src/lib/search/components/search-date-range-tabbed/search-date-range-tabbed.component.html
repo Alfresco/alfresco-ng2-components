@@ -1,13 +1,13 @@
 <adf-search-filter-tabbed>
-    <ng-container *ngFor="let field of fields">
-        <adf-search-date-range
-            *adf-search-filter-tab="getTabLabel(field)"
-            [dateFormat]="settings.dateFormat"
-            [maxDate]="settings.maxDate"
-            [field]="field"
-            [initialValue]="preselectedValues[field]"
-            [onReset$]="reset$"
-            (changed)="onDateRangedValueChanged($event, field)"
-            (valid)="tabsValidity[field]=$event" />
-    </ng-container>
+  @for (field of fields; track field) {
+    <adf-search-date-range
+      *adf-search-filter-tab="getTabLabel(field)"
+      [dateFormat]="settings.dateFormat"
+      [maxDate]="settings.maxDate"
+      [field]="field"
+      [initialValue]="preselectedValues[field]"
+      [onReset$]="reset$"
+      (changed)="onDateRangedValueChanged($event, field)"
+      (valid)="tabsValidity[field]=$event" />
+  }
 </adf-search-filter-tabbed>

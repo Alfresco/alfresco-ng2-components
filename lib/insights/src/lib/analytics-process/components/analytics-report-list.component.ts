@@ -20,7 +20,7 @@ import { Observable, Observer } from 'rxjs';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import { AnalyticsService } from '../services/analytics.service';
 import { share } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
+
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
@@ -30,7 +30,7 @@ export const LAYOUT_GRID = 'GRID';
 
 @Component({
     selector: 'adf-analytics-report-list',
-    imports: [CommonModule, MatListModule, MatIconModule, MatCardModule],
+    imports: [MatListModule, MatIconModule, MatCardModule],
     templateUrl: './analytics-report-list.component.html',
     styleUrls: ['./analytics-report-list.component.scss'],
     encapsulation: ViewEncapsulation.None

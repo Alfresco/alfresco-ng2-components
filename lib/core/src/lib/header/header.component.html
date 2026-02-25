@@ -1,43 +1,47 @@
-<ng-container [ngSwitch]="variant">
-    <ng-container *ngSwitchCase="'minimal'">
-        <adf-toolbar [color]="color">
-            <adf-toolbar-title>
-                <ng-container *ngTemplateOutlet="toolbarTitleContent" />
-            </adf-toolbar-title>
-            <ng-container *ngTemplateOutlet="navbarTemplate" />
-            <div class="adf-toolbar--spacer"></div>
-            <ng-container *ngTemplateOutlet="toolbarActions" />
-        </adf-toolbar>
-    </ng-container>
 
-    <ng-container *ngSwitchCase="'extended'">
-        <adf-toolbar [color]="color">
-            <adf-toolbar-title>
-                <ng-container *ngTemplateOutlet="toolbarTitleContent" />
-            </adf-toolbar-title>
-            <ng-container *ngTemplateOutlet="toolbarActions" />
-        </adf-toolbar>
-        <adf-toolbar [color]="color">
-            <ng-container *ngTemplateOutlet="navbarTemplate" />
-        </adf-toolbar>
-    </ng-container>
-</ng-container>
+@switch (variant) {
+  @case ('minimal') {
+    <adf-toolbar [color]="color">
+      <adf-toolbar-title>
+        <ng-container *ngTemplateOutlet="toolbarTitleContent" />
+      </adf-toolbar-title>
+      <ng-container *ngTemplateOutlet="navbarTemplate" />
+      <div class="adf-toolbar--spacer"></div>
+      <ng-container *ngTemplateOutlet="toolbarActions" />
+    </adf-toolbar>
+  }
+  @case ('extended') {
+    <adf-toolbar [color]="color">
+      <adf-toolbar-title>
+        <ng-container *ngTemplateOutlet="toolbarTitleContent" />
+      </adf-toolbar-title>
+      <ng-container *ngTemplateOutlet="toolbarActions" />
+    </adf-toolbar>
+    <adf-toolbar [color]="color">
+      <ng-container *ngTemplateOutlet="navbarTemplate" />
+    </adf-toolbar>
+  }
+}
 
 <ng-template #toolbarTitleContent>
-    <img *ngIf="logoSrc" [src]="logoSrc" [alt]="logoAlt" class="adf-toolbar-logo"/>
-    <span *ngIf="variant==='extended'">{{ title }}</span>
+  @if (logoSrc) {
+    <img [src]="logoSrc" [alt]="logoAlt" class="adf-toolbar-logo"/>
+  }
+  @if (variant==='extended') {
+    <span>{{ title }}</span>
+  }
 </ng-template>
 
 <ng-template #toolbarActions>
-    <div class="adf-toolbar-actions">
-        <ng-content select="[adf-toolbar-actions]" />
-    </div>
+  <div class="adf-toolbar-actions">
+    <ng-content select="[adf-toolbar-actions]" />
+  </div>
 </ng-template>
 
 <ng-template #navbarTemplate>
-    <adf-navbar [items]="navbarItems">
-        <ng-content select="adf-navbar-item" />
-    </adf-navbar>
+  <adf-navbar [items]="navbarItems">
+    <ng-content select="adf-navbar-item" />
+  </adf-navbar>
 </ng-template>
 
 

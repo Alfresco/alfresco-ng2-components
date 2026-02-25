@@ -16,7 +16,7 @@
  */
 
 import { Pagination } from '@alfresco/js-api';
-import { NgForOf, NgIf } from '@angular/common';
+
 import {
     AfterViewInit,
     ChangeDetectorRef,
@@ -48,7 +48,7 @@ import { IconModule } from '../icon/icon.module';
     selector: 'adf-dynamic-chip-list',
     templateUrl: './dynamic-chip-list.component.html',
     styleUrls: ['./dynamic-chip-list.component.scss'],
-    imports: [MatChipsModule, TranslatePipe, NgForOf, IconModule, NgIf, MatButtonModule],
+    imports: [MatChipsModule, TranslatePipe, IconModule, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {

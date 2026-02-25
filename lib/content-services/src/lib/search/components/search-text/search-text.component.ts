@@ -21,7 +21,7 @@ import { SearchWidgetSettings } from '../../models/search-widget-settings.interf
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
@@ -32,7 +32,7 @@ import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search-text',
-    imports: [CommonModule, MatFormFieldModule, TranslatePipe, MatInputModule, MatButtonModule, FormsModule, IconModule],
+    imports: [MatFormFieldModule, TranslatePipe, MatInputModule, MatButtonModule, FormsModule, IconModule],
     templateUrl: './search-text.component.html',
     styleUrls: ['./search-text.component.scss'],
     encapsulation: ViewEncapsulation.None,

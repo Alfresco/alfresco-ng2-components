@@ -22,7 +22,7 @@ import { filter } from 'rxjs/operators';
 import { ComponentSelectionMode } from '../../../../types';
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { GroupCloudComponent } from '../../../../group/components/group-cloud.component';
 
@@ -30,7 +30,7 @@ import { GroupCloudComponent } from '../../../../group/components/group-cloud.co
 
 @Component({
     selector: 'group-cloud-widget',
-    imports: [CommonModule, TranslatePipe, ErrorWidgetComponent, GroupCloudComponent],
+    imports: [TranslatePipe, ErrorWidgetComponent, GroupCloudComponent],
     templateUrl: './group-cloud.widget.html',
     host: {
         '(click)': 'event($event)',

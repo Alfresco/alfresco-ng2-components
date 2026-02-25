@@ -1,40 +1,43 @@
 <div class="adf-textfield adf-number-widget {{ field.className }}"
-     [class.adf-invalid]="!field.isValid && isTouched()"
-     [class.adf-readonly]="field.readOnly"
-     [class.adf-left-label-input-container]="field.leftLabels">
-    <div *ngIf="field.leftLabels">
-        <label class="adf-label adf-left-label"
-               [attr.for]="field.id">
-            {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
-        </label>
+  [class.adf-invalid]="!field.isValid && isTouched()"
+  [class.adf-readonly]="field.readOnly"
+  [class.adf-left-label-input-container]="field.leftLabels">
+  @if (field.leftLabels) {
+    <div>
+      <label class="adf-label adf-left-label"
+        [attr.for]="field.id">
+        {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
+      </label>
     </div>
-    <div class="adf-number-widget-container">
-        <mat-form-field class="adf-form-field-input" [floatLabel]="field.placeholder ? 'always' : null">
-            @if( (field.name || this.field?.required) && !field.leftLabels) {
-            <mat-label class="adf-label" [attr.for]="field.id">
-                {{ field.name | translate }}
-            </mat-label>
-            }
-            <input matInput
-                   class="adf-input"
-                   type="text"
-                   pattern="-?[0-9]*(\.[0-9]+)?"
-                   [id]="field.id"
-                   [required]="field.required"
-                   [value]="displayValue"
-                   [(ngModel)]="field.value"
-                   (ngModelChange)="onNumberChange($event)"
-                   [disabled]="field.readOnly"
-                   [placeholder]="field.placeholder"
-                   [title]="field.tooltip"
-                   (blur)="markAsTouched()">
-        </mat-form-field>
-        <div class="adf-error-messages-container">
-            <error-widget [error]="field.validationSummary" />
-            <error-widget
-                *ngIf="isInvalidFieldRequired() && isTouched()"
-                required="{{ 'FORM.FIELD.REQUIRED' | translate }}"
-            />
-        </div>
+  }
+  <div class="adf-number-widget-container">
+    <mat-form-field class="adf-form-field-input" [floatLabel]="field.placeholder ? 'always' : null">
+      @if( (field.name || this.field?.required) && !field.leftLabels) {
+        <mat-label class="adf-label" [attr.for]="field.id">
+          {{ field.name | translate }}
+        </mat-label>
+      }
+      <input matInput
+        class="adf-input"
+        type="text"
+        pattern="-?[0-9]*(\.[0-9]+)?"
+        [id]="field.id"
+        [required]="field.required"
+        [value]="displayValue"
+        [(ngModel)]="field.value"
+        (ngModelChange)="onNumberChange($event)"
+        [disabled]="field.readOnly"
+        [placeholder]="field.placeholder"
+        [title]="field.tooltip"
+        (blur)="markAsTouched()">
+    </mat-form-field>
+    <div class="adf-error-messages-container">
+      <error-widget [error]="field.validationSummary" />
+      @if (isInvalidFieldRequired() && isTouched()) {
+        <error-widget
+          required="{{ 'FORM.FIELD.REQUIRED' | translate }}"
+          />
+      }
     </div>
+  </div>
 </div>

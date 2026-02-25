@@ -31,7 +31,7 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
@@ -65,18 +65,17 @@ const DEFAULT_TAGS_SORTING = {
 @Component({
     selector: 'adf-tags-creator',
     imports: [
-        CommonModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        AutoFocusDirective,
-        TranslatePipe,
-        MatChipsModule,
-        MatButtonModule,
-        MatIconModule,
-        MatListModule,
-        MatProgressSpinnerModule,
-        DynamicChipListComponent
-    ],
+    MatInputModule,
+    ReactiveFormsModule,
+    AutoFocusDirective,
+    TranslatePipe,
+    MatChipsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule,
+    MatProgressSpinnerModule,
+    DynamicChipListComponent
+],
     templateUrl: './tags-creator.component.html',
     styleUrls: ['./tags-creator.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -20,7 +20,7 @@ import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cd
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { TabbedFacetField } from '../../../models/tabbed-facet-field.interface';
 import { Subject } from 'rxjs';
-import { CommonModule } from '@angular/common';
+
 import { MatChipsModule } from '@angular/material/chips';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SearchFacetTabbedContentComponent } from './search-facet-tabbed-content.component';
@@ -31,15 +31,14 @@ import { IconModule } from '@alfresco/adf-core';
 @Component({
     selector: 'adf-search-facet-chip-tabbed',
     imports: [
-        CommonModule,
-        MatChipsModule,
-        MatMenuModule,
-        TranslatePipe,
-        IconModule,
-        SearchFacetTabbedContentComponent,
-        MatButtonModule,
-        SearchFilterMenuCardComponent
-    ],
+    MatChipsModule,
+    MatMenuModule,
+    TranslatePipe,
+    IconModule,
+    SearchFacetTabbedContentComponent,
+    MatButtonModule,
+    SearchFilterMenuCardComponent
+],
     templateUrl: './search-facet-chip-tabbed.component.html',
     styleUrls: ['./search-facet-chip-tabbed.component.scss'],
     encapsulation: ViewEncapsulation.None

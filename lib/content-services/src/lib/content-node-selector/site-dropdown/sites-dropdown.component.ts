@@ -22,7 +22,7 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SitesService } from '../../common/services/sites.service';
-import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 /* eslint-disable no-shadow */
@@ -37,7 +37,7 @@ export type Relations = (typeof Relations)[keyof typeof Relations];
 
 @Component({
     selector: 'adf-sites-dropdown',
-    imports: [CommonModule, TranslatePipe, MatFormFieldModule, MatSelectModule, InfiniteSelectScrollDirective],
+    imports: [TranslatePipe, MatFormFieldModule, MatSelectModule, InfiniteSelectScrollDirective],
     templateUrl: './sites-dropdown.component.html',
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-sites-dropdown' }

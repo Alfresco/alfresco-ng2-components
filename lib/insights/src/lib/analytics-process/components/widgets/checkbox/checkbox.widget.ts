@@ -20,13 +20,13 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
 import { WidgetComponent } from '../widget.component';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
     selector: 'analytics-checkbox-widget',
-    imports: [CommonModule, TranslatePipe, ReactiveFormsModule, MatCheckboxModule],
+    imports: [TranslatePipe, ReactiveFormsModule, MatCheckboxModule],
     templateUrl: './checkbox.widget.html',
     host: {
         '(click)': 'event($event)'

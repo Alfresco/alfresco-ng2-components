@@ -39,23 +39,22 @@ import {
     inject
 } from '@angular/core';
 import { ProcessContentService } from '../../form/services/process-content.service';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'adf-process-attachment-list',
     imports: [
-        CommonModule,
-        TranslatePipe,
-        MatProgressSpinnerModule,
-        DataTableComponent,
-        NoContentTemplateDirective,
-        EmptyListComponent,
-        DataColumnListComponent,
-        DataColumnComponent,
-        LoadingContentTemplateDirective
-    ],
+    TranslatePipe,
+    MatProgressSpinnerModule,
+    DataTableComponent,
+    NoContentTemplateDirective,
+    EmptyListComponent,
+    DataColumnListComponent,
+    DataColumnComponent,
+    LoadingContentTemplateDirective
+],
     styleUrls: ['./process-attachment-list.component.scss'],
     templateUrl: './process-attachment-list.component.html',
     encapsulation: ViewEncapsulation.None

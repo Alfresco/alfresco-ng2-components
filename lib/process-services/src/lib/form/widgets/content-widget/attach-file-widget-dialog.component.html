@@ -1,40 +1,51 @@
 <header
-    mat-dialog-title
-    data-automation-id="content-node-selector-title">
-    <span *ngIf="isLoggedIn(); else loginTitle">{{title}}</span>
-    <ng-template #loginTitle>{{data.title}}</ng-template>
+  mat-dialog-title
+  data-automation-id="content-node-selector-title">
+  @if (isLoggedIn()) {
+    <span>{{title}}</span>
+  } @else {
+    {{data.title}}
+  }
 </header>
 
 <mat-dialog-content class="adf-login-dialog-content">
-    <adf-login-dialog-panel id="attach-file-login-panel" #adfLoginPanel *ngIf="!isLoggedIn()" />
-    <adf-content-node-selector-panel *ngIf="isLoggedIn()"
-                                     id="attach-file-content-node"
-                                     [currentFolderId]="data?.currentFolderId"
-                                     [isSelectionValid]="data?.isSelectionValid"
-                                     [showFilesInResult]="data?.showFilesInResult"
-                                     (select)="onSelect($event)"
-                                     (siteChange)="onSiteChange($event)" />
+  @if (!isLoggedIn()) {
+    <adf-login-dialog-panel id="attach-file-login-panel" #adfLoginPanel />
+  }
+  @if (isLoggedIn()) {
+    <adf-content-node-selector-panel
+      id="attach-file-content-node"
+      [currentFolderId]="data?.currentFolderId"
+      [isSelectionValid]="data?.isSelectionValid"
+      [showFilesInResult]="data?.showFilesInResult"
+      (select)="onSelect($event)"
+      (siteChange)="onSiteChange($event)" />
+  }
 </mat-dialog-content>
 
 <mat-dialog-actions class="adf-login-dialog-actions" align="end">
+  <button
+    mat-button
+    (click)="close()"
+    data-automation-id="attach-file-dialog-actions-cancel">{{ 'ATTACH-FILE.ACTIONS.CANCEL' | translate }}
+  </button>
+
+  @if (!isLoggedIn()) {
     <button
-        mat-button
-        (click)="close()"
-        data-automation-id="attach-file-dialog-actions-cancel">{{ 'ATTACH-FILE.ACTIONS.CANCEL' | translate }}
+      mat-button
+      (click)="performLogin()"
+      data-automation-id="attach-file-dialog-actions-login">{{ 'ATTACH-FILE.ACTIONS.LOGIN' | translate }}
     </button>
+  }
 
-    <button *ngIf="!isLoggedIn()"
-        mat-button
-        (click)="performLogin()"
-        data-automation-id="attach-file-dialog-actions-login">{{ 'ATTACH-FILE.ACTIONS.LOGIN' | translate }}
+  @if (isLoggedIn()) {
+    <button
+      mat-button
+      [disabled]="!hasNodeSelected()"
+      class="adf-choose-action"
+      (click)="onClick()"
+      data-automation-id="attach-file-dialog-actions-choose">{{ buttonActionName | translate }}
     </button>
-
-    <button *ngIf="isLoggedIn()"
-        mat-button
-        [disabled]="!hasNodeSelected()"
-        class="adf-choose-action"
-        (click)="onClick()"
-        data-automation-id="attach-file-dialog-actions-choose">{{ buttonActionName | translate }}
-    </button>
+  }
 
 </mat-dialog-actions>

@@ -1,74 +1,79 @@
 <h2 data-automation-id="adf-folder-dialog-title" class="adf-folder-dialog-title" mat-dialog-title>
-    {{ (editing ? editTitle : createTitle) | translate }}
+  {{ (editing ? editTitle : createTitle) | translate }}
 </h2>
 
 <mat-dialog-content class="adf-folder-dialog-content">
-    <form [formGroup]="form" (submit)="submit()">
-        <mat-form-field class="adf-full-width adf-folder-dialog-form-field">
-            <mat-label>{{ 'CORE.FOLDER_DIALOG.FOLDER_NAME.LABEL' | translate }}</mat-label>
-            <input
-                id="adf-folder-name-input"
-                [attr.aria-label]="'CORE.FOLDER_DIALOG.FOLDER_NAME.LABEL' | translate"
-                matInput
-                required
-                [formControlName]="'name'"
-                adf-auto-focus
-            />
+  <form [formGroup]="form" (submit)="submit()">
+    <mat-form-field class="adf-full-width adf-folder-dialog-form-field">
+      <mat-label>{{ 'CORE.FOLDER_DIALOG.FOLDER_NAME.LABEL' | translate }}</mat-label>
+      <input
+        id="adf-folder-name-input"
+        [attr.aria-label]="'CORE.FOLDER_DIALOG.FOLDER_NAME.LABEL' | translate"
+        matInput
+        required
+        [formControlName]="'name'"
+        adf-auto-focus
+        />
 
-            <mat-hint *ngIf="form.controls['name'].dirty">
-                <span *ngIf="form.controls['name'].errors?.required">
-                    {{ 'CORE.FOLDER_DIALOG.FOLDER_NAME.ERRORS.REQUIRED' | translate }}
-                </span>
+      @if (form.controls['name'].dirty) {
+        <mat-hint>
+          @if (form.controls['name'].errors?.required) {
+            <span>
+              {{ 'CORE.FOLDER_DIALOG.FOLDER_NAME.ERRORS.REQUIRED' | translate }}
+            </span>
+          }
+          @if (!form.controls['name'].errors?.required && form.controls['name'].errors?.message) {
+            <span>
+              {{ form.controls['name'].errors?.message | translate }}
+            </span>
+          }
+        </mat-hint>
+      }
+    </mat-form-field>
 
-                <span *ngIf="!form.controls['name'].errors?.required && form.controls['name'].errors?.message">
-                    {{ form.controls['name'].errors?.message | translate }}
-                </span>
-            </mat-hint>
-        </mat-form-field>
+    <mat-form-field class="adf-full-width adf-folder-dialog-form-field">
+      <mat-label>{{ 'CORE.FOLDER_DIALOG.FOLDER_TITLE.LABEL' | translate }}</mat-label>
+      <input
+        id="adf-folder-title-input"
+        matInput
+        [attr.aria-label]="'CORE.FOLDER_DIALOG.FOLDER_TITLE.LABEL' | translate"
+        [formControlName]="'title'"
+        />
+    </mat-form-field>
 
-        <mat-form-field class="adf-full-width adf-folder-dialog-form-field">
-            <mat-label>{{ 'CORE.FOLDER_DIALOG.FOLDER_TITLE.LABEL' | translate }}</mat-label>
-            <input
-                id="adf-folder-title-input"
-                matInput
-                [attr.aria-label]="'CORE.FOLDER_DIALOG.FOLDER_TITLE.LABEL' | translate"
-                [formControlName]="'title'"
-            />
-        </mat-form-field>
-
-        <mat-form-field class="adf-full-width adf-folder-dialog-form-field">
-            <mat-label>{{ 'CORE.FOLDER_DIALOG.FOLDER_DESCRIPTION.LABEL' | translate }}</mat-label>
-            <textarea
-                id="adf-folder-description-input"
-                matInput
-                [attr.aria-label]="'CORE.FOLDER_DIALOG.FOLDER_DESCRIPTION.LABEL' | translate"
-                rows="4"
-                [formControlName]="'description'">
-            </textarea>
-        </mat-form-field>
-    </form>
+    <mat-form-field class="adf-full-width adf-folder-dialog-form-field">
+      <mat-label>{{ 'CORE.FOLDER_DIALOG.FOLDER_DESCRIPTION.LABEL' | translate }}</mat-label>
+      <textarea
+        id="adf-folder-description-input"
+        matInput
+        [attr.aria-label]="'CORE.FOLDER_DIALOG.FOLDER_DESCRIPTION.LABEL' | translate"
+        rows="4"
+        [formControlName]="'description'">
+      </textarea>
+    </mat-form-field>
+  </form>
 </mat-dialog-content>
 
 <mat-dialog-actions class="adf-dialog-buttons">
-    <span class="adf-fill-remaining-space"></span>
+  <span class="adf-fill-remaining-space"></span>
 
-    <button
-        mat-button
-        id="adf-folder-cancel-button"
-        mat-dialog-close>
-        {{ 'CORE.FOLDER_DIALOG.CANCEL_BUTTON.LABEL' | translate }}
-    </button>
+  <button
+    mat-button
+    id="adf-folder-cancel-button"
+    mat-dialog-close>
+    {{ 'CORE.FOLDER_DIALOG.CANCEL_BUTTON.LABEL' | translate }}
+  </button>
 
-    <button class="adf-dialog-action-button"
-            id="adf-folder-create-button"
-            mat-button
-            (click)="submit()"
-            [disabled]="!form.valid || disableSubmitButton">
-        {{
-        (editing
-        ? 'CORE.FOLDER_DIALOG.UPDATE_BUTTON.LABEL'
-        : 'CORE.FOLDER_DIALOG.CREATE_BUTTON.LABEL'
-        ) | translate
-        }}
-    </button>
+  <button class="adf-dialog-action-button"
+    id="adf-folder-create-button"
+    mat-button
+    (click)="submit()"
+    [disabled]="!form.valid || disableSubmitButton">
+    {{
+    (editing
+    ? 'CORE.FOLDER_DIALOG.UPDATE_BUTTON.LABEL'
+    : 'CORE.FOLDER_DIALOG.CREATE_BUTTON.LABEL'
+    ) | translate
+    }}
+  </button>
 </mat-dialog-actions>

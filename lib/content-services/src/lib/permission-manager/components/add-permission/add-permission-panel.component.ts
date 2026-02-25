@@ -24,7 +24,7 @@ import { debounceTime } from 'rxjs/operators';
 import { SearchPermissionConfigurationService } from './search-config-permission.service';
 import { SearchComponent } from '../../../search/components/search.component';
 import { MatListModule, MatSelectionList } from '@angular/material/list';
-import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -35,17 +35,16 @@ import { IconModule } from '@alfresco/adf-core';
 @Component({
     selector: 'adf-add-permission-panel',
     imports: [
-        CommonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        TranslatePipe,
-        ReactiveFormsModule,
-        IconModule,
-        MatListModule,
-        UserIconColumnComponent,
-        SearchComponent,
-        MatIconButton
-    ],
+    MatFormFieldModule,
+    MatInputModule,
+    TranslatePipe,
+    ReactiveFormsModule,
+    IconModule,
+    MatListModule,
+    UserIconColumnComponent,
+    SearchComponent,
+    MatIconButton
+],
     templateUrl: './add-permission-panel.component.html',
     styleUrls: ['./add-permission-panel.component.scss'],
     encapsulation: ViewEncapsulation.None,

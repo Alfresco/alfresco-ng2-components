@@ -19,7 +19,7 @@ import { Component, ViewChild } from '@angular/core';
 import { SearchComponent } from '../search/components/search.component';
 import { SearchRequest, ResultSetPaging, ResultSetRowEntry, ContentInfo, UserInfo, ResultNode } from '@alfresco/js-api';
 import { SearchModule } from '../search';
-import { CommonModule } from '@angular/common';
+
 
 const entryItem = new ResultSetRowEntry({
     entry: new ResultNode({
@@ -82,31 +82,32 @@ export const noResult = {
 @Component({
     template: `
         <adf-search
-            [searchTerm]="searchedWord"
-            [maxResults]="maxResults"
-            (error)="showSearchResult('ERROR')"
-            (success)="showSearchResult('success')"
-            #search
-        >
-            <ng-template let-data>
-                <ul id="autocomplete-search-result-list">
-                    <li
-                        *ngFor="let item of data?.list?.entries; let idx = index"
-                        (click)="elementClicked()"
-                        tabindex="0"
-                        role="button"
-                        (keyup.enter)="elementClicked()"
-                    >
-                        <div id="result_option_{{ idx }}">
-                            <span>{{ item?.entry.name }}</span>
-                        </div>
-                    </li>
-                </ul>
-            </ng-template>
+          [searchTerm]="searchedWord"
+          [maxResults]="maxResults"
+          (error)="showSearchResult('ERROR')"
+          (success)="showSearchResult('success')"
+          #search
+          >
+          <ng-template let-data>
+            <ul id="autocomplete-search-result-list">
+              @for (item of data?.list?.entries; track item; let idx = $index) {
+                <li
+                  (click)="elementClicked()"
+                  tabindex="0"
+                  role="button"
+                  (keyup.enter)="elementClicked()"
+                  >
+                  <div id="result_option_{{ idx }}">
+                    <span>{{ item?.entry.name }}</span>
+                  </div>
+                </li>
+              }
+            </ul>
+          </ng-template>
         </adf-search>
         <span id="component-result-message">{{ message }}</span>
-    `,
-    imports: [SearchModule, CommonModule]
+        `,
+    imports: [SearchModule]
 })
 export class SimpleSearchTestComponent {
     @ViewChild('search', { static: true })

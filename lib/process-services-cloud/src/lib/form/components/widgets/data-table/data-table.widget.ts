@@ -27,7 +27,7 @@ import {
     NoContentTemplateDirective,
     EmptyContentComponent
 } from '@alfresco/adf-core';
-import { NgIf } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
@@ -36,7 +36,7 @@ import { DataTablePathParserHelper } from './helpers/data-table-path-parser.help
 
 @Component({
     standalone: true,
-    imports: [NgIf, TranslatePipe, FormBaseModule, DataTableComponent, NoContentTemplateDirective, EmptyContentComponent],
+    imports: [TranslatePipe, FormBaseModule, DataTableComponent, NoContentTemplateDirective, EmptyContentComponent],
     selector: 'data-table',
     templateUrl: './data-table.widget.html',
     styleUrls: ['./data-table.widget.scss'],

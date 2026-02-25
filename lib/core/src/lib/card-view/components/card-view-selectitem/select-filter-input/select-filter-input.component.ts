@@ -17,7 +17,7 @@
 
 import { Component, DestroyRef, ElementRef, EventEmitter, inject, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
-import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
@@ -28,7 +28,7 @@ import { IconModule } from '../../../../icon/icon.module';
 
 @Component({
     selector: 'adf-select-filter-input',
-    imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, IconModule, TranslatePipe],
+    imports: [MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, IconModule, TranslatePipe],
     templateUrl: './select-filter-input.component.html',
     styleUrls: ['./select-filter-input.component.scss'],
     host: { class: 'adf-select-filter-input' },

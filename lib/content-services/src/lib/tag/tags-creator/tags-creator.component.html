@@ -1,63 +1,78 @@
 <div class="adf-tags-creation">
-    @if (tagNameControlVisible) {
-        <mat-form-field class="adf-tag-name-field">
-            <mat-label>{{ 'TAG.TAGS_CREATOR.TAG_SEARCH_PLACEHOLDER' | translate }}</mat-label>
-            <input
-                matInput
-                #tagNameInput
-                autocomplete="off"
-                [formControl]="tagNameControl"
-                (keyup.enter)="addTag()"
-                adf-auto-focus
-            />
-            <mat-error 
-                *ngIf="tagNameControl.invalid && tagNameControl.touched"
-                data-automation-id="tags-error-message">
-                {{ tagNameErrorMessageKey | translate }}
-            </mat-error>
-        </mat-form-field>
-    }
-    <p class="adf-no-tags-message" *ngIf="showEmptyTagMessage">
-        {{ 'TAG.TAGS_CREATOR.NO_TAGS_CREATED' | translate }}
+  @if (tagNameControlVisible) {
+    <mat-form-field class="adf-tag-name-field">
+      <mat-label>{{ 'TAG.TAGS_CREATOR.TAG_SEARCH_PLACEHOLDER' | translate }}</mat-label>
+      <input
+        matInput
+        #tagNameInput
+        autocomplete="off"
+        [formControl]="tagNameControl"
+        (keyup.enter)="addTag()"
+        adf-auto-focus
+        />
+      @if (tagNameControl.invalid && tagNameControl.touched) {
+        <mat-error
+          data-automation-id="tags-error-message">
+          {{ tagNameErrorMessageKey | translate }}
+        </mat-error>
+      }
+    </mat-form-field>
+  }
+  @if (showEmptyTagMessage) {
+    <p class="adf-no-tags-message">
+      {{ 'TAG.TAGS_CREATOR.NO_TAGS_CREATED' | translate }}
     </p>
-    <div class="adf-tags-list" [class.adf-tags-list-fixed]="!tagNameControlVisible" #tagsList>
-        <ng-container *ngIf="tags?.length > 0">
-            <adf-dynamic-chip-list
-                class="adf-tags-chips-container"
-                [chips]="tagsToDisplay"
-                [disableDelete]="disabledTagsRemoving"
-                (removedChip)="removeTag($event)" />
-        </ng-container>
-    </div>
+  }
+  <div class="adf-tags-list" [class.adf-tags-list-fixed]="!tagNameControlVisible" #tagsList>
+    @if (tags?.length > 0) {
+      <adf-dynamic-chip-list
+        class="adf-tags-chips-container"
+        [chips]="tagsToDisplay"
+        [disableDelete]="disabledTagsRemoving"
+        (removedChip)="removeTag($event)" />
+    }
+  </div>
 </div>
-<div class="adf-existing-tags-panel" *ngIf="existingTagsPanelVisible">
-    <span
-        *ngIf="!spinnerVisible || existingTags"
+@if (existingTagsPanelVisible) {
+  <div class="adf-existing-tags-panel">
+    @if (!spinnerVisible || existingTags) {
+      <span
         class="adf-create-tag-label"
         (click)="addTag()"
         role="button"
         tabindex="0"
         (keyup.enter)="addTag()"
         [hidden]="!tagNameControl.value || tagNameControl.invalid || typing"
-    >
+        >
         {{ 'TAG.TAGS_CREATOR.CREATE_TAG' | translate : { tag: tagNameControl.value } }}
-    </span>
-    <p *ngIf="!spinnerVisible && existingTags" class="adf-existing-tags-label">
+      </span>
+    }
+    @if (!spinnerVisible && existingTags) {
+      <p class="adf-existing-tags-label">
         {{ (isOnlyCreateMode() ? 'TAG.TAGS_CREATOR.EXISTING_TAGS' : 'TAG.TAGS_CREATOR.EXISTING_TAGS_SELECTION') | translate }}
-    </p>
+      </p>
+    }
     <div class="adf-tags-list">
-        <mat-list *ngIf="!spinnerVisible && existingTags" [disabled]="isOnlyCreateMode()">
-            <mat-list-item *ngFor="let tagRow of existingTags" class="adf-tag"
-                           (click)="addExistingTagToTagsToAssign(tagRow)">
-                {{ tagRow.entry.tag }}
+      @if (!spinnerVisible && existingTags) {
+        <mat-list [disabled]="isOnlyCreateMode()">
+          @for (tagRow of existingTags; track tagRow) {
+            <mat-list-item class="adf-tag"
+              (click)="addExistingTagToTagsToAssign(tagRow)">
+              {{ tagRow.entry.tag }}
             </mat-list-item>
-            <p *ngIf="!existingTags?.length">{{ 'TAG.TAGS_CREATOR.NO_EXISTING_TAGS' | translate }}</p>
+          }
+          @if (!existingTags?.length) {
+            <p>{{ 'TAG.TAGS_CREATOR.NO_EXISTING_TAGS' | translate }}</p>
+          }
         </mat-list>
+      }
+      @if (spinnerVisible) {
         <mat-spinner
-            *ngIf="spinnerVisible"
-            class="adf-tags-creator-spinner"
-            [diameter]="50"
-            [attr.aria-label]="'TAG.TAGS_CREATOR.TAGS_LOADING' | translate"
-        />
+          class="adf-tags-creator-spinner"
+          [diameter]="50"
+          [attr.aria-label]="'TAG.TAGS_CREATOR.TAGS_LOADING' | translate"
+          />
+      }
     </div>
-</div>
+  </div>
+}

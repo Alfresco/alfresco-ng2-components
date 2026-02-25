@@ -1,77 +1,91 @@
 <div class="adf-categories-management">
-    @if (categoryNameControlVisible) {
-        <mat-form-field class="adf-category-name-field">
-            <mat-label>{{ 'CATEGORIES_MANAGEMENT.CATEGORIES_SEARCH_PLACEHOLDER' | translate }}</mat-label>
-            <input
-                matInput
-                #categoryNameInput
-                autocomplete="off"
-                [formControl]="categoryNameControl"
-                (keyup.enter)="addCategory()"
-                adf-auto-focus
-            />
-            <mat-error 
-                *ngIf="categoryNameControl.invalid && categoryNameControl.touched"
-                data-automation-id="categories-error-message">
-                {{ categoryNameErrorMessageKey | translate }}
-            </mat-error>
-        </mat-form-field>
-    }
-    <div class="adf-categories-list" *ngIf="categories?.length > 0" [class.adf-categories-list-fixed]="!categoryNameControlVisible">
+  @if (categoryNameControlVisible) {
+    <mat-form-field class="adf-category-name-field">
+      <mat-label>{{ 'CATEGORIES_MANAGEMENT.CATEGORIES_SEARCH_PLACEHOLDER' | translate }}</mat-label>
+      <input
+        matInput
+        #categoryNameInput
+        autocomplete="off"
+        [formControl]="categoryNameControl"
+        (keyup.enter)="addCategory()"
+        adf-auto-focus
+        />
+      @if (categoryNameControl.invalid && categoryNameControl.touched) {
+        <mat-error
+          data-automation-id="categories-error-message">
+          {{ categoryNameErrorMessageKey | translate }}
+        </mat-error>
+      }
+    </mat-form-field>
+  }
+  @if (categories?.length > 0) {
+    <div class="adf-categories-list" [class.adf-categories-list-fixed]="!categoryNameControlVisible">
+      @for (category of categories; track category) {
         <span
-            *ngFor="let category of categories"
-            [class.adf-categories-padded]="!isCRUDMode"
-            class="adf-assigned-categories">
-            {{ category.name }}
-            <button
-                data-automation-id="categories-remove-category-button"
-                mat-icon-button
-                (click)="removeCategory(category)"
-                [attr.title]="removeCategoryTitle | translate"
-                [disabled]="disableRemoval">
-                <mat-icon adf-icon="remove" />
-            </button>
+          [class.adf-categories-padded]="!isCRUDMode"
+          class="adf-assigned-categories">
+          {{ category.name }}
+          <button
+            data-automation-id="categories-remove-category-button"
+            mat-icon-button
+            (click)="removeCategory(category)"
+            [attr.title]="removeCategoryTitle | translate"
+            [disabled]="disableRemoval">
+            <mat-icon adf-icon="remove" />
+          </button>
         </span>
+      }
     </div>
-    <p *ngIf="showEmptyCategoryMessage" class="adf-no-categories-message">
-        {{ noCategoriesMsg | translate }}
+  }
+  @if (showEmptyCategoryMessage) {
+    <p class="adf-no-categories-message">
+      {{ noCategoriesMsg | translate }}
     </p>
+  }
 </div>
-<div class="adf-existing-categories-panel" *ngIf="existingCategoriesPanelVisible">
-    <ng-container *ngIf="isCRUDMode && (!existingCategoriesLoading || existingCategories)">
-        <span class="adf-create-category-label"
-            (click)="addCategory()"
-            tabindex="0"
-            role="button"
-            (keyup.enter)="addCategory()"
-            [hidden]="categoryNameControl.invalid || typing">
-            {{ 'CATEGORIES_MANAGEMENT.GENERIC_CREATE' | translate : { name: categoryNameControl.value } }}
-        </span>
-    </ng-container>
-    <div *ngIf="categoryNameControlVisible" class="adf-categories-list">
-        <ng-container *ngIf="!existingCategoriesLoading && existingCategories">
-            <p class="adf-existing-categories-label">
-                {{ existingCategoriesMsg | translate }}
-            </p>
-            <mat-list
-                [disabled]="isCRUDMode || !multiSelect && categories.length > 0"
-                class="adf-categories-management-list">
-                <mat-list-item
-                    *ngFor="let category of existingCategories"
-                    class="adf-category"
-                    (click)='addCategoryToAssign(category)'>
-                        {{ category.name }}
-                </mat-list-item>
-                <p *ngIf="!existingCategories?.length && !existingCategoriesLoading"
-                   data-automation-id="no-categories-message">
-                    {{ 'CATEGORIES_MANAGEMENT.NO_EXISTING_CATEGORIES' | translate }}
-                </p>
-            </mat-list>
-        </ng-container>
-        <mat-spinner
-            *ngIf="existingCategoriesLoading"
+@if (existingCategoriesPanelVisible) {
+  <div class="adf-existing-categories-panel">
+    @if (isCRUDMode && (!existingCategoriesLoading || existingCategories)) {
+      <span class="adf-create-category-label"
+        (click)="addCategory()"
+        tabindex="0"
+        role="button"
+        (keyup.enter)="addCategory()"
+        [hidden]="categoryNameControl.invalid || typing">
+        {{ 'CATEGORIES_MANAGEMENT.GENERIC_CREATE' | translate : { name: categoryNameControl.value } }}
+      </span>
+    }
+    @if (categoryNameControlVisible) {
+      <div class="adf-categories-list">
+        @if (!existingCategoriesLoading && existingCategories) {
+          <p class="adf-existing-categories-label">
+            {{ existingCategoriesMsg | translate }}
+          </p>
+          <mat-list
+            [disabled]="isCRUDMode || !multiSelect && categories.length > 0"
+            class="adf-categories-management-list">
+            @for (category of existingCategories; track category) {
+              <mat-list-item
+                class="adf-category"
+                (click)='addCategoryToAssign(category)'>
+                {{ category.name }}
+              </mat-list-item>
+            }
+            @if (!existingCategories?.length && !existingCategoriesLoading) {
+              <p
+                data-automation-id="no-categories-message">
+                {{ 'CATEGORIES_MANAGEMENT.NO_EXISTING_CATEGORIES' | translate }}
+              </p>
+            }
+          </mat-list>
+        }
+        @if (existingCategoriesLoading) {
+          <mat-spinner
             [diameter]="50"
             class="adf-categories-management-spinner"
             [attr.aria-label]="'CATEGORIES_MANAGEMENT.LOADING' | translate" />
-    </div>
-</div>
+        }
+      </div>
+    }
+  </div>
+}

@@ -36,13 +36,13 @@ import {
 import { TaskDetailsCloudModel } from '../../models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CommonModule } from '@angular/common';
+
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'adf-cloud-task-header',
-    imports: [CommonModule, MatProgressSpinnerModule, CardViewComponent, MatCardModule],
+    imports: [MatProgressSpinnerModule, CardViewComponent, MatCardModule],
     templateUrl: './task-header-cloud.component.html',
     styleUrls: ['./task-header-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

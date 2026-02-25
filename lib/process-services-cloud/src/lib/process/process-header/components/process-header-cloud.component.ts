@@ -29,11 +29,11 @@ import { ProcessInstanceCloud } from '../../start-process/models/process-instanc
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatCardModule } from '@angular/material/card';
-import { NgIf } from '@angular/common';
+
 
 @Component({
     selector: 'adf-cloud-process-header',
-    imports: [CardViewComponent, MatCardModule, NgIf],
+    imports: [CardViewComponent, MatCardModule],
     templateUrl: './process-header-cloud.component.html',
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['./process-header-cloud.component.scss'],

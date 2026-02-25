@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
-import { NgIf } from '@angular/common';
+
 import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -42,7 +42,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent],
+    imports: [TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent],
     providers: [DecimalNumberPipe],
     encapsulation: ViewEncapsulation.None
 })

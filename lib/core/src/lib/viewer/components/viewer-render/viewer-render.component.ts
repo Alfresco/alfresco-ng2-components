@@ -16,7 +16,7 @@
  */
 
 import { AppExtensionService, ExtensionsModule, ViewerExtensionRef, PreviewExtensionComponent } from '@alfresco/adf-extensions';
-import { NgForOf, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
     Component,
     EventEmitter,
@@ -48,18 +48,17 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
     host: { class: 'adf-viewer-render' },
     encapsulation: ViewEncapsulation.None,
     imports: [
-        TranslatePipe,
-        MatProgressSpinnerModule,
-        PdfViewerComponent,
-        ImgViewerComponent,
-        MediaPlayerComponent,
-        TxtViewerComponent,
-        NgTemplateOutlet,
-        UnknownFormatComponent,
-        ExtensionsModule,
-        NgForOf,
-        PreviewExtensionComponent
-    ],
+    TranslatePipe,
+    MatProgressSpinnerModule,
+    PdfViewerComponent,
+    ImgViewerComponent,
+    MediaPlayerComponent,
+    TxtViewerComponent,
+    NgTemplateOutlet,
+    UnknownFormatComponent,
+    ExtensionsModule,
+    PreviewExtensionComponent
+],
     providers: [ViewUtilService]
 })
 export class ViewerRenderComponent implements OnChanges, OnInit {

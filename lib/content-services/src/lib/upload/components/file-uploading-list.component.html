@@ -1,6 +1,7 @@
 <div class="upload-list">
+  @for ( of files; track ) {
     <ng-template
-        ngFor
-        [ngForOf]="files"
-        [ngForTemplate]="template" />
+      [ngForOf]="files"
+      [ngForTemplate]="template" />
+  }
 </div>

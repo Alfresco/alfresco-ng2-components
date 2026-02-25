@@ -18,12 +18,12 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.component';
-import { CommonModule } from '@angular/common';
+
 import { CardViewItemDispatcherComponent } from '../card-view-item-dispatcher/card-view-item-dispatcher.component';
 
 @Component({
     selector: 'adf-card-view',
-    imports: [CommonModule, CardViewItemDispatcherComponent],
+    imports: [CardViewItemDispatcherComponent],
     templateUrl: './card-view.component.html',
     styleUrls: ['./card-view.component.scss'],
     encapsulation: ViewEncapsulation.None

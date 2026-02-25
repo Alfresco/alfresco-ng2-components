@@ -1,44 +1,48 @@
 <div class="{{ field.className }}"
-     id="data-time-widget"
-     [class.adf-invalid]="datetimeInputControl.invalid && datetimeInputControl.touched"
-     [class.adf-left-label-input-container]="field.leftLabels">
-    <div *ngIf="field.leftLabels">
-        <label class="adf-label adf-left-label" [attr.for]="field.id">
-            {{ field.name | translate }} ({{ field.dateDisplayFormat }})<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
-        </label>
+  id="data-time-widget"
+  [class.adf-invalid]="datetimeInputControl.invalid && datetimeInputControl.touched"
+  [class.adf-left-label-input-container]="field.leftLabels">
+  @if (field.leftLabels) {
+    <div>
+      <label class="adf-label adf-left-label" [attr.for]="field.id">
+        {{ field.name | translate }} ({{ field.dateDisplayFormat }})<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
+      </label>
     </div>
-    <div class="adf-date-time-widget-container">
-        <mat-form-field class="adf-date-time-widget adf-form-field-input"
-                        [class.adf-left-label-input-datepicker]="field.leftLabels"
-                        [floatLabel]="field.placeholder ? 'always' : null">
-            @if( (field.name || field?.required) && !field.leftLabels) {
-            <mat-label class="adf-label" [attr.for]="field.id">
-                {{ field.name | translate }} ({{ field.dateDisplayFormat }})
-            </mat-label>
-            }
-            <input matInput
-                   class="adf-input"
-                   [matDatetimepicker]="datetimePicker"
-                   [readonly]="field.readOnly"
-                   [required]="field.required && field.isVisible"
-                   [id]="field.id"
-                   [formControl]="datetimeInputControl"
-                   (keydown.enter)="datetimePicker.open()"
-                   [placeholder]="field.placeholder"
-                   [title]="field.tooltip"
-                   [min]="minDate"
-                   [max]="maxDate">
-            <mat-datetimepicker-toggle matSuffix [for]="datetimePicker"
-                                       [disabled]="field.readOnly" />
-            <mat-datetimepicker #datetimePicker
-                data-automation-id="adf-date-time-widget-picker"
-                type="datetime"
-                [touchUi]="true"
-                [timeInterval]="5"
-                [disabled]="field.readOnly" />
-        </mat-form-field>
-        <div class="adf-error-messages-container">
-            <error-widget *ngIf="datetimeInputControl.invalid && datetimeInputControl.touched" [error]="field.validationSummary" />
-        </div>
+  }
+  <div class="adf-date-time-widget-container">
+    <mat-form-field class="adf-date-time-widget adf-form-field-input"
+      [class.adf-left-label-input-datepicker]="field.leftLabels"
+      [floatLabel]="field.placeholder ? 'always' : null">
+      @if( (field.name || field?.required) && !field.leftLabels) {
+        <mat-label class="adf-label" [attr.for]="field.id">
+          {{ field.name | translate }} ({{ field.dateDisplayFormat }})
+        </mat-label>
+      }
+      <input matInput
+        class="adf-input"
+        [matDatetimepicker]="datetimePicker"
+        [readonly]="field.readOnly"
+        [required]="field.required && field.isVisible"
+        [id]="field.id"
+        [formControl]="datetimeInputControl"
+        (keydown.enter)="datetimePicker.open()"
+        [placeholder]="field.placeholder"
+        [title]="field.tooltip"
+        [min]="minDate"
+        [max]="maxDate">
+      <mat-datetimepicker-toggle matSuffix [for]="datetimePicker"
+        [disabled]="field.readOnly" />
+      <mat-datetimepicker #datetimePicker
+        data-automation-id="adf-date-time-widget-picker"
+        type="datetime"
+        [touchUi]="true"
+        [timeInterval]="5"
+        [disabled]="field.readOnly" />
+    </mat-form-field>
+    <div class="adf-error-messages-container">
+      @if (datetimeInputControl.invalid && datetimeInputControl.touched) {
+        <error-widget [error]="field.validationSummary" />
+      }
     </div>
+  </div>
 </div>

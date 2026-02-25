@@ -34,7 +34,7 @@ import { EMPTY, Observable, Subject, timer } from 'rxjs';
 import { debounce, first, map, tap } from 'rxjs/operators';
 import { CategoriesManagementMode } from './categories-management-mode';
 import { CategoryService } from '../services/category.service';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { AutoFocusDirective } from '../../directives';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -57,17 +57,16 @@ interface CategoryNameControlErrors {
 @Component({
     selector: 'adf-categories-management',
     imports: [
-        CommonModule,
-        TranslatePipe,
-        AutoFocusDirective,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatButtonModule,
-        IconModule,
-        MatListModule,
-        MatProgressSpinnerModule,
-        MatInputModule
-    ],
+    TranslatePipe,
+    AutoFocusDirective,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    IconModule,
+    MatListModule,
+    MatProgressSpinnerModule,
+    MatInputModule
+],
     templateUrl: './categories-management.component.html',
     styleUrls: ['./categories-management.component.scss'],
     encapsulation: ViewEncapsulation.None

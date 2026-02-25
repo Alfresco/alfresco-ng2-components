@@ -1,15 +1,17 @@
 <mat-slider
-    class="adf-search-slider"
-    data-automation-id="slider-range"
-    [max]="max"
-    [min]="min"
-    [step]="step"
-    [discrete]="thumbLabel">
-    <input matSliderThumb (change)="onChangedHandler()" [(ngModel)]="value">
+  class="adf-search-slider"
+  data-automation-id="slider-range"
+  [max]="max"
+  [min]="min"
+  [step]="step"
+  [discrete]="thumbLabel">
+  <input matSliderThumb (change)="onChangedHandler()" [(ngModel)]="value">
 </mat-slider>
 
-<div class="adf-facet-buttons" *ngIf="!settings?.hideDefaultAction">
+@if (!settings?.hideDefaultAction) {
+  <div class="adf-facet-buttons">
     <button mat-button color="primary" (click)="clear()" data-automation-id="slider-btn-clear">
-        {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
+      {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
     </button>
-</div>
+  </div>
+}

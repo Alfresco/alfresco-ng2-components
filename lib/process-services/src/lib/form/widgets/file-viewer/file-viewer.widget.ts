@@ -17,7 +17,7 @@
 
 import { BaseViewerWidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { AlfrescoViewerComponent } from '@alfresco/adf-content-services';
 
@@ -25,7 +25,7 @@ import { AlfrescoViewerComponent } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'file-viewer-widget',
-    imports: [CommonModule, TranslatePipe, AlfrescoViewerComponent, ErrorWidgetComponent],
+    imports: [TranslatePipe, AlfrescoViewerComponent, ErrorWidgetComponent],
     templateUrl: './file-viewer.widget.html',
     styleUrls: ['./file-viewer.widget.scss'],
     encapsulation: ViewEncapsulation.None

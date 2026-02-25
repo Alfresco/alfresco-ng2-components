@@ -1,107 +1,126 @@
-<div *ngIf="!hasForm()">
+@if (!hasForm()) {
+  <div>
     <ng-content select="[empty-form]" />
-</div>
+  </div>
+}
 
-<div
-    *ngIf="hasForm()"
+@if (hasForm()) {
+  <div
     class="adf-cloud-form-container adf-cloud-form-{{ displayConfiguration?.options?.fullscreen ? 'fullscreen' : 'inline' }}-container"
     [style]="formStyle"
->
+    >
     <div
-        class="adf-cloud-form-content"
-        [class.adf-cloud-form-content-standalone-fullscreen]="displayMode === 'standalone' && displayConfiguration?.options?.fullscreen"
-        [class.adf-cloud-form-content-toolbar]="!!displayConfiguration?.options?.displayToolbar"
-        [cdkTrapFocus]="displayConfiguration?.options?.trapFocus"
-        cdkTrapFocusAutoCapture>
-        <adf-toolbar class="adf-cloud-form-toolbar" *ngIf="displayConfiguration?.options?.displayToolbar">
-            <div class="adf-cloud-form__form-title">
-                <span class="adf-cloud-form__display-name" [title]="form.taskName">
-                    {{ form.taskName }}
-                    <ng-container *ngIf="!form.taskName">
-                        {{ 'FORM.FORM_RENDERER.NAMELESS_TASK' | translate }}
-                    </ng-container>
-                </span>
-            </div>
-
-            <adf-toolbar-divider *ngIf="displayConfiguration?.options?.displayCloseButton" />
+      class="adf-cloud-form-content"
+      [class.adf-cloud-form-content-standalone-fullscreen]="displayMode === 'standalone' && displayConfiguration?.options?.fullscreen"
+      [class.adf-cloud-form-content-toolbar]="!!displayConfiguration?.options?.displayToolbar"
+      [cdkTrapFocus]="displayConfiguration?.options?.trapFocus"
+      cdkTrapFocusAutoCapture>
+      @if (displayConfiguration?.options?.displayToolbar) {
+        <adf-toolbar class="adf-cloud-form-toolbar">
+          <div class="adf-cloud-form__form-title">
+            <span class="adf-cloud-form__display-name" [title]="form.taskName">
+              {{ form.taskName }}
+              @if (!form.taskName) {
+                {{ 'FORM.FORM_RENDERER.NAMELESS_TASK' | translate }}
+              }
+            </span>
+          </div>
+          @if (displayConfiguration?.options?.displayCloseButton) {
+            <adf-toolbar-divider />
+          }
+          @if (displayConfiguration?.options?.displayCloseButton) {
             <button
-                *ngIf="displayConfiguration?.options?.displayCloseButton"
-                class="adf-cloud-form-close-button"
-                data-automation-id="adf-toolbar-right-back"
-                [attr.aria-label]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
-                [attr.data-automation-id]="'adf-cloud-form-close-button'"
-                [title]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
-                mat-icon-button
-                title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
-                (click)="switchToDisplayMode()"
-            >
-                <mat-icon adf-icon="close" />
+              class="adf-cloud-form-close-button"
+              data-automation-id="adf-toolbar-right-back"
+              [attr.aria-label]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
+              [attr.data-automation-id]="'adf-cloud-form-close-button'"
+              [title]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
+              mat-icon-button
+              title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
+              (click)="switchToDisplayMode()"
+              >
+              <mat-icon adf-icon="close" />
             </button>
+          }
         </adf-toolbar>
-
-        <mat-card
-            appearance="outlined"
-            class="adf-cloud-form-content-card"
-            [class.adf-cloud-form-content-card-fullscreen]="displayMode === 'fullScreen'"
-            [class.adf-cloud-form-content-card-fullscreen-toolbar]="displayMode === 'fullScreen' && displayConfiguration?.options?.displayToolbar"
+      }
+      <mat-card
+        appearance="outlined"
+        class="adf-cloud-form-content-card"
+        [class.adf-cloud-form-content-card-fullscreen]="displayMode === 'fullScreen'"
+        [class.adf-cloud-form-content-card-fullscreen-toolbar]="displayMode === 'fullScreen' && displayConfiguration?.options?.displayToolbar"
         >
-            <div class="adf-cloud-form-content-card-container">
-                <mat-card-header *ngIf="showTitle || showRefreshButton || showValidationIcon">
-                    <mat-card-title>
-                        <h4>
-                            <div *ngIf="showValidationIcon" class="adf-form-validation-button">
-                                <i id="adf-valid-form-icon" class="material-icons" *ngIf="form.isValid; else no_valid_form">check_circle</i>
-                                <ng-template #no_valid_form>
-                                    <i id="adf-invalid-form-icon" class="material-icons adf-invalid-color">error</i>
-                                </ng-template>
-                            </div>
-                            <div
-                                *ngIf="!displayConfiguration?.options?.fullscreen && findDisplayConfiguration('fullScreen')"
-                                class="adf-cloud-form-fullscreen-button"
-                            >
-                                <button
-                                    mat-icon-button
-                                    (click)="switchToDisplayMode('fullScreen')"
-                                    [attr.data-automation-id]="'adf-cloud-form-fullscreen-button'"
-                                >
-                                    <mat-icon adf-icon="fullscreen" />
-                                </button>
-                            </div>
-                            <div *ngIf="showRefreshButton" class="adf-cloud-form-reload-button" [title]="'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate">
-                                <button mat-icon-button (click)="onRefreshClicked()" [attr.aria-label]="'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate">
-                                    <mat-icon adf-icon="refresh" />
-                                </button>
-                            </div>
-                            <span *ngIf="isTitleEnabled()" class="adf-cloud-form-title" [title]="form.taskName"
-                                >{{ form.taskName }}
-                                <ng-container *ngIf="!form.taskName">
-                                    {{ 'FORM.FORM_RENDERER.NAMELESS_TASK' | translate }}
-                                </ng-container>
-                            </span>
-                        </h4>
-                    </mat-card-title>
-                </mat-card-header>
-                <mat-card-content class="adf-form-container-card-content">
-                    <adf-form-renderer [formDefinition]="form" [readOnly]="readOnly" />
-                </mat-card-content>
-                    <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-cloud-form-content-card-actions" align="end">
-                        <ng-content select="adf-cloud-form-custom-outcomes" />
-                        <ng-container *ngFor="let outcome of form.outcomes">
-                            <button
-                                *ngIf="outcome.isVisible"
-                                [id]="'adf-form-' + outcome.name | formatSpace"
-                                [color]="getColorForOutcome(outcome.name)"
-                                mat-button
-                                [disabled]="!isOutcomeButtonEnabled(outcome)"
-                                [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
-                                class="adf-cloud-form-custom-outcome-button"
-                                (click)="onOutcomeClicked(outcome)"
-                            >
-                                {{ getCustomOutcomeButtonText(outcome) || (outcome.name | translate | uppercase) }}
-                            </button>
-                        </ng-container>
-                    </mat-card-actions>
-            </div>
-        </mat-card>
+        <div class="adf-cloud-form-content-card-container">
+          @if (showTitle || showRefreshButton || showValidationIcon) {
+            <mat-card-header>
+              <mat-card-title>
+                <h4>
+                  @if (showValidationIcon) {
+                    <div class="adf-form-validation-button">
+                      @if (form.isValid) {
+                        <i id="adf-valid-form-icon" class="material-icons">check_circle</i>
+                      } @else {
+                        <i id="adf-invalid-form-icon" class="material-icons adf-invalid-color">error</i>
+                      }
+                    </div>
+                  }
+                  @if (!displayConfiguration?.options?.fullscreen && findDisplayConfiguration('fullScreen')) {
+                    <div
+                      class="adf-cloud-form-fullscreen-button"
+                      >
+                      <button
+                        mat-icon-button
+                        (click)="switchToDisplayMode('fullScreen')"
+                        [attr.data-automation-id]="'adf-cloud-form-fullscreen-button'"
+                        >
+                        <mat-icon adf-icon="fullscreen" />
+                      </button>
+                    </div>
+                  }
+                  @if (showRefreshButton) {
+                    <div class="adf-cloud-form-reload-button" [title]="'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate">
+                      <button mat-icon-button (click)="onRefreshClicked()" [attr.aria-label]="'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate">
+                        <mat-icon adf-icon="refresh" />
+                      </button>
+                    </div>
+                  }
+                  @if (isTitleEnabled()) {
+                    <span class="adf-cloud-form-title" [title]="form.taskName"
+                      >{{ form.taskName }}
+                      @if (!form.taskName) {
+                        {{ 'FORM.FORM_RENDERER.NAMELESS_TASK' | translate }}
+                      }
+                    </span>
+                  }
+                </h4>
+              </mat-card-title>
+            </mat-card-header>
+          }
+          <mat-card-content class="adf-form-container-card-content">
+            <adf-form-renderer [formDefinition]="form" [readOnly]="readOnly" />
+          </mat-card-content>
+          @if (form.hasOutcomes()) {
+            <mat-card-actions class="adf-cloud-form-content-card-actions" align="end">
+              <ng-content select="adf-cloud-form-custom-outcomes" />
+              @for (outcome of form.outcomes; track outcome) {
+                @if (outcome.isVisible) {
+                  <button
+                    [id]="'adf-form-' + outcome.name | formatSpace"
+                    [color]="getColorForOutcome(outcome.name)"
+                    mat-button
+                    [disabled]="!isOutcomeButtonEnabled(outcome)"
+                    [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
+                    class="adf-cloud-form-custom-outcome-button"
+                    (click)="onOutcomeClicked(outcome)"
+                    >
+                    {{ getCustomOutcomeButtonText(outcome) || (outcome.name | translate | uppercase) }}
+                  </button>
+                }
+              }
+            </mat-card-actions>
+          }
+        </div>
+      </mat-card>
     </div>
-</div>
+  </div>
+}

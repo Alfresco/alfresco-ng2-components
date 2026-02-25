@@ -40,24 +40,23 @@ import {
     inject
 } from '@angular/core';
 import { ProcessContentService } from '../../form/services/process-content.service';
-import { CommonModule } from '@angular/common';
+
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-task-attachment-list',
     imports: [
-        CommonModule,
-        MatProgressSpinnerModule,
-        DataTableComponent,
-        EmptyListHeaderDirective,
-        TranslatePipe,
-        DataColumnListComponent,
-        DataColumnComponent,
-        LoadingContentTemplateDirective,
-        EmptyListComponent,
-        NoContentTemplateDirective
-    ],
+    MatProgressSpinnerModule,
+    DataTableComponent,
+    EmptyListHeaderDirective,
+    TranslatePipe,
+    DataColumnListComponent,
+    DataColumnComponent,
+    LoadingContentTemplateDirective,
+    EmptyListComponent,
+    NoContentTemplateDirective
+],
     styleUrls: ['./task-attachment-list.component.scss'],
     templateUrl: './task-attachment-list.component.html',
     encapsulation: ViewEncapsulation.None

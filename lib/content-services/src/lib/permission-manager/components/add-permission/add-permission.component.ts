@@ -21,14 +21,14 @@ import { NodePermissionService } from '../../services/node-permission.service';
 import { RoleModel } from '../../models/role.model';
 import { ContentService } from '../../../common/services/content.service';
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
-import { CommonModule } from '@angular/common';
+
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-add-permission',
-    imports: [CommonModule, AddPermissionPanelComponent, MatButtonModule, TranslatePipe],
+    imports: [AddPermissionPanelComponent, MatButtonModule, TranslatePipe],
     templateUrl: './add-permission.component.html',
     styleUrls: ['./add-permission.component.scss'],
     encapsulation: ViewEncapsulation.None

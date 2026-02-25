@@ -1,44 +1,50 @@
 <div class="adf-new-version-container">
-    <adf-version-comparison *ngIf="showVersionComparison" [node]="node" [newFileVersion]="newFileVersion" />
-    <div class="adf-new-version-uploader-container" id="adf-new-version-uploader-container" [@uploadToggle]="uploadState">
-        <table class="adf-version-upload" *ngIf="uploadState !== 'close' && !versionList.isLoading">
-            <tr>
-                <td>
-                    <adf-version-upload
-                        id="adf-version-upload-button"
-                        [node]="node"
-                        [newFileVersion]="newFileVersion"
-                        [currentVersion]="versionList?.latestVersion?.entry"
-                        (success)="onUploadSuccess($event)"
-                        (cancel)="onUploadCancel()"
-                        (error)="onUploadError($event)" />
-                </td>
-            </tr>
-        </table>
+  @if (showVersionComparison) {
+    <adf-version-comparison [node]="node" [newFileVersion]="newFileVersion" />
+  }
+  <div class="adf-new-version-uploader-container" id="adf-new-version-uploader-container" [@uploadToggle]="uploadState">
+    @if (uploadState !== 'close' && !versionList.isLoading) {
+      <table class="adf-version-upload">
+        <tr>
+          <td>
+            <adf-version-upload
+              id="adf-version-upload-button"
+              [node]="node"
+              [newFileVersion]="newFileVersion"
+              [currentVersion]="versionList?.latestVersion?.entry"
+              (success)="onUploadSuccess($event)"
+              (cancel)="onUploadCancel()"
+              (error)="onUploadError($event)" />
+          </td>
+        </tr>
+      </table>
+    }
+  </div>
+  <div class="adf-version-list-container">
+    <div class="adf-version-list-table">
+      <div>
+        @if (uploadState ==='close') {
+          <button mat-raised-button
+            id="adf-show-version-upload-button"
+            class="adf-version-manager-upload-button"
+            (click)="toggleNewVersion()" color="primary"
+            >{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.ADD' | translate }}
+          </button>
+        }
+      </div>
+      <div>
+        <adf-version-list
+          #versionList
+          [node]="node"
+          [allowDownload]="allowDownload"
+          [showComments]="showComments"
+          [showActions]="showActions"
+          [allowViewVersions]="allowViewVersions"
+          [allowVersionDelete]="allowVersionDelete"
+          (deleted)="refresh($event)"
+          (restored)="refresh($event)"
+          (viewVersion)="onViewVersion($event)" />
+      </div>
     </div>
-    <div class="adf-version-list-container">
-        <div class="adf-version-list-table">
-            <div>
-                <button mat-raised-button
-                        id="adf-show-version-upload-button"
-                        class="adf-version-manager-upload-button"
-                        (click)="toggleNewVersion()" color="primary"
-                        *ngIf="uploadState ==='close'">{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.ADD' | translate }}
-                </button>
-            </div>
-            <div>
-                <adf-version-list
-                    #versionList
-                    [node]="node"
-                    [allowDownload]="allowDownload"
-                    [showComments]="showComments"
-                    [showActions]="showActions"
-                    [allowViewVersions]="allowViewVersions"
-                    [allowVersionDelete]="allowVersionDelete"
-                    (deleted)="refresh($event)"
-                    (restored)="refresh($event)"
-                    (viewVersion)="onViewVersion($event)" />
-            </div>
-        </div>
-    </div>
+  </div>
 </div>

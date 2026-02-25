@@ -19,11 +19,11 @@ import { DataTableComponent, DataCellEvent, DataColumnListComponent, ShowHeaderM
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { LightUserRepresentation } from '@alfresco/js-api';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'adf-people-list',
-    imports: [CommonModule, DataTableComponent],
+    imports: [DataTableComponent],
     templateUrl: './people-list.component.html',
     styleUrls: ['./people-list.component.scss']
 })

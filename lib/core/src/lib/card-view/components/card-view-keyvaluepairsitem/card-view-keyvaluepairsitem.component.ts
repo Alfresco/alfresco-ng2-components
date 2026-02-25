@@ -20,7 +20,7 @@ import { CardViewKeyValuePairsItemModel } from '../../models/card-view.models';
 import { CardViewKeyValuePairsItemType } from '../../interfaces/card-view.interfaces';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { BaseCardView } from '../base-card-view';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
@@ -29,7 +29,7 @@ import { IconModule } from '../../../icon/icon.module';
 
 @Component({
     selector: 'adf-card-view-key-value-pairs-item',
-    imports: [CommonModule, TranslatePipe, MatTableModule, MatInputModule, FormsModule, MatButtonModule, IconModule],
+    imports: [TranslatePipe, MatTableModule, MatInputModule, FormsModule, MatButtonModule, IconModule],
     templateUrl: './card-view-keyvaluepairsitem.component.html',
     styleUrls: ['./card-view-keyvaluepairsitem.component.scss'],
     encapsulation: ViewEncapsulation.None,

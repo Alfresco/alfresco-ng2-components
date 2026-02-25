@@ -19,7 +19,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @angular-eslint/no-output-native */
 
-import { NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
     Component,
     EventEmitter,
@@ -92,17 +92,16 @@ export const PDFJS_VIEWER_MODULE = new InjectionToken('PDFJS_VIEWER_MODULE', { f
     providers: [RenderingQueueServices],
     host: { class: 'adf-pdf-viewer' },
     imports: [
-        MatButtonModule,
-        IconModule,
-        TranslatePipe,
-        PdfThumbListComponent,
-        NgIf,
-        NgTemplateOutlet,
-        MatProgressBarModule,
-        NgStyle,
-        ToolbarComponent,
-        ToolbarDividerComponent
-    ],
+    MatButtonModule,
+    IconModule,
+    TranslatePipe,
+    PdfThumbListComponent,
+    NgTemplateOutlet,
+    MatProgressBarModule,
+    NgStyle,
+    ToolbarComponent,
+    ToolbarDividerComponent
+],
     encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements OnChanges, OnDestroy {

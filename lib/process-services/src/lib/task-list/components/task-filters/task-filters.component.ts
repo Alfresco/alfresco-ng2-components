@@ -23,7 +23,7 @@ import { IconModel } from '../../../app-list/icon.model';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { UserTaskFilterRepresentation } from '@alfresco/js-api';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -32,7 +32,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-task-filters',
-    imports: [CommonModule, TranslatePipe, MatButtonModule, MatIconModule],
+    imports: [TranslatePipe, MatButtonModule, MatIconModule],
     templateUrl: './task-filters.component.html',
     styleUrls: ['./task-filters.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -20,50 +20,51 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { BreadcrumbItemComponent } from '../components/breadcrumb-item/breadcrumb-item.component';
 import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
-import { NgIf } from '@angular/common';
+
 import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-demo-breadcrumb',
     template: `
         <adf-breadcrumb [compact]="compact">
-            <adf-breadcrumb-item>
-                <a href="/">Home</a>
+          <adf-breadcrumb-item>
+            <a href="/">Home</a>
+          </adf-breadcrumb-item>
+        
+          <adf-breadcrumb-item>
+            <a href="https://www.alfresco.com/">Alfresco</a>
+          </adf-breadcrumb-item>
+        
+          <adf-breadcrumb-item>
+            <a href="https://www.alfresco.com">External Link 1</a>
+          </adf-breadcrumb-item>
+        
+          <adf-breadcrumb-item>
+            <a href="https://www.alfresco.com/">External Link 2</a>
+          </adf-breadcrumb-item>
+        
+          <adf-breadcrumb-item>
+            <a href="https://www.alfresco.com/">External Link 3</a>
+          </adf-breadcrumb-item>
+        
+          @if (showBreadcrumbItemWithMenu) {
+            <adf-breadcrumb-item aria-current="location" aria-haspopup="true">
+              <div>
+                Current Page
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+                  <mat-icon adf-icon="menu_open" />
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item>Menu Item 1</button>
+                  <button mat-menu-item>Menu Item 2</button>
+                </mat-menu>
+              </div>
             </adf-breadcrumb-item>
-
-            <adf-breadcrumb-item>
-                <a href="https://www.alfresco.com/">Alfresco</a>
-            </adf-breadcrumb-item>
-
-            <adf-breadcrumb-item>
-                <a href="https://www.alfresco.com">External Link 1</a>
-            </adf-breadcrumb-item>
-
-            <adf-breadcrumb-item>
-                <a href="https://www.alfresco.com/">External Link 2</a>
-            </adf-breadcrumb-item>
-
-            <adf-breadcrumb-item>
-                <a href="https://www.alfresco.com/">External Link 3</a>
-            </adf-breadcrumb-item>
-
-            <adf-breadcrumb-item *ngIf="showBreadcrumbItemWithMenu" aria-current="location" aria-haspopup="true">
-                <div>
-                    Current Page
-                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
-                        <mat-icon adf-icon="menu_open" />
-                    </button>
-
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item>Menu Item 1</button>
-                        <button mat-menu-item>Menu Item 2</button>
-                    </mat-menu>
-                </div>
-            </adf-breadcrumb-item>
+          }
         </adf-breadcrumb>
-    `,
+        `,
     standalone: true,
-    imports: [MatButtonModule, MatMenuModule, IconModule, BreadcrumbItemComponent, BreadcrumbComponent, NgIf]
+    imports: [MatButtonModule, MatMenuModule, IconModule, BreadcrumbItemComponent, BreadcrumbComponent]
 })
 export class DemoBreadcrumbComponent {
     compact = false;

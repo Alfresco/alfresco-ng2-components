@@ -19,7 +19,7 @@ import { Component, Input } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
 import { BaseCardView } from '../base-card-view';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator.directive';
 import { FormsModule } from '@angular/forms';
@@ -27,7 +27,7 @@ import { MatError } from '@angular/material/form-field';
 
 @Component({
     selector: 'adf-card-view-boolitem',
-    imports: [CommonModule, MatCheckboxModule, TranslatePipe, CardViewPropertyValidatorDirective, FormsModule, MatError],
+    imports: [MatCheckboxModule, TranslatePipe, CardViewPropertyValidatorDirective, FormsModule, MatError],
     templateUrl: './card-view-boolitem.component.html',
     styles: [
         `

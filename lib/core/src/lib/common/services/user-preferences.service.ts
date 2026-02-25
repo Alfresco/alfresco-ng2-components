@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { inject, Injectable, RendererFactory2, Signal } from '@angular/core';
+import { inject, Injectable, RendererFactory2, Signal, DOCUMENT } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { LanguageItem } from './language-item.interface';
-import { DOCUMENT } from '@angular/common';
+
 import { Directionality, Direction } from '@angular/cdk/bidi';
 import { DEFAULT_LANGUAGE_LIST } from '../models/default-languages.model';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -46,7 +46,6 @@ export class UserPreferencesService {
 
     private readonly document = inject(DOCUMENT);
     private readonly rendererFactory = inject(RendererFactory2);
-    private readonly directionality = inject(Directionality);
 
     defaults = {
         paginationSize: 25,
@@ -135,7 +134,6 @@ export class UserPreferencesService {
 
         this.select('textOrientation').subscribe((direction: Direction) => {
             renderer.setAttribute(this.document.body, 'dir', direction);
-            (this.directionality as any).value = direction;
         });
     }
 

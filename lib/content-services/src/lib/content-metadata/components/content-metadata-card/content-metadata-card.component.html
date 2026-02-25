@@ -1,28 +1,32 @@
-<mat-card appearance="outlined" *ngIf="node" class="adf-content-metadata-card-view">
+@if (node) {
+  <mat-card appearance="outlined" class="adf-content-metadata-card-view">
     <mat-card-content class="adf-content-metadata-card-view-content">
-        <adf-content-metadata
-            [displayDefaultProperties]="displayDefaultProperties"
-            [expanded]="expanded"
-            [node]="node"
-            [displayEmpty]="displayEmpty"
-            [readOnly]="!editable"
-            [multi]="multi"
-            [displayAspect]="displayAspect"
-            [preset]="preset"
-            [displayTags]="displayTags"
-            [displayCategories]="displayCategories"
-            [customPanels]="customPanels" />
+      <adf-content-metadata
+        [displayDefaultProperties]="displayDefaultProperties"
+        [expanded]="expanded"
+        [node]="node"
+        [displayEmpty]="displayEmpty"
+        [readOnly]="!editable"
+        [multi]="multi"
+        [displayAspect]="displayAspect"
+        [preset]="preset"
+        [displayTags]="displayTags"
+        [displayCategories]="displayCategories"
+        [customPanels]="customPanels" />
     </mat-card-content>
     <mat-card-footer class="adf-content-metadata-card-footer adf-content-metadata-card-view-footer">
-        <div>
-            <button *ngIf="isEditAspectSupported()"
-                mat-icon-button
-                (click)="openAspectDialog()"
-                [attr.title]="'CORE.METADATA.ACTIONS.EDIT_ASPECTS' | translate"
-                [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT_ASPECTS' | translate"
-                data-automation-id="meta-data-card-edit-aspect">
-                <mat-icon adf-icon="menu" />
-            </button>
-        </div>
+      <div>
+        @if (isEditAspectSupported()) {
+          <button
+            mat-icon-button
+            (click)="openAspectDialog()"
+            [attr.title]="'CORE.METADATA.ACTIONS.EDIT_ASPECTS' | translate"
+            [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT_ASPECTS' | translate"
+            data-automation-id="meta-data-card-edit-aspect">
+            <mat-icon adf-icon="menu" />
+          </button>
+        }
+      </div>
     </mat-card-footer>
-</mat-card>
+  </mat-card>
+}

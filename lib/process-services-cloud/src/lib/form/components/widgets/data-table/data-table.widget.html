@@ -1,31 +1,31 @@
 <div class="adf-data-table-widget-container">
-    <div class="adf-data-table-widget-label">
-        <label
-            class="adf-label"
-            [class.adf-left-label]="field.leftLabels"
-            [attr.for]="field.id">
-                {{field.name | translate }}
-        </label>
-    </div>
+  <div class="adf-data-table-widget-label">
+    <label
+      class="adf-label"
+      [class.adf-left-label]="field.leftLabels"
+      [attr.for]="field.id">
+      {{field.name | translate }}
+    </label>
+  </div>
 
-    <ng-container *ngIf="!previewState; else previewTemplate">
-        <adf-datatable data-automation-id="adf-data-table-widget" [data]="dataSource">
-            <adf-no-content-template>
-                <ng-template>
-                    <adf-empty-content
-                        icon="border_all"
-                        [title]="'FORM.FIELD.DATA_TABLE_EMPTY_CONTENT' | translate" />
-                </ng-template>
-            </adf-no-content-template>
-        </adf-datatable>
+  @if (!previewState) {
+    <adf-datatable data-automation-id="adf-data-table-widget" [data]="dataSource">
+      <adf-no-content-template>
+        <ng-template>
+          <adf-empty-content
+            icon="border_all"
+            [title]="'FORM.FIELD.DATA_TABLE_EMPTY_CONTENT' | translate" />
+        </ng-template>
+      </adf-no-content-template>
+    </adf-datatable>
+    @if (dataTableLoadFailed) {
+      <error-widget
+        class="adf-data-table-widget-failed-message"
+        [required]="'FORM.FIELD.DATA_TABLE_LOAD_FAILED' | translate" />
+    }
+  } @else {
+    <adf-datatable data-automation-id="adf-data-table-widget-preview" />
+    <div class="adf-preview-placeholder"></div>
+  }
 
-        <error-widget *ngIf="dataTableLoadFailed"
-            class="adf-data-table-widget-failed-message"
-            [required]="'FORM.FIELD.DATA_TABLE_LOAD_FAILED' | translate" />
-    </ng-container>
-
-    <ng-template #previewTemplate>
-        <adf-datatable data-automation-id="adf-data-table-widget-preview" />
-        <div class="adf-preview-placeholder"></div>
-    </ng-template>
 </div>

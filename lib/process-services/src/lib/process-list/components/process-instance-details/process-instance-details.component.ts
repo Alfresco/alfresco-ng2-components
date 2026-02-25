@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CommonModule, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { TaskDetailsEvent } from '../../../task-list';
 import { ProcessService } from '../../services/process.service';
@@ -30,14 +30,13 @@ import { ProcessCommentsComponent } from '../../../process-comments';
 @Component({
     selector: 'adf-process-instance-details',
     imports: [
-        CommonModule,
-        TranslatePipe,
-        MatCardModule,
-        MatButtonModule,
-        ProcessCommentsComponent,
-        ProcessInstanceTasksComponent,
-        ProcessInstanceHeaderComponent
-    ],
+    TranslatePipe,
+    MatCardModule,
+    MatButtonModule,
+    ProcessCommentsComponent,
+    ProcessInstanceTasksComponent,
+    ProcessInstanceHeaderComponent
+],
     templateUrl: './process-instance-details.component.html',
     styleUrls: ['./process-instance-details.component.css']
 })

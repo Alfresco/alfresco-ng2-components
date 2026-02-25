@@ -1,29 +1,33 @@
 <div class="adf-typeahead-widget-container">
-    <div class="adf-typeahead-widget {{field.className}}"
-        [class.is-dirty]="value"
-        [class.adf-invalid]="!field.isValid"
-        [class.adf-readonly]="field.readOnly"
-        id="typehead-div">
-        <mat-form-field>
-            <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}</label>
-            <input matInput class="adf-input"
-                   type="text"
-                   [id]="field.id"
-                   [(ngModel)]="value"
-                   (ngModelChange)="validate()"
-                   (keyup)="onKeyUp($event)"
-                   [disabled]="field.readOnly"
-                   data-automation-id="adf-typeahed-search-input"
-                   placeholder="{{field.placeholder}}"
-                   [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
-                <mat-option *ngFor="let item of options; let i = index" id="adf-typeahed-widget-user-{{i}}" [value]="item">
-                    <span id="adf-typeahed-label-name">{{item.name}}</span>
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
+  <div class="adf-typeahead-widget {{field.className}}"
+    [class.is-dirty]="value"
+    [class.adf-invalid]="!field.isValid"
+    [class.adf-readonly]="field.readOnly"
+    id="typehead-div">
+    <mat-form-field>
+      <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}</label>
+      <input matInput class="adf-input"
+        type="text"
+        [id]="field.id"
+        [(ngModel)]="value"
+        (ngModelChange)="validate()"
+        (keyup)="onKeyUp($event)"
+        [disabled]="field.readOnly"
+        data-automation-id="adf-typeahed-search-input"
+        placeholder="{{field.placeholder}}"
+        [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
+        @for (item of options; track item; let i = $index) {
+          <mat-option id="adf-typeahed-widget-user-{{i}}" [value]="item">
+            <span id="adf-typeahed-label-name">{{item.name}}</span>
+          </mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
 
-        <error-widget [error]="field.validationSummary" />
-        <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
-    </div>
+    <error-widget [error]="field.validationSummary" />
+    @if (isInvalidFieldRequired()) {
+      <error-widget required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
+    }
+  </div>
 </div>

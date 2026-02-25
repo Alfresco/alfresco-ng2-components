@@ -21,13 +21,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
-import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'adf-amount-editor',
-    imports: [CommonModule, MatFormFieldModule, MatInputModule],
+    imports: [MatFormFieldModule, MatInputModule],
     templateUrl: './amount.editor.html',
     styleUrls: ['./amount.editor.scss']
 })

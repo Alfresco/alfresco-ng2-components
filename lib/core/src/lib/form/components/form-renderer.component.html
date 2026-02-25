@@ -1,135 +1,158 @@
 <div id="adf-form-renderer" class="{{ formDefinition.className }} adf-form-renderer"
-     [ngClass]="{ 'adf-readonly-form': formDefinition.readOnly }">
-    <div *ngIf="formDefinition.hasTabs()">
-        <div *ngIf="hasTabs()" class="alfresco-tabs-widget">
-            <mat-tab-group [preserveContent]="true">
-                <mat-tab *ngFor="let tab of visibleTabs()" [label]="tab.title | translate ">
-                    <ng-template matTabContent>
-                        <div class="adf-form-tab-content">
-                            <ng-template *ngTemplateOutlet="render; context: { fieldToRender: tab.fields }" />
-                        </div>
-                    </ng-template>
-                </mat-tab>
-            </mat-tab-group>
+  [ngClass]="{ 'adf-readonly-form': formDefinition.readOnly }">
+  @if (formDefinition.hasTabs()) {
+    <div>
+      @if (hasTabs()) {
+        <div class="alfresco-tabs-widget">
+          <mat-tab-group [preserveContent]="true">
+            @for (tab of visibleTabs(); track tab) {
+              <mat-tab [label]="tab.title | translate ">
+                <ng-template matTabContent>
+                  <div class="adf-form-tab-content">
+                    <ng-template *ngTemplateOutlet="render; context: { fieldToRender: tab.fields }" />
+                  </div>
+                </ng-template>
+              </mat-tab>
+            }
+          </mat-tab-group>
         </div>
+      }
     </div>
+  }
 
-    <div *ngIf="!formDefinition.hasTabs() && formDefinition.hasFields()">
-        <ng-template *ngTemplateOutlet="render; context: { fieldToRender: formDefinition.fields }" />
+  @if (!formDefinition.hasTabs() && formDefinition.hasFields()) {
+    <div>
+      <ng-template *ngTemplateOutlet="render; context: { fieldToRender: formDefinition.fields }" />
     </div>
+  }
 </div>
 
 <ng-template #render let-fieldToRender="fieldToRender">
-    <div *ngFor="let currentRootElement of fieldToRender">
-        <div *ngIf="currentRootElement.type === 'section'" [id]="'field-' + currentRootElement?.id + '-container'" class="adf-container-widget">
-            <adf-form-section [field]="currentRootElement" />
+  @for (currentRootElement of fieldToRender; track currentRootElement) {
+    <div>
+      @if (currentRootElement.type === 'section') {
+        <div [id]="'field-' + currentRootElement?.id + '-container'" class="adf-container-widget">
+          <adf-form-section [field]="currentRootElement" />
         </div>
-
-        <div *ngIf="currentRootElement.type === 'container' || currentRootElement.type === 'group'"
-             [id]="'field-' + currentRootElement?.id + '-container'"
-             class="adf-container-widget"
-             [hidden]="!currentRootElement?.isVisible">
-            <adf-header-widget [element]="currentRootElement" />
-            <div *ngIf="currentRootElement?.form?.enableFixedSpace; else fixingTemplate">
+      }
+      @if (currentRootElement.type === 'container' || currentRootElement.type === 'group') {
+        <div
+          [id]="'field-' + currentRootElement?.id + '-container'"
+          class="adf-container-widget"
+          [hidden]="!currentRootElement?.isVisible">
+          <adf-header-widget [element]="currentRootElement" />
+          @if (currentRootElement?.form?.enableFixedSpace) {
+            <div>
+              @if (currentRootElement?.isExpanded) {
                 <div class="adf-grid-list"
-                     [ngStyle]="{ 'grid-template-columns': 'repeat(' + getNumberOfColumns(currentRootElement) + ', 1fr)' }"
-                     *ngIf="currentRootElement?.isExpanded">
+                  [ngStyle]="{ 'grid-template-columns': 'repeat(' + getNumberOfColumns(currentRootElement) + ', 1fr)' }"
+                  >
+                  @for (field of getContainerFields(currentRootElement); track field) {
                     <div class="adf-grid-list-item"
-                         *ngFor="let field of getContainerFields(currentRootElement)"
-                         [ngStyle]="{ 'grid-area': 'auto / auto / span ' + (field?.rowspan || 1) + ' / span ' + (field?.colspan || 1) }">
-                        <adf-form-field *ngIf="field" [field]="field" />
+                      [ngStyle]="{ 'grid-area': 'auto / auto / span ' + (field?.rowspan || 1) + ' / span ' + (field?.colspan || 1) }">
+                      @if (field) {
+                        <adf-form-field [field]="field" />
+                      }
                     </div>
+                  }
                 </div>
+              }
             </div>
-
-            <ng-template #fixingTemplate>
-                <section class="adf-grid-list-column-view" *ngIf="currentRootElement?.isExpanded">
-                    <div class="adf-grid-list-single-column"
-                         *ngFor="let column of currentRootElement?.columns"
-                         [style.width.%]="getColumnWidth(currentRootElement)"
+          } @else {
+            @if (currentRootElement?.isExpanded) {
+              <section class="adf-grid-list-column-view">
+                @for (column of currentRootElement?.columns; track column) {
+                  <div class="adf-grid-list-single-column"
+                    [style.width.%]="getColumnWidth(currentRootElement)"
                     >
-                        <ng-container *ngFor="let field of column?.fields">
-                            <ng-container *ngIf="field.type === 'section'; else formField">
-                                <adf-form-section [field]="field"/>
-                            </ng-container>
-                            <ng-template #formField>
-                                <div class="adf-grid-list-column-view-item">
-                                    <adf-form-field [field]="field"/>
-                                </div>
-                            </ng-template>
-                        </ng-container>
-                    </div>
-                </section>
-            </ng-template>
-
-            <ng-template #columnViewItem let-column="column">
-                <div class="adf-grid-list-column-view-item" *ngFor="let field of column?.fields">
-                    <adf-form-field *ngIf="field" [field]="field" />
-                </div>
-            </ng-template>
-        </div>
-
-        @if (currentRootElement.type === 'repeatable-section') {
-            <div 
-                [id]="'field-' + currentRootElement?.id + '-container'"
-                class="adf-container-widget"
-                [hidden]="!currentRootElement?.isVisible"
-            >
-                <adf-repeat-widget [element]="currentRootElement" [isEditor]="false">
-                    @for (row of currentRootElement.field.rows; track row.id; let rowIndex = $index) {
-                        @let hasMultipleRows = currentRootElement.field.rows.length > 1;
-                        <div 
-                            class="adf-grid-list-container"
-                            [class.adf-grid-list-container-multiple]="hasMultipleRows"
-                            [class.adf-grid-list-container-disabled]="currentRootElement.field.readOnly"
-                        >   
-                            <div class="adf-grid-list-row">
-                                <span  class="adf-grid-list-row-label">{{ 'FORM.FORM_RENDERER.ROW_LABEL' | translate: {number: rowIndex + 1} }}</span>
-
-                                @let shouldDisplayRemoveRowButton = !currentRootElement.field.rows[rowIndex].isInitial || (currentRootElement.field.rows[rowIndex].isInitial && currentRootElement.field.params.allowInitialRowsDelete);
-                                @if (shouldDisplayRemoveRowButton) {
-                                    <button 
-                                        mat-icon-button
-                                        class="adf-grid-list-row-remove-button"
-                                        [disabled]="currentRootElement.field.readOnly"
-                                        [matTooltip]="'FORM.FORM_RENDERER.DELETE_ROW' | translate"
-                                        (click)="displayDialogToRemoveRow(currentRootElement.field, rowIndex)"
-                                    >
-                                        <mat-icon adf-icon="close" />
-                                    </button>
-                                }
-                            </div>
-                            <section  class="adf-grid-list-column-view">
-                                @for (column of row.columns; track $index) {
-                                    <div 
-                                        class="adf-grid-list-single-column"
-                                        [style.width.%]="getColumnWidth(currentRootElement)"
-                                    >
-                                        @for (field of column?.fields; track $index) {
-                                            @if (field.type === 'section') {
-                                                <adf-form-section [field]="field"/>
-                                            } @else {
-                                                <div class="adf-grid-list-column-view-item">
-                                                    <adf-form-field [field]="field"/>
-                                                </div>
-                                            }
-                                        }
-                                    </div>
-                                }
-                            </section>
+                    @for (field of column?.fields; track field) {
+                      @if (field.type === 'section') {
+                        <adf-form-section [field]="field"/>
+                      } @else {
+                        <div class="adf-grid-list-column-view-item">
+                          <adf-form-field [field]="field"/>
                         </div>
+                      }
                     }
-                </adf-repeat-widget>
-            </div>
-        }
-
-        <div *ngIf="currentRootElement.type === 'dynamic-table'" class="adf-container-widget">
-            <adf-form-field [field]="currentRootElement" />
+                  </div>
+                }
+              </section>
+            }
+          }
+          <ng-template #columnViewItem let-column="column">
+            @for (field of column?.fields; track field) {
+              <div class="adf-grid-list-column-view-item">
+                @if (field) {
+                  <adf-form-field [field]="field" />
+                }
+              </div>
+            }
+          </ng-template>
         </div>
-
+      }
+      @if (currentRootElement.type === 'repeatable-section') {
+        <div
+          [id]="'field-' + currentRootElement?.id + '-container'"
+          class="adf-container-widget"
+          [hidden]="!currentRootElement?.isVisible"
+          >
+          <adf-repeat-widget [element]="currentRootElement" [isEditor]="false">
+            @for (row of currentRootElement.field.rows; track row.id; let rowIndex = $index) {
+              @let hasMultipleRows = currentRootElement.field.rows.length > 1;
+              <div
+                class="adf-grid-list-container"
+                [class.adf-grid-list-container-multiple]="hasMultipleRows"
+                [class.adf-grid-list-container-disabled]="currentRootElement.field.readOnly"
+                >
+                <div class="adf-grid-list-row">
+                  <span  class="adf-grid-list-row-label">{{ 'FORM.FORM_RENDERER.ROW_LABEL' | translate: {number: rowIndex + 1} }}</span>
+                  @let shouldDisplayRemoveRowButton = !currentRootElement.field.rows[rowIndex].isInitial || (currentRootElement.field.rows[rowIndex].isInitial && currentRootElement.field.params.allowInitialRowsDelete);
+                  @if (shouldDisplayRemoveRowButton) {
+                    <button
+                      mat-icon-button
+                      class="adf-grid-list-row-remove-button"
+                      [disabled]="currentRootElement.field.readOnly"
+                      [matTooltip]="'FORM.FORM_RENDERER.DELETE_ROW' | translate"
+                      (click)="displayDialogToRemoveRow(currentRootElement.field, rowIndex)"
+                      >
+                      <mat-icon adf-icon="close" />
+                    </button>
+                  }
+                </div>
+                <section  class="adf-grid-list-column-view">
+                  @for (column of row.columns; track $index) {
+                    <div
+                      class="adf-grid-list-single-column"
+                      [style.width.%]="getColumnWidth(currentRootElement)"
+                      >
+                      @for (field of column?.fields; track $index) {
+                        @if (field.type === 'section') {
+                          <adf-form-section [field]="field"/>
+                        } @else {
+                          <div class="adf-grid-list-column-view-item">
+                            <adf-form-field [field]="field"/>
+                          </div>
+                        }
+                      }
+                    </div>
+                  }
+                </section>
+              </div>
+            }
+          </adf-repeat-widget>
+        </div>
+      }
+      @if (currentRootElement.type === 'dynamic-table') {
+        <div class="adf-container-widget">
+          <adf-form-field [field]="currentRootElement" />
+        </div>
+      }
+      @if (currentRootElement.type === 'readonly' && currentRootElement.field.params.field.type === 'dynamic-table') {
         <div class="adf-container-widget"
-             *ngIf="currentRootElement.type === 'readonly' && currentRootElement.field.params.field.type === 'dynamic-table'">
-            <adf-form-field [field]="currentRootElement.field"/>
+          >
+          <adf-form-field [field]="currentRootElement.field"/>
         </div>
+      }
     </div>
+  }
 </ng-template>

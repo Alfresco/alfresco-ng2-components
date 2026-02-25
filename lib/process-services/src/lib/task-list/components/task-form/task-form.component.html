@@ -1,27 +1,29 @@
-<ng-container *ngIf="!loading; else loadingTemplate">
-  <adf-form *ngIf="hasFormKey(); else withoutForm"
-    [taskId]="taskDetails?.id"
-    [showTitle]="showFormTitle"
-    [showValidationIcon]="showFormValidationIcon"
-    [showRefreshButton]="showFormRefreshButton"
-    [showCompleteButton]="showFormCompleteButton"
-    [showSaveButton]="isSaveButtonVisible()"
-    [disableCompleteButton]="!isCompleteButtonEnabled()"
-    [readOnly]="isReadOnlyForm()"
-    [fieldValidators]="fieldValidators"
-    (formSaved)='onFormSaved($event)'
-    (formCompleted)='onFormCompleted($event)'
-    (formContentClicked)='onFormContentClick($event)'
-    (formLoaded)='onFormLoaded($event)'
-    (formError)='onFormError($event)'
-    (error)='onError($event)'
-    (executeOutcome)='onFormExecuteOutcome($event)'>
-    <adf-form-custom-outcomes>
+@if (!loading) {
+  @if (hasFormKey()) {
+    <adf-form
+      [taskId]="taskDetails?.id"
+      [showTitle]="showFormTitle"
+      [showValidationIcon]="showFormValidationIcon"
+      [showRefreshButton]="showFormRefreshButton"
+      [showCompleteButton]="showFormCompleteButton"
+      [showSaveButton]="isSaveButtonVisible()"
+      [disableCompleteButton]="!isCompleteButtonEnabled()"
+      [readOnly]="isReadOnlyForm()"
+      [fieldValidators]="fieldValidators"
+      (formSaved)='onFormSaved($event)'
+      (formCompleted)='onFormCompleted($event)'
+      (formContentClicked)='onFormContentClick($event)'
+      (formLoaded)='onFormLoaded($event)'
+      (formError)='onFormError($event)'
+      (error)='onError($event)'
+      (executeOutcome)='onFormExecuteOutcome($event)'>
+      <adf-form-custom-outcomes>
         <ng-template [ngTemplateOutlet]="taskFormButtons" />
-    </adf-form-custom-outcomes>
-  </adf-form>
-  <ng-template #withoutForm>
-    <adf-task-standalone *ngIf="isStandaloneTask(); else emptyFormMessage"
+      </adf-form-custom-outcomes>
+    </adf-form>
+  } @else {
+    @if (isStandaloneTask()) {
+      <adf-task-standalone
         [taskName]="taskDetails.name"
         [taskId]="taskDetails.id"
         [isCompleted]="isCompletedTask()"
@@ -29,75 +31,79 @@
         [hideCancelButton]="showCancelButton"
         (complete)="onCompleteTask()"
         (showAttachForm)="onShowAttachForm()" />
-      <ng-template #emptyFormMessage>
-        <mat-card appearance="outlined" class="adf-task-form-container">
-            <mat-card-header>
-                <mat-card-title>
-                    <h4>
-                        <span class="adf-form-title">
-                            {{taskDetails.name}}
-                            <ng-container *ngIf="!taskDetails.name">
-                                {{'FORM.FORM_RENDERER.NAMELESS_TASK' | translate}}
-                            </ng-container>
-                        </span>
-                    </h4>
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <adf-empty-content *ngIf="isCompletedTask(); else emptyFormTemplate"
-                    [icon]="'description'"
-                    [title]="getCompletedTaskTranslatedMessage() | async"
-                    [subtitle]="'ADF_TASK_FORM.COMPLETED_TASK.SUBTITLE'" />
-                <ng-template #emptyFormTemplate>
-                    <adf-empty-content
-                        [icon]="'description'"
-                        [title]="'ADF_TASK_LIST.STANDALONE_TASK.NO_FORM_MESSAGE'"
-                        [subtitle]="'ADF_TASK_FORM.EMPTY_FORM.SUBTITLE'" />
-                </ng-template>
-            </mat-card-content>
-            <mat-card-actions align="end">
-                <div class="adf-task-form-actions">
-                    <ng-template [ngTemplateOutlet]="taskFormButtons" />
-                    <button mat-button
-                        *ngIf="!isCompletedTask()" id="adf-no-form-complete-button"
-                        color="primary"
-                        class="adf-task-form-actions-button"
-                        [disabled]="canCompleteNoFormTask()"
-                        (click)="onCompleteTask()">
-                        {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate}}
-                    </button>
-                </div>
-            </mat-card-actions>
-        </mat-card>
-      </ng-template>
-  </ng-template>
-
+    } @else {
+      <mat-card appearance="outlined" class="adf-task-form-container">
+        <mat-card-header>
+          <mat-card-title>
+            <h4>
+              <span class="adf-form-title">
+                {{taskDetails.name}}
+                @if (!taskDetails.name) {
+                  {{'FORM.FORM_RENDERER.NAMELESS_TASK' | translate}}
+                }
+              </span>
+            </h4>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          @if (isCompletedTask()) {
+            <adf-empty-content
+              [icon]="'description'"
+              [title]="getCompletedTaskTranslatedMessage() | async"
+              [subtitle]="'ADF_TASK_FORM.COMPLETED_TASK.SUBTITLE'" />
+          } @else {
+            <adf-empty-content
+              [icon]="'description'"
+              [title]="'ADF_TASK_LIST.STANDALONE_TASK.NO_FORM_MESSAGE'"
+              [subtitle]="'ADF_TASK_FORM.EMPTY_FORM.SUBTITLE'" />
+          }
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <div class="adf-task-form-actions">
+            <ng-template [ngTemplateOutlet]="taskFormButtons" />
+            @if (!isCompletedTask()) {
+              <button mat-button
+                id="adf-no-form-complete-button"
+                color="primary"
+                class="adf-task-form-actions-button"
+                [disabled]="canCompleteNoFormTask()"
+                (click)="onCompleteTask()">
+                {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate}}
+              </button>
+            }
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    }
+  }
   <ng-template #taskFormButtons>
-        <button mat-button id="adf-no-form-cancel-button"
-            *ngIf="showCancelButton"
-            (click)="onCancel()">
-            {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL' | translate}}
-        </button>
-        <button mat-button data-automation-id="adf-task-form-claim-button"
-            *ngIf="isTaskClaimable()"
-            adf-claim-task
-            [taskId]="taskId"
-            (success)="onClaimTask($event)"
-            (error)="onClaimTaskError($event)">
-            {{ 'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM' | translate }}
-        </button>
-        <button mat-button data-automation-id="adf-task-form-unclaim-button"
-            *ngIf="isTaskClaimedByCandidateMember()"
-            adf-unclaim-task
-            [taskId]="taskId"
-            (success)="onUnclaimTask($event)"
-            (error)="onUnclaimTaskError($event)">
-            {{ 'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.UNCLAIM' | translate }}
-        </button>
+    @if (showCancelButton) {
+      <button mat-button id="adf-no-form-cancel-button"
+        (click)="onCancel()">
+        {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL' | translate}}
+      </button>
+    }
+    @if (isTaskClaimable()) {
+      <button mat-button data-automation-id="adf-task-form-claim-button"
+        adf-claim-task
+        [taskId]="taskId"
+        (success)="onClaimTask($event)"
+        (error)="onClaimTaskError($event)">
+        {{ 'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM' | translate }}
+      </button>
+    }
+    @if (isTaskClaimedByCandidateMember()) {
+      <button mat-button data-automation-id="adf-task-form-unclaim-button"
+        adf-unclaim-task
+        [taskId]="taskId"
+        (success)="onUnclaimTask($event)"
+        (error)="onUnclaimTaskError($event)">
+        {{ 'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.UNCLAIM' | translate }}
+      </button>
+    }
   </ng-template>
-</ng-container>
-<ng-template #loadingTemplate>
-    <div class="adf-task-form-spinner-container">
-        <mat-spinner />
-    </div>
-</ng-template>
+} @else {
+  <div class="adf-task-form-spinner-container">
+    <mat-spinner />
+  </div>
+}

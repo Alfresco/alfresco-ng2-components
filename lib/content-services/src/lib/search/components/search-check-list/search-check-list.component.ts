@@ -24,7 +24,7 @@ import { SearchFilterList } from '../../models/search-filter-list.model';
 import { IconModule, TranslationService } from '@alfresco/adf-core';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -37,7 +37,7 @@ export interface SearchListOption {
 
 @Component({
     selector: 'adf-search-check-list',
-    imports: [CommonModule, MatCheckboxModule, TranslatePipe, MatButtonModule, IconModule],
+    imports: [MatCheckboxModule, TranslatePipe, MatButtonModule, IconModule],
     templateUrl: './search-check-list.component.html',
     styleUrls: ['./search-check-list.component.scss'],
     encapsulation: ViewEncapsulation.None,

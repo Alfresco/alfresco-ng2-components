@@ -19,14 +19,14 @@ import { Component, inject, Input, OnInit, ViewEncapsulation } from '@angular/co
 import { WidgetVisibilityService } from '../../services/widget-visibility.service';
 import { FormFieldModel } from '../widgets/core/form-field.model';
 import { FormFieldComponent } from '../form-field/form-field.component';
-import { NgFor } from '@angular/common';
+
 
 @Component({
     selector: 'adf-form-section',
     templateUrl: './form-section.component.html',
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['./form-section.component.scss'],
-    imports: [NgFor, FormFieldComponent]
+    imports: [FormFieldComponent]
 })
 export class FormSectionComponent implements OnInit {
     @Input()

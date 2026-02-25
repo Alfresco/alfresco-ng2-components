@@ -1,193 +1,189 @@
-<div *ngIf="showViewer"
-     class="adf-viewer-container"
-     [class.adf-viewer-overlay-container]="overlayMode"
-     [class.adf-viewer-inline-container]="!overlayMode">
-
+@if (showViewer) {
+  <div
+    class="adf-viewer-container"
+    [class.adf-viewer-overlay-container]="overlayMode"
+    [class.adf-viewer-inline-container]="!overlayMode">
     <div class="adf-viewer-content"
-         [cdkTrapFocus]="overlayMode"
-         cdkTrapFocusAutoCapture>
-        <ng-content select="adf-viewer-toolbar" />
-        <ng-container *ngIf="showToolbar && !toolbar">
-            <adf-toolbar id="adf-viewer-toolbar" class="adf-viewer-toolbar">
-                <adf-toolbar-title>
-                    <ng-container *ngIf="allowLeftSidebar">
-                        <button mat-icon-button
-                                [attr.aria-expanded]="showLeftSidebar"
-                                [attr.aria-label]="'ADF_VIEWER.ACTIONS.INFO' | translate"
-                                title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
-                                data-automation-id="adf-toolbar-left-sidebar"
-                                [color]="showLeftSidebar ? 'accent' : null"
-                                (click)="toggleLeftSidebar()">
-                            <mat-icon adf-icon="info_outline" />
-                        </button>
-                    </ng-container>
-
-                    <button *ngIf="allowGoBack && closeButtonPosition === CloseButtonPosition.Left"
-                            class="adf-viewer-close-button"
-                            data-automation-id="adf-toolbar-left-back"
-                            [attr.aria-label]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
-                            mat-icon-button
-                            title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
-                            (click)="onClose()">
-                        <mat-icon adf-icon="close" />
-                    </button>
-                </adf-toolbar-title>
-
-                <div class="adf-viewer__file-title">
-                    <button *ngIf="allowNavigate && canNavigateBefore"
-                            data-automation-id="adf-toolbar-pref-file"
-                            mat-icon-button
-                            [attr.aria-label]="'ADF_VIEWER.ACTIONS.PREV_FILE' | translate"
-                            title="{{ 'ADF_VIEWER.ACTIONS.PREV_FILE' | translate }}"
-                            (click)="onNavigateBeforeClick($event)">
-                        <mat-icon adf-icon="navigate_before" />
-                    </button>
-                    <img class="adf-viewer__mimeicon"
-                         [alt]="'ADF_VIEWER.ARIA.MIME_TYPE_ICON' | translate"
-                         [src]="mimeTypeIconUrl"
-                         data-automation-id="adf-file-thumbnail">
-                    @if (displayTitle) {
-                        <div class="adf-viewer__title-display-name-container"
-                             id="adf-viewer-title-display-name"
-                             [title]="displayTitle">
-                            <p class="adf-viewer__title-value">{{ displayTitle }}</p>
-                            <p class="adf-viewer__display-name-value">{{ displayName }}</p>
-                        </div>
-                    } @else {
-                        <div class="adf-viewer__display-name"
-                             id="adf-viewer-display-name"
-                             [title]="fileName">
-                            <span>{{ displayName }}</span>
-                        </div>
-                    }
-                    <button *ngIf="allowNavigate && canNavigateNext"
-                            data-automation-id="adf-toolbar-next-file"
-                            mat-icon-button
-                            [attr.aria-label]="'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate"
-                            title="{{ 'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate }}"
-                            (click)="onNavigateNextClick($event)">
-                        <mat-icon adf-icon="navigate_next" />
-                    </button>
-                </div>
-
-                <ng-content select="adf-viewer-toolbar-actions" />
-
-                <ng-container *ngIf="mnuOpenWith"
-                              data-automation-id='adf-toolbar-custom-btn'>
-                    <button id="adf-viewer-openwith"
-                            mat-button
-                            [matMenuTriggerFor]="mnuOpenWith"
-                            data-automation-id="adf-toolbar-open-with">
-                        <span>{{ 'ADF_VIEWER.ACTIONS.OPEN_WITH' | translate }}</span>
-                        <mat-icon adf-icon="arrow_drop_down" />
-                    </button>
-                    <mat-menu #mnuOpenWith="matMenu"
-                              [overlapTrigger]="false">
-                        <ng-content select="adf-viewer-open-with" />
-                    </mat-menu>
-                </ng-container>
-
-                @if (showToolbarDividers) {
-                    <adf-toolbar-divider />
-                }
-
-                <ng-content select="adf-viewer-toolbar-custom-actions" />
-
-                <button id="adf-viewer-fullscreen"
-                        *ngIf="allowFullScreen"
-                        mat-icon-button
-                        [attr.aria-label]="'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate"
-                        title="{{ 'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate }}"
-                        data-automation-id="adf-toolbar-fullscreen"
-                        (click)="enterFullScreen()">
-                    <mat-icon adf-icon="fullscreen" />
-                </button>
-
-                <ng-container *ngIf="allowRightSidebar && !hideInfoButton">
-                    <adf-toolbar-divider />
-
-                    <button mat-icon-button
-                            [attr.aria-expanded]="showRightSidebar"
-                            [attr.aria-label]="'ADF_VIEWER.ACTIONS.INFO' | translate"
-                            title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
-                            data-automation-id="adf-toolbar-sidebar"
-                            [color]="showRightSidebar ? 'accent' : null"
-                            (click)="toggleRightSidebar()">
-                        <mat-icon adf-icon="info_outline" />
-                    </button>
-
-                </ng-container>
-
-                <ng-container *ngIf="mnuMoreActions">
-                    <button id="adf-viewer-moreactions"
-                            mat-icon-button
-                            [matMenuTriggerFor]="mnuMoreActions"
-                            [attr.aria-label]="'ADF_VIEWER.ACTIONS.MORE_ACTIONS' | translate"
-                            title="{{ 'ADF_VIEWER.ACTIONS.MORE_ACTIONS' | translate }}"
-                            data-automation-id="adf-toolbar-more-actions">
-                        <mat-icon adf-icon="more_vert" />
-                    </button>
-                    <mat-menu #mnuMoreActions="matMenu"
-                              [overlapTrigger]="false">
-                        <ng-content select="adf-viewer-more-actions" />
-                    </mat-menu>
-                </ng-container>
-
-                <ng-container *ngIf="allowGoBack && closeButtonPosition === CloseButtonPosition.Right">
-                    @if (showToolbarDividers) {
-                        <adf-toolbar-divider />
-                    }
-                    <button class="adf-viewer-close-button"
-                            data-automation-id="adf-toolbar-right-back"
-                            [attr.aria-label]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
-                            mat-icon-button
-                            title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
-                            (click)="onClose()">
-                        <mat-icon adf-icon="close" />
-                    </button>
-                </ng-container>
-
-            </adf-toolbar>
-        </ng-container>
-
-        <div class="adf-viewer-sidebars">
-
-            <ng-container *ngIf="allowRightSidebar && showRightSidebar">
-                <div class="adf-viewer__sidebar adf-viewer__sidebar__right"
-                     id="adf-right-sidebar">
-                    <ng-container *ngIf="sidebarRightTemplate">
-                        <ng-container *ngTemplateOutlet="sidebarRightTemplate;context:sidebarRightTemplateContext" />
-                    </ng-container>
-                    <ng-content *ngIf="!sidebarRightTemplate"
-                                select="adf-viewer-sidebar" />
-                </div>
+      [cdkTrapFocus]="overlayMode"
+      cdkTrapFocusAutoCapture>
+      <ng-content select="adf-viewer-toolbar" />
+      @if (showToolbar && !toolbar) {
+        <adf-toolbar id="adf-viewer-toolbar" class="adf-viewer-toolbar">
+          <adf-toolbar-title>
+            @if (allowLeftSidebar) {
+              <button mat-icon-button
+                [attr.aria-expanded]="showLeftSidebar"
+                [attr.aria-label]="'ADF_VIEWER.ACTIONS.INFO' | translate"
+                title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
+                data-automation-id="adf-toolbar-left-sidebar"
+                [color]="showLeftSidebar ? 'accent' : null"
+                (click)="toggleLeftSidebar()">
+                <mat-icon adf-icon="info_outline" />
+              </button>
+            }
+            @if (allowGoBack && closeButtonPosition === CloseButtonPosition.Left) {
+              <button
+                class="adf-viewer-close-button"
+                data-automation-id="adf-toolbar-left-back"
+                [attr.aria-label]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
+                mat-icon-button
+                title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
+                (click)="onClose()">
+                <mat-icon adf-icon="close" />
+              </button>
+            }
+          </adf-toolbar-title>
+          <div class="adf-viewer__file-title">
+            @if (allowNavigate && canNavigateBefore) {
+              <button
+                data-automation-id="adf-toolbar-pref-file"
+                mat-icon-button
+                [attr.aria-label]="'ADF_VIEWER.ACTIONS.PREV_FILE' | translate"
+                title="{{ 'ADF_VIEWER.ACTIONS.PREV_FILE' | translate }}"
+                (click)="onNavigateBeforeClick($event)">
+                <mat-icon adf-icon="navigate_before" />
+              </button>
+            }
+            <img class="adf-viewer__mimeicon"
+              [alt]="'ADF_VIEWER.ARIA.MIME_TYPE_ICON' | translate"
+              [src]="mimeTypeIconUrl"
+              data-automation-id="adf-file-thumbnail">
+            @if (displayTitle) {
+              <div class="adf-viewer__title-display-name-container"
+                id="adf-viewer-title-display-name"
+                [title]="displayTitle">
+                <p class="adf-viewer__title-value">{{ displayTitle }}</p>
+                <p class="adf-viewer__display-name-value">{{ displayName }}</p>
+              </div>
+            } @else {
+              <div class="adf-viewer__display-name"
+                id="adf-viewer-display-name"
+                [title]="fileName">
+                <span>{{ displayName }}</span>
+              </div>
+            }
+            @if (allowNavigate && canNavigateNext) {
+              <button
+                data-automation-id="adf-toolbar-next-file"
+                mat-icon-button
+                [attr.aria-label]="'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate"
+                title="{{ 'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate }}"
+                (click)="onNavigateNextClick($event)">
+                <mat-icon adf-icon="navigate_next" />
+              </button>
+            }
+          </div>
+          <ng-content select="adf-viewer-toolbar-actions" />
+          @if (mnuOpenWith) {
+            <ng-container
+              data-automation-id='adf-toolbar-custom-btn'>
+              <button id="adf-viewer-openwith"
+                mat-button
+                [matMenuTriggerFor]="mnuOpenWith"
+                data-automation-id="adf-toolbar-open-with">
+                <span>{{ 'ADF_VIEWER.ACTIONS.OPEN_WITH' | translate }}</span>
+                <mat-icon adf-icon="arrow_drop_down" />
+              </button>
+              <mat-menu #mnuOpenWith="matMenu"
+                [overlapTrigger]="false">
+                <ng-content select="adf-viewer-open-with" />
+              </mat-menu>
             </ng-container>
-
-            <ng-container *ngIf="allowLeftSidebar && showLeftSidebar">
-                <div class="adf-viewer__sidebar adf-viewer__sidebar__left"
-                     id="adf-left-sidebar">
-                    <ng-container *ngIf="sidebarLeftTemplate">
-                        <ng-container *ngTemplateOutlet="sidebarLeftTemplate;context:sidebarLeftTemplateContext" />
-                    </ng-container>
-                    <ng-content *ngIf="!sidebarLeftTemplate"
-                                select="adf-viewer-sidebar" />
-                </div>
-            </ng-container>
-
-            <adf-viewer-render (close)="onClose()"
-                               [mimeType]="mimeType"
-                               [fileName]="fileName"
-                               [blobFile]="blobFile"
-                               [readOnly]="readOnly"
-                               (submitFile)="onSubmitFile($event)"
-                               [allowedEditActions]="allowedEditActions"
-                               [urlFile]="urlFile"
-                               (isSaving)="allowNavigate = !$event"
-                               [tracks]="tracks"
-                               [viewerTemplateExtensions]="viewerExtensions ?? viewerTemplateExtensions"
-                               [nodeId]="nodeId"
-                               [customError]="customError" />
-
-        </div>
+          }
+          @if (showToolbarDividers) {
+            <adf-toolbar-divider />
+          }
+          <ng-content select="adf-viewer-toolbar-custom-actions" />
+          @if (allowFullScreen) {
+            <button id="adf-viewer-fullscreen"
+              mat-icon-button
+              [attr.aria-label]="'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate"
+              title="{{ 'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate }}"
+              data-automation-id="adf-toolbar-fullscreen"
+              (click)="enterFullScreen()">
+              <mat-icon adf-icon="fullscreen" />
+            </button>
+          }
+          @if (allowRightSidebar && !hideInfoButton) {
+            <adf-toolbar-divider />
+            <button mat-icon-button
+              [attr.aria-expanded]="showRightSidebar"
+              [attr.aria-label]="'ADF_VIEWER.ACTIONS.INFO' | translate"
+              title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
+              data-automation-id="adf-toolbar-sidebar"
+              [color]="showRightSidebar ? 'accent' : null"
+              (click)="toggleRightSidebar()">
+              <mat-icon adf-icon="info_outline" />
+            </button>
+          }
+          @if (mnuMoreActions) {
+            <button id="adf-viewer-moreactions"
+              mat-icon-button
+              [matMenuTriggerFor]="mnuMoreActions"
+              [attr.aria-label]="'ADF_VIEWER.ACTIONS.MORE_ACTIONS' | translate"
+              title="{{ 'ADF_VIEWER.ACTIONS.MORE_ACTIONS' | translate }}"
+              data-automation-id="adf-toolbar-more-actions">
+              <mat-icon adf-icon="more_vert" />
+            </button>
+            <mat-menu #mnuMoreActions="matMenu"
+              [overlapTrigger]="false">
+              <ng-content select="adf-viewer-more-actions" />
+            </mat-menu>
+          }
+          @if (allowGoBack && closeButtonPosition === CloseButtonPosition.Right) {
+            @if (showToolbarDividers) {
+              <adf-toolbar-divider />
+            }
+            <button class="adf-viewer-close-button"
+              data-automation-id="adf-toolbar-right-back"
+              [attr.aria-label]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
+              mat-icon-button
+              title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
+              (click)="onClose()">
+              <mat-icon adf-icon="close" />
+            </button>
+          }
+        </adf-toolbar>
+      }
+      <div class="adf-viewer-sidebars">
+        @if (allowRightSidebar && showRightSidebar) {
+          <div class="adf-viewer__sidebar adf-viewer__sidebar__right"
+            id="adf-right-sidebar">
+            @if (sidebarRightTemplate) {
+              <ng-container *ngTemplateOutlet="sidebarRightTemplate;context:sidebarRightTemplateContext" />
+            }
+            @if (!sidebarRightTemplate) {
+              <ng-content
+                select="adf-viewer-sidebar" />
+            }
+          </div>
+        }
+        @if (allowLeftSidebar && showLeftSidebar) {
+          <div class="adf-viewer__sidebar adf-viewer__sidebar__left"
+            id="adf-left-sidebar">
+            @if (sidebarLeftTemplate) {
+              <ng-container *ngTemplateOutlet="sidebarLeftTemplate;context:sidebarLeftTemplateContext" />
+            }
+            @if (!sidebarLeftTemplate) {
+              <ng-content
+                select="adf-viewer-sidebar" />
+            }
+          </div>
+        }
+        <adf-viewer-render (close)="onClose()"
+          [mimeType]="mimeType"
+          [fileName]="fileName"
+          [blobFile]="blobFile"
+          [readOnly]="readOnly"
+          (submitFile)="onSubmitFile($event)"
+          [allowedEditActions]="allowedEditActions"
+          [urlFile]="urlFile"
+          (isSaving)="allowNavigate = !$event"
+          [tracks]="tracks"
+          [viewerTemplateExtensions]="viewerExtensions ?? viewerTemplateExtensions"
+          [nodeId]="nodeId"
+          [customError]="customError" />
+      </div>
     </div>
-</div>
+  </div>
+}

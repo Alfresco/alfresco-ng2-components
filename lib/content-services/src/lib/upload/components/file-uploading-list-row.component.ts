@@ -17,7 +17,7 @@
 
 import { FileModel, FileUploadStatus } from '../../common/models/file.model';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatListModule } from '@angular/material/list';
 import { FileSizePipe, IconModule } from '@alfresco/adf-core';
 import { MatChipsModule } from '@angular/material/chips';
@@ -29,16 +29,15 @@ import { FileUploadErrorPipe } from '../pipes/file-upload-error.pipe';
 @Component({
     selector: 'adf-file-uploading-list-row',
     imports: [
-        CommonModule,
-        IconModule,
-        MatListModule,
-        MatChipsModule,
-        TranslatePipe,
-        ToggleIconDirective,
-        FileSizePipe,
-        MatButtonModule,
-        FileUploadErrorPipe
-    ],
+    IconModule,
+    MatListModule,
+    MatChipsModule,
+    TranslatePipe,
+    ToggleIconDirective,
+    FileSizePipe,
+    MatButtonModule,
+    FileUploadErrorPipe
+],
     templateUrl: './file-uploading-list-row.component.html',
     styleUrls: ['./file-uploading-list-row.component.scss'],
     encapsulation: ViewEncapsulation.None

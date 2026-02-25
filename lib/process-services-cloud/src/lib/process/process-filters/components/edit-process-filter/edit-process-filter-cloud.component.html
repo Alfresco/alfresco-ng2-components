@@ -1,116 +1,143 @@
 <mat-accordion [hideToggle]="isLoading" class="adf-edit-process-filter">
-    <mat-expansion-panel (afterExpand)="onExpand()" (closed)="onClose()">
-        <mat-expansion-panel-header *ngIf="processFilter" id="adf-edit-process-filter-expansion-header" class="adf-edit-process-filter-header">
-            <ng-container *ngIf="!isLoading; else loadingTemplate">
-                <mat-panel-title *ngIf="showProcessFilterName" id="adf-edit-process-filter-title-id" class="adf-edit-process-filter-header__title">
-                    {{processFilter.name | translate}}</mat-panel-title>
-                <mat-panel-description  class="adf-edit-process-filter-header__description" id="adf-edit-process-filter-sub-title-id">
-                    <span *ngIf="showTitle"> {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE' | translate}}</span>
-                    <div *ngIf="showFilterActions" class="adf-cloud-edit-process-filter-actions">
-                        <ng-container *ngIf="toggleFilterActions">
-                            <button 
-                                *ngFor="let filterAction of processFilterActions"
-                                mat-icon-button
-                                [title]="filterAction.tooltip | translate"
-                                [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType"
-                                [disabled]="isDisabledAction(filterAction)"
-                                (click)="executeFilterActions($event, filterAction)"
-                            >
-                                @if (filterAction.icon.includes(':')) {
-                                    <mat-icon [svgIcon]="filterAction.icon" aria-hidden="true" />
-                                } @else {
-                                    <mat-icon [adf-icon]="filterAction.icon" aria-hidden="true" />
-                                }   
-                            </button>
-                        </ng-container>
-                    </div>
-                </mat-panel-description>
-            </ng-container>
-            <ng-template #loadingTemplate>
-                <div class="adf-cloud-edit-process-filter-loading-margin">
-                    <mat-spinner [diameter]="30" />
-                </div>
-            </ng-template>
-        </mat-expansion-panel-header>
-        <ng-container *ngIf="!isLoading">
-            <form [formGroup]="editProcessFilterForm" *ngIf="editProcessFilterForm" class="adf-edit-process-filter-content">
-                <div class="adf-edit-process-filter-form">
-                    <ng-container *ngFor="let processFilterProperty of processFilterProperties; trackBy: filterTracker">
-                        <mat-form-field [floatLabel]="'auto'" *ngIf="processFilterProperty.type === 'select'" [attr.data-automation-id]="processFilterProperty.key">
-                            <mat-label class="adf-edit-process-filter-content__select-label">{{processFilterProperty.label | translate}}</mat-label>
-                            <mat-select
-                                [formControlName]="processFilterProperty.key"
-                                [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
-                                <mat-option
-                                    *ngFor="let propertyOption of processFilterProperty.options"
-                                    [value]="propertyOption.value"
-                                    [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + processFilterProperty.key"
-                                >{{ propertyOption.label | translate }}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field [floatLabel]="'auto'" *ngIf="processFilterProperty.type === 'multi-select'" [attr.data-automation-id]="processFilterProperty.key">
-                            <mat-label class="adf-edit-process-filter-content__select-label">{{processFilterProperty.label | translate}}</mat-label>
-                            <mat-select
-                                [formControlName]="processFilterProperty.key"
-                                [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"
-                                [multiple]="true">
-                                <mat-option *ngFor="let propertyOption of processFilterProperty.options" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + processFilterProperty.key">
-                                    {{ propertyOption.label | translate }}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field [floatLabel]="'auto'" *ngIf="processFilterProperty.type === 'text'" [attr.data-automation-id]="processFilterProperty.key">
-                            <mat-label class="adf-edit-process-filter-content__text-label">{{processFilterProperty.label | translate}}</mat-label>
-                            <input matInput
-                                [formControlName]="processFilterProperty.key"
-                                type="text"
-                                [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"/>
-                        </mat-form-field>
-                        <mat-form-field [floatLabel]="'auto'" *ngIf="processFilterProperty.type === 'number'" [attr.data-automation-id]="processFilterProperty.key">
-                            <input matInput
-                                [formControlName]="processFilterProperty.key"
-                                type="number" min="0"
-                                placeholder="{{processFilterProperty.label | translate}}"
-                                [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"/>
-                        </mat-form-field>
-                        <mat-form-field [floatLabel]="'auto'" *ngIf="processFilterProperty.type === 'date'" [attr.data-automation-id]="processFilterProperty.key">
-                            <mat-label>{{processFilterProperty.label | translate}}</mat-label>
-                            <input
-                                matInput
-                                [formControlName]="processFilterProperty.key"
-                                (keyup)="onDateChanged($any($event).target.value, processFilterProperty)"
-                                (dateChange)="onDateChanged($event.value, processFilterProperty)"
-                                [matDatepicker]="dateController"
-                                placeholder="{{processFilterProperty.label | translate}}"
-                                [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
-                            <mat-datepicker-toggle
-                                matSuffix [for]="dateController"
-                               [attr.data-automation-id]="'adf-cloud-edit-process-property-date-toggle-' + processFilterProperty.key" />
-                            <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-process-property-date-picker-' + processFilterProperty.key" />
-                            <div class="adf-edit-process-filter-date-error-container">
-                                <div *ngIf="hasError(processFilterProperty)">
-                                    <div class="adf-error-text">{{'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.DATE' | translate}}</div>
-                                    <mat-icon class="adf-error-icon" adf-icon="warning" />
-                                </div>
-                            </div>
-                        </mat-form-field>
-
-                        <adf-cloud-date-range-filter *ngIf="processFilterProperty.type === 'date-range'"
-                            [processFilterProperty]="processFilterProperty"
-                            [options]="processFilterProperty.dateFilterOptions"
-                            (dateTypeChange)="onDateTypeChange($event, processFilterProperty)"
-                            (dateChanged)="onDateRangeFilterChanged($event, processFilterProperty)" />
-                        <adf-cloud-people
-                            *ngIf="processFilterProperty.type === 'people'"
-                            [preSelectUsers]="initiatorOptions"
-                            [title]="processFilterProperty.label"
-                            [validate]="true"
-                            [appName]="appName"
-                            [mode]="processFilterProperty.selectionMode"
-                            (changedUsers)="onChangedUser($event, processFilterProperty)" />
-                    </ng-container>
-                </div>
-            </form>
-        </ng-container>
-    </mat-expansion-panel>
+  <mat-expansion-panel (afterExpand)="onExpand()" (closed)="onClose()">
+    @if (processFilter) {
+      <mat-expansion-panel-header id="adf-edit-process-filter-expansion-header" class="adf-edit-process-filter-header">
+        @if (!isLoading) {
+          @if (showProcessFilterName) {
+            <mat-panel-title id="adf-edit-process-filter-title-id" class="adf-edit-process-filter-header__title">
+            {{processFilter.name | translate}}</mat-panel-title>
+          }
+          <mat-panel-description  class="adf-edit-process-filter-header__description" id="adf-edit-process-filter-sub-title-id">
+            @if (showTitle) {
+              <span> {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE' | translate}}</span>
+            }
+            @if (showFilterActions) {
+              <div class="adf-cloud-edit-process-filter-actions">
+                @if (toggleFilterActions) {
+                  @for (filterAction of processFilterActions; track filterAction) {
+                    <button
+                      mat-icon-button
+                      [title]="filterAction.tooltip | translate"
+                      [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType"
+                      [disabled]="isDisabledAction(filterAction)"
+                      (click)="executeFilterActions($event, filterAction)"
+                      >
+                      @if (filterAction.icon.includes(':')) {
+                        <mat-icon [svgIcon]="filterAction.icon" aria-hidden="true" />
+                      } @else {
+                        <mat-icon [adf-icon]="filterAction.icon" aria-hidden="true" />
+                      }
+                    </button>
+                  }
+                }
+              </div>
+            }
+          </mat-panel-description>
+        } @else {
+          <div class="adf-cloud-edit-process-filter-loading-margin">
+            <mat-spinner [diameter]="30" />
+          </div>
+        }
+      </mat-expansion-panel-header>
+    }
+    @if (!isLoading) {
+      @if (editProcessFilterForm) {
+        <form [formGroup]="editProcessFilterForm" class="adf-edit-process-filter-content">
+          <div class="adf-edit-process-filter-form">
+            @for (processFilterProperty of processFilterProperties; track filterTracker($index, processFilterProperty)) {
+              @if (processFilterProperty.type === 'select') {
+                <mat-form-field [floatLabel]="'auto'" [attr.data-automation-id]="processFilterProperty.key">
+                  <mat-label class="adf-edit-process-filter-content__select-label">{{processFilterProperty.label | translate}}</mat-label>
+                  <mat-select
+                    [formControlName]="processFilterProperty.key"
+                    [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
+                    @for (propertyOption of processFilterProperty.options; track propertyOption) {
+                      <mat-option
+                        [value]="propertyOption.value"
+                        [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + processFilterProperty.key"
+                      >{{ propertyOption.label | translate }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              }
+              @if (processFilterProperty.type === 'multi-select') {
+                <mat-form-field [floatLabel]="'auto'" [attr.data-automation-id]="processFilterProperty.key">
+                  <mat-label class="adf-edit-process-filter-content__select-label">{{processFilterProperty.label | translate}}</mat-label>
+                  <mat-select
+                    [formControlName]="processFilterProperty.key"
+                    [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"
+                    [multiple]="true">
+                    @for (propertyOption of processFilterProperty.options; track propertyOption) {
+                      <mat-option [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + processFilterProperty.key">
+                        {{ propertyOption.label | translate }}
+                      </mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              }
+              @if (processFilterProperty.type === 'text') {
+                <mat-form-field [floatLabel]="'auto'" [attr.data-automation-id]="processFilterProperty.key">
+                  <mat-label class="adf-edit-process-filter-content__text-label">{{processFilterProperty.label | translate}}</mat-label>
+                  <input matInput
+                    [formControlName]="processFilterProperty.key"
+                    type="text"
+                    [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"/>
+                </mat-form-field>
+              }
+              @if (processFilterProperty.type === 'number') {
+                <mat-form-field [floatLabel]="'auto'" [attr.data-automation-id]="processFilterProperty.key">
+                  <input matInput
+                    [formControlName]="processFilterProperty.key"
+                    type="number" min="0"
+                    placeholder="{{processFilterProperty.label | translate}}"
+                    [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"/>
+                </mat-form-field>
+              }
+              @if (processFilterProperty.type === 'date') {
+                <mat-form-field [floatLabel]="'auto'" [attr.data-automation-id]="processFilterProperty.key">
+                  <mat-label>{{processFilterProperty.label | translate}}</mat-label>
+                  <input
+                    matInput
+                    [formControlName]="processFilterProperty.key"
+                    (keyup)="onDateChanged($any($event).target.value, processFilterProperty)"
+                    (dateChange)="onDateChanged($event.value, processFilterProperty)"
+                    [matDatepicker]="dateController"
+                    placeholder="{{processFilterProperty.label | translate}}"
+                    [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
+                  <mat-datepicker-toggle
+                    matSuffix [for]="dateController"
+                    [attr.data-automation-id]="'adf-cloud-edit-process-property-date-toggle-' + processFilterProperty.key" />
+                  <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-process-property-date-picker-' + processFilterProperty.key" />
+                  <div class="adf-edit-process-filter-date-error-container">
+                    @if (hasError(processFilterProperty)) {
+                      <div>
+                        <div class="adf-error-text">{{'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.DATE' | translate}}</div>
+                        <mat-icon class="adf-error-icon" adf-icon="warning" />
+                      </div>
+                    }
+                  </div>
+                </mat-form-field>
+              }
+              @if (processFilterProperty.type === 'date-range') {
+                <adf-cloud-date-range-filter
+                  [processFilterProperty]="processFilterProperty"
+                  [options]="processFilterProperty.dateFilterOptions"
+                  (dateTypeChange)="onDateTypeChange($event, processFilterProperty)"
+                  (dateChanged)="onDateRangeFilterChanged($event, processFilterProperty)" />
+              }
+              @if (processFilterProperty.type === 'people') {
+                <adf-cloud-people
+                  [preSelectUsers]="initiatorOptions"
+                  [title]="processFilterProperty.label"
+                  [validate]="true"
+                  [appName]="appName"
+                  [mode]="processFilterProperty.selectionMode"
+                  (changedUsers)="onChangedUser($event, processFilterProperty)" />
+              }
+            }
+          </div>
+        </form>
+      }
+    }
+  </mat-expansion-panel>
 </mat-accordion>

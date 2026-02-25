@@ -1,115 +1,117 @@
 <div class="adf-user-task-cloud-container">
-    <div *ngIf="!loading; else loadingTemplate">
-        <ng-container [ngSwitch]="taskType">
-            <ng-container *ngSwitchCase="taskTypeEnum.Form">
-                <adf-cloud-task-form
-                    #adfCloudTaskForm
-                    [appName]="appName"
-                    [candidateUsers]="candidateUsers"
-                    [candidateGroups]="candidateGroups"
-                    [displayModeConfigurations]="displayModeConfigurations"
-                    [enableParentVisibilityCheck]="enableParentVisibilityCheck"
-                    [showValidationIcon]="showValidationIcon"
-                    [showTitle]="showTitle"
-                    [taskId]="taskId"
-                    [taskDetails]="taskDetails"
-                    [showCancelButton]="showCancelButton"
-                    [showSaveButton]="showSaveButton && canCompleteTask()"
-                    [showCompleteButton]="showCompleteButton && canCompleteTask()"
-                    [customCancelButtonText]="customCancelButtonText"
-                    [customSaveButtonText]="customSaveButtonText"
-                    [customCompleteButtonText]="customCompleteButtonText"
-                    (cancelClick)="onCancelForm()"
-                    (executeOutcome)="onExecuteOutcome($event)"
-                    (error)="onError($event)"
-                    (formLoaded)="onFormLoaded($event)"
-                    (formSaved)="onFormSaved()"
-                    (formContentClicked)="onFormContentClicked($event)"
-                    (taskCompleted)="onCompleteTaskForm()"
-                    (taskClaimed)="onClaimTask()"
-                    (taskUnclaimed)="onTaskUnclaimed()"
+  @if (!loading) {
+    <div>
+      @switch (taskType) {
+        @case (taskTypeEnum.Form) {
+          <adf-cloud-task-form
+            #adfCloudTaskForm
+            [appName]="appName"
+            [candidateUsers]="candidateUsers"
+            [candidateGroups]="candidateGroups"
+            [displayModeConfigurations]="displayModeConfigurations"
+            [enableParentVisibilityCheck]="enableParentVisibilityCheck"
+            [showValidationIcon]="showValidationIcon"
+            [showTitle]="showTitle"
+            [taskId]="taskId"
+            [taskDetails]="taskDetails"
+            [showCancelButton]="showCancelButton"
+            [showSaveButton]="showSaveButton && canCompleteTask()"
+            [showCompleteButton]="showCompleteButton && canCompleteTask()"
+            [customCancelButtonText]="customCancelButtonText"
+            [customSaveButtonText]="customSaveButtonText"
+            [customCompleteButtonText]="customCompleteButtonText"
+            (cancelClick)="onCancelForm()"
+            (executeOutcome)="onExecuteOutcome($event)"
+            (error)="onError($event)"
+            (formLoaded)="onFormLoaded($event)"
+            (formSaved)="onFormSaved()"
+            (formContentClicked)="onFormContentClicked($event)"
+            (taskCompleted)="onCompleteTaskForm()"
+            (taskClaimed)="onClaimTask()"
+            (taskUnclaimed)="onTaskUnclaimed()"
+            />
+        }
+        @case (taskTypeEnum.Screen) {
+          <adf-cloud-task-screen
+            #adfCloudTaskScreen
+            [appName]="appName"
+            [canClaimTask]="canClaimTask()"
+            [canUnclaimTask]="canUnclaimTask()"
+            [processInstanceId]="taskDetails.processInstanceId"
+            [rootProcessInstanceId]="taskDetails.rootProcessInstanceId"
+            [screenId]="screenId"
+            [showCancelButton]="showCancelButton"
+            [taskName]="taskDetails.name"
+            [taskId]="taskId"
+            [showNextTaskCheckbox]="showNextTaskCheckbox && canCompleteTask()"
+            [isNextTaskCheckboxChecked]="isNextTaskCheckboxChecked"
+            (cancelTask)="onCancelClick()"
+            (claimTask)="onClaimTask()"
+            (error)="onError($event)"
+            (taskCompleted)="onCompleteTask($event, taskType)"
+            (taskSaved)="onFormSaved()"
+            (unclaimTask)="onUnclaimTask()"
+            (nextTaskCheckboxCheckedChanged)="onNextTaskCheckboxCheckedChanged($event)"
+            />
+        }
+        @case (taskTypeEnum.None) {
+          <mat-card appearance="outlined" class="adf-task-form-container">
+            @if (showTitle) {
+              <mat-card-header>
+                <mat-card-title>
+                  <h4>
+                    <span class="adf-form-title">
+                      {{ taskDetails?.name || 'FORM.FORM_RENDERER.NAMELESS_TASK' | translate }}
+                    </span>
+                  </h4>
+                </mat-card-title>
+              </mat-card-header>
+            }
+            <mat-card-content>
+              <adf-empty-content
+                [icon]="'description'"
+                [title]="'ADF_CLOUD_TASK_FORM.EMPTY_FORM.TITLE'"
+                [subtitle]="'ADF_CLOUD_TASK_FORM.EMPTY_FORM.SUBTITLE'"
                 />
-            </ng-container>
-
-            <ng-container *ngSwitchCase="taskTypeEnum.Screen">
-                <adf-cloud-task-screen
-                    #adfCloudTaskScreen
-                    [appName]="appName"
-                    [canClaimTask]="canClaimTask()"
-                    [canUnclaimTask]="canUnclaimTask()"
-                    [processInstanceId]="taskDetails.processInstanceId"
-                    [rootProcessInstanceId]="taskDetails.rootProcessInstanceId"
-                    [screenId]="screenId"
-                    [showCancelButton]="showCancelButton"
-                    [taskName]="taskDetails.name"
-                    [taskId]="taskId"
-                    [showNextTaskCheckbox]="showNextTaskCheckbox && canCompleteTask()"
-                    [isNextTaskCheckboxChecked]="isNextTaskCheckboxChecked"
-                    (cancelTask)="onCancelClick()"
-                    (claimTask)="onClaimTask()"
-                    (error)="onError($event)"
-                    (taskCompleted)="onCompleteTask($event, taskType)"
-                    (taskSaved)="onFormSaved()"
-                    (unclaimTask)="onUnclaimTask()"
-                    (nextTaskCheckboxCheckedChanged)="onNextTaskCheckboxCheckedChanged($event)"
-                />
-            </ng-container>
-
-            <ng-container *ngSwitchCase="taskTypeEnum.None">
-                <mat-card appearance="outlined" class="adf-task-form-container">
-                    <mat-card-header *ngIf="showTitle">
-                        <mat-card-title>
-                            <h4>
-                                <span class="adf-form-title">
-                                    {{ taskDetails?.name || 'FORM.FORM_RENDERER.NAMELESS_TASK' | translate }}
-                                </span>
-                            </h4>
-                        </mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <adf-empty-content
-                            [icon]="'description'"
-                            [title]="'ADF_CLOUD_TASK_FORM.EMPTY_FORM.TITLE'"
-                            [subtitle]="'ADF_CLOUD_TASK_FORM.EMPTY_FORM.SUBTITLE'"
-                        />
-                    </mat-card-content>
-                    <mat-card-actions class="adf-task-form-actions" align="end">
-                        <ng-template [ngTemplateOutlet]="taskFormCloudButtons" />
-                        <button
-                            *ngIf="canCompleteTask()"
-                            mat-flat-button
-                            adf-cloud-complete-task
-                            [appName]="appName"
-                            [taskId]="taskId"
-                            (success)="onCompleteTask(false, taskType)"
-                            (error)="onError($event)"
-                            color="primary"
-                            id="adf-form-complete"
-                        >
-                            {{ customCompleteButtonText || ('ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate) }}
-                        </button>
-                    </mat-card-actions>
-                </mat-card>
-            </ng-container>
-        </ng-container>
+            </mat-card-content>
+            <mat-card-actions class="adf-task-form-actions" align="end">
+              <ng-template [ngTemplateOutlet]="taskFormCloudButtons" />
+              @if (canCompleteTask()) {
+                <button
+                  mat-flat-button
+                  adf-cloud-complete-task
+                  [appName]="appName"
+                  [taskId]="taskId"
+                  (success)="onCompleteTask(false, taskType)"
+                  (error)="onError($event)"
+                  color="primary"
+                  id="adf-form-complete"
+                  >
+                  {{ customCompleteButtonText || ('ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate) }}
+                </button>
+              }
+            </mat-card-actions>
+          </mat-card>
+        }
+      }
     </div>
+  } @else {
+    <mat-spinner class="adf-user-task-cloud-spinner" />
+  }
 </div>
 
-<ng-template #loadingTemplate>
-    <mat-spinner class="adf-user-task-cloud-spinner" />
-</ng-template>
 
 <ng-template #taskFormCloudButtons>
-    <adf-cloud-user-task-cloud-buttons
-        [appName]="appName"
-        [canClaimTask]="canClaimTask()"
-        [canUnclaimTask]="canUnclaimTask()"
-        [showCancelButton]="showCancelButton"
-        [customCancelButtonText]="customCancelButtonText"
-        [taskId]="taskId"
-        (cancelClick)="onCancelClick()"
-        (claimTask)="onClaimTask()"
-        (unclaimTask)="onUnclaimTask()"
-        (error)="onError($event)"
+  <adf-cloud-user-task-cloud-buttons
+    [appName]="appName"
+    [canClaimTask]="canClaimTask()"
+    [canUnclaimTask]="canUnclaimTask()"
+    [showCancelButton]="showCancelButton"
+    [customCancelButtonText]="customCancelButtonText"
+    [taskId]="taskId"
+    (cancelClick)="onCancelClick()"
+    (claimTask)="onClaimTask()"
+    (unclaimTask)="onUnclaimTask()"
+    (error)="onError($event)"
     />
 </ng-template>

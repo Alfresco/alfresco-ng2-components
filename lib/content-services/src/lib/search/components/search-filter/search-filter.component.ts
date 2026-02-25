@@ -20,7 +20,7 @@ import { SearchQueryBuilderService } from '../../services/search-query-builder.s
 import { FacetFieldBucket } from '../../models/facet-field-bucket.interface';
 import { FacetField } from '../../models/facet-field.interface';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
-import { CommonModule } from '@angular/common';
+
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -32,15 +32,14 @@ import { SearchFacetTabbedContentComponent } from '../search-filter-chips';
 @Component({
     selector: 'adf-search-filter',
     imports: [
-        CommonModule,
-        MatExpansionModule,
-        MatButtonModule,
-        TranslatePipe,
-        SearchFilterCardComponent,
-        ResetSearchDirective,
-        SearchFacetFieldComponent,
-        SearchFacetTabbedContentComponent
-    ],
+    MatExpansionModule,
+    MatButtonModule,
+    TranslatePipe,
+    SearchFilterCardComponent,
+    ResetSearchDirective,
+    SearchFacetFieldComponent,
+    SearchFacetTabbedContentComponent
+],
     templateUrl: './search-filter.component.html',
     styleUrls: ['./search-filter.component.scss'],
     encapsulation: ViewEncapsulation.None,

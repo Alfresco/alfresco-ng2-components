@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessContentService } from '../../form/services/process-content.service';
-import { CommonModule } from '@angular/common';
+
 import { RelatedContentRepresentation } from '@alfresco/js-api';
 import { MatButtonModule } from '@angular/material/button';
 import { UploadDirective } from '@alfresco/adf-core';
@@ -25,7 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-create-task-attachment',
-    imports: [CommonModule, MatButtonModule, UploadDirective, MatIconModule],
+    imports: [MatButtonModule, UploadDirective, MatIconModule],
     styleUrls: ['./create-task-attachment.component.scss'],
     templateUrl: './create-task-attachment.component.html'
 })

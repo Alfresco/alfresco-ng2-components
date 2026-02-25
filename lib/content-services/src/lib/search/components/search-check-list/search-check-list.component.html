@@ -1,40 +1,46 @@
 <fieldset class="adf-search-checklist">
+  @for (option of options; track option) {
     <mat-checkbox
-        *ngFor="let option of options"
-        [checked]="option.checked"
-        (keydown.enter)="option.checked = !option.checked"
-        [attr.data-automation-id]="'checkbox-' + (option.name)"
-        (change)="changeHandler($event, option)"
-        class="adf-facet-filter">
-        <div title="{{ option.name | translate }}" class="adf-search-check-list-label">
-            {{ option.name | translate }}
-        </div>
-
+      [checked]="option.checked"
+      (keydown.enter)="option.checked = !option.checked"
+      [attr.data-automation-id]="'checkbox-' + (option.name)"
+      (change)="changeHandler($event, option)"
+      class="adf-facet-filter">
+      <div title="{{ option.name | translate }}" class="adf-search-check-list-label">
+        {{ option.name | translate }}
+      </div>
     </mat-checkbox>
+  }
 </fieldset>
 
-<div class="adf-facet-buttons" *ngIf="options.fitsPage && !settings?.hideDefaultAction">
+@if (options.fitsPage && !settings?.hideDefaultAction) {
+  <div class="adf-facet-buttons">
     <button mat-button color="primary" (click)="clear()">
-        {{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}
+      {{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}
     </button>
-</div>
+  </div>
+}
 
-<div class="adf-facet-buttons" *ngIf="!options.fitsPage">
+@if (!options.fitsPage) {
+  <div class="adf-facet-buttons">
     <button mat-icon-button
-        title="{{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}"
-        (click)="clear()">
-        <mat-icon adf-icon="clear" />
+      title="{{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}"
+      (click)="clear()">
+      <mat-icon adf-icon="clear" />
     </button>
-    <button mat-icon-button
-        *ngIf="options.canShowLessItems"
+    @if (options.canShowLessItems) {
+      <button mat-icon-button
         title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}"
         (click)="options.showLessItems()">
         <mat-icon adf-icon="keyboard_arrow_up" />
-    </button>
-    <button mat-icon-button
-        *ngIf="options.canShowMoreItems"
+      </button>
+    }
+    @if (options.canShowMoreItems) {
+      <button mat-icon-button
         title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}"
         (click)="options.showMoreItems()">
         <mat-icon adf-icon="keyboard_arrow_down" />
-    </button>
-</div>
+      </button>
+    }
+  </div>
+}

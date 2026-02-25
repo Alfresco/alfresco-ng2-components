@@ -1,32 +1,41 @@
 <div class="adf-analytics-report-list menu-container">
-    <mat-nav-list *ngIf="isList()">
+  @if (isList()) {
+    <mat-nav-list>
+      @for (report of reports; track report; let idx = $index) {
         <mat-list-item
-            class="adf-activiti-filters__entry"
-            (click)="selectReport(report)"
-            *ngFor="let report of reports; let idx = index"
-            [class.adf-active]="currentReport === report">
-            <span [attr.id]="'report-list-' + idx" class="adf-activiti-filters__label">
-                <mat-icon matListItemLine
-                    [attr.data-automation-id]="report.name + '_filter'"
-                    class="adf-activiti-filters__entry-icon">assignment</mat-icon>
-                <span class="adf-text">{{report.name}}</span>
-            </span>
+          class="adf-activiti-filters__entry"
+          (click)="selectReport(report)"
+          [class.adf-active]="currentReport === report">
+          <span [attr.id]="'report-list-' + idx" class="adf-activiti-filters__label">
+            <mat-icon matListItemLine
+              [attr.data-automation-id]="report.name + '_filter'"
+            class="adf-activiti-filters__entry-icon">assignment</mat-icon>
+            <span class="adf-text">{{report.name}}</span>
+          </span>
         </mat-list-item>
+      }
     </mat-nav-list>
-    <div class="adf-report-card-grids" *ngIf="isGrid()">
-        <mat-card appearance="outlined" (click)="selectReport(report)" class="adf-report-card" *ngFor="let report of reports">
-            <div class="adf-report-card-logo logo">
-                <mat-icon class="adf-report-card-logo-icon">equalizer</mat-icon>
-            </div>
-            <div mat-card-title class="adf-report-card-title">
-                <h1 class="adf-application-title">{{report.name}}</h1>
-            </div>
-            <div mat-card-content class="adf-report-card-content">
-                <p>{{report.description}}</p>
-            </div>
-            <div mat-card-actions class="adf-report-card-actions">
-                <mat-icon class="adf-report-card-actions-icon" *ngIf="isSelected(report)">done</mat-icon>
-            </div>
+  }
+  @if (isGrid()) {
+    <div class="adf-report-card-grids">
+      @for (report of reports; track report) {
+        <mat-card appearance="outlined" (click)="selectReport(report)" class="adf-report-card">
+          <div class="adf-report-card-logo logo">
+            <mat-icon class="adf-report-card-logo-icon">equalizer</mat-icon>
+          </div>
+          <div mat-card-title class="adf-report-card-title">
+            <h1 class="adf-application-title">{{report.name}}</h1>
+          </div>
+          <div mat-card-content class="adf-report-card-content">
+            <p>{{report.description}}</p>
+          </div>
+          <div mat-card-actions class="adf-report-card-actions">
+            @if (isSelected(report)) {
+              <mat-icon class="adf-report-card-actions-icon">done</mat-icon>
+            }
+          </div>
         </mat-card>
+      }
     </div>
+  }
 </div>

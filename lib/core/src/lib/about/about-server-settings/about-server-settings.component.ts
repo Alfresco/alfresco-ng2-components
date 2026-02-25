@@ -17,7 +17,7 @@
 
 import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 
@@ -26,7 +26,7 @@ import { MatCardModule } from '@angular/material/card';
     templateUrl: './about-server-settings.component.html',
     styleUrls: ['./about-server-settings.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    imports: [CommonModule, TranslatePipe, MatCardModule]
+    imports: [TranslatePipe, MatCardModule]
 })
 export class AboutServerSettingsComponent implements OnInit {
     private readonly appConfig = inject(AppConfigService);

@@ -1,4 +1,5 @@
-<adf-content-metadata
+@if (!loading) {
+  <adf-content-metadata
     [displayDefaultProperties]="displayDefaultProperties"
     [expanded]="expanded"
     [node]="node"
@@ -11,10 +12,9 @@
     [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
     [displayTags]="false"
     [displayCategories]="false"
-    *ngIf="!loading; else loadingTemplate"
-/>
-<ng-template #loadingTemplate>
-    <div class="adf-properties-viewer-wrapper-loading">
-        <mat-progress-spinner />
-    </div>
-</ng-template>
+    />
+} @else {
+  <div class="adf-properties-viewer-wrapper-loading">
+    <mat-progress-spinner />
+  </div>
+}

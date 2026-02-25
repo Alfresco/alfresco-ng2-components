@@ -22,7 +22,7 @@ import { ContextMenuOverlayRef } from './context-menu-overlay';
 import { contextMenuAnimation } from './animations';
 import { CONTEXT_MENU_DATA } from './context-menu.tokens';
 import { AfterViewInit, Component, HostListener, QueryList, ViewChildren, ViewEncapsulation, inject } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { IconModule } from '../icon/icon.module';
@@ -37,7 +37,7 @@ import { ContextMenuItem } from './interfaces';
         class: 'adf-context-menu'
     },
     encapsulation: ViewEncapsulation.None,
-    imports: [IconModule, MatMenuModule, NgForOf, NgIf, TranslatePipe],
+    imports: [IconModule, MatMenuModule, TranslatePipe],
     animations: [trigger('panelAnimation', contextMenuAnimation)]
 })
 export class ContextMenuListComponent implements AfterViewInit {

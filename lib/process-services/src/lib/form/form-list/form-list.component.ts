@@ -17,12 +17,12 @@
 
 import { Component, Input, OnChanges, ViewEncapsulation, inject } from '@angular/core';
 import { ModelService } from '../services/model.service';
-import { CommonModule } from '@angular/common';
+
 import { DataColumnComponent, DataColumnListComponent, DataTableComponent } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-form-list',
-    imports: [CommonModule, DataTableComponent, DataColumnListComponent, DataColumnComponent],
+    imports: [DataTableComponent, DataColumnListComponent, DataColumnComponent],
     templateUrl: './form-list.component.html',
     encapsulation: ViewEncapsulation.None
 })

@@ -1,83 +1,79 @@
-<ng-container *ngIf="hasItems">
-    <div class="adf-pagination__block adf-pagination__range-block" aria-live="polite">
-        <span class="adf-pagination__range">
-            {{ itemRangeText }}
-        </span>
-    </div>
-
-    <div class="adf-pagination__block adf-pagination__perpage-block">
-        <span>
-            {{ 'CORE.PAGINATION.ITEMS_PER_PAGE' | translate }}
-        </span>
-
-        <span class="adf-pagination__max-items">
-            {{ pagination.maxItems }}
-        </span>
-
+@if (hasItems) {
+  <div class="adf-pagination__block adf-pagination__range-block" aria-live="polite">
+    <span class="adf-pagination__range">
+      {{ itemRangeText }}
+    </span>
+  </div>
+  <div class="adf-pagination__block adf-pagination__perpage-block">
+    <span>
+      {{ 'CORE.PAGINATION.ITEMS_PER_PAGE' | translate }}
+    </span>
+    <span class="adf-pagination__max-items">
+      {{ pagination.maxItems }}
+    </span>
+    <button
+      mat-icon-button
+      [attr.aria-label]="'CORE.PAGINATION.ARIA.ITEMS_PER_PAGE' | translate"
+      [matMenuTriggerFor]="pageSizeMenu">
+      <mat-icon adf-icon="arrow_drop_down" />
+    </button>
+    <mat-menu #pageSizeMenu="matMenu" class="adf-pagination__page-selector">
+      @for (pageSize of supportedPageSizes; track pageSize) {
         <button
-            mat-icon-button
-            [attr.aria-label]="'CORE.PAGINATION.ARIA.ITEMS_PER_PAGE' | translate"
-            [matMenuTriggerFor]="pageSizeMenu">
-            <mat-icon adf-icon="arrow_drop_down" />
+          mat-menu-item
+          (click)="onChangePageSize(pageSize)">
+          {{ pageSize }}
         </button>
-
-        <mat-menu #pageSizeMenu="matMenu" class="adf-pagination__page-selector">
-            <button
-                mat-menu-item
-                *ngFor="let pageSize of supportedPageSizes"
-                (click)="onChangePageSize(pageSize)">
-                {{ pageSize }}
-            </button>
-        </mat-menu>
-    </div>
-
-    <div class="adf-pagination__block adf-pagination__actualinfo-block">
-        <span class="adf-pagination__current-page">
-            {{ 'CORE.PAGINATION.CURRENT_PAGE' | translate: { number: current } }}
+      }
+    </mat-menu>
+  </div>
+  <div class="adf-pagination__block adf-pagination__actualinfo-block">
+    <span class="adf-pagination__current-page">
+      {{ 'CORE.PAGINATION.CURRENT_PAGE' | translate: { number: current } }}
+    </span>
+    @if (lastPage > 1) {
+      <button
+        mat-icon-button
+        data-automation-id="page-selector"
+        [attr.aria-label]="'CORE.PAGINATION.ARIA.CURRENT_PAGE' | translate"
+        [matMenuTriggerFor]="pagesMenu"
+        >
+        <mat-icon adf-icon="arrow_drop_down" />
+      </button>
+    }
+    @if (pagination.totalItems) {
+      <div>
+        <span class="adf-pagination__total-pages">
+          {{ 'CORE.PAGINATION.TOTAL_PAGES' | translate: { total: lastPage } }}
         </span>
-
+      </div>
+    }
+    <mat-menu #pagesMenu="matMenu" class="adf-pagination__page-selector">
+      @for (pageNumber of limitedPages; track pageNumber) {
         <button
-            mat-icon-button
-            data-automation-id="page-selector"
-            [attr.aria-label]="'CORE.PAGINATION.ARIA.CURRENT_PAGE' | translate"
-            [matMenuTriggerFor]="pagesMenu"
-            *ngIf="lastPage > 1">
-            <mat-icon adf-icon="arrow_drop_down" />
+          mat-menu-item
+          (click)="onChangePageNumber(pageNumber)">
+          {{ pageNumber }}
         </button>
-
-        <div *ngIf="pagination.totalItems">
-            <span class="adf-pagination__total-pages">
-                {{ 'CORE.PAGINATION.TOTAL_PAGES' | translate: { total: lastPage } }}
-            </span>
-        </div>
-
-        <mat-menu #pagesMenu="matMenu" class="adf-pagination__page-selector">
-            <button
-                mat-menu-item
-                *ngFor="let pageNumber of limitedPages"
-                (click)="onChangePageNumber(pageNumber)">
-                {{ pageNumber }}
-            </button>
-        </mat-menu>
-    </div>
-
-    <div class="adf-pagination__block adf-pagination__controls-block">
-        <button
-            class="adf-pagination__previous-button"
-            mat-icon-button
-            [attr.aria-label]="'CORE.PAGINATION.ARIA.PREVIOUS_PAGE' | translate"
-            [disabled]="isFirstPage"
-            (click)="goPrevious()">
-            <mat-icon adf-icon="keyboard_arrow_left" />
-        </button>
-
-        <button
-            class="adf-pagination__next-button"
-            mat-icon-button
-            [attr.aria-label]="'CORE.PAGINATION.ARIA.NEXT_PAGE' | translate"
-            [disabled]="isLastPage"
-            (click)="goNext()">
-            <mat-icon adf-icon="keyboard_arrow_right" />
-        </button>
-    </div>
-</ng-container>
+      }
+    </mat-menu>
+  </div>
+  <div class="adf-pagination__block adf-pagination__controls-block">
+    <button
+      class="adf-pagination__previous-button"
+      mat-icon-button
+      [attr.aria-label]="'CORE.PAGINATION.ARIA.PREVIOUS_PAGE' | translate"
+      [disabled]="isFirstPage"
+      (click)="goPrevious()">
+      <mat-icon adf-icon="keyboard_arrow_left" />
+    </button>
+    <button
+      class="adf-pagination__next-button"
+      mat-icon-button
+      [attr.aria-label]="'CORE.PAGINATION.ARIA.NEXT_PAGE' | translate"
+      [disabled]="isLastPage"
+      (click)="goNext()">
+      <mat-icon adf-icon="keyboard_arrow_right" />
+    </button>
+  </div>
+}

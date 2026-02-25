@@ -1,55 +1,66 @@
-<div class="menu-container" *ngIf="!isEmpty()">
-    <mat-list *ngIf="isList()" class="adf-app-list">
-        <mat-list-item class="adf-app-list-item" (click)="selectApp(app)" (keyup.enter)="selectApp(app)" *ngFor="let app of appList" tabindex="0" role="button" title="{{app.name}}">
+@if (!isEmpty()) {
+  <div class="menu-container">
+    @if (isList()) {
+      <mat-list class="adf-app-list">
+        @for (app of appList; track app) {
+          <mat-list-item class="adf-app-list-item" (click)="selectApp(app)" (keyup.enter)="selectApp(app)" tabindex="0" role="button" title="{{app.name}}">
             <mat-icon matListItemIcon>touch_app</mat-icon>
             <span matLine>{{getAppName(app) | translate}}</span>
-        </mat-list-item>
-    </mat-list>
-    <div *ngIf="isGrid()" class="adf-app-listgrid">
-        <div *ngFor="let app of appList"
+          </mat-list-item>
+        }
+      </mat-list>
+    }
+    @if (isGrid()) {
+      <div class="adf-app-listgrid">
+        @for (app of appList; track app) {
+          <div
             class="adf-app-listgrid-item">
-                <mat-card appearance="outlined" tabindex="0"
-                    role="button"
-                    class="adf-app-listgrid-item-card"
-                    title="{{getAppName(app) | translate}}"
-                    [ngClass]="[getTheme(app)]"
-                    (click)="selectApp(app)"
-                    (keyup.enter)="selectApp(app)">
-                        <div class="adf-app-listgrid-item-card-logo">
-                            <mat-icon class="adf-app-listgrid-item-card-logo-icon">{{getBackgroundIcon(app)}}</mat-icon>
-                        </div>
-                        <div mat-card-title class="adf-app-listgrid-item-card-title">
-                            <h1>{{getAppName(app) | translate}}</h1>
-                        </div>
-                        <mat-card-subtitle class="adf-app-listgrid-item-card-subtitle">
-                            <div class="adf-line-clamp">{{app.description}}</div>
-                        </mat-card-subtitle>
+            <mat-card appearance="outlined" tabindex="0"
+              role="button"
+              class="adf-app-listgrid-item-card"
+              title="{{getAppName(app) | translate}}"
+              [ngClass]="[getTheme(app)]"
+              (click)="selectApp(app)"
+              (keyup.enter)="selectApp(app)">
+              <div class="adf-app-listgrid-item-card-logo">
+                <mat-icon class="adf-app-listgrid-item-card-logo-icon">{{getBackgroundIcon(app)}}</mat-icon>
+              </div>
+              <div mat-card-title class="adf-app-listgrid-item-card-title">
+                <h1>{{getAppName(app) | translate}}</h1>
+              </div>
+              <mat-card-subtitle class="adf-app-listgrid-item-card-subtitle">
+                <div class="adf-line-clamp">{{app.description}}</div>
+              </mat-card-subtitle>
+              <mat-card-actions class="adf-app-listgrid-item-card-actions">
+                @if (isSelected(app.id)) {
+                  <mat-icon class="adf-app-listgrid-item-card-actions-icon">done</mat-icon>
+                }
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}
 
-                        <mat-card-actions class="adf-app-listgrid-item-card-actions">
-                            <mat-icon class="adf-app-listgrid-item-card-actions-icon" *ngIf="isSelected(app.id)">done</mat-icon>
-                        </mat-card-actions>
-                </mat-card>
-        </div>
-    </div>
-</div>
-
-<ng-container *ngIf="isLoading(); else empty">
-    <div class="adf-app-list-spinner">
-        <mat-progress-spinner mode="indeterminate" />
-    </div>
-</ng-container>
-
-<ng-template #empty>
-    <div class="adf-app-list-empty" *ngIf="isEmpty()">
+@if (isLoading()) {
+  <div class="adf-app-list-spinner">
+    <mat-progress-spinner mode="indeterminate" />
+  </div>
+} @else {
+  @if (isEmpty()) {
+    <div class="adf-app-list-empty">
+      @if (hasEmptyCustomContentTemplate) {
         <ng-content select="adf-custom-empty-content-template"
-                    *ngIf="hasEmptyCustomContentTemplate; else defaultEmptyTemplate"
-                    class="adf-custom-empty-template" />
-
-        <ng-template #defaultEmptyTemplate>
-            <adf-empty-content
-                icon="apps"
-                [title]="'ADF_TASK_LIST.APPS.TITLE' | translate"
-                [subtitle]="'ADF_TASK_LIST.APPS.SUBTITLE' | translate" />
-        </ng-template>
+          class="adf-custom-empty-template" />
+      } @else {
+        <adf-empty-content
+          icon="apps"
+          [title]="'ADF_TASK_LIST.APPS.TITLE' | translate"
+          [subtitle]="'ADF_TASK_LIST.APPS.SUBTITLE' | translate" />
+      }
     </div>
-</ng-template>
+  }
+}
+
