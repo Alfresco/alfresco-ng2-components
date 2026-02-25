@@ -517,7 +517,7 @@ describe('Test PdfViewer - User interaction', () => {
 
         component.ngOnChanges(changes);
 
-        const getDocumentSpy = pdfjsLibraryMock.getDocument;
+        const getDocumentSpy = pdfjsLibMock.getDocument;
 
         expect(getDocumentSpy).toHaveBeenCalled();
         const loadingArgs = getDocumentSpy.calls.mostRecent().args[0];
