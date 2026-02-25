@@ -1,11 +1,6 @@
 name: 'Setup'
 description: 'Initialize cache, env var load'
 inputs:
-  enable-cache:
-    description: 'enable caching'
-    required: false
-    type: boolean
-    default: 'true'
   enable-node-modules-cache:
     description: 'enable caching for node modules'
     required: false
@@ -16,22 +11,26 @@ inputs:
     required: false
     type: boolean
     default: 'false'
+outputs:
+  npm-tag:
+    description: 'NPM tag'
+    value: ${{ steps.set-npm-tag.outputs.npm-tag }}
 runs:
   using: "composite"
   steps:
       - name: install NPM
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         with:
           node-version-file: '.nvmrc'
           cache-dependency-path: package-lock.json
       - name: get latest tag sha
         id: tag-sha
-        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@691c1d16c90c88a92d2438a001acdefc0efa7d2a # v8.26.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@7e6cfc6dc78dd63baf3e7193e85f6a630e46c41e # v15.2.0
 # CACHE
       - name: Node Modules cache
         id: node-modules-cache
         if: ${{ inputs.enable-node-modules-cache == 'true' }}
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         env:
           cache-name: node-modules-cache
         with:
@@ -42,15 +41,8 @@ runs:
             node_modules-${{ runner.os }}-build-${{ env.cache-name }}-
             node_modules-${{ runner.os }}-build-
             node_modules-${{ runner.os }}-
-      - name: pip cache
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        if: ${{ inputs.enable-cache == 'true' }}
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-
-          restore-keys: |
-            ${{ runner.os }}
       - name: load "NPM TAG"
+        id: set-npm-tag
         uses: ./.github/actions/set-npm-tag
       - name: before install script
         uses: ./.github/actions/before-install
