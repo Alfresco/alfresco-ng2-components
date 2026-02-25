@@ -350,6 +350,19 @@ describe('FormComponent', () => {
         expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcomeName, outcome.id);
     });
 
+    it('should complete form on custom outcome click when id is null (APS)', () => {
+        const formModel = new FormModel();
+        const outcomeName = 'Custom Action';
+        const outcome = new FormOutcomeModel(formModel, { name: outcomeName, id: null });
+
+        formComponent.form = formModel;
+        spyOn(formComponent, 'completeTaskForm').and.stub();
+
+        const result = formComponent.onOutcomeClicked(outcome);
+        expect(result).toBeTruthy();
+        expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcomeName, null);
+    });
+
     it('should save form on [save] outcome click', () => {
         const formModel = new FormModel();
         const outcome = new FormOutcomeModel(formModel, {
