@@ -24,11 +24,10 @@ import { MatChipsModule } from '@angular/material/chips';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ToggleIconDirective } from '../directives/toggle-icon.directive';
 import { MatButtonModule } from '@angular/material/button';
-import { FileUploadErrorPipe } from '../pipes/file-upload-error.pipe';
 
 @Component({
     selector: 'adf-file-uploading-list-row',
-    imports: [IconModule, MatListModule, MatChipsModule, TranslatePipe, ToggleIconDirective, FileSizePipe, MatButtonModule, FileUploadErrorPipe],
+    imports: [IconModule, MatListModule, MatChipsModule, TranslatePipe, ToggleIconDirective, FileSizePipe, MatButtonModule],
     templateUrl: './file-uploading-list-row.component.html',
     styleUrls: ['./file-uploading-list-row.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -82,5 +81,9 @@ export class FileUploadingListRowComponent {
 
     isUploadVersionComplete(): boolean {
         return this.file?.status === FileUploadStatus.Complete && this.isUploadVersion();
+    }
+
+    getFileUploadErrorKey(errorCode: number): string {
+        return `FILE_UPLOAD.ERRORS.${errorCode || 'GENERIC'}`;
     }
 }
