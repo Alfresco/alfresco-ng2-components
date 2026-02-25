@@ -24,13 +24,13 @@ import { Node } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { PermissionModel } from '../../document-list/models/permissions.model';
 import { UploadBase } from './base-upload/upload-base';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-upload-button',
-    imports: [CommonModule, MatButtonModule, TranslatePipe, IconModule],
+    imports: [MatButtonModule, TranslatePipe, IconModule],
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.scss'],
     encapsulation: ViewEncapsulation.None
