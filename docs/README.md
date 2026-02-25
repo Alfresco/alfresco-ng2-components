@@ -323,7 +323,6 @@ for more information about installing and using the source code.
 | [Node Favorite directive](content-services/directives/node-favorite.directive.md) | Selectively toggles nodes as favorites. | [Source](../lib/content-services/src/lib/directives/node-favorite.directive.ts) |
 | [Node Lock directive](content-services/directives/node-lock.directive.md) | Locks or unlocks a node. | [Source](../lib/content-services/src/lib/directives/node-lock.directive.ts) |
 | [Node Restore directive](content-services/directives/node-restore.directive.md) | Restores deleted nodes to their original location. | [Source](../lib/content-services/src/lib/directives/node-restore.directive.ts) |
-| [Toggle Icon directive](content-services/directives/toggle-icon.directive.md) | Toggle icon on mouse or keyboard event for a selectable element. | [Source](../lib/content-services/src/lib/upload/directives/toggle-icon.directive.ts) |
 | [Version Compatibility Directive](content-services/directives/version-compatibility.directive.md) | Enables/disables components based on ACS version in use. | [Source](../lib/content-services/src/lib/version-compatibility/version-compatibility.directive.ts) |
 
 ### Dialogs
