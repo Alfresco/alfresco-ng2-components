@@ -23,11 +23,9 @@ import { UploadButtonComponent } from './components/upload-button.component';
 import { UploadVersionButtonComponent } from './components/upload-version-button.component';
 import { UploadDragAreaComponent } from './components/upload-drag-area.component';
 import { FileDraggableDirective } from './directives/file-draggable.directive';
-import { ToggleIconDirective } from './directives/toggle-icon.directive';
 
 export const CONTENT_UPLOAD_DIRECTIVES = [
     FileDraggableDirective,
-    ToggleIconDirective,
     UploadDragAreaComponent,
     UploadButtonComponent,
     UploadVersionButtonComponent,

@@ -26,20 +26,22 @@
     <div
       tabindex="0"
       role="button"
-      #toggleIcon="toggleIcon"
-      adf-toggle-icon
+      (mouseenter)="onToggleMouseEnter(toggleIconState)"
+      (mouseleave)="onToggleMouseLeave(toggleIconState)"
+      (focus)="onToggleFocus(toggleIconState)"
+      (blur)="onToggleBlur(toggleIconState)"
       (keyup.enter)="onCancel(file)"
       (click)="onCancel(file)"
       data-automation-id="cancel-upload-progress"
       [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.STOP_FILE_UPLOAD' | translate: { file: file.name }"
       class="adf-file-uploading-row__group adf-file-uploading-row__group--toggle"
       title="{{ 'ADF_FILE_UPLOAD.BUTTON.STOP_FILE' | translate }}">
-      @if (!toggleIcon.isToggled) {
+      @if (!toggleIconState.isToggled) {
         <span class="adf-file-uploading-row__status">
           {{ file.progress.loaded | adfFileSize }} / {{ file.progress.total | adfFileSize }}
         </span>
       }
-      @if (toggleIcon.isToggled) {
+      @if (toggleIconState.isToggled) {
         <mat-icon class="adf-file-uploading-row__action adf-file-uploading-row__action--cancel" adf-icon="clear" />
       }
     </div>
@@ -47,8 +49,10 @@
 
   @if (isUploadComplete()) {
     <button mat-icon-button
-      adf-toggle-icon
-      #toggleIcon="toggleIcon"
+      (mouseenter)="onToggleMouseEnter(toggleIconState)"
+      (mouseleave)="onToggleMouseLeave(toggleIconState)"
+      (focus)="onToggleFocus(toggleIconState)"
+      (blur)="onToggleBlur(toggleIconState)"
       class="adf-file-uploading-row__group"
       [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.UPLOAD_SUCCESSFUL' | translate: { file: file.name }"
       title="{{ 'ADF_FILE_UPLOAD.BUTTON.UPLOAD_SUCCESSFUL' | translate }}">
@@ -67,18 +71,20 @@
 
   @if (canCancelUpload()) {
     <button
-      adf-toggle-icon
-      #toggleIconCancel="toggleIcon"
+      (mouseenter)="onToggleMouseEnter(toggleIconCancelState)"
+      (mouseleave)="onToggleMouseLeave(toggleIconCancelState)"
+      (focus)="onToggleFocus(toggleIconCancelState)"
+      (blur)="onToggleBlur(toggleIconCancelState)"
       mat-icon-button
       (click)="onCancel(file)"
       data-automation-id="cancel-upload-queue"
       class="adf-file-uploading-row__group"
       title="{{ 'ADF_FILE_UPLOAD.BUTTON.STOP_FILE' | translate }}"
       [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.STOP_FILE' | translate: { file: file.name }">
-      @if (!toggleIconCancel.isToggled) {
+      @if (!toggleIconCancelState.isToggled) {
         <mat-icon class="adf-file-uploading-row__status adf-file-uploading-row__status--pending" adf-icon="schedule" />
       }
-      @if (toggleIconCancel.isToggled) {
+      @if (toggleIconCancelState.isToggled) {
         <mat-icon class="adf-file-uploading-row__action adf-file-uploading-row__action--remove" adf-icon="remove_circle" />
       }
     </button>

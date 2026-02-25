@@ -22,12 +22,16 @@ import { MatListModule } from '@angular/material/list';
 import { FileSizePipe, IconModule } from '@alfresco/adf-core';
 import { MatChipsModule } from '@angular/material/chips';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ToggleIconDirective } from '../directives/toggle-icon.directive';
 import { MatButtonModule } from '@angular/material/button';
+
+interface ToggleIconState {
+    isFocused: boolean;
+    isToggled: boolean;
+}
 
 @Component({
     selector: 'adf-file-uploading-list-row',
-    imports: [IconModule, MatListModule, MatChipsModule, TranslatePipe, ToggleIconDirective, FileSizePipe, MatButtonModule],
+    imports: [IconModule, MatListModule, MatChipsModule, TranslatePipe, FileSizePipe, MatButtonModule],
     templateUrl: './file-uploading-list-row.component.html',
     styleUrls: ['./file-uploading-list-row.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -39,8 +43,38 @@ export class FileUploadingListRowComponent {
     @Output()
     cancel = new EventEmitter<FileModel>();
 
+    toggleIconState: ToggleIconState = { isFocused: false, isToggled: false };
+    toggleIconCancelState: ToggleIconState = { isFocused: false, isToggled: false };
+
     onCancel(file: FileModel): void {
         this.cancel.emit(file);
+    }
+
+    onToggleMouseEnter(state: ToggleIconState): void {
+        if (!state.isFocused) {
+            state.isToggled = true;
+        }
+    }
+
+    onToggleMouseLeave(state: ToggleIconState): void {
+        if (!state.isFocused) {
+            state.isToggled = false;
+        }
+
+        if (state.isFocused && state.isToggled) {
+            state.isFocused = false;
+            state.isToggled = false;
+        }
+    }
+
+    onToggleFocus(state: ToggleIconState): void {
+        state.isFocused = true;
+        state.isToggled = true;
+    }
+
+    onToggleBlur(state: ToggleIconState): void {
+        state.isFocused = false;
+        state.isToggled = false;
     }
 
     showCancelledStatus(): boolean {

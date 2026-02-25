@@ -663,7 +663,6 @@ backend services have been tested with each released version of ADF.
 -   [Text mask component](core/components/text-mask.component.md)
 -   [Thumbnail service](core/services/thumbnail.service.md)
 -   [Time ago pipe](core/pipes/time-ago.pipe.md)
--   [Toggle icon directive](content-services/directives/toggle-icon.directive.md)
 -   [Toolbar divider component](core/components/toolbar-divider.component.md)
 -   [Toolbar title component](core/components/toolbar-title.component.md)
 -   [Toolbar component](core/components/toolbar.component.md)
