@@ -89,8 +89,8 @@
       role="status"
       class="adf-file-uploading-row__block adf-file-uploading-row__status--error">
       <mat-icon
-        [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.UPLOAD_FILE_ERROR' | translate: { error: file.errorCode | adfFileUploadError }"
-        [title]="file.errorCode | adfFileUploadError"
+        [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.UPLOAD_FILE_ERROR' | translate: { error: getFileUploadErrorKey(file.errorCode) | translate }"
+        [title]="getFileUploadErrorKey(file.errorCode) | translate"
         adf-icon="report_problem"
         matListItemIcon
         />

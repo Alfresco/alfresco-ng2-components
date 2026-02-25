@@ -33,6 +33,7 @@ import { ViewerWithCustomToolbarActionsComponent } from './mock/adf-viewer-conta
 import { ViewerWithCustomToolbarComponent } from './mock/adf-viewer-container-toolbar.component.mock';
 import { ViewerComponent } from './viewer.component';
 import { ThumbnailService } from '../../common/services/thumbnail.service';
+import { MatIconTestingModule } from '@angular/material/icon/testing';
 
 @Component({
     selector: 'adf-dialog-dummy',
@@ -71,6 +72,7 @@ describe('ViewerComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                MatIconTestingModule,
                 ViewerWithCustomToolbarComponent,
                 ViewerWithCustomSidebarComponent,
                 ViewerWithCustomOpenWithComponent,
@@ -106,8 +108,8 @@ describe('ViewerComponent', () => {
 
     describe('Mime Type Test', () => {
         it('should mimeType change when blobFile changes', () => {
-            const mockSimpleChanges: SimpleChanges = { 
-                blobFile: new SimpleChange(null, { type: 'image/png' }, true) 
+            const mockSimpleChanges: SimpleChanges = {
+                blobFile: new SimpleChange(null, { type: 'image/png' }, true)
             };
 
             component.ngOnChanges(mockSimpleChanges);
@@ -117,9 +119,9 @@ describe('ViewerComponent', () => {
 
         it('should set mimeTypeIconUrl when mimeType changes and no nodeMimeType is provided', () => {
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('image/png');
-            const mockSimpleChanges: SimpleChanges = { 
-                mimeType: new SimpleChange(null, 'image/png', true), 
-                nodeMimeType: undefined 
+            const mockSimpleChanges: SimpleChanges = {
+                mimeType: new SimpleChange(null, 'image/png', true),
+                nodeMimeType: undefined
             };
 
             component.ngOnChanges(mockSimpleChanges);
@@ -130,9 +132,9 @@ describe('ViewerComponent', () => {
 
         it('should set mimeTypeIconUrl when nodeMimeType changes', () => {
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('application/pdf');
-            const mockSimpleChanges: SimpleChanges = { 
-                mimeType: new SimpleChange(null, 'image/png', true), 
-                nodeMimeType: new SimpleChange(null, 'application/pdf', true) 
+            const mockSimpleChanges: SimpleChanges = {
+                mimeType: new SimpleChange(null, 'image/png', true),
+                nodeMimeType: new SimpleChange(null, 'application/pdf', true)
             };
 
             component.ngOnChanges(mockSimpleChanges);
@@ -531,8 +533,8 @@ describe('ViewerComponent', () => {
                 });
 
                 it('should file name be present if is overlay mode ', async () => {
-                    const mockSimpleChanges: SimpleChanges = { 
-                        blobFile: new SimpleChange(null, { type: 'image/png' }, true) 
+                    const mockSimpleChanges: SimpleChanges = {
+                        blobFile: new SimpleChange(null, { type: 'image/png' }, true)
                     };
                     component.ngOnChanges(mockSimpleChanges);
                     fixture.detectChanges();
