@@ -41,27 +41,24 @@
                 [class.adf-active]="last"
                 title="{{ item.name ?? '' | translate }}"
                 class="adf-breadcrumb-item">
-                @switch (breadcrumbItemIsAnchor(last)) {
-                    @case (true) {
-                        <a
-                            href="#"
-                            [attr.data-automation-id]="'breadcrumb_' + item.name"
-                            class="adf-breadcrumb-item-anchor"
-                            (click)="onRoutePathClick(item, $event)"
-                        >
-                            {{ item.name ?? '' | translate }}
-                        </a>
-                    }
-                    @default {
-                        <div class="adf-breadcrumb-item-current" aria-current="location">
-                            {{ (selectedRowItemsCount < 1 ? item.name ?? '' : 'BREADCRUMB.HEADER.SELECTED') | translate: { count: selectedRowItemsCount } }}
-                        </div>
-                    }
-                }
+            @if (breadcrumbItemIsAnchor(last)) {
+                <a
+                    href="#"
+                    [attr.data-automation-id]="'breadcrumb_' + item.name"
+                    class="adf-breadcrumb-item-anchor"
+                    (click)="onRoutePathClick(item, $event)"
+                >
+                    {{ item.name ?? '' | translate }}
+                </a>
+            } @else {
+                <div class="adf-breadcrumb-item-current" aria-current="location">
+                    {{ (selectedRowItemsCount < 1 ? item.name ?? '' : 'BREADCRUMB.HEADER.SELECTED') | translate: { count: selectedRowItemsCount } }}
+                </div>
+            }
 
-                @if (!last) {
-                    <mat-icon class="adf-breadcrumb-item-chevron" adf-icon="chevron_right" />
-                }
+            @if (!last) {
+                <mat-icon class="adf-breadcrumb-item-chevron" adf-icon="chevron_right" />
+            }
             </div>
         }
     </nav>
