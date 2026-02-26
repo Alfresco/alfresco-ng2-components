@@ -17,11 +17,11 @@
           (click)="onClickUploadButton()"/>
         <label tabindex="0" (keydown.enter)="onClickUploadButton()" for="upload-single-file" class="adf-upload-button-label">
           <mat-icon class="adf-upload-button-icon" adf-icon="file_upload" />
-          @if (!staticTitle) {
-            <span id="upload-single-file-label">{{ 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate }}</span>
-          }
+
           @if (staticTitle) {
             <span id="upload-single-file-label-static"> {{ staticTitle }}</span>
+          } @else {
+            <span id="upload-single-file-label">{{ 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate }}</span>
           }
         </label>
       }
@@ -39,11 +39,10 @@
           (change)="onFilesAdded($event)"/>
         <label for="upload-multiple-files" class="adf-upload-button-label">
           <mat-icon class="adf-upload-button-icon" adf-icon="file_upload" />
-          @if (!staticTitle) {
-            <span id="upload-multiple-file-label">{{ 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate }}</span>
-          }
           @if (staticTitle) {
             <span id="upload-multiple-file-label-static"> {{ staticTitle }}</span>
+          } @else {
+            <span id="upload-multiple-file-label">{{ 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate }}</span>
           }
         </label>
       }
@@ -65,11 +64,10 @@
       (change)="onDirectoryAdded($event)"/>
     <label for="uploadFolder" data-automation-id="uploadFolder" class="adf-upload-button-label">
       <mat-icon class="adf-upload-button-icon" adf-icon="file_upload" />
-      @if (!staticTitle) {
-        <span id="uploadFolder-label">{{ 'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' | translate }}</span>
-      }
       @if (staticTitle) {
         <span id="uploadFolder-label-static"> {{ staticTitle }}</span>
+      } @else {
+        <span id="uploadFolder-label">{{ 'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' | translate }}</span>
       }
     </label>
   }
