@@ -19,5 +19,6 @@ import { AiAnswerReference } from './aiAnswerReference';
 
 export interface AiAnswerObjectReference {
     objectId: string;
+    nodeId?: string;
     references: AiAnswerReference[];
 }
