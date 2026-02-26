@@ -15,31 +15,33 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { FilterParamsModel, TaskFilterCloudModel } from '../../models/filter-cloud.model';
 import { AppConfigService, IconModule, TranslationService } from '@alfresco/adf-core';
-import { debounceTime, tap } from 'rxjs/operators';
+import { debounceTime, map, tap } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from '../base-task-filters-cloud.component';
 import { TaskDetailsCloudModel } from '../../../models/task-details-cloud.model';
 import { TaskCloudEngineEvent } from '../../../../models/engine-event-cloud.model';
 import { TaskListCloudService } from '../../../task-list/services/task-list-cloud.service';
 import { TaskFilterCloudAdapter } from '../../../../models/filter-cloud-model';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'adf-cloud-task-filters',
-    imports: [CommonModule, MatProgressSpinnerModule, TranslatePipe, IconModule, MatListModule],
+    imports: [AsyncPipe, MatProgressSpinnerModule, TranslatePipe, MatListModule, RouterLink, IconModule],
     templateUrl: './task-filters-cloud.component.html',
-    styleUrls: ['./task-filters-cloud.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./task-filters-cloud.component.scss']
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
+    protected readonly TASKS_ROUTE = '/task-list-cloud';
+
     /** (optional) From Activiti 8.7.0 forward, use the 'POST' method to get the task count. */
     @Input()
     searchApiMethod: 'GET' | 'POST' = 'GET';
@@ -70,6 +72,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     private readonly taskListCloudService = inject(TaskListCloudService);
     private readonly translationService = inject(TranslationService);
     private readonly appConfigService = inject(AppConfigService);
+    private readonly activatedRoute = inject(ActivatedRoute);
+    readonly currentRouteFilterId = toSignal(this.activatedRoute.queryParamMap.pipe(map((params) => params.get('filter'))));
 
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
