@@ -347,12 +347,6 @@ for more information about installing and using the source code.
 | [Permission Style model](content-services/models/permissions-style.model.md) | Sets custom CSS styles for rows of a Document List according to the item's permissions. | [Source](../lib/content-services/src/lib/document-list/models/permissions-style.model.ts) |
 | [Row Filter Model](content-services/models/row-filter.model.md) | Defines the Row Filter function used by the Document List Component. | [Source](../lib/content-services/document-list/data/row-filter.model.ts) |
 
-### Pipes
-
-| Name | Description | Source link |
-| ---- | ----------- | ----------- |
-| [File upload error pipe](content-services/pipes/file-upload-error.pipe.md) | Converts an upload error code to an error message. | [Source](../lib/content-services/src/lib/upload/pipes/file-upload-error.pipe.ts) |
-
 ### Services
 
 | Name | Description | Source link |

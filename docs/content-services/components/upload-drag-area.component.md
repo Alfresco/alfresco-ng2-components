@@ -141,4 +141,3 @@ This could be either a selection of 2 or more files, or a folder with multiple e
 
 -   [File uploading dialog component](file-uploading-dialog.component.md)
 -   [Upload button component](upload-button.component.md)
--   [File upload error pipe](../pipes/file-upload-error.pipe.md)
