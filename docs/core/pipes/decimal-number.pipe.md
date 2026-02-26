@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-08-05
 ---
 
-# [Decimal Number Pipe](../../../lib/core/src/lib/pipes/decimal-number.pipe.ts "Defined in decimal-number.pipe.ts")
+# Decimal Number Pipe
 
 Transforms a number to have a certain amount of digits in its integer part and also in its decimal part.
 
@@ -15,7 +15,7 @@ Transforms a number to have a certain amount of digits in its integer part and a
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| digitsInfo | [`DecimalNumberModel`](../../../lib/core/src/lib/models/decimal-number.model.ts) |  | A format to apply to the date value. [Date Pipe Formats.](https://angular.io/api/common/DatePipe#custom-format-options) |
+| digitsInfo | `DecimalNumberModel` |  | A format to apply to the date value. [Date Pipe Formats.](https://angular.io/api/common/DatePipe#custom-format-options) |
 | locale | string | 'en-US' | A locale id for the locale format rules to use. |
 
 ## Details
@@ -30,11 +30,11 @@ This pipe transforms a given number so it follows the set configuration for the 
   }
 ```
 
-You can also overwrite this config by passing a [`DecimalNumberModel`](../../../lib/core/src/lib/models/decimal-number.model.ts) as an argument for this pipe.
+You can also overwrite this config by passing a `DecimalNumberModel` as an argument for this pipe.
 
 The number can be also localized so it applies commas and dots in the right place depending on the locale id in use.
 
-#### Result
+### Result
 
 ```ts
 decimalNumberPipe.transform(1234.567);
