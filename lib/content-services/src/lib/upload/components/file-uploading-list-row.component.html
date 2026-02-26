@@ -1,9 +1,7 @@
 <div class="adf-file-uploading-row" [attr.aria-label]="file.name + ' ' + file.status">
   @if (mimeType === 'default') {
     <mat-icon matListItemIcon class="adf-file-uploading-row__type" adf-icon="insert_drive_file" />
-  }
-
-  @if (mimeType !== 'default') {
+  } @else {
     <mat-icon svgIcon="adf:{{ mimeType }}" aria-hidden="true" />
   }
 
@@ -36,13 +34,13 @@
       [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.STOP_FILE_UPLOAD' | translate: { file: file.name }"
       class="adf-file-uploading-row__group adf-file-uploading-row__group--toggle"
       title="{{ 'ADF_FILE_UPLOAD.BUTTON.STOP_FILE' | translate }}">
-      @if (!toggleIconState.isToggled) {
-        <span class="adf-file-uploading-row__status">
-          {{ file.progress.loaded | adfFileSize }} / {{ file.progress.total | adfFileSize }}
-        </span>
-      }
+
       @if (toggleIconState.isToggled) {
         <mat-icon class="adf-file-uploading-row__action adf-file-uploading-row__action--cancel" adf-icon="clear" />
+      } @else {
+        <span class="adf-file-uploading-row__status">
+            {{ file.progress.loaded | adfFileSize }} / {{ file.progress.total | adfFileSize }}
+        </span>
       }
     </div>
   }
@@ -81,11 +79,11 @@
       class="adf-file-uploading-row__group"
       title="{{ 'ADF_FILE_UPLOAD.BUTTON.STOP_FILE' | translate }}"
       [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.STOP_FILE' | translate: { file: file.name }">
-      @if (!toggleIconCancelState.isToggled) {
-        <mat-icon class="adf-file-uploading-row__status adf-file-uploading-row__status--pending" adf-icon="schedule" />
-      }
+
       @if (toggleIconCancelState.isToggled) {
         <mat-icon class="adf-file-uploading-row__action adf-file-uploading-row__action--remove" adf-icon="remove_circle" />
+      } @else {
+        <mat-icon class="adf-file-uploading-row__status adf-file-uploading-row__status--pending" adf-icon="schedule" />
       }
     </button>
   }
