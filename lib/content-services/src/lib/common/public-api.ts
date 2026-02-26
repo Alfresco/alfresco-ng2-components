@@ -41,4 +41,3 @@ export * from './models/allowable-operations.enum';
 export * from './interfaces/search-configuration.interface';
 export * from './interfaces/saved-search.interface';
 export * from './interfaces/saved-searches-strategy.interface';
-export * from './mocks/ecm-user.service.mock';
