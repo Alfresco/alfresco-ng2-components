@@ -20,10 +20,8 @@
   "stylelint.enable": true,
   "css.validate": false,
   "scss.validate": false,
-  "stylelint.config": {
-      "extends": "./.stylelintrc.json"
-  },
-  "stylelint.configFile": ".stylelintrc.json",
+  "stylelint.configFile": "${workspaceFolder}/.stylelintrc.json",
+  "stylelint.configBasedir": "${workspaceFolder}",
   "stylelint.validate": [
     "css",
     "less",
