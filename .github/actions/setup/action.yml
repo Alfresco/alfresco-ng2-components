@@ -38,9 +38,9 @@ runs:
             node_modules
           key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            node_modules-${{ runner.os }}-build-${{ env.cache-name }}-
-            node_modules-${{ runner.os }}-build-
-            node_modules-${{ runner.os }}-
+            .npm-${{ runner.os }}-build-${{ env.cache-name }}-
+            .npm-${{ runner.os }}-build-
+            .npm-${{ runner.os }}-
       - name: load "NPM TAG"
         id: set-npm-tag
         uses: ./.github/actions/set-npm-tag
