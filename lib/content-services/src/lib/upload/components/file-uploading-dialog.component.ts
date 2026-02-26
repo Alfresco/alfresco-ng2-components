@@ -56,7 +56,9 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     private readonly uploadService = inject(UploadService);
     private readonly changeDetector = inject(ChangeDetectorRef);
     private readonly userPreferencesService = inject(UserPreferencesService);
-    private readonly elementRef = inject(ElementRef);
+
+    @ViewChild('uploadDialog', { read: ElementRef })
+    private readonly uploadDialogRef: ElementRef<HTMLElement> | undefined;
 
     /** Dialog direction. Can be 'ltr' or 'rtl. */
     private direction: Direction = 'ltr';
@@ -70,11 +72,11 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
     /** Makes the dialog always visible even when there are no uploads. */
     @Input()
-    alwaysVisible: boolean = false;
+    alwaysVisible = false;
 
     /** Emitted when a file in the list has an error. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter();
+    error = new EventEmitter();
 
     @HostBinding('attr.adfUploadDialogRight')
     public get isPositionRight(): boolean {
@@ -98,10 +100,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.dialogActive.pipe(delay(100), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-            const element: any = this.elementRef.nativeElement.querySelector('#upload-dialog');
-            if (element) {
-                element.focus();
-            }
+            this.uploadDialogRef?.nativeElement?.focus();
         });
 
         this.uploadService.queueChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((fileList) => {
