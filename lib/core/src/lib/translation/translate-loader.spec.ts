@@ -18,8 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { TranslateLoaderService } from './translate-loader.service';
 import { TranslationService } from './translation.service';
-import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
+import { provideTranslateLoader, provideTranslateService } from '@ngx-translate/core';
 
 describe('TranslateLoader', () => {
     let translationService: TranslationService;
@@ -29,12 +28,8 @@ describe('TranslateLoader', () => {
         TestBed.configureTestingModule({
             providers: [
                 provideTranslateService({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService,
-                        deps: [HttpClient]
-                    },
-                    defaultLanguage: 'en'
+                    loader: provideTranslateLoader(TranslateLoaderService),
+                    fallbackLang: 'en'
                 }),
                 TranslationService
             ]

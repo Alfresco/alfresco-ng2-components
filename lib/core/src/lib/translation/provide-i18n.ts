@@ -16,9 +16,8 @@
  */
 
 import { EnvironmentProviders, inject, provideAppInitializer, Provider } from '@angular/core';
-import { provideTranslateService, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { provideTranslateLoader, provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { TranslateLoaderService } from './translate-loader.service';
-import { HttpClient } from '@angular/common/http';
 import { provideTranslations } from './translation.service';
 
 export interface ProvideI18NConfig {
@@ -54,12 +53,8 @@ export function provideI18N(config?: ProvideI18NConfig): (Provider | Environment
 
     const result: (Provider | EnvironmentProviders)[] = [
         provideTranslateService({
-            loader: {
-                provide: TranslateLoader,
-                useExisting: TranslateLoaderService,
-                deps: [HttpClient]
-            },
-            defaultLanguage
+            loader: provideTranslateLoader(TranslateLoaderService),
+            fallbackLang: defaultLanguage
         })
     ];
 

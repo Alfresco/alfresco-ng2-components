@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { provideTranslateLoader, provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { TranslationService } from './translation.service';
 import { of } from 'rxjs';
 import { provideAppConfigTesting } from '../testing';
@@ -51,15 +51,13 @@ describe('TranslationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: FakeLoader
-                    }
+            providers: [
+                TranslationService,
+                provideAppConfigTesting(),
+                provideTranslateService({
+                    loader: provideTranslateLoader(FakeLoader)
                 })
-            ],
-            providers: [TranslationService, provideAppConfigTesting()]
+            ]
         });
 
         translationService = TestBed.inject(TranslationService);
