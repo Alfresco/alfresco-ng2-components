@@ -21,7 +21,6 @@ import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimep
 import { CONTENT_TAG_DIRECTIVES } from './tag/tag.module';
 import { DOCUMENT_LIST_DIRECTIVES } from './document-list/document-list.module';
 import { CONTENT_SEARCH_DIRECTIVES } from './search/search.module';
-import { BREADCRUMB_DIRECTIVES } from './breadcrumb/breadcrumb.module';
 import { CONTENT_VERSION_DIRECTIVES } from './version-manager/version-manager.module';
 import { CONTENT_NODE_SELECTOR_DIRECTIVES } from './content-node-selector/content-node-selector.module';
 import { CONTENT_NODE_SHARE_DIRECTIVES } from './content-node-share/content-node-share.module';
@@ -50,7 +49,6 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
         ...CONTENT_SEARCH_DIRECTIVES,
         ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_UPLOAD_DIRECTIVES,
-        ...BREADCRUMB_DIRECTIVES,
         ...CONTENT_NODE_SELECTOR_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
         ...CONTENT_METADATA_DIRECTIVES,
@@ -66,7 +64,6 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
         ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_UPLOAD_DIRECTIVES,
         ...CONTENT_SEARCH_DIRECTIVES,
-        ...BREADCRUMB_DIRECTIVES,
         ...CONTENT_NODE_SELECTOR_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
         ...CONTENT_METADATA_DIRECTIVES,
