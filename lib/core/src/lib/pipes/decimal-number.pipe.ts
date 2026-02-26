@@ -19,7 +19,12 @@ import { DecimalPipe } from '@angular/common';
 import { Pipe, PipeTransform, inject } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
-import { DecimalNumberModel } from '../models/decimal-number.model';
+
+export interface DecimalNumberModel {
+    minIntegerDigits?: number;
+    minFractionDigits?: number;
+    maxFractionDigits?: number;
+}
 
 @Pipe({
     name: 'adfDecimalNumber',

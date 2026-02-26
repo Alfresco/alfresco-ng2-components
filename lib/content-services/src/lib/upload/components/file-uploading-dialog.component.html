@@ -1,116 +1,117 @@
-<div *ngIf="canShowDialog()"
-     role="dialog"
-     [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG'| translate"
-     tabindex="0"
-     class="adf-upload-dialog"
-     id="upload-dialog"
-     [class.adf-upload-dialog--minimized]="isDialogMinimized">
+@if (canShowDialog()) {
+  <div
+    #uploadDialog
+    role="dialog"
+    [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG'| translate"
+    tabindex="0"
+    class="adf-upload-dialog"
+    id="upload-dialog"
+    [class.adf-upload-dialog--minimized]="isDialogMinimized">
     <header class="adf-upload-dialog__header">
-        <button
-            mat-icon-button
-            class="adf-upload-dialog__header-button"
-            [attr.data-automation-id]="'adf-upload-dialog__toggle-minimize'"
-            [attr.aria-label]="(isDialogMinimized ?
-                'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_MAXIMIZE':
-                'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_MINIMIZE') | translate"
-            [disabled]="isConfirmation"
-            [attr.aria-expanded]="!isDialogMinimized"
-            (click)="toggleMinimized()">
-            <mat-icon class="adf-upload-dialog__header-button-icon" [adf-icon]="isDialogMinimized ? 'keyboard_arrow_up' : 'keyboard_arrow_down'" />
-        </button>
+      <button
+        mat-icon-button
+        class="adf-upload-dialog__header-button"
+        [attr.data-automation-id]="'adf-upload-dialog__toggle-minimize'"
+        [attr.aria-label]="(isDialogMinimized ?
+            'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_MAXIMIZE':
+            'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_MINIMIZE') | translate"
+        [disabled]="isConfirmation"
+        [attr.aria-expanded]="!isDialogMinimized"
+        (click)="toggleMinimized()">
+        <mat-icon class="adf-upload-dialog__header-button-icon" [adf-icon]="isDialogMinimized ? 'keyboard_arrow_up' : 'keyboard_arrow_down'" />
+      </button>
 
-        <span
-            class="adf-upload-dialog__title"
-            *ngIf="!uploadList.isUploadCancelled()">
+    @if (uploadList.isUploadCancelled()) {
+      <span class="adf-upload-dialog__title">
+        {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_CANCELED' | translate }}
+      </span>
+    } @else {
+        <span class="adf-upload-dialog__title">
             {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_PROGRESS'
-                | translate: {
-                    completed: totalCompleted,
-                    total: filesUploadingList.length
-                }
-            }}
+            | translate: {
+              completed: totalCompleted,
+              total: filesUploadingList.length
+            }
+          }}
         </span>
-
-        <span
-            class="adf-upload-dialog__title"
-            *ngIf="uploadList.isUploadCancelled()">
-            {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_CANCELED' | translate }}
-        </span>
-    </header>
-
-    <section class="adf-upload-dialog__info"
-        *ngIf="totalErrors">
-        {{
-            (totalErrors > 1
-                 ? 'FILE_UPLOAD.MESSAGES.UPLOAD_ERRORS'
-                 : 'FILE_UPLOAD.MESSAGES.UPLOAD_ERROR')
-                 | translate: { total: totalErrors }
-        }}
+    }
+  </header>
+  @if (totalErrors) {
+    <section class="adf-upload-dialog__info">
+      {{
+      (totalErrors > 1
+      ? 'FILE_UPLOAD.MESSAGES.UPLOAD_ERRORS'
+      : 'FILE_UPLOAD.MESSAGES.UPLOAD_ERROR')
+      | translate: { total: totalErrors }
+      }}
     </section>
-
-    <section class="adf-upload-dialog__content"
-        [class.adf-upload-dialog--padding]="isConfirmation" aria-live="polite">
-        <adf-file-uploading-list
-            class="adf-file-uploading-list"
-            [class.adf-upload-dialog--hide]="isConfirmation"
-            #uploadList
-            [files]="filesUploadingList">
-                <ng-template let-file="$implicit">
-                     <adf-file-uploading-list-row
-                        [file]="file"
-                        (cancel)="uploadList.cancelFile(file)" />
-                </ng-template>
-        </adf-file-uploading-list>
-
-        <div
-            aria-live="polite"
-            aria-labelledby="confirmationTitle"
-            aria-describedby="confirmationDescription"
-            class="adf-upload-dialog__confirmation"
-            [class.adf-upload-dialog--hide]="!isConfirmation">
-                <p role="heading" aria-level="2" id="confirmationTitle" class="adf-upload-dialog__confirmation--title">
-                    {{ 'ADF_FILE_UPLOAD.CONFIRMATION.MESSAGE.TITLE' | translate }}
-                </p>
-                <p id="confirmationDescription" class="adf-upload-dialog__confirmation--text">
-                    {{ 'ADF_FILE_UPLOAD.CONFIRMATION.MESSAGE.TEXT' | translate }}
-                </p>
-        </div>
-    </section>
-
-    <footer class="adf-upload-dialog__actions" *ngIf="!isConfirmation">
+  }
+  <section class="adf-upload-dialog__content"
+    [class.adf-upload-dialog--padding]="isConfirmation" aria-live="polite">
+    <adf-file-uploading-list
+      class="adf-file-uploading-list"
+      [class.adf-upload-dialog--hide]="isConfirmation"
+      #uploadList
+      [files]="filesUploadingList">
+      <ng-template let-file="$implicit">
+        <adf-file-uploading-list-row
+          [file]="file"
+          (cancel)="uploadList.cancelFile(file)" />
+      </ng-template>
+    </adf-file-uploading-list>
+    <div
+      aria-live="polite"
+      aria-labelledby="confirmationTitle"
+      aria-describedby="confirmationDescription"
+      class="adf-upload-dialog__confirmation"
+      [class.adf-upload-dialog--hide]="!isConfirmation">
+      <p role="heading" aria-level="2" id="confirmationTitle" class="adf-upload-dialog__confirmation--title">
+        {{ 'ADF_FILE_UPLOAD.CONFIRMATION.MESSAGE.TITLE' | translate }}
+      </p>
+      <p id="confirmationDescription" class="adf-upload-dialog__confirmation--text">
+        {{ 'ADF_FILE_UPLOAD.CONFIRMATION.MESSAGE.TEXT' | translate }}
+      </p>
+    </div>
+  </section>
+  @if (!isConfirmation) {
+    <footer class="adf-upload-dialog__actions">
+      @if (canShowCancelAll()) {
         <button
-            id="adf-upload-dialog-cancel-all"
-            [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.STOP_ALL' | translate"
-            color="primary"
-            mat-button
-            *ngIf="canShowCancelAll()"
-            (click)="toggleConfirmation()"
+          id="adf-upload-dialog-cancel-all"
+          [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.STOP_ALL' | translate"
+          color="primary"
+          mat-button
+          (click)="toggleConfirmation()"
         >{{ 'ADF_FILE_UPLOAD.BUTTON.STOP_ALL' | translate }}</button>
-
+      }
+      @if (canCloseDialog()) {
         <button
-            id="adf-upload-dialog-close"
-            [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_CLOSE' | translate"
-            *ngIf="canCloseDialog()"
-            mat-button
-            color="primary"
-            (click)="close()"
+          id="adf-upload-dialog-close"
+          [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_CLOSE' | translate"
+          mat-button
+          color="primary"
+          (click)="close()"
         >{{ 'ADF_FILE_UPLOAD.BUTTON.CLOSE' | translate }}</button>
+      }
     </footer>
-
+  }
+  @if (isConfirmation) {
     <footer class="adf-upload-dialog__actions"
-            *ngIf="isConfirmation" cdkTrapFocus cdkTrapFocusAutoCapture>
-        <button
-            id="adf-upload-dialog-cancel"
-            [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CONFIRMATION.CANCEL' | translate"
-            mat-button
-            (click)="cancelAllUploads()"
-        >{{ 'ADF_FILE_UPLOAD.CONFIRMATION.BUTTON.CANCEL' | translate }}</button>
-
-        <button
-            id="adf-upload-dialog-confirm"
-            [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CONFIRMATION.CONTINUE' | translate"
-            mat-button
-            color="primary"
-            (click)="toggleConfirmation()"
-        >{{ 'ADF_FILE_UPLOAD.CONFIRMATION.BUTTON.CONTINUE' | translate }}</button>
+      cdkTrapFocus cdkTrapFocusAutoCapture>
+      <button
+        id="adf-upload-dialog-cancel"
+        [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CONFIRMATION.CANCEL' | translate"
+        mat-button
+        (click)="cancelAllUploads()"
+      >{{ 'ADF_FILE_UPLOAD.CONFIRMATION.BUTTON.CANCEL' | translate }}</button>
+      <button
+        id="adf-upload-dialog-confirm"
+        [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CONFIRMATION.CONTINUE' | translate"
+        mat-button
+        color="primary"
+        (click)="toggleConfirmation()"
+      >{{ 'ADF_FILE_UPLOAD.CONFIRMATION.BUTTON.CONTINUE' | translate }}</button>
     </footer>
+  }
 </div>
+}

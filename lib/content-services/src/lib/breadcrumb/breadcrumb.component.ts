@@ -31,7 +31,6 @@ import {
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { Node, PathElement } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
-import { CommonModule } from '@angular/common';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IconModule } from '@alfresco/adf-core';
@@ -39,7 +38,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
     selector: 'adf-breadcrumb',
-    imports: [CommonModule, IconModule, TranslatePipe, MatSelectModule],
+    imports: [IconModule, TranslatePipe, MatSelectModule],
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
     encapsulation: ViewEncapsulation.None,

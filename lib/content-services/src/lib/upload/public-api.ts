@@ -24,9 +24,6 @@ export * from './components/file-uploading-list-row.component';
 export * from './components/upload-files.event';
 
 export * from './directives/file-draggable.directive';
-export * from './directives/toggle-icon.directive';
-
-export * from './pipes/file-upload-error.pipe';
 
 export * from './components/base-upload/upload-base';
 

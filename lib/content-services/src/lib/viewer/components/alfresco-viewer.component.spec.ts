@@ -48,6 +48,7 @@ import { AlfrescoViewerComponent } from './alfresco-viewer.component';
 import { RenditionService } from '../../common/services/rendition.service';
 import { NodeActionsService } from '../../document-list/services/node-actions.service';
 import { provideApiTesting } from '../../testing/providers';
+import { MatIconTestingModule } from '@angular/material/icon/testing';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -179,7 +180,7 @@ describe('AlfrescoViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAuthModule, NoopTranslateModule, MatDialogModule, AlfrescoViewerComponent],
+            imports: [NoopAuthModule, MatIconTestingModule, NoopTranslateModule, MatDialogModule, AlfrescoViewerComponent],
             providers: [
                 provideApiTesting(),
                 {

@@ -323,7 +323,6 @@ for more information about installing and using the source code.
 | [Node Favorite directive](content-services/directives/node-favorite.directive.md) | Selectively toggles nodes as favorites. | [Source](../lib/content-services/src/lib/directives/node-favorite.directive.ts) |
 | [Node Lock directive](content-services/directives/node-lock.directive.md) | Locks or unlocks a node. | [Source](../lib/content-services/src/lib/directives/node-lock.directive.ts) |
 | [Node Restore directive](content-services/directives/node-restore.directive.md) | Restores deleted nodes to their original location. | [Source](../lib/content-services/src/lib/directives/node-restore.directive.ts) |
-| [Toggle Icon directive](content-services/directives/toggle-icon.directive.md) | Toggle icon on mouse or keyboard event for a selectable element. | [Source](../lib/content-services/src/lib/upload/directives/toggle-icon.directive.ts) |
 | [Version Compatibility Directive](content-services/directives/version-compatibility.directive.md) | Enables/disables components based on ACS version in use. | [Source](../lib/content-services/src/lib/version-compatibility/version-compatibility.directive.ts) |
 
 ### Dialogs
@@ -347,12 +346,6 @@ for more information about installing and using the source code.
 | [Image Resolver Model](content-services/models/image-resolver.model.md) | Defines the Image Resolver function used by the Document List Component. | [Source](../lib/content-services/document-list/data/image-resolver.model.ts) |
 | [Permission Style model](content-services/models/permissions-style.model.md) | Sets custom CSS styles for rows of a Document List according to the item's permissions. | [Source](../lib/content-services/src/lib/document-list/models/permissions-style.model.ts) |
 | [Row Filter Model](content-services/models/row-filter.model.md) | Defines the Row Filter function used by the Document List Component. | [Source](../lib/content-services/document-list/data/row-filter.model.ts) |
-
-### Pipes
-
-| Name | Description | Source link |
-| ---- | ----------- | ----------- |
-| [File upload error pipe](content-services/pipes/file-upload-error.pipe.md) | Converts an upload error code to an error message. | [Source](../lib/content-services/src/lib/upload/pipes/file-upload-error.pipe.ts) |
 
 ### Services
 

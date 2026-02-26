@@ -18,6 +18,5 @@
 export * from './comment.model';
 export * from './pagination.model';
 export * from './request-pagination.model';
-export * from './decimal-number.model';
 export * from './general-user.model';
 export * from './path.model';

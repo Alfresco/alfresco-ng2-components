@@ -20,11 +20,11 @@ import { UploadService } from '../../common/services/upload.service';
 import { FileModel, FileUploadStatus } from '../../common/models/file.model';
 
 import { Component, ContentChild, Input, Output, TemplateRef, EventEmitter, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
     selector: 'adf-file-uploading-list',
-    imports: [CommonModule],
+    imports: [NgTemplateOutlet],
     templateUrl: './file-uploading-list.component.html',
     styleUrls: ['./file-uploading-list.component.scss']
 })
