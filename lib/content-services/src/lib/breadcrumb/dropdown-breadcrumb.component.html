@@ -24,7 +24,7 @@
           role="button"
           data-automation-id="dropdown-breadcrumb-path"
           aria-labelledby="dropdown-breadcrumb-button">
-          @for (node of previousNodes; track node) {
+          @for (node of previousNodes; track node.id) {
             <mat-option
               (click)="onRoutePathClick(node, $event)"
               (onSelectionChange)="onRouteClick(node)"
