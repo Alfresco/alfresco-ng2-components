@@ -354,7 +354,6 @@ backend services have been tested with each released version of ADF.
 -   [Edit process filter cloud component](process-services-cloud/components/edit-process-filter-cloud.component.md)
 -   [Edit task filter cloud component](process-services-cloud/components/edit-task-filter-cloud.component.md)
 -   [Extension service](extensions/services/extension.service.md)
--   [File upload error pipe](content-services/pipes/file-upload-error.pipe.md)
 -   [Format space pipe](core/pipes/format-space.pipe.md)
 -   [Full name pipe](core/pipes/full-name.pipe.md)
 -   [Group cloud component](process-services-cloud/components/group-cloud.component.md)
