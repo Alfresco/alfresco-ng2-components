@@ -19,20 +19,20 @@
         (click)="toggleMinimized()">
         <mat-icon class="adf-upload-dialog__header-button-icon" [adf-icon]="isDialogMinimized ? 'keyboard_arrow_up' : 'keyboard_arrow_down'" />
       </button>
-      @if (!uploadList.isUploadCancelled()) {
-        <span class="adf-upload-dialog__title">
-          {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_PROGRESS'
-          | translate: {
-            completed: totalCompleted,
-            total: filesUploadingList.length
-          }
-        }}
-      </span>
-    }
+
     @if (uploadList.isUploadCancelled()) {
       <span class="adf-upload-dialog__title">
         {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_CANCELED' | translate }}
       </span>
+    } @else {
+        <span class="adf-upload-dialog__title">
+            {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_PROGRESS'
+            | translate: {
+              completed: totalCompleted,
+              total: filesUploadingList.length
+            }
+          }}
+        </span>
     }
   </header>
   @if (totalErrors) {
