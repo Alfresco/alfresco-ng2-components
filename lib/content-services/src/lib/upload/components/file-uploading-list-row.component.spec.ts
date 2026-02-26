@@ -107,6 +107,38 @@ describe('FileUploadingListRowComponent', () => {
         expect(cancelButton.title).toBe('ADF_FILE_UPLOAD.BUTTON.STOP_FILE');
     });
 
+    describe('getFileUploadErrorKey', () => {
+        it('should return correct key format for error code 500', () => {
+            const result = component.getFileUploadErrorKey(500);
+            expect(result).toBe('FILE_UPLOAD.ERRORS.500');
+        });
+
+        it('should return correct key format for error code 404', () => {
+            const result = component.getFileUploadErrorKey(404);
+            expect(result).toBe('FILE_UPLOAD.ERRORS.404');
+        });
+
+        it('should return correct key format for error code 403', () => {
+            const result = component.getFileUploadErrorKey(403);
+            expect(result).toBe('FILE_UPLOAD.ERRORS.403');
+        });
+
+        it('should return GENERIC key when errorCode is null', () => {
+            const result = component.getFileUploadErrorKey(null);
+            expect(result).toBe('FILE_UPLOAD.ERRORS.GENERIC');
+        });
+
+        it('should return GENERIC key when errorCode is undefined', () => {
+            const result = component.getFileUploadErrorKey(undefined);
+            expect(result).toBe('FILE_UPLOAD.ERRORS.GENERIC');
+        });
+
+        it('should return GENERIC key when errorCode is 0', () => {
+            const result = component.getFileUploadErrorKey(0);
+            expect(result).toBe('FILE_UPLOAD.ERRORS.GENERIC');
+        });
+    });
+
     describe('Toggle Icon State', () => {
         describe('onToggleMouseEnter', () => {
             it('should set isToggled to true when not focused', () => {
