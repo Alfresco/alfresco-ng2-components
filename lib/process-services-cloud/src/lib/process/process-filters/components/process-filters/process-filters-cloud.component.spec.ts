@@ -215,12 +215,12 @@ describe('ProcessFiltersCloudComponent', () => {
                 await fixture.whenStable();
 
                 const link = fixture.debugElement.query(By.css(`[data-automation-id="${allProcessesFilterKey}_filter"]`)).nativeElement;
-                expect(link.getAttribute('href')).toBe('/process-list-cloud?filter=10');
+                expect(link.getAttribute('href')).toBe('/process-list-cloud?filterId=10');
 
                 link.click();
                 fixture.detectChanges();
                 await fixture.whenStable();
-                expect(router.url).toBe('/process-list-cloud?filter=10');
+                expect(router.url).toBe('/process-list-cloud?filterId=10');
             });
         });
     });
