@@ -34,17 +34,8 @@ import { versionCompatibilityFactory } from './version-compatibility/version-com
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
-import { CategoriesManagementComponent } from './category';
-import { TreeComponent } from './tree';
-import { NewVersionUploaderDialogComponent } from './new-version-uploader';
-import { VersionCompatibilityDirective } from './version-compatibility';
 import { CONTENT_UPLOAD_DIRECTIVES } from './upload';
-import { TreeViewComponent } from './tree-view';
-import { NodeCommentsComponent } from './node-comments';
-import { AlfrescoViewerComponent } from './viewer';
-import { ContentTypeDialogComponent } from './content-type';
 import { MaterialModule } from './material.module';
-import { AlfrescoIconComponent } from './alfresco-icon/alfresco-icon.component';
 import { AlfrescoApiService } from './services/alfresco-api.service';
 import { AlfrescoApiNoAuthService } from './api-factories/alfresco-api-no-auth.service';
 import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-factories/alfresco-api-v2-loader.service';
@@ -66,16 +57,7 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
         ...CONTENT_DIRECTIVES,
         ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
         ...CONTENT_VERSION_DIRECTIVES,
-        TreeViewComponent,
-        ContentTypeDialogComponent,
-        ...ASPECT_LIST_DIRECTIVES,
-        VersionCompatibilityDirective,
-        NodeCommentsComponent,
-        TreeComponent,
-        AlfrescoViewerComponent,
-        CategoriesManagementComponent,
-        NewVersionUploaderDialogComponent,
-        AlfrescoIconComponent
+        ...ASPECT_LIST_DIRECTIVES
     ],
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
@@ -92,16 +74,7 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
         ...CONTENT_DIRECTIVES,
         ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
         ...CONTENT_VERSION_DIRECTIVES,
-        TreeViewComponent,
-        ...ASPECT_LIST_DIRECTIVES,
-        ContentTypeDialogComponent,
-        VersionCompatibilityDirective,
-        NodeCommentsComponent,
-        TreeComponent,
-        AlfrescoViewerComponent,
-        CategoriesManagementComponent,
-        NewVersionUploaderDialogComponent,
-        AlfrescoIconComponent
+        ...ASPECT_LIST_DIRECTIVES
     ]
 })
 export class ContentModule {
