@@ -31,12 +31,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatListModule } from '@angular/material/list';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'adf-cloud-task-filters',
-    imports: [AsyncPipe, MatProgressSpinnerModule, TranslatePipe, MatListModule, MatButtonModule, RouterLink, IconModule],
+    imports: [AsyncPipe, MatProgressSpinnerModule, TranslatePipe, MatListModule, RouterLink, IconModule],
     templateUrl: './task-filters-cloud.component.html',
     styleUrls: ['./task-filters-cloud.component.scss']
 })

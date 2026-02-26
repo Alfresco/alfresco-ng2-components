@@ -15,9 +15,10 @@
                     {{ filter.name | translate }}
                 </span>
                 @if (showIcons) {
-                    <button mat-icon-button MatListItemIcon>
-                        <mat-icon data-automation-id="adf-filter-icon" [adf-icon]="filter.icon" aria-hidden="true" />
-                    </button>
+                    <mat-icon matListItemIcon
+                        data-automation-id="adf-filter-icon"
+                        [adf-icon]="filter.icon"
+                        aria-hidden="true" />
                 }
                 @if (counters[filter.key]) {
                     <span matListItemMeta
@@ -33,6 +34,6 @@
     </mat-nav-list>
 } @else {
     <div class="adf-app-list-spinner">
-        <mat-spinner />
+        <mat-spinner [attr.aria-label]="'ADF_CLOUD_TASK_LIST.LOADING' | translate" aria-live="polite" />
     </div>
 }
