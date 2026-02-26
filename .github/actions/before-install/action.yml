@@ -21,6 +21,7 @@ runs:
           echo "BUILD_OPTS=--configuration production";
           echo CI_FORCE_RUN=false;
           echo NODE_VERSION=$(node -v);
+          echo NOM_VERSION=$(npm -v);
         } >> $GITHUB_ENV
 
     - name: affected:* flag parser
