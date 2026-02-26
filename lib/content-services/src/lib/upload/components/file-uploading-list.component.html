@@ -1,5 +1,5 @@
 <div class="upload-list">
-  @for (file of files; track file) {
+  @for (file of files; track file.id) {
     <ng-template
       [ngTemplateOutlet]="template"
       [ngTemplateOutletContext]="{ $implicit: file }" />
