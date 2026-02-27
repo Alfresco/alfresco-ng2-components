@@ -20,4 +20,3 @@ export * from './version-manager.component';
 export * from './version-upload.component';
 export * from './version-comparison.component';
 export * from './content-version.service';
-export * from './version-manager.module';

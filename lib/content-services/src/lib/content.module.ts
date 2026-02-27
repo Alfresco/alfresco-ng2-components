@@ -20,7 +20,6 @@ import { provideTranslations } from '@alfresco/adf-core';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { DOCUMENT_LIST_DIRECTIVES } from './document-list/document-list.module';
 import { CONTENT_SEARCH_DIRECTIVES } from './search/search.module';
-import { CONTENT_VERSION_DIRECTIVES } from './version-manager/version-manager.module';
 import { CONTENT_NODE_SHARE_DIRECTIVES } from './content-node-share/content-node-share.module';
 import { CONTENT_DIRECTIVES } from './directives/content-directive.module';
 import { CONTENT_PERMISSION_MANAGER_DIRECTIVES } from './permission-manager/permission-manager.module';
@@ -42,8 +41,7 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
         ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
         ...CONTENT_DIRECTIVES,
-        ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
-        ...CONTENT_VERSION_DIRECTIVES
+        ...CONTENT_PERMISSION_MANAGER_DIRECTIVES
     ],
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
@@ -52,8 +50,7 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
         ...CONTENT_SEARCH_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
         ...CONTENT_DIRECTIVES,
-        ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
-        ...CONTENT_VERSION_DIRECTIVES
+        ...CONTENT_PERMISSION_MANAGER_DIRECTIVES
     ]
 })
 export class ContentModule {
