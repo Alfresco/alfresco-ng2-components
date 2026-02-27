@@ -63,7 +63,7 @@ describe('TaskFiltersCloudComponent', () => {
                     useValue: {
                         queryParamMap: of({
                             get: (param: string) => {
-                                if (param === 'filter') {
+                                if (param === 'filterId') {
                                     return defaultTaskFiltersMock[0].id;
                                 }
                                 return null;
@@ -616,7 +616,7 @@ describe('TaskFiltersCloudComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(router.url).toBe(`/task-list-cloud?filter=${defaultTaskFiltersMock[0].id}`);
+                expect(router.url).toBe(`/task-list-cloud?filterId=${defaultTaskFiltersMock[0].id}`);
 
                 filterLink = fixture.debugElement.query(By.css(`[data-automation-id="${assignedTasksFilterKey}_filter"]`));
                 expect(filterLink.nativeElement.classList).toContain('adf-active');
