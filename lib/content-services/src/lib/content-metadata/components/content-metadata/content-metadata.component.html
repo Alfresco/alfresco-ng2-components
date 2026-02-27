@@ -210,7 +210,7 @@
     }
 
     @for (customPanel of customPanels; track customPanel.panelTitle) {
-        @let isExpandedCustomPanel = (currentPanel.panelTitle === customPanel.panelTitle && currentPanel.expanded) ?? false;
+        @let isExpandedCustomPanel = currentPanel.panelTitle === customPanel.panelTitle && currentPanel.expanded;
         <mat-expansion-panel
             [expanded]="isExpandedCustomPanel"
             (opened)="expandPanel(customPanel.panelTitle)"

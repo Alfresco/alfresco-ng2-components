@@ -247,7 +247,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     }
 
     isPanelExpanded(panelTitle: string): boolean {
-        return (this.currentPanel.panelTitle === panelTitle && this.currentPanel.expanded) ?? false;
+        return this.currentPanel.panelTitle === panelTitle && this.currentPanel.expanded;
     }
 
     protected handleUpdateError(error: Error) {

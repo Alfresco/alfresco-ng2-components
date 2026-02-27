@@ -10,12 +10,11 @@
       id="site-dropdown"
       placeholder="{{placeholder | translate}}"
       [(value)]="selected"
-      placeholder="{{placeholder | translate}}"
       (selectionChange)="selectedSite($event)">
       <mat-select-trigger class="adf-sites-dropdown-select-trigger">
         {{ selected?.entry?.title | translate}}
       </mat-select-trigger>
-      @for (site of siteList?.list?.entries; track site?.entry?.id) {
+      @for (site of siteList?.list?.entries; track site.entry.id) {
         <mat-option [value]="site">
           {{ site.entry.title | translate}}
         </mat-option>
