@@ -24,7 +24,7 @@
     "@alfresco/js-api": ">=9.2.1",
     "@alfresco/adf-core": ">=8.2.1",
     "@alfresco/adf-content-services": ">=8.2.1",
-    "@ngx-translate/core": ">=14.0.0"
+    "@ngx-translate/core": ">=17.0.0"
   },
   "keywords": [
     "process-services",
