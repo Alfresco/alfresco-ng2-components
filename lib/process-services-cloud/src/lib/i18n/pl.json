@@ -50,7 +50,8 @@
         "MAXIMUM_LENGTH": "Przekroczono długość, maksymalna długość wynosi {{characters}} znaków",
         "SPACE_VALIDATOR": "Spacje na początku lub końcu są zabronione."
       }
-    }
+    },
+    "LOADING": "Ładowanie"
   },
   "ADF_CLOUD_TASK_LIST": {
     "START_TASK": {
@@ -97,7 +98,8 @@
         "SUBTITLE": "Utwórz nowe zadanie, które później będzie łatwo znaleźć.",
         "NONE": "Nie znaleziono list zadań."
       }
-    }
+    },
+    "LOADING": "Ładowanie"
   },
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {

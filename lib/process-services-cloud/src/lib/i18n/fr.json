@@ -50,7 +50,8 @@
         "MAXIMUM_LENGTH": "Longueur dépassée, {{characters}} caractères max.",
         "SPACE_VALIDATOR": "Ne peut pas commencer ou finir par un espace."
       }
-    }
+    },
+    "LOADING": "Chargement"
   },
   "ADF_CLOUD_TASK_LIST": {
     "START_TASK": {
@@ -97,7 +98,8 @@
         "SUBTITLE": "Créer une nouvelle tâche facilement accessible ultérieurement",
         "NONE": "Aucune liste de tâches trouvée"
       }
-    }
+    },
+    "LOADING": "Chargement"
   },
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {
