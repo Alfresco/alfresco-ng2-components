@@ -20,7 +20,7 @@
   }
   @if (categories && categories.length > 0) {
     <div class="adf-categories-list" [class.adf-categories-list-fixed]="!categoryNameControlVisible">
-      @for (category of categories; track category) {
+      @for (category of categories; track category.id) {
         <span
           [class.adf-categories-padded]="!isCRUDMode"
           class="adf-assigned-categories">
