@@ -25,7 +25,6 @@ import { CONTENT_VERSION_DIRECTIVES } from './version-manager/version-manager.mo
 import { CONTENT_NODE_SELECTOR_DIRECTIVES } from './content-node-selector/content-node-selector.module';
 import { CONTENT_NODE_SHARE_DIRECTIVES } from './content-node-share/content-node-share.module';
 import { CONTENT_DIRECTIVES } from './directives/content-directive.module';
-import { CONTENT_DIALOG_DIRECTIVES } from './dialogs/dialog.module';
 import { CONTENT_METADATA_DIRECTIVES } from './content-metadata/content-metadata.module';
 import { CONTENT_PERMISSION_MANAGER_DIRECTIVES } from './permission-manager/permission-manager.module';
 import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
@@ -44,7 +43,6 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
         MatDatetimepickerModule,
         MatNativeDatetimeModule,
         ...CONTENT_TAG_DIRECTIVES,
-        ...CONTENT_DIALOG_DIRECTIVES,
         ...CONTENT_SEARCH_DIRECTIVES,
         ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_UPLOAD_DIRECTIVES,
@@ -65,7 +63,6 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
         ...CONTENT_NODE_SELECTOR_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
         ...CONTENT_METADATA_DIRECTIVES,
-        ...CONTENT_DIALOG_DIRECTIVES,
         ...CONTENT_DIRECTIVES,
         ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
         ...CONTENT_VERSION_DIRECTIVES
