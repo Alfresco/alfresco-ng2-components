@@ -18,7 +18,6 @@
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { provideTranslations } from '@alfresco/adf-core';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
-import { CONTENT_TAG_DIRECTIVES } from './tag/tag.module';
 import { DOCUMENT_LIST_DIRECTIVES } from './document-list/document-list.module';
 import { CONTENT_SEARCH_DIRECTIVES } from './search/search.module';
 import { CONTENT_VERSION_DIRECTIVES } from './version-manager/version-manager.module';
@@ -39,7 +38,6 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
         MaterialModule,
         MatDatetimepickerModule,
         MatNativeDatetimeModule,
-        ...CONTENT_TAG_DIRECTIVES,
         ...CONTENT_SEARCH_DIRECTIVES,
         ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
@@ -50,7 +48,6 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
         MaterialModule,
-        ...CONTENT_TAG_DIRECTIVES,
         ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_SEARCH_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
