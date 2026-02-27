@@ -1,26 +1,30 @@
 <div id="site-dropdown-container" class="adf-site-dropdown-container">
-    <mat-form-field class="adf-sites-dropdown-form-field">
-        <mat-label>{{ 'NODE_SELECTOR.LOCATION' | translate }}</mat-label>
-        <mat-select
-            adf-infinite-select-scroll
-            (scrollEnd)="loadAllOnScroll()"
-            #siteSelect
-            data-automation-id="site-my-files-option"
-            class="adf-site-dropdown-list-element"
-            id="site-dropdown"
-            placeholder="{{placeholder | translate}}"
-            [(value)]="selected"
-            placeholder="{{placeholder | translate}}"
-            (selectionChange)="selectedSite($event)">
-            <mat-select-trigger class="adf-sites-dropdown-select-trigger">
-                {{ selected?.entry.title | translate}}
-            </mat-select-trigger>
-            <mat-option *ngFor="let site of siteList?.list.entries;" [value]="site">
-                {{ site.entry.title | translate}}
-            </mat-option>
-            <mat-option *ngIf="showLoading()" disabled="true" data-automation-id="site-loading">
-                {{ 'ADF_DROPDOWN.LOADING' | translate}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+  <mat-form-field class="adf-sites-dropdown-form-field">
+    <mat-label>{{ 'NODE_SELECTOR.LOCATION' | translate }}</mat-label>
+    <mat-select
+      adf-infinite-select-scroll
+      (scrollEnd)="loadAllOnScroll()"
+      #siteSelect
+      data-automation-id="site-my-files-option"
+      class="adf-site-dropdown-list-element"
+      id="site-dropdown"
+      placeholder="{{placeholder | translate}}"
+      [(value)]="selected"
+      placeholder="{{placeholder | translate}}"
+      (selectionChange)="selectedSite($event)">
+      <mat-select-trigger class="adf-sites-dropdown-select-trigger">
+        {{ selected?.entry?.title | translate}}
+      </mat-select-trigger>
+      @for (site of siteList?.list?.entries; track site?.entry?.id) {
+        <mat-option [value]="site">
+          {{ site.entry.title | translate}}
+        </mat-option>
+      }
+      @if (showLoading()) {
+        <mat-option disabled="true" data-automation-id="site-loading">
+          {{ 'ADF_DROPDOWN.LOADING' | translate}}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 </div>
