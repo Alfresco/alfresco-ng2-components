@@ -74,14 +74,14 @@
 
 <mat-dialog-actions class="adf-content-node-selector-dialog-actions">
     <div>
-        <ng-container *ngIf="isUploadEnabled()">
+        @if (isUploadEnabled()) {
             <adf-upload-button
                 [staticTitle]="'FORM.FIELD.UPLOAD' | translate"
                 [multipleFiles]="isMultipleSelection()"
                 [rootFolderId]="currentDirectoryId"
                 [disabled]="isNotAllowedToUpload()"
                 (error)="onError($event)" />
-        </ng-container>
+        }
     </div>
     <div>
         <button
