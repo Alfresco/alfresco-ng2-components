@@ -50,7 +50,8 @@
         "MAXIMUM_LENGTH": "Max. Länge überschritten, max. {{characters}} Zeichen.",
         "SPACE_VALIDATOR": "Darf nicht mit einem Leerzeichen beginnen oder enden."
       }
-    }
+    },
+    "LOADING": "Wird geladen"
   },
   "ADF_CLOUD_TASK_LIST": {
     "START_TASK": {
@@ -97,7 +98,8 @@
         "SUBTITLE": "Erstellen Sie eine neue Aufgabe, die sich später leicht wiederfinden lässt",
         "NONE": "Keine Aufgabenliste gefunden"
       }
-    }
+    },
+    "LOADING": "Wird geladen"
   },
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {

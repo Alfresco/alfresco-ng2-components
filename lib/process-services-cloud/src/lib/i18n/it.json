@@ -50,7 +50,8 @@
         "MAXIMUM_LENGTH": "Lunghezza superata, massimo {{characters}} caratteri.",
         "SPACE_VALIDATOR": "Non può iniziare o terminare con uno spazio."
       }
-    }
+    },
+    "LOADING": "Caricamento in corso"
   },
   "ADF_CLOUD_TASK_LIST": {
     "START_TASK": {
@@ -97,7 +98,8 @@
         "SUBTITLE": "Crea un nuovo compito da trovare facilmente più tardi",
         "NONE": "Nessun elenco compiti trovato"
       }
-    }
+    },
+    "LOADING": "Caricamento in corso"
   },
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {
