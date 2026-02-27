@@ -63,7 +63,7 @@ describe('TaskFiltersCloudComponent', () => {
                     useValue: {
                         queryParamMap: of({
                             get: (param: string) => {
-                                if (param === 'filter') {
+                                if (param === 'filterId') {
                                     return defaultTaskFiltersMock[0].id;
                                 }
                                 return null;

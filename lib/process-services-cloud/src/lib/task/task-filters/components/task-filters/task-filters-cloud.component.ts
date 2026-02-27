@@ -73,7 +73,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     private readonly translationService = inject(TranslationService);
     private readonly appConfigService = inject(AppConfigService);
     private readonly activatedRoute = inject(ActivatedRoute);
-    readonly currentRouteFilterId = toSignal(this.activatedRoute.queryParamMap.pipe(map((params) => params.get('filter'))));
+    readonly currentRouteFilterId = toSignal(this.activatedRoute.queryParamMap.pipe(map((params) => params.get('filterId'))));
 
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
