@@ -72,7 +72,7 @@ describe('ProcessFiltersCloudComponent', () => {
                         queryParamMap: of({
                             get: (param: string) => {
                                 if (param === 'filterId') {
-                                    return 'fake-process-filter-id';
+                                    return mockProcessFilters[0].id;
                                 }
                                 return null;
                             }
@@ -205,6 +205,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
         describe('Highlight Selected Filter', () => {
             const allProcessesFilterKey = mockProcessFilters[0].key;
+            const allProcessesFilterId = mockProcessFilters[0].id;
 
             it('should apply active CSS class on filter click', async () => {
                 component.enableNotifications = true;
@@ -214,13 +215,42 @@ describe('ProcessFiltersCloudComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const link = fixture.debugElement.query(By.css(`[data-automation-id="${allProcessesFilterKey}_filter"]`)).nativeElement;
-                expect(link.getAttribute('href')).toBe('/process-list-cloud?filterId=10');
+                let link = fixture.debugElement.query(By.css(`[data-automation-id="${allProcessesFilterKey}_filter"]`)).nativeElement;
+                expect(link.getAttribute('href')).toBe(`/process-list-cloud?filterId=${allProcessesFilterId}`);
 
                 link.click();
                 fixture.detectChanges();
                 await fixture.whenStable();
-                expect(router.url).toBe('/process-list-cloud?filterId=10');
+                expect(router.url).toBe(`/process-list-cloud?filterId=${allProcessesFilterId}`);
+
+                link = fixture.debugElement.query(By.css(`[data-automation-id="${allProcessesFilterKey}_filter"]`)).nativeElement;
+                expect(link.classList).toContain('adf-active');
+            });
+
+            it('should add aria-current attribute with value "page" to the active filter', async () => {
+                component.enableNotifications = true;
+                component.appName = 'mock-app-name';
+                const appNameChange = new SimpleChange(null, 'mock-app-name', true);
+
+                component.ngOnChanges({ appName: appNameChange });
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const link = fixture.debugElement.query(By.css(`[data-automation-id="${allProcessesFilterKey}_filter"]`)).nativeElement;
+                expect(link.getAttribute('aria-current')).toBe('page');
+            });
+
+            it('should not have aria-current attribute when filter is not active', async () => {
+                component.enableNotifications = true;
+                component.appName = 'mock-app-name';
+                const appNameChange = new SimpleChange(null, 'mock-app-name', true);
+
+                component.ngOnChanges({ appName: appNameChange });
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const link = fixture.debugElement.query(By.css(`[data-automation-id="${mockProcessFilters[1].key}_filter"]`)).nativeElement;
+                expect(link.getAttribute('aria-current')).toBeNull();
             });
         });
     });
