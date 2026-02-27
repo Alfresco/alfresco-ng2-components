@@ -4,7 +4,7 @@
             <a mat-list-item
                 [activated]="filter.id === currentRouteFilterId()"
                 [routerLink]="[TASKS_ROUTE]"
-                [queryParams]="{ filter: filter.id }"
+                [queryParams]="{ filterId: filter.id }"
                 [attr.data-automation-id]="filter.key + '_filter'"
                 class="adf-task-filters__entry"
                 [class.adf-active]="filter.id === currentRouteFilterId()"
