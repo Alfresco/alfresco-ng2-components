@@ -28,7 +28,6 @@ import { CONTENT_DIRECTIVES } from './directives/content-directive.module';
 import { CONTENT_DIALOG_DIRECTIVES } from './dialogs/dialog.module';
 import { CONTENT_METADATA_DIRECTIVES } from './content-metadata/content-metadata.module';
 import { CONTENT_PERMISSION_MANAGER_DIRECTIVES } from './permission-manager/permission-manager.module';
-import { ASPECT_LIST_DIRECTIVES } from './aspect-list/aspect-list.module';
 import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
@@ -54,8 +53,7 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
         ...CONTENT_METADATA_DIRECTIVES,
         ...CONTENT_DIRECTIVES,
         ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
-        ...CONTENT_VERSION_DIRECTIVES,
-        ...ASPECT_LIST_DIRECTIVES
+        ...CONTENT_VERSION_DIRECTIVES
     ],
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
@@ -70,8 +68,7 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
         ...CONTENT_DIALOG_DIRECTIVES,
         ...CONTENT_DIRECTIVES,
         ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
-        ...CONTENT_VERSION_DIRECTIVES,
-        ...ASPECT_LIST_DIRECTIVES
+        ...CONTENT_VERSION_DIRECTIVES
     ]
 })
 export class ContentModule {

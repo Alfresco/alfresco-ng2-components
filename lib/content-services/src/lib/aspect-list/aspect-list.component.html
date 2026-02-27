@@ -1,8 +1,10 @@
-<div id="aspect-list-container" class="adf-aspect-list-container" *ngIf="aspects$ | async as aspects; else loading">
+@let aspects = aspects$ | async;
+
+@if (aspects) {
+<div id="aspect-list-container" class="adf-aspect-list-container">
     <mat-accordion class="adf-accordion-aspect-list">
-        <div class="adf-accordion-aspect-list-item"
-             *ngFor="let aspect of aspects; let colIndex = index"
-             [ngClass]="{'adf-hover' : !isPanelOpen[colIndex]}">
+        @for (aspect of aspects; track aspect.entry.id; let colIndex = $index) {
+        <div class="adf-accordion-aspect-list-item" [ngClass]="{'adf-hover' : !isPanelOpen[colIndex]}">
             <mat-checkbox class="adf-aspect-list-check-button" [id]="'aspect-list-'+colIndex+'-check'"
                           [checked]="nodeAspects?.includes(aspect?.entry?.id)"
                           (click)="onCheckBoxClick($event)"
@@ -28,7 +30,8 @@
                 </mat-expansion-panel-header>
                 <p class="adf-property-paragraph" [id]="'aspect-list-'+colIndex+'-description'"> {{aspect?.entry?.description}}</p>
 
-                <table mat-table [dataSource]="aspect?.entry?.properties" *ngIf="aspect?.entry?.properties?.length > 0" class="adf-aspect-property-table" [id]="'aspect-list-'+colIndex+'-properties-table'">
+                @if (aspect?.entry?.properties?.length > 0) {
+                <table mat-table [dataSource]="aspect?.entry?.properties" class="adf-aspect-property-table" [id]="'aspect-list-'+colIndex+'-properties-table'">
                     <ng-container matColumnDef="name">
                       <th class="adf-aspect-property-table-column-name" mat-header-cell *matHeaderCellDef> {{'ADF-ASPECT-LIST.PROPERTY_NAME' | translate}} </th>
                       <td class="adf-aspect-property-table-column-name adf-aspect-property-table-cell" mat-cell *matCellDef="let property"> {{property.id}} </td>
@@ -43,14 +46,15 @@
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="propertyColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: propertyColumns;"></tr>
-                  </table>
+                </table>
+                }
             </mat-expansion-panel>
         </div>
+        }
     </mat-accordion>
 </div>
-
-<ng-template #loading>
+} @else {
     <div class="adf-aspect-list-spinner">
-       <mat-progress-spinner mode="indeterminate" id="adf-aspect-spinner" />
+        <mat-progress-spinner mode="indeterminate" id="adf-aspect-spinner" />
     </div>
-</ng-template>
+}
