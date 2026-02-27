@@ -621,6 +621,32 @@ describe('TaskFiltersCloudComponent', () => {
                 filterLink = fixture.debugElement.query(By.css(`[data-automation-id="${assignedTasksFilterKey}_filter"]`));
                 expect(filterLink.nativeElement.classList).toContain('adf-active');
             });
+
+            it('should add aria-current attribute with value "page" to the active filter', async () => {
+                getTaskListFiltersSpy.and.returnValue(of(defaultTaskFiltersMock));
+                component.appName = 'mock-app-name';
+                const appNameChange = new SimpleChange(null, 'mock-app-name', true);
+
+                component.ngOnChanges({ appName: appNameChange });
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const filterLink = fixture.debugElement.query(By.css(`[data-automation-id="${assignedTasksFilterKey}_filter"]`));
+                expect(filterLink.nativeElement.getAttribute('aria-current')).toBe('page');
+            });
+
+            it('should not have aria-current attribute when filter is not active', async () => {
+                getTaskListFiltersSpy.and.returnValue(of(defaultTaskFiltersMock));
+                component.appName = 'mock-app-name';
+                const appNameChange = new SimpleChange(null, 'mock-app-name', true);
+
+                component.ngOnChanges({ appName: appNameChange });
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const otherFilterLink = fixture.debugElement.query(By.css(`[data-automation-id="${defaultTaskFiltersMock[1].key}_filter"]`));
+                expect(otherFilterLink.nativeElement.getAttribute('aria-current')).toBeNull();
+            });
         });
     });
 });

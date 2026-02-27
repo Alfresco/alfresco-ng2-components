@@ -226,6 +226,32 @@ describe('ProcessFiltersCloudComponent', () => {
                 link = fixture.debugElement.query(By.css(`[data-automation-id="${allProcessesFilterKey}_filter"]`)).nativeElement;
                 expect(link.classList).toContain('adf-active');
             });
+
+            it('should add aria-current attribute with value "page" to the active filter', async () => {
+                component.enableNotifications = true;
+                component.appName = 'mock-app-name';
+                const appNameChange = new SimpleChange(null, 'mock-app-name', true);
+
+                component.ngOnChanges({ appName: appNameChange });
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const link = fixture.debugElement.query(By.css(`[data-automation-id="${allProcessesFilterKey}_filter"]`)).nativeElement;
+                expect(link.getAttribute('aria-current')).toBe('page');
+            });
+
+            it('should not have aria-current attribute when filter is not active', async () => {
+                component.enableNotifications = true;
+                component.appName = 'mock-app-name';
+                const appNameChange = new SimpleChange(null, 'mock-app-name', true);
+
+                component.ngOnChanges({ appName: appNameChange });
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const link = fixture.debugElement.query(By.css(`[data-automation-id="${mockProcessFilters[1].key}_filter"]`)).nativeElement;
+                expect(link.getAttribute('aria-current')).toBeNull();
+            });
         });
     });
 

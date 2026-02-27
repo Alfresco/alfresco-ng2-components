@@ -8,6 +8,7 @@
                 [attr.data-automation-id]="filter.key + '_filter'"
                 class="adf-process-filters__entry"
                 [class.adf-active]="filter.id === currentRouteFilterId()"
+                [attr.aria-current]="filter.id === currentRouteFilterId() ? 'page' : null"
                 [id]="filter.id"
                 [title]="filter.name ?? '' | translate"
                 [attr.aria-label]="filter.name ?? '' | translate"
