@@ -24,7 +24,6 @@ import { CONTENT_SEARCH_DIRECTIVES } from './search/search.module';
 import { CONTENT_VERSION_DIRECTIVES } from './version-manager/version-manager.module';
 import { CONTENT_NODE_SHARE_DIRECTIVES } from './content-node-share/content-node-share.module';
 import { CONTENT_DIRECTIVES } from './directives/content-directive.module';
-import { CONTENT_METADATA_DIRECTIVES } from './content-metadata/content-metadata.module';
 import { CONTENT_PERMISSION_MANAGER_DIRECTIVES } from './permission-manager/permission-manager.module';
 import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
@@ -46,7 +45,6 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
         ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_UPLOAD_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
-        ...CONTENT_METADATA_DIRECTIVES,
         ...CONTENT_DIRECTIVES,
         ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
         ...CONTENT_VERSION_DIRECTIVES
@@ -59,7 +57,6 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
         ...CONTENT_UPLOAD_DIRECTIVES,
         ...CONTENT_SEARCH_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
-        ...CONTENT_METADATA_DIRECTIVES,
         ...CONTENT_DIRECTIVES,
         ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
         ...CONTENT_VERSION_DIRECTIVES
