@@ -64,7 +64,7 @@ describe('TaskFiltersCloudComponent', () => {
                         queryParamMap: of({
                             get: (param: string) => {
                                 if (param === 'filter') {
-                                    return 'fake-task-filter-id';
+                                    return defaultTaskFiltersMock[0].id;
                                 }
                                 return null;
                             }
@@ -601,7 +601,7 @@ describe('TaskFiltersCloudComponent', () => {
         });
 
         describe('Highlight Selected Filter', () => {
-            const assignedTasksFilterKey = defaultTaskFiltersMock[1].key;
+            const assignedTasksFilterKey = defaultTaskFiltersMock[0].key;
 
             it('Should highlight task filter on filter click', async () => {
                 getTaskListFiltersSpy.and.returnValue(of(defaultTaskFiltersMock));
@@ -611,12 +611,15 @@ describe('TaskFiltersCloudComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const filterLink = fixture.debugElement.query(By.css(`[data-automation-id="${assignedTasksFilterKey}_filter"]`));
+                let filterLink = fixture.debugElement.query(By.css(`[data-automation-id="${assignedTasksFilterKey}_filter"]`));
                 filterLink.nativeElement.click();
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(router.url).toBe('/task-list-cloud?filter=2');
+                expect(router.url).toBe(`/task-list-cloud?filter=${defaultTaskFiltersMock[0].id}`);
+
+                filterLink = fixture.debugElement.query(By.css(`[data-automation-id="${assignedTasksFilterKey}_filter"]`));
+                expect(filterLink.nativeElement.classList).toContain('adf-active');
             });
         });
     });
