@@ -62,7 +62,7 @@ export class TranslationService {
         this.customLoader = this.translate.currentLoader as TranslateLoaderService;
 
         this.defaultLang = 'en';
-        this.translate.setFallbackLang(this.defaultLang);
+        this.translate.setDefaultLang(this.defaultLang);
         this.customLoader.setDefaultLang(this.defaultLang);
 
         if (this.providers && this.providers.length > 0) {
@@ -115,7 +115,7 @@ export class TranslationService {
      * @param fallback Language code to fall back to if the first one was unavailable
      */
     loadTranslation(lang: string, fallback?: string) {
-        this.translate.currentLoader.getTranslation(lang).subscribe(
+        this.translate.getTranslation(lang).subscribe(
             () => {
                 this.translate.use(lang);
                 this.onTranslationChanged(lang);
@@ -134,8 +134,10 @@ export class TranslationService {
      * @param lang The new language code
      */
     onTranslationChanged(lang: string): void {
-        const translations = this.customLoader.getFullTranslationJSON?.(lang) ?? {};
-        this.translate.setTranslation(lang, translations, true);
+        this.translate.onTranslationChange.next({
+            lang,
+            translations: this.customLoader.getFullTranslationJSON?.(lang) ?? {}
+        });
     }
 
     /**
