@@ -18,13 +18,13 @@
 import { EventEmitter, Injectable, NgModule } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
+import { provideTranslateLoader, provideTranslateService, TranslateLoader, TranslationObject } from '@ngx-translate/core';
 import { TranslationService } from '../translation/translation.service';
 import { LangChangeEvent } from '../mock';
 import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class NoopTranslationService {
+export class NoopTranslationService implements TranslateLoader {
     defaultLang: string = 'en';
     userLang: string;
     customLoader: any;
@@ -47,6 +47,10 @@ export class NoopTranslationService {
     instant(key: string | Array<string>): string | any {
         return key;
     }
+
+    getTranslation(): Observable<TranslationObject> {
+        return of({});
+    }
 }
 
 @NgModule({
@@ -55,10 +59,7 @@ export class NoopTranslationService {
         provideHttpClientTesting(),
         { provide: TranslationService, useClass: NoopTranslationService },
         provideTranslateService({
-            loader: {
-                provide: TranslateLoader,
-                useClass: NoopTranslationService
-            }
+            loader: provideTranslateLoader(NoopTranslationService)
         })
     ]
 })
