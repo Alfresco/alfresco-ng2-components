@@ -18,7 +18,7 @@
 import { EventEmitter, Injectable, NgModule } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideTranslateLoader, provideTranslateService, TranslateLoader, TranslationObject } from '@ngx-translate/core';
+import { Language, provideTranslateLoader, provideTranslateService, TranslateLoader, TranslationObject } from '@ngx-translate/core';
 import { TranslationService } from '../translation/translation.service';
 import { LangChangeEvent } from '../mock';
 import { Observable, of } from 'rxjs';
@@ -30,7 +30,8 @@ export class NoopTranslationService implements TranslateLoader {
     customLoader: any;
 
     translate: any = {
-        onLangChange: new EventEmitter<LangChangeEvent>()
+        onLangChange: new EventEmitter<LangChangeEvent>(),
+        getCurrentLang: (): Language => 'en'
     };
 
     addTranslationFolder() {}
