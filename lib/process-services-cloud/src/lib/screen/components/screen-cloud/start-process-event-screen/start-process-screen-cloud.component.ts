@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input, output, signal } from '@angular/core';
 import { BaseScreenCloudComponent } from '../base-screen/base-screen-cloud.component';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { StartProcessScreenCloud } from './start-process-screen.model';
+import { TaskVariableCloud } from '../../../../../..';
 
 @Component({
     selector: 'adf-cloud-start-process-screen-cloud',
@@ -31,22 +32,25 @@ import { StartProcessScreenCloud } from './start-process-screen.model';
 })
 export class StartProcessScreenCloudComponent extends BaseScreenCloudComponent<StartProcessScreenCloud> {
     processDefinitionId = input('');
+    readonly resolvedValues = input<TaskVariableCloud[]>();
     screenStartProcessPayloadChange = output<unknown>();
     disableStartProcessButton = output<boolean>();
 
     showStartProcessButtons = signal(false);
 
-    protected setInputsForDynamicComponent(): void {
-        if (this.processDefinitionId()) {
-            this.componentRef.setInput('processDefinitionId', this.processDefinitionId());
-        }
-    }
-
-    protected subscribeToOutputs(): void {
-        this.componentRef.instance.startProcessPayloadChanged.subscribe((payload) => this.screenStartProcessPayloadChange.emit(payload));
-        this.componentRef.instance.defaultStartProcessButtonsConfigurationChange.subscribe((config) => {
-            this.showStartProcessButtons.set(config.show);
-            this.disableStartProcessButton.emit(config.disable);
+    constructor() {
+        super();
+        effect(() => this.componentRefChanged()?.setInput('processDefinitionId', this.processDefinitionId()));
+        effect(() => this.componentRefChanged()?.setInput('resolvedValues', this.resolvedValues()));
+        effect(() => {
+            const componentRef = this.componentRefChanged();
+            if (componentRef) {
+                componentRef.instance.startProcessPayloadChanged.subscribe((payload) => this.screenStartProcessPayloadChange.emit(payload));
+                componentRef.instance.defaultStartProcessButtonsConfigurationChange.subscribe((config) => {
+                    this.showStartProcessButtons.set(config.show);
+                    this.disableStartProcessButton.emit(config.disable);
+                });
+            }
         });
     }
 }

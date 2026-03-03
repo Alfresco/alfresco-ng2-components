@@ -310,6 +310,15 @@ describe('StartProcessCloudComponent', () => {
             expect(contentElement.textContent).toBe('Mock Screen Component');
         });
 
+        it('should inject screen inputs', fakeAsync(() => {
+            const processDefinition = fakeProcessDefinitions[2];
+            component.processDefinitionCurrent = processDefinition;
+            fixture.componentRef.setInput('resolvedValues', [new TaskVariableCloud({ name: 'name1', value: 'value1' })]);
+
+            expect(screenComponent.processDefinitionId()).toEqual(processDefinition.id);
+            expect(screenComponent.resolvedValues()).toEqual(component.resolvedValues);
+        }));
+
         it('should toggle default process buttons', () => {
             screenComponent.defaultStartProcessButtonsConfigurationChange.emit({ show: false, disable: false });
             fixture.detectChanges();
