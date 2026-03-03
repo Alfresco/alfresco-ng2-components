@@ -17,7 +17,6 @@
 
 import { EnvironmentProviders, inject, provideAppInitializer, Provider } from '@angular/core';
 import { provideTranslateLoader, provideTranslateService, TranslateService } from '@ngx-translate/core';
-import { firstValueFrom } from 'rxjs';
 import { TranslateLoaderService } from './translate-loader.service';
 import { provideTranslations } from './translation.service';
 
@@ -70,7 +69,7 @@ export function provideI18N(config?: ProvideI18NConfig): (Provider | Environment
             provideAppInitializer(() => {
                 const translateService = inject(TranslateService);
                 translateService.setTranslation(defaultLanguage, config.translations, true);
-                return firstValueFrom(translateService.use(defaultLanguage));
+                return Promise.resolve();
             })
         );
     }
