@@ -37,7 +37,7 @@ export class DocumentListService implements DocumentListLoader {
     private readonly customResourcesService = inject(CustomResourcesService);
 
     @LazyApi((self: DocumentListService) => new NodesApi(self.apiService.getInstance()))
-    nodes: NodesApi;
+    declare readonly nodes: NodesApi;
 
     private readonly _reload = new Subject<void>();
     private readonly _resetSelection = new Subject<void>();

@@ -33,7 +33,7 @@ export class TaskFormService {
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     @LazyApi((self: TaskFormService) => new TaskFormsApi(self.apiService.getInstance()))
-    taskFormsApi: TaskFormsApi;
+    declare readonly taskFormsApi: TaskFormsApi;
 
     /**
      * Saves a task form.

@@ -25,7 +25,7 @@ export class DiagramsService {
     private readonly apiService = inject(AlfrescoApiService);
 
     @LazyApi((self: DiagramsService) => new ModelJsonBpmnApi(self.apiService.getInstance()))
-    modelJsonBpmnApi: ModelJsonBpmnApi;
+    declare readonly modelJsonBpmnApi: ModelJsonBpmnApi;
 
     getProcessDefinitionModel(processDefinitionId: string): Observable<any> {
         return from(this.modelJsonBpmnApi.getModelJSON(processDefinitionId));

@@ -28,7 +28,7 @@ export class TaskFilterService {
     protected apiService = inject(AlfrescoApiService);
 
     @LazyApi((self: TaskFilterService) => new UserFiltersApi(self.apiService.getInstance()))
-    userFiltersApi: UserFiltersApi;
+    declare readonly userFiltersApi: UserFiltersApi;
 
     /**
      * Creates and returns the default filters for a process app.

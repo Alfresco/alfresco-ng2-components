@@ -32,7 +32,7 @@ export class EditorService {
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     @LazyApi((self: EditorService) => new FormModelsApi(self.apiService.getInstance()))
-    editorApi: FormModelsApi;
+    declare readonly editorApi: FormModelsApi;
 
     /**
      * Saves a form.

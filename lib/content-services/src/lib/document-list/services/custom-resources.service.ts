@@ -47,25 +47,25 @@ export class CustomResourcesService {
     private readonly apiService = inject(AlfrescoApiService);
 
     @LazyApi((self: CustomResourcesService) => new PeopleApi(self.apiService.getInstance()))
-    peopleApi: PeopleApi;
+    declare readonly peopleApi: PeopleApi;
 
     @LazyApi((self: CustomResourcesService) => new SitesApi(self.apiService.getInstance()))
-    sitesApi: SitesApi;
+    declare readonly sitesApi: SitesApi;
 
     @LazyApi((self: CustomResourcesService) => new TrashcanApi(self.apiService.getInstance()))
-    trashcanApi: TrashcanApi;
+    declare readonly trashcanApi: TrashcanApi;
 
     @LazyApi((self: CustomResourcesService) => new SearchApi(self.apiService.getInstance()))
-    searchApi: SearchApi;
+    declare readonly searchApi: SearchApi;
 
     @LazyApi((self: CustomResourcesService) => new SharedlinksApi(self.apiService.getInstance()))
-    sharedLinksApi: SharedlinksApi;
+    declare readonly sharedLinksApi: SharedlinksApi;
 
     @LazyApi((self: CustomResourcesService) => new FavoritesApi(self.apiService.getInstance()))
-    favoritesApi: FavoritesApi;
+    declare readonly favoritesApi: FavoritesApi;
 
     @LazyApi((self: CustomResourcesService) => new NodesApi(self.apiService.getInstance()))
-    nodesApi: NodesApi;
+    declare readonly nodesApi: NodesApi;
 
     /**
      * Gets files recently accessed by a user.

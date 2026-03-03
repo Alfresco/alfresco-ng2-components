@@ -34,7 +34,7 @@ export class AspectListService {
     private readonly appConfigService = inject(AppConfigService);
 
     @LazyApi((self: AspectListService) => new AspectsApi(self.alfrescoApiService.getInstance()))
-    aspectsApi: AspectsApi;
+    declare readonly aspectsApi: AspectsApi;
 
     getAllAspects(standardOpts?: ListAspectsOpts, customOpts?: ListAspectsOpts): Observable<CustomAspectPaging> {
         const visibleAspectList = this.getVisibleAspects();

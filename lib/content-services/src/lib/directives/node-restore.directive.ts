@@ -36,7 +36,7 @@ export class NodeRestoreDirective {
     private readonly restoreProcessStatus;
 
     @LazyApi((self: NodeRestoreDirective) => new TrashcanApi(self.alfrescoApiService.getInstance()))
-    trashcanApi: TrashcanApi;
+    declare readonly trashcanApi: TrashcanApi;
 
     /** Array of deleted nodes to restore. */
     @Input('adf-restore')

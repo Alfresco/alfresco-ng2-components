@@ -34,7 +34,7 @@ export abstract class SavedSearchesBaseService implements SavedSearchStrategy {
     protected readonly authService = inject(AuthenticationService);
 
     @LazyApi((self: SavedSearchesBaseService) => new NodesApi(self.apiService.getInstance()))
-    nodesApi: NodesApi;
+    declare readonly nodesApi: NodesApi;
 
     protected abstract fetchAllSavedSearches(): Observable<SavedSearch[]>;
     protected abstract updateSavedSearches(searches: SavedSearch[]): Observable<NodeEntry>;

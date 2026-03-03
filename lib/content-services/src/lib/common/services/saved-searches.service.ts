@@ -42,7 +42,7 @@ export class SavedSearchesService extends SavedSearchesBaseService {
         }
         return new PreferencesApi(self.apiService.getInstance());
     })
-    preferencesApi: PreferencesApi;
+    declare readonly preferencesApi: SavedSearchesPreferencesApiService;
 
     protected fetchAllSavedSearches(): Observable<SavedSearch[]> {
         const savedSearchesMigrated = localStorage.getItem(this.getLocalStorageKey()) ?? '';

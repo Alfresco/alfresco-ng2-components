@@ -36,7 +36,7 @@ export class NodeDownloadDirective {
     private readonly dialog = inject(MatDialog);
 
     @LazyApi((self: NodeDownloadDirective) => new ContentApi(self.apiService.getInstance()))
-    contentApi: ContentApi;
+    declare readonly contentApi: ContentApi;
 
     /** Nodes to download. */
     @Input('adfNodeDownload')

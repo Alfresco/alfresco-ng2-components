@@ -57,13 +57,13 @@ export class UploadService {
     private isThumbnailGenerationEnabled: boolean;
 
     @LazyApi((self: UploadService) => new UploadApi(self.apiService.getInstance()))
-    uploadApi: UploadApi;
+    declare readonly uploadApi: UploadApi;
 
     @LazyApi((self: UploadService) => new NodesApi(self.apiService.getInstance()))
-    nodesApi: NodesApi;
+    declare readonly nodesApi: NodesApi;
 
     @LazyApi((self: UploadService) => new VersionsApi(self.apiService.getInstance()))
-    versionsApi: VersionsApi;
+    declare readonly versionsApi: VersionsApi;
 
     protected apiService = inject(AlfrescoApiService);
     protected appConfigService = inject(AppConfigService);

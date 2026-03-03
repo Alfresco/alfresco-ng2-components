@@ -25,7 +25,7 @@ export class ContentVersionService {
     private readonly alfrescoApi = inject(AlfrescoApiService);
 
     @LazyApi((self: ContentVersionService) => new ContentApi(self.alfrescoApi.getInstance()))
-    contentApi: ContentApi;
+    declare readonly contentApi: ContentApi;
 
     /**
      * Get content URL for the given nodeId and specific version.

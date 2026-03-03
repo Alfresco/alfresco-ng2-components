@@ -50,7 +50,7 @@ export class PeopleContentService {
     private currentUser: EcmUserModel;
 
     @LazyApi((self: PeopleContentService) => new PeopleApi(self.apiService.getInstance()))
-    peopleApi: PeopleApi;
+    declare readonly peopleApi: PeopleApi;
 
     constructor() {
         const authenticationService = inject(AuthenticationService);

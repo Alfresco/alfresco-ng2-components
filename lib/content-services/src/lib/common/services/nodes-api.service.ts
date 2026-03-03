@@ -49,10 +49,10 @@ export class NodesApiService {
     nodeUpdated = new Subject<Node>();
 
     @LazyApi((self: NodesApiService) => new TrashcanApi(self.apiService.getInstance()))
-    trashcanApi: TrashcanApi;
+    declare readonly trashcanApi: TrashcanApi;
 
     @LazyApi((self: NodesApiService) => new NodesApi(self.apiService.getInstance()))
-    nodesApi: NodesApi;
+    declare readonly nodesApi: NodesApi;
 
     private getEntryFromEntity(entity: NodeEntry): Node {
         return entity.entry;

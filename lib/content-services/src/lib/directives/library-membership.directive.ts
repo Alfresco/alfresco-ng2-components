@@ -39,7 +39,7 @@ export class LibraryMembershipDirective implements OnChanges {
     isJoinRequested: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     @LazyApi((self: LibraryMembershipDirective) => new SitesApi(self.alfrescoApiService.getInstance()))
-    sitesApi: SitesApi;
+    declare readonly sitesApi: SitesApi;
 
     /** Site for which to toggle the membership request. */
     @Input('adf-library-membership')

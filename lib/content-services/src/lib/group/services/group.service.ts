@@ -28,7 +28,7 @@ export class GroupService {
     private readonly alfrescoApiService = inject(AlfrescoApiService);
 
     @LazyApi((self: GroupService) => new GroupsApi(self.alfrescoApiService.getInstance()))
-    groupsApi: GroupsApi;
+    declare readonly groupsApi: GroupsApi;
 
     async listAllGroupMembershipsForPerson(personId: string, opts?: any, accumulator = []): Promise<GroupEntry[]> {
         const groupsPaginated = await this.groupsApi.listGroupMembershipsForPerson(personId, opts);

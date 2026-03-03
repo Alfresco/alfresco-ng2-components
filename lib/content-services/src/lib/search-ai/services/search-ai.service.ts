@@ -35,7 +35,7 @@ export class SearchAiService {
     });
 
     @LazyApi((self: SearchAiService) => new SearchAiApi(self.apiService.getInstance()))
-    searchAiApi: SearchAiApi;
+    declare readonly searchAiApi: SearchAiApi;
 
     toggleSearchAiInput$ = this.toggleSearchAiInput.asObservable();
 

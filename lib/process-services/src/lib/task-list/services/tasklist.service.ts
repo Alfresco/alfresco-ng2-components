@@ -40,16 +40,16 @@ export class TaskListService {
     protected apiService = inject(AlfrescoApiService);
 
     @LazyApi((self: TaskListService) => new ModelsApi(self.apiService.getInstance()))
-    modelsApi: ModelsApi;
+    declare readonly modelsApi: ModelsApi;
 
     @LazyApi((self: TaskListService) => new TasksApi(self.apiService.getInstance()))
-    tasksApi: TasksApi;
+    declare readonly tasksApi: TasksApi;
 
     @LazyApi((self: TaskListService) => new TaskActionsApi(self.apiService.getInstance()))
-    taskActionsApi: TaskActionsApi;
+    declare readonly taskActionsApi: TaskActionsApi;
 
     @LazyApi((self: TaskListService) => new ChecklistsApi(self.apiService.getInstance()))
-    checklistsApi: ChecklistsApi;
+    declare readonly checklistsApi: ChecklistsApi;
 
     /**
      * Gets all the filters in the list that belong to a task.

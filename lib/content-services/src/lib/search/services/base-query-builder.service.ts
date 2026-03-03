@@ -46,7 +46,7 @@ export abstract class BaseQueryBuilderService {
     private readonly activatedRoute = inject(ActivatedRoute);
 
     @LazyApi((self: BaseQueryBuilderService) => new SearchApi(self.alfrescoApiService.getInstance()))
-    searchApi: SearchApi;
+    declare readonly searchApi: SearchApi;
 
     /*  Stream that emits the search configuration whenever the user change the search forms */
     configUpdated = new Subject<SearchConfiguration>();

@@ -31,10 +31,10 @@ export class SearchService {
     dataLoaded = new Subject<ResultSetPaging>();
 
     @LazyApi((self: SearchService) => new QueriesApi(self.apiService.getInstance()))
-    queriesApi: QueriesApi;
+    declare readonly queriesApi: QueriesApi;
 
     @LazyApi((self: SearchService) => new SearchApi(self.apiService.getInstance()))
-    searchApi: SearchApi;
+    declare readonly searchApi: SearchApi;
 
     /**
      * Gets a list of nodes that match the given search criteria.

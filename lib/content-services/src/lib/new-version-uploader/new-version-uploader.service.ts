@@ -35,7 +35,7 @@ export class NewVersionUploaderService {
     private readonly overlayContainer = inject(OverlayContainer);
 
     @LazyApi((self: NewVersionUploaderService) => new VersionsApi(self.apiService.getInstance()))
-    versionsApi: VersionsApi;
+    declare readonly versionsApi: VersionsApi;
 
     /**
      * Open a dialog NewVersionUploaderDialogComponent to display:

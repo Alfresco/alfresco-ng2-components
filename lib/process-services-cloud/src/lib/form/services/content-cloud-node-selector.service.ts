@@ -33,7 +33,7 @@ export class ContentCloudNodeSelectorService {
     private readonly dialog = inject(MatDialog);
 
     @LazyApi((self: ContentCloudNodeSelectorService) => new NodesApi(self.apiService.getInstance()))
-    nodesApi: NodesApi;
+    declare readonly nodesApi: NodesApi;
 
     sourceNodeNotFound = false;
 

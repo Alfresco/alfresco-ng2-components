@@ -28,7 +28,7 @@ export class AppsProcessService {
     private readonly apiService = inject(AlfrescoApiService);
 
     @LazyApi((self: AppsProcessService) => new RuntimeAppDefinitionsApi(self.apiService.getInstance()))
-    appsApi: RuntimeAppDefinitionsApi;
+    declare readonly appsApi: RuntimeAppDefinitionsApi;
 
     /**
      * Gets a list of deployed apps for this user.

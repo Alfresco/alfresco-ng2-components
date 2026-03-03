@@ -36,7 +36,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
     private readonly formService = inject(FormService);
 
     @LazyApi((self: FormCloudService) => new UploadApi(self.apiService.getInstance()))
-    uploadApi: UploadApi;
+    declare readonly uploadApi: UploadApi;
 
     /**
      * Gets the form definition of a task.

@@ -59,13 +59,13 @@ export class RenditionService {
     private readonly DEFAULT_RENDITION: string = 'imgpreview';
 
     @LazyApi((self: RenditionService) => new RenditionsApi(self.apiService.getInstance()))
-    renditionsApi: RenditionsApi;
+    declare readonly renditionsApi: RenditionsApi;
 
     @LazyApi((self: RenditionService) => new ContentApi(self.apiService.getInstance()))
-    contentApi: ContentApi;
+    declare readonly contentApi: ContentApi;
 
     @LazyApi((self: RenditionService) => new VersionsApi(self.apiService.getInstance()))
-    versionsApi: VersionsApi;
+    declare readonly versionsApi: VersionsApi;
 
     getRenditionUrl(nodeId: string, type: string, renditionExists: boolean): string {
         return renditionExists && type !== RenditionService.ContentGroup.IMAGE

@@ -56,7 +56,7 @@ export class NodeLockDialogComponent implements OnInit {
     nodeName: string;
 
     @LazyApi((self: NodeLockDialogComponent) => new NodesApi(self.alfrescoApi.getInstance()))
-    nodesApi: NodesApi;
+    declare readonly nodesApi: NodesApi;
 
     ngOnInit() {
         const { node } = this.data;

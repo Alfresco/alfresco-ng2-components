@@ -33,7 +33,7 @@ export class ProcessFilterService {
     private readonly alfrescoApiService = inject(AlfrescoApiService);
 
     @LazyApi((self: ProcessFilterService) => new UserFiltersApi(self.alfrescoApiService.getInstance()))
-    userFiltersApi: UserFiltersApi;
+    declare readonly userFiltersApi: UserFiltersApi;
 
     /**
      * Gets all filters defined for a Process App.

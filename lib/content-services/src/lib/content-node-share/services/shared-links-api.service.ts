@@ -32,7 +32,7 @@ export class SharedLinksApiService {
     error = new Subject<{ statusCode: number; message: string }>();
 
     @LazyApi((self: SharedLinksApiService) => new SharedlinksApi(self.apiService.getInstance()))
-    sharedLinksApi: SharedlinksApi;
+    declare readonly sharedLinksApi: SharedlinksApi;
 
     /**
      * Gets shared links available to the current user.

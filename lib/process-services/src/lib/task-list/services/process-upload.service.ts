@@ -24,7 +24,7 @@ import { Injectable } from '@angular/core';
 })
 export class ProcessUploadService extends UploadService {
     @LazyApi((self: ProcessUploadService) => new ActivitiContentApi(self.apiService.getInstance()))
-    contentApi: ActivitiContentApi;
+    declare readonly contentApi: ActivitiContentApi;
 
     getUploadPromise(file: any): Promise<RelatedContentRepresentation> {
         const opts = {

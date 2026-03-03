@@ -37,7 +37,7 @@ export class ProcessContentService {
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     @LazyApi((self: ProcessContentService) => new ActivitiContentApi(self.apiService.getInstance()))
-    contentApi: ActivitiContentApi;
+    declare readonly contentApi: ActivitiContentApi;
 
     /**
      * Create temporary related content from an uploaded file.

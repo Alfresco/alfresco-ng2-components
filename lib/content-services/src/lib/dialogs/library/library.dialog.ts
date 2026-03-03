@@ -102,7 +102,7 @@ export class LibraryDialogComponent implements OnInit {
     disableCreateButton = false;
 
     @LazyApi((self: LibraryDialogComponent) => new QueriesApi(self.alfrescoApiService.getInstance()))
-    queriesApi: QueriesApi;
+    declare readonly queriesApi: QueriesApi;
 
     private readonly destroyRef = inject(DestroyRef);
 

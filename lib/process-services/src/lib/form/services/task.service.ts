@@ -31,7 +31,7 @@ export class TaskService {
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     @LazyApi((self: TaskService) => new TasksApi(self.apiService.getInstance()))
-    taskApi: TasksApi;
+    declare readonly taskApi: TasksApi;
 
     /**
      * Gets a task.

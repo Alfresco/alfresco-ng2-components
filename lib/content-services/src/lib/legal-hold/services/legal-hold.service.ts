@@ -39,7 +39,7 @@ export class LegalHoldService {
     private readonly apiService = inject(AlfrescoApiService);
 
     @LazyApi((self: LegalHoldService) => new LegalHoldApi(self.apiService.getInstance()))
-    legalHoldApi: LegalHoldApi;
+    declare readonly legalHoldApi: LegalHoldApi;
 
     /**
      * Gets the list of holds available in the file plan.

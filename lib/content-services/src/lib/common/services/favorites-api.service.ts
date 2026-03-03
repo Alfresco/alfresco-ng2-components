@@ -30,7 +30,7 @@ export class FavoritesApiService {
     private readonly preferences = inject(UserPreferencesService);
 
     @LazyApi((self: FavoritesApiService) => new FavoritesApi(self.apiService.getInstance()))
-    favoritesApi: FavoritesApi;
+    declare readonly favoritesApi: FavoritesApi;
 
     static remapEntry({ entry }: any): any {
         entry.properties = {

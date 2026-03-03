@@ -68,10 +68,10 @@ export class NodeDeleteDirective implements OnChanges {
     delete: EventEmitter<any> = new EventEmitter();
 
     @LazyApi((self: NodeDeleteDirective) => new TrashcanApi(self.alfrescoApiService.getInstance()))
-    trashcanApi: TrashcanApi;
+    declare readonly trashcanApi: TrashcanApi;
 
     @LazyApi((self: NodeDeleteDirective) => new NodesApi(self.alfrescoApiService.getInstance()))
-    nodesApi: NodesApi;
+    declare readonly nodesApi: NodesApi;
 
     @HostListener('click')
     onClick() {

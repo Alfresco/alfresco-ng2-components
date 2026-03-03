@@ -74,7 +74,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     private previewState = false;
 
     @LazyApi((self: AttachFileCloudWidgetComponent) => new NodesApi(self.apiService.getInstance()))
-    nodesApi: NodesApi;
+    declare readonly nodesApi: NodesApi;
 
     displayedColumns = ['icon', 'fileName', 'title', 'action'];
 

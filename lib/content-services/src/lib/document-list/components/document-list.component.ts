@@ -470,7 +470,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     private readonly destroyRef = inject(DestroyRef);
 
     @LazyApi((self: DocumentListComponent) => new NodesApi(self.alfrescoApiService.getInstance()))
-    nodesApi: NodesApi;
+    declare readonly nodesApi: NodesApi;
 
     constructor() {
         const appConfig = inject(AppConfigService);

@@ -24,7 +24,7 @@ import { ActivitiContentApi, LazyApi, RelatedContentRepresentation } from '@alfr
 })
 export class TaskUploadService extends UploadService {
     @LazyApi((self: TaskUploadService) => new ActivitiContentApi(self.apiService.getInstance()))
-    contentApi: ActivitiContentApi;
+    declare readonly contentApi: ActivitiContentApi;
 
     getUploadPromise(file: any): Promise<RelatedContentRepresentation> {
         const opts = {

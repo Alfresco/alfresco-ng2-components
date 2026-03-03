@@ -35,7 +35,7 @@ export class EcmModelService {
     error = new EventEmitter<any>();
 
     @LazyApi((self: EcmModelService) => new CustomModelApi(self.apiService.getInstance()))
-    customModelApi: CustomModelApi;
+    declare readonly customModelApi: CustomModelApi;
 
     public createEcmTypeForActivitiForm(formName: string, form: FormModel): Observable<any> {
         return new Observable((observer) => {

@@ -30,7 +30,7 @@ export class AgentService {
     private readonly agents = new BehaviorSubject<Agent[]>([]);
 
     @LazyApi((self: AgentService) => new AgentsApi(self.apiService.getInstance()))
-    agentsApi: AgentsApi;
+    declare readonly agentsApi: AgentsApi;
 
     agents$ = this.agents.asObservable();
 

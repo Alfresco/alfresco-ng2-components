@@ -40,7 +40,7 @@ export class LibraryFavoriteDirective implements OnChanges {
     private targetLibrary = null;
 
     @LazyApi((self: LibraryFavoriteDirective) => new FavoritesApi(self.alfrescoApiService.getInstance()))
-    favoritesApi: FavoritesApi;
+    declare readonly favoritesApi: FavoritesApi;
 
     @HostListener('click')
     onClick() {

@@ -29,16 +29,16 @@ export class PeopleProcessService {
     private readonly apiService = inject(AlfrescoApiService);
 
     @LazyApi((self: PeopleProcessService) => new TaskActionsApi(self.apiService.getInstance()))
-    taskActionsApi: TaskActionsApi;
+    declare readonly taskActionsApi: TaskActionsApi;
 
     @LazyApi((self: PeopleProcessService) => new UsersApi(self.apiService.getInstance()))
-    userApi: UsersApi;
+    declare readonly userApi: UsersApi;
 
     @LazyApi((self: PeopleProcessService) => new ActivitiGroupsApi(self.apiService.getInstance()))
-    groupsApi: ActivitiGroupsApi;
+    declare readonly groupsApi: ActivitiGroupsApi;
 
     @LazyApi((self: PeopleProcessService) => new UserProfileApi(self.apiService.getInstance()))
-    profileApi: UserProfileApi;
+    declare readonly profileApi: UserProfileApi;
 
     /**
      * Gets information about the current user.

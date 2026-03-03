@@ -27,7 +27,7 @@ export class DownloadZipService {
     private readonly apiService = inject(AlfrescoApiService);
 
     @LazyApi((self: DownloadZipService) => new DownloadsApi(self.apiService.getInstance()))
-    downloadsApi: DownloadsApi;
+    declare readonly downloadsApi: DownloadsApi;
 
     /**
      * Creates a new download.

@@ -44,16 +44,16 @@ export class ProcessService {
     private readonly alfrescoApiService = inject(AlfrescoApiService);
 
     @LazyApi((self: ProcessService) => new TasksApi(self.alfrescoApiService.getInstance()))
-    tasksApi: TasksApi;
+    declare readonly tasksApi: TasksApi;
 
     @LazyApi((self: ProcessService) => new ProcessDefinitionsApi(self.alfrescoApiService.getInstance()))
-    processDefinitionsApi: ProcessDefinitionsApi;
+    declare readonly processDefinitionsApi: ProcessDefinitionsApi;
 
     @LazyApi((self: ProcessService) => new ProcessInstancesApi(self.alfrescoApiService.getInstance()))
-    processInstancesApi: ProcessInstancesApi;
+    declare readonly processInstancesApi: ProcessInstancesApi;
 
     @LazyApi((self: ProcessService) => new ProcessInstanceVariablesApi(self.alfrescoApiService.getInstance()))
-    processInstanceVariablesApi: ProcessInstanceVariablesApi;
+    declare readonly processInstanceVariablesApi: ProcessInstanceVariablesApi;
 
     /**
      * Gets process instances for a filter and optionally a process definition.

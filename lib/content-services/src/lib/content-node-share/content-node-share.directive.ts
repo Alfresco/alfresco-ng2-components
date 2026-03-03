@@ -46,7 +46,7 @@ export class NodeSharedDirective implements OnChanges {
     baseShareUrl: string;
 
     @LazyApi((self: NodeSharedDirective) => new NodesApi(self.alfrescoApiService.getInstance()))
-    nodesApi: NodesApi;
+    declare readonly nodesApi: NodesApi;
 
     private readonly destroyRef = inject(DestroyRef);
     shareNode(nodeEntry: NodeEntry) {

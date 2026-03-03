@@ -241,16 +241,16 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     sidebarLeftTemplateContext: { node: Node } = { node: null };
 
     @LazyApi((self: AlfrescoViewerComponent) => new SharedlinksApi(self.apiService.getInstance()))
-    sharedLinksApi: SharedlinksApi;
+    declare readonly sharedLinksApi: SharedlinksApi;
 
     @LazyApi((self: AlfrescoViewerComponent) => new VersionsApi(self.apiService.getInstance()))
-    versionsApi: VersionsApi;
+    declare readonly versionsApi: VersionsApi;
 
     @LazyApi((self: AlfrescoViewerComponent) => new NodesApi(self.apiService.getInstance()))
-    nodesApi: NodesApi;
+    declare readonly nodesApi: NodesApi;
 
     @LazyApi((self: AlfrescoViewerComponent) => new ContentApi(self.apiService.getInstance()))
-    contentApi: ContentApi;
+    declare readonly contentApi: ContentApi;
 
     private readonly destroyRef = inject(DestroyRef);
 

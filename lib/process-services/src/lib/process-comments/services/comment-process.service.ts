@@ -31,7 +31,7 @@ export class CommentProcessService implements CommentsService {
     private readonly peopleProcessService = inject(PeopleProcessService);
 
     @LazyApi((self: CommentProcessService) => new ActivitiCommentsApi(self.apiService.getInstance()))
-    commentsApi: ActivitiCommentsApi;
+    declare readonly commentsApi: ActivitiCommentsApi;
 
     /**
      * Gets all comments that have been added to a process instance.

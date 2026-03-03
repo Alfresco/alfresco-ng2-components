@@ -33,7 +33,7 @@ export class ProcessDefinitionService {
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     @LazyApi((self: ProcessDefinitionService) => new ProcessDefinitionsApi(self.apiService.getInstance()))
-    processDefinitionsApi: ProcessDefinitionsApi;
+    declare readonly processDefinitionsApi: ProcessDefinitionsApi;
 
     /**
      * Gets values of fields populated by a REST backend using a process ID.

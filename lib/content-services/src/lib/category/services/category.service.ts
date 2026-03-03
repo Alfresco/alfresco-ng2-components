@@ -38,10 +38,10 @@ export class CategoryService {
     private readonly appConfigService = inject(AppConfigService);
 
     @LazyApi((self: CategoryService) => new CategoriesApi(self.apiService.getInstance()))
-    categoriesApi: CategoriesApi;
+    declare readonly categoriesApi: CategoriesApi;
 
     @LazyApi((self: CategoryService) => new SearchApi(self.apiService.getInstance()))
-    searchApi: SearchApi;
+    declare readonly searchApi: SearchApi;
 
     /**
      * Get subcategories of a given parent category

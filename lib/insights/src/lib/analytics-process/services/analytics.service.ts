@@ -37,10 +37,10 @@ export class AnalyticsService {
     private readonly apiService = inject(AlfrescoApiService);
 
     @LazyApi((self: AnalyticsService) => new ReportApi(self.apiService.getInstance()))
-    reportApi: ReportApi;
+    declare readonly reportApi: ReportApi;
 
     @LazyApi((self: AnalyticsService) => new ProcessDefinitionsApi(self.apiService.getInstance()))
-    processDefinitionsApi: ProcessDefinitionsApi;
+    declare readonly processDefinitionsApi: ProcessDefinitionsApi;
 
     /**
      * Retrieve all the Deployed app

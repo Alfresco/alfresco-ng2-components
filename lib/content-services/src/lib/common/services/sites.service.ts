@@ -41,7 +41,7 @@ export class SitesService {
     private readonly apiService = inject(AlfrescoApiService);
 
     @LazyApi((self: SitesService) => new SitesApi(self.apiService.getInstance()))
-    sitesApi: SitesApi;
+    declare readonly sitesApi: SitesApi;
 
     /**
      * Create a site

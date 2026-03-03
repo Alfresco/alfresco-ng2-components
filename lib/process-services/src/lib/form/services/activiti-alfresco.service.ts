@@ -41,10 +41,10 @@ export class ActivitiContentService {
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     @LazyApi((self: ActivitiContentService) => new IntegrationAlfrescoOnPremiseApi(self.apiService.getInstance()))
-    integrationAlfrescoOnPremiseApi: IntegrationAlfrescoOnPremiseApi;
+    declare readonly integrationAlfrescoOnPremiseApi: IntegrationAlfrescoOnPremiseApi;
 
     @LazyApi((self: ActivitiContentService) => new ActivitiContentApi(self.apiService.getInstance()))
-    contentApi: ActivitiContentApi;
+    declare readonly contentApi: ActivitiContentApi;
 
     /**
      * Returns a list of child nodes below the specified folder

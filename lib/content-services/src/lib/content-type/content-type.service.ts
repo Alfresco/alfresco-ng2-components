@@ -28,7 +28,7 @@ export class ContentTypeService {
     private readonly alfrescoApiService = inject(AlfrescoApiService);
 
     @LazyApi((self: ContentTypeService) => new TypesApi(self.alfrescoApiService.getInstance()))
-    typesApi: TypesApi;
+    declare readonly typesApi: TypesApi;
 
     getContentTypeByPrefix(prefixedType: string): Observable<TypeEntry> {
         return from(this.typesApi.getType(prefixedType));

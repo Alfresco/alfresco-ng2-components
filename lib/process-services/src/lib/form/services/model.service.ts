@@ -31,7 +31,7 @@ export class ModelService {
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     @LazyApi((self: ModelService) => new ModelsApi(self.apiService.getInstance()))
-    modelsApi: ModelsApi;
+    declare readonly modelsApi: ModelsApi;
 
     /**
      * Create a Form.

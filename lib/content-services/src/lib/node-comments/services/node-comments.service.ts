@@ -29,10 +29,10 @@ export class NodeCommentsService implements CommentsService {
     private readonly apiService = inject(AlfrescoApiService);
 
     @LazyApi((self: NodeCommentsService) => new CommentsApi(self.apiService.getInstance()))
-    commentsApi: CommentsApi;
+    declare readonly commentsApi: CommentsApi;
 
     @LazyApi((self: NodeCommentsService) => new PeopleApi(self.apiService.getInstance()))
-    peopleApi: PeopleApi;
+    declare readonly peopleApi: PeopleApi;
 
     /**
      * Gets all comments that have been added to a task.

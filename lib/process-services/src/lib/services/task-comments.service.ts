@@ -28,7 +28,7 @@ import { PeopleProcessService } from './people-process.service';
 })
 export class TaskCommentsService implements CommentsService {
     @LazyApi((self: TaskCommentsService) => new ActivitiCommentsApi(self.apiService.getInstance()))
-    commentsApi: ActivitiCommentsApi;
+    declare readonly commentsApi: ActivitiCommentsApi;
 
     protected apiService = inject(AlfrescoApiService);
     protected peopleProcessService = inject(PeopleProcessService);

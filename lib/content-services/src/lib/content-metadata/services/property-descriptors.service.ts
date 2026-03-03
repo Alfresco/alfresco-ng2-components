@@ -29,7 +29,7 @@ export class PropertyDescriptorsService {
     private readonly alfrescoApiService = inject(AlfrescoApiService);
 
     @LazyApi((self: PropertyDescriptorsService) => new ClassesApi(self.alfrescoApiService.getInstance()))
-    classesApi: ClassesApi;
+    declare readonly classesApi: ClassesApi;
 
     load(groupNames: string[]): Observable<PropertyGroupContainer> {
         const groupFetchStreams = groupNames

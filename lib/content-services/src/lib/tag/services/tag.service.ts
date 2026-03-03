@@ -31,7 +31,7 @@ export class TagService {
     private readonly appConfigService = inject(AppConfigService);
 
     @LazyApi((self: TagService) => new TagsApi(self.apiService.getInstance()))
-    tagsApi: TagsApi;
+    declare readonly tagsApi: TagsApi;
 
     /** Emitted when tag information is updated. */
     @Output()

@@ -43,7 +43,7 @@ export class ContentService {
     folderEdit = new Subject<Node>();
 
     @LazyApi((self: ContentService) => new ContentApi(self.apiService.getInstance()))
-    contentApi: ContentApi;
+    declare readonly contentApi: ContentApi;
 
     /**
      * Gets a content URL for the given node.

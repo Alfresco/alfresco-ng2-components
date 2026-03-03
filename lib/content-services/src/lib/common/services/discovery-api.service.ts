@@ -38,13 +38,13 @@ export class DiscoveryApiService {
     private readonly alfrescoApiService = inject(AlfrescoApiService);
 
     @LazyApi((self: DiscoveryApiService) => new DiscoveryApi(self.alfrescoApiService.getInstance()))
-    discoveryApi: DiscoveryApi;
+    declare readonly discoveryApi: DiscoveryApi;
 
     @LazyApi((self: DiscoveryApiService) => new AboutApi(self.alfrescoApiService.getInstance()))
-    aboutApi: AboutApi;
+    declare readonly aboutApi: AboutApi;
 
     @LazyApi((self: DiscoveryApiService) => new SystemPropertiesApi(self.alfrescoApiService.getInstance()))
-    systemPropertiesApi: SystemPropertiesApi;
+    declare readonly systemPropertiesApi: SystemPropertiesApi;
 
     /**
      * Gets product information for Content Services.

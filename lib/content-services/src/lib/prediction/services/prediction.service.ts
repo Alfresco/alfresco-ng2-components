@@ -25,7 +25,7 @@ export class PredictionService {
     private readonly apiService = inject(AlfrescoApiService);
 
     @LazyApi((self: PredictionService) => new PredictionsApi(self.apiService.getInstance()))
-    predictionsApi: PredictionsApi;
+    declare readonly predictionsApi: PredictionsApi;
 
     /**
      * Get predictions for a given node

@@ -61,13 +61,13 @@ export class SecurityControlsService {
     loading$ = this.loadingSource.asObservable();
 
     @LazyApi((self: SecurityControlsService) => new SecurityGroupsApi(self.apiService.getInstance()))
-    groupsApi: SecurityGroupsApi;
+    declare readonly groupsApi: SecurityGroupsApi;
 
     @LazyApi((self: SecurityControlsService) => new SecurityMarksApi(self.apiService.getInstance()))
-    marksApi: SecurityMarksApi;
+    declare readonly marksApi: SecurityMarksApi;
 
     @LazyApi((self: SecurityControlsService) => new AuthorityClearanceApi(self.apiService.getInstance()))
-    authorityClearanceApi: AuthorityClearanceApi;
+    declare readonly authorityClearanceApi: AuthorityClearanceApi;
 
     /**
      * Get All security groups

@@ -78,13 +78,13 @@ export class VersionListComponent implements OnChanges, OnInit {
     private readonly dialog = inject(MatDialog);
 
     @LazyApi((self: VersionListComponent) => new ContentApi(self.alfrescoApi.getInstance()))
-    contentApi: ContentApi;
+    declare readonly contentApi: ContentApi;
 
     @LazyApi((self: VersionListComponent) => new VersionsApi(self.alfrescoApi.getInstance()))
-    versionsApi: VersionsApi;
+    declare readonly versionsApi: VersionsApi;
 
     @LazyApi((self: VersionListComponent) => new NodesApi(self.alfrescoApi.getInstance()))
-    nodesApi: NodesApi;
+    declare readonly nodesApi: NodesApi;
 
     versionsDataSource: VersionListDataSource;
     latestVersion: VersionEntry;

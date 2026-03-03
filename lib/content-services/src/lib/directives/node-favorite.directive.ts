@@ -36,7 +36,7 @@ export class NodeFavoriteDirective implements OnChanges {
     favorites: any[] = [];
 
     @LazyApi((self: NodeFavoriteDirective) => new FavoritesApi(self.alfrescoApiService.getInstance()))
-    favoritesApi: FavoritesApi;
+    declare readonly favoritesApi: FavoritesApi;
 
     /** Array of nodes to toggle as favorites. */
     @Input('adf-node-favorite')

@@ -37,7 +37,7 @@ export class NodePermissionService {
     private readonly translation = inject(TranslationService);
 
     @LazyApi((self: NodePermissionService) => new GroupsApi(self.apiService.getInstance()))
-    groupsApi: GroupsApi;
+    declare readonly groupsApi: GroupsApi;
 
     /**
      * Gets a list of roles for the current node.
