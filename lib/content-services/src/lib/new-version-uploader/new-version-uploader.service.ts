@@ -20,7 +20,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
-import { VersionsApi } from '@alfresco/js-api';
+import { VersionsApi, LazyApi } from '@alfresco/js-api';
 import { NewVersionUploaderData, NewVersionUploaderDialogData } from './models';
 import { Observable } from 'rxjs';
 import { OverlayContainer } from '@angular/cdk/overlay';
@@ -34,11 +34,8 @@ export class NewVersionUploaderService {
     private readonly dialog = inject(MatDialog);
     private readonly overlayContainer = inject(OverlayContainer);
 
-    private _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
-        this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
-        return this._versionsApi;
-    }
+    @LazyApi((self: NewVersionUploaderService) => new VersionsApi(self.apiService.getInstance()))
+    versionsApi: VersionsApi;
 
     /**
      * Open a dialog NewVersionUploaderDialogComponent to display:

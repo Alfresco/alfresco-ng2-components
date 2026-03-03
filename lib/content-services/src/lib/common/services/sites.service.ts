@@ -29,7 +29,8 @@ import {
     SiteMembershipBodyUpdate,
     SiteMembershipRequestWithPersonPaging,
     SitePaging,
-    SitesApi
+    SitesApi,
+    LazyApi
 } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
@@ -39,11 +40,8 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 export class SitesService {
     private readonly apiService = inject(AlfrescoApiService);
 
-    private _sitesApi: SitesApi;
-    get sitesApi(): SitesApi {
-        this._sitesApi = this._sitesApi ?? new SitesApi(this.apiService.getInstance());
-        return this._sitesApi;
-    }
+    @LazyApi((self: SitesService) => new SitesApi(self.apiService.getInstance()))
+    sitesApi: SitesApi;
 
     /**
      * Create a site

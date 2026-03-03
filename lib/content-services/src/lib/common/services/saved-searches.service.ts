@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NodeEntry, PreferencesApi, ContentFieldsQuery, PreferenceEntry } from '@alfresco/js-api';
+import { NodeEntry, PreferencesApi, ContentFieldsQuery, PreferenceEntry, LazyApi } from '@alfresco/js-api';
 import { Injectable, InjectionToken, inject } from '@angular/core';
 import { Observable, of, from, throwError } from 'rxjs';
 import { catchError, concatMap, first, map, switchMap, take, tap } from 'rxjs/operators';
@@ -34,18 +34,15 @@ export const SAVED_SEARCHES_SERVICE_PREFERENCES = new InjectionToken<SavedSearch
 })
 export class SavedSearchesService extends SavedSearchesBaseService {
     private savedSearchFileNodeId: string;
-    private _preferencesApi: SavedSearchesPreferencesApiService;
     private readonly preferencesService = inject(SAVED_SEARCHES_SERVICE_PREFERENCES, { optional: true });
 
-    get preferencesApi(): SavedSearchesPreferencesApiService {
-        if (this.preferencesService) {
-            this._preferencesApi = this.preferencesService;
-            return this._preferencesApi;
+    @LazyApi((self: SavedSearchesService) => {
+        if (self.preferencesService) {
+            return self.preferencesService;
         }
-
-        this._preferencesApi = this._preferencesApi ?? new PreferencesApi(this.apiService.getInstance());
-        return this._preferencesApi;
-    }
+        return new PreferencesApi(self.apiService.getInstance());
+    })
+    preferencesApi: PreferencesApi;
 
     protected fetchAllSavedSearches(): Observable<SavedSearch[]> {
         const savedSearchesMigrated = localStorage.getItem(this.getLocalStorageKey()) ?? '';

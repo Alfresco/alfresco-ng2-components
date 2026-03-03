@@ -16,7 +16,7 @@
  */
 
 import { Injectable, inject } from '@angular/core';
-import { PredictionsApi, PredictionPaging, ReviewStatus } from '@alfresco/js-api';
+import { PredictionsApi, PredictionPaging, ReviewStatus, LazyApi } from '@alfresco/js-api';
 import { from, Observable } from 'rxjs';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
@@ -24,12 +24,8 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 export class PredictionService {
     private readonly apiService = inject(AlfrescoApiService);
 
-    private _predictionsApi: PredictionsApi;
-
-    get predictionsApi(): PredictionsApi {
-        this._predictionsApi = this._predictionsApi ?? new PredictionsApi(this.apiService.getInstance());
-        return this._predictionsApi;
-    }
+    @LazyApi((self: PredictionService) => new PredictionsApi(self.apiService.getInstance()))
+    predictionsApi: PredictionsApi;
 
     /**
      * Get predictions for a given node

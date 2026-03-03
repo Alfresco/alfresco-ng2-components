@@ -16,7 +16,7 @@
  */
 
 import { Injectable, inject } from '@angular/core';
-import { ContentApi, Node, NodeEntry } from '@alfresco/js-api';
+import { ContentApi, LazyApi, Node, NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
 import { PermissionsEnum } from '../models/permissions.enum';
@@ -42,11 +42,8 @@ export class ContentService {
     folderCreate = new Subject<Node>();
     folderEdit = new Subject<Node>();
 
-    private _contentApi: ContentApi;
-    get contentApi(): ContentApi {
-        this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
-        return this._contentApi;
-    }
+    @LazyApi((self: ContentService) => new ContentApi(self.apiService.getInstance()))
+    contentApi: ContentApi;
 
     /**
      * Gets a content URL for the given node.

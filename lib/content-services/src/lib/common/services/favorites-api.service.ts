@@ -16,7 +16,7 @@
  */
 
 import { Injectable, inject } from '@angular/core';
-import { FavoritesApi, NodePaging, FavoritePaging } from '@alfresco/js-api';
+import { FavoritesApi, NodePaging, FavoritePaging, LazyApi } from '@alfresco/js-api';
 import { Observable, from, of } from 'rxjs';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { UserPreferencesService } from '@alfresco/adf-core';
@@ -29,11 +29,8 @@ export class FavoritesApiService {
     private readonly apiService = inject(AlfrescoApiService);
     private readonly preferences = inject(UserPreferencesService);
 
-    private _favoritesApi: FavoritesApi;
-    get favoritesApi(): FavoritesApi {
-        this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.apiService.getInstance());
-        return this._favoritesApi;
-    }
+    @LazyApi((self: FavoritesApiService) => new FavoritesApi(self.apiService.getInstance()))
+    favoritesApi: FavoritesApi;
 
     static remapEntry({ entry }: any): any {
         entry.properties = {

@@ -17,7 +17,7 @@
 
 import { DestroyRef, Directive, HostListener, inject, Input, NgZone, OnChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { NodeEntry, NodesApi } from '@alfresco/js-api';
+import { LazyApi, NodeEntry, NodesApi } from '@alfresco/js-api';
 
 import { ShareDialogComponent } from './content-node-share.dialog';
 import { from, Observable } from 'rxjs';
@@ -45,11 +45,8 @@ export class NodeSharedDirective implements OnChanges {
     @Input()
     baseShareUrl: string;
 
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
-        return this._nodesApi;
-    }
+    @LazyApi((self: NodeSharedDirective) => new NodesApi(self.alfrescoApiService.getInstance()))
+    nodesApi: NodesApi;
 
     private readonly destroyRef = inject(DestroyRef);
     shareNode(nodeEntry: NodeEntry) {

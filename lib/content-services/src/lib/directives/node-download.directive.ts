@@ -19,7 +19,7 @@ import { Directive, Input, HostListener, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DownloadService } from '@alfresco/adf-core';
 import { DownloadZipDialogComponent } from '../dialogs/download-zip/download-zip.dialog';
-import { ContentApi, NodeEntry, VersionEntry } from '@alfresco/js-api';
+import { ContentApi, LazyApi, NodeEntry, VersionEntry } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 /**
@@ -35,11 +35,8 @@ export class NodeDownloadDirective {
     private readonly downloadService = inject(DownloadService);
     private readonly dialog = inject(MatDialog);
 
-    private _contentApi: ContentApi;
-    get contentApi(): ContentApi {
-        this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
-        return this._contentApi;
-    }
+    @LazyApi((self: NodeDownloadDirective) => new ContentApi(self.apiService.getInstance()))
+    contentApi: ContentApi;
 
     /** Nodes to download. */
     @Input('adfNodeDownload')

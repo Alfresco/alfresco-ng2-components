@@ -20,7 +20,7 @@ import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { EventEmitter, Injectable, Output, inject } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { TagBody, TagEntry, TagPaging, TagsApi } from '@alfresco/js-api';
+import { LazyApi, TagBody, TagEntry, TagPaging, TagsApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -30,11 +30,8 @@ export class TagService {
     private readonly userPreferencesService = inject(UserPreferencesService);
     private readonly appConfigService = inject(AppConfigService);
 
-    private _tagsApi: TagsApi;
-    get tagsApi(): TagsApi {
-        this._tagsApi = this._tagsApi ?? new TagsApi(this.apiService.getInstance());
-        return this._tagsApi;
-    }
+    @LazyApi((self: TagService) => new TagsApi(self.apiService.getInstance()))
+    tagsApi: TagsApi;
 
     /** Emitted when tag information is updated. */
     @Output()

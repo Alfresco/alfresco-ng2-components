@@ -21,7 +21,8 @@ import {
     ActivitiContentApi,
     RelatedContentRepresentation,
     ResultListDataRepresentationRelatedProcessTask,
-    ResultListDataRepresentationRelatedContentRepresentation
+    ResultListDataRepresentationRelatedContentRepresentation,
+    LazyApi
 } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -35,11 +36,8 @@ export class ProcessContentService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    private _contentApi: ActivitiContentApi;
-    get contentApi(): ActivitiContentApi {
-        this._contentApi = this._contentApi ?? new ActivitiContentApi(this.apiService.getInstance());
-        return this._contentApi;
-    }
+    @LazyApi((self: ProcessContentService) => new ActivitiContentApi(self.apiService.getInstance()))
+    contentApi: ActivitiContentApi;
 
     /**
      * Create temporary related content from an uploaded file.

@@ -16,7 +16,7 @@
  */
 
 import { Injectable, inject } from '@angular/core';
-import { ContentApi, RenditionEntry, RenditionPaging, RenditionsApi, VersionsApi } from '@alfresco/js-api';
+import { ContentApi, LazyApi, RenditionEntry, RenditionPaging, RenditionsApi, VersionsApi } from '@alfresco/js-api';
 import { Track, TranslationService, ViewUtilService } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
@@ -56,26 +56,16 @@ export class RenditionService {
      * Timeout used for setInterval.
      */
     private readonly TRY_TIMEOUT: number = 10000;
-
-    _renditionsApi: RenditionsApi;
-    get renditionsApi(): RenditionsApi {
-        this._renditionsApi = this._renditionsApi ?? new RenditionsApi(this.apiService.getInstance());
-        return this._renditionsApi;
-    }
-
-    _contentApi: ContentApi;
-    get contentApi(): ContentApi {
-        this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
-        return this._contentApi;
-    }
-
-    _versionsApi: VersionsApi;
     private readonly DEFAULT_RENDITION: string = 'imgpreview';
 
-    get versionsApi(): VersionsApi {
-        this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
-        return this._versionsApi;
-    }
+    @LazyApi((self: RenditionService) => new RenditionsApi(self.apiService.getInstance()))
+    renditionsApi: RenditionsApi;
+
+    @LazyApi((self: RenditionService) => new ContentApi(self.apiService.getInstance()))
+    contentApi: ContentApi;
+
+    @LazyApi((self: RenditionService) => new VersionsApi(self.apiService.getInstance()))
+    versionsApi: VersionsApi;
 
     getRenditionUrl(nodeId: string, type: string, renditionExists: boolean): string {
         return renditionExists && type !== RenditionService.ContentGroup.IMAGE

@@ -23,7 +23,7 @@ import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.
 import { AppConfigService } from '@alfresco/adf-core';
 import { filter } from 'rxjs/operators';
 import { DiscoveryApiService } from '../../common/services/discovery-api.service';
-import { NodeBodyCreate, NodesApi, UploadApi, VersionsApi } from '@alfresco/js-api';
+import { LazyApi, NodeBodyCreate, NodesApi, UploadApi, VersionsApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 const MIN_CANCELLABLE_FILE_SIZE = 1000000;
@@ -56,23 +56,14 @@ export class UploadService {
     private abortedFile: string;
     private isThumbnailGenerationEnabled: boolean;
 
-    private _uploadApi: UploadApi;
-    get uploadApi(): UploadApi {
-        this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
-        return this._uploadApi;
-    }
+    @LazyApi((self: UploadService) => new UploadApi(self.apiService.getInstance()))
+    uploadApi: UploadApi;
 
-    private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
+    @LazyApi((self: UploadService) => new NodesApi(self.apiService.getInstance()))
+    nodesApi: NodesApi;
 
-    private _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
-        this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
-        return this._versionsApi;
-    }
+    @LazyApi((self: UploadService) => new VersionsApi(self.apiService.getInstance()))
+    versionsApi: VersionsApi;
 
     protected apiService = inject(AlfrescoApiService);
     protected appConfigService = inject(AppConfigService);

@@ -18,7 +18,7 @@
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { Injectable, inject } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
-import { TaskRepresentation, TasksApi } from '@alfresco/js-api';
+import { LazyApi, TaskRepresentation, TasksApi } from '@alfresco/js-api';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
@@ -30,11 +30,8 @@ export class TaskService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    private _taskApi: TasksApi;
-    get taskApi(): TasksApi {
-        this._taskApi = this._taskApi ?? new TasksApi(this.apiService.getInstance());
-        return this._taskApi;
-    }
+    @LazyApi((self: TaskService) => new TasksApi(self.apiService.getInstance()))
+    taskApi: TasksApi;
 
     /**
      * Gets a task.

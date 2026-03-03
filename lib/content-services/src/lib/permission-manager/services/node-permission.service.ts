@@ -19,7 +19,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { TranslationService } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { EcmUserModel } from '../../common/models/ecm-user.model';
-import { Group, GroupMemberPaging, GroupsApi, Node, PathElement, PermissionElement, SearchRequest } from '@alfresco/js-api';
+import { Group, GroupMemberPaging, GroupsApi, LazyApi, Node, PathElement, PermissionElement, SearchRequest } from '@alfresco/js-api';
 import { SearchService } from '../../search/services/search.service';
 import { Injectable, inject } from '@angular/core';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
@@ -36,11 +36,8 @@ export class NodePermissionService {
     private readonly nodeService = inject(NodesApiService);
     private readonly translation = inject(TranslationService);
 
-    private _groupsApi: GroupsApi;
-    get groupsApi(): GroupsApi {
-        this._groupsApi = this._groupsApi ?? new GroupsApi(this.apiService.getInstance());
-        return this._groupsApi;
-    }
+    @LazyApi((self: NodePermissionService) => new GroupsApi(self.apiService.getInstance()))
+    groupsApi: GroupsApi;
 
     /**
      * Gets a list of roles for the current node.

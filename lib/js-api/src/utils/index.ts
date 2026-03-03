@@ -16,4 +16,5 @@
  */
 
 export * from './is-browser';
+export * from './lazy-api';
 export * from './param-to-string';

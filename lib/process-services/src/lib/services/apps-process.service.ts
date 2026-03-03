@@ -16,7 +16,7 @@
  */
 
 import { Injectable, inject } from '@angular/core';
-import { RuntimeAppDefinitionsApi, AppDefinitionRepresentation } from '@alfresco/js-api';
+import { RuntimeAppDefinitionsApi, AppDefinitionRepresentation, LazyApi } from '@alfresco/js-api';
 import { Observable, from } from 'rxjs';
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { map } from 'rxjs/operators';
@@ -27,11 +27,8 @@ import { map } from 'rxjs/operators';
 export class AppsProcessService {
     private readonly apiService = inject(AlfrescoApiService);
 
-    private _appsApi: RuntimeAppDefinitionsApi;
-    get appsApi(): RuntimeAppDefinitionsApi {
-        this._appsApi = this._appsApi ?? new RuntimeAppDefinitionsApi(this.apiService.getInstance());
-        return this._appsApi;
-    }
+    @LazyApi((self: AppsProcessService) => new RuntimeAppDefinitionsApi(self.apiService.getInstance()))
+    appsApi: RuntimeAppDefinitionsApi;
 
     /**
      * Gets a list of deployed apps for this user.

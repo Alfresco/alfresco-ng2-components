@@ -19,14 +19,12 @@ import { inject, Injectable } from '@angular/core';
 import { SavedSearchStrategy } from '../interfaces/saved-searches-strategy.interface';
 import { AuthenticationService } from '@alfresco/adf-core';
 import { ReplaySubject, Observable, catchError, switchMap, take, tap, throwError, map } from 'rxjs';
-import { NodeEntry, NodesApi } from '@alfresco/js-api';
+import { LazyApi, NodeEntry, NodesApi } from '@alfresco/js-api';
 import { SavedSearch } from '../interfaces/saved-search.interface';
 import { AlfrescoApiService } from '../../services';
 
 @Injectable()
 export abstract class SavedSearchesBaseService implements SavedSearchStrategy {
-    private _nodesApi: NodesApi;
-
     private static readonly SAVE_MODE_THRESHOLD = 5;
 
     protected readonly _savedSearches$ = new ReplaySubject<SavedSearch[]>(1);
@@ -35,10 +33,8 @@ export abstract class SavedSearchesBaseService implements SavedSearchStrategy {
     protected readonly apiService = inject(AlfrescoApiService);
     protected readonly authService = inject(AuthenticationService);
 
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
+    @LazyApi((self: SavedSearchesBaseService) => new NodesApi(self.apiService.getInstance()))
+    nodesApi: NodesApi;
 
     protected abstract fetchAllSavedSearches(): Observable<SavedSearch[]>;
     protected abstract updateSavedSearches(searches: SavedSearch[]): Observable<NodeEntry>;

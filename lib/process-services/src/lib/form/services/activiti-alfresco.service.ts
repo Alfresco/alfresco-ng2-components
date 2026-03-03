@@ -24,7 +24,8 @@ import {
     RelatedContentRepresentation,
     ActivitiContentApi,
     AlfrescoEndpointRepresentation,
-    AlfrescoContentRepresentation
+    AlfrescoContentRepresentation,
+    LazyApi
 } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -39,18 +40,11 @@ export class ActivitiContentService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    private _integrationAlfrescoOnPremiseApi: IntegrationAlfrescoOnPremiseApi;
-    get integrationAlfrescoOnPremiseApi(): IntegrationAlfrescoOnPremiseApi {
-        this._integrationAlfrescoOnPremiseApi =
-            this._integrationAlfrescoOnPremiseApi ?? new IntegrationAlfrescoOnPremiseApi(this.apiService.getInstance());
-        return this._integrationAlfrescoOnPremiseApi;
-    }
+    @LazyApi((self: ActivitiContentService) => new IntegrationAlfrescoOnPremiseApi(self.apiService.getInstance()))
+    integrationAlfrescoOnPremiseApi: IntegrationAlfrescoOnPremiseApi;
 
-    private _contentApi: ActivitiContentApi;
-    get contentApi(): ActivitiContentApi {
-        this._contentApi = this._contentApi ?? new ActivitiContentApi(this.apiService.getInstance());
-        return this._contentApi;
-    }
+    @LazyApi((self: ActivitiContentService) => new ActivitiContentApi(self.apiService.getInstance()))
+    contentApi: ActivitiContentApi;
 
     /**
      * Returns a list of child nodes below the specified folder

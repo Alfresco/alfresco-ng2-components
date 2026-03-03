@@ -27,7 +27,7 @@ import {
     ErrorWidgetComponent,
     IconModule
 } from '@alfresco/adf-core';
-import { Node, NodesApi, RelatedContentRepresentation } from '@alfresco/js-api';
+import { LazyApi, Node, NodesApi, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
 import { UploadCloudWidgetComponent } from '../upload/upload-cloud.widget';
 import { DestinationFolderPathModel, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
@@ -72,11 +72,10 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     error = new EventEmitter<any>();
 
     private previewState = false;
-    private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
+
+    @LazyApi((self: AttachFileCloudWidgetComponent) => new NodesApi(self.apiService.getInstance()))
+    nodesApi: NodesApi;
+
     displayedColumns = ['icon', 'fileName', 'title', 'action'];
 
     ngOnInit() {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DownloadEntry, DownloadBodyCreate, DownloadsApi } from '@alfresco/js-api';
+import { DownloadEntry, DownloadBodyCreate, DownloadsApi, LazyApi } from '@alfresco/js-api';
 import { Injectable, inject } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { AlfrescoApiService } from '../../../services/alfresco-api.service';
@@ -26,11 +26,8 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
 export class DownloadZipService {
     private readonly apiService = inject(AlfrescoApiService);
 
-    private _downloadsApi: DownloadsApi;
-    get downloadsApi(): DownloadsApi {
-        this._downloadsApi = this._downloadsApi ?? new DownloadsApi(this.apiService.getInstance());
-        return this._downloadsApi;
-    }
+    @LazyApi((self: DownloadZipService) => new DownloadsApi(self.apiService.getInstance()))
+    downloadsApi: DownloadsApi;
 
     /**
      * Creates a new download.

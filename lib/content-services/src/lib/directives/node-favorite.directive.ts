@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/no-input-rename */
 
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
-import { FavoriteBodyCreate, NodeEntry, SharedLinkEntry, Node, SharedLink, FavoritesApi } from '@alfresco/js-api';
+import { FavoriteBodyCreate, NodeEntry, SharedLinkEntry, Node, SharedLink, FavoritesApi, LazyApi } from '@alfresco/js-api';
 import { Observable, from, forkJoin, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
@@ -35,11 +35,8 @@ export class NodeFavoriteDirective implements OnChanges {
 
     favorites: any[] = [];
 
-    private _favoritesApi: FavoritesApi;
-    get favoritesApi(): FavoritesApi {
-        this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.alfrescoApiService.getInstance());
-        return this._favoritesApi;
-    }
+    @LazyApi((self: NodeFavoriteDirective) => new FavoritesApi(self.alfrescoApiService.getInstance()))
+    favoritesApi: FavoritesApi;
 
     /** Array of nodes to toggle as favorites. */
     @Input('adf-node-favorite')

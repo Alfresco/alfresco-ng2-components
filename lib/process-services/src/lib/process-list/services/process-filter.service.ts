@@ -20,6 +20,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, from, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
+    LazyApi,
     ResultListDataRepresentationUserProcessInstanceFilterRepresentation,
     UserFiltersApi,
     UserProcessInstanceFilterRepresentation
@@ -31,11 +32,8 @@ import {
 export class ProcessFilterService {
     private readonly alfrescoApiService = inject(AlfrescoApiService);
 
-    private _userFiltersApi: UserFiltersApi;
-    get userFiltersApi(): UserFiltersApi {
-        this._userFiltersApi = this._userFiltersApi ?? new UserFiltersApi(this.alfrescoApiService.getInstance());
-        return this._userFiltersApi;
-    }
+    @LazyApi((self: ProcessFilterService) => new UserFiltersApi(self.alfrescoApiService.getInstance()))
+    userFiltersApi: UserFiltersApi;
 
     /**
      * Gets all filters defined for a Process App.

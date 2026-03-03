@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TypeEntry, TypePaging, TypesApi } from '@alfresco/js-api';
+import { LazyApi, TypeEntry, TypePaging, TypesApi } from '@alfresco/js-api';
 import { Injectable, inject } from '@angular/core';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { from, Observable } from 'rxjs';
@@ -27,11 +27,8 @@ import { map } from 'rxjs/operators';
 export class ContentTypeService {
     private readonly alfrescoApiService = inject(AlfrescoApiService);
 
-    private _typesApi: TypesApi;
-    get typesApi(): TypesApi {
-        this._typesApi = this._typesApi ?? new TypesApi(this.alfrescoApiService.getInstance());
-        return this._typesApi;
-    }
+    @LazyApi((self: ContentTypeService) => new TypesApi(self.alfrescoApiService.getInstance()))
+    typesApi: TypesApi;
 
     getContentTypeByPrefix(prefixedType: string): Observable<TypeEntry> {
         return from(this.typesApi.getType(prefixedType));

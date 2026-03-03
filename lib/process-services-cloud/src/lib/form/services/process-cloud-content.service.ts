@@ -20,7 +20,7 @@ import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DownloadService } from '@alfresco/adf-core';
 import { ContentService, NodesApiService, AlfrescoApiService } from '@alfresco/adf-content-services';
-import { AuthenticationApi, Node, UploadApi } from '@alfresco/js-api';
+import { AuthenticationApi, LazyApi, Node, UploadApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -31,17 +31,11 @@ export class ProcessCloudContentService {
     private readonly contentService = inject(ContentService);
     private readonly downloadService = inject(DownloadService);
 
-    private _uploadApi: UploadApi;
-    get uploadApi(): UploadApi {
-        this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
-        return this._uploadApi;
-    }
+    @LazyApi((self: ProcessCloudContentService) => new UploadApi(self.apiService.getInstance()))
+    uploadApi: UploadApi;
 
-    private _authenticationApi: AuthenticationApi;
-    get authenticationApi(): AuthenticationApi {
-        this._authenticationApi = this._authenticationApi ?? new AuthenticationApi(this.apiService.getInstance());
-        return this._authenticationApi;
-    }
+    @LazyApi((self: ProcessCloudContentService) => new AuthenticationApi(self.apiService.getInstance()))
+    authenticationApi: AuthenticationApi;
 
     createTemporaryRawRelatedContent(file: File, nodeId: string): Observable<Node> {
         return from(this.uploadApi.uploadFile(file, '', nodeId, null, { overwrite: true })).pipe(

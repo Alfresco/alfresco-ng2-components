@@ -18,6 +18,7 @@
 import { BehaviorSubject, from, Observable, ReplaySubject, Subject } from 'rxjs';
 import { AppConfigService } from '@alfresco/adf-core';
 import {
+    LazyApi,
     RequestFacetFields,
     RequestHighlight,
     RequestScope,
@@ -43,11 +44,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export abstract class BaseQueryBuilderService {
     private readonly router = inject(Router);
     private readonly activatedRoute = inject(ActivatedRoute);
-    private _searchApi: SearchApi;
-    get searchApi(): SearchApi {
-        this._searchApi = this._searchApi ?? new SearchApi(this.alfrescoApiService.getInstance());
-        return this._searchApi;
-    }
+
+    @LazyApi((self: BaseQueryBuilderService) => new SearchApi(self.alfrescoApiService.getInstance()))
+    searchApi: SearchApi;
 
     /*  Stream that emits the search configuration whenever the user change the search forms */
     configUpdated = new Subject<SearchConfiguration>();
@@ -693,7 +692,7 @@ export abstract class BaseQueryBuilderService {
         } else {
             const configurations = this.loadConfiguration();
             if (Array.isArray(configurations)) {
-                const defaultConfig = configurations.find(config => config.default);
+                const defaultConfig = configurations.find((config) => config.default);
                 if (defaultConfig && this.selectedConfigurationId !== defaultConfig.id) {
                     this.setSelectedConfiguration(defaultConfig.id);
                 }

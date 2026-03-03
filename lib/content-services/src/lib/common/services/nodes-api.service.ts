@@ -27,7 +27,8 @@ import {
     TrashcanApi,
     SizeDetailsEntry,
     JobIdBodyEntry,
-    NodeAssociationPaging
+    NodeAssociationPaging,
+    LazyApi
 } from '@alfresco/js-api';
 import { Injectable, inject } from '@angular/core';
 import { from, Observable, Subject, throwError } from 'rxjs';
@@ -47,17 +48,11 @@ export class NodesApiService {
      */
     nodeUpdated = new Subject<Node>();
 
-    private _trashcanApi: TrashcanApi;
-    get trashcanApi(): TrashcanApi {
-        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
-        return this._trashcanApi;
-    }
+    @LazyApi((self: NodesApiService) => new TrashcanApi(self.apiService.getInstance()))
+    trashcanApi: TrashcanApi;
 
-    private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
+    @LazyApi((self: NodesApiService) => new NodesApi(self.apiService.getInstance()))
+    nodesApi: NodesApi;
 
     private getEntryFromEntity(entity: NodeEntry): Node {
         return entity.entry;

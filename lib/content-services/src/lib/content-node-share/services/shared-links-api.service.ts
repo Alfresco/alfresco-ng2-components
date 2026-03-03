@@ -16,7 +16,7 @@
  */
 
 import { Injectable, inject } from '@angular/core';
-import { NodePaging, SharedLinkBodyCreate, SharedLinkEntry, SharedlinksApi } from '@alfresco/js-api';
+import { LazyApi, NodePaging, SharedLinkBodyCreate, SharedLinkEntry, SharedlinksApi } from '@alfresco/js-api';
 import { Observable, from, of, Subject } from 'rxjs';
 import { UserPreferencesService } from '@alfresco/adf-core';
 import { catchError } from 'rxjs/operators';
@@ -31,11 +31,8 @@ export class SharedLinksApiService {
 
     error = new Subject<{ statusCode: number; message: string }>();
 
-    private _sharedLinksApi: SharedlinksApi;
-    get sharedLinksApi(): SharedlinksApi {
-        this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
-        return this._sharedLinksApi;
-    }
+    @LazyApi((self: SharedLinksApiService) => new SharedlinksApi(self.apiService.getInstance()))
+    sharedLinksApi: SharedlinksApi;
 
     /**
      * Gets shared links available to the current user.

@@ -19,7 +19,7 @@ import { Injectable, inject } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
 import { AuthenticationService } from '@alfresco/adf-core';
 import { map, tap } from 'rxjs/operators';
-import { Pagination, PeopleApi, PersonBodyCreate, PersonBodyUpdate } from '@alfresco/js-api';
+import { LazyApi, Pagination, PeopleApi, PersonBodyCreate, PersonBodyUpdate } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { ContentService } from './content.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
@@ -49,11 +49,8 @@ export class PeopleContentService {
 
     private currentUser: EcmUserModel;
 
-    private _peopleApi: PeopleApi;
-    get peopleApi(): PeopleApi {
-        this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
-        return this._peopleApi;
-    }
+    @LazyApi((self: PeopleContentService) => new PeopleApi(self.apiService.getInstance()))
+    peopleApi: PeopleApi;
 
     constructor() {
         const authenticationService = inject(AuthenticationService);

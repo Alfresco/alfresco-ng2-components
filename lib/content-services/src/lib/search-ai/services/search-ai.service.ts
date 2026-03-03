@@ -16,7 +16,7 @@
  */
 
 import { Injectable, inject } from '@angular/core';
-import { AiAnswerEntry, KnowledgeRetrievalConfigEntry, QuestionModel, QuestionRequest, SearchAiApi } from '@alfresco/js-api';
+import { AiAnswerEntry, KnowledgeRetrievalConfigEntry, LazyApi, QuestionModel, QuestionRequest, SearchAiApi } from '@alfresco/js-api';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { SelectionState } from '@alfresco/adf-extensions';
 import { TranslateService } from '@ngx-translate/core';
@@ -33,12 +33,9 @@ export class SearchAiService {
     private readonly toggleSearchAiInput = new BehaviorSubject<SearchAiInputState>({
         active: false
     });
-    private _searchAiApi: SearchAiApi;
 
-    get searchAiApi(): SearchAiApi {
-        this._searchAiApi = this._searchAiApi ?? new SearchAiApi(this.apiService.getInstance());
-        return this._searchAiApi;
-    }
+    @LazyApi((self: SearchAiService) => new SearchAiApi(self.apiService.getInstance()))
+    searchAiApi: SearchAiApi;
 
     toggleSearchAiInput$ = this.toggleSearchAiInput.asObservable();
 
