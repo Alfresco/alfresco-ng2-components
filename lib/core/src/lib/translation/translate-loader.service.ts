@@ -149,8 +149,8 @@ export class TranslateLoaderService implements TranslateLoader {
                         const fullTranslation = this.getFullTranslationJSON(lang);
                         if (fullTranslation) {
                             observer.next(fullTranslation);
-                        }
-                        if (hasFailures) {
+                            observer.complete();
+                        } else if (hasFailures) {
                             observer.error('Failed to load some resources');
                         } else {
                             observer.complete();
