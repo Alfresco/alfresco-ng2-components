@@ -43,7 +43,7 @@ export class StartProcessScreenCloudComponent extends BaseScreenCloudComponent<S
         effect(() => this.componentRefChanged()?.setInput('processDefinitionId', this.processDefinitionId()));
         effect(() => {
             const componentRef = this.componentRefChanged();
-            if (componentRef && Object.prototype.hasOwnProperty.call(componentRef.instance, 'resolvedValues')) {
+            if (componentRef?.instance && 'resolvedValues' in componentRef.instance) {
                 componentRef.setInput('resolvedValues', this.resolvedValues());
             }
         });

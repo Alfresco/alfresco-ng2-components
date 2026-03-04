@@ -76,7 +76,7 @@ describe('StartProcessScreenCloudComponent', () => {
     it('should set resolvedValues', () => {
         const screenInstance: StartProcessScreenCloud = fixture.debugElement.query(By.directive(MockedTaskScreenCloudComponent)).componentInstance;
         expect(screenInstance.resolvedValues()).toBeUndefined();
-        const newValues = [new TaskVariableCloud({ id: 'new-id', name: 'new-name ' })];
+        const newValues = [new TaskVariableCloud({ id: 'new-id', name: 'new-name' })];
         fixture.componentRef.setInput('resolvedValues', newValues);
         fixture.detectChanges();
         expect(screenInstance.resolvedValues()).toEqual(newValues);
