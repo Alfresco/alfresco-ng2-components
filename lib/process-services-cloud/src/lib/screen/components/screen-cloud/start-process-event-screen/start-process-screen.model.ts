@@ -16,7 +16,7 @@
  */
 
 import { InputSignal, OutputEmitterRef } from '@angular/core';
-import { TaskVariableCloud } from '../../../../../..';
+import { TaskVariableCloud } from '../../../../form/models/task-variable-cloud.model';
 
 export interface StartProcessScreenDefaultButtons {
     show: boolean;

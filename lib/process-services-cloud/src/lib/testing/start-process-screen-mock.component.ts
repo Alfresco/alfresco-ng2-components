@@ -20,7 +20,7 @@ import {
     StartProcessScreenCloud,
     StartProcessScreenDefaultButtons
 } from '../screen/components/screen-cloud/start-process-event-screen/start-process-screen.model';
-import { TaskVariableCloud } from '../../..';
+import { TaskVariableCloud } from '../form/models/task-variable-cloud.model';
 
 @Component({
     selector: 'adf-cloud-mock-screen-component',

@@ -29,7 +29,7 @@ export abstract class BaseScreenCloudComponent<TScreenComponent = unknown> imple
     container: ViewContainerRef;
 
     protected componentRef: ComponentRef<TScreenComponent>;
-    private readonly _componentRefChanged = signal<ComponentRef<TScreenComponent>>(undefined);
+    private readonly _componentRefChanged = signal<ComponentRef<TScreenComponent> | undefined>(undefined);
     protected readonly componentRefChanged = this._componentRefChanged.asReadonly();
     protected readonly screenRenderingService = inject(ScreenRenderingService);
 
@@ -49,5 +49,5 @@ export abstract class BaseScreenCloudComponent<TScreenComponent = unknown> imple
 
     protected setInputsForDynamicComponent(): void {}
 
-    protected subscribeToOutputs(): void {}
+    protected abstract subscribeToOutputs(): void;
 }

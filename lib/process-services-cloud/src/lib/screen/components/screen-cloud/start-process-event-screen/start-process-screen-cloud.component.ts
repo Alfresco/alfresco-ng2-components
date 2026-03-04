@@ -20,7 +20,7 @@ import { BaseScreenCloudComponent } from '../base-screen/base-screen-cloud.compo
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { StartProcessScreenCloud } from './start-process-screen.model';
-import { TaskVariableCloud } from '../../../../../..';
+import { TaskVariableCloud } from '../../../../form/models/task-variable-cloud.model';
 
 @Component({
     selector: 'adf-cloud-start-process-screen-cloud',
@@ -41,16 +41,19 @@ export class StartProcessScreenCloudComponent extends BaseScreenCloudComponent<S
     constructor() {
         super();
         effect(() => this.componentRefChanged()?.setInput('processDefinitionId', this.processDefinitionId()));
-        effect(() => this.componentRefChanged()?.setInput('resolvedValues', this.resolvedValues()));
         effect(() => {
             const componentRef = this.componentRefChanged();
-            if (componentRef) {
-                componentRef.instance.startProcessPayloadChanged.subscribe((payload) => this.screenStartProcessPayloadChange.emit(payload));
-                componentRef.instance.defaultStartProcessButtonsConfigurationChange.subscribe((config) => {
-                    this.showStartProcessButtons.set(config.show);
-                    this.disableStartProcessButton.emit(config.disable);
-                });
+            if (componentRef && Object.prototype.hasOwnProperty.call(componentRef.instance, 'resolvedValues')) {
+                componentRef.setInput('resolvedValues', this.resolvedValues());
             }
+        });
+    }
+
+    protected subscribeToOutputs(): void {
+        this.componentRef.instance.startProcessPayloadChanged.subscribe((payload) => this.screenStartProcessPayloadChange.emit(payload));
+        this.componentRef.instance.defaultStartProcessButtonsConfigurationChange.subscribe((config) => {
+            this.showStartProcessButtons.set(config.show);
+            this.disableStartProcessButton.emit(config.disable);
         });
     }
 }
