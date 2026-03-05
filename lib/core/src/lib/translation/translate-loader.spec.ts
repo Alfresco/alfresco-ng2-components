@@ -30,6 +30,7 @@ describe('TranslateLoader', () => {
         customLoader = TestBed.inject(TranslateLoaderService);
         httpMock = TestBed.inject(HttpTestingController);
     });
+
     it('should be able to provide TranslateLoaderService', () => {
         expect(customLoader).toBeDefined();
         expect(customLoader instanceof TranslateLoaderService).toBeTruthy();
