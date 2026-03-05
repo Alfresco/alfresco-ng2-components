@@ -72,6 +72,10 @@ export class UnitTestingUtils {
         return this.getByCSS(`[data-automation-class="${dataAutomationClass}"]`);
     }
 
+    getAllByDataAutomationId(dataAutomationId: string): DebugElement[] {
+        return this.debugElement.queryAll(By.css(`[data-automation-id="${dataAutomationId}"]`));
+    }
+
     getInnerTextByDataAutomationId(dataAutomationId: string): string {
         return this.getByDataAutomationId(dataAutomationId).nativeElement.innerText;
     }
