@@ -62,11 +62,7 @@ class DownloadsApiMock extends DownloadsApi {
 }
 
 export class DownloadZipMockService extends DownloadZipService {
-    private _mockDownloadsApi: DownloadsApi;
-    get downloadsApi(): DownloadsApi {
-        this._mockDownloadsApi = this._mockDownloadsApi ?? new DownloadsApiMock();
-        return this._mockDownloadsApi;
-    }
+    override readonly downloadsApi: DownloadsApi = new DownloadsApiMock();
 
     createDownload(payload: DownloadBodyCreate): Observable<DownloadEntry> {
         return from(this.downloadsApi.createDownload(payload)).pipe(catchError((err) => of(err)));
