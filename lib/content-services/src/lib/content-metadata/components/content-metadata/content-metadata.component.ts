@@ -429,7 +429,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
                     if (Object.keys(result).length > 1 && this.displayTags) {
                         this.loadTagsForNode(this.node.id);
                     }
-                    if (this.displayCategories) {
+                    if (Object.keys(result).length > 1 && this.displayCategories) {
                         this.loadCategoriesForNode(this.node.id);
                     }
                 }
