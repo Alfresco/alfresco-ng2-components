@@ -122,10 +122,17 @@ describe('ContentMetadataComponent', () => {
         fixture.detectChanges();
     };
 
+    const clickOnSaveCategoriesButton = () => {
+        findSaveCategoriesButton().click();
+        fixture.detectChanges();
+    };
+
     const getGroupSaveButton = () => fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]')).nativeElement;
     const clickOnGroupSaveButton = () => getGroupSaveButton().click();
 
     const findTagsCreator = (): TagsCreatorComponent => fixture.debugElement.query(By.directive(TagsCreatorComponent))?.componentInstance;
+    const findCategoriesManagement = (): CategoriesManagementComponent =>
+        fixture.debugElement.query(By.directive(CategoriesManagementComponent))?.componentInstance;
     const getToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-general-info-edit"]'));
     const getTagsToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="showing-tag-input-button"]'));
     const getCategoriesToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-categories-edit"]'));
@@ -507,6 +514,32 @@ describe('ContentMetadataComponent', () => {
             clickOnTagsSave();
 
             expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
+        });
+
+        it('should fetch latest categories on save click', () => {
+            component.displayCategories = true;
+            const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
+            const expectedNode = { ...node, name: 'some-modified-value' };
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
+            spyOn(categoryService, 'getCategoryLinksForNode').and.returnValue(of(categoryPagingResponse));
+            spyOn(categoryService, 'unlinkNodeFromCategory').and.returnValue(of(undefined));
+            spyOn(categoryService, 'linkNodeToCategory').and.returnValue(of({}));
+            component.ngOnInit();
+            component.readOnly = false;
+
+            updateService.update(property, 'updated-value');
+
+            fixture.detectChanges();
+            toggleEditModeForCategories();
+
+            findCategoriesManagement().categoriesChange.emit([category1, category2]);
+            fixture.detectChanges();
+
+            clickOnSaveCategoriesButton();
+
+            expect(categoryService.getCategoryLinksForNode).toHaveBeenCalledWith(node.id);
+            expect(component.categories).toEqual(categoryPagingResponse.list.entries.map((entry) => entry.entry));
+            expect(component.assignedCategories).toEqual(categoryPagingResponse.list.entries.map((entry) => entry.entry));
         });
 
         it('should throw error on unsuccessful save', fakeAsync(() => {
