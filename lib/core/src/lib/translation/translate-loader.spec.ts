@@ -15,37 +15,48 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TranslateLoaderService } from './translate-loader.service';
-import { TranslationService } from './translation.service';
-import { provideTranslateLoader, provideTranslateService } from '@ngx-translate/core';
 
 describe('TranslateLoader', () => {
-    let translationService: TranslationService;
     let customLoader: TranslateLoaderService;
+    let httpMock: HttpTestingController;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [
-                provideTranslateService({
-                    loader: provideTranslateLoader(TranslateLoaderService),
-                    fallbackLang: 'en'
-                }),
-                TranslationService
-            ]
+            providers: [provideHttpClientTesting(), TranslateLoaderService]
         });
-        translationService = TestBed.inject(TranslationService);
-        customLoader = translationService.translate.currentLoader as TranslateLoaderService;
+        customLoader = TestBed.inject(TranslateLoaderService);
+        httpMock = TestBed.inject(HttpTestingController);
     });
-
-    it('should be able to provide any TranslateLoader', () => {
-        expect(translationService).toBeDefined();
-        expect(translationService.translate.currentLoader).toBeDefined();
-        expect(translationService.translate.currentLoader instanceof TranslateLoaderService).toBeTruthy();
+    it('should be able to provide TranslateLoaderService', () => {
+        expect(customLoader).toBeDefined();
+        expect(customLoader instanceof TranslateLoaderService).toBeTruthy();
     });
 
     it('should add the component to the list', () => {
         customLoader.registerProvider('login', 'path/login');
         expect(customLoader.providerRegistered('login')).toBeTruthy();
     });
+
+    it('should complete observer when gets full translation json', fakeAsync(() => {
+        const language = 'en';
+        let nextInvoked = false;
+        let completeInvoked = false;
+
+        const subscription = customLoader.getTranslation(language).subscribe({
+            next: () => (nextInvoked = true),
+            error: () => fail('Should not call error handler'),
+            complete: () => (completeInvoked = true)
+        });
+        const expectedRequest = httpMock.expectOne((request) => request.url.includes(`assets/adf-core/i18n/${language}.json`));
+        expect(expectedRequest.request.method).toBe('GET');
+        expectedRequest.flush({ 'TEST.COMPONENT': 'Composant de test' });
+        tick();
+        expect(nextInvoked).toBeTrue();
+        expect(completeInvoked).toBeTrue();
+        subscription.unsubscribe();
+        httpMock.verify();
+    }));
 });
