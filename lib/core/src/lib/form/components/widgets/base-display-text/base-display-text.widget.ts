@@ -68,8 +68,8 @@ export abstract class BaseDisplayTextWidgetComponent extends WidgetComponent imp
     protected abstract reevaluateExpressions(): void;
     private readonly destroyRef = inject(DestroyRef);
 
-    protected resolveExpressions(text: string): string {
-        return this.formExpressionService.resolveExpressions(this.field.form, text);
+    protected resolveExpressions(text: string, escapeHtml?: boolean): string {
+        return this.formExpressionService.resolveExpressions(this.field.form, text, escapeHtml);
     }
 
     private applyExpressions() {

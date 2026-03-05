@@ -27,7 +27,7 @@ export class FormExpressionService {
     private readonly VARIABLE_PREFIX = 'variable.';
     private readonly VARIABLES_REGEX = /(?:field|variable)\.[a-zA-Z_$][a-zA-Z0-9_$]*/g;
 
-    resolveExpressions(form: FormModel, formField: string): string {
+    resolveExpressions(form: FormModel, formField: string, escapeHtml?: boolean): string {
         let result = formField || '';
 
         const matches = result.match(this.GLOBAL_EXPRESSION_REGEX);
@@ -42,6 +42,19 @@ export class FormExpressionService {
                 expressionResult = '';
             } else if (typeof expressionResult !== 'string') {
                 expressionResult = JSON.stringify(expressionResult);
+            }
+            if (escapeHtml) {
+                expressionResult = expressionResult
+                    .split('&')
+                    .join('&amp;')
+                    .split('<')
+                    .join('&lt;')
+                    .split('>')
+                    .join('&gt;')
+                    .split('"')
+                    .join('&quot;')
+                    .split("'")
+                    .join('&#039;');
             }
             result = result.replace(match, expressionResult);
         }

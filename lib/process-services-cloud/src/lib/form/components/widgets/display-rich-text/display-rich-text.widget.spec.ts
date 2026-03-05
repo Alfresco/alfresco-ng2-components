@@ -137,13 +137,15 @@ describe('DisplayRichTextWidgetComponent', () => {
     });
 
     it('should sanitize unsafe HTML', async () => {
+        mockRichTextParserService.parse.and.returnValue('<img src="x" onerror="alert(\'XSS\')">');
         widget.field = mockUnsafeFormField;
 
         fixture.detectChanges();
         await fixture.whenStable();
 
         const parsedHtmlEl = debugEl.query(By.css(cssSelector.parsedHTML));
-        expect(parsedHtmlEl.nativeElement.innerHTML.includes('<img src="x" onerror="alert(\'XSS\')">')).toBe(false);
+        expect(parsedHtmlEl.nativeElement.innerHTML.includes('img src="x"')).toBe(true);
+        expect(parsedHtmlEl.nativeElement.innerHTML.includes('onerror')).toBe(false);
     });
 
     describe('expression evaluation', () => {

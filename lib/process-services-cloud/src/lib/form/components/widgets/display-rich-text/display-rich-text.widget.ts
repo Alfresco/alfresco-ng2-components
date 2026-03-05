@@ -90,7 +90,7 @@ export class DisplayRichTextWidgetComponent extends BaseDisplayTextWidgetCompone
 
     private applyExpressionsToBlocks(value: any): void {
         for (const block of value.blocks) {
-            block.data.text = this.resolveExpressions(block.data.text);
+            block.data.text = this.resolveExpressions(block.data.text, true);
         }
         this.field.value = value;
     }
