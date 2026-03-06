@@ -147,7 +147,7 @@ export class TranslateLoaderService implements TranslateLoader {
                 forkJoin(batch).subscribe({
                     next: () => {
                         const fullTranslation = this.getFullTranslationJSON(lang);
-                        if (fullTranslation) {
+                        if (Object.keys(fullTranslation).length) {
                             observer.next(fullTranslation);
                             observer.complete();
                         } else if (hasFailures) {

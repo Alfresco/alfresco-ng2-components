@@ -49,7 +49,7 @@ export class NoopTranslationService implements TranslateLoader {
         return key;
     }
 
-    getTranslation(): Observable<TranslationObject> {
+    getTranslation(_lang: string): Observable<TranslationObject> {
         return of({});
     }
 }
