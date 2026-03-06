@@ -495,7 +495,7 @@
       "CREATED_DATE": "Datum der Erstellung",
       "MODIFIER": "Bearbeiter",
       "MODIFIED_DATE": "Datum der Änderung",
-      "CONTENT_TYPE": "Content-Typ",
+      "CONTENT_TYPE": "Inhaltstyp",
       "TAGS": "Tags",
       "NO_TAGS_ADDED": "Derzeit sind keine Tags hinzugefügt",
       "NO_ITEMS_MESSAGE": "Es gibt derzeit keinen {{ groupTitle }} hinzugefügt",
