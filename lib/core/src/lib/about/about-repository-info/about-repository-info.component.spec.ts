@@ -23,6 +23,8 @@ describe('AboutRepositoryInfoComponent', () => {
     let fixture: ComponentFixture<AboutRepositoryInfoComponent>;
     let unitTestingUtils: UnitTestingUtils;
 
+    const headerTag = 'H2';
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [AboutRepositoryInfoComponent]
@@ -42,7 +44,9 @@ describe('AboutRepositoryInfoComponent', () => {
             } as RepositoryInfo;
 
             fixture.detectChanges();
-            expect(unitTestingUtils.getInnerTextByDataAutomationId('adf-about-repository-info-header-license')).toBe('ABOUT.LICENSE.TITLE');
+            const licenseHeader = unitTestingUtils.getByDataAutomationId('adf-about-repository-info-header-license').nativeElement;
+            expect(licenseHeader.innerText).toBe('ABOUT.LICENSE.TITLE');
+            expect(licenseHeader.tagName).toBe(headerTag);
         });
     });
 
@@ -55,7 +59,9 @@ describe('AboutRepositoryInfoComponent', () => {
             } as RepositoryInfo;
 
             fixture.detectChanges();
-            expect(unitTestingUtils.getInnerTextByDataAutomationId('adf-about-repository-info-header-status')).toBe('ABOUT.STATUS.TITLE');
+            const statusHeader = unitTestingUtils.getByDataAutomationId('adf-about-repository-info-header-status').nativeElement;
+            expect(statusHeader.innerText).toBe('ABOUT.STATUS.TITLE');
+            expect(statusHeader.tagName).toBe(headerTag);
         });
     });
 
@@ -71,7 +77,9 @@ describe('AboutRepositoryInfoComponent', () => {
             } as RepositoryInfo;
 
             fixture.detectChanges();
-            expect(unitTestingUtils.getInnerTextByDataAutomationId('adf-about-repository-info-header-modules')).toBe('ABOUT.MODULES.TITLE');
+            const modulesHeader = unitTestingUtils.getByDataAutomationId('adf-about-repository-info-header-modules').nativeElement;
+            expect(modulesHeader.innerText).toBe('ABOUT.MODULES.TITLE');
+            expect(modulesHeader.tagName).toBe(headerTag);
         });
     });
 });
