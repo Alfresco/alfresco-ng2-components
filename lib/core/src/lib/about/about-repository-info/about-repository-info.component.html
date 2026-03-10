@@ -1,16 +1,27 @@
-<div>
-    <article *ngIf="licenseEntries">
-        <h2 class="adf-about-repository-info-header">{{ 'ABOUT.LICENSE.TITLE' | translate }}</h2>
+@if (licenseEntries) {
+    <article>
+        <h2 data-automation-id="adf-about-repository-info-header-license"
+            class="adf-about-repository-info-header">
+            {{ 'ABOUT.LICENSE.TITLE' | translate }}
+        </h2>
         <adf-about-license-list [data]="licenseEntries" />
     </article>
-
-    <article *ngIf="statusEntries">
-        <h2 class="adf-about-repository-info-header">{{ 'ABOUT.STATUS.TITLE' | translate }}</h2>
+}
+@if (statusEntries) {
+    <article>
+        <h2 data-automation-id="adf-about-repository-info-header-status"
+            class="adf-about-repository-info-header">
+            {{ 'ABOUT.STATUS.TITLE' | translate }}
+        </h2>
         <adf-about-status-list [data]="statusEntries" />
     </article>
-
-    <article *ngIf="data?.modules">
-        <h2 class="adf-about-repository-info-header">{{ 'ABOUT.MODULES.TITLE' | translate }}</h2>
+}
+@if (data?.modules) {
+    <article>
+        <h2 data-automation-id="adf-about-repository-info-header-modules"
+            class="adf-about-repository-info-header">
+            {{ 'ABOUT.MODULES.TITLE' | translate }}
+        </h2>
         <adf-about-module-list [data]="data.modules" />
     </article>
-</div>
+}
