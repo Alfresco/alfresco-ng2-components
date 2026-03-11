@@ -19,8 +19,10 @@ on:
     types: [closed]
     branches:
       - develop
-      - master
       - develop-patch*
+  push:
+    branches:
+      - master
       - master-patch*
 
 permissions:
