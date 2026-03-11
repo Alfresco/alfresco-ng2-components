@@ -19,9 +19,11 @@ on:
     types: [closed]
     branches:
       - develop
-      - master
       - develop-patch*
-      - master-patch*
+  push:
+    branches:
+      - master
+      - master-patch-*
 
 permissions:
   id-token: write  # Required for OIDC
