@@ -23,7 +23,7 @@ on:
   push:
     branches:
       - master
-      - master-patch*
+      - master-patch-*
 
 permissions:
   id-token: write  # Required for OIDC
