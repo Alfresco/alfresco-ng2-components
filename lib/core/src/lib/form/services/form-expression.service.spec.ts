@@ -268,6 +268,34 @@ describe('FormExpressionService', () => {
 
             expect(result).toBe('true');
         });
+
+        describe('when escapeHtml is true', () => {
+            let getFieldSpy: jasmine.Spy;
+
+            beforeEach(() => {
+                getFieldSpy = spyOn(formModel, 'getFieldById');
+            });
+
+            it('should escape ampersands in resolved field values', () => {
+                getFieldSpy.and.returnValue({ id: 'f', value: 'a & b' } as any);
+                expect(service.resolveExpressions(formModel, '${field.f}', true)).toBe('a &amp; b');
+            });
+
+            it('should escape all HTML special characters in an XSS-like payload', () => {
+                getFieldSpy.and.returnValue({ id: 'f', value: `<img src="x" onerror='alert(1)'>` } as any);
+                expect(service.resolveExpressions(formModel, '${field.f}', true)).toBe('&lt;img src=&quot;x&quot; onerror=&#039;alert(1)&#039;&gt;');
+            });
+
+            it('should not escape characters when escapeHtml is false', () => {
+                getFieldSpy.and.returnValue({ id: 'f', value: '<b>bold</b>' } as any);
+                expect(service.resolveExpressions(formModel, '${field.f}', false)).toBe('<b>bold</b>');
+            });
+
+            it('should not escape characters when escapeHtml is omitted', () => {
+                getFieldSpy.and.returnValue({ id: 'f', value: '<b>bold</b>' } as any);
+                expect(service.resolveExpressions(formModel, '${field.f}')).toBe('<b>bold</b>');
+            });
+        });
     });
 
     describe('getFieldDependencies', () => {
