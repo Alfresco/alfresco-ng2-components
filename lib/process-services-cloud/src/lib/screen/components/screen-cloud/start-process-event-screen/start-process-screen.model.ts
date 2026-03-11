@@ -23,6 +23,7 @@ export interface StartProcessScreenDefaultButtons {
     disable: boolean;
 }
 export interface StartProcessScreenCloud {
+    readonly appName?: InputSignal<string>;
     processDefinitionId: InputSignal<string>;
     readonly resolvedValues?: InputSignal<TaskVariableCloud[]>;
     defaultStartProcessButtonsConfigurationChange: OutputEmitterRef<StartProcessScreenDefaultButtons>;

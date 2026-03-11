@@ -31,6 +31,7 @@ import { TaskVariableCloud } from '../../../../form/models/task-variable-cloud.m
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StartProcessScreenCloudComponent extends BaseScreenCloudComponent<StartProcessScreenCloud> {
+    readonly appName = input.required<string>();
     processDefinitionId = input('');
     readonly resolvedValues = input<TaskVariableCloud[]>();
     screenStartProcessPayloadChange = output<unknown>();
@@ -40,6 +41,12 @@ export class StartProcessScreenCloudComponent extends BaseScreenCloudComponent<S
 
     constructor() {
         super();
+        effect(() => {
+            const componentRef = this.componentRefChanged();
+            if (componentRef.instance && 'appName' in componentRef.instance) {
+                componentRef.setInput('appName', this.appName());
+            }
+        });
         effect(() => this.componentRefChanged()?.setInput('processDefinitionId', this.processDefinitionId()));
         effect(() => {
             const componentRef = this.componentRefChanged();

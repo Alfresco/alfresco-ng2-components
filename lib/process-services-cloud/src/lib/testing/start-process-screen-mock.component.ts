@@ -27,6 +27,7 @@ import { TaskVariableCloud } from '../form/models/task-variable-cloud.model';
     template: `<div>Mock Screen Component</div>`
 })
 export class MockedTaskScreenCloudComponent implements StartProcessScreenCloud {
+    readonly appName = input('');
     processDefinitionId = input('');
     readonly resolvedValues = input<TaskVariableCloud[]>();
     defaultStartProcessButtonsConfigurationChange = output<StartProcessScreenDefaultButtons>();

@@ -64,6 +64,15 @@ describe('StartProcessScreenCloudComponent', () => {
         expect(component.showStartProcessButtons()).toBe(startProcessScreenDefaultButtons.show);
     });
 
+    it('should set appName', () => {
+        const screenInstance: StartProcessScreenCloud = fixture.debugElement.query(By.directive(MockedTaskScreenCloudComponent)).componentInstance;
+        expect(screenInstance.appName()).toBeUndefined();
+        const newValue = 'new-app-name';
+        fixture.componentRef.setInput('appName', newValue);
+        fixture.detectChanges();
+        expect(screenInstance.appName()).toEqual(newValue);
+    });
+
     it('should set process definition id', () => {
         const screenInstance: StartProcessScreenCloud = fixture.debugElement.query(By.directive(MockedTaskScreenCloudComponent)).componentInstance;
         expect(screenInstance.processDefinitionId()).toBe(processDefinitionId);
