@@ -51,6 +51,7 @@ import {
 import { FormFieldModel, FormModel, TextWidgetComponent } from './widgets';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
+import { WidgetVisibilityService } from '../services/widget-visibility.service';
 
 const typeIntoInput = (testingUtils: UnitTestingUtils, selector: string, message: string) => {
     testingUtils.fillInputByCSS(selector, message);
@@ -108,6 +109,48 @@ describe('Form Renderer Component', () => {
 
     afterEach(() => {
         fixture.destroy();
+    });
+
+    describe('visibility refresh on form rules', () => {
+        it('should refresh visibility when a fieldValueChanged rule event fires for the same form', () => {
+            const form = formService.parseForm(textWidgetVisibility.formRepresentation);
+            formRendererComponent.formDefinition = form;
+            fixture.detectChanges();
+
+            const visibilityService = TestBed.inject(WidgetVisibilityService);
+            const refreshVisibilitySpy = spyOn(visibilityService, 'refreshVisibility');
+
+            formService.formRulesEvent.next({ type: 'fieldValueChanged', form } as any);
+
+            expect(refreshVisibilitySpy).toHaveBeenCalledOnceWith(form);
+        });
+
+        it('should not refresh visibility when a fieldValueChanged rule event fires for a different form', () => {
+            const form = formService.parseForm(textWidgetVisibility.formRepresentation);
+            const otherForm = formService.parseForm(formDateVisibility.formRepresentation);
+            formRendererComponent.formDefinition = form;
+            fixture.detectChanges();
+
+            const visibilityService = TestBed.inject(WidgetVisibilityService);
+            const refreshVisibilitySpy = spyOn(visibilityService, 'refreshVisibility');
+
+            formService.formRulesEvent.next({ type: 'fieldValueChanged', form: otherForm } as any);
+
+            expect(refreshVisibilitySpy).not.toHaveBeenCalled();
+        });
+
+        it('should not refresh visibility for non-fieldValueChanged rule events', () => {
+            const form = formService.parseForm(textWidgetVisibility.formRepresentation);
+            formRendererComponent.formDefinition = form;
+            fixture.detectChanges();
+
+            const visibilityService = TestBed.inject(WidgetVisibilityService);
+            const refreshVisibilitySpy = spyOn(visibilityService, 'refreshVisibility');
+
+            formService.formRulesEvent.next({ type: 'formLoaded', form } as any);
+
+            expect(refreshVisibilitySpy).not.toHaveBeenCalled();
+        });
     });
 
     describe('Display Date Widget ', () => {
