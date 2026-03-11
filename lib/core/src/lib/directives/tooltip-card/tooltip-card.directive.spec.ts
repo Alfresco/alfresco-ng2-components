@@ -131,4 +131,20 @@ describe('TooltipCardDirective', () => {
 
         expect(fixture.componentInstance.directive.hide).toHaveBeenCalledTimes(0);
     });
+
+    it('should hide tooltip-card on click', () => {
+        fixture.detectChanges();
+        const span = fixture.debugElement.query(By.css('span.test-component'));
+        span.triggerEventHandler('mouseenter', {});
+        fixture.detectChanges();
+        let tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
+
+        expect(tooltipCard).not.toBeNull();
+
+        span.triggerEventHandler('click', {});
+        fixture.detectChanges();
+        tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
+
+        expect(tooltipCard).toBeNull();
+    });
 });

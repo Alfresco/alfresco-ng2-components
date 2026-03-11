@@ -28,17 +28,16 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '../../../icon/icon.module';
 
 export const DEFAULT_SEPARATOR = ', ';
 const templateTypes = {
     clickableTemplate: 'clickableTemplate',
     multilineTemplate: 'multilineTemplate',
     chipsTemplate: 'chipsTemplate',
-    emptyTemplate: 'emptyTemplate',
     defaultTemplate: 'defaultTemplate'
 };
 
@@ -51,7 +50,7 @@ const templateTypes = {
         MatInputModule,
         ReactiveFormsModule,
         MatChipsModule,
-        MatIconModule,
+        IconModule,
         FormsModule,
         MatButtonModule,
         MatSnackBarModule
@@ -62,6 +61,10 @@ const templateTypes = {
     host: { class: 'adf-card-view-textitem' }
 })
 export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges {
+    private readonly clipboardService = inject(ClipboardService);
+    private readonly translateService = inject(TranslationService);
+    private readonly cd = inject(ChangeDetectorRef);
+
     @Input()
     displayEmpty = true;
 
@@ -74,23 +77,12 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     @Input()
     multiValueSeparator: string = DEFAULT_SEPARATOR;
 
-    @Input()
-    displayLabelForChips = false;
-
     editedValue: string | string[];
     errors: CardViewItemValidator[];
     templateType: string;
     textInput = new UntypedFormControl();
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private clipboardService: ClipboardService,
-        private translateService: TranslationService,
-        private cd: ChangeDetectorRef
-    ) {
-        super();
-    }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.property?.firstChange) {
@@ -128,7 +120,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
                 this.templateType = templateTypes.defaultTemplate;
             }
         } else {
-            this.templateType = templateTypes.emptyTemplate;
+            this.templateType = templateTypes.defaultTemplate;
         }
     }
 
@@ -251,10 +243,6 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     get isChipViewEnabled(): boolean {
         return this.property.multivalued && this.useChipsForMultiValueProperty;
-    }
-
-    get showLabelForChips(): boolean {
-        return this.displayLabelForChips;
     }
 
     private prepareIntLongValue(value: string): string {

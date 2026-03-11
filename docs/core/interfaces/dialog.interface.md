@@ -21,9 +21,9 @@ interface DialogData {
     isCloseButtonHidden?: boolean;
     isCancelButtonHidden?: boolean;
     dialogSize?: DialogSizes;
-    contentTemplate?: TemplateRef<any>;
-    actionsTemplate?: TemplateRef<any>;
-    descriptionTemplate?: TemplateRef<any>;
+    contentTemplate?: TemplateRef<unknown>;
+    actionsTemplate?: TemplateRef<unknown>;
+    descriptionTemplate?: TemplateRef<unknown>;
     headerIcon?: string;
     additionalActionButtons?: AdditionalDialogActionButton[];
     componentData?: any;
@@ -46,9 +46,9 @@ interface DialogData {
 | dialogSize | `DialogSize` | `Medium` | Set dialog size. Can be `Large`, `Medium`, `Alert`. (optional) |
 | contentText | `string` |    | Inserts a content text. (optional) |
 | contentComponent | `Type<any>` |    | Inserts a content component. (optional) |
-| contentTemplate | `TemplateRef<any>` |    | Inserts a content template. (optional) |
-| actionsTemplate | `TemplateRef<any>` |    | Inserts a template styled on the left. Should be used for additional `mat-button` style buttons. (optional) |
-| descriptionTemplate | `TemplateRef<any>` |    | Inserts a description template. (optional) |
+| contentTemplate | `TemplateRef<unknown>` |    | Inserts a content template. (optional) |
+| actionsTemplate | `TemplateRef<unknown>` |    | Inserts a template styled on the left. Should be used for additional `mat-button` style buttons. (optional) |
+| descriptionTemplate | `TemplateRef<unknown>` |    | Inserts a description template. (optional) |
 | additionalActionButtons | `AdditionalDialogActionButton[]` |    | Inserts additional base-styled buttons into the action bar on the left. (optional) |
 | componentData | `any` |    | Data that injected in contentComponent. (optional) |
 | dataOnConfirm$ | `Subject<any>` |    | Data to be passed on confirm action after dialog closed. (optional) |

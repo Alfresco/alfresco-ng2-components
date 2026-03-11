@@ -51,7 +51,7 @@ export const mockPreselectedFoodUsers = [
 
 @Injectable()
 export class IdentityUserServiceMock extends IdentityUserService {
-    queryParams: { search: string; application?: string; roles?: string[]; groups?: string[] };
+    declare queryParams: { search: string; application?: string; roles?: string[]; groups?: string[] };
 
     getCurrentUserInfo(): IdentityUserModel {
         return mockKielbasaSausage;

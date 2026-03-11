@@ -34,6 +34,7 @@ import {
     ContentLinkModel,
     FormModel,
     FormOutcomeEvent,
+    IconModule,
     InplaceFormInputComponent,
     LocalizedDatePipe,
     TranslationService,
@@ -57,7 +58,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { FormCloudComponent } from '../../../form/components/form-cloud.component';
@@ -81,7 +81,7 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = /%{processdefinition}/i;
         MatCardModule,
         MatButtonModule,
         InplaceFormInputComponent,
-        MatIconModule,
+        IconModule,
         MatInputModule,
         MatOptionModule,
         MatAutocompleteModule,
@@ -96,6 +96,8 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = /%{processdefinition}/i;
     encapsulation: ViewEncapsulation.None
 })
 export class StartProcessCloudComponent implements OnChanges, OnInit {
+    private readonly translateService = inject(TranslationService);
+
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
 
@@ -141,6 +143,13 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
      */
     @Input()
     displayModeConfigurations: FormCloudDisplayModeConfiguration[];
+
+    /**
+     * Toggle to enable parent visibility check for validation.
+     * When enabled, fields inside hidden groups/sections will skip validation.
+     */
+    @Input()
+    enableParentVisibilityCheck: boolean = false;
 
     /** Emitted when the process is successfully started. */
     @Output()
@@ -256,7 +265,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         return this.translateService.instant('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.CANCEL').toUpperCase();
     }
 
-    constructor(private readonly translateService: TranslationService) {
+    constructor() {
         this.startProcessButtonLabel = this.defaultStartProcessButtonLabel;
         this.cancelButtonLabel = this.defaultCancelProcessButtonLabel;
     }

@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRow, DataSorting, ThumbnailService } from '@alfresco/adf-core';
+import { DataColumn, DataRow, DataSorting, NoopAuthModule, ThumbnailService } from '@alfresco/adf-core';
 import { FileNode, FolderNode, SmartFolderNode, RuleFolderNode, LinkFolderNode } from './../../mock';
 import { ERR_OBJECT_NOT_FOUND, ShareDataRow } from './share-data-row.model';
 import { ERR_COL_NOT_FOUND, ERR_ROW_NOT_FOUND, ShareDataTableAdapter } from './share-datatable-adapter';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TestBed } from '@angular/core/testing';
 import { ContentService } from '../../common/services/content.service';
 
@@ -29,7 +28,7 @@ describe('ShareDataTableAdapter', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [NoopAuthModule]
         });
         const imageUrl: string = 'http://<addresss>';
 
@@ -493,5 +492,17 @@ describe('ShareDataTableAdapter', () => {
             expect(adapter.getRowByNodeId('fake-node-id-1')).toEqual(fakeShareDataRows[0]);
             expect(adapter.getRowByNodeId('fake-node-id-2')).toEqual(fakeShareDataRows[1]);
         });
+    });
+
+    it('should initialize with allowFocusOnRows as true by default', () => {
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
+        expect(adapter.allowFocusOnRows).toBe(true);
+    });
+
+    it('should set allowFocusOnRows value', () => {
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
+        expect(adapter.allowFocusOnRows).toBe(true);
+        adapter.setAllowFocusOnTableRows(false);
+        expect(adapter.allowFocusOnRows).toBe(false);
     });
 });

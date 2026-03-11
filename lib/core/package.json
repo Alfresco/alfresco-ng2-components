@@ -38,8 +38,8 @@
     "@angular/router": ">=16.0.0",
     "@mat-datetimepicker/core": ">=12.0.1",
     "@ngx-translate/core": ">=16.0.0",
-    "@alfresco/js-api": ">=9.1.1",
-    "@alfresco/adf-extensions": ">=8.2.0",
+    "@alfresco/js-api": ">=9.2.1",
+    "@alfresco/adf-extensions": ">=8.2.1",
     "minimatch": ">=10.0.0",
     "pdfjs-dist": ">=3.3.122"
   },

@@ -6,6 +6,10 @@
     &.adf-datatable {
         overflow: hidden;
 
+        .adf-datatable-header .adf-datatable-row {
+            padding-right: 0;
+        }
+
         .adf-datatable-row .adf-permission-role-column-header {
             position: relative;
         }
@@ -18,10 +22,6 @@
                 padding-right: 10px;
                 place-content: flex-end;
             }
-        }
-
-        .adf-authorityId-column {
-            flex: 40%;
         }
 
         .adf-authority-icon-column {

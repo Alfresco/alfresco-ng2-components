@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { NodeEntry } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
@@ -29,5 +29,5 @@ import { NodeDownloadDirective } from '../../../directives/node-download.directi
     templateUrl: './file-auto-download.component.html'
 })
 export class FileAutoDownloadComponent {
-    constructor(@Inject(MAT_DIALOG_DATA) public node: NodeEntry) {}
+    node = inject<NodeEntry>(MAT_DIALOG_DATA);
 }

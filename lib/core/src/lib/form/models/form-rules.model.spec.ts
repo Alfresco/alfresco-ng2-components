@@ -17,7 +17,6 @@
 
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { getTestScheduler } from 'jasmine-marbles';
 import { FormModel } from '../components/widgets';
 import { FormEvent, FormRulesEvent } from '../events';
 import { FormService } from '../services/form.service';
@@ -74,7 +73,6 @@ describe('Form Rules', () => {
             const event = new FormRulesEvent('formLoaded', formEvent);
 
             rulesManager.initialize(formModel);
-            getTestScheduler().flush();
 
             expect(getRulesSpy).toHaveBeenCalled();
             expect(handleRuleEventSpy).toHaveBeenCalledWith(event, {});
@@ -91,8 +89,6 @@ describe('Form Rules', () => {
             rulesManager.initialize(formModel);
 
             formService.formRulesEvent.next(event);
-
-            getTestScheduler().flush();
 
             expect(handleRuleEventSpy).not.toHaveBeenCalledWith(event, jasmine.anything());
         });

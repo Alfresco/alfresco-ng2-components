@@ -18,9 +18,9 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { DataTableComponent } from '../components/datatable/datatable.component';
 import { MainMenuDataTableTemplateDirective } from './main-data-table-action-template.directive';
+import { Injector, runInInjectionContext } from '@angular/core';
 
 describe('MainMenuDataTableTemplateDirective', () => {
-
     let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
     let directive: MainMenuDataTableTemplateDirective;
@@ -28,7 +28,13 @@ describe('MainMenuDataTableTemplateDirective', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
-        directive = new MainMenuDataTableTemplateDirective(dataTable);
+
+        const injector = Injector.create({
+            providers: [{ provide: DataTableComponent, useValue: dataTable }],
+            parent: TestBed.inject(Injector)
+        });
+
+        directive = runInInjectionContext(injector, () => new MainMenuDataTableTemplateDirective());
     });
 
     afterEach(() => {

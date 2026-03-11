@@ -33,7 +33,6 @@ import {
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Observable, Subject, Subscription } from 'rxjs';
@@ -43,6 +42,7 @@ import { searchAnimation } from './animations';
 import { SearchAnimationDirection, SearchAnimationState, SearchTextStateEnum } from './models/search-text-input.model';
 import { SearchTriggerDirective } from './search-trigger.directive';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '../icon/icon.module';
 
 @Component({
     selector: 'adf-search-text-input',
@@ -50,12 +50,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     styleUrls: ['./search-text-input.component.scss'],
     animations: [searchAnimation],
     encapsulation: ViewEncapsulation.None,
-    imports: [MatButtonModule, MatIconModule, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, SearchTriggerDirective, NgIf, NgClass],
+    imports: [MatButtonModule, IconModule, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, SearchTriggerDirective, NgIf, NgClass],
     host: {
         class: 'adf-search-text-input'
     }
 })
 export class SearchTextInputComponent implements OnInit, OnDestroy {
+    private readonly userPreferencesService = inject(UserPreferencesService);
+
     /** Toggles auto-completion of the search input field. */
     @Input()
     autocomplete: boolean = false;
@@ -166,14 +168,14 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     private dir = 'ltr';
     private toggleSearch = new Subject<any>();
     private focusSubscription: Subscription;
-    private valueChange = new Subject<string>();
-    private toggleSubscription: Subscription;
+    private readonly valueChange = new Subject<string>();
+    private readonly toggleSubscription: Subscription;
 
     toggle$ = this.toggleSearch.asObservable();
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private userPreferencesService: UserPreferencesService) {
+    constructor() {
         this.toggleSubscription = this.toggle$.pipe(debounceTime(200), takeUntilDestroyed()).subscribe(() => {
             if (this.expandable) {
                 this.subscriptAnimationState = this.toggleAnimation();
@@ -216,11 +218,11 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     private toggleAnimation() {
         if (this.dir === 'ltr') {
             return this.subscriptAnimationState.value === 'inactive'
-                ? { value: 'active', params: { 'margin-left': 13 } }
+                ? { value: 'active', params: { 'margin-left': 0 } }
                 : { value: 'inactive', params: { transform: 'translateX(100%)' } };
         } else {
             return this.subscriptAnimationState.value === 'inactive'
-                ? { value: 'active', params: { 'margin-right': 13 } }
+                ? { value: 'active', params: { 'margin-right': 0 } }
                 : { value: 'inactive', params: { transform: 'translateX(-100%)' } };
         }
     }

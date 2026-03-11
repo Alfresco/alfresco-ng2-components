@@ -16,14 +16,12 @@
  */
 
 import { NgModule } from '@angular/core';
-import { IconComponent } from './icon.component';
+import { MatIconModule } from '@angular/material/icon';
+import { IconDirective } from './icon.directive';
 
-/**
- * @deprecated this Module is deprecated and should no longer be used.
- * Consider importing components directly instead.
- */
 @NgModule({
-    imports: [IconComponent],
-    exports: [IconComponent]
+    declarations: [IconDirective],
+    imports: [MatIconModule],
+    exports: [MatIconModule, IconDirective]
 })
 export class IconModule {}

@@ -16,7 +16,7 @@
  */
 
 import { DataColumnComponent, DataColumnListComponent, TranslationService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, inject } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -46,6 +46,9 @@ import { PeopleListComponent } from '../people-list/people-list.component';
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleSearchFieldComponent {
+    peopleProcessService = inject(PeopleProcessService);
+    private readonly translationService = inject(TranslationService);
+
     @Input()
     performSearch: PerformSearchCallback;
 
@@ -60,7 +63,7 @@ export class PeopleSearchFieldComponent {
 
     defaultPlaceholder = 'ADF_TASK_LIST.PEOPLE.SEARCH_USER';
 
-    constructor(public peopleProcessService: PeopleProcessService, private translationService: TranslationService) {
+    constructor() {
         this.users$ = this.searchUser.valueChanges.pipe(
             debounceTime(200),
             switchMap((searchWord: string) => {

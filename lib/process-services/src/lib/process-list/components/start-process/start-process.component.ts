@@ -32,7 +32,7 @@ import { AppConfigService, AppConfigValues, EmptyContentComponent, FormValues, L
 import { AppsProcessService } from '../../../services/apps-process.service';
 import { ProcessService } from '../../services/process.service';
 import { AbstractControl, FormsModule, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
@@ -82,6 +82,12 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
     encapsulation: ViewEncapsulation.None
 })
 export class StartProcessInstanceComponent implements OnChanges, OnInit {
+    private readonly processService = inject(ProcessService);
+    private readonly contentService = inject(ActivitiContentService);
+    private readonly appsProcessService = inject(AppsProcessService);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly datePipe = inject(LocalizedDatePipe);
+
     /**
      * Limit the list of processes that can be started to those
      * contained in the specified app.
@@ -162,17 +168,9 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
 
     isProcessDefinitionsLoading = true;
     isAppsLoading = true;
-    movedNodeToPS: FormValues;
+    populatedFormData: FormValues;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private processService: ProcessService,
-        private contentService: ActivitiContentService,
-        private appsProcessService: AppsProcessService,
-        private appConfig: AppConfigService,
-        private datePipe: LocalizedDatePipe
-    ) {}
 
     ngOnInit() {
         this.processNameInput = new UntypedFormControl('', [
@@ -199,7 +197,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['values']?.currentValue) {
-            this.moveNodeFromCStoPS();
+            this.populateFormData();
         }
 
         const appId = changes['appId'];
@@ -356,17 +354,17 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
         return alfrescoRepositoryName + 'Alfresco';
     }
 
-    moveNodeFromCStoPS(): void {
+    populateFormData(): void {
         const accountIdentifier = this.getAlfrescoRepositoryName();
 
         for (const key in this.values) {
             if (Object.prototype.hasOwnProperty.call(this.values, key)) {
                 const currentValue = Array.isArray(this.values[key]) ? this.values[key] : [this.values[key]];
-                const contents = currentValue
-                    .filter((value: any) => !!value?.isFile)
-                    .map((content: Node) => this.contentService.applyAlfrescoNode(content, null, accountIdentifier));
+                const contents = currentValue.map((content: Node) =>
+                    content.isFile ? this.contentService.applyAlfrescoNode(content, null, accountIdentifier) : of(content)
+                );
                 forkJoin(contents).subscribe((res: RelatedContentRepresentation[]) => {
-                    this.movedNodeToPS = { [key]: [...res] };
+                    this.populatedFormData = { ...(this.populatedFormData || {}), [key]: [...res] };
                 });
             }
         }

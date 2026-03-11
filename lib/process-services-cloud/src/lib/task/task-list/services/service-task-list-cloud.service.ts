@@ -16,7 +16,13 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ServiceTaskQueryCloudRequestModel, ServiceTaskIntegrationContextCloudModel } from '../models/service-task-cloud.model';
+import {
+    ServiceTaskQueryCloudRequestModel,
+    ServiceTaskIntegrationContextCloudModel,
+    IntegrationContext,
+    IntegrationContextsRequestModel,
+    IntegrationContextsPaginationModel
+} from '../models/service-task-cloud.model';
 import { Observable, throwError } from 'rxjs';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
@@ -54,10 +60,33 @@ export class ServiceTaskListCloudService extends BaseCloudService {
     getServiceTaskStatus(appName: string, serviceTaskId: string): Observable<ServiceTaskIntegrationContextCloudModel> {
         if (appName) {
             const queryUrl = `${this.getBasePath(appName)}/query/admin/v1/service-tasks/${serviceTaskId}/integration-context`;
-            return this.get(queryUrl).pipe(map((response: any) => response.entry));
+            return this.get<{ entry: ServiceTaskIntegrationContextCloudModel }>(queryUrl).pipe(map((response) => response.entry));
         } else {
             return throwError('Appname not configured');
         }
+    }
+
+    /**
+     * Finds service task integration contexts using pagination and sorting.
+     *
+     * @param appName string
+     * @param serviceTaskId string
+     * @param requestModel Request model with pagination and sorting
+     * @returns Service Task Integration Contexts with pagination information
+     */
+    getServiceTaskIntegrationContexts(
+        appName: string,
+        serviceTaskId: string,
+        requestModel: IntegrationContextsRequestModel
+    ): Observable<{ list: { entries: IntegrationContext[]; pagination: IntegrationContextsPaginationModel } }> {
+        const queryUrl = `${this.getBasePath(appName)}/query/admin/v1/service-tasks/${serviceTaskId}/integration-contexts`;
+        const queryParams = this.buildQueryParams(requestModel);
+        const sortingParams = this.buildSortingParam(requestModel.sorting);
+        if (sortingParams) {
+            queryParams['sort'] = sortingParams;
+        }
+
+        return this.get(queryUrl, queryParams);
     }
 
     /**

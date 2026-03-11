@@ -225,41 +225,43 @@ export interface TextField extends FormField {
     placeholder: string | null;
 }
 
-// eslint-disable-next-line no-shadow
-export enum PeopleModeOptions {
-    single = 'single',
-    multiple = 'multiple'
-}
+export const PeopleModeOptions = {
+    single: 'single',
+    multiple: 'multiple'
+} as const;
+
+export type PeopleModeOptions = (typeof PeopleModeOptions)[keyof typeof PeopleModeOptions];
 
 export interface PeopleField extends FormField {
     required: boolean;
     optionType: PeopleModeOptions;
 }
 
-// eslint-disable-next-line no-shadow
-export enum FormFieldType {
-    text = 'text',
-    multiline = 'multi-line-text',
-    // eslint-disable-next-line id-blacklist
-    number = 'integer',
-    checkbox = 'boolean',
-    date = 'date',
-    datetime = 'datetime',
-    dropdown = 'dropdown',
-    typeahead = 'typeahead',
-    amount = 'amount',
-    radio = 'radio-buttons',
-    people = 'people',
-    groupOfPeople = 'functional-group',
-    dynamicTable = 'dynamicTable',
-    hyperlink = 'hyperlink',
-    header = 'group',
-    uploadFile = 'upload',
-    uploadFolder = 'uploadFolder',
-    displayValue = 'readonly',
-    displayText = 'readonly-text',
-    fileViewer = 'file-viewer'
-}
+export const FormFieldType = {
+    text: 'text',
+    multiline: 'multi-line-text',
+    number: 'integer',
+    checkbox: 'boolean',
+    date: 'date',
+    datetime: 'datetime',
+    dropdown: 'dropdown',
+    typeahead: 'typeahead',
+    amount: 'amount',
+    radio: 'radio-buttons',
+    people: 'people',
+    groupOfPeople: 'functional-group',
+    dynamicTable: 'dynamicTable',
+    hyperlink: 'hyperlink',
+    header: 'group',
+    uploadFile: 'upload',
+    uploadFolder: 'uploadFolder',
+    displayValue: 'readonly',
+    displayText: 'readonly-text',
+    fileViewer: 'file-viewer',
+    button: 'button'
+} as const;
+
+export type FormFieldType = (typeof FormFieldType)[keyof typeof FormFieldType];
 
 export interface FormCloudDisplayModeConfigurationOptions {
     onCompleteTask(id?: string): void;
@@ -279,12 +281,13 @@ export interface FormCloudDisplayModeConfiguration {
     default?: boolean;
 }
 
-// eslint-disable-next-line no-shadow
-export enum FormCloudDisplayMode {
-    inline = 'inline',
-    fullScreen = 'fullScreen',
-    standalone = 'standalone'
-}
+export const FormCloudDisplayMode = {
+    inline: 'inline',
+    fullScreen: 'fullScreen',
+    standalone: 'standalone'
+} as const;
+
+export type FormCloudDisplayMode = (typeof FormCloudDisplayMode)[keyof typeof FormCloudDisplayMode];
 
 export interface FormCloudDisplayModeChange {
     displayMode: string;

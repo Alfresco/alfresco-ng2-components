@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AiAnswerEntry, KnowledgeRetrievalConfigEntry, QuestionModel, QuestionRequest, SearchAiApi } from '@alfresco/js-api';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { SelectionState } from '@alfresco/adf-extensions';
@@ -27,7 +27,10 @@ import { AlfrescoApiService } from '../../services';
     providedIn: 'root'
 })
 export class SearchAiService {
-    private toggleSearchAiInput = new BehaviorSubject<SearchAiInputState>({
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly translateService = inject(TranslateService);
+
+    private readonly toggleSearchAiInput = new BehaviorSubject<SearchAiInputState>({
         active: false
     });
     private _searchAiApi: SearchAiApi;
@@ -38,8 +41,6 @@ export class SearchAiService {
     }
 
     toggleSearchAiInput$ = this.toggleSearchAiInput.asObservable();
-
-    constructor(private apiService: AlfrescoApiService, private translateService: TranslateService) {}
 
     /**
      * Update the state of the search AI input.

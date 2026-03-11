@@ -16,7 +16,7 @@
  */
 
 /* eslint-disable @angular-eslint/no-input-rename */
-import { Directive, Input, Output, EventEmitter } from '@angular/core';
+import { Directive, Input, Output, EventEmitter, inject } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { ContentService } from '../../common/services/content.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
@@ -30,6 +30,9 @@ import { AllowableOperationsEnum } from '../../common/models/allowable-operation
     }
 })
 export class InheritPermissionDirective {
+    private readonly nodeService = inject(NodesApiService);
+    private readonly contentService = inject(ContentService);
+
     /** ID of the node to add/remove inherited permissions. */
     @Input()
     nodeId: string;
@@ -41,8 +44,6 @@ export class InheritPermissionDirective {
     /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
-
-    constructor(private nodeService: NodesApiService, private contentService: ContentService) {}
 
     onInheritPermissionClicked() {
         this.nodeService.getNode(this.nodeId).subscribe((node: Node) => {

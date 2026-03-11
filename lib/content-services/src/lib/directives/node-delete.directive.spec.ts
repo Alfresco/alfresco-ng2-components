@@ -21,7 +21,6 @@ import { By } from '@angular/platform-browser';
 import { NodeDeleteDirective } from './node-delete.directive';
 import { RedirectAuthService } from '@alfresco/adf-core';
 import { EMPTY, of, Subscription } from 'rxjs';
-import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
 
 @Component({
     imports: [NodeDeleteDirective],
@@ -37,8 +36,8 @@ class TestComponent {
 }
 
 @Component({
-    imports: [NodeDeleteDirective, CheckAllowableOperationDirective],
-    template: `<div id="delete-component" [adf-check-allowable-operation]="'delete'" [adf-delete]="selection" (delete)="onDelete($event)"></div>`
+    imports: [NodeDeleteDirective],
+    template: `<div id="delete-component" [adf-delete]="selection" (delete)="onDelete($event)"></div>`
 })
 class TestWithPermissionsComponent {
     selection: any[] = [];

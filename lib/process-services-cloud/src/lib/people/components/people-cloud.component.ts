@@ -33,7 +33,7 @@ import {
 } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, mergeMap, switchMap, tap } from 'rxjs/operators';
-import { FullNamePipe, InitialUsernamePipe } from '@alfresco/adf-core';
+import { FullNamePipe, IconModule, InitialUsernamePipe } from '@alfresco/adf-core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ComponentSelectionMode } from '../../types';
 import { IdentityUserModel } from '../models/identity-user.model';
@@ -41,7 +41,6 @@ import { MatFormFieldAppearance, MatFormFieldModule, SubscriptSizing } from '@an
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -55,7 +54,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     imports: [
         CommonModule,
         TranslatePipe,
-        MatIconModule,
+        IconModule,
         MatFormFieldModule,
         MatProgressBarModule,
         MatSelectModule,
@@ -79,6 +78,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
+    private readonly identityUserService = inject(IdentityUserService);
+
     /** Label for the user selection component. */
     @Input()
     label: string;
@@ -206,7 +207,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
     warning = new EventEmitter<any>();
 
     @ViewChild('userInput')
-    private userInput: ElementRef<HTMLInputElement>;
+    private readonly userInput: ElementRef<HTMLInputElement>;
 
     private searchUsers: IdentityUserModel[] = [];
 
@@ -227,8 +228,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
     typingUniqueValueNotEmpty$: Observable<string>;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private identityUserService: IdentityUserService) {}
 
     ngOnInit(): void {
         this.initSearch();

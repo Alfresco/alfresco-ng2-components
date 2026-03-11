@@ -22,14 +22,10 @@ import { FileUploadingListComponent } from './components/file-uploading-list.com
 import { UploadButtonComponent } from './components/upload-button.component';
 import { UploadVersionButtonComponent } from './components/upload-version-button.component';
 import { UploadDragAreaComponent } from './components/upload-drag-area.component';
-import { FileUploadErrorPipe } from './pipes/file-upload-error.pipe';
 import { FileDraggableDirective } from './directives/file-draggable.directive';
-import { ToggleIconDirective } from './directives/toggle-icon.directive';
 
 export const CONTENT_UPLOAD_DIRECTIVES = [
-    FileUploadErrorPipe,
     FileDraggableDirective,
-    ToggleIconDirective,
     UploadDragAreaComponent,
     UploadButtonComponent,
     UploadVersionButtonComponent,

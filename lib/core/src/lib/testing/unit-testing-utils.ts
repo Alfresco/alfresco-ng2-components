@@ -32,6 +32,8 @@ import { MatTabGroupHarness, MatTabHarness } from '@angular/material/tabs/testin
 import { MatToolbarHarness } from '@angular/material/toolbar/testing';
 import { MatSnackBarHarness } from '@angular/material/snack-bar/testing';
 import { MatProgressBarHarness } from '@angular/material/progress-bar/testing';
+import { MatListOptionHarness } from '@angular/material/list/testing';
+import { MatCellHarness } from '@angular/material/table/testing';
 
 export class UnitTestingUtils {
     constructor(
@@ -70,12 +72,20 @@ export class UnitTestingUtils {
         return this.getByCSS(`[data-automation-class="${dataAutomationClass}"]`);
     }
 
+    getAllByDataAutomationId(dataAutomationId: string): DebugElement[] {
+        return this.debugElement.queryAll(By.css(`[data-automation-id="${dataAutomationId}"]`));
+    }
+
     getInnerTextByDataAutomationId(dataAutomationId: string): string {
         return this.getByDataAutomationId(dataAutomationId).nativeElement.innerText;
     }
 
     getByDirective(directive: Type<any>): DebugElement {
         return this.debugElement.query(By.directive(directive));
+    }
+
+    getAllByDirective(directive: Type<any>): DebugElement[] {
+        return this.debugElement.queryAll(By.directive(directive));
     }
 
     /** Perform actions */
@@ -91,6 +101,11 @@ export class UnitTestingUtils {
 
     doubleClickByDataAutomationId(dataAutomationId: string): void {
         const element = this.getByDataAutomationId(dataAutomationId);
+        element.triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+    }
+
+    doubleClickByCSS(selector: string): void {
+        const element = this.getByCSS(selector);
         element.triggerEventHandler('dblclick', new MouseEvent('dblclick'));
     }
 
@@ -266,6 +281,14 @@ export class UnitTestingUtils {
         return select.getOptions();
     }
 
+    async getMatSelect(): Promise<MatSelectHarness> {
+        return this.loader.getHarness(MatSelectHarness);
+    }
+
+    async getMatSelectByDataAutomationId(dataAutomationId: string): Promise<MatSelectHarness> {
+        return this.loader.getHarness(MatSelectHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
     async getMatSelectHost(): Promise<TestElement> {
         const select = await this.loader.getHarness(MatSelectHarness);
         return select.host();
@@ -387,6 +410,11 @@ export class UnitTestingUtils {
         return input.getValue();
     }
 
+    async getMatInputValueByDataAutomationId(dataAutomationId: string): Promise<string> {
+        const input = await this.getMatInputByDataAutomationId(dataAutomationId);
+        return input.getValue();
+    }
+
     async sendKeysToMatInput(keys: (string | TestKey)[]): Promise<void> {
         const input = await this.getMatInput();
         const host = await input.host();
@@ -433,5 +461,21 @@ export class UnitTestingUtils {
     async getMatProgressBarHost(): Promise<TestElement> {
         const progress = await this.loader.getHarness(MatProgressBarHarness);
         return progress.host();
+    }
+
+    /** MatListOption related methods */
+
+    async getMatListOption(): Promise<MatListOptionHarness> {
+        return this.loader.getHarness(MatListOptionHarness);
+    }
+
+    async getAllMatListOptions(): Promise<MatListOptionHarness[]> {
+        return this.loader.getAllHarnesses(MatListOptionHarness);
+    }
+
+    /** MatCell related methods */
+
+    async getMatCellByColumnName(columnName: string): Promise<MatCellHarness> {
+        return this.loader.getHarness(MatCellHarness.with({ columnName }));
     }
 }

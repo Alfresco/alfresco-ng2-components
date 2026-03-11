@@ -20,8 +20,8 @@ import { RaphaelService } from './raphael.service';
 
 @Directive()
 export class RaphaelBase {
-    private raphaelService = inject(RaphaelService);
-    private element = inject(ElementRef);
+    private readonly raphaelService = inject(RaphaelService);
+    private readonly element = inject(ElementRef);
 
     paper: any;
 

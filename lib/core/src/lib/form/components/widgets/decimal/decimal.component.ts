@@ -21,7 +21,6 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 
@@ -43,8 +42,4 @@ import { WidgetComponent } from '../widget.component';
     imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent],
     encapsulation: ViewEncapsulation.None
 })
-export class DecimalWidgetComponent extends WidgetComponent {
-    constructor(public formService: FormService) {
-        super(formService);
-    }
-}
+export class DecimalWidgetComponent extends WidgetComponent {}

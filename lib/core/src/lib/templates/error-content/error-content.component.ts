@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ChangeDetectionStrategy, Input, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ViewEncapsulation, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslationService } from '../../translation/translation.service';
 import { Observable } from 'rxjs';
@@ -34,6 +34,10 @@ import { TranslatePipe } from '@ngx-translate/core';
     host: { class: 'adf-error-content' }
 })
 export class ErrorContentComponent implements OnInit {
+    private readonly route = inject(ActivatedRoute);
+    private readonly translateService = inject(TranslationService);
+    private readonly breakpointObserver = inject(BreakpointObserver);
+
     static UNKNOWN_ERROR = 'UNKNOWN';
 
     /** Error code associated with this error. */
@@ -42,8 +46,6 @@ export class ErrorContentComponent implements OnInit {
 
     errorCodeTranslated: string;
     isSmallScreen$: Observable<boolean>;
-
-    constructor(private route: ActivatedRoute, private translateService: TranslationService, private breakpointObserver: BreakpointObserver) {}
 
     ngOnInit() {
         if (this.route) {

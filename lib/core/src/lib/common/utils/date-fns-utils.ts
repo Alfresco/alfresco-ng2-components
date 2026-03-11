@@ -69,6 +69,7 @@ export class DateFnsUtils {
             case 'pl':
                 dateFnsLocale = pl;
                 break;
+            case 'pt':
             case 'pt-BR':
                 dateFnsLocale = ptBR;
                 break;
@@ -88,7 +89,7 @@ export class DateFnsUtils {
         return dateFnsLocale;
     }
 
-    private static momentToDateFnsMap = {
+    private static readonly momentToDateFnsMap = {
         D: 'd',
         Y: 'y',
         AZ: 'aa',

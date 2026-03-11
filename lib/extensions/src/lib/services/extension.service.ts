@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable, Type, InjectionToken, Inject } from '@angular/core';
+import { Injectable, Type, InjectionToken, inject } from '@angular/core';
 import { RuleEvaluator, RuleRef, RuleContext } from '../config/rule.extensions';
 import { ExtensionConfig } from '../config/extension.config';
 import { ExtensionLoaderService } from './extension-loader.service';
@@ -75,6 +75,12 @@ export function provideExtensionConfigValues(extensionConfigValue: ExtensionConf
     providedIn: 'root'
 })
 export class ExtensionService {
+    protected loader = inject(ExtensionLoaderService);
+    protected componentRegister = inject(ComponentRegisterService);
+    protected ruleService = inject(RuleService);
+    protected extensionJsons = inject(EXTENSION_JSONS);
+    protected extensionJsonValues = inject(EXTENSION_JSON_VALUES);
+
     configPath = 'assets/app.extensions.json';
     pluginsPath = 'assets/plugins';
 
@@ -88,13 +94,7 @@ export class ExtensionService {
     protected config: ExtensionConfig = null;
     protected onSetup$ = new BehaviorSubject<ExtensionConfig>(this.config);
 
-    constructor(
-        protected loader: ExtensionLoaderService,
-        protected componentRegister: ComponentRegisterService,
-        protected ruleService: RuleService,
-        @Inject(EXTENSION_JSONS) protected extensionJsons: string[],
-        @Inject(EXTENSION_JSON_VALUES) protected extensionJsonValues: ExtensionConfig[]
-    ) {
+    constructor() {
         this.setup$ = this.onSetup$.asObservable();
     }
 
@@ -103,7 +103,7 @@ export class ExtensionService {
      * @returns The loaded config data
      */
     async load(): Promise<ExtensionConfig> {
-        const config = await this.loader.load(this.configPath, this.pluginsPath, this.extensionJsons.flat(), this.extensionJsonValues.flat());
+        const config = await this.loader.load(this.configPath, this.pluginsPath, this.extensionJsons.flat(), this.extensionJsonValues.flat() as any);
 
         this.setup(config);
         return config;

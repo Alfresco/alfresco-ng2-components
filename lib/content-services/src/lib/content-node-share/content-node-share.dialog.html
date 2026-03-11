@@ -8,13 +8,13 @@
                 aria-level="1">
                 {{ 'SHARE.DIALOG-TITLE' | translate }} {{ fileName }}
             </div>
-            <mat-icon mat-dialog-close class="adf-share-link__close adf-share-link__icon">close</mat-icon>
+            <mat-icon mat-dialog-close class="adf-share-link__close adf-share-link__icon" adf-icon="close" />
         </div>
         <mat-dialog-content class="adf-share-link--dialog-content">
-            <hr class="adf-share-link__separation-line" />
+            <hr class="adf-share-link__separation-line" aria-hidden="true" />
             <form [formGroup]="form" class="adf-share-link__form">
                 <div class="adf-share-link--row adf-share-link--row-sharable">
-                    <mat-icon class="adf-share-link__icon">timer</mat-icon>
+                    <mat-icon class="adf-share-link__icon" adf-icon="timer" />
                     <div class="adf-share-link__label adf-sharable-link">{{ 'SHARE.LINK-EXPIRY-DATE' | translate }}
                     </div>
                     <mat-slide-toggle
@@ -28,15 +28,13 @@
                 </div>
                 <div
                     [style.display]="isExpiryDateToggleChecked ? 'block' : 'none'"
-                    data-automation-id="adf-slide-toggle-checked"
-                    class="adf-share-link__date-time-container">
-                    <mat-form-field class="adf-full-width" subscriptSizing="dynamic" data-automation-id="adf-content-share-expiration-field">
+                    data-automation-id="adf-slide-toggle-checked">
+                    <mat-form-field class="adf-full-width" data-automation-id="adf-content-share-expiration-field">
                         <mat-label>{{ 'SHARE.EXPIRATION-PLACEHOLDER' | translate }}</mat-label>
                         <mat-datepicker-toggle
                             [disabled]="time.disabled"
                             [for]="datePicker"
-                            matSuffix
-                            class="adf-share-link__icon adf-share-link__calender-icon" />
+                            matSuffix />
                         <mat-datepicker
                             #datePicker
                             (closed)="onDatePickerClosed()" />
@@ -69,8 +67,6 @@
                     </div>
                 </div>
                 <mat-form-field
-                    subscriptSizing="dynamic"
-                    floatLabel="always"
                     class="adf-full-width adf-share-link__form--field"
                     data-automation-id="adf-content-share-public-link-field"
                     [ngClass]="isLinkWithExpiryDate? 'adf-share-link__border-color' : ''">
@@ -91,22 +87,22 @@
                         [adf-clipboard]
                         [attr.aria-label]="'SHARE.COPY_BUTTON_LABEL' | translate"
                         [target]="sharedLinkInput"
-                        tabindex="0">
-                        content_copy
-                    </mat-icon>
+                        tabindex="0"
+                        adf-icon="content_copy"
+                    />
                 </mat-form-field>
                 <p class="adf-share-link__warn adf-share-link__para" *ngIf="isLinkWithExpiryDate">
                     {{ 'SHARE.LINK-WITH-EXPIRY-SETTINGS' | translate }}
                 </p>
                 <div class="adf-share-link--row">
-                    <mat-icon class="adf-share-link__icon">public</mat-icon>
+                    <mat-icon class="adf-share-link__icon" adf-icon="public" />
                     <p
                         class="adf-share-link__info adf-sharable-link adf-share-link__public-content adf-share-link__para">
                         {{ 'SHARE.PUBLIC-CONTENT' | translate }}
                     </p>
                 </div>
             </form>
-            <hr class="adf-share-link__separation-line" />
+            <hr class="adf-share-link__separation-line" aria-hidden="true" />
         </mat-dialog-content>
         <div class="adf-share-link__actions" mat-dialog-actions>
             <button data-automation-id="adf-share-dialog-close" mat-button color="primary" mat-dialog-close>

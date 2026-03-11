@@ -26,12 +26,13 @@ import {
     QueryList,
     TemplateRef,
     ViewChildren,
-    ViewEncapsulation
+    ViewEncapsulation,
+    inject
 } from '@angular/core';
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
 import { TreeService } from '../services/tree.service';
-import { ContextMenuDirective, IconComponent, PaginationModel, UserPreferencesService } from '@alfresco/adf-core';
+import { ContextMenuDirective, IconModule, PaginationModel, UserPreferencesService } from '@alfresco/adf-core';
 import { SelectionChange, SelectionModel } from '@angular/cdk/collections';
 import { TreeResponse } from '../models/tree-response.interface';
 import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
@@ -43,7 +44,6 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-tree',
@@ -53,11 +53,10 @@ import { MatIconModule } from '@angular/material/icon';
         MatTreeModule,
         MatProgressSpinnerModule,
         MatButtonModule,
-        IconComponent,
         ContextMenuDirective,
         MatCheckboxModule,
         MatMenuModule,
-        MatIconModule
+        IconModule
     ],
     templateUrl: './tree.component.html',
     styleUrls: ['./tree.component.scss'],
@@ -65,6 +64,9 @@ import { MatIconModule } from '@angular/material/icon';
     encapsulation: ViewEncapsulation.None
 })
 export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
+    treeService = inject<TreeService<T>>(TreeService);
+    private readonly userPreferenceService = inject(UserPreferencesService);
+
     /** TemplateRef to provide empty template when no nodes are loaded */
     @Input()
     public emptyContentTemplate: TemplateRef<any>;
@@ -109,14 +111,12 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     @ViewChildren(MatCheckbox)
     public nodeCheckboxes: QueryList<MatCheckbox>;
 
-    private loadingRootSource = new BehaviorSubject<boolean>(false);
+    private readonly loadingRootSource = new BehaviorSubject<boolean>(false);
     private _contextMenuSource: T;
     private _contextMenuOptions: any[];
-    private contextMenuOptionsChanged$ = new Subject<void>();
+    private readonly contextMenuOptionsChanged$ = new Subject<void>();
     public loadingRoot$: Observable<boolean>;
     public treeNodesSelection = new SelectionModel<T>(true, [], true, (node1: T, node2: T) => node1.id === node2.id);
-
-    constructor(public treeService: TreeService<T>, private userPreferenceService: UserPreferencesService) {}
 
     set contextMenuSource(contextMenuSource: T) {
         this._contextMenuSource = contextMenuSource;

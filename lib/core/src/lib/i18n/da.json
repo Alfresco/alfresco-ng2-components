@@ -285,11 +285,6 @@
     "ACTION": {
       "HELP": "Har du brug for hjælp?",
       "REGISTER": "Tilmeld"
-    },
-    "DIALOG": {
-      "CANCEL": "Annuller",
-      "CHOOSE": "Vælg",
-      "LOGIN": "Log ind"
     }
   },
   "ADF-DATATABLE": {

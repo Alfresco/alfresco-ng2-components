@@ -16,7 +16,8 @@
  */
 
 import { AppExtensionService } from '@alfresco/adf-extensions';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { ViewUtilService } from './view-util.service';
 
@@ -27,8 +28,7 @@ describe('ViewUtilService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [AppExtensionService]
+            providers: [AppExtensionService, provideHttpClient(), provideHttpClientTesting()]
         });
 
         viewUtilService = TestBed.inject(ViewUtilService);

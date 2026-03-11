@@ -16,20 +16,23 @@
  */
 
 import { NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
-import { Component, Inject, Injector, Input, OnDestroy, OnInit, Optional, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Injector, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
 import { FormService } from '../services/form.service';
 import { FormFieldComponent } from './form-field/form-field.component';
 import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE, FormFieldModelRenderMiddleware } from './middlewares/middleware';
-import { ContainerModel, FormFieldModel, FormModel, TabModel } from './widgets';
+import { ContainerModel, FormFieldModel, FormModel, TabModel, RepeatWidgetComponent } from './widgets';
 import { HeaderWidgetComponent } from './widgets/header/header.widget';
 import { FormSectionComponent } from './form-section/form-section.component';
 import { DecimalRenderMiddlewareService } from './middlewares/decimal-middleware.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../../lib/dialogs/confirm-dialog/confirm.dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { IconModule } from '../../icon/icon.module';
 
 @Component({
     selector: 'adf-form-renderer',
@@ -54,17 +57,26 @@ import { DecimalRenderMiddlewareService } from './middlewares/decimal-middleware
         NgTemplateOutlet,
         TranslatePipe,
         MatButtonModule,
-        MatIconModule,
+        IconModule,
         NgStyle,
         FormFieldComponent,
         FormsModule,
         NgClass,
         HeaderWidgetComponent,
-        FormSectionComponent
+        FormSectionComponent,
+        RepeatWidgetComponent,
+        MatTooltipModule
     ],
     encapsulation: ViewEncapsulation.None
 })
 export class FormRendererComponent<T> implements OnInit, OnDestroy {
+    private readonly middlewareServices = inject<FormFieldModelRenderMiddleware[]>(FORM_FIELD_MODEL_RENDER_MIDDLEWARE, { optional: true }) ?? [];
+
+    public readonly formService = inject(FormService);
+    private readonly formRulesManager = inject(FormRulesManager<T>);
+    private readonly dialog = inject(MatDialog);
+    private readonly cdr = inject(ChangeDetectorRef);
+
     @Input({ required: true })
     formDefinition: FormModel;
 
@@ -74,14 +86,6 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     debugMode: boolean;
 
     fields: FormFieldModel[];
-
-    constructor(
-        public formService: FormService,
-        private formRulesManager: FormRulesManager<T>,
-        @Optional()
-        @Inject(FORM_FIELD_MODEL_RENDER_MIDDLEWARE)
-        private middlewareServices?: FormFieldModelRenderMiddleware[]
-    ) {}
 
     ngOnInit(): void {
         this.runMiddlewareServices();
@@ -143,6 +147,27 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
             )?.fields?.length;
         }
         return maxFieldSize;
+    }
+
+    displayDialogToRemoveRow(field: FormFieldModel, rowIndex: number) {
+        this.dialog
+            .open(ConfirmDialogComponent, {
+                data: {
+                    title: 'FORM.FORM_RENDERER.REMOVE_ROW_DIALOG.TITLE',
+                    message: 'FORM.FORM_RENDERER.REMOVE_ROW_DIALOG.MESSAGE',
+                    yesLabel: 'FORM.FORM_RENDERER.REMOVE_ROW_DIALOG.YES_LABEL',
+                    noLabel: 'FORM.FORM_RENDERER.REMOVE_ROW_DIALOG.NO_LABEL'
+                },
+                minWidth: '500px',
+                closeOnNavigation: true
+            })
+            .beforeClosed()
+            .subscribe((shouldRemove) => {
+                if (shouldRemove) {
+                    field.removeRow(rowIndex);
+                    this.cdr.detectChanges();
+                }
+            });
     }
 
     /**

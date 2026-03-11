@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 
-export const DEFAULT_APP_INSTANCE_THEME = 'theme-2';
-export const DEFAULT_APP_INSTANCE_ICON = 'favorite_border';
-
 export interface ApplicationInstanceModel {
     name?: string;
     displayName?: string;
@@ -33,6 +30,7 @@ export interface ApplicationInstanceModel {
     environmentId?: string;
     environment?: string;
     lastModifiedAt?: Date;
+    quickRunDeployment?: boolean;
 }
 
 export interface Descriptor {
@@ -50,10 +48,12 @@ export interface Descriptor {
     customUIAuthFlowType?: DescriptorCustomUIAuthFlowType;
 }
 
-export enum DescriptorCustomUIAuthFlowType {
-    CODE = 'CODE',
-    IMPLICIT = 'IMPLICIT'
-}
+export const DescriptorCustomUIAuthFlowType = {
+    CODE: 'CODE',
+    IMPLICIT: 'IMPLICIT'
+} as const;
+
+export type DescriptorCustomUIAuthFlowType = (typeof DescriptorCustomUIAuthFlowType)[keyof typeof DescriptorCustomUIAuthFlowType];
 
 export interface DescriptorSecurity {
     role: string;

@@ -1,0 +1,101 @@
+/*!
+ * @license
+ * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { applicationConfig, componentWrapperDecorator, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { LanguageMenuComponent } from './language-menu.component';
+import { LanguageService } from './service/language.service';
+import { LanguageServiceMock } from '../mock/language.service.mock';
+import { provideStoryCore } from '../stories/core-story.providers';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { IconModule } from '../icon/icon.module';
+
+const meta: Meta<LanguageMenuComponent> = {
+    component: LanguageMenuComponent,
+    title: 'Core/Language Menu/Language Menu',
+    decorators: [
+        moduleMetadata({
+            imports: [LanguageMenuComponent, MatMenuModule, MatButtonModule, IconModule],
+            providers: [{ provide: LanguageService, useClass: LanguageServiceMock }]
+        }),
+        applicationConfig({
+            providers: [...provideStoryCore()]
+        })
+    ],
+    parameters: {
+        docs: {
+            description: {
+                component: `Displays all the languages that are present in "app.config.json" and the default (EN).`
+            }
+        }
+    },
+    argTypes: {
+        changedLanguage: {
+            action: 'changedLanguage',
+            description: 'Emitted when the user clicks on one of the language buttons.',
+            table: {
+                category: 'Actions',
+                type: { summary: 'EventEmitter <LanguageItem>' }
+            }
+        }
+    }
+};
+
+export default meta;
+type Story = StoryObj<LanguageMenuComponent>;
+
+export const AsMainMenu: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    decorators: [
+        componentWrapperDecorator(
+            (story) => `
+      <button mat-icon-button [matMenuTriggerFor]="langMenu">
+        <mat-icon adf-icon="language" />
+      </button>
+      <mat-menu #langMenu="matMenu">
+        ${story}
+      </mat-menu>
+    `
+        )
+    ]
+};
+
+export const AsNestedMenu: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    decorators: [
+        componentWrapperDecorator(
+            (story) => `
+      <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+        <mat-icon adf-icon="more_vert" />
+      </button>
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item [matMenuTriggerFor]="langMenu">
+          <mat-icon adf-icon="language" />
+          Language
+        </button>
+      </mat-menu>
+      <mat-menu #langMenu="matMenu">
+        ${story}
+      </mat-menu>
+    `
+        )
+    ]
+};

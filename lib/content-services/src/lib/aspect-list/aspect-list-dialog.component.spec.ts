@@ -19,7 +19,6 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AspectListDialogComponent } from './aspect-list-dialog.component';
 import { of, Subject } from 'rxjs';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
 import { AspectListService } from './services/aspect-list.service';
 import { delay } from 'rxjs/operators';
@@ -27,6 +26,9 @@ import { AspectEntry, Node } from '@alfresco/js-api';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { By } from '@angular/platform-browser';
 import { AspectListComponent } from './aspect-list.component';
+import { provideApiTesting } from '../testing/providers';
+import { UnitTestingUtils } from '@alfresco/adf-core';
+import { DebugElement } from '@angular/core';
 
 const aspectListMock: AspectEntry[] = [
     {
@@ -99,12 +101,20 @@ describe('AspectListDialogComponent', () => {
     let aspectListService: AspectListService;
     let nodeService: NodesApiService;
     let data: AspectListDialogComponentData;
+    let testingUtils: UnitTestingUtils;
     const event = new KeyboardEvent('keydown', {
         bubbles: true,
         keyCode: 27
     } as KeyboardEventInit);
 
-    beforeEach(async () => {
+    const getResetButton = (): DebugElement => testingUtils.getByCSS('#aspect-list-dialog-actions-reset');
+    const getClearButton = (): DebugElement => testingUtils.getByCSS('#aspect-list-dialog-actions-clear');
+    const getCancelButton = (): DebugElement => testingUtils.getByCSS('#aspect-list-dialog-actions-cancel');
+    const getApplyButton = (): DebugElement => testingUtils.getByCSS('#aspect-list-dialog-actions-apply');
+    const getAspectCounter = (): string => testingUtils.getInnerTextByCSS('#aspect-list-dialog-counter');
+    const getAspectCheckbox = (index: number): HTMLInputElement => testingUtils.getByCSS(`#aspect-list-${index}-check-input`).nativeElement;
+
+    beforeEach(() => {
         data = {
             title: 'Title',
             description: 'Description that can be longer or shorter',
@@ -112,9 +122,10 @@ describe('AspectListDialogComponent', () => {
             select: new Subject<string[]>(),
             excludedAspects: []
         };
-        await TestBed.configureTestingModule({
-            imports: [ContentTestingModule, MatDialogModule],
+        TestBed.configureTestingModule({
+            imports: [MatDialogModule],
             providers: [
+                provideApiTesting(),
                 { provide: MAT_DIALOG_DATA, useValue: data },
                 {
                     provide: MatDialogRef,
@@ -125,8 +136,9 @@ describe('AspectListDialogComponent', () => {
                     }
                 }
             ]
-        }).compileComponents();
+        });
         fixture = TestBed.createComponent(AspectListDialogComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     describe('Without passing node id', () => {
@@ -143,91 +155,81 @@ describe('AspectListDialogComponent', () => {
         });
 
         it('should show 4 actions : CLEAR, RESET, CANCEL and APPLY', () => {
-            expect(fixture.nativeElement.querySelector('#aspect-list-dialog-actions-reset')).not.toBeNull();
-            expect(fixture.nativeElement.querySelector('#aspect-list-dialog-actions-reset')).toBeDefined();
-            expect(fixture.nativeElement.querySelector('#aspect-list-dialog-actions-clear')).not.toBeNull();
-            expect(fixture.nativeElement.querySelector('#aspect-list-dialog-actions-clear')).toBeDefined();
-            expect(fixture.nativeElement.querySelector('#aspect-list-dialog-actions-cancel')).not.toBeNull();
-            expect(fixture.nativeElement.querySelector('#aspect-list-dialog-actions-cancel')).toBeDefined();
-            expect(fixture.nativeElement.querySelector('#aspect-list-dialog-actions-apply')).not.toBeNull();
-            expect(fixture.nativeElement.querySelector('#aspect-list-dialog-actions-apply')).toBeDefined();
+            expect(getResetButton()).toBeDefined();
+            expect(getClearButton()).toBeDefined();
+            expect(getCancelButton()).toBeDefined();
+            expect(getApplyButton()).toBeDefined();
         });
 
         it('should show basic information for the dialog', () => {
-            const dialogTitle = fixture.nativeElement.querySelector('[data-automation-id="aspect-list-dialog-title"] .adf-aspect-list-dialog-title');
-            expect(dialogTitle).not.toBeNull();
-            expect(dialogTitle.innerText).toBe(data.title);
+            const dialogTitleText = testingUtils.getInnerTextByCSS('[data-automation-id="aspect-list-dialog-title"] .adf-aspect-list-dialog-title');
+            expect(dialogTitleText).toBe(data.title);
 
-            const dialogDescription = fixture.nativeElement.querySelector(
+            const dialogDescription = testingUtils.getInnerTextByCSS(
                 '[data-automation-id="aspect-list-dialog-title"] .adf-aspect-list-dialog-description'
             );
-            expect(dialogDescription).not.toBeNull();
-            expect(dialogDescription.innerText).toBe(data.description);
+            expect(dialogDescription).toBe(data.description);
 
-            const overTableMessage = fixture.nativeElement.querySelector('#aspect-list-dialog-over-table-message');
-            expect(overTableMessage).not.toBeNull();
-            expect(overTableMessage.innerText).toBe(data.overTableMessage);
-
-            const selectionCounter = fixture.nativeElement.querySelector('#aspect-list-dialog-counter');
-            expect(selectionCounter).not.toBeNull();
-            expect(selectionCounter.innerText).toBe('0 ADF-ASPECT-LIST.DIALOG.SELECTED');
+            expect(testingUtils.getInnerTextByCSS('#aspect-list-dialog-over-table-message')).toBe(data.overTableMessage);
+            expect(getAspectCounter()).toBe('0 ADF-ASPECT-LIST.DIALOG.SELECTED');
         });
 
-        it('should update the counter when an option is selcted and unselected', async () => {
-            const firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-0-check-input');
+        it('should update the counter when an option is selected and unselected', async () => {
+            const firstAspectCheckbox = getAspectCheckbox(0);
             expect(firstAspectCheckbox).toBeDefined();
-            expect(firstAspectCheckbox).not.toBeNull();
-            let selectionCounter = fixture.nativeElement.querySelector('#aspect-list-dialog-counter');
-            expect(selectionCounter).not.toBeNull();
-            expect(selectionCounter.innerText).toBe('0 ADF-ASPECT-LIST.DIALOG.SELECTED');
-            firstAspectCheckbox.click();
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            selectionCounter = fixture.nativeElement.querySelector('#aspect-list-dialog-counter');
-            expect(selectionCounter).not.toBeNull();
-            expect(selectionCounter.innerText).toBe('1 ADF-ASPECT-LIST.DIALOG.SELECTED');
+            expect(getAspectCounter()).toBe('0 ADF-ASPECT-LIST.DIALOG.SELECTED');
 
             firstAspectCheckbox.click();
             fixture.detectChanges();
             await fixture.whenStable();
 
-            selectionCounter = fixture.nativeElement.querySelector('#aspect-list-dialog-counter');
-            expect(selectionCounter).not.toBeNull();
-            expect(selectionCounter.innerText).toBe('0 ADF-ASPECT-LIST.DIALOG.SELECTED');
+            expect(getAspectCounter()).toBe('1 ADF-ASPECT-LIST.DIALOG.SELECTED');
+
+            firstAspectCheckbox.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(getAspectCounter()).toBe('0 ADF-ASPECT-LIST.DIALOG.SELECTED');
         });
 
         it('should reset to the node values when Reset button is clicked', async () => {
-            let firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-0-check-input');
+            let firstAspectCheckbox = getAspectCheckbox(0);
             expect(firstAspectCheckbox).toBeDefined();
-            expect(firstAspectCheckbox).not.toBeNull();
+
             firstAspectCheckbox.click();
             fixture.detectChanges();
             await fixture.whenStable();
-            const resetButton: HTMLButtonElement = fixture.nativeElement.querySelector('#aspect-list-dialog-actions-reset');
+
+            const resetButton: HTMLButtonElement = getResetButton().nativeElement;
             expect(resetButton).toBeDefined();
             expect(firstAspectCheckbox.checked).toBeTruthy();
+
             resetButton.click();
             fixture.detectChanges();
             await fixture.whenStable();
-            firstAspectCheckbox = fixture.nativeElement.querySelector('#aspect-list-0-check-input');
+
+            firstAspectCheckbox = getAspectCheckbox(0);
             expect(firstAspectCheckbox.checked).toBeFalsy();
         });
 
         it('should clear all the value when Clear button is clicked', async () => {
-            let firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-0-check-input');
+            let firstAspectCheckbox = getAspectCheckbox(0);
             expect(firstAspectCheckbox).toBeDefined();
             expect(firstAspectCheckbox).not.toBeNull();
+
             firstAspectCheckbox.click();
             fixture.detectChanges();
             await fixture.whenStable();
-            const clearButton: HTMLButtonElement = fixture.nativeElement.querySelector('#aspect-list-dialog-actions-clear');
+
+            const clearButton: HTMLButtonElement = getClearButton().nativeElement;
             expect(clearButton).toBeDefined();
             expect(firstAspectCheckbox.checked).toBeTruthy();
+
             clearButton.click();
             fixture.detectChanges();
             await fixture.whenStable();
-            firstAspectCheckbox = fixture.nativeElement.querySelector('#aspect-list-0-check-input');
+
+            firstAspectCheckbox = getAspectCheckbox(0);
             expect(firstAspectCheckbox.checked).toBeFalsy();
         });
 
@@ -237,7 +239,7 @@ describe('AspectListDialogComponent', () => {
                 () => {},
                 () => done()
             );
-            const cancelButton: HTMLButtonElement = fixture.nativeElement.querySelector('#aspect-list-dialog-actions-cancel');
+            const cancelButton: HTMLButtonElement = getCancelButton().nativeElement;
             expect(cancelButton).toBeDefined();
             cancelButton.click();
             fixture.detectChanges();
@@ -271,17 +273,14 @@ describe('AspectListDialogComponent', () => {
             await fixture.whenRenderingDone();
             const firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-0-check-input');
             expect(firstAspectCheckbox).toBeDefined();
-            expect(firstAspectCheckbox).not.toBeNull();
             expect(firstAspectCheckbox.checked).toBeTruthy();
 
             const notCheckedAspect: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-1-check-input');
             expect(notCheckedAspect).toBeDefined();
-            expect(notCheckedAspect).not.toBeNull();
             expect(notCheckedAspect.checked).toBeFalsy();
 
             const customAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-2-check-input');
             expect(customAspectCheckbox).toBeDefined();
-            expect(customAspectCheckbox).not.toBeNull();
             expect(customAspectCheckbox.checked).toBeTruthy();
         });
 
@@ -297,14 +296,16 @@ describe('AspectListDialogComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const applyButton = fixture.nativeElement.querySelector('#aspect-list-dialog-actions-apply');
-
-            fixture.nativeElement.querySelector('#aspect-list-dialog-actions-clear').click();
+            getClearButton().nativeElement.click();
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(applyButton.disabled).toBe(false);
+            expect(getApplyButton().nativeElement.disabled).toBe(false);
+        });
+
+        it('should announce the amount of selected aspects', () => {
+            expect(testingUtils.getByCSS('#aspect-list-dialog-counter').nativeElement.getAttribute('aria-live')).toBe('polite');
         });
     });
 

@@ -31,31 +31,6 @@
     .adf-form-tab-group {
         width: 100%;
     }
-
-    #{ms.$mat-tab-body} {
-        margin-bottom: 8em;
-
-        @include flex.layout-bp(lt-md) {
-            margin-bottom: 0;
-        }
-    }
-
-    #{ms.$mat-tab-header} {
-        z-index: 2;
-        margin: 0;
-        background-color: white;
-        position: absolute;
-        width: 98%;
-        /* stylelint-disable-next-line declaration-no-important */
-        margin-left: 0 !important;
-        /* stylelint-disable-next-line declaration-no-important */
-        margin-right: 10px !important;
-        top: 0;
-    }
-
-    #{ms.$mat-tab-body-wrapper} {
-        padding-top: 5%;
-    }
 }
 
 .mat-mdc-card-content:first-child {
@@ -67,14 +42,14 @@
         display: grid;
 
         &-column-view {
-            @include flex.layout-bp(lt-md) {
-                display: flow;
-            }
-
             display: flex;
             margin-right: -1%;
             width: 100%;
             gap: 8px;
+
+            @include flex.layout-bp(lt-md) {
+                display: flow;
+            }
 
             &-item {
                 width: 100%;
@@ -96,6 +71,50 @@
             box-sizing: border-box;
             padding-left: 3px;
             padding-right: 3px;
+        }
+
+        &-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            &-remove-button {
+                padding: 0;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                #{ms.$mat-icon} {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 18px;
+                }
+            }
+        }
+
+        &-container {
+            padding: 0 15px;
+
+            &-multiple {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.54);
+                margin-bottom: 25px;
+            }
+
+            &-disabled {
+                &.adf-grid-list-container-multiple {
+                    border-bottom: 1px solid
+                        var(--mdc-text-button-disabled-label-text-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent));
+                }
+
+                .adf-grid-list-row-label {
+                    color: var(--mdc-text-button-disabled-label-text-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent));
+                    cursor: default;
+                }
+            }
         }
     }
 
@@ -161,11 +180,6 @@
         & #{ms.$mat-card} {
             padding: 16px 24px;
             overflow: hidden;
-        }
-
-        & #{ms.$mat-tab-header} {
-            position: fixed;
-            z-index: 1000;
         }
 
         & #{ms.$mat-card-header-text} {

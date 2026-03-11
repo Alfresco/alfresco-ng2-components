@@ -1,5 +1,5 @@
 .adf-empty-content {
-    color: var(--adf-theme-foreground-text-color-054);
+    color: var(--adf-theme-foreground-text-color-064);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,6 +11,7 @@
         font-size: var(--theme-display-3-font-size);
         height: var(--theme-display-3-font-size);
         width: var(--theme-display-3-font-size);
+        opacity: 0.6;
     }
 
     &__title {
@@ -29,9 +30,5 @@
         line-height: inherit;
         white-space: normal;
         text-align: center;
-    }
-
-    .adf-icon {
-        opacity: 0.6;
     }
 }

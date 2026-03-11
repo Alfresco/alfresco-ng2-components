@@ -18,7 +18,6 @@
 import { FileViewerWidgetComponent } from './file-viewer.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormModel, FormService, FormFieldModel, RedirectAuthService } from '@alfresco/adf-core';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EMPTY, of } from 'rxjs';
 
 describe('FileViewerWidgetComponent', () => {
@@ -48,13 +47,30 @@ describe('FileViewerWidgetComponent', () => {
             providers: [
                 { provide: FormService, useValue: formServiceStub },
                 { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            ]
         });
 
         formServiceStub = TestBed.inject(FormService);
         fixture = TestBed.createComponent(FileViewerWidgetComponent);
         widget = fixture.componentInstance;
+    });
+
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            eventSpy = spyOn(widget, 'event').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {});
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
     });
 
     it('should set the file id corretly when the field value is an array', (done) => {

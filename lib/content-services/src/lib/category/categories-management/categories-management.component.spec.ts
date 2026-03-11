@@ -22,7 +22,6 @@ import { MatError } from '@angular/material/form-field';
 import { MatList } from '@angular/material/list';
 import { By } from '@angular/platform-browser';
 import { of, Subject } from 'rxjs';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { CategoriesManagementMode } from './categories-management-mode';
 import { CategoryService } from '../services/category.service';
 import { CategoriesManagementComponent } from './categories-management.component';
@@ -47,7 +46,7 @@ describe('CategoriesManagementComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, CategoriesManagementComponent],
+            imports: [CategoriesManagementComponent],
             providers: [
                 {
                     provide: CategoryService,
@@ -119,7 +118,7 @@ describe('CategoriesManagementComponent', () => {
      * @returns error text
      */
     function getFirstError(): string {
-        return fixture.debugElement.query(By.directive(MatError)).nativeElement.textContent;
+        return fixture.debugElement.query(By.directive(MatError)).nativeElement.textContent.trim();
     }
 
     /**
@@ -329,7 +328,6 @@ describe('CategoriesManagementComponent', () => {
             const categoriesChangeSpy = spyOn(component.categoriesChange, 'emit').and.callThrough();
             typeCategory('test');
             const options = getExistingCategoriesList();
-            // eslint-disable-next-line no-underscore-dangle
             options[0].click();
 
             expect(component.categories.length).toBe(3);
@@ -343,7 +341,6 @@ describe('CategoriesManagementComponent', () => {
         it('should remove selected category from categories list and add it back to existing categories', fakeAsync(() => {
             typeCategory('test');
             const options = getExistingCategoriesList();
-            // eslint-disable-next-line no-underscore-dangle
             options[0].click();
             fixture.detectChanges();
 

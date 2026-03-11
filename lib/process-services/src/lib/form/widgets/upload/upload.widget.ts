@@ -17,8 +17,8 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { ThumbnailService, FormService, ContentLinkModel, WidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ThumbnailService, ContentLinkModel, WidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
+import { Component, ElementRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { ProcessContentService } from '../../services/process-content.service';
 import { mergeMap, map } from 'rxjs/operators';
@@ -55,9 +55,8 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     @ViewChild('uploadFiles')
     fileInput: ElementRef;
 
-    constructor(public formService: FormService, private thumbnailService: ThumbnailService, public processContentService: ProcessContentService) {
-        super(formService);
-    }
+    protected thumbnailService = inject(ThumbnailService);
+    protected processContentService = inject(ProcessContentService);
 
     ngOnInit() {
         if (this.field?.value?.length > 0) {

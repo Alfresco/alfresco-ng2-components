@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchPanelComponent } from './search-panel.component';
 import { By } from '@angular/platform-browser';
 import { ContentNodeSelectorPanelService } from '../../../content-node-selector';
 import { SearchCategory } from '../../models';
+import { provideRouter } from '@angular/router';
 
 describe('SearchPanelComponent', () => {
     let fixture: ComponentFixture<SearchPanelComponent>;
@@ -30,7 +30,8 @@ describe('SearchPanelComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [SearchPanelComponent],
+            providers: [provideRouter([])]
         });
         fixture = TestBed.createComponent(SearchPanelComponent);
         contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);

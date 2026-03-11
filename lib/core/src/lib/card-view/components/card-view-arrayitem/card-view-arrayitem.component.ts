@@ -21,14 +21,14 @@ import { BaseCardView } from '../base-card-view';
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { IconModule } from '../../../icon/icon.module';
 
 @Component({
     selector: 'adf-card-view-arrayitem',
-    imports: [CommonModule, MatChipsModule, TranslatePipe, MatIconModule, MatMenuModule, MatCardModule, MatButtonModule],
+    imports: [CommonModule, MatChipsModule, TranslatePipe, IconModule, MatMenuModule, MatCardModule, MatButtonModule],
     templateUrl: './card-view-arrayitem.component.html',
     styleUrls: ['./card-view-arrayitem.component.scss'],
     encapsulation: ViewEncapsulation.None

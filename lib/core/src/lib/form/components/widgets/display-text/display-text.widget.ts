@@ -19,8 +19,7 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { FormService } from '../../../services/form.service';
-import { WidgetComponent } from '../widget.component';
+import { BaseDisplayTextWidgetComponent } from '../base-display-text/base-display-text.widget';
 
 @Component({
     selector: 'display-text-widget',
@@ -40,8 +39,22 @@ import { WidgetComponent } from '../widget.component';
     imports: [TranslatePipe],
     encapsulation: ViewEncapsulation.None
 })
-export class DisplayTextWidgetComponent extends WidgetComponent {
-    constructor(public formService: FormService) {
-        super(formService);
+export class DisplayTextWidgetComponent extends BaseDisplayTextWidgetComponent {
+    protected storeOriginalValue(): void {
+        if (this.field) {
+            this.originalFieldValue = this.field.value;
+        }
+    }
+
+    protected evaluateExpressions(): void {
+        if (this.field) {
+            this.field.value = this.resolveExpressions(this.field.value);
+        }
+    }
+
+    protected reevaluateExpressions(): void {
+        if (this.field && this.originalFieldValue) {
+            this.field.value = this.resolveExpressions(this.originalFieldValue);
+        }
     }
 }

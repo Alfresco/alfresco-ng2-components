@@ -16,11 +16,11 @@
  */
 
 import { Observable } from 'rxjs';
-import { Component, DestroyRef, EventEmitter, inject, Inject, OnInit, Optional, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Node } from '@alfresco/js-api';
-import { TranslationService } from '@alfresco/adf-core';
+import { TranslationService, NotificationService } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './folder-name.validators';
 import { CommonModule } from '@angular/common';
@@ -49,6 +49,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-folder-dialog' }
 })
 export class FolderDialogComponent implements OnInit {
+    private readonly formBuilder = inject(UntypedFormBuilder);
+    private readonly dialog = inject<MatDialogRef<FolderDialogComponent>>(MatDialogRef);
+    private readonly nodesApi = inject(NodesApiService);
+    private readonly translation = inject(TranslationService);
+    data = inject(MAT_DIALOG_DATA, { optional: true });
+
     /**
      * Emitted when the edit/create folder give error for example a folder with same name already exist
      */
@@ -94,16 +100,11 @@ export class FolderDialogComponent implements OnInit {
     }
 
     private readonly destroyRef = inject(DestroyRef);
+    private readonly notificationService = inject(NotificationService);
 
-    constructor(
-        private formBuilder: UntypedFormBuilder,
-        private dialog: MatDialogRef<FolderDialogComponent>,
-        private nodesApi: NodesApiService,
-        private translation: TranslationService,
-        @Optional()
-        @Inject(MAT_DIALOG_DATA)
-        public data: any
-    ) {
+    constructor() {
+        const data = this.data;
+
         if (data) {
             this.editTitle = data.editTitle || this.editTitle;
             this.createTitle = data.createTitle || this.createTitle;
@@ -116,7 +117,6 @@ export class FolderDialogComponent implements OnInit {
         let name = '';
         let title = '';
         let description = '';
-
         if (folder) {
             const { properties } = folder;
 
@@ -143,6 +143,10 @@ export class FolderDialogComponent implements OnInit {
 
         (this.editing ? this.edit() : this.create()).subscribe(
             (folder: Node) => {
+                const messageKey = this.editing ? 'CORE.FOLDER_DIALOG.FOLDER_UPDATED_SUCCESS' : 'CORE.FOLDER_DIALOG.FOLDER_CREATED_SUCCESS';
+                const message = this.translation.instant(messageKey, { name: folder.name });
+
+                this.notificationService.showInfo(message);
                 this.success.emit(folder);
                 this.dialog.close(folder);
             },

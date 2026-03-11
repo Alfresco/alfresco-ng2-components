@@ -8,35 +8,11 @@ adf-comments {
 
         .adf-comments-input-container {
             width: 100%;
-            padding-bottom: 8px;
+            padding: 10px 0;
 
-            #{ms.$mat-form-field} {
+            .adf-comments-input-form-field {
                 width: 100%;
-
-                &#{ms.$mat-form-field-invalid} {
-                    #{ms.$mat-input-element} {
-                        &::placeholder,
-                        &:focus::placeholder {
-                            color: var(--theme-warn-color);
-                        }
-                    }
-                }
-            }
-
-            #{ms.$mat-form-field-wrapper} {
-                #{ms.$mat-form-field-flex} {
-                    #{ms.$mat-form-field-infix} {
-                        padding-bottom: 2px;
-                        padding-top: 25px;
-                    }
-                }
-
-                #{ms.$mat-input-element} {
-                    &:focus::placeholder {
-                        color: var(--theme-primary-color);
-                        -webkit-font-smoothing: subpixel-antialiased;
-                    }
-                }
+                margin-bottom: 10px;
             }
 
             textarea {
@@ -46,10 +22,6 @@ adf-comments {
         }
     }
 
-    .adf-comments-divider {
-        border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
-    }
-
     .adf-comments-header {
         padding: 10px 0;
         font-size: var(--theme-body-1-font-size);
@@ -57,7 +29,6 @@ adf-comments {
     }
 
     .adf-comments-input-actions {
-        padding-top: 16px;
         display: flex;
         justify-content: flex-end;
     }

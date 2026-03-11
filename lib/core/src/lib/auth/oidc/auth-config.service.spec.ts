@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { AppConfigService } from '../../app-config/app-config.service';
@@ -31,7 +32,6 @@ describe('AuthConfigService', () => {
         host: 'http://localhost:3000/auth/realms/alfresco',
         clientId: 'fakeClientId',
         scope: 'openid profile email',
-        secret: '',
         implicitFlow: true,
         silentLogin: true,
         redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
@@ -44,7 +44,6 @@ describe('AuthConfigService', () => {
         host: 'http://localhost:3000/auth/realms/alfresco',
         clientId: 'fakeClientId',
         scope: 'openid profile email',
-        secret: '',
         implicitFlow: true,
         silentLogin: true,
         redirectSilentIframeUri: 'http://localhost:3000/subfolder/assets/silent-refresh.html',
@@ -57,7 +56,6 @@ describe('AuthConfigService', () => {
         host: 'http://localhost:3000/auth/realms/alfresco',
         clientId: 'fakeClientId',
         scope: 'openid profile email',
-        secret: '',
         implicitFlow: true,
         silentLogin: true,
         redirectSilentIframeUri: 'http://localhost:3000/subfolder2/assets/silent-refresh.html',
@@ -70,7 +68,6 @@ describe('AuthConfigService', () => {
         host: 'http://localhost:3000/auth/realms/alfresco',
         clientId: 'fakeClientId',
         scope: 'openid profile email',
-        secret: '',
         implicitFlow: true,
         silentLogin: true,
         redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
@@ -83,7 +80,6 @@ describe('AuthConfigService', () => {
         host: 'http://localhost:3000/auth/realms/alfresco',
         clientId: 'fakeClientId',
         scope: 'openid profile email',
-        secret: '',
         implicitFlow: false,
         codeFlow: true,
         silentLogin: true,
@@ -95,8 +91,7 @@ describe('AuthConfigService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [{ provide: AUTH_MODULE_CONFIG, useValue: { useHash: true } }]
+            providers: [{ provide: AUTH_MODULE_CONFIG, useValue: { useHash: true } }, provideHttpClient(), provideHttpClientTesting()]
         });
         service = TestBed.inject(AuthConfigService);
         spyOn<any>(service, 'getLocationOrigin').and.returnValue('http://localhost:3000');
@@ -116,7 +111,7 @@ describe('AuthConfigService', () => {
                 postLogoutRedirectUri: 'http://localhost:3000/#/logout',
                 clientId: 'fakeClientId',
                 scope: 'openid profile email',
-                dummyClientSecret: ''
+                dummyClientSecret: 'dummyClientSecret'
             };
 
             expect(await service.loadConfig()).toEqual(jasmine.objectContaining(expectedConfig));
@@ -133,7 +128,7 @@ describe('AuthConfigService', () => {
                 clientId: 'fakeClientId',
                 scope: 'openid profile email',
                 responseType: 'code',
-                dummyClientSecret: ''
+                dummyClientSecret: 'dummyClientSecret'
             };
 
             expect(await service.loadConfig()).toEqual(jasmine.objectContaining(expectedConfig));
@@ -180,7 +175,6 @@ describe('AuthConfigService', () => {
                 host: 'http://localhost:3000/auth/realms/alfresco',
                 clientId: 'fakeClientId',
                 scope: 'openid profile email',
-                secret: '',
                 implicitFlow: true,
                 silentLogin: true,
                 redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',

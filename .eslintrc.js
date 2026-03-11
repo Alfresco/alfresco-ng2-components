@@ -1,16 +1,7 @@
 module.exports = {
     root: true,
 
-    ignorePatterns: [
-        'projects/**/*',
-        '**/node_modules/**/*',
-        'lib/cli/node_modules/**/*',
-        '**/node_modules',
-        '**/docker',
-        '**/assets',
-        '**/scripts',
-        '**/docs'
-    ],
+    ignorePatterns: ['projects/**/*', '**/node_modules/**/*', 'lib/cli/node_modules/**/*', '**/node_modules', '**/assets', '**/scripts', '**/docs'],
 
     plugins: ['@nx'],
 
@@ -77,6 +68,7 @@ module.exports = {
                 ],
                 '@angular-eslint/no-host-metadata-property': 'off',
                 '@angular-eslint/no-input-prefix': 'error',
+                '@angular-eslint/prefer-inject': 'error',
                 '@typescript-eslint/consistent-type-definitions': 'error',
                 '@typescript-eslint/dot-notation': 'off',
                 '@typescript-eslint/explicit-member-accessibility': [
@@ -86,7 +78,8 @@ module.exports = {
                     }
                 ],
                 '@typescript-eslint/await-thenable': 'error',
-                '@typescript-eslint/prefer-optional-chain': 'warn',
+                '@typescript-eslint/prefer-optional-chain': 'error',
+                '@typescript-eslint/prefer-readonly': 'error',
                 '@typescript-eslint/no-inferrable-types': 'off',
                 '@typescript-eslint/no-require-imports': 'off',
                 '@typescript-eslint/no-var-requires': 'error',
@@ -150,7 +143,16 @@ module.exports = {
                 ],
                 'no-duplicate-imports': 'error',
                 'no-multiple-empty-lines': 'error',
-                'no-redeclare': 'error',
+                'no-redeclare': 'off',
+                '@typescript-eslint/no-redeclare': ['off', { ignoreDeclarationMerge: true }],
+                '@typescript-eslint/no-unused-vars': [
+                    'error',
+                    {
+                        argsIgnorePattern: '^_',
+                        varsIgnorePattern: '^_',
+                        caughtErrorsIgnorePattern: '^_'
+                    }
+                ],
                 'no-return-await': 'error',
                 'rxjs/no-create': 'error',
                 'rxjs/no-subject-unsubscribe': 'error',
@@ -185,6 +187,25 @@ module.exports = {
                         ' * limitations under the License.',
                         ' */'
                     ]
+                ],
+                'no-restricted-syntax': [
+                    'error',
+                    {
+                        selector: "Identifier[name='CUSTOM_ELEMENTS_SCHEMA']",
+                        message: 'The use of CUSTOM_ELEMENTS_SCHEMA is not allowed. Consider alternatives for proper schema handling.'
+                    },
+                    {
+                        selector: "Identifier[name='NO_ERRORS_SCHEMA']",
+                        message: 'The use of NO_ERRORS_SCHEMA is not allowed. Consider alternatives for proper schema handling.'
+                    },
+                    {
+                        selector: 'TSEnumDeclaration',
+                        message: 'Enums are not allowed. Use string literal types (e.g., type Foo = "a" | "b") or const objects instead.'
+                    },
+                    {
+                        selector: ':matches(Literal[value=/ng-reflect-/], TemplateElement[value.cooked=/ng-reflect-/])',
+                        message: '*ng-reflect-* attributes should not be used. Consider alternatives for proper selectors.'
+                    }
                 ]
             }
         },
@@ -215,6 +236,14 @@ module.exports = {
             rules: {
                 'comma-dangle': ['error', 'never']
             }
+        },
+        {
+            files: ['**/*.stories.ts'],
+            rules: {
+                '@cspell/spellchecker': 'off'
+            }
         }
-    ]
+    ],
+
+    extends: ['plugin:storybook/recommended']
 };

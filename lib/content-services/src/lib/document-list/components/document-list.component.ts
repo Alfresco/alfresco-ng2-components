@@ -34,6 +34,7 @@ import {
     DataTableSchema,
     DataTableService,
     EmptyListComponent,
+    IconModule,
     LoadingContentTemplateDirective,
     MainMenuDataTableTemplateDirective,
     NoContentTemplateDirective,
@@ -77,13 +78,11 @@ import { PermissionStyleModel } from '../models/permissions-style.model';
 import { presetsDefaultModel } from '../models/preset.model';
 import { DocumentListService } from '../services/document-list.service';
 import { LockService } from '../services/lock.service';
-import { ADF_DOCUMENT_PARENT_COMPONENT } from './document-list.token';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 import { CommonModule } from '@angular/common';
 import { FilterHeaderComponent } from './filter-header/filter-header.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -100,7 +99,7 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
         EmptyListComponent,
         TranslatePipe,
         NoPermissionTemplateDirective,
-        MatIconModule,
+        IconModule,
         LoadingContentTemplateDirective,
         MatProgressSpinnerModule,
         MainMenuDataTableTemplateDirective,
@@ -108,17 +107,23 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
     ],
     templateUrl: './document-list.component.html',
     styleUrls: ['./document-list.component.scss'],
-    providers: [
-        {
-            provide: ADF_DOCUMENT_PARENT_COMPONENT,
-            useExisting: DocumentListComponent
-        },
-        DataTableService
-    ],
+    providers: [DataTableService],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-document-list' }
 })
 export class DocumentListComponent extends DataTableSchema implements OnInit, OnChanges, AfterContentInit, PaginatedComponent {
+    private readonly documentListService = inject(DocumentListService);
+    private readonly elementRef = inject(ElementRef);
+    private readonly appConfig: AppConfigService;
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly contentService = inject(ContentService);
+    private readonly thumbnailService = inject(ThumbnailService);
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
+    private readonly nodeService = inject(NodesApiService);
+    private readonly dataTableService = inject(DataTableService);
+    private readonly lockService = inject(LockService);
+    private readonly dialog = inject(MatDialog);
+
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
 
@@ -132,7 +137,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     DEFAULT_SORTING: DataSorting[] = [new DataSorting('name', 'asc'), new DataSorting('isFolder', 'desc')];
 
     @ContentChild(DataColumnListComponent)
-    columnList: DataColumnListComponent;
+    declare columnList: DataColumnListComponent;
 
     @ContentChild(CustomLoadingContentTemplateDirective)
     customLoadingContent: CustomLoadingContentTemplateDirective;
@@ -155,6 +160,12 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     where: string;
 
     /**
+     * Specifies additional filters to apply (joined with **AND**). Applied for recent files only.
+     */
+    @Input()
+    filters: string[];
+
+    /**
      * Define a set of CSS styles to apply depending on the permission
      * of the user on that node. See the Permission Style model
      * page for further details and examples.
@@ -172,7 +183,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
     /** Toggles the header */
     @Input()
-    showHeader = ShowHeaderMode.Data;
+    showHeader: ShowHeaderMode = ShowHeaderMode.Data;
 
     /**
      * User interaction for folder navigation or file preview.
@@ -374,6 +385,13 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     displayDragAndDropHint = true;
 
+    /**
+     * Indicates if the data is provided externally.
+     * If true the component won't fetch data itself
+     */
+    @Input()
+    isDataProvidedExternally = false;
+
     /** Emitted when the user clicks a list node */
     @Output()
     nodeClick = new EventEmitter<NodeEntityEvent>();
@@ -442,7 +460,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     // @deprecated 3.0.0
     folderNode: Node;
 
-    private _pagination: PaginationModel = this.DEFAULT_PAGINATION;
+    private readonly _pagination: PaginationModel = this.DEFAULT_PAGINATION;
     pagination: BehaviorSubject<PaginationModel> = new BehaviorSubject<PaginationModel>(this.DEFAULT_PAGINATION);
     sortingSubject: BehaviorSubject<DataSorting[]> = new BehaviorSubject<DataSorting[]>(this.DEFAULT_SORTING);
 
@@ -457,20 +475,12 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         return this._nodesApi;
     }
 
-    constructor(
-        private documentListService: DocumentListService,
-        private elementRef: ElementRef,
-        private appConfig: AppConfigService,
-        private userPreferencesService: UserPreferencesService,
-        private contentService: ContentService,
-        private thumbnailService: ThumbnailService,
-        private alfrescoApiService: AlfrescoApiService,
-        private nodeService: NodesApiService,
-        private dataTableService: DataTableService,
-        private lockService: LockService,
-        private dialog: MatDialog
-    ) {
-        super(appConfig, 'default', presetsDefaultModel);
+    constructor() {
+        const appConfig = inject(AppConfigService);
+
+        super('default', presetsDefaultModel);
+        this.appConfig = appConfig;
+
         this.nodeService.nodeUpdated.pipe(takeUntilDestroyed()).subscribe((node) => {
             this.dataTableService.rowUpdate.next({ id: node.id, obj: { entry: node } });
         });
@@ -599,7 +609,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
 
         if (this.currentFolderId && changes['currentFolderId']?.currentValue !== changes['currentFolderId']?.previousValue) {
-            this.loadFolder();
+            !this.isDataProvidedExternally && this.loadFolder();
         }
 
         if (this.data) {
@@ -789,18 +799,20 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             this.updateCustomSourceData(this.currentFolderId);
         }
 
-        this.documentListService.loadFolderByNodeId(this.currentFolderId, this._pagination, this.includeFields, this.where, this.orderBy).subscribe(
-            (documentNode: DocumentLoaderNode) => {
-                if (documentNode.currentNode) {
-                    this.folderNode = documentNode.currentNode.entry;
-                    this.$folderNode.next(documentNode.currentNode.entry);
+        this.documentListService
+            .loadFolderByNodeId(this.currentFolderId, this._pagination, this.includeFields, this.where, this.orderBy, this.filters)
+            .subscribe({
+                next: (documentNode: DocumentLoaderNode) => {
+                    if (documentNode.currentNode) {
+                        this.folderNode = documentNode.currentNode.entry;
+                        this.$folderNode.next(documentNode.currentNode.entry);
+                    }
+                    this.onPageLoaded(documentNode.children);
+                },
+                error: (err) => {
+                    this.handleError(err);
                 }
-                this.onPageLoaded(documentNode.children);
-            },
-            (err) => {
-                this.handleError(err);
-            }
-        );
+            });
     }
 
     resetSelection() {
@@ -1023,6 +1035,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     private onDataReady(nodePaging: NodePaging) {
         this.ready.emit(nodePaging);
         this.pagination.next(nodePaging.list.pagination);
+        this.setLoadingState(false);
     }
 
     updatePagination(requestPaginationModel: RequestPaginationModel) {
@@ -1038,6 +1051,16 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
     onFilterSelectionChange(activeFilters: FilterSearch[]) {
         this.filterSelection.emit(activeFilters);
+    }
+
+    onFilterSearchResultsReady(nodePaging: NodePaging) {
+        this.node = nodePaging;
+        this.reload();
+    }
+
+    onFiltersCleared() {
+        this.node = null;
+        this.reload();
     }
 
     resetNewFolderPagination() {

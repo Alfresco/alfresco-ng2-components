@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, effect, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,7 +29,7 @@ import {
     ProcessFilterProperties,
     ProcessSortFilterProperty
 } from '../../models/process-filter-cloud.model';
-import { DateFnsUtils, IconComponent, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { DateFnsUtils, IconModule, TranslationService, UserPreferencesService } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from '../process-filter-dialog/process-filter-dialog-cloud.component';
 import { ProcessCloudService } from '../../../services/process-cloud.service';
@@ -47,7 +47,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatIconModule } from '@angular/material/icon';
 import { DateRangeFilterComponent } from '../../../../common/date-range-filter/date-range-filter.component';
 import { PeopleCloudComponent } from '../../../../people/components/people-cloud.component';
 
@@ -81,7 +80,6 @@ interface ProcessFilterFormProps {
 @Component({
     selector: 'adf-cloud-edit-process-filter',
     imports: [
-        IconComponent,
         MatProgressSpinnerModule,
         TranslatePipe,
         MatButtonModule,
@@ -93,7 +91,7 @@ interface ProcessFilterFormProps {
         ReactiveFormsModule,
         MatInputModule,
         MatDatepickerModule,
-        MatIconModule,
+        IconModule,
         DateRangeFilterComponent,
         PeopleCloudComponent
     ],
@@ -101,7 +99,16 @@ interface ProcessFilterFormProps {
     styleUrls: ['./edit-process-filter-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
+export class EditProcessFilterCloudComponent implements OnChanges {
+    private readonly formBuilder = inject(FormBuilder);
+    dialog = inject(MatDialog);
+    private readonly dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly translateService = inject(TranslationService);
+    private readonly processFilterCloudService = inject(ProcessFilterCloudService);
+    private readonly appsProcessCloudService = inject(AppsProcessCloudService);
+    private readonly processCloudService = inject(ProcessCloudService);
+
     /** The name of the application. */
     @Input()
     appName: string = '';
@@ -219,22 +226,14 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private formBuilder: FormBuilder,
-        public dialog: MatDialog,
-        private dateAdapter: DateAdapter<Date>,
-        private userPreferencesService: UserPreferencesService,
-        private translateService: TranslationService,
-        private processFilterCloudService: ProcessFilterCloudService,
-        private appsProcessCloudService: AppsProcessCloudService,
-        private processCloudService: ProcessCloudService
-    ) {}
-
-    ngOnInit() {
-        this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((locale) => this.dateAdapter.setLocale(locale));
+    constructor() {
+        // Use effect to react to locale signal changes (must be in injection context)
+        effect(() => {
+            const locale = this.userPreferencesService.localeSignal();
+            if (locale) {
+                this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale));
+            }
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {

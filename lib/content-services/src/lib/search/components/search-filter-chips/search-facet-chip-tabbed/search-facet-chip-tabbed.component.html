@@ -17,9 +17,9 @@
         &nbsp; {{ displayValue | translate }}
     </span>
     <ng-template #showAny><span class="adf-search-filter-ellipsis adf-filter-value">&nbsp;{{ 'SEARCH.FILTER.ANY' | translate }}</span></ng-template>
-    <mat-icon class="adf-search-filter-chip-icon" *ngIf="isPopulated; else disabledIcon">{{ chipIcon }}</mat-icon>
+    <mat-icon class="adf-search-filter-chip-icon" *ngIf="isPopulated; else disabledIcon" [adf-icon]="chipIcon" />
     <ng-template #disabledIcon>
-        <mat-icon>remove</mat-icon>
+        <mat-icon adf-icon="remove" />
     </ng-template>
 </mat-chip>
 

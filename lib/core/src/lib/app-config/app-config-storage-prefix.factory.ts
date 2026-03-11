@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { Injectable, InjectionToken, inject } from '@angular/core';
 import { AppConfigService, AppConfigValues } from './app-config.service';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -30,12 +30,8 @@ export const STORAGE_PREFIX_FACTORY_SERVICE = new InjectionToken<StoragePrefixFa
     providedIn: 'root'
 })
 export class StoragePrefixFactory {
-    constructor(
-        private appConfigService: AppConfigService,
-        @Optional()
-        @Inject(STORAGE_PREFIX_FACTORY_SERVICE)
-        private storagePrefixFactory?: StoragePrefixFactoryService
-    ) {}
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly storagePrefixFactory = inject<StoragePrefixFactoryService>(STORAGE_PREFIX_FACTORY_SERVICE, { optional: true });
 
     getPrefix(): Observable<string | undefined> {
         return this.appConfigService.select(AppConfigValues.STORAGE_PREFIX).pipe(

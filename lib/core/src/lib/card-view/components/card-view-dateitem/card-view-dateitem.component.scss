@@ -4,17 +4,17 @@
     display: flow-root;
 
     .adf-dateitem-editable {
-        cursor: pointer;
         width: 100%;
+
+        .adf-date-reset-icon {
+            padding: 0;
+        }
 
         &-controls {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            top: 6px;
             position: relative;
-            left: 12px;
-            height: 20px;
 
             #{ms.$mat-icon} {
                 opacity: 0.5;
@@ -31,23 +31,14 @@
             .adf-datepicker-span-button {
                 flex: 1 0 auto;
                 font-size: 14px;
-                top: 10px;
                 position: relative;
             }
-        }
-
-        #{ms.$mat-line-ripple},
-        #{ms.$mat-form-field-subscript-wrapper} {
-            display: none;
         }
     }
 
     .adf-property-value {
-        padding-top: 6px;
-        padding-bottom: 6px;
         line-height: 20px;
         color: var(--adf-metadata-property-panel-title-color);
-        margin-top: 10px;
 
         &.adf-property-value-editable {
             display: flex;
@@ -55,23 +46,6 @@
             border-radius: 6px;
             border-bottom: inherit;
             padding-left: 0;
-
-            &:not(.adf-property-readonly-value) {
-                margin-top: 35px;
-            }
-
-            .adf-date-reset-icon {
-                position: relative;
-                padding: 0;
-            }
-
-            .adf-dateitem-picker-toggle {
-                position: relative;
-            }
-        }
-
-        &.adf-property-readonly-value {
-            padding: 0 0 0 12px;
         }
     }
 
@@ -84,10 +58,6 @@
         margin: 0;
         padding: 0;
         float: right;
-
-        &#{ms.$mat-input-element}#{ms.$mat-form-field-input-control} {
-            margin-top: 35px;
-        }
     }
 
     .adf-dateitem-chip-list-container.adf-property-field {

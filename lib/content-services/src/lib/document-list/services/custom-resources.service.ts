@@ -35,7 +35,7 @@ import {
     ResultSetPaging,
     SEARCH_LANGUAGE
 } from '@alfresco/js-api';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -43,6 +43,8 @@ const CREATE_PERMISSION: string = 'create';
 
 @Injectable({ providedIn: 'root' })
 export class CustomResourcesService {
+    private readonly apiService = inject(AlfrescoApiService);
+
     private _peopleApi: PeopleApi;
     get peopleApi(): PeopleApi {
         this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
@@ -85,8 +87,6 @@ export class CustomResourcesService {
         return this._nodesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
-
     /**
      * Gets files recently accessed by a user.
      *
@@ -116,8 +116,7 @@ export class CustomResourcesService {
             '-TYPE:"fm:topic"',
             '-TYPE:"fm:post"',
             '-TYPE:"ia:calendarEvent"',
-            '-TYPE:"lnk:link"',
-            '-ASPECT:"app:linked"'
+            '-TYPE:"lnk:link"'
         ];
 
         return new Observable((observer) => {
@@ -386,9 +385,10 @@ export class CustomResourcesService {
      * @param pagination Specifies how to paginate the results
      * @param includeFields List of data field names to include in the results
      * @param where  Filters the Node list using the *where* condition of the REST API (for example, isFolder=true). See the REST API documentation for more information.
+     * @param filters Specifies additional filters to apply (joined with **AND**). Applied for '-recent-' only.
      * @returns List of items contained in the folder
      */
-    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[] = [], where?: string): any {
+    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[] = [], where?: string, filters?: string[]): any {
         if (nodeId === '-trashcan-') {
             return this.loadTrashcan(pagination, includeFields);
         } else if (nodeId === '-sharedlinks-') {
@@ -400,7 +400,9 @@ export class CustomResourcesService {
         } else if (nodeId === '-favorites-') {
             return this.loadFavorites(pagination, includeFields, where);
         } else if (nodeId === '-recent-') {
-            return this.getRecentFiles('-me-', pagination);
+            return this.getRecentFiles('-me-', pagination, filters);
+        } else {
+            return of(null);
         }
     }
 

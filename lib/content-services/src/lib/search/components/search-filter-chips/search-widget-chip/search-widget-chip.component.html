@@ -1,40 +1,65 @@
-<mat-chip [attr.data-automation-id]="'search-filter-chip-' + category.name"
-          [disableRipple]="true"
-          class="adf-search-filter-chip"
-          [class.adf-search-toggle-chip]="(widget.getDisplayValue() | async) || menuTrigger.menuOpen"
-          tabindex="0"
-          [matMenuTriggerFor]="menu"
-          (menuOpened)="onMenuOpen()"
-          (keydown.enter)="onEnterKeydown()"
-          (keydown.escape)="onEscKeydown()"
-          [attr.title]="widget.getDisplayValue() | async"
-          #menuTrigger="matMenuTrigger">
+<mat-chip
+    role="button"
+    [attr.data-automation-id]="'search-filter-chip-' + category.name"
+    [disableRipple]="true"
+    class="adf-search-filter-chip"
+    [class.adf-search-toggle-chip]="(widget.getDisplayValue() | async) || menuTrigger.menuOpen"
+    tabindex="0"
+    [matMenuTriggerFor]="menu"
+    (menuOpened)="onMenuOpen()"
+    (keydown.enter)="onEnterKeydown()"
+    (keydown.escape)="onEscKeydown()"
+    [attr.title]="widget.getDisplayValue() | async"
+    [attr.aria-label]="category.name | translate"
+    [attr.aria-expanded]="menuTrigger.menuOpen"
+    [attr.aria-haspopup]="'dialog'"
+    #menuTrigger="matMenuTrigger"
+>
     <span class="adf-search-filter-placeholder">
         <span class="adf-search-filter-ellipsis">{{ category.name | translate }}:</span>
     </span>
     <span class="adf-search-filter-ellipsis adf-filter-value" *ngIf="widget.getDisplayValue() | async as displayValue; else showAny">
         &nbsp;{{ displayValue | translate }}
     </span>
-    <ng-template #showAny><span class="adf-search-filter-ellipsis adf-filter-value">&nbsp;{{ 'SEARCH.FILTER.ANY' | translate }}</span></ng-template>
-    <mat-icon class="adf-search-filter-chip-icon">{{ chipIcon }}</mat-icon>
+    <ng-template #showAny
+        ><span class="adf-search-filter-ellipsis adf-filter-value">&nbsp;{{ 'SEARCH.FILTER.ANY' | translate }}</span></ng-template
+    >
+    <mat-icon class="adf-search-filter-chip-icon" [adf-icon]="chipIcon" />
 </mat-chip>
 
-<mat-menu #menu="matMenu" class="adf-search-widget-extra-width" backdropClass="adf-search-filter-chip-menu" [class]="'adf-search-filter-chip-menu-panel adf-search-filter-chip-menu-panel-' + category.id" (closed)="onClosed()">
-    <div #menuContainer [attr.data-automation-id]="'search-field-' + category.name">
-        <adf-search-filter-menu-card (click)="$event.stopPropagation()"
-                                     (keydown.tab)="$event.stopPropagation();"
-                                     (keydown.shift.tab)="$event.stopPropagation()"
-                                     (close)="menuTrigger.closeMenu()">
-
+<mat-menu
+    #menu="matMenu"
+    class="adf-search-widget-extra-width"
+    backdropClass="adf-search-filter-chip-menu"
+    [class]="'adf-search-filter-chip-menu-panel adf-search-filter-chip-menu-panel-' + category.id"
+    (closed)="onClosed()"
+    role="presentation"
+>
+    <div
+        [attr.aria-label]="category.name | translate"
+        role="dialog"
+        aria-modal="false"
+        #menuContainer
+        [attr.data-automation-id]="'search-field-' + category.name"
+    >
+        <adf-search-filter-menu-card
+            (click)="$event.stopPropagation()"
+            (keydown.tab)="$event.stopPropagation()"
+            (keydown.shift.tab)="$event.stopPropagation()"
+            (close)="menuTrigger.closeMenu()"
+        >
             <ng-container ngProjectAs="filter-title">
-                {{ category.name | translate }} <ng-container *ngIf="category.component.settings.unit">({{category.component.settings.unit}})</ng-container>
+                {{ category.name | translate }}
+                <ng-container *ngIf="category.component.settings.unit">({{ category.component.settings.unit }})</ng-container>
             </ng-container>
 
             <ng-container ngProjectAs="filter-content">
-                <adf-search-widget-container #widget
-                                             [id]="category.id"
-                                             [selector]="category.component.selector"
-                                             [settings]="category.component.settings" />
+                <adf-search-widget-container
+                    #widget
+                    [id]="category.id"
+                    [selector]="category.component.selector"
+                    [settings]="category.component.settings"
+                />
             </ng-container>
 
             <ng-container ngProjectAs="filter-actions">

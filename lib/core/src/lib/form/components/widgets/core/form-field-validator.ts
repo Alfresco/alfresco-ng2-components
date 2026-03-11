@@ -27,7 +27,7 @@ export interface FormFieldValidator {
 }
 
 export class RequiredFieldValidator implements FormFieldValidator {
-    private supportedTypes = [
+    private readonly supportedTypes = [
         FormFieldTypes.TEXT,
         FormFieldTypes.MULTILINE_TEXT,
         FormFieldTypes.NUMBER,
@@ -51,7 +51,7 @@ export class RequiredFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.isVisible) {
+        if (this.isSupported(field) && field.form && !field.form.isFieldOrParentHidden(field)) {
             if (field.type === FormFieldTypes.RADIO_BUTTONS) {
                 const option = field.options.find((opt) => opt.id === field.value);
                 return !!option;
@@ -78,7 +78,7 @@ export class RequiredFieldValidator implements FormFieldValidator {
 }
 
 export class NumberFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.NUMBER, FormFieldTypes.AMOUNT];
+    private readonly supportedTypes = [FormFieldTypes.NUMBER, FormFieldTypes.AMOUNT];
 
     static isNumber(value: any): boolean {
         return isNumberValue(value);
@@ -89,7 +89,7 @@ export class NumberFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.isVisible) {
+        if (this.isSupported(field) && field.form && !field.form.isFieldOrParentHidden(field)) {
             if (field.value === null || field.value === undefined || field.value === '') {
                 return true;
             }
@@ -109,14 +109,14 @@ export class NumberFieldValidator implements FormFieldValidator {
 }
 
 export class MinLengthFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT];
+    private readonly supportedTypes = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT];
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1 && field.minLength > 0;
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value && field.isVisible) {
+        if (this.isSupported(field) && field.value && field.form && !field.form.isFieldOrParentHidden(field)) {
             if (field.value.length >= field.minLength) {
                 return true;
             }
@@ -130,8 +130,8 @@ export class MinLengthFieldValidator implements FormFieldValidator {
 
 export class MaxLengthFieldValidator implements FormFieldValidator {
     constructor(
-        private supportedTypes: FormFieldTypes[] = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT],
-        private maxLength?: number
+        private readonly supportedTypes: FormFieldTypes[] = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT],
+        private readonly maxLength?: number
     ) {}
 
     isSupported(field: FormFieldModel): boolean {
@@ -139,7 +139,7 @@ export class MaxLengthFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value && field.isVisible) {
+        if (this.isSupported(field) && field.value && field.form && !field.form.isFieldOrParentHidden(field)) {
             if (field.value.toString().length <= this.getMaxLength(field)) {
                 return true;
             }
@@ -159,14 +159,14 @@ export class MaxLengthFieldValidator implements FormFieldValidator {
 }
 
 export class MinValueFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.NUMBER, FormFieldTypes.DECIMAL, FormFieldTypes.AMOUNT];
+    private readonly supportedTypes = [FormFieldTypes.NUMBER, FormFieldTypes.DECIMAL, FormFieldTypes.AMOUNT];
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1 && NumberFieldValidator.isNumber(field.minValue);
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value && field.isVisible) {
+        if (this.isSupported(field) && field.value && field.form && !field.form.isFieldOrParentHidden(field)) {
             const value: number = +field.value;
             const minValue: number = +field.minValue;
 
@@ -183,14 +183,14 @@ export class MinValueFieldValidator implements FormFieldValidator {
 }
 
 export class MaxValueFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.NUMBER, FormFieldTypes.DECIMAL, FormFieldTypes.AMOUNT];
+    private readonly supportedTypes = [FormFieldTypes.NUMBER, FormFieldTypes.DECIMAL, FormFieldTypes.AMOUNT];
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1 && NumberFieldValidator.isNumber(field.maxValue);
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value && field.isVisible) {
+        if (this.isSupported(field) && field.value && field.form && !field.form.isFieldOrParentHidden(field)) {
             const value: number = +field.value;
             const maxValue: number = +field.maxValue;
 
@@ -207,18 +207,23 @@ export class MaxValueFieldValidator implements FormFieldValidator {
 }
 
 export class RegExFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT];
+    private readonly supportedTypes = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT];
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1 && !!field.regexPattern;
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value && field.isVisible) {
+        if (this.isSupported(field) && field.value && field.form && !field.form.isFieldOrParentHidden(field)) {
             if (field.value.length > 0 && field.value.match(new RegExp('^' + field.regexPattern + '$'))) {
                 return true;
             }
-            field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
+
+            if (field.enableCustomValidationMessage === true && !!field.customValidationMessage) {
+                field.validationSummary.message = field.customValidationMessage;
+            } else {
+                field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
+            }
             return false;
         }
         return true;
@@ -226,7 +231,7 @@ export class RegExFieldValidator implements FormFieldValidator {
 }
 
 export class FixedValueFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.TYPEAHEAD];
+    private readonly supportedTypes = [FormFieldTypes.TYPEAHEAD];
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1;
@@ -253,7 +258,7 @@ export class FixedValueFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.isVisible) {
+        if (this.isSupported(field) && field.form && !field.form.isFieldOrParentHidden(field)) {
             if (this.hasStringValue(field) && this.hasOptions(field) && !this.hasValidNameOrValidId(field)) {
                 field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
                 return false;
@@ -264,14 +269,14 @@ export class FixedValueFieldValidator implements FormFieldValidator {
 }
 
 export class DecimalFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.DECIMAL];
+    private readonly supportedTypes = [FormFieldTypes.DECIMAL];
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1 && !!field.value;
     }
 
     validate(field: FormFieldModel): boolean {
-        const shouldValidateField = this.isSupported(field) && field.isVisible;
+        const shouldValidateField = this.isSupported(field) && field.form && !field.form.isFieldOrParentHidden(field);
 
         if (!shouldValidateField) {
             return true;

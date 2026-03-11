@@ -29,7 +29,7 @@ import {
     SelectFilterInputComponent,
     WidgetComponent
 } from '@alfresco/adf-core';
-import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -56,10 +56,11 @@ export const DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE = 100;
     selector: 'dropdown-cloud-widget',
     templateUrl: './dropdown-cloud.widget.html',
     styleUrls: ['./dropdown-cloud.widget.scss'],
+    host: {
+        '(click)': 'event($event)'
+    },
     encapsulation: ViewEncapsulation.None,
     imports: [
-        NgIf,
-        NgFor,
         NgClass,
         AsyncPipe,
         ReactiveFormsModule,
@@ -75,7 +76,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     private readonly formCloudService = inject(FormCloudService);
     private readonly appConfig = inject(AppConfigService);
     private readonly formUtilsService = inject(FormUtilsService);
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     typeId = 'DropdownCloudWidgetComponent';
     showInputFilter = false;
@@ -92,7 +93,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     private readonly defaultVariableOptionLabel = 'name';
     private readonly defaultVariableOptionPath = 'data';
 
-    private debounceSetValue = new Subject<void>();
+    private readonly debounceSetValue = new Subject<void>();
 
     get showRequiredMessage(): boolean {
         return this.dropdownControl.touched && this.dropdownControl.errors?.required && !this.isRestApiFailed && !this.variableOptionsFailed;
@@ -142,8 +143,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 value = this.field?.value;
             } else if (this.field?.value && typeof this.field?.value === 'object') {
                 value = { id: this.field?.value.id, name: this.field?.value.name };
-            } else if (this.field.value === null) {
-                value = this.field.value;
+            } else if (this.field.value === null || this.field.value === undefined || this.field.value === '') {
+                value = null;
             } else {
                 value = { id: this.field?.value, name: '' };
             }
@@ -518,7 +519,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return event.field.type === FormFieldTypes.DROPDOWN;
     }
 
-    private setOptionValue(option: FormFieldOption | FormFieldOption[], field: FormFieldModel) {
+    private setOptionValue(option: FormFieldOption | FormFieldOption[] | null, field: FormFieldModel) {
+        if (option == null) {
+            field.value = undefined;
+            return;
+        }
         if (Array.isArray(option) || field.hasMultipleValues) {
             field.value = option;
             return;

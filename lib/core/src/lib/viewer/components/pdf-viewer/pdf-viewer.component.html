@@ -8,7 +8,7 @@
                             (click)="toggleThumbnails()"
                             [attr.aria-label]="'ADF_VIEWER.ARIA.THUMBNAILS_PANLEL_CLOSE' | translate"
                             title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}">
-                        <mat-icon>close</mat-icon>
+                        <mat-icon adf-icon="close" />
                     </button>
                 </div>
 
@@ -52,7 +52,7 @@
                     data-automation-id="adf-thumbnails-button"
                     [disabled]="isPanelDisabled"
                     (click)="toggleThumbnails()">
-                <mat-icon>dashboard</mat-icon>
+                <mat-icon adf-icon="dashboard" />
             </button>
             <adf-toolbar-divider />
         </ng-container>
@@ -62,7 +62,7 @@
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.PREVIOUS_PAGE' | translate }}"
                 mat-icon-button
                 (click)="previousPage()">
-            <mat-icon>keyboard_arrow_up</mat-icon>
+            <mat-icon adf-icon="keyboard_arrow_up" />
         </button>
 
         <button id="viewer-next-page-button"
@@ -70,7 +70,7 @@
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.NEXT_PAGE' | translate }}"
                 mat-icon-button
                 (click)="nextPage()">
-            <mat-icon>keyboard_arrow_down</mat-icon>
+            <mat-icon adf-icon="keyboard_arrow_down" />
         </button>
 
         <div class="adf-pdf-viewer__toolbar-page-selector">
@@ -95,7 +95,7 @@
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.ZOOM_IN' | translate }}"
                 mat-icon-button
                 (click)="zoomIn()">
-            <mat-icon>zoom_in</mat-icon>
+            <mat-icon adf-icon="zoom_in" />
         </button>
 
         <button id="viewer-zoom-out-button"
@@ -103,7 +103,7 @@
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.ZOOM_OUT' | translate }}"
                 mat-icon-button
                 (click)="zoomOut()">
-            <mat-icon>zoom_out</mat-icon>
+            <mat-icon adf-icon="zoom_out" />
         </button>
 
         <button id="viewer-scale-page-button"
@@ -112,7 +112,7 @@
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.FIT_PAGE' | translate }}"
                 mat-icon-button
                 (click)="pageFit()">
-            <mat-icon>zoom_out_map</mat-icon>
+            <mat-icon adf-icon="zoom_out_map" />
         </button>
 
     </adf-toolbar>

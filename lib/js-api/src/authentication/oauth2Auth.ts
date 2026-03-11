@@ -99,10 +99,6 @@ export class Oauth2Auth extends AlfrescoApiClient {
                 throw new Error('Missing the required oauth2 scope parameter');
             }
 
-            if (this.config.oauth2.secret === undefined || this.config.oauth2.secret === null) {
-                this.config.oauth2.secret = '';
-            }
-
             if ((this.config.oauth2.redirectUri === undefined || this.config.oauth2.redirectUri === null) && this.config.oauth2.implicitFlow) {
                 throw new Error('Missing redirectUri required parameter');
             }
@@ -580,8 +576,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
             username,
             password,
             grant_type: 'password',
-            client_id: this.config.oauth2.clientId,
-            client_secret: this.config.oauth2.secret
+            client_id: this.config.oauth2.clientId
         };
 
         const contentTypes = ['application/x-www-form-urlencoded'];
@@ -624,7 +619,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
      * @returns promise of void
      */
     refreshToken(): Promise<any> {
-        const auth = 'Basic ' + this.universalBtoa(this.config.oauth2.clientId + ':' + this.config.oauth2.secret);
+        const auth = 'Basic ' + this.universalBtoa(this.config.oauth2.clientId);
         const headerParams = {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Cache-Control': 'no-cache',

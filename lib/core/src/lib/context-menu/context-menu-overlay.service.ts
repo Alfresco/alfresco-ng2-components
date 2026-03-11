@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Injectable, Injector, ElementRef, ComponentRef } from '@angular/core';
+import { Injectable, Injector, ElementRef, ComponentRef, inject } from '@angular/core';
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
-import { PortalInjector, ComponentPortal } from '@angular/cdk/portal';
+import { ComponentPortal } from '@angular/cdk/portal';
 import { ContextMenuOverlayRef } from './context-menu-overlay';
 import { ContextMenuOverlayConfig } from './interfaces';
 import { CONTEXT_MENU_DATA } from './context-menu.tokens';
@@ -33,7 +33,8 @@ const DEFAULT_CONFIG: ContextMenuOverlayConfig = {
     providedIn: 'root'
 })
 export class ContextMenuOverlayService {
-    constructor(private injector: Injector, private overlay: Overlay) {}
+    private readonly injector = inject(Injector);
+    private readonly overlay = inject(Overlay);
 
     open(config: ContextMenuOverlayConfig): ContextMenuOverlayRef {
         const overlayConfig = { ...DEFAULT_CONFIG, ...config };
@@ -47,14 +48,12 @@ export class ContextMenuOverlayService {
         overlay.backdropClick().subscribe(() => overlayRef.close());
 
         // prevent native contextmenu on overlay element if config.hasBackdrop is true
-        if (overlayConfig.hasBackdrop) {
-            // eslint-disable-next-line no-underscore-dangle
-            (overlay as any).backdropElement.addEventListener(
+        if (overlayConfig.hasBackdrop && overlay.backdropElement) {
+            overlay.backdropElement.addEventListener(
                 'contextmenu',
                 (event) => {
                     event.preventDefault();
-                    // eslint-disable-next-line no-underscore-dangle
-                    (overlay as any)._backdropClick.next(null);
+                    overlayRef.close();
                 },
                 true
             );
@@ -77,28 +76,32 @@ export class ContextMenuOverlayService {
         return containerRef.instance;
     }
 
-    private createInjector(config: ContextMenuOverlayConfig, contextMenuOverlayRef: ContextMenuOverlayRef): PortalInjector {
-        const injectionTokens = new WeakMap();
-
-        injectionTokens.set(ContextMenuOverlayRef, contextMenuOverlayRef);
-        injectionTokens.set(CONTEXT_MENU_DATA, config.data);
-
-        return new PortalInjector(this.injector, injectionTokens);
+    private createInjector(config: ContextMenuOverlayConfig, contextMenuOverlayRef: ContextMenuOverlayRef): Injector {
+        return Injector.create({
+            parent: this.injector,
+            providers: [
+                { provide: ContextMenuOverlayRef, useValue: contextMenuOverlayRef },
+                { provide: CONTEXT_MENU_DATA, useValue: config.data }
+            ]
+        });
     }
 
     private getOverlayConfig(config: ContextMenuOverlayConfig): OverlayConfig {
         const { clientY, clientX } = config.source;
 
-        const fakeElement: any = {
-            getBoundingClientRect: (): ClientRect =>
+        const fakeElement: Pick<HTMLElement, 'getBoundingClientRect'> = {
+            getBoundingClientRect: (): DOMRect =>
                 ({
                     bottom: clientY,
                     height: 0,
                     left: clientX,
                     right: clientX,
                     top: clientY,
-                    width: 0
-                } as any)
+                    width: 0,
+                    x: clientX,
+                    y: clientY,
+                    toJSON: () => ({})
+                }) as DOMRect
         };
 
         const positionStrategy = this.overlay

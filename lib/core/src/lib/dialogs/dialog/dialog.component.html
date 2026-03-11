@@ -13,9 +13,8 @@
                 *ngIf="data.headerIcon"
                 color="primary"
                 class="adf-dialog-header-icon"
-            >
-                {{ data.headerIcon }}
-            </mat-icon>
+                [adf-icon]="data.headerIcon"
+            />
             <h2 class="adf-dialog-title">{{ data.title | translate }}</h2>
         </div>
         <button
@@ -25,7 +24,7 @@
             title="{{'CLOSE' | translate }}"
             data-automation-id="adf-dialog-close-button"
         >
-            <mat-icon>close</mat-icon>
+            <mat-icon adf-icon="close" />
         </button>
     </div>
 

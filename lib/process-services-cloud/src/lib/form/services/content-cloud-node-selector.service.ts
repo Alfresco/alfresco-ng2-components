@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData, NodeAction, AlfrescoApiService } from '@alfresco/adf-content-services';
@@ -28,6 +28,10 @@ import { DestinationFolderPathModel } from '../models/form-cloud-representation.
     providedIn: 'root'
 })
 export class ContentCloudNodeSelectorService {
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly notificationService = inject(NotificationService);
+    private readonly dialog = inject(MatDialog);
+
     private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
@@ -35,12 +39,6 @@ export class ContentCloudNodeSelectorService {
     }
 
     sourceNodeNotFound = false;
-
-    constructor(
-        private apiService: AlfrescoApiService,
-        private notificationService: NotificationService,
-        private dialog: MatDialog
-    ) {}
 
     openUploadFileDialog(
         currentFolderId?: string,

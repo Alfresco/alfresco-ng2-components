@@ -25,8 +25,8 @@ import { SearchConfigurationService } from './search-configuration.service';
     providedIn: 'root'
 })
 export class SearchService {
-    private apiService = inject(AlfrescoApiService);
-    private searchConfigurationService = inject(SearchConfigurationService);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly searchConfigurationService = inject(SearchConfigurationService);
 
     dataLoaded = new Subject<ResultSetPaging>();
 

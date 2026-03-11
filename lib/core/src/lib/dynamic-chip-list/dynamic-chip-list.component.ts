@@ -32,13 +32,14 @@ import {
     SimpleChanges,
     ViewChild,
     ViewChildren,
-    ViewEncapsulation
+    ViewEncapsulation,
+    inject
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChip, MatChipsModule } from '@angular/material/chips';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Chip } from './chip';
+import { IconModule } from '../icon/icon.module';
 
 /**
  * This component shows dynamic list of chips which render depending on free space.
@@ -47,10 +48,12 @@ import { Chip } from './chip';
     selector: 'adf-dynamic-chip-list',
     templateUrl: './dynamic-chip-list.component.html',
     styleUrls: ['./dynamic-chip-list.component.scss'],
-    imports: [MatChipsModule, TranslatePipe, NgForOf, MatIconModule, NgIf, MatButtonModule],
+    imports: [MatChipsModule, TranslatePipe, NgForOf, IconModule, NgIf, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
     /* eslint no-underscore-dangle: ["error", { "allow": ["_elementRef"] }]*/
     /** Provide if you want to use paginated chips. */
     @Input()
@@ -103,14 +106,12 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
     private initialLimitChipsDisplayed: boolean;
     private viewMoreButtonLeftOffsetBeforeFlexDirection: number;
     private requestedDisplayingAllChips = false;
-    private resizeObserver = new ResizeObserver(() => {
+    private readonly resizeObserver = new ResizeObserver(() => {
         if (this.initialLimitChipsDisplayed && this.chipsToDisplay.length) {
             this.calculateChipsToDisplay();
             this.changeDetectorRef.detectChanges();
         }
     });
-
-    constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.pagination) {

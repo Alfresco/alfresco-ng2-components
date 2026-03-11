@@ -16,13 +16,14 @@
  */
 
 import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { NodeEntry, Site } from '@alfresco/js-api';
+import { NodeEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { BehaviorSubject } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NodeTooltipUtils } from '../../utils/node-tooltip.utils';
 
 @Component({
     selector: 'adf-library-name-column',
@@ -46,13 +47,17 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
             {{ displayText$ | async }}
         </span>
     `,
+    styleUrls: ['./library-name-column.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
-        class: 'adf-datatable-content-cell adf-datatable-link adf-library-name-column'
+        class: 'adf-datatable-content-cell adf-datatable-link adf-datatable-library-link adf-library-name-column'
     }
 })
 export class LibraryNameColumnComponent implements OnInit {
+    private readonly element = inject(ElementRef);
+    private readonly nodesApiService = inject(NodesApiService);
+
     @Input({ required: true })
     context: any;
 
@@ -61,8 +66,6 @@ export class LibraryNameColumnComponent implements OnInit {
     node: NodeEntry;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private element: ElementRef, private nodesApiService: NodesApiService) {}
 
     ngOnInit() {
         this.updateValue();
@@ -84,8 +87,9 @@ export class LibraryNameColumnComponent implements OnInit {
         this.node = this.context.row.node;
         const rows: Array<ShareDataRow> = this.context.data.rows || [];
         if (this.node?.entry) {
-            this.displayText$.next(this.makeLibraryTitle(this.node.entry as any, rows));
-            this.displayTooltip$.next(this.makeLibraryTooltip(this.node.entry));
+            const allEntries = rows.map((row: ShareDataRow) => row.node.entry);
+            this.displayText$.next(NodeTooltipUtils.getLibraryTitle(this.node.entry, allEntries));
+            this.displayTooltip$.next(NodeTooltipUtils.getLibraryTooltip(this.node));
         }
     }
 
@@ -98,24 +102,5 @@ export class LibraryNameColumnComponent implements OnInit {
                 }
             })
         );
-    }
-
-    makeLibraryTooltip(library: any): string {
-        const { description, title } = library;
-
-        return description || title || '';
-    }
-
-    makeLibraryTitle(library: Site, rows: Array<ShareDataRow>): string {
-        const entries = rows.map((row: ShareDataRow) => row.node.entry);
-        const { title, id } = library;
-
-        let isDuplicate = false;
-
-        if (entries) {
-            isDuplicate = entries.some((entry: any) => entry.id !== id && entry.title === title);
-        }
-
-        return isDuplicate ? `${title} (${id})` : `${title}`;
     }
 }

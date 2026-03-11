@@ -1,3 +1,4 @@
+/* stylelint-disable selector-class-pattern */
 .adf-pdf-viewer {
     .textLayer {
         position: absolute;
@@ -181,6 +182,33 @@
             .adf-page {
                 margin: 0 auto 10px;
                 border: none;
+            }
+        }
+
+        .adf-pdf-viewer-annotation-tooltip.popup {
+            outline-color: var(--adf-pdf-viewer-annotation-tooltip-color);
+            background-color: color-mix(in srgb, var(--adf-pdf-viewer-annotation-tooltip-color) 30%, var(--theme-primary-color-default-contrast));
+            margin-left: 40px;
+            width: max-content;
+            max-width: 300px;
+            opacity: 0;
+            pointer-events: none;
+
+            .popupContent {
+                display: inherit;
+            }
+        }
+
+        .textAnnotation {
+            &:hover,
+            &:focus-within {
+                /* stylelint-disable-next-line declaration-no-important */
+                z-index: 9999 !important; // important is required because pdfjs-dist adds style attribute to that tag
+
+                .adf-pdf-viewer-annotation-tooltip.popup {
+                    opacity: 1;
+                    pointer-events: auto;
+                }
             }
         }
     }

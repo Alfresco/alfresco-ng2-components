@@ -10,7 +10,7 @@
         <button mat-button (click)="enableSearch()" class="adf-search-user-button">
             {{ "PERMISSION_MANAGER.ADD-PERMISSION.SEARCH" | translate }}
             <span class="adf-toolbar--spacer"></span>
-            <mat-icon iconPositionEnd>search</mat-icon>
+            <mat-icon iconPositionEnd adf-icon="search" />
         </button>
 
         <div class="adf-new-permission-table">
@@ -27,7 +27,7 @@
                         </ng-template>
                     </data-column>
 
-                    <data-column class="adf-ellipsis-cell adf-expand-cell-5 adf-authorityId-column"
+                    <data-column class="adf-ellipsis-cell adf-expand-cell-5"
                                  [title]="'PERMISSION_MANAGER.COLUMN.NAME' | translate:{count:selectedMembers.length}"
                                  key="id">
                         <ng-template let-context>
@@ -35,9 +35,10 @@
                         </ng-template>
                     </data-column>
 
-                    <data-column class="adf-ellipsis-cell adf-expand-cell-4"
+                    <data-column class="adf-ellipsis-cell adf-expand-cell-3"
                                  title="PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE"
-                                 key="role">
+                                 key="role"
+                                 [sortable]="false">
                         <ng-template let-entry="$implicit">
                             <adf-user-role-column [readonly]="entry.row.obj.readonly"
                                                   [value]="entry.data.getValue(entry.row, entry.col)"
@@ -66,7 +67,7 @@
                                     [attr.aria-label]="'PERMISSION_MANAGER.ADD-PERMISSION.REMOVE_USER_GROUP' | translate"
                                     [attr.title]="'PERMISSION_MANAGER.ADD-PERMISSION.REMOVE_USER_GROUP' | translate"
                                     data-automation-id="adf-delete-permission-button">
-                                <mat-icon>highlight_off</mat-icon>
+                                <mat-icon adf-icon="highlight_off" />
                             </button>
                         </ng-template>
                     </data-column>

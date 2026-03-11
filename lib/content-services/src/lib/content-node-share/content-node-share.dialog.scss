@@ -1,11 +1,7 @@
-@use '../mat-selectors.scss' as ms;
+@use '@angular/material' as mat;
 
 .adf-share-link-dialog {
     .adf-share-link {
-        #{ms.$mat-form-field-flex} {
-            height: 48px;
-        }
-
         &__dialog-content {
             display: flex;
             flex-direction: column;
@@ -34,26 +30,24 @@
 
         &__form {
             padding-top: 8px;
-
-            #{ms.$mat-form-field-infix}:has(.adf-share-link__input) {
-                border-top: 0.9375em solid transparent;
-                border-bottom: 0.9375em solid transparent;
-                height: 16px;
-            }
-
-            &--field {
-                padding-bottom: 16px;
-            }
         }
 
         &__public-content {
-            color: var(--adf-theme-foreground-text-color-054);
+            color: var(--adf-theme-foreground-text-color-064);
             font-size: var(--theme-caption-font-size);
         }
 
         &__warn {
             color: var(--theme-warn-color-a700);
             font-size: var(--theme-caption-font-size);
+        }
+
+        &__border-color {
+            @include mat.form-field-overrides(
+                (
+                    outlined-outline-color: var(--theme-warn-color-a700)
+                )
+            );
         }
 
         &--row {
@@ -65,7 +59,7 @@
             margin: 8px 0;
 
             &-sharable {
-                margin-bottom: 0;
+                margin-bottom: 10px;
             }
         }
 
@@ -82,10 +76,6 @@
             padding-bottom: 0;
         }
 
-        &__input {
-            color: var(--adf-theme-foreground-text-color-087);
-        }
-
         &__separation-line {
             border: 1px solid var(--theme-grey-background-color);
             margin: 8px -24px;
@@ -94,12 +84,6 @@
         &__close {
             cursor: pointer;
             margin-left: 12px;
-        }
-
-        &__icon {
-            color: var(--adf-theme-foreground-icon-color-054);
-            padding-bottom: 0;
-            padding-right: 0;
         }
 
         &__para {
@@ -111,30 +95,6 @@
             font-weight: 700;
             font-size: var(--theme-subheading-2-font-size);
         }
-
-        &__copy-icon {
-            padding-top: 18px;
-            font-size: 22px;
-        }
-
-        &__calender-icon {
-            top: 12px;
-            position: relative;
-            right: -6px;
-
-            svg {
-                height: 18px;
-                width: 18px;
-            }
-        }
-
-        &__date-time-container {
-            padding-bottom: 20px;
-        }
-
-        &__border-color {
-            border: 1px solid var(--theme-warn-color-a700);
-        }
     }
 
     .adf-input-action {
@@ -143,8 +103,6 @@
 
     .adf-full-width {
         width: 100%;
-        border-radius: 6px;
-        margin-top: -6px;
     }
 
     .adf-sharable-link {

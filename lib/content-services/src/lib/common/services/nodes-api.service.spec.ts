@@ -68,4 +68,11 @@ describe('NodesApiService', () => {
 
         expect(nodesApiService.nodesApi.getFolderSizeInfo).toHaveBeenCalledWith('fake-node-id', 'fake-job-id');
     });
+
+    it('should call listParents api with nodeId and optional params', async () => {
+        spyOn(nodesApiService.nodesApi, 'listParents').and.returnValue(Promise.resolve({ list: { entries: [] } }));
+        await firstValueFrom(nodesApiService.listParents('fake-node-id', { include: ['path'], where: 'isPrimary=true' }));
+
+        expect(nodesApiService.nodesApi.listParents).toHaveBeenCalledWith('fake-node-id', { include: ['path'], where: 'isPrimary=true' });
+    });
 });

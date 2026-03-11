@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { PreferenceCloudServiceInterface } from './preference-cloud.interface';
 import { StorageService } from '@alfresco/adf-core';
 import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class LocalPreferenceCloudService implements PreferenceCloudServiceInterface {
-    constructor(private storage: StorageService) {}
+    private readonly storage = inject(StorageService);
 
     /**
      * Gets local preferences

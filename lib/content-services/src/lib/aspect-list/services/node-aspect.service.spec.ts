@@ -19,7 +19,6 @@ import { Node } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { EMPTY, of } from 'rxjs';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodeAspectService } from './node-aspect.service';
 import { DialogAspectListService } from './dialog-aspect-list.service';
 import { CardViewContentUpdateService } from '../../common/services/card-view-content-update.service';
@@ -32,9 +31,7 @@ describe('NodeAspectService', () => {
     let cardViewContentUpdateService: CardViewContentUpdateService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
-        });
+        TestBed.configureTestingModule({});
         dialogAspectListService = TestBed.inject(DialogAspectListService);
         nodeAspectService = TestBed.inject(NodeAspectService);
         nodeApiService = TestBed.inject(NodesApiService);

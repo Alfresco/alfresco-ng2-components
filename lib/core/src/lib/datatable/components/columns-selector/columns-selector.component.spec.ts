@@ -34,6 +34,9 @@ describe('ColumnsSelectorComponent', () => {
 
     const menuOpenedTrigger = new Subject<void>();
     const menuClosedTrigger = new Subject<void>();
+    const getSelectorInputValue = (): Promise<string> => testingUtils.getMatInputValueByDataAutomationId('adf-columns-selector-search-input');
+    const fillSelectorInput = (value: string): Promise<void> =>
+        testingUtils.fillMatInputByDataAutomationId('adf-columns-selector-search-input', value);
 
     let mainMenuTrigger: { menuOpened: Observable<void>; menuClosed: Observable<void> };
 
@@ -93,35 +96,33 @@ describe('ColumnsSelectorComponent', () => {
 
     afterEach(() => fixture.destroy());
 
-    it('should clear search after closing menu', fakeAsync(() => {
+    it('should clear search after closing menu', fakeAsync(async () => {
         menuOpenedTrigger.next();
         fixture.detectChanges();
 
-        let searchInput = testingUtils.getByCSS('.adf-columns-selector-search-input').nativeElement;
-        testingUtils.fillInputByCSS('.adf-columns-selector-search-input', 'TEST');
+        await fillSelectorInput('TEST');
 
         tick(300);
-        expect(searchInput.value).toBe('TEST');
+        expect(await getSelectorInputValue()).toBe('TEST');
 
         menuClosedTrigger.next();
         tick(300);
-        searchInput = testingUtils.getByCSS('.adf-columns-selector-search-input').nativeElement;
 
-        expect(searchInput.value).toBe('');
+        expect(await getSelectorInputValue()).toBe('');
     }));
 
     it('should list only columns with title', async () => {
         menuOpenedTrigger.next();
         fixture.detectChanges();
 
-        const checkboxes = await testingUtils.getAllMatCheckboxes();
+        const options = await testingUtils.getAllMatListOptions();
         const inputColumnsWithTitle = inputColumns.filter((column) => !!column.title);
-        expect(checkboxes.length).toBe(inputColumnsWithTitle.length);
+        expect(options.length).toBe(inputColumnsWithTitle.length);
 
-        for await (const checkbox of checkboxes) {
-            const checkboxLabel = await checkbox.getLabelText();
+        for (const option of options) {
+            const optionLabel = await option.getFullText();
 
-            const inputColumn = inputColumnsWithTitle.find((inputColumnWithTitle) => inputColumnWithTitle.title === checkboxLabel);
+            const inputColumn = inputColumnsWithTitle.find((inputColumnWithTitle) => inputColumnWithTitle.title === optionLabel);
             expect(inputColumn).toBeTruthy('Should have all columns with title');
         }
     });
@@ -130,42 +131,42 @@ describe('ColumnsSelectorComponent', () => {
         fixture.detectChanges();
         menuOpenedTrigger.next();
 
-        testingUtils.fillInputByCSS('.adf-columns-selector-search-input', inputColumns[0].title);
+        await fillSelectorInput(inputColumns[0].title);
 
         tick(400);
         fixture.detectChanges();
 
-        const columnCheckboxes = await testingUtils.getAllMatCheckboxes();
+        const columnOptions = await testingUtils.getAllMatListOptions();
 
-        expect(columnCheckboxes.length).toBe(1);
-        expect(await columnCheckboxes[0].getLabelText()).toBe(inputColumns[0].title);
+        expect(columnOptions.length).toBe(1);
+        expect(await columnOptions[0].getFullText()).toBe(inputColumns[0].title);
     }));
 
     it('should change column visibility', async () => {
         menuOpenedTrigger.next();
         fixture.detectChanges();
 
-        const firstColumnCheckbox = await testingUtils.getMatCheckbox();
-        const checkBoxName = await firstColumnCheckbox.getLabelText();
+        const firstColumnOption = await testingUtils.getMatListOption();
+        const optionName = await firstColumnOption.getFullText();
 
-        const toggledColumnItem = component.columnItems.find((item) => item.title === checkBoxName);
-        expect(toggledColumnItem?.isHidden).toBe(undefined);
+        const toggledColumnItem = component.columnItems.find((item) => item.title === optionName);
+        expect(toggledColumnItem?.isHidden).toBeUndefined();
 
-        await firstColumnCheckbox.toggle();
+        await firstColumnOption.toggle();
         expect(toggledColumnItem?.isHidden).toBeTrue();
     });
 
-    describe('checkboxes', () => {
+    describe('list options', () => {
         it('should have set proper default state', async () => {
             menuOpenedTrigger.next();
             fixture.detectChanges();
 
-            const checkboxes = await testingUtils.getAllMatCheckboxes();
+            const options = await testingUtils.getAllMatListOptions();
 
-            expect(await checkboxes[0].isChecked()).toBe(true);
-            expect(await checkboxes[1].isChecked()).toBe(true);
-            expect(await checkboxes[2].isChecked()).toBe(true);
-            expect(await checkboxes[3].isChecked()).toBe(false);
+            expect(await options[0].isSelected()).toBeTrue();
+            expect(await options[1].isSelected()).toBeTrue();
+            expect(await options[2].isSelected()).toBeTrue();
+            expect(await options[3].isSelected()).toBeFalse();
         });
 
         it('should be disabled when visible columns limit is reached', async () => {
@@ -173,12 +174,12 @@ describe('ColumnsSelectorComponent', () => {
             menuOpenedTrigger.next();
             fixture.detectChanges();
 
-            const checkboxes = await testingUtils.getAllMatCheckboxes();
+            const options = await testingUtils.getAllMatListOptions();
 
-            expect(await checkboxes[0].isDisabled()).toBe(false);
-            expect(await checkboxes[1].isDisabled()).toBe(false);
-            expect(await checkboxes[2].isDisabled()).toBe(false);
-            expect(await checkboxes[3].isDisabled()).toBe(true);
+            expect(await options[0].isDisabled()).toBeFalse();
+            expect(await options[1].isDisabled()).toBeFalse();
+            expect(await options[2].isDisabled()).toBeFalse();
+            expect(await options[3].isDisabled()).toBeTrue();
         });
     });
 
@@ -202,12 +203,9 @@ describe('ColumnsSelectorComponent', () => {
             menuOpenedTrigger.next();
             fixture.detectChanges();
 
-            const checkboxes = await testingUtils.getAllMatCheckboxes();
-            const labeTextOne = await checkboxes[0].getLabelText();
-            const labeTextTwo = await checkboxes[1].getLabelText();
-
-            expect(labeTextOne).toBe(shownDataColumn.title!);
-            expect(labeTextTwo).toBe(hiddenDataColumn.title!);
+            const options = await testingUtils.getAllMatListOptions();
+            expect(await options[0].getFullText()).toBe(shownDataColumn.title);
+            expect(await options[1].getFullText()).toBe(hiddenDataColumn.title);
         });
 
         it('should NOT show hidden columns at the end of the list if sorting is disabled', async () => {
@@ -216,12 +214,9 @@ describe('ColumnsSelectorComponent', () => {
             menuOpenedTrigger.next();
             fixture.detectChanges();
 
-            const checkboxes = await testingUtils.getAllMatCheckboxes();
-            const labeTextOne = await checkboxes[0].getLabelText();
-            const labeTextTwo = await checkboxes[1].getLabelText();
-
-            expect(labeTextOne).toBe(hiddenDataColumn.title!);
-            expect(labeTextTwo).toBe(shownDataColumn.title!);
+            const options = await testingUtils.getAllMatListOptions();
+            expect(await options[0].getFullText()).toBe(hiddenDataColumn.title);
+            expect(await options[1].getFullText()).toBe(shownDataColumn.title);
         });
 
         it('should show subtitle', async () => {
@@ -238,10 +233,7 @@ describe('ColumnsSelectorComponent', () => {
             component.columnsSorting = false;
             menuOpenedTrigger.next();
             fixture.detectChanges();
-
-            const checkboxes = await testingUtils.getAllMatCheckboxes();
-            const labeTextOne = await checkboxes[0].getLabelText();
-            expect(labeTextOne).toBe(`${column.title}  ${column.subtitle}`);
+            expect(await (await testingUtils.getMatListOption()).getFullText()).toBe(`${column.title}  ${column.subtitle}`);
         });
     });
 });

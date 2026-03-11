@@ -2,7 +2,8 @@
   "COMMON": {
     "APPLY": "Aplicar",
     "CANCEL": "Cancelar",
-    "NAME": "Nome"
+    "NAME": "Nome",
+    "CLEAR": "Limpar"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
@@ -17,7 +18,8 @@
         "MINOR": "alterações menores ({{version}})",
         "COMMENT": "Deixe um comentário",
         "ADD": "Adicionar nova versão",
-        "CANCEL": "Cancelar"
+        "CANCEL": "Cancelar",
+        "VERSION_TYPE_LABEL": "Selecionar tipo de versão"
       }
     },
     "CONFIRM_DELETE": {
@@ -379,6 +381,7 @@
       "TITLE": "Filtro",
       "TYPE": "Tipo",
       "FILTER_BY": "Filtrar por {{ category }}",
+      "ACTIVE_FILTER": "Filtro ativo",
       "CLEAR": "Limpar",
       "APPLY": "Aplicar",
       "FILTERS": {
@@ -426,7 +429,8 @@
       "IN_LAST_LABELS": {
         "DAYS": "Dias",
         "WEEKS": "Semanas",
-        "MONTHS": "Meses"
+        "MONTHS": "Meses",
+        "QUANTITY": "Quantidade"
       },
       "IN_LAST_DISPLAY_LABELS": {
         "DAYS": "Nos últimos {{value}} dias",
@@ -435,7 +439,8 @@
       },
       "BETWEEN_PLACEHOLDERS": {
         "START_DATE": "Data inicial",
-        "END_DATE": "Data final"
+        "END_DATE": "Data final",
+        "DATE_RANGE": "Intervalo de datas"
       },
       "ERROR": {
         "IN_LAST": "O valor é obrigatório",
@@ -466,7 +471,12 @@
         "GB": "GB"
       },
       "FILE_TYPE": "Tipo de ficheiro",
-      "FILE_TYPE_PLACEHOLDER": "Adicionar tipo de ficheiro"
+      "FILE_TYPE_PLACEHOLDER": "Adicionar tipo de ficheiro",
+      "ACCESSIBILITY": {
+        "CONDITION": "Estado",
+        "SIZE_VALUE": "Valor tamanho do arquivo",
+        "UNIT": "Unidade"
+      }
     }
   },
   "PERMISSION": {
@@ -555,8 +565,10 @@
       "ADD-ACTION": "ADICIONAR",
       "CLOSE-ACTION": "CANCELAR",
       "BASE-DIALOG-TITLE": "Pesquisar um grupo ou pessoas para adicionar...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "Adicionar permissão de usuário ou grupo",
       "EVERYONE": "TODOS",
-      "USER-GROUP-LIST": "Lista de utilizadores ou grupos"
+      "USER-GROUP-LIST": "Lista de utilizadores ou grupos",
+      "REMOVE_USER_GROUP": "Remover"
     },
     "COLUMN": {
       "NAME": "Utilizadores e grupos ({{ count }})",
@@ -599,6 +611,10 @@
       "DUPLICATE-PERMISSION": "Uma ou mais das permissões que definiu já estão presentes: {{list}}",
       "NOT-ALLOWED": "Não tem permissão para alterar as permissões"
     }
+  },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "Ícone do grupo",
+    "GROUP_USER_SELECTED_ALT": "Selecionar grupo ou ícone do utilizador"
   },
   "ADF-TREE-VIEW": {
     "MISSING-ID": "Não foi fornecido nenhum nodeId!",
@@ -648,7 +664,9 @@
       "TITLE_TOO_SHORT": "O título deve ter pelo menos 2 caracteres",
       "ILLEGAL_CHARACTERS": "Utilizar apenas números e letras",
       "ONLY_SPACES": "O nome da biblioteca não pode conter apenas espaços",
-      "LIBRARY_UPDATE_ERROR": "Ocorreu um erro ao atualizar as propriedades da biblioteca"
+      "LIBRARY_UPDATE_ERROR": "Ocorreu um erro ao atualizar as propriedades da biblioteca",
+      "NAME_REQUIRED": "O nome da biblioteca é obrigatório",
+      "ID_REQUIRED": "O ID da biblioteca é necessário"
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Propriedades da biblioteca atualizadas"

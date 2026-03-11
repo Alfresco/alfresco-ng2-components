@@ -39,10 +39,11 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { AutoFocusDirective } from '../../directives';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatInputModule } from '@angular/material/input';
+import { IconModule } from '@alfresco/adf-core';
 
 interface CategoryNameControlErrors {
     duplicatedExistingCategory?: boolean;
@@ -62,15 +63,18 @@ interface CategoryNameControlErrors {
         ReactiveFormsModule,
         MatFormFieldModule,
         MatButtonModule,
-        MatIconModule,
+        IconModule,
         MatListModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatInputModule
     ],
     templateUrl: './categories-management.component.html',
     styleUrls: ['./categories-management.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class CategoriesManagementComponent implements OnInit, OnDestroy {
+    private readonly categoryService = inject(CategoryService);
+
     readonly nameErrorMessagesByErrors = new Map<keyof CategoryNameControlErrors, string>([
         ['duplicatedExistingCategory', 'ALREADY_EXISTS'],
         ['duplicatedCategory', 'DUPLICATED_CATEGORY'],
@@ -80,9 +84,9 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         ['endsWithDot', 'ENDS_WITH_DOT']
     ]);
 
-    private existingCategoryLoaded$ = new Subject<void>();
-    private cancelExistingCategoriesLoading$ = new Subject<void>();
-    private _categoryNameControl = new FormControl<string>(
+    private readonly existingCategoryLoaded$ = new Subject<void>();
+    private readonly cancelExistingCategoriesLoading$ = new Subject<void>();
+    private readonly _categoryNameControl = new FormControl<string>(
         '',
         [
             this.validateIfNotAlreadyAdded.bind(this),
@@ -166,11 +170,9 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     categoryNameControlVisibleChange = new EventEmitter<boolean>();
 
     @ViewChild('categoryNameInput')
-    private categoryNameInputElement: ElementRef;
+    private readonly categoryNameInputElement: ElementRef;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private categoryService: CategoryService) {}
 
     ngOnInit() {
         this.categoryNameControl.valueChanges

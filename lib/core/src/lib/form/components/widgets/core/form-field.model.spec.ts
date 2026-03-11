@@ -420,6 +420,33 @@ describe('FormFieldModel', () => {
         expect(formDateTimeFormatted).toEqual(currentDateTimeFormatted);
     });
 
+    it('should handle properly date string that is in ISO format', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'FormFieldRepresentation',
+            id: 'date',
+            name: 'date',
+            type: FormFieldTypes.DATE,
+            value: '',
+            required: false,
+            readOnly: false,
+            params: {
+                field: {
+                    id: 'date',
+                    name: 'date',
+                    type: FormFieldTypes.DATE,
+                    value: '',
+                    required: false,
+                    readOnly: false
+                }
+            }
+        });
+
+        field.value = '2026-01-23T15:25:03.439+0000';
+
+        expect(field.getFormValue()).toEqual('2026-01-23T00:00:00.000Z');
+    });
+
     it('should set the value to null when the value is null', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
@@ -852,7 +879,8 @@ describe('FormFieldModel', () => {
         FormFieldTypes.READONLY_TYPES.forEach((typeName) => {
             const field = new FormFieldModel(form, {
                 id: typeName,
-                type: typeName
+                type: typeName,
+                params: {}
             });
 
             field.value = '<some value>';
@@ -1265,5 +1293,420 @@ describe('FormFieldModel', () => {
         });
 
         expect(field.tooltip).toBe('');
+    });
+
+    describe('repeatable section', () => {
+        let form: FormModel;
+        let field: FormFieldModel;
+
+        const fields = {
+            '1': [
+                {
+                    id: 'Text0wwp7n',
+                    name: 'Text',
+                    type: 'text',
+                    readOnly: false,
+                    required: false,
+                    colspan: 1,
+                    rowspan: 1,
+                    placeholder: null,
+                    minLength: 0,
+                    maxLength: 0,
+                    regexPattern: null,
+                    visibilityCondition: null,
+                    params: {
+                        existingColspan: 1,
+                        maxColspan: 2
+                    }
+                },
+                {
+                    id: 'Dropdown0e7tn4',
+                    name: 'Dropdown',
+                    type: 'dropdown',
+                    readOnly: false,
+                    required: false,
+                    colspan: 1,
+                    rowspan: 1,
+                    optionType: 'manual',
+                    options: [
+                        {
+                            id: 'Id_1',
+                            name: 'Label 1'
+                        },
+                        {
+                            id: 'Id_2',
+                            name: 'Label 2'
+                        }
+                    ],
+                    authName: null,
+                    restUrl: null,
+                    restResponsePath: null,
+                    restIdProperty: null,
+                    restLabelProperty: null,
+                    selectionType: 'single',
+                    visibilityCondition: null,
+                    params: {
+                        existingColspan: 1,
+                        maxColspan: 2
+                    },
+                    rule: null
+                }
+            ],
+            '2': [
+                {
+                    id: 'Integer0rzkwq',
+                    name: 'Integer',
+                    type: 'integer',
+                    readOnly: false,
+                    colspan: 1,
+                    rowspan: 1,
+                    placeholder: null,
+                    minValue: null,
+                    maxValue: null,
+                    required: false,
+                    visibilityCondition: null,
+                    params: {
+                        existingColspan: 1,
+                        maxColspan: 2
+                    }
+                },
+                {
+                    id: 'Dropdown0wgm63',
+                    name: 'Dropdown',
+                    type: 'dropdown',
+                    readOnly: false,
+                    required: false,
+                    colspan: 1,
+                    rowspan: 1,
+                    optionType: 'manual',
+                    options: [],
+                    authName: null,
+                    restUrl: null,
+                    restResponsePath: null,
+                    restIdProperty: null,
+                    restLabelProperty: null,
+                    selectionType: 'single',
+                    visibilityCondition: null,
+                    params: {
+                        existingColspan: 1,
+                        maxColspan: 2
+                    },
+                    rule: {
+                        ruleOn: 'Dropdown0e7tn4',
+                        entries: [
+                            {
+                                key: 'Id_1',
+                                options: [
+                                    {
+                                        id: 'Id_3',
+                                        name: 'Label 3'
+                                    },
+                                    {
+                                        id: 'Id_4',
+                                        name: 'Label 4'
+                                    }
+                                ]
+                            },
+                            {
+                                key: 'Id_2',
+                                options: []
+                            }
+                        ]
+                    }
+                }
+            ]
+        };
+
+        const fieldsDisabled = {
+            '1': [
+                {
+                    id: 'Text0wwp7n',
+                    name: 'Text',
+                    type: 'text',
+                    readOnly: true,
+                    required: false,
+                    colspan: 1,
+                    rowspan: 1,
+                    placeholder: null,
+                    minLength: 0,
+                    maxLength: 0,
+                    regexPattern: null,
+                    visibilityCondition: null,
+                    params: {
+                        existingColspan: 1,
+                        maxColspan: 2
+                    }
+                }
+            ],
+            '2': [
+                {
+                    id: 'Integer0rzkwq',
+                    name: 'Integer',
+                    type: 'integer',
+                    readOnly: false,
+                    colspan: 1,
+                    rowspan: 1,
+                    placeholder: null,
+                    minValue: null,
+                    maxValue: null,
+                    required: false,
+                    visibilityCondition: null,
+                    params: {
+                        existingColspan: 1,
+                        maxColspan: 2
+                    }
+                }
+            ]
+        };
+
+        const json = {
+            id: 'RepeatableSection0tbw2y',
+            name: 'Repeatable Section',
+            type: 'repeatable-section',
+            tab: null,
+            params: {
+                initialNumberOfRows: 2,
+                allowInitialRowsDelete: true,
+                maxNumberOfRows: 5
+            },
+            numberOfColumns: 2,
+            fields
+        };
+
+        const jsonDisabled = {
+            id: 'RepeatableSection0tbw2y',
+            name: 'Repeatable Section',
+            type: 'repeatable-section',
+            tab: null,
+            params: {
+                initialNumberOfRows: 2,
+                allowInitialRowsDelete: true,
+                maxNumberOfRows: 5
+            },
+            numberOfColumns: 2,
+            fields: fieldsDisabled
+        };
+
+        beforeEach(() => {
+            form = new FormModel();
+            field = new FormFieldModel(form, json);
+        });
+
+        describe('add row', () => {
+            it('should add row if allowed by limit param', () => {
+                expect(field.rows.length).toBe(2);
+
+                field.addRow(field.fields, form);
+                expect(field.rows.length).toBe(3);
+            });
+
+            it('should add row if no limit param is defined', () => {
+                field.params.newRowsLimit = null;
+                expect(field.rows.length).toBe(2);
+
+                field.addRow(field.fields, form);
+                expect(field.rows.length).toBe(3);
+            });
+
+            it('should NOT add row if NOT allowed by limit param', () => {
+                expect(field.rows.length).toBe(2);
+
+                field.addRow(field.fields, form);
+                field.addRow(field.fields, form);
+                field.addRow(field.fields, form);
+                expect(field.rows.length).toBe(5);
+
+                field.addRow(field.fields, form);
+                expect(field.rows.length).toBe(5);
+            });
+
+            it('should call onRepeatableSectionChanged', () => {
+                spyOn(field.form, 'onRepeatableSectionChanged').and.callThrough();
+
+                expect(field.form.onRepeatableSectionChanged).not.toHaveBeenCalled();
+
+                field.addRow(field.fields, form);
+
+                expect(field.form.onRepeatableSectionChanged).toHaveBeenCalled();
+            });
+        });
+
+        describe('remove row', () => {
+            it('should remove row if target index exists', () => {
+                expect(field.rows.length).toBe(2);
+
+                field.removeRow(1);
+                expect(field.rows.length).toBe(1);
+            });
+
+            it('should NOT remove row if target index does NOT exist', () => {
+                expect(field.rows.length).toBe(2);
+
+                field.removeRow(2);
+                expect(field.rows.length).toBe(2);
+            });
+
+            it('should update children fields rowIndex', () => {
+                expect(field.rows[0].columns[0].fields[0].parent.rowIndex).toBe(0);
+                expect(field.rows[1].columns[0].fields[0].parent.rowIndex).toBe(1);
+
+                field.removeRow(0);
+                expect(field.rows[0].columns[0].fields[0].parent.rowIndex).toBe(0);
+            });
+
+            it('should update form value', () => {
+                const formValues = {
+                    initialState: [
+                        {
+                            Text0wwp7n: 'mock-1',
+                            Integer0rzkwq: 1
+                        },
+                        {
+                            Text0wwp7n: 'mock-2',
+                            Integer0rzkwq: 2
+                        }
+                    ],
+                    removeState: [
+                        {
+                            Text0wwp7n: 'mock-2',
+                            Integer0rzkwq: 2
+                        }
+                    ]
+                };
+
+                form.values[field.id] = formValues.initialState;
+                expect(form.values[field.id]).toEqual(formValues.initialState);
+
+                field.removeRow(0);
+                expect(form.values[field.id]).toEqual(formValues.removeState);
+            });
+
+            it('should call onFormFieldChanged if form values contains field id', () => {
+                spyOn(field.form, 'onFormFieldChanged').and.callThrough();
+
+                field.removeRow(1);
+
+                expect(field.form.onFormFieldChanged).toHaveBeenCalled();
+            });
+
+            it('should NOT call onFormFieldChanged if form values does NOT contain field id', () => {
+                spyOn(field.form, 'onFormFieldChanged').and.callThrough();
+
+                field.form.values = {};
+                field.removeRow(1);
+
+                expect(field.form.onFormFieldChanged).not.toHaveBeenCalled();
+            });
+
+            it('should call onRepeatableSectionChanged', () => {
+                spyOn(field.form, 'onRepeatableSectionChanged').and.callThrough();
+
+                expect(field.form.onRepeatableSectionChanged).not.toHaveBeenCalled();
+
+                field.removeRow(1);
+
+                expect(field.form.onRepeatableSectionChanged).toHaveBeenCalled();
+            });
+        });
+
+        describe('disabled state', () => {
+            const textWidgetId = 'Text0wwp7n';
+
+            /**
+             *
+             * @param expectation expectation function
+             */
+            function checkChildrenWidgets(expectation: any) {
+                for (const row of field.rows) {
+                    for (const column of row.columns) {
+                        for (const child of column.fields) {
+                            expectation(child);
+                        }
+                    }
+                }
+            }
+            it('should make all children fields disabled if repeatable section is disabled', () => {
+                field.readOnly = true;
+
+                checkChildrenWidgets((child) => {
+                    expect(child.readOnly).toBeTruthy();
+                });
+            });
+
+            it('should allow for initial disabled children widgets if repeatable section is enabled', () => {
+                field = new FormFieldModel(form, jsonDisabled);
+
+                checkChildrenWidgets((child) => {
+                    if (child.id.startsWith(textWidgetId)) {
+                        expect(child.readOnly).toBeTruthy();
+                        return;
+                    }
+
+                    expect(child.readOnly).toBeFalsy();
+                });
+            });
+
+            it('should keep initial disabled children widgets if repeatable section is re-enabled', () => {
+                field = new FormFieldModel(form, jsonDisabled);
+                field.rows[0].columns[0].fields[0].readOnly = true;
+                field.readOnly = true;
+
+                checkChildrenWidgets((child) => {
+                    expect(child.readOnly).toBeTruthy();
+                });
+
+                field.readOnly = false;
+
+                checkChildrenWidgets((child) => {
+                    if (child.id.startsWith(textWidgetId)) {
+                        expect(child.readOnly).toBeTruthy();
+                        return;
+                    }
+
+                    expect(child.readOnly).toBeFalsy();
+                });
+            });
+        });
+
+        describe('widgets', () => {
+            describe('id property', () => {
+                let textWidget: FormFieldModel;
+
+                beforeEach(() => {
+                    textWidget = field.rows[0].columns[0].fields[0];
+                });
+
+                it('should set id to parent uid', () => {
+                    expect(textWidget.id).toBe(textWidget.parent.uid);
+                });
+
+                it('should NOT set id to json id', () => {
+                    const textWidgetJson = json.fields['1'][0];
+
+                    expect(textWidget.id).not.toBe(textWidgetJson.id);
+                });
+            });
+
+            describe('rule property', () => {
+                let conditionalDropdown: FormFieldModel;
+                let targetDropdown: FormFieldModel;
+
+                beforeEach(() => {
+                    conditionalDropdown = field.rows[0].columns[1].fields[1];
+                });
+
+                it('should set ruleOn property of rule to target id', () => {
+                    targetDropdown = field.rows[0].columns[0].fields[1];
+
+                    expect(conditionalDropdown.rule.ruleOn).toBe(targetDropdown.id);
+                });
+
+                it('should NOT set ruleOn property of rule to target json id', () => {
+                    const targetDropdownJson = json.fields['1'][1];
+
+                    expect(conditionalDropdown.rule.ruleOn).not.toBe(targetDropdownJson.id);
+                });
+            });
+        });
     });
 });

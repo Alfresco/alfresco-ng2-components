@@ -51,12 +51,13 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-// eslint-disable-next-line no-shadow
-export enum TasksListCloudPreferences {
-    columnOrder = 'tasks-list-cloud-columns-order',
-    columnsVisibility = 'tasks-list-cloud-columns-visibility',
-    columnsWidths = 'tasks-list-cloud-columns-widths'
-}
+export const TasksListCloudPreferences = {
+    columnOrder: 'tasks-list-cloud-columns-order',
+    columnsVisibility: 'tasks-list-cloud-columns-visibility',
+    columnsWidths: 'tasks-list-cloud-columns-widths'
+} as const;
+
+export type TasksListCloudPreferences = (typeof TasksListCloudPreferences)[keyof typeof TasksListCloudPreferences];
 
 const taskPresetsCloudDefaultModel = {
     default: [
@@ -193,16 +194,16 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
     protected isLoadingPreferences$ = new BehaviorSubject<boolean>(true);
 
     protected readonly destroyRef = inject(DestroyRef);
+    protected readonly appConfigService = inject(AppConfigService);
+    protected readonly taskCloudService = inject(TaskCloudService);
+    protected readonly userPreferences = inject(UserPreferencesService);
+    private readonly cloudPreferenceService: PreferenceCloudServiceInterface;
 
-    constructor(
-        appConfigService: AppConfigService,
-        private taskCloudService: TaskCloudService,
-        private userPreferences: UserPreferencesService,
-        presetKey: string,
-        private cloudPreferenceService: PreferenceCloudServiceInterface
-    ) {
-        super(appConfigService, presetKey, taskPresetsCloudDefaultModel);
-        this.size = userPreferences.paginationSize;
+    // eslint-disable-next-line @angular-eslint/prefer-inject
+    constructor(presetKey: string, cloudPreferenceService: PreferenceCloudServiceInterface) {
+        super(presetKey, taskPresetsCloudDefaultModel);
+        this.cloudPreferenceService = cloudPreferenceService;
+        this.size = this.userPreferences.paginationSize;
 
         this.pagination = new BehaviorSubject<PaginationModel>({
             maxItems: this.size,

@@ -4,7 +4,9 @@ export default {
     preset: '../../jest.preset.js',
     testEnvironment: 'jsdom',
     setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-    coverageDirectory: '../../../coverage/libs/js-api',
+    collectCoverage: true,
+    coverageReporters: ['html', ['text-summary', { file: 'summary.txt' }], 'text-summary'],
+    coverageDirectory: '../../coverage/js-api',
     moduleNameMapper: {
         '^pdfjs-dist$': 'pdfjs-dist/legacy/build/pdf'
     },

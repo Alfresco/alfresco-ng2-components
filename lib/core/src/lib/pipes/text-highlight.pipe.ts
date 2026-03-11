@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { HighlightTransformService, HighlightTransformResult } from '../common/services/highlight-transform.service';
 
 @Pipe({
     name: 'highlight'
 })
 export class HighlightPipe implements PipeTransform {
-    constructor(private highlightTransformService: HighlightTransformService) {}
+    private readonly highlightTransformService = inject(HighlightTransformService);
 
     transform(text: string, search: string): string {
         const highlightTransformResult: HighlightTransformResult = this.highlightTransformService.highlight(text, search);

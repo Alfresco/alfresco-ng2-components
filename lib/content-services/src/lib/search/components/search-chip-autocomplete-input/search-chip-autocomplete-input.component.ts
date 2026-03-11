@@ -33,18 +33,18 @@ import { ENTER } from '@angular/cdk/keycodes';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
-import { EMPTY, Observable, timer } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { debounce, startWith, tap } from 'rxjs/operators';
 import { AutocompleteOption } from '../../models/autocomplete-option.interface';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search-chip-autocomplete-input',
-    imports: [CommonModule, MatFormFieldModule, MatChipsModule, TranslatePipe, MatIconModule, ReactiveFormsModule, MatAutocompleteModule],
+    imports: [CommonModule, MatFormFieldModule, MatChipsModule, TranslatePipe, IconModule, ReactiveFormsModule, MatAutocompleteModule],
     templateUrl: './search-chip-autocomplete-input.component.html',
     styleUrls: ['./search-chip-autocomplete-input.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -77,7 +77,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnChanges {
     @Input()
     filter = (options: AutocompleteOption[], value: string): AutocompleteOption[] => {
         const filterValue = value.toLowerCase();
-        return options.filter((option) => option.value.toLowerCase().includes(filterValue)).slice(0, 15);
+        return options?.filter((option) => option.value.toLowerCase().includes(filterValue)).slice(0, 15) ?? [];
     };
 
     @Output()
@@ -104,11 +104,11 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnChanges {
             .pipe(
                 startWith(''),
                 tap(() => (this.activeAnyOption = false)),
-                debounce((value: string) => (value ? timer(300) : EMPTY)),
+                debounce(() => timer(300)),
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((value: string) => {
-                this.filteredOptions = value ? this.filter(this.autocompleteOptions, value) : [];
+                this.filteredOptions = this.filter(this.autocompleteOptions, value);
                 this.inputChanged.emit(value);
             });
         this.onReset$?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reset());
@@ -121,6 +121,9 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnChanges {
                 changes.autocompleteOptions.currentValue?.length > 0
                     ? this.filter(changes.autocompleteOptions.currentValue, this.formCtrl.value)
                     : [];
+        }
+        if (changes.preselectedOptions) {
+            this.selectedOptions = changes.preselectedOptions.currentValue ?? [];
         }
     }
 

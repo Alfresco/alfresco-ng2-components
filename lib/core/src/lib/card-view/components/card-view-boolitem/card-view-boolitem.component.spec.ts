@@ -16,13 +16,18 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
 import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator.directive';
+import { FormControl, NgModel } from '@angular/forms';
+import { MatError } from '@angular/material/form-field';
+import { Injector } from '@angular/core';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatErrorHarness } from '@angular/material/form-field/testing';
 
 describe('CardViewBoolItemComponent', () => {
     let fixture: ComponentFixture<CardViewBoolItemComponent>;
@@ -170,7 +175,7 @@ describe('CardViewBoolItemComponent', () => {
             spyOn(cardViewUpdateService, 'update');
             const property = { ...component.property };
 
-            component.changed({ checked: true } as MatCheckboxChange);
+            component.changed(true);
 
             expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, true);
         });
@@ -178,7 +183,7 @@ describe('CardViewBoolItemComponent', () => {
         it('should update the property value after a changed', async () => {
             component.property.value = true;
 
-            component.changed({ checked: false } as MatCheckboxChange);
+            component.changed(false);
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -200,6 +205,88 @@ describe('CardViewBoolItemComponent', () => {
             });
 
             testingUtils.clickByDataAutomationId('card-boolean-label-boolKey');
+        });
+    });
+
+    describe('Validation', () => {
+        let cardViewPropertyValidator: CardViewPropertyValidatorDirective;
+        let control: FormControl<string | number>;
+
+        const getCheckboxElementInjector = (): Injector => testingUtils.getByDirective(MatCheckbox).injector;
+
+        beforeEach(() => {
+            component.editable = true;
+            fixture.detectChanges();
+            const checkboxElementInjector = getCheckboxElementInjector();
+            cardViewPropertyValidator = checkboxElementInjector.get(CardViewPropertyValidatorDirective);
+            control = checkboxElementInjector.get(NgModel).control;
+        });
+
+        it('should have assigned correct property', () => {
+            expect(cardViewPropertyValidator.property).toBe(component.property);
+        });
+
+        it('should display correct error', () => {
+            cardViewPropertyValidator.validated.emit(['Error 1', 'Error 2']);
+            control.setErrors({
+                error1: 'Error 1',
+                error2: 'Error 2'
+            });
+            control.markAsTouched();
+
+            fixture.detectChanges();
+            expect(testingUtils.getByDirective(MatError).nativeElement.textContent).toBe('Error 1Error 2');
+        });
+
+        it('should join multiple errors with br tag in innerHTML', () => {
+            cardViewPropertyValidator.validated.emit(['Error 1', 'Error 2']);
+            control.setErrors({
+                error1: 'Error 1',
+                error2: 'Error 2'
+            });
+            control.markAsTouched();
+
+            fixture.detectChanges();
+            expect(testingUtils.getByDirective(MatError).nativeElement.innerHTML).toContain('Error 1<br>Error 2');
+        });
+
+        it('should not contain br tag when there is only one error', () => {
+            cardViewPropertyValidator.validated.emit(['Single Error']);
+            control.setErrors({
+                error1: 'Single Error'
+            });
+            control.markAsTouched();
+
+            fixture.detectChanges();
+            expect(testingUtils.getByDirective(MatError).nativeElement.innerHTML).not.toContain('<br>');
+            expect(testingUtils.getByDirective(MatError).nativeElement.textContent).toBe('Single Error');
+        });
+
+        it('should join three errors with br tags', () => {
+            cardViewPropertyValidator.validated.emit(['Error A', 'Error B', 'Error C']);
+            control.setErrors({
+                errorA: 'Error A',
+                errorB: 'Error B',
+                errorC: 'Error C'
+            });
+            control.markAsTouched();
+
+            fixture.detectChanges();
+            expect(testingUtils.getByDirective(MatError).nativeElement.innerHTML).toContain('Error A<br>Error B<br>Error C');
+        });
+
+        it('should set empty error string when validated with empty array', () => {
+            cardViewPropertyValidator.validated.emit([]);
+
+            expect(component.error).toBe('');
+        });
+
+        it('should not display error message when control is touched and has no errors', async () => {
+            control.markAsTouched();
+
+            fixture.detectChanges();
+            const errors = await loader.getAllHarnesses(MatErrorHarness);
+            expect(errors.length).toBe(0);
         });
     });
 });

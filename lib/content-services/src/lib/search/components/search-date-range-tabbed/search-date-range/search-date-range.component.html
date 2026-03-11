@@ -5,44 +5,72 @@
         {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.ANYTIME' | translate }}
       </mat-radio-button>
     </span>
-    <span class="adf-search-date-range-container-row">
+    <fieldset
+        class="adf-search-date-range-container-row"
+        aria-labelledby="adf-search-date-range-in-last-radio-button">
       <mat-radio-button [value]="DateRangeType.IN_LAST" data-automation-id="date-range-in-last">
-        {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.IN_LAST' | translate }}
+          <span id="adf-search-date-range-in-last-radio-button">
+              {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.IN_LAST' | translate }}
+          </span>
       </mat-radio-button>
-      <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-input-field" subscriptSizing="dynamic">
+      <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-input-field">
+        <mat-label id="adf-search-date-range-quantity-label">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.QUANTITY' | translate }}</mat-label>
         <input matInput [attr.aria-label]="'SEARCH.DATE_RANGE_ADVANCED.ARIA_LABEL.NUMBER_INPUT' | translate"
+               aria-labelledby="adf-search-date-range-quantity-label"
                type="number" min="1" formControlName="inLastValue"
                data-automation-id="date-range-in-last-input" (input)="narrowDownAllowedCharacters($event)"
                (keydown)="preventIncorrectNumberCharacters($event)">
         <mat-error *ngIf="form.controls.inLastValue.errors?.required">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.IN_LAST' | translate }}</mat-error>
       </mat-form-field>
-      <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-form-field-select" subscriptSizing="dynamic">
+      <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-form-field-select">
+        <mat-label>{{ 'SEARCH.SEARCH_PROPERTIES.ACCESSIBILITY.UNIT' | translate }}</mat-label>
         <mat-select formControlName="inLastValueType" data-automation-id="date-range-in-last-dropdown">
           <mat-option data-automation-id="date-range-in-last-option-days" [value]="InLastDateType.DAYS">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.DAYS' | translate }}</mat-option>
           <mat-option data-automation-id="date-range-in-last-option-weeks" [value]="InLastDateType.WEEKS">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.WEEKS' | translate }}</mat-option>
           <mat-option data-automation-id="date-range-in-last-option-months" [value]="InLastDateType.MONTHS">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.MONTHS' | translate }}</mat-option>
         </mat-select>
       </mat-form-field>
-    </span>
-    <span class="adf-search-date-range-container-row adf-search-date-range-container-row-date">
+    </fieldset>
+    <fieldset
+        class="adf-search-date-range-container-row adf-search-date-range-container-row-date"
+        aria-labelledby="adf-search-date-range-between-radio-button">
       <mat-radio-button [value]="DateRangeType.BETWEEN" data-automation-id="date-range-between">
-        {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.BETWEEN' | translate }}
+        <span id="adf-search-date-range-between-radio-button">
+            {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.BETWEEN' | translate }}
+        </span>
       </mat-radio-button>
-      <mat-form-field class="adf-search-date-range-form-field" subscriptSizing="dynamic">
-        <mat-date-range-input [rangePicker]="$any(picker)" [max]="convertedMaxDate">
-          <input matStartDate placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.START_DATE' | translate }}"
-                 data-automation-id="date-range-between-start-input" [formControl]="betweenStartDateFormControl" (change)="dateChanged($event, betweenStartDateFormControl)">
-          <input matEndDate placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.END_DATE' | translate }}"
-                 data-automation-id="date-range-between-end-input" [formControl]="betweenEndDateFormControl" (change)="dateChanged($event, betweenEndDateFormControl)">
+      <mat-form-field class="adf-search-date-range-form-field">
+        <mat-label
+            aria-hidden="true"
+            id="adf-search-date-range-between-range-label">
+            {{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.DATE_RANGE' | translate }}
+        </mat-label>
+        <mat-date-range-input [rangePicker]="$any(picker)" [max]="convertedMaxDate" #adfDateRangeInput>
+          <input
+              matStartDate placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.START_DATE' | translate }}"
+              data-automation-id="date-range-between-start-input"
+              [formControl]="betweenStartDateFormControl"
+              [required]="true"
+              (change)="dateChanged($event, betweenStartDateFormControl)"
+              aria-labelledby="adf-search-date-range-between-range-label"
+          >
+          <input
+              matEndDate
+              placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.END_DATE' | translate }}"
+              data-automation-id="date-range-between-end-input"
+              [formControl]="betweenEndDateFormControl"
+              [required]="true"
+              (change)="dateChanged($event, betweenEndDateFormControl)"
+              aria-labelledby="adf-search-date-range-between-range-label">
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker" data-automation-id="date-range-between-datepicker-toggle" />
         <mat-date-range-picker #picker />
 
-        <mat-error *ngIf="betweenStartDateFormControl.errors?.invalidDate">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.START_DATE.INVALID_FORMAT' | translate }}</mat-error>
+        <mat-error *ngIf="betweenStartDateFormControl.errors?.invalidDate">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.START_DATE.INVALID_FORMAT' | translate: { requiredFormat: dateFormat } }}</mat-error>
         <mat-error *ngIf="betweenStartDateFormControl.errors?.required">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.START_DATE.REQUIRED' | translate }}</mat-error>
-        <mat-error *ngIf="betweenEndDateFormControl.errors?.invalidDate">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.END_DATE.INVALID_FORMAT' | translate }}</mat-error>
+        <mat-error *ngIf="betweenEndDateFormControl.errors?.invalidDate">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.END_DATE.INVALID_FORMAT' | translate : { requiredFormat: dateFormat } }}</mat-error>
         <mat-error *ngIf="betweenEndDateFormControl.errors?.required">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.END_DATE.REQUIRED' | translate }}</mat-error>
       </mat-form-field>
-    </span>
+    </fieldset>
   </mat-radio-group>
 </div>

@@ -16,28 +16,29 @@
  */
 
 import { NgIf } from '@angular/common';
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
+import { IconModule } from '../../../icon/icon.module';
 
-declare const pdfjsLib: any;
+declare const pdfjsLib: { PasswordResponses: { NEED_PASSWORD: number; INCORRECT_PASSWORD: number } };
 
 @Component({
     selector: 'adf-pdf-viewer-password-dialog',
     templateUrl: './pdf-viewer-password-dialog.html',
     styleUrls: ['./pdf-viewer-password-dialog.scss'],
-    imports: [MatDialogModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, TranslatePipe, NgIf, MatButtonModule],
+    imports: [MatDialogModule, IconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, TranslatePipe, NgIf, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class PdfPasswordDialogComponent implements OnInit {
-    passwordFormControl: UntypedFormControl;
+    private readonly dialogRef = inject<MatDialogRef<PdfPasswordDialogComponent>>(MatDialogRef);
+    data = inject(MAT_DIALOG_DATA);
 
-    constructor(private dialogRef: MatDialogRef<PdfPasswordDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+    passwordFormControl: UntypedFormControl;
 
     ngOnInit() {
         this.passwordFormControl = new UntypedFormControl('', [Validators.required]);

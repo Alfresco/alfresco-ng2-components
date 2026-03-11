@@ -17,11 +17,11 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { Component } from '@angular/core';
 import { InheritPermissionDirective } from './inherited-button.directive';
 import { NgIf } from '@angular/common';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 const fakeNodeWithInherit: any = { id: 'fake-id', permissions: { isInheritanceEnabled: true }, allowableOperations: ['updatePermissions'] };
 const fakeNodeNoInherit: any = { id: 'fake-id', permissions: { isInheritanceEnabled: false }, allowableOperations: ['updatePermissions'] };
@@ -55,7 +55,7 @@ describe('InheritPermissionDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SimpleInheritedPermissionTestComponent]
+            imports: [NoopAuthModule, SimpleInheritedPermissionTestComponent]
         });
         fixture = TestBed.createComponent(SimpleInheritedPermissionTestComponent);
         component = fixture.componentInstance;

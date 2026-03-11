@@ -18,29 +18,19 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { AppConfigService } from '@alfresco/adf-core';
 import { ShellLayoutComponent } from './shell.component';
-import { Router, NavigationStart, RouterModule } from '@angular/router';
-import { of, Subject } from 'rxjs';
+import { provideRouter, RouterModule } from '@angular/router';
+import { of } from 'rxjs';
 import { ShellAppService, SHELL_APP_SERVICE } from '../../services/shell-app.service';
-
-class MockRouter {
-    private url = 'some-url';
-    private subject = new Subject();
-    events = this.subject.asObservable();
-    routerState = { snapshot: { url: this.url } };
-
-    navigateByUrl(url: string) {
-        const navigationStart = new NavigationStart(0, url);
-        this.subject.next(navigationStart);
-    }
-}
+import { RouterTestingHarness } from '@angular/router/testing';
 
 describe('AppLayoutComponent', () => {
     let fixture: ComponentFixture<ShellLayoutComponent>;
     let component: ShellLayoutComponent;
     let appConfig: AppConfigService;
     let shellAppService: ShellAppService;
+    let routerHarness: RouterTestingHarness;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         const shellService: ShellAppService = {
             pageHeading$: of('Title'),
             hideSidenavConditions: [],
@@ -55,13 +45,10 @@ describe('AppLayoutComponent', () => {
             imports: [RouterModule.forChild([]), ShellLayoutComponent],
             providers: [
                 {
-                    provide: Router,
-                    useClass: MockRouter
-                },
-                {
                     provide: SHELL_APP_SERVICE,
                     useValue: shellService
-                }
+                },
+                provideRouter([{ path: 'minimize', component: ShellLayoutComponent }])
             ]
         });
 
@@ -69,6 +56,7 @@ describe('AppLayoutComponent', () => {
         component = fixture.componentInstance;
         appConfig = TestBed.inject(AppConfigService);
         shellAppService = TestBed.inject(SHELL_APP_SERVICE);
+        routerHarness = await RouterTestingHarness.create();
     });
 
     beforeEach(() => {
@@ -162,5 +150,44 @@ describe('AppLayoutComponent', () => {
         component.hideMenu({ preventDefault: () => {} } as any);
 
         expect(component.layout.container.toggleMenu).toHaveBeenCalled();
+    });
+
+    it('should minimize menu when navigates to minimize url', async () => {
+        shellAppService.minimizeSidenavConditions = ['/minimize'];
+        component.layout.container = {
+            isMobileScreenSize: false,
+            isMenuMinimized: false,
+            toggleMenu: () => {}
+        };
+
+        spyOn(component.layout.container, 'toggleMenu');
+
+        fixture.detectChanges();
+        await routerHarness.navigateByUrl('/minimize');
+        fixture.detectChanges();
+
+        expect(component.minimizeSidenav).toBeTrue();
+        expect(component.layout.isMenuMinimized).toBeTrue();
+        expect(component.layout.container.toggleMenu).toHaveBeenCalled();
+    });
+
+    it('should not minimize menu again when previous and current route contain minimize url', async () => {
+        shellAppService.minimizeSidenavConditions = ['/minimize'];
+        component.layout.container = {
+            isMobileScreenSize: false,
+            isMenuMinimized: false,
+            toggleMenu: () => {}
+        };
+
+        fixture.detectChanges();
+        await routerHarness.navigateByUrl('/minimize?query=123');
+        fixture.detectChanges();
+
+        expect(component.minimizeSidenav).toBeTrue();
+
+        await routerHarness.navigateByUrl('/minimize?query=456');
+        fixture.detectChanges();
+
+        expect(component.minimizeSidenav).toBeFalse();
     });
 });

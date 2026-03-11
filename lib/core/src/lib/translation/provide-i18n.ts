@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { EnvironmentProviders, Provider } from '@angular/core';
-import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
+import { EnvironmentProviders, inject, provideAppInitializer, Provider } from '@angular/core';
+import { provideTranslateService, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateLoaderService } from './translate-loader.service';
 import { HttpClient } from '@angular/common/http';
 import { provideTranslations } from './translation.service';
@@ -32,6 +32,12 @@ export interface ProvideI18NConfig {
      * Example: [['adf-core', 'assets/adf-core'], ['my-translations', 'assets/my-translations']]
      */
     assets?: [string, string][];
+
+    /**
+     * An object of translations to be used for i18n for the default language.
+     * Example: { 'WELCOME_MESSAGE': 'Welcome!' }
+     */
+    translations?: Record<string, string>;
 }
 
 /**
@@ -44,6 +50,8 @@ export interface ProvideI18NConfig {
  * @returns An array of providers for the i18n service.
  */
 export function provideI18N(config?: ProvideI18NConfig): (Provider | EnvironmentProviders)[] {
+    const defaultLanguage = config?.defaultLanguage || 'en';
+
     const result: (Provider | EnvironmentProviders)[] = [
         provideTranslateService({
             loader: {
@@ -51,7 +59,7 @@ export function provideI18N(config?: ProvideI18NConfig): (Provider | Environment
                 useExisting: TranslateLoaderService,
                 deps: [HttpClient]
             },
-            defaultLanguage: config?.defaultLanguage || 'en'
+            defaultLanguage
         })
     ];
 
@@ -59,6 +67,16 @@ export function provideI18N(config?: ProvideI18NConfig): (Provider | Environment
         config.assets.forEach(([id, path]) => {
             result.push(provideTranslations(id, path));
         });
+    }
+
+    if (config?.translations) {
+        result.push(
+            provideAppInitializer(() => {
+                const translateService = inject(TranslateService);
+                translateService.setTranslation(defaultLanguage, config.translations, true);
+                return Promise.resolve();
+            })
+        );
     }
 
     return result;

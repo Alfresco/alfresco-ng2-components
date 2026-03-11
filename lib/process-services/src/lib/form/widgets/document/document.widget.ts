@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService, WidgetComponent } from '@alfresco/adf-core';
+import { WidgetComponent } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { ContentWidgetComponent } from './content.widget';
 
@@ -40,10 +40,6 @@ import { ContentWidgetComponent } from './content.widget';
 export class DocumentWidgetComponent extends WidgetComponent implements OnInit {
     fileId: string = null;
     hasFile: boolean = false;
-
-    constructor(public formService: FormService) {
-        super(formService);
-    }
 
     ngOnInit() {
         if (this.field) {

@@ -27,7 +27,7 @@ import {
     HttpSentEvent,
     HttpUserEvent
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { Authentication } from '../authentication';
@@ -36,7 +36,7 @@ export const SHOULD_ADD_AUTH_TOKEN = new HttpContextToken<boolean>(() => false);
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
-    constructor(private authService: Authentication) {}
+    private readonly authService = inject(Authentication);
 
     intercept(
         req: HttpRequest<any>,

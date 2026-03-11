@@ -18,6 +18,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { DataTableComponent } from '../components/datatable/datatable.component';
 import { HeaderFilterTemplateDirective } from './header-filter-template.directive';
+import { Injector, runInInjectionContext } from '@angular/core';
 
 describe('HeaderFilterTemplateDirective', () => {
     let fixture: ComponentFixture<DataTableComponent>;
@@ -30,7 +31,13 @@ describe('HeaderFilterTemplateDirective', () => {
         });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
-        directive = new HeaderFilterTemplateDirective(dataTable);
+
+        const injector = Injector.create({
+            providers: [{ provide: DataTableComponent, useValue: dataTable }],
+            parent: TestBed.inject(Injector)
+        });
+
+        directive = runInInjectionContext(injector, () => new HeaderFilterTemplateDirective());
     });
 
     afterEach(() => {

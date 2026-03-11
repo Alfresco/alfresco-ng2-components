@@ -41,9 +41,94 @@ export interface ServiceTaskQueryCloudRequestModel {
     startedDate?: Date;
 }
 
-export interface ServiceTaskIntegrationContextCloudModel extends ServiceTaskQueryCloudRequestModel {
-    errorDate?: Date;
+export interface ServiceTaskIntegrationContextCloudModel {
+    id?: string;
+    status?: string;
+    appName?: string;
+    appVersion?: string;
+    serviceName?: string;
+    serviceFullName?: string;
+    serviceVersion?: string;
+    serviceType?: string;
+    processDefinitionId?: string;
+    processDefinitionKey?: string;
+    processDefinitionVersion?: number;
+    processInstanceId?: string;
+    parentProcessInstanceId?: string;
+    rootProcessInstanceId?: string;
+    executionId?: string;
+    connectorType?: string;
+    clientId?: string;
+    clientName?: string;
+    clientType?: string;
+    businessKey?: string;
+    inBoundVariables?: Record<string, any>;
+    outBoundVariables?: Record<string, any>;
+    requestDate?: string;
+    resultDate?: string;
+    errorDate?: string;
+    errorCode?: string;
+    errorClassName?: string;
+    errorMessage?: string;
+    stackTraceElements?: ServiceTaskStackTraceElement[];
+}
+
+export interface ServiceTaskStackTraceElement {
+    classLoaderName?: string;
+    moduleName?: string;
+    moduleVersion?: string;
+    methodName?: string;
+    fileName?: string;
+    lineNumber?: number;
+    className?: string;
+    nativeMethod?: boolean;
+}
+
+export interface StackTraceElement {
+    className: string;
+    fileName: string;
+    lineNumber: number;
+}
+
+export interface IntegrationContextsPaginationModel {
+    skipCount: number;
+    maxItems: number;
+    count: number;
+    hasMoreItems: boolean;
+    totalItems: number;
+}
+
+export interface IntegrationContext {
+    id: string;
+    serviceName: string;
+    serviceFullName: string;
+    serviceVersion: string;
+    appName: string;
+    inBoundVariables: Record<string, any>;
+    outBoundVariables: Record<string, any>;
+    rootProcessInstanceId: string;
+    processInstanceId: string;
+    executionId: string;
+    processDefinitionId: string;
+    processDefinitionKey: string;
+    processDefinitionVersion: number;
+    clientId: string;
+    clientName: string;
+    clientType: string;
+    connectorType: string;
+    requestDate: string;
+    resultDate?: string;
+    stackTraceElements: StackTraceElement[];
+    status: string;
+    errorDate?: string;
     errorClassName?: string;
     errorCode?: string;
     errorMessage?: string;
+}
+
+export interface IntegrationContextsRequestModel {
+    appName: string;
+    maxItems: number;
+    skipCount: number;
+    sorting?: TaskListCloudSortingModel[];
 }

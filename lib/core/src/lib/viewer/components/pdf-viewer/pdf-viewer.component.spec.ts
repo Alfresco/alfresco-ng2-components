@@ -16,7 +16,7 @@
  */
 
 import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
-import { Component, SimpleChange, ViewChild } from '@angular/core';
+import { Component, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
@@ -27,9 +27,15 @@ import { UnitTestingUtils, provideCoreAuthTesting } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 import { PDFJS_MODULE, PDFJS_VIEWER_MODULE, PdfViewerComponent } from './pdf-viewer.component';
-import pdfjsLibraryMock from '../mock/pdfjs-lib.mock';
+import pdfjsLibraryMock, { annotations } from '../mock/pdfjs-lib.mock';
+import { TranslateService } from '@ngx-translate/core';
 
-declare const pdfjsLib: any;
+declare const pdfjsLib: {
+    PasswordResponses: {
+        NEED_PASSWORD: number;
+        INCORRECT_PASSWORD: number;
+    };
+};
 
 @Component({
     selector: 'adf-url-test-component',
@@ -40,7 +46,7 @@ class UrlTestComponent {
     @ViewChild(PdfViewerComponent, { static: true })
     pdfViewerComponent: PdfViewerComponent;
 
-    urlFile: any;
+    urlFile: string;
 
     constructor() {
         this.urlFile = './fake-test-file.pdf';
@@ -56,7 +62,7 @@ class UrlTestPasswordComponent {
     @ViewChild(PdfViewerComponent, { static: true })
     pdfViewerComponent: PdfViewerComponent;
 
-    urlFile: any;
+    urlFile: string;
 
     constructor() {
         this.urlFile = './fake-test-password-file.pdf';
@@ -71,7 +77,7 @@ class BlobTestComponent {
     @ViewChild(PdfViewerComponent, { static: true })
     pdfViewerComponent: PdfViewerComponent;
 
-    blobFile: any;
+    blobFile: Blob;
 
     constructor() {
         this.blobFile = this.createFakeBlob();
@@ -100,7 +106,7 @@ class BlobTestComponent {
 describe('Test PdfViewer component', () => {
     let component: PdfViewerComponent;
     let fixture: ComponentFixture<PdfViewerComponent>;
-    let change: any;
+    let change: SimpleChange;
     let dialog: MatDialog;
     let testingUtils: UnitTestingUtils;
 
@@ -264,17 +270,17 @@ describe('Test PdfViewer component', () => {
                 fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
                 componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
 
-                spyOn(dialog, 'open').and.callFake((_: any, context: any) => {
+                spyOn(dialog, 'open').and.callFake((_dialogComponent: unknown, context: { data: { reason: number } }) => {
                     if (context.data.reason === pdfjsLib.PasswordResponses.NEED_PASSWORD) {
                         return {
                             afterClosed: () => of('wrong_password')
-                        } as any;
+                        } as ReturnType<MatDialog['open']>;
                     }
 
                     if (context.data.reason === pdfjsLib.PasswordResponses.INCORRECT_PASSWORD) {
                         return {
                             afterClosed: () => of('password')
-                        } as any;
+                        } as ReturnType<MatDialog['open']>;
                     }
 
                     return undefined;
@@ -327,7 +333,7 @@ describe('Test PdfViewer component', () => {
                     () =>
                         ({
                             afterClosed: () => of('')
-                        }) as any
+                        }) as ReturnType<MatDialog['open']>
                 );
 
                 spyOn(componentUrlTestPasswordComponent.pdfViewerComponent.close, 'emit');
@@ -455,7 +461,9 @@ describe('Test PdfViewer - User interaction', () => {
 
         component.urlFile = './fake-test-file.pdf';
         fixture.detectChanges();
-        component.ngOnChanges({ urlFile: { currentValue: './fake-test-file.pdf' } } as any);
+        component.ngOnChanges({ 
+            urlFile: new SimpleChange(null, './fake-test-file.pdf', true)
+        });
 
         flush();
     }));
@@ -464,8 +472,8 @@ describe('Test PdfViewer - User interaction', () => {
         fixture.destroy();
     });
 
-    it('should init the viewer with annotation mode disabled', () => {
-        expect(pdfViewerSpy).toHaveBeenCalledWith(jasmine.objectContaining({ annotationMode: 0 }));
+    it('should init the viewer with annotation mode enabled', () => {
+        expect(pdfViewerSpy).toHaveBeenCalledWith(jasmine.objectContaining({ annotationMode: 1 }));
     });
 
     it('should Total number of pages be loaded', () => {
@@ -511,6 +519,21 @@ describe('Test PdfViewer - User interaction', () => {
         component.inputPage('2');
 
         expect(component.displayPage).toBe(2);
+    });
+
+    it('should configure PDF.js with the correct wasmUrl', () => {
+        const changes: SimpleChanges = {
+            blobFile: new SimpleChange(null, component.blobFile, true)
+        };
+
+        component.ngOnChanges(changes);
+
+        const getDocumentSpy = pdfjsLibraryMock.getDocument;
+
+        expect(getDocumentSpy).toHaveBeenCalled();
+        const loadingArgs = getDocumentSpy.calls.mostRecent().args[0];
+
+        expect(loadingArgs.wasmUrl).toBe('./wasm/');
     });
 
     describe('Zoom', () => {
@@ -599,5 +622,81 @@ describe('Test PdfViewer - User interaction', () => {
 
             expect(component.isPanelDisabled).toBe(false);
         });
+    });
+
+    describe('Annotations', () => {
+        const annotationImageAlt = 'Note Annotation';
+        const annotationAttribute = 'data-annotation-id';
+
+        let annotationElement: HTMLElement;
+        let annotationImageElement: HTMLImageElement;
+        let documentContainer: HTMLDivElement;
+
+        const dispatchAnnotationLayerRenderedEvent = (): void => {
+            pdfViewerSpy.calls.mostRecent().args[0].eventBus.dispatch('annotationlayerrendered', {
+                pageNumber: 1,
+                source: {
+                    div: documentContainer
+                }
+            });
+            tick();
+        };
+
+        const getAnnotationPopupElement = (): HTMLElement => annotationElement.querySelector('.adf-pdf-viewer-annotation-tooltip');
+
+        const getAnnotationTitle = (): string => annotationElement.querySelector('.title').textContent;
+
+        const getAnnotationDate = (): string => annotationElement.querySelector('.popupDate')?.textContent;
+
+        const getAnnotationContent = (): string => annotationElement.querySelector('.popupContent').textContent;
+
+        beforeEach(() => {
+            documentContainer = document.createElement('div');
+            annotationImageElement = document.createElement('img');
+            annotationElement = document.createElement('section');
+            annotationElement.setAttribute(annotationAttribute, 'R13');
+            annotationElement.append(annotationImageElement);
+            documentContainer.append(annotationElement);
+            spyOn(TestBed.inject(TranslateService), 'instant').withArgs('ADF_VIEWER.ARIA.NOTE_ANNOTATION_IMG').and.returnValue(annotationImageAlt);
+        });
+
+        it('should have corrected image in annotation popup', fakeAsync(() => {
+            dispatchAnnotationLayerRenderedEvent();
+            expect(annotationImageElement.src).toBe(
+                'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGV' +
+                    'pZ2h0PSIyNCI+PHBhdGggZD0iTTIgMmgxNHYxNEgyeiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0zIDNoMTJ2MTJIM3oiIGZpbGw9Ii' +
+                    'NmZmRiMDAiLz48cGF0aCBkPSJNNSA1aDh2OGgtOHoiIGZpbGw9IiNmZmJiMDAiLz48L3N2Zz4='
+            );
+            expect(annotationImageElement.alt).toBe(annotationImageAlt);
+        }));
+
+        it('should have corrected content in annotation popup', fakeAsync(() => {
+            dispatchAnnotationLayerRenderedEvent();
+            expect(getAnnotationTitle()).toBe('Annotation title');
+            const dateText = getAnnotationDate();
+            // Date format may vary by locale, so check it contains the key parts
+            expect(dateText).toMatch(/2026/);
+            expect(dateText).toMatch(/10:41:06|10:41:6/);
+            expect(getAnnotationContent()).toBe('Annotation contents');
+            expect(getAnnotationPopupElement()).toBeDefined();
+        }));
+
+        it('should have corrected content in annotation popup if there is no modification date', fakeAsync(() => {
+            annotations[0].modificationDate = null;
+            dispatchAnnotationLayerRenderedEvent();
+            expect(getAnnotationTitle()).toBe('Annotation title');
+            expect(getAnnotationDate()).toBeUndefined();
+            expect(getAnnotationContent()).toBe('Annotation contents');
+            expect(getAnnotationPopupElement()).toBeDefined();
+        }));
+
+        it('should not have corrected content', fakeAsync(() => {
+            const annotationPopupElement = document.createElement('section');
+            annotationPopupElement.setAttribute(annotationAttribute, 'R1');
+            documentContainer.append(annotationPopupElement);
+
+            dispatchAnnotationLayerRenderedEvent();
+            expect(getAnnotationPopupElement()).toBeNull();
+        }));
     });
 });

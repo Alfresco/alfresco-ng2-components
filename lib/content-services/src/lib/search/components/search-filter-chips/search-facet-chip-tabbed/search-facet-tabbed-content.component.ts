@@ -36,9 +36,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetTabbedContentComponent implements OnInit, OnChanges, FacetWidget {
-    private queryBuilder = inject(SearchQueryBuilderService);
-    private translationService = inject(TranslationService);
-    private searchFacetFiltersService = inject(SearchFacetFiltersService);
+    private readonly queryBuilder = inject(SearchQueryBuilderService);
+    private readonly translationService = inject(TranslationService);
+    private readonly searchFacetFiltersService = inject(SearchFacetFiltersService);
 
     @Input({ required: true })
     tabbedFacet: TabbedFacetField;
@@ -55,7 +55,7 @@ export class SearchFacetTabbedContentComponent implements OnInit, OnChanges, Fac
     @Output()
     displayValue$ = new EventEmitter<string>();
 
-    private resetSubject$ = new Subject<void>();
+    private readonly resetSubject$ = new Subject<void>();
 
     reset$ = this.resetSubject$.asObservable();
     chipIcon = 'keyboard_arrow_down';

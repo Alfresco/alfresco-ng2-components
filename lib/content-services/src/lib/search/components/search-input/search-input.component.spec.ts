@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { SearchConfiguration, SearchInputComponent } from '@alfresco/adf-content-services';
 import { AppConfigService } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { SearchInputComponent } from './search-input.component';
+import { SearchConfiguration } from '../../models';
 
 describe('SearchInputComponent', () => {
     let loader: HarnessLoader;
@@ -45,7 +45,7 @@ describe('SearchInputComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchInputComponent]
+            imports: [SearchInputComponent]
         });
 
         fixture = TestBed.createComponent(SearchInputComponent);

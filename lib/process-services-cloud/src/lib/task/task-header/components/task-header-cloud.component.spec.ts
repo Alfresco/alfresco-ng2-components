@@ -503,7 +503,7 @@ describe('TaskHeaderCloudComponent', () => {
 
             fixture.detectChanges();
             await fixture.whenStable();
-            const createdDateElement = fixture.debugElement.query(By.css('[data-automation-id="header-created"] .adf-property-value'));
+            const createdDateElement = fixture.debugElement.query(By.css('[data-automation-id="card-date-value-created"]'));
 
             expect(component.dateFormat).toEqual('full');
             expect(createdDateElement.nativeElement.innerText.trim()).toBe('Monday, December 17, 2018 at 12:00:00 AM GMT+00:00');

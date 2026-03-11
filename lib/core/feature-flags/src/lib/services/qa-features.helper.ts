@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { ApplicationRef, Inject, Injectable } from '@angular/core';
+import { ApplicationRef, Injectable, inject } from '@angular/core';
 import { FeaturesServiceToken, FlagSet } from '../interfaces/features.interface';
 import { DebugFeaturesService } from './debug-features.service';
 @Injectable()
 export class QaFeaturesHelper {
-    constructor(private applicationRef: ApplicationRef, @Inject(FeaturesServiceToken) private debugFeaturesService: DebugFeaturesService) {}
+    private readonly applicationRef = inject(ApplicationRef);
+    private readonly debugFeaturesService = inject<DebugFeaturesService>(FeaturesServiceToken);
 
     isOn(key: string): boolean {
         let isOn = false;

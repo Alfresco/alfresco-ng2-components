@@ -6,7 +6,11 @@
       "files": ["*.ts"],
       "extends": ["plugin:@nx/angular"],
       "parserOptions": {
-        "project": ["lib/content-services/tsconfig.lib.json", "lib/content-services/tsconfig.spec.json"],
+        "project": [
+          "lib/content-services/tsconfig.lib.json",
+          "lib/content-services/tsconfig.spec.json",
+          "lib/content-services/.storybook/tsconfig.json"
+        ],
         "createDefaultProgram": true
       },
       "rules": {
@@ -74,7 +78,6 @@
         "no-bitwise": "off",
         "no-duplicate-imports": "error",
         "no-multiple-empty-lines": "error",
-        "no-redeclare": "error",
         "no-return-await": "error",
         "rxjs/no-create": "error",
         "rxjs/no-subject-unsubscribe": "error",

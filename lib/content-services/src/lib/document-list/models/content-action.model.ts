@@ -50,10 +50,12 @@ export class ContentActionModel {
     }
 }
 
-export enum ContentActionTarget {
-    Document = 'document',
-    Folder = 'folder',
-    All = 'all'
-}
+export const ContentActionTarget = {
+    Document: 'document',
+    Folder: 'folder',
+    All: 'all'
+} as const;
+
+export type ContentActionTarget = (typeof ContentActionTarget)[keyof typeof ContentActionTarget];
 
 export type ContentActionHandler = (obj: any, target?: any, permission?: string) => any;

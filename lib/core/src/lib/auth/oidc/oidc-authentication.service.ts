@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { Observable, defer, EMPTY, combineLatest } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -33,17 +33,12 @@ import { HttpHeaders } from '@angular/common/http';
     providedIn: 'root'
 })
 export class OidcAuthenticationService extends BaseAuthenticationService {
-    constructor(
-        appConfig: AppConfigService,
-        cookie: CookieService,
-        private jwtHelperService: JwtHelperService,
-        private authStorage: OAuthStorage,
-        private oauthService: OAuthService,
-        private readonly authConfig: AuthConfigService,
-        private readonly auth: AuthService
-    ) {
-        super(appConfig, cookie);
-    }
+    private readonly jwtHelperService = inject(JwtHelperService);
+    private readonly authStorage = inject(OAuthStorage);
+    private readonly oauthService = inject(OAuthService);
+    private readonly authConfig = inject(AuthConfigService);
+
+    private readonly auth = inject(AuthService);
 
     /**
      * Observable that determines whether an SSO login should be performed.
@@ -55,6 +50,13 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
     shouldPerformSsoLogin$: Observable<boolean> = combineLatest([this.auth.authenticated$, this.auth.isDiscoveryDocumentLoaded$]).pipe(
         map(([authenticated, isDiscoveryDocumentLoaded]) => !authenticated && isDiscoveryDocumentLoaded)
     );
+
+    constructor() {
+        const appConfig = inject(AppConfigService);
+        const cookie = inject(CookieService);
+
+        super(appConfig, cookie);
+    }
 
     isLoggedIn(): boolean {
         return this.oauthService.hasValidAccessToken() && this.oauthService.hasValidIdToken();

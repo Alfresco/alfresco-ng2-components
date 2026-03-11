@@ -39,6 +39,8 @@ import {
     formNumberWidgetVisibility,
     formRequiredNumberWidget,
     mockSectionVisibilityForm,
+    mockRepeatableSectionForm01,
+    mockRepeatableSectionForm02,
     multilineWidgetFormVisibilityMock,
     numberMinMaxForm,
     numberNotRequiredForm,
@@ -46,7 +48,9 @@ import {
     radioWidgetVisibilityForm,
     textWidgetVisibility
 } from './mock/form-renderer.component.mock';
-import { FormModel, TextWidgetComponent } from './widgets';
+import { FormFieldModel, FormModel, TextWidgetComponent } from './widgets';
+import { MatDialog } from '@angular/material/dialog';
+import { of } from 'rxjs';
 
 const typeIntoInput = (testingUtils: UnitTestingUtils, selector: string, message: string) => {
     testingUtils.fillInputByCSS(selector, message);
@@ -87,6 +91,7 @@ describe('Form Renderer Component', () => {
     let formRenderingService: FormRenderingService;
     let rulesManager: FormRulesManager<any>;
     let testingUtils: UnitTestingUtils;
+    let dialog: MatDialog;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -96,6 +101,7 @@ describe('Form Renderer Component', () => {
         formRendererComponent = fixture.componentInstance;
         testingUtils = new UnitTestingUtils(fixture.debugElement);
         formService = TestBed.inject(FormService);
+        dialog = TestBed.inject(MatDialog);
         formRenderingService = TestBed.inject(FormRenderingService);
         rulesManager = fixture.debugElement.injector.get(FormRulesManager);
     });
@@ -607,24 +613,24 @@ describe('Form Renderer Component', () => {
 
     describe('Custom Widget', () => {
         it('Should be able to correctly display a custom process cloud widget', async () => {
-            formRenderingService.register({ bananaforevah: () => TextWidgetComponent }, true);
+            formRenderingService.register({ banana: () => TextWidgetComponent }, true);
             formRendererComponent.formDefinition = formService.parseForm(customWidgetForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
             expectElementToBeVisible(testingUtils, 'Text0vdi18');
-            expectElementToBeVisible(testingUtils, 'bananaforevah0k8gui');
+            expectElementToBeVisible(testingUtils, 'banana0k8gui');
         });
 
         it('Should be able to correctly use visibility in a custom process cloud widget ', async () => {
-            formRenderingService.register({ bananaforevah: () => TextWidgetComponent }, true);
+            formRenderingService.register({ banana: () => TextWidgetComponent }, true);
             formRendererComponent.formDefinition = formService.parseForm(customWidgetFormWithVisibility.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, 'bananaforevah0k8gui');
+            expectElementToBeHidden(testingUtils, 'banana0k8gui');
             typeIntoInput(testingUtils, '#Text0vdi18', 'no');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, 'bananaforevah0k8gui');
+            expectElementToBeVisible(testingUtils, 'banana0k8gui');
         });
     });
 
@@ -797,6 +803,146 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
 
             expectElementToBeVisible(testingUtils, mockSectionFieldId);
+        });
+    });
+
+    describe('Repeatable section', () => {
+        const repeatableSectionField = new FormFieldModel(new FormModel(), {
+            id: 'RepeatableSection0tbw2y',
+            name: 'Repeatable Section',
+            type: 'repeatable-section',
+            tab: null,
+            params: {
+                initialNumberOfRows: 2,
+                allowInitialRowsDelete: true,
+                maxNumberOfRows: 3
+            },
+            numberOfColumns: 2,
+            fields: {
+                '1': [
+                    {
+                        id: 'Text0wwp7n',
+                        name: 'Text',
+                        type: 'text',
+                        readOnly: false,
+                        required: false,
+                        colspan: 1,
+                        rowspan: 1,
+                        placeholder: null,
+                        minLength: 0,
+                        maxLength: 0,
+                        regexPattern: null,
+                        visibilityCondition: null,
+                        params: {
+                            existingColspan: 1,
+                            maxColspan: 2
+                        }
+                    }
+                ],
+                '2': [
+                    {
+                        id: 'Integer0rzkwq',
+                        name: 'Integer',
+                        type: 'integer',
+                        readOnly: false,
+                        colspan: 1,
+                        rowspan: 1,
+                        placeholder: null,
+                        minValue: null,
+                        maxValue: null,
+                        required: false,
+                        visibilityCondition: null,
+                        params: {
+                            existingColspan: 1,
+                            maxColspan: 2
+                        }
+                    }
+                ]
+            }
+        });
+
+        beforeEach(() => {
+            const formDefinition = new FormModel(mockRepeatableSectionForm01.formRepresentation);
+            fixture.componentInstance.formDefinition = formDefinition;
+
+            fixture.detectChanges();
+        });
+
+        it('should display repeatable-section field', () => {
+            const container = testingUtils.getByCSS('#field-RepeatableSection0tbw2y-container');
+
+            expect(container).toBeTruthy();
+        });
+
+        it('should remove row if confimation dialog is true', () => {
+            spyOn(dialog, 'open').and.returnValue({
+                beforeClosed: () => of(true)
+            } as any);
+
+            spyOn(repeatableSectionField, 'removeRow').and.callThrough();
+
+            const rowIndex = 0;
+
+            fixture.detectChanges();
+
+            fixture.componentInstance.displayDialogToRemoveRow(repeatableSectionField, rowIndex);
+
+            expect(dialog.open).toHaveBeenCalled();
+            expect(repeatableSectionField.removeRow).toHaveBeenCalledWith(rowIndex);
+        });
+
+        it('should NOT remove row if confirmation dialog is false', () => {
+            spyOn(dialog, 'open').and.returnValue({
+                beforeClosed: () => of(false)
+            } as any);
+
+            spyOn(repeatableSectionField, 'removeRow').and.callThrough();
+
+            const rowIndex = 0;
+
+            fixture.detectChanges();
+
+            fixture.componentInstance.displayDialogToRemoveRow(repeatableSectionField, rowIndex);
+
+            expect(dialog.open).toHaveBeenCalled();
+            expect(repeatableSectionField.removeRow).not.toHaveBeenCalled();
+        });
+
+        it('should display the correct number of initial rows', () => {
+            const rows = testingUtils.getAllByCSS('#field-RepeatableSection0tbw2y-container .adf-grid-list-container');
+
+            expect(rows.length).toBeTruthy(2);
+        });
+
+        describe('remove row button', () => {
+            it('should display remove button if allowed', () => {
+                const row = testingUtils.getByCSS('#field-RepeatableSection0tbw2y-container .adf-grid-list-container');
+
+                expect(row).toBeTruthy();
+
+                const removeRowButton = testingUtils.getByCSS(
+                    '#field-RepeatableSection0tbw2y-container .adf-grid-list-container .adf-grid-list-row-remove-button'
+                );
+
+                expect(removeRowButton).toBeTruthy();
+            });
+
+            it('should NOT display remove button if NOT allowed', () => {
+                const formDefinition = new FormModel(mockRepeatableSectionForm02.formRepresentation);
+                fixture.componentInstance.formDefinition = formDefinition;
+
+                fixture.detectChanges();
+
+                const row = testingUtils.getByCSS('#field-RepeatableSection0tbw2y-container .adf-grid-list-container');
+
+                expect(row).toBeTruthy();
+
+                const removeRowButton = testingUtils.getByCSS(
+                    '#field-RepeatableSection0tbw2y-container .adf-grid-list-container .adf-grid-list-row-remove-button'
+                );
+
+                expect(removeRowButton).toBeFalsy();
+            });
         });
     });
 });

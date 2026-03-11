@@ -64,7 +64,7 @@ export function buildCollectionParam(param: string[], collectionFormat: string):
 }
 
 export class AlfrescoApiClient implements LegacyHttpClient {
-    private eventEmitter = new EventEmitter();
+    private readonly eventEmitter = new EventEmitter();
 
     storage: Storage;
     host: string;

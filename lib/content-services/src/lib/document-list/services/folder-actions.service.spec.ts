@@ -21,8 +21,8 @@ import { FileNode, FolderNode } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentListService } from './document-list.service';
 import { FolderActionsService } from './folder-actions.service';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { PermissionModel } from '../models/permissions.model';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('FolderActionsService', () => {
     let service: FolderActionsService;
@@ -30,7 +30,7 @@ describe('FolderActionsService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [NoopAuthModule]
         });
         documentListService = TestBed.inject(DocumentListService);
         service = TestBed.inject(FolderActionsService);

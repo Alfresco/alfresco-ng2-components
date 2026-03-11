@@ -1,40 +1,42 @@
-<mat-action-list class="adf-process-filters" *ngIf="filters$ | async as filterList; else loading">
-    <button
-        *ngFor="let filter of filterList"
-        mat-list-item
-        (click)="onFilterClick(filter)"
-        [attr.aria-label]="filter.name | translate"
-        [id]="filter.id"
-        [attr.data-automation-id]="filter.key + '_filter'"
-        [class.adf-active]="currentFilter === filter"
-    >
-        <div class="adf-process-filters__entry">
-            <div>
-                <adf-icon
-                    data-automation-id="adf-filter-icon"
-                    *ngIf="showIcons"
-                    [value]="filter.icon" />
-                <span
-                    data-automation-id="adf-filter-label"
-                    class="adf-filter-action-button__label">
-                    {{ filter.name | translate }}
+@if (filters$ | async; as filterList) {
+    <mat-nav-list>
+        @for (filter of filterList; track filter.id) {
+            <a mat-list-item
+                [activated]="filter.id === currentRouteFilterId()"
+                [routerLink]="[PROCESSES_ROUTE]"
+                [queryParams]="{ filterId: filter.id }"
+                [attr.data-automation-id]="filter.key + '_filter'"
+                class="adf-process-filters__entry"
+                [class.adf-active]="filter.id === currentRouteFilterId()"
+                [attr.aria-current]="filter.id === currentRouteFilterId() ? 'page' : null"
+                [id]="filter.id"
+                [title]="filter.name ?? '' | translate"
+                [attr.aria-label]="filter.name ?? '' | translate"
+                (click)="onFilterClick(filter)">
+                <span matListItemTitle>
+                    {{ filter.name ?? '' | translate }}
                 </span>
-            </div>
-            <span
-                *ngIf="counters[filter.key]"
-                [attr.data-automation-id]="filter.key + '_filter-counter'"
-                class="adf-process-filters__entry-counter"
-                [class.adf-active]="isFilterUpdated(filter.key)"
-               >
-                {{ counters[filter.key] }}
-            </span>
-        </div>
-    </button>
-</mat-action-list>
-<ng-template #loading>
-    <ng-container>
-        <div class="adf-app-list-spinner">
-            <mat-spinner />
-        </div>
-    </ng-container>
-</ng-template>
+                @if (showIcons) {
+                    <mat-icon matListItemIcon
+                        data-automation-id="adf-filter-icon"
+                        [adf-icon]="filter.icon ?? ''"
+                        aria-hidden="true" />
+                }
+                @if (counters[filter.key ?? '']) {
+                    <span matListItemMeta
+                        [attr.data-automation-id]="filter.key + '_filter-counter'"
+                        class="adf-process-filters__entry-counter"
+                        [class.adf-active]="isFilterUpdated(filter.key ?? '')"
+                    >
+                        {{ counters[filter.key ?? ''] }}
+                    </span>
+                }
+            </a>
+        }
+    </mat-nav-list>
+} @else {
+    <div class="adf-app-list-spinner">
+        <mat-spinner [attr.aria-label]="'ADF_CLOUD_PROCESS_LIST.LOADING' | translate" aria-live="polite" />
+    </div>
+}
+

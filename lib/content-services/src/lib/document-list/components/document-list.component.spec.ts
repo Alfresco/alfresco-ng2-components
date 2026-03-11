@@ -23,6 +23,7 @@ import {
     DataColumnComponent,
     DataColumnListComponent,
     DataTableComponent,
+    NoopAuthModule,
     ObjectDataTableAdapter,
     ShowHeaderMode,
     ThumbnailService,
@@ -31,7 +32,7 @@ import {
 import { FavoritePaging, FavoritePagingList, Node, NodeEntry, NodePaging } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, Injector, QueryList, runInInjectionContext, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Injector, QueryList, runInInjectionContext, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { By } from '@angular/platform-browser';
@@ -50,8 +51,6 @@ import {
     mockNodePagingWithPreselectedNodes,
     mockPreselectedNodes
 } from '../../mock';
-import { ContentTestingModule } from '../../testing/content.testing.module';
-import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
 import { ImageResolver } from '../data/image-resolver.model';
 import { RowFilter } from '../data/row-filter.model';
 import { ShareDataRow } from '../data/share-data-row.model';
@@ -62,7 +61,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
 import { DocumentListComponent } from './document-list.component';
 import { CustomResourcesService, DocumentListService } from '../public-api';
-import { CommonModule } from '@angular/common';
 import { MatIconRegistry } from '@angular/material/icon';
 
 const mockDialog = {
@@ -99,8 +97,7 @@ describe('DocumentList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, DocumentListComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            imports: [NoopAuthModule, DocumentListComponent],
             providers: [{ provide: MatDialog, useValue: mockDialog }]
         });
         eventMock = {
@@ -1181,7 +1178,7 @@ describe('DocumentList', () => {
     it('should display [empty folder] template ', () => {
         fixture.detectChanges();
         runInInjectionContext(injector, () => {
-            documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock, null);
+            documentList.dataTable = TestBed.createComponent(DataTableComponent).componentInstance as DataTableComponent;
         });
         expect(documentList.dataTable).toBeDefined();
         expect(fixture.debugElement.query(By.css('adf-empty-list'))).not.toBeNull();
@@ -1202,7 +1199,7 @@ describe('DocumentList', () => {
 
     it('should empty folder NOT show the pagination', () => {
         runInInjectionContext(injector, () => {
-            documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock, null);
+            documentList.dataTable = TestBed.createComponent(DataTableComponent).componentInstance as DataTableComponent;
         });
 
         expect(documentList.isEmpty()).toBeTruthy();
@@ -1276,8 +1273,10 @@ describe('DocumentList', () => {
         documentList.onNodeDblClick(node);
     });
 
-    it('should load folder by ID on init', async () => {
+    it('should load folder by ID on init if isDataProvidedExternally is false', async () => {
         spyOn(documentList, 'loadFolder').and.stub();
+
+        documentList.isDataProvidedExternally = false;
 
         fixture.detectChanges();
 
@@ -1286,6 +1285,20 @@ describe('DocumentList', () => {
         await fixture.whenStable();
 
         expect(documentList.loadFolder).toHaveBeenCalled();
+    });
+
+    it('should NOT load folder by ID on init if isDataProvidedExternally is true', async () => {
+        spyOn(documentList, 'loadFolder').and.stub();
+
+        documentList.isDataProvidedExternally = true;
+
+        fixture.detectChanges();
+
+        documentList.ngOnChanges({ currentFolderId: new SimpleChange(undefined, '1d26e465-dea3-42f3-b415-faa8364b9692', true) });
+
+        await fixture.whenStable();
+
+        expect(documentList.loadFolder).not.toHaveBeenCalled();
     });
 
     it('should emit error when getFolderNode fails', (done) => {
@@ -1732,6 +1745,23 @@ describe('DocumentList', () => {
         expect(getEmptyFolderDragDropSubtitle()).toBeUndefined();
     });
 
+    it('should call loadFolderByNodeId with filters when they are provided', () => {
+        spyOn(documentListService, 'loadFolderByNodeId').and.callFake(() => of(new DocumentLoaderNode(null, { list: { pagination: {} } })));
+        documentList.filters = ['filter1', 'filter2'];
+        documentList.currentFolderId = '-recent-';
+        documentList.loadFolder();
+
+        fixture.detectChanges();
+        expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith(
+            documentList.currentFolderId,
+            documentList.DEFAULT_PAGINATION,
+            documentList.includeFields,
+            documentList.where,
+            documentList.orderBy,
+            documentList.filters
+        );
+    });
+
     describe('Preselect nodes', () => {
         beforeEach(() => {
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_created.svg`);
@@ -1969,7 +1999,7 @@ describe('DocumentList', () => {
 });
 
 @Component({
-    imports: [CommonModule, DocumentListComponent, CustomLoadingContentTemplateDirective],
+    imports: [DocumentListComponent, CustomLoadingContentTemplateDirective],
     template: `
         <adf-document-list #customDocumentList>
             <adf-custom-loading-content-template>
@@ -1996,7 +2026,7 @@ describe('DocumentListComponent rendering', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, CustomTemplateComponent]
+            imports: [NoopAuthModule, CustomTemplateComponent]
         });
         fixture = TestBed.createComponent(CustomTemplateComponent);
         component = fixture.componentInstance;

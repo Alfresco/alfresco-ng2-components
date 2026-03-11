@@ -17,9 +17,10 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, inject, InjectionToken, OnInit, SecurityContext, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormService } from '@alfresco/adf-core';
+import { Component, inject, InjectionToken, OnDestroy, OnInit, SecurityContext, ViewEncapsulation } from '@angular/core';
+import { BaseDisplayTextWidgetComponent } from '@alfresco/adf-core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 import { RichTextParserService } from '../../../services/rich-text-parser.service';
 
 export const RICH_TEXT_PARSER_TOKEN = new InjectionToken<RichTextParserService>('RichTextParserService', {
@@ -43,17 +44,58 @@ export const RICH_TEXT_PARSER_TOKEN = new InjectionToken<RichTextParserService>(
     },
     encapsulation: ViewEncapsulation.None
 })
-export class DisplayRichTextWidgetComponent extends WidgetComponent implements OnInit {
+export class DisplayRichTextWidgetComponent extends BaseDisplayTextWidgetComponent implements OnInit, OnDestroy {
     parsedHTML: string | Error;
 
     private readonly richTextParserService = inject(RICH_TEXT_PARSER_TOKEN);
     private readonly sanitizer = inject(DomSanitizer);
-
-    constructor(formService: FormService) {
-        super(formService);
-    }
+    private fieldChangedSubscription?: Subscription;
 
     ngOnInit(): void {
+        this.parseAndSanitize();
+
+        // Re-parse when field changes (after expressions are evaluated)
+        this.fieldChangedSubscription = this.fieldChanged.subscribe(() => {
+            this.parseAndSanitize();
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.fieldChangedSubscription?.unsubscribe();
+    }
+
+    protected storeOriginalValue(): void {
+        if (this.field) {
+            this.originalFieldValue = JSON.stringify(this.field.value);
+        }
+    }
+
+    protected evaluateExpressions(): void {
+        if (!this.field) {
+            return;
+        }
+
+        const value = JSON.parse(JSON.stringify(this.field.value));
+        this.applyExpressionsToBlocks(value);
+    }
+
+    protected reevaluateExpressions(): void {
+        if (!this.field || !this.originalFieldValue) {
+            return;
+        }
+
+        const value = JSON.parse(this.originalFieldValue);
+        this.applyExpressionsToBlocks(value);
+    }
+
+    private applyExpressionsToBlocks(value: any): void {
+        for (const block of value.blocks) {
+            block.data.text = this.resolveExpressions(block.data.text, true);
+        }
+        this.field.value = value;
+    }
+
+    private parseAndSanitize(): void {
         this.parsedHTML = this.richTextParserService.parse(this.field.value);
 
         if (this.parsedHTML instanceof Error) {

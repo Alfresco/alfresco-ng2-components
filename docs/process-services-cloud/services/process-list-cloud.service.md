@@ -44,7 +44,3 @@ For example :
 ```json
   "alfresco-deployed-apps" : [{"name": "simple-app"}]
 ```
-
-## See also
-
--   [App list cloud component](../components/app-list-cloud.component.md)

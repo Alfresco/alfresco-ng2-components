@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, effect, Input, OnInit, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import {
     DatetimeAdapter,
@@ -25,7 +25,7 @@ import {
     MatDatetimepickerModule
 } from '@mat-datetimepicker/core';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
-import { UserPreferencesService, UserPreferenceValues } from '../../../common/services/user-preferences.service';
+import { UserPreferencesService } from '../../../common/services/user-preferences.service';
 import { BaseCardView } from '../base-card-view';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { TranslationService } from '../../../translation/translation.service';
@@ -35,14 +35,13 @@ import { isValid } from 'date-fns';
 import { DateFnsUtils } from '../../../common/utils/date-fns-utils';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { IconModule } from '../../../icon/icon.module';
 
 @Component({
     providers: [
@@ -55,7 +54,7 @@ import { MatInputModule } from '@angular/material/input';
     imports: [
         CommonModule,
         TranslatePipe,
-        MatIconModule,
+        IconModule,
         MatDatetimepickerModule,
         MatChipsModule,
         MatInputModule,
@@ -70,6 +69,11 @@ import { MatInputModule } from '@angular/material/input';
     host: { class: 'adf-card-view-dateitem' }
 })
 export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit {
+    private readonly dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly clipboardService = inject(ClipboardService);
+    private readonly translateService = inject(TranslationService);
+
     @Input()
     displayEmpty = true;
 
@@ -83,25 +87,15 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     cardViewDateTimeControl: FormControl<Date> = new FormControl<Date>(null);
 
-    private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private dateAdapter: DateAdapter<Date>,
-        private userPreferencesService: UserPreferencesService,
-        private clipboardService: ClipboardService,
-        private translateService: TranslationService
-    ) {
+    constructor() {
         super();
+        // Use effect to react to locale signal changes (must be in injection context)
+        effect(() => {
+            this.property.locale = this.userPreferencesService.localeSignal();
+        });
     }
 
     ngOnInit() {
-        this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((locale) => {
-                this.property.locale = locale;
-            });
-
         (this.dateAdapter as AdfDateFnsAdapter).displayFormat = 'MMM DD';
 
         if (this.property.multivalued) {

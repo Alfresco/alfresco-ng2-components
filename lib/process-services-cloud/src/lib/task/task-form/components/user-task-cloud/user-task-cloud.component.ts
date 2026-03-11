@@ -67,6 +67,13 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     @Input()
     displayModeConfigurations: FormCloudDisplayModeConfiguration[];
 
+    /**
+     * Toggle to enable parent visibility check for validation.
+     * When enabled, fields inside hidden groups/sections will skip validation.
+     */
+    @Input()
+    enableParentVisibilityCheck: boolean = false;
+
     /** Toggle readonly state of the task. */
     @Input()
     readOnly = false;
@@ -181,7 +188,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     taskTypeEnum = UserTaskContentType;
     screenId: string;
 
-    private taskCloudService: TaskCloudService = inject(TaskCloudService);
+    private readonly taskCloudService: TaskCloudService = inject(TaskCloudService);
     private readonly taskTypeResolverService = inject(TaskTypeResolverService);
     private readonly destroyRef = inject(DestroyRef);
 
@@ -247,8 +254,10 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
         this.taskClaimed.emit(this.taskId);
     }
 
-    onCompleteTask(openNextTask: boolean = false): void {
-        this.loadTask();
+    onCompleteTask(openNextTask: boolean = false, taskType?: UserTaskType): void {
+        if (!taskType || taskType !== UserTaskContentType.Screen) {
+            this.loadTask();
+        }
         this.taskCompleted.emit(openNextTask);
     }
 

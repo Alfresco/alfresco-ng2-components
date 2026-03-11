@@ -1,5 +1,3 @@
-@use '../../mat-selectors.scss' as ms;
-
 .adf-library-dialog {
     .adf-library-dialog-content {
         padding: 0;
@@ -9,7 +7,6 @@
     .adf-library-dialog-radio-group {
         display: flex;
         flex-direction: column;
-        margin: 0;
     }
 
     .adf-library-dialog-radio-group .adf-library-dialog-radio-group-button {
@@ -18,47 +15,7 @@
 
     .adf-library-dialog-form-field {
         width: 100%;
-        padding-top: 9.5px;
-
-        &:first-of-type {
-            padding-top: 13.5px;
-        }
-
-        &:last-of-type {
-            padding-top: 4.5px;
-        }
-
-        #{ms.$mat-floating-label} {
-            -webkit-font-smoothing: subpixel-antialiased;
-        }
-
-        &#{ms.$mat-form-field-hide-placeholder} {
-            #{ms.$mat-floating-label} {
-                padding-top: 20px;
-            }
-        }
-
-        &-description {
-            &#{ms.$mat-form-field-hide-placeholder} {
-                #{ms.$mat-floating-label} {
-                    padding-top: 20px;
-                }
-            }
-        }
-
-        #{ms.$mat-form-field-infix} {
-            padding-bottom: 3.5px;
-        }
-
-        #{ms.$mat-form-field-error-wrapper} {
-            margin-left: -2px;
-            font-size: 10.5px;
-            -webkit-font-smoothing: subpixel-antialiased;
-
-            #{ms.$mat-form-field-error} {
-                height: 13.125px;
-            }
-        }
+        margin-bottom: 15px;
     }
 
     .adf-action-buttons {

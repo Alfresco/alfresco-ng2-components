@@ -4,6 +4,7 @@
   "sourceRoot": "lib/js-api",
   "projectType": "library",
   "prefix": "adf",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
@@ -12,8 +13,7 @@
       "options": {
         "outputPath": "dist/libs/js-api/typings",
         "main": "lib/js-api/src/index.ts",
-        "tsConfig": "lib/js-api/tsconfig/tsconfig.types.json",
-        "externalBuildTargets": ["build"]
+        "tsConfig": "lib/js-api/tsconfig/tsconfig.types.json"
       },
       "configurations": {
         "test": {
@@ -108,9 +108,9 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-          "jestConfig": "lib/js-api/jest.config.ts",
-          "passWithNoTests": true
-      }}
-  },
-  "tags": []
+        "jestConfig": "lib/js-api/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
 }

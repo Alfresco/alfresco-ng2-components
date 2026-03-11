@@ -32,7 +32,7 @@
                                  id="login-error"
                                  data-automation-id="login-error"
                                  class="adf-error  adf-error-message">
-                                <mat-icon class="adf-error-icon">warning</mat-icon>
+                                <mat-icon class="adf-error-icon" adf-icon="warning" />
                                 <span class="adf-login-error-message">
                                     {{ errorMsg | translate }}
                                 </span>
@@ -91,9 +91,7 @@
                                             (click)="toggleShowPassword($event)"
                                             (keyup.enter)="toggleShowPassword($event)"
                                             [attr.data-automation-id]="isPasswordShow ? 'hide_password' : 'show_password'">
-                                        <mat-icon class="adf-login-form-password-icon adf-login-password-icon">
-                                            {{ isPasswordShow ? 'visibility' : 'visibility_off' }}
-                                        </mat-icon>
+                                        <mat-icon class="adf-login-form-password-icon adf-login-password-icon" [adf-icon]="isPasswordShow ? 'visibility' : 'visibility_off'" />
                                     </button>
                                 </mat-form-field>
                                 <span class="adf-login-validation"
@@ -142,7 +140,7 @@
                                     <span class="adf-login-button-label">
                                         {{ 'LOGIN.BUTTON.WELCOME' | translate }}
                                     </span>
-                                    <mat-icon class="adf-welcome-icon">done</mat-icon>
+                                    <mat-icon class="adf-welcome-icon" adf-icon="done" />
                                 </div>
                             </button>
                             <div *ngIf="showRememberMe" class="adf-login__remember-me">

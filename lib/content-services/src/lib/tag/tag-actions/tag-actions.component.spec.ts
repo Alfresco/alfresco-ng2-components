@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TagActionsComponent } from './tag-actions.component';
 import { TagService } from '../services/tag.service';
 import { of } from 'rxjs';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('TagActionsComponent', () => {
     const dataTag = {
@@ -50,7 +49,7 @@ describe('TagActionsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, TagActionsComponent]
+            imports: [TagActionsComponent]
         });
         fixture = TestBed.createComponent(TagActionsComponent);
         tagService = TestBed.inject(TagService);

@@ -4,17 +4,17 @@ on:
   workflow_call:
     inputs:
       dry-run-flag:
-        description: 'enable dry-run on artifact push'
+        description: "enable dry-run on artifact push"
         required: false
         type: boolean
         default: true
       devel:
-        description: 'devel'
+        description: "devel"
         required: false
         type: boolean
         default: false
       cron-run:
-        description: 'disables jobs which should not run when cron runs e2es'
+        description: "disables jobs which should not run when cron runs e2es"
         required: false
         type: boolean
         default: false
@@ -33,36 +33,20 @@ concurrency:
 env:
   BASE_REF: ${{ github.base_ref }}
   HEAD_REF: ${{ github.head_ref }}
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  GITHUB_BRANCH: ${{ github.ref_name }}
-  GH_BUILD_DIR: ${{ github.workspace }}
   GH_COMMIT: ${{ github.sha }}
-  BUILD_ID: ${{ github.run_id }}
-  GH_RUN_NUMBER: ${{ github.run_attempt }}
   GH_BUILD_NUMBER: ${{ github.run_id }}
-  JOB_ID: ${{ github.run_id }}
   LOG_LEVEL: "ERROR"
-  S3_BUILD_BUCKET_SHORT_NAME: ${{ secrets.S3_BUILD_BUCKET_SHORT_NAME }}
   NODE_OPTIONS: "--max-old-space-size=5120"
-  DOCKER_REPOSITORY_DOMAIN: ${{ secrets.DOCKER_REPOSITORY_DOMAIN }}
-  DOCKER_REPOSITORY_USER: ${{ secrets.DOCKER_USERNAME }}
-  DOCKER_REPOSITORY_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  REPO_OWNER: "Alfresco"
-  REPO_NAME: "alfresco-ng2-components"
-  BUILT_LIBS_DIR: "./dist/libs"
-  NODE_MODULES_DIR: "./node_modules"
-  REDIRECT_URI: /
 
 jobs:
   pre-checks:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Ensure SHA pinned actions
-        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@9e9574ef04ea69da568d6249bd69539ccc704e74 # v4.0.0
+        uses: hyland/github-actions-ensure-sha-pinned-actions@1afac08cba4e5ea12263a46f49683570690ae3af # v1.2.0
 
       - name: Check package-lock.json version
         run: |
@@ -77,20 +61,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
 
       - name: Get branch name
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@bebd6c2fddd0a58ecf7f0acfc511a019f6afc180 # v9.2.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@40f2376b812403b51e0cea49eaff04c1b8d65cfd # v15.7.1
 
       - name: Save commit message
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@bebd6c2fddd0a58ecf7f0acfc511a019f6afc180 # v9.2.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@40f2376b812403b51e0cea49eaff04c1b8d65cfd # v15.7.1
+        with:
+          header-only: true
 
       - name: ci:force flag parser
         shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          ACTOR: ${{ github.actor }}
         run: |
-          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.actor }}" == "dependabot[bot]" ]; then
+          if [ "$EVENT_NAME" == "schedule" ] || [ "$ACTOR" == "dependabot[bot]" ]; then
             echo -e "\033[32mci:force check can be skipped\033[0m"
             skip_check="true"
           elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
@@ -107,16 +96,21 @@ jobs:
 
       - name: show pr number
         shell: bash
+        env:
+          PR_NUMBER: ${{ steps.action.outputs.number }}
         run: |
-          echo "PR: ${{ steps.action.outputs.number }}"
+          echo "PR: $PR_NUMBER"
 
       - name: check if pr is approved
         env:
           DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
           skip_check: "false"
+          EVENT_NAME: ${{ github.event_name }}
+          ACTOR: ${{ github.actor }}
+          PR_NUMBER: ${{ steps.action.outputs.number }}
         run: |
-          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.actor }}" == "dependabot[bot]" ]; then
+          if [ "$EVENT_NAME" == "schedule" ] || [ "$ACTOR" == "dependabot[bot]" ]; then
             echo -e "\033[32mci:force check can be skipped\033[0m"
             skip_check="true"
           elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
@@ -124,11 +118,11 @@ jobs:
             skip_check="true"
           fi
 
-          if [ "${{ github.actor }}" == "dependabot[bot]" ] || [ "${{ github.actor }}" == "alfresco-build" ]; then
-            echo -e "\033[32mCommit by ${{ github.actor }}. No need for approval.\033[0m"
+          if [ "$ACTOR" == "dependabot[bot]" ] || [ "$ACTOR" == "alfresco-build" ]; then
+            echo -e "\033[32mCommit by $ACTOR. No need for approval.\033[0m"
             skip_check="true"
           fi
-          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          if [ "$EVENT_NAME" == "schedule" ] || [ "$EVENT_NAME" == "workflow_dispatch" ]; then
             echo -e "\033[32mSchedule event\033[0m"
             skip_check="true"
           fi
@@ -140,7 +134,7 @@ jobs:
 
           if [ "$skip_check" == "false" ]; then
             echo "Checking PR approval"
-            prNumber=${{ steps.action.outputs.number }}
+            prNumber=$PR_NUMBER
             echo "PR: $prNumber"
             checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
             if [[ $checkApproval ]]; then
@@ -159,7 +153,7 @@ jobs:
     needs: [check-if-pr-is-approved, pre-checks]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
@@ -194,14 +188,16 @@ jobs:
             exclude: "insights,core,extensions,content-services,process-services$,eslint-plugin-eslint-angular,js-api"
     steps:
       - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: Run unit tests
+        env:
+          EXCLUDE_PATTERN: ${{ matrix.unit-tests.exclude }}
         run: |
-          /usr/bin/xvfb-run --auto-servernum npm run test:affected -- $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
+          /usr/bin/xvfb-run --auto-servernum npm run test:affected -- $NX_CALCULATION_FLAGS --exclude=$EXCLUDE_PATTERN
 
   lint:
     # long timeout required when cache has to be recreated
@@ -211,7 +207,7 @@ jobs:
     needs: [setup]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
@@ -226,12 +222,27 @@ jobs:
     needs: [setup]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - run: NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npm run build:affected -- $NX_CALCULATION_FLAGS --prod
+      - uses: ./.github/actions/upload-node-modules-and-artifacts
+
+  build-storybook:
+    timeout-minutes: 30
+    name: "Build storybook"
+    runs-on: ubuntu-latest
+    needs: [setup]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0 # Fetch all history for all tags and branches
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/download-node-modules-and-artifacts
+      - run: npm run build-storybook
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   PR-forbidden-labels:
@@ -240,7 +251,7 @@ jobs:
     steps:
       - id: checkoutRepo
         name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 1
       - name: PR contains forbidden labels
@@ -257,15 +268,27 @@ jobs:
               core.setFailed('The PR contains a forbidden label! You are not allowed to merge until the label is there.');
             }
       - name: Check value after
+        env:
+          STEP_RESULT: ${{ toJson(steps.pr-forbidden.*.result) }}
+          HAS_FAILURE: ${{ contains(toJson(steps.pr-forbidden.*.result), 'failure') }}
         run: |
-          echo "result ${{ toJson(steps.pr-forbidden.*.result) }}" && echo "result ${{ steps.pr-forbidden.*.result }}"
-          echo "result ${{ contains(toJson(steps.pr-forbidden.*.result), 'failure') }}"
+          echo "Step result: $STEP_RESULT"
+          echo "Has failure: $HAS_FAILURE"
 
   finalize:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     name: Final Results
-    needs: [check-if-pr-is-approved, pre-checks, setup, unit-tests, lint, build-libs]
+    needs:
+      [
+        check-if-pr-is-approved,
+        pre-checks,
+        setup,
+        unit-tests,
+        lint,
+        build-libs,
+        build-storybook,
+      ]
     steps:
       - name: Check job execution status
         if: >-

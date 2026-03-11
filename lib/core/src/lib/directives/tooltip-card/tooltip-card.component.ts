@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, SecurityContext } from '@angular/core';
+import { Component, Input, SecurityContext, inject } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
@@ -33,12 +33,12 @@ import { CommonModule } from '@angular/common';
     ]
 })
 export class TooltipCardComponent {
+    private readonly sanitizer = inject(DomSanitizer);
+
     @Input() image = '';
     @Input() text = '';
     @Input() htmlContent = '';
     @Input() width = '300';
-
-    constructor(private sanitizer: DomSanitizer) {}
 
     sanitizedHtmlContent(): string {
         return this.sanitizer.sanitize(SecurityContext.HTML, this.htmlContent);

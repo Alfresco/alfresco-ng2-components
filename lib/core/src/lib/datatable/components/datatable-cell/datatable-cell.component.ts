@@ -15,38 +15,38 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation, signal, computed, effect } from '@angular/core';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
 import { BehaviorSubject } from 'rxjs';
 import { DataTableService } from '../../services/datatable.service';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { ClipboardDirective } from '../../../clipboard/clipboard.directive';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TruncatePipe } from '../../../pipes/truncate.pipe';
+import { UserPreferencesService } from '../../../common/services/user-preferences.service';
 
 @Component({
     selector: 'adf-datatable-cell',
-    imports: [CommonModule, ClipboardDirective, TruncatePipe],
+    imports: [ClipboardDirective, TruncatePipe, AsyncPipe],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        <ng-container>
+        @let value = value$ | async;
+        @let displayValue = column?.maxTextLength ? (value | truncate: column?.maxTextLength) : value;
+
+        @if (copyContent) {
             <span
-                *ngIf="copyContent; else defaultCell"
                 adf-clipboard="CLIPBOARD.CLICK_TO_COPY"
                 [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'"
-                [attr.aria-label]="value$ | async"
-                [title]="tooltip"
+                [attr.aria-label]="value"
+                [title]="title()"
                 class="adf-datatable-cell-value"
-                >{{ column?.maxTextLength ? (value$ | async | truncate : column?.maxTextLength) : (value$ | async) }}</span
+                >{{ displayValue }}</span
             >
-        </ng-container>
-        <ng-template #defaultCell>
-            <span [title]="tooltip" class="adf-datatable-cell-value">{{
-                column?.maxTextLength ? (value$ | async | truncate : column?.maxTextLength) : (value$ | async)
-            }}</span>
-        </ng-template>
+        } @else {
+            <span [title]="title()" class="adf-datatable-cell-value">{{ displayValue }}</span>
+        }
     `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell' }
@@ -78,7 +78,27 @@ export class DataTableCellComponent implements OnInit {
 
     protected destroyRef = inject(DestroyRef);
     protected dataTableService = inject(DataTableService, { optional: true });
+    protected readonly userPreferencesService = inject(UserPreferencesService);
     value$ = new BehaviorSubject<any>('');
+
+    // Signal to track the raw computed title (without tooltip override)
+    protected rawComputedTitle = signal<string>('');
+
+    // Computed signal that automatically combines tooltip input with computed title
+    title = computed(() => this.tooltip || this.rawComputedTitle());
+
+    // Store the latest value for locale change re-computation
+    private latestValue: any = null;
+
+    constructor() {
+        // Listen to locale changes and re-compute the title with the latest value
+        effect(() => {
+            // Read the signal value to track changes
+            this.userPreferencesService.localeSignal?.();
+            // When locale changes, re-compute title using the stored latest value
+            this.recomputeTitle();
+        });
+    }
 
     ngOnInit() {
         this.updateValue();
@@ -88,13 +108,19 @@ export class DataTableCellComponent implements OnInit {
     protected updateValue() {
         if (this.column?.key && this.row && this.data) {
             const value = this.data.getValue(this.row, this.column, this.resolverFn);
-
             this.value$.next(value);
-
-            if (!this.tooltip) {
-                this.tooltip = value;
-            }
+            // Store the value for locale change re-computation and update the title
+            this.latestValue = value;
+            this.recomputeTitle();
         }
+    }
+
+    /**
+     * Re-computes the title based on the current latestValue.
+     * This is called both when the value changes (via updateValue) and when the locale changes (via effect).
+     */
+    private recomputeTitle(): void {
+        this.rawComputedTitle.set(this.computeTitle(this.latestValue));
     }
 
     private subscribeToRowUpdates() {
@@ -114,5 +140,23 @@ export class DataTableCellComponent implements OnInit {
 
     private getNestedPropertyValue(obj: any, path: string) {
         return path.split('.').reduce((source, key) => (source ? source[key] : ''), obj);
+    }
+
+    /**
+     * Computes the title/tooltip for the cell based on the value.
+     * Override this in derived classes to provide custom tooltip logic.
+     * Note: The tooltip input always takes precedence (handled by title signal).
+     *
+     * @param value - The cell value to compute the title for
+     * @returns The computed title string, or empty string if no title should be shown
+     */
+    protected computeTitle(value: string): string {
+        const rawValue = value;
+        const max = this.column?.maxTextLength;
+
+        if (typeof max === 'number' && max > 0 && rawValue?.length > max) {
+            return rawValue;
+        }
+        return '';
     }
 }

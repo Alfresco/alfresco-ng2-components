@@ -27,6 +27,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { addMinutes } from 'date-fns';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
+import { MatFormField } from '@angular/material/form-field';
 
 describe('CardViewDateItemComponent', () => {
     let loader: HarnessLoader;
@@ -64,14 +65,16 @@ describe('CardViewDateItemComponent', () => {
     afterEach(() => fixture.destroy());
 
     const getPropertyLabel = (): string => testingUtils.getInnerTextByCSS('.adf-property-label');
-    const getPropertyValue = (): string => testingUtils.getInnerTextByCSS('.adf-property-value');
-    const getDateTime = (): string => testingUtils.getInnerTextByCSS('.adf-datepicker-span-button');
+    const getPropertyValue = (): string => testingUtils.getInputByCSS('.adf-invisible-date-input').value;
+    const getDefaultValue = (): string =>
+        testingUtils.getInnerTextByDataAutomationId('card-' + component.property.type + '-value-' + component.property.key);
+    const getDateTime = (): string => testingUtils.getInnerTextByDataAutomationId('datepicker-label-toggle-' + component.property.key);
 
     it('should render the label and value', () => {
         fixture.detectChanges();
 
         expect(getPropertyLabel()).toBe('Date label');
-        expect(getPropertyValue().trim()).toBe('Jul 10, 2017');
+        expect(getPropertyValue().trim()).toBe('07/10/2017');
     });
 
     it('should NOT render the default as value if the value is empty, editable:false and displayEmpty is false', () => {
@@ -103,7 +106,7 @@ describe('CardViewDateItemComponent', () => {
         component.displayEmpty = true;
         fixture.detectChanges();
 
-        expect(getPropertyValue().trim()).toBe('FAKE-DEFAULT-KEY');
+        expect(getDefaultValue()).toBe('FAKE-DEFAULT-KEY');
     });
 
     it('should render the default as value if the value is empty and editable:true', () => {
@@ -148,8 +151,8 @@ describe('CardViewDateItemComponent', () => {
 
         const datePicker = testingUtils.getByDataAutomationId(`datepicker-${component.property.key}`);
         const datePickerToggle = testingUtils.getByDataAutomationId(`datepickertoggle-${component.property.key}`);
-        expect(datePicker).toBeNull('Datepicker should NOT be in DOM');
-        expect(datePickerToggle).toBeNull('Datepicker toggle should NOT be shown');
+        expect(datePicker.classes['cdk-visually-hidden']).toBeTrue();
+        expect(datePickerToggle.classes['cdk-visually-hidden']).toBeTrue();
     });
 
     it('should NOT render the picker and toggle in case of editable:true but (general) editable:false', () => {
@@ -160,8 +163,8 @@ describe('CardViewDateItemComponent', () => {
         expect(component.isEditable).toBe(false);
         const datePicker = testingUtils.getByDataAutomationId(`datepicker-${component.property.key}`);
         const datePickerToggle = testingUtils.getByDataAutomationId(`datepickertoggle-${component.property.key}`);
-        expect(datePicker).toBeNull('Datepicker should NOT be in DOM');
-        expect(datePickerToggle).toBeNull('Datepicker toggle should NOT be shown');
+        expect(datePicker.classes['cdk-visually-hidden']).toBeTrue();
+        expect(datePickerToggle.classes['cdk-visually-hidden']).toBeTrue();
     });
 
     it('should open the datepicker when clicking on the label', () => {
@@ -213,7 +216,7 @@ describe('CardViewDateItemComponent', () => {
         component.editable = false;
         fixture.detectChanges();
 
-        testingUtils.doubleClickByDataAutomationId(`card-dateitem-${component.property.key}`);
+        testingUtils.doubleClickByDataAutomationId('datepicker-label-toggle-' + component.property.key);
 
         fixture.detectChanges();
         expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Jul 10, 2017', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
@@ -370,14 +373,10 @@ describe('CardViewDateItemComponent', () => {
             component.editable = true;
             fixture.detectChanges();
 
-            const matFormField = await testingUtils.getMatFormField();
-            const host = await matFormField.host();
-            const floatLabel = await host.getAttribute('ng-reflect-float-label');
-
-            expect(floatLabel).toBe('always');
+            expect(testingUtils.getByDirective(MatFormField).componentInstance.floatLabel).toBe('always');
         });
 
-        it('should set floatLabel to null when property has no default value and is editable', async () => {
+        it('should set floatLabel to auto when property has no default value and is editable', async () => {
             component.property = new CardViewDateItemModel({
                 label: 'Date label',
                 value: new Date('07/10/2017'),
@@ -389,14 +388,10 @@ describe('CardViewDateItemComponent', () => {
             component.editable = true;
             fixture.detectChanges();
 
-            const matFormField = await testingUtils.getMatFormField();
-            const host = await matFormField.host();
-            const floatLabel = await host.getAttribute('ng-reflect-float-label');
-
-            expect(floatLabel).toBe(null);
+            expect(testingUtils.getByDirective(MatFormField).componentInstance.floatLabel).toBe('auto');
         });
 
-        it('should set floatLabel to null when property has null default value and is editable', async () => {
+        it('should set floatLabel to auto when property has null default value and is editable', async () => {
             component.property = new CardViewDateItemModel({
                 label: 'Date label',
                 value: new Date('07/10/2017'),
@@ -407,12 +402,7 @@ describe('CardViewDateItemComponent', () => {
             });
             component.editable = true;
             fixture.detectChanges();
-
-            const matFormField = await testingUtils.getMatFormField();
-            const host = await matFormField.host();
-            const floatLabel = await host.getAttribute('ng-reflect-float-label');
-
-            expect(floatLabel).toBe(null);
+            expect(testingUtils.getByDirective(MatFormField).componentInstance.floatLabel).toBe('auto');
         });
     });
 });

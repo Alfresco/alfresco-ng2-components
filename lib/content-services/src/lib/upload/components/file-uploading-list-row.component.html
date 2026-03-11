@@ -1,111 +1,113 @@
-<div class="adf-file-uploading-row">
-    <mat-icon *ngIf="mimeType === 'default'" matListItemIcon class="adf-file-uploading-row__type">
-        insert_drive_file
-    </mat-icon>
+<div class="adf-file-uploading-row" [attr.aria-label]="file.name + ' ' + file.status">
+  @if (mimeType === 'default') {
+    <mat-icon matListItemIcon class="adf-file-uploading-row__type" adf-icon="insert_drive_file" />
+  } @else {
+    <mat-icon svgIcon="adf:{{ mimeType }}" aria-hidden="true" />
+  }
 
-    <adf-icon *ngIf="mimeType !== 'default'" value="adf:{{ mimeType }}" />
+  <span
+    class="adf-file-uploading-row__name"
+    title="{{ file.name }}">
+    {{ file.name }}
+  </span>
 
-    <span
-        class="adf-file-uploading-row__name"
-        title="{{ file.name }}">
-        {{ file.name }}
+  @if (isUploadVersion()) {
+    <span class="adf-file-uploading-row__version" tabindex="0" >
+      <mat-chip color="primary"
+        [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.VERSION' | translate: { version:  versionNumber }"
+        [title]="'version' + versionNumber"
+      >{{ versionNumber }}</mat-chip>
     </span>
+  }
 
-    <span *ngIf="isUploadVersion()" class="adf-file-uploading-row__version" tabindex="0" >
-        <mat-chip color="primary"
-            [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.VERSION' | translate: { version:  versionNumber }"
-            [title]="'version' + versionNumber"
-        >{{ versionNumber }}</mat-chip>
-    </span>
-
+  @if (isUploading()) {
     <div
-        tabindex="0"
-        role="button"
-        #toggleIcon="toggleIcon"
-        adf-toggle-icon
-        (keyup.enter)="onCancel(file)"
-        (click)="onCancel(file)"
-        data-automation-id="cancel-upload-progress"
-        *ngIf="isUploading()"
-        [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.STOP_FILE_UPLOAD' | translate: { file: file.name }"
-        class="adf-file-uploading-row__group adf-file-uploading-row__group--toggle"
-        title="{{ 'ADF_FILE_UPLOAD.BUTTON.STOP_FILE' | translate }}">
+      tabindex="0"
+      role="button"
+      (mouseenter)="onToggleMouseEnter(toggleIconState)"
+      (mouseleave)="onToggleMouseLeave(toggleIconState)"
+      (focus)="onToggleFocus(toggleIconState)"
+      (blur)="onToggleBlur(toggleIconState)"
+      (keyup.enter)="onCancel(file)"
+      (click)="onCancel(file)"
+      data-automation-id="cancel-upload-progress"
+      [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.STOP_FILE_UPLOAD' | translate: { file: file.name }"
+      class="adf-file-uploading-row__group adf-file-uploading-row__group--toggle"
+      title="{{ 'ADF_FILE_UPLOAD.BUTTON.STOP_FILE' | translate }}">
 
-        <span class="adf-file-uploading-row__status" *ngIf="!toggleIcon.isToggled">
+      @if (toggleIconState.isToggled) {
+        <mat-icon class="adf-file-uploading-row__action adf-file-uploading-row__action--cancel" adf-icon="clear" />
+      } @else {
+        <span class="adf-file-uploading-row__status">
             {{ file.progress.loaded | adfFileSize }} / {{ file.progress.total | adfFileSize }}
         </span>
-
-        <mat-icon *ngIf="toggleIcon.isToggled"
-            class="adf-file-uploading-row__action adf-file-uploading-row__action--cancel">
-            clear
-        </mat-icon>
+      }
     </div>
+  }
 
+  @if (isUploadComplete()) {
     <button mat-icon-button
-        adf-toggle-icon
-        #toggleIcon="toggleIcon"
-        *ngIf="isUploadComplete()"
-        class="adf-file-uploading-row__group"
-        [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.UPLOAD_SUCCESSFUL' | translate: { file: file.name }"
-        title="{{ 'ADF_FILE_UPLOAD.BUTTON.UPLOAD_SUCCESSFUL' | translate }}">
-
-        <mat-icon
-            class="adf-file-uploading-row__status adf-file-uploading-row__status--done">
-            check_circle
-        </mat-icon>
+      (mouseenter)="onToggleMouseEnter(toggleIconState)"
+      (mouseleave)="onToggleMouseLeave(toggleIconState)"
+      (focus)="onToggleFocus(toggleIconState)"
+      (blur)="onToggleBlur(toggleIconState)"
+      class="adf-file-uploading-row__group"
+      [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.UPLOAD_SUCCESSFUL' | translate: { file: file.name }"
+      title="{{ 'ADF_FILE_UPLOAD.BUTTON.UPLOAD_SUCCESSFUL' | translate }}">
+      <mat-icon class="adf-file-uploading-row__status adf-file-uploading-row__status--done" adf-icon="check_circle" />
     </button>
+  }
 
+  @if (isUploadVersionComplete()) {
     <div
-        *ngIf="isUploadVersionComplete()"
-        class="adf-file-uploading-row__file-version"
-        [attr.aria-label]="'ADF_FILE_UPLOAD.STATUS.FILE_DONE_STATUS' | translate"
-        >
-        <mat-icon
-            matListItemIcon
-            class="adf-file-uploading-row__status--done">
-            check_circle
-        </mat-icon>
+      class="adf-file-uploading-row__file-version"
+      [attr.aria-label]="'ADF_FILE_UPLOAD.STATUS.FILE_DONE_STATUS' | translate"
+      >
+      <mat-icon class="adf-file-uploading-row__status--done" adf-icon="check_circle" matListItemIcon />
     </div>
+  }
 
+  @if (canCancelUpload()) {
     <button
-        adf-toggle-icon
-        #toggleIconCancel="toggleIcon"
-        mat-icon-button
-        *ngIf="canCancelUpload()"
-        (click)="onCancel(file)"
-        data-automation-id="cancel-upload-queue"
-        class="adf-file-uploading-row__group"
-        title="{{ 'ADF_FILE_UPLOAD.BUTTON.STOP_FILE' | translate }}"
-        [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.STOP_FILE' | translate: { file: file.name }">
-        <mat-icon
-            *ngIf="!toggleIconCancel.isToggled"
-            class="adf-file-uploading-row__status adf-file-uploading-row__status--pending">
-            schedule
-        </mat-icon>
+      (mouseenter)="onToggleMouseEnter(toggleIconCancelState)"
+      (mouseleave)="onToggleMouseLeave(toggleIconCancelState)"
+      (focus)="onToggleFocus(toggleIconCancelState)"
+      (blur)="onToggleBlur(toggleIconCancelState)"
+      mat-icon-button
+      (click)="onCancel(file)"
+      data-automation-id="cancel-upload-queue"
+      class="adf-file-uploading-row__group"
+      title="{{ 'ADF_FILE_UPLOAD.BUTTON.STOP_FILE' | translate }}"
+      [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.STOP_FILE' | translate: { file: file.name }">
 
-        <mat-icon
-            *ngIf="toggleIconCancel.isToggled"
-            class="adf-file-uploading-row__action adf-file-uploading-row__action--remove">
-            remove_circle
-        </mat-icon>
+      @if (toggleIconCancelState.isToggled) {
+        <mat-icon class="adf-file-uploading-row__action adf-file-uploading-row__action--remove" adf-icon="remove_circle" />
+      } @else {
+        <mat-icon class="adf-file-uploading-row__status adf-file-uploading-row__status--pending" adf-icon="schedule" />
+      }
     </button>
+  }
 
+  @if (isUploadError()) {
+    @let uploadErrorLabel = getFileUploadErrorKey(file.errorCode) | translate;
     <div
-        role="status"
-        *ngIf="isUploadError()"
-        class="adf-file-uploading-row__block adf-file-uploading-row__status--error">
-        <mat-icon matListItemIcon
-            [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.UPLOAD_FILE_ERROR' | translate: { error: file.errorCode | adfFileUploadError }"
-            [title]="file.errorCode | adfFileUploadError">
-            report_problem
-        </mat-icon>
+      role="status"
+      class="adf-file-uploading-row__block adf-file-uploading-row__status--error">
+      <mat-icon
+        [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.UPLOAD_FILE_ERROR' | translate: { error: uploadErrorLabel }"
+        [title]="uploadErrorLabel"
+        adf-icon="report_problem"
+        matListItemIcon
+        />
     </div>
+  }
 
+  @if (showCancelledStatus()) {
     <div
-        [attr.aria-label]="'ADF_FILE_UPLOAD.STATUS.FILE_CANCELED_STATUS' | translate"
-        role="status"
-        *ngIf="showCancelledStatus()"
-        class="adf-file-uploading-row__block adf-file-uploading-row__status--cancelled">
-        {{ 'ADF_FILE_UPLOAD.STATUS.FILE_CANCELED_STATUS' | translate }}
+      [attr.aria-label]="'ADF_FILE_UPLOAD.STATUS.FILE_CANCELED_STATUS' | translate"
+      role="status"
+      class="adf-file-uploading-row__block adf-file-uploading-row__status--cancelled">
+      {{ 'ADF_FILE_UPLOAD.STATUS.FILE_CANCELED_STATUS' | translate }}
     </div>
+  }
 </div>

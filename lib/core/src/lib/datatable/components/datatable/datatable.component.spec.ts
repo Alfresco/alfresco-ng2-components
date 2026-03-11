@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, NO_ERRORS_SCHEMA, QueryList, SimpleChange, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, QueryList, SimpleChange, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { DataColumn } from '../../data/data-column.model';
@@ -36,6 +36,8 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { provideRouter } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { DataTableAdapter } from '@alfresco/adf-core';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 @Component({
     selector: 'adf-custom-column-template-component',
@@ -144,6 +146,8 @@ describe('DataTable', () => {
 
         expect(doubleClickCount).toBe(1);
     };
+
+    const getColumnsHeadersElements = (): DebugElement[] => testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -389,24 +393,66 @@ describe('DataTable', () => {
         });
     });
 
-    it('should emit "sorting-changed" DOM event', (done) => {
-        const column = new ObjectDataColumn({ key: 'name', sortable: true, direction: 'asc', sortingKey: 'displayName' });
+    it('should emit "sorting-changed" DOM event with correct parameters if sortingKey is missing', () => {
+        const column = new ObjectDataColumn({ key: 'name', sortable: true, direction: 'desc' });
         dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [column]);
-        dataTable.data.setSorting(new DataSorting('name', 'desc'));
-
-        fixture.nativeElement.addEventListener('sorting-changed', (event: CustomEvent) => {
-            expect(event.detail.key).toBe('name');
-            expect(event.detail.sortingKey).toBe('displayName');
-            expect(event.detail.direction).toBe('asc');
-            done();
-        });
+        dataTable.data.setSorting(new DataSorting('name', 'asc'));
+        spyOn(fixture.nativeElement, 'dispatchEvent');
 
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
-        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
 
-        headerColumns[0].nativeElement.click();
+        getColumnsHeadersElements()[0].nativeElement.click();
         fixture.detectChanges();
+        expect(fixture.nativeElement.dispatchEvent).toHaveBeenCalledWith(
+            jasmine.objectContaining({
+                type: 'sorting-changed',
+                detail: {
+                    key: 'name',
+                    sortingKey: undefined,
+                    direction: 'desc'
+                },
+                bubbles: true
+            })
+        );
+    });
+
+    it('should emit "sorting-changed" DOM event with correct parameters if sortingKey exists', () => {
+        const column = new ObjectDataColumn({ key: 'name', sortable: true, direction: 'desc', sortingKey: 'displayName' });
+        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [column]);
+        dataTable.data.setSorting(new DataSorting('displayName', 'asc'));
+        spyOn(fixture.nativeElement, 'dispatchEvent');
+
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
+
+        getColumnsHeadersElements()[0].nativeElement.click();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.dispatchEvent).toHaveBeenCalledWith(
+            jasmine.objectContaining({
+                type: 'sorting-changed',
+                detail: {
+                    key: 'name',
+                    sortingKey: 'displayName',
+                    direction: 'desc'
+                },
+                bubbles: true
+            })
+        );
+    });
+
+    it('should fallback to column sortingKey if key is missing', () => {
+        const sorting = new DataSorting('displayName', 'asc');
+        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
+        dataTable.data.setSorting(sorting);
+
+        const column1 = new ObjectDataColumn({ key: 'name', sortable: true, direction: 'desc', sortingKey: 'displayName' });
+        const column2 = new ObjectDataColumn({ key: 'displayName', sortable: true, direction: 'desc', sortingKey: 'name' });
+        const column3 = new ObjectDataColumn({ key: 'other', sortable: true, direction: 'desc', sortingKey: 'other' });
+
+        expect(dataTable.isColumnSortActive(column1)).toBeTrue();
+        expect(dataTable.isColumnSortActive(column2)).toBeTrue();
+        expect(dataTable.isColumnSortActive(column3)).toBeFalse();
     });
 
     it('should change the rows on changing of the data', () => {
@@ -831,26 +877,41 @@ describe('DataTable', () => {
         const adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
-        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
-        headerColumns[0].nativeElement.click();
+        getColumnsHeadersElements()[0].nativeElement.click();
         fixture.detectChanges();
 
         expect(adapter.setSorting).not.toHaveBeenCalled();
     });
 
-    it('should set sorting upon column header clicked', () => {
+    it('should set sorting upon column header clicked when sortingKey is missing', () => {
         dataTable.data = new ObjectDataTableAdapter([{ name: '1' }], [new ObjectDataColumn({ key: 'column_1', sortable: true })]);
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
         const adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
-        spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'desc', { numeric: true }));
+        spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'asc', { numeric: true }));
 
-        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
-        headerColumns[0].nativeElement.click();
+        getColumnsHeadersElements()[0].nativeElement.click();
         fixture.detectChanges();
 
-        expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'asc', { numeric: true }));
+        expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'desc', { numeric: true }));
+    });
+
+    it('should set sorting upon column header clicked when sortingKey exists', () => {
+        dataTable.data = new ObjectDataTableAdapter(
+            [{ name: '1' }],
+            [new ObjectDataColumn({ key: 'column_1', sortable: true, sortingKey: 'columnSortingKey' })]
+        );
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
+        const adapter = dataTable.data;
+        spyOn(adapter, 'setSorting').and.callThrough();
+        spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('columnSortingKey', 'asc', { numeric: true }));
+
+        getColumnsHeadersElements()[0].nativeElement.click();
+        fixture.detectChanges();
+
+        expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'desc', { numeric: true }));
     });
 
     it('should invert sorting upon column header clicked', () => {
@@ -862,7 +923,7 @@ describe('DataTable', () => {
         const sorting = new DataSorting('column_1', 'asc', { numeric: true });
         spyOn(adapter, 'setSorting').and.callThrough();
         spyOn(adapter, 'getSorting').and.returnValue(sorting);
-        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
+        const headerColumns = getColumnsHeadersElements();
         headerColumns[0].nativeElement.click();
         fixture.detectChanges();
 
@@ -885,8 +946,7 @@ describe('DataTable', () => {
         dataTable.ngAfterViewInit();
 
         const [col1, col2] = dataTable.getSortableColumns();
-        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
-        headerColumns[1].nativeElement.click();
+        getColumnsHeadersElements()[1].nativeElement.click();
         fixture.detectChanges();
 
         expect(dataTable.isColumnSortActive(col1)).toBe(false);
@@ -1395,6 +1455,33 @@ describe('DataTable', () => {
         expect(rows[1].isSelected).toBeTrue();
     });
 
+    it('should call stopPropagation on checkbox keydown enter event', () => {
+        const petRows = [{ pet: 'dog' }, { pet: 'cat' }];
+        dataTable.multiselect = true;
+        dataTable.data = new ObjectDataTableAdapter(petRows, [new ObjectDataColumn({ key: 'pet' })]);
+        dataTable.ngOnChanges({ rows: new SimpleChange(null, petRows, false) });
+        fixture.detectChanges();
+
+        const checkboxElement = testingUtils.getByCSS('[data-adf-datatable-row-checkbox]').nativeElement as HTMLElement;
+
+        const enterEvent = new KeyboardEvent('keydown', {
+            key: 'Enter',
+            code: 'Enter',
+            bubbles: true,
+            cancelable: true
+        });
+
+        const stopPropagationSpy = jasmine.createSpy('stopPropagationSpy');
+
+        Object.assign(enterEvent, {
+            stopPropagation: stopPropagationSpy
+        });
+
+        checkboxElement.dispatchEvent(enterEvent);
+
+        expect(stopPropagationSpy).toHaveBeenCalled();
+    });
+
     it('should be able to display column of type boolean', () => {
         dataTable.data = new ObjectDataTableAdapter(mockCarsData, mockCarsSchemaDefinition);
 
@@ -1515,6 +1602,28 @@ describe('Accessibility', () => {
     let dataTable: DataTableComponent;
     let columnCustomTemplate: TemplateRef<any>;
     let testingUtils: UnitTestingUtils;
+    let loader: HarnessLoader;
+
+    const setupAndCheckHeaderColumns = (sortable: boolean, selector: string, assertions: (element: DebugElement | null) => void) => {
+        dataTable.showHeader = ShowHeaderMode.Always;
+        const dataRows = [{ name: 'name1' }];
+
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, sortable })]);
+
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
+
+        const element = testingUtils.getByCSS(selector);
+        assertions(element);
+    };
+
+    const headerCellSelector = '.adf-datatable-cell-header';
+    const bodyCellSelector = '.adf-datatable-cell';
+    const headerCellContentSelector = '.adf-datatable-cell-header-content';
 
     const focusTrapFactory = jasmine.createSpyObj('ConfigurableFocusTrapFactory', ['create']);
     const focusTrap = jasmine.createSpyObj('ConfigurableFocusTrap', ['focusInitialElement', 'destroy']);
@@ -1522,13 +1631,13 @@ describe('Accessibility', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [CustomColumnTemplateComponent],
-            providers: [{ provide: ConfigurableFocusTrapFactory, useValue: focusTrapFactory }],
-            schemas: [NO_ERRORS_SCHEMA]
+            providers: [{ provide: ConfigurableFocusTrapFactory, useValue: focusTrapFactory }]
         });
         columnCustomTemplate = TestBed.createComponent(CustomColumnTemplateComponent).componentInstance.templateRef;
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         testingUtils = new UnitTestingUtils(fixture.debugElement);
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -1641,78 +1750,113 @@ describe('Accessibility', () => {
 
             expect(document.activeElement?.getAttribute('data-automation-id')).toBe('datatable-row-0');
         });
+    });
 
-        it('should select header row when `showHeader` is `Always`', () => {
-            dataTable.showHeader = ShowHeaderMode.Always;
-
-            dataTable.ngOnChanges({
-                rows: new SimpleChange(null, dataRows, false)
+    describe('Row cells focus management', () => {
+        it('should remove header cell focus when cell is not sortable', () => {
+            setupAndCheckHeaderColumns(false, headerCellSelector, (element) => {
+                expect(element?.nativeElement.getAttribute('tabindex')).toBeNull();
             });
-
-            fixture.detectChanges();
-            dataTable.ngAfterViewInit();
-
-            const rowElement = testingUtils.getAllByCSS('.adf-datatable-body .adf-datatable-row')[0];
-            testingUtils.setDebugElement(rowElement);
-            testingUtils.clickByCSS('.adf-datatable-cell');
-
-            fixture.debugElement.nativeElement.dispatchEvent(event);
-
-            expect(document.activeElement?.getAttribute('data-automation-id')).toBe('datatable-row-header');
         });
 
-        it('should not select header row when `showHeader` is `Never`', () => {
-            dataTable.showHeader = ShowHeaderMode.Never;
-
-            dataTable.ngOnChanges({
-                rows: new SimpleChange(null, dataRows, false)
+        it('should remove header cell focus when cell is sortable', () => {
+            setupAndCheckHeaderColumns(true, headerCellSelector, (element) => {
+                expect(element?.nativeElement.getAttribute('tabindex')).toBeNull();
             });
+        });
 
-            fixture.detectChanges();
-            dataTable.ngAfterViewInit();
+        it('should set tabindex equal to null on body cell by default (sortable = false)', () => {
+            setupAndCheckHeaderColumns(false, bodyCellSelector, (element) => {
+                expect(element?.nativeElement.getAttribute('tabindex')).toBeNull();
+            });
+        });
 
-            const rowElement = testingUtils.getAllByCSS('.adf-datatable-body .adf-datatable-row')[0];
-            testingUtils.setDebugElement(rowElement);
-            testingUtils.clickByCSS('.adf-datatable-cell');
+        it('should set tabindex equal to null on body cell by default (sortable = true)', () => {
+            setupAndCheckHeaderColumns(true, bodyCellSelector, (element) => {
+                expect(element?.nativeElement.getAttribute('tabindex')).toBeNull();
+            });
+        });
 
-            fixture.debugElement.nativeElement.dispatchEvent(event);
+        it('should set tabindex equal to null on header cell sortable wrapper when cell is sortable', () => {
+            setupAndCheckHeaderColumns(true, headerCellContentSelector, (element) => {
+                expect(element?.nativeElement.getAttribute('tabindex')).toEqual('0');
+            });
+        });
 
-            expect(document.activeElement?.getAttribute('data-automation-id')).toBe('datatable-row-1');
+        it('should set tabindex equal to null on header cell sortable wrapper when cell is not sortable', () => {
+            setupAndCheckHeaderColumns(false, headerCellContentSelector, (element) => {
+                expect(element?.nativeElement.getAttribute('tabindex')).toBeNull();
+            });
         });
     });
 
-    it('should remove cell focus when [focus] is set to false', () => {
-        dataTable.showHeader = ShowHeaderMode.Never;
-        const dataRows = [{ name: 'name1' }];
-
-        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus: false })]);
-
-        dataTable.ngOnChanges({
-            rows: new SimpleChange(null, dataRows, false)
+    it('should set role="button" on sortable header content cells', () => {
+        setupAndCheckHeaderColumns(true, headerCellContentSelector, (element) => {
+            expect(element?.nativeElement.getAttribute('role')).toEqual('button');
         });
-
-        fixture.detectChanges();
-        dataTable.ngAfterViewInit();
-
-        const cell = testingUtils.getByCSS('.adf-datatable-row[data-automation-id="datatable-row-0"] .adf-cell-value');
-        expect(cell?.nativeElement.getAttribute('tabindex')).toBe(null);
     });
 
-    it('should allow element focus when [focus] is set to true', () => {
-        dataTable.showHeader = ShowHeaderMode.Never;
-        const dataRows = [{ name: 'name1' }];
+    it('should have no role set on non-sortable header content cells', () => {
+        setupAndCheckHeaderColumns(false, headerCellContentSelector, (element) => {
+            expect(element?.nativeElement.getAttribute('role')).toBeNull();
+        });
+    });
 
-        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus: true })]);
+    it('should set aria-description on an active sortable header content cells', () => {
+        spyOn(dataTable, 'isColumnSortActive').and.returnValue(true);
 
-        dataTable.ngOnChanges({
-            rows: new SimpleChange(null, dataRows, false)
+        setupAndCheckHeaderColumns(true, headerCellContentSelector, (element) => {
+            expect(element?.nativeElement.getAttribute('aria-description')).toBeDefined();
+        });
+    });
+
+    it('should not set aria-description on non-active sortable header content cells', () => {
+        spyOn(dataTable, 'isColumnSortActive').and.returnValue(false);
+
+        setupAndCheckHeaderColumns(true, headerCellContentSelector, (element) => {
+            expect(element?.nativeElement.getAttribute('aria-description')).toBeNull();
+        });
+    });
+
+    describe('ShareDatatable adapter allowFocusOnRows', () => {
+        class ShareAdapterMock extends ObjectDataTableAdapter {
+            public allowFocusOnRows = true;
+
+            constructor(data: any[], schema: DataColumn[]) {
+                super(data, schema);
+            }
+
+            setAllowFocusOnTableRows(allow: boolean) {
+                this.allowFocusOnRows = allow;
+            }
+        }
+        const testAllowFocusOnRows = (expectedTabindex: string | null, adapter: DataTableAdapter) => {
+            const fakeDataRows = [new FakeDataRow(), new FakeDataRow()];
+
+            adapter.setRows(fakeDataRows);
+            dataTable.data = adapter;
+            fixture.detectChanges();
+            const rowElements = testingUtils.getAllByCSS('.adf-datatable-body adf-datatable-row');
+            expect(rowElements.length).toBeGreaterThan(0);
+            expect(rowElements.every((row) => row.nativeElement.getAttribute('tabindex') === expectedTabindex)).toBeTrue();
+        };
+
+        it('should set tabindex to null (disabled === true) on datatable-body rows when allowFocusOnRows is set to false in ShareDatatable adapter', () => {
+            const adapter = new ShareAdapterMock([], []);
+            adapter.setAllowFocusOnTableRows(false);
+            testAllowFocusOnRows(null, adapter);
         });
 
-        fixture.detectChanges();
-        dataTable.ngAfterViewInit();
+        it('should set tabindex to 0 (disabled === false) on datatable-body rows when allowFocusOnRows is not set explicitly in ShareDatatable adapter and falls back to default value ', () => {
+            const adapter = new ShareAdapterMock([], []);
+            adapter.setAllowFocusOnTableRows(true);
+            testAllowFocusOnRows('0', adapter);
+        });
 
-        const cell = testingUtils.getByCSS('.adf-datatable-row[data-automation-id="datatable-row-0"] .adf-cell-value');
-        expect(cell?.nativeElement.getAttribute('tabindex')).toBe('0');
+        it('should set tabindex to 0 (disabled === false) by default on datatable-body rows when allowFocusOnRows is not defined in Datatable adapter (fallback case)', () => {
+            const adapter = new ObjectDataTableAdapter([], []);
+            testAllowFocusOnRows('0', adapter);
+        });
     });
 
     it('should create focus trap on main menu open', () => {
@@ -1744,6 +1888,126 @@ describe('Accessibility', () => {
         expect(focusTrap.destroy).toHaveBeenCalled();
         expect(dataTable.focusTrap).toBeNull();
     });
+
+    it('should support drag&drop with shift + arrow keys', () => {
+        dataTable.showHeader = ShowHeaderMode.Never;
+        dataTable.enableDragRows = true;
+        const dataRows = [{ name: 'test1' }, { name: 'test2' }, { name: 'test3' }, { name: 'test4' }];
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
+
+        const keyDownEvent = new KeyboardEvent('keyup', {
+            code: 'ArrowDown',
+            key: 'ArrowDown',
+            keyCode: 40
+        } as KeyboardEventInit);
+
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
+
+        const rowElement = testingUtils.getAllByCSS('.adf-datatable-body .adf-datatable-row')[0];
+        testingUtils.setDebugElement(rowElement);
+        testingUtils.clickByCSS('.adf-datatable-cell');
+
+        fixture.debugElement.nativeElement.dispatchEvent(keyDownEvent);
+        fixture.detectChanges();
+
+        spyOn(dataTable.dragDropped, 'emit').and.callThrough();
+        const shiftDownEvent = new KeyboardEvent('keyup', {
+            code: 'ArrowDown',
+            key: 'ArrowDown',
+            shiftKey: true,
+            keyCode: 40
+        } as KeyboardEventInit);
+        fixture.debugElement.nativeElement.dispatchEvent(shiftDownEvent);
+        fixture.detectChanges();
+
+        expect(dataTable.dragDropped.emit).toHaveBeenCalledWith({ previousIndex: -1, currentIndex: 0 });
+
+        testingUtils.clickByCSS('.adf-datatable-cell');
+        fixture.debugElement.nativeElement.dispatchEvent(keyDownEvent);
+        fixture.debugElement.nativeElement.dispatchEvent(keyDownEvent);
+        fixture.detectChanges();
+
+        const shiftUpEvent = new KeyboardEvent('keyup', {
+            code: 'ArrowUp',
+            key: 'ArrowUp',
+            shiftKey: true,
+            keyCode: 38
+        } as KeyboardEventInit);
+
+        fixture.debugElement.nativeElement.dispatchEvent(shiftUpEvent);
+        fixture.detectChanges();
+
+        expect(dataTable.dragDropped.emit).toHaveBeenCalledWith({ previousIndex: 1, currentIndex: 0 });
+    });
+
+    describe('Select-all accessibility checkbox tooltip', () => {
+        let tooltip: MatTooltipHarness;
+        let checkbox: MatCheckboxHarness;
+
+        beforeEach(() => {
+            dataTable.showHeader = ShowHeaderMode.Always;
+            const dataRows = [{ name: 'name1' }];
+            dataTable.multiselect = true;
+
+            dataTable.data = new ObjectDataTableAdapter(
+                [],
+                [
+                    new ObjectDataColumn({
+                        key: 'name',
+                        template: columnCustomTemplate,
+                        sortable: true
+                    })
+                ]
+            );
+
+            dataTable.ngOnChanges({
+                rows: new SimpleChange(null, dataRows, false)
+            });
+
+            fixture.detectChanges();
+            dataTable.ngAfterViewInit();
+        });
+
+        beforeEach(async () => {
+            checkbox = await loader.getHarness(MatCheckboxHarness);
+            tooltip = await loader.getHarness(MatTooltipHarness);
+
+            await checkbox.blur();
+            await tooltip.hide();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+        });
+
+        it('should show accessibility tooltip on select-all checkbox focus', async () => {
+            expect(await tooltip.isOpen()).toBe(false);
+
+            await checkbox.focus();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(await tooltip.isOpen()).toBe(true);
+            expect(await tooltip.getTooltipText()).toBe('ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL');
+        });
+
+        it('should show accessibility tooltip on select-all checkbox mouse enter', async () => {
+            expect(await tooltip.isOpen()).toBe(false);
+
+            await tooltip.show();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(await tooltip.isOpen()).toBe(true);
+            expect(await tooltip.getTooltipText()).toBe('ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL');
+        });
+    });
 });
 
 describe('Drag&Drop column header', () => {
@@ -1755,8 +2019,7 @@ describe('Drag&Drop column header', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CustomColumnTemplateComponent],
-            schemas: [NO_ERRORS_SCHEMA]
+            imports: [CustomColumnTemplateComponent]
         });
         fixture = TestBed.createComponent(DataTableComponent);
         testingUtils = new UnitTestingUtils(fixture.debugElement);
@@ -1849,8 +2112,7 @@ describe('Show/hide columns', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CustomColumnTemplateComponent],
-            schemas: [NO_ERRORS_SCHEMA]
+            imports: [CustomColumnTemplateComponent]
         });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
@@ -1957,8 +2219,7 @@ describe('Column Resizing', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CustomColumnTemplateComponent],
-            schemas: [NO_ERRORS_SCHEMA]
+            imports: [CustomColumnTemplateComponent]
         });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
@@ -2334,6 +2595,104 @@ describe('Column Resizing', () => {
 
             expect(datatableCellHeaders.length).toBe(expectedNumberOfColumns);
             expect(datatableCells.length).toBe(expectedNumberOfColumns);
+        });
+    });
+
+    describe('Data conversion methods', () => {
+        describe('convertToRowsData', () => {
+            it('should convert array of objects to ObjectDataRow array', () => {
+                const rowsData = [
+                    { name: 'Row 1', isSelected: true, isSelectable: true },
+                    { name: 'Row 2', isSelected: false, isSelectable: false }
+                ];
+
+                const result = dataTable.convertToRowsData(rowsData);
+
+                expect(result.length).toBe(2);
+                expect(result[0].getValue('name')).toBe('Row 1');
+                expect(result[0].isSelected).toBe(true);
+                expect(result[1].getValue('name')).toBe('Row 2');
+                expect(result[1].isSelected).toBe(false);
+            });
+
+            it('should return empty array when input is null', () => {
+                const result = dataTable.convertToRowsData(null);
+
+                expect(result).toEqual([]);
+            });
+
+            it('should return empty array when input is undefined', () => {
+                const result = dataTable.convertToRowsData(undefined);
+
+                expect(result).toEqual([]);
+            });
+
+            it('should return empty array when input is not an array', () => {
+                const result = dataTable.convertToRowsData({} as any);
+
+                expect(result).toEqual([]);
+            });
+
+            it('should return empty array when input is a string', () => {
+                const result = dataTable.convertToRowsData('not an array' as any);
+
+                expect(result).toEqual([]);
+            });
+
+            it('should return empty array when input is a number', () => {
+                const result = dataTable.convertToRowsData(123 as any);
+
+                expect(result).toEqual([]);
+            });
+        });
+
+        describe('convertToColumnsData', () => {
+            it('should convert array of objects to ObjectDataColumn array', () => {
+                const columnsData = [
+                    { key: 'name', title: 'Name', sortable: true },
+                    { key: 'age', title: 'Age', sortable: false }
+                ];
+
+                const result = dataTable.convertToColumnsData(columnsData);
+
+                expect(result.length).toBe(2);
+                expect(result[0].key).toBe('name');
+                expect(result[0].title).toBe('Name');
+                expect(result[0].sortable).toBe(true);
+                expect(result[1].key).toBe('age');
+                expect(result[1].title).toBe('Age');
+                expect(result[1].sortable).toBe(false);
+            });
+
+            it('should return empty array when input is null', () => {
+                const result = dataTable.convertToColumnsData(null);
+
+                expect(result).toEqual([]);
+            });
+
+            it('should return empty array when input is undefined', () => {
+                const result = dataTable.convertToColumnsData(undefined);
+
+                expect(result).toEqual([]);
+            });
+
+            it('should return empty array when input is not an array', () => {
+                const result = dataTable.convertToColumnsData({} as any);
+
+                expect(result).toEqual([]);
+            });
+
+            it('should return empty array when input is a string', () => {
+                const result = dataTable.convertToColumnsData('not an array' as any);
+
+                expect(result).toEqual([]);
+            });
+
+            it('should return empty array when input is a number', () => {
+                const result = dataTable.convertToColumnsData(456 as any);
+
+                expect(result).toEqual([]);
+            });
         });
     });
 });

@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { FormService, BaseViewerWidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
+import { BaseViewerWidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { AlfrescoViewerComponent } from '@alfresco/adf-content-services';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -27,21 +27,6 @@ import { TranslatePipe } from '@ngx-translate/core';
     imports: [ErrorWidgetComponent, AlfrescoViewerComponent, TranslatePipe],
     templateUrl: './file-viewer.widget.html',
     styleUrls: ['./file-viewer.widget.scss'],
-    host: {
-        '(click)': 'event($event)',
-        '(blur)': 'event($event)',
-        '(change)': 'event($event)',
-        '(focus)': 'event($event)',
-        '(focusin)': 'event($event)',
-        '(focusout)': 'event($event)',
-        '(input)': 'event($event)',
-        '(invalid)': 'event($event)',
-        '(select)': 'event($event)'
-    },
     encapsulation: ViewEncapsulation.None
 })
-export class FileViewerWidgetComponent extends BaseViewerWidgetComponent {
-    constructor(formService: FormService) {
-        super(formService);
-    }
-}
+export class FileViewerWidgetComponent extends BaseViewerWidgetComponent {}

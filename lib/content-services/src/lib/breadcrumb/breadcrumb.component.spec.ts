@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Node } from '@alfresco/js-api';
 import { fakeNodeWithCreatePermission } from '../mock';
 import { DocumentListComponent, DocumentListService } from '../document-list';
 import { BreadcrumbComponent } from './breadcrumb.component';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { of } from 'rxjs';
+import { NoopAuthModule } from '@alfresco/adf-core';
+import { SimpleChange } from '@angular/core';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('Breadcrumb', () => {
     let component: BreadcrumbComponent;
@@ -32,19 +34,22 @@ describe('Breadcrumb', () => {
         isCustomSourceService: false
     });
     let documentListComponent: DocumentListComponent;
+    let liveAnnouncer: LiveAnnouncer;
+    let translateService: TranslateService;
 
     const getBreadcrumbActionText = (): string => fixture.debugElement.nativeElement.querySelector('.adf-breadcrumb-item-current').textContent.trim();
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            imports: [NoopAuthModule],
             providers: [{ provide: DocumentListService, useValue: documentListService }]
         });
         fixture = TestBed.createComponent(BreadcrumbComponent);
         component = fixture.componentInstance;
         documentListComponent = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;
         documentListService = TestBed.inject(DocumentListService);
+        liveAnnouncer = TestBed.inject(LiveAnnouncer);
+        translateService = TestBed.inject(TranslateService);
     });
 
     afterEach(() => {
@@ -61,7 +66,7 @@ describe('Breadcrumb', () => {
     it('should root be present as default node if the path is null', () => {
         component.root = 'default';
         component.folderNode = fakeNodeWithCreatePermission;
-        component.ngOnChanges();
+        component.ngOnChanges({});
 
         expect(component.route[0].name).toBe('default');
     });
@@ -116,7 +121,25 @@ describe('Breadcrumb', () => {
                 documentListComponent.DEFAULT_PAGINATION,
                 documentListComponent.includeFields,
                 documentListComponent.where,
-                documentListComponent.orderBy
+                documentListComponent.orderBy,
+                undefined
+            );
+        });
+
+        it('should update document list with filters param for recent files when filters are provided', () => {
+            const node = { id: '-id-', name: 'name' };
+            component.target = documentListComponent;
+            documentListComponent.filters = ['filter1', 'filter2'];
+
+            component.onRoutePathClick(node, null);
+
+            expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith(
+                node.id,
+                documentListComponent.DEFAULT_PAGINATION,
+                documentListComponent.includeFields,
+                documentListComponent.where,
+                documentListComponent.orderBy,
+                documentListComponent.filters
             );
         });
 
@@ -297,7 +320,7 @@ describe('Breadcrumb', () => {
             return transformNode;
         };
         component.folderNode = node;
-        component.ngOnChanges();
+        component.ngOnChanges({});
         expect(component.route.length).toBe(4);
         expect(component.route[3].id).toBe('test-id');
         expect(component.route[3].name).toBe('test-name');
@@ -314,7 +337,7 @@ describe('Breadcrumb', () => {
             path: { elements: [{ id: 'element-1-id', name: 'element-1-name' }] }
         } as Node;
 
-        component.ngOnChanges();
+        component.ngOnChanges({});
         fixture.detectChanges();
 
         expect(getBreadcrumbActionText()).toEqual('test-name');
@@ -323,5 +346,16 @@ describe('Breadcrumb', () => {
         fixture.detectChanges();
 
         expect(getBreadcrumbActionText()).toEqual('BREADCRUMB.HEADER.SELECTED');
+    });
+
+    it('should announce number of selected items when selectedRowItemsCount changes', () => {
+        const change = new SimpleChange(null, 10, true);
+        spyOn(liveAnnouncer, 'announce');
+        spyOn(translateService, 'instant').and.callThrough();
+
+        component.ngOnChanges({ selectedRowItemsCount: change });
+
+        expect(translateService.instant).toHaveBeenCalledWith('BREADCRUMB.HEADER.SELECTED', { count: 10 });
+        expect(liveAnnouncer.announce).toHaveBeenCalledWith('BREADCRUMB.HEADER.SELECTED');
     });
 });

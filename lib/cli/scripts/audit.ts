@@ -17,14 +17,12 @@
  * limitations under the License.
  */
 
-import * as shell from 'shelljs';
+import { spawnSync } from 'node:child_process';
 import * as ejs from 'ejs';
 import * as path from 'path';
 import * as fs from 'fs';
 import { argv, exit } from 'node:process';
-import { Command } from 'commander';
-
-const program = new Command();
+import { parseArgs } from 'node:util';
 
 interface AuditCommandArgs {
     package?: string;
@@ -39,19 +37,39 @@ interface AuditCommandArgs {
  * @returns void
  */
 export default function main(_args: string[], workingDir: string) {
-    program
-        .description('Generate an audit report')
-        .usage('audit [options]')
-        .option('-p, --package <path>', 'Path to package file (default: package.json in working directory)')
-        .option('-d, --outDir <dir>', 'Ouput directory (default: working directory)')
-        .parse(argv);
-
     if (argv.includes('-h') || argv.includes('--help')) {
-        program.outputHelp();
+        console.log(`
+Usage: audit [options]
+
+Generate an audit report
+
+Options:
+  -p, --package <path>  Path to package file (default: package.json in working directory)
+  -d, --outDir <dir>    Output directory (default: working directory)
+  -h, --help            Display help for command
+`);
         exit(0);
     }
 
-    const options: AuditCommandArgs = program.opts();
+    const { values } = parseArgs({
+        args: argv.slice(2),
+        options: {
+            package: {
+                type: 'string',
+                short: 'p'
+            },
+            outDir: {
+                type: 'string',
+                short: 'd'
+            }
+        },
+        allowPositionals: true
+    });
+
+    const options: AuditCommandArgs = {
+        package: values.package as string | undefined,
+        outDir: values.outDir as string | undefined
+    };
 
     let packagePath = path.resolve(workingDir, 'package.json');
 
@@ -75,8 +93,45 @@ export default function main(_args: string[], workingDir: string) {
         console.log(`Running audit on ${packagePath}`);
 
         const packageJson = JSON.parse(fs.readFileSync(packagePath).toString());
-        const cmd = 'npm audit --json --prod';
-        const jsonAudit = JSON.parse(shell.exec(cmd, { silent: true }));
+
+        // Run in the directory containing the package.json
+        const packageDir = path.dirname(packagePath);
+
+        // Use spawnSync with array arguments for safer command execution (prevents shell injection)
+        // Cross-platform: npm is available on PATH on all platforms (Windows, macOS, Linux)
+        const result = spawnSync('npm', ['audit', '--json', '--prod'], {
+            cwd: packageDir,
+            encoding: 'utf-8',
+            // shell: false is the default and more secure (no shell interpretation)
+            shell: false,
+            // Set maxBuffer to handle large audit outputs
+            maxBuffer: 10 * 1024 * 1024 // 10MB
+        });
+
+        let jsonAudit;
+
+        // npm audit returns non-zero exit code when vulnerabilities are found
+        // We still want to parse the JSON output in this case
+        if (result.error) {
+            console.error('Failed to run npm audit:', result.error.message);
+            reject(result.error);
+            return;
+        }
+
+        const auditOutput = result.stdout;
+        if (!auditOutput) {
+            console.error('npm audit produced no output');
+            reject(new Error('npm audit produced no output'));
+            return;
+        }
+
+        try {
+            jsonAudit = JSON.parse(auditOutput);
+        } catch (parseError) {
+            console.error('Failed to parse npm audit output');
+            reject(parseError);
+            return;
+        }
 
         ejs.renderFile(
             templatePath,

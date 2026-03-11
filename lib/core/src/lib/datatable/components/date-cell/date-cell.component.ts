@@ -15,28 +15,36 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, inject, effect, signal, computed } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { DateConfig } from '../../data/data-column.model';
-import { CommonModule } from '@angular/common';
 import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
-    imports: [CommonModule, LocalizedDatePipe, TimeAgoPipe],
     selector: 'adf-date-cell',
-    templateUrl: './date-cell.component.html',
+    template: `
+        @if (formattedDate()) {
+            <span [title]="title()" class="adf-datatable-cell-value">{{ formattedDate() }}</span>
+        }
+    `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell' },
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [LocalizedDatePipe, TimeAgoPipe]
 })
 export class DateCellComponent extends DataTableCellComponent implements OnInit {
     @Input()
     dateConfig: DateConfig;
 
-    config: DateConfig = {};
+    config = signal<DateConfig>({});
 
-    private readonly appConfig: AppConfigService = inject(AppConfigService);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly localizedDatePipe = inject(LocalizedDatePipe);
+    private readonly timeAgoPipe = inject(TimeAgoPipe);
+
+    private userLocale: string = 'en';
 
     readonly defaultDateConfig: DateConfig = {
         format: 'medium',
@@ -44,9 +52,43 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
         locale: undefined
     };
 
+    // Convert value$ observable to signal for reactive computation
+    private readonly dateValue = toSignal(this.value$);
+
+    // Computed signal that automatically formats the date based on value and config
+    protected readonly formattedDate = computed(() => {
+        const date = this.dateValue();
+        const currentConfig = this.config();
+
+        if (!date) {
+            return '';
+        }
+        if (currentConfig.format === 'timeAgo') {
+            return this.timeAgoPipe.transform(date, currentConfig.locale) || '';
+        }
+
+        return this.localizedDatePipe.transform(date, currentConfig.format, currentConfig.locale) || '';
+    });
+
+    constructor() {
+        super();
+        // Use effect to react to locale signal changes (must be in injection context)
+        effect(() => {
+            this.userLocale = this.userPreferencesService.localeSignal() || 'en';
+            this.setConfig();
+        });
+    }
+
     ngOnInit(): void {
         super.ngOnInit();
-        this.setConfig();
+    }
+
+    protected override computeTitle(value: any): string {
+        if (value) {
+            const currentConfig = this.config();
+            return this.localizedDatePipe.transform(value, currentConfig.tooltipFormat, currentConfig.locale) || '';
+        }
+        return '';
     }
 
     private setConfig(): void {
@@ -58,23 +100,35 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
     }
 
     private setCustomConfig(): void {
-        this.config.format = this.dateConfig?.format || this.getDefaultFormat();
-        this.config.tooltipFormat = this.dateConfig?.tooltipFormat || this.getDefaultTooltipFormat();
-        this.config.locale = this.dateConfig?.locale || this.getDefaultLocale();
+        this.config.set({
+            format: this.dateConfig?.format || this.getDefaultFormat(),
+            tooltipFormat: this.dateConfig?.tooltipFormat || this.getDefaultTooltipFormat(),
+            locale: this.normalizeLocale(this.dateConfig?.locale || this.userLocale)
+        });
     }
 
     private setDefaultConfig(): void {
-        this.config.format = this.getDefaultFormat();
-        this.config.tooltipFormat = this.getDefaultTooltipFormat();
-        this.config.locale = this.getDefaultLocale();
+        this.config.set({
+            format: this.getDefaultFormat(),
+            tooltipFormat: this.getDefaultTooltipFormat(),
+            locale: this.normalizeLocale(this.userLocale)
+        });
+    }
+
+    private normalizeLocale(locale: string): string {
+        if (!locale) {
+            return locale;
+        }
+        // Extract language code from locale like 'fr-FR' -> 'fr', 'en-US' -> 'en'
+        // but keep special cases like 'pt-BR' and 'zh-CN' intact
+        if (locale === 'pt-BR' || locale === 'zh-CN') {
+            return locale;
+        }
+        return locale.split('-')[0];
     }
 
     private getDefaultFormat(): string {
         return this.column?.format || this.getAppConfigPropertyValue('dateValues.defaultDateFormat', this.defaultDateConfig.format);
-    }
-
-    private getDefaultLocale(): string {
-        return this.getAppConfigPropertyValue('dateValues.defaultLocale', this.defaultDateConfig.locale);
     }
 
     private getDefaultTooltipFormat(): string {

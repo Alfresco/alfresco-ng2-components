@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 import { SnackBarData } from './snack-bar-data';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
+import { IconModule } from '../icon/icon.module';
 
 @Component({
     selector: 'adf-snackbar-content',
-    imports: [MatIconModule, TranslatePipe, MatButtonModule],
+    imports: [IconModule, TranslatePipe, MatButtonModule],
     templateUrl: './snackbar-content.component.html',
     styleUrls: ['./snackbar-content.component.scss'],
     host: {
@@ -32,7 +32,12 @@ import { MatButtonModule } from '@angular/material/button';
     }
 })
 export class SnackbarContentComponent {
-    constructor(public snackBarRef: MatSnackBarRef<SnackbarContentComponent>, @Inject(MAT_SNACK_BAR_DATA) public data: SnackBarData) {
+    snackBarRef = inject<MatSnackBarRef<SnackbarContentComponent>>(MatSnackBarRef);
+    data = inject<SnackBarData>(MAT_SNACK_BAR_DATA);
+
+    constructor() {
+        const data = this.data;
+
         if (!data) {
             this.data = { message: '' };
         }

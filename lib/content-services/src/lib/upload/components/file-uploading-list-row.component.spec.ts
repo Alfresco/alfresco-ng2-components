@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FileUploadingListRowComponent } from './file-uploading-list-row.component';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
 import { FileModel, FileUploadStatus } from '../../common/models/file.model';
 
@@ -28,7 +27,7 @@ describe('FileUploadingListRowComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [FileUploadingListRowComponent]
         });
         fixture = TestBed.createComponent(FileUploadingListRowComponent);
         component = fixture.componentInstance;
@@ -106,5 +105,119 @@ describe('FileUploadingListRowComponent', () => {
 
         const cancelButton = getCancelButton();
         expect(cancelButton.title).toBe('ADF_FILE_UPLOAD.BUTTON.STOP_FILE');
+    });
+
+    describe('getFileUploadErrorKey', () => {
+        it('should return correct key format for error code 500', () => {
+            const result = component.getFileUploadErrorKey(500);
+            expect(result).toBe('FILE_UPLOAD.ERRORS.500');
+        });
+
+        it('should return correct key format for error code 404', () => {
+            const result = component.getFileUploadErrorKey(404);
+            expect(result).toBe('FILE_UPLOAD.ERRORS.404');
+        });
+
+        it('should return correct key format for error code 403', () => {
+            const result = component.getFileUploadErrorKey(403);
+            expect(result).toBe('FILE_UPLOAD.ERRORS.403');
+        });
+
+        it('should return GENERIC key when errorCode is null', () => {
+            const result = component.getFileUploadErrorKey(null);
+            expect(result).toBe('FILE_UPLOAD.ERRORS.GENERIC');
+        });
+
+        it('should return GENERIC key when errorCode is undefined', () => {
+            const result = component.getFileUploadErrorKey(undefined);
+            expect(result).toBe('FILE_UPLOAD.ERRORS.GENERIC');
+        });
+
+        it('should return GENERIC key when errorCode is 0', () => {
+            const result = component.getFileUploadErrorKey(0);
+            expect(result).toBe('FILE_UPLOAD.ERRORS.GENERIC');
+        });
+    });
+
+    describe('Toggle Icon State', () => {
+        describe('onToggleMouseEnter', () => {
+            it('should set isToggled to true when not focused', () => {
+                component.toggleIconState = { isFocused: false, isToggled: false };
+
+                component.onToggleMouseEnter(component.toggleIconState);
+
+                expect(component.toggleIconState.isToggled).toBe(true);
+            });
+
+            it('should not change isToggled when already focused', () => {
+                component.toggleIconState = { isFocused: true, isToggled: false };
+
+                component.onToggleMouseEnter(component.toggleIconState);
+
+                expect(component.toggleIconState.isToggled).toBe(false);
+            });
+        });
+
+        describe('onToggleMouseLeave', () => {
+            it('should set isToggled to false when not focused', () => {
+                component.toggleIconState = { isFocused: false, isToggled: true };
+
+                component.onToggleMouseLeave(component.toggleIconState);
+
+                expect(component.toggleIconState.isToggled).toBe(false);
+            });
+
+            it('should not change state when focused but not toggled', () => {
+                component.toggleIconState = { isFocused: true, isToggled: false };
+
+                component.onToggleMouseLeave(component.toggleIconState);
+
+                expect(component.toggleIconState.isFocused).toBe(true);
+                expect(component.toggleIconState.isToggled).toBe(false);
+            });
+
+            it('should reset both isFocused and isToggled when both are true', () => {
+                component.toggleIconState = { isFocused: true, isToggled: true };
+
+                component.onToggleMouseLeave(component.toggleIconState);
+
+                expect(component.toggleIconState.isFocused).toBe(false);
+                expect(component.toggleIconState.isToggled).toBe(false);
+            });
+        });
+
+        describe('onToggleFocus', () => {
+            it('should set both isFocused and isToggled to true', () => {
+                component.toggleIconState = { isFocused: false, isToggled: false };
+
+                component.onToggleFocus(component.toggleIconState);
+
+                expect(component.toggleIconState.isFocused).toBe(true);
+                expect(component.toggleIconState.isToggled).toBe(true);
+            });
+        });
+
+        describe('onToggleBlur', () => {
+            it('should set both isFocused and isToggled to false', () => {
+                component.toggleIconState = { isFocused: true, isToggled: true };
+
+                component.onToggleBlur(component.toggleIconState);
+
+                expect(component.toggleIconState.isFocused).toBe(false);
+                expect(component.toggleIconState.isToggled).toBe(false);
+            });
+        });
+
+        describe('Multiple toggle states', () => {
+            it('should maintain independent state for toggleIconState and toggleIconCancelState', () => {
+                component.onToggleFocus(component.toggleIconState);
+                component.onToggleMouseEnter(component.toggleIconCancelState);
+
+                expect(component.toggleIconState.isFocused).toBe(true);
+                expect(component.toggleIconState.isToggled).toBe(true);
+                expect(component.toggleIconCancelState.isFocused).toBe(false);
+                expect(component.toggleIconCancelState.isToggled).toBe(true);
+            });
+        });
     });
 });

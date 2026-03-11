@@ -28,14 +28,13 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
-import { IconComponent } from '@alfresco/adf-core';
+import { IconModule } from '@alfresco/adf-core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DateRangeFilterComponent } from '../../../../../common/date-range-filter/date-range-filter.component';
 import { PeopleCloudComponent } from '../../../../../people/components/people-cloud.component';
@@ -48,14 +47,13 @@ import { TaskAssignmentFilterCloudComponent } from '../../task-assignment-filter
         TranslatePipe,
         MatExpansionModule,
         MatButtonModule,
-        IconComponent,
         MatProgressSpinnerModule,
         MatFormFieldModule,
         ReactiveFormsModule,
         MatSelectModule,
         MatInputModule,
         MatDatepickerModule,
-        MatIconModule,
+        IconModule,
         MatCheckboxModule,
         DateRangeFilterComponent,
         PeopleCloudComponent,
@@ -66,7 +64,7 @@ import { TaskAssignmentFilterCloudComponent } from '../../task-assignment-filter
     encapsulation: ViewEncapsulation.None
 })
 export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent<TaskFilterCloudModel> {
-    private taskFilterCloudService = inject(TaskFilterCloudService);
+    private readonly taskFilterCloudService = inject(TaskFilterCloudService);
 
     constructor() {
         super();

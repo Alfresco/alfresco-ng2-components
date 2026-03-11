@@ -17,9 +17,9 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { FormService, FormFieldOption, WidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
+import { FormFieldOption, WidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { CommonModule } from '@angular/common';
@@ -53,13 +53,8 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     oldValue: string;
     options: FormFieldOption[] = [];
 
-    constructor(
-        public formService: FormService,
-        private taskFormService: TaskFormService,
-        private processDefinitionService: ProcessDefinitionService
-    ) {
-        super(formService);
-    }
+    private readonly taskFormService = inject(TaskFormService);
+    private readonly processDefinitionService = inject(ProcessDefinitionService);
 
     ngOnInit() {
         if (this.field.form.taskId && this.field.restUrl) {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserLike } from './user-like.interface';
 
@@ -23,7 +23,7 @@ import { UserLike } from './user-like.interface';
     name: 'usernameInitials'
 })
 export class InitialUsernamePipe implements PipeTransform {
-    constructor(private sanitized: DomSanitizer) {}
+    private readonly sanitized = inject(DomSanitizer);
 
     transform(user: UserLike & { displayName?: string }, className: string = '', delimiter: string = ''): SafeHtml {
         let safeHtml: SafeHtml = '';
@@ -32,6 +32,7 @@ export class InitialUsernamePipe implements PipeTransform {
             const div = document.createElement('div');
             div.textContent = initialResult;
             div.dataset.automationId = 'user-initials-image';
+            div.ariaLabel = user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user.displayName || user.username || '';
             div.className = className;
 
             safeHtml = this.sanitized.bypassSecurityTrustHtml(div.outerHTML);

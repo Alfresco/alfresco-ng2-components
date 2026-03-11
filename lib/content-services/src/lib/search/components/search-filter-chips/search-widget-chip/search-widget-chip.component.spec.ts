@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchWidgetChipComponent } from './search-widget-chip.component';
 import { simpleCategories } from '../../../../mock';
-import { ContentTestingModule } from '../../../../testing/content.testing.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
@@ -26,6 +25,8 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
+import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
+import { provideRouter } from '@angular/router';
 
 describe('SearchWidgetChipComponent', () => {
     let loader: HarnessLoader;
@@ -33,9 +34,13 @@ describe('SearchWidgetChipComponent', () => {
     let fixture: ComponentFixture<SearchWidgetChipComponent>;
     let queryBuilder: SearchQueryBuilderService;
 
+    const focusTrapFactory = jasmine.createSpyObj('ConfigurableFocusTrapFactory', ['create']);
+    const focusTrap = jasmine.createSpyObj('ConfigurableFocusTrap', ['focusInitialElement', 'destroy']);
+
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatMenuModule, ContentTestingModule]
+            imports: [MatMenuModule, SearchWidgetChipComponent],
+            providers: [provideRouter([]), { provide: ConfigurableFocusTrapFactory, useValue: focusTrapFactory }]
         });
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
         fixture = TestBed.createComponent(SearchWidgetChipComponent);
@@ -45,6 +50,7 @@ describe('SearchWidgetChipComponent', () => {
         component.category = simpleCategories[1];
         fixture.detectChanges();
         loader = TestbedHarnessEnvironment.loader(fixture);
+        focusTrapFactory.create.and.returnValue(focusTrap);
     });
 
     it('should update search query on apply click', async () => {
@@ -79,5 +85,28 @@ describe('SearchWidgetChipComponent', () => {
         const chip = await loader.getHarness(MatChipHarness);
         const icon = await chip.getHarness(MatIconHarness);
         expect(await icon.getName()).toBe('keyboard_arrow_up');
+    });
+
+    it('should create focus trap and focus initial element when menu opens', async () => {
+        const chip = await loader.getHarness(MatChipHarness);
+        await (await chip.host()).click();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(focusTrapFactory.create).toHaveBeenCalledWith(component.menuContainer.nativeElement);
+        expect(focusTrap.focusInitialElement).toHaveBeenCalled();
+    });
+
+    it('should destroy focus trap on main menu closed', () => {
+        component.focusTrap = focusTrap;
+        component.onClosed();
+
+        expect(focusTrap.destroy).toHaveBeenCalled();
+        expect(component.focusTrap).toBeNull();
+    });
+
+    it('should set aria-haspopup to "dialog" for matMenu trigger on initialization', () => {
+        expect(component.menuTriggerEl.nativeElement.getAttribute('aria-haspopup')).toBe('dialog');
     });
 });

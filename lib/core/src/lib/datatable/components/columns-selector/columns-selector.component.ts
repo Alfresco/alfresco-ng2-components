@@ -23,11 +23,14 @@ import { DataColumn } from '../../data/data-column.model';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ColumnsSearchFilterPipe } from './columns-search-filter.pipe';
+import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { IconModule } from '../../../icon/icon.module';
 
 @Component({
     selector: 'adf-datatable-column-selector',
@@ -35,11 +38,15 @@ import { ColumnsSearchFilterPipe } from './columns-search-filter.pipe';
         CommonModule,
         TranslatePipe,
         MatButtonModule,
-        MatIconModule,
+        IconModule,
         MatDividerModule,
         ReactiveFormsModule,
         MatCheckboxModule,
-        ColumnsSearchFilterPipe
+        ColumnsSearchFilterPipe,
+        MatSelectionList,
+        MatListOption,
+        MatFormFieldModule,
+        MatInputModule
     ],
     templateUrl: './columns-selector.component.html',
     styleUrls: ['./columns-selector.component.scss'],
@@ -85,8 +92,8 @@ export class ColumnsSelectorComponent implements OnInit {
         this.mainMenuTrigger.closeMenu();
     }
 
-    changeColumnVisibility(dataColumn: DataColumn): void {
-        const selectedColumn = this.columnItems.find((column) => column.id === dataColumn.id);
+    changeColumnVisibility(event: MatSelectionListChange): void {
+        const selectedColumn = this.columnItems.find((column) => column.id === event.options[0].value);
         selectedColumn.isHidden = !selectedColumn.isHidden;
     }
 

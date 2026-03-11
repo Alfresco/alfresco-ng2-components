@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
-import { FormValues, FormModel, FormFieldOption, FormFieldValidator } from '@alfresco/adf-core';
+import { inject, Injectable, InjectionToken } from '@angular/core';
+import { FormValues, FormModel, FormFieldOption, FormFieldValidator, FormService } from '@alfresco/adf-core';
 import { Observable, from, EMPTY } from 'rxjs';
 import { expand, map, reduce, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/models/task-details-cloud.model';
@@ -25,7 +25,6 @@ import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { FormContent } from '../../services/form-fields.interfaces';
 import { FormCloudServiceInterface } from './form-cloud.service.interface';
-import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 export const FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldValidator[]>('FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN');
 
@@ -34,18 +33,11 @@ export const FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN = new InjectionToken<Form
 })
 export class FormCloudService extends BaseCloudService implements FormCloudServiceInterface {
     private _uploadApi: UploadApi;
-    private fieldValidators: FormFieldValidator[];
+    private readonly fieldValidators: FormFieldValidator[] = inject(FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, { optional: true }) ?? [];
+    private readonly formService = inject(FormService);
     get uploadApi(): UploadApi {
         this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
         return this._uploadApi;
-    }
-
-    constructor(
-        adfHttpClient: AdfHttpClient,
-        @Optional() @Inject(FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN) injectedFieldValidators?: FormFieldValidator[]
-    ) {
-        super(adfHttpClient);
-        this.fieldValidators = injectedFieldValidators || [];
     }
 
     /**
@@ -226,7 +218,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
                 formValues[variable.name] = variable.value;
             });
 
-            return new FormModel(flattenForm, formValues, readOnly, undefined, undefined, this.fieldValidators);
+            return new FormModel(flattenForm, formValues, readOnly, this.formService, undefined, this.fieldValidators);
         }
         return null;
     }

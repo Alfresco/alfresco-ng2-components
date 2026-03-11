@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewEncapsulation, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FeaturesServiceToken, IDebugFeaturesService } from '../interfaces/features.interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -48,16 +48,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FlagsOverrideComponent {
+    private readonly featuresService = inject<IDebugFeaturesService>(FeaturesServiceToken);
+
     isEnabled = false;
 
     @Input()
     size: 'small' | 'medium' | 'large' = 'medium';
 
-    constructor(
-        @Inject(FeaturesServiceToken)
-        private featuresService: IDebugFeaturesService,
-        changeDetectorRef: ChangeDetectorRef
-    ) {
+    constructor() {
+        const changeDetectorRef = inject(ChangeDetectorRef);
+
         if (this.featuresService.isEnabled$) {
             this.featuresService
                 .isEnabled$()

@@ -44,17 +44,12 @@
         padding-left: 10px;
     }
 
-    #{ms.$mat-form-field-subscript-wrapper} {
-        display: none;
-    }
-
     .adf-property-read-only {
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
         cursor: default;
         padding: 6px 0;
-        border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
     }
 
     #{ms.$mat-line-ripple} {
@@ -63,12 +58,5 @@
 
     .adf-property-readonly-value {
         color: var(--adf-metadata-property-panel-label-color);
-    }
-
-    .adf-property-label {
-        &-non-editable {
-            cursor: default;
-            font-size: 10px;
-        }
     }
 }

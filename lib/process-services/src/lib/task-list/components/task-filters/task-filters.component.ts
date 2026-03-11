@@ -26,18 +26,24 @@ import { UserTaskFilterRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { IconComponent } from '@alfresco/adf-core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { forkJoin, Observable } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-task-filters',
-    imports: [CommonModule, TranslatePipe, MatButtonModule, IconComponent],
+    imports: [CommonModule, TranslatePipe, MatButtonModule, MatIconModule],
     templateUrl: './task-filters.component.html',
     styleUrls: ['./task-filters.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFiltersComponent implements OnInit, OnChanges {
+    private readonly taskFilterService = inject(TaskFilterService);
+    private readonly taskListService = inject(TaskListService);
+    private readonly appsProcessService = inject(AppsProcessService);
+    private readonly router = inject(Router);
+    private readonly activatedRoute = inject(ActivatedRoute);
+
     /**
      * Parameters to use for the task filter. If there is no match then
      * the default filter (the first one the list) is selected.
@@ -82,14 +88,6 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     private iconsMDL: IconModel;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private taskFilterService: TaskFilterService,
-        private taskListService: TaskListService,
-        private appsProcessService: AppsProcessService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute
-    ) {}
 
     ngOnInit() {
         this.iconsMDL = new IconModel();

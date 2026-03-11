@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, Output, QueryList, ViewChildren, inject } from '@angular/core';
 import { LanguageService } from './service/language.service';
 import { Observable } from 'rxjs';
 import { LanguageItem } from '../common/services/language-item.interface';
@@ -32,6 +32,8 @@ import { MatMenuItem, MatMenuModule } from '@angular/material/menu';
     `
 })
 export class LanguageMenuComponent {
+    private readonly languageService = inject(LanguageService);
+
     /** Emitted when the language change */
     @Output()
     changedLanguage: EventEmitter<LanguageItem> = new EventEmitter<LanguageItem>();
@@ -41,7 +43,9 @@ export class LanguageMenuComponent {
 
     languages$: Observable<LanguageItem[]>;
 
-    constructor(private languageService: LanguageService) {
+    constructor() {
+        const languageService = this.languageService;
+
         this.languages$ = languageService.languages$;
     }
 

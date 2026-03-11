@@ -1,6 +1,6 @@
 
 <div class="adf-select-filter-input-container">
-    <mat-form-field subscriptSizing="dynamic">
+    <mat-form-field>
         <input matInput
             autocomplete="off"
             (keydown)="handleKeydown($event)"
@@ -20,7 +20,7 @@
             *ngIf="term"
             (keydown.enter)="reset($event)"
             (click)="reset()">
-            <mat-icon>close</mat-icon>
+            <mat-icon adf-icon="close" />
         </button>
     </mat-form-field>
 </div>

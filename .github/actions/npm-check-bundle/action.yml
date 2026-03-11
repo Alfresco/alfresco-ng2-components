@@ -5,19 +5,22 @@ inputs:
   branch_name:
     description: "override GITHUB_REF_NAME"
     required: false
-    default: $GITHUB_REF_NAME
+    default: ${{ github.ref_name }}
 
 runs:
   using: "composite"
 
   steps:
     - name: load "NPM TAG"
+      id: set-npm-tag
       uses: ./.github/actions/set-npm-tag
       with:
         branch_name: ${{ inputs.branch_name }}
     - name: check npm bundle
       shell: bash
       id: sha_out
+      env:
+        TAG_NPM: ${{ steps.set-npm-tag.outputs.npm-tag }}
       run: |
         if [[ -z $TAG_NPM ]]; then
           echo "TAG_NPM not set, aborting"

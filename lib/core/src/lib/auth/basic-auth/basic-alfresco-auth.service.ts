@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { Authentication } from '../interfaces/authentication.interface';
 import { CookieService } from '../../common/services/cookie.service';
@@ -34,6 +34,9 @@ const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
     providedIn: 'root'
 })
 export class BasicAlfrescoAuthService extends BaseAuthenticationService {
+    private readonly contentAuth = inject(ContentAuth);
+    private readonly processAuth = inject(ProcessAuth);
+
     protected redirectUrl: RedirectionModel = null;
 
     authentications: Authentication = {
@@ -43,12 +46,10 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         type: 'basic'
     };
 
-    constructor(
-        appConfig: AppConfigService,
-        cookie: CookieService,
-        private readonly contentAuth: ContentAuth,
-        private readonly processAuth: ProcessAuth
-    ) {
+    constructor() {
+        const appConfig = inject(AppConfigService);
+        const cookie = inject(CookieService);
+
         super(appConfig, cookie);
 
         this.appConfig.onLoad.subscribe(() => {

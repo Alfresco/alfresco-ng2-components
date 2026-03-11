@@ -17,7 +17,7 @@
 
 import { FocusableOption } from '@angular/cdk/a11y';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -29,12 +29,13 @@ import { TranslatePipe } from '@ngx-translate/core';
     host: { tabindex: '0' }
 })
 export class PdfThumbComponent implements OnInit, FocusableOption {
+    private readonly sanitizer = inject(DomSanitizer);
+    private readonly element = inject(ElementRef);
+
     @Input()
-    page: any = null;
+    page: any;
 
     image$: Promise<string>;
-
-    constructor(private sanitizer: DomSanitizer, private element: ElementRef) {}
 
     ngOnInit() {
         this.image$ = this.page.getPage().then((page) => this.getThumb(page));

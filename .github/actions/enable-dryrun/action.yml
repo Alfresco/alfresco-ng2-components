@@ -20,8 +20,10 @@ runs:
     - name: set dryrun flag to TRUE
       shell: bash
       id: dryrun
+      env:
+        DRY_RUN_FLAG: ${{ inputs.dry-run-flag }}
       run: |
-          if [[ '${{ inputs.dry-run-flag }}' == 'true' ]]; then
+          if [[ '$DRY_RUN_FLAG' == 'true' ]]; then
             echo "dryrun=--dryrun" >> $GITHUB_OUTPUT;
             echo "enabling dryrun"
           else

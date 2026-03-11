@@ -18,11 +18,10 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { LocalizedDatePipe, ThumbnailService, UploadDirective, DisplayableCMProperties } from '@alfresco/adf-core';
+import { LocalizedDatePipe, ThumbnailService, UploadDirective, DisplayableCMProperties, IconModule } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { NewVersionUploaderDialogData } from '@alfresco/adf-content-services';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -34,24 +33,14 @@ const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 
 @Component({
     selector: 'adf-cloud-file-properties-table',
-    imports: [
-        CommonModule,
-        MatIconModule,
-        TranslatePipe,
-        MatMenuModule,
-        UploadDirective,
-        MatButtonModule,
-        MatTableModule,
-        MatLineModule,
-        MatListModule
-    ],
+    imports: [CommonModule, IconModule, TranslatePipe, MatMenuModule, UploadDirective, MatButtonModule, MatTableModule, MatLineModule, MatListModule],
     providers: [LocalizedDatePipe],
     templateUrl: './file-properties-table-cloud.component.html',
     styleUrls: ['./file-properties-table-cloud.component.scss']
 })
 export class FilePropertiesTableCloudComponent {
-    private localizedDatePipe = inject(LocalizedDatePipe);
-    private thumbnailService = inject(ThumbnailService);
+    private readonly localizedDatePipe = inject(LocalizedDatePipe);
+    private readonly thumbnailService = inject(ThumbnailService);
 
     @Input()
     uploadedFiles;

@@ -36,7 +36,6 @@ export * from './lib/node-comments/index';
 export * from './lib/new-version-uploader';
 export * from './lib/interfaces/index';
 export * from './lib/version-compatibility/index';
-export * from './lib/pipes/index';
 export * from './lib/common/index';
 export * from './lib/tree/index';
 export * from './lib/category/index';
@@ -54,4 +53,3 @@ export * from './lib/search-ai/index';
 
 export * from './lib/content.module';
 export * from './lib/material.module';
-export * from './lib/testing/content.testing.module';

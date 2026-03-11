@@ -24,6 +24,7 @@
   "CLOSE": "Fermer",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Aucune notification n'est disponible pour l'instant.",
+    "UNREAD_MESSAGES": "Vous avez des notifications non lues.",
     "TITLE": "Notifications",
     "MARK_AS_READ": "Marquer tout comme lu",
     "SYSTEM": "Système",
@@ -68,10 +69,22 @@
         "NO_LONGER_THAN": "Saisir {{ maxLength }} caractères maximum"
       },
       "FILE_ALREADY_UPLOADED": "Un fichier du même nom a déjà été importé.",
-      "ATTACH": "Joindre"
+      "ATTACH": "Joindre",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "ajouter",
+        "ROW_LIMIT_REACHED": "Limite des lignes ({{ limit }}) atteinte."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Tâche sans nom"
+      "NAMELESS_TASK": "Tâche sans nom",
+      "ROW_LABEL": "Ligne {{ number }}",
+      "DELETE_ROW": "Supprimer la ligne",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Supprimer la ligne",
+        "MESSAGE": "Voulez-vous vraiment supprimer cette ligne ?",
+        "YES_LABEL": "Supprimer la ligne",
+        "NO_LABEL": "Annuler"
+      }
     },
     "FIELD_STYLE": {
       "FONT_SIZE": "Taille de la police",
@@ -201,7 +214,9 @@
       },
       "CANCEL_BUTTON": {
         "LABEL": "Annuler"
-      }
+      },
+      "FOLDER_CREATED_SUCCESS": "Le dossier « {{ name }} » a bien été créé",
+      "FOLDER_UPDATED_SUCCESS": "Le dossier « {{ name }} » a bien été mis à jour"
     },
     "MESSAGES": {
       "ERRORS": {
@@ -287,7 +302,8 @@
         "EDIT": "Bouton Modifier",
         "DATEPICKER": "Utilisez les touches de direction pour naviguer entre les dates : haut et bas pour passer à la semaine suivante ou précédente en conservant le même jour ; gauche et droite pour passer au jour suivant ou précédent. Appuyez sur Entrée (Saut de ligne) pour sélectionner une date.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Valeur copiée dans le Presse-papiers",
-        "EDIT_ASPECTS": "Modifier aspect"
+        "EDIT_ASPECTS": "Modifier aspect",
+        "SECTION": "Section {{ sectionName }}"
       }
     },
     "SEARCH": {
@@ -364,11 +380,6 @@
     "ACTION": {
       "HELP": "Besoin d'aide ?",
       "REGISTER": "S'inscrire"
-    },
-    "DIALOG": {
-      "CANCEL": "Annuler",
-      "CHOOSE": "Choisir",
-      "LOGIN": "Connexion"
     }
   },
   "ADF-DATATABLE": {
@@ -397,7 +408,9 @@
       "ICON_DISABLED": "Désactivé",
       "ROW_OPTION_BUTTON": "Actions",
       "DRAG": "Bouton de déplacement",
-      "EMPTY_HEADER": "En-tête vide"
+      "EMPTY_HEADER": "En-tête vide",
+      "RESIZE_COLUMN": "Redimensionnez la colonne {{ column }}. Utilisez les flèches de direction pour ajuster la largeur et la touche Maj pour des incréments plus importants.",
+      "COLUMN_WIDTH_CHANGED": "Largeur de la colonne {{ column }} : {{ width }} pixels"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Document",
@@ -418,7 +431,8 @@
     "COLUMNS_SELECTOR": {
       "COLUMNS": "Colonnes",
       "SEARCH": "Rechercher",
-      "APPLY": "Appliquer"
+      "APPLY": "Appliquer",
+      "COLUMNS_VISIBILITY": "Sélectionner les colonnes à afficher"
     }
   },
   "USER_PROFILE": {
@@ -465,7 +479,8 @@
       "RESET": "Réinitialiser",
       "THUMBNAILS": "Miniatures des documents",
       "THUMBNAILS_PANLEL_CLOSE": "Fermer le panneau des miniatures",
-      "LOADING": "Chargement du document en cours"
+      "LOADING": "Chargement du document en cours",
+      "NOTE_ANNOTATION_IMG": "Annotation de note"
     },
     "PAGE_LABEL": {
       "SHOWING": "Affichage en cours",
@@ -591,7 +606,9 @@
     "LICENSE": {
       "TITLE": "Licence",
       "PROPERTY": "Propriété",
-      "VALUE": "Valeur"
+      "VALUE": "Valeur",
+      "ENABLED": "Activé",
+      "DISABLED": "Désactivé"
     },
     "STATUS": {
       "TITLE": "Statut",

@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('ContentColumnList', () => {
     let documentList: DocumentListComponent;
@@ -28,14 +27,21 @@ describe('ContentColumnList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [NoopAuthModule]
         });
-        documentList = TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent;
-        actionList = new ContentActionListComponent(documentList);
+
+        const docListFixture = TestBed.createComponent(DocumentListComponent);
+        documentList = docListFixture.componentInstance;
     });
 
     it('should register action', () => {
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule],
+            providers: [{ provide: DocumentListComponent, useValue: documentList }, ContentActionListComponent]
+        });
+        actionList = TestBed.inject(ContentActionListComponent);
+
         spyOn(documentList.actions, 'push').and.callThrough();
 
         const action = new ContentActionModel();
@@ -46,12 +52,24 @@ describe('ContentColumnList', () => {
     });
 
     it('should require document list instance to register action', () => {
-        actionList = new ContentActionListComponent(null);
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule],
+            providers: [{ provide: DocumentListComponent, useValue: null }, ContentActionListComponent]
+        });
+        actionList = TestBed.inject(ContentActionListComponent);
         const action = new ContentActionModel();
         expect(actionList.registerAction(action)).toBeFalsy();
     });
 
     it('should require action instance to register', () => {
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule],
+            providers: [{ provide: DocumentListComponent, useValue: documentList }, ContentActionListComponent]
+        });
+        actionList = TestBed.inject(ContentActionListComponent);
+
         spyOn(documentList.actions, 'push').and.callThrough();
         const result = actionList.registerAction(null);
 

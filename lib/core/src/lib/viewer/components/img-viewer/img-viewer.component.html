@@ -19,7 +19,7 @@
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.ZOOM_OUT' | translate }}"
                 mat-icon-button
                 (click)="zoomOut()">
-            <mat-icon>zoom_out</mat-icon>
+            <mat-icon adf-icon="zoom_out" />
         </button>
 
         <div class="adf-image-viewer__toolbar-page-scale" data-automation-id="adf-page-scale">
@@ -31,7 +31,7 @@
                 title="{{ 'ADF_VIEWER.ARIA.ZOOM_IN' | translate }}"
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.ZOOM_IN' | translate }}"
                 (click)="zoomIn()">
-            <mat-icon>zoom_in</mat-icon>
+            <mat-icon adf-icon="zoom_in" />
         </button>
 
         <button *ngIf="!readOnly && allowedEditActions.rotate" id="viewer-rotate-button"
@@ -39,14 +39,14 @@
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.ROTATE' | translate }}"
                 mat-icon-button
                 (click)="rotateImage()">
-            <mat-icon>rotate_left</mat-icon>
+            <mat-icon adf-icon="rotate_left" />
         </button>
         <button *ngIf="!readOnly && allowedEditActions.crop" id="viewer-crop-button"
                 title="{{ 'ADF_VIEWER.ARIA.CROP' | translate }}"
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.CROP' | translate }}"
                 mat-icon-button
                 (click)="cropImage()">
-            <mat-icon>crop</mat-icon>
+            <mat-icon adf-icon="crop" />
         </button>
 
         <button id="viewer-reset-button"
@@ -54,7 +54,7 @@
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.RESET' | translate }}"
                 mat-icon-button
                 (click)="reset()">
-            <mat-icon>zoom_out_map</mat-icon>
+            <mat-icon adf-icon="zoom_out_map" />
         </button>
 
     </adf-toolbar>
@@ -65,7 +65,7 @@
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.CANCEL' | translate }}"
                 mat-icon-button
                 (click)="reset()">
-            <mat-icon>close</mat-icon>
+            <mat-icon adf-icon="close" />
         </button>
 
         <button id="viewer-save-button"
@@ -73,7 +73,7 @@
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.SAVE' | translate }}"
                 mat-icon-button
                 (click)="save()">
-            <mat-icon>check</mat-icon>
+            <mat-icon adf-icon="check" />
         </button>
 
     </adf-toolbar>

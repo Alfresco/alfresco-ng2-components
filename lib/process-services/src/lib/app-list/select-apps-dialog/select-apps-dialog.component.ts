@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AppsProcessService } from '../../services/apps-process.service';
 import { CommonModule } from '@angular/common';
@@ -31,15 +31,15 @@ import { MatButtonModule } from '@angular/material/button';
     encapsulation: ViewEncapsulation.None
 })
 export class SelectAppsDialogComponent {
+    private readonly appsProcessService = inject(AppsProcessService);
+    dialogRef = inject<MatDialogRef<SelectAppsDialogComponent>>(MatDialogRef);
+    data = inject(MAT_DIALOG_DATA);
+
     processApps: any;
 
     selectedProcess: any;
 
-    constructor(
-        private appsProcessService: AppsProcessService,
-        public dialogRef: MatDialogRef<SelectAppsDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any
-    ) {
+    constructor() {
         this.appsProcessService.getDeployedApplications().subscribe((apps) => {
             this.processApps = apps.filter((currentApp) => currentApp.id);
         });

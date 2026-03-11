@@ -5,7 +5,7 @@
 
     <ng-container *ngIf="permissionList.error$ | async">
         <div class="adf-no-permission__template" id="adf-permission-manager-error">
-            <mat-icon color="warn">error</mat-icon>
+            <mat-icon color="warn" adf-icon="error" />
             <p class="adf-no-permission__template--text">{{ 'PERMISSION_MANAGER.ERROR.NOT-FOUND'| translate }}</p>
         </div>
     </ng-container>
@@ -46,8 +46,7 @@
                 #popOver="adfPopOver"
                 *ngIf="model.node.permissions.isInheritanceEnabled">
                 {{ (popOver.open ? 'PERMISSION_MANAGER.LABELS.HIDE' : 'PERMISSION_MANAGER.LABELS.SHOW') | translate }}
-                <mat-icon class="adf-permission-visibility-toggle-icon" iconPositionEnd>
-                    {{ popOver.open ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }} </mat-icon>
+                <mat-icon class="adf-permission-visibility-toggle-icon" [adf-icon]="popOver.open ? 'keyboard_arrow_up' : 'keyboard_arrow_down'" iconPositionEnd />
             </button>
         </div>
 
@@ -77,7 +76,7 @@
                         (click)="openAddPermissionDialog()"
                         class="adf-add-permission-button"
                         data-automation-id="adf-add-permission-button">
-                        <mat-icon>person_add_outline</mat-icon>
+                        <mat-icon adf-icon="person_add_outline" />
                     </button>
 
                     <button
@@ -86,7 +85,7 @@
                         [disabled]="!selectedPermissions?.length"
                         (click)="deleteSelection()"
                         data-automation-id="adf-delete-selected-permission">
-                        <mat-icon>delete_outline</mat-icon>
+                        <mat-icon adf-icon="delete_outline" />
                     </button>
                 </ng-container>
             </section>

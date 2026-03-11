@@ -157,6 +157,7 @@ searchAiApi.getConfig().then((answer) => {
 | Name           | Type                                      |
 |----------------|-------------------------------------------|
 | **objectId**   | string                                    |
+| nodeId         | string                                    |
 | **references** | [AiAnswerReference](#AiAnswerReference)[] |
 
 ## AiAnswerReference

@@ -48,6 +48,11 @@ import { MatCardModule } from '@angular/material/card';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskHeaderCloudComponent implements OnInit, OnChanges {
+    private readonly taskCloudService = inject(TaskCloudService);
+    private readonly translationService = inject(TranslationService);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly cardViewUpdateService = inject(CardViewUpdateService);
+
     /** (Required) The name of the application. */
     @Input({ required: true })
     appName: string = '';
@@ -86,12 +91,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private taskCloudService: TaskCloudService,
-        private translationService: TranslationService,
-        private appConfig: AppConfigService,
-        private cardViewUpdateService: CardViewUpdateService
-    ) {
+    constructor() {
         this.dateFormat = this.appConfig.get('adf-cloud-task-header.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
     }
@@ -130,8 +130,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
             .subscribe(
                 ([taskDetails, candidateUsers, candidateGroups]) => {
                     this.taskDetails = taskDetails;
-                    this.candidateGroups = candidateGroups.map((user) => ({ icon: 'group', value: user } as CardViewArrayItem));
-                    this.candidateUsers = candidateUsers.map((group) => ({ icon: 'person', value: group } as CardViewArrayItem));
+                    this.candidateGroups = candidateGroups.map((user) => ({ icon: 'group', value: user }) as CardViewArrayItem);
+                    this.candidateUsers = candidateUsers.map((group) => ({ icon: 'person', value: group }) as CardViewArrayItem);
                     this.processInstanceId = taskDetails.processInstanceId;
                     if (this.taskDetails.parentTaskId) {
                         this.loadParentName(`${this.taskDetails.parentTaskId}`);

@@ -16,6 +16,7 @@
  */
 
 export interface SearchForm {
+    id: string;
     index: number;
     name: string;
     default: boolean;

@@ -16,7 +16,7 @@
  */
 
 import { throwError as observableThrowError, Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
     HttpHandler,
     HttpInterceptor,
@@ -33,11 +33,11 @@ import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable()
 export class AuthBearerInterceptor implements HttpInterceptor {
-    private _bearerExcludedUrls: readonly string[] = ['resources/', 'assets/', 'auth/realms', 'idp/'];
+    private readonly authenticationService = inject(AuthenticationService);
+
+    private readonly _bearerExcludedUrls: readonly string[] = ['resources/', 'assets/', 'auth/realms', 'idp/'];
 
     private excludedUrlsRegex: RegExp[];
-
-    constructor(private authenticationService: AuthenticationService) {}
 
     private loadExcludedUrlsRegex() {
         const excludedUrls = this.bearerExcludedUrls;

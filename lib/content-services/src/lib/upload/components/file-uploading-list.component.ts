@@ -19,16 +19,19 @@ import { TranslationService } from '@alfresco/adf-core';
 import { UploadService } from '../../common/services/upload.service';
 import { FileModel, FileUploadStatus } from '../../common/models/file.model';
 
-import { Component, ContentChild, Input, Output, TemplateRef, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ContentChild, Input, Output, TemplateRef, EventEmitter, inject } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
     selector: 'adf-file-uploading-list',
-    imports: [CommonModule],
+    imports: [NgTemplateOutlet],
     templateUrl: './file-uploading-list.component.html',
     styleUrls: ['./file-uploading-list.component.scss']
 })
 export class FileUploadingListComponent {
+    private readonly uploadService = inject(UploadService);
+    private readonly translateService = inject(TranslationService);
+
     @ContentChild(TemplateRef)
     template: any;
 
@@ -38,8 +41,6 @@ export class FileUploadingListComponent {
     /** Emitted when a file in the list has an error. */
     @Output()
     error = new EventEmitter<any>();
-
-    constructor(private uploadService: UploadService, private translateService: TranslationService) {}
 
     /**
      * Cancel file upload

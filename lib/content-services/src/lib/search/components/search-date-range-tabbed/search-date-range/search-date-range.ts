@@ -21,7 +21,7 @@ import { InLastDateType } from './in-last-date-type';
 export interface SearchDateRange {
     dateRangeType: DateRangeType;
     inLastValueType?: InLastDateType;
-    inLastValue?: string;
+    inLastValue?: string | number;
     betweenStartDate?: Date;
     betweenEndDate?: Date;
 }

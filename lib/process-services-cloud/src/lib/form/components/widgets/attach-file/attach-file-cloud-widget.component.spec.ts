@@ -170,8 +170,48 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
     });
 
-    afterEach(() => {
-        fixture.destroy();
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            eventSpy = spyOn(widget, 'event').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {});
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
+
+        it('should not trigger button click when label is clicked', async () => {
+            const openSelectDialogSpy = spyOn(widget, 'openSelectDialog');
+            createUploadWidgetField(new FormModel(), 'attach-file-test', [], contentSourceParam);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const label = element.querySelector('.adf-label') as HTMLElement;
+            label.click();
+            fixture.detectChanges();
+
+            expect(openSelectDialogSpy).not.toHaveBeenCalled();
+        });
+
+        it('should call openSelectDialog only once when button is clicked', async () => {
+            const openSelectDialogSpy = spyOn(widget, 'openSelectDialog');
+            createUploadWidgetField(new FormModel(), 'attach-file-test', [], contentSourceParam);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const button = element.querySelector('.adf-attach-widget__menu-upload__button') as HTMLButtonElement;
+            button.click();
+            fixture.detectChanges();
+
+            expect(openSelectDialogSpy).toHaveBeenCalledTimes(1);
+        });
     });
 
     it('should show up as simple upload when is configured for only local files', async () => {

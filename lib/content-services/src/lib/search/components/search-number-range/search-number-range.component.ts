@@ -87,7 +87,7 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
         this.context.populateFilters
             .asObservable()
             .pipe(
-                map((filtersQueries) => filtersQueries[this.id]),
+                map((filtersQueries) => filtersQueries?.[this.id]),
                 first()
             )
             .subscribe((filterQuery) => {

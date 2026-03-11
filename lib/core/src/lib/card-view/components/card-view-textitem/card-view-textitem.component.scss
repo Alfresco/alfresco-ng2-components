@@ -2,9 +2,6 @@
 
 .adf-card-view-textitem {
     .adf-textitem-error {
-        font-size: var(--theme-caption-font-size);
-        padding-top: 6px;
-
         &::before {
             display: none;
         }
@@ -50,18 +47,18 @@
             margin-top: 6px;
         }
 
-        #{ms.$mat-form-field-infix} {
-            padding-top: 0;
-
-            .adf-property-value {
-                margin-left: 0;
-            }
+        .adf-property-value {
+            margin-left: 0;
         }
     }
 
     .adf-textitem-clickable {
+        background: none;
+        border: none;
+        margin: 0;
         cursor: pointer;
-        padding-top: 3px;
+        width: 100%;
+        padding: 3px 0 0;
 
         .adf-textitem-action:hover {
             color: var(--adf-theme-foreground-text-color);
@@ -75,17 +72,14 @@
         }
     }
 
-    .adf-textitem-default-value {
-        color: var(--adf-theme-foreground-text-color-054);
-    }
-
-    .adf-property-read-only:not(:has(.adf-property-readonly-value)) {
-        border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
-    }
-
     .adf-property-value-not-editable {
-        /* stylelint-disable-next-line declaration-no-important */
         color: var(--adf-metadata-property-panel-title-color);
+    }
+
+    input.adf-property-value:disabled,
+    textarea.adf-property-value:disabled {
+        user-select: none;
+        pointer-events: none;
     }
 
     .adf-property-value-has-icon-suffix {
@@ -94,11 +88,8 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+}
 
-    #{ms.$mat-line-ripple} {
-        &::before,
-        &::after {
-            display: none;
-        }
-    }
+.adf-card-textitem-field-container {
+    padding-top: 5px;
 }

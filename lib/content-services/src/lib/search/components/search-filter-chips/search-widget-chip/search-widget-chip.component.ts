@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { SearchCategory } from '../../../models/search-category.interface';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
@@ -23,10 +23,10 @@ import { SearchWidgetContainerComponent } from '../../search-widget-container/se
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search-filter-menu-card.component';
 import { MatButtonModule } from '@angular/material/button';
 import { first } from 'rxjs/operators';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search-widget-chip',
@@ -35,7 +35,7 @@ import { first } from 'rxjs/operators';
         MatChipsModule,
         MatMenuModule,
         TranslatePipe,
-        MatIconModule,
+        IconModule,
         SearchFilterMenuCardComponent,
         SearchWidgetContainerComponent,
         MatButtonModule
@@ -51,11 +51,17 @@ import { first } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchWidgetChipComponent implements AfterViewInit {
+    private readonly cd = inject(ChangeDetectorRef);
+    private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
+
     @Input({ required: true })
     category: SearchCategory;
 
     @ViewChild('menuContainer', { static: false })
     menuContainer: ElementRef;
+
+    @ViewChild('menuTrigger', { read: ElementRef, static: false })
+    menuTriggerEl: ElementRef;
 
     @ViewChild('menuTrigger', { static: false })
     menuTrigger: MatMenuTrigger;
@@ -66,8 +72,6 @@ export class SearchWidgetChipComponent implements AfterViewInit {
     focusTrap: ConfigurableFocusTrap;
     chipIcon = 'keyboard_arrow_down';
 
-    constructor(private readonly cd: ChangeDetectorRef, private readonly focusTrapFactory: ConfigurableFocusTrapFactory) {}
-
     ngAfterViewInit(): void {
         this.widgetContainerComponent
             ?.getDisplayValue()
@@ -75,12 +79,19 @@ export class SearchWidgetChipComponent implements AfterViewInit {
             .subscribe(() => {
                 this.cd.detectChanges();
             });
+
+        if (this.menuTriggerEl) {
+            this.menuTriggerEl.nativeElement.setAttribute('aria-haspopup', 'dialog');
+        }
     }
 
     onMenuOpen() {
-        if (this.menuContainer && !this.focusTrap) {
-            this.focusTrap = this.focusTrapFactory.create(this.menuContainer.nativeElement);
-        }
+        setTimeout(() => {
+            if (this.menuContainer && !this.focusTrap) {
+                this.focusTrap = this.focusTrapFactory.create(this.menuContainer.nativeElement);
+                this.focusTrap.focusInitialElement();
+            }
+        });
         this.chipIcon = 'keyboard_arrow_up';
     }
 

@@ -17,14 +17,15 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ContentTestingModule } from '../../../../testing/content.testing.module';
 import { SearchDateRangeComponent } from './search-date-range.component';
+import { SearchDateRange } from './search-date-range';
 import { addDays, endOfToday, format, parse, startOfYesterday, subDays } from 'date-fns';
 import { Validators } from '@angular/forms';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCalendarHarness, MatDatepickerToggleHarness } from '@angular/material/datepicker/testing';
 import { MatRadioButtonHarness } from '@angular/material/radio/testing';
+import { Subject } from 'rxjs';
 
 describe('SearchDateRangeComponent', () => {
     let component: SearchDateRangeComponent;
@@ -33,10 +34,11 @@ describe('SearchDateRangeComponent', () => {
 
     const startDateSampleValue = parse('05-Jun-23', 'dd-MMM-yy', new Date());
     const endDateSampleValue = parse('07-Jun-23', 'dd-MMM-yy', new Date());
+    const resetSubject = new Subject<void>();
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchDateRangeComponent]
+            imports: [SearchDateRangeComponent]
         });
 
         fixture = TestBed.createComponent(SearchDateRangeComponent);
@@ -51,6 +53,7 @@ describe('SearchDateRangeComponent', () => {
             betweenStartDate: null,
             betweenEndDate: null
         });
+        component.onReset$ = resetSubject.asObservable();
         loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
         fixture.detectChanges();
     });
@@ -224,7 +227,7 @@ describe('SearchDateRangeComponent', () => {
 
     it('should not emit values when form is invalid', async () => {
         spyOn(component.changed, 'emit');
-        let value = {
+        let value: Partial<SearchDateRange> = {
             dateRangeType: component.DateRangeType.IN_LAST,
             inLastValueType: component.InLastDateType.WEEKS,
             inLastValue: '',
@@ -249,8 +252,8 @@ describe('SearchDateRangeComponent', () => {
             dateRangeType: component.DateRangeType.BETWEEN,
             inLastValueType: component.InLastDateType.DAYS,
             inLastValue: undefined,
-            betweenStartDate: '',
-            betweenEndDate: ''
+            betweenStartDate: undefined,
+            betweenEndDate: undefined
         };
         dateRangeTypeRadioButton = await loader.getHarness(MatRadioButtonHarness.with({ selector: '[data-automation-id="date-range-between"]' }));
         await dateRangeTypeRadioButton.check();
@@ -260,7 +263,7 @@ describe('SearchDateRangeComponent', () => {
 
     it('should emit values when form is valid', async () => {
         spyOn(component.changed, 'emit');
-        let value = {
+        let value: Partial<SearchDateRange> = {
             dateRangeType: component.DateRangeType.IN_LAST,
             inLastValueType: component.InLastDateType.WEEKS,
             inLastValue: 5,
@@ -295,5 +298,36 @@ describe('SearchDateRangeComponent', () => {
         component.betweenEndDateFormControl.setValue(endDateSampleValue);
         fixture.detectChanges();
         expect(component.changed.emit).toHaveBeenCalledWith(value);
+    });
+
+    it('should reset the form when onReset event is received', () => {
+        spyOn(component, 'reset').and.callThrough();
+        component.form.controls.dateRangeType.setValue(component.DateRangeType.BETWEEN);
+        component.form.controls.betweenStartDate.setValue(startDateSampleValue);
+        component.form.controls.betweenEndDate.setValue(endDateSampleValue);
+        fixture.detectChanges();
+
+        resetSubject.next();
+        fixture.detectChanges();
+
+        expect(component.form.controls.dateRangeType.value).toEqual(component.DateRangeType.ANY);
+        expect(component.form.controls.betweenStartDate.value).toBeNull();
+        expect(component.form.controls.betweenEndDate.value).toBeNull();
+        expect(component.reset).toHaveBeenCalled();
+    });
+
+    it('should set aria-haspopup="false" on date range inputs', () => {
+        const inputEls: NodeListOf<HTMLInputElement> = component.dateRangeInput.nativeElement.querySelectorAll('input');
+
+        inputEls.forEach((input) => {
+            spyOn(input, 'setAttribute').and.callThrough();
+        });
+
+        component.ngAfterViewInit();
+
+        inputEls.forEach((input) => {
+            expect(input.setAttribute).toHaveBeenCalledWith('aria-haspopup', 'false');
+            expect(input.getAttribute('aria-haspopup')).toBe('false');
+        });
     });
 });

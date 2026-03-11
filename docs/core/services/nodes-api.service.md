@@ -98,6 +98,11 @@ Accesses and manipulates ACS document nodes using their node IDs.
     -   _nodeId:_ `string` - ID of the target node
     -   _jobId:_ `string` - ID of the job started by the `initiateFolderSizeCalculation` request
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SizeDetailsEntry`](../../../lib/js-api/src/api/content-rest-api/docs/NodesApi.md#sizedetailsentry)`>` - Details of the folder
+-   **listParents**(nodeId: `string`, opts: `{ where?: string; includeSource?: boolean;} & NodesIncludeQuery & ContentPagingQuery`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeAssociationPaging`](../../../lib/js-api/src/api/content-rest-api/docs/NodesApi.md#NodeAssociationPaging)`>`<br/>
+    Lists parents of a node.
+    -   _nodeId:_ `string` - ID of the target node
+    -   _opts:_ `{ where?: string; includeSource?: boolean;} & NodesIncludeQuery & ContentPagingQuery` - additional options that API can take
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeAssociationPaging`](../../../lib/js-api/src/api/content-rest-api/docs/NodesApi.md#NodeAssociationPaging)`>` - List of node's parents.
 
 ## Details
 

@@ -20,6 +20,7 @@ import { OidcAuthenticationService } from '../../auth/oidc/oidc-authentication.s
 import { LoginComponent } from '../components/login/login.component';
 import { LoginFooterDirective } from './login-footer.directive';
 import { provideCoreAuthTesting } from '../../testing';
+import { Injector, runInInjectionContext } from '@angular/core';
 
 describe('LoginFooterDirective', () => {
     let fixture: ComponentFixture<LoginComponent>;
@@ -39,7 +40,13 @@ describe('LoginFooterDirective', () => {
         });
         fixture = TestBed.createComponent(LoginComponent);
         component = fixture.componentInstance;
-        directive = new LoginFooterDirective(component);
+
+        const injector = Injector.create({
+            providers: [{ provide: LoginComponent, useValue: component }],
+            parent: TestBed.inject(Injector)
+        });
+
+        directive = runInInjectionContext(injector, () => new LoginFooterDirective());
     });
 
     afterEach(() => {

@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { effect, Injectable, inject } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
-import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
+import { UserPreferencesService } from '../services/user-preferences.service';
 
 // Stub for the moment.js integration.
 // While this dependency is no longer used by the libraries, the moment adapter can still discover the moment.js linked to the application
@@ -34,10 +34,15 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
 
     overrideDisplayFormat: string;
 
-    constructor(preferences: UserPreferencesService) {
+    constructor() {
+        const preferences = inject(UserPreferencesService);
+
         super();
 
-        preferences.select(UserPreferenceValues.Locale).subscribe((locale: string) => {
+        // Use effect to reactively update locale when signal changes
+        // Note: This adapter is a singleton service, so no cleanup needed
+        effect(() => {
+            const locale = preferences.localeSignal();
             this.setLocale(locale);
         });
     }

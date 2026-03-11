@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Directive, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
 import { SiteEntry, SiteMembershipRequestBodyCreate, SiteMembershipRequestEntry, SitesApi } from '@alfresco/js-api';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
@@ -30,6 +30,10 @@ import { SitesService } from '../common/services/sites.service';
     exportAs: 'libraryMembership'
 })
 export class LibraryMembershipDirective implements OnChanges {
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
+    private readonly sitesService = inject(SitesService);
+    private readonly versionCompatibilityService = inject(VersionCompatibilityService);
+
     targetSite: any = null;
 
     isJoinRequested: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -59,12 +63,6 @@ export class LibraryMembershipDirective implements OnChanges {
     onClick() {
         this.toggleMembershipRequest();
     }
-
-    constructor(
-        private alfrescoApiService: AlfrescoApiService,
-        private sitesService: SitesService,
-        private versionCompatibilityService: VersionCompatibilityService
-    ) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (!changes.selection.currentValue?.entry) {

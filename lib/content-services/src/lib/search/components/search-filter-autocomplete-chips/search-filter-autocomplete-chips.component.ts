@@ -39,6 +39,10 @@ import { SitesService } from '../../../common/services/sites.service';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnInit {
+    private readonly tagService = inject(TagService);
+    private readonly categoryService = inject(CategoryService);
+    private readonly sitesService = inject(SitesService);
+
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -48,18 +52,14 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     selectedOptions: AutocompleteOption[] = [];
     enableChangeUpdate: boolean;
 
-    private resetSubject$ = new Subject<void>();
+    private readonly resetSubject$ = new Subject<void>();
     reset$: Observable<void> = this.resetSubject$.asObservable();
-    private autocompleteOptionsSubject$ = new BehaviorSubject<AutocompleteOption[]>([]);
+    private readonly autocompleteOptionsSubject$ = new BehaviorSubject<AutocompleteOption[]>([]);
     autocompleteOptions$: Observable<AutocompleteOption[]> = this.autocompleteOptionsSubject$.asObservable();
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private readonly tagService: TagService,
-        private readonly categoryService: CategoryService,
-        private readonly sitesService: SitesService
-    ) {
+    constructor() {
         this.options = new SearchFilterList<AutocompleteOption[]>();
     }
 
@@ -122,30 +122,35 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     }
 
     onInputChange(value: string) {
-        if (value) {
-            if (this.settings.field === AutocompleteField.CATEGORIES) {
-                this.searchForExistingCategories(value);
-            } else if (this.settings.field === AutocompleteField.LOCATION) {
-                this.populateSitesOptions();
-            }
+        if (this.settings.field === AutocompleteField.CATEGORIES) {
+            this.searchForExistingCategories(value);
+        } else if (this.settings.field === AutocompleteField.LOCATION) {
+            this.populateSitesOptions();
         }
     }
 
     optionComparator(option1: AutocompleteOption, option2: AutocompleteOption): boolean {
-        return option1.id ? option1.id.toUpperCase() === option2.id.toUpperCase() : option1.value.toUpperCase() === option2.value.toUpperCase();
+        if (!option1 || !option2) return false;
+        if (option1.id && option2.id) {
+            return option1.id.toUpperCase() === option2.id.toUpperCase();
+        }
+        if (option1.value && option2.value) {
+            return option1.value.toUpperCase() === option2.value.toUpperCase();
+        }
+        return false;
     }
 
     private updateQuery(updateContext = true) {
         this.context.filterRawParams[this.id] = this.selectedOptions.length > 0 ? this.selectedOptions : undefined;
         this.displayValue$.next(this.selectedOptions.map((option) => option.value).join(', '));
-        if (this.context && this.settings && this.settings.field) {
+        if (this.context && this.settings?.field) {
             let queryFragments;
             switch (this.settings.field) {
                 case AutocompleteField.CATEGORIES:
                     queryFragments = this.selectedOptions.map((val) => `${this.settings.field}:"workspace://SpacesStore/${val.id}"`);
                     break;
                 case AutocompleteField.LOCATION:
-                    queryFragments = this.selectedOptions.map((val) => val.query ?? `${this.settings.field}:"${val.id}"`);
+                    queryFragments = this.selectedOptions.map((val) => val.query ?? `${this.settings.field}:"${val.id || val.value}"`);
                     break;
                 default:
                     queryFragments = this.selectedOptions.map((val) => val.query ?? `${this.settings.field}:"${val.value}"`);

@@ -24,7 +24,8 @@ import {
     CardViewComponent,
     NotificationService,
     UpdateNotification,
-    UnitTestingUtils
+    UnitTestingUtils,
+    NoopAuthModule
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -35,14 +36,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EMPTY, firstValueFrom, of, throwError } from 'rxjs';
 import { CategoriesManagementComponent, CategoriesManagementMode } from '../../../category';
 import { TagsCreatorComponent, TagsCreatorMode } from '../../../tag';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { PropertyGroup } from '../../interfaces/property-group.interface';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 import { TagService } from '../../../tag/services/tag.service';
 import { CategoryService } from '../../../category/services/category.service';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { DebugElement, SimpleChange } from '@angular/core';
 
 describe('ContentMetadataComponent', () => {
@@ -97,20 +96,17 @@ describe('ContentMetadataComponent', () => {
         return tags;
     };
 
-    const findCancelButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=reset-metadata]')).nativeElement;
-    const findCancelTagsButton = (): HTMLButtonElement =>
-        fixture.debugElement.query(By.css('[data-automation-id=reset-tags-metadata]')).nativeElement;
+    const findCancelButton = (): HTMLButtonElement => testingUtils.getByDataAutomationId('reset-metadata').nativeElement;
+    const findCancelTagsButton = (): HTMLButtonElement => testingUtils.getByDataAutomationId('reset-tags-metadata').nativeElement;
 
     const clickOnCancel = () => {
         findCancelButton().click();
         fixture.detectChanges();
     };
 
-    const findSaveGeneralInfoButton = (): HTMLButtonElement =>
-        fixture.debugElement.query(By.css('[data-automation-id=save-general-info-metadata]')).nativeElement;
-    const findSaveTagsButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=save-tags-metadata]')).nativeElement;
-    const findSaveCategoriesButton = (): HTMLButtonElement =>
-        fixture.debugElement.query(By.css('[data-automation-id=save-categories-metadata]')).nativeElement;
+    const findSaveGeneralInfoButton = (): HTMLButtonElement => testingUtils.getByDataAutomationId('save-general-info-metadata').nativeElement;
+    const findSaveTagsButton = (): HTMLButtonElement => testingUtils.getByDataAutomationId('save-tags-metadata').nativeElement;
+    const findSaveCategoriesButton = (): HTMLButtonElement => testingUtils.getByDataAutomationId('save-categories-metadata').nativeElement;
 
     const clickOnGeneralInfoSave = () => {
         findSaveGeneralInfoButton().click();
@@ -122,14 +118,19 @@ describe('ContentMetadataComponent', () => {
         fixture.detectChanges();
     };
 
-    const getGroupSaveButton = () => fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]')).nativeElement;
+    const clickOnSaveCategoriesButton = () => {
+        findSaveCategoriesButton().click();
+        fixture.detectChanges();
+    };
+
+    const getGroupSaveButton = () => testingUtils.getByDataAutomationId('save-metadata').nativeElement;
     const clickOnGroupSaveButton = () => getGroupSaveButton().click();
 
-    const findTagsCreator = (): TagsCreatorComponent => fixture.debugElement.query(By.directive(TagsCreatorComponent))?.componentInstance;
-    const getToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-general-info-edit"]'));
-    const getTagsToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="showing-tag-input-button"]'));
-    const getCategoriesToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-categories-edit"]'));
-    const getGroupToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
+    const findTagsCreator = (): TagsCreatorComponent => testingUtils.getByDirective(TagsCreatorComponent)?.componentInstance;
+    const getToggleEditButton = () => testingUtils.getByDataAutomationId('meta-data-general-info-edit');
+    const getTagsToggleEditButton = () => testingUtils.getByDataAutomationId('showing-tag-input-button');
+    const getCategoriesToggleEditButton = () => testingUtils.getByDataAutomationId('meta-data-categories-edit');
+    const getGroupToggleEditButton = () => testingUtils.getByDataAutomationId('meta-data-card-toggle-edit');
 
     const toggleEditModeForTags = (): void => {
         getTagsToggleEditButton().nativeElement.click();
@@ -151,16 +152,14 @@ describe('ContentMetadataComponent', () => {
         fixture.detectChanges();
     };
 
-    const getGeneralInfoPanelContent = (): CardViewComponent =>
-        fixture.debugElement.query(By.css('.adf-metadata-properties-expansion-panel')).componentInstance;
+    const getGeneralInfoPanelContent = (): CardViewComponent => testingUtils.getByCSS('.adf-metadata-properties-expansion-panel').componentInstance;
 
     const getGroupPanelContent = (): CardViewComponent =>
-        fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container adf-card-view')).componentInstance;
+        testingUtils.getByCSS('.adf-metadata-grouped-properties-container adf-card-view').componentInstance;
 
-    const getGeneralInfoPanel = (): MatExpansionPanel =>
-        fixture.debugElement.query(By.css('[data-automation-id="adf-metadata-group-properties"]'))?.componentInstance;
+    const getGeneralInfoPanel = (): MatExpansionPanel => testingUtils.getByDataAutomationId('adf-metadata-group-properties')?.componentInstance;
 
-    const queryDom = (properties = 'properties') => fixture.debugElement.query(By.css(`[data-automation-id="adf-metadata-group-${properties}"]`));
+    const queryDom = (properties = 'properties') => testingUtils.getByDataAutomationId(`adf-metadata-group-${properties}`);
 
     const getEmptyPanelMessage = (): DebugElement => testingUtils.getByCSS('.adf-metadata-no-item-added');
 
@@ -170,7 +169,7 @@ describe('ContentMetadataComponent', () => {
      * @returns list of native elements
      */
     function getCategories(): HTMLParagraphElement[] {
-        return fixture.debugElement.queryAll(By.css('.adf-metadata-categories'))?.map((debugElem) => debugElem.nativeElement);
+        return testingUtils.getAllByCSS('.adf-metadata-categories')?.map((category) => category.nativeElement);
     }
 
     /**
@@ -179,12 +178,12 @@ describe('ContentMetadataComponent', () => {
      * @returns angular component
      */
     function getCategoriesManagementComponent(): CategoriesManagementComponent {
-        return fixture.debugElement.query(By.directive(CategoriesManagementComponent))?.componentInstance;
+        return testingUtils.getByDirective(CategoriesManagementComponent)?.componentInstance;
     }
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, MatDialogModule, MatSnackBarModule, ContentMetadataComponent],
+            imports: [NoopAuthModule, MatDialogModule, MatSnackBarModule, ContentMetadataComponent],
             providers: [
                 {
                     provide: TagService,
@@ -264,7 +263,7 @@ describe('ContentMetadataComponent', () => {
 
             component.basicProperties$.subscribe(() => {
                 fixture.detectChanges();
-                const basicPropertiesComponent = fixture.debugElement.query(By.directive(CardViewComponent)).componentInstance;
+                const basicPropertiesComponent = testingUtils.getByDirective(CardViewComponent).componentInstance;
                 expect(basicPropertiesComponent.properties).toBeDefined();
                 done();
             });
@@ -507,6 +506,34 @@ describe('ContentMetadataComponent', () => {
             clickOnTagsSave();
 
             expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
+        });
+
+        it('should fetch latest categories on save click', () => {
+            component.displayCategories = true;
+            const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
+            const expectedNode: Node = { ...node, name: 'some-modified-value' };
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
+            const getCategoriesSpy = spyOn(categoryService, 'getCategoryLinksForNode').and.returnValue(of(categoryPagingResponse));
+            spyOn(categoryService, 'unlinkNodeFromCategory').and.returnValue(of(undefined));
+            spyOn(categoryService, 'linkNodeToCategory').and.returnValue(of({}));
+            component.ngOnInit();
+            component.readOnly = false;
+
+            updateService.update(property, 'updated-value');
+
+            fixture.detectChanges();
+            toggleEditModeForCategories();
+
+            getCategoriesManagementComponent().categoriesChange.emit([category1, category2]);
+            fixture.detectChanges();
+
+            getCategoriesSpy.calls.reset();
+            clickOnSaveCategoriesButton();
+
+            const expectedCategories = categoryPagingResponse.list.entries.map((entry) => entry.entry);
+            expect(getCategoriesSpy).toHaveBeenCalledWith(node.id);
+            expect(component.categories).toEqual(expectedCategories);
+            expect(component.assignedCategories).toEqual(expectedCategories);
         });
 
         it('should throw error on unsuccessful save', fakeAsync(() => {
@@ -845,7 +872,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const basicPropertiesComponent = fixture.debugElement.query(By.directive(CardViewComponent)).componentInstance;
+            const basicPropertiesComponent = testingUtils.getByDirective(CardViewComponent).componentInstance;
             expect(basicPropertiesComponent.properties.length).toBe(expectedProperties.length);
         });
 
@@ -862,7 +889,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const basicPropertiesComponent = fixture.debugElement.query(By.directive(CardViewComponent)).componentInstance;
+            const basicPropertiesComponent = testingUtils.getByDirective(CardViewComponent).componentInstance;
             expect(basicPropertiesComponent.displayEmpty).toBe(false);
         });
 
@@ -934,7 +961,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const basicPropertiesGroup = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container .adf-content-metadata-panel'));
+            const basicPropertiesGroup = testingUtils.getByCSS('.adf-metadata-grouped-properties-container .adf-content-metadata-panel');
             expect(basicPropertiesGroup).toBeNull();
         });
 
@@ -947,7 +974,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const basicPropertiesGroup = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container .adf-content-metadata-panel'));
+            const basicPropertiesGroup = testingUtils.getByCSS('.adf-metadata-grouped-properties-container .adf-content-metadata-panel');
             expect(basicPropertiesGroup).toBeDefined();
         });
 
@@ -1167,7 +1194,7 @@ describe('ContentMetadataComponent', () => {
             await firstValueFrom(component.groupedProperties$);
             fixture.detectChanges();
 
-            const verProps = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-metadata-group-Versionable"]'));
+            const verProps = testingUtils.getAllByDataAutomationId('adf-metadata-group-Versionable');
 
             expect(verProps.length).toEqual(2);
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
@@ -1259,15 +1286,11 @@ describe('ContentMetadataComponent', () => {
 
             exifProp.nativeElement.click();
 
-            const pixelXDimensionElement = fixture.debugElement.query(
-                By.css('[data-automation-id="card-textitem-label-properties.exif:pixelXDimension"]')
-            );
+            const pixelXDimensionElement = testingUtils.getByDataAutomationId('card-textitem-label-properties.exif:pixelXDimension');
             expect(pixelXDimensionElement).toBeTruthy();
             expect(pixelXDimensionElement.nativeElement.textContent.trim()).toEqual('Image Width');
 
-            const pixelYDimensionElement = fixture.debugElement.query(
-                By.css('[data-automation-id="card-textitem-label-properties.exif:pixelYDimension"]')
-            );
+            const pixelYDimensionElement = testingUtils.getByDataAutomationId('card-textitem-label-properties.exif:pixelYDimension');
             expect(pixelYDimensionElement).toBeTruthy();
             expect(pixelYDimensionElement.nativeElement.textContent.trim()).toEqual('Image Height');
         });
@@ -1286,7 +1309,7 @@ describe('ContentMetadataComponent', () => {
             await firstValueFrom(component.groupedProperties$);
             fixture.detectChanges();
 
-            const exifProps = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-metadata-group-Exif"]'));
+            const exifProps = testingUtils.getAllByDataAutomationId('adf-metadata-group-Exif');
 
             expect(exifProps.length).toEqual(2);
             expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
@@ -1347,7 +1370,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             const event = { keyCode: 37, stopPropagation: () => {} };
             spyOn(event, 'stopPropagation').and.stub();
-            const element = fixture.debugElement.query(By.css('adf-card-view'));
+            const element = testingUtils.getByCSS('adf-card-view');
             element.triggerEventHandler('keydown', event);
             expect(event.stopPropagation).toHaveBeenCalled();
         });
@@ -1356,7 +1379,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             const event = { keyCode: 39, stopPropagation: () => {} };
             spyOn(event, 'stopPropagation').and.stub();
-            const element = fixture.debugElement.query(By.css('adf-card-view'));
+            const element = testingUtils.getByCSS('adf-card-view');
             element.triggerEventHandler('keydown', event);
             expect(event.stopPropagation).toHaveBeenCalled();
         });
@@ -1365,7 +1388,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             const event = { keyCode: 40, stopPropagation: () => {} };
             spyOn(event, 'stopPropagation').and.stub();
-            const element = fixture.debugElement.query(By.css('adf-card-view'));
+            const element = testingUtils.getByCSS('adf-card-view');
             element.triggerEventHandler('keydown', event);
             expect(event.stopPropagation).not.toHaveBeenCalled();
         });
@@ -1375,7 +1398,7 @@ describe('ContentMetadataComponent', () => {
         let tagPaging: TagPaging;
 
         const expandTagsPanel = (): void => {
-            fixture.debugElement.query(By.css('[data-automation-id="adf-content-metadata-tags-panel"]'))?.componentInstance.opened.emit();
+            testingUtils.getByDataAutomationId('adf-content-metadata-tags-panel')?.componentInstance.opened.emit();
             fixture.detectChanges();
         };
 
@@ -1492,7 +1515,7 @@ describe('ContentMetadataComponent', () => {
 
             toggleEditModeForTags();
             fixture.detectChanges();
-            const noEditableTagsContainer = fixture.debugElement.query(By.css('div.adf-metadata-properties-tags'));
+            const noEditableTagsContainer = testingUtils.getByCSS('div.adf-metadata-properties-tags');
             expect(noEditableTagsContainer).toBeNull();
         });
 
@@ -1622,7 +1645,7 @@ describe('ContentMetadataComponent', () => {
 
     describe('Categories list', () => {
         const expandCategoriesPanel = (): void => {
-            fixture.debugElement.query(By.css('[data-automation-id="adf-content-metadata-categories-panel"]'))?.componentInstance.opened.emit();
+            testingUtils.getByDataAutomationId('adf-content-metadata-categories-panel')?.componentInstance.opened.emit();
             fixture.detectChanges();
         };
 
@@ -1835,8 +1858,8 @@ describe('ContentMetadataComponent', () => {
         it('should render correct custom panel with title and component', () => {
             component.customPanels = [{ panelTitle: 'testTitle', component: 'testComponent' }];
             fixture.detectChanges();
-            const panelTitle = fixture.debugElement.query(By.css('.adf-metadata-custom-panel-title .adf-metadata-properties-title')).nativeElement;
-            const customComponent = fixture.debugElement.query(By.css('adf-dynamic-component')).nativeElement;
+            const panelTitle = testingUtils.getByCSS('.adf-metadata-custom-panel-title .adf-metadata-properties-title').nativeElement;
+            const customComponent = testingUtils.getByCSS('adf-dynamic-component').nativeElement;
             expect(panelTitle.innerText).toEqual('testTitle');
             expect(customComponent).toBeDefined();
         });

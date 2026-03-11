@@ -23,7 +23,7 @@ import { CardViewBoolItemProperties } from '../interfaces/card-view.interfaces';
 export class CardViewBoolItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type = 'bool';
     value = false;
-    default: boolean;
+    declare default: boolean;
 
     constructor(cardViewBoolItemProperties: CardViewBoolItemProperties) {
         super(cardViewBoolItemProperties);

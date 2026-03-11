@@ -18,7 +18,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ViewerComponent } from '../../../../viewer';
-import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 
@@ -29,24 +28,12 @@ import { WidgetComponent } from '../widget.component';
     templateUrl: './base-viewer.widget.html',
     styleUrls: ['./base-viewer.widget.scss'],
     host: {
-        '(click)': 'event($event)',
-        '(blur)': 'event($event)',
-        '(change)': 'event($event)',
-        '(focus)': 'event($event)',
-        '(focusin)': 'event($event)',
-        '(focusout)': 'event($event)',
-        '(input)': 'event($event)',
-        '(invalid)': 'event($event)',
-        '(select)': 'event($event)'
+        '(click)': 'event($event)'
     },
     imports: [TranslatePipe, ViewerComponent, ErrorWidgetComponent],
     encapsulation: ViewEncapsulation.None
 })
 export class BaseViewerWidgetComponent extends WidgetComponent implements OnInit {
-    constructor(formService: FormService) {
-        super(formService);
-    }
-
     ngOnInit(): void {
         if (this.field?.value) {
             if (Array.isArray(this.field.value) && this.field.value.length > 0) {

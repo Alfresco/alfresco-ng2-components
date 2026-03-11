@@ -22,6 +22,7 @@ import {
     DataColumnListComponent,
     DataSorting,
     HighlightDirective,
+    IconModule,
     InfinitePaginationComponent,
     PaginatedComponent,
     ShowHeaderMode,
@@ -41,13 +42,11 @@ import { ShareDataRow } from '../../document-list/data/share-data-row.model';
 import { NodeEntryEvent } from '../../document-list/components/node.event';
 import { debounceTime } from 'rxjs/operators';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
-import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { AutoFocusDirective } from '../../directives/auto-focus.directive';
 import { NodeCounterDirective } from '../../directives/node-counter.directive';
-import { MatIconModule } from '@angular/material/icon';
 import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
 import { MatButtonModule } from '@angular/material/button';
 import { NameLocationCellComponent } from '../name-location-cell/name-location-cell.component';
@@ -63,13 +62,12 @@ export const defaultValidation = () => true;
 @Component({
     selector: 'adf-content-node-selector-panel',
     imports: [
-        CommonModule,
         MatFormFieldModule,
         TranslatePipe,
         MatInputModule,
         ReactiveFormsModule,
         AutoFocusDirective,
-        MatIconModule,
+        IconModule,
         DropdownSitesComponent,
         MatButtonModule,
         ToolbarTitleComponent,
@@ -92,6 +90,14 @@ export const defaultValidation = () => true;
     providers: [SearchQueryBuilderService]
 })
 export class ContentNodeSelectorPanelComponent implements OnInit {
+    private readonly customResourcesService = inject(CustomResourcesService);
+    private readonly queryBuilderService = inject(SearchQueryBuilderService);
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly nodesApiService = inject(NodesApiService);
+    private readonly uploadService = inject(UploadService);
+    private readonly sitesService = inject(SitesService);
+    private readonly contentNodeSelectorPanelService = inject(ContentNodeSelectorPanelService);
+
     // eslint-disable-next-line @typescript-eslint/naming-convention
     DEFAULT_PAGINATION: Pagination = new Pagination({
         maxItems: 25,
@@ -305,16 +311,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     searchPanelExpanded: boolean = false;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private customResourcesService: CustomResourcesService,
-        private queryBuilderService: SearchQueryBuilderService,
-        private userPreferencesService: UserPreferencesService,
-        private nodesApiService: NodesApiService,
-        private uploadService: UploadService,
-        private sitesService: SitesService,
-        private contentNodeSelectorPanelService: ContentNodeSelectorPanelService
-    ) {}
 
     set chosenNode(value: Node[]) {
         this._chosenNode = value;

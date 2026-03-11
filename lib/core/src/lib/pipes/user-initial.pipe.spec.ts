@@ -18,6 +18,7 @@
 import { DomSanitizer } from '@angular/platform-browser';
 import { User } from '../models/general-user.model';
 import { InitialUsernamePipe } from './user-initial.pipe';
+import { TestBed } from '@angular/core/testing';
 
 class FakeSanitizer extends DomSanitizer {
     constructor() {
@@ -54,7 +55,10 @@ describe('UserInitialPipe', () => {
     let fakeUser: User;
 
     beforeEach(() => {
-        pipe = new InitialUsernamePipe(new FakeSanitizer());
+        TestBed.configureTestingModule({
+            providers: [InitialUsernamePipe, { provide: DomSanitizer, useClass: FakeSanitizer }]
+        });
+        pipe = TestBed.inject(InitialUsernamePipe);
         fakeUser = { username: '' } as User;
     });
 
@@ -62,28 +66,28 @@ describe('UserInitialPipe', () => {
         fakeUser.firstName = 'FAKE-NAME';
         fakeUser.lastName = 'FAKE-SURNAME';
         const result = pipe.transform(fakeUser);
-        expect(result).toBe('<div data-automation-id="user-initials-image" class="">FF</div>');
+        expect(result).toBe('<div data-automation-id="user-initials-image" aria-label="FAKE-NAME FAKE-SURNAME" class="">FF</div>');
     });
 
     it('should apply the style class passed in input', () => {
         fakeUser.firstName = 'FAKE-NAME';
         fakeUser.lastName = 'FAKE-SURNAME';
         const result = pipe.transform(fakeUser, 'fake-class-to-check');
-        expect(result).toBe('<div data-automation-id="user-initials-image" class="fake-class-to-check">FF</div>');
+        expect(result).toBe('<div data-automation-id="user-initials-image" aria-label="FAKE-NAME FAKE-SURNAME" class="fake-class-to-check">FF</div>');
     });
 
     it('should return a single letter into div when lastName is undefined', () => {
         fakeUser.firstName = 'FAKE-NAME';
         fakeUser.lastName = undefined;
         const result = pipe.transform(fakeUser);
-        expect(result).toBe('<div data-automation-id="user-initials-image" class="">F</div>');
+        expect(result).toBe('<div data-automation-id="user-initials-image" aria-label="" class="">F</div>');
     });
 
     it('should return a single letter into div when firstname is null', () => {
         fakeUser.firstName = undefined;
         fakeUser.lastName = 'FAKE-SURNAME';
         const result = pipe.transform(fakeUser);
-        expect(result).toBe('<div data-automation-id="user-initials-image" class="">F</div>');
+        expect(result).toBe('<div data-automation-id="user-initials-image" aria-label="" class="">F</div>');
     });
 
     it('should return a single letter into div when only username is defined', () => {
@@ -91,7 +95,7 @@ describe('UserInitialPipe', () => {
         fakeUser.lastName = undefined;
         fakeUser.username = 'USERNAME-FAKE';
         const result = pipe.transform(fakeUser);
-        expect(result).toBe('<div data-automation-id="user-initials-image" class="">U</div>');
+        expect(result).toBe('<div data-automation-id="user-initials-image" aria-label="USERNAME-FAKE" class="">U</div>');
     });
 
     it('should return a single letter into div of firstName when only firstName and username is defined', () => {
@@ -99,7 +103,7 @@ describe('UserInitialPipe', () => {
         fakeUser.lastName = undefined;
         fakeUser.username = 'USERNAME-FAKE';
         const result = pipe.transform(fakeUser);
-        expect(result).toBe('<div data-automation-id="user-initials-image" class="">F</div>');
+        expect(result).toBe('<div data-automation-id="user-initials-image" aria-label="USERNAME-FAKE" class="">F</div>');
     });
 
     it('should return two letter into div of username and lastName when firstName is undefined', () => {
@@ -107,7 +111,7 @@ describe('UserInitialPipe', () => {
         fakeUser.lastName = 'FAKE-SURNAME';
         fakeUser.username = 'USERNAME-FAKE';
         const result = pipe.transform(fakeUser);
-        expect(result).toBe('<div data-automation-id="user-initials-image" class="">UF</div>');
+        expect(result).toBe('<div data-automation-id="user-initials-image" aria-label="USERNAME-FAKE" class="">UF</div>');
     });
 
     it('should return a div with the user initials when firstName, lastName and username is defined', () => {
@@ -115,11 +119,33 @@ describe('UserInitialPipe', () => {
         fakeUser.lastName = 'FAKE-SURNAME';
         fakeUser.username = 'USERNAME-FAKE';
         const result = pipe.transform(fakeUser);
-        expect(result).toBe('<div data-automation-id="user-initials-image" class="">FF</div>');
+        expect(result).toBe('<div data-automation-id="user-initials-image" aria-label="FAKE-NAME FAKE-SURNAME" class="">FF</div>');
     });
 
     it('should return an empty string when user is null', () => {
         const result = pipe.transform(null);
         expect(result).toBe('');
+    });
+
+    it('should add aria label with available user information', () => {
+        fakeUser.firstName = 'FAKE-NAME';
+        fakeUser.lastName = 'FAKE-SURNAME';
+        const result = pipe.transform(fakeUser);
+        expect(result).toContain('aria-label="FAKE-NAME FAKE-SURNAME"');
+
+        fakeUser.firstName = undefined;
+        fakeUser.lastName = undefined;
+        fakeUser.displayName = 'Fake Display Name';
+        const result2 = pipe.transform(fakeUser);
+        expect(result2).toContain('aria-label="Fake Display Name"');
+
+        fakeUser.displayName = undefined;
+        fakeUser.username = 'fakeusername';
+        const result3 = pipe.transform(fakeUser);
+        expect(result3).toContain('aria-label="fakeusername"');
+
+        fakeUser.username = undefined;
+        const result4 = pipe.transform(fakeUser);
+        expect(result4).toContain('aria-label=""');
     });
 });

@@ -33,29 +33,30 @@ export interface NewVersionUploaderDialogData {
 
 export type NewVersionUploaderData = VersionManagerUploadData | ViewVersion | RefreshData;
 
-// eslint-disable-next-line no-shadow
-export enum NewVersionUploaderDataAction {
-    refresh = 'refresh',
-    upload = 'upload',
-    view = 'view'
-}
+export const NewVersionUploaderDataAction = {
+    refresh: 'refresh',
+    upload: 'upload',
+    view: 'view'
+} as const;
+
+export type NewVersionUploaderDataAction = (typeof NewVersionUploaderDataAction)[keyof typeof NewVersionUploaderDataAction];
 
 interface BaseData {
     action: NewVersionUploaderDataAction;
 }
 
 export interface VersionManagerUploadData extends BaseData {
-    action: NewVersionUploaderDataAction.upload;
+    action: 'upload';
     newVersion: NodeEntityEvent;
     currentVersion: NodeChildAssociation;
 }
 
 export interface ViewVersion extends BaseData {
-    action: NewVersionUploaderDataAction.view;
+    action: 'view';
     versionId: string;
 }
 
 export interface RefreshData extends BaseData {
-    action: NewVersionUploaderDataAction.refresh;
+    action: 'refresh';
     node: Node;
 }

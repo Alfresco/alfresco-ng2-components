@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { CollectionViewer, SelectionChange } from '@angular/cdk/collections';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -25,6 +25,9 @@ import { TreeViewService } from '../services/tree-view.service';
 
 @Injectable()
 export class TreeViewDataSource {
+    private readonly treeControl = inject<FlatTreeControl<TreeBaseNode>>(FlatTreeControl);
+    private readonly treeViewService = inject(TreeViewService);
+
     treeNodes: TreeBaseNode[];
     dataChange = new BehaviorSubject<TreeBaseNode[]>([]);
     childrenSubscription = null;
@@ -39,7 +42,7 @@ export class TreeViewDataSource {
         this.dataChange.next(value);
     }
 
-    constructor(private treeControl: FlatTreeControl<TreeBaseNode>, private treeViewService: TreeViewService) {
+    constructor() {
         this.dataChange.subscribe((treeNodes) => (this.treeNodes = treeNodes));
     }
 

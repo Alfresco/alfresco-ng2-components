@@ -15,15 +15,23 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostListener, Component, ViewContainerRef, ViewEncapsulation, OnInit } from '@angular/core';
+import { Directive, Input, HostListener, ViewContainerRef, inject } from '@angular/core';
 import { ClipboardService } from './clipboard.service';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Directive({
     selector: '[adf-clipboard]',
-    exportAs: 'adfClipboard'
+    exportAs: 'adfClipboard',
+    standalone: true,
+    hostDirectives: [MatTooltip]
 })
 export class ClipboardDirective {
+    private readonly clipboardService = inject(ClipboardService);
+    viewContainerRef = inject(ViewContainerRef);
+    private readonly matTooltip = inject(MatTooltip, { self: true });
+    private readonly translate = inject(TranslateService, { optional: true });
+
     /** Translation key or message for the tooltip. */
     // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('adf-clipboard')
@@ -37,19 +45,18 @@ export class ClipboardDirective {
     // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('clipboard-notification') message: string;
 
-    constructor(private clipboardService: ClipboardService, public viewContainerRef: ViewContainerRef) {}
-
     @HostListener('mouseenter')
     showTooltip() {
-        if (this.placeholder) {
-            const componentRef = this.viewContainerRef.createComponent(ClipboardComponent).instance;
-            componentRef.placeholder = this.placeholder;
-        }
+        const messageKey = this.placeholder || 'CLIPBOARD.CLICK_TO_COPY';
+        const translated = this.translate ? this.translate.instant(messageKey) : messageKey;
+        this.matTooltip.message = translated;
+        this.matTooltip.position = 'below';
+        this.matTooltip.show();
     }
 
     @HostListener('mouseleave')
     closeTooltip() {
-        this.viewContainerRef.remove();
+        this.matTooltip.hide();
     }
 
     @HostListener('keydown.enter', ['$event'])
@@ -69,19 +76,5 @@ export class ClipboardDirective {
 
     private copyContentToClipboard(content: string) {
         this.clipboardService.copyContentToClipboard(content, this.message);
-    }
-}
-
-@Component({
-    selector: 'adf-copy-content-tooltip',
-    imports: [TranslatePipe],
-    template: `<span class="adf-copy-tooltip">{{ placeholder | translate }} </span>`,
-    encapsulation: ViewEncapsulation.None
-})
-export class ClipboardComponent implements OnInit {
-    placeholder: string;
-
-    ngOnInit() {
-        this.placeholder = this.placeholder || 'CLIPBOARD.CLICK_TO_COPY';
     }
 }

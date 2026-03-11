@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { effect, Injectable, InjectionToken, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TranslateLoaderService } from './translate-loader.service';
@@ -50,31 +50,42 @@ export function provideTranslations(id: string, path: string) {
     providedIn: 'root'
 })
 export class TranslationService {
+    translate = inject(TranslateService);
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly providers = inject<TranslationProvider[]>(TRANSLATION_PROVIDER, { optional: true }) ?? [];
+
     defaultLang: string;
     userLang: string;
     customLoader: TranslateLoaderService;
 
-    constructor(
-        public translate: TranslateService,
-        userPreferencesService: UserPreferencesService,
-        @Optional() @Inject(TRANSLATION_PROVIDER) providers: TranslationProvider[]
-    ) {
+    constructor() {
         this.customLoader = this.translate.currentLoader as TranslateLoaderService;
 
         this.defaultLang = 'en';
-        translate.setDefaultLang(this.defaultLang);
+        this.translate.setDefaultLang(this.defaultLang);
         this.customLoader.setDefaultLang(this.defaultLang);
 
-        if (providers && providers.length > 0) {
-            for (const provider of providers) {
+        if (this.providers && this.providers.length > 0) {
+            for (const provider of this.providers) {
                 this.addTranslationFolder(provider.name, provider.source);
             }
         }
 
-        userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            if (locale) {
+        // Try to read locale from storage synchronously to apply it before components render
+        const storedLocale = this.userPreferencesService.get(UserPreferenceValues.Locale);
+
+        if (storedLocale) {
+            // Apply stored locale immediately during construction
+            this.userLang = storedLocale;
+            this.loadTranslation(storedLocale, this.defaultLang);
+        }
+
+        effect(() => {
+            const locale = this.userPreferencesService.localeSignal();
+
+            if (locale && locale !== this.userLang) {
                 this.userLang = locale;
-                this.use(this.userLang);
+                this.loadTranslation(locale, this.defaultLang);
             }
         });
     }
@@ -125,7 +136,7 @@ export class TranslationService {
     onTranslationChanged(lang: string): void {
         this.translate.onTranslationChange.next({
             lang,
-            translations: this.customLoader.getFullTranslationJSON(lang)
+            translations: this.customLoader.getFullTranslationJSON?.(lang) ?? {}
         });
     }
 
@@ -149,6 +160,22 @@ export class TranslationService {
      */
     get(key: string | Array<string>, interpolateParams?: any): Observable<string | any> {
         return this.translate.get(key, interpolateParams);
+    }
+
+    /**
+     * Determines the preferred locale for the current user.
+     *
+     * @returns Locale identifier resolved from the browser or the default translation locale
+     */
+    getLocale(): string {
+        const defaultLocale = this.userLang || this.defaultLang;
+        if (typeof window?.navigator === 'undefined') {
+            return defaultLocale;
+        }
+        const wn = window.navigator as Navigator;
+        let lang = wn.languages ? wn.languages[0] : defaultLocale;
+        lang = lang || wn.language;
+        return lang;
     }
 
     /**

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChange, SimpleChanges, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChange, SimpleChanges, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { CardItemTypeService } from '../../services/card-item-types.service';
 import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.component';
@@ -25,6 +25,8 @@ import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.comp
     template: '<ng-template #content />'
 })
 export class CardViewItemDispatcherComponent implements OnChanges {
+    private readonly cardItemTypeService = inject(CardItemTypeService);
+
     @Input()
     property: CardViewItem;
 
@@ -49,9 +51,6 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     @Input()
     multiValueSeparator: string = DEFAULT_SEPARATOR;
 
-    @Input()
-    displayLabelForChips: boolean = false;
-
     private loaded: boolean = false;
     private componentReference: any = null;
 
@@ -61,7 +60,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     @ViewChild('content', { read: ViewContainerRef, static: true })
     content!: ViewContainerRef;
 
-    constructor(private cardItemTypeService: CardItemTypeService) {
+    constructor() {
         const dynamicLifeCycleMethods = [
             'ngOnInit',
             'ngDoCheck',
@@ -103,7 +102,6 @@ export class CardViewItemDispatcherComponent implements OnChanges {
         this.componentReference.instance.copyToClipboardAction = this.copyToClipboardAction;
         this.componentReference.instance.useChipsForMultiValueProperty = this.useChipsForMultiValueProperty;
         this.componentReference.instance.multiValueSeparator = this.multiValueSeparator;
-        this.componentReference.instance.displayLabelForChips = this.displayLabelForChips;
     }
 
     private proxy(methodName, ...args) {

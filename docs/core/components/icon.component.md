@@ -1,8 +1,8 @@
 ---
 Title: Icon Component
 Added: v3.0.0
-Status: Active
-Last reviewed: 2019-02-08
+Status: Deprecated
+Last reviewed: 2026-01-20
 ---
 
 # [Icon Component](../../../lib/core/src/lib/icon/icon.component.ts "Defined in icon.component.ts")
@@ -29,7 +29,9 @@ Provides a universal way of rendering registered and named icons.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | color | [`ThemePalette`](https://github.com/angular/components/blob/master/src/material/core/common-behaviors/color.ts) |  | Theme color palette for the component. |
+| fontSet | `string` | | Icon font set. |
 | value | `string` |  | Icon value, which can be either a ligature name or a custom icon in the format `[namespace]:[name]`. |
+| isSvg | `boolean` | false | Is icon of type svg. |
 
 ## Details
 
@@ -77,6 +79,73 @@ using the `adf:` namespace.
 ```html
 <adf-icon value="adf:image/gif"></adf-icon>
 ```
+
+### Icon alias mapping
+
+The Icon Alias Mapping feature allows you to provide custom icon value mappings at runtime using the `ICON_ALIAS_MAP_TOKEN` injection token. When an icon value matches a key in the alias map, the component automatically replaces it with the mapped value. This is useful for creating consistent icon conventions across your application without modifying component code.
+
+**How icon name replacement works:**
+
+When you provide an alias map, the component checks if the icon value matches any key in the map. If a match is found, the icon name is replaced with the corresponding mapped value. This happens automatically and transparently:
+
+- Original icon name: `icon-mock`
+- Alias map entry: `'icon-mock': 'alias-mock'`
+- Result: Icon renders as `alias-mock` instead of `icon-mock`
+
+This allows you to:
+- **Rename icons** without changing component code
+- **Support legacy icon names** by mapping them to new ones
+- **Centralize icon naming conventions** in your application
+- **Create icon aliases** for shorter or more descriptive names
+
+**Example alias map:**
+
+```ts
+import { ICON_ALIAS_MAP_TOKEN } from '@alfresco/adf-core';
+
+function getProviders() {
+    return [
+        {
+            provide: ICON_ALIAS_MAP_TOKEN,
+            useValue: {
+                'icon-mock': 'alias-mock',
+                'old-icon': 'new-icon'
+            }
+        }
+    ]
+}
+```
+
+### Template usage
+
+The Icon Component supports two ways to provide the icon value:
+
+**1. Using the `value` input property:**
+
+```html
+<adf-icon value="home"></adf-icon>
+<adf-icon value="alert"></adf-icon>
+<adf-icon value="adf:custom-icon"></adf-icon>
+```
+
+**2. Using content projection (slot):**
+
+Similar to Angular Material's `mat-icon`, you can provide the icon value as text content:
+
+```html
+<adf-icon>home</adf-icon>
+<adf-icon>alert</adf-icon>
+<adf-icon>adf:custom-icon</adf-icon>
+```
+
+**Priority:** If both are provided, the slot content takes priority over the `value` input property:
+
+```html
+<!-- Uses "home" from slot, ignores value input -->
+<adf-icon value="alert">home</adf-icon>
+```
+
+This approach provides flexibility and familiarity for developers accustomed to Angular Material's icon component API.
 
 ## See also
 

@@ -1,0 +1,28 @@
+<div [style]="element | adfFieldStyle" class="adf-container-widget-repeat" [class.adf-readonly]="element.field.readOnly">
+    <h4
+        id="container-repeat"
+        class="adf-container-widget-repeat__text"
+    >
+        <span [id]="'container-repeat-label-' + element?.id" role="button" tabindex="0">
+            {{ element.name | translate }}
+        </span>
+    </h4>
+
+    <ng-content />
+
+    @if (!isEditor) {
+        @let shouldDisplayAddRowButton = !element.field.params.maxNumberOfRows || (element.field.params.maxNumberOfRows > element.field.rows.length);
+        @if (shouldDisplayAddRowButton) {
+            <button 
+                mat-flat-button
+                class="adf-container-widget-row-action"
+                [disabled]="element.field.readOnly"
+                (click)="addRow()"
+            >
+                <mat-icon adf-icon="add" /> {{ 'FORM.FIELD.REPEATABLE_SECTION.ADD_ROW' | translate }}
+            </button>
+        } @else {
+            <span class="adf-container-widget-row-action adf-container-widget-row-limit">{{ 'FORM.FIELD.REPEATABLE_SECTION.ROW_LIMIT_REACHED' | translate: { limit: element.field.params.maxNumberOfRows } }}</span>
+        }
+    }
+</div>

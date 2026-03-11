@@ -22,11 +22,10 @@ import { FacetFieldBucket } from '../../models/facet-field-bucket.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { FacetWidget } from '../../models/facet-widget.interface';
-import { TranslationService } from '@alfresco/adf-core';
+import { IconModule, TranslationService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -34,15 +33,15 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'adf-search-facet-field',
-    imports: [CommonModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, TranslatePipe, FormsModule, MatCheckboxModule],
+    imports: [CommonModule, MatButtonModule, IconModule, MatFormFieldModule, MatInputModule, TranslatePipe, FormsModule, MatCheckboxModule],
     templateUrl: './search-facet-field.component.html',
     styleUrls: ['./search-facet-field.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetFieldComponent implements FacetWidget {
-    private queryBuilder = inject(SearchQueryBuilderService);
-    private searchFacetFiltersService = inject(SearchFacetFiltersService);
-    private translationService = inject(TranslationService);
+    private readonly queryBuilder = inject(SearchQueryBuilderService);
+    private readonly searchFacetFiltersService = inject(SearchFacetFiltersService);
+    private readonly translationService = inject(TranslationService);
 
     @Input({ required: true })
     field: FacetField;

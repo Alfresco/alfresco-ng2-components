@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateCellComponent } from './date-cell.component';
 import { DataColumn, DateConfig } from '../../data/data-column.model';
-import { BehaviorSubject } from 'rxjs';
 import { AppConfigService } from '../../../app-config';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
@@ -31,18 +30,39 @@ let fixture: ComponentFixture<DateCellComponent>;
 let testingUtils: UnitTestingUtils;
 
 let mockDate;
-let mockTooltip = '';
 const mockColumn: DataColumn = {
     key: 'mock-date',
     type: 'date',
     format: 'full'
 };
 
-const renderDateCell = (dateConfig: DateConfig, value: number | string | Date, tooltip: string) => {
-    component.value$ = new BehaviorSubject<number | string | Date>(value);
-    component.dateConfig = dateConfig;
-    component.tooltip = tooltip;
+const renderDateCell = (dateConfig: DateConfig, value: number | string | Date, tooltip?: string) => {
+    // Set up mock data if not already set
+    component.data = {
+        getValue: () => value
+    } as any;
+    component.row = { id: '1', getValue: () => value } as any;
 
+    // Only set column if not already set (preserve any test-specific column config)
+    if (!component.column) {
+        component.column = { key: 'date' } as any;
+    }
+
+    component.dateConfig = dateConfig;
+
+    if (tooltip) {
+        component.tooltip = tooltip;
+    }
+
+    // Initialize the component first, then emit the value
+    component.ngOnInit();
+
+    // Trigger config recalculation by simulating a locale change
+    // This is needed when column.format is set after component construction
+    (component as any).setConfig();
+
+    // Emit the value to the observable which will trigger the signal update
+    component.value$.next(value);
     fixture.detectChanges();
 };
 
@@ -85,7 +105,6 @@ describe('DateCellComponent', () => {
         registerLocaleData(localePL);
         configureTestingModule([]);
         mockDate = new Date('2023-10-25T00:00:00');
-        mockTooltip = mockDate.toISOString();
     });
 
     it('should set default date config', () => {
@@ -103,7 +122,7 @@ describe('DateCellComponent', () => {
         const expectedDate = '10/25/23, 12:00 AM';
         const expectedTooltip = '10/25/23';
 
-        renderDateCell(mockDateConfig, mockDate, mockTooltip);
+        renderDateCell(mockDateConfig, mockDate);
         checkDisplayedDate(expectedDate);
         checkDisplayedTooltip(expectedTooltip);
     });
@@ -113,13 +132,13 @@ describe('DateCellComponent', () => {
         const expectedDate = 'Oct 25, 2023';
         const expectedTooltip = 'October 25, 2023 at 12:00:00 AM GMT+0';
 
-        renderDateCell(mockDateConfig, mockDate, mockTooltip);
+        renderDateCell(mockDateConfig, mockDate);
         checkDisplayedDate(expectedDate);
         checkDisplayedTooltip(expectedTooltip);
 
-        expect(component.config.format).toEqual('mediumDate');
-        expect(component.config.tooltipFormat).toEqual('long');
-        expect(component.config.locale).toEqual('en-US');
+        expect(component.config().format).toEqual('mediumDate');
+        expect(component.config().tooltipFormat).toEqual('long');
+        expect(component.config().locale).toEqual('en-US');
     });
 
     it('should display date and tooltip with defaules values if NO dateConfig or appConfig is provided', () => {
@@ -131,7 +150,7 @@ describe('DateCellComponent', () => {
         const expectedDate = 'Oct 25, 2023, 12:00:00 AM';
         const expectedTooltip = expectedDate;
 
-        renderDateCell(mockDateConfig, mockDate, mockTooltip);
+        renderDateCell(mockDateConfig, mockDate);
         checkDisplayedDate(expectedDate);
         checkDisplayedTooltip(expectedTooltip);
     });
@@ -146,19 +165,21 @@ describe('DateCellComponent', () => {
 
         const expectedDate = '1 day ago';
 
-        renderDateCell(mockDateConfig, yesterday, mockTooltip);
+        renderDateCell(mockDateConfig, yesterday);
         checkDisplayedDate(expectedDate);
     });
 
     it('should display date with timeAgo format if NO dateConfig and column format provided', () => {
-        component.column = { ...mockColumn, format: 'timeAgo' };
         const mockDateConfig = undefined as any;
         const today = new Date();
         const yesterday = new Date(today);
         yesterday.setDate(today.getDate() - 1);
 
         const expectedDate = '1 day ago';
-        renderDateCell(mockDateConfig, yesterday, mockTooltip);
+
+        // Set column format before calling renderDateCell
+        component.column = { ...mockColumn, format: 'timeAgo' };
+        renderDateCell(mockDateConfig, yesterday);
         checkDisplayedDate(expectedDate);
     });
     //eslint-disable-next-line
@@ -170,7 +191,7 @@ describe('DateCellComponent', () => {
 
         const expectedDate = 'Wednesday, October 25, 2023 at 12:00:00 AM GMT+00:00';
 
-        renderDateCell(mockDateConfig, mockDate, mockTooltip);
+        renderDateCell(mockDateConfig, mockDate);
         checkDisplayedDate(expectedDate);
     });
 
@@ -182,7 +203,7 @@ describe('DateCellComponent', () => {
 
         const expectedDate = '10/25/23, 12:00 AM';
 
-        renderDateCell(mockDateConfig, mockDate, mockTooltip);
+        renderDateCell(mockDateConfig, mockDate);
         checkDisplayedDate(expectedDate);
     });
 
@@ -195,7 +216,7 @@ describe('DateCellComponent', () => {
 
         const expectedDate = '10/25/23, 12:00 AM';
 
-        renderDateCell(mockDateConfig, mockStringDate, mockTooltip);
+        renderDateCell(mockDateConfig, mockStringDate);
         checkDisplayedDate(expectedDate);
     });
 
@@ -208,7 +229,7 @@ describe('DateCellComponent', () => {
 
         const expectedDate = '10/25/23, 12:00 AM';
 
-        renderDateCell(mockDateConfig, mockTimestamp, mockTooltip);
+        renderDateCell(mockDateConfig, mockTimestamp);
         checkDisplayedDate(expectedDate);
     });
 });
@@ -227,7 +248,7 @@ describe('DateCellComponent locale', () => {
         const expectedDate = '25.10.2023, 00:00';
         const expectedTooltip = '25 paź 2023, 00:00:00';
 
-        renderDateCell(mockDateConfig, mockDate, mockTooltip);
+        renderDateCell(mockDateConfig, mockDate);
         checkDisplayedDate(expectedDate);
         checkDisplayedTooltip(expectedTooltip);
     });

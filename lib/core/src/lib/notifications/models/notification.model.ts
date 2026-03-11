@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-// eslint-disable-next-line no-shadow
-export enum NOTIFICATION_TYPE {
-    INFO = 'info',
-    WARN = 'warning',
-    ERROR = 'error',
-    RECURSIVE = 'recursive'
-}
+export const NOTIFICATION_TYPE = {
+    INFO: 'info',
+    WARN: 'warning',
+    ERROR: 'error',
+    RECURSIVE: 'recursive'
+} as const;
+
+export type NOTIFICATION_TYPE = (typeof NOTIFICATION_TYPE)[keyof typeof NOTIFICATION_TYPE];
 
 export interface NotificationInitiator {
     key: string | symbol;

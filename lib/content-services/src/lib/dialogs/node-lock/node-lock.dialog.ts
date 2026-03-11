@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit, Optional, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { differenceInSeconds } from 'date-fns';
@@ -46,6 +46,11 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
     encapsulation: ViewEncapsulation.None
 })
 export class NodeLockDialogComponent implements OnInit {
+    private readonly formBuilder = inject(UntypedFormBuilder);
+    dialog = inject<MatDialogRef<NodeLockDialogComponent>>(MatDialogRef);
+    private readonly alfrescoApi = inject(AlfrescoApiService);
+    data = inject(MAT_DIALOG_DATA, { optional: true });
+
     form: UntypedFormGroup;
     node: Node = null;
     nodeName: string;
@@ -55,15 +60,6 @@ export class NodeLockDialogComponent implements OnInit {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApi.getInstance());
         return this._nodesApi;
     }
-
-    constructor(
-        private formBuilder: UntypedFormBuilder,
-        public dialog: MatDialogRef<NodeLockDialogComponent>,
-        private alfrescoApi: AlfrescoApiService,
-        @Optional()
-        @Inject(MAT_DIALOG_DATA)
-        public data: any
-    ) {}
 
     ngOnInit() {
         const { node } = this.data;

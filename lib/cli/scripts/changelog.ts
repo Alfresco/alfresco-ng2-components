@@ -20,14 +20,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { argv, exit } from 'node:process';
-import * as shell from 'shelljs';
+import { parseArgs } from 'node:util';
+import { spawnSync } from 'node:child_process';
 import * as path from 'path';
-import { Command } from 'commander';
 import { logger } from './logger';
 import * as fs from 'fs';
 import * as ejs from 'ejs';
-
-const program = new Command();
 
 interface Commit {
     hash: string;
@@ -67,10 +65,22 @@ interface DiffOptions {
  * @returns URL pointing to the git remote
  */
 function getRemote(workingDir: string): string {
-    const command = 'git config --get remote.origin.url';
-    const remote = shell.exec(command, { cwd: workingDir, silent: true }).toString();
+    // Use spawnSync with array arguments for safer command execution (prevents shell injection)
+    const result = spawnSync('git', ['config', '--get', 'remote.origin.url'], {
+        cwd: workingDir,
+        encoding: 'utf-8',
+        shell: false
+    });
 
-    return remote.trim();
+    if (result.error) {
+        throw new Error(`Failed to get git remote: ${result.error.message}`);
+    }
+
+    if (result.status !== 0) {
+        throw new Error(`git config command failed with exit code ${result.status}: ${result.stderr}`);
+    }
+
+    return result.stdout.trim();
 }
 
 /**
@@ -89,14 +99,14 @@ function getCommits(options: DiffOptions): Array<Commit> {
         authorFilter = `bot|Alfresco Build User`;
     }
 
+    // Build git command arguments array for safe execution (prevents shell injection)
     const args = [
-        `git`,
-        `log`,
+        'log',
         options.range,
-        `--no-merges`,
-        `--first-parent`,
+        '--no-merges',
+        '--first-parent',
         // this format is needed to allow parsing all characters in the commit message and safely convert to JSON
-        `--format="{ ^@^hash^@^: ^@^%h^@^, ^@^author^@^: ^@^%an^@^, ^@^author_email^@^: ^@^%ae^@^, ^@^date^@^: ^@^%ad^@^, ^@^subject^@^: ^@^%s^@^ }"`
+        '--format={ ^@^hash^@^: ^@^%h^@^, ^@^author^@^: ^@^%an^@^, ^@^author_email^@^: ^@^%ae^@^, ^@^date^@^: ^@^%ad^@^, ^@^subject^@^: ^@^%s^@^ }'
     ];
 
     if (options.max !== undefined) {
@@ -107,9 +117,23 @@ function getCommits(options: DiffOptions): Array<Commit> {
         args.push(`--skip=${options.skip}`);
     }
 
-    const command = args.join(' ');
+    // Use spawnSync with array arguments for safer command execution
+    const result = spawnSync('git', args, {
+        cwd: options.dir,
+        encoding: 'utf-8',
+        shell: false,
+        maxBuffer: 10 * 1024 * 1024 // 10MB to handle large git logs
+    });
 
-    let log = shell.exec(command, { cwd: options.dir, silent: true }).toString();
+    if (result.error) {
+        throw new Error(`Failed to get git commits: ${result.error.message}`);
+    }
+
+    if (result.status !== 0) {
+        throw new Error(`git log command failed with exit code ${result.status}: ${result.stderr}`);
+    }
+
+    let log = result.stdout;
 
     // https://stackoverflow.com/a/13928240/14644447
     log = JSON.stringify(log.trim()).slice(1, -1).replace(/\^@\^/gm, '"');
@@ -151,28 +175,74 @@ function commitAuthorAllowed(commit: Commit, authorFilter: string): boolean {
  * @returns void
  */
 export default function main(_args: string[], workingDir: string) {
-    program
-        .description('Generate changelog report for two branches of git repository')
-        .version('0.0.1', '-v, --version')
-        .usage('changelog [options]')
-        .option('-r, --range <range>', 'Commit range, e.g. origin/master..develop', 'origin/master..develop')
-        .option('-d, --dir <dir>', 'Working directory (default: working directory)')
-        .option('-m, --max <number>', 'Limit the number of commits to output')
-        .option('-o, --output <dir>', 'Output directory, will use console output if not defined')
-        .option('--skip <number>', 'Skip number commits before starting to show the commit output')
-        .option('-f, --format <format>', 'Output format (md, html)', 'md')
-        .option('-e --exclude <string>', 'Exclude authors from the output, comma-delimited list')
-        .parse(argv);
-
     if (argv.includes('-h') || argv.includes('--help')) {
-        program.outputHelp();
+        console.log(`
+Usage: changelog [options]
+
+Generate changelog report for two branches of git repository
+
+Options:
+  -v, --version          Output the version number
+  -r, --range <range>    Commit range, e.g. origin/master..develop (default: "origin/master..develop")
+  -d, --dir <dir>        Working directory (default: working directory)
+  -m, --max <number>     Limit the number of commits to output
+  -o, --output <dir>     Output directory, will use console output if not defined
+  --skip <number>        Skip number commits before starting to show the commit output
+  -f, --format <format>  Output format (md, html) (default: "md")
+  -e, --exclude <string> Exclude authors from the output, comma-delimited list
+  -h, --help             Display help for command
+`);
         exit(0);
     }
 
-    const options = program.opts();
+    if (argv.includes('-v') || argv.includes('--version')) {
+        console.log('0.0.1');
+        exit(0);
+    }
 
-    const dir = path.resolve(options.dir || workingDir);
-    const { range, skip, max, format, output, exclude } = options;
+    const { values } = parseArgs({
+        args: argv.slice(2),
+        options: {
+            range: {
+                type: 'string',
+                short: 'r',
+                default: 'origin/master..develop'
+            },
+            dir: {
+                type: 'string',
+                short: 'd'
+            },
+            max: {
+                type: 'string',
+                short: 'm'
+            },
+            output: {
+                type: 'string',
+                short: 'o'
+            },
+            skip: {
+                type: 'string'
+            },
+            format: {
+                type: 'string',
+                short: 'f',
+                default: 'md'
+            },
+            exclude: {
+                type: 'string',
+                short: 'e'
+            }
+        },
+        allowPositionals: true
+    });
+
+    const dir = path.resolve((values.dir as string) || workingDir);
+    const range = values.range as string;
+    const skip = values.skip ? parseInt(values.skip as string, 10) : undefined;
+    const max = values.max ? parseInt(values.max as string, 10) : undefined;
+    const format = values.format as string;
+    const output = values.output as string | undefined;
+    const exclude = values.exclude as string | undefined;
 
     const remote = getRemote(dir);
 

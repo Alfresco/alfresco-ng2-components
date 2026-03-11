@@ -15,33 +15,43 @@
  * limitations under the License.
  */
 
-import { InitialUsernamePipe, User } from '@alfresco/adf-core';
+import { IconModule, InitialUsernamePipe, User } from '@alfresco/adf-core';
 import { Group, NodeEntry } from '@alfresco/js-api';
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-user-icon-column',
-    imports: [CommonModule, MatIconModule, InitialUsernamePipe],
+    imports: [CommonModule, IconModule, InitialUsernamePipe, TranslatePipe],
     template: `
-        <div class="adf-cell-value" [attr.id]="group ? 'group-icon' : 'person-icon'" *ngIf="!isSelected">
-            <ng-container *ngIf="displayText$ | async as user">
-                <mat-icon *ngIf="group" class="adf-group-icon">people_alt_outline</mat-icon>
-                <div *ngIf="!group" [outerHTML]="user | usernameInitials : 'adf-people-initial'"></div>
-            </ng-container>
-        </div>
-        <div class="adf-cell-value" *ngIf="isSelected">
-            <mat-icon class="adf-people-select-icon adf-datatable-selected" svgIcon="selected" />
-        </div>
+        @if (!isSelected) {
+            <div class="adf-cell-value" [attr.id]="group ? 'group-icon' : 'person-icon'">
+                @if (displayText$ | async; as user) {
+                    @if (group) {
+                        <mat-icon class="adf-group-icon" adf-icon="people_alt_outline" />
+                        <span class="cdk-visually-hidden">{{ 'USER_ICON.GROUP_ICON_ALT' | translate }}</span>
+                    } @else {
+                        <div [outerHTML]="user | usernameInitials: 'adf-people-initial'"></div>
+                    }
+                }
+            </div>
+        } @else {
+            <div class="adf-cell-value">
+                <mat-icon class="adf-people-select-icon adf-datatable-selected" svgIcon="selected" />
+                <span class="cdk-visually-hidden">{{ 'USER_ICON.GROUP_USER_SELECTED_ALT' | translate }}</span>
+            </div>
+        }
     `,
     styleUrls: ['./user-icon-column.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-user-icon-column adf-datatable-content-cell' }
 })
 export class UserIconColumnComponent implements OnInit {
+    private readonly nodePermissionService = inject(NodePermissionService);
+
     @Input()
     context: any;
 
@@ -57,8 +67,6 @@ export class UserIconColumnComponent implements OnInit {
     get isSelected(): boolean {
         return this.context?.row?.isSelected || this.selected;
     }
-
-    constructor(private nodePermissionService: NodePermissionService) {}
 
     ngOnInit() {
         if (this.context) {

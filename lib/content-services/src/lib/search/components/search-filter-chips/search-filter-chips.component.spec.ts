@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchFilterChipsComponent } from './search-filter-chips.component';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
 import { SearchFacetFieldComponent } from '../search-facet-field/search-facet-field.component';
 import { SearchFilterList } from '../../models/search-filter-list.model';
@@ -30,6 +29,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatChipHarness } from '@angular/material/chips/testing';
+import { provideRouter } from '@angular/router';
 
 describe('SearchFilterChipsComponent', () => {
     let fixture: ComponentFixture<SearchFilterChipsComponent>;
@@ -40,7 +40,8 @@ describe('SearchFilterChipsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [SearchFilterChipsComponent],
+            providers: [provideRouter([])]
         });
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
         appConfigService = TestBed.inject(AppConfigService);
@@ -52,6 +53,7 @@ describe('SearchFilterChipsComponent', () => {
     it('should fetch facet fields from response payload and show the already checked items', async () => {
         spyOn(queryBuilder, 'execute').and.stub();
         queryBuilder.config = {
+            id: 'test-config',
             categories: [],
             facetFields: {
                 fields: [
@@ -114,6 +116,7 @@ describe('SearchFilterChipsComponent', () => {
     it('should fetch facet fields from response payload and show the newly checked items', async () => {
         spyOn(queryBuilder, 'execute').and.stub();
         queryBuilder.config = {
+            id: 'test-config',
             categories: [],
             facetFields: {
                 fields: [
@@ -175,6 +178,7 @@ describe('SearchFilterChipsComponent', () => {
     it('should show buckets with 0 values when there are no facet fields on the response payload', async () => {
         spyOn(queryBuilder, 'execute').and.stub();
         queryBuilder.config = {
+            id: 'test-config',
             categories: [],
             facetFields: {
                 fields: [
@@ -252,7 +256,7 @@ describe('SearchFilterChipsComponent', () => {
 
     describe('widgets', () => {
         it('should not show the disabled widget', async () => {
-            appConfigService.config.search = { categories: disabledCategories };
+            appConfigService.config.search = { id: 'test-config', categories: disabledCategories };
             queryBuilder.resetToDefaults();
 
             const chips = await loader.getAllHarnesses(MatChipHarness);
@@ -261,7 +265,7 @@ describe('SearchFilterChipsComponent', () => {
         });
 
         it('should show the widgets only if configured', async () => {
-            appConfigService.config.search = { categories: simpleCategories };
+            appConfigService.config.search = { id: 'test-config', categories: simpleCategories };
             queryBuilder.resetToDefaults();
 
             const chips = await loader.getAllHarnesses(MatChipHarness);

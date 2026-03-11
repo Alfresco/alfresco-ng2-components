@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement, SimpleChanges } from '@angular/core';
+import { Component, DebugElement, SimpleChange, SimpleChanges } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
@@ -33,6 +33,7 @@ import { ViewerWithCustomToolbarActionsComponent } from './mock/adf-viewer-conta
 import { ViewerWithCustomToolbarComponent } from './mock/adf-viewer-container-toolbar.component.mock';
 import { ViewerComponent } from './viewer.component';
 import { ThumbnailService } from '../../common/services/thumbnail.service';
+import { MatIconTestingModule } from '@angular/material/icon/testing';
 
 @Component({
     selector: 'adf-dialog-dummy',
@@ -42,8 +43,8 @@ import { ThumbnailService } from '../../common/services/thumbnail.service';
 class DummyDialogComponent {}
 
 describe('ViewerComponent', () => {
-    let component: ViewerComponent<any>;
-    let fixture: ComponentFixture<ViewerComponent<any>>;
+    let component: ViewerComponent<unknown>;
+    let fixture: ComponentFixture<ViewerComponent<unknown>>;
     let dialog: MatDialog;
     let viewUtilService: ViewUtilService;
     let appConfigService: AppConfigService;
@@ -53,10 +54,25 @@ describe('ViewerComponent', () => {
     const getFileName = (): string => testingUtils.getByCSS('#adf-viewer-display-name').nativeElement.textContent;
     const getTitle = (): string => testingUtils.getByCSS('.adf-viewer__title-value')?.nativeElement?.textContent;
     const getDividers = (): DebugElement[] => testingUtils.getAllByCSS('.adf-toolbar-divider');
+    const mockImgViewerEditMode = (isEditing: boolean) => {
+        const imgViewerMock = jasmine.createSpyObj('ImgViewerComponent', [], {
+            isEditing
+        });
+        component.viewerRenderer.imgViewer = imgViewerMock;
+    };
+    const dispatchKeyboardEvent = (key: string): KeyboardEvent => {
+        const event = new KeyboardEvent('keyup', {
+            key
+        });
+        spyOn(event, 'preventDefault');
+        document.dispatchEvent(event);
+        return event;
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                MatIconTestingModule,
                 ViewerWithCustomToolbarComponent,
                 ViewerWithCustomSidebarComponent,
                 ViewerWithCustomOpenWithComponent,
@@ -92,7 +108,9 @@ describe('ViewerComponent', () => {
 
     describe('Mime Type Test', () => {
         it('should mimeType change when blobFile changes', () => {
-            const mockSimpleChanges: any = { blobFile: { currentValue: { type: 'image/png' } } };
+            const mockSimpleChanges: SimpleChanges = {
+                blobFile: new SimpleChange(null, { type: 'image/png' }, true)
+            };
 
             component.ngOnChanges(mockSimpleChanges);
 
@@ -101,7 +119,10 @@ describe('ViewerComponent', () => {
 
         it('should set mimeTypeIconUrl when mimeType changes and no nodeMimeType is provided', () => {
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('image/png');
-            const mockSimpleChanges: any = { mimeType: { currentValue: 'image/png' }, nodeMimeType: undefined };
+            const mockSimpleChanges: SimpleChanges = {
+                mimeType: new SimpleChange(null, 'image/png', true),
+                nodeMimeType: undefined
+            };
 
             component.ngOnChanges(mockSimpleChanges);
 
@@ -111,7 +132,10 @@ describe('ViewerComponent', () => {
 
         it('should set mimeTypeIconUrl when nodeMimeType changes', () => {
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('application/pdf');
-            const mockSimpleChanges: any = { mimeType: { currentValue: 'image/png' }, nodeMimeType: { currentValue: 'application/pdf' } };
+            const mockSimpleChanges: SimpleChanges = {
+                mimeType: new SimpleChange(null, 'image/png', true),
+                nodeMimeType: new SimpleChange(null, 'application/pdf', true)
+            };
 
             component.ngOnChanges(mockSimpleChanges);
             fixture.detectChanges();
@@ -509,7 +533,9 @@ describe('ViewerComponent', () => {
                 });
 
                 it('should file name be present if is overlay mode ', async () => {
-                    const mockSimpleChanges: any = { blobFile: { currentValue: { type: 'image/png' } } };
+                    const mockSimpleChanges: SimpleChanges = {
+                        blobFile: new SimpleChange(null, { type: 'image/png' }, true)
+                    };
                     component.ngOnChanges(mockSimpleChanges);
                     fixture.detectChanges();
                     await fixture.whenStable();
@@ -691,7 +717,7 @@ describe('ViewerComponent', () => {
                     downloadPromptReminderDelay: 2
                 }
             };
-            dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({ afterClosed: () => of(null) } as any);
+            dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({ afterClosed: () => of(null) } as ReturnType<MatDialog['open']>);
             component.urlFile = undefined;
             component.clearDownloadPromptTimeouts();
         });
@@ -702,11 +728,11 @@ describe('ViewerComponent', () => {
         });
 
         it('should configure reminder timeout to display non responsive dialog after initial dialog', fakeAsync(() => {
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as ReturnType<MatDialog['open']>);
             fixture.detectChanges();
             tick(3000);
             expect(component.downloadPromptReminderTimer).toBeDefined();
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as ReturnType<MatDialog['open']>);
             flush();
             discardPeriodicTasks();
         }));
@@ -727,12 +753,12 @@ describe('ViewerComponent', () => {
         }));
 
         it('should show reminder non responsive dialog after initial dialog', fakeAsync(() => {
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as ReturnType<MatDialog['open']>);
             fixture.detectChanges();
             tick(3000);
             expect(dialogOpenSpy).toHaveBeenCalled();
 
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as ReturnType<MatDialog['open']>);
             tick(2000);
             expect(dialogOpenSpy).toHaveBeenCalledTimes(2);
 
@@ -741,7 +767,7 @@ describe('ViewerComponent', () => {
         }));
 
         it('should emit downloadFileEvent when DownloadPromptDialog return DownloadPromptActions.DOWNLOAD on close', fakeAsync(() => {
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.DOWNLOAD) } as any);
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.DOWNLOAD) } as ReturnType<MatDialog['open']>);
             spyOn(component.downloadFile, 'emit');
             fixture.detectChanges();
             tick(3000);
@@ -749,5 +775,80 @@ describe('ViewerComponent', () => {
 
             expect(component.downloadFile.emit).toHaveBeenCalled();
         }));
+    });
+
+    describe('keyboard events', () => {
+        it('should do nothing when default was already prevented', () => {
+            spyOn(component, 'onNavigateBeforeClick').and.callThrough();
+            spyOn(component, 'onNavigateNextClick').and.callThrough();
+            spyOn(component, 'enterFullScreen').and.callThrough();
+
+            const event = new KeyboardEvent('keyup', {
+                key: 'a'
+            });
+
+            event.preventDefault();
+            document.dispatchEvent(event);
+            fixture.detectChanges();
+
+            expect(component.onNavigateBeforeClick).not.toHaveBeenCalled();
+            expect(component.onNavigateNextClick).not.toHaveBeenCalled();
+            expect(component.enterFullScreen).not.toHaveBeenCalled();
+        });
+
+        it('should enter full screen mode when ctrl + F is pressed', () => {
+            spyOn(component, 'enterFullScreen').and.callThrough();
+
+            const event = new KeyboardEvent('keyup', {
+                code: 'KeyF',
+                ctrlKey: true
+            });
+            spyOn(event, 'preventDefault');
+            document.dispatchEvent(event);
+            fixture.detectChanges();
+
+            expect(event.preventDefault).toHaveBeenCalled();
+            expect(component.enterFullScreen).toHaveBeenCalled();
+        });
+
+        it('should navigate before when left arrow is pressed', () => {
+            component.canNavigateBefore = true;
+            spyOn(component, 'onNavigateBeforeClick').and.callThrough();
+
+            fixture.detectChanges();
+            mockImgViewerEditMode(true);
+            const event = dispatchKeyboardEvent('ArrowLeft');
+            fixture.detectChanges();
+
+            expect(event.preventDefault).not.toHaveBeenCalled();
+            expect(component.onNavigateBeforeClick).not.toHaveBeenCalled();
+
+            mockImgViewerEditMode(false);
+            const event2 = dispatchKeyboardEvent('ArrowLeft');
+            fixture.detectChanges();
+
+            expect(event2.preventDefault).toHaveBeenCalled();
+            expect(component.onNavigateBeforeClick).toHaveBeenCalledWith(event2);
+        });
+
+        it('should navigate next when right arrow is pressed', () => {
+            component.canNavigateNext = true;
+            spyOn(component, 'onNavigateNextClick').and.callThrough();
+
+            fixture.detectChanges();
+            mockImgViewerEditMode(true);
+            const event = dispatchKeyboardEvent('ArrowRight');
+            fixture.detectChanges();
+
+            expect(event.preventDefault).not.toHaveBeenCalled();
+            expect(component.onNavigateNextClick).not.toHaveBeenCalled();
+
+            mockImgViewerEditMode(false);
+            const event2 = dispatchKeyboardEvent('ArrowRight');
+            fixture.detectChanges();
+
+            expect(event2.preventDefault).toHaveBeenCalled();
+            expect(component.onNavigateNextClick).toHaveBeenCalledWith(event2);
+        });
     });
 });

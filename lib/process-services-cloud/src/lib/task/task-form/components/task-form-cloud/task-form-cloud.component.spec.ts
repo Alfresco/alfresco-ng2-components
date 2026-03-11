@@ -276,6 +276,31 @@ describe('TaskFormCloudComponent', () => {
             expect(cloudFormComponent).toBeDefined();
             expect(cloudFormComponent.customCompleteButtonText).toBe(customText);
         });
+
+        it('should pass enableParentVisibilityCheck to adf-cloud-form', () => {
+            component.appName = 'app1';
+            component.taskId = 'task1';
+            component.enableParentVisibilityCheck = true;
+            fixture.detectChanges();
+
+            const cloudFormElement = fixture.debugElement.query(By.css('adf-cloud-form'));
+            expect(cloudFormElement).toBeDefined();
+            const cloudFormComponent = cloudFormElement.componentInstance as FormCloudComponent;
+            expect(cloudFormComponent).toBeDefined();
+            expect(cloudFormComponent.enableParentVisibilityCheck).toBe(true);
+        });
+
+        it('should pass enableParentVisibilityCheck as false by default to adf-cloud-form', () => {
+            component.appName = 'app1';
+            component.taskId = 'task1';
+            fixture.detectChanges();
+
+            const cloudFormElement = fixture.debugElement.query(By.css('adf-cloud-form'));
+            expect(cloudFormElement).toBeDefined();
+            const cloudFormComponent = cloudFormElement.componentInstance as FormCloudComponent;
+            expect(cloudFormComponent).toBeDefined();
+            expect(cloudFormComponent.enableParentVisibilityCheck).toBe(false);
+        });
     });
 
     describe('Events', () => {

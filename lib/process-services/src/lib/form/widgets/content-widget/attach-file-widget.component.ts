@@ -18,14 +18,13 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, DestroyRef, inject, isDevMode, OnInit, ViewEncapsulation } from '@angular/core';
-import { AppConfigService, AppConfigValues, DownloadService, ErrorWidgetComponent, FormService, ThumbnailService } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigValues, DownloadService, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { AlfrescoIconComponent, ContentNodeDialogService, ContentService } from '@alfresco/adf-content-services';
 import { AlfrescoEndpointRepresentation, Node, NodeChildAssociation, RelatedContentRepresentation } from '@alfresco/js-api';
 import { from, of, zip } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { UploadWidgetComponent } from '../upload/upload.widget';
-import { ProcessContentService } from '../../services/process-content.service';
 import { ActivitiContentService } from '../../services/activiti-alfresco.service';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -41,20 +40,18 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     imports: [CommonModule, TranslatePipe, MatIconModule, MatButtonModule, MatMenuModule, MatListModule, ErrorWidgetComponent, AlfrescoIconComponent],
     templateUrl: './attach-file-widget.component.html',
     styleUrls: ['./attach-file-widget.component.scss'],
-    host: {
-        '(click)': 'event($event)',
-        '(blur)': 'event($event)',
-        '(change)': 'event($event)',
-        '(focus)': 'event($event)',
-        '(focusin)': 'event($event)',
-        '(focusout)': 'event($event)',
-        '(input)': 'event($event)',
-        '(invalid)': 'event($event)',
-        '(select)': 'event($event)'
-    },
     encapsulation: ViewEncapsulation.None
 })
 export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit {
+    private readonly activitiContentService = inject(ActivitiContentService);
+    private readonly contentService = inject(ContentService);
+    private readonly contentDialog = inject(ContentNodeDialogService);
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly downloadService = inject(DownloadService);
+    private readonly router = inject(Router);
+    private readonly activatedRoute = inject(ActivatedRoute);
+    private readonly attachDialogService = inject(AttachFileWidgetDialogService);
+
     typeId = 'AttachFileWidgetComponent';
     repositoryList: AlfrescoEndpointRepresentation[] = [];
     isStartProcessPage = false;
@@ -62,22 +59,6 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     private tempFilesList = [];
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        public formService: FormService,
-        public thumbnails: ThumbnailService,
-        public processContentService: ProcessContentService,
-        private activitiContentService: ActivitiContentService,
-        private contentService: ContentService,
-        private contentDialog: ContentNodeDialogService,
-        private appConfigService: AppConfigService,
-        private downloadService: DownloadService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute,
-        private attachDialogService: AttachFileWidgetDialogService
-    ) {
-        super(formService, thumbnails, processContentService);
-    }
 
     ngOnInit() {
         super.ngOnInit();

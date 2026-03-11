@@ -45,6 +45,7 @@ Based on property taskDetails: TaskDetailsCloudModel shows a form or a screen.
 | showValidationIcon        | `boolean`                             | true          | Toggle rendering of the `Validation` icon.                          |
 | taskId                    | `string`                              |               | Task id to fetch corresponding form and values.                     |
 | displayModeConfigurations | `FormCloudDisplayModeConfiguration[]` |               | The available display configurations for the form                   |
+| enableParentVisibilityCheck | `boolean`                           | false         | Toggle to enable parent visibility check for validation. When enabled, fields inside hidden groups/sections will skip validation. |
 
 ### Events
 

@@ -15,15 +15,36 @@
  * limitations under the License.
  */
 
-import { fakeEcmUser } from '../mocks/ecm-user.service.mock';
 import { RedirectAuthService } from '@alfresco/adf-core';
 import { PeopleContentQueryRequestModel, PeopleContentService } from './people-content.service';
 import { TestBed } from '@angular/core/testing';
-import { PersonPaging } from '@alfresco/js-api';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { Person, PersonPaging } from '@alfresco/js-api';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { EMPTY, firstValueFrom, of } from 'rxjs';
 import { AlfrescoApiService } from '../../services';
 import { AlfrescoApiServiceMock } from '../../mock';
+
+const fakeEcmUser: Person = {
+    id: 'fake-id',
+    firstName: 'fake-ecm-first-name',
+    lastName: 'fake-ecm-last-name',
+    description: 'i am a fake user for test',
+    avatarId: 'fake-avatar-id',
+    email: 'fakeEcm@ecmUser.com',
+    skypeId: 'fake-skype-id',
+    googleId: 'fake-googleId-id',
+    instantMessageId: 'fake-instantMessageId-id',
+    company: null,
+    jobTitle: 'job-ecm-test',
+    location: 'fake location',
+    mobile: '000000000',
+    telephone: '11111111',
+    statusUpdatedAt: new Date(),
+    userStatus: 'active',
+    enabled: true,
+    emailNotificationsEnabled: true
+};
 
 export const fakeEcmUser2 = {
     id: 'another-fake-id',
@@ -70,11 +91,12 @@ describe('PeopleContentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
             providers: [
                 PeopleContentService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
+                provideHttpClient(),
+                provideHttpClientTesting()
             ]
         });
 

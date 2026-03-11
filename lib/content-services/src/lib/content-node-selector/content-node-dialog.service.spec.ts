@@ -21,8 +21,8 @@ import { DocumentListService, NodeAction } from '../document-list';
 import { ContentNodeDialogService } from './content-node-dialog.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, of } from 'rxjs';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { SitesService } from '../common';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 const fakeNodeEntry = {
     entry: {
@@ -67,7 +67,7 @@ describe('ContentNodeDialogService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [NoopAuthModule]
         });
         service = TestBed.inject(ContentNodeDialogService);
         documentListService = TestBed.inject(DocumentListService);
@@ -89,12 +89,12 @@ describe('ContentNodeDialogService', () => {
             isFile: false
         } as Node;
 
-        service.openLockNodeDialog(testNode).subscribe(
-            () => {},
-            (error) => {
+        service.openLockNodeDialog(testNode).subscribe({
+            next: () => {},
+            error: (error) => {
                 expect(error).toBe('OPERATION.FAIL.NODE.NO_PERMISSION');
             }
-        );
+        });
     });
 
     it('should be able to open the dialog when node has permission', () => {
@@ -103,13 +103,13 @@ describe('ContentNodeDialogService', () => {
     });
 
     it('should NOT be able to open the dialog when node has NOT permission', () => {
-        service.openCopyMoveDialog(NodeAction.CHOOSE, fakeNode, 'noperm').subscribe(
-            () => {},
-            (error) => {
+        service.openCopyMoveDialog(NodeAction.CHOOSE, fakeNode, 'noperm').subscribe({
+            next: () => {},
+            error: (error) => {
                 expect(spyOnDialogOpen).not.toHaveBeenCalled();
                 expect(JSON.parse(error.message).error.statusCode).toBe(403);
             }
-        );
+        });
     });
 
     it('should be able to open the dialog using a folder id', fakeAsync(() => {

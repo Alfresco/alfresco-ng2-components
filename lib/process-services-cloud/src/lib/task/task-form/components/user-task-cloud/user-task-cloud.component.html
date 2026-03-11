@@ -8,6 +8,7 @@
                     [candidateUsers]="candidateUsers"
                     [candidateGroups]="candidateGroups"
                     [displayModeConfigurations]="displayModeConfigurations"
+                    [enableParentVisibilityCheck]="enableParentVisibilityCheck"
                     [showValidationIcon]="showValidationIcon"
                     [showTitle]="showTitle"
                     [taskId]="taskId"
@@ -47,7 +48,7 @@
                     (cancelTask)="onCancelClick()"
                     (claimTask)="onClaimTask()"
                     (error)="onError($event)"
-                    (taskCompleted)="onCompleteTask($event)"
+                    (taskCompleted)="onCompleteTask($event, taskType)"
                     (taskSaved)="onFormSaved()"
                     (unclaimTask)="onUnclaimTask()"
                     (nextTaskCheckboxCheckedChanged)="onNextTaskCheckboxCheckedChanged($event)"
@@ -76,11 +77,11 @@
                         <ng-template [ngTemplateOutlet]="taskFormCloudButtons" />
                         <button
                             *ngIf="canCompleteTask()"
-                            mat-button
+                            mat-flat-button
                             adf-cloud-complete-task
                             [appName]="appName"
                             [taskId]="taskId"
-                            (success)="onCompleteTask()"
+                            (success)="onCompleteTask(false, taskType)"
                             (error)="onError($event)"
                             color="primary"
                             id="adf-form-complete"

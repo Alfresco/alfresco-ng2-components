@@ -35,6 +35,7 @@ ADF Libraries list:
 - [Insights](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/insights)
 - [Process Service Cloud](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/process-services-cloud)
 - [Process service](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/process-services)
+- [Stories](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/stories)
 
 ## Browser Support
 

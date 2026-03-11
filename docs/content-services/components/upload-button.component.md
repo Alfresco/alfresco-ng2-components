@@ -86,4 +86,3 @@ export class MyComponent {
 ## See also
 
 -   [Upload Version Button component](upload-version-button.component.md)
--   [File upload error pipe](../pipes/file-upload-error.pipe.md)

@@ -16,7 +16,7 @@
  */
 
 import { AppConfigService, NoopAuthModule } from '@alfresco/adf-core';
-import { SimpleChange } from '@angular/core';
+import { Component, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { first, of, throwError } from 'rxjs';
@@ -27,11 +27,17 @@ import { TaskFilterCloudService } from '../../services/task-filter-cloud.service
 import { TaskFiltersCloudComponent } from './task-filters-cloud.component';
 import { TaskListCloudService } from '../../../task-list/services/task-list-cloud.service';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { MatActionListItemHarness } from '@angular/material/list/testing';
+import { MatNavListItemHarness } from '@angular/material/list/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { TaskFilterCloudAdapter } from '../../../../models/filter-cloud-model';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { TaskFilterCloudModel } from '../../models/filter-cloud.model';
+import { MatIconHarness } from '@angular/material/icon/testing';
+import { ActivatedRoute, provideRouter, Router } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
+
+@Component({ selector: 'adf-cloud-dummy', template: '' })
+class DummyComponent {}
 
 describe('TaskFiltersCloudComponent', () => {
     let loader: HarnessLoader;
@@ -44,11 +50,28 @@ describe('TaskFiltersCloudComponent', () => {
     let getTaskFilterCounterSpy: jasmine.Spy;
     let getTaskListFiltersSpy: jasmine.Spy;
     let getTaskListCountSpy: jasmine.Spy;
+    let router: Router;
 
-    const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
+    const configureTestingModule = async (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
             imports: [NoopAuthModule, TaskFiltersCloudComponent, ApolloTestingModule],
-            providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
+            providers: [
+                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
+                provideRouter([{ path: 'task-list-cloud', component: DummyComponent }]),
+                {
+                    provide: ActivatedRoute,
+                    useValue: {
+                        queryParamMap: of({
+                            get: (param: string) => {
+                                if (param === 'filterId') {
+                                    return defaultTaskFiltersMock[0].id;
+                                }
+                                return null;
+                            }
+                        })
+                    }
+                }
+            ]
         });
         taskFilterService = TestBed.inject(TaskFilterCloudService);
         taskListService = TestBed.inject(TaskListCloudService);
@@ -64,6 +87,9 @@ describe('TaskFiltersCloudComponent', () => {
         loader = TestbedHarnessEnvironment.loader(fixture);
 
         component.searchApiMethod = searchApiMethod;
+        TestBed.inject(ActivatedRoute);
+        router = TestBed.inject(Router);
+        await RouterTestingHarness.create();
     };
 
     afterEach(() => {
@@ -71,8 +97,8 @@ describe('TaskFiltersCloudComponent', () => {
     });
 
     describe('searchApiMethod set to GET', () => {
-        beforeEach(() => {
-            configureTestingModule('GET');
+        beforeEach(async () => {
+            await configureTestingModule('GET');
         });
 
         it('should attach specific icon for each filter if hasIcon is true', async () => {
@@ -89,11 +115,11 @@ describe('TaskFiltersCloudComponent', () => {
 
             expect(component.filters.length).toBe(3);
 
-            const filters = fixture.nativeElement.querySelectorAll('.adf-icon');
-            expect(filters.length).toBe(3);
-            expect(filters[0].innerText).toContain('adjust');
-            expect(filters[1].innerText).toContain('done');
-            expect(filters[2].innerText).toContain('inbox');
+            const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+            expect(filterIcons.length).toBe(3);
+            expect(await filterIcons[0].getName()).toContain('adjust');
+            expect(await filterIcons[1].getName()).toContain('done');
+            expect(await filterIcons[2].getName()).toContain('inbox');
         });
 
         it('should not attach icons for each filter if hasIcon is false', async () => {
@@ -104,8 +130,8 @@ describe('TaskFiltersCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
-            expect(filters.length).toBe(0);
+            const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+            expect(filterIcons.length).toBe(0);
         });
 
         it('should display the filters', async () => {
@@ -251,25 +277,24 @@ describe('TaskFiltersCloudComponent', () => {
             component.appName = 'my-app-1';
         });
 
-        it('should attach specific icon for each filter if hasIcon is true', () => {
+        it('should attach specific icon for each filter if hasIcon is true', async () => {
             fixture.detectChanges();
 
-            const filters = fixture.nativeElement.querySelectorAll('.adf-icon');
+            const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
 
             expect(component.filters.length).toBe(3);
-            expect(filters.length).toBe(3);
-            expect(filters[0].innerText).toContain('adjust');
-            expect(filters[1].innerText).toContain('done');
-            expect(filters[2].innerText).toContain('inbox');
+            expect(filterIcons.length).toBe(3);
+            expect(await filterIcons[0].getName()).toContain('adjust');
+            expect(await filterIcons[1].getName()).toContain('done');
+            expect(await filterIcons[2].getName()).toContain('inbox');
         });
 
-        it('should not attach icons for each filter if showIcons is false', () => {
+        it('should not attach icons for each filter if showIcons is false', async () => {
             component.showIcons = false;
             fixture.detectChanges();
 
-            const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
-
-            expect(filters.length).toBe(0);
+            const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+            expect(filterIcons.length).toBe(0);
         });
 
         it('should display the filters', () => {
@@ -295,7 +320,7 @@ describe('TaskFiltersCloudComponent', () => {
             const spy = spyOn(component.filterClicked, 'emit');
 
             const filterButton = await loader.getHarness(
-                MatActionListItemHarness.with({ selector: `[data-automation-id="${fakeGlobalFilter[0].key}_filter"]` })
+                MatNavListItemHarness.with({ selector: `[data-automation-id="${fakeGlobalFilter[0].key}_filter"]` })
             );
             await filterButton.click();
 
@@ -353,7 +378,7 @@ describe('TaskFiltersCloudComponent', () => {
             fixture.detectChanges();
 
             const filterButton = await loader.getHarness(
-                MatActionListItemHarness.with({ selector: `[data-automation-id="${fakeGlobalFilter[0].key}_filter"]` })
+                MatNavListItemHarness.with({ selector: `[data-automation-id="${fakeGlobalFilter[0].key}_filter"]` })
             );
             await filterButton.click();
 
@@ -576,20 +601,7 @@ describe('TaskFiltersCloudComponent', () => {
         });
 
         describe('Highlight Selected Filter', () => {
-            const assignedTasksFilterKey = defaultTaskFiltersMock[1].key;
-            const queuedTasksFilterKey = defaultTaskFiltersMock[0].key;
-            const completedTasksFilterKey = defaultTaskFiltersMock[2].key;
-
-            const getActiveFilterElement = (filterKey: string): Element => {
-                const activeFilter = fixture.debugElement.query(By.css(`.adf-active`));
-                return activeFilter.nativeElement.querySelector(`[data-automation-id="${filterKey}_filter"]`);
-            };
-
-            const clickOnFilter = async (filterKey: string) => {
-                fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${filterKey}_filter"]`).click();
-                fixture.detectChanges();
-                await fixture.whenStable();
-            };
+            const assignedTasksFilterKey = defaultTaskFiltersMock[0].key;
 
             it('Should highlight task filter on filter click', async () => {
                 getTaskListFiltersSpy.and.returnValue(of(defaultTaskFiltersMock));
@@ -599,52 +611,41 @@ describe('TaskFiltersCloudComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                await clickOnFilter(assignedTasksFilterKey);
+                let filterLink = fixture.debugElement.query(By.css(`[data-automation-id="${assignedTasksFilterKey}_filter"]`));
+                filterLink.nativeElement.click();
+                fixture.detectChanges();
+                await fixture.whenStable();
 
-                expect(getActiveFilterElement(assignedTasksFilterKey)).toBeDefined();
-                expect(getActiveFilterElement(queuedTasksFilterKey)).toBeNull();
-                expect(getActiveFilterElement(completedTasksFilterKey)).toBeNull();
+                expect(router.url).toBe(`/task-list-cloud?filterId=${defaultTaskFiltersMock[0].id}`);
 
-                await clickOnFilter(queuedTasksFilterKey);
-
-                expect(getActiveFilterElement(assignedTasksFilterKey)).toBeNull();
-                expect(getActiveFilterElement(queuedTasksFilterKey)).toBeDefined();
-                expect(getActiveFilterElement(completedTasksFilterKey)).toBeNull();
-
-                await clickOnFilter(completedTasksFilterKey);
-
-                expect(getActiveFilterElement(assignedTasksFilterKey)).toBeNull();
-                expect(getActiveFilterElement(queuedTasksFilterKey)).toBeNull();
-                expect(getActiveFilterElement(completedTasksFilterKey)).toBeDefined();
+                filterLink = fixture.debugElement.query(By.css(`[data-automation-id="${assignedTasksFilterKey}_filter"]`));
+                expect(filterLink.nativeElement.classList).toContain('adf-active');
             });
 
-            it('Should highlight task filter when filterParam input changed', async () => {
+            it('should add aria-current attribute with value "page" to the active filter', async () => {
                 getTaskListFiltersSpy.and.returnValue(of(defaultTaskFiltersMock));
-                fixture.detectChanges();
+                component.appName = 'mock-app-name';
+                const appNameChange = new SimpleChange(null, 'mock-app-name', true);
 
-                component.ngOnChanges({ filterParam: new SimpleChange(null, { key: assignedTasksFilterKey }, true) });
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                expect(getActiveFilterElement(assignedTasksFilterKey)).toBeDefined();
-                expect(getActiveFilterElement(queuedTasksFilterKey)).toBeNull();
-                expect(getActiveFilterElement(completedTasksFilterKey)).toBeNull();
-
-                component.ngOnChanges({ filterParam: new SimpleChange(null, { key: queuedTasksFilterKey }, true) });
+                component.ngOnChanges({ appName: appNameChange });
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(getActiveFilterElement(assignedTasksFilterKey)).toBeNull();
-                expect(getActiveFilterElement(queuedTasksFilterKey)).toBeDefined();
-                expect(getActiveFilterElement(completedTasksFilterKey)).toBeNull();
+                const filterLink = fixture.debugElement.query(By.css(`[data-automation-id="${assignedTasksFilterKey}_filter"]`));
+                expect(filterLink.nativeElement.getAttribute('aria-current')).toBe('page');
+            });
 
-                component.ngOnChanges({ filterParam: new SimpleChange(null, { key: completedTasksFilterKey }, true) });
+            it('should not have aria-current attribute when filter is not active', async () => {
+                getTaskListFiltersSpy.and.returnValue(of(defaultTaskFiltersMock));
+                component.appName = 'mock-app-name';
+                const appNameChange = new SimpleChange(null, 'mock-app-name', true);
+
+                component.ngOnChanges({ appName: appNameChange });
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(getActiveFilterElement(assignedTasksFilterKey)).toBeNull();
-                expect(getActiveFilterElement(queuedTasksFilterKey)).toBeNull();
-                expect(getActiveFilterElement(completedTasksFilterKey)).toBeDefined();
+                const otherFilterLink = fixture.debugElement.query(By.css(`[data-automation-id="${defaultTaskFiltersMock[1].key}_filter"]`));
+                expect(otherFilterLink.nativeElement.getAttribute('aria-current')).toBeNull();
             });
         });
     });

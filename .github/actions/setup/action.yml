@@ -1,11 +1,6 @@
 name: 'Setup'
 description: 'Initialize cache, env var load'
 inputs:
-  enable-cache:
-    description: 'enable caching'
-    required: false
-    type: boolean
-    default: 'true'
   enable-node-modules-cache:
     description: 'enable caching for node modules'
     required: false
@@ -16,22 +11,26 @@ inputs:
     required: false
     type: boolean
     default: 'false'
+outputs:
+  npm-tag:
+    description: 'NPM tag'
+    value: ${{ steps.set-npm-tag.outputs.npm-tag }}
 runs:
   using: "composite"
   steps:
       - name: install NPM
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: '.nvmrc'
           cache-dependency-path: package-lock.json
       - name: get latest tag sha
         id: tag-sha
-        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@bebd6c2fddd0a58ecf7f0acfc511a019f6afc180 # v9.2.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@40f2376b812403b51e0cea49eaff04c1b8d65cfd # v15.7.1
 # CACHE
       - name: Node Modules cache
         id: node-modules-cache
         if: ${{ inputs.enable-node-modules-cache == 'true' }}
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         env:
           cache-name: node-modules-cache
         with:
@@ -39,18 +38,11 @@ runs:
             node_modules
           key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            node_modules-${{ runner.os }}-build-${{ env.cache-name }}-
-            node_modules-${{ runner.os }}-build-
-            node_modules-${{ runner.os }}-
-      - name: pip cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
-        if: ${{ inputs.enable-cache == 'true' }}
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-
-          restore-keys: |
-            ${{ runner.os }}
+            .npm-${{ runner.os }}-build-${{ env.cache-name }}-
+            .npm-${{ runner.os }}-build-
+            .npm-${{ runner.os }}-
       - name: load "NPM TAG"
+        id: set-npm-tag
         uses: ./.github/actions/set-npm-tag
       - name: before install script
         uses: ./.github/actions/before-install

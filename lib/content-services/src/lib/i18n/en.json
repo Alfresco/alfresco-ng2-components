@@ -18,7 +18,8 @@
         "MINOR": "minor changes ({{version}})",
         "COMMENT": "Leave a comment",
         "ADD": "Add New Version",
-        "CANCEL": "Cancel"
+        "CANCEL": "Cancel",
+        "VERSION_TYPE_LABEL": "Select version type"
       }
     },
     "CONFIRM_DELETE": {
@@ -380,6 +381,7 @@
       "TITLE": "Filter",
       "TYPE": "Type",
       "FILTER_BY": "Filter by {{ category }}",
+      "ACTIVE_FILTER": "Active filter",
       "CLEAR": "Clear",
       "APPLY": "Apply",
       "FILTERS": {
@@ -427,7 +429,8 @@
       "IN_LAST_LABELS": {
         "DAYS": "Days",
         "WEEKS": "Weeks",
-        "MONTHS": "Months"
+        "MONTHS": "Months",
+        "QUANTITY": "Quantity"
       },
       "IN_LAST_DISPLAY_LABELS": {
         "DAYS": "In the last {{value}} days",
@@ -436,17 +439,18 @@
       },
       "BETWEEN_PLACEHOLDERS": {
         "START_DATE": "Start Date",
-        "END_DATE": "End Date"
+        "END_DATE": "End Date",
+        "DATE_RANGE": "Date Range"
       },
       "ERROR": {
         "IN_LAST": "Value required",
         "START_DATE": {
           "REQUIRED": "Start Date required",
-          "INVALID_FORMAT": "Start Date invalid"
+          "INVALID_FORMAT": "Start Date invalid. The date must be in the format '{{ requiredFormat }}'"
         },
         "END_DATE": {
           "REQUIRED": "End Date required",
-          "INVALID_FORMAT": "End Date invalid"
+          "INVALID_FORMAT": "End Date invalid. The date must be in the format '{{ requiredFormat }}'"
         }
       },
       "ARIA_LABEL": {
@@ -467,7 +471,12 @@
         "GB": "GB"
       },
       "FILE_TYPE": "File Type",
-      "FILE_TYPE_PLACEHOLDER": "Add file type"
+      "FILE_TYPE_PLACEHOLDER": "Add file type",
+      "ACCESSIBILITY": {
+        "CONDITION": "Condition",
+        "SIZE_VALUE": "File size value",
+        "UNIT": "Unit"
+      }
     }
   },
   "PERMISSION": {
@@ -524,7 +533,7 @@
     "LINK-WITH-EXPIRY-SETTINGS": "New link has been generated with expiry settings",
     "EXPIRES": "Expires on",
     "LINK-EXPIRY-DATE": "Link Expiry Date",
-    "EXPIRATION-LABEL": "Expiration Date",
+    "EXPIRATION-LABEL": "Expiration Date. Enter date in MM/DD/YYYY format",
     "EXPIRATION-PLACEHOLDER": "MM/DD/YYYY",
     "CLIPBOARD-MESSAGE": "Link copied to the clipboard",
     "CLOSE": "Close",
@@ -603,6 +612,10 @@
       "NOT-ALLOWED": "You are not allowed to change permissions"
     }
   },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "Group icon",
+    "GROUP_USER_SELECTED_ALT": "Selected group or user icon"
+  },
   "ADF-TREE-VIEW": {
     "MISSING-ID": "No nodeId provided!",
     "ACCESSIBILITY": {
@@ -651,7 +664,9 @@
       "TITLE_TOO_SHORT": "Title must be at least 2 characters long",
       "ILLEGAL_CHARACTERS": "Use numbers and letters only",
       "ONLY_SPACES": "Library name can't contain only spaces",
-      "LIBRARY_UPDATE_ERROR": "There was an error updating library properties"
+      "LIBRARY_UPDATE_ERROR": "There was an error updating library properties",
+      "NAME_REQUIRED": "Library name is required",
+      "ID_REQUIRED": "Library ID is required"
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Library properties updated"
@@ -659,8 +674,8 @@
   },
   "BREADCRUMB": {
     "ARIA-LABEL": {
-      "BREADCRUMB": "Breadcrumb",
-      "DROPDOWN": "Dropdown"
+      "BREADCRUMB": "Breadcrumb navigation",
+      "DROPDOWN": "Open breadcrumb menu for {{folderName}}"
     },
     "HEADER": {
       "SELECTED": "Selected ({{ count }})"

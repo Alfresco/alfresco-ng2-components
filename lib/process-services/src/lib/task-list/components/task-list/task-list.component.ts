@@ -16,7 +16,6 @@
  */
 
 import {
-    AppConfigService,
     CustomEmptyContentTemplateDirective,
     CustomLoadingContentTemplateDirective,
     DataCellEvent,
@@ -73,6 +72,9 @@ export const PRESET_KEY = 'adf-task-list.presets';
     styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnInit {
+    private readonly taskListService = inject(TaskListService);
+    private readonly userPreferences = inject(UserPreferencesService);
+
     @ContentChild(CustomEmptyContentTemplateDirective)
     customEmptyContent: CustomEmptyContentTemplateDirective;
 
@@ -226,8 +228,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private taskListService: TaskListService, appConfigService: AppConfigService, private userPreferences: UserPreferencesService) {
-        super(appConfigService, PRESET_KEY, taskPresetsDefaultModel);
+    constructor() {
+        super(PRESET_KEY, taskPresetsDefaultModel);
 
         this.pagination = new BehaviorSubject<PaginationModel>({
             maxItems: this.size,

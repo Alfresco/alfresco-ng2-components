@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
-import { DataColumn, IconComponent, TranslationService } from '@alfresco/adf-core';
+import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
 import { SearchHeaderQueryBuilderService } from '../../services/search-header-query-builder.service';
 import { SearchCategory } from '../../models/search-category.interface';
@@ -25,27 +25,25 @@ import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { FilterSearch } from '../../models/filter-search.interface';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatBadgeModule } from '@angular/material/badge';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-search-filter-container',
-    imports: [
-        CommonModule,
-        MatButtonModule,
-        MatMenuModule,
-        IconComponent,
-        MatBadgeModule,
-        SearchWidgetContainerComponent,
-        TranslatePipe,
-        MatDialogModule
-    ],
+    imports: [CommonModule, MatButtonModule, MatMenuModule, MatIconModule, SearchWidgetContainerComponent, TranslatePipe, MatDialogModule],
     templateUrl: './search-filter-container.component.html',
     styleUrls: ['./search-filter-container.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterContainerComponent implements OnInit {
+    private readonly searchFilterQueryBuilder = inject(SearchHeaderQueryBuilderService);
+    private readonly translationService = inject(TranslationService);
+    private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
+    private readonly matIconRegistry = inject(MatIconRegistry);
+    private readonly sanitizer = inject(DomSanitizer);
+
     /** The column the filter will be applied on. */
     @Input({ required: true })
     col: DataColumn;
@@ -68,15 +66,10 @@ export class SearchFilterContainerComponent implements OnInit {
     focusTrap: ConfigurableFocusTrap;
     initialValue: any;
 
-    constructor(
-        private searchFilterQueryBuilder: SearchHeaderQueryBuilderService,
-        private translationService: TranslationService,
-        private focusTrapFactory: ConfigurableFocusTrapFactory
-    ) {}
-
     ngOnInit() {
+        this.registerFilterIcon();
         this.category = this.searchFilterQueryBuilder.getCategoryForColumn(this.col.key);
-        this.initialValue = this.value?.[this.col.key] ? this.value[this.col.key] : undefined;
+        this.initialValue = this.value?.[this.category?.id];
     }
 
     onKeyPressed(event: KeyboardEvent, menuTrigger: MatMenuTrigger) {
@@ -88,7 +81,7 @@ export class SearchFilterContainerComponent implements OnInit {
 
     onApply() {
         if (this.widgetContainer.hasValueSelected()) {
-            this.searchFilterQueryBuilder.setActiveFilter(this.category.columnKey, this.widgetContainer.getCurrentValue());
+            this.searchFilterQueryBuilder.setActiveFilter(this.category.id, this.widgetContainer.getCurrentValue());
             this.filterChange.emit();
             this.widgetContainer.applyInnerWidget();
         } else {
@@ -103,7 +96,7 @@ export class SearchFilterContainerComponent implements OnInit {
 
     resetSearchFilter() {
         this.widgetContainer.resetInnerWidget();
-        this.searchFilterQueryBuilder.removeActiveFilter(this.category.columnKey);
+        this.searchFilterQueryBuilder.removeActiveFilter(this.category.id);
         this.filterChange.emit();
     }
 
@@ -115,7 +108,7 @@ export class SearchFilterContainerComponent implements OnInit {
     }
 
     isActive(): boolean {
-        return this.searchFilterQueryBuilder.getActiveFilters().findIndex((f: FilterSearch) => f.key === this.category.columnKey) > -1;
+        return this.searchFilterQueryBuilder.getActiveFilters().findIndex((f: FilterSearch) => f.key === this.category.id) > -1;
     }
 
     onMenuOpen() {
@@ -128,5 +121,12 @@ export class SearchFilterContainerComponent implements OnInit {
     onClosed() {
         this.focusTrap.destroy();
         this.focusTrap = null;
+    }
+
+    private registerFilterIcon(): void {
+        const filterIcon = this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/custom_filter.svg');
+        const filterIconFilled = this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/custom_filter_filled.svg');
+        this.matIconRegistry.addSvgIconInNamespace('adf', 'custom_filter', filterIcon);
+        this.matIconRegistry.addSvgIconInNamespace('adf', 'custom_filter_filled', filterIconFilled);
     }
 }

@@ -27,5 +27,5 @@ export interface StatusData {
 
 export interface LicenseData {
     property: string;
-    value: string;
+    value: string | number;
 }

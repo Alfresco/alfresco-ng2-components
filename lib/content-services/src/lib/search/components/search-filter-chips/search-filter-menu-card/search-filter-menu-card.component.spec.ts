@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchFilterMenuCardComponent } from './search-filter-menu-card.component';
-import { ContentTestingModule } from '../../../../testing/content.testing.module';
 
 describe('SearchFilterMenuComponent', () => {
     let component: SearchFilterMenuCardComponent;
@@ -25,7 +24,7 @@ describe('SearchFilterMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [SearchFilterMenuCardComponent]
         });
         fixture = TestBed.createComponent(SearchFilterMenuCardComponent);
         component = fixture.componentInstance;

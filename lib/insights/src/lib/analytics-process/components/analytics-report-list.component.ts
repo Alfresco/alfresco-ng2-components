@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import { AnalyticsService } from '../services/analytics.service';
@@ -36,6 +36,8 @@ export const LAYOUT_GRID = 'GRID';
     encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsReportListComponent implements OnInit {
+    private readonly analyticsService = inject(AnalyticsService);
+
     /** layout Type LIST or GRID. */
     @Input()
     layoutType: string = LAYOUT_LIST;
@@ -66,7 +68,7 @@ export class AnalyticsReportListComponent implements OnInit {
 
     private reportObserver: Observer<any>;
 
-    constructor(private analyticsService: AnalyticsService) {
+    constructor() {
         this.report$ = new Observable<ReportParametersModel>((observer) => (this.reportObserver = observer)).pipe(share());
     }
 

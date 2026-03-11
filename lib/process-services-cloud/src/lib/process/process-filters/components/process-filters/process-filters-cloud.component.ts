@@ -15,29 +15,30 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFilterCloudModel } from '../../models/process-filter-cloud.model';
-import { AppConfigService, IconComponent, TranslationService } from '@alfresco/adf-core';
+import { AppConfigService, IconModule, TranslationService } from '@alfresco/adf-core';
 import { FilterParamsModel } from '../../../../task/task-filters/models/filter-cloud.model';
-import { debounceTime, tap } from 'rxjs/operators';
+import { debounceTime, map, tap } from 'rxjs/operators';
 import { ProcessListCloudService } from '../../../process-list/services/process-list-cloud.service';
 import { ProcessFilterCloudAdapter } from '../../../process-list/models/process-cloud-query-request.model';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { TranslatePipe } from '@ngx-translate/core';
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule } from '@angular/material/list';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
     selector: 'adf-cloud-process-filters',
-    imports: [TranslatePipe, IconComponent, NgIf, MatProgressSpinnerModule, NgForOf, MatListModule, AsyncPipe],
+    imports: [TranslatePipe, IconModule, MatProgressSpinnerModule, MatListModule, AsyncPipe, RouterLink],
     templateUrl: './process-filters-cloud.component.html',
-    styleUrls: ['./process-filters-cloud.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./process-filters-cloud.component.scss']
 })
 export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
+    protected readonly PROCESSES_ROUTE = '/process-list-cloud';
     /** (required) The application name */
     @Input()
     appName: string = '';
@@ -87,6 +88,8 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     private readonly translationService = inject(TranslationService);
     private readonly appConfigService = inject(AppConfigService);
     private readonly processListCloudService = inject(ProcessListCloudService);
+    private readonly activatedRoute = inject(ActivatedRoute);
+    protected readonly currentRouteFilterId = toSignal(this.activatedRoute.queryParamMap.pipe(map((params) => params.get('filterId'))));
 
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);

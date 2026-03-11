@@ -16,13 +16,14 @@
  */
 
 import { NgModule } from '@angular/core';
-import { ClipboardDirective, ClipboardComponent } from './clipboard.directive';
+import { ClipboardDirective } from './clipboard.directive';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
-export const CLIPBOARD_DIRECTIVES = [ClipboardDirective, ClipboardComponent] as const;
+export const CLIPBOARD_DIRECTIVES = [ClipboardDirective] as const;
 
 /** @deprecated use `...CLIPBOARD_DIRECTIVES` or import standalone directives */
 @NgModule({
-    imports: [...CLIPBOARD_DIRECTIVES],
-    exports: [...CLIPBOARD_DIRECTIVES]
+    imports: [MatTooltipModule, ...CLIPBOARD_DIRECTIVES],
+    exports: [MatTooltipModule, ...CLIPBOARD_DIRECTIVES]
 })
 export class ClipboardModule {}

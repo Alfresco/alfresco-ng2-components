@@ -20,5 +20,19 @@ export interface ContextMenuOverlayConfig {
     hasBackdrop?: boolean;
     backdropClass?: string;
     source?: MouseEvent;
-    data?: any;
+    data?: ContextMenuItem[];
+}
+
+export interface ContextMenuItem {
+    title?: string;
+    model?: {
+        title?: string;
+        visible?: boolean;
+        disabled?: boolean;
+        icon?: string;
+        tooltip?: string;
+    };
+    subject: {
+        next: (value: ContextMenuItem) => void;
+    };
 }

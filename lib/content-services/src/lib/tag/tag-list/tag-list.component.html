@@ -13,7 +13,7 @@
         data-automation-id="show-fewer-tags"
         mat-icon-button
         (click)="loadLessTags()">
-        <mat-icon>keyboard_arrow_up</mat-icon>
+        <mat-icon adf-icon="keyboard_arrow_up" />
     </button>
     <button
         *ngIf="pagination.hasMoreItems"
@@ -21,6 +21,6 @@
         data-automation-id="show-more-tags"
         mat-icon-button
         (click)="loadMoreTags()">
-        <mat-icon>keyboard_arrow_down</mat-icon>
+        <mat-icon adf-icon="keyboard_arrow_down" />
     </button>
 </div>

@@ -19,7 +19,7 @@ import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../common/services/dynamic-component-mapper.service';
 import { CardViewBaseItemModel } from './card-view-baseitem.model';
 import { CardViewDateItemProperties } from '../interfaces/card-view.interfaces';
-import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
+import { DatePipe } from '@angular/common';
 import { DateFnsUtils } from '../../common/utils/date-fns-utils';
 
 type DateItemType = Date | Date[] | null;
@@ -28,8 +28,6 @@ export class CardViewDateItemModel extends CardViewBaseItemModel<DateItemType> i
     type = 'date';
     format: string;
     locale: string;
-
-    localizedDatePipe: LocalizedDatePipe;
 
     constructor(cardViewDateItemProperties: CardViewDateItemProperties) {
         super(cardViewDateItemProperties);
@@ -56,8 +54,10 @@ export class CardViewDateItemModel extends CardViewBaseItemModel<DateItemType> i
     }
 
     transformDate(value: Date | string | number): string {
-        this.localizedDatePipe = new LocalizedDatePipe();
-        return this.localizedDatePipe.transform(value, this.format, this.locale);
+        const actualFormat = this.format || 'mediumDate';
+        const actualLocale = this.locale || 'en-US';
+        const datePipe = new DatePipe(actualLocale);
+        return datePipe.transform(value, actualFormat);
     }
 
     private prepareDate(date: Date): Date {

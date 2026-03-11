@@ -62,13 +62,14 @@ import { DocumentListService } from '@alfresco/adf-core';
     -   _nodeId:_ `any`  - 
     -   **Returns** `boolean` - 
 
--   **loadFolderByNodeId**(nodeId: `string`, pagination: `PaginationModel`, includeFields: `string[]`, where?: `string`, orderBy?: `string[]`): `Observable<DocumentLoaderNode>`<br/>
+-   **loadFolderByNodeId**(nodeId: `string`, pagination: `PaginationModel`, includeFields: `string[]`, where?: `string`, orderBy?: `string[]`, filters?: `string[]`): `Observable<DocumentLoaderNode>`<br/>
     Load a folder by Node Id.
     -   _nodeId:_ `string`  - ID of the folder node
     -   _pagination:_ `PaginationModel` - pagination model
     -   _includeFields:_ `string[]`  - List of data field names to include in the results
     -   _where:_ `string`  - (Optional) Optionally filter the list
     -   _orderBy:_ `string[]`  - (Optional) order by node property
+    -   _filters:_ `string[]` - (Optional) Specifies additional filters to apply (joined with **AND**). Applied for recent files only
     -   **Returns** `Observable<DocumentLoaderNode>` - Details of the folder
 -   **moveNode**(nodeId: `string`, targetParentId: `string`): `Observable<NodeEntry>`<br/>
     Moves a node to destination node.

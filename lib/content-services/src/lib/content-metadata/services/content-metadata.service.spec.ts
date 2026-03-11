@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService, CardViewItem, NoopAuthModule } from '@alfresco/adf-core';
 import { ClassesApi, Node } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
 import { firstValueFrom, of } from 'rxjs';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
 import { PropertyGroup } from '../interfaces/property-group.interface';
 import { ContentMetadataService } from './content-metadata.service';
@@ -197,7 +196,7 @@ describe('ContentMetaDataService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [NoopAuthModule]
         });
         service = TestBed.inject(ContentMetadataService);
         contentPropertyService = TestBed.inject(ContentTypePropertiesService);
@@ -216,12 +215,10 @@ describe('ContentMetaDataService', () => {
     });
 
     it('should return the content type property', () => {
-        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of({ label: 'hello i am a weird content type' } as any));
+        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of([{ label: 'hello i am a weird content type' } as CardViewItem]));
 
-        service.getContentTypeProperty(fakeNode).subscribe((res: any) => {
-            expect(res).toBeDefined();
-            expect(res).not.toBeNull();
-            expect(res.label).toBe('hello i am a weird content type');
+        service.getContentTypeProperty(fakeNode).subscribe((res) => {
+            expect(res[0].label).toBe('hello i am a weird content type');
         });
     });
 

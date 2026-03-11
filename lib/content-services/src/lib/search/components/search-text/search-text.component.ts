@@ -27,12 +27,12 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search-text',
-    imports: [CommonModule, MatFormFieldModule, TranslatePipe, MatInputModule, MatButtonModule, FormsModule, MatIconModule],
+    imports: [CommonModule, MatFormFieldModule, TranslatePipe, MatInputModule, MatButtonModule, FormsModule, IconModule],
     templateUrl: './search-text.component.html',
     styleUrls: ['./search-text.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -76,7 +76,7 @@ export class SearchTextComponent implements SearchWidget, OnInit {
         this.context.populateFilters
             .asObservable()
             .pipe(
-                map((filtersQueries) => filtersQueries[this.id]),
+                map((filtersQueries) => filtersQueries?.[this.id]),
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((filterQuery) => {
@@ -99,6 +99,8 @@ export class SearchTextComponent implements SearchWidget, OnInit {
 
     reset(updateContext = true) {
         this.value = '';
+        this.context.filterRawParams[this.id] = undefined;
+        this.context.queryFragments[this.id] = '';
         this.updateQuery(null, updateContext);
     }
 
@@ -111,9 +113,12 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     }
 
     private updateQuery(value: string, updateContext = true) {
-        this.context.filterRawParams[this.id] = value;
+        if (value !== null) {
+            this.context.filterRawParams[this.id] = value;
+        }
+
         this.displayValue$.next(value);
-        if (this.context && this.settings && this.settings.field) {
+        if (this.context?.queryFragments && this.settings?.field) {
             this.context.queryFragments[this.id] = value ? `${this.settings.field}:'${this.getSearchPrefix()}${value}${this.getSearchSuffix()}'` : '';
             if (updateContext) {
                 this.context.update();

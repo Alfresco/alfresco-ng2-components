@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
-import { BaseViewerWidgetComponent, ErrorWidgetComponent, FormService } from '@alfresco/adf-core';
+import { BaseViewerWidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { PropertiesViewerWrapperComponent } from './properties-viewer-wrapper/properties-viewer-wrapper.component';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -29,26 +29,11 @@ import { CommonModule } from '@angular/common';
     imports: [CommonModule, ErrorWidgetComponent, PropertiesViewerWrapperComponent, TranslatePipe],
     templateUrl: './properties-viewer.widget.html',
     styleUrls: ['./properties-viewer.widget.scss'],
-    host: {
-        '(click)': 'event($event)',
-        '(blur)': 'event($event)',
-        '(change)': 'event($event)',
-        '(focus)': 'event($event)',
-        '(focusin)': 'event($event)',
-        '(focusout)': 'event($event)',
-        '(input)': 'event($event)',
-        '(invalid)': 'event($event)',
-        '(select)': 'event($event)'
-    },
     encapsulation: ViewEncapsulation.None
 })
 export class PropertiesViewerWidgetComponent extends BaseViewerWidgetComponent {
     @Output()
     nodeContentLoaded: EventEmitter<Node> = new EventEmitter();
-
-    constructor(formService: FormService) {
-        super(formService);
-    }
 
     onNodeContentLoaded(node: Node) {
         this.nodeContentLoaded.emit(node);

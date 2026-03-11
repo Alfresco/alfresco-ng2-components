@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
+import { IconModule } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     standalone: true,
-    imports: [CommonModule, MatIconModule, MatExpansionModule, TranslatePipe],
+    imports: [CommonModule, IconModule, MatExpansionModule, TranslatePipe],
     selector: 'adf-content-metadata-header',
     encapsulation: ViewEncapsulation.None,
     styles: [
@@ -46,7 +46,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     ],
     template: `
         <ng-container>
-            <mat-icon>{{ expanded ? 'expand_more' : 'chevron_right' }}</mat-icon>
+            <mat-icon [adf-icon]="expanded ? 'expand_more' : 'chevron_right'" />
             <mat-panel-title *ngIf="title" class="adf-metadata-properties-title" [title]="title | translate">{{ title | translate }}</mat-panel-title>
             <ng-content />
         </ng-container>

@@ -23,8 +23,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     selector: 'adf-viewer-extension'
 })
 export class ViewerExtensionDirective implements AfterContentInit {
+    private readonly viewerComponent = inject(ViewerRenderComponent);
+
     @ContentChild(TemplateRef)
-    template: any;
+    template: TemplateRef<unknown>;
 
     @Input()
     urlFileContent: string;
@@ -35,11 +37,9 @@ export class ViewerExtensionDirective implements AfterContentInit {
     @Input()
     supportedExtensions: string[];
 
-    templateModel: any;
+    templateModel: { template: TemplateRef<unknown>; isVisible: boolean };
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private viewerComponent: ViewerRenderComponent) {}
 
     ngAfterContentInit() {
         this.templateModel = { template: this.template, isVisible: false };

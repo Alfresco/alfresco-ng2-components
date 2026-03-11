@@ -17,29 +17,12 @@ on:
 env:
   BASE_REF: ${{ github.base_ref }}
   HEAD_REF: ${{ github.head_ref }}
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  GITHUB_BRANCH: ${{ github.ref_name }}
-  GH_BUILD_DIR: ${{ github.workspace }}
   GH_COMMIT: ${{ github.sha }}
-  BUILD_ID: ${{ github.run_id }}
-  GH_RUN_NUMBER: ${{ github.run_attempt }}
   GH_BUILD_NUMBER: ${{ github.run_id }}
-  JOB_ID: ${{ github.run_id }}
   LOG_LEVEL: "ERROR"
-  S3_BUILD_BUCKET_SHORT_NAME: ${{ secrets.S3_BUILD_BUCKET_SHORT_NAME }}
   NODE_OPTIONS: "--max-old-space-size=5120"
-  DOCKER_REPOSITORY_DOMAIN: ${{ secrets.DOCKER_REPOSITORY_DOMAIN }}
-  DOCKER_REPOSITORY_USER: ${{ secrets.DOCKER_USERNAME }}
-  DOCKER_REPOSITORY_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   NPM_REGISTRY_ADDRESS: ${{ secrets.NPM_REGISTRY_ADDRESS }}
-  NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
   BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
-  REPO_OWNER: "Alfresco"
-  REPO_NAME: "alfresco-ng2-components"
-  BUILT_LIBS_DIR: "./dist/libs"
-  NODE_MODULES_DIR: "./node_modules"
-  REDIRECT_URI: /
 
 jobs:
 
@@ -58,16 +41,18 @@ jobs:
       GITHUB_TOKEN: $BOT_GITHUB_TOKEN
     steps:
       - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - id: set-dryrun
         uses: ./.github/actions/enable-dryrun
         with:
           dry-run-flag: ${{ inputs.dry-run-flag }}
       - name: install NPM
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: '.nvmrc'
       - name: "Release tag"
+        env:
+          DRYRUN_FLAG: ${{ steps.set-dryrun.outputs.dryrun }}
         run: |
           git fetch --all --quiet
-          BRANCH=${GITHUB_REF##*/} ./scripts/github/release/git-tag.sh ${{ steps.set-dryrun.outputs.dryrun }}
+          BRANCH=${GITHUB_REF##*/} ./scripts/github/release/git-tag.sh $DRYRUN_FLAG

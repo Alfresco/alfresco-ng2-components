@@ -27,37 +27,40 @@ import { OauthConfigModel } from '../auth/models/oauth-config.model';
 /* spellchecker: disable */
 
 // eslint-disable-next-line no-shadow
-export enum AppConfigValues {
-    APP_CONFIG_LANGUAGES_KEY = 'languages',
-    PROVIDERS = 'providers',
-    OAUTHCONFIG = 'oauth2',
-    ECMHOST = 'ecmHost',
-    BASESHAREURL = 'baseShareUrl',
-    OOI_CONNECTOR_URL = 'ooiServiceUrl',
-    BPMHOST = 'bpmHost',
-    IDENTITY_HOST = 'identityHost',
-    AUTHTYPE = 'authType',
-    CONTEXTROOTECM = 'contextRootEcm',
-    CONTEXTROOTBPM = 'contextRootBpm',
-    ALFRESCO_REPOSITORY_NAME = 'alfrescoRepositoryName',
-    LOG_LEVEL = 'logLevel',
-    LOGIN_ROUTE = 'loginRoute',
-    DISABLECSRF = 'disableCSRF',
-    AUTH_WITH_CREDENTIALS = 'auth.withCredentials',
-    APPLICATION = 'application',
-    STORAGE_PREFIX = 'application.storagePrefix',
-    NOTIFY_DURATION = 'notificationDefaultDuration',
-    CONTENT_TICKET_STORAGE_LABEL = 'ticket-ECM',
-    PROCESS_TICKET_STORAGE_LABEL = 'ticket-BPM',
-    UNSAVED_CHANGES_MODAL_HIDDEN = 'unsaved_changes__modal_hidden'
-}
+export const AppConfigValues = {
+    APP_CONFIG_LANGUAGES_KEY: 'languages',
+    PROVIDERS: 'providers',
+    OAUTHCONFIG: 'oauth2',
+    ECMHOST: 'ecmHost',
+    BASESHAREURL: 'baseShareUrl',
+    OOI_CONNECTOR_URL: 'ooiServiceUrl',
+    BPMHOST: 'bpmHost',
+    IDENTITY_HOST: 'identityHost',
+    AUTHTYPE: 'authType',
+    CONTEXTROOTECM: 'contextRootEcm',
+    CONTEXTROOTBPM: 'contextRootBpm',
+    ALFRESCO_REPOSITORY_NAME: 'alfrescoRepositoryName',
+    LOG_LEVEL: 'logLevel',
+    LOGIN_ROUTE: 'loginRoute',
+    DISABLECSRF: 'disableCSRF',
+    AUTH_WITH_CREDENTIALS: 'auth.withCredentials',
+    APPLICATION: 'application',
+    STORAGE_PREFIX: 'application.storagePrefix',
+    NOTIFY_DURATION: 'notificationDefaultDuration',
+    CONTENT_TICKET_STORAGE_LABEL: 'ticket-ECM',
+    PROCESS_TICKET_STORAGE_LABEL: 'ticket-BPM',
+    UNSAVED_CHANGES_MODAL_HIDDEN: 'unsaved_changes__modal_hidden'
+} as const;
 
-// eslint-disable-next-line no-shadow
-export enum Status {
-    INIT = 'init',
-    LOADING = 'loading',
-    LOADED = 'loaded'
-}
+export type AppConfigValues = (typeof AppConfigValues)[keyof typeof AppConfigValues];
+
+export const Status = {
+    INIT: 'init',
+    LOADING: 'loading',
+    LOADED: 'loaded'
+} as const;
+
+export type Status = (typeof Status)[keyof typeof Status];
 
 /* spellchecker: enable */
 

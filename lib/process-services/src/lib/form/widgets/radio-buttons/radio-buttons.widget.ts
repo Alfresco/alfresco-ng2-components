@@ -17,8 +17,8 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { ErrorWidgetComponent, FormService, WidgetComponent } from '@alfresco/adf-core';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ErrorWidgetComponent, WidgetComponent } from '@alfresco/adf-core';
+import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { CommonModule } from '@angular/common';
@@ -45,13 +45,8 @@ import { FormsModule } from '@angular/forms';
     encapsulation: ViewEncapsulation.None
 })
 export class RadioButtonsWidgetComponent extends WidgetComponent implements OnInit {
-    constructor(
-        public formService: FormService,
-        private taskFormService: TaskFormService,
-        private processDefinitionService: ProcessDefinitionService
-    ) {
-        super(formService);
-    }
+    private readonly taskFormService = inject(TaskFormService);
+    private readonly processDefinitionService = inject(ProcessDefinitionService);
 
     ngOnInit() {
         if (this.isValidRestConfig() && !this.isReadOnlyForm()) {

@@ -17,16 +17,36 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { NgIf } from '@angular/common';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { Component, DestroyRef, Directive, inject, InjectionToken, Input, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { FormService } from '../../../services/form.service';
+import { isObservable } from 'rxjs';
+import { ADF_CUSTOM_MESSAGE } from '../core/custom-validation-message.token';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 import { InputMaskDirective } from './text-mask.component';
+
+type FieldStatusTemplate = TemplateRef<{ $implicit: WidgetComponent }>;
+const FIELD_STATUS_TEMPLATE = new InjectionToken<FieldStatusTemplate>('FIELD_STATUS_TEMPLATE');
+
+@Directive({
+    selector: '[adf-field-status-template]',
+    providers: [
+        {
+            provide: FIELD_STATUS_TEMPLATE,
+            useFactory: (directive: FieldStatusTemplateDirective) => directive.template,
+            deps: [FieldStatusTemplateDirective]
+        }
+    ]
+})
+export class FieldStatusTemplateDirective {
+    @Input('adf-field-status-template')
+    template?: FieldStatusTemplate;
+}
 
 @Component({
     selector: 'text-widget',
@@ -43,19 +63,33 @@ import { InputMaskDirective } from './text-mask.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent, InputMaskDirective],
+    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent, InputMaskDirective, NgTemplateOutlet],
     encapsulation: ViewEncapsulation.None
 })
 export class TextWidgetComponent extends WidgetComponent implements OnInit {
     mask: string;
     placeholder: string;
     isMaskReversed: boolean;
+    fieldStatusTemplate = inject(FIELD_STATUS_TEMPLATE, { optional: true });
 
-    constructor(public formService: FormService) {
-        super(formService);
-    }
+    private readonly destroyRef = inject(DestroyRef);
+    private readonly enableCustomMessage = inject(ADF_CUSTOM_MESSAGE, { optional: true });
 
     ngOnInit() {
+        if (this.enableCustomMessage != null) {
+            if (isObservable(this.enableCustomMessage)) {
+                this.enableCustomMessage.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((enabled: boolean) => {
+                    if (this.field) {
+                        this.field.enableCustomValidationMessage = enabled ?? false;
+                    }
+                });
+            } else {
+                this.field.enableCustomValidationMessage = this.enableCustomMessage;
+            }
+        } else {
+            this.field.enableCustomValidationMessage = false;
+        }
+
         if (this.field.params) {
             this.mask = this.field.params['inputMask'];
             this.placeholder =

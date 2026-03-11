@@ -45,13 +45,13 @@ const PROCESS_EVENT_SUBSCRIPTION_QUERY = `
     providedIn: 'root'
 })
 export class ProcessFilterCloudService {
-    private filtersSubject: BehaviorSubject<ProcessFilterCloudModel[]>;
+    private readonly filtersSubject: BehaviorSubject<ProcessFilterCloudModel[]>;
     filters$: Observable<ProcessFilterCloudModel[]>;
-    private filterKeyToBeRefreshedSource = new Subject<string>();
+    private readonly filterKeyToBeRefreshedSource = new Subject<string>();
     filterKeyToBeRefreshed$: Observable<string> = this.filterKeyToBeRefreshedSource.asObservable();
 
-    private readonly preferenceService = inject<PreferenceCloudServiceInterface>(PROCESS_FILTERS_SERVICE_TOKEN);
-    private readonly identityUserService = inject(IdentityUserService);
+    protected readonly preferenceService = inject<PreferenceCloudServiceInterface>(PROCESS_FILTERS_SERVICE_TOKEN);
+    protected readonly identityUserService = inject(IdentityUserService);
     private readonly notificationCloudService = inject(NotificationCloudService);
 
     constructor() {
@@ -342,7 +342,7 @@ export class ProcessFilterCloudService {
      * @param appName Name of the target app
      * @returns String of process instance filters preference key
      */
-    private prepareKey(appName: string): string {
+    protected prepareKey(appName: string): string {
         const user = this.identityUserService.getCurrentUserInfo();
         return `process-filters-${appName}-${user.username}`;
     }

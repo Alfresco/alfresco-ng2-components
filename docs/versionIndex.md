@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v8.3.0](#v830)
 -   [v7.0.0-alpha.3](#v700-alpha3)
 -   [v6.8.0](#v680)
 -   [v6.7.0](#v670)
@@ -47,6 +48,14 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v8.3.0
+
+<!--7.0.0-alpha.3 start-->
+
+-   [CardViewPropertyValidator Directive](core/directives/card-view-property-validator.directive.md)
+
+<!--7.0.0-alpha.3 end-->
 
 ## v7.0.0-alpha.3
 
@@ -314,7 +323,6 @@ backend services have been tested with each released version of ADF.
 -   [Form cloud component](process-services-cloud/components/form-cloud.component.md)
 -   [Form cloud service](process-services-cloud/services/form-cloud.service.md)
 -   [Json cell component](core/components/json-cell.component.md)
--   [Multi value pipe](core/pipes/multi-value.pipe.md)
 -   [Task form cloud component](process-services-cloud/components/task-form-cloud.component.md)
 
 <!--v320 end-->
@@ -346,7 +354,6 @@ backend services have been tested with each released version of ADF.
 -   [Edit process filter cloud component](process-services-cloud/components/edit-process-filter-cloud.component.md)
 -   [Edit task filter cloud component](process-services-cloud/components/edit-task-filter-cloud.component.md)
 -   [Extension service](extensions/services/extension.service.md)
--   [File upload error pipe](content-services/pipes/file-upload-error.pipe.md)
 -   [Format space pipe](core/pipes/format-space.pipe.md)
 -   [Full name pipe](core/pipes/full-name.pipe.md)
 -   [Group cloud component](process-services-cloud/components/group-cloud.component.md)
@@ -395,8 +402,6 @@ backend services have been tested with each released version of ADF.
 <!--v260 start-->
 
 -   [Login dialog panel component](core/components/login-dialog-panel.component.md)
--   [Login dialog component](core/components/login-dialog.component.md)
--   [Login dialog service](core/services/login-dialog.service.md)
 
 <!--v260 end-->
 
@@ -598,7 +603,6 @@ backend services have been tested with each released version of ADF.
 -   [Logout directive](core/directives/logout.directive.md)
 -   [Node delete directive](content-services/directives/node-delete.directive.md)
 -   [Node favorite directive](content-services/directives/node-favorite.directive.md)
--   [Node name tooltip pipe](core/pipes/node-name-tooltip.pipe.md)
 -   [Node permission service](content-services/services/node-permission.service.md)
 -   [Node restore directive](content-services/directives/node-restore.directive.md)
 -   [Nodes api service](core/services/nodes-api.service.md)
@@ -658,7 +662,6 @@ backend services have been tested with each released version of ADF.
 -   [Text mask component](core/components/text-mask.component.md)
 -   [Thumbnail service](core/services/thumbnail.service.md)
 -   [Time ago pipe](core/pipes/time-ago.pipe.md)
--   [Toggle icon directive](content-services/directives/toggle-icon.directive.md)
 -   [Toolbar divider component](core/components/toolbar-divider.component.md)
 -   [Toolbar title component](core/components/toolbar-title.component.md)
 -   [Toolbar component](core/components/toolbar.component.md)

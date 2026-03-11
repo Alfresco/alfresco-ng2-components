@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { SimpleChange, Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { of, throwError } from 'rxjs';
+import { of, Subscription, throwError } from 'rxjs';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 import { mockEmittedTaskAttachments, mockTaskAttachments } from '../../testing/mock/task/task-attachments.mock';
 import { ProcessContentService } from '../../form/services/process-content.service';
@@ -34,7 +34,7 @@ describe('TaskAttachmentList', () => {
     let deleteContentSpy: jasmine.Spy;
     let getFileRawContentSpy: jasmine.Spy;
     let getContentPreviewSpy: jasmine.Spy;
-    let disposableSuccess: any;
+    let disposableSuccess: Subscription;
     let loader: HarnessLoader;
 
     beforeEach(() => {
@@ -76,7 +76,7 @@ describe('TaskAttachmentList', () => {
 
     it('should emit an error when an error occurs loading attachments', () => {
         const emitSpy = spyOn(component.error, 'emit');
-        getTaskRelatedContentSpy.and.returnValue(throwError({}));
+        getTaskRelatedContentSpy.and.returnValue(throwError(() => new Error('Error loading attachments')));
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ taskId: change });
         expect(emitSpy).toHaveBeenCalled();
@@ -296,8 +296,7 @@ describe('Custom CustomEmptyTemplateComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [CustomEmptyTemplateComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            declarations: [CustomEmptyTemplateComponent]
         });
         fixture = TestBed.createComponent(CustomEmptyTemplateComponent);
         fixture.detectChanges();
@@ -311,7 +310,7 @@ describe('Custom CustomEmptyTemplateComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
+        const title: DebugElement[] = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
         expect(title.length).toBe(1);
         expect(title[0].nativeElement.innerText).toBe('Custom header');
     });

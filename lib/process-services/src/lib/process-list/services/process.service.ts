@@ -40,7 +40,7 @@ import { DatePipe } from '@angular/common';
     providedIn: 'root'
 })
 export class ProcessService {
-    private alfrescoApiService = inject(AlfrescoApiService);
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
 
     private _tasksApi: TasksApi;
     get tasksApi(): TasksApi {
@@ -106,6 +106,7 @@ export class ProcessService {
     }
 
     /**
+     * @deprecated This api is no longer used and will be removed in future releases.
      * Fetches the Process Audit information as a PDF.
      *
      * @param processId ID of the target process
@@ -116,6 +117,7 @@ export class ProcessService {
     }
 
     /**
+     * @deprecated This api is no longer used and will be removed in future releases.
      * Fetches the Process Audit information in a JSON format.
      *
      * @param processId ID of the target process

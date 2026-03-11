@@ -23,6 +23,7 @@ import { SearchSortingDefinition } from './search-sorting-definition.interface';
 import { RequestHighlight } from '@alfresco/js-api';
 
 export interface SearchConfiguration {
+    id: string;
     include?: string[];
     fields?: string[];
     categories?: SearchCategory[];

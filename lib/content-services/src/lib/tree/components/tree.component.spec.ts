@@ -30,6 +30,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { MatIconHarness } from '@angular/material/icon/testing';
 
 describe('TreeComponent', () => {
     let fixture: ComponentFixture<TreeComponent<TreeNode>>;
@@ -141,18 +142,17 @@ describe('TreeComponent', () => {
         expect(matSpinnerElement).not.toBeNull();
     });
 
-    it('should show provided expand/collapse icons', () => {
+    it('should show provided expand/collapse icons', async () => {
         component.treeService.treeNodes = Array.from(treeNodesMockExpanded);
         component.expandIcon = 'folder';
         component.collapseIcon = 'chevron_left';
         component.treeService.collapseNode(component.treeService.treeNodes[0]);
         fixture.detectChanges();
-        let nodeIcons: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
-        expect(nodeIcons[0].nativeElement.innerText).toContain('folder');
+        const icon = await loader.getHarnessOrNull(MatIconHarness.with({ ancestor: '.adf-tree-expand-collapse-button' }));
+        expect(await icon.getName()).toContain('folder');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(true);
         fixture.detectChanges();
-        nodeIcons = fixture.debugElement.queryAll(By.css('.adf-icon'));
-        expect(nodeIcons[0].nativeElement.innerText).toContain('chevron_left');
+        expect(await icon.getName()).toContain('chevron_left');
     });
 
     it('when node has more items to load loadMore node should appear', () => {

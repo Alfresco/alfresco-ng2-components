@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, of, BehaviorSubject, throwError, Subject } from 'rxjs';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
 import { switchMap, map } from 'rxjs/operators';
@@ -26,7 +26,6 @@ import { TaskCloudNodePaging } from '../../../models/task-cloud.model';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
-import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 const TASK_EVENT_SUBSCRIPTION_QUERY = `
     subscription {
@@ -48,20 +47,16 @@ const TASK_EVENT_SUBSCRIPTION_QUERY = `
     providedIn: 'root'
 })
 export class TaskFilterCloudService extends BaseCloudService {
-    private filtersSubject = new BehaviorSubject<TaskFilterCloudModel[]>([]);
-    filters$ = this.filtersSubject.asObservable();
-    private filterKeyToBeRefreshedSource = new Subject<string>();
-    filterKeyToBeRefreshed$ = this.filterKeyToBeRefreshedSource.asObservable();
+    private readonly notificationCloudService = inject(NotificationCloudService);
 
-    constructor(
-        private identityUserService: IdentityUserService,
-        @Inject(TASK_FILTERS_SERVICE_TOKEN)
-        public preferenceService: PreferenceCloudServiceInterface,
-        private notificationCloudService: NotificationCloudService,
-        adfHttpClient: AdfHttpClient
-    ) {
-        super(adfHttpClient);
-    }
+    public preferenceService = inject<PreferenceCloudServiceInterface>(TASK_FILTERS_SERVICE_TOKEN);
+
+    protected identityUserService = inject(IdentityUserService);
+
+    private readonly filtersSubject = new BehaviorSubject<TaskFilterCloudModel[]>([]);
+    filters$ = this.filtersSubject.asObservable();
+    private readonly filterKeyToBeRefreshedSource = new Subject<string>();
+    filterKeyToBeRefreshed$ = this.filterKeyToBeRefreshedSource.asObservable();
 
     /**
      * Creates and returns the default task filters for an app.
@@ -307,7 +302,7 @@ export class TaskFilterCloudService extends BaseCloudService {
      * @param appName Name of the target app
      * @returns String of task filters preference key
      */
-    private prepareKey(appName: string): string {
+    protected prepareKey(appName: string): string {
         return `task-filters-${appName}-${this.identityUserService.getCurrentUserInfo().username}`;
     }
 

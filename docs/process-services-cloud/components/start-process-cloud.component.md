@@ -42,6 +42,9 @@ Starts a process.
 | processDefinitionName | `string` |  | Name of the process definition. |
 | showSelectProcessDropdown | `boolean` | true | Show/hide the process dropdown list. |
 | showTitle | `boolean` | true | Show/hide title. |
+| showCancelButton | `boolean` | true | Show/hide cancel button. |
+| displayModeConfigurations | [`FormCloudDisplayModeConfiguration`](../../../lib/process-services-cloud/src/lib/services/form-fields.interfaces.ts)`[]` |  | The available display configurations for the form (start process event can have assigned form). |
+| enableParentVisibilityCheck | `boolean` | false | Toggle to enable parent visibility check for validation. When enabled, fields inside hidden groups/sections will skip validation. |
 | values | [`TaskVariableCloud`](../../../lib/process-services-cloud/src/lib/form/models/task-variable-cloud.model.ts)`[]` |  | Parameter to pass form field values in the start form if one is associated. |
 | variables | `any` |  | Variables to attach to the payload. |
 

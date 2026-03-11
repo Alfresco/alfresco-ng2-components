@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Directive, Input, TemplateRef } from '@angular/core';
+import { Directive, Input, TemplateRef, inject } from '@angular/core';
 
 @Directive({
     selector: '[adf-search-filter-tab]'
 })
 export class SearchFilterTabDirective {
+    readonly templateRef = inject<TemplateRef<any>>(TemplateRef);
+
     @Input('adf-search-filter-tab')
     name: string;
-
-    constructor(public readonly templateRef: TemplateRef<any>) {}
 }

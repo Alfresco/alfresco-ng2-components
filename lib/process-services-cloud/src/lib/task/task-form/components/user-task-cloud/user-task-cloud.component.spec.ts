@@ -736,6 +736,25 @@ describe('UserTaskCloudComponent', () => {
 
                 expect(taskFormComponent.customCompleteButtonText).toBe(customText);
             });
+
+            it('should pass enableParentVisibilityCheck to task form when task type is Form', () => {
+                fixture.componentRef.setInput('enableParentVisibilityCheck', true);
+                fixture.detectChanges();
+
+                const taskFormElement = fixture.debugElement.query(By.css('adf-cloud-task-form'));
+                const taskFormComponent = taskFormElement?.componentInstance as TaskFormCloudComponent;
+
+                expect(taskFormComponent.enableParentVisibilityCheck).toBe(true);
+            });
+
+            it('should pass enableParentVisibilityCheck as false by default to task form', () => {
+                fixture.detectChanges();
+
+                const taskFormElement = fixture.debugElement.query(By.css('adf-cloud-task-form'));
+                const taskFormComponent = taskFormElement?.componentInstance as TaskFormCloudComponent;
+
+                expect(taskFormComponent.enableParentVisibilityCheck).toBe(false);
+            });
         });
     });
 
@@ -759,5 +778,43 @@ describe('UserTaskCloudComponent', () => {
         taskFormComponent.formLoaded.emit(mockForm);
 
         expect(component.formLoaded.emit).toHaveBeenCalledWith(mockForm);
+    });
+
+    it('should not load task for task screen on complete', () => {
+        component.taskId = 't1';
+        component.taskType = 'screen';
+        component.taskDetails = taskDetails;
+        component.taskDetails.processInstanceId = 'p1';
+        component.taskDetails.rootProcessInstanceId = 'rp1';
+        fixture.detectChanges();
+
+        spyOn(component.taskCompleted, 'emit');
+        const onCompleteSpy = spyOn(component, 'onCompleteTask').and.callThrough();
+        const screenDebugEl = fixture.debugElement.query(By.css('adf-cloud-task-screen'));
+        expect(screenDebugEl).toBeTruthy('adf-cloud-task-screen should be present in template');
+
+        const screenCompInstance = screenDebugEl.componentInstance as TaskScreenCloudMockComponent;
+        const payload = true;
+
+        screenCompInstance.taskCompleted.emit(payload);
+        fixture.detectChanges();
+
+        expect(onCompleteSpy).toHaveBeenCalledWith(payload, 'screen');
+        expect(component.taskCompleted.emit).toHaveBeenCalledWith(payload);
+        expect(getTaskSpy).not.toHaveBeenCalled();
+    });
+
+    it('should load task for non task screen on complete', () => {
+        spyOn(component.taskCompleted, 'emit');
+
+        component.onCompleteTask(true, 'form');
+
+        expect(component.taskCompleted.emit).toHaveBeenCalledTimes(1);
+        expect(getTaskSpy).toHaveBeenCalledTimes(1);
+
+        component.onCompleteTask(true, '');
+
+        expect(component.taskCompleted.emit).toHaveBeenCalledTimes(2);
+        expect(getTaskSpy).toHaveBeenCalledTimes(2);
     });
 });

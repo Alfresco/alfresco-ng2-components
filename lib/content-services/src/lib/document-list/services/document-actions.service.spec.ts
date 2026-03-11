@@ -21,8 +21,8 @@ import { DocumentActionsService } from './document-actions.service';
 import { DocumentListService } from './document-list.service';
 import { of } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { PermissionModel } from '../models/permissions.model';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('DocumentActionsService', () => {
     let service: DocumentActionsService;
@@ -30,7 +30,7 @@ describe('DocumentActionsService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [NoopAuthModule]
         });
         documentListService = TestBed.inject(DocumentListService);
         service = TestBed.inject(DocumentActionsService);
@@ -69,7 +69,12 @@ describe('DocumentActionsService', () => {
         const file = new FileNode();
         expect(service.canExecuteAction(file)).toBeTruthy();
 
-        service = new DocumentActionsService(null, null, null);
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule],
+            providers: [{ provide: DocumentListService, useValue: null }]
+        });
+        service = TestBed.inject(DocumentActionsService);
         expect(service.canExecuteAction(file)).toBeFalsy();
     });
 

@@ -22,8 +22,8 @@ import { take, tap } from 'rxjs/operators';
 
 export abstract class InfiniteScrollDatasource<T> extends DataSource<T> {
     protected readonly dataStream = new BehaviorSubject<T[]>([]);
-    private isLoading$ = new Subject<boolean>();
-    private subscription = new Subscription();
+    private readonly isLoading$ = new Subject<boolean>();
+    private readonly subscription = new Subscription();
     private batchesFetched = 0;
     private _itemsCount = 0;
     private _firstItem: T;

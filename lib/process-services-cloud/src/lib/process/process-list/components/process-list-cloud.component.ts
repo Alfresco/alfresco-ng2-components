@@ -20,16 +20,16 @@ import {
     Component,
     ContentChild,
     EventEmitter,
-    Inject,
+    input,
     Input,
     OnChanges,
     Output,
     SimpleChanges,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
+    inject
 } from '@angular/core';
 import {
-    AppConfigService,
     ColumnsSelectorComponent,
     CustomEmptyContentTemplateDirective,
     CustomLoadingContentTemplateDirective,
@@ -64,7 +64,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProcessVariableFilterModel } from '../../../models/process-variable-filter.model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { PaginatedList } from '@alfresco/js-api';
+import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
@@ -81,7 +83,8 @@ const PRESET_KEY = 'adf-cloud-process-list.presets';
         EmptyContentComponent,
         NoContentTemplateDirective,
         LoadingContentTemplateDirective,
-        NgIf
+        NgIf,
+        AsyncPipe
     ],
     templateUrl: './process-list-cloud.component.html',
     styleUrls: ['./process-list-cloud.component.scss'],
@@ -91,6 +94,11 @@ export class ProcessListCloudComponent
     extends DataTableSchema<ProcessListDataColumnCustomData>
     implements OnChanges, AfterContentInit, PaginatedComponent
 {
+    private readonly processListCloudService = inject(ProcessListCloudService);
+    private readonly userPreferences = inject(UserPreferencesService);
+    private readonly cloudPreferenceService = inject<PreferenceCloudServiceInterface>(PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN);
+    private readonly variableMapperService = inject(VariableMapperService);
+
     @ViewChild(DataTableComponent) dataTable: DataTableComponent;
 
     @ContentChild(CustomEmptyContentTemplateDirective)
@@ -98,6 +106,8 @@ export class ProcessListCloudComponent
 
     @ContentChild(CustomLoadingContentTemplateDirective)
     customLoadingContent: CustomLoadingContentTemplateDirective;
+
+    processRelatedTo = input<string[] | undefined>();
 
     /** The name of the application. */
     @Input()
@@ -290,7 +300,23 @@ export class ProcessListCloudComponent
     @Input()
     processVariables: ProcessVariableFilterModel[];
 
-    @Input() excludeByProcessCategoryName: string = '';
+    /**
+     * Enables reloading of preferences and process list when appName changes.
+     */
+    @Input()
+    enableAppChange: boolean = false;
+
+    /** Include subprocesses in the process list. */
+    @Input()
+    includeSubprocesses: boolean | null = null;
+
+    /** Include unlinked processes in the process list. */
+    @Input()
+    includeUnlinkedProcesses: boolean | null = null;
+
+    /** Include linked processes in the process list. */
+    @Input()
+    includeLinkedProcesses: boolean | null = null;
 
     /** Emitted when a row in the process list is clicked. */
     @Output()
@@ -318,14 +344,13 @@ export class ProcessListCloudComponent
 
     /** Emitted when the list of process instances has been loaded successfully from the server. */
     @Output()
-    success = new EventEmitter<any>();
+    success = new EventEmitter<PaginatedList<ProcessInstanceCloud>>();
 
     pagination: BehaviorSubject<PaginationModel>;
     size: number;
     skipCount: number = 0;
     currentInstanceId: string;
     selectedInstances: any[];
-    isLoading = true;
 
     rows: any[] = [];
     formattedSorting: any[];
@@ -333,32 +358,38 @@ export class ProcessListCloudComponent
     processListRequestNode: ProcessListRequestModel;
     dataAdapter: ProcessListDatatableAdapter;
 
-    private defaultSorting = { key: 'startDate', direction: 'desc' };
+    private readonly defaultSorting = { key: 'startDate', direction: 'desc' };
 
-    private fetchProcessesTrigger$ = new Subject<void>();
+    protected isLoadingPreferences$ = new BehaviorSubject<boolean>(true);
+    private readonly isReloadingSubject$ = new BehaviorSubject<boolean>(false);
 
-    constructor(
-        private processListCloudService: ProcessListCloudService,
-        appConfigService: AppConfigService,
-        private userPreferences: UserPreferencesService,
-        @Inject(PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN) private cloudPreferenceService: PreferenceCloudServiceInterface,
-        private variableMapperService: VariableMapperService
-    ) {
-        super(appConfigService, PRESET_KEY, processCloudPresetsDefaultModel);
+    isLoading$ = combineLatest([this.isLoadingPreferences$, this.isReloadingSubject$]).pipe(
+        map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
+    );
+
+    private readonly fetchProcessesTrigger$ = new Subject<void>();
+
+    constructor() {
+        super(PRESET_KEY, processCloudPresetsDefaultModel);
+        const userPreferences = this.userPreferences;
+
         this.size = userPreferences.paginationSize;
-        this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
-            this.size = pageSize;
-        });
+        this.userPreferences
+            .select(UserPreferenceValues.PaginationSize)
+            .pipe(takeUntilDestroyed())
+            .subscribe((pageSize) => {
+                this.size = pageSize;
+            });
         this.pagination = new BehaviorSubject<PaginationModel>({
             maxItems: this.size,
             skipCount: 0,
             totalItems: 0
         });
 
-        combineLatest([this.isColumnSchemaCreated$, this.fetchProcessesTrigger$])
+        combineLatest([this.isLoadingPreferences$, this.isColumnSchemaCreated$, this.fetchProcessesTrigger$])
             .pipe(
-                tap(() => (this.isLoading = true)),
-                filter(([isColumnSchemaCreated]) => isColumnSchemaCreated),
+                tap(() => this.isReloadingSubject$.next(true)),
+                filter(([isLoadingPreferences, isColumnSchemaCreated]) => !isLoadingPreferences && !!isColumnSchemaCreated),
                 switchMap(() => {
                     if (this.searchApiMethod === 'POST') {
                         const requestNode = this.createProcessListRequestNode();
@@ -367,7 +398,7 @@ export class ProcessListCloudComponent
                     } else {
                         const requestNode = this.createRequestNode();
                         this.requestNode = requestNode;
-                        return this.processListCloudService.getProcessByRequest(requestNode).pipe(take(1));
+                        return this.processListCloudService.getProcessByRequest(requestNode).pipe();
                     }
                 }),
                 takeUntilDestroyed()
@@ -379,18 +410,46 @@ export class ProcessListCloudComponent
                     this.dataAdapter = new ProcessListDatatableAdapter(this.rows, this.columns);
 
                     this.success.emit(processes);
-                    this.isLoading = false;
+                    this.isReloadingSubject$.next(false);
                     this.pagination.next(processes.list.pagination);
                 },
                 error: (error) => {
                     console.error(error);
                     this.error.emit(error);
-                    this.isLoading = false;
+                    this.isReloadingSubject$.next(false);
                 }
             });
     }
 
+    reload() {
+        if (this.appName || this.appName === '') {
+            this.isReloadingSubject$.next(true);
+            this.fetchProcessesTrigger$.next();
+        } else {
+            this.rows = [];
+        }
+    }
+
     ngAfterContentInit() {
+        this.retrieveProcessPreferences();
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (this.isPropertyChanged(changes, 'sorting')) {
+            this.formatSorting(changes['sorting'].currentValue);
+        }
+
+        if (changes['appName'] && this.enableAppChange) {
+            this.retrieveProcessPreferences();
+        }
+
+        if (this.isAnyPropertyChanged(changes)) {
+            this.reload();
+        }
+    }
+
+    private retrieveProcessPreferences(): void {
+        this.isLoadingPreferences$.next(true);
         this.cloudPreferenceService
             .getPreferences(this.appName)
             .pipe(
@@ -405,7 +464,7 @@ export class ProcessListCloudComponent
 
                     return {
                         columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
-                        columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : this.columnsVisibility,
+                        columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : undefined,
                         columnsWidths: columnsWidths ? JSON.parse(columnsWidths.entry.value) : undefined
                     };
                 }),
@@ -413,7 +472,7 @@ export class ProcessListCloudComponent
                     if (error.status === 404) {
                         return of({
                             columnsOrder: undefined,
-                            columnsVisibility: this.columnsVisibility,
+                            columnsVisibility: undefined,
                             columnsWidths: undefined
                         });
                     } else {
@@ -421,42 +480,35 @@ export class ProcessListCloudComponent
                     }
                 })
             )
-            .subscribe(({ columnsOrder, columnsVisibility, columnsWidths }) => {
-                if (columnsVisibility) {
-                    this.columnsVisibility = columnsVisibility;
+            .subscribe(
+                ({ columnsOrder, columnsVisibility, columnsWidths }) => {
+                    if (columnsVisibility) {
+                        this.columnsVisibility = columnsVisibility;
+                    }
+
+                    if (columnsOrder) {
+                        this.columnsOrder = columnsOrder;
+                    }
+
+                    if (columnsWidths) {
+                        this.columnsWidths = columnsWidths;
+                    }
+
+                    this.createDatatableSchema();
+                    if (this.enableAppChange) {
+                        this.createColumns();
+                    }
+                    this.isLoadingPreferences$.next(false);
+                },
+                (error) => {
+                    this.error.emit(error);
+                    this.isLoadingPreferences$.next(false);
                 }
-
-                if (columnsOrder) {
-                    this.columnsOrder = columnsOrder;
-                }
-
-                if (columnsWidths) {
-                    this.columnsWidths = columnsWidths;
-                }
-
-                this.createDatatableSchema();
-            });
-    }
-    ngOnChanges(changes: SimpleChanges) {
-        if (this.isPropertyChanged(changes, 'sorting')) {
-            this.formatSorting(changes['sorting'].currentValue);
-        }
-
-        if (this.isAnyPropertyChanged(changes)) {
-            this.reload();
-        }
+            );
     }
 
     getCurrentId(): string {
         return this.currentInstanceId;
-    }
-
-    reload() {
-        if (this.appName || this.appName === '') {
-            this.fetchProcessesTrigger$.next();
-        } else {
-            this.rows = [];
-        }
     }
 
     private isAnyPropertyChanged(changes: SimpleChanges): boolean {
@@ -608,9 +660,12 @@ export class ProcessListCloudComponent
             completedTo: this.completedTo,
             suspendedFrom: this.suspendedFrom,
             suspendedTo: this.suspendedTo,
+            includeSubprocesses: this.includeSubprocesses,
+            includeUnlinkedProcesses: this.includeUnlinkedProcesses,
+            includeLinkedProcesses: this.includeLinkedProcesses,
             processVariableKeys: this.getVariableDefinitionsRequestModel(),
             processVariableFilters: this.processVariables,
-            excludeByProcessCategoryName: this.excludeByProcessCategoryName
+            processRelatedTo: this.processRelatedTo()
         };
 
         return new ProcessListRequestModel(requestNode);

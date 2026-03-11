@@ -129,8 +129,7 @@ export class SuperagentHttpClient implements HttpClient {
         queryParams: { [key: string]: any },
         headerParams: { [key: string]: any },
         formParams: { [key: string]: any },
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        bodyParam: string | Object,
+        bodyParam: string | object,
         contentType: string,
         accept: string,
         responseType: string,
@@ -337,7 +336,7 @@ export class SuperagentHttpClient implements HttpClient {
         const newParams: { [key: string]: any } = {};
 
         for (const key in params) {
-            if (Object.prototype.hasOwnProperty.call(params, key) && params[key] !== undefined && params[key] !== null) {
+            if (Object.prototype.hasOwnProperty.call(params, key) && params[key] != null) {
                 const value = params[key];
                 if (SuperagentHttpClient.isFileParam(value) || Array.isArray(value)) {
                     newParams[key] = value;

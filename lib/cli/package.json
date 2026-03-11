@@ -17,16 +17,15 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "develop": "tsc -p tsconfig.json --watch",
-    "dist": "rm -rf ../../dist/libs/cli && npm run build && cp -R ./bin ../../dist/libs/cli && cp -R ./resources ../../dist/libs/cli && cp -R ./templates ../../dist/libs/cli && cp ./package.json ../../dist/libs/cli"
+    "dist": "rm -rf ../../dist/libs/cli && npm run build && cp -R ./bin ../../dist/libs/cli && cp -R ./resources ../../dist/libs/cli && cp -R ./templates ../../dist/libs/cli && cp ./package.json ../../dist/libs/cli",
+    "link": "npm run dist && cd ../../dist/libs/cli && npm link",
+    "unlink": "cd ../../dist/libs/cli && npm unlink"
   },
   "dependencies": {
-    "@alfresco/js-api": ">=8.4.0-0",
-    "commander": "^6.2.1",
+    "@alfresco/js-api": ">=9.2.0",
     "ejs": "^3.1.10",
     "license-checker": "^25.0.1",
     "node-fetch": "^2.7.0",
-    "rxjs": "7.8.2",
-    "shelljs": "^0.10.0",
     "spdx-license-list": "^5.0.0"
   },
   "keywords": [
@@ -36,7 +35,6 @@
   "devDependencies": {
     "@types/ejs": "^3.1.2",
     "@types/node": "^20.1.7",
-    "@types/shelljs": "^0.8.12",
     "typescript": "^4.9.5"
   }
 }

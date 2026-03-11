@@ -12,11 +12,7 @@
         (click)="toggleMenu()"
         [attr.aria-expanded]="expandedSidenav"
         [attr.aria-label]="'CORE.HEADER.ACCESSIBILITY.SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL' | translate">
-        <mat-icon
-            class="adf-menu-icon-header"
-            role="img"
-            aria-hidden="true">{{ toggleIcon }}
-        </mat-icon>
+        <mat-icon class="adf-menu-icon-header" role="img" aria-hidden="true" [adf-icon]="toggleIcon" />
     </button>
 
     <a *ngIf="showLogo" [routerLink]="redirectUrl" title="{{ tooltip }}">
@@ -47,10 +43,6 @@
         (click)="toggleMenu()"
         [attr.aria-expanded]="expandedSidenav"
         [attr.aria-label]="'CORE.HEADER.ACCESSIBILITY.SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL' | translate">
-        <mat-icon
-            class="adf-menu-icon-header"
-            role="img"
-            aria-hidden="true">{{ toggleIcon }}
-        </mat-icon>
+        <mat-icon class="adf-menu-icon-header" role="img" aria-hidden="true" [adf-icon]="toggleIcon" />
     </button>
 </mat-toolbar>

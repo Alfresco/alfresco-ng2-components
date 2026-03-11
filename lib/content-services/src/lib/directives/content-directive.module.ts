@@ -19,7 +19,6 @@ import { NgModule } from '@angular/core';
 import { NodeLockDirective } from './node-lock.directive';
 import { NodeCounterComponent, NodeCounterDirective } from './node-counter.directive';
 import { AutoFocusDirective } from './auto-focus.directive';
-import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
 import { LibraryFavoriteDirective } from './library-favorite.directive';
 import { LibraryMembershipDirective } from './library-membership.directive';
 import { NodeDeleteDirective } from './node-delete.directive';
@@ -27,12 +26,12 @@ import { NodeFavoriteDirective } from './node-favorite.directive';
 import { NodeRestoreDirective } from './node-restore.directive';
 import { NodeDownloadDirective } from './node-download.directive';
 
+/* @deprecated import standalone directives instead */
 export const CONTENT_DIRECTIVES = [
     NodeLockDirective,
     NodeCounterDirective,
     NodeCounterComponent,
     AutoFocusDirective,
-    CheckAllowableOperationDirective,
     LibraryFavoriteDirective,
     LibraryMembershipDirective,
     NodeDeleteDirective,
@@ -41,7 +40,7 @@ export const CONTENT_DIRECTIVES = [
     NodeDownloadDirective
 ];
 
-/** @deprecated import CONTENT_DIRECTIVES or standalone directives instead */
+/** @deprecated import standalone directives instead */
 @NgModule({
     imports: [...CONTENT_DIRECTIVES],
     exports: [...CONTENT_DIRECTIVES]

@@ -8,11 +8,14 @@
     },
     {
       "path": "./tsconfig.lib.prod.json"
+    },
+    {
+      "path": "./.storybook/tsconfig.json"
     }
   ],
   "compilerOptions": {
     "baseUrl": "src",
-    "target": "es2020"
+    "target": "es2022"
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,

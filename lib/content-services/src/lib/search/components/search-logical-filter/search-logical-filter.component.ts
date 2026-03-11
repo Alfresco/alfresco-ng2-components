@@ -28,12 +28,14 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-export enum LogicalSearchFields {
-    MATCH_ALL = 'matchAll',
-    MATCH_ANY = 'matchAny',
-    EXCLUDE = 'exclude',
-    MATCH_EXACT = 'matchExact'
-}
+export const LogicalSearchFields = {
+    MATCH_ALL: 'matchAll',
+    MATCH_ANY: 'matchAny',
+    EXCLUDE: 'exclude',
+    MATCH_EXACT: 'matchExact'
+} as const;
+
+export type LogicalSearchFields = (typeof LogicalSearchFields)[keyof typeof LogicalSearchFields];
 
 export type LogicalSearchConditionEnumValuedKeys = { [T in LogicalSearchFields]: string };
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -47,6 +49,8 @@ export interface LogicalSearchCondition extends LogicalSearchConditionEnumValued
     encapsulation: ViewEncapsulation.None
 })
 export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
+    private readonly translationService = inject(TranslationService);
+
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -58,14 +62,12 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private translationService: TranslationService) {}
-
     ngOnInit(): void {
         this.clearSearchInputs();
         this.context.populateFilters
             .asObservable()
             .pipe(
-                map((filtersQueries) => filtersQueries[this.id]),
+                map((filtersQueries) => filtersQueries?.[this.id]),
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((filterQuery) => {
@@ -80,7 +82,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
     }
 
     submitValues(updateContext = true) {
-        if (this.hasValidValue() && this.id && this.context && this.settings && this.settings.field) {
+        if (this.hasValidValue() && this.id && this.context?.queryFragments && this.settings?.field) {
             this.updateDisplayValue();
             const fields = this.settings.field.split(',').map((field) => (field += ':'));
             let query = '';

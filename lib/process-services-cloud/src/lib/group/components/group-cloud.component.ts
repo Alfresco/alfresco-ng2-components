@@ -38,7 +38,6 @@ import { IdentityGroupModel } from '../models/identity-group.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
@@ -47,13 +46,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { IdentityGroupService } from '../services/identity-group.service';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-cloud-group',
     imports: [
         CommonModule,
         TranslatePipe,
-        MatIconModule,
+        IconModule,
         MatFormFieldModule,
         MatProgressBarModule,
         MatSelectModule,
@@ -74,6 +74,8 @@ import { IdentityGroupService } from '../services/identity-group.service';
     encapsulation: ViewEncapsulation.None
 })
 export class GroupCloudComponent implements OnInit, OnChanges {
+    private readonly identityGroupService = inject(IdentityGroupService);
+
     /** Label for the user selection component. */
     @Input()
     label: string;
@@ -143,7 +145,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     warning = new EventEmitter<any>();
 
     @ViewChild('groupInput')
-    private groupInput: ElementRef<HTMLInputElement>;
+    private readonly groupInput: ElementRef<HTMLInputElement>;
 
     private searchGroups: IdentityGroupModel[] = [];
 
@@ -164,8 +166,6 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     typingUniqueValueNotEmpty$: Observable<any>;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private identityGroupService: IdentityGroupService) {}
 
     ngOnInit(): void {
         this.initSearch();

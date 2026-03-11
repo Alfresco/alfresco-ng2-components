@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { StorageService } from '../../common/services/storage.service';
@@ -38,6 +38,10 @@ export interface TicketEntry {
     providedIn: 'root'
 })
 export class ContentAuth {
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly adfHttpClient = inject(AdfHttpClient);
+    private readonly storageService = inject(StorageService);
+
     onLogin = new ReplaySubject<any>(1);
     onLogout = new ReplaySubject<any>(1);
     onError = new Subject<any>();
@@ -59,7 +63,7 @@ export class ContentAuth {
         return this.appConfigService.get<string>(AppConfigValues.ECMHOST) + '/' + contextRootEcm + '/api/-default-/public/authentication/versions/1';
     }
 
-    constructor(private appConfigService: AppConfigService, private adfHttpClient: AdfHttpClient, private storageService: StorageService) {
+    constructor() {
         this.appConfigService.onLoad.subscribe(() => {
             this.setConfig();
         });

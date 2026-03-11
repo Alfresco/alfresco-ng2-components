@@ -20,6 +20,7 @@ import { DateAlfresco } from '../../content-custom-api';
 export class AlfrescoEndpointRepresentation {
     accountUsername?: string;
     alfrescoTenantId?: string;
+    authenticationType?: string;
     created?: Date;
     id?: number;
     lastUpdated?: Date;

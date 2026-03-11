@@ -16,12 +16,16 @@
  */
 
 import { ResizableDirective } from './resizable.directive';
-import { Directive, ElementRef, Input, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, Renderer2, inject } from '@angular/core';
 
 @Directive({
     selector: '[adf-resize-handle]'
 })
 export class ResizeHandleDirective implements OnInit, OnDestroy {
+    private readonly renderer = inject(Renderer2);
+    private readonly element = inject(ElementRef);
+    private readonly zone = inject(NgZone);
+
     /**
      * Reference to ResizableDirective
      */
@@ -30,7 +34,32 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
     private unlistenMouseDown?: () => void;
     private unlistenMouseMove?: () => void;
     private unlistenMouseUp?: () => void;
-    constructor(private readonly renderer: Renderer2, private readonly element: ElementRef, private readonly zone: NgZone) {}
+
+    @HostListener('keydown', ['$event'])
+    onKeydown(event: KeyboardEvent): void {
+        const shiftDelta = 40;
+        const rightStepBaseValue = 20;
+        const shiftModifier = event.shiftKey ? shiftDelta : 0;
+
+        let delta: number | null = null;
+
+        switch (event.key) {
+            case 'ArrowRight':
+            case 'ArrowUp':
+                delta = shiftModifier + rightStepBaseValue;
+                break;
+            case 'ArrowLeft':
+            case 'ArrowDown':
+                delta = -shiftModifier;
+                break;
+            default:
+                return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+        this.resizableContainer.resizeByKeyboard(delta);
+    }
 
     ngOnInit(): void {
         this.zone.runOutsideAngular(() => {
@@ -66,6 +95,7 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
 
     private onMouseup(event: MouseEvent): void {
         this.unlistenMouseMove?.();
+        this.unlistenMouseMove = undefined;
         this.unlistenMouseUp();
         this.resizableContainer.mouseup.next(event);
     }

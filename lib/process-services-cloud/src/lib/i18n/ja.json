@@ -53,16 +53,6 @@
     }
   },
   "ADF_CLOUD_TASK_LIST": {
-    "APPS": {
-      "NO_APPS": {
-        "TITLE": "アプリケーションが見つかりません",
-        "SUBTITLE": "後で簡単に見つけられるよう、新しいアプリケーションを作成してください"
-      },
-      "ERROR": {
-        "TITLE": "エラーが発生しました",
-        "SUBTITLE": "アプリケーションにアクセスする権限があることを確認してください"
-      }
-    },
     "START_TASK": {
       "FORM": {
         "TITLE": "タスクの開始",
@@ -72,9 +62,7 @@
           "ATTACHFORM": "フォームの添付",
           "ASSIGNEE": "担当者",
           "CANDIDATE_GROUP": "候補グループ",
-          "FORM": "フォーム",
           "DATE": "日付の選択",
-          "NONE": "なし",
           "PRIORITY": "優先度"
         },
         "ACTION": {

@@ -119,7 +119,10 @@ export class ProcessListCloudService extends BaseCloudService {
             suspendedTo: requestNode.suspendedTo,
             processVariableKeys: requestNode.processVariableKeys,
             processVariableFilters: requestNode.processVariableFilters,
-            excludeByProcessCategoryName: requestNode.excludeByProcessCategoryName
+            includeSubprocesses: requestNode.includeSubprocesses,
+            includeUnlinkedProcesses: requestNode.includeUnlinkedProcesses,
+            includeLinkedProcesses: requestNode.includeLinkedProcesses,
+            processRelatedTo: requestNode.processRelatedTo
         };
 
         if (requestNode.sorting) {
@@ -148,7 +151,7 @@ export class ProcessListCloudService extends BaseCloudService {
          */
         Object.keys(queryData).forEach((key) => {
             const value = queryData[key];
-            const isValueEmpty = !value;
+            const isValueEmpty = value === undefined || value === null || value === '';
             const isValueArrayWithEmptyValue = Array.isArray(value) && (value.length === 0 || value[0] === null);
             if (isValueEmpty || isValueArrayWithEmptyValue) {
                 delete queryData[key];

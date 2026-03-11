@@ -1,36 +1,36 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
-@import './theme/theme-data';
+@use './theme/theme-data' as theme;
 
 $custom-theme: mat.m2-define-light-theme(
     (
         color: (
-            primary: map.get($palettes, primary),
-            accent: map.get($palettes, accent),
-            warn: map.get($palettes, warning)
+            primary: map.get(theme.$palettes, primary),
+            accent: map.get(theme.$palettes, accent),
+            warn: map.get(theme.$palettes, warning)
         ),
-        typography: $app-typography
+        typography: theme.$app-typography
     )
 );
 
-@if $background-color {
-    $custom-theme: get-custom-background-color($background-color, $custom-theme);
+@if theme.$background-color {
+    $custom-theme: theme.get-custom-background-color(theme.$background-color, $custom-theme);
 }
 
-@if $text-color {
-    $custom-theme: get-custom-text-color($text-color, $custom-theme);
+@if theme.$text-color {
+    $custom-theme: theme.get-custom-text-color(theme.$text-color, $custom-theme);
 }
 
-@if $base-font-size {
+@if theme.$base-font-size {
     body,
     html {
-        font-size: $base-font-size;
+        font-size: theme.$base-font-size;
     }
 }
 
-@if $font-family {
+@if theme.$font-family {
     body,
     html {
-        font-family: $font-family;
+        font-family: theme.$font-family;
     }
 }

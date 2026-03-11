@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Inject, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
     FeaturesServiceToken,
     IDebugFeaturesService,
-    IFeaturesService,
     IWritableFeaturesService,
     WritableFeaturesServiceToken,
     WritableFlagChangeset
@@ -30,7 +29,6 @@ import { debounceTime, map, take, tap } from 'rxjs/operators';
 import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
@@ -38,6 +36,7 @@ import { FlagsOverrideComponent } from '../feature-override-indicator.component'
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-feature-flags-overrides',
@@ -48,7 +47,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         MatTableModule,
         MatSlideToggleModule,
         MatToolbarModule,
-        MatIconModule,
+        IconModule,
         MatButtonModule,
         MatInputModule,
         MatDialogModule,
@@ -60,6 +59,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FlagsComponent {
+    private readonly featuresService = inject<IDebugFeaturesService>(FeaturesServiceToken);
+    private readonly writableFeaturesService = inject<IWritableFeaturesService>(WritableFeaturesServiceToken);
+
     displayedColumns: string[] = ['icon', 'flag', 'value'];
     flags$: Observable<{ fictive: boolean; flag: string; value: any }[]>;
     isEnabled = false;
@@ -68,12 +70,7 @@ export class FlagsComponent {
     inputValue$ = new BehaviorSubject<string>('');
     showPlusButton$!: Observable<boolean>;
     writableFlagChangeset: WritableFlagChangeset = {};
-    constructor(
-        @Inject(FeaturesServiceToken)
-        private featuresService: IDebugFeaturesService & IFeaturesService<WritableFlagChangeset>,
-        @Inject(WritableFeaturesServiceToken)
-        private writableFeaturesService: IWritableFeaturesService
-    ) {
+    constructor() {
         if (this.featuresService.isEnabled$) {
             this.featuresService
                 .isEnabled$()

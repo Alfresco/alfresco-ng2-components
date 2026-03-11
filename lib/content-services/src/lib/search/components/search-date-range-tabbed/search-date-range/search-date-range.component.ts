@@ -15,7 +15,20 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    DestroyRef,
+    effect,
+    ElementRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { endOfDay, isAfter, isBefore, isValid, parse } from 'date-fns';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
@@ -23,7 +36,7 @@ import { InLastDateType } from './in-last-date-type';
 import { DateRangeType } from './date-range-type';
 import { SearchDateRange } from './search-date-range';
 import { FormBuilder, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { DateFnsUtils, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { DateFnsUtils, UserPreferencesService } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { MatRadioModule } from '@angular/material/radio';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -32,6 +45,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Observable } from 'rxjs';
 
 const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
@@ -56,7 +70,11 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-date-range' }
 })
-export class SearchDateRangeComponent implements OnInit {
+export class SearchDateRangeComponent implements OnInit, AfterViewInit {
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly dateAdapter = inject<DateAdapter<DateFnsAdapter>>(DateAdapter);
+    private readonly dateFormatConfig = inject<MatDateFormats>(MAT_DATE_FORMATS);
+
     @Input()
     dateFormat = DEFAULT_DATE_DISPLAY_FORMAT;
     @Input()
@@ -70,10 +88,17 @@ export class SearchDateRangeComponent implements OnInit {
         }
     }
 
+    @Input()
+    onReset$: Observable<void>;
+
     @Output()
     changed = new EventEmitter<Partial<SearchDateRange>>();
     @Output()
     valid = new EventEmitter<boolean>();
+
+    @ViewChild('adfDateRangeInput', { static: false, read: ElementRef }) dateRangeInput: ElementRef;
+
+    private readonly formBuilder = inject(FormBuilder);
 
     form = this.formBuilder.group<SearchDateRange>({
         dateRangeType: DateRangeType.ANY,
@@ -91,12 +116,13 @@ export class SearchDateRangeComponent implements OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private userPreferencesService: UserPreferencesService,
-        private dateAdapter: DateAdapter<DateFnsAdapter>,
-        @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats
-    ) {}
+    constructor() {
+        // Use effect to react to locale signal changes (must be in injection context)
+        effect(() => {
+            const locale = this.userPreferencesService.localeSignal();
+            this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale));
+        });
+    }
 
     readonly endDateValidator = (formControl: UntypedFormControl): { [key: string]: boolean } | null => {
         if (isBefore(formControl.value, this.betweenStartDateFormControl.value) || isAfter(formControl.value, this.convertedMaxDate)) {
@@ -110,15 +136,19 @@ export class SearchDateRangeComponent implements OnInit {
     ngOnInit(): void {
         this.dateFormatConfig.display.dateInput = this.dateFormat;
         this.convertedMaxDate = endOfDay(this.maxDate && this.maxDate !== 'today' ? parse(this.maxDate, this.dateFormat, new Date()) : new Date());
-        this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((locale) => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
         this.form.controls.dateRangeType.valueChanges
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((dateRangeType) => this.updateValidators(dateRangeType));
         this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.onChange());
+        this.onReset$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reset());
     }
+
+    ngAfterViewInit() {
+        this.dateRangeInput.nativeElement.querySelectorAll('input').forEach((input: HTMLInputElement) => {
+            input.setAttribute('aria-haspopup', 'false');
+        });
+    }
+
     private updateValidators(dateRangeType: DateRangeType) {
         switch (dateRangeType) {
             case DateRangeType.BETWEEN:
@@ -188,5 +218,15 @@ export class SearchDateRangeComponent implements OnInit {
             default:
                 return true;
         }
+    }
+
+    reset(): void {
+        this.form.reset({
+            dateRangeType: DateRangeType.ANY,
+            inLastValueType: InLastDateType.DAYS,
+            inLastValue: undefined,
+            betweenStartDate: undefined,
+            betweenEndDate: undefined
+        });
     }
 }

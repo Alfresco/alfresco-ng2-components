@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output, ViewEncapsulation, inject } from '@angular/core';
 import { FocusableOption } from '@angular/cdk/a11y';
 import { DataRow } from '../../data/data-row.model';
 
@@ -25,14 +25,15 @@ import { DataRow } from '../../data/data-row.model';
     encapsulation: ViewEncapsulation.None,
     host: {
         class: 'adf-datatable-row',
-        tabindex: '0',
         role: 'row'
     }
 })
 export class DataTableRowComponent implements FocusableOption {
+    private readonly element = inject(ElementRef);
+
     @Input() row: DataRow;
 
-    @Input() disabled = false;
+    @Input() disabled = true;
 
     @Output()
     select: EventEmitter<any> = new EventEmitter<any>();
@@ -58,11 +59,8 @@ export class DataTableRowComponent implements FocusableOption {
         if (!this.row) {
             return null;
         }
-        if (this.row.isSelected) {
-            return this.row.getValue('name') + ' selected' || '';
-        } else {
-            return this.row.getValue('name') || '';
-        }
+        const label = this.row.getValue('name') || this.row.getValue('title') || '';
+        return this.row.isSelected && label ? `${label} selected` : label;
     }
 
     @HostBinding('attr.tabindex')
@@ -77,8 +75,6 @@ export class DataTableRowComponent implements FocusableOption {
             this.select.emit(event);
         }
     }
-
-    constructor(private element: ElementRef) {}
 
     focus() {
         this.element.nativeElement.focus();

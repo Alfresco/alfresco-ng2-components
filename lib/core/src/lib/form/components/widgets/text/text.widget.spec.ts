@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
@@ -23,6 +24,8 @@ import { TextWidgetComponent } from './text.widget';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../../../../testing/unit-testing-utils';
+import { ADF_CUSTOM_MESSAGE } from '../core/custom-validation-message.token';
+import { of, Subject } from 'rxjs';
 
 describe('TextWidgetComponent', () => {
     const form = new FormModel({ taskId: 'fake-task-id' });
@@ -41,6 +44,24 @@ describe('TextWidgetComponent', () => {
         widget = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
         testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
+    });
+
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            eventSpy = spyOn(widget, 'event').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {});
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
     });
 
     describe('when template is ready', () => {
@@ -452,6 +473,229 @@ describe('TextWidgetComponent', () => {
 
             expect(asterisk).toBeTruthy();
             expect(asterisk.textContent).toEqual('*');
+        });
+    });
+
+    describe('when fieldStatusTemplate is provided', () => {
+        @Component({
+            standalone: true,
+            template: `
+                <ng-template #fieldStatusTemplate let-widget>
+                    <div class="custom-status-message">custom status message for {{ widget.field.name }}</div>
+                </ng-template>
+            `
+        })
+        class FieldStatusTemplateTestComponent {
+            @ViewChild('fieldStatusTemplate', { static: true }) fieldStatusTemplate: TextWidgetComponent['fieldStatusTemplate'];
+        }
+
+        beforeEach(() => {
+            const templateFixture = TestBed.createComponent(FieldStatusTemplateTestComponent);
+            fixture.componentInstance.fieldStatusTemplate = templateFixture.componentInstance.fieldStatusTemplate;
+        });
+
+        it('should display custom status template', () => {
+            widget.field = new FormFieldModel(form, {
+                id: 'text-id',
+                name: 'text-name',
+                type: FormFieldTypes.TEXT
+            });
+            fixture.detectChanges();
+            const customStatusMessage = testingUtils.getByCSS('.custom-status-message').nativeElement;
+            expect(customStatusMessage?.textContent).toBe(`custom status message for ${widget.field.name}`);
+        });
+    });
+});
+
+describe('TextWidgetComponent - ADF_CUSTOM_MESSAGE', () => {
+    let widget: TextWidgetComponent;
+    let fixture: ComponentFixture<TextWidgetComponent>;
+    let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
+
+    describe('when provided as plain boolean', () => {
+        describe('set to true', () => {
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [TextWidgetComponent],
+                    providers: [{ provide: ADF_CUSTOM_MESSAGE, useValue: true }]
+                });
+                fixture = TestBed.createComponent(TextWidgetComponent);
+                widget = fixture.componentInstance;
+                loader = TestbedHarnessEnvironment.loader(fixture);
+                testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
+            });
+
+            it('should set enableCustomValidationMessage to true on the field', () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    type: FormFieldTypes.TEXT
+                });
+                fixture.detectChanges();
+                expect(widget.field.enableCustomValidationMessage).toBeTrue();
+            });
+
+            it('should display custom validation message when regex validation fails', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    regexPattern: '^[0-9]+$',
+                    customValidationMessage: 'Only numbers are allowed'
+                });
+                fixture.detectChanges();
+
+                await testingUtils.fillMatInput('invalid text');
+                expect(widget.field.isValid).toBeFalse();
+                expect(widget.field.validationSummary.message).toBe('Only numbers are allowed');
+            });
+        });
+
+        describe('set to false', () => {
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [TextWidgetComponent],
+                    providers: [{ provide: ADF_CUSTOM_MESSAGE, useValue: false }]
+                });
+                fixture = TestBed.createComponent(TextWidgetComponent);
+                widget = fixture.componentInstance;
+                loader = TestbedHarnessEnvironment.loader(fixture);
+                testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
+            });
+
+            it('should set enableCustomValidationMessage to false on the field', () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    type: FormFieldTypes.TEXT
+                });
+                fixture.detectChanges();
+                expect(widget.field.enableCustomValidationMessage).toBeFalse();
+            });
+
+            it('should display default validation message when regex validation fails even if customValidationMessage is set', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    regexPattern: '^[0-9]+$',
+                    customValidationMessage: 'Only numbers are allowed'
+                });
+                fixture.detectChanges();
+
+                await testingUtils.fillMatInput('invalid text');
+                expect(widget.field.isValid).toBeFalse();
+                expect(widget.field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_VALUE');
+            });
+        });
+    });
+
+    describe('when provided as observable', () => {
+        describe('emitting true', () => {
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [TextWidgetComponent],
+                    providers: [{ provide: ADF_CUSTOM_MESSAGE, useValue: of(true) }]
+                });
+                fixture = TestBed.createComponent(TextWidgetComponent);
+                widget = fixture.componentInstance;
+            });
+
+            it('should set enableCustomValidationMessage to true on the field', () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    type: FormFieldTypes.TEXT
+                });
+                fixture.detectChanges();
+                expect(widget.field.enableCustomValidationMessage).toBeTrue();
+            });
+        });
+
+        describe('emitting false', () => {
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [TextWidgetComponent],
+                    providers: [{ provide: ADF_CUSTOM_MESSAGE, useValue: of(false) }]
+                });
+                fixture = TestBed.createComponent(TextWidgetComponent);
+                widget = fixture.componentInstance;
+            });
+
+            it('should set enableCustomValidationMessage to false on the field', () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    type: FormFieldTypes.TEXT
+                });
+                fixture.detectChanges();
+                expect(widget.field.enableCustomValidationMessage).toBeFalse();
+            });
+        });
+
+        describe('when field is not set', () => {
+            it('should not throw when observable emits after field is cleared', () => {
+                const subject = new Subject<boolean>();
+                TestBed.configureTestingModule({
+                    imports: [TextWidgetComponent],
+                    providers: [{ provide: ADF_CUSTOM_MESSAGE, useValue: subject }]
+                });
+                fixture = TestBed.createComponent(TextWidgetComponent);
+                widget = fixture.componentInstance;
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    type: FormFieldTypes.TEXT
+                });
+                fixture.detectChanges();
+
+                widget.field = undefined as any;
+                expect(() => subject.next(true)).not.toThrow();
+            });
+        });
+    });
+
+    describe('when not provided', () => {
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [TextWidgetComponent]
+            });
+            fixture = TestBed.createComponent(TextWidgetComponent);
+            widget = fixture.componentInstance;
+            loader = TestbedHarnessEnvironment.loader(fixture);
+            testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
+        });
+
+        it('should default enableCustomValidationMessage to false on the field', () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'text-id',
+                name: 'text-name',
+                type: FormFieldTypes.TEXT
+            });
+            fixture.detectChanges();
+            expect(widget.field.enableCustomValidationMessage).toBeFalse();
+        });
+
+        it('should display default validation message when regex validation fails', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'text-id',
+                name: 'text-name',
+                value: '',
+                type: FormFieldTypes.TEXT,
+                readOnly: false,
+                regexPattern: '^[0-9]+$',
+                customValidationMessage: 'Only numbers are allowed'
+            });
+            fixture.detectChanges();
+
+            await testingUtils.fillMatInput('invalid text');
+            expect(widget.field.isValid).toBeFalse();
+            expect(widget.field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_VALUE');
         });
     });
 });

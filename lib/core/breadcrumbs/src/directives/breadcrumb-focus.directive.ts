@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef } from '@angular/core';
+import { Directive, ElementRef, inject } from '@angular/core';
 
 /** @internal */
 @Directive({
@@ -26,7 +26,7 @@ import { Directive, ElementRef } from '@angular/core';
     }
 })
 export class BreadcrumbFocusDirective {
-    constructor(private elementRef: ElementRef) {}
+    private readonly elementRef = inject(ElementRef);
 
     focusOnFirstFocusableElement() {
         this.getFocusableElements(this.elementRef.nativeElement)[0].focus();

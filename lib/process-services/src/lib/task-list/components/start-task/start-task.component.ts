@@ -64,6 +64,9 @@ const MAX_LENGTH = 255;
     encapsulation: ViewEncapsulation.None
 })
 export class StartTaskComponent implements OnInit {
+    private readonly taskService = inject(TaskListService);
+    private readonly formBuilder = inject(UntypedFormBuilder);
+
     /** (required) The id of the app. */
     @Input({ required: true })
     appId: number;
@@ -94,8 +97,6 @@ export class StartTaskComponent implements OnInit {
     loading = false;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private taskService: TaskListService, private formBuilder: UntypedFormBuilder) {}
 
     ngOnInit() {
         if (this.name) {

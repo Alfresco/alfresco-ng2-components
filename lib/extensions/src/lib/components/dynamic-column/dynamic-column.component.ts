@@ -26,7 +26,8 @@ import {
     OnChanges,
     SimpleChanges,
     ViewEncapsulation,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    inject
 } from '@angular/core';
 import { ExtensionService } from '../../services/extension.service';
 
@@ -47,6 +48,8 @@ import { ExtensionService } from '../../services/extension.service';
     ]
 })
 export class DynamicColumnComponent implements OnInit, OnChanges, OnDestroy {
+    private readonly extensions = inject(ExtensionService);
+
     @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;
 
@@ -57,8 +60,6 @@ export class DynamicColumnComponent implements OnInit, OnChanges, OnDestroy {
     context: any;
 
     private componentRef: ComponentRef<any>;
-
-    constructor(private extensions: ExtensionService) {}
 
     ngOnInit() {
         const componentType = this.extensions.getComponentById(this.id);

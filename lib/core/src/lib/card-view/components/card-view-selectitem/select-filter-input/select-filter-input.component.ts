@@ -15,26 +15,28 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, ElementRef, EventEmitter, Inject, inject, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, ElementRef, EventEmitter, inject, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '../../../../icon/icon.module';
 
 @Component({
     selector: 'adf-select-filter-input',
-    imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule, TranslatePipe],
+    imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, IconModule, TranslatePipe],
     templateUrl: './select-filter-input.component.html',
     styleUrls: ['./select-filter-input.component.scss'],
     host: { class: 'adf-select-filter-input' },
     encapsulation: ViewEncapsulation.None
 })
 export class SelectFilterInputComponent implements OnInit {
+    private readonly matSelect = inject<MatSelect>(MatSelect);
+
     @ViewChild('selectFilterInput', { read: ElementRef, static: false }) selectFilterInput: ElementRef;
     @Output() change = new EventEmitter<string>();
 
@@ -42,8 +44,6 @@ export class SelectFilterInputComponent implements OnInit {
     previousSelected: any[];
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(@Inject(MatSelect) private matSelect: MatSelect) {}
 
     onModelChange(value: string) {
         this.change.next(value);

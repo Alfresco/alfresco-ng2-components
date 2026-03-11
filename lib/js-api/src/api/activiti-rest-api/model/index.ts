@@ -141,6 +141,7 @@ export * from './runtimeAppDefinitionSaveRepresentation';
 export * from './runtimeDecisionTableRepresentation';
 export * from './runtimeFormRepresentation';
 export * from './saveFormRepresentation';
+export * from './ssoUserAccountCredentialsRepresentation';
 export * from './submittedFormRepresentation';
 export * from './syncLogEntryRepresentation';
 export * from './systemPropertiesRepresentation';

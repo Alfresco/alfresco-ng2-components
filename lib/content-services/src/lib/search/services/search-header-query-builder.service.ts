@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService, DataSorting } from '@alfresco/adf-core';
 import { SearchConfiguration } from '../models/search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
@@ -32,11 +32,16 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
     providedIn: 'root'
 })
 export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
-    private customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
+    private readonly nodeApiService = inject(NodesApiService);
+
+    private readonly customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
 
     activeFilters: FilterSearch[] = [];
 
-    constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService, private nodeApiService: NodesApiService) {
+    constructor() {
+        const appConfig = inject(AppConfigService);
+        const alfrescoApiService = inject(AlfrescoApiService);
+
         super(appConfig, alfrescoApiService);
 
         this.updated.pipe(filter((query) => !!query)).subscribe(() => {
@@ -55,7 +60,7 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     setupCurrentPagination(maxItems: number, skipCount: number) {
         if (!this.paging || (this.paging && this.paging.maxItems !== maxItems) || this.paging.skipCount !== skipCount) {
             this.paging = { maxItems, skipCount };
-            this.execute();
+            this.execute(false);
         }
     }
 
@@ -108,7 +113,9 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
             }
         });
 
-        this.execute();
+        if (!this.isNoFilterActive()) {
+            this.execute(false);
+        }
     }
 
     private getSortingFieldFromColumnName(columnName: string) {
@@ -127,6 +134,12 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         return foundCategory;
     }
 
+    getOperatorForFilterId(id: string): string | undefined {
+        const foundCategory = this.categories?.find((category) => category.id === id);
+
+        return foundCategory?.component?.settings?.operator;
+    }
+
     setCurrentRootFolderId(currentFolderId: string) {
         const alreadyAddedFilter = this.filterQueries.find((filterQueries) => filterQueries.query.includes(currentFolderId));
 
@@ -140,7 +153,9 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
             }
         ];
 
-        this.execute();
+        if (!this.isNoFilterActive()) {
+            this.execute(false);
+        }
     }
 
     isCustomSourceNode(currentNodeId: string): boolean {

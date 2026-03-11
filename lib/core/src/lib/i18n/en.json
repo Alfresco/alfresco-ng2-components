@@ -24,6 +24,7 @@
   "CLOSE": "CLOSE",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "You have no notifications at this time.",
+    "UNREAD_MESSAGES": "You have unread notifications.",
     "TITLE": "Notifications",
     "MARK_AS_READ": "Mark all as read",
     "SYSTEM": "System",
@@ -68,10 +69,22 @@
         "NO_LONGER_THAN": "Enter no more than {{ maxLength }} characters"
       },
       "FILE_ALREADY_UPLOADED": "A file with the same name is already uploaded.",
-      "ATTACH": "Attach"
+      "ATTACH": "Attach",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "add",
+        "ROW_LIMIT_REACHED": "Rows limit ({{ limit }}) reached."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Nameless task"
+      "NAMELESS_TASK": "Nameless task",
+      "ROW_LABEL": "Row {{ number }}",
+      "DELETE_ROW": "Delete row",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Delete the row",
+        "MESSAGE": "Are you sure you want to delete this row?",
+        "YES_LABEL": "Delete row",
+        "NO_LABEL": "Cancel"
+      }
     },
     "FIELD_STYLE": {
       "FONT_SIZE": "Font size",
@@ -201,7 +214,9 @@
       },
       "CANCEL_BUTTON": {
         "LABEL": "Cancel"
-      }
+      },
+      "FOLDER_CREATED_SUCCESS": "Folder '{{ name }}' created successfully",
+      "FOLDER_UPDATED_SUCCESS": "Folder '{{ name }}' updated successfully"
     },
     "MESSAGES": {
       "ERRORS": {
@@ -284,10 +299,11 @@
         "EDIT_ASPECTS": "Edit Aspect"
       },
       "ACCESSIBILITY": {
-        "EDIT": "Edit button",
+        "EDIT": "Edit {{ sectionName }}",
         "DATEPICKER": "Use the arrow keys to navigate between dates. Up and down move to the next or previous week but on the same day. Left and right move to the next or previous day. Press Enter or Return to select a date.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Value copied to clipboard",
-        "EDIT_ASPECTS": "Edit Aspect"
+        "EDIT_ASPECTS": "Edit Aspect",
+        "SECTION": "{{ sectionName }} section"
       }
     },
     "SEARCH": {
@@ -364,11 +380,6 @@
     "ACTION": {
       "HELP": "NEED HELP?",
       "REGISTER": "REGISTER"
-    },
-    "DIALOG": {
-      "CANCEL": "Cancel",
-      "CHOOSE": "Choose",
-      "LOGIN": "Sign in"
     }
   },
   "ADF-DATATABLE": {
@@ -397,7 +408,9 @@
       "ICON_DISABLED": "Disabled",
       "ROW_OPTION_BUTTON": "Actions",
       "DRAG": "Drag button",
-      "EMPTY_HEADER": "Empty header"
+      "EMPTY_HEADER": "Empty header",
+      "RESIZE_COLUMN": "Resize {{ column }} column. Use arrow keys to adjust width, Shift for larger steps.",
+      "COLUMN_WIDTH_CHANGED": "{{ column }} column width: {{ width }} pixels"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Document",
@@ -416,9 +429,10 @@
       "MISCELLANEOUS": "Miscellaneous"
     },
     "COLUMNS_SELECTOR": {
-      "COLUMNS": "Columns",
+      "COLUMNS": "Choose visible columns",
       "SEARCH": "Search",
-      "APPLY": "Apply"
+      "APPLY": "Apply",
+      "COLUMNS_VISIBILITY": "Select columns to display"
     }
   },
   "USER_PROFILE": {
@@ -465,7 +479,8 @@
       "RESET": "Reset",
       "THUMBNAILS": "Document thumbnails",
       "THUMBNAILS_PANLEL_CLOSE": "Close thumbnails panel",
-      "LOADING": "Document is loading"
+      "LOADING": "Document is loading",
+      "NOTE_ANNOTATION_IMG": "Note Annotation"
     },
     "PAGE_LABEL": {
       "SHOWING": "Showing",
@@ -591,7 +606,9 @@
     "LICENSE": {
       "TITLE": "License",
       "PROPERTY": "Property",
-      "VALUE": "Value"
+      "VALUE": "Value",
+      "ENABLED": "Enabled",
+      "DISABLED": "Disabled"
     },
     "STATUS": {
       "TITLE": "Status",

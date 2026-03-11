@@ -17,8 +17,6 @@
 
 import { LibraryRoleColumnComponent } from './library-role-column.component';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('LibraryRoleColumnComponent', () => {
     let fixture: ComponentFixture<LibraryRoleColumnComponent>;
@@ -26,8 +24,7 @@ describe('LibraryRoleColumnComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, LibraryRoleColumnComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+            imports: [LibraryRoleColumnComponent]
         });
         fixture = TestBed.createComponent(LibraryRoleColumnComponent);
         component = fixture.componentInstance;
@@ -38,11 +35,10 @@ describe('LibraryRoleColumnComponent', () => {
             row: { node: { entry: { role: 'SiteManager' } } }
         };
 
-        let value = '';
-        component.displayText$.subscribe((val) => (value = val));
-
+        component.ngOnInit();
         fixture.detectChanges();
-        expect(value).toBe('LIBRARY.ROLE.MANAGER');
+
+        expect(component.displayText()).toBe('LIBRARY.ROLE.MANAGER');
     });
 
     it('should render Collaborator', () => {
@@ -50,11 +46,10 @@ describe('LibraryRoleColumnComponent', () => {
             row: { node: { entry: { role: 'SiteCollaborator' } } }
         };
 
-        let value = '';
-        component.displayText$.subscribe((val) => (value = val));
-
+        component.ngOnInit();
         fixture.detectChanges();
-        expect(value).toBe('LIBRARY.ROLE.COLLABORATOR');
+
+        expect(component.displayText()).toBe('LIBRARY.ROLE.COLLABORATOR');
     });
 
     it('should render Contributor', () => {
@@ -62,11 +57,10 @@ describe('LibraryRoleColumnComponent', () => {
             row: { node: { entry: { role: 'SiteContributor' } } }
         };
 
-        let value = '';
-        component.displayText$.subscribe((val) => (value = val));
-
+        component.ngOnInit();
         fixture.detectChanges();
-        expect(value).toBe('LIBRARY.ROLE.CONTRIBUTOR');
+
+        expect(component.displayText()).toBe('LIBRARY.ROLE.CONTRIBUTOR');
     });
 
     it('should render Consumer', () => {
@@ -74,11 +68,10 @@ describe('LibraryRoleColumnComponent', () => {
             row: { node: { entry: { role: 'SiteConsumer' } } }
         };
 
-        let value = '';
-        component.displayText$.subscribe((val) => (value = val));
-
+        component.ngOnInit();
         fixture.detectChanges();
-        expect(value).toBe('LIBRARY.ROLE.CONSUMER');
+
+        expect(component.displayText()).toBe('LIBRARY.ROLE.CONSUMER');
     });
 
     it('should not render text for unknown', () => {
@@ -86,11 +79,10 @@ describe('LibraryRoleColumnComponent', () => {
             row: { node: { entry: { role: 'ROLE' } } }
         };
 
-        let value = '';
-        component.displayText$.subscribe((val) => (value = val));
-
+        component.ngOnInit();
         fixture.detectChanges();
-        expect(value).toBe('LIBRARY.ROLE.NONE');
+
+        expect(component.displayText()).toBe('LIBRARY.ROLE.NONE');
     });
 
     it('should take role from obj when node entry role is not provided', () => {
@@ -101,10 +93,9 @@ describe('LibraryRoleColumnComponent', () => {
             }
         };
 
-        let value = '';
-        component.displayText$.subscribe((val) => (value = val));
-
+        component.ngOnInit();
         fixture.detectChanges();
-        expect(value).toBe('LIBRARY.ROLE.MANAGER');
+
+        expect(component.displayText()).toBe('LIBRARY.ROLE.MANAGER');
     });
 });

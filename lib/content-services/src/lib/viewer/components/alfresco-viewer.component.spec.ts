@@ -26,13 +26,13 @@ import {
     EventMock,
     ViewUtilService,
     ViewerComponent,
-    VIEWER_DIRECTIVES,
     ViewerSidebarComponent,
     ViewerToolbarComponent,
     ViewerOpenWithComponent,
     ViewerMoreActionsComponent,
     ViewerToolbarActionsComponent,
-    NoopAuthModule
+    NoopAuthModule,
+    NoopTranslateModule
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
@@ -47,8 +47,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { AlfrescoViewerComponent } from './alfresco-viewer.component';
 import { RenditionService } from '../../common/services/rendition.service';
 import { NodeActionsService } from '../../document-list/services/node-actions.service';
-import { ContentTestingModule } from '../../testing/content.testing.module';
-import { ContentService } from '../../common/services/content.service';
+import { provideApiTesting } from '../../testing/providers';
+import { MatIconTestingModule } from '@angular/material/icon/testing';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -70,7 +70,7 @@ class ViewerWithCustomToolbarComponent {}
     template: `<adf-alfresco-viewer>
         <adf-viewer-toolbar-actions>
             <button mat-icon-button id="custom-button">
-                <mat-icon>alarm</mat-icon>
+                <mat-icon [adf-icon]="'alarm'" />
             </button>
         </adf-viewer-toolbar-actions>
     </adf-alfresco-viewer>`
@@ -105,15 +105,15 @@ class DummyDialogComponent {}
         <adf-alfresco-viewer>
             <adf-viewer-open-with>
                 <button mat-menu-item>
-                    <mat-icon>dialpad</mat-icon>
+                    <mat-icon [adf-icon]="'dialpad'" />
                     <span>Option 1</span>
                 </button>
                 <button mat-menu-item [disabled]="true">
-                    <mat-icon>voicemail</mat-icon>
+                    <mat-icon [adf-icon]="'voicemail'" />
                     <span>Option 2</span>
                 </button>
                 <button mat-menu-item>
-                    <mat-icon>notifications_off</mat-icon>
+                    <mat-icon [adf-icon]="'notifications_off'" />
                     <span>Option 3</span>
                 </button>
             </adf-viewer-open-with>
@@ -129,15 +129,15 @@ class ViewerWithCustomOpenWithComponent {}
     template: ` <adf-alfresco-viewer>
         <adf-viewer-more-actions>
             <button mat-menu-item>
-                <mat-icon>dialpad</mat-icon>
+                <mat-icon [adf-icon]="'dialpad'" />
                 <span>Action One</span>
             </button>
             <button mat-menu-item [disabled]="true">
-                <mat-icon>voicemail</mat-icon>
+                <mat-icon [adf-icon]="'voicemail'" />
                 <span>Action Two</span>
             </button>
             <button mat-menu-item>
-                <mat-icon>notifications_off</mat-icon>
+                <mat-icon [adf-icon]="'notifications_off'" />
                 <span>Action Three</span>
             </button>
         </adf-viewer-more-actions>
@@ -180,19 +180,9 @@ describe('AlfrescoViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ContentTestingModule,
-                NoopAuthModule,
-                MatDialogModule,
-                ...VIEWER_DIRECTIVES,
-                ViewerWithCustomToolbarComponent,
-                ViewerWithCustomSidebarComponent,
-                ViewerWithCustomOpenWithComponent,
-                ViewerWithCustomMoreActionsComponent,
-                ViewerWithCustomToolbarActionsComponent
-            ],
+            imports: [NoopAuthModule, MatIconTestingModule, NoopTranslateModule, MatDialogModule, AlfrescoViewerComponent],
             providers: [
-                ContentService,
+                provideApiTesting(),
                 {
                     provide: RenditionService,
                     useValue: {

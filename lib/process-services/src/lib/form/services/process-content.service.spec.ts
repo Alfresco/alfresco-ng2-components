@@ -198,4 +198,58 @@ describe('ProcessContentService', () => {
             done();
         });
     });
+
+    describe('getContentPreview', () => {
+        it('should return preview rendition when available', (done) => {
+            const contentId = 999;
+            const fakeBlob = createFakeBlob();
+            spyOn(service.contentApi, 'getRawContent').and.returnValue(Promise.resolve(fakeBlob));
+
+            service.getContentPreview(contentId).subscribe((result) => {
+                expect(service.contentApi.getRawContent).toHaveBeenCalledWith(contentId, 'preview');
+                expect(service.contentApi.getRawContent).toHaveBeenCalledTimes(1);
+                expect(result).toEqual(fakeBlob);
+                done();
+            });
+        });
+
+        it('should fallback to raw content when preview fails', (done) => {
+            const contentId = 999;
+            const fakeBlob = createFakeBlob();
+            spyOn(service.contentApi, 'getRawContent').and.returnValues(
+                Promise.reject(new Error('Preview not available')),
+                Promise.resolve(fakeBlob)
+            );
+
+            service.getContentPreview(contentId).subscribe((result) => {
+                expect(service.contentApi.getRawContent).toHaveBeenCalledWith(contentId, 'preview');
+                expect(service.contentApi.getRawContent).toHaveBeenCalledWith(contentId);
+                expect(service.contentApi.getRawContent).toHaveBeenCalledTimes(2);
+                expect(result).toEqual(fakeBlob);
+                done();
+            });
+        });
+
+        it('should return error when both preview and raw content fail', (done) => {
+            const contentId = 999;
+            const errorMessage = 'Content not found';
+            spyOn(service.contentApi, 'getRawContent').and.returnValues(
+                Promise.reject(new Error('Preview not available')),
+                Promise.reject(new Error(errorMessage))
+            );
+
+            service.getContentPreview(contentId).subscribe({
+                next: () => {
+                    fail('Should have thrown an error');
+                },
+                error: (error) => {
+                    expect(service.contentApi.getRawContent).toHaveBeenCalledWith(contentId, 'preview');
+                    expect(service.contentApi.getRawContent).toHaveBeenCalledWith(contentId);
+                    expect(service.contentApi.getRawContent).toHaveBeenCalledTimes(2);
+                    expect(error.message).toEqual(errorMessage);
+                    done();
+                }
+            });
+        });
+    });
 });

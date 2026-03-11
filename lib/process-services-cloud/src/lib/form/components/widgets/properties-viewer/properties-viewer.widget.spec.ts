@@ -57,7 +57,23 @@ describe('PropertiesViewerWidgetComponent', () => {
         spyOn(nodesApiService, 'getNode').and.returnValue(of(fakeNodeWithProperties));
     });
 
-    afterEach(() => fixture.destroy());
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            eventSpy = spyOn(widget, 'event').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {});
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
+    });
 
     it('should not display properties viewer when value is not set', async () => {
         widget.field.value = undefined;

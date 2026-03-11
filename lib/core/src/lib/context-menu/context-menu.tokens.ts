@@ -16,5 +16,6 @@
  */
 
 import { InjectionToken } from '@angular/core';
+import { ContextMenuItem } from './interfaces';
 
-export const CONTEXT_MENU_DATA = new InjectionToken<any>('CONTEXT_MENU_DATA');
+export const CONTEXT_MENU_DATA = new InjectionToken<ContextMenuItem[]>('CONTEXT_MENU_DATA');

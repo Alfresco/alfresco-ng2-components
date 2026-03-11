@@ -83,8 +83,6 @@ A collection of Angular components for generic use.
 | Name                                              | Description                                     |
 |---------------------------------------------------|-------------------------------------------------|
 | [Avatar](core/components/avatar.component.md)     | Displays user avatars.                          |
-| [Button](core/components/button.component.md)     | A standard button component.                    |
-| [Progress](core/components/progress.component.md) | A progress bar component.                       |
 | [Header](core/components/adf-header.component.md) | A simple reusable application header component. |
 
 ### Components
@@ -113,7 +111,6 @@ A collection of Angular components for generic use.
 | [Json Cell component](core/components/json-cell.component.md) | Shows a JSON-formatted value inside a datatable component. | [Source](../lib/core/src/lib/datatable/components/json-cell/json-cell.component.ts) |
 | [Language Menu component](core/components/language-menu.component.md) | Displays all the languages that are present in "app.config.json" and the default (EN). | [Source](../lib/core/src/lib/language-menu/language-menu.component.ts) |
 | [Login Dialog Panel component](core/components/login-dialog-panel.component.md) | Shows and manages a login dialog. | [Source](../lib/core/src/lib/login/components/login-dialog-panel.component.ts) |
-| [Login Dialog component](core/components/login-dialog.component.md) | Allows a user to perform a login via a dialog. | [Source](../lib/core/src/lib/login/components/login-dialog.component.ts) |
 | [Login component](core/components/login.component.md) | Authenticates to Alfresco Content Services and Alfresco Process Services. | [Source](../lib/core/src/lib/login/components/login.component.ts) |
 | [Notification History component](core/components/notification-history.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | This component is in the current status just an experimental component. The main purpose of the Notification history component is list all the notification received in the current session. They will disappear from the list after the refresh. | [Source](../lib/core/src/lib/notifications/components/notification-history.component.ts) |  |
 | [Pagination Component](core/components/pagination.component.md) | Adds pagination to the component it is used with. | [Source](../lib/core/src/lib/pagination/pagination.component.ts) |
@@ -121,7 +118,6 @@ A collection of Angular components for generic use.
 | [Sidebar action menu component](core/components/sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../lib/core/src/lib/layout/components/sidebar-action/sidebar-action-menu.component.ts) |
 | [Sidenav Layout component](core/components/sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../lib/core/src/lib/layout/components/sidenav-layout/sidenav-layout.component.ts) |
 | [Snackbar Content Component](core/components/snackbar-content.component.md) | Custom content for Snackbar which allows use icon as action. | [Source](../lib/core/src/lib/snackbar-content/snackbar-content.component.ts) |
-| [Sorting Picker Component](core/components/sorting-picker.component.md) | Selects from a set of predefined sorting definitions and directions. | [Source](../lib/core/src/lib/sorting-picker/sorting-picker.component.ts) |
 | [Start Form component](core/components/start-form.component.md) | Displays the Start Form for a process. | [Source](../lib/process-services/src/lib/form/start-form/start-form.component.ts) |
 | [Text Mask directive](core/components/text-mask.component.md) | Implements text field input masks. | [Source](../lib/core/src/lib/form/components/widgets/text/text-mask.component.ts) |
 | [Toolbar Divider Component](core/components/toolbar-divider.component.md) | Divides groups of elements in a Toolbar with a visual separator. | [Source](../lib/core/src/lib/toolbar/toolbar-divider.component.ts) |
@@ -141,7 +137,7 @@ A collection of Angular components for generic use.
 | [Logout directive](core/directives/logout.directive.md) | Logs the user out when the decorated element is clicked. | [Source](../lib/core/src/lib/directives/logout.directive.ts) |
 | [Node Download directive](core/directives/node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../lib/content-services/src/lib/directives/node-download.directive.ts) |
 | [Upload Directive](core/directives/upload.directive.md) | Uploads content in response to file drag and drop. | [Source](../lib/core/src/lib/directives/upload.directive.ts) |
-
+| [CardViewPropertyValidator Directive](core/directives/card-view-property-validator.directive.md) | Checks validators defined on property.| [Source](../lib/core/src/lib/card-view/directives/card-view-property-validator.directive.ts) |
 ### Dialogs
 
 | Name | Description | Source link |
@@ -180,8 +176,6 @@ A collection of Angular components for generic use.
 | [Format Space pipe](core/pipes/format-space.pipe.md) | Replaces all the white space in a string with a supplied character.                                                                                                                                                           | [Source](../lib/core/src/lib/pipes/format-space.pipe.ts) |
 | [Full name pipe](core/pipes/full-name.pipe.md) | Joins the first and last name properties from a `UserLike` object into a single string.                                                                                                                                       | [Source](../lib/core/src/lib/pipes/full-name.pipe.ts) |
 | [Localized Date pipe](core/pipes/localized-date.pipe.md) | Converts a date to a given format and locale.                                                                                                                                                                                 | [Source](../lib/core/src/lib/pipes/localized-date.pipe.ts) |
-| [Multi Value Pipe](core/pipes/multi-value.pipe.md) | Takes an array of strings and turns it into one string where items are separated by a separator. The default separator applied to the list is the comma ,  however, you can set your own separator in the params of the pipe. | [Source](../lib/core/src/lib/pipes/multi-value.pipe.ts) |
-| [Node Name Tooltip pipe](core/pipes/node-name-tooltip.pipe.md) | Formats the tooltip for a Node.                                                                                                                                                                                               | [Source](../lib/content-services/src/lib/pipes/node-name-tooltip.pipe.ts) |
 | [Text Highlight pipe](core/pipes/text-highlight.pipe.md) | Adds highlighting to words or sections of text that match a search string.                                                                                                                                                    | [Source](../lib/core/src/lib/pipes/text-highlight.pipe.ts) |
 | [Time Ago pipe](core/pipes/time-ago.pipe.md) | Converts a recent past date into a number of days ago.                                                                                                                                                                        | [Source](../lib/core/src/lib/pipes/time-ago.pipe.ts) |
 | [User Initial pipe](core/pipes/user-initial.pipe.md) | Takes the name fields of a `UserLike` object and extracts and formats the initials.                                                                                                                                            | [Source](../lib/core/src/lib/pipes/user-initial.pipe.ts) |
@@ -222,7 +216,6 @@ A collection of Angular components for generic use.
 | [Identity user service](core/services/identity-user.service.md) | Gets OAuth2 personal details and roles for users and performs CRUD operations on identity users. | [Source](../lib/process-services-cloud/src/lib/people/services/identity-user.service.ts) |
 | [JWT helper service](core/services/jwt-helper.service.md) | Decodes a JSON Web Token (JWT) to a JavaScript object. | [Source](../lib/core/src/lib/auth/services/jwt-helper.service.ts) |
 | [Log Service](core/services/log.service.md) | Provides log functionality. | [Source](../lib/core/src/lib/common/services/log.service.ts) |
-| [Login Dialog service](core/services/login-dialog.service.md) | Manages login dialogs. | [Source](../lib/core/src/lib/services/login-dialog.service.ts) |
 | [Nodes Api service](core/services/nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](../lib/content-services/src/lib/common/services/nodes-api.service.ts) |
 | [Notification Service](core/services/notification.service.md) | Shows a notification message with optional feedback. | [Source](../lib/core/src/lib/notifications/services/notification.service.ts) |
 | [Page Title service](core/services/page-title.service.md) | Sets the page title. | [Source](../lib/core/src/lib/common/services/page-title.service.ts) |
@@ -299,7 +292,6 @@ for more information about installing and using the source code.
 | [Search number range component](content-services/components/search-number-range.component.md)                                                                         | Implements a number range widget for the Search Filter component. | [Source](../lib/content-services/src/lib/search/components/search-number-range/search-number-range.component.ts) |
 | [Search radio component](content-services/components/search-radio.component.md)                                                                                       | Implements a radio button list widget for the Search Filter component. | [Source](../lib/content-services/src/lib/search/components/search-radio/search-radio.component.ts) |
 | [Search slider component](content-services/components/search-slider.component.md)                                                                                     | Implements a numeric slider widget for the Search Filter component. | [Source](../lib/content-services/src/lib/search/components/search-slider/search-slider.component.ts) |
-| [Search Sorting Picker Component](content-services/components/search-sorting-picker.component.md)                                                                     | Provides an ability to select one of the predefined sorting definitions for search results: | [Source](../lib/content-services/src/lib/search/components/search-sorting-picker/search-sorting-picker.component.ts) |
 | [Search text component](content-services/components/search-text.component.md)                                                                                         | Implements a text input widget for the Search Filter component. | [Source](../lib/content-services/src/lib/search/components/search-text/search-text.component.ts) |
 | [Search component](content-services/components/search.component.md)                                                                                                   | Searches items for supplied search terms. | [Source](../lib/content-services/src/lib/search/components/search.component.ts) |
 | [Sites Dropdown component](content-services/components/sites-dropdown.component.md)                                                                                   | Displays a dropdown menu to show and interact with the sites of the current user. | [Source](../lib/content-services/src/lib/content-node-selector/site-dropdown/sites-dropdown.component.ts) |
@@ -323,7 +315,6 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Auto Focus directive](content-services/directives/auto-focus.directive.md) | Automatically focuses HTML element after content is initialized. | [Source](../lib/content-services/src/lib/directives/auto-focus.directive.ts) |
-| [Check Allowable Operation directive](content-services/directives/check-allowable-operation.directive.md) | Selectively disables an HTML element or Angular component. | [Source](../lib/content-services/src/lib/directives/check-allowable-operation.directive.ts) |
 | [Node Public File Share Directive](content-services/directives/content-node-share.directive.md) | Creates and manages public shared links for files. | [Source](../lib/content-services/src/lib/content-node-share/content-node-share.directive.ts) |
 | [File Draggable directive](content-services/directives/file-draggable.directive.md) | Provides drag-and-drop features for an element such as a div. | [Source](../lib/content-services/src/lib/upload/directives/file-draggable.directive.ts) |
 | [Inherit Permission directive](content-services/directives/inherited-button.directive.md) | Update the current node by adding/removing the inherited permissions. | [Source](../lib/content-services/src/lib/permission-manager/components/inherited-button.directive.ts) |
@@ -332,7 +323,6 @@ for more information about installing and using the source code.
 | [Node Favorite directive](content-services/directives/node-favorite.directive.md) | Selectively toggles nodes as favorites. | [Source](../lib/content-services/src/lib/directives/node-favorite.directive.ts) |
 | [Node Lock directive](content-services/directives/node-lock.directive.md) | Locks or unlocks a node. | [Source](../lib/content-services/src/lib/directives/node-lock.directive.ts) |
 | [Node Restore directive](content-services/directives/node-restore.directive.md) | Restores deleted nodes to their original location. | [Source](../lib/content-services/src/lib/directives/node-restore.directive.ts) |
-| [Toggle Icon directive](content-services/directives/toggle-icon.directive.md) | Toggle icon on mouse or keyboard event for a selectable element. | [Source](../lib/content-services/src/lib/upload/directives/toggle-icon.directive.ts) |
 | [Version Compatibility Directive](content-services/directives/version-compatibility.directive.md) | Enables/disables components based on ACS version in use. | [Source](../lib/content-services/src/lib/version-compatibility/version-compatibility.directive.ts) |
 
 ### Dialogs
@@ -346,7 +336,6 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Base Card View Content Update interface](content-services/interfaces/base-card-view-content-update.interface.md) | Specifies required properties and methods for Card View Content Update service. Extends from BaseCardViewUpdate. | [Source](../lib/content-services/src/lib/interfaces/base-card-view-content-update.interface.ts) |  |
 | [Search widget interface](content-services/interfaces/search-widget.interface.md) | Specifies required properties for Search filter component widgets. | [Source](../lib/content-services/src/lib/search/models/search-widget.interface.ts) |
 | [Content Metadata Custom Panel interface](content-services/interfaces/content-metadata-custom-panel.interface.md) | Specifies required properties for metadata custom panel. | [Source](../lib/content-services/src/lib/content-metadata/interfaces/content-metadata-custom-panel.interface.ts) |
 
@@ -357,12 +346,6 @@ for more information about installing and using the source code.
 | [Image Resolver Model](content-services/models/image-resolver.model.md) | Defines the Image Resolver function used by the Document List Component. | [Source](../lib/content-services/document-list/data/image-resolver.model.ts) |
 | [Permission Style model](content-services/models/permissions-style.model.md) | Sets custom CSS styles for rows of a Document List according to the item's permissions. | [Source](../lib/content-services/src/lib/document-list/models/permissions-style.model.ts) |
 | [Row Filter Model](content-services/models/row-filter.model.md) | Defines the Row Filter function used by the Document List Component. | [Source](../lib/content-services/document-list/data/row-filter.model.ts) |
-
-### Pipes
-
-| Name | Description | Source link |
-| ---- | ----------- | ----------- |
-| [File upload error pipe](content-services/pipes/file-upload-error.pipe.md) | Converts an upload error code to an error message. | [Source](../lib/content-services/src/lib/upload/pipes/file-upload-error.pipe.ts) |
 
 ### Services
 
@@ -443,7 +426,6 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Claim Task Directive](process-services/directives/claim-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Claims a task | [Source](../lib/process-services/src/lib/task-list/components/task-form/claim-task.directive.ts) |
-| [Process Audit Directive](process-services/directives/process-audit.directive.md) | Fetches the Process Audit information in PDF or JSON format. | [Source](../lib/process-services/src/lib/process-list/components/process-audit/process-audit.directive.ts) |
 | [Unclaim Task Directive](process-services/directives/unclaim-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Unclaims a task | [Source](../lib/process-services/src/lib/task-list/components/task-form/unclaim-task.directive.ts) |
 
 ### Services
@@ -472,12 +454,10 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [App List Cloud Component](process-services-cloud/components/app-list-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all deployed cloud application instances. | [Source](../lib/process-services-cloud/src/lib/app/components/app-list-cloud.component.ts) |
 | [Edit Process Filter Cloud component](process-services-cloud/components/edit-process-filter-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows/edits process filter details. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter/edit-process-filter-cloud.component.ts) |
 | [Edit Task Filter Cloud component](process-services-cloud/components/edit-task-filter-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Edits task filter details. | [Source](../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filters/edit-task-filter-cloud.component.ts) |
 | [Form cloud custom outcomes component](process-services-cloud/components/form-cloud-custom-outcome.component.md) | Supplies custom outcome buttons to be included in Form cloud component. | [Source](../lib/process-services-cloud/src/lib/form/components/form-cloud-custom-outcomes.component.ts) |
 | [Form cloud component](process-services-cloud/components/form-cloud.component.md) | Shows a form from Process Services. | [Source](../lib/process-services-cloud/src/lib/form/components/form-cloud.component.ts) |
-| [Form Definition Selector Cloud](process-services-cloud/components/form-definition-selector-cloud.component.md) | Allows one form to be selected from a dropdown list. For forms to be displayed in this component they will need to be compatible with standAlone tasks. | [Source](../lib/process-services-cloud/src/lib/form/components/form-definition-selector-cloud.component.ts) |
 | [Group Cloud component](process-services-cloud/components/group-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches Groups. | [Source](../lib/process-services-cloud/src/lib/group/components/group-cloud.component.ts) |
 | [](process-services-cloud/components/people-cloud.component.md) | Title: People Cloud Component |  |
 

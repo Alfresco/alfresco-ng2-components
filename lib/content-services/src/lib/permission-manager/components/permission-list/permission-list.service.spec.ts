@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { NotificationService } from '@alfresco/adf-core';
+import { NoopAuthModule, NotificationService } from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { PermissionListService } from './permission-list.service';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { fakeNodeInheritedOnly, fakeNodeLocalSiteManager, fakeNodeWithOnlyLocally } from '../../../mock/permission-list.component.mock';
 import { PermissionDisplayModel } from '../../models/permission.model';
@@ -40,7 +39,7 @@ describe('PermissionListService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [NoopAuthModule]
         });
         service = TestBed.inject(PermissionListService);
         nodePermissionService = TestBed.inject(NodePermissionService);

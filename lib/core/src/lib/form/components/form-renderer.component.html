@@ -69,6 +69,60 @@
             </ng-template>
         </div>
 
+        @if (currentRootElement.type === 'repeatable-section') {
+            <div 
+                [id]="'field-' + currentRootElement?.id + '-container'"
+                class="adf-container-widget"
+                [hidden]="!currentRootElement?.isVisible"
+            >
+                <adf-repeat-widget [element]="currentRootElement" [isEditor]="false">
+                    @for (row of currentRootElement.field.rows; track row.id; let rowIndex = $index) {
+                        @let hasMultipleRows = currentRootElement.field.rows.length > 1;
+                        <div 
+                            class="adf-grid-list-container"
+                            [class.adf-grid-list-container-multiple]="hasMultipleRows"
+                            [class.adf-grid-list-container-disabled]="currentRootElement.field.readOnly"
+                        >   
+                            <div class="adf-grid-list-row">
+                                <span  class="adf-grid-list-row-label">{{ 'FORM.FORM_RENDERER.ROW_LABEL' | translate: {number: rowIndex + 1} }}</span>
+
+                                @let shouldDisplayRemoveRowButton = !currentRootElement.field.rows[rowIndex].isInitial || (currentRootElement.field.rows[rowIndex].isInitial && currentRootElement.field.params.allowInitialRowsDelete);
+                                @if (shouldDisplayRemoveRowButton) {
+                                    <button 
+                                        mat-icon-button
+                                        class="adf-grid-list-row-remove-button"
+                                        [disabled]="currentRootElement.field.readOnly"
+                                        [matTooltip]="'FORM.FORM_RENDERER.DELETE_ROW' | translate"
+                                        (click)="displayDialogToRemoveRow(currentRootElement.field, rowIndex)"
+                                    >
+                                        <mat-icon adf-icon="close" />
+                                    </button>
+                                }
+                            </div>
+                            <section  class="adf-grid-list-column-view">
+                                @for (column of row.columns; track $index) {
+                                    <div 
+                                        class="adf-grid-list-single-column"
+                                        [style.width.%]="getColumnWidth(currentRootElement)"
+                                    >
+                                        @for (field of column?.fields; track $index) {
+                                            @if (field.type === 'section') {
+                                                <adf-form-section [field]="field"/>
+                                            } @else {
+                                                <div class="adf-grid-list-column-view-item">
+                                                    <adf-form-field [field]="field"/>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                }
+                            </section>
+                        </div>
+                    }
+                </adf-repeat-widget>
+            </div>
+        }
+
         <div *ngIf="currentRootElement.type === 'dynamic-table'" class="adf-container-widget">
             <adf-form-field [field]="currentRootElement" />
         </div>

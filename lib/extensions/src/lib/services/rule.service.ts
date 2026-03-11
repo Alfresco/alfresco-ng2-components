@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { RuleRef, RuleContext, RuleEvaluator, RuleParameter } from '../config/rule.extensions';
 import { ExtensionConfig } from '../config/extension.config';
 import { ExtensionLoaderService } from './extension-loader.service';
@@ -24,11 +24,11 @@ import { ExtensionLoaderService } from './extension-loader.service';
     providedIn: 'root'
 })
 export class RuleService {
+    protected loader = inject(ExtensionLoaderService);
+
     context: RuleContext = null;
     rules: Array<RuleRef> = [];
     evaluators: { [key: string]: RuleEvaluator } = {};
-
-    constructor(protected loader: ExtensionLoaderService) {}
 
     setup(config: ExtensionConfig) {
         this.rules = this.loader.getRules(config);

@@ -31,7 +31,6 @@ import {
     LogService,
     CardViewLongItemModel
 } from '@alfresco/adf-core';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { Constraint, Definition, Property as PropertyBase } from '@alfresco/js-api';
 
 describe('PropertyGroupTranslatorService', () => {
@@ -44,7 +43,7 @@ describe('PropertyGroupTranslatorService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: []
         });
         logService = TestBed.inject(LogService);
         service = TestBed.inject(PropertyGroupTranslatorService);

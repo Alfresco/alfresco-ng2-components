@@ -19,9 +19,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatChipRemove } from '@angular/material/chips';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchChipAutocompleteInputComponent } from './search-chip-autocomplete-input.component';
-import { DebugElement } from '@angular/core';
+import { DebugElement, SimpleChanges } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness, MatChipGridHarness } from '@angular/material/chips/testing';
@@ -36,7 +35,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchChipAutocompleteInputComponent]
+            imports: [SearchChipAutocompleteInputComponent]
         });
 
         fixture = TestBed.createComponent(SearchChipAutocompleteInputComponent);
@@ -126,6 +125,16 @@ describe('SearchChipAutocompleteInputComponent', () => {
         component.preselectedOptions = [{ value: 'option1' }];
         component.ngOnInit();
         expect(component.selectedOptions).toEqual([{ value: 'option1' }]);
+    });
+
+    it('should assign preselected values whenever they are changed', async () => {
+        const preselectedOptionsChange: SimpleChanges = {
+            preselectedOptions: { currentValue: [{ value: 'option1' }], previousValue: [], firstChange: false, isFirstChange: () => false }
+        };
+        component.ngOnChanges(preselectedOptionsChange);
+        fixture.detectChanges();
+        expect(component.selectedOptions).toEqual([{ value: 'option1' }]);
+        expect(await getChipValue(0)).toBe('option1');
     });
 
     it('should add new option only if value is predefined when allowOnlyPredefinedValues = true', async () => {
@@ -339,6 +348,18 @@ describe('SearchChipAutocompleteInputComponent', () => {
             const option = { value: 'option1' };
             component.selectedOptions = [option];
             expect(component.isOptionSelected(option)).toBeTrue();
+        });
+
+        it('should clear filteredOptions after input is cleared', async () => {
+            enterNewInputValue('option');
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(component.filteredOptions.length).toBe(component.autocompleteOptions.length);
+
+            enterNewInputValue('');
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(component.filteredOptions.length).toBe(component.autocompleteOptions.length);
         });
     });
 });

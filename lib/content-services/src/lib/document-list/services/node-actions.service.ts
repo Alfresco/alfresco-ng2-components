@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable, Output, EventEmitter, inject, Injector, runInInjectionContext } from '@angular/core';
 import { Node, NodeEntry } from '@alfresco/js-api';
-import { Subject } from 'rxjs';
-import { DownloadService } from '@alfresco/adf-core';
+import { Observable } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentService } from '../../common/services/content.service';
 import { NodeDownloadDirective } from '../../directives/node-download.directive';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 import { DocumentListService } from './document-list.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
@@ -33,21 +32,19 @@ import { NodeAction } from '../models/node-action.enum';
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class NodeActionsService {
+    private readonly contentDialogService = inject(ContentNodeDialogService);
+    dialogRef = inject(MatDialog);
+    content = inject(ContentService);
+    private readonly documentListService = inject(DocumentListService);
+    private readonly injector = inject(Injector);
+
     @Output()
     error = new EventEmitter<any>();
 
-    constructor(
-        private contentDialogService: ContentNodeDialogService,
-        public dialogRef: MatDialog,
-        public content: ContentService,
-        private documentListService?: DocumentListService,
-        private apiService?: AlfrescoApiService,
-        private dialog?: MatDialog,
-        private downloadService?: DownloadService
-    ) {}
-
     downloadNode(node: NodeEntry) {
-        new NodeDownloadDirective(this.apiService, this.downloadService, this.dialog).downloadNode(node);
+        runInInjectionContext(this.injector, () => {
+            new NodeDownloadDirective().downloadNode(node);
+        });
     }
 
     /**
@@ -57,7 +54,7 @@ export class NodeActionsService {
      * @param permission permission which is needed to apply the action
      * @returns operation result
      */
-    copyContent(contentEntry: Node, permission?: string): Subject<string> {
+    copyContent(contentEntry: Node, permission?: string): Observable<string> {
         return this.doFileOperation(NodeAction.COPY, 'content', contentEntry, permission);
     }
 
@@ -68,7 +65,7 @@ export class NodeActionsService {
      * @param permission permission which is needed to apply the action
      * @returns operation result
      */
-    copyFolder(contentEntry: Node, permission?: string): Subject<string> {
+    copyFolder(contentEntry: Node, permission?: string): Observable<string> {
         return this.doFileOperation(NodeAction.COPY, 'folder', contentEntry, permission);
     }
 
@@ -79,7 +76,7 @@ export class NodeActionsService {
      * @param permission permission which is needed to apply the action
      * @returns operation result
      */
-    moveContent(contentEntry: Node, permission?: string): Subject<string> {
+    moveContent(contentEntry: Node, permission?: string): Observable<string> {
         return this.doFileOperation(NodeAction.MOVE, 'content', contentEntry, permission);
     }
 
@@ -90,7 +87,7 @@ export class NodeActionsService {
      * @param permission permission which is needed to apply the action
      * @returns operation result
      */
-    moveFolder(contentEntry: Node, permission?: string): Subject<string> {
+    moveFolder(contentEntry: Node, permission?: string): Observable<string> {
         return this.doFileOperation(NodeAction.MOVE, 'folder', contentEntry, permission);
     }
 
@@ -103,29 +100,14 @@ export class NodeActionsService {
      * @param permission permission which is needed to apply the action
      * @returns operation result
      */
-    private doFileOperation(
-        action: NodeAction.COPY | NodeAction.MOVE,
-        type: 'content' | 'folder',
-        contentEntry: Node,
-        permission?: string
-    ): Subject<string> {
-        const observable = new Subject<string>();
-
-        this.contentDialogService.openCopyMoveDialog(action, contentEntry, permission).subscribe(
-            (selections: Node[]) => {
+    private doFileOperation(action: 'COPY' | 'MOVE', type: 'content' | 'folder', contentEntry: Node, permission?: string): Observable<string> {
+        return this.contentDialogService.openCopyMoveDialog(action, contentEntry, permission).pipe(
+            switchMap((selections) => {
                 const selection = selections[0];
-                this.documentListService[`${action.toLowerCase()}Node`]
+                return this.documentListService[`${action.toLowerCase()}Node`]
                     .call(this.documentListService, contentEntry.id, selection.id)
-                    .subscribe(
-                        observable.next.bind(observable, `OPERATION.SUCCESS.${type.toUpperCase()}.${action}`),
-                        observable.error.bind(observable)
-                    );
-            },
-            (error) => {
-                observable.error(error);
-                return observable;
-            }
+                    .pipe(map(() => `OPERATION.SUCCESS.${type.toUpperCase()}.${action}`));
+            })
         );
-        return observable;
     }
 }

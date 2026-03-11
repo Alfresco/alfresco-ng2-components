@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SearchDateRange } from './search-date-range/search-date-range';
 import { SearchFilterTabbedComponent } from '../search-filter-tabbed/search-filter-tabbed.component';
@@ -64,7 +63,7 @@ describe('SearchDateRangeTabbedComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchFilterTabbedComponent, SearchDateRangeComponent, SearchDateRangeTabbedComponent],
+            imports: [SearchFilterTabbedComponent, SearchDateRangeComponent, SearchDateRangeTabbedComponent],
             providers: [
                 { provide: SearchFilterTabbedComponent, useClass: MockSearchFilterTabbedComponent },
                 { provide: SearchDateRangeComponent, useClass: MockSearchDateRangeComponent }
@@ -107,7 +106,7 @@ describe('SearchDateRangeTabbedComponent', () => {
         inLastMockData = {
             dateRangeType: DateRangeType.IN_LAST,
             inLastValueType: InLastDateType.WEEKS,
-            inLastValue: '5',
+            inLastValue: 5,
             betweenStartDate: undefined,
             betweenEndDate: undefined
         };
@@ -174,7 +173,7 @@ describe('SearchDateRangeTabbedComponent', () => {
         inLastMockData = {
             dateRangeType: DateRangeType.IN_LAST,
             inLastValueType: InLastDateType.DAYS,
-            inLastValue: '9',
+            inLastValue: 9,
             betweenStartDate: null,
             betweenEndDate: null
         };
@@ -190,7 +189,7 @@ describe('SearchDateRangeTabbedComponent', () => {
         inLastMockData = {
             dateRangeType: DateRangeType.IN_LAST,
             inLastValueType: InLastDateType.MONTHS,
-            inLastValue: '7',
+            inLastValue: 7,
             betweenStartDate: null,
             betweenEndDate: null
         };
@@ -225,16 +224,20 @@ describe('SearchDateRangeTabbedComponent', () => {
         expect(component.context.update).toHaveBeenCalled();
     });
 
-    it('should clear values and search filter when widget is reset', () => {
+    it('should clear values and search filter when widget is reset', (done) => {
         spyOn(component.displayValue$, 'next');
+        component.reset$.subscribe(() => {
+            expect(component.combinedQuery).toBe('');
+            expect(component.combinedDisplayValue).toBe('');
+            expect(component.displayValue$.next).toHaveBeenCalledWith('');
+            expect(component.context.queryFragments['dateRange']).toEqual('');
+            expect(component.context.update).toHaveBeenCalled();
+            component.fields.forEach((field) => expect(component.context.filterRawParams[field]).toBeUndefined());
+            done();
+        });
+
         component.reset();
         fixture.detectChanges();
-        expect(component.combinedQuery).toBe('');
-        expect(component.combinedDisplayValue).toBe('');
-        expect(component.displayValue$.next).toHaveBeenCalledWith('');
-        expect(component.context.queryFragments['dateRange']).toEqual('');
-        expect(component.context.update).toHaveBeenCalled();
-        component.fields.forEach((field) => expect(component.context.filterRawParams[field]).toBeUndefined());
     });
 
     it('should populate filter state when populate filters event has been observed', () => {

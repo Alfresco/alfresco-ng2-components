@@ -28,24 +28,27 @@ import {
     QueryList,
     SimpleChanges,
     TemplateRef,
-    ViewChildren
+    ViewChildren,
+    inject
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { map, startWith } from 'rxjs/operators';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BreadcrumbFocusDirective } from '../../directives/breadcrumb-focus.directive';
 import { BreadcrumbItemComponent } from '../breadcrumb-item/breadcrumb-item.component';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-breadcrumb',
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, MatIconModule, TranslatePipe, MatButtonModule, BreadcrumbFocusDirective]
+    imports: [CommonModule, IconModule, TranslatePipe, MatButtonModule, BreadcrumbFocusDirective]
 })
 export class BreadcrumbComponent implements AfterContentInit, OnChanges {
+    private readonly cdr = inject(ChangeDetectorRef);
+
     private _breadcrumbTemplateRefs: Array<TemplateRef<unknown>> = [];
 
     @Input()
@@ -61,8 +64,6 @@ export class BreadcrumbComponent implements AfterContentInit, OnChanges {
     breadcrumbItems!: QueryList<BreadcrumbItemComponent>;
 
     selectedBreadcrumbs: Array<TemplateRef<unknown>> = [];
-
-    constructor(private cdr: ChangeDetectorRef) {}
 
     ngAfterContentInit() {
         this.breadcrumbItems.changes

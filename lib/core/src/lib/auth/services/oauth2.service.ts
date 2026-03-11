@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
@@ -31,7 +31,7 @@ export interface OAuth2RequestParams {
 
 @Injectable({ providedIn: 'root' })
 export class OAuth2Service {
-    constructor(private adfHttpClient: AdfHttpClient) {}
+    private readonly adfHttpClient = inject(AdfHttpClient);
 
     request<T>(opts: OAuth2RequestParams): Observable<T> {
         const { httpMethod, url, bodyParam, queryParams } = opts;

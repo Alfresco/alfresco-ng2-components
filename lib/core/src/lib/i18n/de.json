@@ -24,6 +24,7 @@
   "CLOSE": "Schließen",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Sie haben momentan keine Benachrichtigungen.",
+    "UNREAD_MESSAGES": "Sie haben ungelesene Benachrichtigungen.",
     "TITLE": "Benachrichtigungen",
     "MARK_AS_READ": "Alles als gelesen markieren",
     "SYSTEM": "System",
@@ -68,10 +69,22 @@
         "NO_LONGER_THAN": "Geben Sie höchstens {{ maxLength }} Zeichen ein"
       },
       "FILE_ALREADY_UPLOADED": "Eine Datei mit diesem Namen wurde bereits hochgeladen.",
-      "ATTACH": "Anhängen"
+      "ATTACH": "Anhängen",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "hinzufügen",
+        "ROW_LIMIT_REACHED": "Zeilenlimit erreicht ({{ limit }})."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Namenlose Aufgabe"
+      "NAMELESS_TASK": "Namenlose Aufgabe",
+      "ROW_LABEL": "Seite {{ number }}",
+      "DELETE_ROW": "Zeile löschen",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Zeile löschen",
+        "MESSAGE": "Sind Sie sicher, dass Sie diese Zeile löschen möchten?",
+        "YES_LABEL": "Zeile löschen",
+        "NO_LABEL": "Abbrechen"
+      }
     },
     "FIELD_STYLE": {
       "FONT_SIZE": "Schriftgröße",
@@ -201,7 +214,9 @@
       },
       "CANCEL_BUTTON": {
         "LABEL": "Abbrechen"
-      }
+      },
+      "FOLDER_CREATED_SUCCESS": "Ordner '{{ name }}' erfolgreich erstellt",
+      "FOLDER_UPDATED_SUCCESS": "Ordner '{{ name }}' erfolgreich aktualisiert"
     },
     "MESSAGES": {
       "ERRORS": {
@@ -287,7 +302,8 @@
         "EDIT": "Schaltfläche 'Bearbeiten'",
         "DATEPICKER": "Mit den Pfeiltasten können Sie zwischen den Daten wechseln. Mit den Aufwärts- und Abwärtspfeilen gelangen Sie zum selben Tag der vorherigen bzw. nächsten Woche, mit den Links- und Rechtspfeilen gelangen Sie zum vorherigen bzw. zum nächsten Tag. Drücken Sie die Eingabetaste, um ein Datum auszuwählen.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Wert in Zwischenablage kopiert",
-        "EDIT_ASPECTS": "Aspekt bearbeiten"
+        "EDIT_ASPECTS": "Aspekt bearbeiten",
+        "SECTION": "{{ sectionName }} Bereich"
       }
     },
     "SEARCH": {
@@ -364,11 +380,6 @@
     "ACTION": {
       "HELP": "Brauchen Sie Hilfe?",
       "REGISTER": "Registrieren"
-    },
-    "DIALOG": {
-      "CANCEL": "Abbrechen",
-      "CHOOSE": "Auswählen",
-      "LOGIN": "Anmelden"
     }
   },
   "ADF-DATATABLE": {
@@ -397,7 +408,9 @@
       "ICON_DISABLED": "Deaktiviert",
       "ROW_OPTION_BUTTON": "Aktionen",
       "DRAG": "Drag Button",
-      "EMPTY_HEADER": "Leerer Header"
+      "EMPTY_HEADER": "Leerer Header",
+      "RESIZE_COLUMN": "Ändern Sie die Größe der {{ column }} Spalte. Verwenden Sie Pfeiltasten, um die Breite anzupassen, Umschalt für größere Schritte.",
+      "COLUMN_WIDTH_CHANGED": "{{ column }} Spaltenbreite: {{ width }} Pixel"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -418,7 +431,8 @@
     "COLUMNS_SELECTOR": {
       "COLUMNS": "Spalten",
       "SEARCH": "Suchen",
-      "APPLY": "Anwenden"
+      "APPLY": "Anwenden",
+      "COLUMNS_VISIBILITY": "Spalten zum Anzeigen auswählen"
     }
   },
   "USER_PROFILE": {
@@ -465,7 +479,8 @@
       "RESET": "Zurücksetzen",
       "THUMBNAILS": "Dokumenten-Miniaturansichten",
       "THUMBNAILS_PANLEL_CLOSE": "Miniaturansichten-Fenster schließen",
-      "LOADING": "Dokument wird geladen"
+      "LOADING": "Dokument wird geladen",
+      "NOTE_ANNOTATION_IMG": "Notiz-Anmerkung"
     },
     "PAGE_LABEL": {
       "SHOWING": "Angezeigt",
@@ -591,7 +606,9 @@
     "LICENSE": {
       "TITLE": "Lizenz",
       "PROPERTY": "Eigenschaft",
-      "VALUE": "Wert"
+      "VALUE": "Wert",
+      "ENABLED": "Aktiviert",
+      "DISABLED": "Deaktiviert"
     },
     "STATUS": {
       "TITLE": "Status",

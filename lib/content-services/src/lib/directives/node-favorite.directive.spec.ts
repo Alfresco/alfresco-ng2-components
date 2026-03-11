@@ -19,27 +19,19 @@ import { SimpleChange } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { NodeFavoriteDirective } from './node-favorite.directive';
 import { AppConfigService, AppConfigServiceMock, NotificationService } from '@alfresco/adf-core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AlfrescoApiService } from '../services';
-import { AlfrescoApiServiceMock } from '../mock';
-import { ContentTestingModule } from '../testing/content.testing.module';
+import { provideApiTesting } from '../testing/providers';
 
 describe('NodeFavoriteDirective', () => {
     let directive: NodeFavoriteDirective;
-    let alfrescoApiService: AlfrescoApiService;
     let notificationService: NotificationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, ContentTestingModule],
-            providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
-            ]
+            imports: [],
+            providers: [NodeFavoriteDirective, provideApiTesting(), { provide: AppConfigService, useClass: AppConfigServiceMock }]
         });
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         notificationService = TestBed.inject(NotificationService);
-        directive = new NodeFavoriteDirective(alfrescoApiService, notificationService);
+        directive = TestBed.inject(NodeFavoriteDirective);
     });
 
     describe('selection input change event', () => {

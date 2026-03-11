@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation, inject } from '@angular/core';
 import { FormFieldEvent, FormRulesEvent } from '../../events';
 import { FormService } from '../../services/form.service';
 import { FormFieldModel } from './core';
@@ -29,7 +29,6 @@ import { FormFieldModel } from './core';
     selector: 'base-widget',
     template: '',
     host: {
-        '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
         '(focus)': 'event($event)',
@@ -61,7 +60,7 @@ export class WidgetComponent implements AfterViewInit {
 
     touched: boolean = false;
 
-    constructor(public formService?: FormService) {}
+    protected formService = inject(FormService);
 
     hasField(): boolean {
         return !!this.field;

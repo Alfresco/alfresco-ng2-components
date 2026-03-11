@@ -16,8 +16,10 @@
  */
 
 import { of } from 'rxjs';
-import { StoragePrefixFactory, StoragePrefixFactoryService } from './app-config-storage-prefix.factory';
+import { StoragePrefixFactory, StoragePrefixFactoryService, STORAGE_PREFIX_FACTORY_SERVICE } from './app-config-storage-prefix.factory';
 import { AppConfigService } from './app-config.service';
+import { Injector, runInInjectionContext } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
 type TestAppConfigService = Pick<AppConfigService, 'select'>;
 
@@ -25,13 +27,17 @@ describe('StoragePrefixFactory', () => {
     it('should get prefix set in app.config.json', () => {
         const appConfigPrefix = 'prefix-from-app-config-json';
         const appConfigService: TestAppConfigService = {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             select(_property: string) {
                 return of(appConfigPrefix);
             }
         };
 
-        const prefixFactory = new StoragePrefixFactory(appConfigService as AppConfigService);
+        const injector = Injector.create({
+            providers: [{ provide: AppConfigService, useValue: appConfigService }],
+            parent: TestBed.inject(Injector)
+        });
+
+        const prefixFactory = runInInjectionContext(injector, () => new StoragePrefixFactory());
 
         prefixFactory.getPrefix().subscribe((prefix) => {
             expect(prefix).toBe(appConfigPrefix);
@@ -41,13 +47,17 @@ describe('StoragePrefixFactory', () => {
     it('should work with NO prefix set in app.config.json', () => {
         const appConfigPrefix = undefined;
         const appConfigService: TestAppConfigService = {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             select(_property: string) {
                 return of(appConfigPrefix);
             }
         };
 
-        const prefixFactory = new StoragePrefixFactory(appConfigService as AppConfigService);
+        const injector = Injector.create({
+            providers: [{ provide: AppConfigService, useValue: appConfigService }],
+            parent: TestBed.inject(Injector)
+        });
+
+        const prefixFactory = runInInjectionContext(injector, () => new StoragePrefixFactory());
 
         prefixFactory.getPrefix().subscribe((prefix) => {
             expect(prefix).toBe(appConfigPrefix);
@@ -57,7 +67,6 @@ describe('StoragePrefixFactory', () => {
     it('should return prefix from provided factory, when NO prefix is set in app.config.json', () => {
         const appConfigPrefix = undefined;
         const appConfigService: TestAppConfigService = {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             select(_property: string) {
                 return of(appConfigPrefix);
             }
@@ -69,7 +78,15 @@ describe('StoragePrefixFactory', () => {
             }
         };
 
-        const prefixFactory = new StoragePrefixFactory(appConfigService as AppConfigService, externalPrefixFactory);
+        const injector = Injector.create({
+            providers: [
+                { provide: AppConfigService, useValue: appConfigService },
+                { provide: STORAGE_PREFIX_FACTORY_SERVICE, useValue: externalPrefixFactory }
+            ],
+            parent: TestBed.inject(Injector)
+        });
+
+        const prefixFactory = runInInjectionContext(injector, () => new StoragePrefixFactory());
 
         prefixFactory.getPrefix().subscribe((prefix) => {
             expect(prefix).toBe('prefix-from-factory');
@@ -80,7 +97,6 @@ describe('StoragePrefixFactory', () => {
         const appConfigPrefix = 'prefix-from-app-config-json';
 
         const appConfigService: TestAppConfigService = {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             select(_property: string) {
                 return of(appConfigPrefix);
             }
@@ -92,7 +108,15 @@ describe('StoragePrefixFactory', () => {
             }
         };
 
-        const prefixFactory = new StoragePrefixFactory(appConfigService as AppConfigService, externalPrefixFactory);
+        const injector = Injector.create({
+            providers: [
+                { provide: AppConfigService, useValue: appConfigService },
+                { provide: STORAGE_PREFIX_FACTORY_SERVICE, useValue: externalPrefixFactory }
+            ],
+            parent: TestBed.inject(Injector)
+        });
+
+        const prefixFactory = runInInjectionContext(injector, () => new StoragePrefixFactory());
 
         prefixFactory.getPrefix().subscribe((prefix) => {
             expect(prefix).toBe(appConfigPrefix);

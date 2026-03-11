@@ -128,7 +128,6 @@ describe('Oauth2  test', () => {
                         host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
-                        secret: '',
                         redirectUri: '/',
                         redirectUriLogout: '/logout'
                     },
@@ -143,7 +142,6 @@ describe('Oauth2  test', () => {
                         host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
-                        secret: '',
                         redirectUri: '/',
                         redirectUriLogout: '/logout'
                     },
@@ -175,7 +173,6 @@ describe('Oauth2  test', () => {
                         host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
-                        secret: '',
                         redirectUri: '/',
                         redirectUriLogout: '/logout'
                     },
@@ -201,7 +198,6 @@ describe('Oauth2  test', () => {
                         host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
-                        secret: '',
                         redirectUri: '/',
                         redirectUriLogout: '/logout',
                         implicitFlow: false,
@@ -271,7 +267,6 @@ describe('Oauth2  test', () => {
                         host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
-                        secret: '',
                         redirectUri: '/',
                         redirectUriLogout: '/logout'
                     },
@@ -297,7 +292,6 @@ describe('Oauth2  test', () => {
                         host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
-                        secret: '',
                         redirectUri: '/',
                         redirectUriLogout: '/logout'
                     },
@@ -331,7 +325,6 @@ describe('Oauth2  test', () => {
                         host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
-                        secret: '',
                         redirectUri: '/',
                         redirectUriLogout: '/logout'
                     },
@@ -358,7 +351,6 @@ describe('Oauth2  test', () => {
                         host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
-                        secret: '',
                         redirectUri: '/',
                         redirectUriLogout: '/logout'
                     },
@@ -385,7 +377,6 @@ describe('Oauth2  test', () => {
                     host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
                     scope: 'openid',
-                    secret: '',
                     redirectUri: '/',
                     redirectUriLogout: '/logout'
                 },
@@ -420,7 +411,6 @@ describe('Oauth2  test', () => {
                     host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
                     scope: 'openid',
-                    secret: '',
                     redirectUri: '/',
                     redirectUriLogout: '/logout'
                 },
@@ -460,7 +450,6 @@ describe('Oauth2  test', () => {
                     host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
                     scope: 'openid',
-                    secret: '',
                     redirectUri: '/',
                     redirectUriLogout: '/logout'
                 },
@@ -500,7 +489,6 @@ describe('Oauth2  test', () => {
                         host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
-                        secret: '',
                         redirectUri: '/',
                         redirectUriLogout: '/logout'
                     },
@@ -525,7 +513,6 @@ describe('Oauth2  test', () => {
                         host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
-                        secret: '',
                         redirectUri: '/',
                         redirectUriLogout: '/logout'
                     },
@@ -549,7 +536,6 @@ describe('Oauth2  test', () => {
                             host: 'https://myOauthUrl:30081/auth/realms/springboot',
                             clientId: 'activiti',
                             scope: 'openid',
-                            secret: '',
                             redirectUri: '/',
                             redirectUriLogout: '/logout'
                         },
@@ -586,7 +572,6 @@ describe('Oauth2  test', () => {
                             host: 'https://myOauthUrl:30081/auth/realms/springboot',
                             clientId: 'activiti',
                             scope: 'openid',
-                            secret: '',
                             redirectUri: '/',
                             redirectUriLogout: '/logout'
                         },

@@ -29,13 +29,12 @@ import {
     CardViewSelectItemModel,
     CardViewTextItemModel,
     DecimalNumberPipe,
-    LogService,
-    MultiValuePipe,
-    UserPreferencesService
+    LogService
 } from '@alfresco/adf-core';
 import { CardViewGroup, OrganisedPropertyGroup, Property } from '../interfaces/content-metadata.interfaces';
 import { of } from 'rxjs';
 import { Constraint, Definition, Property as PropertyBase } from '@alfresco/js-api';
+import { MultiValuePipe } from './pipes/multi-value.pipe';
 
 const D_TEXT = 'd:text';
 const D_MLTEXT = 'd:mltext';
@@ -53,9 +52,8 @@ export const RECOGNISED_ECM_TYPES = [D_TEXT, D_MLTEXT, D_DATE, D_DATETIME, D_INT
     providedIn: 'root'
 })
 export class PropertyGroupTranslatorService {
-    private userPreferenceService = inject(UserPreferencesService);
-    private appConfig = inject(AppConfigService);
-    private logService = inject(LogService);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly logService = inject(LogService);
 
     valueSeparator: string;
 
@@ -221,7 +219,7 @@ export class PropertyGroupTranslatorService {
     private getDecimalNumberPipe(): DecimalNumberPipe {
         let decimalNumberPipe: DecimalNumberPipe;
         runInInjectionContext(this.injector, () => {
-            decimalNumberPipe = new DecimalNumberPipe(this.userPreferenceService, this.appConfig);
+            decimalNumberPipe = new DecimalNumberPipe();
         });
         return decimalNumberPipe;
     }

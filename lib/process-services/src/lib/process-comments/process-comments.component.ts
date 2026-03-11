@@ -18,11 +18,10 @@
 import { ADF_COMMENTS_SERVICE, CommentsComponent } from '@alfresco/adf-core';
 import { CommentProcessService } from './services/comment-process.service';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-process-instance-comments',
-    imports: [CommonModule, CommentsComponent],
+    imports: [CommentsComponent],
     providers: [
         {
             provide: ADF_COMMENTS_SERVICE,

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { NodeEntry, PermissionElement } from '@alfresco/js-api';
 import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
@@ -23,8 +23,7 @@ import { MemberModel } from '../../models/member.model';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
-import { DataColumnComponent, DataColumnListComponent, DataTableComponent, DateColumnHeaderComponent } from '@alfresco/adf-core';
-import { MatIconModule } from '@angular/material/icon';
+import { DataColumnComponent, DataColumnListComponent, DataTableComponent, DateColumnHeaderComponent, IconModule } from '@alfresco/adf-core';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { UserIconColumnComponent } from '../user-icon-column/user-icon-column.component';
 import { UserNameColumnComponent } from '../user-name-column/user-name-column.component';
@@ -41,7 +40,7 @@ import { UserRoleColumnComponent } from '../user-role-column/user-role-column.co
         DataColumnListComponent,
         DataColumnComponent,
         DateColumnHeaderComponent,
-        MatIconModule,
+        IconModule,
         AddPermissionPanelComponent,
         UserIconColumnComponent,
         UserNameColumnComponent,
@@ -52,13 +51,16 @@ import { UserRoleColumnComponent } from '../user-role-column/user-role-column.co
     encapsulation: ViewEncapsulation.None
 })
 export class AddPermissionDialogComponent {
+    data = inject<AddPermissionDialogData>(MAT_DIALOG_DATA);
+    private readonly dialogRef = inject<MatDialogRef<AddPermissionDialogComponent>>(MatDialogRef);
+
     isSearchActive = true;
     selectedMembers: MemberModel[] = [];
 
-    private existingMembers: PermissionElement[] = [];
+    private readonly existingMembers: PermissionElement[] = [];
     currentSelection: NodeEntry[] = [];
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: AddPermissionDialogData, private dialogRef: MatDialogRef<AddPermissionDialogComponent>) {
+    constructor() {
         this.existingMembers = this.data.node.permissions.locallySet || [];
     }
 

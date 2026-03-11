@@ -32,9 +32,9 @@ export class UploadFilesEvent {
 
     constructor(
         public files: Array<FileModel>,
-        private uploadService: UploadService,
-        private successEmitter: EventEmitter<any>,
-        private errorEmitter: EventEmitter<any>
+        private readonly uploadService: UploadService,
+        private readonly successEmitter: EventEmitter<any>,
+        private readonly errorEmitter: EventEmitter<any>
     ) {}
 
     pauseUpload() {

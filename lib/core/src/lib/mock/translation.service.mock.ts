@@ -17,7 +17,6 @@
 
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { TranslationService } from '../translation/translation.service';
 
 export interface LangChangeEvent {
     lang: string;
@@ -26,7 +25,7 @@ export interface LangChangeEvent {
 
 /** @deprecated use `NoopTranslateModule` instead */
 @Injectable()
-export class TranslationMock implements TranslationService {
+export class TranslationMock {
     defaultLang: string = 'en';
     userLang: string;
     customLoader: any;
@@ -46,6 +45,8 @@ export class TranslationMock implements TranslationService {
     get(key: string | Array<string>): Observable<string | any> {
         return of(key);
     }
+
+    getLocale(): any {}
 
     instant(key: string | Array<string>): string | any {
         return key;

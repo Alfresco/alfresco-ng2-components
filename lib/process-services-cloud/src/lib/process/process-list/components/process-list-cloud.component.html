@@ -3,7 +3,7 @@
         [columns]="columns"
         [data]="dataAdapter"
         [stickyHeader]="stickyHeader"
-        [loading]="isLoading"
+        [loading]="isLoading$ | async"
         [sorting]="formattedSorting"
         [selectionMode]="selectionMode"
         [multiselect]="multiselect"

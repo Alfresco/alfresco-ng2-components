@@ -33,11 +33,11 @@ import {
     Output,
     SimpleChanges,
     TemplateRef,
+    ViewChild,
     ViewEncapsulation
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslatePipe } from '@ngx-translate/core';
 import { fromEvent } from 'rxjs';
@@ -55,9 +55,9 @@ import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { ViewerToolbarActionsComponent } from './viewer-toolbar-actions.component';
 import { ViewerToolbarCustomActionsComponent } from './viewer-toolbar-custom-actions.component';
-import { IconComponent } from '../../icon';
 import { ThumbnailService } from '../../common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '../../icon/icon.module';
 
 const DEFAULT_NON_PREVIEW_CONFIG = {
     enableDownloadPrompt: false,
@@ -79,7 +79,7 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
         ToolbarTitleComponent,
         MatButtonModule,
         TranslatePipe,
-        MatIconModule,
+        IconModule,
         MatMenuModule,
         ToolbarDividerComponent,
         ViewerRenderComponent,
@@ -87,13 +87,17 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
         ViewerToolbarComponent,
         ViewerSidebarComponent,
         ViewerToolbarActionsComponent,
-        ViewerToolbarCustomActionsComponent,
-        IconComponent
+        ViewerToolbarCustomActionsComponent
     ],
     providers: [ViewUtilService]
 })
 export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
-    private thumbnailService = inject(ThumbnailService);
+    private readonly el = inject(ElementRef);
+    dialog = inject(MatDialog);
+    private readonly viewUtilsService = inject(ViewUtilService);
+    private readonly appConfigService = inject(AppConfigService);
+
+    private readonly thumbnailService = inject(ThumbnailService);
 
     @HostBinding('class.adf-viewer-inline')
     get isInline() {
@@ -113,7 +117,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     mnuMoreActions: ViewerMoreActionsComponent;
 
     @ContentChild('viewerExtensions', { static: false })
-    viewerTemplateExtensions: TemplateRef<any>;
+    viewerTemplateExtensions: TemplateRef<unknown>;
 
     get CloseButtonPosition() {
         return CloseButtonPosition;
@@ -186,11 +190,11 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     /** The template for the right sidebar. The template context contains the loaded node data. */
     @Input()
-    sidebarRightTemplate: TemplateRef<any> = null;
+    sidebarRightTemplate: TemplateRef<unknown> = null;
 
     /** The template for the left sidebar. The template context contains the loaded node data. */
     @Input()
-    sidebarLeftTemplate: TemplateRef<any> = null;
+    sidebarLeftTemplate: TemplateRef<unknown> = null;
 
     /** Enable when where is possible the editing functionalities  */
     @Input()
@@ -231,7 +235,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
      * Change the close button position Right/Left.
      */
     @Input()
-    closeButtonPosition = CloseButtonPosition.Left;
+    closeButtonPosition: CloseButtonPosition = CloseButtonPosition.Left;
 
     /** Toggles the 'Info Button' */
     @Input()
@@ -239,7 +243,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     /** Template containing ViewerExtensionDirective instances providing different viewer extensions based on supported file extension. */
     @Input()
-    viewerExtensions: TemplateRef<any>;
+    viewerExtensions: TemplateRef<unknown>;
 
     /** Identifier of a node that is opened by the viewer. */
     @Input()
@@ -299,8 +303,11 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Output()
     submitFile = new EventEmitter<Blob>();
 
+    @ViewChild(ViewerRenderComponent)
+    viewerRenderer: ViewerRenderComponent;
+
     private closeViewer = true;
-    private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
+    private readonly keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
     private isDialogVisible = false;
     private _fileName: string;
     private _fileNameWithoutExtension: string;
@@ -341,13 +348,6 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     get fileNameWithoutExtension(): string {
         return this._fileNameWithoutExtension;
     }
-
-    constructor(
-        private el: ElementRef,
-        public dialog: MatDialog,
-        private viewUtilsService: ViewUtilService,
-        private appConfigService: AppConfigService
-    ) {}
 
     ngOnChanges(changes: SimpleChanges) {
         const { blobFile, urlFile, mimeType, nodeMimeType } = changes;
@@ -437,14 +437,16 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
             return;
         }
 
-        if (event.key === 'ArrowLeft' && this.canNavigateBefore) {
-            event.preventDefault();
-            this.onNavigateBeforeClick(event);
-        }
+        if (!this.viewerRenderer?.imgViewer?.isEditing) {
+            if (event.key === 'ArrowLeft' && this.canNavigateBefore) {
+                event.preventDefault();
+                this.onNavigateBeforeClick(event);
+            }
 
-        if (event.key === 'ArrowRight' && this.canNavigateNext) {
-            event.preventDefault();
-            this.onNavigateNextClick(event);
+            if (event.key === 'ArrowRight' && this.canNavigateNext) {
+                event.preventDefault();
+                this.onNavigateNextClick(event);
+            }
         }
 
         if (event.code === 'KeyF' && event.ctrlKey) {

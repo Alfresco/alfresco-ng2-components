@@ -17,7 +17,19 @@
 
 import { AppExtensionService, ExtensionsModule, ViewerExtensionRef, PreviewExtensionComponent } from '@alfresco/adf-extensions';
 import { NgForOf, NgTemplateOutlet } from '@angular/common';
-import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Injector,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    TemplateRef,
+    ViewChild,
+    ViewEncapsulation,
+    inject
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -51,6 +63,11 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
     providers: [ViewUtilService]
 })
 export class ViewerRenderComponent implements OnChanges, OnInit {
+    private readonly viewUtilService = inject(ViewUtilService);
+    private readonly extensionService = inject(AppExtensionService);
+    dialog = inject(MatDialog);
+    readonly injector = inject(Injector);
+
     /**
      * If you want to load an external file that does not come from ACS you
      * can use this URL to specify where to load the file from.
@@ -72,7 +89,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     /** The template for the pdf thumbnails. */
     @Input()
-    thumbnailsTemplate: TemplateRef<any> = null;
+    thumbnailsTemplate: TemplateRef<unknown> = null;
 
     /** MIME type of the file content (when not determined by the filename extension). */
     @Input()
@@ -107,7 +124,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     /** Template containing ViewerExtensionDirective instances providing different viewer extensions based on supported file extension. */
     @Input()
-    viewerTemplateExtensions: TemplateRef<any>;
+    viewerTemplateExtensions: TemplateRef<unknown>;
 
     /** Custom error message to be displayed in the viewer. */
     @Input()
@@ -129,7 +146,10 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     @Output()
     isSaving = new EventEmitter<boolean>();
 
-    extensionTemplates: { template: TemplateRef<any>; isVisible: boolean }[] = [];
+    @ViewChild(ImgViewerComponent)
+    imgViewer: ImgViewerComponent;
+
+    extensionTemplates: { template: TemplateRef<unknown>; isVisible: boolean }[] = [];
     extensionsSupportedByTemplates: string[] = [];
     extension: string;
     internalFileName: string;
@@ -164,13 +184,6 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     }
 
     cacheTypeForContent = 'no-cache';
-
-    constructor(
-        private viewUtilService: ViewUtilService,
-        private extensionService: AppExtensionService,
-        public dialog: MatDialog,
-        public readonly injector: Injector
-    ) {}
 
     ngOnInit() {
         this.cacheTypeForContent = 'no-cache';

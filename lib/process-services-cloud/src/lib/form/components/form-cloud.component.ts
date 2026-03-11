@@ -21,13 +21,11 @@ import {
     DestroyRef,
     EventEmitter,
     HostListener,
-    Inject,
     inject,
     InjectionToken,
     Input,
     OnChanges,
     OnInit,
-    Optional,
     Output,
     SimpleChanges
 } from '@angular/core';
@@ -47,6 +45,7 @@ import {
     FormRendererComponent,
     FormService,
     FormValues,
+    IconModule,
     ToolbarComponent,
     ToolbarDividerComponent,
     UploadWidgetContentLinkModel,
@@ -65,7 +64,6 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
 import { A11yModule } from '@angular/cdk/a11y';
 
 export const FORM_CLOUD_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldValidator[]>('FORM_CLOUD_FIELD_VALIDATORS_TOKEN');
@@ -79,7 +77,7 @@ export const FORM_CLOUD_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldVal
         MatButtonModule,
         MatCardModule,
         FormRendererComponent,
-        MatIconModule,
+        IconModule,
         ToolbarDividerComponent,
         ToolbarComponent,
         A11yModule
@@ -135,6 +133,13 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Input()
     customCompleteButtonText: string = '';
 
+    /**
+     * Toggle to enable parent visibility check for validation.
+     * When enabled, fields inside hidden groups/sections will skip validation.
+     */
+    @Input()
+    enableParentVisibilityCheck: boolean = false;
+
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
     formSaved = new EventEmitter<FormModel>();
@@ -183,7 +188,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(@Optional() @Inject(FORM_CLOUD_FIELD_VALIDATORS_TOKEN) injectedFieldValidators?: FormFieldValidator[]) {
+    constructor() {
+        const injectedFieldValidators = inject(FORM_CLOUD_FIELD_VALIDATORS_TOKEN, { optional: true });
+
         super();
         this.loadInjectedFieldValidators(injectedFieldValidators);
         this.spinnerService.initSpinnerHandling(this.destroyRef);
@@ -253,6 +260,12 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             this.form = formRepresentation.currentValue;
             this.onFormLoaded(this.form);
             return;
+        }
+
+        const enableParentVisibilityCheckChange = changes['enableParentVisibilityCheck'];
+        if (enableParentVisibilityCheckChange && this.form) {
+            this.setCheckParentVisibilityForValidationOnFields();
+            this.form.validateForm();
         }
     }
 
@@ -338,8 +351,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
                         const parsedForm = this.parseForm(this.formCloudRepresentationJSON);
                         this.visibilityService.refreshVisibility(parsedForm, this.data);
-                        parsedForm.validateForm();
                         this.form = parsedForm;
+                        this.setCheckParentVisibilityForValidationOnFields();
+                        parsedForm.validateForm();
                         this.form.nodeId = '-my-';
                         this.onFormLoaded(this.form);
                         resolve(this.form);
@@ -369,8 +383,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     this.formCloudRepresentationJSON.processVariables = this.data || [];
                     const parsedForm = this.parseForm(form);
                     this.visibilityService.refreshVisibility(parsedForm);
-                    parsedForm?.validateForm();
                     this.form = parsedForm;
+                    this.setCheckParentVisibilityForValidationOnFields();
+                    parsedForm?.validateForm();
                     this.form.nodeId = '-my-';
                     this.onFormLoaded(this.form);
                 },
@@ -467,9 +482,27 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     private refreshFormData() {
         this.form = this.parseForm(this.formCloudRepresentationJSON);
         if (this.form) {
+            this.setCheckParentVisibilityForValidationOnFields();
             this.onFormLoaded(this.form);
             this.onFormDataRefreshed(this.form);
         }
+    }
+
+    /**
+     * Sets the parent visibility check flag on all form fields.
+     * When enabled, fields inside hidden groups/sections will skip validation.
+     * When disabled, resets flags to false to revert to default behavior.
+     */
+    private setCheckParentVisibilityForValidationOnFields(): void {
+        if (!this.form) {
+            return;
+        }
+
+        this.form.enableParentVisibilityCheck = this.enableParentVisibilityCheck;
+        const allFields = this.form.getFormFields();
+        allFields.forEach((field) => {
+            field.checkParentVisibilityForValidation = this.enableParentVisibilityCheck;
+        });
     }
 
     protected onFormLoaded(form: FormModel) {

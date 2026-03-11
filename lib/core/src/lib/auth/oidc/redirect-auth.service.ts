@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
     AuthConfig,
     AUTH_CONFIG,
@@ -40,12 +40,15 @@ const isPromise = <T>(value: T | Promise<T>): value is Promise<T> => value && ty
 
 @Injectable()
 export class RedirectAuthService extends AuthService {
+    private readonly oauthService = inject(OAuthService);
+    private readonly _oauthStorage = inject(OAuthStorage);
+
     readonly authModuleConfig: AuthModuleConfig = inject(AUTH_MODULE_CONFIG);
     private readonly _retryLoginService: RetryLoginService = inject(RetryLoginService);
     private readonly _oauthLogger: OAuthLogger = inject(OAuthLogger);
     private readonly _timeSyncService: TimeSyncService = inject(TimeSyncService);
 
-    private _isDiscoveryDocumentLoadedSubject$ = new ReplaySubject<boolean>();
+    private readonly _isDiscoveryDocumentLoadedSubject$ = new ReplaySubject<boolean>();
     public isDiscoveryDocumentLoaded$ = this._isDiscoveryDocumentLoadedSubject$.asObservable();
 
     onLogin: Observable<any>;
@@ -119,7 +122,7 @@ export class RedirectAuthService extends AuthService {
         return this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken();
     }
 
-    private authConfig!: AuthConfig | Promise<AuthConfig>;
+    private readonly authConfig!: AuthConfig | Promise<AuthConfig>;
 
     private readonly AUTH_STORAGE_ITEMS: string[] = [
         'access_token',
@@ -136,8 +139,11 @@ export class RedirectAuthService extends AuthService {
         'session_state'
     ];
 
-    constructor(private oauthService: OAuthService, private _oauthStorage: OAuthStorage, @Inject(AUTH_CONFIG) authConfig: AuthConfig) {
+    constructor() {
+        const authConfig = inject<AuthConfig>(AUTH_CONFIG);
+
         super();
+        const oauthService = this.oauthService;
 
         this.authConfig = authConfig;
 

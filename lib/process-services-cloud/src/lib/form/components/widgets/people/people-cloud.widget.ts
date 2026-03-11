@@ -16,7 +16,7 @@
  */
 
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { ErrorWidgetComponent, FormService, WidgetComponent } from '@alfresco/adf-core';
+import { ErrorWidgetComponent, WidgetComponent } from '@alfresco/adf-core';
 import { UntypedFormControl } from '@angular/forms';
 import { filter } from 'rxjs/operators';
 import { ComponentSelectionMode } from '../../../../types';
@@ -48,7 +48,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleCloudWidgetComponent extends WidgetComponent implements OnInit {
-    private identityUserService = inject(IdentityUserService);
+    private readonly identityUserService = inject(IdentityUserService);
 
     typeId = 'PeopleCloudWidgetComponent';
     appName: string;
@@ -61,10 +61,6 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
     validate = false;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(formService: FormService) {
-        super(formService);
-    }
 
     ngOnInit() {
         if (this.field) {

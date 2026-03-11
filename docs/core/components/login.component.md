@@ -196,7 +196,6 @@ You can access an external provider to get an auth token for a user:
     "oauth2" : {
       "host": "http://myhost.com",
       "clientId": "my-client-id",
-      "secret": ""
     }
 }
 ```
@@ -294,7 +293,6 @@ enabled the setting in `app.config.json`) then the [login component](login.compo
       "host": "<AUTH-SERVER>/auth/realms/alfresco",
       "clientId": "activiti",
       "scope": "openid",
-      "secret": "",
       "implicitFlow": true,
       "silentLogin": false,
       "redirectUri": "/",
@@ -324,7 +322,6 @@ You can also enable automatic redirection to the OAuth provider using the follow
     "host": "<AUTH-SERVER>/auth/realms/alfresco",
     "clientId": "alfresco",
     "scope": "openid",
-    "secret": "",
     "implicitFlow": true,
     "silentLogin": true,
     "redirectSilentIframeUri": "/assets/silent-refresh.html",

@@ -17,14 +17,12 @@
  * limitations under the License.
  */
 
-import { Command } from 'commander';
+import { parseArgs } from 'node:util';
 import fetch from 'node-fetch';
 import * as fs from 'fs';
 import { logger } from './logger';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
-
-const program = new Command();
 const ACTIVITI_CLOUD_APPS = require('./resources').ACTIVITI_CLOUD_APPS;
 
 let alfrescoJsApiModeler: AlfrescoApi;
@@ -40,7 +38,6 @@ export interface ConfigArgs {
     oauth: string;
     tokenEndpoint: string;
     clientId: string;
-    secret: string;
     scope: string;
     host: string;
     tag: string;
@@ -452,7 +449,6 @@ function getAlfrescoJsApiInstance(configArgs: ConfigArgs): AlfrescoApi {
             tokenUrl: `${ssoHost}/${configArgs.tokenEndpoint}`,
             clientId: `${configArgs.clientId}`,
             scope: `${configArgs.scope}`,
-            secret: `${configArgs.secret}`,
             implicitFlow: false,
             silentLogin: false,
             redirectUri: '/'
@@ -730,32 +726,98 @@ async function sleep(time: number) {
  * Init AAE environment command
  */
 export default async function main() {
-    program
-        .version('0.1.0')
-        .description(
-            'The following command is in charge of Initializing the activiti cloud env with the default apps' +
-                'adf-cli init-aae-env --host "gateway_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devevopsusername" --devopsPassword "devopspassword"'
-        )
-        .option('-h, --host [type]', 'Host gateway')
-        .option('--oauth [type]', 'SSO host')
-        .option('--clientId [type]', 'sso client')
-        .option('--secret [type]', 'sso secret', '')
-        .option('--scope [type]', 'sso scope', 'openid')
-        .option('--tokenEndpoint [type]', 'discovery token Endpoint', 'auth/realms/${clientId}/protocol/openid-connect/token')
-        .option('--modelerUsername [type]', 'username of a user with role ACTIVIT_MODELER')
-        .option('--modelerPassword [type]', 'modeler password')
-        .option('--devopsUsername [type]', 'username of a user with role ACTIVIT_DEVOPS')
-        .option('--devopsPassword [type]', 'devops password')
-        .option('--tag [type]', 'tag name of the codebase')
-        .option('--envs [type...]', 'environment ids of the envs where to deploy the app')
-        .parse(argv);
+    if (argv.includes('--help')) {
+        console.log(`
+Usage: init-aae-env [options]
 
-    if (argv.includes('-h') || argv.includes('--help')) {
-        program.outputHelp();
+Initialize the activiti cloud env with the default apps
+
+Example:
+  adf-cli init-aae-env --host "gateway_env" --modelerUsername "modelerusername" \\
+    --modelerPassword "modelerpassword" --devopsUsername "devopsusername" \\
+    --devopsPassword "devopspassword"
+
+Options:
+  -v, --version                 Output the version number
+  -h, --host <host>             Host gateway
+  --oauth <host>                SSO host
+  --clientId <id>               SSO client
+  --secret <secret>             SSO secret (default: "")
+  --scope <scope>               SSO scope (default: "openid")
+  --tokenEndpoint <endpoint>    Discovery token endpoint (default: "auth/realms/\${clientId}/protocol/openid-connect/token")
+  --modelerUsername <username>  Username of a user with role ACTIVIT_MODELER
+  --modelerPassword <password>  Modeler password
+  --devopsUsername <username>   Username of a user with role ACTIVIT_DEVOPS
+  --devopsPassword <password>   Devops password
+  --tag <tag>                   Tag name of the codebase
+  --envs <envs...>              Environment ids of the envs where to deploy the app
+  --help                        Display help for command
+`);
         return;
     }
 
-    const options = initializeDefaultToken(program.opts() as ConfigArgs);
+    if (argv.includes('-v') || argv.includes('--version')) {
+        console.log('0.1.0');
+        exit(0);
+    }
+
+    const { values } = parseArgs({
+        args: argv.slice(2),
+        options: {
+            host: {
+                type: 'string',
+                short: 'h'
+            },
+            oauth: {
+                type: 'string'
+            },
+            clientId: {
+                type: 'string'
+            },
+            scope: {
+                type: 'string',
+                default: 'openid'
+            },
+            tokenEndpoint: {
+                type: 'string',
+                default: 'auth/realms/${clientId}/protocol/openid-connect/token'
+            },
+            modelerUsername: {
+                type: 'string'
+            },
+            modelerPassword: {
+                type: 'string'
+            },
+            devopsUsername: {
+                type: 'string'
+            },
+            devopsPassword: {
+                type: 'string'
+            },
+            tag: {
+                type: 'string'
+            },
+            envs: {
+                type: 'string',
+                multiple: true
+            }
+        },
+        allowPositionals: true
+    });
+
+    const options = initializeDefaultToken({
+        host: values.host as string,
+        oauth: values.oauth as string,
+        clientId: values.clientId as string,
+        scope: values.scope as string,
+        tokenEndpoint: values.tokenEndpoint as string,
+        modelerUsername: values.modelerUsername as string,
+        modelerPassword: values.modelerPassword as string,
+        devopsUsername: values.devopsUsername as string,
+        devopsPassword: values.devopsPassword as string,
+        tag: values.tag as string,
+        envs: (values.envs as string[]) || []
+    } as ConfigArgs);
 
     args = {
         host: options.host,
@@ -767,7 +829,6 @@ export default async function main() {
         oauth: options.oauth,
         tokenEndpoint: options.tokenEndpoint,
         scope: options.scope,
-        secret: options.secret,
         tag: options.tag,
         envs: options.envs
     };

@@ -13,42 +13,38 @@
         <button
             data-automation-id="adf-columns-selector-close-button"
             mat-icon-button
-            role="menuitem"
             [attr.aria-label]="'CLOSE' | translate"
             (click)="closeMenu()"
         >
-            <mat-icon>close</mat-icon>
+            <mat-icon adf-icon="close" />
         </button>
     </div>
 
-    <mat-divider class="adf-columns-selector-divider" />
+    <mat-divider class="adf-columns-selector-divider" aria-hidden="true" />
 
-    <div class="adf-columns-selector-search-input-container">
-        <mat-icon
-            class="adf-columns-selector-search-input-icon">
-            search
-        </mat-icon>
-
+    <mat-form-field class="adf-columns-selector-search-input-form">
+        <mat-label>{{ 'ADF-DATATABLE.COLUMNS_SELECTOR.SEARCH' | translate }}</mat-label>
         <input
-            [formControl]="searchInputControl"
-            class="adf-columns-selector-search-input"
-            data-automation-id="adf-columns-selector-search-input"
+            matInput
             type="text"
-            role="menuitem"
-            [placeholder]='"ADF-DATATABLE.COLUMNS_SELECTOR.SEARCH" | translate'>
-    </div>
+            data-automation-id="adf-columns-selector-search-input"
+            [placeholder]="'ADF-DATATABLE.COLUMNS_SELECTOR.SEARCH' | translate"
+            [formControl]="searchInputControl"/>
+        <mat-icon adf-icon="search" matSuffix />
+    </mat-form-field>
 
-    <div class="adf-columns-selector-list-container">
+    <mat-selection-list
+        class="adf-columns-selector-list-container"
+        (selectionChange)="changeColumnVisibility($event)"
+        [attr.aria-label]='"ADF-DATATABLE.COLUMNS_SELECTOR.COLUMNS_VISIBILITY" | translate'>
         <div *ngFor="let column of (columnItems | columnsSearchFilter: searchQuery)" class="adf-columns-selector-list-item">
-            <mat-checkbox
+            <mat-list-option
                 color="primary"
                 class="adf-columns-selector-column-checkbox"
                 [attr.data-automation-id]="'adf-columns-selector-column-checkbox-' + column.title"
-                [checked]="!column.isHidden"
-                role="menuitem"
+                [selected]="!column.isHidden"
                 [disabled]="isCheckboxDisabled(column)"
-                (keydown.enter)="changeColumnVisibility(column)"
-                (change)="changeColumnVisibility(column)">
+                [value]="column.id">
                 <div class="adf-columns-selector-list-content">
                     {{column.title | translate}}
                 </div>
@@ -63,16 +59,15 @@
                         {{column.subtitle | translate}}
                     </span>
                 </div>
-            </mat-checkbox>
+            </mat-list-option>
         </div>
-    </div>
+    </mat-selection-list>
 
-    <mat-divider class="adf-columns-selector-divider" />
+    <mat-divider class="adf-columns-selector-divider" aria-hidden="true" />
 
     <div class="adf-columns-selector-footer">
         <button
             mat-flat-button
-            role="menuitem"
             data-automation-id="adf-columns-selector-apply-button"
             color="primary"
             (click)="apply()">

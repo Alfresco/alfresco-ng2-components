@@ -18,6 +18,7 @@
   },
   "tasksRunnerOptions": {
     "default": {
+      "runner": "nx/tasks-runners/default",
       "options": {
         "runtimeCacheInputs": ["node -v"]
       }
@@ -32,9 +33,12 @@
     ],
     "production": [
       "default",
+      "!{projectRoot}/.storybook/**/*",
+      "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
       "!{projectRoot}/**/*.spec.[jt]s",
       "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/karma.conf.js"
+      "!{projectRoot}/karma.conf.js",
+      "!{projectRoot}/tsconfig.storybook.json"
     ]
   },
   "cacheDirectory": "nxcache",

@@ -17,10 +17,8 @@
 
 import { EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { UserPreferencesService } from '@alfresco/adf-core';
-import { UploadModule } from '../upload.module';
+import { NoopAuthModule, UserPreferencesService } from '@alfresco/adf-core';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { UploadService } from '../../common/services/upload.service';
 import { FileModel } from '../../common/models/file.model';
 import { FileUploadCompleteEvent, FileUploadErrorEvent } from '../../common/events/file.event';
@@ -35,7 +33,7 @@ describe('FileUploadingDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, UploadModule]
+            imports: [NoopAuthModule, FileUploadingDialogComponent]
         });
         fixture = TestBed.createComponent(FileUploadingDialogComponent);
         component = fixture.componentInstance;

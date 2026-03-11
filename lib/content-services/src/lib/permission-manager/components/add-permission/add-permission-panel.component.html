@@ -1,4 +1,5 @@
-<mat-form-field appearance="fill" class="adf-permission-search-input">
+<mat-form-field class="adf-permission-search-input">
+    <mat-label>{{ 'SEARCH.INPUT.LABEL' | translate }}</mat-label>
     <input
         matInput
         id="searchInput"
@@ -19,13 +20,12 @@
         class="adf-permission-search-input-clear-button"
         (click)="clearSearch()"
         [attr.aria-label]="'COMMON.CLEAR' | translate"
-        [attr.title]="'COMMON.CLEAR' | translate">
-        <mat-icon class="adf-permission-search-icon">clear</mat-icon>
+        [attr.title]="'COMMON.CLEAR' | translate"
+    >
+        <mat-icon class="adf-permission-search-icon" adf-icon="clear" />
     </button>
 
-    <mat-icon *ngIf="searchedWord?.length === 0" class="adf-permission-search-icon" data-automation-id="adf-permission-search-icon" matSuffix
-        >search
-    </mat-icon>
+    <mat-icon *ngIf="searchedWord?.length === 0" class="adf-permission-search-icon" data-automation-id="adf-permission-search-icon" adf-icon="search" matSuffix />
 </mat-form-field>
 
 <div *ngIf="searchedWord?.length === 0" class="adf-permission-start-message" id="adf-add-permission-type-search">

@@ -23,7 +23,7 @@ import { TranslationService } from '../../../translation';
     name: 'columnsSearchFilter'
 })
 export class ColumnsSearchFilterPipe implements PipeTransform {
-    private translationService = inject(TranslationService);
+    private readonly translationService = inject(TranslationService);
 
     transform(columns: DataColumn[], searchByName: string): DataColumn[] {
         const result = [];

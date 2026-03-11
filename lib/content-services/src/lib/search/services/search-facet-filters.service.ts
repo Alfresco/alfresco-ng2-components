@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { FacetBucketSortBy, FacetBucketSortDirection, FacetField } from '../models/facet-field.interface';
 import { throwError } from 'rxjs';
 import { SearchQueryBuilderService } from './search-query-builder.service';
@@ -40,6 +40,11 @@ const DEFAULT_PAGE_SIZE: number = 5;
     providedIn: 'root'
 })
 export class SearchFacetFiltersService {
+    private readonly queryBuilder = inject(SearchQueryBuilderService);
+    private readonly searchService = inject(SearchService);
+    private readonly translationService = inject(TranslationService);
+    private readonly categoryService = inject(CategoryService);
+
     /**
      * All facet field items to be displayed in the component. These are updated according to the response.
      * When a new search is performed, the already existing items are updated with the new bucket count values and
@@ -53,12 +58,9 @@ export class SearchFacetFiltersService {
     selectedBuckets: SelectedBucket[] = [];
 
     private readonly facetQueriesPageSize = DEFAULT_PAGE_SIZE;
-    constructor(
-        private queryBuilder: SearchQueryBuilderService,
-        private searchService: SearchService,
-        private translationService: TranslationService,
-        private categoryService: CategoryService
-    ) {
+    constructor() {
+        const queryBuilder = this.queryBuilder;
+
         if (queryBuilder.config?.facetQueries) {
             this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || DEFAULT_PAGE_SIZE;
         }
@@ -281,7 +283,7 @@ export class SearchFacetFiltersService {
         return bucket.count === null ? '' : `(${bucket.count})`;
     }
 
-    private getFilterByMinCount =
+    private readonly getFilterByMinCount =
         (minCountInput: number) =>
         (bucket: FacetFieldBucket): boolean => {
             let minCount = minCountInput;
@@ -363,7 +365,7 @@ export class SearchFacetFiltersService {
         });
     }
 
-    private getBucketFilterFunction =
+    private readonly getBucketFilterFunction =
         (bucketList: SearchFilterList<FacetFieldBucket>) =>
         (bucket: FacetFieldBucket): boolean => {
             if (bucket && bucketList.filterText) {

@@ -33,6 +33,7 @@ import {
 } from '@angular/core';
 import {
     CloseButtonPosition,
+    IconModule,
     Track,
     VIEWER_DIRECTIVES,
     ViewerComponent,
@@ -56,13 +57,12 @@ import { NodeActionsService } from '../../document-list';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { NodeDownloadDirective } from '../../directives';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-alfresco-viewer',
-    imports: [CommonModule, TranslatePipe, MatButtonModule, MatIconModule, ...VIEWER_DIRECTIVES, NodeDownloadDirective],
+    imports: [CommonModule, TranslatePipe, MatButtonModule, IconModule, ...VIEWER_DIRECTIVES, NodeDownloadDirective],
     templateUrl: './alfresco-viewer.component.html',
     styleUrls: ['./alfresco-viewer.component.scss'],
     host: { class: 'adf-alfresco-viewer' },
@@ -70,6 +70,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     providers: [ViewUtilService]
 })
 export class AlfrescoViewerComponent implements OnChanges, OnInit {
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly nodesApiService = inject(NodesApiService);
+    private readonly renditionService = inject(RenditionService);
+    private readonly viewUtilService = inject(ViewUtilService);
+    private readonly contentService = inject(ContentService);
+    private readonly uploadService = inject(UploadService);
+    dialog = inject(MatDialog);
+    private readonly cdr = inject(ChangeDetectorRef);
+    private readonly nodeActionsService = inject(NodeActionsService);
+
     @ViewChild('adfViewer')
     adfViewer: ViewerComponent<{ node: Node }>;
 
@@ -178,7 +188,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
 
     /** Change the close button position Right/Left */
     @Input()
-    closeButtonPosition = CloseButtonPosition.Left;
+    closeButtonPosition: CloseButtonPosition = CloseButtonPosition.Left;
 
     /** The template for the right sidebar. The template context contains the loaded node data. */
     @Input()
@@ -256,17 +266,9 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private apiService: AlfrescoApiService,
-        private nodesApiService: NodesApiService,
-        private renditionService: RenditionService,
-        private viewUtilService: ViewUtilService,
-        private contentService: ContentService,
-        private uploadService: UploadService,
-        public dialog: MatDialog,
-        private cdr: ChangeDetectorRef,
-        private nodeActionsService: NodeActionsService
-    ) {
+    constructor() {
+        const renditionService = this.renditionService;
+
         renditionService.maxRetries = this.maxRetries;
     }
 

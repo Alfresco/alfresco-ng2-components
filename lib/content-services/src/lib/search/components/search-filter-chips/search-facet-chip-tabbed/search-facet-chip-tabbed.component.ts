@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { TabbedFacetField } from '../../../models/tabbed-facet-field.interface';
@@ -23,10 +23,10 @@ import { Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { SearchFacetTabbedContentComponent } from './search-facet-tabbed-content.component';
 import { MatButtonModule } from '@angular/material/button';
 import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search-filter-menu-card.component';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search-facet-chip-tabbed',
@@ -35,7 +35,7 @@ import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search
         MatChipsModule,
         MatMenuModule,
         TranslatePipe,
-        MatIconModule,
+        IconModule,
         SearchFacetTabbedContentComponent,
         MatButtonModule,
         SearchFilterMenuCardComponent
@@ -45,6 +45,9 @@ import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetChipTabbedComponent {
+    private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
     @Input()
     tabbedFacet: TabbedFacetField;
 
@@ -54,8 +57,8 @@ export class SearchFacetChipTabbedComponent {
     @ViewChild('menuTrigger', { static: false })
     menuTrigger: MatMenuTrigger;
 
-    private resetSubject$ = new Subject<void>();
-    private applySubject$ = new Subject<void>();
+    private readonly resetSubject$ = new Subject<void>();
+    private readonly applySubject$ = new Subject<void>();
 
     displayValue = '';
     reset$ = this.resetSubject$.asObservable();
@@ -64,17 +67,18 @@ export class SearchFacetChipTabbedComponent {
     chipIcon = 'keyboard_arrow_down';
     isPopulated = false;
 
-    constructor(private focusTrapFactory: ConfigurableFocusTrapFactory, private changeDetectorRef: ChangeDetectorRef) {}
-
     onMenuOpen() {
-        if (this.menuContainer && !this.focusTrap) {
-            this.focusTrap = this.focusTrapFactory.create(this.menuContainer.nativeElement);
-        }
+        setTimeout(() => {
+            if (this.menuContainer && !this.focusTrap) {
+                this.focusTrap = this.focusTrapFactory.create(this.menuContainer.nativeElement);
+                this.focusTrap.focusInitialElement();
+            }
+        });
         this.chipIcon = 'keyboard_arrow_up';
     }
 
     onClosed() {
-        this.focusTrap.destroy();
+        this.focusTrap?.destroy();
         this.focusTrap = null;
         this.chipIcon = 'keyboard_arrow_down';
     }

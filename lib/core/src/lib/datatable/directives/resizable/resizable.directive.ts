@@ -26,6 +26,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     exportAs: 'adf-resizable'
 })
 export class ResizableDirective implements OnInit, OnDestroy {
+    private readonly renderer = inject(Renderer2);
+    private readonly element = inject<ElementRef<HTMLElement>>(ElementRef);
+    private readonly zone = inject(NgZone);
+
     /**
      * Emitted when the mouse is pressed and a resize event is about to begin.
      */
@@ -40,6 +44,11 @@ export class ResizableDirective implements OnInit, OnDestroy {
      * Emitted when the mouse is released after a resize event.
      */
     @Output() resizeEnd = new EventEmitter<ResizeEvent>();
+
+    /**
+     * Emitted when keyboard resize is triggered.
+     */
+    @Output() keyboardResizing = new EventEmitter<ResizeEvent>();
 
     /**
      * This is to cover sum of the left and right padding between resize handler and its parent.
@@ -66,7 +75,10 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private readonly renderer: Renderer2, private readonly element: ElementRef<HTMLElement>, private readonly zone: NgZone) {
+    constructor() {
+        const renderer = this.renderer;
+        const zone = this.zone;
+
         this.pointerDown = new Observable((observer: Observer<IResizeMouseEvent>) => {
             zone.runOutsideAngular(() => {
                 this.unsubscribeMouseDown = renderer.listen('document', 'mousedown', (event: MouseEvent) => {
@@ -172,6 +184,14 @@ export class ResizableDirective implements OnInit, OnDestroy {
         this.unsubscribeMouseDown?.();
         this.unsubscribeMouseMove?.();
         this.unsubscribeMouseUp?.();
+    }
+
+    resizeByKeyboard(delta: number): void {
+        const currentRect = this.getElementRect(this.element);
+        const rectangle = this.getNewBoundingRectangle(currentRect, delta);
+        this.zone.run(() => {
+            this.keyboardResizing.emit({ rectangle });
+        });
     }
 
     private getNewBoundingRectangle({ top, bottom, left, right }: BoundingRectangle, clientX: number): BoundingRectangle {

@@ -130,7 +130,7 @@ export class DataColumnComponent implements OnInit {
 
     ngOnInit() {
         if (!this.srTitle && this.key === '$thumbnail') {
-            this.srTitle = 'Thumbnail';
+            this.srTitle = 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL';
         }
     }
 }

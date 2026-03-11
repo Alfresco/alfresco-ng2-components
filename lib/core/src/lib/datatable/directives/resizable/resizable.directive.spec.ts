@@ -67,9 +67,17 @@ describe('ResizableDirective', () => {
         const injector = TestBed.inject(Injector);
         spyOn(ngZone, 'runOutsideAngular').and.callFake((fn) => fn());
         spyOn(ngZone, 'run').and.callFake((fn) => fn());
-        runInInjectionContext(injector, () => {
-            directive = new ResizableDirective(renderer, element, ngZone);
+
+        const testInjector = Injector.create({
+            providers: [
+                { provide: Renderer2, useValue: renderer },
+                { provide: ElementRef, useValue: element },
+                { provide: NgZone, useValue: ngZone }
+            ],
+            parent: injector
         });
+
+        directive = runInInjectionContext(testInjector, () => new ResizableDirective());
 
         directive.ngOnInit();
     });
@@ -157,5 +165,13 @@ describe('ResizableDirective', () => {
         directive.mousemove.next(mouseMoveEvent);
 
         expect(directive.resizing.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, bottom: 0, right: 130, width: 130 } });
+    });
+
+    it('should emit keyboardResizing event when resizeByKeyboard', () => {
+        spyOn(directive.keyboardResizing, 'emit');
+        const step = 20;
+        directive.resizeByKeyboard(step);
+
+        expect(directive.keyboardResizing.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, bottom: 0, right: step, width: step } });
     });
 });

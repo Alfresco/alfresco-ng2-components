@@ -102,7 +102,10 @@ export class ProcessListRequestModel {
     completedTo?: string;
     suspendedFrom?: string;
     suspendedTo?: string;
-    excludeByProcessCategoryName?: string;
+    includeSubprocesses?: boolean;
+    includeUnlinkedProcesses?: boolean;
+    includeLinkedProcesses?: boolean;
+    processRelatedTo?: string[];
 
     processVariableFilters?: ProcessVariableFilterModel[];
     processVariableKeys?: string[];
@@ -131,9 +134,14 @@ export class ProcessListRequestModel {
         this.completedTo = obj.completedTo;
         this.suspendedFrom = obj.suspendedFrom;
         this.suspendedTo = obj.suspendedTo;
+        this.includeSubprocesses = obj.includeSubprocesses;
+        this.includeUnlinkedProcesses = obj.includeUnlinkedProcesses;
+        this.includeLinkedProcesses = obj.includeLinkedProcesses;
+
         this.processVariableKeys = obj.processVariableKeys;
         this.processVariableFilters = obj.processVariableFilters;
-        this.excludeByProcessCategoryName = obj.excludeByProcessCategoryName;
+
+        this.processRelatedTo = obj.processRelatedTo;
     }
 }
 

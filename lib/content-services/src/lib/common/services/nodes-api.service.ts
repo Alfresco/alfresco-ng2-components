@@ -26,9 +26,10 @@ import {
     NodesIncludeQuery,
     TrashcanApi,
     SizeDetailsEntry,
-    JobIdBodyEntry
+    JobIdBodyEntry,
+    NodeAssociationPaging
 } from '@alfresco/js-api';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { NodeMetadata } from '../models/node-metadata.model';
@@ -38,6 +39,9 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
     providedIn: 'root'
 })
 export class NodesApiService {
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly preferences = inject(UserPreferencesService);
+
     /**
      * Publish/subscribe to events related to node updates.
      */
@@ -54,8 +58,6 @@ export class NodesApiService {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
-
-    constructor(private apiService: AlfrescoApiService, private preferences: UserPreferencesService) {}
 
     private getEntryFromEntity(entity: NodeEntry): Node {
         return entity.entry;
@@ -276,6 +278,24 @@ export class NodesApiService {
      */
     getFolderSizeInfo(nodeId: string, jobId: string): Observable<SizeDetailsEntry> {
         return from(this.nodesApi.getFolderSizeInfo(nodeId, jobId));
+    }
+
+    /**
+     * Lists parents of a given node.
+     *
+     * @param nodeId Node ID
+     * @param opts Optional parameters
+     * @returns List of parent nodes
+     */
+    listParents(
+        nodeId: string,
+        opts?: {
+            where?: string;
+            includeSource?: boolean;
+        } & NodesIncludeQuery &
+            ContentPagingQuery
+    ): Observable<NodeAssociationPaging> {
+        return from(this.nodesApi.listParents(nodeId, opts));
     }
 
     private randomNodeName(): string {

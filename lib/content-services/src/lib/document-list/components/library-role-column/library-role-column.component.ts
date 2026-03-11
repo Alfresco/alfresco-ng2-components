@@ -15,21 +15,19 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, Input, OnInit, signal, ViewEncapsulation } from '@angular/core';
 import { Site } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
-import { AsyncPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-library-role-column',
-    imports: [AsyncPipe, TranslatePipe],
+    imports: [TranslatePipe],
     template: `
-        <span class="adf-datatable-cell-value" title="{{ displayText$ | async | translate }}">
-            {{ displayText$ | async | translate }}
+        <span class="adf-datatable-cell-value" [title]="displayText() | translate">
+            {{ displayText() | translate }}
         </span>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,14 +35,30 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-library-role-column adf-datatable-content-cell' }
 })
 export class LibraryRoleColumnComponent implements OnInit {
+    private readonly nodesApiService = inject(NodesApiService);
+
     @Input({ required: true })
     context: any;
 
-    displayText$ = new BehaviorSubject<string>('');
+    private readonly role = signal<string | undefined>(undefined);
+
+    readonly displayText = computed(() => {
+        const roleValue = this.role();
+        switch (roleValue) {
+            case Site.RoleEnum.SiteManager:
+                return 'LIBRARY.ROLE.MANAGER';
+            case Site.RoleEnum.SiteCollaborator:
+                return 'LIBRARY.ROLE.COLLABORATOR';
+            case Site.RoleEnum.SiteContributor:
+                return 'LIBRARY.ROLE.CONTRIBUTOR';
+            case Site.RoleEnum.SiteConsumer:
+                return 'LIBRARY.ROLE.CONSUMER';
+            default:
+                return 'LIBRARY.ROLE.NONE';
+        }
+    });
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private nodesApiService: NodesApiService) {}
 
     ngOnInit() {
         this.updateValue();
@@ -63,23 +77,7 @@ export class LibraryRoleColumnComponent implements OnInit {
     }
 
     protected updateValue() {
-        const role = this.context.row.node?.entry.role ?? this.context.row.obj.role;
-        switch (role) {
-            case Site.RoleEnum.SiteManager:
-                this.displayText$.next('LIBRARY.ROLE.MANAGER');
-                break;
-            case Site.RoleEnum.SiteCollaborator:
-                this.displayText$.next('LIBRARY.ROLE.COLLABORATOR');
-                break;
-            case Site.RoleEnum.SiteContributor:
-                this.displayText$.next('LIBRARY.ROLE.CONTRIBUTOR');
-                break;
-            case Site.RoleEnum.SiteConsumer:
-                this.displayText$.next('LIBRARY.ROLE.CONSUMER');
-                break;
-            default:
-                this.displayText$.next('LIBRARY.ROLE.NONE');
-                break;
-        }
+        const roleValue = this.context.row.node?.entry.role ?? this.context.row.obj.role;
+        this.role.set(roleValue);
     }
 }

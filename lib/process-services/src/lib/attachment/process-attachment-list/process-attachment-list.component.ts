@@ -35,7 +35,8 @@ import {
     OnChanges,
     Output,
     SimpleChanges,
-    ViewEncapsulation
+    ViewEncapsulation,
+    inject
 } from '@angular/core';
 import { ProcessContentService } from '../../form/services/process-content.service';
 import { CommonModule } from '@angular/common';
@@ -60,6 +61,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessAttachmentListComponent implements OnChanges, AfterContentInit {
+    private readonly processContentService = inject(ProcessContentService);
+    private readonly downloadService = inject(DownloadService);
+    private readonly thumbnailService = inject(ThumbnailService);
+    private readonly ngZone = inject(NgZone);
+
     @ContentChild(EmptyListComponent)
     emptyTemplate: EmptyListComponent;
 
@@ -98,13 +104,6 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
 
     attachments: any[] = [];
     isLoading: boolean = false;
-
-    constructor(
-        private processContentService: ProcessContentService,
-        private downloadService: DownloadService,
-        private thumbnailService: ThumbnailService,
-        private ngZone: NgZone
-    ) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['processInstanceId']?.currentValue) {

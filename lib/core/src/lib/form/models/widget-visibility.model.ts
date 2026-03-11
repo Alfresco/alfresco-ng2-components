@@ -24,7 +24,7 @@ export class WidgetVisibilityModel {
     nextCondition?: WidgetVisibilityModel;
     nextConditionOperator: string;
 
-    constructor(private json?: any) {
+    constructor(private readonly json?: any) {
         if (json) {
             this.operator = json.operator;
             this.nextCondition = new WidgetVisibilityModel(json.nextCondition);
@@ -102,9 +102,10 @@ export class WidgetVisibilityModel {
     }
 }
 
-// eslint-disable-next-line no-shadow
-export enum WidgetTypeEnum {
-    field = 'field',
-    variable = 'variable',
-    value = 'value'
-}
+export const WidgetTypeEnum = {
+    field: 'field',
+    variable: 'variable',
+    value: 'value'
+} as const;
+
+export type WidgetTypeEnum = (typeof WidgetTypeEnum)[keyof typeof WidgetTypeEnum];

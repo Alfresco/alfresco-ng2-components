@@ -20,17 +20,20 @@ import { filter } from 'rxjs/operators';
 import { FormRulesEvent } from '../../events';
 import { FormFieldModel, FormModel } from './core';
 import { WidgetComponent } from './widget.component';
+import { FormService } from '@alfresco/adf-core';
 
 describe('WidgetComponent', () => {
     let widget: WidgetComponent;
     let fixture: ComponentFixture<WidgetComponent>;
     let element: HTMLElement;
+    let formService: FormService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [WidgetComponent]
         });
         fixture = TestBed.createComponent(WidgetComponent);
+        formService = fixture.debugElement.injector.get(FormService);
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
@@ -40,7 +43,7 @@ describe('WidgetComponent', () => {
 
     describe('Events', () => {
         it('should click event be redirect on the form event service', fakeAsync(() => {
-            widget.formService.formEvents.subscribe((event) => {
+            formService.formEvents.subscribe((event) => {
                 expect(event).toBeTruthy();
             });
 
@@ -48,7 +51,7 @@ describe('WidgetComponent', () => {
         }));
 
         it('should click event be redirect on the form rules event service', fakeAsync(() => {
-            widget.formService.formRulesEvent.pipe(filter((event) => event.type === 'click')).subscribe((event) => {
+            formService.formRulesEvent.pipe(filter((event) => event.type === 'click')).subscribe((event) => {
                 expect(event).toBeTruthy();
             });
 
@@ -95,7 +98,7 @@ describe('WidgetComponent', () => {
         const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
 
         let lastValue: FormRulesEvent;
-        widget.formService.formRulesEvent.subscribe((event) => (lastValue = event));
+        formService.formRulesEvent.subscribe((event) => (lastValue = event));
 
         widget.onFieldChanged(fakeField);
         expect(lastValue.type).toEqual('fieldValueChanged');

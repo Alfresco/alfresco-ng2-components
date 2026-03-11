@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PermissionContainerComponent } from './permission-container.component';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
@@ -30,9 +29,6 @@ describe('PermissionContainerComponent', () => {
     let element: HTMLElement;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
-        });
         fixture = TestBed.createComponent(PermissionContainerComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

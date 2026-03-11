@@ -60,7 +60,7 @@ import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
 import { buffer, debounceTime, filter, map, share } from 'rxjs/operators';
 import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ResizeEvent } from '../../directives/resizable/types';
 import { CommonModule } from '@angular/common';
@@ -68,7 +68,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { FileTypePipe, LocalizedDatePipe } from '../../../pipes';
 import { DropZoneDirective } from '../../directives/drop-zone.directive';
 import { ResizableDirective } from '../../directives/resizable/resizable.directive';
-import { IconComponent } from '../../../icon';
 import { ResizeHandleDirective } from '../../directives/resizable/resize-handle.directive';
 import { MatButtonModule } from '@angular/material/button';
 import { UploadDirective } from '../../../directives';
@@ -83,13 +82,16 @@ import { JsonCellComponent } from '../json-cell/json-cell.component';
 import { AmountCellComponent } from '../amount-cell/amount-cell.component';
 import { NumberCellComponent } from '../number-cell/number-cell.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '../../../icon/icon.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
-// eslint-disable-next-line no-shadow
-export enum ShowHeaderMode {
-    Never = 'never',
-    Always = 'always',
-    Data = 'data'
-}
+export const ShowHeaderMode = {
+    Never: 'never',
+    Always: 'always',
+    Data: 'data'
+} as const;
+
+export type ShowHeaderMode = (typeof ShowHeaderMode)[keyof typeof ShowHeaderMode];
 
 @Component({
     selector: 'adf-datatable',
@@ -103,11 +105,10 @@ export enum ShowHeaderMode {
         DropZoneDirective,
         ResizableDirective,
         CdkDragHandle,
-        IconComponent,
         ResizeHandleDirective,
         MatButtonModule,
         MatMenuModule,
-        MatIconModule,
+        IconModule,
         UploadDirective,
         ContextMenuDirective,
         FileTypePipe,
@@ -120,7 +121,8 @@ export enum ShowHeaderMode {
         BooleanCellComponent,
         JsonCellComponent,
         AmountCellComponent,
-        NumberCellComponent
+        NumberCellComponent,
+        MatTooltipModule
     ],
     templateUrl: './datatable.component.html',
     styleUrls: ['./datatable.component.scss'],
@@ -128,7 +130,12 @@ export enum ShowHeaderMode {
     host: { class: 'adf-datatable' }
 })
 export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
-    private static MINIMUM_COLUMN_SIZE = 100;
+    private readonly elementRef = inject(ElementRef);
+    private readonly matIconRegistry = inject(MatIconRegistry);
+    private readonly sanitizer = inject(DomSanitizer);
+    private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
+
+    private static readonly MINIMUM_COLUMN_SIZE = 100;
 
     @ViewChildren(DataTableRowComponent)
     rowsList: QueryList<DataTableRowComponent>;
@@ -215,7 +222,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     /** Toggles the header. */
     @Input()
-    showHeader = ShowHeaderMode.Data;
+    showHeader: ShowHeaderMode = ShowHeaderMode.Data;
 
     /** Toggles the sticky header mode. */
     @Input()
@@ -331,9 +338,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     private keyManager: FocusKeyManager<DataTableRowComponent>;
     private clickObserver: Observer<DataRowEvent>;
-    private click$: Observable<DataRowEvent>;
+    private readonly click$: Observable<DataRowEvent>;
 
-    private differ: any;
+    private readonly differ: any;
     private rowMenuCache: any = {};
 
     private singleClickStreamSub: Subscription;
@@ -343,16 +350,40 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     @HostListener('keyup', ['$event'])
     onKeydown(event: KeyboardEvent): void {
-        this.keyManager.onKeydown(event);
+        if (event.shiftKey && this.enableDragRows) {
+            switch (event.key) {
+                case 'ArrowUp': {
+                    if (this.keyManager.activeItemIndex > 1) {
+                        this.dragDropped.emit({
+                            previousIndex: this.keyManager.activeItemIndex - 1,
+                            currentIndex: this.keyManager.activeItemIndex - 2
+                        });
+                        setTimeout(() => {
+                            this.keyManager.setActiveItem(this.keyManager.activeItemIndex - 1);
+                        });
+                    }
+                    break;
+                }
+                case 'ArrowDown': {
+                    if (this.keyManager.activeItemIndex < this.rowsList.length - 1) {
+                        this.dragDropped.emit({ previousIndex: this.keyManager.activeItemIndex - 1, currentIndex: this.keyManager.activeItemIndex });
+                        setTimeout(() => {
+                            this.keyManager.setActiveItem(this.keyManager.activeItemIndex + 1);
+                        });
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        } else {
+            this.keyManager.onKeydown(event);
+        }
     }
 
-    constructor(
-        private readonly elementRef: ElementRef,
-        differs: IterableDiffers,
-        private readonly matIconRegistry: MatIconRegistry,
-        private readonly sanitizer: DomSanitizer,
-        private readonly focusTrapFactory: ConfigurableFocusTrapFactory
-    ) {
+    constructor() {
+        const differs = inject(IterableDiffers);
+
         if (differs) {
             this.differ = differs.find([]).create(null);
         }
@@ -425,10 +456,11 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     isColumnSortActive(column: DataColumn): boolean {
-        if (!column || !this.data.getSorting()) {
+        const sorting = this.data.getSorting();
+        if (!column || !sorting) {
             return false;
         }
-        return column.key === this.data.getSorting().key;
+        return column.key === sorting.key || column.sortingKey === sorting.key;
     }
 
     getVisibleColumns(): DataColumn[] {
@@ -461,10 +493,16 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     convertToRowsData(rows: any[]): ObjectDataRow[] {
+        if (!Array.isArray(rows)) {
+            return [];
+        }
         return rows.map((row) => new ObjectDataRow(row, row.isSelected, row?.isSelectable));
     }
 
     convertToColumnsData(columns: any[]): ObjectDataColumn[] {
+        if (!Array.isArray(columns)) {
+            return [];
+        }
         return columns.map((column) => new ObjectDataColumn(column));
     }
 
@@ -714,7 +752,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     private isValidClickEvent(event: Event): boolean {
         if (event instanceof MouseEvent) {
-            return event.eventPhase === event.BUBBLING_PHASE;
+            return event.eventPhase === event.AT_TARGET || event.eventPhase === event.BUBBLING_PHASE;
         } else if (event instanceof KeyboardEvent) {
             return event.eventPhase === event.AT_TARGET;
         }
@@ -726,7 +764,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         if (this.isValidClickEvent(event) && column && column.sortable) {
             const current = this.data.getSorting();
             let newDirection = 'asc';
-            if (current && column.key === current.key) {
+            if ((column.sortingKey || column.key) === current?.key) {
                 newDirection = current.direction?.toLowerCase() === 'asc' ? 'desc' : 'asc';
             }
             this.sorting = [column.key, newDirection, { numeric: true }];
@@ -926,7 +964,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     getCellTooltip(row: DataRow, col: DataColumn): string {
-        if (row && col && col.formatTooltip) {
+        if (row && col?.formatTooltip) {
             const result: string = col.formatTooltip(row, col);
             if (result) {
                 return result;

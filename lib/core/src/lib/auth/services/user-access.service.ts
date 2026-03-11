@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { JwtHelperService } from './jwt-helper.service';
 import { ApplicationAccessModel } from '../models/application-access.model';
 import { AppConfigService } from '../../app-config/app-config.service';
@@ -24,10 +24,11 @@ import { AppConfigService } from '../../app-config/app-config.service';
     providedIn: 'root'
 })
 export class UserAccessService {
+    private readonly jwtHelperService = inject(JwtHelperService);
+    private readonly appConfigService = inject(AppConfigService);
+
     private globalAccess: string[];
     private applicationAccess: ApplicationAccessModel[];
-
-    constructor(private jwtHelperService: JwtHelperService, private appConfigService: AppConfigService) {}
 
     fetchUserAccess() {
         if (this.hasRolesInRealmAccess()) {

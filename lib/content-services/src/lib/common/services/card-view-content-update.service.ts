@@ -17,18 +17,19 @@
 
 import { UpdateNotification, CardViewBaseItemModel, CardViewUpdateService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Subject } from 'rxjs';
-import { BaseCardViewContentUpdate } from '../../interfaces/base-card-view-content-update.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class CardViewContentUpdateService implements BaseCardViewContentUpdate {
+export class CardViewContentUpdateService {
+    private readonly cardViewUpdateService = inject(CardViewUpdateService);
+
     itemUpdated$ = new Subject<UpdateNotification>();
     updatedAspect$ = new Subject<Node>();
 
-    constructor(private cardViewUpdateService: CardViewUpdateService) {
+    constructor() {
         this.linkVariables();
     }
 

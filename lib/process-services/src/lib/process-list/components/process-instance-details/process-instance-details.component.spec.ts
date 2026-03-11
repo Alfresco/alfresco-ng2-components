@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
@@ -39,8 +39,7 @@ describe('ProcessInstanceDetailsComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ProcessInstanceDetailsComponent],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }],
-            schemas: [NO_ERRORS_SCHEMA]
+            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         fixture = TestBed.createComponent(ProcessInstanceDetailsComponent);
         component = fixture.componentInstance;

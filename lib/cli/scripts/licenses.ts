@@ -18,14 +18,12 @@
  */
 
 import { argv, exit } from 'node:process';
+import { parseArgs } from 'node:util';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as checker from 'license-checker';
 import * as licenseList from 'spdx-license-list';
 import * as ejs from 'ejs';
-import { Command } from 'commander';
-
-const program = new Command();
 
 interface LicensesCommandArgs {
     package?: string;
@@ -103,19 +101,40 @@ function getPackageFile(packagePath: string): PackageInfo {
  * @returns void function
  */
 export default function main(_args: string[], workingDir: string) {
-    program
-        .description('Generate a licences report')
-        .usage('licenses [options]')
-        .option('-p, --package <path>', 'Path to package file (default: package.json in working directory)')
-        .option('-d, --outDir <dir>', 'Ouput directory (default: working directory)')
-        .parse(argv);
-
     if (argv.includes('-h') || argv.includes('--help')) {
-        program.outputHelp();
+        console.log(`
+Usage: licenses [options]
+
+Generate a licenses report
+
+Options:
+  -p, --package <path>  Path to package file (default: package.json in working directory)
+  -d, --outDir <dir>    Output directory (default: working directory)
+  -h, --help            Display help for command
+`);
         exit(0);
     }
 
-    const options: LicensesCommandArgs = program.opts();
+    const { values } = parseArgs({
+        args: argv.slice(2),
+        options: {
+            package: {
+                type: 'string',
+                short: 'p'
+            },
+            outDir: {
+                type: 'string',
+                short: 'd'
+            }
+        },
+        allowPositionals: true
+    });
+
+    const options: LicensesCommandArgs = {
+        package: values.package as string | undefined,
+        outDir: values.outDir as string | undefined
+    };
+
     let packagePath = path.resolve(workingDir, 'package.json');
 
     if (options.package) {

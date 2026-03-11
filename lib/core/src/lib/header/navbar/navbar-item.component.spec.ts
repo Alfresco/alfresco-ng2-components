@@ -16,9 +16,10 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { NavbarItemComponent } from './navbar-item.component';
-import { UnitTestingUtils } from '../../testing/unit-testing-utils';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
+import { UnitTestingUtils } from '@alfresco/adf-core';
 
 describe('NavbarItemComponent', () => {
     let component: NavbarItemComponent;
@@ -46,8 +47,11 @@ describe('NavbarItemComponent', () => {
         expect(button.textContent).toContain('Test Label');
     });
 
-    it('should bind routerLink', () => {
+    it('should navigate to routerLink on click', () => {
+        const navigateByUrlSpy = spyOn(TestBed.inject(Router), 'navigateByUrl');
+
+        button.click();
         fixture.detectChanges();
-        expect(button.getAttribute('ng-reflect-router-link')).toEqual('/expected-route');
+        expect(navigateByUrlSpy.calls.mostRecent().args[0].toString()).toBe('/expected-route');
     });
 });

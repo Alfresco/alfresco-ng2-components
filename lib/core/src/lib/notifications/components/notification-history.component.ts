@@ -15,21 +15,34 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, ChangeDetectorRef, Component, DestroyRef, inject, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    DestroyRef,
+    inject,
+    Input,
+    OnInit,
+    QueryList,
+    ViewChild,
+    ViewChildren,
+    ViewEncapsulation
+} from '@angular/core';
 import { NotificationService } from '../services/notification.service';
 import { NOTIFICATION_TYPE, NotificationModel } from '../models/notification.model';
-import { MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
+import { MatMenuItem, MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { StorageService } from '../../common/services/storage.service';
 import { PaginationModel } from '../../models/pagination.model';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButton, MatButtonModule, MatIconButton } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatListModule } from '@angular/material/list';
 import { NgForOf, NgIf } from '@angular/common';
 import { InitialUsernamePipe, TimeAgoPipe } from '../../pipes';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FocusKeyManager } from '@angular/cdk/a11y';
+import { IconModule } from '../../icon/icon.module';
 
 @Component({
     selector: 'adf-notification-history',
@@ -39,7 +52,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         MatButtonModule,
         MatMenuModule,
         TranslatePipe,
-        MatIconModule,
+        IconModule,
         MatBadgeModule,
         MatListModule,
         NgIf,
@@ -51,6 +64,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class NotificationHistoryComponent implements OnInit, AfterViewInit {
+    private readonly notificationService = inject(NotificationService);
+    private readonly storageService = inject(StorageService);
+    private readonly cd = inject(ChangeDetectorRef);
+
     public static MAX_NOTIFICATION_STACK_LENGTH = 100;
     public static NOTIFICATION_STORAGE = 'notification-history';
 
@@ -73,9 +90,18 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
     paginatedNotifications: NotificationModel[] = [];
     pagination: PaginationModel;
 
+    @ViewChild('markAsReadButton')
+    private readonly markAsReadButton: MatIconButton;
+
+    @ViewChild('loadMoreButton')
+    private readonly loadMoreButton: MatButton;
+
+    @ViewChildren(MatMenuItem)
+    private readonly menuItems: QueryList<MatMenuItem>;
+
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private notificationService: NotificationService, public storageService: StorageService, public cd: ChangeDetectorRef) {}
+    private focusKeyManager: FocusKeyManager<MatIconButton | MatMenuItem | MatButton>;
 
     ngOnInit() {
         this.notifications = JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)) || [];
@@ -108,6 +134,7 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
 
     onMenuOpened() {
         this.createPagination();
+        setTimeout(() => this.initializeFocusManager(0));
     }
 
     markAsRead() {
@@ -132,6 +159,7 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
         this.pagination.skipCount = this.pagination.maxItems + this.pagination.skipCount;
         this.pagination.hasMoreItems = this.notifications.length > this.pagination.skipCount;
         this.paginatedNotifications = this.notifications.slice(0, this.pagination.skipCount);
+        setTimeout(() => this.initializeFocusManager(this.focusKeyManager.activeItemIndex));
     }
 
     hasMoreNotifications(): boolean {
@@ -144,5 +172,24 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
             notification.clickCallBack(notification.args);
             this.trigger.closeMenu();
         }
+    }
+
+    manageFocus(event: KeyboardEvent): void {
+        if (event.key === 'ArrowUp') {
+            this.focusKeyManager.setPreviousItemActive();
+            event.stopPropagation();
+        } else if (event.key === 'ArrowDown') {
+            event.stopPropagation();
+            this.focusKeyManager.setNextItemActive();
+        }
+    }
+
+    private initializeFocusManager(activeIndex: number): void {
+        this.focusKeyManager = new FocusKeyManager([
+            this.markAsReadButton,
+            ...this.menuItems,
+            ...(this.hasMoreNotifications() ? [this.loadMoreButton] : [])
+        ]).withWrap();
+        this.focusKeyManager.setActiveItem(activeIndex);
     }
 }

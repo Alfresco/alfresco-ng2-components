@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { FormFieldOption } from '@alfresco/adf-core';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { ProcessDefinitionsApi } from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
@@ -27,6 +27,8 @@ import { DynamicTableColumnOption } from '../widgets/dynamic-table/editors/model
     providedIn: 'root'
 })
 export class ProcessDefinitionService {
+    private readonly apiService = inject(AlfrescoApiService);
+
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
@@ -35,8 +37,6 @@ export class ProcessDefinitionService {
         this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.apiService.getInstance());
         return this._processDefinitionsApi;
     }
-
-    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Gets values of fields populated by a REST backend using a process ID.
@@ -88,8 +88,8 @@ export class ProcessDefinitionService {
             errMsg = error.message
                 ? error.message
                 : error.status
-                ? `${error.status} - ${error.statusText}`
-                : ProcessDefinitionService.GENERIC_ERROR_MESSAGE;
+                  ? `${error.status} - ${error.statusText}`
+                  : ProcessDefinitionService.GENERIC_ERROR_MESSAGE;
         }
         return throwError(errMsg);
     }

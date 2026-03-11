@@ -1414,9 +1414,9 @@ export const customWidgetForm = {
                         ],
                         '2': [
                             {
-                                id: 'bananaforevah0k8gui',
-                                name: 'bananaforevah',
-                                type: 'bananaforevah',
+                                id: 'banana0k8gui',
+                                name: 'banana',
+                                type: 'banana',
                                 required: true,
                                 readOnly: false,
                                 isCustomType: true,
@@ -1478,9 +1478,9 @@ export const customWidgetFormWithVisibility = {
                         ],
                         '2': [
                             {
-                                id: 'bananaforevah0k8gui',
-                                name: 'bananaforevah',
-                                type: 'bananaforevah',
+                                id: 'banana0k8gui',
+                                name: 'banana',
+                                type: 'banana',
                                 required: true,
                                 readOnly: false,
                                 isCustomType: true,
@@ -2312,6 +2312,147 @@ export const mockSectionVisibilityForm = {
         outcomes: [],
         metadata: {},
         variables: []
+    }
+};
+export const mockRepeatableSectionForm01 = {
+    formRepresentation: {
+        id: 'form-c3ac7a6b-88c8-4111-9f04-e9cc28f352d9',
+        name: 'repeatable-section-mock',
+        key: 'repeatable-section-mock-rthbq',
+        description: '',
+        version: 0,
+        formDefinition: {
+            tabs: [],
+            fields: [
+                {
+                    id: 'RepeatableSection0tbw2y',
+                    name: 'Repeatable Section',
+                    type: 'repeatable-section',
+                    tab: null,
+                    params: {
+                        initialNumberOfRows: 2,
+                        allowInitialRowsDelete: true,
+                        maxNumberOfRows: 5
+                    },
+                    numberOfColumns: 2,
+                    fields: {
+                        '1': [
+                            {
+                                id: 'Text0wwp7n',
+                                name: 'Text',
+                                type: 'text',
+                                readOnly: false,
+                                required: false,
+                                colspan: 1,
+                                rowspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ],
+                        '2': [
+                            {
+                                id: 'Integer0rzkwq',
+                                name: 'Integer',
+                                type: 'integer',
+                                readOnly: false,
+                                colspan: 1,
+                                rowspan: 1,
+                                placeholder: null,
+                                minValue: null,
+                                maxValue: null,
+                                required: false,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            outcomes: [],
+            metadata: {},
+            variables: []
+        }
+    }
+};
+
+export const mockRepeatableSectionForm02 = {
+    formRepresentation: {
+        id: 'form-c3ac7a6b-88c8-4111-9f04-e9cc28f352d9',
+        name: 'repeatable-section-mock',
+        key: 'repeatable-section-mock-rthbq',
+        description: '',
+        version: 0,
+        formDefinition: {
+            tabs: [],
+            fields: [
+                {
+                    id: 'RepeatableSection0tbw2y',
+                    name: 'Repeatable Section',
+                    type: 'repeatable-section',
+                    tab: null,
+                    params: {
+                        initialNumberOfRows: 2,
+                        allowInitialRowsDelete: false,
+                        maxNumberOfRows: 5
+                    },
+                    numberOfColumns: 2,
+                    fields: {
+                        '1': [
+                            {
+                                id: 'Text0wwp7n',
+                                name: 'Text',
+                                type: 'text',
+                                readOnly: false,
+                                required: false,
+                                colspan: 1,
+                                rowspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ],
+                        '2': [
+                            {
+                                id: 'Integer0rzkwq',
+                                name: 'Integer',
+                                type: 'integer',
+                                readOnly: false,
+                                colspan: 1,
+                                rowspan: 1,
+                                placeholder: null,
+                                minValue: null,
+                                maxValue: null,
+                                required: false,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            outcomes: [],
+            metadata: {},
+            variables: []
+        }
     }
 };
 

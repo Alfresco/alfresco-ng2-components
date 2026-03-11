@@ -55,7 +55,6 @@ describe('Oauth2 Implicit flow test', () => {
                     oauth2: {
                         host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
-                        secret: '',
                         scope: 'openid',
                         implicitFlow: true,
                         redirectUri: undefined
@@ -77,7 +76,6 @@ describe('Oauth2 Implicit flow test', () => {
                 oauth2: {
                     host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
-                    secret: '',
                     scope: 'openid',
                     implicitFlow: true,
                     redirectUri: 'redirectUri'
@@ -101,7 +99,6 @@ describe('Oauth2 Implicit flow test', () => {
                 oauth2: {
                     host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
-                    secret: '',
                     scope: 'openid',
                     implicitFlow: true,
                     redirectUri: '#/redirectUri'
@@ -129,7 +126,6 @@ describe('Oauth2 Implicit flow test', () => {
                 oauth2: {
                     host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
-                    secret: '',
                     scope: 'openid',
                     implicitFlow: true,
                     redirectUri: 'redirectUri'
@@ -161,7 +157,6 @@ describe('Oauth2 Implicit flow test', () => {
                 oauth2: {
                     host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
-                    secret: '',
                     scope: 'openid',
                     implicitFlow: true,
                     redirectUri: 'redirectUri'

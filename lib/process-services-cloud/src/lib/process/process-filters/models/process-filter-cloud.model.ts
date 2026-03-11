@@ -47,6 +47,9 @@ export class ProcessFilterCloudModel {
     completedDateType: DateCloudFilterType | null;
     startedDateType: DateCloudFilterType | null;
     suspendedDateType: DateCloudFilterType | null;
+    includeSubprocesses: boolean | null;
+    includeUnlinkedProcesses: boolean | null;
+    includeLinkedProcesses: boolean | null;
     completedDate: Date | null;
     environmentId: string | null;
     showCounter: boolean;
@@ -58,11 +61,10 @@ export class ProcessFilterCloudModel {
     initiators: string[] | null;
     appVersions: string[] | null;
     statuses: string[] | null;
-    excludeByProcessCategoryName: string | null;
 
     processVariableFilters?: ProcessVariableFilterModel[];
 
-    private dateRangeFilterService = new DateRangeFilterService();
+    private readonly dateRangeFilterService = new DateRangeFilterService();
     private _completedFrom: string | null;
     private _completedTo: string | null;
     private _startFrom: string | null;
@@ -111,14 +113,16 @@ export class ProcessFilterCloudModel {
         this.completedFrom = obj._completedFrom || null;
         this.completedTo = obj._completedTo || null;
         this.completedDate = obj.completedDate || null;
-        this.excludeByProcessCategoryName = obj.excludeByProcessCategoryName || null;
         this._suspendedFrom = obj._suspendedFrom || null;
         this._suspendedTo = obj._suspendedTo || null;
+        this.includeSubprocesses = obj.includeSubprocesses || null;
+        this.includeUnlinkedProcesses = obj.includeUnlinkedProcesses || null;
+        this.includeLinkedProcesses = obj.includeLinkedProcesses || null;
 
         this.initArrayProperties(obj);
     }
 
-    private initArrayProperties(obj) {
+    private initArrayProperties(obj: ProcessFilterCloudModel) {
         if (obj.processDefinitionNames) {
             this.processDefinitionNames = obj.processDefinitionNames;
         } else {

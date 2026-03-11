@@ -22,17 +22,17 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search-form',
-    imports: [CommonModule, MatButtonModule, TranslatePipe, MatMenuModule, MatIconModule],
+    imports: [CommonModule, MatButtonModule, TranslatePipe, MatMenuModule, IconModule],
     templateUrl: './search-form.component.html',
     styleUrls: ['./search-form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFormComponent {
-    private queryBuilder = inject(SearchQueryBuilderService);
+    private readonly queryBuilder = inject(SearchQueryBuilderService);
 
     searchForms$ = this.queryBuilder.searchForms;
 
@@ -41,7 +41,7 @@ export class SearchFormComponent {
     formChange: EventEmitter<SearchForm> = new EventEmitter<SearchForm>();
 
     onSelectionChange(form: SearchForm) {
-        this.queryBuilder.updateSelectedConfiguration(form.index);
+        this.queryBuilder.updateSelectedConfiguration(form.id);
         this.formChange.emit(form);
     }
 

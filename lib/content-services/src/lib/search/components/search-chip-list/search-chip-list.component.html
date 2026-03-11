@@ -17,7 +17,7 @@
             [removable]="true"
             (removed)="facetFiltersService.unselectFacetBucket(selection.field, selection.bucket)">
             {{ (selection.bucket.display || selection.bucket.label) | translate }}
-            <mat-icon class="adf-search-chip-list-item-remove" matChipRemove>cancel</mat-icon>
+            <mat-icon class="adf-search-chip-list-item-remove" adf-icon="cancel" matChipRemove />
         </mat-chip-option>
     </ng-container>
 </mat-chip-listbox>

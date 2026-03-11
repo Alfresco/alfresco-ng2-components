@@ -28,7 +28,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { IconModule } from '@alfresco/adf-core';
 
 export interface SearchRadioOption {
     name: string;
@@ -37,7 +37,7 @@ export interface SearchRadioOption {
 
 @Component({
     selector: 'adf-search-radio',
-    imports: [CommonModule, MatRadioModule, FormsModule, TranslatePipe, MatButtonModule, MatIconModule],
+    imports: [CommonModule, MatRadioModule, FormsModule, TranslatePipe, MatButtonModule, IconModule],
     templateUrl: './search-radio.component.html',
     styleUrls: ['./search-radio.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -86,7 +86,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
             .asObservable()
             .pipe(first())
             .subscribe((filtersQueries) => {
-                if (filtersQueries[this.id]) {
+                if (filtersQueries?.[this.id]) {
                     this.value = filtersQueries[this.id];
                     this.submitValues(false);
                 } else {

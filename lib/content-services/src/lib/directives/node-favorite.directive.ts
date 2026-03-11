@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/no-input-rename */
 
-import { Directive, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Directive, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
 import { FavoriteBodyCreate, NodeEntry, SharedLinkEntry, Node, SharedLink, FavoritesApi } from '@alfresco/js-api';
 import { Observable, from, forkJoin, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -30,6 +30,9 @@ import { NotificationService } from '@alfresco/adf-core';
     exportAs: 'adfFavorite'
 })
 export class NodeFavoriteDirective implements OnChanges {
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
+    private readonly notificationService = inject(NotificationService);
+
     favorites: any[] = [];
 
     private _favoritesApi: FavoritesApi;
@@ -52,8 +55,6 @@ export class NodeFavoriteDirective implements OnChanges {
     onClick() {
         this.toggleFavorite();
     }
-
-    constructor(private readonly alfrescoApiService: AlfrescoApiService, private readonly notificationService: NotificationService) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (!changes.selection.currentValue.length) {

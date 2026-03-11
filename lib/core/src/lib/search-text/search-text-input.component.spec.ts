@@ -40,7 +40,7 @@ describe('SearchTextInputComponent', () => {
         debugElement = fixture.debugElement;
         testingUtils = new UnitTestingUtils(debugElement);
         userPreferencesService = TestBed.inject(UserPreferencesService);
-        component.focusListener = new Subject<any>();
+        component.focusListener = new Subject();
     });
 
     afterEach(() => {
@@ -80,6 +80,7 @@ describe('SearchTextInputComponent', () => {
 
     describe('search button', () => {
         let searchButton: DebugElement;
+
         beforeEach(fakeAsync(() => {
             fixture.detectChanges();
             tick(100);
@@ -89,13 +90,14 @@ describe('SearchTextInputComponent', () => {
 
         it('should NOT display a autocomplete list control when configured not to', fakeAsync(() => {
             component.subscriptAnimationState.value = 'active';
+            component.showClearButton = true;
             fixture.detectChanges();
 
             tick(100);
 
             expect(component.subscriptAnimationState.value).toBe('active');
 
-            searchButton.triggerEventHandler('click', null);
+            testingUtils.clickByDataAutomationId('adf-clear-search-button');
             fixture.detectChanges();
             tick(100);
             fixture.detectChanges();
@@ -115,30 +117,6 @@ describe('SearchTextInputComponent', () => {
             tick(100);
 
             expect(component.subscriptAnimationState.value).toBe('active');
-            discardPeriodicTasks();
-        }));
-
-        it('Search button should not change the input state too often', fakeAsync(() => {
-            component.subscriptAnimationState.value = 'active';
-            fixture.detectChanges();
-
-            tick(100);
-
-            expect(component.subscriptAnimationState.value).toBe('active');
-            searchButton.triggerEventHandler('click', null);
-            fixture.detectChanges();
-
-            tick(100);
-
-            searchButton.triggerEventHandler('click', null);
-            fixture.detectChanges();
-
-            tick(100);
-            fixture.detectChanges();
-
-            tick(100);
-
-            expect(component.subscriptAnimationState.value).toBe('inactive');
             discardPeriodicTasks();
         }));
 
@@ -186,7 +164,7 @@ describe('SearchTextInputComponent', () => {
         function testMarginValue(isLtr: boolean): void {
             userPreferencesService.setWithoutStore('textOrientation', isLtr ? 'ltr' : 'rtl');
             clickSearchButton();
-            const expectedResult = isLtr ? { 'margin-left': 13 } : { 'margin-right': 13 };
+            const expectedResult = isLtr ? { 'margin-left': 0 } : { 'margin-right': 0 };
             expect(component.subscriptAnimationState.params).toEqual(expectedResult);
             discardPeriodicTasks();
         }
@@ -206,8 +184,7 @@ describe('SearchTextInputComponent', () => {
          */
         function testTransformValue(isLtr: boolean): void {
             userPreferencesService.setWithoutStore('textOrientation', isLtr ? 'ltr' : 'rtl');
-            component.subscriptAnimationState.value = 'active';
-            clickSearchButton();
+            component.subscriptAnimationState.value = 'inactive';
             const expectedValue = isLtr ? 'translateX(100%)' : 'translateX(-100%)';
             expect(component.subscriptAnimationState.params).toEqual({ transform: expectedValue });
             discardPeriodicTasks();
@@ -364,7 +341,7 @@ describe('SearchTextInputComponent', () => {
             component.expandable = true;
             component.showClearButton = true;
             fixture.detectChanges();
-            component.subscriptAnimationState.value = 'active';
+            component.subscriptAnimationState.value = 'inactive';
             fixture.detectChanges();
             tick(200);
         }));
@@ -387,6 +364,8 @@ describe('SearchTextInputComponent', () => {
         });
 
         it('should contain correct translation key for clear button title', () => {
+            component.subscriptAnimationState.value = 'active';
+            fixture.detectChanges();
             const clearButton = testingUtils.getByDataAutomationId('adf-clear-search-button');
             expect(clearButton.nativeElement.getAttribute('title')).toBe('CORE.SEARCH.FILTER.BUTTONS.CLOSE');
         });

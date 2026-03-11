@@ -14,9 +14,11 @@
     "backend",
     "baseitem",
     "BASESHAREURL",
+    "berseria",
     "booleanvisibility",
     "booleanvisibilityprocess",
     "boolitem",
+    "BPMECM",
     "BPMHOST",
     "cardview",
     "checkboxes",
@@ -47,6 +49,7 @@
     "dryrun",
     "ECMBPM",
     "ECMHOST",
+    "edjs",
     "Examinate",
     "exif",
     "filedata",
@@ -86,7 +89,6 @@
     "mouseenter",
     "multiselect",
     "mysites",
-    "nginx",
     "numbervisibilityprocess",
     "OAUTHCONFIG",
     "oidc",
@@ -121,6 +123,7 @@
     "Theming",
     "transcluded",
     "transclusion",
+    "triggerable",
     "truthy",
     "typeahead",
     "typeahed",
@@ -134,6 +137,7 @@
     "uploader",
     "uploadfileform",
     "userinfo",
+    "validatable",
     "validators",
     "waypoint",
     "waypoints",
@@ -141,11 +145,8 @@
     "Whitespaces",
     "xdescribe",
     "xsrf",
-    "BPMECM",
-    "berseria",
     "zestiria",
-    "validatable",
-    "edjs"
+    "webscript"
   ],
   "dictionaries": [
     "html",
@@ -156,7 +157,8 @@
   ],
   "ignorePaths": [
     "lib/{content-services,core,extensions,insights,process-services}/**/*.spec.ts",
-    "lib/{content-services,core,extensions,insights,process-services}/**/*.mock.ts"
+    "lib/{content-services,core,extensions,insights,process-services}/**/*.mock.ts",
+    "**/*.stories.ts"
   ],
   "ignoreRegExpList": [
     "(\"|'|`)((?:\\\\1|(?:(?!\\1).))*)\\1"

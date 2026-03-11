@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, inject } from '@angular/core';
 import { DiagramElementModel } from '../models/diagram/diagram-element.model';
 import { DiagramModel } from '../models/diagram/diagram.model';
 import { DiagramColorService } from '../services/diagram-color.service';
@@ -73,6 +73,10 @@ const PADDING_HEIGHT: number = 60;
     templateUrl: './diagram.component.html'
 })
 export class DiagramComponent implements OnChanges {
+    private readonly diagramColorService = inject(DiagramColorService);
+    private readonly raphaelService = inject(RaphaelService);
+    private readonly diagramsService = inject(DiagramsService);
+
     /** processDefinitionId. */
     @Input()
     processDefinitionId: any;
@@ -110,8 +114,6 @@ export class DiagramComponent implements OnChanges {
     error = new EventEmitter();
 
     diagram: DiagramModel;
-
-    constructor(private diagramColorService: DiagramColorService, private raphaelService: RaphaelService, private diagramsService: DiagramsService) {}
 
     ngOnChanges() {
         this.reset();

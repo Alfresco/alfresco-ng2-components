@@ -1,3 +1,5 @@
+@use '../../../styles/mat-selectors' as ms;
+
 $adf-columns-selector-space: 12px;
 
 @mixin adf-columns-selector-side-padding {
@@ -8,101 +10,82 @@ $adf-columns-selector-space: 12px;
     padding: $adf-columns-selector-space 0;
 }
 
-.adf-columns-selector {
-    @include adf-columns-selector-top-bottom-padding;
+adf-datatable-column-selector {
+    .adf-columns-selector {
+        @include adf-columns-selector-top-bottom-padding;
 
-    min-width: 277px;
+        min-width: 277px;
 
-    &-header {
-        @include adf-columns-selector-side-padding;
+        &-header {
+            @include adf-columns-selector-side-padding;
 
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    &-header-label {
-        font-size: var(--theme-body-1-font-size);
-    }
-
-    &-list-container {
-        max-height: 350px;
-        overflow: hidden auto;
-    }
-
-    &-list-item {
-        margin-top: 10px;
-
-        &:hover {
-            background-color: var(--adf-theme-background-hover-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-    }
 
-    &-list-content {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: block;
-        width: 210px;
-    }
-
-    &-subtitle {
-        color: var(--adf-theme-foreground-text-color);
-        font-size: var(--theme-caption-font-size);
-        opacity: 0.6;
-        display: flex;
-        column-gap: 3px;
-        align-items: center;
-    }
-
-    &-subtitle-icon {
-        margin-top: 3px;
-        height: var(--theme-caption-font-size);
-        width: var(--theme-caption-font-size);
-        font-size: var(--theme-caption-font-size);
-    }
-
-    &-column-checkbox {
-        padding: 0 20px;
-    }
-
-    &-footer {
-        @include adf-columns-selector-side-padding;
-
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    &-divider {
-        margin: 16px 0;
-    }
-
-    &-search-input-container {
-        @include adf-columns-selector-side-padding;
-
-        position: relative;
-        display: flex;
-        align-items: center;
-        margin-bottom: 15px;
-    }
-
-    &-search-input {
-        padding: 10px 10px 10px 29px;
-        width: 100%;
-        outline: 0;
-        border-radius: 6px;
-        border: 1px solid var(--theme-background-color);
-        background: var(--theme-background-color);
-
-        &:focus {
-            outline: none;
+        &-header-label {
+            font-size: var(--theme-body-1-font-size);
         }
-    }
 
-    &-search-input-icon {
-        position: absolute;
-        left: 17px;
-        top: 10px;
-        font-size: var(--theme-adf-icon-1-font-size);
+        &-list-container {
+            max-height: 350px;
+            overflow: hidden auto;
+            margin-left: -16px;
+        }
+
+        &-list-content {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+            width: 210px;
+            color: var(--theme-secondary-text);
+        }
+
+        &-subtitle {
+            color: var(--adf-theme-foreground-text-color);
+            font-size: var(--theme-caption-font-size);
+            opacity: 0.6;
+            display: flex;
+            column-gap: 3px;
+            align-items: center;
+        }
+
+        &-subtitle-icon {
+            margin-top: 3px;
+            height: var(--theme-caption-font-size);
+            width: var(--theme-caption-font-size);
+            font-size: var(--theme-caption-font-size);
+        }
+
+        &-column-checkbox {
+            padding: 0 20px;
+            display: flex;
+            flex-direction: row-reverse;
+            padding-left: 0;
+            align-items: center;
+            height: auto;
+
+            #{ms.$mat-list-item-end} {
+                margin-right: -5px;
+            }
+        }
+
+        &-footer {
+            @include adf-columns-selector-side-padding;
+
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        &-divider {
+            margin: 16px 0;
+        }
+
+        &-search-input-form {
+            display: flex;
+            padding: 10px 12px 0;
+        }
     }
 }

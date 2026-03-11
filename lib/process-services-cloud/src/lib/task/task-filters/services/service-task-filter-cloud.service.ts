@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
 import { switchMap, map } from 'rxjs/operators';
@@ -27,14 +27,11 @@ import { IdentityUserService } from '../../../people/services/identity-user.serv
     providedIn: 'root'
 })
 export class ServiceTaskFilterCloudService {
-    private filtersSubject = new BehaviorSubject<ServiceTaskFilterCloudModel[]>([]);
-    filters$ = this.filtersSubject.asObservable();
+    private readonly filtersSubject = new BehaviorSubject<ServiceTaskFilterCloudModel[]>([]);
+    readonly filters$ = this.filtersSubject.asObservable();
 
-    constructor(
-        private identityUserService: IdentityUserService,
-        @Inject(TASK_FILTERS_SERVICE_TOKEN)
-        public preferenceService: PreferenceCloudServiceInterface
-    ) {}
+    protected readonly preferenceService = inject<PreferenceCloudServiceInterface>(TASK_FILTERS_SERVICE_TOKEN);
+    protected readonly identityUserService = inject(IdentityUserService);
 
     /**
      * Creates and returns the default task filters for an app.
@@ -242,7 +239,7 @@ export class ServiceTaskFilterCloudService {
      * @param appName Name of the target app
      * @returns String of task filters preference key
      */
-    private prepareKey(appName: string): string {
+    protected prepareKey(appName: string): string {
         return `service-task-filters-${appName}-${this.identityUserService.getCurrentUserInfo().username}`;
     }
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { inject, Injectable, RendererFactory2 } from '@angular/core';
+import { inject, Injectable, RendererFactory2, Signal } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
@@ -25,22 +25,28 @@ import { LanguageItem } from './language-item.interface';
 import { DOCUMENT } from '@angular/common';
 import { Directionality, Direction } from '@angular/cdk/bidi';
 import { DEFAULT_LANGUAGE_LIST } from '../models/default-languages.model';
+import { toSignal } from '@angular/core/rxjs-interop';
 
-// eslint-disable-next-line no-shadow
-export enum UserPreferenceValues {
-    PaginationSize = 'paginationSize',
-    Locale = 'locale',
-    SupportedPageSizes = 'supportedPageSizes',
-    ExpandedSideNavStatus = 'expandedSidenav'
-}
+export const UserPreferenceValues = {
+    PaginationSize: 'paginationSize',
+    Locale: 'locale',
+    SupportedPageSizes: 'supportedPageSizes',
+    ExpandedSideNavStatus: 'expandedSidenav'
+} as const;
+
+export type UserPreferenceValues = (typeof UserPreferenceValues)[keyof typeof UserPreferenceValues];
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserPreferencesService {
-    private document = inject(DOCUMENT);
-    private rendererFactory = inject(RendererFactory2);
-    private directionality = inject(Directionality);
+    translate = inject(TranslateService);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly storage = inject(StorageService);
+
+    private readonly document = inject(DOCUMENT);
+    private readonly rendererFactory = inject(RendererFactory2);
+    private readonly directionality = inject(Directionality);
 
     defaults = {
         paginationSize: 25,
@@ -49,13 +55,77 @@ export class UserPreferencesService {
         expandedSidenav: true
     };
 
-    private userPreferenceStatus: any = this.defaults;
-    private onChangeSubject: BehaviorSubject<any>;
+    private userPreferenceStatus: any = { ...this.defaults };
+    private readonly onChangeSubject: BehaviorSubject<any>;
     onChange: Observable<any>;
 
-    constructor(public translate: TranslateService, private appConfig: AppConfigService, private storage: StorageService) {
+    /**
+     * Observable that emits the current locale whenever it changes.
+     * This is a convenience property that simplifies subscribing to locale changes.
+     *
+     * @example Observable usage (requires manual unsubscription):
+     * ```typescript
+     * constructor(private userPreferencesService: UserPreferencesService) {
+     *   this.userPreferencesService.locale$
+     *     .pipe(takeUntilDestroyed())
+     *     .subscribe(locale => {
+     *       this.currentLocale = locale;
+     *     });
+     * }
+     * ```
+     *
+     * @example Signal usage (automatic cleanup, recommended):
+     * ```typescript
+     * export class MyComponent {
+     *   private userPreferencesService = inject(UserPreferencesService);
+     *   currentLocale = this.userPreferencesService.localeSignal; // Signal - no subscription needed!
+     * }
+     * ```
+     */
+    readonly locale$: Observable<string>;
+
+    /**
+     * Signal that provides the current locale value.
+     * Automatically handles cleanup - no need for takeUntilDestroyed or manual unsubscription.
+     * This is the recommended way to access locale in components.
+     */
+    readonly localeSignal: Signal<string>;
+
+    /**
+     * Observable that emits the current pagination size whenever it changes.
+     */
+    readonly paginationSize$: Observable<number>;
+
+    /**
+     * Signal that provides the current pagination size value.
+     */
+    readonly paginationSizeSignal: Signal<number>;
+
+    /**
+     * Observable that emits the supported page sizes whenever they change.
+     */
+    readonly supportedPageSizes$: Observable<number[]>;
+
+    /**
+     * Signal that provides the supported page sizes array.
+     */
+    readonly supportedPageSizesSignal: Signal<number[]>;
+
+    constructor() {
         this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
         this.onChange = this.onChangeSubject.asObservable();
+
+        // Initialize convenience observables
+        this.locale$ = this.select<string>(UserPreferenceValues.Locale);
+        this.paginationSize$ = this.select<number>(UserPreferenceValues.PaginationSize);
+        this.supportedPageSizes$ = this.select<string>(UserPreferenceValues.SupportedPageSizes).pipe(
+            map((value) => (value ? JSON.parse(value) : this.defaults.supportedPageSizes))
+        );
+
+        // Initialize convenience signals (automatically handle cleanup)
+        this.localeSignal = toSignal(this.locale$, { initialValue: this.defaults.locale });
+        this.paginationSizeSignal = toSignal(this.paginationSize$, { initialValue: this.defaults.paginationSize });
+        this.supportedPageSizesSignal = toSignal(this.supportedPageSizes$, { initialValue: this.defaults.supportedPageSizes });
 
         this.appConfig.onLoad.subscribe(() => {
             this.initUserPreferenceStatus();
@@ -71,19 +141,48 @@ export class UserPreferencesService {
 
     private initUserPreferenceStatus() {
         this.initUserLanguage();
-        this.set(UserPreferenceValues.PaginationSize, this.paginationSize);
-        this.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify(this.supportedPageSizes));
+        this.initPaginationPreferences();
+    }
+
+    private initPaginationPreferences() {
+        // Check if values are already in storage
+        const storedPaginationSize = this.get(UserPreferenceValues.PaginationSize);
+        const storedSupportedPageSizes = this.get(UserPreferenceValues.SupportedPageSizes);
+
+        if (storedPaginationSize) {
+            // Already in storage - just update in-memory state
+            this.setWithoutStore(UserPreferenceValues.PaginationSize, Number(storedPaginationSize));
+        } else {
+            // Not in storage - get from config and save
+            const paginationSize = this.appConfig.get('pagination.size', this.defaults.paginationSize);
+            this.set(UserPreferenceValues.PaginationSize, paginationSize);
+        }
+
+        if (storedSupportedPageSizes) {
+            // Already in storage - just update in-memory state
+            this.setWithoutStore(UserPreferenceValues.SupportedPageSizes, storedSupportedPageSizes);
+        } else {
+            // Not in storage - get from config and save
+            const supportedPageSizes = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
+            this.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify(supportedPageSizes));
+        }
     }
 
     private initUserLanguage() {
-        if (this.locale || this.appConfig.get<string>(UserPreferenceValues.Locale)) {
-            const locale = this.locale || this.getDefaultLocale();
+        const storedLocale = this.get(UserPreferenceValues.Locale);
+        const configLocale = this.appConfig.get<string>(UserPreferenceValues.Locale);
 
-            this.set(UserPreferenceValues.Locale, locale);
-            this.set('textOrientation', this.getLanguageByKey(locale).direction || 'ltr');
+        if (storedLocale) {
+            // Locale already in storage - just update in-memory state, don't re-save
+            this.setWithoutStore(UserPreferenceValues.Locale, storedLocale);
+            this.setWithoutStore('textOrientation', this.getLanguageByKey(storedLocale).direction || 'ltr');
+        } else if (configLocale) {
+            // Locale from config but not in storage - save to storage
+            this.set(UserPreferenceValues.Locale, configLocale);
+            this.set('textOrientation', this.getLanguageByKey(configLocale).direction || 'ltr');
         } else {
-            const locale = this.locale || this.getDefaultLocale();
-
+            // No locale anywhere - use default, don't save to storage
+            const locale = this.getDefaultLocale();
             this.setWithoutStore(UserPreferenceValues.Locale, locale);
             this.setWithoutStore('textOrientation', this.getLanguageByKey(locale).direction || 'ltr');
         }
@@ -229,7 +328,7 @@ export class UserPreferencesService {
      * @returns locale name
      */
     get locale(): string {
-        return this.get(UserPreferenceValues.Locale);
+        return this.get(UserPreferenceValues.Locale) || this.getDefaultLocale();
     }
 
     set locale(value: string) {

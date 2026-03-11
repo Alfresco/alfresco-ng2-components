@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular/core';
+import { AfterContentInit, ContentChild, Directive, TemplateRef, inject } from '@angular/core';
 import { LoginComponent } from '../components/login/login.component';
 
 @Directive({
     selector: 'adf-login-footer'
 })
 export class LoginFooterDirective implements AfterContentInit {
+    private readonly alfrescoLoginComponent = inject(LoginComponent);
+
     @ContentChild(TemplateRef)
     template: any;
-
-    constructor(private alfrescoLoginComponent: LoginComponent) {}
 
     ngAfterContentInit() {
         this.alfrescoLoginComponent.footerTemplate = this.template;

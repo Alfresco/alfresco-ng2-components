@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldModel, FormFieldOption, FormFieldTypes, FormModel } from '@alfresco/adf-core';
+import { FormFieldModel, FormFieldOption, FormFieldTypes, FormModel, FormService } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { RadioButtonsCloudWidgetComponent } from './radio-buttons-cloud.widget';
 import { of, throwError } from 'rxjs';
@@ -29,6 +29,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
     let fixture: ComponentFixture<RadioButtonsCloudWidgetComponent>;
     let widget: RadioButtonsCloudWidgetComponent;
     let formCloudService: FormCloudService;
+    let formService: FormService;
     let formUtilsService: FormUtilsService;
     let element: HTMLElement;
     let loader: HarnessLoader;
@@ -50,10 +51,29 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         formCloudService = TestBed.inject(FormCloudService);
         formUtilsService = TestBed.inject(FormUtilsService);
         fixture = TestBed.createComponent(RadioButtonsCloudWidgetComponent);
+        formService = fixture.debugElement.injector.get(FormService);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
         loader = TestbedHarnessEnvironment.loader(fixture);
         widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>' });
+    });
+
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            eventSpy = spyOn(widget, 'event').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {});
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
     });
 
     it('should update form on values fetched', () => {
@@ -273,7 +293,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
             options: restOption
         });
         fixture.detectChanges();
-        const formValueSpy = spyOn(widget.formService.formRulesEvent, 'next');
+        const formValueSpy = spyOn(formService.formRulesEvent, 'next');
         const radioButton = await loader.getHarness(MatRadioButtonHarness.with({ label: 'opt-name-1' }));
         await radioButton.check();
 

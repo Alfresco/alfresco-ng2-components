@@ -17,7 +17,7 @@
 
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
-import { ChangeDetectorRef, ElementRef } from '@angular/core';
+import { ChangeDetectorRef, ElementRef, TemplateRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ViewerRenderComponent } from '../components/viewer-render/viewer-render.component';
 import { ViewerExtensionDirective } from './viewer-extension.directive';
@@ -50,7 +50,7 @@ describe('ExtensionViewerDirective', () => {
         });
         extensionViewerDirective = TestBed.inject(ViewerExtensionDirective);
         viewerRenderer = TestBed.inject(ViewerRenderComponent);
-        extensionViewerDirective.templateModel = { template: '', isVisible: false };
+        extensionViewerDirective.templateModel = { template: {} as TemplateRef<unknown>, isVisible: false };
     });
 
     it('is defined', () => {

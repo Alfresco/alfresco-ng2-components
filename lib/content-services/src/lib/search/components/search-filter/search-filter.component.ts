@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { FacetFieldBucket } from '../../models/facet-field-bucket.interface';
 import { FacetField } from '../../models/facet-field.interface';
@@ -47,6 +47,9 @@ import { SearchFacetTabbedContentComponent } from '../search-filter-chips';
     host: { class: 'adf-search-filter' }
 })
 export class SearchFilterComponent {
+    queryBuilder = inject(SearchQueryBuilderService);
+    facetFiltersService = inject(SearchFacetFiltersService);
+
     /** Toggles whether to show or not the context facet filters. */
     @Input()
     showContextFacets: boolean = true;
@@ -57,7 +60,9 @@ export class SearchFilterComponent {
     };
     displayResetButton: boolean;
 
-    constructor(public queryBuilder: SearchQueryBuilderService, public facetFiltersService: SearchFacetFiltersService) {
+    constructor() {
+        const queryBuilder = this.queryBuilder;
+
         if (queryBuilder.config?.facetQueries) {
             this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
             this.facetExpanded['query'] = queryBuilder.config.facetQueries.expanded;

@@ -191,19 +191,6 @@ describe('StartProcessComponent', () => {
                 expect(inputLabels.length).toBe(2);
             });
 
-            it('should have floating labels for process name and type', async () => {
-                component.processDefinitionInput.setValue('My Default Name');
-                component.processNameInput.setValue('claim');
-
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                const inputLabelsNodes = document.querySelectorAll('.adf-start-process .adf-process-input-container');
-                inputLabelsNodes.forEach((labelNode) => {
-                    expect(labelNode.getAttribute('ng-reflect-float-label')).toBe('always');
-                });
-            });
-
             it('should load start form from service', async () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
@@ -259,23 +246,7 @@ describe('StartProcessComponent', () => {
                 expect(component.alfrescoRepositoryName).toBe('alfresco-1-fake-repo-name');
             });
 
-            it('if values in input is a node should be linked in the process service', async () => {
-                component.values = {};
-                component.values['file'] = {
-                    isFile: true,
-                    name: 'example-file'
-                };
-
-                component.moveNodeFromCStoPS();
-
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                expect(component.movedNodeToPS.file[0].id).toBe(1234);
-                expect(applyAlfrescoNodeSpy).toHaveBeenCalled();
-            });
-
-            it('if values in input is a collection of nodes should be linked in the process service', async () => {
+            it('should handle a collection of nodes as input and link to the process service', async () => {
                 component.values = {};
                 component.values['file'] = [
                     {
@@ -292,15 +263,48 @@ describe('StartProcessComponent', () => {
                     }
                 ];
 
-                component.moveNodeFromCStoPS();
+                component.populateFormData();
 
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(component.movedNodeToPS.file.length).toBe(3);
-                expect(component.movedNodeToPS.file[0].id).toBe(1234);
-                expect(component.movedNodeToPS.file[1].id).toBe(1234);
+                expect(component.populatedFormData.file.length).toBe(3);
+                expect(component.populatedFormData.file[0].id).toBe(1234);
+                expect(component.populatedFormData.file[1].id).toBe(1234);
                 expect(applyAlfrescoNodeSpy).toHaveBeenCalledTimes(3);
+            });
+
+            it('should handle not Node values in the input without call the process service', async () => {
+                component.values = {};
+                component.values['form-field-id'] = 'form-field-value';
+                component.values['another-form-field-id'] = 'another-form-field-value';
+
+                component.populateFormData();
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(applyAlfrescoNodeSpy).not.toHaveBeenCalled();
+                expect(component.populatedFormData['form-field-id']).toEqual(['form-field-value']);
+                expect(component.populatedFormData['another-form-field-id']).toEqual(['another-form-field-value']);
+            });
+
+            it('should handle mixed values in the input making required amount of calls to process service', async () => {
+                component.values = {};
+                component.values['form-field-id'] = 'form-field-value';
+                component.values['file'] = {
+                    isFile: true,
+                    name: 'example-file'
+                };
+
+                component.populateFormData();
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(applyAlfrescoNodeSpy).toHaveBeenCalledTimes(1);
+                expect(component.populatedFormData['form-field-id']).toEqual(['form-field-value']);
+                expect(component.populatedFormData.file[0].id).toBe(1234);
             });
         });
     });

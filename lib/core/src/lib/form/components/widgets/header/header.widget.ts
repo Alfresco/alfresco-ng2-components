@@ -18,17 +18,17 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { ContainerModel } from '../core/container.model';
 import { FieldStylePipe } from './../../../pipes/field-style.pipe';
-import { MatIconModule } from '@angular/material/icon';
 import { NgTemplateOutlet } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
+import { IconModule } from '../../../../icon/icon.module';
 
 @Component({
     selector: 'adf-header-widget',
     templateUrl: './header.widget.html',
     styleUrls: ['./header.widget.scss'],
     encapsulation: ViewEncapsulation.None,
-    imports: [FieldStylePipe, MatIconModule, MatButtonModule, TranslatePipe, NgTemplateOutlet]
+    imports: [FieldStylePipe, IconModule, MatButtonModule, TranslatePipe, NgTemplateOutlet]
 })
 export class HeaderWidgetComponent {
     @Input() element: ContainerModel;

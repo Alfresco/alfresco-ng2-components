@@ -16,7 +16,6 @@
  */
 
 import { SearchTextComponent } from './search-text.component';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -31,7 +30,7 @@ describe('SearchTextComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [SearchTextComponent]
         });
         fixture = TestBed.createComponent(SearchTextComponent);
         component = fixture.componentInstance;
@@ -123,7 +122,7 @@ describe('SearchTextComponent', () => {
 
         expect(component.value).toBe('');
         expect(component.context.queryFragments[component.id]).toBe('');
-        expect(component.context.filterRawParams[component.id]).toBeNull();
+        expect(component.context.filterRawParams[component.id]).toBeUndefined();
     });
 
     it('should update query with startValue on init, if provided', () => {

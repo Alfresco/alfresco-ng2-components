@@ -1,4 +1,5 @@
-<mat-form-field class="adf-chip-list" appearance="outline">
+<mat-form-field class="adf-chip-list">
+    <mat-label>{{ placeholder | translate }}</mat-label>
     <mat-chip-grid #chipList [attr.aria-label]="'SEARCH.FILTER.ARIA-LABEL.OPTIONS-SELECTION' | translate">
         <mat-chip-row
             class="adf-option-chips adf-autocomplete-added-option-chips"
@@ -10,9 +11,10 @@
             <button
                 matChipRemove
                 class="adf-option-chips-delete-button adf-autocomplete-added-option-chips-delete-button"
-                [title]="'SEARCH.FILTER.BUTTONS.REMOVE' | translate"
+                [title]="('SEARCH.FILTER.BUTTONS.REMOVE' | translate) + ' ' + option.value"
+                [attr.aria-label]="('SEARCH.FILTER.BUTTONS.REMOVE' | translate) + ' ' + option.value"
             >
-                <mat-icon class="adf-option-chips-delete-icon adf-autocomplete-added-option-chips-delete-icon">close</mat-icon>
+                <mat-icon class="adf-option-chips-delete-icon adf-autocomplete-added-option-chips-delete-icon" adf-icon="close" />
             </button>
         </mat-chip-row>
         <input
@@ -32,7 +34,6 @@
     </mat-chip-grid>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" id="adf-search-chip-autocomplete"
                       (optionActivated)="activeAnyOption = true" (closed)="activeAnyOption = false">
-        <ng-container *ngIf="optionInput.value.length > 0">
             <mat-option
                 *ngFor="let option of filteredOptions"
                 [value]="option"
@@ -45,6 +46,5 @@
             >
                 {{ option.fullPath || option.value }}
             </mat-option>
-        </ng-container>
     </mat-autocomplete>
 </mat-form-field>

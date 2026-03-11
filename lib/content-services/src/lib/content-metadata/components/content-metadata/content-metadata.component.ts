@@ -25,6 +25,7 @@ import {
     CardViewItem,
     Chip,
     DynamicChipListComponent,
+    IconModule,
     NotificationService,
     TranslationService,
     UpdateNotification
@@ -44,7 +45,6 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatIconModule } from '@angular/material/icon';
 import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TagsCreatorComponent } from '../../../tag';
@@ -55,11 +55,13 @@ import { CategoriesManagementComponent } from '../../../category/categories-mana
 
 const DEFAULT_SEPARATOR = ', ';
 
-enum DefaultPanels {
-    PROPERTIES = 'Properties',
-    TAGS = 'Tags',
-    CATEGORIES = 'Categories'
-}
+const DefaultPanels = {
+    PROPERTIES: 'Properties',
+    TAGS: 'Tags',
+    CATEGORIES: 'Categories'
+} as const;
+
+export type DefaultPanels = (typeof DefaultPanels)[keyof typeof DefaultPanels];
 
 @Component({
     selector: 'adf-content-metadata',
@@ -69,7 +71,7 @@ enum DefaultPanels {
         ContentMetadataHeaderComponent,
         MatButtonModule,
         TranslatePipe,
-        MatIconModule,
+        IconModule,
         MatChipsModule,
         CategoriesManagementComponent,
         DynamicExtensionComponent,
@@ -84,6 +86,16 @@ enum DefaultPanels {
     encapsulation: ViewEncapsulation.None
 })
 export class ContentMetadataComponent implements OnChanges, OnInit {
+    private readonly contentMetadataService = inject(ContentMetadataService);
+    private readonly cardViewContentUpdateService = inject(CardViewContentUpdateService);
+    private readonly nodesApiService = inject(NodesApiService);
+    private readonly translationService = inject(TranslationService);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly tagService = inject(TagService);
+    private readonly categoryService = inject(CategoryService);
+    private readonly contentService = inject(ContentService);
+    private readonly notificationService = inject(NotificationService);
+
     /** (required) The node entity to fetch metadata about */
     @Input({ required: true })
     node: Node;
@@ -144,10 +156,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
 
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
-    private _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
+    private readonly _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
     private _tags: string[] = [];
     private targetProperty: CardViewBaseItemModel;
-    private classifiableChangedSubject = new Subject<void>();
+    private readonly classifiableChangedSubject = new Subject<void>();
     private _saving = false;
 
     DefaultPanels = DefaultPanels;
@@ -172,17 +184,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private contentMetadataService: ContentMetadataService,
-        private cardViewContentUpdateService: CardViewContentUpdateService,
-        private nodesApiService: NodesApiService,
-        private translationService: TranslationService,
-        private appConfig: AppConfigService,
-        private tagService: TagService,
-        private categoryService: CategoryService,
-        private contentService: ContentService,
-        private notificationService: NotificationService
-    ) {
+    constructor() {
         this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
         this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || DEFAULT_SEPARATOR;
         this.useChipsForMultiValueProperty = this.appConfig.get<boolean>('content-metadata.multi-value-chips');
@@ -427,10 +429,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
                     if (Object.keys(result).length > 1 && this.displayTags) {
                         this.loadTagsForNode(this.node.id);
                     }
-                    if (this.displayCategories && !!result.LinkingCategories) {
-                        this.assignedCategories = result.LinkingCategories.list
-                            ? result.LinkingCategories.list.entries.map((entry: CategoryEntry) => entry.entry)
-                            : [result.LinkingCategories.entry];
+                    if (Object.keys(result).length > 1 && this.displayCategories) {
+                        this.loadCategoriesForNode(this.node.id);
                     }
                 }
                 this._saving = false;

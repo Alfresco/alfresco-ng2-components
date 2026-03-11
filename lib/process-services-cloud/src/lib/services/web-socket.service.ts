@@ -51,12 +51,14 @@ interface serviceOptions {
     providedIn: 'root'
 })
 export class WebSocketService {
-    private appConfigService = inject(AppConfigService);
-    private subscriptionProtocol = 'graphql-ws';
+    private readonly apollo = inject(Apollo);
+    private readonly httpLink = inject(HttpLink);
+    private readonly authService = inject(AuthenticationService);
+
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly subscriptionProtocol: 'graphql-ws' | 'transport-ws' = 'graphql-ws';
     private wsLink: GraphQLWsLink | WebSocketLink;
     private httpLinkHandler: HttpLinkHandler;
-
-    constructor(private readonly apollo: Apollo, private readonly httpLink: HttpLink, private readonly authService: AuthenticationService) {}
 
     public getSubscription<T>(options: serviceOptions): Observable<FetchResult<T>> {
         const { apolloClientName, subscriptionOptions } = options;
@@ -155,9 +157,9 @@ export class WebSocketService {
         this.wsLink = new GraphQLWsLink(
             createClient({
                 url: this.createWsUrl(options.wsUrl) + '/v2/ws/graphql',
-                connectionParams: {
+                connectionParams: () => ({
                     Authorization: 'Bearer ' + this.authService.getToken()
-                },
+                }),
                 on: {
                     error: () => {
                         this.apollo.removeClient(options.apolloClientName);

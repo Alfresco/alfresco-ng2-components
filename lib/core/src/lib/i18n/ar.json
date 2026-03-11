@@ -285,11 +285,6 @@
     "ACTION": {
       "HELP": "بحاجة لمساعدة؟",
       "REGISTER": "تسجيل"
-    },
-    "DIALOG": {
-      "CANCEL": "إلغاء",
-      "CHOOSE": "اختيار",
-      "LOGIN": "تسجيل دخول"
     }
   },
   "ADF-DATATABLE": {

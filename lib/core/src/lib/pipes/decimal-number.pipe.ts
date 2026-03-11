@@ -16,38 +16,34 @@
  */
 
 import { DecimalPipe } from '@angular/common';
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
-import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
-import { DecimalNumberModel } from '../models/decimal-number.model';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { UserPreferencesService } from '../common/services/user-preferences.service';
+
+export interface DecimalNumberModel {
+    minIntegerDigits?: number;
+    minFractionDigits?: number;
+    maxFractionDigits?: number;
+}
 
 @Pipe({
     name: 'adfDecimalNumber',
     pure: false
 })
 export class DecimalNumberPipe implements PipeTransform {
+    userPreferenceService? = inject(UserPreferencesService);
+    appConfig? = inject(AppConfigService);
+
     static DEFAULT_LOCALE = 'en-US';
     static DEFAULT_MIN_INTEGER_DIGITS = 1;
     static DEFAULT_MIN_FRACTION_DIGITS = 0;
     static DEFAULT_MAX_FRACTION_DIGITS = 2;
 
-    defaultLocale: string = DecimalNumberPipe.DEFAULT_LOCALE;
     defaultMinIntegerDigits: number = DecimalNumberPipe.DEFAULT_MIN_INTEGER_DIGITS;
     defaultMinFractionDigits: number = DecimalNumberPipe.DEFAULT_MIN_FRACTION_DIGITS;
     defaultMaxFractionDigits: number = DecimalNumberPipe.DEFAULT_MAX_FRACTION_DIGITS;
-    constructor(public userPreferenceService?: UserPreferencesService, public appConfig?: AppConfigService) {
-        if (this.userPreferenceService) {
-            this.userPreferenceService
-                .select(UserPreferenceValues.Locale)
-                .pipe(takeUntilDestroyed())
-                .subscribe((locale) => {
-                    if (locale) {
-                        this.defaultLocale = locale;
-                    }
-                });
-        }
 
+    constructor() {
         if (this.appConfig) {
             this.defaultMinIntegerDigits = this.appConfig.get<number>('decimalValues.minIntegerDigits', DecimalNumberPipe.DEFAULT_MIN_INTEGER_DIGITS);
             this.defaultMinFractionDigits = this.appConfig.get<number>(
@@ -67,7 +63,9 @@ export class DecimalNumberPipe implements PipeTransform {
         const actualMaxFractionDigits: number = digitsInfo?.maxFractionDigits ? digitsInfo.maxFractionDigits : this.defaultMaxFractionDigits;
 
         const actualDigitsInfo = `${actualMinIntegerDigits}.${actualMinFractionDigits}-${actualMaxFractionDigits}`;
-        const actualLocale = locale || this.defaultLocale;
+        // Use signal directly - no subscription needed!
+        const defaultLocale = this.userPreferenceService?.localeSignal() || DecimalNumberPipe.DEFAULT_LOCALE;
+        const actualLocale = locale || defaultLocale;
 
         const decimalPipe: DecimalPipe = new DecimalPipe(actualLocale);
 

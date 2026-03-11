@@ -36,9 +36,9 @@ import { UserPreferencesService, UserPreferenceValues } from '../common/services
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '../icon/icon.module';
 
 export type PaginationAction = 'NEXT_PAGE' | 'PREV_PAGE' | 'CHANGE_PAGE_SIZE' | 'CHANGE_PAGE_NUMBER';
 
@@ -57,9 +57,15 @@ export const DEFAULT_PAGINATION: PaginationModel = {
     styleUrls: ['./pagination.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    imports: [CommonModule, TranslatePipe, MatButtonModule, MatIconModule, MatMenuModule]
+    imports: [CommonModule, TranslatePipe, MatButtonModule, IconModule, MatMenuModule]
 })
 export class PaginationComponent implements OnInit, PaginationComponentInterface {
+    private readonly elementRef = inject(ElementRef);
+    private readonly renderer = inject(Renderer2);
+    private readonly cdr = inject(ChangeDetectorRef);
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly translate = inject(TranslateService);
+
     private _pagination: PaginationModel;
     private _isEmpty = true;
     private _hasItems = false;
@@ -117,14 +123,6 @@ export class PaginationComponent implements OnInit, PaginationComponentInterface
     prevPage = new EventEmitter<PaginationModel>();
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private elementRef: ElementRef,
-        private renderer: Renderer2,
-        private cdr: ChangeDetectorRef,
-        private userPreferencesService: UserPreferencesService,
-        private translate: TranslateService
-    ) {}
 
     ngOnInit() {
         this.userPreferencesService

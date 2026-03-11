@@ -63,7 +63,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.ended = new Date('2016-11-03');
         component.ngOnChanges();
         fixture.detectChanges();
-        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-ended"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-date-value-ended"]');
         expect(valueEl.innerText).toBe('Nov 3, 2016');
     });
 
@@ -71,7 +71,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.ended = null;
         component.ngOnChanges();
         fixture.detectChanges();
-        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-ended"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-date-value-ended"]');
         expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.END_DATE_DEFAULT');
     });
 
@@ -97,7 +97,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.started = new Date('2016-11-03');
         component.ngOnChanges();
         fixture.detectChanges();
-        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-created"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-date-value-created"]');
         expect(valueEl.innerText).toBe('Nov 3, 2016');
     });
 

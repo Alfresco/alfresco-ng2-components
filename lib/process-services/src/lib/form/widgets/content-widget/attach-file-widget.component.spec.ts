@@ -189,7 +189,7 @@ describe('AttachFileWidgetComponent', () => {
         processContentService = TestBed.inject(ProcessContentService);
         downloadService = TestBed.inject(DownloadService);
         appConfigService = TestBed.inject(AppConfigService);
-        formService = TestBed.inject(FormService);
+        formService = fixture.debugElement.injector.get(FormService);
         attachFileWidgetDialogService = TestBed.inject(AttachFileWidgetDialogService);
     });
 
@@ -206,6 +206,27 @@ describe('AttachFileWidgetComponent', () => {
         const showFileButton = items[0];
         return showFileButton.isDisabled();
     };
+
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of([]));
+            spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of({}));
+            eventSpy = spyOn(widget, 'event').and.callThrough();
+
+            widget.field = new FormFieldModel(new FormModel(), {});
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
+    });
 
     it('should add file to tempFilesList when form has value and file source is configured', () => {
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
@@ -824,7 +845,7 @@ describe('AttachFileWidgetComponent', () => {
                 value: []
             });
 
-            spyOn(widget.formService.formContentClicked, 'next');
+            spyOn(formService.formContentClicked, 'next');
         });
 
         it('should call formContentClicked when file clicked and it has sourceId', () => {
@@ -832,7 +853,7 @@ describe('AttachFileWidgetComponent', () => {
 
             widget.onAttachFileClicked(fileWithSourceId);
 
-            expect(widget.formService.formContentClicked.next).toHaveBeenCalledWith(fileWithSourceId);
+            expect(formService.formContentClicked.next).toHaveBeenCalledWith(fileWithSourceId);
         });
 
         it('should call formContentClicked when file is temporary', () => {
@@ -843,7 +864,7 @@ describe('AttachFileWidgetComponent', () => {
 
             widget.onAttachFileClicked(regularFile);
 
-            expect(widget.formService.formContentClicked.next).toHaveBeenCalledWith(regularFile);
+            expect(formService.formContentClicked.next).toHaveBeenCalledWith(regularFile);
         });
 
         it('should fetch getContentPreview when file is neither temporary nor has sourceId', () => {
@@ -853,7 +874,7 @@ describe('AttachFileWidgetComponent', () => {
             widget.onAttachFileClicked(regularFile);
 
             expect(processContentService.getContentPreview).toHaveBeenCalledWith(123);
-            expect(widget.formService.formContentClicked.next).toHaveBeenCalled();
+            expect(formService.formContentClicked.next).toHaveBeenCalled();
         });
 
         it('should not emit formContentClicked when file has no sourceId and contentAvailable is false', () => {
@@ -861,7 +882,7 @@ describe('AttachFileWidgetComponent', () => {
 
             widget.onAttachFileClicked(fileWithoutContent);
 
-            expect(widget.formService.formContentClicked.next).not.toHaveBeenCalled();
+            expect(formService.formContentClicked.next).not.toHaveBeenCalled();
         });
 
         it('should not emit formContentClicked when file is external', () => {
@@ -869,7 +890,7 @@ describe('AttachFileWidgetComponent', () => {
 
             widget.onAttachFileClicked(externalFile);
 
-            expect(widget.formService.formContentClicked.next).not.toHaveBeenCalled();
+            expect(formService.formContentClicked.next).not.toHaveBeenCalled();
         });
 
         it('should not emit formContentClicked when file has no sourceId and isStartProcessPage is true', () => {
@@ -878,7 +899,7 @@ describe('AttachFileWidgetComponent', () => {
 
             widget.onAttachFileClicked(fileWithoutContent);
 
-            expect(widget.formService.formContentClicked.next).not.toHaveBeenCalled();
+            expect(formService.formContentClicked.next).not.toHaveBeenCalled();
         });
     });
 });

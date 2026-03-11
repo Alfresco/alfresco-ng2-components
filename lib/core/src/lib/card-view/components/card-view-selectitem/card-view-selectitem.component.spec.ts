@@ -26,6 +26,9 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { DebugElement } from '@angular/core';
+import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator.directive';
+import { MatError } from '@angular/material/form-field';
+import { FormControl, NgModel } from '@angular/forms';
 
 describe('CardViewSelectItemComponent', () => {
     let loader: HarnessLoader;
@@ -59,6 +62,8 @@ describe('CardViewSelectItemComponent', () => {
         editable: true
     };
 
+    const getSelectElement = (): DebugElement => testingUtils.getByDataAutomationId('select-box');
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [CardViewSelectItemComponent]
@@ -77,8 +82,6 @@ describe('CardViewSelectItemComponent', () => {
     });
 
     describe('Rendering', () => {
-        const getReadOnlyElement = (): DebugElement => testingUtils.getByDataAutomationClass('read-only-value');
-
         it('should render custom label when editable is set to false', () => {
             component.property = new CardViewSelectItemModel({
                 ...mockDefaultProps,
@@ -88,7 +91,7 @@ describe('CardViewSelectItemComponent', () => {
             expect(testingUtils.getInnerTextByCSS('.adf-property-label')).toBe('Select box label');
         });
 
-        it('should render readOnly value is editable property is FALSE', () => {
+        it('should render disable select when editable property is FALSE', async () => {
             component.property = new CardViewSelectItemModel({
                 ...mockDefaultProps,
                 editable: false
@@ -96,20 +99,9 @@ describe('CardViewSelectItemComponent', () => {
 
             component.ngOnChanges({});
             fixture.detectChanges();
-            const selectBox = testingUtils.getByDataAutomationClass('select-box');
+            const selectBox = await testingUtils.getMatSelectByDataAutomationId('select-box');
 
-            expect(getReadOnlyElement()).not.toBeNull();
-            expect(selectBox).toBeNull();
-        });
-
-        it('should read only value have title', () => {
-            component.property = new CardViewSelectItemModel({
-                ...mockDefaultProps,
-                editable: false
-            });
-
-            fixture.detectChanges();
-            expect(getReadOnlyElement().nativeElement.title).toBe('Two');
+            expect(await selectBox.isDisabled()).toBe(true);
         });
 
         it('should be possible edit selectBox item', async () => {
@@ -334,6 +326,39 @@ describe('CardViewSelectItemComponent', () => {
             expect(options.length).toBe(2);
             expect(await options[0].getText()).toContain('Option 1');
             expect(await options[1].getText()).toContain('Option 2');
+        });
+    });
+
+    describe('Validation', () => {
+        let cardViewPropertyValidator: CardViewPropertyValidatorDirective;
+        let control: FormControl<string | number>;
+
+        beforeEach(() => {
+            component.property = new CardViewSelectItemModel({
+                ...mockDefaultProps,
+                editable: true
+            });
+            component.editable = true;
+            fixture.detectChanges();
+            const selectElementInjector = getSelectElement().injector;
+            cardViewPropertyValidator = selectElementInjector.get(CardViewPropertyValidatorDirective);
+            control = selectElementInjector.get(NgModel).control;
+        });
+
+        it('should have assigned correct property', () => {
+            expect(cardViewPropertyValidator.property).toBe(component.property);
+        });
+
+        it('should display correct error', () => {
+            cardViewPropertyValidator.validated.emit(['Error 1', 'Error 2']);
+            control.setErrors({
+                error1: 'Error 1',
+                error2: 'Error 2'
+            });
+            control.markAsTouched();
+
+            fixture.detectChanges();
+            expect(testingUtils.getByDirective(MatError).nativeElement.textContent).toBe('Error 1Error 2');
         });
     });
 });

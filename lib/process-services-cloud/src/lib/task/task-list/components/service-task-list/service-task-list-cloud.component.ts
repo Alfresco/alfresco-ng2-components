@@ -15,21 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, Inject, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
 import {
-    AppConfigService,
     ColumnsSelectorComponent,
     DataTableComponent,
     EmptyContentComponent,
     LoadingContentTemplateDirective,
     MainMenuDataTableTemplateDirective,
-    NoContentTemplateDirective,
-    UserPreferencesService
+    NoContentTemplateDirective
 } from '@alfresco/adf-core';
 import { ServiceTaskQueryCloudRequestModel } from '../../models/service-task-cloud.model';
 import { BaseTaskListCloudComponent } from '../base-task-list-cloud.component';
 import { ServiceTaskListCloudService } from '../../services/service-task-list-cloud.service';
-import { TaskCloudService } from '../../../services/task-cloud.service';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { PreferenceCloudServiceInterface, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../../services/public-api';
 import { map } from 'rxjs/operators';
@@ -58,22 +55,20 @@ const PRESET_KEY = 'adf-cloud-service-task-list.presets';
     encapsulation: ViewEncapsulation.None
 })
 export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
+    private readonly serviceTaskListCloudService = inject(ServiceTaskListCloudService);
+
     @Input()
     queryParams: { [key: string]: any } = {};
 
-    private isReloadingSubject$ = new BehaviorSubject<boolean>(false);
+    private readonly isReloadingSubject$ = new BehaviorSubject<boolean>(false);
     isLoading$ = combineLatest([this.isLoadingPreferences$, this.isReloadingSubject$]).pipe(
         map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
     );
 
-    constructor(
-        private serviceTaskListCloudService: ServiceTaskListCloudService,
-        appConfigService: AppConfigService,
-        taskCloudService: TaskCloudService,
-        userPreferences: UserPreferencesService,
-        @Inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface
-    ) {
-        super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
+    constructor() {
+        const cloudPreferenceService = inject<PreferenceCloudServiceInterface>(TASK_LIST_PREFERENCES_SERVICE_TOKEN);
+
+        super(PRESET_KEY, cloudPreferenceService);
     }
 
     reload() {

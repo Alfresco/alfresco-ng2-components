@@ -21,11 +21,12 @@ import { MatMenuItem, MatMenuModule } from '@angular/material/menu';
 import { ContextMenuOverlayRef } from './context-menu-overlay';
 import { contextMenuAnimation } from './animations';
 import { CONTEXT_MENU_DATA } from './context-menu.tokens';
-import { AfterViewInit, Component, HostListener, Inject, Optional, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
+import { AfterViewInit, Component, HostListener, QueryList, ViewChildren, ViewEncapsulation, inject } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
+import { IconModule } from '../icon/icon.module';
+import { ContextMenuItem } from './interfaces';
 
 @Component({
     selector: 'adf-context-menu',
@@ -36,16 +37,19 @@ import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
         class: 'adf-context-menu'
     },
     encapsulation: ViewEncapsulation.None,
-    imports: [MatIconModule, MatMenuModule, NgForOf, NgIf, TranslatePipe],
+    imports: [IconModule, MatMenuModule, NgForOf, NgIf, TranslatePipe],
     animations: [trigger('panelAnimation', contextMenuAnimation)]
 })
 export class ContextMenuListComponent implements AfterViewInit {
+    private readonly contextMenuOverlayRef = inject<ContextMenuOverlayRef>(ContextMenuOverlayRef);
+    private readonly data = inject(CONTEXT_MENU_DATA, { optional: true });
+
     private keyManager: FocusKeyManager<MatMenuItem>;
     @ViewChildren(MatMenuItem) items: QueryList<MatMenuItem>;
-    links: any[];
+    links: ContextMenuItem[];
 
     @HostListener('document:keydown.Escape', ['$event'])
-    handleKeydownEscape(event: KeyboardEvent) {
+    handleKeydownEscape(event: Event) {
         if (event) {
             this.contextMenuOverlayRef.close();
         }
@@ -61,14 +65,11 @@ export class ContextMenuListComponent implements AfterViewInit {
         }
     }
 
-    constructor(
-        @Inject(ContextMenuOverlayRef) private contextMenuOverlayRef: ContextMenuOverlayRef,
-        @Optional() @Inject(CONTEXT_MENU_DATA) private data: any
-    ) {
+    constructor() {
         this.links = this.data;
     }
 
-    onMenuItemClick(event: Event, menuItem: any) {
+    onMenuItemClick(event: Event, menuItem: ContextMenuItem) {
         if (menuItem?.model?.disabled) {
             event.preventDefault();
             event.stopImmediatePropagation();

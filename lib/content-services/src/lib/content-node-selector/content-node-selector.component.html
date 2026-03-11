@@ -23,10 +23,7 @@
                     </adf-toolbar>
                     <ng-template mat-tab-label>
                         {{ 'NODE_SELECTOR.UPLOAD_FROM_DEVICE' | translate }}
-                        <mat-icon *ngIf="hasUploadError()"
-                                  data-automation-id="adf-content-node-selector-disabled-tab-info-icon"
-                                  title="{{ getWarningMessage() | translate }}">info
-                        </mat-icon>
+                        <mat-icon *ngIf="hasUploadError()" data-automation-id="adf-content-node-selector-disabled-tab-info-icon" title="{{ getWarningMessage() | translate }}" adf-icon="info" />
                     </ng-template>
                 </div>
                 <div class="adf-content-node-selector-local-upload-content">
@@ -79,7 +76,7 @@
     <div>
         <ng-container *ngIf="isUploadEnabled()">
             <adf-upload-button
-                [staticTitle]="'FORM.FIELD.UPLOAD' | translate "
+                [staticTitle]="'FORM.FIELD.UPLOAD' | translate"
                 [multipleFiles]="isMultipleSelection()"
                 [rootFolderId]="currentDirectoryId"
                 [disabled]="isNotAllowedToUpload()"

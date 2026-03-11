@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
+import { Component, SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { first, of, throwError } from 'rxjs';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
@@ -27,6 +27,14 @@ import { mockProcessFilters } from '../../mock/process-filters-cloud.mock';
 import { AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../../../process-list/services/process-list-cloud.service';
 import { ApolloTestingModule } from 'apollo-angular/testing';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatIconHarness } from '@angular/material/icon/testing';
+import { ActivatedRoute, provideRouter, Router } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
+
+@Component({ selector: 'adf-cloud-dummy', template: '' })
+class DummyComponent {}
 
 const ProcessFilterCloudServiceMock = {
     getProcessFilters: () => of(mockProcessFilters),
@@ -40,8 +48,10 @@ describe('ProcessFiltersCloudComponent', () => {
     let fixture: ComponentFixture<ProcessFiltersCloudComponent>;
     let getProcessFiltersSpy: jasmine.Spy;
     let getProcessNotificationSubscriptionSpy: jasmine.Spy;
+    let loader: HarnessLoader;
+    let router: Router;
 
-    const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
+    const configureTestingModule = async (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
             imports: [ProcessFiltersCloudComponent, ApolloTestingModule],
             providers: [
@@ -54,14 +64,32 @@ describe('ProcessFiltersCloudComponent', () => {
                         getProcessListCount: () => of(10)
                     }
                 },
-                { provide: ProcessFilterCloudService, useValue: ProcessFilterCloudServiceMock }
+                { provide: ProcessFilterCloudService, useValue: ProcessFilterCloudServiceMock },
+                provideRouter([{ path: 'process-list-cloud', component: DummyComponent }]),
+                {
+                    provide: ActivatedRoute,
+                    useValue: {
+                        queryParamMap: of({
+                            get: (param: string) => {
+                                if (param === 'filterId') {
+                                    return mockProcessFilters[0].id;
+                                }
+                                return null;
+                            }
+                        })
+                    }
+                }
             ]
         });
         fixture = TestBed.createComponent(ProcessFiltersCloudComponent);
+        loader = TestbedHarnessEnvironment.loader(fixture);
         component = fixture.componentInstance;
         component.searchApiMethod = searchApiMethod;
 
         processFilterService = TestBed.inject(ProcessFilterCloudService);
+        TestBed.inject(ActivatedRoute);
+        router = TestBed.inject(Router);
+        await RouterTestingHarness.create();
         getProcessFiltersSpy = spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(mockProcessFilters));
         getProcessNotificationSubscriptionSpy = spyOn(processFilterService, 'getProcessNotificationSubscription').and.returnValue(of([]));
     };
@@ -71,8 +99,8 @@ describe('ProcessFiltersCloudComponent', () => {
     });
 
     describe('searchApiMethod set to GET', () => {
-        beforeEach(() => {
-            configureTestingModule('GET');
+        beforeEach(async () => {
+            await configureTestingModule('GET');
         });
 
         it('should attach specific icon for each filter if hasIcon is true', async () => {
@@ -88,11 +116,11 @@ describe('ProcessFiltersCloudComponent', () => {
             await fixture.whenStable();
 
             expect(component.filters.length).toBe(3);
-            const filters = fixture.nativeElement.querySelectorAll('.adf-icon');
-            expect(filters.length).toBe(3);
-            expect(filters[0].innerText).toContain('adjust');
-            expect(filters[1].innerText).toContain('inbox');
-            expect(filters[2].innerText).toContain('done');
+            const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+            expect(filterIcons.length).toBe(3);
+            expect(await filterIcons[0].getName()).toContain('adjust');
+            expect(await filterIcons[1].getName()).toContain('inbox');
+            expect(await filterIcons[2].getName()).toContain('done');
         });
 
         it('should not attach icons for each filter if hasIcon is false', async () => {
@@ -103,8 +131,8 @@ describe('ProcessFiltersCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
-            expect(filters.length).toBe(0);
+            const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+            expect(filterIcons.length).toBe(0);
         });
 
         it('should display the filters', async () => {
@@ -177,20 +205,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
         describe('Highlight Selected Filter', () => {
             const allProcessesFilterKey = mockProcessFilters[0].key;
-            const runningProcessesFilterKey = mockProcessFilters[1].key;
-            const completedProcessesFilterKey = mockProcessFilters[2].key;
-
-            const getActiveFilterElement = (filterKey: string): Element => {
-                const activeFilter = fixture.debugElement.query(By.css(`.adf-active`));
-                return activeFilter.nativeElement.querySelector(`[data-automation-id="${filterKey}_filter"]`);
-            };
-
-            const clickOnFilter = async (filterKey: string) => {
-                const button = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${filterKey}_filter"]`);
-                button.click();
-                fixture.detectChanges();
-                await fixture.whenStable();
-            };
+            const allProcessesFilterId = mockProcessFilters[0].id;
 
             it('should apply active CSS class on filter click', async () => {
                 component.enableNotifications = true;
@@ -200,36 +215,49 @@ describe('ProcessFiltersCloudComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                await clickOnFilter(allProcessesFilterKey);
+                let link = fixture.debugElement.query(By.css(`[data-automation-id="${allProcessesFilterKey}_filter"]`)).nativeElement;
+                expect(link.getAttribute('href')).toBe(`/process-list-cloud?filterId=${allProcessesFilterId}`);
+
+                link.click();
+                fixture.detectChanges();
+                await fixture.whenStable();
+                expect(router.url).toBe(`/process-list-cloud?filterId=${allProcessesFilterId}`);
+
+                link = fixture.debugElement.query(By.css(`[data-automation-id="${allProcessesFilterKey}_filter"]`)).nativeElement;
+                expect(link.classList).toContain('adf-active');
+            });
+
+            it('should add aria-current attribute with value "page" to the active filter', async () => {
+                component.enableNotifications = true;
+                component.appName = 'mock-app-name';
+                const appNameChange = new SimpleChange(null, 'mock-app-name', true);
+
+                component.ngOnChanges({ appName: appNameChange });
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(getActiveFilterElement(allProcessesFilterKey)).toBeDefined();
-                expect(getActiveFilterElement(runningProcessesFilterKey)).toBeNull();
-                expect(getActiveFilterElement(completedProcessesFilterKey)).toBeNull();
+                const link = fixture.debugElement.query(By.css(`[data-automation-id="${allProcessesFilterKey}_filter"]`)).nativeElement;
+                expect(link.getAttribute('aria-current')).toBe('page');
+            });
 
-                await clickOnFilter(runningProcessesFilterKey);
+            it('should not have aria-current attribute when filter is not active', async () => {
+                component.enableNotifications = true;
+                component.appName = 'mock-app-name';
+                const appNameChange = new SimpleChange(null, 'mock-app-name', true);
+
+                component.ngOnChanges({ appName: appNameChange });
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(getActiveFilterElement(allProcessesFilterKey)).toBeNull();
-                expect(getActiveFilterElement(runningProcessesFilterKey)).toBeDefined();
-                expect(getActiveFilterElement(completedProcessesFilterKey)).toBeNull();
-
-                await clickOnFilter(completedProcessesFilterKey);
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                expect(getActiveFilterElement(allProcessesFilterKey)).toBeNull();
-                expect(getActiveFilterElement(runningProcessesFilterKey)).toBeNull();
-                expect(getActiveFilterElement(completedProcessesFilterKey)).toBeDefined();
+                const link = fixture.debugElement.query(By.css(`[data-automation-id="${mockProcessFilters[1].key}_filter"]`)).nativeElement;
+                expect(link.getAttribute('aria-current')).toBeNull();
             });
         });
     });
 
     describe('searchApiMethod set to POST', () => {
-        beforeEach(() => {
-            configureTestingModule('POST');
+        beforeEach(async () => {
+            await configureTestingModule('POST');
         });
 
         it('should attach specific icon for each filter if hasIcon is true', async () => {
@@ -245,11 +273,11 @@ describe('ProcessFiltersCloudComponent', () => {
             await fixture.whenStable();
 
             expect(component.filters.length).toBe(3);
-            const filters = fixture.nativeElement.querySelectorAll('.adf-icon');
-            expect(filters.length).toBe(3);
-            expect(filters[0].innerText).toContain('adjust');
-            expect(filters[1].innerText).toContain('inbox');
-            expect(filters[2].innerText).toContain('done');
+            const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+            expect(filterIcons.length).toBe(3);
+            expect(await filterIcons[0].getName()).toContain('adjust');
+            expect(await filterIcons[1].getName()).toContain('inbox');
+            expect(await filterIcons[2].getName()).toContain('done');
         });
 
         it('should not attach icons for each filter if hasIcon is false', async () => {
@@ -260,8 +288,8 @@ describe('ProcessFiltersCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
-            expect(filters.length).toBe(0);
+            const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+            expect(filterIcons.length).toBe(0);
         });
 
         it('should display the filters', async () => {
@@ -331,62 +359,11 @@ describe('ProcessFiltersCloudComponent', () => {
             expect(component.currentFilter).toEqual(mockProcessFilters[0]);
             expect(filterClickedSpy).toHaveBeenCalledWith(mockProcessFilters[0]);
         });
-
-        describe('Highlight Selected Filter', () => {
-            const allProcessesFilterKey = mockProcessFilters[0].key;
-            const runningProcessesFilterKey = mockProcessFilters[1].key;
-            const completedProcessesFilterKey = mockProcessFilters[2].key;
-
-            const getActiveFilterElement = (filterKey: string): Element => {
-                const activeFilter = fixture.debugElement.query(By.css(`.adf-active`));
-                return activeFilter.nativeElement.querySelector(`[data-automation-id="${filterKey}_filter"]`);
-            };
-
-            const clickOnFilter = async (filterKey: string) => {
-                const button = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${filterKey}_filter"]`);
-                button.click();
-                fixture.detectChanges();
-                await fixture.whenStable();
-            };
-
-            it('should apply active CSS class on filter click', async () => {
-                component.enableNotifications = true;
-                component.appName = 'mock-app-name';
-                const appNameChange = new SimpleChange(null, 'mock-app-name', true);
-                component.ngOnChanges({ appName: appNameChange });
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                await clickOnFilter(allProcessesFilterKey);
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                expect(getActiveFilterElement(allProcessesFilterKey)).toBeDefined();
-                expect(getActiveFilterElement(runningProcessesFilterKey)).toBeNull();
-                expect(getActiveFilterElement(completedProcessesFilterKey)).toBeNull();
-
-                await clickOnFilter(runningProcessesFilterKey);
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                expect(getActiveFilterElement(allProcessesFilterKey)).toBeNull();
-                expect(getActiveFilterElement(runningProcessesFilterKey)).toBeDefined();
-                expect(getActiveFilterElement(completedProcessesFilterKey)).toBeNull();
-
-                await clickOnFilter(completedProcessesFilterKey);
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                expect(getActiveFilterElement(allProcessesFilterKey)).toBeNull();
-                expect(getActiveFilterElement(runningProcessesFilterKey)).toBeNull();
-                expect(getActiveFilterElement(completedProcessesFilterKey)).toBeDefined();
-            });
-        });
     });
 
     describe('API agnostic', () => {
-        beforeEach(() => {
-            configureTestingModule('GET');
+        beforeEach(async () => {
+            await configureTestingModule('GET');
         });
 
         it('should emit an error with a bad response', () => {
@@ -544,43 +521,7 @@ describe('ProcessFiltersCloudComponent', () => {
         });
 
         describe('Highlight Selected Filter', () => {
-            const allProcessesFilterKey = mockProcessFilters[0].key;
-            const runningProcessesFilterKey = mockProcessFilters[1].key;
-            const completedProcessesFilterKey = mockProcessFilters[2].key;
-
-            const getActiveFilterElement = (filterKey: string): Element => {
-                const activeFilter = fixture.debugElement.query(By.css(`.adf-active`));
-                return activeFilter.nativeElement.querySelector(`[data-automation-id="${filterKey}_filter"]`);
-            };
-
-            it('Should apply active CSS class when filterParam input changed', async () => {
-                fixture.detectChanges();
-                component.ngOnChanges({ filterParam: new SimpleChange(null, { key: allProcessesFilterKey }, true) });
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                expect(getActiveFilterElement(allProcessesFilterKey)).toBeDefined();
-                expect(getActiveFilterElement(runningProcessesFilterKey)).toBeNull();
-                expect(getActiveFilterElement(completedProcessesFilterKey)).toBeNull();
-
-                component.ngOnChanges({ filterParam: new SimpleChange(null, { key: runningProcessesFilterKey }, true) });
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                expect(getActiveFilterElement(allProcessesFilterKey)).toBeNull();
-                expect(getActiveFilterElement(runningProcessesFilterKey)).toBeDefined();
-                expect(getActiveFilterElement(completedProcessesFilterKey)).toBeNull();
-
-                component.ngOnChanges({ filterParam: new SimpleChange(null, { key: completedProcessesFilterKey }, true) });
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                expect(getActiveFilterElement(allProcessesFilterKey)).toBeNull();
-                expect(getActiveFilterElement(runningProcessesFilterKey)).toBeNull();
-                expect(getActiveFilterElement(completedProcessesFilterKey)).toBeDefined();
-            });
-
-            it('should made sbscription', () => {
+            it('should make subscription', () => {
                 component.enableNotifications = true;
                 component.appName = 'mock-app-name';
                 const appNameChange = new SimpleChange(null, 'mock-app-name', true);

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
 import { InfiniteSelectScrollDirective, AuthenticationService } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry, Site } from '@alfresco/js-api';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
@@ -28,10 +28,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 /* eslint-disable no-shadow */
 /* eslint-disable @typescript-eslint/naming-convention */
 
-export enum Relations {
-    Members = 'members',
-    Containers = 'containers'
-}
+export const Relations = {
+    Members: 'members',
+    Containers: 'containers'
+} as const;
+
+export type Relations = (typeof Relations)[keyof typeof Relations];
 
 @Component({
     selector: 'adf-sites-dropdown',
@@ -41,6 +43,11 @@ export enum Relations {
     host: { class: 'adf-sites-dropdown' }
 })
 export class DropdownSitesComponent implements OnInit {
+    private readonly authService = inject(AuthenticationService);
+    private readonly sitesService = inject(SitesService);
+    private readonly liveAnnouncer = inject(LiveAnnouncer);
+    private readonly translateService = inject(TranslateService);
+
     /** Hide the "My Files" option. */
     @Input()
     hideMyFiles: boolean = false;
@@ -93,13 +100,6 @@ export class DropdownSitesComponent implements OnInit {
         return this.loading;
     }
 
-    constructor(
-        private authService: AuthenticationService,
-        private sitesService: SitesService,
-        private liveAnnouncer: LiveAnnouncer,
-        private translateService: TranslateService
-    ) {}
-
     ngOnInit() {
         if (!this.siteList) {
             this.loadSiteList();
@@ -124,7 +124,7 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     private loadSiteList() {
-        const extendedOptions: any = {
+        const extendedOptions: { skipCount: number; maxItems: number; relations?: string[] } = {
             skipCount: this.skipCount,
             maxItems: InfiniteSelectScrollDirective.MAX_ITEMS
         };
@@ -135,8 +135,8 @@ export class DropdownSitesComponent implements OnInit {
             extendedOptions.relations = [this.relations];
         }
 
-        this.sitesService.getSites(extendedOptions).subscribe(
-            (sitePaging: SitePaging) => {
+        this.sitesService.getSites(extendedOptions).subscribe({
+            next: (sitePaging: SitePaging) => {
                 if (!this.siteList) {
                     this.siteList = this.relations === Relations.Members ? this.filteredResultsByMember(sitePaging) : sitePaging;
 
@@ -163,13 +163,15 @@ export class DropdownSitesComponent implements OnInit {
                 if (this.value && !this.selected && this.siteListHasMoreItems()) {
                     this.loadSiteList();
                 }
-
-                this.loading = false;
             },
-            (error) => {
+            error: (error) => {
+                this.loading = false;
                 this.error.emit(error);
+            },
+            complete: () => {
+                this.loading = false;
             }
-        );
+        });
     }
 
     showLoading(): boolean {

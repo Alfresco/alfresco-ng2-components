@@ -16,7 +16,7 @@
  */
 
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject, Injector, runInInjectionContext } from '@angular/core';
 import { TreeBaseNode } from '../models/tree-view.model';
 import { TreeViewDataSource } from '../data/tree-view-datasource';
 import { TreeViewService } from '../services/tree-view.service';
@@ -24,16 +24,19 @@ import { NodeEntry } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-tree-view-list',
-    imports: [CommonModule, MatTreeModule, MatButtonModule, MatIconModule, TranslatePipe],
+    imports: [CommonModule, MatTreeModule, MatButtonModule, IconModule, TranslatePipe],
     templateUrl: './tree-view.component.html',
     styleUrls: ['./tree-view.component.scss']
 })
 export class TreeViewComponent implements OnChanges {
+    private readonly treeViewService = inject(TreeViewService);
+    private readonly injector = inject(Injector);
+
     /** Identifier of the node to display. */
     @Input({ required: true })
     nodeId: string;
@@ -49,9 +52,15 @@ export class TreeViewComponent implements OnChanges {
     treeControl: FlatTreeControl<TreeBaseNode>;
     dataSource: TreeViewDataSource;
 
-    constructor(private treeViewService: TreeViewService) {
+    constructor() {
         this.treeControl = new FlatTreeControl<TreeBaseNode>(this.getLevel, this.isExpandable);
-        this.dataSource = new TreeViewDataSource(this.treeControl, this.treeViewService);
+        this.dataSource = runInInjectionContext(this.injector, () => {
+            const injector = Injector.create({
+                providers: [{ provide: FlatTreeControl, useValue: this.treeControl }],
+                parent: this.injector
+            });
+            return runInInjectionContext(injector, () => new TreeViewDataSource());
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {

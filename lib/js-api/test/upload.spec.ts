@@ -301,21 +301,20 @@ describe('Upload', () => {
 
             uploadMock.get401Response();
 
-            let promiseProgressOne = {};
-            let promiseProgressTwo = {};
+            const promises: Promise<string>[] = [];
 
             const uploadPromise: any = uploadApi.uploadFile(file);
             uploadPromise.catch(() => {});
 
             uploadPromise
                 .once('error', () => {
-                    promiseProgressOne = Promise.resolve('Resolving');
+                    promises.push(Promise.resolve('Resolving'));
                 })
                 .once('unauthorized', () => {
-                    promiseProgressTwo = Promise.resolve('Resolving');
+                    promises.push(Promise.resolve('Resolving'));
                 });
 
-            Promise.all([promiseProgressOne, promiseProgressTwo]).then(() => {
+            Promise.all(promises).then(() => {
                 done();
             });
         });

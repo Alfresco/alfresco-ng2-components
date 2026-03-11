@@ -1,0 +1,14 @@
+.adf-button-widget {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    min-height: 96px;
+
+    &__button {
+        margin-bottom: 32px;
+        word-break: break-word;
+        overflow: hidden;
+    }
+}

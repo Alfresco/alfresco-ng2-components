@@ -78,7 +78,7 @@ export class TaskFilterCloudModel {
     private _dueDateTo: string;
     private _createdFrom: string;
     private _createdTo: string;
-    private dateRangeFilterService = new DateRangeFilterService();
+    private readonly dateRangeFilterService = new DateRangeFilterService();
 
     processVariableFilters?: ProcessVariableFilterModel[];
 
@@ -322,22 +322,26 @@ export interface FilterOptions {
     value?: string;
 }
 
-export enum AssignmentType {
-    CURRENT_USER = 'CURRENT_USER',
-    UNASSIGNED = 'UNASSIGNED',
-    NONE = 'NONE',
-    CANDIDATE_GROUPS = 'CANDIDATE_GROUPS',
-    ASSIGNED_TO = 'ASSIGNED_TO'
-}
+export const AssignmentType = {
+    CURRENT_USER: 'CURRENT_USER',
+    UNASSIGNED: 'UNASSIGNED',
+    NONE: 'NONE',
+    CANDIDATE_GROUPS: 'CANDIDATE_GROUPS',
+    ASSIGNED_TO: 'ASSIGNED_TO'
+} as const;
 
-export enum TaskStatusFilter {
-    ALL = '',
-    CREATED = 'CREATED',
-    ASSIGNED = 'ASSIGNED',
-    SUSPENDED = 'SUSPENDED',
-    CANCELLED = 'CANCELLED',
-    COMPLETED = 'COMPLETED'
-}
+export type AssignmentType = (typeof AssignmentType)[keyof typeof AssignmentType];
+
+export const TaskStatusFilter = {
+    ALL: '',
+    CREATED: 'CREATED',
+    ASSIGNED: 'ASSIGNED',
+    SUSPENDED: 'SUSPENDED',
+    CANCELLED: 'CANCELLED',
+    COMPLETED: 'COMPLETED'
+} as const;
+
+export type TaskStatusFilter = (typeof TaskStatusFilter)[keyof typeof TaskStatusFilter];
 
 export interface TaskFilterProperties {
     label?: string;

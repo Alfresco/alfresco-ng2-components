@@ -28,25 +28,29 @@ import {
     Output,
     SimpleChanges,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
+    inject
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import Cropper from 'cropperjs';
 import { AppConfigService } from '../../../app-config';
 import { UrlService } from '../../../common';
 import { ToolbarComponent } from '../../../toolbar';
+import { IconModule } from '../../../icon/icon.module';
 
 @Component({
     selector: 'adf-img-viewer',
     templateUrl: './img-viewer.component.html',
     styleUrls: ['./img-viewer.component.scss'],
     host: { class: 'adf-image-viewer' },
-    imports: [ToolbarComponent, TranslatePipe, MatIconModule, MatButtonModule, NgIf],
+    imports: [ToolbarComponent, TranslatePipe, IconModule, MatButtonModule, NgIf],
     encapsulation: ViewEncapsulation.None
 })
 export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly urlService = inject(UrlService);
+
     @Input()
     showToolbar = true;
 
@@ -70,11 +74,11 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
-    error = new EventEmitter<any>();
+    error = new EventEmitter<void>();
 
     // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
-    submit = new EventEmitter<any>();
+    submit = new EventEmitter<Blob>();
 
     @Output()
     isSaving = new EventEmitter<boolean>();
@@ -85,27 +89,26 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     @ViewChild('image', { static: false })
     imageElement: ElementRef;
 
-    @HostListener('document:keydown', ['$event'])
+    @HostListener('document:keyup', ['$event'])
     onKeyDown(event: KeyboardEvent) {
+        if (this.destroyed || !this.cropper) {
+            return;
+        }
         switch (event.key) {
             case 'ArrowLeft': {
-                event.preventDefault();
-                this.cropper.move(-3, 0);
+                this.handleArrowLeftKey(event);
                 break;
             }
             case 'ArrowUp': {
-                event.preventDefault();
-                this.cropper.move(0, -3);
+                this.handleArrowUpKey(event);
                 break;
             }
             case 'ArrowRight': {
-                event.preventDefault();
-                this.cropper.move(3, 0);
+                this.handleArrowRightKey(event);
                 break;
             }
             case 'ArrowDown': {
-                event.preventDefault();
-                this.cropper.move(0, 3);
+                this.handleArrowDownKey(event);
                 break;
             }
             case 'i': {
@@ -134,15 +137,13 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     scale: number = 1.0;
     cropper: Cropper;
     isEditing: boolean = false;
+    private destroyed: boolean = false;
 
     get currentScaleText(): string {
         return Math.round(this.scale * 100) + '%';
     }
 
-    constructor(
-        private readonly appConfigService: AppConfigService,
-        private readonly urlService: UrlService
-    ) {
+    constructor() {
         this.initializeScaling();
     }
 
@@ -182,7 +183,11 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.cropper.destroy();
+        this.destroyed = true;
+        if (this.cropper) {
+            this.cropper.destroy();
+            this.cropper = null;
+        }
     }
 
     initializeScaling() {
@@ -193,11 +198,17 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     zoomIn() {
+        if (this.destroyed || !this.cropper) {
+            return;
+        }
         this.cropper.zoom(0.2);
         this.scale = +(this.scale + 0.2).toFixed(1);
     }
 
     zoomOut() {
+        if (this.destroyed || !this.cropper) {
+            return;
+        }
         if (this.scale > 0.2) {
             this.cropper.zoom(-0.2);
             this.scale = +(this.scale - 0.2).toFixed(1);
@@ -205,6 +216,9 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     rotateImage() {
+        if (this.destroyed || !this.cropper) {
+            return;
+        }
         this.isEditing = true;
         this.cropper.rotate(-90);
     }
@@ -254,5 +268,58 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     onImageError() {
         this.error.emit();
+    }
+
+    private handleArrowLeftKey(event: KeyboardEvent) {
+        event.preventDefault();
+        if (event.shiftKey) {
+            this.changeCropBoxArea(-3, 3, 0, 0);
+        } else if (event.altKey) {
+            this.changeCropBoxArea(3, -3, 0, 0);
+        } else {
+            this.cropper.move(-3, 0);
+        }
+    }
+
+    private handleArrowUpKey(event: KeyboardEvent) {
+        event.preventDefault();
+        if (event.shiftKey) {
+            this.changeCropBoxArea(0, 0, -3, 3);
+        } else if (event.altKey) {
+            this.changeCropBoxArea(0, 0, 3, -3);
+        } else {
+            this.cropper.move(0, -3);
+        }
+    }
+
+    private handleArrowRightKey(event: KeyboardEvent) {
+        event.preventDefault();
+        if (event.shiftKey) {
+            this.changeCropBoxArea(0, 3, 0, 0);
+        } else if (event.altKey) {
+            this.changeCropBoxArea(0, -3, 0, 0);
+        } else {
+            this.cropper.move(3, 0);
+        }
+    }
+
+    private handleArrowDownKey(event: KeyboardEvent) {
+        event.preventDefault();
+        if (event.shiftKey) {
+            this.changeCropBoxArea(0, 0, 0, 3);
+        } else if (event.altKey) {
+            this.changeCropBoxArea(0, 0, 0, -3);
+        } else {
+            this.cropper.move(0, 3);
+        }
+    }
+
+    private changeCropBoxArea(left: number, width: number, top: number, height: number) {
+        const cropBoxData = this.cropper.getCropBoxData();
+        cropBoxData.left += left;
+        cropBoxData.width += width;
+        cropBoxData.top += top;
+        cropBoxData.height += height;
+        this.cropper.setCropBoxData(cropBoxData);
     }
 }

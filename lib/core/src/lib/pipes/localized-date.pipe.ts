@@ -16,38 +16,25 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { Pipe, PipeTransform, OnDestroy } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
-import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { UserPreferencesService } from '../common/services/user-preferences.service';
 
 @Pipe({
     standalone: true,
     name: 'adfLocalizedDate',
     pure: false
 })
-export class LocalizedDatePipe implements PipeTransform, OnDestroy {
+export class LocalizedDatePipe implements PipeTransform {
+    userPreferenceService? = inject(UserPreferencesService);
+    appConfig? = inject(AppConfigService);
+
     static DEFAULT_LOCALE = 'en-US';
     static DEFAULT_DATE_FORMAT = 'mediumDate';
 
-    defaultLocale: string = LocalizedDatePipe.DEFAULT_LOCALE;
     defaultFormat: string = LocalizedDatePipe.DEFAULT_DATE_FORMAT;
 
-    private onDestroy$ = new Subject<boolean>();
-
-    constructor(public userPreferenceService?: UserPreferencesService, public appConfig?: AppConfigService) {
-        if (this.userPreferenceService) {
-            this.userPreferenceService
-                .select(UserPreferenceValues.Locale)
-                .pipe(takeUntil(this.onDestroy$))
-                .subscribe((locale) => {
-                    if (locale) {
-                        this.defaultLocale = locale;
-                    }
-                });
-        }
-
+    constructor() {
         if (this.appConfig) {
             this.defaultFormat = this.appConfig.get<string>('dateValues.defaultDateFormat', LocalizedDatePipe.DEFAULT_DATE_FORMAT);
         }
@@ -55,13 +42,10 @@ export class LocalizedDatePipe implements PipeTransform, OnDestroy {
 
     transform(value: Date | string | number, format?: string, locale?: string, timezone?: string): string {
         const actualFormat = format || this.defaultFormat;
-        const actualLocale = locale || this.defaultLocale;
+        // Use signal directly - no subscription needed!
+        const defaultLocale = this.userPreferenceService?.localeSignal() || LocalizedDatePipe.DEFAULT_LOCALE;
+        const actualLocale = locale || defaultLocale;
         const datePipe = timezone ? new DatePipe(actualLocale, timezone) : new DatePipe(actualLocale);
         return datePipe.transform(value, actualFormat);
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }

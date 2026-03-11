@@ -6,17 +6,17 @@
             aria-hidden="false"
             (click)="onClose()"
             [title]="'SEARCH.FILTER.BUTTONS.CLOSE' | translate">
-            <mat-icon>close</mat-icon>
+            <mat-icon adf-icon="close" />
         </button>
     </div>
 
-    <mat-divider />
+    <mat-divider aria-hidden="true" />
 
     <div class="adf-search-filter-content">
         <ng-content select="filter-content" />
     </div>
 
-    <mat-divider />
+    <mat-divider aria-hidden="true" />
 
     <div class="adf-search-filter-actions">
         <ng-content select="filter-actions" />

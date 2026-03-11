@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/no-input-rename, @typescript-eslint/no-use-before-define, @angular-eslint/no-input-rename */
 
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
-import { ChangeDetectorRef, DestroyRef, Directive, ElementRef, forwardRef, inject, Inject, Input, NgZone, OnDestroy, Optional } from '@angular/core';
+import { ChangeDetectorRef, DestroyRef, Directive, ElementRef, forwardRef, inject, Input, NgZone, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 import { fromEvent, merge, Observable, of, Subject, Subscription } from 'rxjs';
@@ -50,6 +50,11 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     providers: [SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR]
 })
 export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
+    private readonly element = inject(ElementRef);
+    private readonly ngZone = inject(NgZone);
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
+    private readonly document = inject(DOCUMENT, { optional: true });
+
     @Input('searchAutocomplete')
     searchPanel: SearchComponentInterface;
 
@@ -65,13 +70,6 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     onTouched = () => {};
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private element: ElementRef,
-        private ngZone: NgZone,
-        private changeDetectorRef: ChangeDetectorRef,
-        @Optional() @Inject(DOCUMENT) private document: any
-    ) {}
 
     ngOnDestroy() {
         if (this.escapeEventStream) {

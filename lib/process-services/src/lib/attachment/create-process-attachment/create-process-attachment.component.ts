@@ -30,7 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
     templateUrl: './create-process-attachment.component.html'
 })
 export class CreateProcessAttachmentComponent implements OnChanges {
-    private processContentService = inject(ProcessContentService);
+    private readonly processContentService = inject(ProcessContentService);
 
     /** (required) The ID of the process instance to display. */
     @Input({ required: true })

@@ -83,4 +83,37 @@ describe('TranslationService', () => {
         expect(translationService.instant('')).toEqual('');
         expect(translationService.instant(undefined)).toEqual('');
     });
+
+    describe('getLocale', () => {
+        it('returns the first language from navigator.languages when available', () => {
+            translationService.userLang = 'it';
+            const returnedLanguages: string[] = ['fr-FR', 'en-US'];
+            const mockLanguages = spyOnProperty(window, 'navigator').and.returnValue({
+                language: 'en-GB',
+                languages: returnedLanguages
+            } as unknown as Navigator);
+
+            expect(translationService.getLocale()).toBe('fr-FR');
+            expect(mockLanguages).toHaveBeenCalled();
+        });
+
+        it('falls back to navigator.language when languages list is absent', () => {
+            translationService.userLang = 'fr';
+            const mockLanguages = spyOnProperty(window, 'navigator').and.returnValue({
+                language: 'de-DE',
+                languages: []
+            } as unknown as Navigator);
+
+            expect(translationService.getLocale()).toBe('de-DE');
+            expect(mockLanguages).toHaveBeenCalled();
+        });
+
+        it('falls back to the provided default locale when navigator is unavailable', () => {
+            translationService.userLang = 'en';
+            const mockLanguages = spyOnProperty(window, 'navigator').and.returnValue(undefined);
+
+            expect(translationService.getLocale()).toBe('en');
+            expect(mockLanguages).toHaveBeenCalled();
+        });
+    });
 });

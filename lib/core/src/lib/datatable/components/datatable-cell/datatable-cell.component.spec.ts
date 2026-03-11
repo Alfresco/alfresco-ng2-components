@@ -31,9 +31,23 @@ describe('DataTableCellComponent', () => {
     let testingUtils: UnitTestingUtils;
 
     const renderTextCell = (value: string, tooltip: string) => {
+        // Set up mock data if not already set
+        if (!component.data) {
+            component.data = {
+                getValue: () => value
+            } as any;
+        }
+        if (!component.row) {
+            component.row = { id: '1', getValue: () => value } as any;
+        }
+        if (!component.column) {
+            component.column = { key: 'text' } as any;
+        }
+
         component.value$ = new BehaviorSubject<string>(value);
         component.tooltip = tooltip;
 
+        component.ngOnInit();
         fixture.detectChanges();
     };
 
@@ -119,5 +133,24 @@ describe('DataTableCellComponent', () => {
 
         checkDisplayedText('hello worl...');
         checkDisplayedTooltip('hello world');
+    });
+
+    it('should compute empty title when column value is undefined', () => {
+        const row: DataRow = {
+            id: '1',
+            isSelected: false,
+            hasValue: () => false,
+            getValue: () => undefined,
+            obj: 'Initial Value',
+            cache: []
+        };
+
+        component.data = new ObjectDataTableAdapter();
+        component.column = { key: 'car_name', type: 'text', maxTextLength: 10 };
+        component.row = row;
+
+        expect(() => fixture.detectChanges()).not.toThrow();
+        expect(component.title()).toBe('');
+        expect(testingUtils.getByCSS('span').nativeElement.title).toBe('');
     });
 });

@@ -34,7 +34,6 @@ import { CommentListComponent } from './comments/comment-list/comment-list.compo
 import { TEMPLATE_DIRECTIVES } from './templates/template.module';
 import { CLIPBOARD_DIRECTIVES } from './clipboard/clipboard.module';
 import { NOTIFICATION_HISTORY_DIRECTIVES } from './notifications/notification-history.module';
-import { BlankPageComponent } from './blank-page/blank-page.component';
 import { CORE_DIRECTIVES } from './directives/directive.module';
 import { CORE_PIPES } from './pipes/pipe.module';
 import { TranslateLoaderService } from './translation/translate-loader.service';
@@ -42,7 +41,6 @@ import { SEARCH_TEXT_INPUT_DIRECTIVES } from './search-text/search-text-input.mo
 import { HttpClient } from '@angular/common/http';
 import { AppConfigPipe } from './app-config';
 import { IconComponent } from './icon';
-import { SortingPickerComponent } from './sorting-picker';
 import { DynamicChipListComponent } from './dynamic-chip-list';
 import { IdentityUserInfoComponent } from './identity-user-info';
 import { UnsavedChangesDialogComponent } from './dialogs';
@@ -83,10 +81,8 @@ import { provideAppConfig } from './app-config/provide-app-config';
         ...DATATABLE_DIRECTIVES,
         ...TEMPLATE_DIRECTIVES,
         IconComponent,
-        SortingPickerComponent,
         ...NOTIFICATION_HISTORY_DIRECTIVES,
         ...SEARCH_TEXT_INPUT_DIRECTIVES,
-        BlankPageComponent,
         UnsavedChangesDialogComponent,
         DynamicChipListComponent,
         MaterialModule
@@ -113,11 +109,9 @@ import { provideAppConfig } from './app-config/provide-app-config';
         ...INFO_DRAWER_DIRECTIVES,
         ...DATATABLE_DIRECTIVES,
         ...TEMPLATE_DIRECTIVES,
-        SortingPickerComponent,
         IconComponent,
         ...NOTIFICATION_HISTORY_DIRECTIVES,
         ...SEARCH_TEXT_INPUT_DIRECTIVES,
-        BlankPageComponent,
         UnsavedChangesDialogComponent,
         DynamicChipListComponent,
         MaterialModule

@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, Inject, InjectionToken, Injector, ViewEncapsulation } from '@angular/core';
+import { Component, InjectionToken, Injector, ViewEncapsulation, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AdditionalDialogActionButton, DialogData } from './dialog-data.interface';
 import { BehaviorSubject } from 'rxjs';
 import { DialogSize, DialogSizes } from './dialog.model';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '../../icon/icon.module';
 
 export const DIALOG_COMPONENT_DATA = new InjectionToken<any>('dialog component data');
 
@@ -32,10 +32,13 @@ export const DIALOG_COMPONENT_DATA = new InjectionToken<any>('dialog component d
     selector: 'adf-dialog',
     templateUrl: './dialog.component.html',
     styleUrls: ['./dialog.component.scss'],
-    imports: [CommonModule, TranslatePipe, MatIconModule, MatDialogModule, MatButtonModule],
+    imports: [CommonModule, TranslatePipe, IconModule, MatDialogModule, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class DialogComponent {
+    data = inject<DialogData>(MAT_DIALOG_DATA);
+    dialogRef = inject<MatDialogRef<DialogComponent>>(MatDialogRef);
+
     isConfirmButtonDisabled$ = new BehaviorSubject<boolean>(false);
     isCloseButtonHidden: boolean;
     isCancelButtonHidden: boolean;
@@ -47,11 +50,9 @@ export class DialogComponent {
 
     dataInjector: Injector;
 
-    constructor(
-        @Inject(MAT_DIALOG_DATA)
-        public data: DialogData,
-        public dialogRef: MatDialogRef<DialogComponent>
-    ) {
+    constructor() {
+        const data = this.data;
+
         if (data) {
             this.isCancelButtonHidden = data.isCancelButtonHidden || false;
             this.isCloseButtonHidden = data.isCloseButtonHidden || false;

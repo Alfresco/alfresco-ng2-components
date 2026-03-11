@@ -24,6 +24,7 @@
   "CLOSE": "FECHAR",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "De momento, não tem notificações.",
+    "UNREAD_MESSAGES": "Você tem notificações não lidas.",
     "TITLE": "Notificações",
     "MARK_AS_READ": "Marcar todas como lidas",
     "SYSTEM": "Sistema",
@@ -68,10 +69,22 @@
         "NO_LONGER_THAN": "Não introduzir mais de {{ maxLength }} caracteres"
       },
       "FILE_ALREADY_UPLOADED": "Já foi carregado um ficheiro com o mesmo nome.",
-      "ATTACH": "Anexar"
+      "ATTACH": "Anexar",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "adicionar",
+        "ROW_LIMIT_REACHED": "Limite de linhas ({{ limit }}) atingido."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Tarefa sem nome"
+      "NAMELESS_TASK": "Tarefa sem nome",
+      "ROW_LABEL": "Linha {{ number }}",
+      "DELETE_ROW": "Excluir linha",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Excluir linha",
+        "MESSAGE": "Tem certeza que deseja excluir esta linha?",
+        "YES_LABEL": "Excluir linha",
+        "NO_LABEL": "Cancelar"
+      }
     },
     "FIELD_STYLE": {
       "FONT_SIZE": "Tamanho do tipo de letra",
@@ -201,7 +214,9 @@
       },
       "CANCEL_BUTTON": {
         "LABEL": "Cancelar"
-      }
+      },
+      "FOLDER_CREATED_SUCCESS": "Pasta '{{ name }}' criada com sucesso",
+      "FOLDER_UPDATED_SUCCESS": "Pasta '{{ name }}' atualizada com sucesso"
     },
     "MESSAGES": {
       "ERRORS": {
@@ -287,7 +302,8 @@
         "EDIT": "Botão Editar",
         "DATEPICKER": "Utilize as teclas de setas para navegar entre datas. Para cima e para baixo passam para a semana seguinte ou anterior, mas no mesmo dia. A esquerda e a direita deslocam-se para o dia seguinte ou anterior.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Valor copiado para a área de transferência",
-        "EDIT_ASPECTS": "Editar aspeto"
+        "EDIT_ASPECTS": "Editar aspeto",
+        "SECTION": "Seção {{ sectionName }}"
       }
     },
     "SEARCH": {
@@ -364,11 +380,6 @@
     "ACTION": {
       "HELP": "PRECISA DE AJUDA?",
       "REGISTER": "REGISTAR"
-    },
-    "DIALOG": {
-      "CANCEL": "Cancelar",
-      "CHOOSE": "Escolher",
-      "LOGIN": "Iniciar sessão"
     }
   },
   "ADF-DATATABLE": {
@@ -397,7 +408,9 @@
       "ICON_DISABLED": "Desativado",
       "ROW_OPTION_BUTTON": "Ações",
       "DRAG": "Botão Arrastar",
-      "EMPTY_HEADER": "Cabeçalho vazio"
+      "EMPTY_HEADER": "Cabeçalho vazio",
+      "RESIZE_COLUMN": "Redimensione a coluna {{ column }} Use as teclas de seta para ajustar a largura e Shift para passos maiores.",
+      "COLUMN_WIDTH_CHANGED": "{{ column }} Largura da coluna: {{ width }} pixels"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Documento",
@@ -418,7 +431,8 @@
     "COLUMNS_SELECTOR": {
       "COLUMNS": "Colunas",
       "SEARCH": "Pesquisar",
-      "APPLY": "Aplicar"
+      "APPLY": "Aplicar",
+      "COLUMNS_VISIBILITY": "Selecione colunas para exibir"
     }
   },
   "USER_PROFILE": {
@@ -465,7 +479,8 @@
       "RESET": "Redefinir",
       "THUMBNAILS": "Miniaturas do documento",
       "THUMBNAILS_PANLEL_CLOSE": "Fechar painel de miniaturas",
-      "LOADING": "O documento está sendo carregado"
+      "LOADING": "O documento está sendo carregado",
+      "NOTE_ANNOTATION_IMG": "Anotação de nota"
     },
     "PAGE_LABEL": {
       "SHOWING": "A mostrar",
@@ -591,7 +606,9 @@
     "LICENSE": {
       "TITLE": "Licença",
       "PROPERTY": "Propriedade",
-      "VALUE": "Valor"
+      "VALUE": "Valor",
+      "ENABLED": "Ativo",
+      "DISABLED": "Desativado"
     },
     "STATUS": {
       "TITLE": "Estado",

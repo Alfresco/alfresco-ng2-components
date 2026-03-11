@@ -48,14 +48,16 @@ export interface FacetFieldSettings {
     bucketSortDirection?: FacetBucketSortDirection;
 }
 
-// eslint-disable-next-line no-shadow
-export enum FacetBucketSortBy {
-    LABEL = 'LABEL',
-    COUNT = 'COUNT'
-}
+export const FacetBucketSortBy = {
+    LABEL: 'LABEL',
+    COUNT: 'COUNT'
+} as const;
 
-// eslint-disable-next-line no-shadow
-export enum FacetBucketSortDirection {
-    ASCENDING = 'ASCENDING',
-    DESCENDING = 'DESCENDING'
-}
+export type FacetBucketSortBy = (typeof FacetBucketSortBy)[keyof typeof FacetBucketSortBy];
+
+export const FacetBucketSortDirection = {
+    ASCENDING: 'ASCENDING',
+    DESCENDING: 'DESCENDING'
+} as const;
+
+export type FacetBucketSortDirection = (typeof FacetBucketSortDirection)[keyof typeof FacetBucketSortDirection];

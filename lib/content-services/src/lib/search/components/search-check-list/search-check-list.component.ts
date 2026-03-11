@@ -21,13 +21,12 @@ import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFilterList } from '../../models/search-filter-list.model';
-import { TranslationService } from '@alfresco/adf-core';
+import { IconModule, TranslationService } from '@alfresco/adf-core';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export interface SearchListOption {
@@ -38,19 +37,21 @@ export interface SearchListOption {
 
 @Component({
     selector: 'adf-search-check-list',
-    imports: [CommonModule, MatCheckboxModule, TranslatePipe, MatButtonModule, MatIconModule],
+    imports: [CommonModule, MatCheckboxModule, TranslatePipe, MatButtonModule, IconModule],
     templateUrl: './search-check-list.component.html',
     styleUrls: ['./search-check-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-check-list' }
 })
 export class SearchCheckListComponent implements SearchWidget, OnInit {
+    private readonly translationService = inject(TranslationService);
+
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     options: SearchFilterList<SearchListOption>;
     operator: string = 'OR';
-    startValue: string;
+    startValue: string | string[];
     pageSize = 5;
     isActive = false;
     enableChangeUpdate = true;
@@ -58,7 +59,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private translationService: TranslationService) {
+    constructor() {
         this.options = new SearchFilterList<SearchListOption>();
     }
 
@@ -81,9 +82,8 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
             }
         }
         this.context.populateFilters
-            .asObservable()
             .pipe(
-                map((filtersQueries) => filtersQueries[this.id]),
+                map((filtersQueries) => filtersQueries?.[this.id]),
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((filterQuery) => {
@@ -160,8 +160,8 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     }
 
     setValue(value: any) {
-        this.options.items.filter((item) => value.includes(item.value)).map((item) => (item.checked = true));
-        this.submitValues();
+        this.options.items.forEach((item) => (item.checked = value.includes(item.value)));
+        this.isActive = true;
     }
 
     private getCheckedValues() {

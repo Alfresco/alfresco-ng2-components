@@ -18,11 +18,23 @@ adf-cli <command> --help
 
 ## Developing
 
-Link the project as a global tool
+### Quick Setup
+
+Link the project as a global tool (builds and links in one command):
 
 ```bash
-npm link
+npm run link
 ```
+
+This will build the CLI and make the `adf-cli` command available globally on your system.
+
+When you're done developing:
+
+```bash
+npm run unlink
+```
+
+### Development Mode
 
 Build the tool in the **develop** mode (automatically watches for changes and rebuilds the commands):
 
@@ -38,18 +50,32 @@ DEVELOP=true adf-cli <command>
 
 In develop mode, the CLI takes the prebuilt scripts from the dist folder.
 
+### Manual Workflow
+
+If you need more control, you can manually build and link:
+
+```bash
+# Build the CLI
+npm run build
+
+# Or build with full distribution (includes copying resources)
+npm run dist
+
+# Link from the dist directory
+cd ../../dist/libs/cli && npm link
+```
+
 ## Commands
 
-| **Commands** |**Description** |
-| --- | --- |
-| changelog | Generate changelog report for two branches of git repository |
-| check-cs-env | Check cs env is up |
-| check-plugin-env | Check plugin status |
-| docker | Build and publish a docker image or create additional tag link |
-| init-aae-env | Init env |
-| init-aps-env | Init aps |
-| licenses | Create a 3th party license file |
-| audit | Check the security risk dependency in your package.json |
+| **Commands**     | **Description**                                                |
+|------------------|----------------------------------------------------------------|
+| changelog        | Generate changelog report for two branches of git repository   |
+| check-cs-env     | Check cs env is up                                             |
+| check-plugin-env | Check plugin status                                            |
+| init-aae-env     | Init env                                                       |
+| init-aps-env     | Init aps                                                       |
+| licenses         | Create a 3th party license file                                |
+| audit            | Check the security risk dependency in your package.json        |
 
 ## Examples
 
@@ -128,29 +154,6 @@ npm install
 adf-cli audit
 ```
 
-### Docker
-
-The command provides 2 targets 'Publish' (default value) and 'Link'
-
-Publish target
-Move in the folder where you have your `Dockerfile` and run the command:
-
-```bash
-adf-cli docker --target "publish" --dockerRepo "${docker_repository}"  --dockerTags "${TAGS}"
-```
-
-If you want to specify a different docker registry you can run
-```bash
---loginCheck --loginUsername "username" --loginPassword "password" --loginRepo "quay.io"--dockerRepo "${docker_repository}"  --dockerTags "${TAGS}"
-```
-
-Link target
-In case you don't need to publish a new image but you would like to create a link to an already existing image (sourceTag) you can use the link target.
-
-```bash
-adf-cli docker --target "link" --dockerRepo "${docker_repository}"  --dockerTags "${TAGS}"  --sourceTag "develop"
-```
-
 ### Initialize activiti cloud env
 
 The following command is in charge of Initializing the activiti cloud env with the default apps:
@@ -167,14 +170,13 @@ adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --identityHost
 If you want to add a new app the schema needs to be:
 
 ```text
-TEST_APP: {
-        name: 'testapp',
-        file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/branch/e2e/resources/testapp.zip?raw=true',
-        security: [
-            {'role': 'APS_ADMIN', 'groups': ['myadmingroup'], 'users': ['myadminuser']},
-            {'role': 'APS_USER', 'groups': ['myusergroup'], 'users': ['myuser']
-        }]
-    },
+TEST_APP: {
+    name: 'testapp',
+    file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/branch/e2e/resources/testapp.zip?raw=true',
+    security:[
+        {'role': 'APS_ADMIN', groups': ['myadmingroup'], 'users': ['myadminuser']},
+        {'role': 'APS_USER', 'groups': ['myusergroup'], 'users': ['myuser']}]
+    },
 ```
 
 ### Checks plugin status

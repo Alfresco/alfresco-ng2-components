@@ -20,7 +20,9 @@
  * Create mode allows only for creating completely new tags.
  * Create and Assign mode allows for both - creation of new tags and selection of existing tags.
  */
-export enum TagsCreatorMode {
-    CREATE,
-    CREATE_AND_ASSIGN
-}
+export const TagsCreatorMode = {
+    CREATE: 'CREATE',
+    CREATE_AND_ASSIGN: 'CREATE_AND_ASSIGN'
+} as const;
+
+export type TagsCreatorMode = (typeof TagsCreatorMode)[keyof typeof TagsCreatorMode];
