@@ -216,4 +216,21 @@ describe('ContentService', () => {
             expect(contentService.getNodeIcon(node)).toContain('assets/images/ft_ic_miscellaneous');
         });
     });
+
+    describe('isRmaContent', () => {
+        it('should return true if nodeType starts with rma:', () => {
+            const rmaNode = new Node({ nodeType: 'rma:hold' });
+            expect(contentService.isRmaContent(rmaNode)).toBeTruthy();
+        });
+
+        it('should return false for misplaced key word', () => {
+            const rmaFolder = new Node({ nodeType: 'cm:rma:recordFolder' });
+            expect(contentService.isRmaContent(rmaFolder)).toBeFalsy();
+        });
+
+        it('should return false if nodeType does not start with rma:', () => {
+            const contentNode = new Node({ nodeType: 'cm:content' });
+            expect(contentService.isRmaContent(contentNode)).toBeFalsy();
+        });
+    });
 });

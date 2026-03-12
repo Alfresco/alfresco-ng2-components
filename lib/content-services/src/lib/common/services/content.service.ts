@@ -186,6 +186,10 @@ export class ContentService {
         return node?.nodeType === 'app:folderlink';
     }
 
+    isRmaContent(node: Node): boolean {
+        return node?.nodeType.startsWith('rma:');
+    }
+
     private hasAspect(node: Node, aspectName: string): boolean {
         return node?.aspectNames?.includes(aspectName);
     }

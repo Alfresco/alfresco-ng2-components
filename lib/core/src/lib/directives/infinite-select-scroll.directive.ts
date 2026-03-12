@@ -37,7 +37,7 @@ export class InfiniteSelectScrollDirective implements AfterViewInit {
 
     ngAfterViewInit() {
         this.matSelect.openedChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((opened: boolean) => {
-            if (opened) {
+            if (opened && this.matSelect.panel) {
                 this.itemHeightToWaitBeforeLoadNext = this.getItemHeight() * (InfiniteSelectScrollDirective.MAX_ITEMS / 2);
                 this.matSelect.panel.nativeElement.addEventListener('scroll', (event: Event) => this.handleScrollEvent(event));
             }
