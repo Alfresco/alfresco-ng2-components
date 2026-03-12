@@ -3,14 +3,14 @@
 .adf-task-filters {
     &__entry-counter {
         padding: 0 5px;
-        border-radius: var(--mat-sys-corner-large, 15px);
+        border-radius: var(--mat-sys-corner-large);
 
         &.adf-active {
-            background-color: var(--mat-sys-secondary, var(--theme-accent-color));
+            background-color: var(--mat-sys-secondary);
 
             @include mat.list-overrides(
                 (
-                    list-item-trailing-supporting-text-color: var(--mat-sys-on-secondary, var(--theme-accent-color-default-contrast))
+                    list-item-trailing-supporting-text-color: var(--mat-sys-on-secondary)
                 )
             );
         }

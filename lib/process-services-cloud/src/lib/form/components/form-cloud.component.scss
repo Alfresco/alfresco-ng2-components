@@ -6,7 +6,6 @@
 .adf-full-screen {
     width: 100%;
     height: 100%;
-    background-color: var(--adf-theme-background-card-color);
 }
 
 .adf-cloud-form {
@@ -37,7 +36,7 @@
         top: 0;
         left: 0;
         z-index: 100000;
-        background-color: var(--adf-theme-mat-grey-color-a400);
+        background-color: var(--mat-sys-surface-container);
         display: block;
         height: 100%;
         width: 100vw;
@@ -61,13 +60,6 @@
         }
     }
 
-    &-toolbar ::ng-deep {
-        #{ms.$mat-toolbar} {
-            background-color: var(--adf-theme-background-card-color-087);
-            border-radius: 14px 14px 0 0;
-        }
-    }
-
     &-fullscreen-button {
         position: absolute;
         right: 70px;
@@ -75,7 +67,7 @@
     }
 
     &__display-name {
-        font-size: var(--theme-subheading-2-font-size);
+        font-size: var(--mat-sys-title-small-size);
         opacity: 0.87;
         line-height: 1.5;
         letter-spacing: -0.4px;
@@ -87,7 +79,6 @@
         overflow: hidden;
         display: inline-block;
         vertical-align: middle;
-        color: var(--adf-theme-foreground-text-color);
     }
 
     &__form-title {

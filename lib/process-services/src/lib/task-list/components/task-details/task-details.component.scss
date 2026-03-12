@@ -1,4 +1,3 @@
-@use '../../../styles/mat-selectors' as ms;
 @use '../../../styles/flex' as flex;
 
 adf-task-details {
@@ -7,9 +6,7 @@ adf-task-details {
     .adf-activiti-task-details__header {
         align-self: flex-end;
         display: flex;
-        font-size: var(--theme-headline-font-size);
-        font-weight: 300;
-        line-height: normal;
+        font: var(--mat-sys-headline-small);
         overflow: hidden;
         margin: 8px 0 16px;
         cursor: pointer;
@@ -75,22 +72,6 @@ adf-task-details {
                     display: flex;
                     flex-direction: column;
                     padding: 20px 0;
-
-                    #{ms.$mat-slide-toggle} {
-                        margin-left: auto;
-
-                        & + div {
-                            background-color: black;
-                            padding: 20px;
-                            clear: both;
-                            margin-top: 30px;
-                            color: white;
-                        }
-                    }
-                }
-
-                & #{ms.$mat-tab-label-text} {
-                    flex-grow: 1;
                 }
             }
         }

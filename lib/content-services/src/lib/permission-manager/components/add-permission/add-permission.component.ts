@@ -30,7 +30,6 @@ import { TranslatePipe } from '@ngx-translate/core';
     selector: 'adf-add-permission',
     imports: [CommonModule, AddPermissionPanelComponent, MatButtonModule, TranslatePipe],
     templateUrl: './add-permission.component.html',
-    styleUrls: ['./add-permission.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 /*

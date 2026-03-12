@@ -10,10 +10,8 @@
 
             .adf-group-short-name {
                 margin-right: 20px;
-                background: var(--theme-primary-color);
                 width: 40px;
                 height: 40px;
-                box-shadow: none;
             }
         }
     }
@@ -22,24 +20,15 @@
         width: 100%;
 
         &-title {
-            color: var(--adf-theme-foreground-secondary-text-color);
+            color: var(--mat-sys-on-surface-variant);
 
             &--focus {
-                color: var(--theme-primary-color);
+                color: var(--mat-sys-primary);
             }
         }
 
-        &-option-active:not(&:disabled) {
-            color: var(--adf-theme-foreground-text-color);
-        }
-
-        &-option-not-active:not(&:active) {
-            background: inherit;
-            color: var(--adf-theme-foreground-secondary-text-color);
-        }
-
         &-error {
-            color: var(--theme-warn-color);
+            color: var(--mat-sys-error);
             margin-top: -10px;
             position: absolute;
             height: 20px;

@@ -2,7 +2,7 @@
     display: grid;
 
     &-location {
-        color: var(--adf-theme-foreground-text-color-064);
-        font-size: var(--theme-caption-font-size);
+        color: var(--mat-sys-on-secondary-container);
+        font: var(--mat-sys-body-small);
     }
 }

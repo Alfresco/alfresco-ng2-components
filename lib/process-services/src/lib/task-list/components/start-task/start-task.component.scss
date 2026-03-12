@@ -1,15 +1,9 @@
-@use '../../../styles/mat-selectors' as ms;
 @use '../../../styles/flex' as flex;
 
 /* stylelint-disable no-descending-specificity */
 .adf-new-task-heading {
     padding-top: 12px;
-    border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
-
-    #{ms.$mat-card-title} {
-        font-weight: bold;
-        font-size: var(--theme-adf-task-title-font-size);
-    }
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
 }
 
 .adf-new-task-layout-card {
@@ -57,8 +51,8 @@
 
 .adf-new-task-footer {
     padding: 4px;
-    font-size: var(--theme-adf-task-footer-font-size);
-    border-top: 1px solid #eee;
+    font: var(--mat-sys-body-medium);
+    border-top: 1px solid var(--mat-sys-outline-variant);
     display: flex;
     place-content: flex-end;
     align-items: flex-end;
@@ -69,20 +63,16 @@
 }
 
 adf-start-task {
-    #{ms.$mat-button}.adf-uppercase {
+    button.adf-uppercase {
         text-transform: uppercase;
     }
 
     people-widget.adf-people-widget-content {
         width: 100%;
-
-        #{ms.$mat-form-field-label} {
-            top: -14px;
-        }
     }
 
     .adf-people-widget-content {
-        #{ms.$mat-form-field} {
+        .adf-people-widget-field {
             width: 100%;
         }
 
@@ -96,7 +86,7 @@ adf-start-task {
     }
 
     .adf {
-        &-start-task-input-container #{ms.$mat-form-field-wrapper} {
+        &-start-task-input-container {
             padding-top: 8px;
         }
 
@@ -116,39 +106,35 @@ adf-start-task {
         &-error-text {
             padding-right: 8px;
             height: 16px;
-            font-size: var(--theme-caption-font-size);
+            font: var(--mat-sys-body-small);
             line-height: 1.33;
-            color: var(--theme-warn-color);
+            color: var(--mat-sys-error);
             width: auto;
         }
 
         &-error-icon {
-            font-size: var(--theme-adf-icon-1-font-size);
-            color: var(--theme-warn-color);
+            font: var(--mat-sys-body-medium);
+            color: var(--mat-sys-error);
         }
 
         &-label {
-            color: rgb(186, 186, 186);
+            color: var(--mat-sys-outline);
         }
 
         &-invalid {
             .adf-file {
-                border-color: var(--theme-warn-color);
-            }
-
-            #{ms.$mat-form-field-prefix} {
-                color: var(--theme-warn-color);
+                border-color: var(--mat-sys-error);
             }
 
             .adf-input {
-                border-color: var(--theme-warn-color);
+                border-color: var(--mat-sys-error);
             }
 
             .adf-label {
-                color: var(--theme-warn-color);
+                color: var(--mat-sys-error);
 
                 &::after {
-                    background-color: var(--theme-warn-color);
+                    background-color: var(--mat-sys-error);
                 }
             }
         }

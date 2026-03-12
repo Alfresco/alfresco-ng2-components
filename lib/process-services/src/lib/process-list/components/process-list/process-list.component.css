@@ -3,10 +3,8 @@
     margin-right: calc((100% - 100px) / 2);
 }
 
+/* stylelint-disable-next-line selector-class-pattern */
 .no-content-message {
-    font-size: var(--theme-subheading-2-font-size);
-    font-weight: bold;
+    font: var(--mat-sys-title-small);
     text-align: center;
-    opacity: 0.54;
-    color: #000;
 }

@@ -24,7 +24,7 @@ $tree-header-font-size: 12px !default;
     padding-left: 15px;
     padding-right: 15px;
     transition-property: background-color;
-    border-bottom: 1px solid var(--adf-theme-foreground-text-color-007);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
     min-height: $tree-row-height;
     user-select: none;
 
@@ -33,7 +33,7 @@ $tree-header-font-size: 12px !default;
     }
 
     &:hover {
-        background-color: var(--adf-theme-background-hover-color);
+        background-color: var(--mat-sys-surface-container);
 
         .adf-tree-actions {
             display: flex;
@@ -41,9 +41,9 @@ $tree-header-font-size: 12px !default;
     }
 
     &:focus {
-        background-color: var(--adf-theme-background-hover-color);
+        background-color: var(--mat-sys-surface-container);
         outline-offset: -1px;
-        outline: 1px solid var(--theme-accent-color-a200);
+        outline: 1px solid var(--mat-sys-secondary);
     }
 
     .adf-tree-expand-collapse-button,
@@ -55,7 +55,7 @@ $tree-header-font-size: 12px !default;
     }
 
     .adf-tree-cell {
-        color: var(--adf-theme-foreground-text-color);
+        color: var(--mat-sys-on-surface);
         width: 100%;
 
         .adf-tree-cell-value {
@@ -82,13 +82,13 @@ $tree-header-font-size: 12px !default;
         letter-spacing: 0;
         min-height: $tree-row-height;
         font-size: $tree-header-font-size;
-        color: var(--adf-theme-foreground-text-color);
+        color: var(--mat-sys-on-surface);
         box-sizing: border-box;
         padding-top: 12px;
 
         &:focus {
             outline-offset: -1px;
-            outline: 1px solid var(--theme-accent-color-a200);
+            outline: 1px solid var(--mat-sys-primary);
         }
     }
 }

@@ -5,11 +5,10 @@ $adf-pagination-border: none !default;
 $adf-pagination-line-height: 20px;
 
 .adf-pagination {
+    font: var(--mat-sys-body-small);
     display: flex;
     border-top: $adf-pagination-border;
     height: $adf-pagination-height;
-    line-height: $adf-pagination-line-height;
-    color: var(--adf-theme-foreground-text-color);
 
     &__block {
         display: flex;
@@ -55,11 +54,6 @@ $adf-pagination-line-height: 20px;
     &__max-items,
     &__current-page {
         margin-right: 5px;
-
-        &,
-        & + button {
-            color: var(--adf-theme-foreground-text-color);
-        }
 
         & + button {
             margin-left: -10px;

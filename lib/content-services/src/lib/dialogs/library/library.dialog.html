@@ -68,7 +68,6 @@
     >
       @for (option of visibilityOptions; track option.value) {
         <mat-radio-button
-          color="primary"
           class="adf-library-dialog-radio-group-button"
           [disabled]="option.disabled"
           [attr.data-automation-id]="option.value"
@@ -88,7 +87,6 @@
   </button>
 
   <button
-    color="primary"
     class="adf-action-button"
     mat-button
     (click)="submit()"

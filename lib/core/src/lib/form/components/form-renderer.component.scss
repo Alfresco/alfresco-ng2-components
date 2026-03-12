@@ -142,25 +142,6 @@
         top: 1.8em;
     }
 
-    #{ms.$mat-focused} {
-        width: 100%;
-
-        #{ms.$mat-text-field-focused} {
-            label {
-                color: var(--theme-primary-color);
-            }
-        }
-
-        label {
-            transition: transform 150ms linear;
-            background-color: 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
-        }
-
-        #{ms.$mat-form-field-prefix} {
-            color: var(--theme-primary-color);
-        }
-    }
-
     #{ms.$mat-grid-tile} {
         overflow: visible;
         width: 80%;
@@ -192,8 +173,6 @@
         }
 
         & #{mat-tab-label-text} {
-            font-size: var(--theme-subheading-2-font-size);
-            line-height: var(--theme-headline-line-height);
             letter-spacing: -0.4px;
             text-align: left;
             color: rgba(0, 0, 0, 0.54);
@@ -212,7 +191,7 @@
     }
 
     &-form-title {
-        font-size: var(--theme-title-font-size);
+        font-size: var(--mat-sys-title-medium-size);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -228,10 +207,10 @@
         position: absolute;
         right: 50px;
         top: 39px;
-        color: var(--theme-accent-color);
+        color: var(--mat-sys-secondary);
 
         & .adf-invalid-color {
-            color: var(--theme-warn-color);
+            color: var(--mat-sys-error);
         }
     }
 
@@ -294,10 +273,4 @@
 
 form-field {
     width: 100%;
-
-    #{ms.$mat-input-element} {
-        font-size: var(--theme-body-2-font-size);
-        padding-top: 8px;
-        line-height: normal;
-    }
 }
