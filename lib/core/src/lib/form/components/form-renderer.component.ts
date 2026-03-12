@@ -16,13 +16,16 @@
  */
 
 import { NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, Injector, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject, Injector, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
 import { FormService } from '../services/form.service';
+import { WidgetVisibilityService } from '../services/widget-visibility.service';
 import { FormFieldComponent } from './form-field/form-field.component';
 import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE, FormFieldModelRenderMiddleware } from './middlewares/middleware';
 import { ContainerModel, FormFieldModel, FormModel, TabModel, RepeatWidgetComponent } from './widgets';
@@ -74,8 +77,10 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
 
     public readonly formService = inject(FormService);
     private readonly formRulesManager = inject(FormRulesManager<T>);
+    private readonly visibilityService = inject(WidgetVisibilityService);
     private readonly dialog = inject(MatDialog);
     private readonly cdr = inject(ChangeDetectorRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     @Input({ required: true })
     formDefinition: FormModel;
@@ -92,6 +97,13 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
         if (!this.readOnly) {
             this.formRulesManager.initialize(this.formDefinition);
         }
+
+        this.formService.formRulesEvent
+            .pipe(
+                filter((event) => event?.type === 'fieldValueChanged' && event.form?.id === this.formDefinition?.id),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe(() => this.visibilityService.refreshVisibility(this.formDefinition));
     }
 
     ngOnDestroy() {
