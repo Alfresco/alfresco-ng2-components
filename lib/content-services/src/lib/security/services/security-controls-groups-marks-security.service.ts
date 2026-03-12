@@ -60,6 +60,10 @@ export class SecurityControlsService {
     private readonly loadingSource = new BehaviorSubject<boolean>(true);
     loading$ = this.loadingSource.asObservable();
 
+    get reloadAuthorityClearance(): Subject<void> {
+        return this._reloadAuthorityClearance;
+    }
+
     @LazyApi((self: SecurityControlsService) => new SecurityGroupsApi(self.apiService.getInstance()))
     declare readonly groupsApi: SecurityGroupsApi;
 
