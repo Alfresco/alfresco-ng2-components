@@ -16,7 +16,7 @@
  */
 
 import { Injectable, inject } from '@angular/core';
-import { Agent, AgentsApi } from '@alfresco/js-api';
+import { Agent, AgentsApi, LazyApi } from '@alfresco/js-api';
 import { BehaviorSubject, from, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { AlfrescoApiService } from '../../services';
@@ -27,13 +27,10 @@ import { AlfrescoApiService } from '../../services';
 export class AgentService {
     private readonly apiService = inject(AlfrescoApiService);
 
-    private _agentsApi: AgentsApi;
     private readonly agents = new BehaviorSubject<Agent[]>([]);
 
-    get agentsApi(): AgentsApi {
-        this._agentsApi = this._agentsApi ?? new AgentsApi(this.apiService.getInstance());
-        return this._agentsApi;
-    }
+    @LazyApi((self: AgentService) => new AgentsApi(self.apiService.getInstance()))
+    declare readonly agentsApi: AgentsApi;
 
     agents$ = this.agents.asObservable();
 

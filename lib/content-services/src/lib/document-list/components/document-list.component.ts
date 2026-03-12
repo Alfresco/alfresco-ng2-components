@@ -47,7 +47,7 @@ import {
     UserPreferencesService,
     UserPreferenceValues
 } from '@alfresco/adf-core';
-import { Node, NodeEntry, NodePaging, NodesApi, Pagination } from '@alfresco/js-api';
+import { LazyApi, Node, NodeEntry, NodePaging, NodesApi, Pagination } from '@alfresco/js-api';
 import {
     AfterContentInit,
     Component,
@@ -469,11 +469,8 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
     private readonly destroyRef = inject(DestroyRef);
 
-    private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
-        return this._nodesApi;
-    }
+    @LazyApi((self: DocumentListComponent) => new NodesApi(self.alfrescoApiService.getInstance()))
+    declare readonly nodesApi: NodesApi;
 
     constructor() {
         const appConfig = inject(AppConfigService);

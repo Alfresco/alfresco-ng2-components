@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { CommentModel, CommentsService } from '@alfresco/adf-core';
-import { ActivitiCommentsApi } from '@alfresco/js-api';
+import { ActivitiCommentsApi, LazyApi } from '@alfresco/js-api';
 import { inject, Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -27,11 +27,8 @@ import { PeopleProcessService } from './people-process.service';
     providedIn: 'root'
 })
 export class TaskCommentsService implements CommentsService {
-    private _commentsApi: ActivitiCommentsApi;
-    get commentsApi(): ActivitiCommentsApi {
-        this._commentsApi = this._commentsApi ?? new ActivitiCommentsApi(this.apiService.getInstance());
-        return this._commentsApi;
-    }
+    @LazyApi((self: TaskCommentsService) => new ActivitiCommentsApi(self.apiService.getInstance()))
+    declare readonly commentsApi: ActivitiCommentsApi;
 
     protected apiService = inject(AlfrescoApiService);
     protected peopleProcessService = inject(PeopleProcessService);

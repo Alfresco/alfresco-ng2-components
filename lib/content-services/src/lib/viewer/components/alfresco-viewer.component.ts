@@ -45,7 +45,7 @@ import {
     ViewUtilService
 } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { ContentApi, Node, NodeEntry, NodesApi, RenditionEntry, SharedlinksApi, Version, VersionEntry, VersionsApi } from '@alfresco/js-api';
+import { ContentApi, LazyApi, Node, NodeEntry, NodesApi, RenditionEntry, SharedlinksApi, Version, VersionEntry, VersionsApi } from '@alfresco/js-api';
 import { RenditionService } from '../../common/services/rendition.service';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
@@ -240,29 +240,17 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     sidebarRightTemplateContext: { node: Node } = { node: null };
     sidebarLeftTemplateContext: { node: Node } = { node: null };
 
-    private _sharedLinksApi: SharedlinksApi;
-    get sharedLinksApi(): SharedlinksApi {
-        this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
-        return this._sharedLinksApi;
-    }
+    @LazyApi((self: AlfrescoViewerComponent) => new SharedlinksApi(self.apiService.getInstance()))
+    declare readonly sharedLinksApi: SharedlinksApi;
 
-    private _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
-        this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
-        return this._versionsApi;
-    }
+    @LazyApi((self: AlfrescoViewerComponent) => new VersionsApi(self.apiService.getInstance()))
+    declare readonly versionsApi: VersionsApi;
 
-    private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
+    @LazyApi((self: AlfrescoViewerComponent) => new NodesApi(self.apiService.getInstance()))
+    declare readonly nodesApi: NodesApi;
 
-    private _contentApi: ContentApi;
-    get contentApi(): ContentApi {
-        this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
-        return this._contentApi;
-    }
+    @LazyApi((self: AlfrescoViewerComponent) => new ContentApi(self.apiService.getInstance()))
+    declare readonly contentApi: ContentApi;
 
     private readonly destroyRef = inject(DestroyRef);
 

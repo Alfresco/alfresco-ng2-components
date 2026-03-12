@@ -20,7 +20,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { Observable, defer, forkJoin } from 'rxjs';
 import { PropertyGroup, PropertyGroupContainer } from '../interfaces/content-metadata.interfaces';
 import { map } from 'rxjs/operators';
-import { ClassesApi } from '@alfresco/js-api';
+import { ClassesApi, LazyApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -28,11 +28,8 @@ import { ClassesApi } from '@alfresco/js-api';
 export class PropertyDescriptorsService {
     private readonly alfrescoApiService = inject(AlfrescoApiService);
 
-    private _classesApi: ClassesApi;
-    get classesApi(): ClassesApi {
-        this._classesApi = this._classesApi ?? new ClassesApi(this.alfrescoApiService.getInstance());
-        return this._classesApi;
-    }
+    @LazyApi((self: PropertyDescriptorsService) => new ClassesApi(self.alfrescoApiService.getInstance()))
+    declare readonly classesApi: ClassesApi;
 
     load(groupNames: string[]): Observable<PropertyGroupContainer> {
         const groupFetchStreams = groupNames

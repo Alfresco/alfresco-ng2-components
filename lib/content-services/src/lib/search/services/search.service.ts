@@ -16,7 +16,7 @@
  */
 
 import { inject, Injectable } from '@angular/core';
-import { NodePaging, QueriesApi, SearchRequest, ResultSetPaging, SearchApi } from '@alfresco/js-api';
+import { NodePaging, QueriesApi, SearchRequest, ResultSetPaging, SearchApi, LazyApi } from '@alfresco/js-api';
 import { Observable, Subject, from } from 'rxjs';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { SearchConfigurationService } from './search-configuration.service';
@@ -30,17 +30,11 @@ export class SearchService {
 
     dataLoaded = new Subject<ResultSetPaging>();
 
-    private _queriesApi: QueriesApi;
-    get queriesApi(): QueriesApi {
-        this._queriesApi = this._queriesApi ?? new QueriesApi(this.apiService.getInstance());
-        return this._queriesApi;
-    }
+    @LazyApi((self: SearchService) => new QueriesApi(self.apiService.getInstance()))
+    declare readonly queriesApi: QueriesApi;
 
-    private _searchApi: SearchApi;
-    get searchApi(): SearchApi {
-        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
-        return this._searchApi;
-    }
+    @LazyApi((self: SearchService) => new SearchApi(self.apiService.getInstance()))
+    declare readonly searchApi: SearchApi;
 
     /**
      * Gets a list of nodes that match the given search criteria.

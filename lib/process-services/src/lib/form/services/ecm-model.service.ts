@@ -20,7 +20,7 @@ import { FormModel } from '@alfresco/adf-core';
 import { EventEmitter, Injectable, inject } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { CustomModelApi } from '@alfresco/js-api';
+import { CustomModelApi, LazyApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -34,11 +34,8 @@ export class EcmModelService {
 
     error = new EventEmitter<any>();
 
-    private _customModelApi: CustomModelApi;
-    get customModelApi(): CustomModelApi {
-        this._customModelApi = this._customModelApi ?? new CustomModelApi(this.apiService.getInstance());
-        return this._customModelApi;
-    }
+    @LazyApi((self: EcmModelService) => new CustomModelApi(self.apiService.getInstance()))
+    declare readonly customModelApi: CustomModelApi;
 
     public createEcmTypeForActivitiForm(formName: string, form: FormModel): Observable<any> {
         return new Observable((observer) => {

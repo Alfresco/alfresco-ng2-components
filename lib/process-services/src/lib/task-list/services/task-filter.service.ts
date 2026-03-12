@@ -18,7 +18,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable, forkJoin, from } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UserFiltersApi, UserTaskFilterRepresentation } from '@alfresco/js-api';
+import { LazyApi, UserFiltersApi, UserTaskFilterRepresentation } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
 
 @Injectable({
@@ -27,11 +27,8 @@ import { AlfrescoApiService } from '@alfresco/adf-content-services';
 export class TaskFilterService {
     protected apiService = inject(AlfrescoApiService);
 
-    private _userFiltersApi: UserFiltersApi;
-    get userFiltersApi(): UserFiltersApi {
-        this._userFiltersApi = this._userFiltersApi ?? new UserFiltersApi(this.apiService.getInstance());
-        return this._userFiltersApi;
-    }
+    @LazyApi((self: TaskFilterService) => new UserFiltersApi(self.apiService.getInstance()))
+    declare readonly userFiltersApi: UserFiltersApi;
 
     /**
      * Creates and returns the default filters for a process app.

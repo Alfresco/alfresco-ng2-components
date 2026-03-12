@@ -25,7 +25,8 @@ import {
     CategoryPaging,
     ResultSetPaging,
     SearchApi,
-    SEARCH_LANGUAGE
+    SEARCH_LANGUAGE,
+    LazyApi
 } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { from, Observable } from 'rxjs';
@@ -36,18 +37,11 @@ export class CategoryService {
     private readonly userPreferencesService = inject(UserPreferencesService);
     private readonly appConfigService = inject(AppConfigService);
 
-    private _categoriesApi: CategoriesApi;
-    private _searchApi: SearchApi;
+    @LazyApi((self: CategoryService) => new CategoriesApi(self.apiService.getInstance()))
+    declare readonly categoriesApi: CategoriesApi;
 
-    get categoriesApi(): CategoriesApi {
-        this._categoriesApi = this._categoriesApi ?? new CategoriesApi(this.apiService.getInstance());
-        return this._categoriesApi;
-    }
-
-    get searchApi(): SearchApi {
-        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
-        return this._searchApi;
-    }
+    @LazyApi((self: CategoryService) => new SearchApi(self.apiService.getInstance()))
+    declare readonly searchApi: SearchApi;
 
     /**
      * Get subcategories of a given parent category

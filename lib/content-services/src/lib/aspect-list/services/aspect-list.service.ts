@@ -20,7 +20,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AppConfigService } from '@alfresco/adf-core';
 import { from, Observable, of, zip } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { AspectEntry, AspectPaging, AspectsApi, ListAspectsOpts } from '@alfresco/js-api';
+import { AspectEntry, AspectPaging, AspectsApi, LazyApi, ListAspectsOpts } from '@alfresco/js-api';
 import { CustomAspectPaging } from '../interfaces/custom-aspect-paging.interface';
 
 export const StandardAspectsWhere = `(modelId in ('cm:contentmodel', 'emailserver:emailserverModel', 'smf:smartFolder', 'app:applicationmodel' ))`;
@@ -33,11 +33,8 @@ export class AspectListService {
     private readonly alfrescoApiService = inject(AlfrescoApiService);
     private readonly appConfigService = inject(AppConfigService);
 
-    private _aspectsApi: AspectsApi;
-    get aspectsApi(): AspectsApi {
-        this._aspectsApi = this._aspectsApi ?? new AspectsApi(this.alfrescoApiService.getInstance());
-        return this._aspectsApi;
-    }
+    @LazyApi((self: AspectListService) => new AspectsApi(self.alfrescoApiService.getInstance()))
+    declare readonly aspectsApi: AspectsApi;
 
     getAllAspects(standardOpts?: ListAspectsOpts, customOpts?: ListAspectsOpts): Observable<CustomAspectPaging> {
         const visibleAspectList = this.getVisibleAspects();

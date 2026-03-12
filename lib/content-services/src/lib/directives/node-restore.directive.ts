@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
 import { Directive, EventEmitter, HostListener, Input, Output, inject } from '@angular/core';
-import { TrashcanApi, DeletedNodeEntry, DeletedNodesPaging } from '@alfresco/js-api';
+import { TrashcanApi, DeletedNodeEntry, DeletedNodesPaging, LazyApi } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
 import { tap, mergeMap, map, catchError } from 'rxjs/operators';
 import { TranslationService } from '@alfresco/adf-core';
@@ -35,11 +35,8 @@ export class NodeRestoreDirective {
 
     private readonly restoreProcessStatus;
 
-    private _trashcanApi: TrashcanApi;
-    get trashcanApi(): TrashcanApi {
-        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.alfrescoApiService.getInstance());
-        return this._trashcanApi;
-    }
+    @LazyApi((self: NodeRestoreDirective) => new TrashcanApi(self.alfrescoApiService.getInstance()))
+    declare readonly trashcanApi: TrashcanApi;
 
     /** Array of deleted nodes to restore. */
     @Input('adf-restore')

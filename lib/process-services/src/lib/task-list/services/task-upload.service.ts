@@ -17,17 +17,14 @@
 
 import { UploadService } from '@alfresco/adf-content-services';
 import { Injectable } from '@angular/core';
-import { ActivitiContentApi, RelatedContentRepresentation } from '@alfresco/js-api';
+import { ActivitiContentApi, LazyApi, RelatedContentRepresentation } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TaskUploadService extends UploadService {
-    private _contentApi: ActivitiContentApi;
-    get contentApi(): ActivitiContentApi {
-        this._contentApi = this._contentApi ?? new ActivitiContentApi(this.apiService.getInstance());
-        return this._contentApi;
-    }
+    @LazyApi((self: TaskUploadService) => new ActivitiContentApi(self.apiService.getInstance()))
+    declare readonly contentApi: ActivitiContentApi;
 
     getUploadPromise(file: any): Promise<RelatedContentRepresentation> {
         const opts = {

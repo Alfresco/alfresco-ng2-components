@@ -20,7 +20,7 @@ import { FormValues, FormModel, FormFieldOption, FormFieldValidator, FormService
 import { Observable, from, EMPTY } from 'rxjs';
 import { expand, map, reduce, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/models/task-details-cloud.model';
-import { CompleteFormRepresentation, UploadApi } from '@alfresco/js-api';
+import { CompleteFormRepresentation, LazyApi, UploadApi } from '@alfresco/js-api';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { FormContent } from '../../services/form-fields.interfaces';
@@ -32,13 +32,11 @@ export const FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN = new InjectionToken<Form
     providedIn: 'root'
 })
 export class FormCloudService extends BaseCloudService implements FormCloudServiceInterface {
-    private _uploadApi: UploadApi;
     private readonly fieldValidators: FormFieldValidator[] = inject(FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, { optional: true }) ?? [];
     private readonly formService = inject(FormService);
-    get uploadApi(): UploadApi {
-        this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
-        return this._uploadApi;
-    }
+
+    @LazyApi((self: FormCloudService) => new UploadApi(self.apiService.getInstance()))
+    declare readonly uploadApi: UploadApi;
 
     /**
      * Gets the form definition of a task.

@@ -33,7 +33,8 @@ import {
     NodesApi,
     SitePaging,
     ResultSetPaging,
-    SEARCH_LANGUAGE
+    SEARCH_LANGUAGE,
+    LazyApi
 } from '@alfresco/js-api';
 import { Injectable, inject } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
@@ -45,47 +46,26 @@ const CREATE_PERMISSION: string = 'create';
 export class CustomResourcesService {
     private readonly apiService = inject(AlfrescoApiService);
 
-    private _peopleApi: PeopleApi;
-    get peopleApi(): PeopleApi {
-        this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
-        return this._peopleApi;
-    }
+    @LazyApi((self: CustomResourcesService) => new PeopleApi(self.apiService.getInstance()))
+    declare readonly peopleApi: PeopleApi;
 
-    private _sitesApi: SitesApi;
-    get sitesApi(): SitesApi {
-        this._sitesApi = this._sitesApi ?? new SitesApi(this.apiService.getInstance());
-        return this._sitesApi;
-    }
+    @LazyApi((self: CustomResourcesService) => new SitesApi(self.apiService.getInstance()))
+    declare readonly sitesApi: SitesApi;
 
-    private _trashcanApi: TrashcanApi;
-    get trashcanApi(): TrashcanApi {
-        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
-        return this._trashcanApi;
-    }
+    @LazyApi((self: CustomResourcesService) => new TrashcanApi(self.apiService.getInstance()))
+    declare readonly trashcanApi: TrashcanApi;
 
-    private _searchApi: SearchApi;
-    get searchApi(): SearchApi {
-        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
-        return this._searchApi;
-    }
+    @LazyApi((self: CustomResourcesService) => new SearchApi(self.apiService.getInstance()))
+    declare readonly searchApi: SearchApi;
 
-    private _sharedLinksApi: SharedlinksApi;
-    get sharedLinksApi(): SharedlinksApi {
-        this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
-        return this._sharedLinksApi;
-    }
+    @LazyApi((self: CustomResourcesService) => new SharedlinksApi(self.apiService.getInstance()))
+    declare readonly sharedLinksApi: SharedlinksApi;
 
-    private _favoritesApi: FavoritesApi;
-    get favoritesApi(): FavoritesApi {
-        this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.apiService.getInstance());
-        return this._favoritesApi;
-    }
+    @LazyApi((self: CustomResourcesService) => new FavoritesApi(self.apiService.getInstance()))
+    declare readonly favoritesApi: FavoritesApi;
 
-    private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
+    @LazyApi((self: CustomResourcesService) => new NodesApi(self.apiService.getInstance()))
+    declare readonly nodesApi: NodesApi;
 
     /**
      * Gets files recently accessed by a user.

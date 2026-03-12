@@ -20,7 +20,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { CommentModel, CommentsService, User } from '@alfresco/adf-core';
 import { map } from 'rxjs/operators';
-import { ActivitiCommentsApi } from '@alfresco/js-api';
+import { ActivitiCommentsApi, LazyApi } from '@alfresco/js-api';
 import { PeopleProcessService } from '../../services/people-process.service';
 
 @Injectable({
@@ -30,11 +30,8 @@ export class CommentProcessService implements CommentsService {
     private readonly apiService = inject(AlfrescoApiService);
     private readonly peopleProcessService = inject(PeopleProcessService);
 
-    private _commentsApi: ActivitiCommentsApi;
-    get commentsApi(): ActivitiCommentsApi {
-        this._commentsApi = this._commentsApi ?? new ActivitiCommentsApi(this.apiService.getInstance());
-        return this._commentsApi;
-    }
+    @LazyApi((self: CommentProcessService) => new ActivitiCommentsApi(self.apiService.getInstance()))
+    declare readonly commentsApi: ActivitiCommentsApi;
 
     /**
      * Gets all comments that have been added to a process instance.

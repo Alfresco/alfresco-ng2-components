@@ -19,7 +19,7 @@ import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { FormFieldOption, FormValues, TaskProcessVariableModel } from '@alfresco/adf-core';
 import { Injectable, inject } from '@angular/core';
 import { from, Observable, throwError } from 'rxjs';
-import { CompleteFormRepresentation, SaveFormRepresentation, TaskFormsApi } from '@alfresco/js-api';
+import { CompleteFormRepresentation, LazyApi, SaveFormRepresentation, TaskFormsApi } from '@alfresco/js-api';
 import { catchError, map } from 'rxjs/operators';
 import { DynamicTableColumnOption } from '../widgets/dynamic-table/editors/models/dynamic-table-column-option.model';
 
@@ -32,11 +32,8 @@ export class TaskFormService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    private _taskFormsApi: TaskFormsApi;
-    get taskFormsApi(): TaskFormsApi {
-        this._taskFormsApi = this._taskFormsApi ?? new TaskFormsApi(this.apiService.getInstance());
-        return this._taskFormsApi;
-    }
+    @LazyApi((self: TaskFormService) => new TaskFormsApi(self.apiService.getInstance()))
+    declare readonly taskFormsApi: TaskFormsApi;
 
     /**
      * Saves a task form.

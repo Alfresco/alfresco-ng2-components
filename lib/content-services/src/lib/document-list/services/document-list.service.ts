@@ -18,7 +18,7 @@
 import { PaginationModel } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { inject, Injectable } from '@angular/core';
-import { Node, NodeEntry, NodePaging, NodesApi } from '@alfresco/js-api';
+import { LazyApi, Node, NodeEntry, NodePaging, NodesApi } from '@alfresco/js-api';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { Observable, from, forkJoin, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -36,11 +36,8 @@ export class DocumentListService implements DocumentListLoader {
     private readonly apiService = inject(AlfrescoApiService);
     private readonly customResourcesService = inject(CustomResourcesService);
 
-    private _nodesApi: NodesApi;
-    get nodes(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
+    @LazyApi((self: DocumentListService) => new NodesApi(self.apiService.getInstance()))
+    declare readonly nodes: NodesApi;
 
     private readonly _reload = new Subject<void>();
     private readonly _resetSelection = new Subject<void>();

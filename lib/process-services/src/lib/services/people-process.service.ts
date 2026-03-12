@@ -20,7 +20,7 @@ import { Observable, from } from 'rxjs';
 import { GroupModel } from '@alfresco/adf-core';
 import { map } from 'rxjs/operators';
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
-import { TaskActionsApi, UsersApi, ActivitiGroupsApi, UserProfileApi, UserRepresentation, LightUserRepresentation } from '@alfresco/js-api';
+import { TaskActionsApi, UsersApi, ActivitiGroupsApi, UserProfileApi, UserRepresentation, LightUserRepresentation, LazyApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -28,29 +28,17 @@ import { TaskActionsApi, UsersApi, ActivitiGroupsApi, UserProfileApi, UserRepres
 export class PeopleProcessService {
     private readonly apiService = inject(AlfrescoApiService);
 
-    private _taskActionsApi: TaskActionsApi;
-    get taskActionsApi(): TaskActionsApi {
-        this._taskActionsApi = this._taskActionsApi ?? new TaskActionsApi(this.apiService.getInstance());
-        return this._taskActionsApi;
-    }
+    @LazyApi((self: PeopleProcessService) => new TaskActionsApi(self.apiService.getInstance()))
+    declare readonly taskActionsApi: TaskActionsApi;
 
-    private _userApi: UsersApi;
-    get userApi(): UsersApi {
-        this._userApi = this._userApi ?? new UsersApi(this.apiService.getInstance());
-        return this._userApi;
-    }
+    @LazyApi((self: PeopleProcessService) => new UsersApi(self.apiService.getInstance()))
+    declare readonly userApi: UsersApi;
 
-    private _groupsApi: ActivitiGroupsApi;
-    get groupsApi(): ActivitiGroupsApi {
-        this._groupsApi = this._groupsApi ?? new ActivitiGroupsApi(this.apiService.getInstance());
-        return this._groupsApi;
-    }
+    @LazyApi((self: PeopleProcessService) => new ActivitiGroupsApi(self.apiService.getInstance()))
+    declare readonly groupsApi: ActivitiGroupsApi;
 
-    private _profileApi: UserProfileApi;
-    get profileApi(): UserProfileApi {
-        this._profileApi = this._profileApi ?? new UserProfileApi(this.apiService.getInstance());
-        return this._profileApi;
-    }
+    @LazyApi((self: PeopleProcessService) => new UserProfileApi(self.apiService.getInstance()))
+    declare readonly profileApi: UserProfileApi;
 
     /**
      * Gets information about the current user.
