@@ -18,22 +18,15 @@
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { provideTranslations } from '@alfresco/adf-core';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
-import { CONTENT_TAG_DIRECTIVES } from './tag/tag.module';
 import { DOCUMENT_LIST_DIRECTIVES } from './document-list/document-list.module';
 import { CONTENT_SEARCH_DIRECTIVES } from './search/search.module';
-import { CONTENT_VERSION_DIRECTIVES } from './version-manager/version-manager.module';
-import { CONTENT_NODE_SELECTOR_DIRECTIVES } from './content-node-selector/content-node-selector.module';
 import { CONTENT_NODE_SHARE_DIRECTIVES } from './content-node-share/content-node-share.module';
 import { CONTENT_DIRECTIVES } from './directives/content-directive.module';
-import { CONTENT_DIALOG_DIRECTIVES } from './dialogs/dialog.module';
-import { CONTENT_METADATA_DIRECTIVES } from './content-metadata/content-metadata.module';
 import { CONTENT_PERMISSION_MANAGER_DIRECTIVES } from './permission-manager/permission-manager.module';
-import { ASPECT_LIST_DIRECTIVES } from './aspect-list/aspect-list.module';
 import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
-import { CONTENT_UPLOAD_DIRECTIVES } from './upload';
 import { MaterialModule } from './material.module';
 import { AlfrescoApiService } from './services/alfresco-api.service';
 import { AlfrescoApiNoAuthService } from './api-factories/alfresco-api-no-auth.service';
@@ -44,34 +37,20 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
         MaterialModule,
         MatDatetimepickerModule,
         MatNativeDatetimeModule,
-        ...CONTENT_TAG_DIRECTIVES,
-        ...CONTENT_DIALOG_DIRECTIVES,
         ...CONTENT_SEARCH_DIRECTIVES,
         ...DOCUMENT_LIST_DIRECTIVES,
-        ...CONTENT_UPLOAD_DIRECTIVES,
-        ...CONTENT_NODE_SELECTOR_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
-        ...CONTENT_METADATA_DIRECTIVES,
         ...CONTENT_DIRECTIVES,
-        ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
-        ...CONTENT_VERSION_DIRECTIVES,
-        ...ASPECT_LIST_DIRECTIVES
+        ...CONTENT_PERMISSION_MANAGER_DIRECTIVES
     ],
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
         MaterialModule,
-        ...CONTENT_TAG_DIRECTIVES,
         ...DOCUMENT_LIST_DIRECTIVES,
-        ...CONTENT_UPLOAD_DIRECTIVES,
         ...CONTENT_SEARCH_DIRECTIVES,
-        ...CONTENT_NODE_SELECTOR_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
-        ...CONTENT_METADATA_DIRECTIVES,
-        ...CONTENT_DIALOG_DIRECTIVES,
         ...CONTENT_DIRECTIVES,
-        ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
-        ...CONTENT_VERSION_DIRECTIVES,
-        ...ASPECT_LIST_DIRECTIVES
+        ...CONTENT_PERMISSION_MANAGER_DIRECTIVES
     ]
 })
 export class ContentModule {

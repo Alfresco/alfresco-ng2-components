@@ -41,7 +41,6 @@ import { CategoryService } from '../../../category/services/category.service';
 import { CategoriesManagementMode } from '../../../category/categories-management/categories-management-mode';
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 import { ContentService } from '../../../common/services/content.service';
-import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -52,6 +51,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ContentMetadataHeaderComponent } from './content-metadata-header.component';
 import { CategoriesManagementComponent } from '../../../category/categories-management/categories-management.component';
+import { AsyncPipe } from '@angular/common';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -66,7 +66,7 @@ export type DefaultPanels = (typeof DefaultPanels)[keyof typeof DefaultPanels];
 @Component({
     selector: 'adf-content-metadata',
     imports: [
-        CommonModule,
+        AsyncPipe,
         MatExpansionModule,
         ContentMetadataHeaderComponent,
         MatButtonModule,
@@ -244,6 +244,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
             this.editing &&
             ((this.currentPanel.panelTitle === panelTitle && this.editedPanelTitle === panelTitle) || this.editedPanelTitle === panelTitle)
         );
+    }
+
+    isPanelExpanded(panelTitle: string): boolean {
+        return this.currentPanel.panelTitle === panelTitle && this.currentPanel.expanded;
     }
 
     protected handleUpdateError(error: Error) {
