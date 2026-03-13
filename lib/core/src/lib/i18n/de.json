@@ -14,14 +14,14 @@
       "SITEMANAGER": "Site-Manager"
     }
   },
-  "SAVE": "Speichern",
-  "COMPLETE": "Abschließen",
-  "CANCEL": "Abbrechen",
-  "CLAIM": "Beanspruchen",
+  "SAVE": "SPEICHEN",
+  "COMPLETE": "ABSCHLIEßEN",
+  "CANCEL": "ABBRECHEN",
+  "CLAIM": "BEANSPRUCHEN",
   "UNCLAIM": "FREIGEBEN",
-  "START PROCESS": "Prozess starten",
+  "START PROCESS": "PROZESS STARTEN",
   "DATA_LOADING": "Daten werden geladen",
-  "CLOSE": "Schließen",
+  "CLOSE": "SCHLIEßEN",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Sie haben momentan keine Benachrichtigungen.",
     "UNREAD_MESSAGES": "Sie haben ungelesene Benachrichtigungen.",
@@ -47,7 +47,7 @@
       "VIEW_FILE": "Anzeigen",
       "DOWNLOAD_FILE": "Herunterladen",
       "REMOVE_FILE": "Entfernen",
-      "UPLOAD": "Hochladen",
+      "UPLOAD": "HOCHLADEN",
       "REQUIRED": "Feld erforderlich",
       "REST_API_FAILED": "Der Server '{{ hostname }}' ist nicht erreichbar",
       "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Beim Laden von Dropdown-Elementen ist ein Problem aufgetreten. Bitte kontaktieren Sie den Administrator.",
@@ -272,14 +272,14 @@
         "CREATED_DATE": "Datum der Erstellung",
         "MODIFIER": "Bearbeiter",
         "MODIFIED_DATE": "Datum der Änderung",
-        "CONTENT_TYPE": "Content-Typ"
+        "CONTENT_TYPE": "Inhaltstyp"
       },
       "CONTENT_TYPE": {
         "DIALOG": {
-          "TITLE": "Content-Typ ändern",
+          "TITLE": "Inhalts-Typ ändern",
           "DESCRIPTION": "Wenn Sie diese Änderung am Content-Typ vornehmen, werden dem Dokument einige Eigenschaften und gespeicherte Metadaten dauerhaft hinzugefügt.",
           "CONFIRM": "Möchten Sie den Content-Typ wirklich ändern?",
-          "CANCEL": "Abbrechen",
+          "CANCEL": "ABBRECHEN",
           "APPLY": "Änderungen speichern",
           "VIEW_DETAILS": "Details anzeigen",
           "PROPERTY": {
@@ -299,7 +299,7 @@
         "EDIT_ASPECTS": "Aspekt bearbeiten"
       },
       "ACCESSIBILITY": {
-        "EDIT": "Schaltfläche 'Bearbeiten'",
+        "EDIT": "{{ sectionName }} bearbeiten",
         "DATEPICKER": "Mit den Pfeiltasten können Sie zwischen den Daten wechseln. Mit den Aufwärts- und Abwärtspfeilen gelangen Sie zum selben Tag der vorherigen bzw. nächsten Woche, mit den Links- und Rechtspfeilen gelangen Sie zum vorherigen bzw. zum nächsten Tag. Drücken Sie die Eingabetaste, um ein Datum auszuwählen.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Wert in Zwischenablage kopiert",
         "EDIT_ASPECTS": "Aspekt bearbeiten",
@@ -372,14 +372,14 @@
       "SSO-WRONG-CONFIGURATION": "Server für SSO-Authentifizierung nicht erreichbar"
     },
     "BUTTON": {
-      "LOGIN": "Anmelden",
-      "CHECKING": "Überprüfung",
-      "WELCOME": "Willkommen",
-      "SSO": "Bei SSO anmelden"
+      "LOGIN": "ANMELDEN",
+      "CHECKING": "ÜBERPRÜFUNG",
+      "WELCOME": "WILLKOMMEN",
+      "SSO": "ANMELDEN MIT SSO"
     },
     "ACTION": {
-      "HELP": "Brauchen Sie Hilfe?",
-      "REGISTER": "Registrieren"
+      "HELP": "BRAUCHEN SIE HILFE?",
+      "REGISTER": "REGISTRIEREN"
     }
   },
   "ADF-DATATABLE": {
@@ -391,7 +391,7 @@
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "Content-Aktionen",
+      "TOOLTIP": "Aktionen für Inhalte",
       "SELECT_COLUMNS": "Spalten auswählen"
     },
     "ACCESSIBILITY": {
@@ -429,7 +429,7 @@
       "MISCELLANEOUS": "Verschiedenes"
     },
     "COLUMNS_SELECTOR": {
-      "COLUMNS": "Spalten",
+      "COLUMNS": "Sichtbare Spalten auswählen",
       "SEARCH": "Suchen",
       "APPLY": "Anwenden",
       "COLUMNS_VISIBILITY": "Spalten zum Anzeigen auswählen"
@@ -474,8 +474,8 @@
       "FIT_PAGE": "Seite anpassen",
       "ROTATE": "Drehen",
       "CROP": "Zuschneiden",
-      "SAVE": "Speichern",
-      "CANCEL": "Abbrechen",
+      "SAVE": "Drehung speichern oder zuschneiden",
+      "CANCEL": "Drehen oder Zuschneiden abbrechen",
       "RESET": "Zurücksetzen",
       "THUMBNAILS": "Dokumenten-Miniaturansichten",
       "THUMBNAILS_PANLEL_CLOSE": "Miniaturansichten-Fenster schließen",

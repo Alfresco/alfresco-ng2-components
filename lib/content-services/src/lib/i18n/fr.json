@@ -446,11 +446,11 @@
         "IN_LAST": "Valeur obligatoire",
         "START_DATE": {
           "REQUIRED": "Date de début obligatoire",
-          "INVALID_FORMAT": "Date de début non valide"
+          "INVALID_FORMAT": "Start Date invalid. The date must be in the format '{{ requiredFormat }}'"
         },
         "END_DATE": {
           "REQUIRED": "Date de fin obligatoire",
-          "INVALID_FORMAT": "Date de fin non valide"
+          "INVALID_FORMAT": "End Date invalid. The date must be in the format '{{ requiredFormat }}'"
         }
       },
       "ARIA_LABEL": {
@@ -533,7 +533,7 @@
     "LINK-WITH-EXPIRY-SETTINGS": "Un nouveau lien a été généré avec des paramètres d'expiration",
     "EXPIRES": "Expire le",
     "LINK-EXPIRY-DATE": "Date d'expiration du lien",
-    "EXPIRATION-LABEL": "Date d'expiration",
+    "EXPIRATION-LABEL": "Expiration Date. Enter date in MM/DD/YYYY format",
     "EXPIRATION-PLACEHOLDER": "MM/JJ/AAAA",
     "CLIPBOARD-MESSAGE": "Lien copié dans le Presse-papiers",
     "CLOSE": "Fermer",
@@ -674,8 +674,8 @@
   },
   "BREADCRUMB": {
     "ARIA-LABEL": {
-      "BREADCRUMB": "Fil d'Ariane",
-      "DROPDOWN": "Liste déroulante"
+      "BREADCRUMB": "Breadcrumb navigation",
+      "DROPDOWN": "Open breadcrumb menu for {{folderName}}"
     },
     "HEADER": {
       "SELECTED": "({{ count }}) sélectionnés"

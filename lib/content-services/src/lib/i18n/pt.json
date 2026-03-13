@@ -446,11 +446,11 @@
         "IN_LAST": "O valor é obrigatório",
         "START_DATE": {
           "REQUIRED": "A data de início é obrigatório",
-          "INVALID_FORMAT": "Data de início inválida"
+          "INVALID_FORMAT": "Start Date invalid. The date must be in the format '{{ requiredFormat }}'"
         },
         "END_DATE": {
           "REQUIRED": "Data final obrigatória",
-          "INVALID_FORMAT": "Data final inválida"
+          "INVALID_FORMAT": "End Date invalid. The date must be in the format '{{ requiredFormat }}'"
         }
       },
       "ARIA_LABEL": {
@@ -533,7 +533,7 @@
     "LINK-WITH-EXPIRY-SETTINGS": "Foi gerada uma nova ligação com definições de expiração",
     "EXPIRES": "Expira em",
     "LINK-EXPIRY-DATE": "Data de expiração da ligação",
-    "EXPIRATION-LABEL": "Data de validade",
+    "EXPIRATION-LABEL": "Expiration Date. Enter date in MM/DD/YYYY format",
     "EXPIRATION-PLACEHOLDER": "DD/MM/AAAA",
     "CLIPBOARD-MESSAGE": "Ligação copiada para a área de transferência",
     "CLOSE": "Fechar",
@@ -674,8 +674,8 @@
   },
   "BREADCRUMB": {
     "ARIA-LABEL": {
-      "BREADCRUMB": "Breadcrumb",
-      "DROPDOWN": "Lista suspensa"
+      "BREADCRUMB": "Breadcrumb navigation",
+      "DROPDOWN": "Open breadcrumb menu for {{folderName}}"
     },
     "HEADER": {
       "SELECTED": "Selecionado({{ count }})"
