@@ -113,6 +113,9 @@
                     } @else if (hasScreen) {
                         <adf-cloud-start-process-screen-cloud
                             [screenId]="processDefinitionCurrent.formKey"
+                            [appName]="appName"
+                            [processDefinitionId]="processDefinitionCurrent?.id ?? ''"
+                            [resolvedValues]="resolvedValues"
                             (screenStartProcessPayloadChange)="onScreenStartProcessPayloadChange($event)"
                             (disableStartProcessButton)="onDisableStartProcessButtonForScreen($event)"
                         >

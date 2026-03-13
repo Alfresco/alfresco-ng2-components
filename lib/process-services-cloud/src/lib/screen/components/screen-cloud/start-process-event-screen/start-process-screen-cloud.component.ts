@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input, output, signal } from '@angular/core';
 import { BaseScreenCloudComponent } from '../base-screen/base-screen-cloud.component';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { StartProcessScreenCloud } from './start-process-screen.model';
+import { TaskVariableCloud } from '../../../../form/models/task-variable-cloud.model';
 
 @Component({
     selector: 'adf-cloud-start-process-screen-cloud',
@@ -30,16 +31,29 @@ import { StartProcessScreenCloud } from './start-process-screen.model';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StartProcessScreenCloudComponent extends BaseScreenCloudComponent<StartProcessScreenCloud> {
+    readonly appName = input.required<string>();
     processDefinitionId = input('');
+    readonly resolvedValues = input<TaskVariableCloud[]>();
     screenStartProcessPayloadChange = output<unknown>();
     disableStartProcessButton = output<boolean>();
 
     showStartProcessButtons = signal(false);
 
-    protected setInputsForDynamicComponent(): void {
-        if (this.processDefinitionId()) {
-            this.componentRef.setInput('processDefinitionId', this.processDefinitionId());
-        }
+    constructor() {
+        super();
+        effect(() => {
+            const componentRef = this.componentRefChanged();
+            if (componentRef.instance && 'appName' in componentRef.instance) {
+                componentRef.setInput('appName', this.appName());
+            }
+        });
+        effect(() => this.componentRefChanged()?.setInput('processDefinitionId', this.processDefinitionId()));
+        effect(() => {
+            const componentRef = this.componentRefChanged();
+            if (componentRef?.instance && 'resolvedValues' in componentRef.instance) {
+                componentRef.setInput('resolvedValues', this.resolvedValues());
+            }
+        });
     }
 
     protected subscribeToOutputs(): void {

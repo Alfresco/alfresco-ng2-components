@@ -20,13 +20,16 @@ import {
     StartProcessScreenCloud,
     StartProcessScreenDefaultButtons
 } from '../screen/components/screen-cloud/start-process-event-screen/start-process-screen.model';
+import { TaskVariableCloud } from '../form/models/task-variable-cloud.model';
 
 @Component({
     selector: 'adf-cloud-mock-screen-component',
     template: `<div>Mock Screen Component</div>`
 })
 export class MockedTaskScreenCloudComponent implements StartProcessScreenCloud {
+    readonly appName = input('');
     processDefinitionId = input('');
+    readonly resolvedValues = input<TaskVariableCloud[]>();
     defaultStartProcessButtonsConfigurationChange = output<StartProcessScreenDefaultButtons>();
     startProcessPayloadChanged = output<unknown>();
 }

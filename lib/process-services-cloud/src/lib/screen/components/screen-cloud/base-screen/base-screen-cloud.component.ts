@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ComponentRef, inject, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentRef, inject, Input, OnInit, signal, ViewChild, ViewContainerRef } from '@angular/core';
 import { ScreenRenderingService } from '../../../services/screen-rendering.service';
 
 @Component({
@@ -29,6 +29,8 @@ export abstract class BaseScreenCloudComponent<TScreenComponent = unknown> imple
     container: ViewContainerRef;
 
     protected componentRef: ComponentRef<TScreenComponent>;
+    private readonly _componentRefChanged = signal<ComponentRef<TScreenComponent> | undefined>(undefined);
+    protected readonly componentRefChanged = this._componentRefChanged.asReadonly();
     protected readonly screenRenderingService = inject(ScreenRenderingService);
 
     ngOnInit() {
@@ -39,12 +41,13 @@ export abstract class BaseScreenCloudComponent<TScreenComponent = unknown> imple
         if (this.screenId) {
             const componentType = this.screenRenderingService.resolveComponentType({ type: this.screenId });
             this.componentRef = this.container.createComponent(componentType);
+            this._componentRefChanged.set(this.componentRef);
             this.setInputsForDynamicComponent();
             this.subscribeToOutputs();
         }
     }
 
-    protected abstract setInputsForDynamicComponent(): void;
+    protected setInputsForDynamicComponent(): void {}
 
     protected abstract subscribeToOutputs(): void;
 }

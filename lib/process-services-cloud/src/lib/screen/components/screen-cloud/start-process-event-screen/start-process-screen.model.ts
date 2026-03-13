@@ -16,13 +16,16 @@
  */
 
 import { InputSignal, OutputEmitterRef } from '@angular/core';
+import { TaskVariableCloud } from '../../../../form/models/task-variable-cloud.model';
 
 export interface StartProcessScreenDefaultButtons {
     show: boolean;
     disable: boolean;
 }
 export interface StartProcessScreenCloud {
+    readonly appName?: InputSignal<string>;
     processDefinitionId: InputSignal<string>;
+    readonly resolvedValues?: InputSignal<TaskVariableCloud[]>;
     defaultStartProcessButtonsConfigurationChange: OutputEmitterRef<StartProcessScreenDefaultButtons>;
     startProcessPayloadChanged: OutputEmitterRef<unknown>;
 }
