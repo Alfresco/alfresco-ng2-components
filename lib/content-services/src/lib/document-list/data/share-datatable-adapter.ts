@@ -38,7 +38,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     permissionsStyle: PermissionStyleModel[];
     selectedRow: DataRow;
     allowDropFiles: boolean;
-    allowFocusOnRows = true;
 
     set sortingMode(value: string) {
         let newValue = (value || 'client').toLowerCase();
@@ -195,10 +194,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
     setImageResolver(resolver: any) {
         this.imageResolver = resolver;
-    }
-
-    setAllowFocusOnTableRows(allow: boolean) {
-        this.allowFocusOnRows = allow;
     }
 
     private getFolderIcon(node: any) {

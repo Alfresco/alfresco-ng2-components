@@ -231,6 +231,12 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         }
     }
 
+    @at-root .adf-datatable-list:focus-within {
+        .adf-datatable-row .adf-datatable-hover-only {
+            visibility: visible;
+        }
+    }
+
     .adf-datatable-cell,
     .adf-datatable-cell-header {
         text-align: left;
