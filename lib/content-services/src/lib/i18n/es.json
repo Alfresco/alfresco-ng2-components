@@ -446,11 +446,11 @@
         "IN_LAST": "Valor requerido",
         "START_DATE": {
           "REQUIRED": "Se requiere la fecha de inicio",
-          "INVALID_FORMAT": "Fecha de inicio no válida"
+          "INVALID_FORMAT": "Start Date invalid. The date must be in the format '{{ requiredFormat }}'"
         },
         "END_DATE": {
           "REQUIRED": "Se requiere la fecha de fin",
-          "INVALID_FORMAT": "Fecha de fin no válida"
+          "INVALID_FORMAT": "End Date invalid. The date must be in the format '{{ requiredFormat }}'"
         }
       },
       "ARIA_LABEL": {
@@ -533,7 +533,7 @@
     "LINK-WITH-EXPIRY-SETTINGS": "Se ha generado un nuevo enlace con la configuración de vencimiento",
     "EXPIRES": "Caduca el",
     "LINK-EXPIRY-DATE": "Fecha de vencimiento del enlace",
-    "EXPIRATION-LABEL": "Fecha de caducidad",
+    "EXPIRATION-LABEL": "Expiration Date. Enter date in MM/DD/YYYY format",
     "EXPIRATION-PLACEHOLDER": "DD/MM/AAAA",
     "CLIPBOARD-MESSAGE": "Enlace copiado al portapapeles",
     "CLOSE": "Cerrar",
@@ -674,8 +674,8 @@
   },
   "BREADCRUMB": {
     "ARIA-LABEL": {
-      "BREADCRUMB": "Ruta de navegación",
-      "DROPDOWN": "Desplegable"
+      "BREADCRUMB": "Breadcrumb navigation",
+      "DROPDOWN": "Open breadcrumb menu for {{folderName}}"
     },
     "HEADER": {
       "SELECTED": "Seleccionado(s) ({{ count }})"

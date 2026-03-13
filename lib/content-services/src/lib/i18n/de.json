@@ -446,11 +446,11 @@
         "IN_LAST": "Wert erforderlich",
         "START_DATE": {
           "REQUIRED": "Startdatum erforderlich",
-          "INVALID_FORMAT": "Startdatum ungültig"
+          "INVALID_FORMAT": "Startdatum ungültig. Das Datum muss im Format '{{ requiredFormat }} ' sein"
         },
         "END_DATE": {
           "REQUIRED": "Enddatum erforderlich",
-          "INVALID_FORMAT": "Enddatum ungültig"
+          "INVALID_FORMAT": "Enddatum ungültig. Das Datum muss im Format '{{ requiredFormat }} ' sein"
         }
       },
       "ARIA_LABEL": {
@@ -503,7 +503,7 @@
     },
     "CONTENT_TYPE": {
       "DIALOG": {
-        "TITLE": "Content-Typ ändern",
+        "TITLE": "Inhalts-Typ ändern",
         "DESCRIPTION": "Wenn Sie diese Änderung am Content-Typ vornehmen, werden dem Dokument einige Eigenschaften und gespeicherte Metadaten dauerhaft hinzugefügt.",
         "CONFIRM": "Möchten Sie den Content-Typ wirklich ändern?",
         "CANCEL": "Abbrechen",
@@ -533,7 +533,7 @@
     "LINK-WITH-EXPIRY-SETTINGS": "Es wurde ein neuer Link mit Ablaufeinstellungen erstellt",
     "EXPIRES": "Läuft ab am",
     "LINK-EXPIRY-DATE": "Ablaufdatum des Links",
-    "EXPIRATION-LABEL": "Ablaufdatum",
+    "EXPIRATION-LABEL": "Ablaufdatum. Datum im MM/DD/JJJ Format eingeben",
     "EXPIRATION-PLACEHOLDER": "TT.MM.JJJJ",
     "CLIPBOARD-MESSAGE": "Link in die Zwischenablage kopiert",
     "CLOSE": "Schließen",
@@ -566,7 +566,7 @@
       "CLOSE-ACTION": "Abbrechen",
       "BASE-DIALOG-TITLE": "Es wird nach Gruppen oder Personen gesucht, die hinzugefügt werden können...",
       "BASE_DIALOG_SCREEN_READER_TITLE": "Benutzer- oder Gruppenberechtigung hinzufügen",
-      "EVERYONE": "Jeder",
+      "EVERYONE": "JEDER",
       "USER-GROUP-LIST": "Benutzer- oder Gruppenliste",
       "REMOVE_USER_GROUP": "Entfernen"
     },
@@ -619,7 +619,7 @@
   "ADF-TREE-VIEW": {
     "MISSING-ID": "Keine Node-ID angegeben!",
     "ACCESSIBILITY": {
-      "ARIA_LABEL": "{{ name }} wechseln"
+      "ARIA_LABEL": "{{ name }} umschalten"
     }
   },
   "ADF-TREE": {
@@ -674,8 +674,8 @@
   },
   "BREADCRUMB": {
     "ARIA-LABEL": {
-      "BREADCRUMB": "Breadcrumb",
-      "DROPDOWN": "Dropdown"
+      "BREADCRUMB": "Breadcrumb-Navigation",
+      "DROPDOWN": "Breadcrumb-Menü für {{folderName}} öffnen"
     },
     "HEADER": {
       "SELECTED": "Ausgewählt ({{ count }})"

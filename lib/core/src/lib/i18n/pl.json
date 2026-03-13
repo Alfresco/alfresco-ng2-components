@@ -299,7 +299,7 @@
         "EDIT_ASPECTS": "Edycja aspektu"
       },
       "ACCESSIBILITY": {
-        "EDIT": "Przycisk Edytuj",
+        "EDIT": "Edit {{ sectionName }}",
         "DATEPICKER": "Użyj klawiszy strzałek, aby przełączać między datami. Strzałki w górę i w dół przełączają na ten sam dzień w następnym lub poprzednim tygodniu. Natomiast strzałki w lewo i w prawo przełączają na następny lub poprzedni dzień. Naciśnij Enter lub Return, aby wybrać datę.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Wartość skopiowano do schowka",
         "EDIT_ASPECTS": "Edycja aspektu",
@@ -429,7 +429,7 @@
       "MISCELLANEOUS": "Różne"
     },
     "COLUMNS_SELECTOR": {
-      "COLUMNS": "Kolumny",
+      "COLUMNS": "Choose visible columns",
       "SEARCH": "Szukaj",
       "APPLY": "Zastosuj",
       "COLUMNS_VISIBILITY": "Wybierz kolumny do wyświetlenia"
@@ -474,8 +474,8 @@
       "FIT_PAGE": "Zmieść na stronie",
       "ROTATE": "Obróć",
       "CROP": "Przytnij",
-      "SAVE": "Zapisz",
-      "CANCEL": "Anuluj",
+      "SAVE": "Save rotate or crop",
+      "CANCEL": "Cancel rotate or crop",
       "RESET": "Resetuj",
       "THUMBNAILS": "Miniatura dokumentu",
       "THUMBNAILS_PANLEL_CLOSE": "Zamknij panel miniatur",
