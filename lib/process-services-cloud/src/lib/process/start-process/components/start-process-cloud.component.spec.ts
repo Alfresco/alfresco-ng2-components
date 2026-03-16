@@ -310,6 +310,14 @@ describe('StartProcessCloudComponent', () => {
             expect(contentElement.textContent).toBe('Mock Screen Component');
         });
 
+        it('should inject screen input', () => {
+            formDefinitionSpy.and.returnValue(of(fakeStartForm));
+            const processDefinition = fakeProcessDefinitions[2];
+            component.processDefinitionCurrent = processDefinition;
+            fixture.detectChanges();
+            expect(screenComponent.processDefinitionId()).toEqual(processDefinition.id);
+        });
+
         it('should toggle default process buttons', () => {
             screenComponent.defaultStartProcessButtonsConfigurationChange.emit({ show: false, disable: false });
             fixture.detectChanges();
