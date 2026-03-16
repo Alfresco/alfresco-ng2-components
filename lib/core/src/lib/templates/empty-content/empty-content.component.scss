@@ -7,7 +7,7 @@
     height: 100%;
     width: 100%;
 
-    &__icon > *:first-child {
+    &__icon > *:first-child:not(svg) {
         font-size: var(--theme-display-3-font-size);
         height: var(--theme-display-3-font-size);
         width: var(--theme-display-3-font-size);
