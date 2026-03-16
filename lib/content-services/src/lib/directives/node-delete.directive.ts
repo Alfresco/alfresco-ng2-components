@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/no-input-rename */
 
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, inject } from '@angular/core';
-import { NodeEntry, Node, DeletedNodeEntry, DeletedNode, TrashcanApi, NodesApi } from '@alfresco/js-api';
+import { NodeEntry, Node, DeletedNodeEntry, DeletedNode, TrashcanApi, NodesApi, LazyApi } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
 import { TranslationService } from '@alfresco/adf-core';
 import { map, catchError, retry } from 'rxjs/operators';
@@ -67,17 +67,11 @@ export class NodeDeleteDirective implements OnChanges {
     @Output()
     delete: EventEmitter<any> = new EventEmitter();
 
-    private _trashcanApi: TrashcanApi;
-    get trashcanApi(): TrashcanApi {
-        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.alfrescoApiService.getInstance());
-        return this._trashcanApi;
-    }
+    @LazyApi((self: NodeDeleteDirective) => new TrashcanApi(self.alfrescoApiService.getInstance()))
+    declare readonly trashcanApi: TrashcanApi;
 
-    private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
-        return this._nodesApi;
-    }
+    @LazyApi((self: NodeDeleteDirective) => new NodesApi(self.alfrescoApiService.getInstance()))
+    declare readonly nodesApi: NodesApi;
 
     @HostListener('click')
     onClick() {

@@ -19,7 +19,7 @@ import { Injectable, inject } from '@angular/core';
 import { NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData, NodeAction, AlfrescoApiService } from '@alfresco/adf-content-services';
-import { Node, NodeEntry, NodesApi } from '@alfresco/js-api';
+import { LazyApi, Node, NodeEntry, NodesApi } from '@alfresco/js-api';
 import { firstValueFrom, from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map, mapTo } from 'rxjs/operators';
 import { DestinationFolderPathModel } from '../models/form-cloud-representation.model';
@@ -32,11 +32,8 @@ export class ContentCloudNodeSelectorService {
     private readonly notificationService = inject(NotificationService);
     private readonly dialog = inject(MatDialog);
 
-    private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
+    @LazyApi((self: ContentCloudNodeSelectorService) => new NodesApi(self.apiService.getInstance()))
+    declare readonly nodesApi: NodesApi;
 
     sourceNodeNotFound = false;
 

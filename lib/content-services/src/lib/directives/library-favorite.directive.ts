@@ -16,7 +16,7 @@
  */
 
 import { Directive, HostListener, Input, OnChanges, Output, EventEmitter, SimpleChanges, inject } from '@angular/core';
-import { FavoriteBodyCreate, FavoritesApi } from '@alfresco/js-api';
+import { FavoriteBodyCreate, FavoritesApi, LazyApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LibraryEntity } from '../interfaces/library-entity.interface';
 import { NotificationService } from '@alfresco/adf-core';
@@ -39,11 +39,8 @@ export class LibraryFavoriteDirective implements OnChanges {
 
     private targetLibrary = null;
 
-    private _favoritesApi: FavoritesApi;
-    get favoritesApi(): FavoritesApi {
-        this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.alfrescoApiService.getInstance());
-        return this._favoritesApi;
-    }
+    @LazyApi((self: LibraryFavoriteDirective) => new FavoritesApi(self.alfrescoApiService.getInstance()))
+    declare readonly favoritesApi: FavoritesApi;
 
     @HostListener('click')
     onClick() {

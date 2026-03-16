@@ -28,7 +28,7 @@ import { MultiBarChart } from '../../diagram/models/chart/multi-bar-chart.model'
 import { PieChart } from '../../diagram/models/chart/pie-chart.model';
 import { TableChart } from '../../diagram/models/chart/table-chart.model';
 import { map } from 'rxjs/operators';
-import { ProcessDefinitionsApi, ReportApi } from '@alfresco/js-api';
+import { LazyApi, ProcessDefinitionsApi, ReportApi } from '@alfresco/js-api';
 import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import { LineChart } from '../../diagram/models/chart/line-chart.model';
 
@@ -36,17 +36,11 @@ import { LineChart } from '../../diagram/models/chart/line-chart.model';
 export class AnalyticsService {
     private readonly apiService = inject(AlfrescoApiService);
 
-    private _reportApi: ReportApi;
-    get reportApi(): ReportApi {
-        this._reportApi = this._reportApi ?? new ReportApi(this.apiService.getInstance());
-        return this._reportApi;
-    }
+    @LazyApi((self: AnalyticsService) => new ReportApi(self.apiService.getInstance()))
+    declare readonly reportApi: ReportApi;
 
-    private _processDefinitionsApi: ProcessDefinitionsApi;
-    get processDefinitionsApi(): ProcessDefinitionsApi {
-        this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.apiService.getInstance());
-        return this._processDefinitionsApi;
-    }
+    @LazyApi((self: AnalyticsService) => new ProcessDefinitionsApi(self.apiService.getInstance()))
+    declare readonly processDefinitionsApi: ProcessDefinitionsApi;
 
     /**
      * Retrieve all the Deployed app

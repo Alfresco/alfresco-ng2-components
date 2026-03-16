@@ -16,7 +16,7 @@
  */
 
 import { CommentModel, CommentsService, User } from '@alfresco/adf-core';
-import { CommentEntry, CommentsApi, Comment, PeopleApi } from '@alfresco/js-api';
+import { CommentEntry, CommentsApi, Comment, PeopleApi, LazyApi } from '@alfresco/js-api';
 import { Injectable, inject } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -28,17 +28,11 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 export class NodeCommentsService implements CommentsService {
     private readonly apiService = inject(AlfrescoApiService);
 
-    private _commentsApi: CommentsApi;
-    get commentsApi(): CommentsApi {
-        this._commentsApi = this._commentsApi ?? new CommentsApi(this.apiService.getInstance());
-        return this._commentsApi;
-    }
+    @LazyApi((self: NodeCommentsService) => new CommentsApi(self.apiService.getInstance()))
+    declare readonly commentsApi: CommentsApi;
 
-    private _peopleApi: PeopleApi;
-    get peopleApi(): PeopleApi {
-        this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
-        return this._peopleApi;
-    }
+    @LazyApi((self: NodeCommentsService) => new PeopleApi(self.apiService.getInstance()))
+    declare readonly peopleApi: PeopleApi;
 
     /**
      * Gets all comments that have been added to a task.

@@ -18,7 +18,7 @@
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { Injectable, inject } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
-import { ModelsApi } from '@alfresco/js-api';
+import { LazyApi, ModelsApi } from '@alfresco/js-api';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
@@ -30,11 +30,8 @@ export class ModelService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    private _modelsApi: ModelsApi;
-    get modelsApi(): ModelsApi {
-        this._modelsApi = this._modelsApi ?? new ModelsApi(this.apiService.getInstance());
-        return this._modelsApi;
-    }
+    @LazyApi((self: ModelService) => new ModelsApi(self.apiService.getInstance()))
+    declare readonly modelsApi: ModelsApi;
 
     /**
      * Create a Form.

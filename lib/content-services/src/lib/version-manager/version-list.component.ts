@@ -18,7 +18,7 @@
 import { ConfirmDialogComponent, IconModule } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ContentApi, ContentPagingQuery, Node, NodeEntry, NodesApi, VersionEntry, VersionsApi } from '@alfresco/js-api';
+import { ContentApi, ContentPagingQuery, LazyApi, Node, NodeEntry, NodesApi, VersionEntry, VersionsApi } from '@alfresco/js-api';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentVersionService } from './content-version.service';
 import { ContentService } from '../common';
@@ -77,23 +77,14 @@ export class VersionListComponent implements OnChanges, OnInit {
     private readonly contentVersionService = inject(ContentVersionService);
     private readonly dialog = inject(MatDialog);
 
-    private _contentApi: ContentApi;
-    get contentApi(): ContentApi {
-        this._contentApi = this._contentApi ?? new ContentApi(this.alfrescoApi.getInstance());
-        return this._contentApi;
-    }
+    @LazyApi((self: VersionListComponent) => new ContentApi(self.alfrescoApi.getInstance()))
+    declare readonly contentApi: ContentApi;
 
-    private _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
-        this._versionsApi = this._versionsApi ?? new VersionsApi(this.alfrescoApi.getInstance());
-        return this._versionsApi;
-    }
+    @LazyApi((self: VersionListComponent) => new VersionsApi(self.alfrescoApi.getInstance()))
+    declare readonly versionsApi: VersionsApi;
 
-    private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApi.getInstance());
-        return this._nodesApi;
-    }
+    @LazyApi((self: VersionListComponent) => new NodesApi(self.alfrescoApi.getInstance()))
+    declare readonly nodesApi: NodesApi;
 
     versionsDataSource: VersionListDataSource;
     latestVersion: VersionEntry;

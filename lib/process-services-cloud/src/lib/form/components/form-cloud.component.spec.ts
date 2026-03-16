@@ -45,7 +45,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { By } from '@angular/platform-browser';
-import { TranslateLoader, TranslateService, provideTranslateService } from '@ngx-translate/core';
+import { TranslateLoader, TranslateService, provideTranslateService, provideTranslateLoader } from '@ngx-translate/core';
 import { firstValueFrom, Observable, of, throwError } from 'rxjs';
 import {
     cloudFormMock,
@@ -1746,10 +1746,7 @@ describe('Multilingual Form', () => {
             imports: [NoopAuthModule],
             providers: [
                 provideTranslateService({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: FakeLoader
-                    }
+                    loader: provideTranslateLoader(FakeLoader)
                 })
             ]
         });

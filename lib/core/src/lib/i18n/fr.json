@@ -299,7 +299,7 @@
         "EDIT_ASPECTS": "Modifier aspect"
       },
       "ACCESSIBILITY": {
-        "EDIT": "Bouton Modifier",
+        "EDIT": "Edit {{ sectionName }}",
         "DATEPICKER": "Utilisez les touches de direction pour naviguer entre les dates : haut et bas pour passer à la semaine suivante ou précédente en conservant le même jour ; gauche et droite pour passer au jour suivant ou précédent. Appuyez sur Entrée (Saut de ligne) pour sélectionner une date.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Valeur copiée dans le Presse-papiers",
         "EDIT_ASPECTS": "Modifier aspect",
@@ -429,7 +429,7 @@
       "MISCELLANEOUS": "Divers"
     },
     "COLUMNS_SELECTOR": {
-      "COLUMNS": "Colonnes",
+      "COLUMNS": "Choose visible columns",
       "SEARCH": "Rechercher",
       "APPLY": "Appliquer",
       "COLUMNS_VISIBILITY": "Sélectionner les colonnes à afficher"
@@ -474,8 +474,8 @@
       "FIT_PAGE": "Ajuster à la page",
       "ROTATE": "Faire pivoter",
       "CROP": "Rogner",
-      "SAVE": "Enregistrer",
-      "CANCEL": "Annuler",
+      "SAVE": "Save rotate or crop",
+      "CANCEL": "Cancel rotate or crop",
       "RESET": "Réinitialiser",
       "THUMBNAILS": "Miniatures des documents",
       "THUMBNAILS_PANLEL_CLOSE": "Fermer le panneau des miniatures",

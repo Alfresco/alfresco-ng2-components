@@ -29,7 +29,8 @@ import {
     ResultListDataRepresentationProcessInstanceRepresentation,
     TasksApi,
     ProcessDefinitionRepresentation,
-    TaskRepresentation
+    TaskRepresentation,
+    LazyApi
 } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { from, Observable } from 'rxjs';
@@ -42,25 +43,17 @@ import { DatePipe } from '@angular/common';
 export class ProcessService {
     private readonly alfrescoApiService = inject(AlfrescoApiService);
 
-    private _tasksApi: TasksApi;
-    get tasksApi(): TasksApi {
-        return (this._tasksApi ||= new TasksApi(this.alfrescoApiService.getInstance()));
-    }
+    @LazyApi((self: ProcessService) => new TasksApi(self.alfrescoApiService.getInstance()))
+    declare readonly tasksApi: TasksApi;
 
-    private _processDefinitionsApi: ProcessDefinitionsApi;
-    get processDefinitionsApi(): ProcessDefinitionsApi {
-        return (this._processDefinitionsApi ||= new ProcessDefinitionsApi(this.alfrescoApiService.getInstance()));
-    }
+    @LazyApi((self: ProcessService) => new ProcessDefinitionsApi(self.alfrescoApiService.getInstance()))
+    declare readonly processDefinitionsApi: ProcessDefinitionsApi;
 
-    private _processInstancesApi: ProcessInstancesApi;
-    get processInstancesApi(): ProcessInstancesApi {
-        return (this._processInstancesApi ||= new ProcessInstancesApi(this.alfrescoApiService.getInstance()));
-    }
+    @LazyApi((self: ProcessService) => new ProcessInstancesApi(self.alfrescoApiService.getInstance()))
+    declare readonly processInstancesApi: ProcessInstancesApi;
 
-    private _processInstanceVariablesApi: ProcessInstanceVariablesApi;
-    get processInstanceVariablesApi(): ProcessInstanceVariablesApi {
-        return (this._processInstanceVariablesApi ||= new ProcessInstanceVariablesApi(this.alfrescoApiService.getInstance()));
-    }
+    @LazyApi((self: ProcessService) => new ProcessInstanceVariablesApi(self.alfrescoApiService.getInstance()))
+    declare readonly processInstanceVariablesApi: ProcessInstanceVariablesApi;
 
     /**
      * Gets process instances for a filter and optionally a process definition.

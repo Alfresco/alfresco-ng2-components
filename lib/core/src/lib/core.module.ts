@@ -16,7 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { TranslateLoader, provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateService, provideTranslateLoader } from '@ngx-translate/core';
 import { ABOUT_DIRECTIVES } from './about/about.module';
 import { CARD_VIEW_DIRECTIVES } from './card-view/card-view.module';
 import { CONTEXT_MENU_DIRECTIVES } from './context-menu/context-menu.module';
@@ -38,7 +38,6 @@ import { CORE_DIRECTIVES } from './directives/directive.module';
 import { CORE_PIPES } from './pipes/pipe.module';
 import { TranslateLoaderService } from './translation/translate-loader.service';
 import { SEARCH_TEXT_INPUT_DIRECTIVES } from './search-text/search-text-input.module';
-import { HttpClient } from '@angular/common/http';
 import { AppConfigPipe } from './app-config';
 import { IconComponent } from './icon';
 import { DynamicChipListComponent } from './dynamic-chip-list';
@@ -123,12 +122,8 @@ export class CoreModule {
             ngModule: CoreModule,
             providers: [
                 provideTranslateService({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService,
-                        deps: [HttpClient]
-                    },
-                    defaultLanguage: 'en'
+                    loader: provideTranslateLoader(TranslateLoaderService),
+                    fallbackLang: 'en'
                 }),
                 provideAppConfig()
             ]

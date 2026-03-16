@@ -17,21 +17,15 @@
 
 import { Injectable, inject } from '@angular/core';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { ContentApi } from '@alfresco/js-api';
+import { ContentApi, LazyApi } from '@alfresco/js-api';
 import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ContentVersionService {
     private readonly alfrescoApi = inject(AlfrescoApiService);
 
-    private _contentApi: ContentApi;
-
-    get contentApi(): ContentApi {
-        if (!this._contentApi) {
-            this._contentApi = new ContentApi(this.alfrescoApi.getInstance());
-        }
-        return this._contentApi;
-    }
+    @LazyApi((self: ContentVersionService) => new ContentApi(self.alfrescoApi.getInstance()))
+    declare readonly contentApi: ContentApi;
 
     /**
      * Get content URL for the given nodeId and specific version.

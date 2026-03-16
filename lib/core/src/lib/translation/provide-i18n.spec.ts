@@ -40,7 +40,7 @@ describe('provideI18N', () => {
 
         it('should set default language to "en" when not specified', () => {
             const translateService = TestBed.inject(TranslateService);
-            expect(translateService.defaultLang).toBe('en');
+            expect(translateService.getFallbackLang()).toBe('en');
         });
     });
 
@@ -53,7 +53,7 @@ describe('provideI18N', () => {
 
         it('should set custom default language', () => {
             const translateService = TestBed.inject(TranslateService);
-            expect(translateService.defaultLang).toBe('fr');
+            expect(translateService.getFallbackLang()).toBe('fr');
         });
     });
 
@@ -81,7 +81,7 @@ describe('provideI18N', () => {
             // Services should be properly configured
             expect(translateService).toBeDefined();
             expect(translationService).toBeDefined();
-            expect(translateService.defaultLang).toBe('en');
+            expect(translateService.getFallbackLang()).toBe('en');
         });
     });
 
@@ -153,7 +153,7 @@ describe('provideI18N', () => {
 
         it('should set translations for custom default language', () => {
             const translateService = TestBed.inject(TranslateService);
-            expect(translateService.defaultLang).toBe('fr');
+            expect(translateService.getFallbackLang()).toBe('fr');
             expect(translateService.instant('HELLO')).toBe('Bonjour!');
         });
     });
@@ -184,7 +184,7 @@ describe('provideI18N', () => {
             const translateService = TestBed.inject(TranslateService);
             const loader = translateService.currentLoader as TranslateLoaderService;
 
-            expect(translateService.defaultLang).toBe('en');
+            expect(translateService.getFallbackLang()).toBe('en');
             expect(loader).toBeDefined();
             expect(loader.providerRegistered).toBeDefined();
             expect(loader.providerRegistered('adf-core')).toBeTruthy();
@@ -211,7 +211,7 @@ describe('provideI18N', () => {
         it('should handle empty translations object', () => {
             const translateService = TestBed.inject(TranslateService);
             expect(translateService).toBeDefined();
-            expect(translateService.defaultLang).toBe('en');
+            expect(translateService.getFallbackLang()).toBe('en');
         });
     });
 });

@@ -16,7 +16,7 @@
  */
 
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
-import { SiteEntry, SiteMembershipRequestBodyCreate, SiteMembershipRequestEntry, SitesApi } from '@alfresco/js-api';
+import { LazyApi, SiteEntry, SiteMembershipRequestBodyCreate, SiteMembershipRequestEntry, SitesApi } from '@alfresco/js-api';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LibraryMembershipToggleEvent } from '../interfaces/library-membership-toggle-event.interface';
@@ -38,11 +38,8 @@ export class LibraryMembershipDirective implements OnChanges {
 
     isJoinRequested: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    private _sitesApi: SitesApi;
-    get sitesApi(): SitesApi {
-        this._sitesApi = this._sitesApi ?? new SitesApi(this.alfrescoApiService.getInstance());
-        return this._sitesApi;
-    }
+    @LazyApi((self: LibraryMembershipDirective) => new SitesApi(self.alfrescoApiService.getInstance()))
+    declare readonly sitesApi: SitesApi;
 
     /** Site for which to toggle the membership request. */
     @Input('adf-library-membership')

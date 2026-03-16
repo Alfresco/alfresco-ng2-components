@@ -16,7 +16,7 @@
  */
 
 import { Injectable, inject } from '@angular/core';
-import { ContentIncludeQuery, Group, GroupEntry, GroupsApi } from '@alfresco/js-api';
+import { ContentIncludeQuery, Group, GroupEntry, GroupsApi, LazyApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -27,11 +27,8 @@ import { map } from 'rxjs/operators';
 export class GroupService {
     private readonly alfrescoApiService = inject(AlfrescoApiService);
 
-    private _groupsApi: GroupsApi;
-    get groupsApi(): GroupsApi {
-        this._groupsApi = this._groupsApi ?? new GroupsApi(this.alfrescoApiService.getInstance());
-        return this._groupsApi;
-    }
+    @LazyApi((self: GroupService) => new GroupsApi(self.alfrescoApiService.getInstance()))
+    declare readonly groupsApi: GroupsApi;
 
     async listAllGroupMembershipsForPerson(personId: string, opts?: any, accumulator = []): Promise<GroupEntry[]> {
         const groupsPaginated = await this.groupsApi.listGroupMembershipsForPerson(personId, opts);

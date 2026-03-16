@@ -115,7 +115,7 @@
     },
     "START_TASK": {
       "DEFAULT_NAME": "Meine Standardaufgabe",
-      "BUTTON": "Aufgabe erstellen",
+      "BUTTON": "AUFGABE ERSTELLEN",
       "FORM": {
         "TITLE": "Aufgabe starten",
         "LABEL": {
@@ -141,7 +141,7 @@
     },
     "PEOPLE": {
       "ASSIGNEE": "Zugewiesener Benutzer",
-      "DIALOG_CLOSE": "Schließen",
+      "DIALOG_CLOSE": "SCHLIEßEN",
       "ADD_USER": "Hinzufügen",
       "ADD_ASSIGNEE": "Zuweisen",
       "SEARCH_USER": "Benutzer suchen",
@@ -318,9 +318,9 @@
   "APP": {
     "DIALOG": {
       "START": "Weiter",
-      "TITLE": "App auswählen",
-      "LIST": "App-Übersicht",
-      "ERROR": "Bei der Verbindung zu Process Services ist ein Fehler aufgetreten"
+      "TITLE": "Eine Prozess-App auswählen",
+      "LIST": "Prozess-App Liste",
+      "ERROR": "Bei der Verbindung zum Prozess-Dienst ist ein Fehler aufgetreten"
     }
   },
   "ATTACH-FILE": {
@@ -340,9 +340,9 @@
       "COMPLETE-TASK-MESSAGE": "Aufgabe {{taskName}} abgeschlossen",
       "COMPLETE-TASK-SUB-MESSAGE": "Keine Formulare, die hinzugefügt werden können",
       "BUTTONS": {
-        "COMPLETE": "Abschließen",
-        "CANCEL": "Abbrechen",
-        "CLAIM": "Beanspruchen",
+        "COMPLETE": "ABGESCHLOSSEN",
+        "CANCEL": "ABBRECHEN",
+        "CLAIM": "BEANSPRUCHEN",
         "UNCLAIM": "FREIGEBEN"
       }
     },

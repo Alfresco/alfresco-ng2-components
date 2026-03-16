@@ -28,7 +28,8 @@ import {
     ResultListDataRepresentationTaskRepresentation,
     TaskQueryRepresentation,
     UserTaskFilterRepresentation,
-    TaskRepresentation
+    TaskRepresentation,
+    LazyApi
 } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
 
@@ -38,29 +39,17 @@ import { AlfrescoApiService } from '@alfresco/adf-content-services';
 export class TaskListService {
     protected apiService = inject(AlfrescoApiService);
 
-    private _modelsApi: ModelsApi;
-    get modelsApi(): ModelsApi {
-        this._modelsApi = this._modelsApi ?? new ModelsApi(this.apiService.getInstance());
-        return this._modelsApi;
-    }
+    @LazyApi((self: TaskListService) => new ModelsApi(self.apiService.getInstance()))
+    declare readonly modelsApi: ModelsApi;
 
-    private _tasksApi: TasksApi;
-    get tasksApi(): TasksApi {
-        this._tasksApi = this._tasksApi ?? new TasksApi(this.apiService.getInstance());
-        return this._tasksApi;
-    }
+    @LazyApi((self: TaskListService) => new TasksApi(self.apiService.getInstance()))
+    declare readonly tasksApi: TasksApi;
 
-    private _taskActionsApi: TaskActionsApi;
-    get taskActionsApi(): TaskActionsApi {
-        this._taskActionsApi = this._taskActionsApi ?? new TaskActionsApi(this.apiService.getInstance());
-        return this._taskActionsApi;
-    }
+    @LazyApi((self: TaskListService) => new TaskActionsApi(self.apiService.getInstance()))
+    declare readonly taskActionsApi: TaskActionsApi;
 
-    private _checklistsApi: ChecklistsApi;
-    get checklistsApi(): ChecklistsApi {
-        this._checklistsApi = this._checklistsApi ?? new ChecklistsApi(this.apiService.getInstance());
-        return this._checklistsApi;
-    }
+    @LazyApi((self: TaskListService) => new ChecklistsApi(self.apiService.getInstance()))
+    declare readonly checklistsApi: ChecklistsApi;
 
     /**
      * Gets all the filters in the list that belong to a task.

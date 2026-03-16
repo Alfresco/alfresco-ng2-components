@@ -23,6 +23,7 @@ import {
     HoldBulkStatusEntry,
     HoldEntry,
     HoldPaging,
+    LazyApi,
     LegalHoldApi,
     RequestQuery
 } from '@alfresco/js-api';
@@ -37,11 +38,8 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 export class LegalHoldService {
     private readonly apiService = inject(AlfrescoApiService);
 
-    private _legalHoldApi: LegalHoldApi;
-    get legalHoldApi(): LegalHoldApi {
-        this._legalHoldApi = this._legalHoldApi ?? new LegalHoldApi(this.apiService.getInstance());
-        return this._legalHoldApi;
-    }
+    @LazyApi((self: LegalHoldService) => new LegalHoldApi(self.apiService.getInstance()))
+    declare readonly legalHoldApi: LegalHoldApi;
 
     /**
      * Gets the list of holds available in the file plan.

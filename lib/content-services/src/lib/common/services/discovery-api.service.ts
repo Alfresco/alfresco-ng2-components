@@ -24,7 +24,8 @@ import {
     DiscoveryApi,
     AboutApi,
     SystemPropertiesApi,
-    BpmProductVersionModel
+    BpmProductVersionModel,
+    LazyApi
 } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AuthenticationService } from '@alfresco/adf-core';
@@ -36,11 +37,14 @@ export class DiscoveryApiService {
     private readonly authenticationService = inject(AuthenticationService);
     private readonly alfrescoApiService = inject(AlfrescoApiService);
 
-    private _discoveryApi: DiscoveryApi;
-    get discoveryApi(): DiscoveryApi {
-        this._discoveryApi = this._discoveryApi ?? new DiscoveryApi(this.alfrescoApiService.getInstance());
-        return this._discoveryApi;
-    }
+    @LazyApi((self: DiscoveryApiService) => new DiscoveryApi(self.alfrescoApiService.getInstance()))
+    declare readonly discoveryApi: DiscoveryApi;
+
+    @LazyApi((self: DiscoveryApiService) => new AboutApi(self.alfrescoApiService.getInstance()))
+    declare readonly aboutApi: AboutApi;
+
+    @LazyApi((self: DiscoveryApiService) => new SystemPropertiesApi(self.alfrescoApiService.getInstance()))
+    declare readonly systemPropertiesApi: SystemPropertiesApi;
 
     /**
      * Gets product information for Content Services.
@@ -78,14 +82,11 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     getBpmProductInfo(): Observable<BpmProductVersionModel> {
-        const aboutApi = new AboutApi(this.alfrescoApiService.getInstance());
-        return from(aboutApi.getAppVersion());
+        return from(this.aboutApi.getAppVersion());
     }
 
     getBPMSystemProperties(): Observable<SystemPropertiesRepresentation> {
-        const systemPropertiesApi = new SystemPropertiesApi(this.alfrescoApiService.getInstance());
-
-        return from(systemPropertiesApi.getProperties()).pipe(
+        return from(this.systemPropertiesApi.getProperties()).pipe(
             map((res) => {
                 if ('string' === typeof res) {
                     throw new Error('Not valid response');

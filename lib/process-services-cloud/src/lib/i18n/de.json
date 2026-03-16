@@ -199,14 +199,14 @@
     "DIALOG": {
       "TITLE": "Filter speichern als",
       "SAVE": "Speichern",
-      "CANCEL": "Abbrechen"
+      "CANCEL": "ABBRECHEN"
     }
   },
   "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
     "LABEL": {
       "APP_NAME": "Anwendungsname",
-      "SERVICE_TASK_ID": "Service-Aufgaben-ID",
-      "SERVICE_NAME": "Servicename",
+      "SERVICE_TASK_ID": "Dienst-Aufgaben-ID",
+      "SERVICE_NAME": "Dienstname",
       "ELEMENT_ID": "Element-ID",
       "PROCESS_DEF_NAME": "Name der Prozessdefinition",
       "PROCESS_DEF_ID": "Prozessdefinitions-ID",
@@ -245,14 +245,14 @@
       "COMPLETED_DATE": "Abschlussdatum",
       "MAIN_PROCESS_ID": "Hauptprozess-Id",
       "DATE_RANGE": {
-        "NO_DATE": "kein Datum",
-        "TODAY": "heute",
-        "TOMORROW": "morgen",
-        "NEXT_7_DAYS": "nächste 7 Tage",
-        "WEEK": "diese Woche",
-        "MONTH": "diesen Monat",
-        "QUARTER": "dieses Quartal",
-        "YEAR": "dieses Jahr",
+        "NO_DATE": "Kein Datum",
+        "TODAY": "Heute",
+        "TOMORROW": "Morgen",
+        "NEXT_7_DAYS": "Nächste 7 Tage",
+        "WEEK": "Diese Woche",
+        "MONTH": "Diesen Monat",
+        "QUARTER": "Dieses Quartal",
+        "YEAR": "Dieses Jahr",
         "RANGE": "Datumsbereich"
       },
       "DATE_RANGE_TITLE": "Startdatum – Enddatum",
@@ -360,9 +360,9 @@
       "TITLE": "Kein Formular verfügbar",
       "SUBTITLE": "Hängen Sie ein Formular an, das später angesehen werden kann",
       "BUTTONS": {
-        "COMPLETE": "Abschließen",
-        "CANCEL": "Abbrechen",
-        "CLAIM": "Beanspruchen",
+        "COMPLETE": "ABGESCHLOSSEN",
+        "CANCEL": "ABBRECHEN",
+        "CLAIM": "BEANSPRUCHEN",
         "UNCLAIM": "FREIGEBEN"
       }
     },

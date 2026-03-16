@@ -19,7 +19,7 @@ import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { FormFieldOption } from '@alfresco/adf-core';
 import { Injectable, inject } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
-import { ProcessDefinitionsApi } from '@alfresco/js-api';
+import { LazyApi, ProcessDefinitionsApi } from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
 import { DynamicTableColumnOption } from '../widgets/dynamic-table/editors/models/dynamic-table-column-option.model';
 
@@ -32,11 +32,8 @@ export class ProcessDefinitionService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    private _processDefinitionsApi: ProcessDefinitionsApi;
-    get processDefinitionsApi(): ProcessDefinitionsApi {
-        this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.apiService.getInstance());
-        return this._processDefinitionsApi;
-    }
+    @LazyApi((self: ProcessDefinitionService) => new ProcessDefinitionsApi(self.apiService.getInstance()))
+    declare readonly processDefinitionsApi: ProcessDefinitionsApi;
 
     /**
      * Gets values of fields populated by a REST backend using a process ID.

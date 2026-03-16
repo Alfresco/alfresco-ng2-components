@@ -30,7 +30,8 @@ import {
     AuthorityClearanceApi,
     AuthorityClearanceGroupPaging,
     NodeSecurityMarkBody,
-    GsGroupInclude
+    GsGroupInclude,
+    LazyApi
 } from '@alfresco/js-api';
 import { UserPreferencesService } from '@alfresco/adf-core';
 import { finalize } from 'rxjs/operators';
@@ -59,25 +60,18 @@ export class SecurityControlsService {
     private readonly loadingSource = new BehaviorSubject<boolean>(true);
     loading$ = this.loadingSource.asObservable();
 
-    private securityGroup: SecurityGroupsApi;
-    private securityMark: SecurityMarksApi;
-    private authorityClearance: AuthorityClearanceApi;
-
-    get groupsApi(): SecurityGroupsApi {
-        return this.securityGroup || (this.securityGroup = new SecurityGroupsApi(this.apiService.getInstance()));
-    }
-
-    get marksApi(): SecurityMarksApi {
-        return this.securityMark || (this.securityMark = new SecurityMarksApi(this.apiService.getInstance()));
-    }
-
-    get authorityClearanceApi(): AuthorityClearanceApi {
-        return this.authorityClearance || (this.authorityClearance = new AuthorityClearanceApi(this.apiService.getInstance()));
-    }
-
     get reloadAuthorityClearance(): Subject<void> {
         return this._reloadAuthorityClearance;
     }
+
+    @LazyApi((self: SecurityControlsService) => new SecurityGroupsApi(self.apiService.getInstance()))
+    declare readonly groupsApi: SecurityGroupsApi;
+
+    @LazyApi((self: SecurityControlsService) => new SecurityMarksApi(self.apiService.getInstance()))
+    declare readonly marksApi: SecurityMarksApi;
+
+    @LazyApi((self: SecurityControlsService) => new AuthorityClearanceApi(self.apiService.getInstance()))
+    declare readonly authorityClearanceApi: AuthorityClearanceApi;
 
     /**
      * Get All security groups

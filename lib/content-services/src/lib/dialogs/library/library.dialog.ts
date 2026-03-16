@@ -28,7 +28,7 @@ import {
     Validators
 } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { QueriesApi, SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-api';
+import { LazyApi, QueriesApi, SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { NotificationService } from '@alfresco/adf-core';
 import { debounceTime, finalize, map, mergeMap, take } from 'rxjs/operators';
 import { SitesService } from '../../common/services/sites.service';
@@ -101,11 +101,8 @@ export class LibraryDialogComponent implements OnInit {
     ];
     disableCreateButton = false;
 
-    _queriesApi: QueriesApi;
-    get queriesApi(): QueriesApi {
-        this._queriesApi = this._queriesApi ?? new QueriesApi(this.alfrescoApiService.getInstance());
-        return this._queriesApi;
-    }
+    @LazyApi((self: LibraryDialogComponent) => new QueriesApi(self.alfrescoApiService.getInstance()))
+    declare readonly queriesApi: QueriesApi;
 
     private readonly destroyRef = inject(DestroyRef);
 

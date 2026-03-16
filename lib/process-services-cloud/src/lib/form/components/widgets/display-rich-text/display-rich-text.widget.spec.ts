@@ -467,5 +467,111 @@ describe('DisplayRichTextWidgetComponent', () => {
                 done();
             }, 100);
         });
+
+        describe('list block type', () => {
+            it('should resolve expressions in unordered list blocks', () => {
+                const form = new FormModel({
+                    fields: [
+                        {
+                            id: 'richText1',
+                            type: 'display-rich-text',
+                            value: {
+                                time: 1658154611110,
+                                blocks: [
+                                    {
+                                        id: '1',
+                                        type: 'list',
+                                        data: {
+                                            style: 'unordered',
+                                            items: [{ content: 'Hello ${field.name}', items: [] }]
+                                        }
+                                    }
+                                ],
+                                version: 1
+                            }
+                        },
+                        { id: 'name', type: 'text', value: 'Yngwie' }
+                    ]
+                });
+
+                widget.field = form.getFieldById('richText1');
+                fixture.detectChanges();
+
+                expect(widget.field.value.blocks[0].data.items[0].content).toBe('Hello Yngwie');
+            });
+
+            it('should resolve expressions in ordered list blocks', () => {
+                const form = new FormModel({
+                    fields: [
+                        {
+                            id: 'richText1',
+                            type: 'display-rich-text',
+                            value: {
+                                time: 1658154611110,
+                                blocks: [
+                                    {
+                                        id: '1',
+                                        type: 'list',
+                                        data: {
+                                            style: 'ordered',
+                                            items: [
+                                                { content: 'First: ${field.firstName}', items: [] },
+                                                { content: 'Last: ${field.lastName}', items: [] }
+                                            ]
+                                        }
+                                    }
+                                ],
+                                version: 1
+                            }
+                        },
+                        { id: 'firstName', type: 'text', value: 'Mike' },
+                        { id: 'lastName', type: 'text', value: 'Watt' }
+                    ]
+                });
+
+                widget.field = form.getFieldById('richText1');
+                fixture.detectChanges();
+
+                expect(widget.field.value.blocks[0].data.items[0].content).toBe('First: Mike');
+                expect(widget.field.value.blocks[0].data.items[1].content).toBe('Last: Watt');
+            });
+
+            it('should resolve expressions in checklists', () => {
+                const form = new FormModel({
+                    fields: [
+                        {
+                            id: 'richText1',
+                            type: 'display-rich-text',
+                            value: {
+                                time: 1658154611110,
+                                blocks: [
+                                    {
+                                        id: '1',
+                                        type: 'paragraph',
+                                        data: { text: 'Hello ${field.name}' }
+                                    },
+                                    {
+                                        id: '2',
+                                        type: 'list',
+                                        data: {
+                                            style: 'checklist',
+                                            items: [{ content: 'Item for ${field.name}', items: [] }]
+                                        }
+                                    }
+                                ],
+                                version: 1
+                            }
+                        },
+                        { id: 'name', type: 'text', value: 'Yngwie' }
+                    ]
+                });
+
+                widget.field = form.getFieldById('richText1');
+                fixture.detectChanges();
+
+                expect(widget.field.value.blocks[0].data.text).toBe('Hello Yngwie');
+                expect(widget.field.value.blocks[1].data.items[0].content).toBe('Item for Yngwie');
+            });
+        });
     });
 });
