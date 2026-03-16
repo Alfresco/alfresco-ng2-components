@@ -31,7 +31,7 @@ import { TaskVariableCloud } from '../../../../form/models/task-variable-cloud.m
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StartProcessScreenCloudComponent extends BaseScreenCloudComponent<StartProcessScreenCloud> {
-    readonly appName = input.required<string>();
+    readonly appName = input('');
     processDefinitionId = input('');
     readonly resolvedValues = input<TaskVariableCloud[]>();
     screenStartProcessPayloadChange = output<unknown>();

@@ -29,7 +29,7 @@ import { TaskVariableCloud } from '../form/models/task-variable-cloud.model';
 export class MockedTaskScreenCloudComponent implements StartProcessScreenCloud {
     readonly appName = input('');
     processDefinitionId = input('');
-    readonly resolvedValues = input<TaskVariableCloud[]>();
+    readonly resolvedValues = input<TaskVariableCloud[] | undefined>();
     defaultStartProcessButtonsConfigurationChange = output<StartProcessScreenDefaultButtons>();
     startProcessPayloadChanged = output<unknown>();
 }

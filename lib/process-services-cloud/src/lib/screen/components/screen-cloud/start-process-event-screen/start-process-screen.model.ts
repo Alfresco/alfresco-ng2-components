@@ -25,7 +25,7 @@ export interface StartProcessScreenDefaultButtons {
 export interface StartProcessScreenCloud {
     readonly appName?: InputSignal<string>;
     processDefinitionId: InputSignal<string>;
-    readonly resolvedValues?: InputSignal<TaskVariableCloud[]>;
+    readonly resolvedValues?: InputSignal<TaskVariableCloud[] | undefined>;
     defaultStartProcessButtonsConfigurationChange: OutputEmitterRef<StartProcessScreenDefaultButtons>;
     startProcessPayloadChanged: OutputEmitterRef<unknown>;
 }
