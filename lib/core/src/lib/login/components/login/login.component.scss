@@ -157,15 +157,15 @@
     }
 
     .adf-login-input:is(input) {
-        font-size: var(--theme-subheading-2-font-size);
+        font-size: var(--mat-sys-title-small-size);
     }
 
     .adf-login-form-field .adf-login-password-icon.adf-login-form-password-icon {
         display: flex;
         justify-content: center;
         align-items: center;
-        color: var(--adf-theme-foreground-text-color);
-        font-size: var(--theme-subheading-2-font-size);
+        color: var(--mat-sys-on-surface);
+        font-size: var(--mat-sys-title-small-size);
     }
 
     .adf-login-controls:has(div) {
