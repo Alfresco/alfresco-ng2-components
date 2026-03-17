@@ -289,7 +289,7 @@
                 <div
                     *ngFor="let col of getVisibleColumns(); let lastColumn = last;"
                     role="gridcell"
-                    class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-data adf-datatable-cell--{{getAutomationValue(row)}}"
+                    class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-data"
                     [attr.title]="col.title | translate"
                     [attr.data-automation-id]="getAutomationValue(row)"
                     [attr.aria-selected]="row.isSelected"
