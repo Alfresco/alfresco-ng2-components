@@ -33,8 +33,8 @@
         }
 
         &__warn {
-            color: var(--theme-warn-color-a700);
-            font-size: var(--theme-caption-font-size);
+            color: var(--mat-sys-error);
+            font-size: var(--mat-sys-body-small-size);
         }
 
         &__border-color {
