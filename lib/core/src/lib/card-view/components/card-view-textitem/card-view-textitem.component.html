@@ -31,6 +31,7 @@
                         'adf-property-value-has-error': isEditable && hasErrors,
                         'adf-property-value-not-editable': !editable
                     }"
+                    [disabled]="isReadonlyProperty || !editable"
                     title="{{ property.label | translate }}"
                     [placeholder]="property.default"
                     [attr.aria-label]="property.label | translate"
@@ -52,6 +53,7 @@
                         'adf-property-value-editable': editable,
                         'adf-property-readonly-value': isReadonlyProperty || !editable,
                     }"
+                    [disabled]="isReadonlyProperty || !editable"
                     [placeholder]="property.default"
                     [attr.aria-label]="property.label | translate"
                     [formControl]="textInput"
@@ -77,7 +79,7 @@
                 >
                     {{ property.label | translate }}
                 </mat-label>
-                <mat-chip-grid #chipElement class="adf-textitem-chip-list">
+                <mat-chip-grid #chipElement class="adf-textitem-chip-list" [disabled]="isReadonlyProperty || !editable">
                     <mat-chip-row *ngFor="let propertyValue of editedValue; let idx = index" [removable]="isEditable" (removed)="removeValueFromList(idx)">
                         {{ propertyValue }}
                         <mat-icon *ngIf="isEditable" matChipRemove adf-icon="cancel" />
@@ -96,6 +98,7 @@
                     [matChipInputFor]="chipElement"
                     [matChipInputAddOnBlur]="true"
                     (matChipInputTokenEnd)="addValueToList($event)"
+                    [disabled]="isReadonlyProperty || !editable"
                     [attr.data-automation-id]="'card-textitem-editchipinput-' + property.key"
                 />
             </mat-form-field>
