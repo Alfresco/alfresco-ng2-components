@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { TranslationService, ViewUtilService } from '@alfresco/adf-core';
-import { Rendition, RenditionEntry, RenditionPaging, RenditionsApi } from '@alfresco/js-api';
+import { ContentApi, Rendition, RenditionEntry, RenditionPaging, RenditionsApi, VersionsApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { RenditionService } from './rendition.service';
 
@@ -37,7 +37,9 @@ const getRenditionPaging = (status: Rendition.StatusEnum): RenditionPaging => ({
 
 describe('RenditionService', () => {
     let renditionService: RenditionService;
-    let renditionsApi: any;
+    let renditionsApi: jasmine.SpyObj<RenditionsApi>;
+    let versionsApiSpy: jasmine.SpyObj<VersionsApi>;
+    let contentApiSpy: jasmine.SpyObj<ContentApi>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -53,25 +55,45 @@ describe('RenditionService', () => {
                         getRendition: jasmine.createSpy('getRendition'),
                         createRendition: jasmine.createSpy('createRendition')
                     }
+                },
+                {
+                    provide: VersionsApi,
+                    useValue: {
+                        listVersionRenditions: jasmine.createSpy('listVersionRenditions'),
+                        createVersionRendition: jasmine.createSpy('createVersionRendition').and.returnValue(Promise.resolve()),
+                        getVersionRendition: jasmine.createSpy('getVersionRendition')
+                    }
+                },
+                {
+                    provide: ContentApi,
+                    useValue: {
+                        getVersionRenditionUrl: jasmine.createSpy('getVersionRenditionUrl').and.returnValue('version-rendition-url')
+                    }
                 }
             ]
         });
         renditionService = TestBed.inject(RenditionService);
-        renditionsApi = TestBed.inject(RenditionsApi);
+        renditionsApi = TestBed.inject(RenditionsApi) as jasmine.SpyObj<RenditionsApi>;
+        versionsApiSpy = TestBed.inject(VersionsApi) as jasmine.SpyObj<VersionsApi>;
+        contentApiSpy = TestBed.inject(ContentApi) as jasmine.SpyObj<ContentApi>;
         spyOnProperty(renditionService, 'renditionsApi').and.returnValue(renditionsApi);
+        spyOnProperty(renditionService, 'versionsApi').and.returnValue(versionsApiSpy);
+        spyOnProperty(renditionService, 'contentApi').and.returnValue(contentApiSpy);
     });
 
     describe('getRendition', () => {
-        it('should retry getting the rendition until maxRetries if status is NOT_CREATED', async () => {
+        it('should retry getting the rendition until maxRetries if status is NOT_CREATED', fakeAsync(() => {
             const mockRenditionPaging: RenditionPaging = getRenditionPaging(Rendition.StatusEnum.NOTCREATED);
             const mockRenditionEntry: RenditionEntry = getRenditionEntry(Rendition.StatusEnum.NOTCREATED);
 
             renditionsApi.listRenditions.and.returnValue(Promise.resolve(mockRenditionPaging));
             renditionsApi.getRendition.and.returnValue(Promise.resolve(mockRenditionEntry));
 
-            await renditionService.getRendition('nodeId', 'pdf');
+            renditionService.getRendition('nodeId', 'pdf');
+            tick(5000);
+
             expect(renditionsApi.getRendition).toHaveBeenCalledTimes(renditionService.maxRetries);
-        }, 10000);
+        }));
     });
 
     it('should return the rendition when status transitions from PENDING to CREATED', async () => {
@@ -101,4 +123,23 @@ describe('RenditionService', () => {
         expect(result).toEqual(mockRenditionPaging.list.entries[0]);
         expect(renditionsApi.getRendition).not.toHaveBeenCalled();
     });
+
+    it('should pass renditionId (not mimeType) to getVersionRenditionUrl when version rendition transitions to CREATED', fakeAsync(() => {
+        const nodeId = 'nodeId';
+        const versionId = 'versionId';
+        const renditionId = 'pdf';
+        const mimeType = 'application/pdf';
+
+        versionsApiSpy.listVersionRenditions.and.returnValue(Promise.resolve(getRenditionPaging(Rendition.StatusEnum.NOTCREATED)));
+        versionsApiSpy.getVersionRendition.and.returnValue(Promise.resolve(getRenditionEntry(Rendition.StatusEnum.CREATED)));
+
+        let result: { url: string; mimeType: string };
+        renditionService.getNodeRendition(nodeId, versionId).then((r) => (result = r));
+
+        tick(10000);
+
+        expect(contentApiSpy.getVersionRenditionUrl).toHaveBeenCalledWith(nodeId, versionId, renditionId);
+        expect(contentApiSpy.getVersionRenditionUrl).not.toHaveBeenCalledWith(nodeId, versionId, mimeType);
+        expect(result.url).toBe('version-rendition-url');
+    }));
 });

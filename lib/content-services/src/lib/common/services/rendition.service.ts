@@ -184,7 +184,7 @@ export class RenditionService {
 
                                 if (status === 'CREATED') {
                                     clearInterval(intervalId);
-                                    return resolve(this.handleNodeRendition(nodeId, rendition.entry.content.mimeType, versionId));
+                                    return resolve(this.handleNodeRendition(nodeId, renditionId, versionId));
                                 }
                             },
                             () => reject(new Error('Error geting version rendition'))
