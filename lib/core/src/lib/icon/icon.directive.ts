@@ -31,7 +31,7 @@ export class IconDirective implements OnChanges {
     @Input('adf-icon') name: string;
 
     ngOnChanges() {
-        const iconAlias = this.aliasMap?.[this.name];
+        const iconAlias = this.getIconAlias();
 
         iconAlias ? this.setSvgIcon(iconAlias) : this.appendLigatureText();
     }
@@ -59,5 +59,13 @@ export class IconDirective implements OnChanges {
 
     private resetSvgIcon() {
         this.matIcon.svgIcon = null;
+    }
+
+    private getIconAlias(): string | undefined {
+        if (!this.aliasMap) {
+            return undefined;
+        }
+
+        return this.aliasMap[this.name] ?? (Object.values(this.aliasMap).includes(this.name) ? this.name : undefined);
     }
 }

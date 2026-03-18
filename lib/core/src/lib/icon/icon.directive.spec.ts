@@ -84,5 +84,14 @@ describe('IconDirective', () => {
             expect(await iconHarness.getType()).toBe(IconType.SVG);
             expect(await iconHarness.getName()).toContain('mock_alias');
         });
+
+        it('should set svg icon if alias map is provided and name matches an alias value directly', async () => {
+            component.name = 'mock_alias';
+
+            const iconHarness = await loader.getHarness(MatIconHarness);
+
+            expect(await iconHarness.getType()).toBe(IconType.SVG);
+            expect(await iconHarness.getName()).toContain('mock_alias');
+        });
     });
 });
