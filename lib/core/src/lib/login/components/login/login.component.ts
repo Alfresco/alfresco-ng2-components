@@ -109,7 +109,7 @@ export class LoginComponent implements OnInit {
 
     /** Path to a custom logo image. */
     @Input()
-    logoImageUrl: string = './assets/images/alfresco-logo.svg';
+    logoImageUrl: string = './assets/images/updated-alfresco-logo.svg';
 
     /** Path to a custom background image. */
     @Input()

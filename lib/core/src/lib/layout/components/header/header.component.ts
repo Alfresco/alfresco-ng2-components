@@ -90,7 +90,7 @@ export class HeaderLayoutComponent implements OnInit {
         }
 
         if (!this.logo) {
-            this.logo = './assets/images/logo.png';
+            this.logo = './assets/images/logo.svg';
         }
     }
 }

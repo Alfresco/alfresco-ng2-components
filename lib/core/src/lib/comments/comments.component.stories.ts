@@ -29,7 +29,7 @@ const meta: Meta<CommentsComponent> = {
         moduleMetadata({
             imports: [CommentsComponent],
             providers: [
-                { provide: CommentsServiceStoriesMock, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } },
+                { provide: CommentsServiceStoriesMock, useValue: { getUserProfileImage: () => '../assets/images/logo.svg' } },
                 { provide: ADF_COMMENTS_SERVICE, useClass: CommentsServiceStoriesMock }
             ]
         }),

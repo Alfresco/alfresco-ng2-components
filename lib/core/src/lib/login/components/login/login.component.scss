@@ -94,6 +94,7 @@
         padding-bottom: 42px;
         padding-top: 0;
         margin: 0 auto;
+        display: block;
     }
 
     .adf-img-logo {
@@ -115,6 +116,10 @@
         height: 36px;
         line-height: normal;
         box-shadow: none;
+
+        &:not(:disabled) {
+            background-color: var(--theme-login-button-bg-color);
+        }
     }
 
     .adf-login-button-label {
