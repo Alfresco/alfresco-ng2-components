@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { TranslationService, ViewUtilService } from '@alfresco/adf-core';
 import { ContentApi, Rendition, RenditionEntry, RenditionPaging, RenditionsApi, VersionsApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
@@ -82,16 +82,18 @@ describe('RenditionService', () => {
     });
 
     describe('getRendition', () => {
-        it('should retry getting the rendition until maxRetries if status is NOT_CREATED', async () => {
+        it('should retry getting the rendition until maxRetries if status is NOT_CREATED', fakeAsync(() => {
             const mockRenditionPaging: RenditionPaging = getRenditionPaging(Rendition.StatusEnum.NOTCREATED);
             const mockRenditionEntry: RenditionEntry = getRenditionEntry(Rendition.StatusEnum.NOTCREATED);
 
             renditionsApi.listRenditions.and.returnValue(Promise.resolve(mockRenditionPaging));
             renditionsApi.getRendition.and.returnValue(Promise.resolve(mockRenditionEntry));
 
-            await renditionService.getRendition('nodeId', 'pdf');
+            renditionService.getRendition('nodeId', 'pdf');
+            tick(5000);
+
             expect(renditionsApi.getRendition).toHaveBeenCalledTimes(renditionService.maxRetries);
-        }, 10000);
+        }));
     });
 
     it('should return the rendition when status transitions from PENDING to CREATED', async () => {
@@ -122,7 +124,7 @@ describe('RenditionService', () => {
         expect(renditionsApi.getRendition).not.toHaveBeenCalled();
     });
 
-    it('should pass renditionId (not mimeType) to getVersionRenditionUrl when version rendition transitions to CREATED', async () => {
+    it('should pass renditionId (not mimeType) to getVersionRenditionUrl when version rendition transitions to CREATED', fakeAsync(() => {
         const nodeId = 'nodeId';
         const versionId = 'versionId';
         const renditionId = 'pdf';
@@ -131,10 +133,13 @@ describe('RenditionService', () => {
         versionsApiSpy.listVersionRenditions.and.returnValue(Promise.resolve(getRenditionPaging(Rendition.StatusEnum.NOTCREATED)));
         versionsApiSpy.getVersionRendition.and.returnValue(Promise.resolve(getRenditionEntry(Rendition.StatusEnum.CREATED)));
 
-        const result = await renditionService.getNodeRendition(nodeId, versionId);
+        let result: { url: string; mimeType: string };
+        renditionService.getNodeRendition(nodeId, versionId).then((r) => (result = r));
+
+        tick(10000);
 
         expect(contentApiSpy.getVersionRenditionUrl).toHaveBeenCalledWith(nodeId, versionId, renditionId);
         expect(contentApiSpy.getVersionRenditionUrl).not.toHaveBeenCalledWith(nodeId, versionId, mimeType);
         expect(result.url).toBe('version-rendition-url');
-    }, 10100);
+    }));
 });
