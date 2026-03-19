@@ -299,7 +299,7 @@
         "EDIT_ASPECTS": "Modifica aspetto"
       },
       "ACCESSIBILITY": {
-        "EDIT": "Edit {{ sectionName }}",
+        "EDIT": "Modifica {{ sectionName }}",
         "DATEPICKER": "Usare i tasti freccia per spostarsi fra le date. I tasti Su e Giù passano alla settimana successiva o precedente, ma nello stesso giorno. I tasti Sinistra e Destra passano al giorno successivo o precedente. Premere Invio per selezionare una data.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Valore copiato negli appunti",
         "EDIT_ASPECTS": "Modifica aspetto",

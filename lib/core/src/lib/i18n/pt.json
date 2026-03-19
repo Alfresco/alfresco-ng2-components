@@ -299,7 +299,7 @@
         "EDIT_ASPECTS": "Editar aspeto"
       },
       "ACCESSIBILITY": {
-        "EDIT": "Edit {{ sectionName }}",
+        "EDIT": "Editar {{ sectionName }}",
         "DATEPICKER": "Utilize as teclas de setas para navegar entre datas. Para cima e para baixo passam para a semana seguinte ou anterior, mas no mesmo dia. A esquerda e a direita deslocam-se para o dia seguinte ou anterior.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Valor copiado para a área de transferência",
         "EDIT_ASPECTS": "Editar aspeto",

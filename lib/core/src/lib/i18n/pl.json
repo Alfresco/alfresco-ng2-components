@@ -299,7 +299,7 @@
         "EDIT_ASPECTS": "Edycja aspektu"
       },
       "ACCESSIBILITY": {
-        "EDIT": "Edit {{ sectionName }}",
+        "EDIT": "Edytuj {{ sectionName }}",
         "DATEPICKER": "Użyj klawiszy strzałek, aby przełączać między datami. Strzałki w górę i w dół przełączają na ten sam dzień w następnym lub poprzednim tygodniu. Natomiast strzałki w lewo i w prawo przełączają na następny lub poprzedni dzień. Naciśnij Enter lub Return, aby wybrać datę.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Wartość skopiowano do schowka",
         "EDIT_ASPECTS": "Edycja aspektu",
