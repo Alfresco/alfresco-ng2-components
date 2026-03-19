@@ -54,7 +54,7 @@ describe('HeaderComponent', () => {
     });
 
     it('should set correct logoSrc when provided', () => {
-        const testLogoSrc = 'https://example.com/new-logo.png';
+        const testLogoSrc = 'https://example.com/new-logo.svg';
         component.logoSrc = testLogoSrc;
         fixture.detectChanges();
         expect(getLogoImgElement().src).toEqual(testLogoSrc);

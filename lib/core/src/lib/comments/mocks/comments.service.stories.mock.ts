@@ -29,7 +29,7 @@ export class CommentsServiceStoriesMock implements Partial<CommentsService> {
     }
 
     getUserImage(_userId: string): string {
-        return '../assets/images/logo.png';
+        return '../assets/images/logo.svg';
     }
 }
 

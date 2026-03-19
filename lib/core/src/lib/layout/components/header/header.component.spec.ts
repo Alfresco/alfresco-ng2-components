@@ -101,12 +101,12 @@ describe('HeaderLayoutComponent', () => {
         });
 
         it('should display the img element with the expected src if a logo path is set', () => {
-            component.logo = 'logo.png';
+            component.logo = 'logo.svg';
             fixture.detectChanges();
 
             const logo = testingUtils.getByCSS('.adf-app-logo').nativeElement;
             const src = logo.getAttribute('src');
-            expect(src).toEqual('logo.png');
+            expect(src).toEqual('logo.svg');
         });
 
         it('should have custom url link set on logo when the redirectUrl is set', async () => {
