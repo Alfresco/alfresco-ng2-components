@@ -71,10 +71,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     @Input()
     public emptyContentTemplate: TemplateRef<any>;
 
-    /** TemplateRef to provide context menu items for context menu displayed on each row*/
-    @Input()
-    public nodeActionsMenuTemplate: TemplateRef<any>;
-
     /** Variable defining if tree header should be sticky. By default set to false */
     @Input()
     @HostBinding('class.adf-tree-sticky-header')

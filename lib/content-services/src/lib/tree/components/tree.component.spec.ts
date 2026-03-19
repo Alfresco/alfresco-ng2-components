@@ -17,7 +17,7 @@
 
 import { TreeComponent } from './tree.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContextMenuDirective, UserPreferencesService } from '@alfresco/adf-core';
+import { ContextMenuDirective, UnitTestingUtils, UserPreferencesService } from '@alfresco/adf-core';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
 import { singleNode, treeNodesChildrenMockExpanded, treeNodesMock, treeNodesMockExpanded, treeNodesNoChildrenMock } from '../mock/tree-node.mock';
 import { of, Subject } from 'rxjs';
@@ -28,35 +28,31 @@ import { SelectionChange } from '@angular/cdk/collections';
 import { DebugElement } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
-import { MatIconHarness } from '@angular/material/icon/testing';
 
 describe('TreeComponent', () => {
     let fixture: ComponentFixture<TreeComponent<TreeNode>>;
     let component: TreeComponent<TreeNode>;
     let userPreferenceService: UserPreferencesService;
     let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
 
     const composeNodeSelector = (nodeId: string) => `[data-automation-id="node_${nodeId}"]`;
+    const getNode = (nodeId: string) => testingUtils.getByCSS(composeNodeSelector(nodeId));
 
-    const getNode = (nodeId: string) => fixture.debugElement.query(By.css(composeNodeSelector(nodeId)));
+    const clickDisplayNameElement = (nodeId: string) => testingUtils.clickByCSS(`${composeNodeSelector(nodeId)} .adf-tree-cell-value`);
 
-    const getDisplayNameElement = (nodeId: string) => fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .adf-tree-cell-value`);
-
-    const getDisplayNameValue = (nodeId: string) => getDisplayNameElement(nodeId).innerText.trim();
+    const getDisplayNameValue = (nodeId: string) => testingUtils.getInnerTextByCSS(`${composeNodeSelector(nodeId)} .adf-tree-cell-value`);
 
     const getNodePadding = (nodeId: string) => parseInt(getComputedStyle(getNode(nodeId).nativeElement).paddingLeft, 10);
 
-    const getNodeSpinner = async (nodeId: string) =>
-        loader.getHarnessOrNull(MatProgressSpinnerHarness.with({ ancestor: composeNodeSelector(nodeId) }));
+    const getNodeSpinner = async (nodeId: string) => testingUtils.getMatProgressSpinnerWithAncestorByDataAutomationId(`node_${nodeId}`);
 
-    const getExpandCollapseBtn = (nodeId: string) =>
-        fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .adf-tree-expand-collapse-button`);
+    const clickExpandCollapseBtn = (nodeId: string) => testingUtils.clickByCSS(`${composeNodeSelector(nodeId)} .adf-tree-expand-collapse-button`);
 
     const tickCheckbox = (index: number) => {
         const selector = `[data-automation-id="${index === 0 ? 'has-children-node-checkbox' : 'no-children-node-checkbox'}"]`;
-        const nodeCheckboxes = fixture.debugElement.queryAll(By.css(selector));
+        const nodeCheckboxes = testingUtils.getAllByCSS(selector);
         nodeCheckboxes[index].nativeElement.dispatchEvent(new Event('change'));
     };
 
@@ -70,6 +66,7 @@ describe('TreeComponent', () => {
         loader = TestbedHarnessEnvironment.loader(fixture);
         component = fixture.componentInstance;
         userPreferenceService = TestBed.inject(UserPreferencesService);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     afterEach(() => {
@@ -101,8 +98,8 @@ describe('TreeComponent', () => {
         spyOn(component, 'isEmpty').and.returnValue(false);
         component.displayName = 'test';
         fixture.detectChanges();
-        const treeHeaderDisplayName = fixture.nativeElement.querySelector(`[data-automation-id="tree-header-display-name"]`);
-        expect(treeHeaderDisplayName.innerText.trim()).toBe('test');
+        const treeHeaderDisplayName = testingUtils.getByDataAutomationId('tree-header-display-name');
+        expect(treeHeaderDisplayName.nativeElement.innerText.trim()).toBe('test');
     });
 
     it('should show a list of nodes', () => {
@@ -138,8 +135,8 @@ describe('TreeComponent', () => {
         component.loadingRoot$ = of(true);
         fixture.detectChanges();
 
-        const matSpinnerElement = await loader.getHarnessOrNull(MatProgressSpinnerHarness.with({ ancestor: '.adf-tree-loading-spinner-container' }));
-        expect(matSpinnerElement).not.toBeNull();
+        const matSpinnerElement = await testingUtils.getMatProgressSpinnerWithAncestorByCSS('.adf-tree-loading-spinner-container');
+        expect(await matSpinnerElement.getMode()).toBe('indeterminate');
     });
 
     it('should show provided expand/collapse icons', async () => {
@@ -148,7 +145,7 @@ describe('TreeComponent', () => {
         component.collapseIcon = 'chevron_left';
         component.treeService.collapseNode(component.treeService.treeNodes[0]);
         fixture.detectChanges();
-        const icon = await loader.getHarnessOrNull(MatIconHarness.with({ ancestor: '.adf-tree-expand-collapse-button' }));
+        const icon = await testingUtils.getMatIconWithAncestorByCSS('.adf-tree-expand-collapse-button');
         expect(await icon.getName()).toContain('folder');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(true);
         fixture.detectChanges();
@@ -158,7 +155,7 @@ describe('TreeComponent', () => {
     it('when node has more items to load loadMore node should appear', () => {
         component.treeService.treeNodes = Array.from(treeNodesMockExpanded);
         fixture.detectChanges();
-        const loadMoreNode = fixture.nativeElement.querySelector('.adf-tree-load-more-row');
+        const loadMoreNode = testingUtils.getByCSS('.adf-tree-load-more-row');
         expect(loadMoreNode).not.toBeNull();
     });
 
@@ -186,7 +183,7 @@ describe('TreeComponent', () => {
         fixture.detectChanges();
         const collapseSpy = spyOn(component.treeService, 'collapseNode');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(true);
-        getExpandCollapseBtn(component.treeService.treeNodes[0].id).dispatchEvent(new Event('click'));
+        clickExpandCollapseBtn(component.treeService.treeNodes[0].id);
         expect(collapseSpy).toHaveBeenCalledWith(component.treeService.treeNodes[0]);
     });
 
@@ -206,7 +203,7 @@ describe('TreeComponent', () => {
         fixture.detectChanges();
         const collapseSpy = spyOn(component.treeService, 'expandNode');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(false);
-        getExpandCollapseBtn(component.treeService.treeNodes[0].id).dispatchEvent(new Event('click'));
+        clickExpandCollapseBtn(component.treeService.treeNodes[0].id);
         expect(collapseSpy).toHaveBeenCalledWith(component.treeService.treeNodes[0], treeNodesMockExpanded);
     });
 
@@ -215,7 +212,7 @@ describe('TreeComponent', () => {
         fixture.detectChanges();
         spyOn(component.treeService, 'collapseNode');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(true);
-        getDisplayNameElement(component.treeService.treeNodes[0].id).dispatchEvent(new Event('click'));
+        clickDisplayNameElement(component.treeService.treeNodes[0].id);
         expect(component.treeService.collapseNode).toHaveBeenCalledWith(component.treeService.treeNodes[0]);
     });
 
@@ -224,7 +221,7 @@ describe('TreeComponent', () => {
         fixture.detectChanges();
         spyOn(component.treeService, 'expandNode');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(false);
-        getDisplayNameElement(component.treeService.treeNodes[0].id).dispatchEvent(new Event('click'));
+        clickDisplayNameElement(component.treeService.treeNodes[0].id);
         expect(component.treeService.expandNode).toHaveBeenCalledWith(component.treeService.treeNodes[0], treeNodesMockExpanded);
     });
 
@@ -242,7 +239,7 @@ describe('TreeComponent', () => {
         fixture.detectChanges();
         spyOn(component.treeService, 'collapseNode');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(true);
-        getDisplayNameElement(component.treeService.treeNodes[0].id).dispatchEvent(new Event('click'));
+        clickDisplayNameElement(component.treeService.treeNodes[0].id);
         expect(component.treeService.collapseNode).not.toHaveBeenCalled();
     });
 
@@ -260,7 +257,7 @@ describe('TreeComponent', () => {
         fixture.detectChanges();
         spyOn(component.treeService, 'expandNode');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(false);
-        getDisplayNameElement(component.treeService.treeNodes[0].id).dispatchEvent(new Event('click'));
+        clickDisplayNameElement(component.treeService.treeNodes[0].id);
         expect(component.treeService.expandNode).not.toHaveBeenCalled();
     });
 
@@ -376,10 +373,16 @@ describe('TreeComponent', () => {
             contextMenu = node.injector.get(ContextMenuDirective);
             contextMenuOption1 = {
                 title: optionTitle1,
+                model: {
+                    icon: 'label'
+                },
                 subject: new Subject()
             };
             contextMenuOption2 = {
                 title: optionTitle2,
+                model: {
+                    icon: 'edit'
+                },
                 subject: new Subject()
             };
         });
@@ -400,10 +403,16 @@ describe('TreeComponent', () => {
             expect(contextMenu.links).toEqual([
                 {
                     title: optionTitle1,
+                    model: {
+                        icon: 'label'
+                    },
                     subject: jasmine.any(Subject)
                 },
                 {
                     title: optionTitle2,
+                    model: {
+                        icon: 'edit'
+                    },
                     subject: jasmine.any(Subject)
                 }
             ]);
@@ -453,6 +462,20 @@ describe('TreeComponent', () => {
                 contextMenuOption: option,
                 row: treeNodesMockExpanded[0]
             });
+        });
+
+        it('should display set of context menu options when tree actions button is clicked', async () => {
+            component.contextMenuOptions = [contextMenuOption1, contextMenuOption2];
+            fixture.detectChanges();
+
+            const menu = await testingUtils.getMatMenuByCSS('#action_menu_right_testId1');
+            await menu.open();
+            expect(await menu.isOpen()).toBeTrue();
+            expect(component.contextMenuOptions.length).toEqual(2);
+            const menuItems = await menu.getItems();
+            expect(menuItems.length).toEqual(2);
+            expect(await menuItems[0].getText()).toEqual(`${contextMenuOption1.model.icon}${optionTitle1}`);
+            expect(await menuItems[1].getText()).toEqual(`${contextMenuOption2.model.icon}${optionTitle2}`);
         });
     });
 });

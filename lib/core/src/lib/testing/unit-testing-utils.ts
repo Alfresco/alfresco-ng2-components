@@ -34,6 +34,8 @@ import { MatSnackBarHarness } from '@angular/material/snack-bar/testing';
 import { MatProgressBarHarness } from '@angular/material/progress-bar/testing';
 import { MatListOptionHarness } from '@angular/material/list/testing';
 import { MatCellHarness } from '@angular/material/table/testing';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { MatMenuHarness } from '@angular/material/menu/testing';
 
 export class UnitTestingUtils {
     constructor(
@@ -477,5 +479,21 @@ export class UnitTestingUtils {
 
     async getMatCellByColumnName(columnName: string): Promise<MatCellHarness> {
         return this.loader.getHarness(MatCellHarness.with({ columnName }));
+    }
+
+    /** MatProgressSpinner related methods */
+
+    async getMatProgressSpinnerWithAncestorByCSS(selector: string): Promise<MatProgressSpinnerHarness> {
+        return this.loader.getHarness(MatProgressSpinnerHarness.with({ ancestor: selector }));
+    }
+
+    async getMatProgressSpinnerWithAncestorByDataAutomationId(dataAutomationId: string): Promise<MatProgressSpinnerHarness> {
+        return this.loader.getHarness(MatProgressSpinnerHarness.with({ ancestor: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
+    /** MatMenu related methods */
+
+    async getMatMenuByCSS(selector: string): Promise<MatMenuHarness> {
+        return this.loader.getHarness(MatMenuHarness.with({ selector }));
     }
 }
