@@ -18,7 +18,6 @@ Shows the nodes in tree structure, each node containing children is collapsible/
     [displayName]="'Tree display name'"
     [loadMoreSuffix]="'subnodes'"
     [emptyContentTemplate]="emptyContentTemplate"
-    [nodeActionsMenuTemplate]="nodeActionsMenuTemplate"
     (paginationChanged)="onPaginationChanged($event)">
 </adf-tree>
 ```
@@ -34,7 +33,6 @@ Shows the nodes in tree structure, each node containing children is collapsible/
 | emptyContentTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` |  | [TemplateRef](https://angular.io/api/core/TemplateRef) to provide empty template when no nodes are loaded |
 | expandIcon | `string` | "chevron_right" | Icon shown when node has children and is collapsed. By default set to chevron_right |
 | loadMoreSuffix | `string` |  | Load more suffix for load more button |
-| nodeActionsMenuTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` |  | [TemplateRef](https://angular.io/api/core/TemplateRef) to provide context menu items for context menu displayed on each row |
 | selectableNodes | `boolean` | false | Variable defining if tree nodes should be selectable. By default set to false |
 | stickyHeader | `boolean` | false | Variable defining if tree header should be sticky. By default set to false |
 | contextMenuOptions | `any[]` |  | Array of context menu options which should be displayed for each row. |
@@ -88,7 +86,6 @@ First step is to provide necessary input value.
     [loadMoreSuffix]="'subnodes'"
     [selectableNodes]="true"
     [emptyContentTemplate]="emptyContentTemplate"
-    [nodeActionsMenuTemplate]="nodeActionsMenuTemplate"
     (paginationChanged)="onPaginationChanged($event)">
 </adf-tree>
 ```

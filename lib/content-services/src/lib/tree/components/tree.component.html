@@ -50,7 +50,7 @@
                 (contextmenu)="contextMenuSource = node"
             >
                 <div class="adf-tree-expand-collapse-container">
-                    <button 
+                    <button
                         *ngIf="node.hasChildren"
                         class="adf-tree-expand-collapse-button"
                         (click)="expandCollapseNode(node)"
@@ -102,9 +102,14 @@
                         <mat-icon adf-icon="more_vert" />
                     </button>
                     <mat-menu #menu="matMenu">
-                        <ng-template
-                            [ngTemplateOutlet]="nodeActionsMenuTemplate"
-                            [ngTemplateOutletContext]="{ node: node }" />
+                        <button
+                            *ngFor="let option of contextMenuOptions"
+                            mat-menu-item
+                            [title]="option.title | translate"
+                            (click)="contextMenuOptionSelected.emit({row: node, contextMenuOption: option})">
+                            <mat-icon>{{ option.model.icon }}</mat-icon>
+                            <span>{{ option.title | translate }}</span>
+                        </button>
                     </mat-menu>
                 </div>
             </mat-tree-node>
