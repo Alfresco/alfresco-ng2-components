@@ -623,7 +623,10 @@
     }
   },
   "ADF-TREE": {
-    "LOAD-MORE-BUTTON": "Carregar mais {{ name }}"
+    "LOAD-MORE-BUTTON": "Carregar mais {{ name }}",
+    "ACTIONS": {
+      "TOOLTIP": "Abrir menu de ações"
+    }
   },
   "LIBRARY": {
     "DIALOG": {
