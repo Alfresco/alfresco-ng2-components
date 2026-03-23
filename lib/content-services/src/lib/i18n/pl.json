@@ -623,7 +623,10 @@
     }
   },
   "ADF-TREE": {
-    "LOAD-MORE-BUTTON": "Wczytaj {{ name }}"
+    "LOAD-MORE-BUTTON": "Wczytaj {{ name }}",
+    "ACTIONS": {
+      "TOOLTIP": "Otwórz menu akcji"
+    }
   },
   "LIBRARY": {
     "DIALOG": {
