@@ -89,7 +89,7 @@ jobs:
 
       - name: Get PR number
         if: ${{ github.event_name != 'schedule' && github.event_name != 'workflow_dispatch' }}
-        uses: kamatama41/get-pr-number-action@0bcaab5752c0b699149e74667c8ce2f764cbb7fa # v0.9.1
+        uses: kamatama41/get-pr-number-action@ff143e03abaa79d346ca5407d49d335b5def979e # v1.0.1
         id: action
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
