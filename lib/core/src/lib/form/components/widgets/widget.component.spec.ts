@@ -116,4 +116,40 @@ describe('WidgetComponent', () => {
         widget.field = new FormFieldModel(null, { required: true });
         expect(widget.isRequired()).toBeTruthy();
     });
+
+    describe('isInvalidFieldRequired', () => {
+        it('should return true when required field has no value', () => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: 'text',
+                required: true,
+                value: null
+            });
+            widget.field.markAsInvalid();
+            widget.field.validationSummary = null;
+
+            expect(widget.isInvalidFieldRequired()).toBe(true);
+        });
+
+        it('should return true when required field has whitespace-only value', () => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: 'text',
+                required: true,
+                value: '   '
+            });
+            widget.field.markAsInvalid();
+
+            expect(widget.isInvalidFieldRequired()).toBe(true);
+        });
+
+        it('should return false when required field has a non-whitespace value', () => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: 'text',
+                required: true,
+                value: 'hello'
+            });
+            widget.field.markAsValid();
+
+            expect(widget.isInvalidFieldRequired()).toBe(false);
+        });
+    });
 });
