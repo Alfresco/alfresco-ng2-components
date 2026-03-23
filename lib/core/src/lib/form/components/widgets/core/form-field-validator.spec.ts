@@ -120,6 +120,26 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBe(false);
         });
 
+        it('should fail (display error) for text with only whitespace', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TEXT,
+                value: '   ',
+                required: true
+            });
+
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should fail (display error) for multiline text with only whitespace', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.MULTILINE_TEXT,
+                value: '  \t\n  ',
+                required: true
+            });
+
+            expect(validator.validate(field)).toBe(false);
+        });
+
         it('should succeed for date', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATE,
