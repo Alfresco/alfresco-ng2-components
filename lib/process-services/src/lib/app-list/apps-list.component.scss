@@ -105,7 +105,7 @@ $tile-themes: (
                 display: flex;
                 transition:
                     transform 280ms cubic-bezier(0.4, 0, 0.2, 1),
-                    box-shadow var(--mat-sys-level2);
+                    box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
                 min-height: 200px;
                 padding: 0;
 
