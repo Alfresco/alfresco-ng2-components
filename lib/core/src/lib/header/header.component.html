@@ -24,7 +24,8 @@
 </ng-container>
 
 <ng-template #toolbarTitleContent>
-    <img *ngIf="logoSrc" [src]="logoSrc" [alt]="logoAlt" class="adf-toolbar-logo"/>
+    <img *ngIf="logoSrc" [src]="logoSrc" [alt]="logoAlt" class="adf-toolbar-logo"
+        [style.height]="logoHeight" [style.width]="logoWidth" />
     <span *ngIf="variant==='extended'">{{ title }}</span>
 </ng-template>
 
