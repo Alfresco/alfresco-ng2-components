@@ -1,0 +1,90 @@
+@use 'mat-selectors' as ms;
+
+@mixin override-mat-date-timepicker(
+    $primary-color,
+    $on-primary-color,
+    $sys-background,
+    $on-surface,
+    $surface-container-highest,
+    $on-surface-variant
+) {
+    #{ms.$mat-datetimepicker-calendar-header} {
+        background-color: $primary-color;
+        color: $on-primary-color;
+    }
+
+    #{ms.$mat-datetimepicker-calendar} {
+        #{ms.$mat-datetimepicker-calendar-content} {
+            background-color: $sys-background;
+            color: $on-surface;
+            #{ms.$mat-datetimepicker-clock} {
+                background-color: $surface-container-highest;
+                #{ms.$mat-datetimepicker-clock-cell} {
+                    color: $on-surface;
+                }
+            }
+        }
+    }
+
+    #{ms.$mat-datetimepicker-calendar-body-cell} {
+        color: $on-surface;
+        #{ms.$mat-datetimepicker-calendar-body-cell-content} {
+            color: $on-surface;
+        }
+    }
+
+    #{ms.$mat-datetimepicker-calendar-body-cell-content} {
+        &#{ms.$mat-datetimepicker-calendar-body-selected} {
+            background-color: $primary-color;
+            color: $on-surface;
+            color: $on-primary-color;
+        }
+
+        &#{ms.$mat-datetimepicker-calendar-body-disabled} > #{ms.$mat-datetimepicker-calendar-body-selected} {
+            background-color: $primary-color;
+            opacity: 0.4;
+            color: $on-primary-color;
+        }
+
+        &#{ms.$mat-datetimepicker-calendar-body-today} {
+            &:not(#{ms.$mat-datetimepicker-calendar-body-selected}) {
+                border-color: $primary-color;
+            }
+
+            &#{ms.$mat-datetimepicker-calendar-body-selected} {
+                box-shadow: inset 0 0 0 1px $on-primary-color;
+            }
+        }
+    }
+
+    #{ms.$mat-datetimepicker-clock-center} {
+        background-color: $primary-color;
+    }
+
+    #{ms.$mat-datetimepicker-clock-hand} {
+        background-color: $primary-color;
+
+        &::before {
+            background-color: $primary-color;
+        }
+    }
+
+    #{ms.$mat-datetimepicker-clock} {
+        #{ms.$mat-datetimepicker-clock-cell} {
+            &#{ms.$mat-datetimepicker-clock-cell-selected} {
+                color: $on-primary-color;
+                background-color: color-mix(in srgb, $primary-color 95%, white);
+            }
+        }
+    }
+
+    #{ms.$mat-datetimepicker-calendar-body-disabled}
+        > #{ms.$mat-datetimepicker-calendar-body-cell-content}:not(#{ms.$mat-datetimepicker-calendar-body-selected}) {
+        opacity: 0.4;
+        color: $on-surface;
+    }
+
+    #{ms.$mat-datetimepicker-calendar-table-header} {
+        color: $on-surface-variant;
+    }
+}
