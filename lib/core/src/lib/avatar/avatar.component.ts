@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -35,11 +35,9 @@ export class AvatarComponent {
     @Input()
     tooltip: string = '';
 
-    @HostBinding('style.--adf-avatar-size')
     @Input()
-    size = getComputedStyle(document.documentElement).getPropertyValue('--adf-avatar-size');
+    size: string;
 
-    @HostBinding('style.--adf-avatar-cursor')
     @Input()
-    cursor = getComputedStyle(document.documentElement).getPropertyValue('--adf-avatar-cursor');
+    cursor: string;
 }
