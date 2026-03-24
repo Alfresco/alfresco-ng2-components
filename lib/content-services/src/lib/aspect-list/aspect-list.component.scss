@@ -35,7 +35,7 @@ $dialog-list-height: calc(65vh - ($dialog-title-height + $dialog-information-hei
         .adf-accordion-aspect-list-item {
             padding-left: 14px;
             display: flex;
-            box-shadow: var(--mat-sys-level-2);
+            box-shadow: var(--mat-sys-level2);
 
             &.adf-hover {
                 &:hover {
