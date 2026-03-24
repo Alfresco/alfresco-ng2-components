@@ -5,13 +5,31 @@
   "projectType": "library",
   "prefix": "adf",
   "targets": {
-    "build": {
+    "compile": {
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "lib/eslint-angular/dist",
         "main": "lib/eslint-angular/index.ts",
         "tsConfig": "lib/eslint-angular/tsconfig.lib.json"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/eslint-plugin-eslint-angular",
+        "commands": [
+          {
+            "command": "nx run eslint-angular:compile",
+            "forwardAllArgs": false
+          },
+          {
+            "command": "printf \"module.exports = require('./index.js');\\n\" > dist/libs/eslint-plugin-eslint-angular/main.js",
+            "forwardAllArgs": false
+          }
+        ],
+        "parallel": false
       }
     },
     "lint": {
