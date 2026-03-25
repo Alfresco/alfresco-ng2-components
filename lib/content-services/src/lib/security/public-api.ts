@@ -16,3 +16,4 @@
  */
 
 export * from './services/security-controls-groups-marks-security.service';
+export * from './services/models/security-controls-mark-response.interface';
