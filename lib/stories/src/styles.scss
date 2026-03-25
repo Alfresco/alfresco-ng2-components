@@ -1,5 +1,6 @@
 @use '@angular/material' as mat;
 @use 'material-icons/iconfont/material-icons.css' as *;
+@use '../../core/src/lib/styles/mat-datetimepicker' as dateTimePickerOverrides;
 
 html {
     color-scheme: light dark;
@@ -27,4 +28,13 @@ html {
         background: var(--mat-sys-surface);
         color: var(--mat-sys-on-surface);
     }
+
+    @include dateTimePickerOverrides.override-mat-date-timepicker(
+        var(--mat-sys-primary),
+        var(--mat-sys-on-primary),
+        var(--mat-sys-background),
+        var(--mat-sys-on-surface),
+        var(--mat-sys-surface-container-highest),
+        var(--mat-sys-on-surface-variant)
+    );
 }
