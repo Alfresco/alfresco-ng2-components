@@ -17,6 +17,12 @@
             width: 100%;
         }
 
+        &-container {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
         &-dropdown-required-message {
             .adf-error-container {
                 margin-top: 1px;

@@ -23,6 +23,156 @@ import { TaskCloudServiceMock } from '../../../mock/task-cloud.service.mock';
 import { FormCloudServiceMock } from '../../../../form/mocks/form-cloud.service.mock';
 import { provideStoryProcessServicesCloud } from '../../../../stories/process-services-cloud-story.providers';
 import { taskWithFormDetailsMock } from '../../../task-header/mocks/task-details-cloud.mock';
+import { Observable, of } from 'rxjs';
+import { FormContent } from '../../../../services/form-fields.interfaces';
+
+const allWidgetTypesForm: FormContent = {
+    formRepresentation: {
+        id: 'form-all-widget-types',
+        name: 'Widget Alignment Test',
+        description: '',
+        version: 0,
+        formDefinition: {
+            tabs: [],
+            fields: [
+                {
+                    type: 'container',
+                    id: 'row-text-dropdown',
+                    name: 'Label',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
+                            {
+                                type: 'text',
+                                id: 'textField',
+                                name: 'Text Field',
+                                colspan: 1,
+                                placeholder: null,
+                                value: '',
+                                required: false,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: { existingColspan: 1, maxColspan: 2 }
+                            }
+                        ],
+                        2: [
+                            {
+                                type: 'dropdown',
+                                id: 'dropdownField',
+                                name: 'Dropdown Field',
+                                colspan: 1,
+                                value: '',
+                                required: false,
+                                optionType: 'manual',
+                                options: [
+                                    { id: 'empty', name: 'Choose one...' },
+                                    { id: 'opt1', name: 'Option 1' },
+                                    { id: 'opt2', name: 'Option 2' }
+                                ],
+                                visibilityCondition: null,
+                                params: { existingColspan: 1, maxColspan: 2 }
+                            }
+                        ]
+                    }
+                },
+                {
+                    type: 'container',
+                    id: 'row-amount-number',
+                    name: 'Label',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
+                            {
+                                type: 'amount',
+                                id: 'amountField',
+                                name: 'Amount Field',
+                                colspan: 1,
+                                placeholder: '123',
+                                value: '',
+                                required: false,
+                                minValue: null,
+                                maxValue: null,
+                                visibilityCondition: null,
+                                params: { existingColspan: 1, maxColspan: 2 },
+                                enableFractions: false,
+                                currency: '$'
+                            }
+                        ],
+                        2: [
+                            {
+                                type: 'integer',
+                                id: 'numberField',
+                                name: 'Number Field',
+                                colspan: 1,
+                                placeholder: null,
+                                value: null,
+                                required: false,
+                                minValue: null,
+                                maxValue: null,
+                                visibilityCondition: null,
+                                params: { existingColspan: 1, maxColspan: 2 }
+                            }
+                        ]
+                    }
+                },
+                {
+                    type: 'container',
+                    id: 'row-date-text2',
+                    name: 'Label',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
+                            {
+                                type: 'date',
+                                id: 'dateField',
+                                name: 'Date Field',
+                                value: null,
+                                colspan: 1,
+                                placeholder: null,
+                                required: false,
+                                minValue: null,
+                                maxValue: null,
+                                visibilityCondition: null,
+                                params: { existingColspan: 1, maxColspan: 2 },
+                                dateDisplayFormat: 'D-M-YYYY'
+                            }
+                        ],
+                        2: [
+                            {
+                                type: 'text',
+                                id: 'textField2',
+                                name: 'Another Text',
+                                colspan: 1,
+                                placeholder: null,
+                                value: '',
+                                required: false,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: { existingColspan: 1, maxColspan: 2 }
+                            }
+                        ]
+                    }
+                }
+            ],
+            outcomes: [],
+            metadata: {},
+            variables: []
+        }
+    }
+};
+
+class AllWidgetTypesFormCloudServiceMock extends FormCloudServiceMock {
+    override getForm(_appName: string, _formKey: string, _version?: number): Observable<FormContent> {
+        return of(allWidgetTypesForm);
+    }
+}
 
 const meta: Meta<TaskFormCloudComponent> = {
     component: TaskFormCloudComponent,
@@ -215,6 +365,29 @@ export const InvalidOrMissingTaskId: Story = {
     args: {
         ...DefaultTaskFormCloud.args,
         taskId: undefined,
+        taskDetails: { ...taskWithFormDetailsMock }
+    }
+};
+
+export const AllWidgetTypes: Story = {
+    decorators: [
+        moduleMetadata({
+            imports: [TaskFormCloudComponent],
+            providers: [
+                { provide: TaskCloudService, useClass: TaskCloudServiceMock },
+                { provide: FormCloudService, useClass: AllWidgetTypesFormCloudServiceMock }
+            ]
+        }),
+        applicationConfig({
+            providers: [...provideStoryProcessServicesCloud()]
+        })
+    ],
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        appName: 'app',
+        taskId: 'mock-task-with-form',
         taskDetails: { ...taskWithFormDetailsMock }
     }
 };
