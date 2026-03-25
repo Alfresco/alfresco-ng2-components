@@ -77,10 +77,12 @@
         }
     }
 
-    #{ms.$mat-datetimepicker-calendar-body-disabled}
-        > #{ms.$mat-datetimepicker-calendar-body-cell-content}:not(#{ms.$mat-datetimepicker-calendar-body-selected}) {
-        opacity: 0.4;
-        color: $on-surface;
+    #{ms.$mat-datetimepicker-calendar-body} {
+        #{ms.$mat-datetimepicker-calendar-body-disabled}
+            > #{ms.$mat-datetimepicker-calendar-body-cell-content}:not(#{ms.$mat-datetimepicker-calendar-body-selected}) {
+            opacity: 0.4;
+            color: $on-surface;
+        }
     }
 
     #{ms.$mat-datetimepicker-calendar-content} #{ms.$mat-datetimepicker-calendar-table-header} {
