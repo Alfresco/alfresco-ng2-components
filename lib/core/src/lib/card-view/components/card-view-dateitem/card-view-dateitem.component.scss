@@ -1,4 +1,5 @@
 @use '../../../styles/mat-selectors' as ms;
+@use '../../../styles/mat-datetimepicker' as dateTimePickerOverrides;
 
 .adf-card-view-dateitem {
     display: flow-root;
@@ -66,3 +67,12 @@
         cursor: pointer;
     }
 }
+
+@include dateTimePickerOverrides.override-mat-date-timepicker(
+    var(--mat-sys-primary),
+    var(--mat-sys-on-primary),
+    var(--mat-sys-background),
+    var(--mat-sys-on-surface),
+    var(--mat-sys-surface-container-highest),
+    var(--mat-sys-on-surface-variant)
+);

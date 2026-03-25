@@ -1,5 +1,6 @@
 /* stylelint-disable selector-class-pattern */
 @use '../../../../styles/mat-selectors' as ms;
+@use '../../../../styles/mat-datetimepicker' as dateTimePickerOverrides;
 
 .adf {
     &-date-time-widget {
@@ -30,3 +31,12 @@
 #{ms.$mat-datetimepicker-toggle} {
     color: var(--adf-theme-foreground-icon-color);
 }
+
+@include dateTimePickerOverrides.override-mat-date-timepicker(
+    var(--mat-sys-primary),
+    var(--mat-sys-on-primary),
+    var(--mat-sys-background),
+    var(--mat-sys-on-surface),
+    var(--mat-sys-surface-container-highest),
+    var(--mat-sys-on-surface-variant)
+);
