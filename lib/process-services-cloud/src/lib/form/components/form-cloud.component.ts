@@ -422,6 +422,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             dialogRef.afterClosed().subscribe((result) => {
                 if (result === true) {
                     this.completeForm(outcome, outcomeId);
+                } else {
+                    this.disableSaveButton = false;
+                    this.disableCompleteButton = false;
                 }
             });
         } else {
