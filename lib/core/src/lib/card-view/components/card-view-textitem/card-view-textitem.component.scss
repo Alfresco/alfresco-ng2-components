@@ -61,6 +61,7 @@
 
     input.adf-property-value:disabled,
     textarea.adf-property-value:disabled {
+        color: var(--mat-sys-on-surface);
         user-select: none;
         pointer-events: none;
     }

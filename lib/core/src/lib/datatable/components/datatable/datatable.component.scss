@@ -164,7 +164,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
             @include mixins.material-animation-default(0.28s);
 
             transition-property: background-color;
-            border-top: 1px solid var(--mat-sys-outline);
+            border-top: 1px solid var(--mat-sys-surface-container);
             min-height: $data-table-row-height;
             cursor: pointer;
 
@@ -180,7 +180,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
             }
 
             &:last-child {
-                border-bottom: 1px solid var(--mat-sys-outline);
+                border-bottom: 1px solid var(--mat-sys-surface-container);
             }
 
             label {
@@ -682,7 +682,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     .adf-datatable-header {
         display: block;
         margin-right: 0;
-        border-top: 1px solid var(--mat-sys-outline-variant);
+        border-top: 1px solid var(--mat-sys-surface-container);
         border-bottom: 1px solid var(--mat-sys-outline-variant);
     }
 

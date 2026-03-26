@@ -1,4 +1,8 @@
 .adf-toolbar {
+    .adf-toolbar-container {
+        font: var(--mat-sys-body-medium);
+    }
+
     &--spacer {
         flex: 1 1 auto;
     }
