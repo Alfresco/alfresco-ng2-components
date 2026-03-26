@@ -419,14 +419,17 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 minWidth: '450px'
             });
 
-            dialogRef.afterClosed().subscribe((result) => {
-                if (result === true) {
-                    this.completeForm(outcome, outcomeId);
-                } else {
-                    this.disableSaveButton = false;
-                    this.disableCompleteButton = false;
-                }
-            });
+            dialogRef
+                .afterClosed()
+                .pipe(takeUntilDestroyed(this.destroyRef))
+                .subscribe((result) => {
+                    if (result === true) {
+                        this.completeForm(outcome, outcomeId);
+                    } else {
+                        this.disableSaveButton = false;
+                        this.disableCompleteButton = false;
+                    }
+                });
         } else {
             this.completeForm(outcome, outcomeId);
         }
