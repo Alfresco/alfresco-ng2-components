@@ -15,7 +15,7 @@
         position: relative;
         height: 100%;
         width: 190px;
-        background-color: rgba(0, 0, 0, 0.12);
+        background-color: var(--mat-sys-surface-container-low);
         display: flex;
         flex-direction: column;
         padding: 0;
@@ -24,7 +24,7 @@
             display: flex;
             flex-direction: column;
             flex: 1;
-            background: #e6e6e6;
+            background: var(--mat-sys-surface-container);
         }
 
         .adf-info-drawer-layout-header {
@@ -113,7 +113,7 @@
             white-space: nowrap;
 
             & > input {
-                border: 1px solid var(--mat-sys-outline);
+                border: 1px solid var(--mat-sys-outline-variant);
                 background-color: var(--mat-sys-surface);
                 color: inherit;
                 padding: 5px;
@@ -121,9 +121,9 @@
                 line-height: 24px;
                 text-align: right;
                 width: 33px;
-                margin-right: 4px;
+                margin: 0 5px;
                 outline-width: 1px;
-                outline-color: gray;
+                outline-color: var(--mat-sys-surface-container);
             }
         }
 
@@ -131,8 +131,8 @@
             cursor: default;
             width: 79px;
             height: 24px;
-            font-size: var(--mat-sys-body-medium-size);
-            border: 1px solid var(--mat-sys-outline);
+            font-size: var(--mat-sys-body-small-size);
+            border: 1px solid var(--mat-sys-outline-variant);
             text-align: center;
             line-height: 24px;
             margin-left: 4px;
