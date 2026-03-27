@@ -231,16 +231,21 @@
                 [class.adf-datatable-row__dragging]="isDraggingRow"
                 [attr.data-automation-id]="'datatable-row-' + idx"
                 (contextmenu)="markRowAsContextMenuSource(row)"
-                [disabled]="!(data?.allowFocusOnRows ?? true)"
-            >
+                [disabled]="!(enableDragRows || multiselect)"
+                [attr.aria-description]="
+                    (multiselect ? ('ADF-DATATABLE.ACCESSIBILITY.ROW_SELECTION' | translate) : '') +
+                    (multiselect && enableDragRows ? '. ' : '') +
+                    (enableDragRows ? ('ADF-DATATABLE.ACCESSIBILITY.DRAGGABLE' | translate) : '')
+                "
+            >   
+                <!-- Live region for selection state  -->
+                <span *ngIf="multiselect" class="adf-sr-only" aria-live="off">
+                    {{ row.isSelected ? ('ADF-DATATABLE.ACCESSIBILITY.SELECTED' | translate) : '' }}
+                </span>
+
                 <!-- Drag button -->
-                <div *ngIf="enableDragRows"
-                        role="gridcell"
-                        class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-hover-only">
-                    <button mat-icon-button
-                            [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.DRAG' | translate">
-                        <mat-icon adf-icon="drag_indicator" />
-                    </button>
+                <div *ngIf="enableDragRows" class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-hover-only">
+                    <mat-icon adf-icon="drag_indicator" aria-hidden="true" />
                 </div>
 
                 <!-- Actions (left) -->
@@ -264,36 +269,33 @@
                 </div>
 
                 <label *ngIf="multiselect"
-                        (keydown.enter)="onEnterKeyPressed(row, $any($event))"
-                        (click)="onCheckboxLabelClick(row, $event)"
-                        [for]="'select-file-' + idx"
-                        class="adf-datatable-cell adf-datatable-checkbox adf-datatable-checkbox-single"
-                        [attr.tabindex]="null">
+                    (keydown.enter)="onEnterKeyPressed(row, $any($event))"
+                    (click)="onCheckboxLabelClick(row, $event)"
+                    [for]="'select-file-' + idx"
+                    class="adf-datatable-cell adf-datatable-checkbox adf-datatable-checkbox-single"
+                    [attr.tabindex]="null"
+                    aria-hidden="true"
+                >
                     <mat-checkbox
                         [id]="'select-file-' + idx"
                         [disabled]="!row?.isSelectable"
                         [class.adf-datatable-checkbox-selected]="row.isSelected"
                         [class.adf-datatable-hover-only]="displayCheckboxesOnHover"
                         [checked]="row.isSelected"
-                        [attr.aria-checked]="row.isSelected"
-                        [aria-label]="'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate"
                         data-adf-datatable-row-checkbox
                         (change)="onCheckboxChange(row, $event)"
                         (keydown.enter)="$event.stopPropagation()"
                         class="adf-checkbox-sr-only"
-                    >
-                        {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate }}
-                    </mat-checkbox>
+                        [tabIndex]="-1"
+                        aria-hidden="true"
+                    />
                 </label>
 
                 <div
-                    *ngFor="let col of getVisibleColumns(); let lastColumn = last;"
-                    role="gridcell"
-                    class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-data"
-                    [attr.title]="col.title | translate"
-                    [attr.data-automation-id]="getAutomationValue(row)"
-                    [attr.aria-selected]="row.isSelected"
-                    [attr.aria-label]="col.title ? (col.title | translate) : null"
+                    *ngFor="let col of getVisibleColumns(); let lastColumn = last"
+                    [attr.role]="!isRepresentationContent(col) ? 'gridcell' : 'presentation'"
+                    class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-data adf-datatable-cell--{{getAutomationValue(row)}}"
+                    [attr.data-automation-id]="getAutomationValue(row)"   
                     (click)="onRowClick(row, $event)"
                     [attr.tabindex]="null"
                     (keydown.enter)="onEnterKeyPressed(row, $any($event))"

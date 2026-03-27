@@ -36,7 +36,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { provideRouter } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { DataTableAdapter } from '@alfresco/adf-core';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 @Component({
@@ -1668,6 +1667,135 @@ describe('Accessibility', () => {
         expect(datatableBodyCellAttributes['role']).toEqual('gridcell');
     });
 
+    describe('isRepresentationContent', () => {
+        const setupTable = (columns: ObjectDataColumn[]) => {
+            dataTable.data = new ObjectDataTableAdapter([{ photo: '', status: '', name: 'test', created: '' }], columns);
+            dataTable.ngOnChanges({});
+            fixture.detectChanges();
+        };
+
+        it('should render image column cell with presentation role', () => {
+            setupTable([new ObjectDataColumn({ key: 'photo', type: 'image' })]);
+
+            const cell = testingUtils.getByCSS('.adf-datatable-body .adf-datatable-cell--image');
+            expect(cell.attributes['role']).toBe('presentation');
+        });
+
+        it('should render icon column cell with presentation role', () => {
+            setupTable([new ObjectDataColumn({ key: 'status', type: 'icon' })]);
+
+            const cell = testingUtils.getByCSS('.adf-datatable-body .adf-datatable-cell--icon');
+            expect(cell.attributes['role']).toBe('presentation');
+        });
+
+        it('should render text column cell with gridcell role', () => {
+            setupTable([new ObjectDataColumn({ key: 'name', type: 'text' })]);
+
+            const cell = testingUtils.getByCSS('.adf-datatable-body .adf-datatable-cell--text');
+            expect(cell.attributes['role']).toBe('gridcell');
+        });
+
+        it('should render date column cell with gridcell role', () => {
+            setupTable([new ObjectDataColumn({ key: 'created', type: 'date' })]);
+
+            const cell = testingUtils.getByCSS('.adf-datatable-body .adf-datatable-cell--date');
+            expect(cell.attributes['role']).toBe('gridcell');
+        });
+
+        it('should assign correct roles when mixing representation and non-representation columns', () => {
+            setupTable([new ObjectDataColumn({ key: 'photo', type: 'image' }), new ObjectDataColumn({ key: 'name', type: 'text' })]);
+
+            const cells = testingUtils.getAllByCSS('.adf-datatable-body .adf-datatable-cell-data');
+            expect(cells[0].attributes['role']).toBe('presentation');
+            expect(cells[1].attributes['role']).toBe('gridcell');
+        });
+    });
+
+    describe('row aria-description', () => {
+        const rowSelector = '.adf-datatable-body .adf-datatable-row';
+
+        it('should have aria-description on row when multiselect is enabled', () => {
+            const dataRows = [{ name: 'test1' }, { name: 'test2' }];
+            dataTable.multiselect = true;
+            dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
+
+            dataTable.ngOnChanges({
+                rows: new SimpleChange(null, dataRows, false)
+            });
+
+            fixture.detectChanges();
+            const rows = testingUtils.getAllByCSS(rowSelector);
+            expect(rows.length).toBeGreaterThan(0);
+            expect(rows[0].attributes['aria-description']).toBeTruthy();
+        });
+
+        it('should have aria-description on row when enableDragRows is true', () => {
+            const dataRows = [{ name: 'test1' }, { name: 'test2' }];
+            dataTable.enableDragRows = true;
+            dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
+
+            dataTable.ngOnChanges({
+                rows: new SimpleChange(null, dataRows, false)
+            });
+
+            fixture.detectChanges();
+            const rows = testingUtils.getAllByCSS(rowSelector);
+            expect(rows.length).toBeGreaterThan(0);
+            expect(rows[0].attributes['aria-description']).toBeTruthy();
+        });
+
+        it('should not have aria-description on row when neither multiselect nor enableDragRows is enabled', () => {
+            const dataRows = [{ name: 'test1' }, { name: 'test2' }];
+            dataTable.multiselect = false;
+            dataTable.enableDragRows = false;
+            dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
+
+            dataTable.ngOnChanges({
+                rows: new SimpleChange(null, dataRows, false)
+            });
+
+            fixture.detectChanges();
+            const rows = testingUtils.getAllByCSS(rowSelector);
+            expect(rows.length).toBeGreaterThan(0);
+            expect(rows[0].attributes['aria-description']).toBeFalsy();
+        });
+    });
+
+    describe('drag button and multiselect checkbox accessibility', () => {
+        it('should have aria-hidden on drag button', () => {
+            const dataRows = [{ name: 'test1' }];
+            dataTable.enableDragRows = true;
+            dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
+            dataTable.showHeader = ShowHeaderMode.Never;
+
+            dataTable.ngOnChanges({
+                rows: new SimpleChange(null, dataRows, false)
+            });
+
+            fixture.detectChanges();
+            const dragButton = testingUtils.getByCSS('.adf-datatable__actions-cell [aria-hidden="true"]');
+            expect(dragButton).toBeTruthy();
+            expect(dragButton.attributes['aria-hidden']).toBe('true');
+        });
+
+        it('should have aria-hidden and negative tabindex on multiselect checkbox', () => {
+            const dataRows = [{ name: 'test1' }];
+            dataTable.multiselect = true;
+            dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
+            dataTable.showHeader = ShowHeaderMode.Never;
+
+            dataTable.ngOnChanges({
+                rows: new SimpleChange(null, dataRows, false)
+            });
+
+            fixture.detectChanges();
+            const checkboxContainer = testingUtils.getByCSS('.adf-checkbox-sr-only');
+            expect(checkboxContainer).toBeTruthy();
+            expect(checkboxContainer.attributes['aria-hidden']).toBe('true');
+            expect(checkboxContainer.nativeElement.tabIndex).toBe(-1);
+        });
+    });
+
     describe('aria-sort', () => {
         let column: DataColumn;
 
@@ -1700,6 +1828,32 @@ describe('Accessibility', () => {
     describe('Focus row', () => {
         let event: KeyboardEvent;
         let dataRows: { name: string }[];
+        const rowSelector = '.adf-datatable-body .adf-datatable-row';
+
+        const setRows = (): void => {
+            dataTable.ngOnChanges({
+                rows: new SimpleChange(null, dataRows, false)
+            });
+            fixture.detectChanges();
+        };
+
+        const getBodyRows = (): DebugElement[] => testingUtils.getAllByCSS(rowSelector);
+
+        const expectRowsTabindex = (expected: string | null): void => {
+            const rowElements = getBodyRows();
+            expect(rowElements.length).toBeGreaterThan(0);
+            expect(rowElements.every((row) => row.nativeElement.getAttribute('tabindex') === expected)).toBeTrue();
+        };
+
+        const activateRow = (rowIndex: number): void => {
+            const rowElement = getBodyRows()[rowIndex];
+            testingUtils.setDebugElement(rowElement);
+            testingUtils.clickByCSS('.adf-datatable-cell-data');
+        };
+
+        const dispatchKeyUp = (keyboardEvent: KeyboardEvent): void => {
+            fixture.debugElement.nativeElement.dispatchEvent(keyboardEvent);
+        };
 
         beforeEach(() => {
             event = new KeyboardEvent('keyup', {
@@ -1711,6 +1865,26 @@ describe('Accessibility', () => {
             dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
         });
 
+        it('should set tabindex to null (disabled === true) on datatable-body rows when neither multiselect nor enableDragRows is enabled', () => {
+            setRows();
+
+            expectRowsTabindex(null);
+        });
+
+        it('should set tabindex to 0 (disabled === false) on datatable-body rows when multiselect is enabled', () => {
+            dataTable.multiselect = true;
+            setRows();
+
+            expectRowsTabindex('0');
+        });
+
+        it('should set tabindex to 0 (disabled === false) on datatable-body rows when enableDragRows is enabled', () => {
+            dataTable.enableDragRows = true;
+            setRows();
+
+            expectRowsTabindex('0');
+        });
+
         it('should focus next row on ArrowDown event', () => {
             event = new KeyboardEvent('keyup', {
                 code: 'ArrowDown',
@@ -1718,35 +1892,23 @@ describe('Accessibility', () => {
                 keyCode: 40
             } as KeyboardEventInit);
 
-            dataTable.ngOnChanges({
-                rows: new SimpleChange(null, dataRows, false)
-            });
-
-            fixture.detectChanges();
+            dataTable.multiselect = true;
+            setRows();
             dataTable.ngAfterViewInit();
 
-            const rowElement = testingUtils.getAllByCSS('.adf-datatable-body .adf-datatable-row')[0];
-            testingUtils.setDebugElement(rowElement);
-            testingUtils.clickByCSS('.adf-datatable-cell');
-
-            fixture.debugElement.nativeElement.dispatchEvent(event);
+            activateRow(0);
+            dispatchKeyUp(event);
 
             expect(document.activeElement?.getAttribute('data-automation-id')).toBe('datatable-row-1');
         });
 
         it('should focus previous row on ArrowUp event', () => {
-            dataTable.ngOnChanges({
-                rows: new SimpleChange(null, dataRows, false)
-            });
-
-            fixture.detectChanges();
+            dataTable.multiselect = true;
+            setRows();
             dataTable.ngAfterViewInit();
 
-            const rowElement = testingUtils.getAllByCSS('.adf-datatable-body .adf-datatable-row')[1];
-            testingUtils.setDebugElement(rowElement);
-            testingUtils.clickByCSS('.adf-datatable-cell');
-
-            fixture.debugElement.nativeElement.dispatchEvent(event);
+            activateRow(1);
+            dispatchKeyUp(event);
 
             expect(document.activeElement?.getAttribute('data-automation-id')).toBe('datatable-row-0');
         });
@@ -1815,47 +1977,6 @@ describe('Accessibility', () => {
 
         setupAndCheckHeaderColumns(true, headerCellContentSelector, (element) => {
             expect(element?.nativeElement.getAttribute('aria-description')).toBeNull();
-        });
-    });
-
-    describe('ShareDatatable adapter allowFocusOnRows', () => {
-        class ShareAdapterMock extends ObjectDataTableAdapter {
-            public allowFocusOnRows = true;
-
-            constructor(data: any[], schema: DataColumn[]) {
-                super(data, schema);
-            }
-
-            setAllowFocusOnTableRows(allow: boolean) {
-                this.allowFocusOnRows = allow;
-            }
-        }
-        const testAllowFocusOnRows = (expectedTabindex: string | null, adapter: DataTableAdapter) => {
-            const fakeDataRows = [new FakeDataRow(), new FakeDataRow()];
-
-            adapter.setRows(fakeDataRows);
-            dataTable.data = adapter;
-            fixture.detectChanges();
-            const rowElements = testingUtils.getAllByCSS('.adf-datatable-body adf-datatable-row');
-            expect(rowElements.length).toBeGreaterThan(0);
-            expect(rowElements.every((row) => row.nativeElement.getAttribute('tabindex') === expectedTabindex)).toBeTrue();
-        };
-
-        it('should set tabindex to null (disabled === true) on datatable-body rows when allowFocusOnRows is set to false in ShareDatatable adapter', () => {
-            const adapter = new ShareAdapterMock([], []);
-            adapter.setAllowFocusOnTableRows(false);
-            testAllowFocusOnRows(null, adapter);
-        });
-
-        it('should set tabindex to 0 (disabled === false) on datatable-body rows when allowFocusOnRows is not set explicitly in ShareDatatable adapter and falls back to default value ', () => {
-            const adapter = new ShareAdapterMock([], []);
-            adapter.setAllowFocusOnTableRows(true);
-            testAllowFocusOnRows('0', adapter);
-        });
-
-        it('should set tabindex to 0 (disabled === false) by default on datatable-body rows when allowFocusOnRows is not defined in Datatable adapter (fallback case)', () => {
-            const adapter = new ObjectDataTableAdapter([], []);
-            testAllowFocusOnRows('0', adapter);
         });
     });
 
