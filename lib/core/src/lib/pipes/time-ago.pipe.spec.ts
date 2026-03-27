@@ -51,7 +51,10 @@ describe('TimeAgoPipe', () => {
         jasmine.clock().uninstall();
         jasmine.clock().install();
         jasmine.clock().mockDate(NOW);
-        jasmine.clock().mockDate(new Date('2026-03-27T12:00:00.000Z'));
+    });
+
+    afterEach(() => {
+        jasmine.clock().uninstall();
     });
 
     it('should return time difference for a given date', () => {

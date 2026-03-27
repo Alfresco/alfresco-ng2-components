@@ -39,7 +39,7 @@ export class TimeAgoPipe implements PipeTransform {
             const diff = differenceInDays(new Date(), new Date(value));
             if (diff > 7) {
                 const datePipe: DatePipe = new DatePipe(actualLocale);
-                return datePipe.transform(value, 'short', null, actualLocale);
+                return datePipe.transform(value, 'short', null, actualLocale) ?? '';
             } else {
                 const dateFnsLocale = DateFnsUtils.getLocaleFromString(actualLocale);
                 return formatDistance(new Date(value), new Date(), { addSuffix: true, locale: dateFnsLocale });
