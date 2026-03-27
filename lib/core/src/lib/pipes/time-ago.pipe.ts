@@ -16,7 +16,6 @@
  */
 
 import { Pipe, PipeTransform, inject } from '@angular/core';
-import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { DatePipe } from '@angular/common';
 import { differenceInDays, formatDistance } from 'date-fns';
@@ -29,16 +28,8 @@ import { DateFnsUtils } from '../common/utils/date-fns-utils';
 })
 export class TimeAgoPipe implements PipeTransform {
     userPreferenceService = inject(UserPreferencesService);
-    appConfig = inject(AppConfigService);
 
     static DEFAULT_LOCALE = 'en-US';
-    static DEFAULT_DATE_TIME_FORMAT = 'dd/MM/yyyy HH:mm';
-
-    defaultDateTimeFormat: string;
-
-    constructor() {
-        this.defaultDateTimeFormat = this.appConfig.get<string>('dateValues.defaultDateTimeFormat', TimeAgoPipe.DEFAULT_DATE_TIME_FORMAT);
-    }
 
     transform(value: Date, locale?: string) {
         if (value !== null && value !== undefined) {
@@ -48,7 +39,7 @@ export class TimeAgoPipe implements PipeTransform {
             const diff = differenceInDays(new Date(), new Date(value));
             if (diff > 7) {
                 const datePipe: DatePipe = new DatePipe(actualLocale);
-                return datePipe.transform(value, this.defaultDateTimeFormat);
+                return datePipe.transform(value, 'short', null, actualLocale);
             } else {
                 const dateFnsLocale = DateFnsUtils.getLocaleFromString(actualLocale);
                 return formatDistance(new Date(value), new Date(), { addSuffix: true, locale: dateFnsLocale });
