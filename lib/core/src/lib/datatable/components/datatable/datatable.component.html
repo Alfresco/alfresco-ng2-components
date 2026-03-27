@@ -295,6 +295,7 @@
                     *ngFor="let col of getVisibleColumns(); let lastColumn = last"
                     [attr.role]="!isRepresentationContent(col) ? 'gridcell' : 'presentation'"
                     class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-data adf-datatable-cell--{{getAutomationValue(row)}}"
+                    [attr.title]="col.title | translate"
                     [attr.data-automation-id]="getAutomationValue(row)"   
                     (click)="onRowClick(row, $event)"
                     [attr.tabindex]="null"
