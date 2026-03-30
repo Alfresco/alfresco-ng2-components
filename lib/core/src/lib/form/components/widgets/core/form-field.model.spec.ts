@@ -1254,7 +1254,7 @@ describe('FormFieldModel', () => {
         expect(field.validate()).toBe(false);
     });
 
-    it('should NOT validate readOnly field if it is NOT validatable', () => {
+    it('should validate readOnly required field even if type is not in validatable list', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             id: 'mockTextFieldId',
@@ -1268,7 +1268,59 @@ describe('FormFieldModel', () => {
         form.fieldValidators = [validator];
 
         expect(FormFieldTypes.isValidatableType(FormFieldTypes.TEXT)).toBeFalse();
+        expect(field.validate()).toBe(false);
+    });
+
+    it('should pass validation for readOnly required field that has a value', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            id: 'mockTextFieldId',
+            type: FormFieldTypes.TEXT,
+            readOnly: true,
+            required: true,
+            value: 'some value'
+        });
+
+        const validator = new RequiredFieldValidator();
+        form.fieldValidators = [validator];
+
         expect(field.validate()).toBe(true);
+    });
+
+    it('should skip validation for readOnly non-required field', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            id: 'mockTextFieldId',
+            type: FormFieldTypes.TEXT,
+            readOnly: true,
+            required: false,
+            value: null
+        });
+
+        const validator = new RequiredFieldValidator();
+        form.fieldValidators = [validator];
+
+        expect(field.validate()).toBe(true);
+    });
+
+    it('should pass validation for readOnly required field with empty value when field or parent is hidden', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            id: 'mockTextFieldId',
+            type: FormFieldTypes.TEXT,
+            readOnly: true,
+            required: true,
+            value: null
+        });
+
+        const validator = new RequiredFieldValidator();
+        form.fieldValidators = [validator];
+
+        spyOn(form, 'isFieldOrParentHidden').and.returnValue(true);
+
+        expect(FormFieldTypes.isValidatableType(FormFieldTypes.TEXT)).toBeFalse();
+        expect(field.validate()).toBe(true);
+        expect(form.isFieldOrParentHidden).toHaveBeenCalledWith(field);
     });
 
     it('should set the tooltip correctly', () => {

@@ -178,6 +178,9 @@ export class FormFieldModel extends FormWidgetModel {
                     return this._isValid;
                 }
             }
+        } else if (this.readOnly && this._required && !this.form?.isFieldOrParentHidden(this) && this.isValueEmpty()) {
+            this._isValid = false;
+            return this._isValid;
         }
         this._isValid = true;
         return this._isValid;
@@ -185,6 +188,22 @@ export class FormFieldModel extends FormWidgetModel {
 
     private isFieldValidatable(): boolean {
         return !this.readOnly || FormFieldTypes.isValidatableType(this.type);
+    }
+
+    private isValueEmpty(): boolean {
+        if (this.value === null || this.value === undefined || this.value === '') {
+            return true;
+        }
+        if (typeof this.value === 'string' && this.value.trim().length === 0) {
+            return true;
+        }
+        if (this.type === FormFieldTypes.BOOLEAN) {
+            return !this.value;
+        }
+        if (Array.isArray(this.value)) {
+            return this.value.length === 0;
+        }
+        return false;
     }
 
     constructor(form: any, json?: any, parent?: RepeatableSectionModel) {
