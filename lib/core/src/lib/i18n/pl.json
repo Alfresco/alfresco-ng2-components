@@ -429,7 +429,7 @@
       "MISCELLANEOUS": "Różne"
     },
     "COLUMNS_SELECTOR": {
-      "COLUMNS": "Choose visible columns",
+      "COLUMNS": "Wybierz widoczne kolumny",
       "SEARCH": "Szukaj",
       "APPLY": "Zastosuj",
       "COLUMNS_VISIBILITY": "Wybierz kolumny do wyświetlenia"
@@ -474,8 +474,8 @@
       "FIT_PAGE": "Zmieść na stronie",
       "ROTATE": "Obróć",
       "CROP": "Przytnij",
-      "SAVE": "Save rotate or crop",
-      "CANCEL": "Cancel rotate or crop",
+      "SAVE": "Zapisz obrót lub przycięcie",
+      "CANCEL": "Anuluj obrót lub przycięcie",
       "RESET": "Resetuj",
       "THUMBNAILS": "Miniatura dokumentu",
       "THUMBNAILS_PANLEL_CLOSE": "Zamknij panel miniatur",
