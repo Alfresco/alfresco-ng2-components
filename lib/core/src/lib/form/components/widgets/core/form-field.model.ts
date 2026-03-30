@@ -178,7 +178,7 @@ export class FormFieldModel extends FormWidgetModel {
                     return this._isValid;
                 }
             }
-        } else if (this.readOnly && this._required && !this.form?.isFieldOrParentHidden(this) && this.isValueEmpty()) {
+        } else if (this.readOnly && this.required && !this.form?.isFieldOrParentHidden(this) && this.isValueEmpty()) {
             this._isValid = false;
             return this._isValid;
         }
@@ -190,7 +190,7 @@ export class FormFieldModel extends FormWidgetModel {
         return !this.readOnly || FormFieldTypes.isValidatableType(this.type);
     }
 
-    private isValueEmpty(): boolean {
+    isValueEmpty(): boolean {
         if (this.value === null || this.value === undefined || this.value === '') {
             return true;
         }
