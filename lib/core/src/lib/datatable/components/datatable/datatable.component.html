@@ -244,7 +244,7 @@
                 </span>
 
                 <!-- Drag button -->
-                <div *ngIf="enableDragRows" class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-hover-only">
+                <div *ngIf="enableDragRows" role="gridcell" class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-hover-only">
                     <mat-icon adf-icon="drag_indicator" aria-hidden="true" />
                 </div>
 
@@ -293,7 +293,7 @@
 
                 <div
                     *ngFor="let col of getVisibleColumns(); let lastColumn = last"
-                    role ='gridcell'
+                    role = 'gridcell'
                     class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-data adf-datatable-cell--{{getAutomationValue(row)}}"
                     [attr.title]="col.title | translate"
                     [attr.data-automation-id]="getAutomationValue(row)"  
