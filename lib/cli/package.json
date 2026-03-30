@@ -25,7 +25,7 @@
     "@alfresco/js-api": ">=9.4.0",
     "ejs": "^3.1.10",
     "license-checker": "^25.0.1",
-    "node-fetch": "^3.3.2",
+    "node-fetch": "^2.7.0",
     "spdx-license-list": "^5.0.0"
   },
   "keywords": [
