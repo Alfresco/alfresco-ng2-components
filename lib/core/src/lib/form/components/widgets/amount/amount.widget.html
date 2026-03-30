@@ -31,12 +31,12 @@
                 (blur)="amountWidgetOnBlur()"
                 />
         </mat-form-field>
-        <mat-label class="adf-error-messages-container">
+        <div class="adf-error-messages-container">
             <error-widget [error]="field.validationSummary" />
             <error-widget
                 *ngIf="isInvalidFieldRequired() && isTouched()"
                 required="{{ 'FORM.FIELD.REQUIRED' | translate }}"
             />
-        </mat-label>
+        </div>
     </div>
 </div>

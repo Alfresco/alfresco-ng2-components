@@ -39,7 +39,7 @@ const allWidgetTypesForm: FormContent = {
                     type: 'container',
                     id: 'row-text-dropdown',
                     name: 'Label',
-                    tab: null,
+                    tab: '',
                     numberOfColumns: 2,
                     fields: {
                         1: [
@@ -82,7 +82,7 @@ const allWidgetTypesForm: FormContent = {
                     type: 'container',
                     id: 'row-amount-number',
                     name: 'Label',
-                    tab: null,
+                    tab: '',
                     numberOfColumns: 2,
                     fields: {
                         1: [
@@ -123,7 +123,7 @@ const allWidgetTypesForm: FormContent = {
                     type: 'container',
                     id: 'row-date-text2',
                     name: 'Label',
-                    tab: null,
+                    tab: '',
                     numberOfColumns: 2,
                     fields: {
                         1: [
