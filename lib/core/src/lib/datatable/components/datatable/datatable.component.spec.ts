@@ -1674,40 +1674,40 @@ describe('Accessibility', () => {
             fixture.detectChanges();
         };
 
-        it('should render image column cell with presentation role', () => {
+        it('should render image column cell with aria-hidden', () => {
             setupTable([new ObjectDataColumn({ key: 'photo', type: 'image' })]);
 
             const cell = testingUtils.getByCSS('.adf-datatable-body .adf-datatable-cell--image');
-            expect(cell.attributes['role']).toBe('presentation');
+            expect(cell.attributes['aria-hidden']).toBe('true');
         });
 
-        it('should render icon column cell with presentation role', () => {
+        it('should render icon column cell with aria-hidden', () => {
             setupTable([new ObjectDataColumn({ key: 'status', type: 'icon' })]);
 
             const cell = testingUtils.getByCSS('.adf-datatable-body .adf-datatable-cell--icon');
-            expect(cell.attributes['role']).toBe('presentation');
+            expect(cell.attributes['aria-hidden']).toBe('true');
         });
 
-        it('should render text column cell with gridcell role', () => {
+        it('should render text column cell without aria-hidden', () => {
             setupTable([new ObjectDataColumn({ key: 'name', type: 'text' })]);
 
             const cell = testingUtils.getByCSS('.adf-datatable-body .adf-datatable-cell--text');
-            expect(cell.attributes['role']).toBe('gridcell');
+            expect(cell.attributes['aria-hidden']).toBeUndefined();
         });
 
-        it('should render date column cell with gridcell role', () => {
+        it('should render date column cell without aria-hidden', () => {
             setupTable([new ObjectDataColumn({ key: 'created', type: 'date' })]);
 
             const cell = testingUtils.getByCSS('.adf-datatable-body .adf-datatable-cell--date');
-            expect(cell.attributes['role']).toBe('gridcell');
+            expect(cell.attributes['aria-hidden']).toBeUndefined();
         });
 
-        it('should assign correct roles when mixing representation and non-representation columns', () => {
+        it('should correctly set aria-hidden when mixing representation and non-representation columns', () => {
             setupTable([new ObjectDataColumn({ key: 'photo', type: 'image' }), new ObjectDataColumn({ key: 'name', type: 'text' })]);
 
             const cells = testingUtils.getAllByCSS('.adf-datatable-body .adf-datatable-cell-data');
-            expect(cells[0].attributes['role']).toBe('presentation');
-            expect(cells[1].attributes['role']).toBe('gridcell');
+            expect(cells[0].attributes['aria-hidden']).toBe('true');
+            expect(cells[1].attributes['aria-hidden']).toBeUndefined();
         });
     });
 

@@ -293,10 +293,12 @@
 
                 <div
                     *ngFor="let col of getVisibleColumns(); let lastColumn = last"
-                    [attr.role]="!isRepresentationContent(col) ? 'gridcell' : 'presentation'"
+                    role ='gridcell'
                     class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-data adf-datatable-cell--{{getAutomationValue(row)}}"
                     [attr.title]="col.title | translate"
-                    [attr.data-automation-id]="getAutomationValue(row)"   
+                    [attr.data-automation-id]="getAutomationValue(row)"  
+                    [attr.aria-label]="col.title ? (col.title | translate) : null" 
+                    [attr.aria-hidden]='isRepresentationContent(col) ? "true" : null'
                     (click)="onRowClick(row, $event)"
                     [attr.tabindex]="null"
                     (keydown.enter)="onEnterKeyPressed(row, $any($event))"
