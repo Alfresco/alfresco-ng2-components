@@ -124,6 +124,8 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     onInputChange(value: string) {
         if (this.settings.field === AutocompleteField.CATEGORIES) {
             this.searchForExistingCategories(value);
+        } else if (this.settings.field === AutocompleteField.TAG) {
+            this.searchForExistingTags(value);
         } else if (this.settings.field === AutocompleteField.LOCATION) {
             this.populateSitesOptions();
         }
@@ -166,13 +168,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     private setOptions() {
         switch (this.settings.field) {
             case AutocompleteField.TAG:
-                this.tagService.getAllTheTags().subscribe((tagPaging) => {
-                    this.autocompleteOptionsSubject$.next(
-                        tagPaging.list.entries.map((tag) => ({
-                            value: tag.entry.tag
-                        }))
-                    );
-                });
+                this.autocompleteOptionsSubject$.next([]);
                 break;
             case AutocompleteField.CATEGORIES:
                 this.autocompleteOptionsSubject$.next([]);
@@ -193,6 +189,17 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
                     const fullPath = path ? `${path}/${rowEntry.entry.name}` : rowEntry.entry.name;
                     return { id: rowEntry.entry.id, value: rowEntry.entry.name, fullPath };
                 })
+            );
+        });
+    }
+
+    private searchForExistingTags(searchTerm: string) {
+        this.tagService.searchTags(searchTerm, { orderBy: 'tag', direction: 'asc' }, false, 0, 15).subscribe((existingTagsResult) => {
+            this.autocompleteOptionsSubject$.next(
+                existingTagsResult.list.entries.map((tag) => ({
+                    id: tag.entry.id,
+                    value: tag.entry.tag
+                }))
             );
         });
     }
