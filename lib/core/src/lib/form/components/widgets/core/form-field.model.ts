@@ -182,22 +182,6 @@ export class FormFieldModel extends FormWidgetModel {
         return this._isValid;
     }
 
-    isValueEmpty(): boolean {
-        if (this.value === null || this.value === undefined || this.value === '') {
-            return true;
-        }
-        if (typeof this.value === 'string' && this.value.trim().length === 0) {
-            return true;
-        }
-        if (this.type === FormFieldTypes.BOOLEAN) {
-            return !this.value;
-        }
-        if (Array.isArray(this.value)) {
-            return this.value.length === 0;
-        }
-        return false;
-    }
-
     constructor(form: any, json?: any, parent?: RepeatableSectionModel) {
         super(form, json);
         if (json) {
