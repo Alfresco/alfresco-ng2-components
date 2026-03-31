@@ -170,24 +170,16 @@ export class FormFieldModel extends FormWidgetModel {
     validate(): boolean {
         this.validationSummary = new ErrorMessageModel();
 
-        if (this.isFieldValidatable()) {
-            const validators = this.form.fieldValidators || [];
-            for (const validator of validators) {
-                if (!validator.validate(this)) {
-                    this._isValid = false;
-                    return this._isValid;
-                }
+        const validators = this.form?.fieldValidators || [];
+        for (const validator of validators) {
+            if (!validator.validate(this)) {
+                this._isValid = false;
+                return this._isValid;
             }
-        } else if (this.readOnly && this.required && !this.form?.isFieldOrParentHidden(this) && this.isValueEmpty()) {
-            this._isValid = false;
-            return this._isValid;
         }
+
         this._isValid = true;
         return this._isValid;
-    }
-
-    private isFieldValidatable(): boolean {
-        return !this.readOnly || FormFieldTypes.isValidatableType(this.type);
     }
 
     isValueEmpty(): boolean {

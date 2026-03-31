@@ -1220,7 +1220,7 @@ describe('FormFieldModel', () => {
         });
     });
 
-    it('should validate readOnly field if it is validatable', () => {
+    it('should fail validation for readOnly required display-external-property field with null value', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             id: 'mockDisplayExternalPropertyFieldId',
@@ -1233,11 +1233,10 @@ describe('FormFieldModel', () => {
         const validator = new RequiredFieldValidator();
         form.fieldValidators = [validator];
 
-        expect(FormFieldTypes.isValidatableType(FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY)).toBeTrue();
         expect(field.validate()).toBe(false);
     });
 
-    it('should validate NOT readOnly field if it is validatable', () => {
+    it('should fail validation for required display-external-property field with null value', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             id: 'mockDisplayExternalPropertyFieldId',
@@ -1250,11 +1249,10 @@ describe('FormFieldModel', () => {
         const validator = new RequiredFieldValidator();
         form.fieldValidators = [validator];
 
-        expect(FormFieldTypes.isValidatableType(FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY)).toBeTrue();
         expect(field.validate()).toBe(false);
     });
 
-    it('should validate readOnly required field even if type is not in validatable list', () => {
+    it('should fail validation for readOnly required text field with null value', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             id: 'mockTextFieldId',
@@ -1267,7 +1265,6 @@ describe('FormFieldModel', () => {
         const validator = new RequiredFieldValidator();
         form.fieldValidators = [validator];
 
-        expect(FormFieldTypes.isValidatableType(FormFieldTypes.TEXT)).toBeFalse();
         expect(field.validate()).toBe(false);
     });
 
@@ -1287,7 +1284,7 @@ describe('FormFieldModel', () => {
         expect(field.validate()).toBe(true);
     });
 
-    it('should skip validation for readOnly non-required field', () => {
+    it('should pass validation for readOnly non-required field with null value', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             id: 'mockTextFieldId',
@@ -1318,7 +1315,6 @@ describe('FormFieldModel', () => {
 
         spyOn(form, 'isFieldOrParentHidden').and.returnValue(true);
 
-        expect(FormFieldTypes.isValidatableType(FormFieldTypes.TEXT)).toBeFalse();
         expect(field.validate()).toBe(true);
         expect(form.isFieldOrParentHidden).toHaveBeenCalledWith(field);
     });
