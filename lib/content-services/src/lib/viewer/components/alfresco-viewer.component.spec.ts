@@ -374,13 +374,20 @@ describe('AlfrescoViewerComponent', () => {
         expect(component.nodesApi.getNode).toHaveBeenCalledTimes(2);
     }));
 
-    it('should append version of the file to the file content URL', fakeAsync(() => {
+    it('should append version of the file to the file content URL', async () => {
+        const mockBlob = new Blob(['fake pdf content'], { type: 'application/pdf' });
+        const mockResponse = {
+            ok: true,
+            blob: () => Promise.resolve(mockBlob)
+        } as Response;
+        spyOn(window, 'fetch').and.returnValue(Promise.resolve(mockResponse));
+
         spyOn(component.nodesApi, 'getNode').and.returnValue(
             Promise.resolve(
                 new NodeEntry({
                     entry: new Node({
                         name: 'file1.pdf',
-                        content: new ContentInfo(),
+                        content: new ContentInfo({ mimeType: 'application/pdf' }),
                         properties: { 'cm:versionLabel': '10' }
                     })
                 })
@@ -392,11 +399,12 @@ describe('AlfrescoViewerComponent', () => {
         component.showViewer = true;
         component.versionId = null;
         component.ngOnChanges(getSimpleChanges('id1'));
-        tick();
+
+        await fixture.whenStable();
 
         expect(component.fileName).toBe('file1.pdf');
-        expect(component.urlFileContent).toContain('/public/alfresco/versions/1/nodes/id1/content?attachment=false&10');
-    }));
+        expect(component.blobFileContent).toBe(mockBlob);
+    });
 
     it('should change display name every time node`s version changes', fakeAsync(() => {
         spyOn(component.nodesApi, 'getNode').and.returnValue(
