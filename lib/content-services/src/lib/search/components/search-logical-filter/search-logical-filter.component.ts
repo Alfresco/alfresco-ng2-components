@@ -38,8 +38,7 @@ export const LogicalSearchFields = {
 export type LogicalSearchFields = (typeof LogicalSearchFields)[keyof typeof LogicalSearchFields];
 
 export type LogicalSearchConditionEnumValuedKeys = { [T in LogicalSearchFields]: string };
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface LogicalSearchCondition extends LogicalSearchConditionEnumValuedKeys {}
+export type LogicalSearchCondition = LogicalSearchConditionEnumValuedKeys;
 
 @Component({
     selector: 'adf-search-logical-filter',

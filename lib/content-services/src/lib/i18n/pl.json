@@ -446,11 +446,11 @@
         "IN_LAST": "Wymagana wartość",
         "START_DATE": {
           "REQUIRED": "Data rozpoczęcia wymagana",
-          "INVALID_FORMAT": "Start Date invalid. The date must be in the format '{{ requiredFormat }}'"
+          "INVALID_FORMAT": "Data rozpoczęcia jest nieprawidłowa. Data musi być w formacie „{{ requiredFormat }}”"
         },
         "END_DATE": {
           "REQUIRED": "Wymagana data zakończenia",
-          "INVALID_FORMAT": "End Date invalid. The date must be in the format '{{ requiredFormat }}'"
+          "INVALID_FORMAT": "Data zakończenia jest nieprawidłowa. Data musi być w formacie „{{ requiredFormat }}”"
         }
       },
       "ARIA_LABEL": {
@@ -533,7 +533,7 @@
     "LINK-WITH-EXPIRY-SETTINGS": "Wygenerowano nowy link z ustawieniami wygaśnięcia",
     "EXPIRES": "Wygasa",
     "LINK-EXPIRY-DATE": "Data wygaśnięcia łącza",
-    "EXPIRATION-LABEL": "Expiration Date. Enter date in MM/DD/YYYY format",
+    "EXPIRATION-LABEL": "Data ważności. Wprowadź datę w formacie MM/DD/RRRR",
     "EXPIRATION-PLACEHOLDER": "MM/DD/RRRR",
     "CLIPBOARD-MESSAGE": "Link został skopiowany do schowka.",
     "CLOSE": "Zamknij",
@@ -677,8 +677,8 @@
   },
   "BREADCRUMB": {
     "ARIA-LABEL": {
-      "BREADCRUMB": "Breadcrumb navigation",
-      "DROPDOWN": "Open breadcrumb menu for {{folderName}}"
+      "BREADCRUMB": "Nawigacja okruszkowa",
+      "DROPDOWN": "Otwórz menu okruszkowe dla {{folderName}}"
     },
     "HEADER": {
       "SELECTED": "Wybrano ({{ count }})"

@@ -1026,7 +1026,7 @@ describe('FormCloudComponent', () => {
         expect(formComponent.form.selectedOutcomeId).toBe(outcomeId);
     });
 
-    it('should not confirm form if user rejects', () => {
+    it('should not confirm form and reenable save and complete buttons if user rejects', () => {
         const outcome = 'complete';
         spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(false) } as any);
 
@@ -1040,10 +1040,15 @@ describe('FormCloudComponent', () => {
         formComponent.form = formModel;
         spyOn(formComponent['formCloudService'], 'completeTaskForm');
 
+        formComponent.disableSaveButton = true;
+        formComponent.disableCompleteButton = true;
+
         formComponent.completeTaskForm(outcome);
 
         expect(matDialog.open).toHaveBeenCalled();
         expect(formComponent['formCloudService'].completeTaskForm).not.toHaveBeenCalled();
+        expect(formComponent.disableSaveButton).toBe(false);
+        expect(formComponent.disableCompleteButton).toBe(false);
     });
 
     it('should require json to parse form', () => {

@@ -87,8 +87,6 @@ const taskPresetsCloudDefaultModel = {
     ]
 };
 
-/* eslint-disable @typescript-eslint/brace-style */
-
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseTaskListCloudComponent<T = unknown>
