@@ -15,10 +15,17 @@
         }
     }
 
+    &-fieldset {
+        border: none;
+        margin: 0;
+        padding: 0;
+        min-inline-size: 0;
+    }
+
     &-container {
         display: flex;
         flex-direction: column;
-        padding: 15.5px 15px 10px;
+        padding: 0;
         color: var(--adf-theme-foreground-text-color-087);
 
         .adf-facet-buttons {
@@ -36,9 +43,11 @@
 
     &-title {
         font-size: 1.1em;
-        padding-bottom: 5px;
+        padding: 16px 0 0 16px;
         color: var(--adf-theme-foreground-text-color-087);
         -webkit-font-smoothing: subpixel-antialiased;
+        float: none;
+        width: 100%;
     }
 }
 
@@ -49,6 +58,10 @@
 
     > div:first-child {
         padding: 0;
+    }
+
+    .adf-search-checklist {
+        margin: 4px 0 0 16px;
     }
 
     .adf-filter-actions {
