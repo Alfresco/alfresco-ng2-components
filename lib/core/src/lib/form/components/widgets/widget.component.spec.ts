@@ -152,4 +152,31 @@ describe('WidgetComponent', () => {
             expect(widget.isInvalidFieldRequired()).toBe(false);
         });
     });
+
+    describe('isTouched', () => {
+        it('should return false by default', () => {
+            widget.field = new FormFieldModel(new FormModel(), { type: 'text' });
+            expect(widget.isTouched()).toBe(false);
+        });
+
+        it('should return true when touched is set', () => {
+            widget.field = new FormFieldModel(new FormModel(), { type: 'text' });
+            widget.markAsTouched();
+            expect(widget.isTouched()).toBe(true);
+        });
+
+        it('should return true when showAllValidationErrors is set on the form', () => {
+            const form = new FormModel();
+            form.showAllValidationErrors = true;
+            widget.field = new FormFieldModel(form, { type: 'text' });
+            expect(widget.isTouched()).toBe(true);
+        });
+
+        it('should return false when showAllValidationErrors is false and not touched', () => {
+            const form = new FormModel();
+            form.showAllValidationErrors = false;
+            widget.field = new FormFieldModel(form, { type: 'text' });
+            expect(widget.isTouched()).toBe(false);
+        });
+    });
 });

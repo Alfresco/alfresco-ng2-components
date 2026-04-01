@@ -100,6 +100,9 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
 
     updateReactiveFormControl(): void {
         this.updateFormControlState();
+        if (this.field?.form?.showAllValidationErrors) {
+            this.dropdownControl.markAsTouched();
+        }
         this.handleErrors();
     }
 
