@@ -1220,7 +1220,7 @@ describe('FormFieldModel', () => {
         });
     });
 
-    it('should validate readOnly field if it is validatable', () => {
+    it('should fail validation for readOnly required display-external-property field with null value', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             id: 'mockDisplayExternalPropertyFieldId',
@@ -1233,11 +1233,10 @@ describe('FormFieldModel', () => {
         const validator = new RequiredFieldValidator();
         form.fieldValidators = [validator];
 
-        expect(FormFieldTypes.isValidatableType(FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY)).toBeTrue();
         expect(field.validate()).toBe(false);
     });
 
-    it('should validate NOT readOnly field if it is validatable', () => {
+    it('should fail validation for required display-external-property field with null value', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             id: 'mockDisplayExternalPropertyFieldId',
@@ -1250,11 +1249,10 @@ describe('FormFieldModel', () => {
         const validator = new RequiredFieldValidator();
         form.fieldValidators = [validator];
 
-        expect(FormFieldTypes.isValidatableType(FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY)).toBeTrue();
         expect(field.validate()).toBe(false);
     });
 
-    it('should NOT validate readOnly field if it is NOT validatable', () => {
+    it('should fail validation for readOnly required text field with null value', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             id: 'mockTextFieldId',
@@ -1267,8 +1265,58 @@ describe('FormFieldModel', () => {
         const validator = new RequiredFieldValidator();
         form.fieldValidators = [validator];
 
-        expect(FormFieldTypes.isValidatableType(FormFieldTypes.TEXT)).toBeFalse();
+        expect(field.validate()).toBe(false);
+    });
+
+    it('should pass validation for readOnly required field that has a value', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            id: 'mockTextFieldId',
+            type: FormFieldTypes.TEXT,
+            readOnly: true,
+            required: true,
+            value: 'some value'
+        });
+
+        const validator = new RequiredFieldValidator();
+        form.fieldValidators = [validator];
+
         expect(field.validate()).toBe(true);
+    });
+
+    it('should pass validation for readOnly non-required field with null value', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            id: 'mockTextFieldId',
+            type: FormFieldTypes.TEXT,
+            readOnly: true,
+            required: false,
+            value: null
+        });
+
+        const validator = new RequiredFieldValidator();
+        form.fieldValidators = [validator];
+
+        expect(field.validate()).toBe(true);
+    });
+
+    it('should pass validation for readOnly required field with empty value when field or parent is hidden', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            id: 'mockTextFieldId',
+            type: FormFieldTypes.TEXT,
+            readOnly: true,
+            required: true,
+            value: null
+        });
+
+        const validator = new RequiredFieldValidator();
+        form.fieldValidators = [validator];
+
+        spyOn(form, 'isFieldOrParentHidden').and.returnValue(true);
+
+        expect(field.validate()).toBe(true);
+        expect(form.isFieldOrParentHidden).toHaveBeenCalledWith(field);
     });
 
     it('should set the tooltip correctly', () => {
