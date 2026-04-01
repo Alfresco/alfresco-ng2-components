@@ -23,76 +23,57 @@ import { formatDistance } from 'date-fns';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { DateFnsUtils } from '../common/utils/date-fns-utils';
 import { TimeAgoPipe } from './time-ago.pipe';
+import { AppConfigService } from '../app-config';
 
 registerLocaleData(localeDe, 'de', localeDeExtra);
 
 describe('TimeAgoPipe', () => {
-    let pipe: TimeAgoPipe;
-    let localeSignalSpy: jasmine.Spy<() => string>;
     const NOW = new Date('2026-03-27T12:00:00.000Z');
 
-    beforeEach(() => {
+    const createPipe = (dateFormat, locale): TimeAgoPipe => {
+        TestBed.resetTestingModule();
         TestBed.configureTestingModule({
             providers: [
                 TimeAgoPipe,
                 {
                     provide: UserPreferencesService,
                     useValue: {
-                        localeSignal: jasmine.createSpy('localeSignal').and.returnValue('en-US')
+                        localeSignal: jasmine.createSpy('localeSignal').and.returnValue(locale)
+                    }
+                },
+                {
+                    provide: AppConfigService,
+                    useValue: {
+                        get: jasmine.createSpy('get').and.returnValue(dateFormat)
                     }
                 }
             ]
         });
 
-        pipe = TestBed.inject(TimeAgoPipe);
-        const userPreferences = TestBed.inject(UserPreferencesService);
-        localeSignalSpy = userPreferences.localeSignal as unknown as jasmine.Spy<() => string>;
+        const newPipe = TestBed.inject(TimeAgoPipe);
+        spyOn(newPipe, 'getCurrentDateTime').and.returnValue(NOW);
 
-        jasmine.clock().uninstall();
-        jasmine.clock().install();
-        jasmine.clock().mockDate(NOW);
-    });
+        return newPipe;
+    };
 
-    afterEach(() => {
-        jasmine.clock().uninstall();
-    });
-
-    it('should return time difference for a given date', () => {
-        const date = new Date();
-        expect(pipe.transform(date)).toBe('less than a minute ago');
-    });
-
-    it('should return exact date if given date is more than seven days for en locale ', () => {
-        const date = new Date('1990-11-03T15:25:42.749');
-        expect(pipe.transform(date)).toBe('11/3/90, 3:25 PM');
-    });
-
-    it('should return exact date if given date is more than seven days for de locale ', () => {
-        localeSignalSpy.and.returnValue('de');
-        const date = new Date('1990-11-03T15:25:42.749');
-
-        expect(pipe.transform(date)).toBe('03.11.90, 15:25');
-    });
-
-    it('should return empty string if given date is empty', () => {
-        expect(pipe.transform(null)).toBe('');
-        expect(pipe.transform(undefined)).toBe('');
-    });
-
-    describe('When a locale is given', () => {
-        it('should return a localised message', () => {
-            const date = new Date();
-            const transformedDate = pipe.transform(date, 'de');
-            /* cspell:disable-next-line */
-            expect(transformedDate).toBe('vor weniger als 1 Minute');
+    describe('AppConfigService returns "MMM d, y, h:mm" and locale="en-US" ', () => {
+        let pipe: TimeAgoPipe;
+        beforeEach(() => {
+            pipe = createPipe('MMM d, y, h:mm', 'en-US');
         });
-    });
-
-    describe('relative time output (within 7 days)', () => {
-        it('should return "less than a minute ago" when date is now', () => {
-            const date = new Date(NOW);
-
+        it('should return time difference for a given date', () => {
+            const date = pipe.getCurrentDateTime();
             expect(pipe.transform(date)).toBe('less than a minute ago');
+        });
+
+        it('should return exact date if given date is more than seven days for en locale ', () => {
+            const date = new Date('1990-11-02T15:25:42.749');
+            expect(pipe.transform(date)).toBe('Nov 2, 1990, 3:25');
+        });
+
+        it('should return empty string if given date is empty', () => {
+            expect(pipe.transform(null)).toBe('');
+            expect(pipe.transform(undefined)).toBe('');
         });
 
         it('should return relative distance when date is a few hours ago', () => {
@@ -106,7 +87,6 @@ describe('TimeAgoPipe', () => {
             });
             expect(result).toBe(expected);
         });
-
         it('should return relative distance when date is 6 days ago', () => {
             const sixDaysAgo = new Date('2026-03-21T12:00:00.000Z');
 
@@ -118,34 +98,148 @@ describe('TimeAgoPipe', () => {
             });
             expect(result).toBe(expected);
         });
-    });
+        it('should return relative distance when date is exactly 7 days ago', () => {
+            const sevenDaysAgo = new Date('2026-03-20T12:00:00.000Z');
 
-    describe('absolute date output (older than 7 days)', () => {
-        it('should return short formatted date when date is more than 7 days ago', () => {
-            const oldDate = new Date('1990-11-03T15:25:42.749');
+            const result = pipe.transform(sevenDaysAgo);
 
-            const result = pipe.transform(oldDate);
-
-            const expected = new DatePipe('en-US').transform(oldDate, 'short', null, 'en-US');
+            const expected = formatDistance(sevenDaysAgo, NOW, {
+                addSuffix: true,
+                locale: DateFnsUtils.getLocaleFromString('en-US')
+            });
             expect(result).toBe(expected);
         });
 
-        it('should return short formatted date when date is exactly 8 days ago', () => {
-            const eightDaysAgo = new Date('2026-03-19T12:00:00.000Z');
+        it('should use locale argument over user preference locale', () => {
+            const oldDate = new Date('2026-03-01T10:00:00.000Z');
+            const result = pipe.transform(oldDate, 'de');
 
-            const result = pipe.transform(eightDaysAgo);
+            expect(result).toBe('März 1, 2026, 10:00');
+        });
+    });
 
-            const expected = new DatePipe('en-US').transform(eightDaysAgo, 'short', null, 'en-US');
+    describe('AppConfigService return "MMM d, y, h:mm" and locale="de" ', () => {
+        let pipe: TimeAgoPipe;
+        beforeEach(() => {
+            pipe = createPipe('MMM d, y, h:mm', 'de');
+        });
+        it('should return time difference for a given date', () => {
+            const date = pipe.getCurrentDateTime();
+            expect(pipe.transform(date)).toBe('vor weniger als 1 Minute');
+        });
+
+        it('should return exact date if given date is more than seven days for de locale ', () => {
+            const date = new Date('1990-11-03T15:25:42.749');
+            expect(pipe.transform(date)).toBe('Nov. 3, 1990, 3:25');
+        });
+
+        it('should return empty string if given date is empty', () => {
+            expect(pipe.transform(null)).toBe('');
+            expect(pipe.transform(undefined)).toBe('');
+        });
+
+        it('should return relative distance when date is a few hours ago', () => {
+            const threeHoursAgo = new Date('2026-03-27T09:00:00.000Z');
+            const result = pipe.transform(threeHoursAgo);
+            const expected = formatDistance(threeHoursAgo, NOW, {
+                addSuffix: true,
+                locale: DateFnsUtils.getLocaleFromString('de')
+            });
             expect(result).toBe(expected);
+        });
+        it('should return relative distance when date is 6 days ago', () => {
+            const sixDaysAgo = new Date('2026-03-21T12:00:00.000Z');
+            const result = pipe.transform(sixDaysAgo);
+            const expected = formatDistance(sixDaysAgo, NOW, {
+                addSuffix: true,
+                locale: DateFnsUtils.getLocaleFromString('de')
+            });
+            expect(result).toBe(expected);
+        });
+        it('should return relative distance when date is exactly 7 days ago', () => {
+            const sevenDaysAgo = new Date('2026-03-20T12:00:00.000Z');
+            const result = pipe.transform(sevenDaysAgo);
+            const expected = formatDistance(sevenDaysAgo, NOW, {
+                addSuffix: true,
+                locale: DateFnsUtils.getLocaleFromString('de')
+            });
+
+            expect(result).toBe(expected);
+        });
+
+        it('should use locale argument over user preference locale', () => {
+            const oldDate = new Date('2026-03-01T10:00:00.000Z');
+            const result = pipe.transform(oldDate, 'en-US');
+
+            expect(result).toBe('Mar 1, 2026, 10:00');
+        });
+    });
+
+    describe('AppConfigService has no value and returns default short and locale="en-US" ', () => {
+        let pipe: TimeAgoPipe;
+        beforeEach(() => {
+            pipe = createPipe('short', 'en-US');
+        });
+        it('should return time difference for a given date', () => {
+            const date = pipe.getCurrentDateTime();
+            expect(pipe.transform(date)).toBe('less than a minute ago');
+        });
+
+        it('should return exact date if given date is more than seven days for en locale ', () => {
+            const date = new Date('1990-11-04T15:25:42.749');
+
+            expect(pipe.transform(date)).toBe('11/4/90, 3:25 PM');
+        });
+
+        it('should return empty string if given date is empty', () => {
+            expect(pipe.transform(null)).toBe('');
+            expect(pipe.transform(undefined)).toBe('');
+        });
+
+        it('should use locale argument over user preference locale', () => {
+            const oldDate = new Date('2026-03-01T10:00:00.000Z');
+            const result = pipe.transform(oldDate, 'de');
+
+            expect(result).toBe('01.03.26, 10:00');
+        });
+    });
+
+    describe('AppConfigService has no value and returns default short and locale="de" ', () => {
+        let pipe: TimeAgoPipe;
+        beforeEach(() => {
+            pipe = createPipe('short', 'de');
+        });
+        it('should return time difference for a given date', () => {
+            const date = pipe.getCurrentDateTime();
+            expect(pipe.transform(date)).toBe('vor weniger als 1 Minute');
+        });
+
+        it('should return exact date if given date is more than seven days for de locale ', () => {
+            const date = new Date('1990-11-04T15:25:42.749');
+            expect(pipe.transform(date)).toBe('04.11.90, 15:25');
+        });
+
+        it('should return empty string if given date is empty', () => {
+            expect(pipe.transform(null)).toBe('');
+            expect(pipe.transform(undefined)).toBe('');
+        });
+
+        it('should use locale argument over user preference locale', () => {
+            const oldDate = new Date('2026-03-01T10:00:00.000Z');
+            const result = pipe.transform(oldDate, 'en-US');
+
+            expect(result).toBe('3/1/26, 10:00 AM');
         });
     });
 
     describe('locale handling', () => {
-        it('should return a localized relative message when locale argument is provided', () => {
+        let pipe: TimeAgoPipe;
+        beforeEach(() => {
+            pipe = createPipe('short', undefined);
+        });
+        it('should return localized relative message when locale argument is provided', () => {
             const date = new Date(NOW);
-
             const result = pipe.transform(date, 'de');
-
             const expected = formatDistance(date, NOW, {
                 addSuffix: true,
                 locale: DateFnsUtils.getLocaleFromString('de')
@@ -153,47 +247,12 @@ describe('TimeAgoPipe', () => {
             expect(result).toBe(expected);
         });
 
-        it('should use locale argument over user preference locale', () => {
-            localeSignalSpy.and.returnValue('fr');
-            const oldDate = new Date('2026-03-01T10:00:00.000Z');
-
-            const result = pipe.transform(oldDate, 'de');
-
-            const expected = '01.03.26, 10:00';
-            expect(result).toBe(expected);
-        });
-
-        it('should use user preference locale when no locale argument is provided', () => {
-            localeSignalSpy.and.returnValue('fr');
-            const date = new Date(NOW);
-
-            const result = pipe.transform(date);
-
-            const expected = formatDistance(date, NOW, {
-                addSuffix: true,
-                locale: DateFnsUtils.getLocaleFromString('fr')
-            });
-            expect(result).toBe(expected);
-        });
-
         it('should fall back to DEFAULT_LOCALE when user preference locale is empty', () => {
-            localeSignalSpy.and.returnValue('');
             const oldDate = new Date('2026-03-01T10:00:00.000Z');
-
             const result = pipe.transform(oldDate);
+            const expected = new DatePipe('en-US').transform(oldDate, 'short');
 
-            const expected = new DatePipe('en-US').transform(oldDate, 'short', null, 'en-US');
             expect(result).toBe(expected);
-        });
-    });
-
-    describe('null and undefined handling', () => {
-        it('should return empty string when value is null', () => {
-            expect(pipe.transform(null as unknown as Date)).toBe('');
-        });
-
-        it('should return empty string when value is undefined', () => {
-            expect(pipe.transform(undefined as unknown as Date)).toBe('');
         });
     });
 });
