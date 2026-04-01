@@ -853,6 +853,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         return false;
     }
 
+    isRepresentationContent(col: DataColumn): boolean {
+        return col.type === 'image' || col.type === 'icon';
+    }
+
     asIconValue(row: DataRow, col: DataColumn): string {
         if (this.isIconValue(row, col)) {
             const value = this.data.getValue(row, col) || '';
