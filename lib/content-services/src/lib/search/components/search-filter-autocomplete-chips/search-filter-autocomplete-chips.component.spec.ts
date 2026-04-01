@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SearchFilterAutocompleteChipsComponent } from './search-filter-autocomplete-chips.component';
-import { EMPTY, of, ReplaySubject } from 'rxjs';
+import { of, ReplaySubject } from 'rxjs';
 import { AutocompleteField, AutocompleteOption } from '../../models/autocomplete-option.interface';
 import { TagService } from '../../../tag/services/tag.service';
 import { SitesService } from '../../../common/services/sites.service';
@@ -33,13 +33,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [SearchFilterAutocompleteChipsComponent],
-            providers: [
-                {
-                    provide: TagService,
-                    useValue: { getAllTheTags: () => EMPTY }
-                }
-            ]
+            imports: [SearchFilterAutocompleteChipsComponent]
         });
 
         fixture = TestBed.createComponent(SearchFilterAutocompleteChipsComponent);
@@ -82,23 +76,6 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         component.ngOnInit();
         component.autocompleteOptions$.subscribe((result) => {
             expect(result).toEqual([{ value: 'test 1' }, { value: 'test 2' }]);
-            done();
-        });
-    });
-
-    it('should load tags if field = TAG', (done) => {
-        const tagPagingMock = {
-            list: {
-                pagination: {},
-                entries: [{ entry: { tag: 'tag1', id: 'id1' } }, { entry: { tag: 'tag2', id: 'id2' } }]
-            }
-        };
-
-        component.settings.field = AutocompleteField.TAG;
-        spyOn(tagService, 'getAllTheTags').and.returnValue(of(tagPagingMock));
-        component.ngOnInit();
-        component.autocompleteOptions$.subscribe((result) => {
-            expect(result).toEqual([{ value: 'tag1' }, { value: 'tag2' }]);
             done();
         });
     });
@@ -215,13 +192,9 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
     it('should use id if present, otherwise value, in LOCATION query fragment', () => {
         component.settings.field = AutocompleteField.LOCATION;
         component.settings.autocompleteOptions = [];
-        component.selectedOptions = [
-            { id: 'site1', value: 'Marketing' },
-            { value: 'custom' }
-        ];
+        component.selectedOptions = [{ id: 'site1', value: 'Marketing' }, { value: 'custom' }];
         component.submitValues();
-        expect(component.context.queryFragments[component.id])
-            .toBe('SITE:"site1" OR SITE:"custom"');
+        expect(component.context.queryFragments[component.id]).toBe('SITE:"site1" OR SITE:"custom"');
     });
 
     it('should still call sitesService.getSites when input is empty for LOCATION field', () => {
@@ -251,6 +224,22 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         expect(searchSpy).toHaveBeenCalledWith('', 0, 15);
     });
 
+    it('should search for tags if field = TAG and input is not empty', () => {
+        component.settings.field = AutocompleteField.TAG;
+        const searchSpy = spyOn(tagService, 'searchTags').and.returnValue(
+            of({
+                list: {
+                    pagination: {},
+                    entries: [{ entry: { tag: 'tag1', id: 'id1' } }, { entry: { tag: 'tag2', id: 'id2' } }]
+                }
+            })
+        );
+
+        component.onInputChange('tag');
+
+        expect(searchSpy).toHaveBeenCalledWith('tag', { orderBy: 'tag', direction: 'asc' }, false, 0, 15);
+    });
+
     describe('optionComparator', () => {
         it('should return false if either option is undefined', () => {
             expect(component.optionComparator(undefined, { value: 'A' })).toBe(false);
@@ -258,7 +247,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         });
 
         it('should compare by id if both have id', () => {
-            expect(component.optionComparator({ id: 'abc', value: 'B' } , { id: 'ABC', value: 'B' })).toBe(true);
+            expect(component.optionComparator({ id: 'abc', value: 'B' }, { id: 'ABC', value: 'B' })).toBe(true);
             expect(component.optionComparator({ id: 'abc', value: 'B' }, { id: 'def', value: 'B' })).toBe(false);
         });
 
