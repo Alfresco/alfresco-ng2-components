@@ -19,7 +19,7 @@ import { Subject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchService } from '../../services/search.service';
 import { SearchHeaderQueryBuilderService } from '../../services/search-header-query-builder.service';
-import { By, DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { SearchFilterContainerComponent } from './search-filter-container.component';
 import { SearchCategory } from '../../models/search-category.interface';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -141,7 +141,7 @@ describe('SearchFilterContainerComponent', () => {
         await menu.open();
 
         component.widgetContainer.componentRef.instance.value = 'searchText';
-        const widgetContainer = fixture.debugElement.query(By.css('adf-search-widget-container'));
+        const widgetContainer = unitTestingUtils.getByCSS('adf-search-widget-container');
         widgetContainer.triggerEventHandler('keypress', { key: 'Enter' });
 
         fixture.detectChanges();
@@ -206,6 +206,31 @@ describe('SearchFilterContainerComponent', () => {
 
             await menu.close();
             expect(await menu.isFocused()).toBe(true);
+        });
+
+        it('should use a fieldset with aria-labelledby pointing to the legend', async () => {
+            const menu = await loader.getHarness(MatMenuHarness);
+            await menu.open();
+            fixture.detectChanges();
+
+            const fieldset = unitTestingUtils.getByCSS('fieldset.adf-filter-fieldset');
+            const legend = unitTestingUtils.getByCSS('legend.adf-filter-title');
+
+            expect(fieldset).toBeTruthy();
+            expect(legend).toBeTruthy();
+
+            const legendId = legend.nativeElement.getAttribute('id');
+            expect(legendId).toBe('filter-legend-' + mockCategory.id);
+            expect(fieldset.nativeElement.getAttribute('aria-labelledby')).toBe(legendId);
+        });
+
+        it('should have the legend text matching the category name', async () => {
+            const menu = await loader.getHarness(MatMenuHarness);
+            await menu.open();
+            fixture.detectChanges();
+
+            const legendText = unitTestingUtils.getInnerTextByCSS('legend.adf-filter-title');
+            expect(legendText.trim()).toBe(mockCategory.name);
         });
     });
 });

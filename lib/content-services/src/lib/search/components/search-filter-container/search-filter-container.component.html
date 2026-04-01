@@ -23,13 +23,15 @@
         <fieldset
             #filterContainer
             tabindex="0"
-            [attr.aria-label]="category?.name | translate"
+            [attr.aria-labelledby]="'filter-legend-' + category?.id"
             (click)="$event.stopPropagation()"
             (keyup.enter)="$event.stopPropagation()"
             (keydown.tab)="$event.stopPropagation()"
             class="adf-filter-container adf-filter-fieldset"
         >
-            <legend class="adf-filter-title">{{ category?.name | translate }}</legend>
+            <legend class="adf-filter-title" [id]="'filter-legend-' + category?.id">
+                {{ category?.name | translate }}
+            </legend>
             <adf-search-widget-container
                 (keypress)="onKeyPressed($event, menuTrigger)"
                 [id]="category?.id"
