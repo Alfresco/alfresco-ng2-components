@@ -398,6 +398,8 @@
       "ACTIONS": "Actions",
       "SELECT_ALL": "Tout sélectionner",
       "SELECT_FILE": "Sélectionner un fichier",
+      "SELECTED": "Selected",
+      "ROW_SELECTION": "Press Space to toggle row selection",
       "SORT_ASCENDING": "Ascendant",
       "SORT_DESCENDING": "Descendant",
       "SORT_NONE": "Aucun",
@@ -408,6 +410,7 @@
       "ICON_DISABLED": "Désactivé",
       "ROW_OPTION_BUTTON": "Actions",
       "DRAG": "Bouton de déplacement",
+      "DRAGGABLE": "Draggable",
       "EMPTY_HEADER": "En-tête vide",
       "RESIZE_COLUMN": "Redimensionnez la colonne {{ column }}. Utilisez les flèches de direction pour ajuster la largeur et la touche Maj pour des incréments plus importants.",
       "COLUMN_WIDTH_CHANGED": "Largeur de la colonne {{ column }} : {{ width }} pixels"
