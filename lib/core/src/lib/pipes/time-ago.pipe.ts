@@ -32,7 +32,7 @@ export class TimeAgoPipe implements PipeTransform {
     appConfig = inject(AppConfigService);
 
     static DEFAULT_LOCALE = 'en-US';
-    static DEFAULT_DATE_TIME_FORMAT = 'dd/MM/yyyy HH:mm';
+    static DEFAULT_DATE_TIME_FORMAT = 'short';
 
     defaultDateTimeFormat: string;
 
@@ -40,18 +40,22 @@ export class TimeAgoPipe implements PipeTransform {
         this.defaultDateTimeFormat = this.appConfig.get<string>('dateValues.defaultDateTimeFormat', TimeAgoPipe.DEFAULT_DATE_TIME_FORMAT);
     }
 
+    getCurrentDateTime(): Date {
+        return new Date();
+    }
+
     transform(value: Date, locale?: string) {
         if (value !== null && value !== undefined) {
             // Use signal directly - no subscription needed!
             const defaultLocale = this.userPreferenceService.localeSignal() || TimeAgoPipe.DEFAULT_LOCALE;
             const actualLocale = locale || defaultLocale;
-            const diff = differenceInDays(new Date(), new Date(value));
+            const diff = differenceInDays(this.getCurrentDateTime(), new Date(value));
             if (diff > 7) {
                 const datePipe: DatePipe = new DatePipe(actualLocale);
                 return datePipe.transform(value, this.defaultDateTimeFormat);
             } else {
                 const dateFnsLocale = DateFnsUtils.getLocaleFromString(actualLocale);
-                return formatDistance(new Date(value), new Date(), { addSuffix: true, locale: dateFnsLocale });
+                return formatDistance(new Date(value), this.getCurrentDateTime(), { addSuffix: true, locale: dateFnsLocale });
             }
         }
         return '';
