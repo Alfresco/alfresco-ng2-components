@@ -510,4 +510,38 @@ describe('DateCloudWidgetComponent', () => {
             expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
         });
     });
+
+    describe('showAllValidationErrors', () => {
+        it('should mark dateInputControl as touched when showAllValidationErrors is true', () => {
+            widget.field = new FormFieldModel(form, {
+                id: 'date-field-id',
+                name: 'date-name',
+                type: 'date',
+                required: true
+            });
+            fixture.detectChanges();
+
+            expect(widget.dateInputControl.touched).toBe(false);
+
+            form.showAllValidationErrors = true;
+            widget.updateReactiveFormControl();
+
+            expect(widget.dateInputControl.touched).toBe(true);
+        });
+
+        it('should not mark dateInputControl as touched when showAllValidationErrors is false', () => {
+            widget.field = new FormFieldModel(form, {
+                id: 'date-field-id',
+                name: 'date-name',
+                type: 'date',
+                required: true
+            });
+            fixture.detectChanges();
+
+            form.showAllValidationErrors = false;
+            widget.updateReactiveFormControl();
+
+            expect(widget.dateInputControl.touched).toBe(false);
+        });
+    });
 });

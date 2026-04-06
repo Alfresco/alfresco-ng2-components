@@ -349,4 +349,42 @@ describe('DropdownWidgetComponent', () => {
             });
         });
     });
+
+    describe('showAllValidationErrors', () => {
+        it('should mark dropdownControl as touched when showAllValidationErrors is true', () => {
+            const form = new FormModel();
+            widget.field = new FormFieldModel(form, {
+                id: 'dropdown-id',
+                name: 'dropdown-name',
+                type: FormFieldTypes.DROPDOWN,
+                required: true,
+                options: fakeOptionList
+            });
+            fixture.detectChanges();
+
+            expect(widget.dropdownControl.touched).toBe(false);
+
+            form.showAllValidationErrors = true;
+            widget.updateReactiveFormControl();
+
+            expect(widget.dropdownControl.touched).toBe(true);
+        });
+
+        it('should not mark dropdownControl as touched when showAllValidationErrors is false', () => {
+            const form = new FormModel();
+            widget.field = new FormFieldModel(form, {
+                id: 'dropdown-id',
+                name: 'dropdown-name',
+                type: FormFieldTypes.DROPDOWN,
+                required: true,
+                options: fakeOptionList
+            });
+            fixture.detectChanges();
+
+            form.showAllValidationErrors = false;
+            widget.updateReactiveFormControl();
+
+            expect(widget.dropdownControl.touched).toBe(false);
+        });
+    });
 });

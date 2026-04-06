@@ -165,6 +165,9 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         this.setFormControlValue();
 
         this.updateFormControlState();
+        if (this.field?.form?.showAllValidationErrors) {
+            this.dropdownControl.markAsTouched();
+        }
         this.handleErrors();
     }
 
