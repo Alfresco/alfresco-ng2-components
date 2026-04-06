@@ -95,11 +95,17 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
     }
 
     private setFormControlValue(): void {
-        this.dateInputControl.setValue(this.field.value, { emitEvent: false });
+        if (this.field.value !== this.dateInputControl.value) {
+            this.dateInputControl.setValue(this.field.value, { emitEvent: false });
+        }
     }
 
     private updateFormControlState(): void {
-        this.dateInputControl.setValidators(this.isRequired() && this.field?.isVisible ? [Validators.required] : []);
+        if (this.isRequired() && this.field?.isVisible) {
+            this.dateInputControl.addValidators(Validators.required);
+        } else {
+            this.dateInputControl.removeValidators(Validators.required);
+        }
         this.field?.readOnly || this.readOnly
             ? this.dateInputControl.disable({ emitEvent: false })
             : this.dateInputControl.enable({ emitEvent: false });
@@ -132,9 +138,12 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
     private handleErrors(errors: ValidationErrors): void {
         const errorAttributes = new Map<string, string>();
         switch (true) {
-            case !!errors.matDatepickerParse:
-                this.updateValidationSummary(this.field.dateDisplayFormat || this.field.defaultDateTimeFormat);
+            case !!errors.matDatepickerParse: {
+                const format = this.field.dateDisplayFormat || this.field.defaultDateTimeFormat;
+                errorAttributes.set('format', format);
+                this.updateValidationSummary('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT', errorAttributes);
                 break;
+            }
             case !!errors.required:
                 this.updateValidationSummary('FORM.FIELD.REQUIRED');
                 break;

@@ -544,4 +544,135 @@ describe('DateCloudWidgetComponent', () => {
             expect(widget.dateInputControl.touched).toBe(false);
         });
     });
+
+    describe('keyboard input', () => {
+        it('should process typed date in default format', async () => {
+            const field = new FormFieldModel(form, {
+                id: 'date-field-id',
+                name: 'date-name',
+                type: FormFieldTypes.DATE
+            });
+
+            widget.field = field;
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            await testingUtils.fillMatInput('25-03-2025');
+
+            expect(field.value).toEqual(jasmine.any(Date));
+            expect(field.value.getFullYear()).toBe(2025);
+            expect(field.value.getMonth()).toBe(2);
+            expect(field.value.getDate()).toBe(25);
+            expect(field.isValid).toBeTrue();
+        });
+
+        it('should process typed date in custom dateDisplayFormat', async () => {
+            const field = new FormFieldModel(form, {
+                id: 'date-field-id',
+                name: 'date-name',
+                type: FormFieldTypes.DATE,
+                dateDisplayFormat: 'MM-DD-YYYY'
+            });
+
+            widget.field = field;
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            await testingUtils.fillMatInput('03-25-2025');
+
+            expect(field.value).toEqual(jasmine.any(Date));
+            expect(field.value.getFullYear()).toBe(2025);
+            expect(field.value.getMonth()).toBe(2);
+            expect(field.value.getDate()).toBe(25);
+            expect(field.isValid).toBeTrue();
+        });
+
+        it('should show validation error when date is typed in wrong format', async () => {
+            const field = new FormFieldModel(form, {
+                id: 'date-field-id',
+                name: 'date-name',
+                type: FormFieldTypes.DATE,
+                dateDisplayFormat: 'MM-DD-YYYY'
+            });
+
+            widget.field = field;
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            await testingUtils.fillMatInput('03/25/2025');
+
+            expect(widget.dateInputControl.invalid).toBeTrue();
+            expect(field.isValid).toBeFalse();
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT');
+            expect(field.validationSummary.attributes.get('format')).toBe('MM-DD-YYYY');
+        });
+    });
+
+    describe('clearing invalid input', () => {
+        it('should transition from invalid to valid when clearing input on non-required field', async () => {
+            const field = new FormFieldModel(form, {
+                id: 'date-field-id',
+                name: 'date-name',
+                type: FormFieldTypes.DATE
+            });
+
+            widget.field = field;
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            await testingUtils.fillMatInput('invalid-text');
+
+            expect(widget.dateInputControl.invalid).toBeTrue();
+            expect(field.isValid).toBeFalse();
+
+            await testingUtils.fillMatInput('');
+
+            expect(widget.dateInputControl.valid).toBeTrue();
+            expect(field.isValid).toBeTrue();
+            expect(field.validationSummary.message).toBe('');
+        });
+    });
+
+    describe('addValidators idempotency', () => {
+        it('should not stack required validators on repeated updateReactiveFormControl calls', () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.DATE,
+                required: true
+            });
+            widget.field.isVisible = true;
+
+            fixture.detectChanges();
+
+            widget.updateReactiveFormControl();
+            widget.updateReactiveFormControl();
+            widget.updateReactiveFormControl();
+
+            widget.dateInputControl.setValue(new Date('2025-06-15'));
+            fixture.detectChanges();
+
+            expect(widget.field.isValid).toBeTrue();
+            expect(widget.dateInputControl.valid).toBeTrue();
+        });
+    });
+
+    describe('async enrichment', () => {
+        it('should sync FormControl when field.value is set externally', () => {
+            const field = new FormFieldModel(form, {
+                id: 'date-field-id',
+                name: 'date-name',
+                type: FormFieldTypes.DATE
+            });
+
+            widget.field = field;
+            fixture.detectChanges();
+
+            expect(widget.dateInputControl.value).toBeNull();
+
+            const enrichedDate = new Date('2025-06-15');
+            field.value = enrichedDate;
+            widget.updateReactiveFormControl();
+
+            expect(widget.dateInputControl.value).toBe(enrichedDate);
+        });
+    });
 });

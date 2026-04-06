@@ -196,25 +196,27 @@ describe('DateTimeWidgetComponent', () => {
 
         expect(widget.datetimeInputControl.invalid).toBeTrue();
         expect(field.isValid).toBeFalse();
-        expect(field.validationSummary.message).toBe('D-M-YYYY hh:mm A');
+        expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT');
+        expect(field.validationSummary.attributes.get('format')).toBe('D-M-YYYY hh:mm A');
     });
-    // eslint-disable-next-line
-    xit('should process direct keyboard input', async () => {
+    it('should process direct keyboard input', async () => {
         const field = new FormFieldModel(form, {
             id: 'date-field-id',
             name: 'date-name',
-            value: '9999-09-12T09:00:00.000Z',
             type: FormFieldTypes.DATETIME
         });
 
         widget.field = field;
 
-        fixture.whenStable();
+        fixture.detectChanges();
         await fixture.whenStable();
 
-        await testingUtils.fillMatInput('9999-09-12T09:10:00.000Z');
+        await testingUtils.fillMatInput('12-09-9999 10:30 AM');
 
-        expect(field.value).toEqual(new Date('9999-09-12T09:10:00.000Z'));
+        expect(field.value).toEqual(jasmine.any(Date));
+        expect(field.value.getFullYear()).toBe(9999);
+        expect(field.value.getMonth()).toBe(8);
+        expect(field.value.getDate()).toBe(12);
         expect(field.isValid).toBeTrue();
     });
 
@@ -235,7 +237,8 @@ describe('DateTimeWidgetComponent', () => {
         expect(widget.datetimeInputControl.invalid).toBeTrue();
         expect(field.value).toBe(null);
         expect(field.isValid).toBeFalse();
-        expect(field.validationSummary.message).toBe('D-M-YYYY hh:mm A');
+        expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT');
+        expect(field.validationSummary.attributes.get('format')).toBe('D-M-YYYY hh:mm A');
     });
 
     it('should allow empty dates when not required', async () => {
@@ -257,6 +260,94 @@ describe('DateTimeWidgetComponent', () => {
         expect(widget.datetimeInputControl.valid).toBeTrue();
         expect(field.value).toBe(null);
         expect(field.isValid).toBeTrue();
+    });
+
+    it('should process keyboard input with custom dateDisplayFormat', async () => {
+        const field = new FormFieldModel(form, {
+            id: 'date-field-id',
+            name: 'date-name',
+            type: FormFieldTypes.DATETIME,
+            dateDisplayFormat: 'MM-DD-YYYY hh:mm A'
+        });
+
+        widget.field = field;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        await testingUtils.fillMatInput('03-25-2025 02:30 PM');
+
+        expect(field.value).toEqual(jasmine.any(Date));
+        expect(field.value.getFullYear()).toBe(2025);
+        expect(field.value.getMonth()).toBe(2);
+        expect(field.value.getDate()).toBe(25);
+        expect(field.isValid).toBeTrue();
+    });
+
+    it('should show validation error when datetime is typed in wrong format', async () => {
+        const field = new FormFieldModel(form, {
+            id: 'date-field-id',
+            name: 'date-name',
+            type: FormFieldTypes.DATETIME,
+            dateDisplayFormat: 'MM-DD-YYYY hh:mm A'
+        });
+
+        widget.field = field;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        await testingUtils.fillMatInput('03/25/2025 02:30 PM');
+
+        expect(widget.datetimeInputControl.invalid).toBeTrue();
+        expect(field.isValid).toBeFalse();
+        expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT');
+        expect(field.validationSummary.attributes.get('format')).toBe('MM-DD-YYYY hh:mm A');
+    });
+
+    it('should transition from invalid to valid when clearing input on non-required field', async () => {
+        const field = new FormFieldModel(form, {
+            id: 'date-field-id',
+            name: 'date-name',
+            type: FormFieldTypes.DATETIME
+        });
+
+        widget.field = field;
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        await testingUtils.fillMatInput('invalid-text');
+
+        expect(widget.datetimeInputControl.invalid).toBeTrue();
+        expect(field.isValid).toBeFalse();
+
+        await testingUtils.fillMatInput('');
+
+        expect(widget.datetimeInputControl.valid).toBeTrue();
+        expect(field.isValid).toBeTrue();
+        expect(field.validationSummary.message).toBe('');
+    });
+
+    describe('addValidators idempotency', () => {
+        it('should not stack required validators on repeated updateReactiveFormControl calls', () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.DATETIME,
+                required: true
+            });
+            widget.field.isVisible = true;
+
+            fixture.detectChanges();
+
+            widget.updateReactiveFormControl();
+            widget.updateReactiveFormControl();
+            widget.updateReactiveFormControl();
+
+            widget.datetimeInputControl.setValue(new Date('2025-06-15T10:30:00.000Z'));
+            fixture.detectChanges();
+
+            expect(widget.field.isValid).toBeTrue();
+            expect(widget.datetimeInputControl.valid).toBeTrue();
+        });
     });
 
     describe('when tooltip is set', () => {
