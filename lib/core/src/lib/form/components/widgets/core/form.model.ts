@@ -94,6 +94,7 @@ export class FormModel implements ProcessFormModel {
     className: string;
     readOnly = false;
     isValid = true;
+    showAllValidationErrors = false;
     processVariables: ProcessVariableModel[] = [];
     variables: FormVariableModel[] = [];
     enableParentVisibilityCheck: boolean = false;

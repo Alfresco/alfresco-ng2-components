@@ -80,6 +80,9 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, Reac
 
     updateReactiveFormControl(): void {
         this.updateFormControlState();
+        if (this.field?.form?.showAllValidationErrors) {
+            this.dateInputControl.markAsTouched();
+        }
         this.validateField();
     }
 

@@ -79,6 +79,11 @@ describe('FormModel', () => {
         expect(form.readOnly).toBeTruthy();
     });
 
+    it('should have showAllValidationErrors default to false', () => {
+        const form = new FormModel({});
+        expect(form.showAllValidationErrors).toBe(false);
+    });
+
     it('should set form values when variable value is 0', () => {
         const variables = {
             pfx_property_one: 0

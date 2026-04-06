@@ -340,4 +340,38 @@ describe('DateWidgetComponent', () => {
 
         expect(dateElement.value).toContain('03-02-2020');
     });
+
+    describe('showAllValidationErrors', () => {
+        it('should mark dateInputControl as touched when showAllValidationErrors is true', () => {
+            widget.field = new FormFieldModel(form, {
+                id: 'date-field-id',
+                name: 'date-name',
+                type: FormFieldTypes.DATE,
+                required: true
+            });
+            fixture.detectChanges();
+
+            expect(widget.dateInputControl.touched).toBe(false);
+
+            form.showAllValidationErrors = true;
+            widget.updateReactiveFormControl();
+
+            expect(widget.dateInputControl.touched).toBe(true);
+        });
+
+        it('should not mark dateInputControl as touched when showAllValidationErrors is false', () => {
+            widget.field = new FormFieldModel(form, {
+                id: 'date-field-id',
+                name: 'date-name',
+                type: FormFieldTypes.DATE,
+                required: true
+            });
+            fixture.detectChanges();
+
+            form.showAllValidationErrors = false;
+            widget.updateReactiveFormControl();
+
+            expect(widget.dateInputControl.touched).toBe(false);
+        });
+    });
 });

@@ -80,7 +80,7 @@ export class WidgetComponent implements AfterViewInit {
     }
 
     isTouched(): boolean {
-        return this.touched;
+        return this.touched || !!this.field?.form?.showAllValidationErrors;
     }
 
     hasValue(): boolean {

@@ -526,4 +526,38 @@ describe('DateTimeWidgetComponent', () => {
             expect(asterisk?.textContent).toEqual('*');
         });
     });
+
+    describe('showAllValidationErrors', () => {
+        it('should mark datetimeInputControl as touched when showAllValidationErrors is true', () => {
+            widget.field = new FormFieldModel(form, {
+                id: 'datetime-id',
+                name: 'datetime-name',
+                type: FormFieldTypes.DATETIME,
+                required: true
+            });
+            fixture.detectChanges();
+
+            expect(widget.datetimeInputControl.touched).toBe(false);
+
+            form.showAllValidationErrors = true;
+            widget.updateReactiveFormControl();
+
+            expect(widget.datetimeInputControl.touched).toBe(true);
+        });
+
+        it('should not mark datetimeInputControl as touched when showAllValidationErrors is false', () => {
+            widget.field = new FormFieldModel(form, {
+                id: 'datetime-id',
+                name: 'datetime-name',
+                type: FormFieldTypes.DATETIME,
+                required: true
+            });
+            fixture.detectChanges();
+
+            form.showAllValidationErrors = false;
+            widget.updateReactiveFormControl();
+
+            expect(widget.datetimeInputControl.touched).toBe(false);
+        });
+    });
 });

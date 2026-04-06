@@ -71,6 +71,9 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
     updateReactiveFormControl(): void {
         this.setFormControlValue();
         this.updateFormControlState();
+        if (this.field?.form?.showAllValidationErrors) {
+            this.datetimeInputControl.markAsTouched();
+        }
         this.validateField();
     }
 
