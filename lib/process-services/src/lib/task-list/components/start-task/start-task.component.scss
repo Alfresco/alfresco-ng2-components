@@ -1,4 +1,5 @@
 @use '../../../styles/flex' as flex;
+@use '../../../../../../core/src/lib/styles/mat-selectors' as ms;
 
 /* stylelint-disable no-descending-specificity */
 .adf-new-task-heading {
@@ -137,6 +138,28 @@ adf-start-task {
                     background-color: var(--mat-sys-error);
                 }
             }
+        }
+    }
+}
+
+#{ms.$mat-calendar} {
+    #{ms.$mat-calendar-header} {
+        button {
+            color: var(--adf-theme-foreground-text-color-087);
+
+            &:disabled {
+                color: var(--adf-theme-foreground-text-color-064);
+            }
+        }
+    }
+    #{ms.$mat-calendar-content} {
+        #{ms.$mat-calendar-table-header} th {
+            color: var(--adf-theme-foreground-text-color-064);
+        }
+
+        #{ms.$mat-calendar-body-disabled} > div {
+            /* stylelint-disable-next-line declaration-no-important */
+            color: var(--adf-theme-foreground-text-color-064) !important;
         }
     }
 }
