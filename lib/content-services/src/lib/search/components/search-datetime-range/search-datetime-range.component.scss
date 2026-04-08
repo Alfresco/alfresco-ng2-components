@@ -1,18 +1,5 @@
-@use '../../../../../../core/src/lib/styles/mat-selectors' as ms;
-
 .adf-search-date-range > form {
     display: inline-flex;
     flex-direction: column;
     width: 100%;
-}
-
-#{ms.$mat-datetimepicker-calendar} {
-    #{ms.$mat-datetimepicker-calendar-content} {
-        #{ms.$mat-datetimepicker-calendar-table-header} th {
-            color: var(--adf-theme-foreground-text-color-064);
-        }
-        #{ms.$mat-datetimepicker-calendar-body-disabled} > div {
-            color: var(--adf-theme-foreground-text-color-064);
-        }
-    }
 }
