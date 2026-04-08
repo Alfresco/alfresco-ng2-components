@@ -1,5 +1,4 @@
 @use '../../../../flex' as flex;
-@use '../../../../../../../core/src/lib/styles/mat-selectors' as ms;
 
 .adf-edit-process-filter-date-error-container {
     position: absolute;
@@ -60,28 +59,6 @@
             &__description {
                 place-content: center space-between;
             }
-        }
-    }
-}
-
-#{ms.$mat-calendar} {
-    #{ms.$mat-calendar-header} {
-        button {
-            color: var(--adf-theme-foreground-text-color-087);
-
-            &:disabled {
-                color: var(--adf-theme-foreground-text-color-064);
-            }
-        }
-    }
-    #{ms.$mat-calendar-content} {
-        #{ms.$mat-calendar-table-header} th {
-            color: var(--adf-theme-foreground-text-color-064);
-        }
-
-        #{ms.$mat-calendar-body-disabled} > div {
-            /* stylelint-disable-next-line declaration-no-important */
-            color: var(--adf-theme-foreground-text-color-064) !important;
         }
     }
 }
