@@ -1,15 +1,4 @@
-@use '../../../../../../../../core/src/lib/styles/mat-selectors' as ms;
-
-.adf {
-    &-date-editor {
-        width: 100%;
-    }
-
-    &-date-editor-button {
-        position: relative;
-        top: 25px;
-    }
-}
+@use '../../../../../core/src/lib/styles/mat-selectors' as ms;
 
 #{ms.$mat-datetimepicker-calendar} {
     #{ms.$mat-datetimepicker-calendar-content} {

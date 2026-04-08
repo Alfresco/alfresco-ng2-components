@@ -42,6 +42,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
         MatInputModule,
         MatButtonModule
     ],
+    styleUrls: ['./node-lock.dialog.scss'],
     templateUrl: './node-lock.dialog.html',
     encapsulation: ViewEncapsulation.None
 })
