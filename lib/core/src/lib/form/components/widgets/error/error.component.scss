@@ -8,10 +8,10 @@
 
     &-container {
         padding-top: 0;
-        color: var(--mat-sys-error, --theme-warn-color);
+        color: var(--mat-sys-error);
 
         .adf-error-text {
-            font: var(--mat-sys-body-small, --theme-body-small-font-size);
+            font: var(--mat-sys-body-small);
         }
 
         .adf-error-icon {
