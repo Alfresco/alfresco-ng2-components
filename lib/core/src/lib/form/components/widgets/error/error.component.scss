@@ -4,10 +4,22 @@
 
     &-widget-container {
         height: auto;
-        padding: 5px 0;
     }
 
-    &-icon {
-        flex: 0 0 auto;
+    &-container {
+        padding-top: 0;
+        color: var(--mat-sys-error);
+
+        .adf-error-text {
+            font: var(--mat-sys-body-small);
+        }
+
+        .adf-error-icon {
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+            margin-right: 4px;
+            flex: 0 0 auto;
+        }
     }
 }
