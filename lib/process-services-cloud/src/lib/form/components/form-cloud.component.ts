@@ -27,7 +27,8 @@ import {
     OnChanges,
     OnInit,
     Output,
-    SimpleChanges
+    SimpleChanges,
+    ViewChild
 } from '@angular/core';
 import { forkJoin, Observable, of, Subscription } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
@@ -60,7 +61,7 @@ import { FormCloudDisplayMode, FormCloudDisplayModeConfiguration } from '../../s
 import { FormCloudSpinnerService } from '../services/spinner/form-cloud-spinner.service';
 import { DisplayModeService } from '../services/display-mode.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CommonModule } from '@angular/common';
+import { UpperCasePipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -71,7 +72,7 @@ export const FORM_CLOUD_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldVal
 @Component({
     selector: 'adf-cloud-form',
     imports: [
-        CommonModule,
+        UpperCasePipe,
         TranslatePipe,
         FormatSpacePipe,
         MatButtonModule,
@@ -140,6 +141,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Input()
     enableParentVisibilityCheck: boolean = false;
 
+    /** Toggle rendering of the tab navigation buttons (Previous/Next). */
+    @Input()
+    showTabNavigationButtons = false;
+
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
     formSaved = new EventEmitter<FormModel>();
@@ -177,6 +182,13 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     displayMode: string;
     displayConfiguration: FormCloudDisplayModeConfiguration = DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0];
     style: string = '';
+
+    @ViewChild(FormRendererComponent)
+    formRenderer!: FormRendererComponent<any>;
+
+    get shouldShowTabNavigation(): boolean {
+        return this.showTabNavigationButtons && this.form?.json?.showTabNavigation === true && this.formRenderer?.visibleTabs().length > 1;
+    }
 
     protected formCloudService = inject(FormCloudService);
     protected formService = inject(FormService);

@@ -117,6 +117,10 @@ export class TaskFormCloudComponent {
     @Input()
     enableParentVisibilityCheck: boolean = false;
 
+    /** Toggle rendering of the tab navigation buttons (Previous/Next). */
+    @Input()
+    showTabNavigationButtons = false;
+
     /** Task details. */
     @Input()
     taskDetails: TaskDetailsCloudModel;
