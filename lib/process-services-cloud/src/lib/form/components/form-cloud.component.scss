@@ -137,4 +137,22 @@
     .adf-label {
         white-space: normal;
     }
+
+    .adf-tab-navigation-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 24px;
+        margin-bottom: 8px;
+
+        button {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        @media (width <= 600px) {
+            padding: 12px 16px;
+        }
+    }
 }

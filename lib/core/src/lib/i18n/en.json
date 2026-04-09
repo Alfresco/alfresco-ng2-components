@@ -87,6 +87,10 @@
         "NO_LABEL": "Cancel"
       }
     },
+    "BUTTON": {
+      "PREVIOUS_TAB": "Previous",
+      "NEXT_TAB": "Next"
+    },
     "FIELD_STYLE": {
       "FONT_SIZE": "Font size",
       "FONT_WEIGHT": "Font weight",
