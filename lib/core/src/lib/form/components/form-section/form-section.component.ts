@@ -19,14 +19,13 @@ import { Component, inject, Input, OnInit, ViewEncapsulation } from '@angular/co
 import { WidgetVisibilityService } from '../../services/widget-visibility.service';
 import { FormFieldModel } from '../widgets/core/form-field.model';
 import { FormFieldComponent } from '../form-field/form-field.component';
-import { NgFor } from '@angular/common';
 
 @Component({
     selector: 'adf-form-section',
     templateUrl: './form-section.component.html',
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['./form-section.component.scss'],
-    imports: [NgFor, FormFieldComponent]
+    imports: [FormFieldComponent]
 })
 export class FormSectionComponent implements OnInit {
     @Input()
@@ -39,14 +38,15 @@ export class FormSectionComponent implements OnInit {
     }
 
     getSectionColumnWidth(numberOfColumns: number, columnFields: FormFieldModel[]): string {
-        const firstColumnFieldIndex = 0;
-        const defaultColspan = 1;
-        const fieldColspan = columnFields[firstColumnFieldIndex]?.colspan ?? defaultColspan;
+        if (!columnFields || columnFields.length === 0) {
+            return '0';
+        }
 
         if (typeof numberOfColumns !== 'number' || !numberOfColumns || numberOfColumns <= 0) {
             numberOfColumns = 1;
         }
 
-        return Math.min(100, (100 / numberOfColumns) * fieldColspan) + '';
+        const maxColspan = Math.max(...columnFields.map((field) => field.colspan || 1));
+        return Math.min(100, (100 / numberOfColumns) * maxColspan) + '';
     }
 }

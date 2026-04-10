@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectorRef, Component, DestroyRef, inject, Injector, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
@@ -54,9 +54,7 @@ import { IconModule } from '../../icon/icon.module';
         }
     ],
     imports: [
-        NgIf,
         MatTabsModule,
-        NgForOf,
         NgTemplateOutlet,
         TranslatePipe,
         MatButtonModule,
@@ -183,15 +181,19 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     }
 
     /**
-     * Calculate the column width based on the numberOfColumns and current field's colspan property
+     * Calculate the column width based on the numberOfColumns and the max colspan of fields within the column
      *
      * @param container container model
-     * @returns the column width for the given model
+     * @param columnFields fields in the specific column being rendered
+     * @returns the column width for the given column
      */
-    getColumnWidth(container: ContainerModel): string {
-        const { field } = container;
-        const colspan = field ? field.colspan : 1;
-        return (100 / field.numberOfColumns) * colspan + '';
+    getColumnWidth(container: ContainerModel, columnFields: FormFieldModel[]): string {
+        const numberOfColumns = container.field?.numberOfColumns || 1;
+        if (!columnFields || columnFields.length === 0) {
+            return '0';
+        }
+        const maxColspan = Math.max(...columnFields.map((field) => field.colspan || 1));
+        return Math.min(100, (100 / numberOfColumns) * maxColspan) + '';
     }
 
     private runMiddlewareServices(): void {

@@ -128,19 +128,19 @@ describe('FormSectionComponent', () => {
             expect(width).toBe('20');
         });
 
-        it('should handle empty columnFields array', () => {
+        it('should return 0 width for empty columnFields array', () => {
             const numberOfColumns = 3;
 
             const width = component.getSectionColumnWidth(numberOfColumns, []);
-            expect(parseFloat(width)).toBeCloseTo(33.33);
+            expect(width).toBe('0');
         });
 
-        it('should use first field colspan when multiple fields are provided', () => {
+        it('should use max field colspan when multiple fields are provided', () => {
             const numberOfColumns = 2;
             const columnFields = [{ colspan: 1 } as FormFieldModel, { colspan: 3 } as FormFieldModel];
 
             const width = component.getSectionColumnWidth(numberOfColumns, columnFields);
-            expect(width).toBe('50');
+            expect(width).toBe('100');
         });
     });
 });
