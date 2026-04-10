@@ -181,19 +181,46 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     }
 
     /**
-     * Calculate the column width based on the numberOfColumns and the max colspan of fields within the column
+     * Calculate the width for a column in flex layout, preserving authored empty spacer columns
+     * and collapsing only columns covered by a previous field's colspan.
      *
      * @param container container model
-     * @param columnFields fields in the specific column being rendered
+     * @param columns sibling columns in the rendered container or row
+     * @param columnIndex current column index
      * @returns the column width for the given column
      */
-    getColumnWidth(container: ContainerModel, columnFields: FormFieldModel[]): string {
+    getColumnWidth(container: ContainerModel, columns: Array<{ fields: FormFieldModel[] }>, columnIndex: number): string {
         const numberOfColumns = container.field?.numberOfColumns || 1;
+        const defaultColumnWidth = 100 / numberOfColumns;
+        const columnFields = columns?.[columnIndex]?.fields ?? [];
+
         if (!columnFields || columnFields.length === 0) {
-            return '0';
+            return this.isColumnCoveredByPreviousField(columns, columnIndex) ? '0' : defaultColumnWidth + '';
         }
+
         const maxColspan = Math.max(...columnFields.map((field) => field.colspan || 1));
-        return Math.min(100, (100 / numberOfColumns) * maxColspan) + '';
+        return Math.min(100, defaultColumnWidth * maxColspan) + '';
+    }
+
+    private isColumnCoveredByPreviousField(columns: Array<{ fields: FormFieldModel[] }>, columnIndex: number): boolean {
+        if (!columns || columnIndex <= 0) {
+            return false;
+        }
+
+        for (let previousColumnIndex = 0; previousColumnIndex < columnIndex; previousColumnIndex++) {
+            const previousFields = columns[previousColumnIndex]?.fields ?? [];
+
+            if (previousFields.length === 0) {
+                continue;
+            }
+
+            const previousColumnSpan = Math.max(...previousFields.map((field) => field.colspan || 1));
+            if (previousColumnIndex + previousColumnSpan > columnIndex) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private runMiddlewareServices(): void {

@@ -38,17 +38,17 @@ describe('FormSectionComponent', () => {
 
     it('should calculate the correct width for section columns', () => {
         const numberOfColumns = 3;
-        const columnField = { colspan: 2 } as FormFieldModel;
+        const columns = [{ fields: [{ colspan: 2 } as FormFieldModel] }];
 
-        const width = component.getSectionColumnWidth(numberOfColumns, [columnField]);
+        const width = component.getSectionColumnWidth(numberOfColumns, columns, 0);
         expect(width).toBe('66.66666666666667');
     });
 
     it('should handle columns with no colspan defined', () => {
         const numberOfColumns = 3;
-        const columnField = {} as FormFieldModel;
+        const columns = [{ fields: [{} as FormFieldModel] }];
 
-        const width = component.getSectionColumnWidth(numberOfColumns, [columnField]);
+        const width = component.getSectionColumnWidth(numberOfColumns, columns, 0);
         expect(width).toBe('33.333333333333336');
     });
 
@@ -63,83 +63,92 @@ describe('FormSectionComponent', () => {
 
     describe('getSectionColumnWidth', () => {
         it('should cap width at 100% when numberOfColumns is not a number', () => {
-            const columnField = { colspan: 2 } as FormFieldModel;
+            const columns = [{ fields: [{ colspan: 2 } as FormFieldModel] }];
 
-            const width = component.getSectionColumnWidth('invalid' as unknown as number, [columnField]);
+            const width = component.getSectionColumnWidth('invalid' as unknown as number, columns, 0);
             expect(width).toBe('100');
         });
 
         it('should cap width at 100% when numberOfColumns is null', () => {
-            const columnField = { colspan: 3 } as FormFieldModel;
+            const columns = [{ fields: [{ colspan: 3 } as FormFieldModel] }];
 
-            const width = component.getSectionColumnWidth(null as unknown as number, [columnField]);
+            const width = component.getSectionColumnWidth(null as unknown as number, columns, 0);
             expect(width).toBe('100');
         });
 
         it('should return 100% when numberOfColumns is undefined', () => {
-            const columnField = { colspan: 1 } as FormFieldModel;
+            const columns = [{ fields: [{ colspan: 1 } as FormFieldModel] }];
 
-            const width = component.getSectionColumnWidth(undefined as unknown as number, [columnField]);
+            const width = component.getSectionColumnWidth(undefined as unknown as number, columns, 0);
             expect(width).toBe('100');
         });
 
         it('should cap width at 100% when numberOfColumns is 0', () => {
-            const columnField = { colspan: 2 } as FormFieldModel;
+            const columns = [{ fields: [{ colspan: 2 } as FormFieldModel] }];
 
-            const width = component.getSectionColumnWidth(0, [columnField]);
+            const width = component.getSectionColumnWidth(0, columns, 0);
             expect(width).toBe('100');
         });
 
         it('should cap width at 100% when numberOfColumns is negative', () => {
-            const columnField = { colspan: 3 } as FormFieldModel;
+            const columns = [{ fields: [{ colspan: 3 } as FormFieldModel] }];
 
-            const width = component.getSectionColumnWidth(-1, [columnField]);
+            const width = component.getSectionColumnWidth(-1, columns, 0);
             expect(width).toBe('100');
         });
 
         it('should return 100 when numberOfColumns is falsy and no colspan is defined', () => {
-            const columnField = {} as FormFieldModel;
+            const columns = [{ fields: [{} as FormFieldModel] }];
 
-            const width = component.getSectionColumnWidth(null as unknown as number, [columnField]);
+            const width = component.getSectionColumnWidth(null as unknown as number, columns, 0);
             expect(width).toBe('100');
         });
 
         it('should calculate percentage width when numberOfColumns is a valid number', () => {
             const numberOfColumns = 4;
-            const columnField = { colspan: 2 } as FormFieldModel;
+            const columns = [{ fields: [{ colspan: 2 } as FormFieldModel] }];
 
-            const width = component.getSectionColumnWidth(numberOfColumns, [columnField]);
+            const width = component.getSectionColumnWidth(numberOfColumns, columns, 0);
             expect(width).toBe('50');
         });
 
         it('should cap width at 100% when colspan exceeds numberOfColumns', () => {
             const numberOfColumns = 2;
-            const columnField = { colspan: 5 } as FormFieldModel;
+            const columns = [{ fields: [{ colspan: 5 } as FormFieldModel] }];
 
-            const width = component.getSectionColumnWidth(numberOfColumns, [columnField]);
+            const width = component.getSectionColumnWidth(numberOfColumns, columns, 0);
             expect(width).toBe('100');
         });
 
         it('should use default colspan of 1 when field has no colspan and numberOfColumns is valid', () => {
             const numberOfColumns = 5;
-            const columnField = {} as FormFieldModel;
+            const columns = [{ fields: [{} as FormFieldModel] }];
 
-            const width = component.getSectionColumnWidth(numberOfColumns, [columnField]);
+            const width = component.getSectionColumnWidth(numberOfColumns, columns, 0);
             expect(width).toBe('20');
         });
 
-        it('should return 0 width for empty columnFields array', () => {
+        it('should return default width for an authored empty spacer column', () => {
             const numberOfColumns = 3;
+            const columns = [{ fields: [] }, { fields: [{ colspan: 1 } as FormFieldModel] }];
 
-            const width = component.getSectionColumnWidth(numberOfColumns, []);
+            const width = component.getSectionColumnWidth(numberOfColumns, columns, 0);
+            expect(width).toBe('33.333333333333336');
+        });
+
+        it('should return 0 width for an empty column covered by a previous colspan', () => {
+            const numberOfColumns = 4;
+            const columns = [{ fields: [{ colspan: 3 } as FormFieldModel] }, { fields: [] }, { fields: [] }, { fields: [] }];
+
+            const width = component.getSectionColumnWidth(numberOfColumns, columns, 1);
             expect(width).toBe('0');
         });
 
         it('should use max field colspan when multiple fields are provided', () => {
             const numberOfColumns = 2;
-            const columnFields = [{ colspan: 1 } as FormFieldModel, { colspan: 3 } as FormFieldModel];
+            const columns = [{ fields: [{ colspan: 1 } as FormFieldModel, { colspan: 3 } as FormFieldModel] }];
 
-            const width = component.getSectionColumnWidth(numberOfColumns, columnFields);
+            const width = component.getSectionColumnWidth(numberOfColumns, columns, 0);
             expect(width).toBe('100');
         });
     });

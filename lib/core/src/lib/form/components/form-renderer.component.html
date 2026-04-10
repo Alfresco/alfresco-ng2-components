@@ -60,11 +60,10 @@
             <ng-template #fixingTemplate>
                 @if (currentRootElement?.isExpanded) {
                     <section class="adf-grid-list-column-view">
-                    @for (column of currentRootElement?.columns; track $index) {
-                        @if (column?.fields?.length) {
+                    @for (column of currentRootElement?.columns; track $index; let columnIndex = $index) {
                             <div
                              class="adf-grid-list-single-column"
-                             [style.width.%]="getColumnWidth(currentRootElement, column?.fields)">
+                             [style.width.%]="getColumnWidth(currentRootElement, currentRootElement?.columns, columnIndex)">
                             @for (field of column?.fields; track $index) {
                                 @if (field.type === 'section') {
                                     <adf-form-section [field]="field"/>
@@ -75,7 +74,6 @@
                                 }
                             }
                         </div>
-                        }
                     }
                 </section>
                 }
@@ -124,11 +122,10 @@
                                 }
                             </div>
                             <section  class="adf-grid-list-column-view">
-                                @for (column of row.columns; track $index) {
-                                    @if (column?.fields?.length) {
+                                @for (column of row.columns; track $index; let columnIndex = $index) {
                                         <div
                                             class="adf-grid-list-single-column"
-                                            [style.width.%]="getColumnWidth(currentRootElement, column?.fields)">
+                                            [style.width.%]="getColumnWidth(currentRootElement, row.columns, columnIndex)">
                                             @for (field of column?.fields; track $index) {
                                                 @if (field.type === 'section') {
                                                     <adf-form-section [field]="field"/>
@@ -139,7 +136,6 @@
                                                 }
                                             }
                                         </div>
-                                    }
                                 }
                             </section>
                         </div>
