@@ -94,46 +94,49 @@
                     <mat-card-content class="adf-form-container-card-content">
                         <adf-form-renderer [formDefinition]="form" [readOnly]="readOnly" />
                     </mat-card-content>
-                    @if (shouldShowTabNavigation) {
-                        <div class="adf-tab-navigation-buttons">
-                            <button
-                                mat-button
-                                [title]="'FORM.BUTTON.PREVIOUS_TAB_TITLE' | translate"
-                                [disabled]="!formRenderer.canNavigatePrevious"
-                                (click)="formRenderer.navigateToPreviousTab()"
-                                data-automation-id="tab-nav-previous-button">
-                                <mat-icon adf-icon="keyboard_arrow_left" />
-                                {{ 'FORM.BUTTON.PREVIOUS_TAB' | translate }}
-                            </button>
-                            <button
-                                mat-button
-                                [title]="'FORM.BUTTON.NEXT_TAB_TITLE' | translate"
-                                [disabled]="!formRenderer.canNavigateNext"
-                                (click)="formRenderer.navigateToNextTab()"
-                                data-automation-id="tab-nav-next-button">
-                                {{ 'FORM.BUTTON.NEXT_TAB' | translate }}
-                                <mat-icon adf-icon="keyboard_arrow_right" iconPositionEnd />
-                            </button>
-                        </div>
-                    }
-                    @if (form.hasOutcomes()) {
-                        <mat-card-actions class="adf-cloud-form-content-card-actions" align="end">
-                            <ng-content select="adf-cloud-form-custom-outcomes" />
-                            @for (outcome of form.outcomes; track outcome.name) {
-                                @if (outcome.isVisible) {
+                    @if (form.hasOutcomes() || shouldShowTabNavigation) {
+                        <mat-card-actions class="adf-cloud-form-content-card-actions" [class.adf-has-tab-navigation]="shouldShowTabNavigation" align="end">
+                            @if (shouldShowTabNavigation) {
+                                <div class="adf-tab-navigation-buttons">
                                     <button
-                                        [id]="'adf-form-' + outcome.name | formatSpace"
-                                        [color]="getColorForOutcome(outcome.name)"
                                         mat-button
-                                        [disabled]="!isOutcomeButtonEnabled(outcome)"
-                                        [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
-                                        class="adf-cloud-form-custom-outcome-button"
-                                        (click)="onOutcomeClicked(outcome)"
-                                    >
-                                        {{ getCustomOutcomeButtonText(outcome) || (outcome.name | translate | uppercase) }}
+                                        [title]="'FORM.BUTTON.PREVIOUS_TAB_TITLE' | translate"
+                                        [disabled]="!formRenderer.canNavigatePrevious"
+                                        (click)="formRenderer.navigateToPreviousTab()"
+                                        data-automation-id="tab-nav-previous-button">
+                                        <mat-icon adf-icon="keyboard_arrow_left" />
+                                        {{ 'FORM.BUTTON.PREVIOUS_TAB' | translate }}
                                     </button>
-                                }
+                                    <button
+                                        mat-button
+                                        [title]="'FORM.BUTTON.NEXT_TAB_TITLE' | translate"
+                                        [disabled]="!formRenderer.canNavigateNext"
+                                        (click)="formRenderer.navigateToNextTab()"
+                                        data-automation-id="tab-nav-next-button">
+                                        {{ 'FORM.BUTTON.NEXT_TAB' | translate }}
+                                        <mat-icon adf-icon="keyboard_arrow_right" iconPositionEnd />
+                                    </button>
+                                </div>
+                                <span class="adf-tab-navigation-divider"></span>
                             }
+                            <div class="adf-cloud-form-outcome-buttons">
+                                <ng-content select="adf-cloud-form-custom-outcomes" />
+                                @for (outcome of form.outcomes; track outcome.name) {
+                                    @if (outcome.isVisible) {
+                                        <button
+                                            [id]="'adf-form-' + outcome.name | formatSpace"
+                                            [color]="getColorForOutcome(outcome.name)"
+                                            mat-button
+                                            [disabled]="!isOutcomeButtonEnabled(outcome)"
+                                            [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
+                                            class="adf-cloud-form-custom-outcome-button"
+                                            (click)="onOutcomeClicked(outcome)"
+                                        >
+                                            {{ getCustomOutcomeButtonText(outcome) || (outcome.name | translate | uppercase) }}
+                                        </button>
+                                    }
+                                }
+                            </div>
                         </mat-card-actions>
                     }
                 </div>
