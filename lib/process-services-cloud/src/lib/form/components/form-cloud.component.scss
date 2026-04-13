@@ -139,13 +139,39 @@
     }
 }
 
-.adf-tab-navigation-buttons {
+.adf-cloud-form-content-card-actions.adf-has-tab-navigation {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 4px 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 
     @media (width <= 600px) {
-        padding: 4px 8px;
+        flex-direction: column;
+        align-items: stretch;
     }
+}
+
+.adf-tab-navigation-buttons {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    @media (width <= 600px) {
+        justify-content: center;
+    }
+}
+
+.adf-tab-navigation-divider {
+    width: 1px;
+    height: 24px;
+    background-color: var(--mat-sys-outline-variant, rgba(0, 0, 0, 0.12));
+
+    @media (width <= 600px) {
+        display: none;
+    }
+}
+
+.adf-cloud-form-outcome-buttons {
+    display: flex;
+    align-items: center;
 }
