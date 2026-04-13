@@ -315,7 +315,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     private async setUpNodeFile(nodeData: Node, versionData?: Version): Promise<void> {
         this.canEditNode = this.contentService.hasAllowableOperations(nodeData, 'update');
         let mimeType: string;
-        let nodeMimeType: string;
         let urlFileContent: string;
 
         if (versionData?.content) {
@@ -323,7 +322,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
         } else if (nodeData.content) {
             mimeType = nodeData.content.mimeType;
         }
-        nodeMimeType = mimeType;
+        const nodeMimeType = mimeType;
 
         const currentFileVersion = this.nodeEntry?.entry?.properties?.['cm:versionLabel']
             ? encodeURI(this.nodeEntry?.entry?.properties['cm:versionLabel'])

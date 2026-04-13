@@ -573,38 +573,51 @@ describe('AlfrescoViewerComponent', () => {
         describe('versioned file with rendition', () => {
             const docxMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
             const xlsxMimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            const nodeId = 'node-id';
+            const previousVersionId = '1.0';
+            const newVersionId = '2.0';
 
             beforeEach(() => {
                 spyOn(component.versionsApi, 'getVersion').and.returnValue(
                     Promise.resolve(
-                        new VersionEntry({ entry: new Node({ name: 'file.docx', content: new ContentInfo({ mimeType: docxMimeType }) }) })
+                        new VersionEntry({
+                            entry: new Node({ id: newVersionId, name: 'file.docx', content: new ContentInfo({ mimeType: docxMimeType }) })
+                        })
                     )
                 );
                 spyOn(renditionService, 'getNodeRendition').and.returnValue(Promise.resolve({ url: 'rendition-url', mimeType: 'application/pdf' }));
 
-                component.nodeId = 'node-id';
-                component.versionId = '2.0';
+                component.nodeId = nodeId;
+                component.versionId = previousVersionId;
                 component.showViewer = true;
             });
 
             it('should set nodeMimeType from versionData.content.mimeType, not nodeData.content.mimeType', fakeAsync(() => {
                 spyOn(component.nodesApi, 'getNode').and.returnValue(
-                    Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file.xlsx', content: new ContentInfo({ mimeType: xlsxMimeType }) }) }))
+                    Promise.resolve(
+                        new NodeEntry({ entry: new Node({ id: nodeId, name: 'file.xlsx', content: new ContentInfo({ mimeType: xlsxMimeType }) }) })
+                    )
                 );
 
-                component.ngOnChanges(getSimpleChangesWithVersion('node-id', '1.0'));
+                component.versionId = newVersionId;
+                component.ngOnChanges(getSimpleChangesWithVersion(nodeId, newVersionId, nodeId, previousVersionId));
                 tick();
 
+                expect(renditionService.getNodeRendition).toHaveBeenCalledWith(nodeId, newVersionId);
                 expect(component.mimeType).toBe('application/pdf');
                 expect(component.nodeMimeType).toBe(docxMimeType);
             }));
 
             it('should preserve nodeMimeType from versionData when nodeData has no content', fakeAsync(() => {
-                spyOn(component.nodesApi, 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file.docx' }) })));
+                spyOn(component.nodesApi, 'getNode').and.returnValue(
+                    Promise.resolve(new NodeEntry({ entry: new Node({ id: nodeId, name: 'file.docx' }) }))
+                );
 
-                component.ngOnChanges(getSimpleChangesWithVersion('node-id', '1.0'));
+                component.versionId = newVersionId;
+                component.ngOnChanges(getSimpleChangesWithVersion(nodeId, newVersionId, nodeId, previousVersionId));
                 tick();
 
+                expect(renditionService.getNodeRendition).toHaveBeenCalledWith(nodeId, newVersionId);
                 expect(component.mimeType).toBe('application/pdf');
                 expect(component.nodeMimeType).toBe(docxMimeType);
             }));
