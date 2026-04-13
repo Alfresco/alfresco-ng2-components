@@ -165,7 +165,7 @@
     }
   },
   "ADF_CLOUD_EDIT_TASK_FILTER": {
-    "TITLE": "Customize your filter",
+    "TITLE": "Customise your filter",
     "FILTER_NAME": "Filter name",
     "TOOL_TIP": {
       "SAVE": "Save filter",
@@ -221,7 +221,7 @@
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
-    "TITLE": "Customize your filter",
+    "TITLE": "Customise your filter",
     "FILTER_NAME": "Filter name",
     "LABEL": {
       "APP_NAME": "ApplicationName",
