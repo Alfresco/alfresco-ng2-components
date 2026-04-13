@@ -90,13 +90,13 @@
     "FIELD_STYLE": {
       "FONT_SIZE": "Font size",
       "FONT_WEIGHT": "Font weight",
-      "FONT_COLOR": "Font color",
+      "FONT_COLOR": "Font colour",
       "FONT_WEIGHTS": {
         "REGULAR": "regular",
         "BOLD": "bold"
       },
       "COLORS": {
-        "SYSTEM_COLOR": "system color",
+        "SYSTEM_COLOR": "system colour",
         "BLACK": "black",
         "GREY": "grey",
         "RED": "red",
@@ -602,13 +602,13 @@
         "NAME": "Name",
         "VERSION": "Version",
         "VENDOR": "Vendor",
-        "LICENSE": "License",
+        "LICENSE": "Licence",
         "RUNTIME": "Runtime",
         "DESCRIPTION": "Description"
       }
     },
     "LICENSE": {
-      "TITLE": "License",
+      "TITLE": "Licence",
       "PROPERTY": "Property",
       "VALUE": "Value",
       "ENABLED": "Enabled",
