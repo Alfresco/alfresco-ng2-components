@@ -345,7 +345,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
             if (nodeRendition) {
                 urlFileContent = nodeRendition.url;
 
-                nodeMimeType = nodeData?.content?.mimeType;
                 const renditionMimeType = nodeRendition.mimeType;
                 mimeType = renditionMimeType || nodeMimeType;
             }
