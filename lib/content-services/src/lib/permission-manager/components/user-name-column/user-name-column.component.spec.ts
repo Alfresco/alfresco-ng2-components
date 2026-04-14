@@ -18,11 +18,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserNameColumnComponent } from './user-name-column.component';
 import { NodeEntry } from '@alfresco/js-api';
+import { UnitTestingUtils } from '@alfresco/adf-core';
 
 describe('UserNameColumnComponent', () => {
     let fixture: ComponentFixture<UserNameColumnComponent>;
     let component: UserNameColumnComponent;
-    let element: HTMLElement;
+    let testingUtils: UnitTestingUtils;
     const person = {
         firstName: 'fake',
         lastName: 'user',
@@ -34,13 +35,15 @@ describe('UserNameColumnComponent', () => {
         displayName: 'fake authority'
     };
 
+    const getUserName = (): string => testingUtils.getInnerTextByCSS('.adf-user-name-column');
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [UserNameColumnComponent]
         });
         fixture = TestBed.createComponent(UserNameColumnComponent);
         component = fixture.componentInstance;
-        element = fixture.nativeElement;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
     });
 
@@ -55,8 +58,8 @@ describe('UserNameColumnComponent', () => {
             };
             component.ngOnInit();
             fixture.detectChanges();
-            expect(element.querySelector('[title="fake user"]').textContent).toContain('fake user');
-            expect(element.querySelector('[title="fake@test.com"]').textContent).toContain('fake@test.com');
+            expect(getUserName()).toBe('fake user');
+            expect(testingUtils.getInnerTextByCSS('.adf-user-email-column')).toBe('fake@test.com');
         });
 
         it('should render person value from node', (done) => {
@@ -95,7 +98,7 @@ describe('UserNameColumnComponent', () => {
             };
             component.ngOnInit();
             fixture.detectChanges();
-            expect(element.querySelector('[title="fake authority"]').textContent.trim()).toBe('fake authority');
+            expect(getUserName()).toBe('fake authority');
         });
 
         it('should display group id when display name is not provided', () => {
@@ -110,20 +113,35 @@ describe('UserNameColumnComponent', () => {
             };
             component.ngOnInit();
             fixture.detectChanges();
-            expect(element.querySelector('[title="fake_group_id"]').textContent.trim()).toBe('fake_group_id');
+            expect(getUserName()).toBe('fake_group_id');
         });
 
-        it('should render group for authorityId', () => {
+        it('should render group for authorityId when authorityDisplayName is not provided', () => {
             component.context = {
                 row: {
                     obj: {
-                        authorityId: 'fake-id'
+                        authorityId: 'fake-id',
+                        authorityDisplayName: null
                     }
                 }
             };
             component.ngOnInit();
             fixture.detectChanges();
-            expect(element.querySelector('[title=fake-id]').textContent.trim()).toBe('fake-id');
+            expect(getUserName()).toBe('fake-id');
+        });
+
+        it('should render authority display name when provided', () => {
+            component.context = {
+                row: {
+                    obj: {
+                        authorityId: 'fake-id',
+                        authorityDisplayName: 'Fake authority'
+                    }
+                }
+            };
+            component.ngOnInit();
+            fixture.detectChanges();
+            expect(getUserName()).toBe('Fake authority');
         });
 
         it('should render person value from node', () => {
@@ -137,7 +155,7 @@ describe('UserNameColumnComponent', () => {
             } as NodeEntry;
             component.ngOnInit();
             fixture.detectChanges();
-            expect(element.querySelector('[title="Fake authority"]').textContent.trim()).toBe('Fake authority');
+            expect(getUserName()).toBe('Fake authority');
         });
     });
 });
