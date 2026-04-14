@@ -1762,38 +1762,80 @@ describe('Accessibility', () => {
     });
 
     describe('drag button and multiselect checkbox accessibility', () => {
-        it('should have aria-hidden on drag button', () => {
-            const dataRows = [{ name: 'test1' }];
-            dataTable.enableDragRows = true;
-            dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
-            dataTable.showHeader = ShowHeaderMode.Never;
+        let dataRows: Array<{ name: string; isSelected?: boolean }>;
 
+        const setupRows = (): void => {
+            dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
             dataTable.ngOnChanges({
                 rows: new SimpleChange(null, dataRows, false)
             });
-
             fixture.detectChanges();
+        };
+
+        beforeEach(() => {
+            dataRows = [{ name: 'test1' }];
+            dataTable.showHeader = ShowHeaderMode.Never;
+        });
+
+        it('should have aria-hidden on drag button', () => {
+            dataTable.enableDragRows = true;
+            setupRows();
+
             const dragButton = testingUtils.getByCSS('.adf-datatable__actions-cell [aria-hidden="true"]');
             expect(dragButton).toBeTruthy();
             expect(dragButton.attributes['aria-hidden']).toBe('true');
         });
 
         it('should have aria-hidden and negative tabindex on multiselect checkbox', () => {
-            const dataRows = [{ name: 'test1' }];
             dataTable.multiselect = true;
-            dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
-            dataTable.showHeader = ShowHeaderMode.Never;
+            setupRows();
 
-            dataTable.ngOnChanges({
-                rows: new SimpleChange(null, dataRows, false)
-            });
-
-            fixture.detectChanges();
             const checkboxContainer = testingUtils.getByCSS('.adf-checkbox-sr-only');
             expect(checkboxContainer).toBeTruthy();
             expect(checkboxContainer.attributes['aria-hidden']).toBe('true');
             expect(checkboxContainer.nativeElement.tabIndex).toBe(-1);
         });
+
+        it('should render selection state live region when multiselect is enabled', () => {
+            dataTable.multiselect = true;
+            setupRows();
+
+            const liveRegions = testingUtils.getAllByCSS('.adf-sr-only[aria-live="off"]');
+            expect(liveRegions.length).toEqual(1);
+        });
+
+        it('should not render selection state live region when multiselect is disabled', () => {
+            dataTable.multiselect = false;
+            setupRows();
+
+            const bodyRows = testingUtils.getAllByCSS('.adf-datatable-body .adf-datatable-row');
+            bodyRows.forEach((row) => {
+                const selectionLiveRegion = row.nativeElement.querySelector('.adf-sr-only[aria-live="off"]');
+                expect(selectionLiveRegion).toBeFalsy();
+            });
+        });
+
+        it('should update live region content when row selection state changes', fakeAsync(() => {
+            dataRows = [{ name: 'test1', isSelected: false }];
+            dataTable.multiselect = true;
+            setupRows();
+            tick();
+
+            const bodyRows = testingUtils.getAllByCSS('.adf-datatable-body .adf-datatable-row');
+            expect(bodyRows.length).toBeGreaterThan(0);
+
+            const firstRow = bodyRows[0];
+            const liveRegion = firstRow.nativeElement.querySelector('.adf-sr-only[aria-live="off"]');
+            expect(liveRegion).toBeTruthy();
+
+            expect(liveRegion.textContent.trim()).toBe('');
+
+            dataTable.data.getRows()[0].isSelected = true;
+            fixture.detectChanges();
+            tick();
+
+            expect(liveRegion.textContent).toContain('SELECTED');
+        }));
     });
 
     describe('aria-sort', () => {
