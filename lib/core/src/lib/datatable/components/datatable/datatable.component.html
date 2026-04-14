@@ -253,13 +253,6 @@
                             (enableDragRows ? ('ADF-DATATABLE.ACCESSIBILITY.DRAGGABLE' | translate) : '')
                         "
                     >
-                        <!-- Live region for selection state  -->
-                        @if (multiselect) {
-                            <span class="adf-sr-only" aria-live="off">
-                                {{ row.isSelected ? ('ADF-DATATABLE.ACCESSIBILITY.SELECTED' | translate) : '' }}
-                            </span>
-                        }
-
                         <!-- Drag button -->
                         @if (enableDragRows) {
                             <div
@@ -318,6 +311,12 @@
                                     aria-hidden="true"
                                 />
                             </label>
+
+                            <!-- Live region for selection state  -->
+                            <span class="adf-sr-only" aria-live="off">
+                                {{ row.isSelected ? ('ADF-DATATABLE.ACCESSIBILITY.SELECTED' | translate) : '' }}
+                            </span>
+                            
                             }
 
                         @for (col of getVisibleColumns(); track col.key; let lastColumn = $last;) {
