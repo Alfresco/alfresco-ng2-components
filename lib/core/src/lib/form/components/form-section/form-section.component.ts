@@ -19,12 +19,13 @@ import { Component, inject, Input, OnInit, ViewEncapsulation } from '@angular/co
 import { WidgetVisibilityService } from '../../services/widget-visibility.service';
 import { FormFieldModel } from '../widgets/core/form-field.model';
 import { FormFieldComponent } from '../form-field/form-field.component';
+import { FormLayoutColumn, getFormLayoutColumnWidth } from '../helpers/column-width';
 
 @Component({
     selector: 'adf-form-section',
     templateUrl: './form-section.component.html',
     encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./form-section.component.scss'],
+    styleUrl: './form-section.component.scss',
     imports: [FormFieldComponent]
 })
 export class FormSectionComponent implements OnInit {
@@ -37,40 +38,7 @@ export class FormSectionComponent implements OnInit {
         this.visibilityService.refreshVisibility(this.field.form);
     }
 
-    getSectionColumnWidth(numberOfColumns: number, columns: Array<{ fields: FormFieldModel[] }>, columnIndex: number): string {
-        if (typeof numberOfColumns !== 'number' || !numberOfColumns || numberOfColumns <= 0) {
-            numberOfColumns = 1;
-        }
-
-        const defaultColumnWidth = 100 / numberOfColumns;
-        const columnFields = columns?.[columnIndex]?.fields ?? [];
-
-        if (!columnFields || columnFields.length === 0) {
-            return this.isColumnCoveredByPreviousField(columns, columnIndex) ? '0' : defaultColumnWidth + '';
-        }
-
-        const maxColspan = Math.max(...columnFields.map((field) => field.colspan || 1));
-        return Math.min(100, defaultColumnWidth * maxColspan) + '';
-    }
-
-    private isColumnCoveredByPreviousField(columns: Array<{ fields: FormFieldModel[] }>, columnIndex: number): boolean {
-        if (!columns || columnIndex <= 0) {
-            return false;
-        }
-
-        for (let previousColumnIndex = 0; previousColumnIndex < columnIndex; previousColumnIndex++) {
-            const previousFields = columns[previousColumnIndex]?.fields ?? [];
-
-            if (previousFields.length === 0) {
-                continue;
-            }
-
-            const previousColumnSpan = Math.max(...previousFields.map((field) => field.colspan || 1));
-            if (previousColumnIndex + previousColumnSpan > columnIndex) {
-                return true;
-            }
-        }
-
-        return false;
+    getSectionColumnWidth(numberOfColumns: number, columns: FormLayoutColumn[], columnIndex: number): string {
+        return getFormLayoutColumnWidth(numberOfColumns, columns, columnIndex);
     }
 }

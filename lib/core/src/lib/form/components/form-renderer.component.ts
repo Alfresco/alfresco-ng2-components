@@ -36,11 +36,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../lib/dialogs/confirm-dialog/confirm.dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { IconModule } from '../../icon/icon.module';
+import { FormLayoutColumn, getFormLayoutColumnWidth } from './helpers/column-width';
 
 @Component({
     selector: 'adf-form-renderer',
     templateUrl: './form-renderer.component.html',
-    styleUrls: ['./form-renderer.component.scss'],
+    styleUrl: './form-renderer.component.scss',
     providers: [
         {
             provide: FormRulesManager,
@@ -180,47 +181,8 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
             });
     }
 
-    /**
-     * Calculate the width for a column in flex layout, preserving authored empty spacer columns
-     * and collapsing only columns covered by a previous field's colspan.
-     *
-     * @param container container model
-     * @param columns sibling columns in the rendered container or row
-     * @param columnIndex current column index
-     * @returns the column width for the given column
-     */
-    getColumnWidth(container: ContainerModel, columns: Array<{ fields: FormFieldModel[] }>, columnIndex: number): string {
-        const numberOfColumns = container.field?.numberOfColumns || 1;
-        const defaultColumnWidth = 100 / numberOfColumns;
-        const columnFields = columns?.[columnIndex]?.fields ?? [];
-
-        if (!columnFields || columnFields.length === 0) {
-            return this.isColumnCoveredByPreviousField(columns, columnIndex) ? '0' : defaultColumnWidth + '';
-        }
-
-        const maxColspan = Math.max(...columnFields.map((field) => field.colspan || 1));
-        return Math.min(100, defaultColumnWidth * maxColspan) + '';
-    }
-
-    private isColumnCoveredByPreviousField(columns: Array<{ fields: FormFieldModel[] }>, columnIndex: number): boolean {
-        if (!columns || columnIndex <= 0) {
-            return false;
-        }
-
-        for (let previousColumnIndex = 0; previousColumnIndex < columnIndex; previousColumnIndex++) {
-            const previousFields = columns[previousColumnIndex]?.fields ?? [];
-
-            if (previousFields.length === 0) {
-                continue;
-            }
-
-            const previousColumnSpan = Math.max(...previousFields.map((field) => field.colspan || 1));
-            if (previousColumnIndex + previousColumnSpan > columnIndex) {
-                return true;
-            }
-        }
-
-        return false;
+    getColumnWidth(container: ContainerModel, columns: FormLayoutColumn[], columnIndex: number): string {
+        return getFormLayoutColumnWidth(container.field?.numberOfColumns, columns, columnIndex);
     }
 
     private runMiddlewareServices(): void {
