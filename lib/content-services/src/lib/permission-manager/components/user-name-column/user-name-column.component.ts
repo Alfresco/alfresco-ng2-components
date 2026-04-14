@@ -53,7 +53,7 @@ export class UserNameColumnComponent implements OnInit {
     ngOnInit() {
         if (this.context != null) {
             const { person, group, authorityId, authorityDisplayName } = this.context.row.obj?.entry ?? this.context.row.obj;
-            const permissionGroup = authorityId ? ({ displayName: authorityDisplayName || authorityId } as Group) : null;
+            const permissionGroup: Group | null = authorityId ? { displayName: authorityDisplayName, id: authorityId } : null;
             this.updatePerson(person);
             this.updateGroup(group || permissionGroup);
         }

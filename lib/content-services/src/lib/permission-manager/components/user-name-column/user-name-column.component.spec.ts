@@ -35,7 +35,7 @@ describe('UserNameColumnComponent', () => {
         displayName: 'fake authority'
     };
 
-    const getUserName = (): string => testingUtils.getInnerTextByCSS('.adf-user-name-column');
+    const getUserName = (): string => testingUtils.getInnerTextByCSS('span.adf-user-name-column');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
