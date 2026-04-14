@@ -4,7 +4,7 @@
         @if (hasTabs()) {
             <div class="alfresco-tabs-widget">
             <mat-tab-group [preserveContent]="true">
-                @for (tab of visibleTabs(); track $index) {
+                @for (tab of visibleTabs(); track tab) {
                     <mat-tab [label]="tab.title | translate ">
                     <ng-template matTabContent>
                         <div class="adf-form-tab-content">
@@ -26,7 +26,7 @@
 </div>
 
 <ng-template #render let-fieldToRender="fieldToRender">
-    @for (currentRootElement of fieldToRender; track $index) {
+    @for (currentRootElement of fieldToRender; track currentRootElement) {
         @if (currentRootElement.type === 'section') {
             <div [id]="'field-' + currentRootElement?.id + '-container'" class="adf-container-widget">
             <adf-form-section [field]="currentRootElement.field" />
@@ -43,7 +43,7 @@
                 @if (currentRootElement?.isExpanded) {
                     <div class="adf-grid-list"
                          [ngStyle]="{ 'grid-template-columns': 'repeat(' + getNumberOfColumns(currentRootElement) + ', 1fr)' }">
-                        @for (field of getContainerFields(currentRootElement); track $index) {
+                        @for (field of getContainerFields(currentRootElement); track field ?? $index) {
                             <div class="adf-grid-list-item"
                                  [ngStyle]="{ 'grid-area': 'auto / auto / span ' + (field?.rowspan || 1) + ' / span ' + (field?.colspan || 1) }">
                                 @if (field) {
@@ -60,11 +60,11 @@
             <ng-template #fixingTemplate>
                 @if (currentRootElement?.isExpanded) {
                     <section class="adf-grid-list-column-view">
-                    @for (column of currentRootElement?.columns; track $index; let columnIndex = $index) {
+                    @for (column of currentRootElement?.columns; track column; let columnIndex = $index) {
                             <div
                              class="adf-grid-list-single-column"
                              [style.width.%]="getColumnWidth(currentRootElement, currentRootElement?.columns, columnIndex)">
-                            @for (field of column?.fields; track $index) {
+                            @for (field of column?.fields; track field) {
                                 @if (field.type === 'section') {
                                     <adf-form-section [field]="field"/>
                                 } @else {
@@ -80,7 +80,7 @@
             </ng-template>
 
             <ng-template #columnViewItem let-column="column">
-                @for (field of column?.fields; track $index) {
+                @for (field of column?.fields; track field) {
                     <div class="adf-grid-list-column-view-item">
                         @if (field) {
                             <adf-form-field [field]="field" />
@@ -98,7 +98,7 @@
                 [hidden]="!currentRootElement?.isVisible"
             >
                 <adf-repeat-widget [element]="currentRootElement" [isEditor]="false">
-                    @for (row of currentRootElement.field.rows; track row.id; let rowIndex = $index) {
+                    @for (row of currentRootElement.field.rows; track row; let rowIndex = $index) {
                         @let hasMultipleRows = currentRootElement.field.rows.length > 1;
                         <div
                             class="adf-grid-list-container"
@@ -122,11 +122,11 @@
                                 }
                             </div>
                             <section  class="adf-grid-list-column-view">
-                                @for (column of row.columns; track $index; let columnIndex = $index) {
+                                @for (column of row.columns; track column; let columnIndex = $index) {
                                         <div
                                             class="adf-grid-list-single-column"
                                             [style.width.%]="getColumnWidth(currentRootElement, row.columns, columnIndex)">
-                                            @for (field of column?.fields; track $index) {
+                                            @for (field of column?.fields; track field) {
                                                 @if (field.type === 'section') {
                                                     <adf-form-section [field]="field"/>
                                                 } @else {
