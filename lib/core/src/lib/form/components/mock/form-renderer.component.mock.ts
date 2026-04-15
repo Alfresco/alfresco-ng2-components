@@ -981,6 +981,130 @@ export const colspanForm = {
     }
 };
 
+export const colspanAnyColumnsForm = {
+    formRepresentation: {
+        id: 'form-any-columns-colspan',
+        name: 'any-columns-colspan',
+        description: '',
+        version: 0,
+        standAlone: true,
+        formDefinition: {
+            tabs: [],
+            fields: [
+                {
+                    id: '4col-container-id',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 4,
+                    fields: {
+                        '1': [
+                            {
+                                id: 'Text4ColLeft',
+                                name: 'Left',
+                                type: 'text',
+                                readOnly: false,
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 4
+                                }
+                            }
+                        ],
+                        '2': [
+                            {
+                                id: 'Text4ColRight',
+                                name: 'Right',
+                                type: 'text',
+                                readOnly: false,
+                                required: false,
+                                colspan: 3,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 4
+                                }
+                            }
+                        ],
+                        '3': [],
+                        '4': []
+                    }
+                },
+                {
+                    id: '12col-container-id',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 12,
+                    fields: {
+                        '1': [
+                            {
+                                id: 'Text12ColLeft',
+                                name: 'Left',
+                                type: 'text',
+                                readOnly: false,
+                                required: false,
+                                colspan: 4,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 12
+                                }
+                            }
+                        ],
+                        '2': [],
+                        '3': [],
+                        '4': [],
+                        '5': [
+                            {
+                                id: 'Text12ColRight',
+                                name: 'Right',
+                                type: 'text',
+                                readOnly: false,
+                                required: false,
+                                colspan: 8,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 12
+                                }
+                            }
+                        ],
+                        '6': [],
+                        '7': [],
+                        '8': [],
+                        '9': [],
+                        '10': [],
+                        '11': [],
+                        '12': []
+                    }
+                }
+            ],
+            outcomes: [],
+            metadata: {},
+            variables: []
+        }
+    }
+};
+
 export const numberNotRequiredForm = {
     formRepresentation: {
         id: 'form-d4c462db-3838-442e-a006-171e6ccafe61',

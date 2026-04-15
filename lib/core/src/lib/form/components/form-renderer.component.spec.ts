@@ -24,6 +24,7 @@ import { FormRendererComponent } from './form-renderer.component';
 import {
     amountWidgetFormVisibilityMock,
     checkboxWidgetFormVisibilityMock,
+    colspanAnyColumnsForm,
     colspanForm,
     customWidgetForm,
     customWidgetFormWithVisibility,
@@ -437,6 +438,65 @@ describe('Form Renderer Component', () => {
                 '#field-d52ada4e-cbdc-4f0c-a480-5b85fa00e4f8-container section.adf-grid-list-column-view .adf-grid-list-single-column'
             ).nativeElement;
             expect(fullWidthElement.style['width']).toBe('100%');
+        });
+
+        it('Should display widths 25% and 75% in non-grid mode for 4-column container with colspan 1 and 3', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(colspanAnyColumnsForm.formRepresentation.formDefinition, null, false, false);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const columns = testingUtils
+                .getAllByCSS('#field-4col-container-id-container section.adf-grid-list-column-view .adf-grid-list-single-column')
+                .map((element) => element.nativeElement as HTMLElement);
+
+            expect(columns.length).toBe(4);
+            expect(columns[0].style['width']).toBe('25%');
+            expect(columns[1].style['width']).toBe('75%');
+            expect(columns[2].style['width']).toBe('0%');
+            expect(columns[3].style['width']).toBe('0%');
+        });
+
+        it('Should display widths 33.333% and 66.666% in non-grid mode for 12-column container with colspan 4 and 8', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(colspanAnyColumnsForm.formRepresentation.formDefinition, null, false, false);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const columns = testingUtils
+                .getAllByCSS('#field-12col-container-id-container section.adf-grid-list-column-view .adf-grid-list-single-column')
+                .map((element) => element.nativeElement as HTMLElement);
+
+            expect(columns.length).toBe(12);
+            expect(parseFloat(columns[0].style['width'])).toBeCloseTo(33.33, 2);
+            expect(columns[1].style['width']).toBe('0%');
+            expect(columns[2].style['width']).toBe('0%');
+            expect(columns[3].style['width']).toBe('0%');
+            expect(parseFloat(columns[4].style['width'])).toBeCloseTo(66.67, 2);
+            expect(columns[5].style['width']).toBe('0%');
+            expect(columns[6].style['width']).toBe('0%');
+            expect(columns[7].style['width']).toBe('0%');
+            expect(columns[8].style['width']).toBe('0%');
+            expect(columns[9].style['width']).toBe('0%');
+            expect(columns[10].style['width']).toBe('0%');
+            expect(columns[11].style['width']).toBe('0%');
+        });
+
+        it('Should preserve width for an intentionally empty leading spacer column in non-grid mode', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(
+                amountWidgetFormVisibilityMock.formRepresentation.formDefinition,
+                null,
+                false,
+                false
+            );
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const columns = testingUtils
+                .getAllByCSS('#field-ce32844c-20b2-4361-88b5-a56f28219aef-container section.adf-grid-list-column-view .adf-grid-list-single-column')
+                .map((element) => element.nativeElement as HTMLElement);
+
+            expect(columns.length).toBe(2);
+            expect(columns[0].style['width']).toBe('50%');
+            expect(columns[1].style['width']).toBe('50%');
         });
 
         it('[C309872] - Should display Text widget spans on 2 columns when colspan is set to 2', () => {

@@ -19,14 +19,14 @@ import { Component, inject, Input, OnInit, ViewEncapsulation } from '@angular/co
 import { WidgetVisibilityService } from '../../services/widget-visibility.service';
 import { FormFieldModel } from '../widgets/core/form-field.model';
 import { FormFieldComponent } from '../form-field/form-field.component';
-import { NgFor } from '@angular/common';
+import { FormLayoutColumn, getFormLayoutColumnWidth } from '../helpers/column-width';
 
 @Component({
     selector: 'adf-form-section',
     templateUrl: './form-section.component.html',
     encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./form-section.component.scss'],
-    imports: [NgFor, FormFieldComponent]
+    styleUrl: './form-section.component.scss',
+    imports: [FormFieldComponent]
 })
 export class FormSectionComponent implements OnInit {
     @Input()
@@ -38,15 +38,7 @@ export class FormSectionComponent implements OnInit {
         this.visibilityService.refreshVisibility(this.field.form);
     }
 
-    getSectionColumnWidth(numberOfColumns: number, columnFields: FormFieldModel[]): string {
-        const firstColumnFieldIndex = 0;
-        const defaultColspan = 1;
-        const fieldColspan = columnFields[firstColumnFieldIndex]?.colspan ?? defaultColspan;
-
-        if (typeof numberOfColumns !== 'number' || !numberOfColumns || numberOfColumns <= 0) {
-            numberOfColumns = 1;
-        }
-
-        return Math.min(100, (100 / numberOfColumns) * fieldColspan) + '';
+    getSectionColumnWidth(numberOfColumns: number, columns: FormLayoutColumn[], columnIndex: number): string {
+        return getFormLayoutColumnWidth(numberOfColumns, columns, columnIndex);
     }
 }
