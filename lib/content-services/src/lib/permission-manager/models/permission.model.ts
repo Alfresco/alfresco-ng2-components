@@ -19,6 +19,7 @@ import { PermissionElement } from '@alfresco/js-api';
 
 export class PermissionDisplayModel implements PermissionElement {
     authorityId?: string;
+    authorityDisplayName?: string;
     name?: string;
     accessStatus?: 'ALLOWED' | 'DENIED' | string;
     isInherited: boolean = false;
@@ -28,6 +29,7 @@ export class PermissionDisplayModel implements PermissionElement {
     constructor(obj?: any) {
         if (obj) {
             this.authorityId = obj.authorityId;
+            this.authorityDisplayName = obj.authorityDisplayName;
             this.name = obj.name;
             this.accessStatus = obj.accessStatus;
             this.isInherited = obj.isInherited !== null && obj.isInherited !== undefined ? obj.isInherited : false;
