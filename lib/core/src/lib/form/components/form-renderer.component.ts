@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectorRef, Component, DestroyRef, inject, Injector, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
@@ -36,11 +36,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../lib/dialogs/confirm-dialog/confirm.dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { IconModule } from '../../icon/icon.module';
+import { FormLayoutColumn, getFormLayoutColumnWidth } from './helpers/column-width';
 
 @Component({
     selector: 'adf-form-renderer',
     templateUrl: './form-renderer.component.html',
-    styleUrls: ['./form-renderer.component.scss'],
+    styleUrl: './form-renderer.component.scss',
     providers: [
         {
             provide: FormRulesManager,
@@ -54,9 +55,7 @@ import { IconModule } from '../../icon/icon.module';
         }
     ],
     imports: [
-        NgIf,
         MatTabsModule,
-        NgForOf,
         NgTemplateOutlet,
         TranslatePipe,
         MatButtonModule,
@@ -182,16 +181,8 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
             });
     }
 
-    /**
-     * Calculate the column width based on the numberOfColumns and current field's colspan property
-     *
-     * @param container container model
-     * @returns the column width for the given model
-     */
-    getColumnWidth(container: ContainerModel): string {
-        const { field } = container;
-        const colspan = field ? field.colspan : 1;
-        return (100 / field.numberOfColumns) * colspan + '';
+    getColumnWidth(container: ContainerModel, columns: FormLayoutColumn[], columnIndex: number): string {
+        return getFormLayoutColumnWidth(container.field?.numberOfColumns, columns, columnIndex);
     }
 
     private runMiddlewareServices(): void {
