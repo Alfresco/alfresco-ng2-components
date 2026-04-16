@@ -26,11 +26,7 @@
   },
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "sharedGlobals": [
-      "{workspaceRoot}/angular.json",
-      "{workspaceRoot}/e2e/protractor.excludes.json",
-      "{workspaceRoot}/e2e/protractor.conf.js"
-    ],
+    "sharedGlobals": ["{workspaceRoot}/angular.json", "{workspaceRoot}/e2e/protractor.excludes.json", "{workspaceRoot}/e2e/protractor.conf.js"],
     "production": [
       "default",
       "!{projectRoot}/.storybook/**/*",
@@ -42,5 +38,6 @@
     ]
   },
   "cacheDirectory": "nxcache",
-  "defaultBase": "develop"
+  "defaultBase": "develop",
+  "analytics": false
 }
