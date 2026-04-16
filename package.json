@@ -90,7 +90,7 @@
     "@nx/js": "22.6.3",
     "@nx/node": "22.6.3",
     "@nx/storybook": "^22.6.3",
-    "@nx/workspace": "22.4.5",
+    "@nx/workspace": "22.6.3",
     "@schematics/angular": "19.2.22",
     "@storybook/addon-themes": "^10.2.0",
     "@storybook/angular": "^10.2.0",
@@ -139,7 +139,7 @@
     "moment": "^2.29.4",
     "ng-packagr": "19.2.2",
     "nock": "13.5.5",
-    "nx": "22.4.1",
+    "nx": "22.6.3",
     "prettier": "3.6.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -158,7 +158,6 @@
       "webpack": "5.105.3"
     },
     "picomatch": "4.0.4",
-    "minimatch": "^10.2.3",
     "path-to-regexp": "^0.1.13",
     "serialize-javascript": "7.0.5"
   },
