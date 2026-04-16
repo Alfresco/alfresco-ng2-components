@@ -19,7 +19,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { User } from '../models/general-user.model';
 import { InitialUsernamePipe } from './user-initial.pipe';
 import { TestBed } from '@angular/core/testing';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 class FakeSanitizer extends DomSanitizer {
     constructor() {
         super();

@@ -22,6 +22,7 @@ import { FeaturesDirective } from './features.directive';
 import { UnitTestingUtils } from '../../../../src/lib/testing/unit-testing-utils';
 
 @Component({
+    selector: 'adf-test-features-enabled',
     template: `
         <div>
             <div id="underFeatureFlag" *adfForFeatures="features"></div>
@@ -34,6 +35,7 @@ class TestWithEnabledFlagComponent {
     features = 'feature1';
 }
 @Component({
+    selector: 'adf-test-features-disabled',
     template: `
         <div>
             <div id="underFeatureFlag" *adfForFeatures="features"></div>
