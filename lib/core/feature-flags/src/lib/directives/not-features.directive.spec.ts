@@ -22,6 +22,7 @@ import { NotFeaturesDirective } from './not-features.directive';
 import { UnitTestingUtils } from '../../../../src/lib/testing/unit-testing-utils';
 
 @Component({
+    selector: 'adf-test-not-features-enabled',
     template: `
         <div>
             <div id="underFeatureFlag" *adfNotForFeatures="features"></div>
@@ -34,6 +35,7 @@ class TestWithEnabledFlagComponent {
 }
 
 @Component({
+    selector: 'adf-test-not-features-disabled',
     template: `
         <div>
             <div id="underFeatureFlag" *adfNotForFeatures="features"></div>
