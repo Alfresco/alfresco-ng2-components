@@ -19,13 +19,14 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
-
-declare let jasmine: any;
+import { ProcessContentService } from '../../form/services/process-content.service';
+import { of } from 'rxjs';
 
 describe('CreateProcessAttachmentComponent', () => {
     let component: CreateProcessAttachmentComponent;
     let fixture: ComponentFixture<CreateProcessAttachmentComponent>;
     let element: HTMLElement;
+    let processContentService: ProcessContentService;
 
     const file = new File([new Blob()], 'Test');
     const fileObj = { entry: null, file, relativeFolder: '/' };
@@ -53,17 +54,10 @@ describe('CreateProcessAttachmentComponent', () => {
         fixture = TestBed.createComponent(CreateProcessAttachmentComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
+        processContentService = TestBed.inject(ProcessContentService);
 
         component.processInstanceId = '9999';
         fixture.detectChanges();
-    });
-
-    beforeEach(() => {
-        jasmine.Ajax.install();
-    });
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
     });
 
     it('should update the processInstanceId when it is changed', () => {
@@ -76,26 +70,25 @@ describe('CreateProcessAttachmentComponent', () => {
     });
 
     it('should emit content created event when the file is uploaded', (done) => {
+        spyOn(processContentService, 'createProcessRelatedContent').and.returnValue(of(fakeUploadResponse) as any);
+
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.id).toBe(9999);
+            expect(processContentService.createProcessRelatedContent).toHaveBeenCalledWith('9999', file, { isRelatedContent: true });
             done();
         });
 
         component.onFileUpload(customEvent);
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeUploadResponse)
-        });
     });
 
     it('should allow user to upload files via button', (done) => {
         const buttonUpload = element.querySelector<HTMLElement>('#add_new_process_content_button');
         expect(buttonUpload).toBeDefined();
         expect(buttonUpload).not.toBeNull();
+
+        spyOn(processContentService, 'createProcessRelatedContent').and.returnValue(of(fakeUploadResponse) as any);
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -107,11 +100,5 @@ describe('CreateProcessAttachmentComponent', () => {
         const dropEvent = new CustomEvent('upload-files', customEvent);
         buttonUpload.dispatchEvent(dropEvent);
         fixture.detectChanges();
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeUploadResponse)
-        });
     });
 });
