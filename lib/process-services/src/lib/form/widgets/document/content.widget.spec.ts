@@ -24,8 +24,6 @@ import { ContentWidgetComponent } from './content.widget';
 import { ProcessContentService } from '../../services/process-content.service';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
-declare let jasmine: any;
-
 describe('ContentWidgetComponent', () => {
     let component: ContentWidgetComponent;
     let fixture: ComponentFixture<ContentWidgetComponent>;
@@ -75,14 +73,6 @@ describe('ContentWidgetComponent', () => {
     });
 
     describe('Rendering tests', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
-
         it('should display content thumbnail', () => {
             component.showDocumentContent = true;
             component.content = new ContentLinkModel();
@@ -94,6 +84,26 @@ describe('ContentWidgetComponent', () => {
 
         it('should load the thumbnail preview of the png image', fakeAsync(() => {
             const blob = createFakeImageBlob();
+            const mockResponse = {
+                id: 4004,
+                name: 'Useful expressions - Email_English.png',
+                created: 1490354907883,
+                createdBy: {
+                    id: 2,
+                    firstName: 'admin',
+                    lastName: 'admin',
+                    email: 'administrator@admin.com'
+                },
+                relatedContent: false,
+                contentAvailable: true,
+                link: false,
+                mimeType: 'image/png',
+                simpleType: 'image',
+                previewStatus: 'unsupported',
+                thumbnailStatus: 'unsupported'
+            };
+
+            spyOn(processContentService, 'getFileContent').and.returnValue(of(mockResponse as any));
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(blob));
 
             component.thumbnailLoaded.subscribe((res) => {
@@ -109,33 +119,30 @@ describe('ContentWidgetComponent', () => {
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
             component.ngOnChanges({ id: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {
-                    id: 4004,
-                    name: 'Useful expressions - Email_English.png',
-                    created: 1490354907883,
-                    createdBy: {
-                        id: 2,
-                        firstName: 'admin',
-                        lastName: 'admin',
-                        email: 'administrator@admin.com'
-                    },
-                    relatedContent: false,
-                    contentAvailable: true,
-                    link: false,
-                    mimeType: 'image/png',
-                    simpleType: 'image',
-                    previewStatus: 'unsupported',
-                    thumbnailStatus: 'unsupported'
-                }
-            });
         }));
 
         it('should load the thumbnail preview of a pdf', fakeAsync(() => {
             const blob = createFakePdfBlob();
+            const mockResponse = {
+                id: 4004,
+                name: 'FakeBlob.pdf',
+                created: 1490354907883,
+                createdBy: {
+                    id: 2,
+                    firstName: 'admin',
+                    lastName: 'admin',
+                    email: 'administrator@admin.com'
+                },
+                relatedContent: false,
+                contentAvailable: true,
+                link: false,
+                mimeType: 'application/pdf',
+                simpleType: 'pdf',
+                previewStatus: 'created',
+                thumbnailStatus: 'created'
+            };
+
+            spyOn(processContentService, 'getFileContent').and.returnValue(of(mockResponse as any));
             spyOn(processContentService, 'getContentThumbnail').and.returnValue(of(blob));
 
             component.thumbnailLoaded.subscribe((res) => {
@@ -151,32 +158,30 @@ describe('ContentWidgetComponent', () => {
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
             component.ngOnChanges({ id: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {
-                    id: 4004,
-                    name: 'FakeBlob.pdf',
-                    created: 1490354907883,
-                    createdBy: {
-                        id: 2,
-                        firstName: 'admin',
-                        lastName: 'admin',
-                        email: 'administrator@admin.com'
-                    },
-                    relatedContent: false,
-                    contentAvailable: true,
-                    link: false,
-                    mimeType: 'application/pdf',
-                    simpleType: 'pdf',
-                    previewStatus: 'created',
-                    thumbnailStatus: 'created'
-                }
-            });
         }));
 
         it('should show unsupported preview with unsupported file', fakeAsync(() => {
+            const mockResponse = {
+                id: 4004,
+                name: 'FakeBlob.zip',
+                created: 1490354907883,
+                createdBy: {
+                    id: 2,
+                    firstName: 'admin',
+                    lastName: 'admin',
+                    email: 'administrator@admin.com'
+                },
+                relatedContent: false,
+                contentAvailable: false,
+                link: false,
+                mimeType: 'application/zip',
+                simpleType: 'zip',
+                previewStatus: 'unsupported',
+                thumbnailStatus: 'unsupported'
+            };
+
+            spyOn(processContentService, 'getFileContent').and.returnValue(of(mockResponse as any));
+
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
             component.ngOnChanges({ id: change });
@@ -186,29 +191,6 @@ describe('ContentWidgetComponent', () => {
                 const thumbnailPreview: any = element.querySelector('#unsupported-thumbnail');
                 expect(thumbnailPreview).toBeDefined();
                 expect(element.querySelector('div.upload-widget__content-text').innerHTML).toEqual('FakeBlob.zip');
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {
-                    id: 4004,
-                    name: 'FakeBlob.zip',
-                    created: 1490354907883,
-                    createdBy: {
-                        id: 2,
-                        firstName: 'admin',
-                        lastName: 'admin',
-                        email: 'administrator@admin.com'
-                    },
-                    relatedContent: false,
-                    contentAvailable: false,
-                    link: false,
-                    mimeType: 'application/zip',
-                    simpleType: 'zip',
-                    previewStatus: 'unsupported',
-                    thumbnailStatus: 'unsupported'
-                }
             });
         }));
 
