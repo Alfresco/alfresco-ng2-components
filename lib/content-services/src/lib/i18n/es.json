@@ -625,7 +625,7 @@
   "ADF-TREE": {
     "LOAD-MORE-BUTTON": "Cargar más {{ name }}",
     "ACTIONS": {
-      "TOOLTIP": "Open actions menu"
+      "TOOLTIP": "Abrir menú de acciones"
     }
   },
   "LIBRARY": {
