@@ -1,6 +1,6 @@
 <div [class.adf-hide]="hideComponent">
     <div class="adf-report-report-container">
-        <div *ngIf="reportParameters">
+        <div *ngIf="reportParameters && reportForm">
             <form [formGroup]="reportForm" novalidate>
                 <adf-toolbar>
                     <adf-toolbar-title class="adf-report-title-container">

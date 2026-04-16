@@ -42,8 +42,6 @@ import { MatMenuItemHarness } from '@angular/material/menu/testing';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 import { CommonModule } from '@angular/common';
 
-declare let jasmine: any;
-
 describe('TaskListComponent', () => {
     let component: TaskListComponent;
     let fixture: ComponentFixture<TaskListComponent>;
@@ -51,16 +49,22 @@ describe('TaskListComponent', () => {
     let appConfig: AppConfigService;
     let taskListService: TaskListService;
 
+    const transformDates = (taskData: any) => ({
+        ...taskData,
+        data: taskData.data.map((task: any) => ({
+            ...task,
+            created: task.created ? new Date(task.created) : undefined,
+            dueDate: task.dueDate ? new Date(task.dueDate) : undefined,
+            endDate: task.endDate ? new Date(task.endDate) : undefined
+        }))
+    });
+
     const testMostRecentCall = (changes: SimpleChanges) => {
+        spyOn(taskListService, 'findTasksByState').and.returnValue(of(transformDates(fakeGlobalTask)));
+
         component.ngAfterContentInit();
         component.ngOnChanges(changes);
         fixture.detectChanges();
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeGlobalTask)
-        });
     };
 
     const testSubscribeForFilteredTaskList = (done: DoneFn) => {
@@ -76,7 +80,7 @@ describe('TaskListComponent', () => {
     };
 
     const testRowSelection = async (selectionMode?: string) => {
-        spyOn(taskListService, 'findTasksByState').and.returnValues(of(fakeGlobalTask));
+        spyOn(taskListService, 'findTasksByState').and.returnValues(of(transformDates(fakeGlobalTask)));
         const state = new SimpleChange(null, 'open', true);
         component.multiselect = true;
         if (selectionMode) {
@@ -129,12 +133,7 @@ describe('TaskListComponent', () => {
         });
     });
 
-    beforeEach(() => {
-        jasmine.Ajax.install();
-    });
-
     afterEach(() => {
-        jasmine.Ajax.uninstall();
         fixture.destroy();
     });
 
@@ -314,14 +313,11 @@ describe('TaskListComponent', () => {
             expect(component.rows[0]['name']).toEqual('nameFake1');
             done();
         });
+
+        spyOn(taskListService, 'findTasksByState').and.returnValue(of(transformDates(fakeGlobalTask)));
+
         fixture.detectChanges();
         component.reload();
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeGlobalTask)
-        });
     });
 
     it('should emit row click event', (done) => {
@@ -363,6 +359,8 @@ describe('TaskListComponent', () => {
             const landingTaskId = '888';
             const change = new SimpleChange(null, landingTaskId, true);
 
+            spyOn(taskListService, 'findTasksByState').and.returnValue(of(transformDates(fakeGlobalTask)));
+
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.rows).toBeDefined();
@@ -371,12 +369,6 @@ describe('TaskListComponent', () => {
             });
 
             component.ngOnChanges({ landingTaskId: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
         });
 
         it('should NOT reload the task list when no parameters changed', () => {
@@ -390,6 +382,8 @@ describe('TaskListComponent', () => {
             const appId = '1';
             const change = new SimpleChange(null, appId, true);
 
+            spyOn(taskListService, 'findTasksByState').and.returnValue(of(transformDates(fakeGlobalTask)));
+
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.rows).toBeDefined();
@@ -399,17 +393,13 @@ describe('TaskListComponent', () => {
                 done();
             });
             component.ngOnChanges({ appId: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
         });
 
         it('should reload the list when the processDefinitionKey parameter changes', (done) => {
             const processDefinitionKey = 'fakeprocess';
             const change = new SimpleChange(null, processDefinitionKey, true);
+
+            spyOn(taskListService, 'findTasksByState').and.returnValue(of(transformDates(fakeGlobalTask)));
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -421,17 +411,13 @@ describe('TaskListComponent', () => {
             });
 
             component.ngOnChanges({ processDefinitionKey: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
         });
 
         it('should reload the list when the state parameter changes', (done) => {
             const state = 'open';
             const change = new SimpleChange(null, state, true);
+
+            spyOn(taskListService, 'findTasksByState').and.returnValue(of(transformDates(fakeGlobalTask)));
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -443,17 +429,13 @@ describe('TaskListComponent', () => {
             });
 
             component.ngOnChanges({ state: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
         });
 
         it('should reload the list when the sort parameter changes', (done) => {
             const sort = 'desc';
             const change = new SimpleChange(null, sort, true);
+
+            spyOn(taskListService, 'findTasksByState').and.returnValue(of(transformDates(fakeGlobalTask)));
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -465,17 +447,13 @@ describe('TaskListComponent', () => {
             });
 
             component.ngOnChanges({ sort: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
         });
 
         it('should reload the process list when the name parameter changes', (done) => {
             const name = 'FakeTaskName';
             const change = new SimpleChange(null, name, true);
+
+            spyOn(taskListService, 'findTasksByState').and.returnValue(of(transformDates(fakeGlobalTask)));
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -487,17 +465,13 @@ describe('TaskListComponent', () => {
             });
 
             component.ngOnChanges({ name: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
         });
 
         it('should reload the list when the assignment parameter changes', (done) => {
             const assignment = 'assignee';
             const change = new SimpleChange(null, assignment, true);
+
+            spyOn(taskListService, 'findTasksByState').and.returnValue(of(transformDates(fakeGlobalTask)));
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -509,12 +483,6 @@ describe('TaskListComponent', () => {
             });
 
             component.ngOnChanges({ assignment: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
         });
     });
 

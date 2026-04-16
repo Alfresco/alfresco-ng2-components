@@ -29,8 +29,6 @@ import {
     headerVisibilityCond
 } from '../../mock/form/widget-visibility-cloud.service.mock';
 
-declare let jasmine: any;
-
 describe('WidgetVisibilityCloudService', () => {
     let service: WidgetVisibilityService;
     let booleanResult: boolean | undefined;
@@ -39,11 +37,6 @@ describe('WidgetVisibilityCloudService', () => {
 
     beforeEach(() => {
         service = TestBed.inject(WidgetVisibilityService);
-        jasmine.Ajax.install();
-    });
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
     });
 
     describe('should be able to evaluate next condition operations', () => {

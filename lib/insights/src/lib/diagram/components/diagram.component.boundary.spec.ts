@@ -22,13 +22,14 @@ import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { UnitTestingUtils } from '@alfresco/adf-core';
 import { RaphaelCircleDirective } from '@alfresco/adf-insights';
-
-declare let jasmine: any;
+import { DiagramsService } from '../services/diagrams.service';
+import { of } from 'rxjs';
 
 describe('Diagrams boundary', () => {
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let unitTestingUtils: UnitTestingUtils;
+    let diagramsService: DiagramsService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,8 +39,8 @@ describe('Diagrams boundary', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
+        diagramsService = TestBed.inject(DiagramsService);
 
-        jasmine.Ajax.install();
         component.processInstanceId = '38399';
         component.processDefinitionId = 'fakeprocess:24:38399';
         component.metricPercentages = { startEvent: 0 };
@@ -47,16 +48,7 @@ describe('Diagrams boundary', () => {
 
     afterEach(() => {
         fixture.destroy();
-        jasmine.Ajax.uninstall();
     });
-
-    const ajaxReply = (resp: any) => {
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: resp
-        });
-    };
 
     describe('Diagrams component Boundary events with process instance id: ', () => {
         it('Should render the Boundary time event', (done) => {
@@ -85,9 +77,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryTimeEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Boundary time event', (done) => {
@@ -120,9 +112,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryTimeEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Boundary time event', (done) => {
@@ -155,9 +147,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryTimeEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Boundary error event', (done) => {
@@ -186,9 +178,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryErrorEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Boundary error event', (done) => {
@@ -221,9 +213,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryErrorEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Boundary error event', (done) => {
@@ -256,9 +248,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryErrorEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Boundary signal event', (done) => {
@@ -287,9 +279,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundarySignalEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Boundary signal event', (done) => {
@@ -322,9 +314,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundarySignalEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Boundary signal event', (done) => {
@@ -357,9 +349,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundarySignalEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Boundary signal message', (done) => {
@@ -388,9 +380,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Boundary signal message', (done) => {
@@ -423,9 +415,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryMessageEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Boundary signal message', (done) => {
@@ -458,9 +450,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryMessageEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Boundary signal message', (done) => {
@@ -489,9 +481,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Boundary signal message', (done) => {
@@ -524,9 +516,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryMessageEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Boundary signal message', (done) => {
@@ -559,9 +551,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryMessageEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 
@@ -592,9 +584,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryTimeEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Boundary error event', (done) => {
@@ -623,9 +615,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryErrorEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Boundary signal event', (done) => {
@@ -654,9 +646,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundarySignalEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Boundary signal message', (done) => {
@@ -685,9 +677,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Boundary signal message', (done) => {
@@ -716,9 +708,9 @@ describe('Diagrams boundary', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 });

@@ -20,8 +20,6 @@ import { PeopleProcessService } from './people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
-declare let jasmine: any;
-
 const firstInvolvedUser: LightUserRepresentation = {
     id: 1,
     email: 'fake-user1@fake.com',
@@ -51,15 +49,9 @@ describe('PeopleProcessService', () => {
     });
 
     describe('when user is logged in', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
-
         it('should be able to retrieve people to involve in the task', fakeAsync(() => {
+            spyOn(service.userApi, 'getUsers').and.returnValue(Promise.resolve({ data: fakeInvolveUserList } as any));
+
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users) => {
                 expect(users).toBeDefined();
                 expect(users.length).toBe(2);
@@ -68,26 +60,16 @@ describe('PeopleProcessService', () => {
                 expect(users[0].firstName).toEqual('fakeName1');
                 expect(users[0].lastName).toEqual('fakeLast1');
             });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: { data: fakeInvolveUserList }
-            });
         }));
 
         it('should be able to get people images for people retrieved', fakeAsync(() => {
+            spyOn(service.userApi, 'getUsers').and.returnValue(Promise.resolve({ data: fakeInvolveUserList } as any));
+
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users) => {
                 expect(users).toBeDefined();
                 expect(users.length).toBe(2);
                 expect(service.getUserImage(users[0].id.toString())).toContain('/users/' + users[0].id + '/picture');
                 expect(service.getUserImage(users[1].id.toString())).toContain('/users/' + users[1].id + '/picture');
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: { data: fakeInvolveUserList }
             });
         }));
 
@@ -98,77 +80,61 @@ describe('PeopleProcessService', () => {
         });
 
         it('should return empty list when there are no users to involve', fakeAsync(() => {
+            spyOn(service.userApi, 'getUsers').and.returnValue(Promise.resolve({} as any));
+
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users) => {
                 expect(users).toBeDefined();
                 expect(users.length).toBe(0);
             });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {}
-            });
         }));
 
         it('getWorkflowUsers catch errors call', fakeAsync(() => {
+            spyOn(service.userApi, 'getUsers').and.returnValue(Promise.reject(errorResponse));
+
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe(
                 () => {},
                 (error) => {
                     expect(error).toEqual(errorResponse);
                 }
             );
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
-            });
         }));
 
         it('should be able to involve people in the task', fakeAsync(() => {
-            service.involveUserWithTask('fake-task-id', 'fake-user-id').subscribe(() => {
-                expect(jasmine.Ajax.requests.mostRecent().method).toBe('PUT');
-                expect(jasmine.Ajax.requests.mostRecent().url).toContain('tasks/fake-task-id/action/involve');
-            });
+            const involveSpy = spyOn(service.taskActionsApi, 'involveUser').and.returnValue(Promise.resolve([] as any));
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200
+            service.involveUserWithTask('fake-task-id', 'fake-user-id').subscribe(() => {
+                expect(involveSpy).toHaveBeenCalledWith('fake-task-id', { userId: 'fake-user-id' });
             });
         }));
 
         it('involveUserWithTask catch errors call', fakeAsync(() => {
+            spyOn(service.taskActionsApi, 'involveUser').and.returnValue(Promise.reject(errorResponse));
+
             service.involveUserWithTask('fake-task-id', 'fake-user-id').subscribe(
                 () => {},
                 (error) => {
                     expect(error).toEqual(errorResponse);
                 }
             );
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
-            });
         }));
 
         it('should be able to remove involved people from task', fakeAsync(() => {
-            service.removeInvolvedUser('fake-task-id', 'fake-user-id').subscribe(() => {
-                expect(jasmine.Ajax.requests.mostRecent().method).toBe('PUT');
-                expect(jasmine.Ajax.requests.mostRecent().url).toContain('tasks/fake-task-id/action/remove-involved');
-            });
+            const removeSpy = spyOn(service.taskActionsApi, 'removeInvolvedUser').and.returnValue(Promise.resolve([] as any));
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200
+            service.removeInvolvedUser('fake-task-id', 'fake-user-id').subscribe(() => {
+                expect(removeSpy).toHaveBeenCalledWith('fake-task-id', { userId: 'fake-user-id' });
             });
         }));
 
         it('removeInvolvedUser catch errors call', fakeAsync(() => {
+            spyOn(service.taskActionsApi, 'removeInvolvedUser').and.returnValue(Promise.reject(errorResponse));
+
             service.removeInvolvedUser('fake-task-id', 'fake-user-id').subscribe(
                 () => {},
                 (error) => {
                     expect(error).toEqual(errorResponse);
                 }
             );
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
-            });
         }));
     });
 });

@@ -23,8 +23,6 @@ import { CustomResourcesService } from './custom-resources.service';
 import { NodesApiService } from '../../common';
 import { provideApiTesting } from '../../testing/providers';
 
-declare let jasmine: any;
-
 describe('DocumentListService', () => {
     let service: DocumentListService;
     let customResourcesService: CustomResourcesService;
@@ -79,7 +77,6 @@ describe('DocumentListService', () => {
         service = TestBed.inject(DocumentListService);
         customResourcesService = TestBed.inject(CustomResourcesService);
         nodesApiService = TestBed.inject(NodesApiService);
-        jasmine.Ajax.install();
     });
 
     it('should emit resetSelection$ when resetSelection is called', (done) => {
@@ -96,11 +93,9 @@ describe('DocumentListService', () => {
         service.reload();
     });
 
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
-    });
-
     it('should return the folder info', fakeAsync(() => {
+        spyOn(service.nodes, 'listNodeChildren').and.returnValue(Promise.resolve(fakeFolder as any));
+
         service.getFolder('/fake-root/fake-name').subscribe((res) => {
             expect(res).toBeDefined();
             expect(res.list).toBeDefined();
@@ -108,12 +103,6 @@ describe('DocumentListService', () => {
             expect(res.list.entries.length).toBe(1);
             expect(res.list.entries[0].entry.isFolder).toBeTruthy();
             expect(res.list.entries[0].entry.name).toEqual('fake-name');
-        });
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: fakeFolder
         });
     }));
 
@@ -204,35 +193,33 @@ describe('DocumentListService', () => {
         });
     });
 
-    it('should delete the folder', fakeAsync(() => {
-        service.deleteNode('fake-id').subscribe((res) => {
-            expect(res).toBe('');
-        });
+    it('should delete the folder', (done) => {
+        spyOn(service.nodes, 'deleteNode').and.returnValue(Promise.resolve() as any);
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 204,
-            contentType: 'json'
+        service.deleteNode('fake-id').subscribe(() => {
+            expect(service.nodes.deleteNode).toHaveBeenCalledWith('fake-id');
+            done();
         });
-    }));
+    });
 
     it('should copy a node', (done) => {
-        service.copyNode('node-id', 'parent-id').subscribe(() => done());
+        const mockResponse = { entry: { id: 'copied-node-id' } } as NodeEntry;
+        const copyNodeSpy = spyOn(service.nodes, 'copyNode').and.returnValue(Promise.resolve(mockResponse));
 
-        expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
-        expect(jasmine.Ajax.requests.mostRecent().url).toContain('/nodes/node-id/copy');
-        expect(jasmine.Ajax.requests.mostRecent().params).toEqual(JSON.stringify({ targetParentId: 'parent-id' }));
-
-        jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json' });
+        service.copyNode('node-id', 'parent-id').subscribe(() => {
+            expect(copyNodeSpy).toHaveBeenCalledWith('node-id', { targetParentId: 'parent-id' });
+            done();
+        });
     });
 
     it('should move a node', (done) => {
-        service.moveNode('node-id', 'parent-id').subscribe(() => done());
+        const mockResponse = { entry: { id: 'moved-node-id' } } as NodeEntry;
+        const moveNodeSpy = spyOn(service.nodes, 'moveNode').and.returnValue(Promise.resolve(mockResponse));
 
-        expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
-        expect(jasmine.Ajax.requests.mostRecent().url).toContain('/nodes/node-id/move');
-        expect(jasmine.Ajax.requests.mostRecent().params).toEqual(JSON.stringify({ targetParentId: 'parent-id' }));
-
-        jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json' });
+        service.moveNode('node-id', 'parent-id').subscribe(() => {
+            expect(moveNodeSpy).toHaveBeenCalledWith('node-id', { targetParentId: 'parent-id' });
+            done();
+        });
     });
 
     it('should call isCustomSource from customResourcesService when isCustomSourceService is called', () => {

@@ -22,13 +22,14 @@ import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { UnitTestingUtils } from '@alfresco/adf-core';
 import { RaphaelCircleDirective } from '@alfresco/adf-insights';
-
-declare let jasmine: any;
+import { DiagramsService } from '../services/diagrams.service';
+import { of } from 'rxjs';
 
 describe('Diagrams events', () => {
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let unitTestingUtils: UnitTestingUtils;
+    let diagramsService: DiagramsService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,8 +39,8 @@ describe('Diagrams events', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
+        diagramsService = TestBed.inject(DiagramsService);
 
-        jasmine.Ajax.install();
         component.processInstanceId = '38399';
         component.processDefinitionId = 'fakeprocess:24:38399';
         component.metricPercentages = { startEvent: 0 };
@@ -48,16 +49,7 @@ describe('Diagrams events', () => {
     afterEach(() => {
         component.success.unsubscribe();
         fixture.destroy();
-        jasmine.Ajax.uninstall();
     });
-
-    const ajaxReply = (resp: any) => {
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: resp
-        });
-    };
 
     describe('Diagrams component Events: ', () => {
         it('Should render the Start Event', (done) => {
@@ -73,9 +65,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Start Timer Event', (done) => {
@@ -97,10 +89,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
-
             const resp = { elements: [diagramsEventsMock.startTimeEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Start Signal Event', (done) => {
@@ -122,9 +113,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startSignalEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Start Message Event', (done) => {
@@ -146,9 +137,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startMessageEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Start Error Event', (done) => {
@@ -170,9 +161,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startErrorEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the End Event', (done) => {
@@ -188,9 +179,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.endEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the End Error Event', (done) => {
@@ -211,9 +202,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.endErrorEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 
@@ -231,9 +222,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Start Event', (done) => {
@@ -249,9 +240,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Start Event', (done) => {
@@ -267,9 +258,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Start Timer Event', (done) => {
@@ -291,10 +282,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startTimeEvent] };
-
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Start Timer Event', (done) => {
@@ -316,10 +306,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startTimeEventActive] };
-
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Start Timer Event', (done) => {
@@ -341,10 +330,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startTimeEventCompleted] };
-
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Start Signal Event', (done) => {
@@ -366,9 +354,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startSignalEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Start Signal Event', (done) => {
@@ -390,9 +378,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startSignalEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Start Signal Event', (done) => {
@@ -414,9 +402,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startSignalEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Start Message Event', (done) => {
@@ -438,9 +426,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startMessageEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Start Message Event', (done) => {
@@ -462,9 +450,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startMessageEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Start Message Event', (done) => {
@@ -486,9 +474,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startMessageEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Start Error Event', (done) => {
@@ -510,9 +498,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startErrorEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Start Error Event', (done) => {
@@ -534,9 +522,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startErrorEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Start Error Event', (done) => {
@@ -558,9 +546,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startErrorEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the End Event', (done) => {
@@ -576,9 +564,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.endEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active End Event', (done) => {
@@ -594,9 +582,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.endEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed End Event', (done) => {
@@ -612,9 +600,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.endEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the End Error Event', (done) => {
@@ -635,9 +623,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.endErrorEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active End Error Event', (done) => {
@@ -658,9 +646,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.endErrorEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed End Error Event', (done) => {
@@ -681,9 +669,9 @@ describe('Diagrams events', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.endErrorEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 });

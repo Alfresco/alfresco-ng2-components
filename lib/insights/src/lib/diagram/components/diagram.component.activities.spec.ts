@@ -22,13 +22,14 @@ import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { UnitTestingUtils } from '@alfresco/adf-core';
 import { RaphaelMultilineTextDirective, RaphaelRectDirective } from '@alfresco/adf-insights';
-
-declare let jasmine: any;
+import { DiagramsService } from '../services/diagrams.service';
+import { of } from 'rxjs';
 
 describe('Diagrams activities', () => {
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let unitTestingUtils: UnitTestingUtils;
+    let diagramsService: DiagramsService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -37,11 +38,11 @@ describe('Diagrams activities', () => {
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
         unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
+        diagramsService = TestBed.inject(DiagramsService);
         fixture.detectChanges();
     });
 
     beforeEach(() => {
-        jasmine.Ajax.install();
         component.processInstanceId = '38399';
         // cspell: disable-next
         component.processDefinitionId = 'fakeprocess:24:38399';
@@ -51,16 +52,7 @@ describe('Diagrams activities', () => {
     afterEach(() => {
         component.success.unsubscribe();
         fixture.destroy();
-        jasmine.Ajax.uninstall();
     });
-
-    const ajaxReply = (resp: any) => {
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: resp
-        });
-    };
 
     describe('Diagrams component Activities: ', () => {
         it('Should render the User Task', (done) => {
@@ -84,9 +76,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.userTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Manual Task', (done) => {
@@ -110,9 +102,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.manualTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Service Task', (done) => {
@@ -134,9 +126,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.serviceTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Service Camel Task', (done) => {
@@ -160,9 +152,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.camelTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Service Mule Task', (done) => {
@@ -182,9 +174,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.muleTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Service Alfresco Publish Task', (done) => {
@@ -210,9 +202,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.alfrescoPublishTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Service Google Drive Publish Task', (done) => {
@@ -238,9 +230,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.googleDrivePublishTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Rest Call Task', (done) => {
@@ -264,9 +256,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.restCallTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Service Box Publish Task', (done) => {
@@ -292,9 +284,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.boxPublishTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Receive Task', (done) => {
@@ -318,9 +310,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.receiveTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Script Task', (done) => {
@@ -344,9 +336,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.scriptTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Business Rule Task', (done) => {
@@ -372,9 +364,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.businessRuleTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 
@@ -400,9 +392,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.userTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active User Task', (done) => {
@@ -426,9 +418,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.userTaskActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed User Task', (done) => {
@@ -452,9 +444,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.userTaskCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Manual Task', (done) => {
@@ -478,9 +470,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.manualTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Manual Task', (done) => {
@@ -504,9 +496,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.manualTaskActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Manual Task', (done) => {
@@ -530,9 +522,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.manualTaskCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Service Task', (done) => {
@@ -556,9 +548,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.serviceTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Service Task', (done) => {
@@ -582,9 +574,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.serviceTaskActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Service Task', (done) => {
@@ -608,9 +600,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.serviceTaskCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Service Camel Task', (done) => {
@@ -634,9 +626,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.camelTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Service Camel Task', (done) => {
@@ -661,9 +653,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.camelTaskActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Service Camel Task', (done) => {
@@ -688,9 +680,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.camelTaskCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Service Mule Task', (done) => {
@@ -710,9 +702,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.muleTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Service Mule Task', (done) => {
@@ -732,9 +724,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.muleTaskActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Service Mule Task', (done) => {
@@ -754,9 +746,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.muleTaskCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Service Alfresco Publish Task', (done) => {
@@ -782,9 +774,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.alfrescoPublishTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Service Alfresco Publish Task', (done) => {
@@ -810,9 +802,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.alfrescoPublishTaskActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Service Alfresco Publish Task', (done) => {
@@ -838,9 +830,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.alfrescoPublishTaskCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Service Google Drive Publish Task', (done) => {
@@ -866,9 +858,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.googleDrivePublishTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Service Google Drive Publish Task', (done) => {
@@ -894,9 +886,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.googleDrivePublishTaskActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Service Google Drive Publish Task', (done) => {
@@ -922,9 +914,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.googleDrivePublishTaskCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Rest Call Task', (done) => {
@@ -948,9 +940,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.restCallTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Rest Call Task', (done) => {
@@ -974,9 +966,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.restCallTaskActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Rest Call Task', (done) => {
@@ -1000,9 +992,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.restCallTaskCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Service Box Publish Task', (done) => {
@@ -1028,9 +1020,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.boxPublishTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Service Box Publish Task', (done) => {
@@ -1056,9 +1048,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.boxPublishTaskActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Service Box Publish Task', (done) => {
@@ -1084,9 +1076,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.boxPublishTaskCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Receive Task', (done) => {
@@ -1110,9 +1102,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.receiveTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Receive Task', (done) => {
@@ -1136,9 +1128,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.receiveTaskActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Receive Task', (done) => {
@@ -1162,9 +1154,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.receiveTaskCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Script Task', (done) => {
@@ -1188,9 +1180,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.scriptTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Script Task', (done) => {
@@ -1214,9 +1206,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.scriptTaskActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Script Task', (done) => {
@@ -1240,9 +1232,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.scriptTaskCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Business Rule Task', (done) => {
@@ -1268,9 +1260,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.businessRuleTask] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Business Rule Task', (done) => {
@@ -1296,9 +1288,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.businessRuleTaskActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Business Rule Task', (done) => {
@@ -1324,9 +1316,9 @@ describe('Diagrams activities', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.businessRuleTaskCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 });

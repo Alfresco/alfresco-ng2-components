@@ -21,13 +21,14 @@ import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { UnitTestingUtils } from '@alfresco/adf-core';
 import { RaphaelTextDirective } from '@alfresco/adf-insights';
-
-declare let jasmine: any;
+import { DiagramsService } from '../services/diagrams.service';
+import { of } from 'rxjs';
 
 describe('Diagrams swim', () => {
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let unitTestingUtils: UnitTestingUtils;
+    let diagramsService: DiagramsService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -37,8 +38,8 @@ describe('Diagrams swim', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
+        diagramsService = TestBed.inject(DiagramsService);
 
-        jasmine.Ajax.install();
         component.processInstanceId = '38399';
         component.processDefinitionId = 'fakeprocess:24:38399';
         component.metricPercentages = { startEvent: 0 };
@@ -47,16 +48,7 @@ describe('Diagrams swim', () => {
     afterEach(() => {
         component.success.unsubscribe();
         fixture.destroy();
-        jasmine.Ajax.uninstall();
     });
-
-    const ajaxReply = (resp: any) => {
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: resp
-        });
-    };
 
     describe('Diagrams component Swim lane: ', () => {
         it('Should render the Pool', (done) => {
@@ -73,9 +65,9 @@ describe('Diagrams swim', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { pools: [swimLanesMock.pool] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Pool with Lanes', (done) => {
@@ -95,9 +87,9 @@ describe('Diagrams swim', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { pools: [swimLanesMock.poolLanes] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 
@@ -116,9 +108,9 @@ describe('Diagrams swim', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { pools: [swimLanesMock.pool] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Pool with Lanes', (done) => {
@@ -138,9 +130,9 @@ describe('Diagrams swim', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { pools: [swimLanesMock.poolLanes] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 });
