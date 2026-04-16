@@ -19,8 +19,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AnalyticsReportListComponent, LAYOUT_GRID, LAYOUT_LIST } from '../components/analytics-report-list.component';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
-
-declare let jasmine: any;
+import { AnalyticsService } from '../services/analytics.service';
+import { of, throwError } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 describe('AnalyticsReportListComponent', () => {
     const reportList = [
@@ -36,25 +37,28 @@ describe('AnalyticsReportListComponent', () => {
     let component: AnalyticsReportListComponent;
     let fixture: ComponentFixture<AnalyticsReportListComponent>;
     let element: HTMLElement;
+    let analyticsService: AnalyticsService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [InsightsTestingModule]
         });
+        analyticsService = TestBed.inject(AnalyticsService);
+
+        // Spy on both methods before creating the component
+        spyOn(analyticsService, 'getReportList').and.returnValue(of(reportList as any));
+        spyOn(analyticsService, 'createDefaultReports').and.returnValue(of([] as any));
+
         fixture = TestBed.createComponent(AnalyticsReportListComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     describe('Rendering tests', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
-
         it('Report return true with undefined reports', () => {
             expect(component.isReportsEmpty()).toBeTruthy();
         });
@@ -65,40 +69,34 @@ describe('AnalyticsReportListComponent', () => {
         });
 
         it('Report render the report list relative to a single app', (done) => {
-            fixture.detectChanges();
+            // Don't call initObserver() manually - ngOnInit will call it
 
-            component.success.subscribe(() => {
+            // Use take(1) to only handle the first emission
+            component.success.pipe(take(1)).subscribe(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#report-list-0 .adf-activiti-filters__entry-icon').innerHTML).toBe('assignment');
-                expect(element.querySelector('#report-list-0 > span').innerHTML).toBe('Fake Test Process definition heat map');
-                expect(element.querySelector('#report-list-1 > span').innerHTML).toBe('Fake Test Process definition overview');
-                expect(element.querySelector('#report-list-2 > span').innerHTML).toBe('Fake Test Process instances overview');
-                expect(element.querySelector('#report-list-3 > span').innerHTML).toBe('Fake Test Task overview');
-                expect(element.querySelector('#report-list-4 > span').innerHTML).toBe('Fake Test Task service level agreement');
+                expect(element.querySelector('#report-list-0 .adf-text').innerHTML).toBe('Fake Test Process definition heat map');
+                expect(element.querySelector('#report-list-1 .adf-text').innerHTML).toBe('Fake Test Process definition overview');
+                expect(element.querySelector('#report-list-2 .adf-text').innerHTML).toBe('Fake Test Process instances overview');
+                expect(element.querySelector('#report-list-3 .adf-text').innerHTML).toBe('Fake Test Task overview');
+                expect(element.querySelector('#report-list-4 .adf-text').innerHTML).toBe('Fake Test Task service level agreement');
                 expect(component.isReportsEmpty()).toBeFalsy();
                 done();
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: reportList
-            });
+            fixture.detectChanges(); // This triggers ngOnInit which calls initObserver() and getReportList()
         });
 
         it('Report emit an error with a empty response', (done) => {
-            fixture.detectChanges();
+            const errorMessage = 'Not found';
+            (analyticsService.getReportList as jasmine.Spy).and.returnValue(throwError(() => errorMessage));
 
-            component.error.subscribe((err) => {
+            component.error.pipe(take(1)).subscribe((err) => {
                 expect(err).toBeDefined();
                 done();
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 404,
-                contentType: 'json',
-                responseText: []
-            });
+            fixture.detectChanges(); // Trigger ngOnInit which calls getReportList
         });
 
         it('Should return the current report when one report is selected', () => {
@@ -121,31 +119,30 @@ describe('AnalyticsReportListComponent', () => {
         });
 
         it('Should reload the report list', (done) => {
-            component.initObserver();
+            fixture.detectChanges(); // Trigger ngOnInit to set up observer
+
             const report = new ReportParametersModel({ id: 2002, name: 'Fake Test Process definition heat map' });
             component.reports = [report];
             expect(component.reports.length).toEqual(1);
-            component.reload();
 
-            component.success.subscribe(() => {
+            // Subscribe BEFORE calling reload - use take(1) to handle only the first emission
+            component.success.pipe(take(1)).subscribe(() => {
                 expect(component.reports.length).toEqual(5);
                 done();
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: reportList
-            });
+            component.reload();
         });
 
         it('Should reload the report list and select the report with the given id', (done) => {
-            component.initObserver();
+            fixture.detectChanges(); // Trigger ngOnInit to set up observer
+
+            // Reset to empty after ngOnInit populated it
+            component.reports = [];
             expect(component.reports.length).toEqual(0);
 
-            component.reload(2002);
-
-            component.success.subscribe(() => {
+            // Subscribe BEFORE calling reload - use take(1) to handle only the first emission
+            component.success.pipe(take(1)).subscribe(() => {
                 expect(component.reports.length).toEqual(5);
                 expect(component.currentReport).toBeDefined();
                 expect(component.currentReport).not.toBeNull();
@@ -153,11 +150,7 @@ describe('AnalyticsReportListComponent', () => {
                 done();
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: reportList
-            });
+            component.reload(2002);
         });
     });
 

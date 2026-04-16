@@ -20,13 +20,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import * as flowsMock from '../../mock/diagram/diagram-flows.mock';
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
-
-declare let jasmine: any;
+import { DiagramsService } from '../services/diagrams.service';
+import { of } from 'rxjs';
 
 describe('Diagrams flows', () => {
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let element: HTMLElement;
+    let diagramsService: DiagramsService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -35,9 +36,9 @@ describe('Diagrams flows', () => {
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
+        diagramsService = TestBed.inject(DiagramsService);
         fixture.detectChanges();
 
-        jasmine.Ajax.install();
         component.processInstanceId = '38399';
         component.processDefinitionId = 'fakeprocess:24:38399';
         component.metricPercentages = { startEvent: 0 };
@@ -46,16 +47,7 @@ describe('Diagrams flows', () => {
     afterEach(() => {
         component.success.unsubscribe();
         fixture.destroy();
-        jasmine.Ajax.uninstall();
     });
-
-    const ajaxReply = (resp: any) => {
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: resp
-        });
-    };
 
     describe('Diagrams component Flows with process instance id: ', () => {
         it('Should render the flow', (done) => {
@@ -72,9 +64,9 @@ describe('Diagrams flows', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { flows: [flowsMock.flow] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 
@@ -93,9 +85,9 @@ describe('Diagrams flows', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { flows: [flowsMock.flow] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 });

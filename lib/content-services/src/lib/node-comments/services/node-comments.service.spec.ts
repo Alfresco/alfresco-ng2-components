@@ -25,8 +25,6 @@ import { EMPTY, of } from 'rxjs';
 import { AlfrescoApiService } from '../../services';
 import { AlfrescoApiServiceMock } from '../../mock';
 
-declare let jasmine: any;
-
 describe('NodeCommentsService', () => {
     let service: NodeCommentsService;
 
@@ -40,15 +38,12 @@ describe('NodeCommentsService', () => {
             ]
         });
         service = TestBed.inject(NodeCommentsService);
-        jasmine.Ajax.install();
-    });
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
     });
 
     describe('Node  comments', () => {
         it('should add a comment node ', (done) => {
+            spyOn(service.commentsApi, 'createComment').and.returnValue(Promise.resolve(fakeContentComment as any));
+
             service.add('999', 'fake-comment-message').subscribe((res: CommentModel) => {
                 expect(res).toBeDefined();
                 expect(res.id).not.toEqual(null);
@@ -59,27 +54,17 @@ describe('NodeCommentsService', () => {
                 expect(res.createdBy.lastName).toEqual('lastName');
                 done();
             });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeContentComment)
-            });
         });
 
         it('should return the nodes comments ', (done) => {
+            spyOn(service.commentsApi, 'listComments').and.returnValue(Promise.resolve(fakeContentComments as any));
+
             service.get('999').subscribe((res: CommentModel[]) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(2);
                 expect(res[0].message).toEqual('fake-message-1');
                 expect(res[1].message).toEqual('fake-message-2');
                 done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeContentComments)
             });
         });
 

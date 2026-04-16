@@ -21,13 +21,14 @@ import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { UnitTestingUtils } from '@alfresco/adf-core';
 import { RaphaelRectDirective } from '@alfresco/adf-insights';
-
-declare let jasmine: any;
+import { DiagramsService } from '../services/diagrams.service';
+import { of } from 'rxjs';
 
 describe('Diagrams structural', () => {
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let unitTestingUtils: UnitTestingUtils;
+    let diagramsService: DiagramsService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -37,8 +38,8 @@ describe('Diagrams structural', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
+        diagramsService = TestBed.inject(DiagramsService);
 
-        jasmine.Ajax.install();
         component.processInstanceId = '38399';
         component.processDefinitionId = 'fakeprocess:24:38399';
         component.metricPercentages = { startEvent: 0 };
@@ -47,16 +48,7 @@ describe('Diagrams structural', () => {
     afterEach(() => {
         component.success.unsubscribe();
         fixture.destroy();
-        jasmine.Ajax.uninstall();
     });
-
-    const ajaxReply = (resp: any) => {
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: resp
-        });
-    };
 
     describe('Diagrams component Structural: ', () => {
         it('Should render the Subprocess', (done) => {
@@ -73,9 +65,9 @@ describe('Diagrams structural', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [structuralMock.subProcess] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Event Subprocess', (done) => {
@@ -92,9 +84,9 @@ describe('Diagrams structural', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [structuralMock.eventSubProcess] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 
@@ -113,9 +105,9 @@ describe('Diagrams structural', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [structuralMock.subProcess] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Subprocess', (done) => {
@@ -132,9 +124,9 @@ describe('Diagrams structural', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [structuralMock.subProcessActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Subprocess', (done) => {
@@ -151,9 +143,9 @@ describe('Diagrams structural', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [structuralMock.subProcessCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Event Subprocess', (done) => {
@@ -170,9 +162,9 @@ describe('Diagrams structural', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [structuralMock.eventSubProcess] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Event Subprocess', (done) => {
@@ -189,9 +181,9 @@ describe('Diagrams structural', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [structuralMock.eventSubProcessActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Event Subprocess', (done) => {
@@ -208,9 +200,9 @@ describe('Diagrams structural', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [structuralMock.eventSubProcessCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 });

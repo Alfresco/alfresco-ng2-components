@@ -22,13 +22,14 @@ import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { UnitTestingUtils } from '@alfresco/adf-core';
 import { RaphaelCircleDirective } from '@alfresco/adf-insights';
-
-declare let jasmine: any;
+import { DiagramsService } from '../services/diagrams.service';
+import { of } from 'rxjs';
 
 describe('Diagrams Catching', () => {
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let unitTestingUtils: UnitTestingUtils;
+    let diagramsService: DiagramsService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,10 +39,10 @@ describe('Diagrams Catching', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
+        diagramsService = TestBed.inject(DiagramsService);
     });
 
     beforeEach(() => {
-        jasmine.Ajax.install();
         component.processInstanceId = '38399';
         component.processDefinitionId = 'fakeprocess:24:38399';
         component.metricPercentages = { startEvent: 0 };
@@ -50,16 +51,7 @@ describe('Diagrams Catching', () => {
     afterEach(() => {
         component.success.unsubscribe();
         fixture.destroy();
-        jasmine.Ajax.uninstall();
     });
-
-    const ajaxReply = (resp: any) => {
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: resp
-        });
-    };
 
     describe('Diagrams component Intermediate Catching events: ', () => {
         it('Should render the Intermediate catching time event', (done) => {
@@ -88,9 +80,9 @@ describe('Diagrams Catching', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Intermediate catching error event', (done) => {
@@ -119,9 +111,9 @@ describe('Diagrams Catching', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Intermediate catching signal event', (done) => {
@@ -150,9 +142,9 @@ describe('Diagrams Catching', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Intermediate catching signal message', (done) => {
@@ -181,9 +173,9 @@ describe('Diagrams Catching', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 
@@ -214,9 +206,9 @@ describe('Diagrams Catching', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Intermediate catching time event', (done) => {
@@ -249,9 +241,9 @@ describe('Diagrams Catching', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Intermediate catching time event', (done) => {
@@ -284,9 +276,9 @@ describe('Diagrams Catching', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Intermediate catching error event', (done) => {
@@ -315,9 +307,9 @@ describe('Diagrams Catching', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Intermediate catching error event', (done) => {
@@ -350,9 +342,9 @@ describe('Diagrams Catching', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Intermediate catching error event', (done) => {
@@ -385,9 +377,9 @@ describe('Diagrams Catching', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Intermediate catching signal event', (done) => {
@@ -416,9 +408,9 @@ describe('Diagrams Catching', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Intermediate Active catching signal event', (done) => {
@@ -451,9 +443,9 @@ describe('Diagrams Catching', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Intermediate catching signal event', (done) => {
@@ -486,9 +478,9 @@ describe('Diagrams Catching', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Intermediate catching signal message', (done) => {
@@ -517,9 +509,9 @@ describe('Diagrams Catching', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Intermediate catching signal message', (done) => {
@@ -552,9 +544,9 @@ describe('Diagrams Catching', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Intermediate catching signal message', (done) => {
@@ -587,9 +579,9 @@ describe('Diagrams Catching', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 });

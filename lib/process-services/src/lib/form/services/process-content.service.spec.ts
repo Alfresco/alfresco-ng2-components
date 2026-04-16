@@ -19,8 +19,6 @@ import { TestBed } from '@angular/core/testing';
 import { ProcessContentService } from './process-content.service';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
-declare let jasmine: any;
-
 const fileContentPdfResponseBody = {
     id: 999,
     name: 'fake-name.pdf',
@@ -71,15 +69,43 @@ describe('ProcessContentService', () => {
         service = TestBed.inject(ProcessContentService);
     });
 
-    beforeEach(() => {
-        jasmine.Ajax.install();
-    });
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
-    });
-
     it('Should fetch the attachments', (done) => {
+        const mockResponse = {
+            size: 2,
+            total: 2,
+            start: 0,
+            data: [
+                {
+                    id: 8,
+                    name: 'fake.zip',
+                    created: 1494595697381,
+                    createdBy: { id: 2, firstName: 'user', lastName: 'user', email: 'user@user.com' },
+                    relatedContent: true,
+                    contentAvailable: true,
+                    link: false,
+                    mimeType: 'application/zip',
+                    simpleType: 'content',
+                    previewStatus: 'unsupported',
+                    thumbnailStatus: 'unsupported'
+                },
+                {
+                    id: 9,
+                    name: 'fake.jpg',
+                    created: 1494595655381,
+                    createdBy: { id: 2, firstName: 'user', lastName: 'user', email: 'user@user.com' },
+                    relatedContent: true,
+                    contentAvailable: true,
+                    link: false,
+                    mimeType: 'image/jpeg',
+                    simpleType: 'image',
+                    previewStatus: 'unsupported',
+                    thumbnailStatus: 'unsupported'
+                }
+            ]
+        };
+
+        spyOn(service.contentApi, 'getRelatedContentForTask').and.returnValue(Promise.resolve(mockResponse as any));
+
         service.getTaskRelatedContent('1234').subscribe((res) => {
             expect(res.data).toBeDefined();
             expect(res.data.length).toBe(2);
@@ -91,48 +117,12 @@ describe('ProcessContentService', () => {
             expect(res.data[1].relatedContent).toBeTruthy();
             done();
         });
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({
-                size: 2,
-                total: 2,
-                start: 0,
-                data: [
-                    {
-                        id: 8,
-                        name: 'fake.zip',
-                        created: 1494595697381,
-                        createdBy: { id: 2, firstName: 'user', lastName: 'user', email: 'user@user.com' },
-                        relatedContent: true,
-                        contentAvailable: true,
-                        link: false,
-                        mimeType: 'application/zip',
-                        simpleType: 'content',
-                        previewStatus: 'unsupported',
-                        thumbnailStatus: 'unsupported'
-                    },
-                    {
-                        id: 9,
-                        name: 'fake.jpg',
-                        created: 1494595655381,
-                        createdBy: { id: 2, firstName: 'user', lastName: 'user', email: 'user@user.com' },
-                        relatedContent: true,
-                        contentAvailable: true,
-                        link: false,
-                        mimeType: 'image/jpeg',
-                        simpleType: 'image',
-                        previewStatus: 'unsupported',
-                        thumbnailStatus: 'unsupported'
-                    }
-                ]
-            })
-        });
     });
 
     it('should return the unsupported content when the file is an image', (done) => {
         const contentId: number = 888;
+
+        spyOn(service.contentApi, 'getContent').and.returnValue(Promise.resolve(fileContentJpgResponseBody as any));
 
         service.getFileContent(contentId).subscribe((result) => {
             expect(result.id).toEqual(contentId);
@@ -141,16 +131,12 @@ describe('ProcessContentService', () => {
             expect(result.thumbnailStatus).toEqual('unsupported');
             done();
         });
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fileContentJpgResponseBody)
-        });
     });
 
     it('should return the supported content when the file is a pdf', (done) => {
         const contentId: number = 999;
+
+        spyOn(service.contentApi, 'getContent').and.returnValue(Promise.resolve(fileContentPdfResponseBody as any));
 
         service.getFileContent(contentId).subscribe((result) => {
             expect(result.id).toEqual(contentId);
@@ -158,12 +144,6 @@ describe('ProcessContentService', () => {
             expect(result.simpleType).toEqual('pdf');
             expect(result.thumbnailStatus).toEqual('created');
             done();
-        });
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fileContentPdfResponseBody)
         });
     });
 
