@@ -21,8 +21,6 @@ import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresent
 import { of } from 'rxjs';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
-declare let jasmine: any;
-
 const fakeProcessFiltersResponse: any = {
     size: 1,
     total: 1,
@@ -60,12 +58,6 @@ describe('Process filter', () => {
 
         beforeEach(() => {
             getFilters = spyOn(service.userFiltersApi, 'getUserProcessInstanceFilters').and.returnValue(Promise.resolve(fakeProcessFiltersResponse));
-
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
         });
 
         describe('get filters', () => {
@@ -102,6 +94,30 @@ describe('Process filter', () => {
             });
 
             it('should return the default filters', (done) => {
+                const runningFilterResponse = {
+                    appId: 1001,
+                    id: 111,
+                    name: 'Running',
+                    icon: 'fake-icon',
+                    recent: false
+                };
+                const completedFilterResponse = {
+                    appId: 1001,
+                    id: 222,
+                    name: 'Completed',
+                    icon: 'fake-icon',
+                    recent: false
+                };
+                const allFilterResponse = {
+                    appId: 1001,
+                    id: 333,
+                    name: 'All',
+                    icon: 'fake-icon',
+                    recent: false
+                };
+
+                spyOn(service, 'addProcessFilter').and.returnValues(of(runningFilterResponse), of(completedFilterResponse), of(allFilterResponse));
+
                 service.createDefaultFilters(1234).subscribe((res) => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(3);
@@ -113,45 +129,33 @@ describe('Process filter', () => {
                     expect(res[2].id).toEqual(333);
                     done();
                 });
-
-                jasmine.Ajax.requests.at(0).respondWith({
-                    status: 200,
-                    contentType: 'application/json',
-                    responseText: JSON.stringify({
-                        appId: 1001,
-                        id: 111,
-                        name: 'Running',
-                        icon: 'fake-icon',
-                        recent: false
-                    })
-                });
-
-                jasmine.Ajax.requests.at(1).respondWith({
-                    status: 200,
-                    contentType: 'application/json',
-                    responseText: JSON.stringify({
-                        appId: 1001,
-                        id: 222,
-                        name: 'Completed',
-                        icon: 'fake-icon',
-                        recent: false
-                    })
-                });
-
-                jasmine.Ajax.requests.at(2).respondWith({
-                    status: 200,
-                    contentType: 'application/json',
-                    responseText: JSON.stringify({
-                        appId: 1001,
-                        id: 333,
-                        name: 'All',
-                        icon: 'fake-icon',
-                        recent: false
-                    })
-                });
             });
 
             it('should be able create filters and add sorting information to the response', (done) => {
+                const runningFilterResponse = {
+                    appId: 1001,
+                    id: 111,
+                    name: 'Running',
+                    icon: 'fake-icon',
+                    recent: false
+                };
+                const completedFilterResponse = {
+                    appId: 1001,
+                    id: 222,
+                    name: 'Completed',
+                    icon: 'fake-icon',
+                    recent: false
+                };
+                const allFilterResponse = {
+                    appId: 1001,
+                    id: 333,
+                    name: 'All',
+                    icon: 'fake-icon',
+                    recent: false
+                };
+
+                spyOn(service, 'addProcessFilter').and.returnValues(of(runningFilterResponse), of(completedFilterResponse), of(allFilterResponse));
+
                 service.createDefaultFilters(1234).subscribe((res) => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(3);
@@ -167,42 +171,6 @@ describe('Process filter', () => {
                     expect(res[2].filter.sort).toEqual('created-desc');
                     expect(res[2].filter.state).toEqual('all');
                     done();
-                });
-
-                jasmine.Ajax.requests.at(0).respondWith({
-                    status: 200,
-                    contentType: 'application/json',
-                    responseText: JSON.stringify({
-                        appId: 1001,
-                        id: 111,
-                        name: 'Running',
-                        icon: 'fake-icon',
-                        recent: false
-                    })
-                });
-
-                jasmine.Ajax.requests.at(1).respondWith({
-                    status: 200,
-                    contentType: 'application/json',
-                    responseText: JSON.stringify({
-                        appId: 1001,
-                        id: 222,
-                        name: 'Completed',
-                        icon: 'fake-icon',
-                        recent: false
-                    })
-                });
-
-                jasmine.Ajax.requests.at(2).respondWith({
-                    status: 200,
-                    contentType: 'application/json',
-                    responseText: JSON.stringify({
-                        appId: 1001,
-                        id: 333,
-                        name: 'All',
-                        icon: 'fake-icon',
-                        recent: false
-                    })
                 });
             });
 
