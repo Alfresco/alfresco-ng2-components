@@ -21,23 +21,24 @@ import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { UnitTestingUtils } from '@alfresco/adf-core';
 import { RaphaelCircleDirective } from '@alfresco/adf-insights';
-
-declare let jasmine: any;
+import { DiagramsService } from '../services/diagrams.service';
+import { of } from 'rxjs';
 
 describe('Diagrams throw', () => {
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let unitTestingUtils: UnitTestingUtils;
+    let diagramsService: DiagramsService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [InsightsTestingModule]
         });
-        jasmine.Ajax.install();
 
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
         unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
+        diagramsService = TestBed.inject(DiagramsService);
         component.processInstanceId = '38399';
         component.processDefinitionId = 'fakeprocess:24:38399';
         component.metricPercentages = { startEvent: 0 };
@@ -47,16 +48,7 @@ describe('Diagrams throw', () => {
 
     afterEach(() => {
         fixture.destroy();
-        jasmine.Ajax.uninstall();
     });
-
-    const ajaxReply = (resp: any) => {
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: resp
-        });
-    };
 
     describe('Diagrams component Throw events with process instance id: ', () => {
         it('Should render the Throw time event', (done) => {
@@ -81,9 +73,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwTimeEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Throw time event', (done) => {
@@ -112,9 +104,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwTimeEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Throw time event', (done) => {
@@ -143,9 +135,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwTimeEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Throw error event', (done) => {
@@ -174,9 +166,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwErrorEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Throw error event', (done) => {
@@ -209,9 +201,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwErrorEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Throw error event', (done) => {
@@ -244,9 +236,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwErrorEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Throw signal event', (done) => {
@@ -275,9 +267,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwSignalEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Throw signal event', (done) => {
@@ -310,9 +302,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwSignalEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Throw signal event', (done) => {
@@ -345,9 +337,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwSignalEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Throw signal message', (done) => {
@@ -376,9 +368,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwMessageEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Throw signal message', (done) => {
@@ -411,9 +403,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwMessageEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Throw signal message', (done) => {
@@ -446,9 +438,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwMessageEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Throw signal message', (done) => {
@@ -477,9 +469,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwMessageEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Throw signal message', (done) => {
@@ -512,9 +504,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwMessageEventActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Throw signal message', (done) => {
@@ -547,9 +539,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwMessageEventCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 
@@ -576,9 +568,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwTimeEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Throw error event', (done) => {
@@ -607,9 +599,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwErrorEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Throw signal event', (done) => {
@@ -638,9 +630,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwSignalEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Throw signal message', (done) => {
@@ -669,9 +661,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwMessageEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Throw signal message', (done) => {
@@ -700,9 +692,9 @@ describe('Diagrams throw', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwMessageEvent] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 });

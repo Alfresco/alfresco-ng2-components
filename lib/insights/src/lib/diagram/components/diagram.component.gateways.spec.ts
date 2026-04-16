@@ -22,13 +22,14 @@ import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { UnitTestingUtils } from '@alfresco/adf-core';
 import { RaphaelRhombusDirective } from '@alfresco/adf-insights';
-
-declare let jasmine: any;
+import { DiagramsService } from '../services/diagrams.service';
+import { of } from 'rxjs';
 
 describe('Diagrams gateways', () => {
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let unitTestingUtils: UnitTestingUtils;
+    let diagramsService: DiagramsService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -37,9 +38,9 @@ describe('Diagrams gateways', () => {
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
         unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
+        diagramsService = TestBed.inject(DiagramsService);
         fixture.detectChanges();
 
-        jasmine.Ajax.install();
         component.processInstanceId = '38399';
         component.processDefinitionId = 'fakeprocess:24:38399';
         component.metricPercentages = { startEvent: 0 };
@@ -48,16 +49,7 @@ describe('Diagrams gateways', () => {
     afterEach(() => {
         component.success.unsubscribe();
         fixture.destroy();
-        jasmine.Ajax.uninstall();
     });
-
-    const ajaxReply = (resp: any) => {
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: resp
-        });
-    };
 
     describe('Diagrams component Gateways: ', () => {
         it('Should render the Exclusive Gateway', (done) => {
@@ -77,9 +69,9 @@ describe('Diagrams gateways', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.exclusiveGateway] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Inclusive Gateway', (done) => {
@@ -99,9 +91,9 @@ describe('Diagrams gateways', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.inclusiveGateway] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Parallel Gateway', (done) => {
@@ -121,9 +113,9 @@ describe('Diagrams gateways', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.parallelGateway] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Event Gateway', (done) => {
@@ -153,9 +145,9 @@ describe('Diagrams gateways', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.eventGateway] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 
@@ -177,9 +169,9 @@ describe('Diagrams gateways', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.exclusiveGateway] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Exclusive Gateway', (done) => {
@@ -199,9 +191,9 @@ describe('Diagrams gateways', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.exclusiveGatewayActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Exclusive Gateway', (done) => {
@@ -221,9 +213,9 @@ describe('Diagrams gateways', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.exclusiveGatewayCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Inclusive Gateway', (done) => {
@@ -243,9 +235,9 @@ describe('Diagrams gateways', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.inclusiveGateway] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Inclusive Gateway', (done) => {
@@ -265,9 +257,9 @@ describe('Diagrams gateways', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.inclusiveGatewayActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Inclusive Gateway', (done) => {
@@ -287,9 +279,9 @@ describe('Diagrams gateways', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.inclusiveGatewayCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Parallel Gateway', (done) => {
@@ -309,9 +301,9 @@ describe('Diagrams gateways', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.parallelGateway] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Parallel Gateway', (done) => {
@@ -331,9 +323,9 @@ describe('Diagrams gateways', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.parallelGatewayActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Parallel Gateway', (done) => {
@@ -353,9 +345,9 @@ describe('Diagrams gateways', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.parallelGatewayCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Event Gateway', (done) => {
@@ -385,9 +377,9 @@ describe('Diagrams gateways', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.eventGateway] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Active Event Gateway', (done) => {
@@ -417,9 +409,9 @@ describe('Diagrams gateways', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.eventGatewayActive] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
 
         it('Should render the Completed Event Gateway', (done) => {
@@ -449,9 +441,9 @@ describe('Diagrams gateways', () => {
                     done();
                 });
             });
-            component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.eventGatewayCompleted] };
-            ajaxReply(resp);
+            spyOn(diagramsService, 'getProcessDefinitionModel').and.returnValue(of(resp));
+            component.ngOnChanges();
         });
     });
 });

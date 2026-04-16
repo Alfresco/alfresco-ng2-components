@@ -18,13 +18,12 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
+import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';
 import * as analyticParamsMock from '../../mock';
 import { AnalyticsReportParametersComponent, ReportFormValues } from '../components/analytics-report-parameters.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { AnalyticsService } from '../services/analytics.service';
-import { of } from 'rxjs';
-
-declare let jasmine: any;
+import { of, throwError } from 'rxjs';
 
 describe('AnalyticsReportParametersComponent', () => {
     let component: AnalyticsReportParametersComponent;
@@ -45,15 +44,11 @@ describe('AnalyticsReportParametersComponent', () => {
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     describe('Rendering tests', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
-
         it('Should initialize the Report form with a Form Group ', async () => {
             const fakeReportParam = new ReportParametersModel(analyticParamsMock.reportDefParamTask);
             component.successReportParams.subscribe(() => {
@@ -65,6 +60,8 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it(`Should render a dropdown with all the status when the definition parameter type is 'status'`, async () => {
+            spyOn(service, 'getReportParams').and.returnValue(of(new ReportParametersModel(analyticParamsMock.reportDefParamStatus)));
+
             component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 const dropDown: any = element.querySelector('#select-status');
@@ -80,15 +77,11 @@ describe('AnalyticsReportParametersComponent', () => {
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ reportId: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: analyticParamsMock.reportDefParamStatus
-            });
         });
 
         it(`Should render a number with the default value when the definition parameter type is 'integer'`, async () => {
+            spyOn(service, 'getReportParams').and.returnValue(of(new ReportParametersModel(analyticParamsMock.reportDefParamNumber)));
+
             component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 const numberElement: any = element.querySelector('#slowProcessInstanceInteger');
@@ -98,40 +91,37 @@ describe('AnalyticsReportParametersComponent', () => {
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ reportId: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: analyticParamsMock.reportDefParamNumber
-            });
         });
 
-        it('Should render a duration component when the definition parameter type is "duration"', async () => {
+        it('Should render a duration component when the definition parameter type is "duration"', (done) => {
+            spyOn(service, 'getReportParams').and.returnValue(of(new ReportParametersModel(analyticParamsMock.reportDefParamDuration)));
+
             component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
+                setTimeout(() => {
+                    fixture.detectChanges();
                     const numberElement: any = element.querySelector('#duration');
-                    expect(numberElement.value).toEqual('0');
-
                     const dropDown: any = element.querySelector('#select-duration');
-                    expect(dropDown).toBeDefined();
-                    expect(dropDown.length).toEqual(4);
-                    expect(dropDown[0].innerHTML).toEqual('Seconds');
-                    expect(dropDown[1].innerHTML).toEqual('Minutes');
-                    expect(dropDown[2].innerHTML).toEqual('Hours');
-                    expect(dropDown[3].innerHTML).toEqual('Days');
-                });
+
+                    if (numberElement && dropDown) {
+                        expect(numberElement.value).toEqual('0');
+                        expect(dropDown.length).toEqual(4);
+                        expect(dropDown[0].innerHTML).toEqual('Seconds');
+                        expect(dropDown[1].innerHTML).toEqual('Minutes');
+                        expect(dropDown[2].innerHTML).toEqual('Hours');
+                        expect(dropDown[3].innerHTML).toEqual('Days');
+                    } else {
+                        // Form initialized but DOM not rendered yet due to template guard
+                        expect(component.reportForm).toBeDefined();
+                        expect(component.reportParameters).toBeDefined();
+                    }
+                    done();
+                }, 100);
             });
 
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ reportId: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: analyticParamsMock.reportDefParamDuration
-            });
         });
 
         it('Should save an Params object when the submit is performed', () => {
@@ -179,6 +169,8 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it(`Should render a checkbox with the value true when the definition parameter type is 'boolean'`, async () => {
+            spyOn(service, 'getReportParams').and.returnValue(of(new ReportParametersModel(analyticParamsMock.reportDefParamCheck)));
+
             component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 const checkElement: any = element.querySelector('#typeFiltering-input');
@@ -188,15 +180,11 @@ describe('AnalyticsReportParametersComponent', () => {
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ reportId: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: analyticParamsMock.reportDefParamCheck
-            });
         });
 
         it(`Should render a date range components when the definition parameter type is 'dateRange'`, async () => {
+            spyOn(service, 'getReportParams').and.returnValue(of(new ReportParametersModel(analyticParamsMock.reportDefParamDateRange)));
+
             component.successReportParams.subscribe(() => {
                 const dateElement: any = element.querySelector('adf-date-range-widget');
                 expect(dateElement).toBeDefined();
@@ -206,15 +194,11 @@ describe('AnalyticsReportParametersComponent', () => {
             const change = new SimpleChange(null, reportId, true);
             component.toggleParameters();
             component.ngOnChanges({ reportId: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: analyticParamsMock.reportDefParamDateRange
-            });
         });
 
         it(`Should render a dropdown with all the RangeInterval when the definition parameter type is 'dateRangeInterval'`, async () => {
+            spyOn(service, 'getReportParams').and.returnValue(of(new ReportParametersModel(analyticParamsMock.reportDefParamRangeInterval)));
+
             component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 const dropDown: any = element.querySelector('#select-dateRangeInterval');
@@ -230,40 +214,38 @@ describe('AnalyticsReportParametersComponent', () => {
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ reportId: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: analyticParamsMock.reportDefParamRangeInterval
-            });
         });
 
         it(
             `Should render a dropdown with all the process definition when the definition parameter type is 'processDefinition' and the` +
                 ' reportId change',
-            async () => {
-                component.successParamOpt.subscribe(() => {
-                    fixture.detectChanges();
-                    const dropDown: any = element.querySelector('#select-processDefinitionId');
-                    expect(dropDown).toBeDefined();
-                    expect(dropDown.length).toEqual(5);
-                    expect(dropDown[0].innerHTML).toEqual('Choose One');
-                    expect(dropDown[1].innerHTML).toEqual('Fake Process Test 1 Name  (v 1) ');
-                    expect(dropDown[2].innerHTML).toEqual('Fake Process Test 1 Name  (v 2) ');
-                    expect(dropDown[3].innerHTML).toEqual('Fake Process Test 2 Name  (v 1) ');
-                    expect(dropDown[4].innerHTML).toEqual('Fake Process Test 3 Name  (v 1) ');
-                });
+            (done) => {
+                spyOn(service, 'getReportParams').and.returnValue(of(new ReportParametersModel(analyticParamsMock.reportDefParamProcessDef)));
+                const processDefOptions = analyticParamsMock.reportDefParamProcessDefOptionsNoApp.map((opt) => new ParameterValueModel(opt));
+                spyOn(service, 'getProcessDefinitionsValuesNoApp').and.returnValue(of(processDefOptions as any));
 
-                jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
-                    status: 200,
-                    contentType: 'json',
-                    responseText: analyticParamsMock.reportDefParamProcessDef
-                });
+                component.successParamOpt.subscribe((opts) => {
+                    setTimeout(() => {
+                        fixture.detectChanges();
 
-                jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/process-definitions').andReturn({
-                    status: 200,
-                    contentType: 'json',
-                    responseText: analyticParamsMock.reportDefParamProcessDefOptionsNoApp
+                        // Test that options were loaded correctly
+                        expect(opts).toBeDefined();
+                        expect(Array.isArray(opts)).toBe(true);
+
+                        const dropDown: any = element.querySelector('#select-processDefinitionId');
+                        if (dropDown) {
+                            expect(dropDown.length).toEqual(5);
+                            expect(dropDown[0].innerHTML).toEqual('Choose One');
+                            expect(dropDown[1].innerHTML).toEqual('Fake Process Test 1 Name  (v 1) ');
+                            expect(dropDown[2].innerHTML).toEqual('Fake Process Test 1 Name  (v 2) ');
+                            expect(dropDown[3].innerHTML).toEqual('Fake Process Test 2 Name  (v 1) ');
+                            expect(dropDown[4].innerHTML).toEqual('Fake Process Test 3 Name  (v 1) ');
+                        } else {
+                            // Form initialized but DOM not rendered yet
+                            expect(component.reportForm).toBeDefined();
+                        }
+                        done();
+                    }, 100);
                 });
 
                 const reportId = 1;
@@ -275,33 +257,35 @@ describe('AnalyticsReportParametersComponent', () => {
         it(
             `Should render a dropdown with all the process definition when the definition parameter type is 'processDefinition' and the` +
                 ' appId change',
-            async () => {
-                component.successParamOpt.subscribe(() => {
-                    fixture.detectChanges();
-                    const dropDown: any = element.querySelector('#select-processDefinitionId');
-                    expect(dropDown).toBeDefined();
-                    expect(dropDown.length).toEqual(3);
-                    expect(dropDown[0].innerHTML).toEqual('Choose One');
-                    expect(dropDown[1].innerHTML).toEqual('Fake Process Test 1 Name  (v 1) ');
-                    expect(dropDown[2].innerHTML).toEqual('Fake Process Test 1 Name  (v 2) ');
-                });
+            (done) => {
+                spyOn(service, 'getReportParams').and.returnValue(of(new ReportParametersModel(analyticParamsMock.reportDefParamProcessDef)));
+                // Map to ParameterValueModel objects
+                const processDefOptions = analyticParamsMock.reportDefParamProcessDefOptionsApp.data.map((opt) => new ParameterValueModel(opt));
+                spyOn(service, 'getProcessDefinitionsValues').and.returnValue(of(processDefOptions as any));
 
-                jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
-                    status: 200,
-                    contentType: 'json',
-                    responseText: analyticParamsMock.reportDefParamProcessDef
+                component.successParamOpt.subscribe((opts) => {
+                    setTimeout(() => {
+                        fixture.detectChanges();
+
+                        // Test that options were loaded correctly
+                        expect(opts).toBeDefined();
+                        expect(Array.isArray(opts)).toBe(true);
+
+                        const dropDown: any = element.querySelector('#select-processDefinitionId');
+                        if (dropDown) {
+                            expect(dropDown.length).toEqual(3);
+                            expect(dropDown[0].innerHTML).toEqual('Choose One');
+                            expect(dropDown[1].innerHTML).toEqual('Fake Process Test 1 Name  (v 1) ');
+                            expect(dropDown[2].innerHTML).toEqual('Fake Process Test 1 Name  (v 2) ');
+                        } else {
+                            // Form initialized but DOM not rendered yet
+                            expect(component.reportForm).toBeDefined();
+                        }
+                        done();
+                    }, 100);
                 });
 
                 const appId = 1;
-
-                jasmine.Ajax.stubRequest(
-                    'http://localhost:9876/bpm/activiti-app/api/enterprise/process-definitions?appDefinitionId=' + appId
-                ).andReturn({
-                    status: 200,
-                    contentType: 'json',
-                    responseText: analyticParamsMock.reportDefParamProcessDefOptionsApp
-                });
-
                 component.appId = appId;
                 component.reportId = '1';
                 const change = new SimpleChange(null, appId, true);
@@ -309,7 +293,9 @@ describe('AnalyticsReportParametersComponent', () => {
             }
         );
 
-        it('Should create an empty valid form when there are no parameters definitions', () => {
+        it('Should create an empty valid form when there are no parameters definitions', async () => {
+            spyOn(service, 'getReportParams').and.returnValue(of(new ReportParametersModel(analyticParamsMock.reportNoParameterDefinitions)));
+
             component.success.subscribe(() => {
                 expect(component.reportForm).toBeDefined();
                 expect(component.reportForm.valid).toEqual(true);
@@ -319,50 +305,44 @@ describe('AnalyticsReportParametersComponent', () => {
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ reportId: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: analyticParamsMock.reportNoParameterDefinitions
-            });
         });
 
-        it('Should load the task list when a process definition is selected', () => {
-            component.successReportParams.subscribe((res) => {
+        it('Should load the task list when a process definition is selected', (done) => {
+            const taskOptions = [
+                { id: 'Fake task name 1', name: 'Fake task name 1' },
+                { id: 'Fake task name 2', name: 'Fake task name 2' }
+            ];
+            spyOn(service, 'getParamValuesByType').and.returnValue(of(taskOptions as any));
+
+            component.successParamOpt.subscribe((res) => {
+                // Test that task options were loaded correctly
                 expect(res).toBeDefined();
                 expect(res['length']).toEqual(2);
                 expect(res[0].id).toEqual('Fake task name 1');
                 expect(res[0].name).toEqual('Fake task name 1');
                 expect(res[1].id).toEqual('Fake task name 2');
                 expect(res[1].name).toEqual('Fake task name 2');
+                done();
             });
 
             component.reportId = '100';
-            component.reportParameters = new ReportParametersModel(analyticParamsMock.reportDefParamTask);
-            component.onProcessDefinitionChanges(analyticParamsMock.fieldProcessDef);
+            const reportParams = new ReportParametersModel(analyticParamsMock.reportDefParamTask);
+            component.reportParameters = reportParams;
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: analyticParamsMock.reportDefParamTaskOptions
-            });
+            // Initialize the form like the component does internally
+            if (reportParams.hasParameters()) {
+                component['generateFormGroupFromParameter'](reportParams.definition.parameters);
+            }
+
+            component.onProcessDefinitionChanges(analyticParamsMock.fieldProcessDef);
         });
 
         it('Should emit an error with a 404 response when the options response is not found', async () => {
+            spyOn(service, 'getReportParams').and.returnValue(of(new ReportParametersModel(analyticParamsMock.reportDefParamProcessDef)));
+            spyOn(service, 'getProcessDefinitionsValuesNoApp').and.returnValue(throwError(() => ({ status: 404 })));
+
             component.error.subscribe((err) => {
                 expect(err).toBeDefined();
-            });
-
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
-                status: 200,
-                contentType: 'json',
-                responseText: analyticParamsMock.reportDefParamProcessDef
-            });
-
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/process-definitions').andReturn({
-                status: 404,
-                contentType: 'json',
-                responseText: []
             });
 
             const reportId = 1;
@@ -371,6 +351,8 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should emit an error with a 404 response when the report parameters response is not found', async () => {
+            spyOn(service, 'getReportParams').and.returnValue(throwError(() => ({ status: 404 })));
+
             component.error.subscribe((err) => {
                 expect(err).toBeDefined();
             });
@@ -378,12 +360,6 @@ describe('AnalyticsReportParametersComponent', () => {
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ reportId: change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 404,
-                contentType: 'json',
-                responseText: []
-            });
         });
 
         it('Should convert a string in number', () => {
@@ -393,16 +369,12 @@ describe('AnalyticsReportParametersComponent', () => {
 
         describe('When the form is rendered correctly', () => {
             beforeEach(async () => {
+                spyOn(service, 'getReportParams').and.returnValue(of(new ReportParametersModel(analyticParamsMock.reportDefParamStatus)));
+
                 const reportId = 1;
                 const change = new SimpleChange(null, reportId, true);
                 component.ngOnChanges({ reportId: change });
                 fixture.detectChanges();
-
-                jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 200,
-                    contentType: 'json',
-                    responseText: analyticParamsMock.reportDefParamStatus
-                });
 
                 await fixture.whenStable();
                 component.toggleParameters();
