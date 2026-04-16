@@ -26,14 +26,46 @@ import { FileModel, FileUploadStatus } from '../../common/models/file.model';
 import { AlfrescoApiService } from '../../services';
 import { AlfrescoApiServiceMock } from '../../mock';
 
-declare let jasmine: any;
-
 describe('UploadService', () => {
     let service: UploadService;
     let appConfigService: AppConfigService;
     let uploadFileSpy: jasmine.Spy;
 
     const mockProductInfo = new BehaviorSubject<RepositoryInfo>(null);
+
+    const createMockPromiseWithEvents = (responseData?: any, shouldError = false) => {
+        const handlers: any = {};
+        const promise: any = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (shouldError) {
+                    if (handlers.error) {
+                        handlers.error(responseData || { status: 404 });
+                    }
+                    reject(responseData);
+                } else {
+                    if (handlers.success) {
+                        handlers.success(responseData);
+                    }
+                    resolve(responseData);
+                }
+            }, 0);
+        });
+
+        promise.on = (event: string, handler: (data?: any) => void) => {
+            handlers[event] = handler;
+            return promise;
+        };
+
+        promise.abort = () => {
+            if (handlers.abort) {
+                handlers.abort();
+            }
+        };
+
+        promise.catch = (handler: (error: any) => void) => Promise.prototype.catch.call(promise, handler);
+
+        return promise;
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -75,12 +107,7 @@ describe('UploadService', () => {
 
         uploadFileSpy = spyOn(service.uploadApi, 'uploadFile').and.callThrough();
 
-        jasmine.Ajax.install();
         mockProductInfo.next({ status: { isThumbnailGenerationEnabled: true } } as RepositoryInfo);
-    });
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
     });
 
     it('should return an empty queue if no elements are added', () => {
@@ -153,52 +180,48 @@ describe('UploadService', () => {
     it('should make XHR done request after the file is added in the queue', (done) => {
         const emitter = new EventEmitter();
 
+        const mockResponse = { entry: { id: 'node-id' } };
+        const mockPromise = createMockPromiseWithEvents(mockResponse);
+
+        uploadFileSpy.and.returnValue(mockPromise);
+
         const emitterDisposable = emitter.subscribe((e) => {
-            expect(e.value).toBe('File uploaded');
+            expect(e.value).toEqual(mockResponse);
             emitterDisposable.unsubscribe();
             done();
         });
+
         const fileFake = new FileModel({ name: 'fake-name', size: 10 } as File, { parentId: '-root-', path: 'fake-dir' });
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
 
-        const request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe(
-            'http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations'
-        );
-        expect(request.method).toBe('POST');
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'text/plain',
-            responseText: 'File uploaded'
-        });
+        expect(uploadFileSpy).toHaveBeenCalled();
     });
 
     it('should make XHR error request after an error occur', (done) => {
         const emitter = new EventEmitter();
+
+        const mockPromise = createMockPromiseWithEvents({ status: 404 }, true);
+        uploadFileSpy.and.returnValue(mockPromise);
 
         const emitterDisposable = emitter.subscribe((e) => {
             expect(e.value).toBe('Error file uploaded');
             emitterDisposable.unsubscribe();
             done();
         });
+
         const fileFake = new FileModel({ name: 'fake-name', size: 10 } as File, { parentId: '-root-' });
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(null, emitter);
-        expect(jasmine.Ajax.requests.mostRecent().url).toBe(
-            'http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations'
-        );
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 404,
-            contentType: 'text/plain',
-            responseText: 'Error file uploaded'
-        });
+        expect(uploadFileSpy).toHaveBeenCalled();
     });
 
     it('should abort file only if it is safe to abort', (done) => {
         const emitter = new EventEmitter();
+
+        const mockPromise = createMockPromiseWithEvents();
+        uploadFileSpy.and.returnValue(mockPromise);
 
         const emitterDisposable = emitter.subscribe((event) => {
             expect(event.value).toEqual('File aborted');
@@ -217,22 +240,18 @@ describe('UploadService', () => {
     it('should let file complete and then delete node if it is not safe to abort', (done) => {
         const emitter = new EventEmitter();
 
+        const mockUploadResponse = { entry: { id: 'myNodeId' } };
+        const mockPromise = createMockPromiseWithEvents(mockUploadResponse);
+        uploadFileSpy.and.returnValue(mockPromise);
+
+        const deleteNodeSpy = spyOn(service.nodesApi, 'deleteNode').and.returnValue(Promise.resolve());
+
         const emitterDisposable = emitter.subscribe((event) => {
-            expect(event.value).toEqual('File deleted');
-            emitterDisposable.unsubscribe();
-
-            const deleteRequest = jasmine.Ajax.requests.mostRecent();
-            expect(deleteRequest.url).toBe(
-                'http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/myNodeId?permanent=true'
-            );
-            expect(deleteRequest.method).toBe('DELETE');
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'text/plain',
-                responseText: 'File deleted'
-            });
-            done();
+            if (event.value === 'File deleted') {
+                expect(deleteNodeSpy).toHaveBeenCalledWith('myNodeId', { permanent: true });
+                emitterDisposable.unsubscribe();
+                done();
+            }
         });
 
         const fileFake = new FileModel({ name: 'fake-name', size: 10 } as File);
@@ -241,41 +260,30 @@ describe('UploadService', () => {
 
         const file = service.getQueue();
         service.cancelUpload(...file);
-
-        const request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe(
-            'http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations'
-        );
-        expect(request.method).toBe('POST');
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: {
-                entry: {
-                    id: 'myNodeId'
-                }
-            }
-        });
     });
 
     it('should delete node version when cancelling the upload of the new file version', (done) => {
         const emitter = new EventEmitter();
 
+        const mockUploadResponse = {
+            entry: {
+                id: 'myNodeId',
+                properties: {
+                    'cm:versionLabel': '1.1'
+                }
+            }
+        };
+        const mockPromise = createMockPromiseWithEvents(mockUploadResponse);
+
+        spyOn(service.nodesApi, 'updateNodeContent').and.returnValue(mockPromise);
+        const deleteVersionSpy = spyOn(service.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve());
+
         const emitterDisposable = emitter.subscribe((event) => {
-            expect(event.value).toEqual('File deleted');
-            emitterDisposable.unsubscribe();
-
-            const deleteRequest = jasmine.Ajax.requests.mostRecent();
-            expect(deleteRequest.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/myNodeId/versions/1.1');
-            expect(deleteRequest.method).toBe('DELETE');
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'text/plain',
-                responseText: 'File deleted'
-            });
-            done();
+            if (event.value === 'File deleted') {
+                expect(deleteVersionSpy).toHaveBeenCalledWith('myNodeId', '1.1');
+                emitterDisposable.unsubscribe();
+                done();
+            }
         });
 
         const fileFake = new FileModel({ name: 'fake-name', size: 10 } as File, null, 'fakeId');
@@ -284,23 +292,6 @@ describe('UploadService', () => {
 
         const file = service.getQueue();
         service.cancelUpload(...file);
-
-        const request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toContain('ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fakeId/content?include=allowableOperations');
-        expect(request.method).toBe('PUT');
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: {
-                entry: {
-                    id: 'myNodeId',
-                    properties: {
-                        'cm:versionLabel': '1.1'
-                    }
-                }
-            }
-        });
     });
 
     it('If newVersion is set, name should be a param', () => {
@@ -331,26 +322,27 @@ describe('UploadService', () => {
     it('should use custom root folder ID given to the service', (done) => {
         const emitter = new EventEmitter();
 
+        const mockResponse = { entry: { id: 'node-id' } };
+        const mockPromise = createMockPromiseWithEvents(mockResponse);
+        uploadFileSpy.and.returnValue(mockPromise);
+
         const emitterDisposable = emitter.subscribe((e) => {
-            expect(e.value).toBe('File uploaded');
+            expect(e.value).toEqual(mockResponse);
             emitterDisposable.unsubscribe();
             done();
         });
+
         const filesFake = new FileModel({ name: 'fake-file-name', size: 10 } as File, { parentId: '123', path: 'fake-dir' });
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
 
-        const request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toContain(
-            '/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/123/children?autoRename=true&include=allowableOperations'
+        expect(uploadFileSpy).toHaveBeenCalledWith(
+            jasmine.objectContaining({ name: 'fake-file-name' }),
+            'fake-dir',
+            '123',
+            jasmine.any(Object),
+            jasmine.any(Object)
         );
-        expect(request.method).toBe('POST');
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'text/plain',
-            responseText: 'File uploaded'
-        });
     });
 
     describe('versioningEnabled', () => {
@@ -437,6 +429,13 @@ describe('UploadService', () => {
     });
 
     it('should start downloading the next one if a file of the list is aborted', (done) => {
+        const mockResponse1 = { entry: { id: 'node-id-1' } };
+        const mockResponse2 = { entry: { id: 'node-id-2' } };
+        const mockPromise1 = createMockPromiseWithEvents(mockResponse1);
+        const mockPromise2 = createMockPromiseWithEvents(mockResponse2);
+
+        uploadFileSpy.and.returnValues(mockPromise1, mockPromise2);
+
         service.fileUploadAborted.subscribe((e) => {
             expect(e).not.toBeNull();
         });
