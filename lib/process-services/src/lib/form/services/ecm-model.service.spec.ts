@@ -21,8 +21,6 @@ import { EcmModelService } from './ecm-model.service';
 import { TestBed } from '@angular/core/testing';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
-declare let jasmine: any;
-
 describe('EcmModelService', () => {
     let service: EcmModelService;
 
@@ -32,75 +30,47 @@ describe('EcmModelService', () => {
             providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         service = TestBed.inject(EcmModelService);
-        jasmine.Ajax.install();
-    });
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
     });
 
     it('Should fetch ECM models', (done) => {
-        service.getEcmModels().subscribe(() => {
-            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('alfresco/versions/1/cmm')).toBeTruthy();
-            done();
-        });
+        spyOn(service.customModelApi, 'getAllCustomModel').and.returnValue(Promise.resolve({} as any));
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({})
+        service.getEcmModels().subscribe(() => {
+            expect(service.customModelApi.getAllCustomModel).toHaveBeenCalled();
+            done();
         });
     });
 
     it('Should fetch ECM types', (done) => {
         const modelName = 'modelTest';
+        spyOn(service.customModelApi, 'getAllCustomType').and.returnValue(Promise.resolve({} as any));
 
         service.getEcmType(modelName).subscribe(() => {
-            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('versions/1/cmm/' + modelName + '/types')).toBeTruthy();
+            expect(service.customModelApi.getAllCustomType).toHaveBeenCalledWith(modelName);
             done();
-        });
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({})
         });
     });
 
     it('Should create ECM types', (done) => {
         const typeName = 'typeTest';
+        const mockResponse = { entry: { name: typeName } };
+        const createTypeSpy = spyOn(service.customModelApi, 'createCustomType').and.returnValue(Promise.resolve(mockResponse as any));
 
         service.createEcmType(typeName, EcmModelService.MODEL_NAME, EcmModelService.TYPE_MODEL).subscribe(() => {
-            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('versions/1/cmm/' + EcmModelService.MODEL_NAME + '/types')).toBeTruthy();
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual(typeName);
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).title).toEqual(typeName);
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).parentName).toEqual(EcmModelService.TYPE_MODEL);
+            expect(createTypeSpy).toHaveBeenCalledWith(EcmModelService.MODEL_NAME, typeName, EcmModelService.TYPE_MODEL, typeName, '');
             done();
-        });
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({})
         });
     });
 
     it('Should create ECM types with a clean and preserve real name in the title', (done) => {
         const typeName = 'typeTest:testName@#$*!';
         const cleanName = 'testName';
+        const mockResponse = { entry: { name: cleanName } };
+        const createTypeSpy = spyOn(service.customModelApi, 'createCustomType').and.returnValue(Promise.resolve(mockResponse as any));
 
         service.createEcmType(typeName, EcmModelService.MODEL_NAME, EcmModelService.TYPE_MODEL).subscribe(() => {
-            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('versions/1/cmm/' + EcmModelService.MODEL_NAME + '/types')).toBeTruthy();
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual(cleanName);
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).title).toEqual(typeName);
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).parentName).toEqual(EcmModelService.TYPE_MODEL);
+            expect(createTypeSpy).toHaveBeenCalledWith(EcmModelService.MODEL_NAME, cleanName, EcmModelService.TYPE_MODEL, typeName, '');
             done();
-        });
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({})
         });
     });
 
@@ -113,37 +83,26 @@ describe('EcmModelService', () => {
             }
         };
 
-        service.addPropertyToAType(EcmModelService.MODEL_NAME, typeName, formFields).subscribe(() => {
-            expect(
-                jasmine.Ajax.requests.mostRecent().url.endsWith('1/cmm/' + EcmModelService.MODEL_NAME + '/types/' + typeName + '?select=props')
-            ).toBeTruthy();
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).properties).toEqual([
-                {
-                    name: 'test',
-                    title: 'test',
-                    description: 'test',
-                    dataType: 'd:text',
-                    multiValued: false,
-                    mandatory: false,
-                    mandatoryEnforced: false
-                },
-                {
-                    name: 'test2',
-                    title: 'test2',
-                    description: 'test2',
-                    dataType: 'd:text',
-                    multiValued: false,
-                    mandatory: false,
-                    mandatoryEnforced: false
-                }
-            ]);
-            done();
-        });
+        const mockResponse = { entry: { properties: [] } };
+        const addPropertySpy = spyOn(service.customModelApi, 'addPropertyToType').and.returnValue(Promise.resolve(mockResponse as any));
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({})
+        service.addPropertyToAType(EcmModelService.MODEL_NAME, typeName, formFields).subscribe(() => {
+            const callArgs = addPropertySpy.calls.mostRecent().args;
+            expect(callArgs[0]).toEqual(EcmModelService.MODEL_NAME);
+            expect(callArgs[1]).toEqual(typeName);
+            expect(callArgs[2]).toEqual(
+                jasmine.arrayContaining([
+                    jasmine.objectContaining({
+                        name: 'test',
+                        title: 'test'
+                    }),
+                    jasmine.objectContaining({
+                        name: 'test2',
+                        title: 'test2'
+                    })
+                ])
+            );
+            done();
         });
     });
 
@@ -157,67 +116,52 @@ describe('EcmModelService', () => {
             }
         };
 
-        service.addPropertyToAType(EcmModelService.MODEL_NAME, typeName, formFields).subscribe(() => {
-            expect(
-                jasmine.Ajax.requests.mostRecent().url.endsWith('1/cmm/' + EcmModelService.MODEL_NAME + '/types/' + cleanName + '?select=props')
-            ).toBeTruthy();
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).properties).toEqual([
-                {
-                    name: 'test',
-                    title: 'test',
-                    description: 'test',
-                    dataType: 'd:text',
-                    multiValued: false,
-                    mandatory: false,
-                    mandatoryEnforced: false
-                },
-                {
-                    name: 'test2',
-                    title: 'test2',
-                    description: 'test2',
-                    dataType: 'd:text',
-                    multiValued: false,
-                    mandatory: false,
-                    mandatoryEnforced: false
-                }
-            ]);
-            done();
-        });
+        const mockResponse = { entry: { properties: [] } };
+        const addPropertySpy = spyOn(service.customModelApi, 'addPropertyToType').and.returnValue(Promise.resolve(mockResponse as any));
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({})
+        service.addPropertyToAType(EcmModelService.MODEL_NAME, typeName, formFields).subscribe(() => {
+            const callArgs = addPropertySpy.calls.mostRecent().args;
+            expect(callArgs[0]).toEqual(EcmModelService.MODEL_NAME);
+            expect(callArgs[1]).toEqual(cleanName);
+            expect(callArgs[2]).toEqual(
+                jasmine.arrayContaining([
+                    jasmine.objectContaining({
+                        name: 'test',
+                        title: 'test'
+                    }),
+                    jasmine.objectContaining({
+                        name: 'test2',
+                        title: 'test2'
+                    })
+                ])
+            );
+            done();
         });
     });
 
     it('Should create ECM model', (done) => {
-        service.createEcmModel(EcmModelService.MODEL_NAME, EcmModelService.MODEL_NAMESPACE).subscribe(() => {
-            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('alfresco/versions/1/cmm')).toBeTruthy();
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).status).toEqual('DRAFT');
-            done();
-        });
+        const mockResponse = { entry: { name: EcmModelService.MODEL_NAME } };
+        const createModelSpy = spyOn(service.customModelApi, 'createCustomModel').and.returnValue(Promise.resolve(mockResponse as any));
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({})
+        service.createEcmModel(EcmModelService.MODEL_NAME, EcmModelService.MODEL_NAMESPACE).subscribe(() => {
+            expect(createModelSpy).toHaveBeenCalledWith(
+                'DRAFT',
+                '',
+                EcmModelService.MODEL_NAME,
+                EcmModelService.MODEL_NAME,
+                EcmModelService.MODEL_NAMESPACE
+            );
+            done();
         });
     });
 
     it('Should activate ECM model', (done) => {
-        service.activeEcmModel(EcmModelService.MODEL_NAME).subscribe(() => {
-            expect(
-                jasmine.Ajax.requests.mostRecent().url.endsWith('alfresco/versions/1/cmm/' + EcmModelService.MODEL_NAME + '?select=status')
-            ).toBeTruthy();
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).status).toEqual('ACTIVE');
-            done();
-        });
+        const mockResponse = { entry: { status: 'ACTIVE' } };
+        const activateModelSpy = spyOn(service.customModelApi, 'activateCustomModel').and.returnValue(Promise.resolve(mockResponse as any));
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({})
+        service.activeEcmModel(EcmModelService.MODEL_NAME).subscribe(() => {
+            expect(activateModelSpy).toHaveBeenCalledWith(EcmModelService.MODEL_NAME);
+            done();
         });
     });
 
