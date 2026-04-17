@@ -11,12 +11,6 @@ $panel-properties-height: 56px !default;
             margin: 12px;
 
             .adf-property-list .adf-property .adf-property-field {
-                .adf-property-value:not(.adf-card-view-selectitem .adf-property-value) {
-                    &:is(textarea) {
-                        padding-top: 6px;
-                    }
-                }
-
                 label {
                     font-size: 19px;
                     line-height: 24px;
