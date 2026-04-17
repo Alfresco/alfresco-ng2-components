@@ -143,7 +143,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     /** Toggle rendering of the tab navigation buttons (Previous/Next). */
     @Input()
-    showTabNavigationButtons = false;
+    showBottomTabNavButtons = false;
 
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
@@ -187,7 +187,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     formRenderer!: FormRendererComponent<any>;
 
     get shouldShowTabNavigation(): boolean {
-        return this.showTabNavigationButtons && this.form?.json?.showTabNavigation === true && this.formRenderer?.visibleTabs().length > 1;
+        return this.showBottomTabNavButtons && this.form?.json?.showBottomTabNavButtons === true && this.formRenderer?.visibleTabs().length > 1;
     }
 
     protected formCloudService = inject(FormCloudService);

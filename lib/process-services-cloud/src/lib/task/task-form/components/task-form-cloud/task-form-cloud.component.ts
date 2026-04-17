@@ -119,7 +119,7 @@ export class TaskFormCloudComponent {
 
     /** Toggle rendering of the tab navigation buttons (Previous/Next). */
     @Input()
-    showTabNavigationButtons = false;
+    showBottomTabNavButtons = false;
 
     /** Task details. */
     @Input()
