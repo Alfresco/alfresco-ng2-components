@@ -30,7 +30,7 @@ import {
     SimpleChanges,
     ViewChild
 } from '@angular/core';
-import { forkJoin, Observable, of, Subscription } from 'rxjs';
+import { forkJoin, isObservable, Observable, of, Subscription } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import {
     ConfirmDialogComponent,
@@ -68,6 +68,7 @@ import { MatCardModule } from '@angular/material/card';
 import { A11yModule } from '@angular/cdk/a11y';
 
 export const FORM_CLOUD_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldValidator[]>('FORM_CLOUD_FIELD_VALIDATORS_TOKEN');
+export const ADF_FORM_TAB_NAV_ENABLED = new InjectionToken<Observable<boolean> | boolean>('ADF_FORM_TAB_NAV_ENABLED');
 
 @Component({
     selector: 'adf-cloud-form',
@@ -141,10 +142,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Input()
     enableParentVisibilityCheck: boolean = false;
 
-    /** Toggle rendering of the tab navigation buttons (Previous/Next). */
-    @Input()
-    showBottomTabNavButtons = false;
-
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
     formSaved = new EventEmitter<FormModel>();
@@ -186,8 +183,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @ViewChild(FormRendererComponent)
     formRenderer!: FormRendererComponent<any>;
 
+    private tabNavEnabledByHost = true;
+
     get shouldShowTabNavigation(): boolean {
-        return this.showBottomTabNavButtons && this.form?.json?.showBottomTabNavButtons === true && this.formRenderer?.visibleTabs().length > 1;
+        return this.tabNavEnabledByHost && this.form?.json?.showBottomTabNavButtons === true && this.formRenderer?.visibleTabs().length > 1;
     }
 
     protected formCloudService = inject(FormCloudService);
@@ -202,12 +201,24 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     constructor() {
         const injectedFieldValidators = inject(FORM_CLOUD_FIELD_VALIDATORS_TOKEN, { optional: true });
+        const tabNavEnabledToken = inject(ADF_FORM_TAB_NAV_ENABLED, { optional: true });
 
         super();
         this.loadInjectedFieldValidators(injectedFieldValidators);
         this.spinnerService.initSpinnerHandling(this.destroyRef);
 
         this.id = uuidGeneration();
+
+        if (tabNavEnabledToken != null) {
+            if (isObservable(tabNavEnabledToken)) {
+                tabNavEnabledToken.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((enabled) => {
+                    this.tabNavEnabledByHost = enabled ?? false;
+                    this.changeDetector.markForCheck();
+                });
+            } else {
+                this.tabNavEnabledByHost = tabNavEnabledToken;
+            }
+        }
 
         this.formService.formContentClicked.pipe(takeUntilDestroyed()).subscribe((content) => {
             if (content instanceof UploadWidgetContentLinkModel) {

@@ -74,10 +74,6 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     @Input()
     enableParentVisibilityCheck: boolean = false;
 
-    /** Toggle rendering of the tab navigation buttons (Previous/Next). */
-    @Input()
-    showBottomTabNavButtons = false;
-
     /** Toggle readonly state of the task. */
     @Input()
     readOnly = false;

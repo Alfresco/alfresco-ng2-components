@@ -151,10 +151,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     @Input()
     enableParentVisibilityCheck: boolean = false;
 
-    /** Toggle rendering of the tab navigation buttons (Previous/Next). */
-    @Input()
-    showBottomTabNavButtons = false;
-
     /** Emitted when the process is successfully started. */
     @Output()
     success = new EventEmitter<ProcessInstanceCloud>();
