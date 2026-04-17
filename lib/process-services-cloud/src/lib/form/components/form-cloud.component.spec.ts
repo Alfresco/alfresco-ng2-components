@@ -1701,6 +1701,111 @@ describe('FormCloudComponent', () => {
             expect(outcomeButton.nativeElement.textContent.trim()).toBe('COMPLETE');
         });
     });
+
+    describe('Tab navigation', () => {
+        const tabbedFormJson = {
+            id: 'tabbed-form',
+            name: 'TabbedForm',
+            tabs: [
+                { id: 'tab1', title: 'Tab 1' },
+                { id: 'tab2', title: 'Tab 2' },
+                { id: 'tab3', title: 'Tab 3' }
+            ],
+            fields: [
+                {
+                    id: 'container1',
+                    type: 'container',
+                    tab: 'tab1',
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'text1', type: 'text', name: 'Text 1' }] }
+                },
+                {
+                    id: 'container2',
+                    type: 'container',
+                    tab: 'tab2',
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'text2', type: 'text', name: 'Text 2' }] }
+                },
+                {
+                    id: 'container3',
+                    type: 'container',
+                    tab: 'tab3',
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'text3', type: 'text', name: 'Text 3' }] }
+                }
+            ],
+            outcomes: [],
+            showTabNavigation: true
+        };
+
+        describe('shouldShowTabNavigation', () => {
+            it('should return false when showTabNavigationButtons input is false (default)', () => {
+                formComponent.form = new FormModel(tabbedFormJson);
+                fixture.detectChanges();
+
+                expect(formComponent.showTabNavigationButtons).toBeFalse();
+                expect(formComponent.shouldShowTabNavigation).toBeFalse();
+            });
+
+            it('should return false when showTabNavigationButtons is true but form json showTabNavigation is false', () => {
+                formComponent.showTabNavigationButtons = true;
+                formComponent.form = new FormModel({ ...tabbedFormJson, showTabNavigation: false });
+                fixture.detectChanges();
+
+                expect(formComponent.shouldShowTabNavigation).toBeFalse();
+            });
+
+            it('should return false when form has only one visible tab', () => {
+                const singleTabJson = {
+                    ...tabbedFormJson,
+                    tabs: [{ id: 'tab1', title: 'Tab 1' }],
+                    fields: [tabbedFormJson.fields[0]]
+                };
+                formComponent.showTabNavigationButtons = true;
+                formComponent.form = new FormModel(singleTabJson);
+                fixture.detectChanges();
+
+                expect(formComponent.shouldShowTabNavigation).toBeFalse();
+            });
+
+            it('should return true when all conditions are met', () => {
+                formComponent.showTabNavigationButtons = true;
+                formComponent.form = new FormModel(tabbedFormJson);
+                fixture.detectChanges();
+
+                expect(formComponent.shouldShowTabNavigation).toBeTrue();
+            });
+        });
+
+        describe('template rendering', () => {
+            it('should not render tab navigation buttons when shouldShowTabNavigation is false', () => {
+                formComponent.form = new FormModel(tabbedFormJson);
+                fixture.detectChanges();
+
+                expect(fixture.debugElement.query(By.css('.adf-tab-navigation-buttons'))).toBeNull();
+                expect(fixture.debugElement.query(By.css('[data-automation-id="tab-nav-previous-button"]'))).toBeNull();
+                expect(fixture.debugElement.query(By.css('[data-automation-id="tab-nav-next-button"]'))).toBeNull();
+            });
+
+            it('should render Previous and Next tab navigation buttons when shouldShowTabNavigation is true', () => {
+                formComponent.showTabNavigationButtons = true;
+                formComponent.form = new FormModel(tabbedFormJson);
+                fixture.detectChanges();
+
+                expect(fixture.debugElement.query(By.css('.adf-tab-navigation-buttons'))).toBeTruthy();
+                expect(fixture.debugElement.query(By.css('[data-automation-id="tab-nav-previous-button"]'))).toBeTruthy();
+                expect(fixture.debugElement.query(By.css('[data-automation-id="tab-nav-next-button"]'))).toBeTruthy();
+            });
+
+            it('should render the form actions container when only tab nav exists and the form has no outcomes', () => {
+                formComponent.showTabNavigationButtons = true;
+                formComponent.form = new FormModel({ ...tabbedFormJson, outcomes: [] });
+                fixture.detectChanges();
+
+                expect(fixture.debugElement.query(By.css('.adf-cloud-form-content-card-actions'))).toBeTruthy();
+            });
+        });
+    });
 });
 
 describe('Multilingual Form', () => {
