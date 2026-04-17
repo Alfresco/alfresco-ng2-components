@@ -1735,21 +1735,21 @@ describe('FormCloudComponent', () => {
                 }
             ],
             outcomes: [],
-            showTabNavigation: true
+            showBottomTabNavButtons: true
         };
 
         describe('shouldShowTabNavigation', () => {
-            it('should return false when showTabNavigationButtons input is false (default)', () => {
+            it('should return false when showBottomTabNavButtons input is false (default)', () => {
                 formComponent.form = new FormModel(tabbedFormJson);
                 fixture.detectChanges();
 
-                expect(formComponent.showTabNavigationButtons).toBeFalse();
+                expect(formComponent.showBottomTabNavButtons).toBeFalse();
                 expect(formComponent.shouldShowTabNavigation).toBeFalse();
             });
 
-            it('should return false when showTabNavigationButtons is true but form json showTabNavigation is false', () => {
-                formComponent.showTabNavigationButtons = true;
-                formComponent.form = new FormModel({ ...tabbedFormJson, showTabNavigation: false });
+            it('should return false when showBottomTabNavButtons is true but form json showBottomTabNavButtons is false', () => {
+                formComponent.showBottomTabNavButtons = true;
+                formComponent.form = new FormModel({ ...tabbedFormJson, showBottomTabNavButtons: false });
                 fixture.detectChanges();
 
                 expect(formComponent.shouldShowTabNavigation).toBeFalse();
@@ -1761,7 +1761,7 @@ describe('FormCloudComponent', () => {
                     tabs: [{ id: 'tab1', title: 'Tab 1' }],
                     fields: [tabbedFormJson.fields[0]]
                 };
-                formComponent.showTabNavigationButtons = true;
+                formComponent.showBottomTabNavButtons = true;
                 formComponent.form = new FormModel(singleTabJson);
                 fixture.detectChanges();
 
@@ -1769,7 +1769,7 @@ describe('FormCloudComponent', () => {
             });
 
             it('should return true when all conditions are met', () => {
-                formComponent.showTabNavigationButtons = true;
+                formComponent.showBottomTabNavButtons = true;
                 formComponent.form = new FormModel(tabbedFormJson);
                 fixture.detectChanges();
 
@@ -1788,7 +1788,7 @@ describe('FormCloudComponent', () => {
             });
 
             it('should render Previous and Next tab navigation buttons when shouldShowTabNavigation is true', () => {
-                formComponent.showTabNavigationButtons = true;
+                formComponent.showBottomTabNavButtons = true;
                 formComponent.form = new FormModel(tabbedFormJson);
                 fixture.detectChanges();
 
@@ -1798,7 +1798,7 @@ describe('FormCloudComponent', () => {
             });
 
             it('should render the form actions container when only tab nav exists and the form has no outcomes', () => {
-                formComponent.showTabNavigationButtons = true;
+                formComponent.showBottomTabNavButtons = true;
                 formComponent.form = new FormModel({ ...tabbedFormJson, outcomes: [] });
                 fixture.detectChanges();
 

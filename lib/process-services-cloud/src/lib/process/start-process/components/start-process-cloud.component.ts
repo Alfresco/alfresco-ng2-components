@@ -153,7 +153,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     /** Toggle rendering of the tab navigation buttons (Previous/Next). */
     @Input()
-    showTabNavigationButtons = false;
+    showBottomTabNavButtons = false;
 
     /** Emitted when the process is successfully started. */
     @Output()

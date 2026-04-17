@@ -76,7 +76,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
 
     /** Toggle rendering of the tab navigation buttons (Previous/Next). */
     @Input()
-    showTabNavigationButtons = false;
+    showBottomTabNavButtons = false;
 
     /** Toggle readonly state of the task. */
     @Input()
