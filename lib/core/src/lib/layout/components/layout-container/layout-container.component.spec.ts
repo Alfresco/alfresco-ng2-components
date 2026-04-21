@@ -17,11 +17,15 @@
 
 import { LayoutContainerComponent } from './layout-container.component';
 import { SimpleChange } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
 import { Direction } from '@angular/cdk/bidi';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { UnitTestingUtils } from '@alfresco/adf-core';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 describe('LayoutContainerComponent', () => {
+    let fixture: ComponentFixture<LayoutContainerComponent>;
     let layoutContainerComponent: LayoutContainerComponent;
+    let unitTestingUtils: UnitTestingUtils;
 
     const setupComponent = (expandedSidenav: boolean, position: 'start' | 'end', direction: Direction) => {
         layoutContainerComponent.expandedSidenav = expandedSidenav;
@@ -45,7 +49,14 @@ describe('LayoutContainerComponent', () => {
     };
 
     beforeEach(() => {
-        layoutContainerComponent = new LayoutContainerComponent();
+        TestBed.configureTestingModule({
+            imports: [LayoutContainerComponent]
+        });
+        fixture = TestBed.createComponent(LayoutContainerComponent);
+        layoutContainerComponent = fixture.componentInstance;
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement, TestbedHarnessEnvironment.loader(fixture));
+        // eslint-disable-next-line
+        console.log(unitTestingUtils);
         layoutContainerComponent.sidenavMin = 70;
         layoutContainerComponent.sidenavMax = 200;
         layoutContainerComponent.mediaQueryList = {
@@ -53,11 +64,6 @@ describe('LayoutContainerComponent', () => {
             addListener: jasmine.createSpy('addListener').and.callFake((callback) => window.addEventListener('resize', callback)),
             removeListener: jasmine.createSpy('removeListener').and.callFake((callback) => window.removeEventListener('resize', callback))
         };
-        layoutContainerComponent.sidenav = {
-            open: jasmine.createSpy('open'),
-            close: jasmine.createSpy('close'),
-            toggle: jasmine.createSpy('toggle')
-        } as unknown as MatSidenav;
     });
 
     describe('OnInit', () => {

@@ -4,7 +4,7 @@
         [position]="position"
         [disableClose]="!isMobileScreenSize"
         [@sidenavAnimation]="sidenavAnimationState"
-        [opened]="!isMobileScreenSize || !hideSidenav"
+        [opened]="!isMobileScreenSize && !hideSidenav"
         [mode]="isMobileScreenSize ? 'over' : 'side'">
         <ng-content sidenav select="[app-layout-navigation]" />
     </mat-sidenav>
