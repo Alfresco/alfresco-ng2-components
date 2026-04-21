@@ -1,8 +1,8 @@
 ---
-Title: License info, alfresco-ng2-components 8.4.0
+Title: License info, alfresco-ng2-components 8.4.1
 ---
 
-# License information for alfresco-ng2-components 8.4.0
+# License information for alfresco-ng2-components 8.4.1
 
 This page lists all third party libraries the project depends on.
 
