@@ -31,10 +31,10 @@ while [[ $1  == -* ]]; do
     esac
 done
 
-if [ ! -f "$ROOTDIR/dist/libs/cli/bin/adf-cli" ]; then
+if [[ ! -f "$ROOTDIR/dist/libs/cli/bin/adf-cli" ]]; then
     echo -e "\e[33madf-cli not found in dist, building it first...\e[0m"
     nx build cli
-    if [ $? -ne 0 ]; then
+    if [[ $? -ne 0 ]]; then
         echo -e "\e[31mFailed to build adf-cli. Exiting.\e[0m"
         exit 1
     fi
