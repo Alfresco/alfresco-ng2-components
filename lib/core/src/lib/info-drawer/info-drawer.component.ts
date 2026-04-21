@@ -29,12 +29,7 @@ import {
 } from '@angular/core';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
-import {
-    InfoDrawerButtonsDirective,
-    InfoDrawerContentDirective,
-    InfoDrawerLayoutComponent,
-    InfoDrawerTitleDirective
-} from './info-drawer-layout.component';
+import { InfoDrawerContentDirective, InfoDrawerLayoutComponent, InfoDrawerTitleDirective } from './info-drawer-layout.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IconModule } from '../icon/icon.module';
 
@@ -64,10 +59,8 @@ export class InfoDrawerTabComponent {
         TranslatePipe,
         MatTabsModule,
         IconModule,
-        InfoDrawerButtonsDirective,
         InfoDrawerTitleDirective,
-        InfoDrawerContentDirective,
-        InfoDrawerTabComponent
+        InfoDrawerContentDirective
     ],
     templateUrl: './info-drawer.component.html',
     styleUrls: ['./info-drawer.component.scss'],

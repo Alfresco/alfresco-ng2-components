@@ -53,8 +53,6 @@ import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerRenderComponent } from './viewer-render/viewer-render.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
-import { ViewerToolbarActionsComponent } from './viewer-toolbar-actions.component';
-import { ViewerToolbarCustomActionsComponent } from './viewer-toolbar-custom-actions.component';
 import { ThumbnailService } from '../../common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IconModule } from '../../icon/icon.module';
@@ -83,11 +81,7 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
         MatMenuModule,
         ToolbarDividerComponent,
         ViewerRenderComponent,
-        NgTemplateOutlet,
-        ViewerToolbarComponent,
-        ViewerSidebarComponent,
-        ViewerToolbarActionsComponent,
-        ViewerToolbarCustomActionsComponent
+        NgTemplateOutlet
     ],
     providers: [ViewUtilService]
 })
