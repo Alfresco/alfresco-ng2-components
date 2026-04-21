@@ -49,7 +49,7 @@ get_next_version() {
 VERSION=`get_next_version $DIR/..`
 JS_API_VERSION=`get_next_version $DIR/../lib/js-api`
 
-echo RELEASE_VERSION=$VERSION >> $GITHUB_OUTPUT
+echo "release_version=$VERSION" >> $GITHUB_OUTPUT
 
 echo "====== New libs version: $VERSION ====="
 echo "====== New js-api version: $JS_API_VERSION ====="
