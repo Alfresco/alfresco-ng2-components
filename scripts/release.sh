@@ -31,6 +31,17 @@ while [[ $1  == -* ]]; do
     esac
 done
 
+if [[ ! -f "$ROOTDIR/dist/libs/cli/bin/adf-cli" ]]; then
+    echo -e "\e[33madf-cli not found in dist, building it first...\e[0m"
+    nx build cli
+    if [[ $? -ne 0 ]]; then
+        echo -e "\e[31mFailed to build adf-cli. Exiting.\e[0m"
+        exit 1
+    fi
+    echo -e "\e[32madf-cli built successfully.\e[0m"
+else
+    echo -e "\e[32madf-cli already built, skipping build step.\e[0m"
+fi
 LICENSE_ROW="- [ADF $VERSION](license-info-$VERSION.md)";
 LICENSE_GREP=`escape_for_grep "$LICENSE_ROW"`
 LICENSE_README="$ROOTDIR/docs/license-info/README.md";
@@ -39,7 +50,7 @@ LICENSE_GREP_RESULT=`grep "$LICENSE_GREP" "$LICENSE_README"`;
 if [ -z "$LICENSE_GREP_RESULT" ];
 then
     echo -e "\e[33mAdding third party license info for version: $VERSION\e[0m"
-    adf-cli licenses
+    node "$ROOTDIR/dist/libs/cli/bin/adf-cli" licenses
     mv "$ROOTDIR/license-info-$VERSION.md" "$ROOTDIR/docs/license-info/license-info-$VERSION.md"
     echo $LICENSE_ROW >> $LICENSE_README
 else
@@ -54,7 +65,7 @@ VULNERABILITY_GREP_RESULT=`grep "$VULNERABILITY_GREP" "$VULNERABILITY_README"`;
 if [ -z "$VULNERABILITY_GREP_RESULT" ];
 then
     echo -e "\e[33mAdding vulnerability info for version: $VERSION\e[0m"
-    adf-cli audit
+    node "$ROOTDIR/dist/libs/cli/bin/adf-cli" audit
     mv "$ROOTDIR/audit-info-$VERSION.md" "$ROOTDIR/docs/vulnerability/audit-info-$VERSION.md"
     echo $VULNERABILITY_ROW >> $VULNERABILITY_README
 else
