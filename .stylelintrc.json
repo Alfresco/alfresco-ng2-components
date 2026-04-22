@@ -1,6 +1,12 @@
 {
   "extends": ["stylelint-config-standard-scss"],
   "rules": {
+    "custom-property-pattern": [
+      "^(mat-sys|mdc)",
+      {
+        "message": "Use only Angular Material system variables (--mat-sys-*, --mdc-*)"
+      }
+    ],
     "color-function-notation": "legacy",
     "alpha-value-notation": "number",
     "color-no-invalid-hex": true,

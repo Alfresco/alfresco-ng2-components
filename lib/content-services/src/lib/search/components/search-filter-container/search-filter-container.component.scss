@@ -5,19 +5,12 @@
         margin-left: -7px;
     }
 
-        &-icon {
-            color: var(--mat-sys-on-surface);
+    &-icon {
+        color: var(--mat-sys-on-surface);
 
         &-active {
             color: var(--mat-sys-primary);
         }
-    }
-
-    &-fieldset {
-        border: none;
-        margin: 0;
-        padding: 0;
-        min-inline-size: 0;
     }
 
     &-fieldset {
