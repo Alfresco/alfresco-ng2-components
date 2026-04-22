@@ -1,7 +1,6 @@
 @use '../../../../../flex' as flex;
 
 .adf-edit-task-filter-checkbox {
-    font-size: var(--theme-subheading-2-font-size);
     padding-top: 10px;
     text-align: center;
     flex: 1 23%;
@@ -22,15 +21,7 @@
     .adf-error-text {
         padding-right: 8px;
         height: 16px;
-        font-size: 10px;
-        line-height: 1.33;
-        color: var(--theme-warn-color);
         width: auto;
-    }
-
-    .adf-error-icon {
-        font-size: 16px;
-        color: var(--theme-warn-color);
     }
 }
 
@@ -74,23 +65,8 @@
         &-header {
             height: 48px;
 
-            &__title {
-                color: var(--adf-theme-foreground-text-color);
-            }
-
             &__description {
-                color: var(--adf-theme-foreground-secondary-text-color);
                 place-content: center space-between;
-            }
-        }
-
-        &-content {
-            &__text-label {
-                color: var(--adf-theme-foreground-secondary-text-color);
-            }
-
-            &__select-label {
-                color: var(--adf-theme-foreground-secondary-text-color);
             }
         }
     }

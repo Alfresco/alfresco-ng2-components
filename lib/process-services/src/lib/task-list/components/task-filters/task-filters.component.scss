@@ -4,8 +4,7 @@ adf-task-filters {
             padding: 0;
             width: 100%;
             cursor: pointer;
-            font-size: var(--theme-body-1-font-size);
-            font-weight: bold;
+            font: var(--mat-sys-body-medium);
 
             .adf-full-width {
                 display: flex;
@@ -20,13 +19,13 @@ adf-task-filters {
                 .adf-filter-action-button__label {
                     padding-left: 20px;
                     margin: 0 8px;
-                    color: var(--theme-action-button-text-color);
+                    color: var(--mat-sys-on-surface);
                 }
             }
 
             &.adf-active {
                 .adf-filter-action-button__label {
-                    color: var(--adf-sidenav-active-text-color);
+                    color: var(--mat-sys-primary);
                 }
             }
         }

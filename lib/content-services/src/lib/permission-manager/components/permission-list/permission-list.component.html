@@ -5,7 +5,7 @@
 
     <ng-container *ngIf="permissionList.error$ | async">
         <div class="adf-no-permission__template" id="adf-permission-manager-error">
-            <mat-icon color="warn" adf-icon="error" />
+            <mat-icon>error</mat-icon>
             <p class="adf-no-permission__template--text">{{ 'PERMISSION_MANAGER.ERROR.NOT-FOUND'| translate }}</p>
         </div>
     </ng-container>
@@ -25,7 +25,6 @@
                         *ngIf="updatePermissionsAllowed"
                         class="adf-inherit-toggle"
                         title="{{'PERMISSION_MANAGER.LABELS.INHERITED_PERMISSION_TOGGLE' | translate }}"
-                        color="primary"
                         aria-label="{{'PERMISSION_MANAGER.LABELS.INHERITED_PERMISSION_TOGGLE' | translate}}"
                         data-automation-id="adf-inherit-toggle-button"
                         [checked]="model.node.permissions.isInheritanceEnabled"

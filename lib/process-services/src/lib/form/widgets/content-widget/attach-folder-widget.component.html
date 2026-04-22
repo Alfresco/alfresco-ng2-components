@@ -16,7 +16,6 @@
         <div *ngIf="!hasFolder && !field.readOnly">
             <button
                 mat-raised-button
-                color="primary"
                 (click)="openSelectDialogFromFileSource()"
                 [id]="'folder-' + field?.id + '-button'"
                 class="adf-attach-folder-menu-trigger"

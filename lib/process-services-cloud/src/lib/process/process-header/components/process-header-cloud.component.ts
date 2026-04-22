@@ -36,7 +36,6 @@ import { NgIf } from '@angular/common';
     imports: [CardViewComponent, MatCardModule, NgIf],
     templateUrl: './process-header-cloud.component.html',
     encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./process-header-cloud.component.scss'],
     host: { class: 'adf-cloud-process-header' }
 })
 export class ProcessHeaderCloudComponent implements OnChanges, OnInit {

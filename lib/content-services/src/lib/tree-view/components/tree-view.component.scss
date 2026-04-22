@@ -1,11 +1,11 @@
 .adf {
     &-tree-view-icon {
-        color: #d9e022;
+        color: var(--mat-sys-primary);
     }
 
     &-tree-view-node.adf-tree-view {
         min-height: 40px;
-        font-size: var(--theme-caption-font-size);
+        font-size: var(--mat-sys-body-small-size);
         align-items: baseline;
     }
 

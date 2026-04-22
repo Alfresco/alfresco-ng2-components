@@ -10,7 +10,7 @@
                 (keyup.enter)="addCategory()"
                 adf-auto-focus
             />
-            <mat-error 
+            <mat-error
                 *ngIf="categoryNameControl.invalid && categoryNameControl.touched"
                 data-automation-id="categories-error-message">
                 {{ categoryNameErrorMessageKey | translate }}

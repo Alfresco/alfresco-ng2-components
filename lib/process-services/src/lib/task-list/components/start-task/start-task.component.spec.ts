@@ -20,15 +20,11 @@ import { of, throwError } from 'rxjs';
 import { TaskListService } from '../../services/tasklist.service';
 import { StartTaskComponent } from './start-task.component';
 import { taskDetailsMock } from '../../../testing/mock/task/task-details.mock';
-import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatButtonHarness } from '@angular/material/button/testing';
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('StartTaskComponent', () => {
     let component: StartTaskComponent;
     let fixture: ComponentFixture<StartTaskComponent>;
-    let loader: HarnessLoader;
     let service: TaskListService;
     let element: HTMLElement;
     let getFormListSpy: jasmine.Spy;
@@ -54,7 +50,6 @@ describe('StartTaskComponent', () => {
         fixture = TestBed.createComponent(StartTaskComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
-        loader = TestbedHarnessEnvironment.loader(fixture);
 
         service = TestBed.inject(TaskListService);
 
@@ -292,13 +287,6 @@ describe('StartTaskComponent', () => {
         expect(element.querySelector('#button-start')).toBeDefined();
         expect(element.querySelector('#button-start')).not.toBeNull();
         expect(element.querySelector('#button-start').textContent).toContain('ADF_TASK_LIST.START_TASK.FORM.ACTION.START');
-    });
-
-    it('should render start task button with primary color', async () => {
-        fixture.detectChanges();
-
-        const buttonEl = await (await loader.getHarness(MatButtonHarness.with({ selector: '#button-start' }))).host();
-        expect(await buttonEl.getAttribute('color')).toBe('primary');
     });
 
     it('should render task buttons with uppercase text', () => {

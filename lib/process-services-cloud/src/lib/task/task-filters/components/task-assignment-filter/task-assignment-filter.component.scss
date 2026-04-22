@@ -9,22 +9,6 @@
     &-container {
         width: 100%;
     }
-
-    &-label {
-        color: var(--adf-theme-foreground-secondary-text-color);
-
-        &.adf-task-assignment-filter-label--focus {
-            color: var(--theme-primary-color);
-        }
-    }
-
-    &-option {
-        color: var(--adf-theme-foreground-text-color);
-
-        &.adf-task-assignment-filter-option--selected:not(&:disabled) {
-            color: var(--theme-primary-color);
-        }
-    }
 }
 
 .adf-group-cloud-filter {

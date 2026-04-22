@@ -14,12 +14,12 @@
 
     &-switch-to-edit-mode,
     &-save-edit-mode {
-        color: var(--theme-primary-color);
+        color: var(--mat-sys-primary);
     }
 
     &-cancel-edit-mode,
     &-claim-controls {
-        color: rgb(131, 131, 131);
+        color: var(--mat-sys-on-surface-variant);
     }
 
     &-task-header-loading {
