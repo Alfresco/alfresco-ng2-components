@@ -1,5 +1,5 @@
 ---
-Title: Changelog for alfresco-ng2-components v8.4.0
+Title: Changelog for alfresco-ng2-components v8.4.1
 ---
 
 # Changelog
