@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, effect, Input, OnInit, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import { Component, OnChanges, effect, Input, OnInit, SimpleChanges, ViewChild, ViewEncapsulation, inject, DestroyRef } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import {
     DatetimeAdapter,
@@ -42,6 +42,23 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { IconModule } from '../../../icon/icon.module';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BehaviorSubject, EMPTY, switchMap } from 'rxjs';
+
+const ANGULAR_DATE_PIPE_ALIASES = new Set([
+    'short',
+    'medium',
+    'long',
+    'full',
+    'shortDate',
+    'mediumDate',
+    'longDate',
+    'fullDate',
+    'shortTime',
+    'mediumTime',
+    'longTime',
+    'fullTime'
+]);
 
 @Component({
     providers: [
@@ -68,11 +85,13 @@ import { IconModule } from '../../../icon/icon.module';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-card-view-dateitem' }
 })
-export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit {
+export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit, OnChanges {
     private readonly dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
+    private readonly datetimeAdapter = inject<DatetimeAdapter<Date>>(DatetimeAdapter);
     private readonly userPreferencesService = inject(UserPreferencesService);
     private readonly clipboardService = inject(ClipboardService);
     private readonly translateService = inject(TranslationService);
+    private readonly destroyRef = inject(DestroyRef);
 
     @Input()
     displayEmpty = true;
@@ -87,6 +106,8 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     cardViewDateTimeControl: FormControl<Date> = new FormControl<Date>(null);
 
+    private readonly property$ = new BehaviorSubject<CardViewDateItemModel | undefined>(undefined);
+
     constructor() {
         super();
         // Use effect to react to locale signal changes (must be in injection context)
@@ -95,13 +116,46 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         });
     }
 
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.property) {
+            this.property$.next(this.property);
+
+            if (!changes.property.firstChange) {
+                this.handleFormatChange();
+                this.syncControlDisabledState();
+            }
+        }
+
+        if (changes.editable && !changes.editable.firstChange) {
+            this.syncControlDisabledState();
+        }
+    }
+
     ngOnInit() {
-        (this.dateAdapter as AdfDateFnsAdapter).displayFormat = 'MMM DD';
+        this.property$.next(this.property);
+        this.property$
+            .pipe(
+                switchMap((prop) => prop?.formatChanges$ ?? EMPTY),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe(() => this.handleFormatChange());
+
+        this.applyFormat();
 
         if (this.property.multivalued) {
             this.initMultivaluedProperty();
         } else {
             this.initSingleValueProperty();
+        }
+    }
+
+    private applyFormat(): void {
+        if (this.property.allowManualInput && this.property.format && !ANGULAR_DATE_PIPE_ALIASES.has(this.property.format)) {
+            (this.dateAdapter as AdfDateFnsAdapter).displayFormat = this.property.format;
+            (this.datetimeAdapter as AdfDateTimeFnsAdapter).displayFormat = this.property.format;
+        } else {
+            (this.dateAdapter as AdfDateFnsAdapter).displayFormat = 'MMM DD';
+            (this.datetimeAdapter as AdfDateTimeFnsAdapter).displayFormat = null;
         }
     }
 
@@ -126,6 +180,9 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
                     this.property.value = DateFnsUtils.forceUtc(event.value);
                     this.valueDate = DateFnsUtils.forceLocal(event.value);
                 }
+                if (this.property.allowManualInput) {
+                    this.cardViewDateTimeControl.setValue(this.valueDate, { emitEvent: false });
+                }
                 this.update();
             }
         }
@@ -133,6 +190,9 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     onDateClear() {
         this.valueDate = null;
+        if (this.property.allowManualInput) {
+            this.cardViewDateTimeControl.setValue(null, { emitEvent: false });
+        }
         this.cardViewUpdateService.update({ ...this.property } as CardViewDateItemModel, null);
         this.property.value = null;
         this.property.default = null;
@@ -169,11 +229,34 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         this.cardViewUpdateService.update({ ...this.property } as CardViewDateItemModel, this.property.value);
     }
 
+    private syncControlDisabledState(): void {
+        if (!this.property.allowManualInput) {
+            return;
+        }
+        if (!this.isEditable) {
+            this.cardViewDateTimeControl.disable({ emitEvent: false });
+        } else {
+            this.cardViewDateTimeControl.enable({ emitEvent: false });
+        }
+    }
+
+    private handleFormatChange(): void {
+        this.applyFormat();
+        if (this.property.allowManualInput && this.cardViewDateTimeControl.value !== null) {
+            this.cardViewDateTimeControl.setValue(this.cardViewDateTimeControl.value, { emitEvent: false });
+        }
+    }
+
     private initSingleValueProperty() {
         if (this.property.value && !Array.isArray(this.property.value)) {
             const date = new Date(this.property.value);
             this.property.value = date;
             this.valueDate = this.property.type === 'date' ? DateFnsUtils.forceLocal(date) : date;
+        }
+
+        if (this.property.allowManualInput) {
+            this.cardViewDateTimeControl.setValue(this.valueDate ?? null);
+            this.syncControlDisabledState();
         }
     }
 
