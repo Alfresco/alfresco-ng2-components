@@ -580,6 +580,69 @@ describe('CardViewDateItemComponent', () => {
             expect(component.cardViewDateTimeControl.value).not.toBeNull();
             expect(component.cardViewDateTimeControl.value instanceof Date).toBeTrue();
         });
+
+        it('should re-sync form control value when property input is replaced after init', () => {
+            fixture.detectChanges();
+
+            const newDate = new Date('2020-03-15');
+            fixture.componentRef.setInput(
+                'property',
+                new CardViewDateItemModel({
+                    label: 'Date label',
+                    value: newDate,
+                    key: 'dateKey',
+                    format: 'yyyy-MM-dd',
+                    editable: true,
+                    allowManualInput: true
+                })
+            );
+            fixture.detectChanges();
+
+            expect(component.cardViewDateTimeControl.value).not.toBeNull();
+            expect(component.cardViewDateTimeControl.value.toDateString()).toBe(newDate.toDateString());
+        });
+
+        it('should set form control to null when replacement property has no value', () => {
+            fixture.detectChanges();
+
+            fixture.componentRef.setInput(
+                'property',
+                new CardViewDateItemModel({
+                    label: 'Date label',
+                    value: null,
+                    key: 'dateKey',
+                    format: 'yyyy-MM-dd',
+                    editable: true,
+                    allowManualInput: true
+                })
+            );
+            fixture.detectChanges();
+
+            expect(component.cardViewDateTimeControl.value).toBeNull();
+        });
+
+        it('should re-sync form control and valueDate when updateItem$ emits for matching key', () => {
+            fixture.detectChanges();
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+            const newDate = new Date('2021-06-01');
+
+            cardViewUpdateService.updateItem$.next({ key: 'dateKey', value: newDate } as any);
+            fixture.detectChanges();
+
+            expect(component.valueDate).not.toBeNull();
+            expect(component.cardViewDateTimeControl.value).not.toBeNull();
+        });
+
+        it('should not re-sync form control when updateItem$ emits for a different key', () => {
+            fixture.detectChanges();
+            const originalControlValue = component.cardViewDateTimeControl.value;
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+
+            cardViewUpdateService.updateItem$.next({ key: 'otherKey', value: new Date('2021-06-01') } as any);
+            fixture.detectChanges();
+
+            expect(component.cardViewDateTimeControl.value).toEqual(originalControlValue);
+        });
     });
 
     describe('format changes', () => {
@@ -784,6 +847,106 @@ describe('CardViewDateItemComponent', () => {
             model.format = 'dd/MM/yyyy';
 
             expect(formatChangeSpy).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('property input replacement', () => {
+        it('should re-sync valueDate when property input is replaced after init', () => {
+            fixture.componentRef.setInput(
+                'property',
+                new CardViewDateItemModel({
+                    label: 'Date label',
+                    value: new Date('07/10/2017'),
+                    key: 'dateKey',
+                    format: '',
+                    editable: true
+                })
+            );
+            fixture.detectChanges();
+
+            const newDate = new Date('2022-11-20');
+            fixture.componentRef.setInput(
+                'property',
+                new CardViewDateItemModel({
+                    label: 'Date label',
+                    value: newDate,
+                    key: 'dateKey',
+                    format: '',
+                    editable: true
+                })
+            );
+            fixture.detectChanges();
+
+            expect(component.valueDate).not.toBeNull();
+            expect(component.valueDate instanceof Date).toBeTrue();
+        });
+
+        it('should set valueDate to null when replacement property has no value', () => {
+            fixture.componentRef.setInput(
+                'property',
+                new CardViewDateItemModel({
+                    label: 'Date label',
+                    value: new Date('07/10/2017'),
+                    key: 'dateKey',
+                    format: '',
+                    editable: true
+                })
+            );
+            fixture.detectChanges();
+
+            fixture.componentRef.setInput(
+                'property',
+                new CardViewDateItemModel({
+                    label: 'Date label',
+                    value: null,
+                    key: 'dateKey',
+                    format: '',
+                    editable: true
+                })
+            );
+            fixture.detectChanges();
+
+            expect(component.valueDate).toBeNull();
+        });
+    });
+
+    describe('updateItem$ re-sync for multivalued', () => {
+        it('should re-sync valueDate when updateItem$ emits for a multivalued property', () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: ['2020-01-01', '2020-02-01'],
+                key: 'dateKey',
+                editable: true,
+                multivalued: true
+            });
+            fixture.detectChanges();
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+            const newDates = [new Date('2021-06-01'), new Date('2021-07-01')];
+
+            component.property.value = newDates;
+            cardViewUpdateService.updateItem$.next({ key: 'dateKey', value: newDates } as any);
+            fixture.detectChanges();
+
+            expect(component.valueDate).not.toBeNull();
+            expect(component.valueDate instanceof Date).toBeTrue();
+        });
+
+        it('should not update valueDate when updateItem$ emits for a different key on multivalued property', () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: ['2020-01-01'],
+                key: 'dateKey',
+                editable: true,
+                multivalued: true
+            });
+            fixture.detectChanges();
+            const originalValueDate = component.valueDate;
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+
+            cardViewUpdateService.updateItem$.next({ key: 'otherKey', value: [new Date('2021-06-01')] } as any);
+            fixture.detectChanges();
+
+            expect(component.valueDate).toEqual(originalValueDate);
         });
     });
 

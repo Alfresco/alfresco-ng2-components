@@ -43,7 +43,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { IconModule } from '../../../icon/icon.module';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { BehaviorSubject, EMPTY, switchMap } from 'rxjs';
+import { BehaviorSubject, EMPTY, filter, switchMap } from 'rxjs';
 
 const ANGULAR_DATE_PIPE_ALIASES = new Set([
     'short',
@@ -123,6 +123,11 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
             if (!changes.property.firstChange) {
                 this.handleFormatChange();
                 this.syncControlDisabledState();
+                if (!this.property.multivalued) {
+                    this.initSingleValueProperty();
+                } else {
+                    this.initMultivaluedProperty();
+                }
             }
         }
 
@@ -139,6 +144,19 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(() => this.handleFormatChange());
+
+        this.cardViewUpdateService.updateItem$
+            .pipe(
+                filter((itemModel) => itemModel.key === this.property.key),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe(() => {
+                if (!this.property.multivalued) {
+                    this.initSingleValueProperty();
+                } else {
+                    this.initMultivaluedProperty();
+                }
+            });
 
         this.applyFormat();
 
@@ -248,6 +266,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     }
 
     private initSingleValueProperty() {
+        this.valueDate = null;
         if (this.property.value && !Array.isArray(this.property.value)) {
             const date = new Date(this.property.value);
             this.property.value = date;

@@ -15,10 +15,13 @@
  * limitations under the License.
  */
 
-import { DatePipe } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
 import { CardViewDateItemModel } from './card-view-dateitem.model';
 import { CardViewDateItemProperties } from '../interfaces/card-view.interfaces';
 import { DateFnsUtils } from '../../common/utils/date-fns-utils';
+
+registerLocaleData(localeFr);
 
 describe('CardViewDateItemModel', () => {
     let properties: CardViewDateItemProperties;
