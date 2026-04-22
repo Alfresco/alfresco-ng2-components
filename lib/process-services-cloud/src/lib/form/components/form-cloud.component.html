@@ -101,8 +101,8 @@
                                     <button
                                         mat-button
                                         [title]="'FORM.BUTTON.PREVIOUS_TAB_TITLE' | translate"
-                                        [disabled]="!formRenderer.canNavigatePrevious"
-                                        (click)="formRenderer.navigateToPreviousTab()"
+                                        [disabled]="!canNavigatePreviousTab"
+                                        (click)="navigateToPreviousTab()"
                                         data-automation-id="tab-nav-previous-button">
                                         <mat-icon adf-icon="keyboard_arrow_left" />
                                         {{ 'FORM.BUTTON.PREVIOUS_TAB' | translate }}
@@ -110,8 +110,8 @@
                                     <button
                                         mat-button
                                         [title]="'FORM.BUTTON.NEXT_TAB_TITLE' | translate"
-                                        [disabled]="!formRenderer.canNavigateNext"
-                                        (click)="formRenderer.navigateToNextTab()"
+                                        [disabled]="!canNavigateNextTab"
+                                        (click)="navigateToNextTab()"
                                         data-automation-id="tab-nav-next-button">
                                         {{ 'FORM.BUTTON.NEXT_TAB' | translate }}
                                         <mat-icon adf-icon="keyboard_arrow_right" iconPositionEnd />

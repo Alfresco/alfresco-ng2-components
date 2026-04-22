@@ -184,9 +184,18 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     formRenderer!: FormRendererComponent<any>;
 
     private tabNavEnabledByHost = true;
+    private currentTabIndex = 0;
 
     get shouldShowTabNavigation(): boolean {
-        return this.tabNavEnabledByHost && this.form?.json?.showBottomTabNavButtons === true && this.formRenderer?.visibleTabs().length > 1;
+        return this.tabNavEnabledByHost && this.currentForm?.json?.showBottomTabNavButtons === true && this.visibleTabCount > 1;
+    }
+
+    get canNavigatePreviousTab(): boolean {
+        return this.currentTabIndex > 0;
+    }
+
+    get canNavigateNextTab(): boolean {
+        return this.currentTabIndex < this.visibleTabCount - 1;
     }
 
     protected formCloudService = inject(FormCloudService);
@@ -198,6 +207,28 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     protected changeDetector = inject(ChangeDetectorRef);
 
     private readonly destroyRef = inject(DestroyRef);
+
+    private get currentForm(): FormModel | undefined {
+        return super.form;
+    }
+
+    private get visibleTabCount(): number {
+        return this.currentForm?.tabs?.filter((tab) => tab.isVisible).length ?? 0;
+    }
+
+    navigateToPreviousTab(): void {
+        if (this.canNavigatePreviousTab) {
+            this.currentTabIndex--;
+            this.formRenderer?.navigateToPreviousTab();
+        }
+    }
+
+    navigateToNextTab(): void {
+        if (this.canNavigateNextTab) {
+            this.currentTabIndex++;
+            this.formRenderer?.navigateToNextTab();
+        }
+    }
 
     constructor() {
         const injectedFieldValidators = inject(FORM_CLOUD_FIELD_VALIDATORS_TOKEN, { optional: true });
@@ -535,6 +566,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     protected onFormLoaded(form: FormModel) {
+        this.currentTabIndex = 0;
+
         if (form) {
             this.displayModeConfigurations = this.displayModeService.getDisplayModeConfigurations(this.displayModeConfigurations);
             this.displayMode = this.displayModeService.switchToDisplayMode(
