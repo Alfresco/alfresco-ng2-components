@@ -27,9 +27,10 @@ import {
     OnChanges,
     OnInit,
     Output,
-    SimpleChanges
+    SimpleChanges,
+    ViewChild
 } from '@angular/core';
-import { forkJoin, Observable, of, Subscription } from 'rxjs';
+import { forkJoin, isObservable, Observable, of, Subscription } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import {
     ConfirmDialogComponent,
@@ -60,18 +61,19 @@ import { FormCloudDisplayMode, FormCloudDisplayModeConfiguration } from '../../s
 import { FormCloudSpinnerService } from '../services/spinner/form-cloud-spinner.service';
 import { DisplayModeService } from '../services/display-mode.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CommonModule } from '@angular/common';
+import { UpperCasePipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { A11yModule } from '@angular/cdk/a11y';
 
 export const FORM_CLOUD_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldValidator[]>('FORM_CLOUD_FIELD_VALIDATORS_TOKEN');
+export const ADF_FORM_TAB_NAV_ENABLED = new InjectionToken<Observable<boolean> | boolean>('ADF_FORM_TAB_NAV_ENABLED');
 
 @Component({
     selector: 'adf-cloud-form',
     imports: [
-        CommonModule,
+        UpperCasePipe,
         TranslatePipe,
         FormatSpacePipe,
         MatButtonModule,
@@ -178,6 +180,24 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     displayConfiguration: FormCloudDisplayModeConfiguration = DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0];
     style: string = '';
 
+    @ViewChild(FormRendererComponent)
+    formRenderer!: FormRendererComponent<any>;
+
+    private tabNavEnabledByHost = true;
+    private currentTabIndex = 0;
+
+    get shouldShowTabNavigation(): boolean {
+        return this.tabNavEnabledByHost && this.currentForm?.json?.showBottomTabNavButtons === true && this.visibleTabCount > 1;
+    }
+
+    get canNavigatePreviousTab(): boolean {
+        return this.currentTabIndex > 0;
+    }
+
+    get canNavigateNextTab(): boolean {
+        return this.currentTabIndex < this.visibleTabCount - 1;
+    }
+
     protected formCloudService = inject(FormCloudService);
     protected formService = inject(FormService);
     protected visibilityService = inject(WidgetVisibilityService);
@@ -188,14 +208,48 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     private readonly destroyRef = inject(DestroyRef);
 
+    private get currentForm(): FormModel | undefined {
+        return super.form;
+    }
+
+    private get visibleTabCount(): number {
+        return this.currentForm?.tabs?.filter((tab) => tab.isVisible).length ?? 0;
+    }
+
+    navigateToPreviousTab(): void {
+        if (this.canNavigatePreviousTab) {
+            this.currentTabIndex--;
+            this.formRenderer?.navigateToPreviousTab();
+        }
+    }
+
+    navigateToNextTab(): void {
+        if (this.canNavigateNextTab) {
+            this.currentTabIndex++;
+            this.formRenderer?.navigateToNextTab();
+        }
+    }
+
     constructor() {
         const injectedFieldValidators = inject(FORM_CLOUD_FIELD_VALIDATORS_TOKEN, { optional: true });
+        const tabNavEnabledToken = inject(ADF_FORM_TAB_NAV_ENABLED, { optional: true });
 
         super();
         this.loadInjectedFieldValidators(injectedFieldValidators);
         this.spinnerService.initSpinnerHandling(this.destroyRef);
 
         this.id = uuidGeneration();
+
+        if (tabNavEnabledToken != null) {
+            if (isObservable(tabNavEnabledToken)) {
+                tabNavEnabledToken.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((enabled) => {
+                    this.tabNavEnabledByHost = enabled ?? false;
+                    this.changeDetector.markForCheck();
+                });
+            } else {
+                this.tabNavEnabledByHost = tabNavEnabledToken;
+            }
+        }
 
         this.formService.formContentClicked.pipe(takeUntilDestroyed()).subscribe((content) => {
             if (content instanceof UploadWidgetContentLinkModel) {
@@ -512,6 +566,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     protected onFormLoaded(form: FormModel) {
+        this.currentTabIndex = 0;
+
         if (form) {
             this.displayModeConfigurations = this.displayModeService.getDisplayModeConfigurations(this.displayModeConfigurations);
             this.displayMode = this.displayModeService.switchToDisplayMode(
