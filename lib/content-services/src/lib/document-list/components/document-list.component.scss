@@ -3,7 +3,7 @@
 .adf-document-list {
     min-height: 0;
     height: 100%;
-    background-color: var(--theme-background-color);
+    background-color: var(--mat-sys-surface);
 }
 
 .adf-sticky-document-list {
@@ -13,7 +13,7 @@
 
 .adf-datatable-card {
     .adf-datatable-selected > svg {
-        fill: var(--theme-accent-color);
+        fill: var(--mat-sys-primary);
         width: 30px;
         height: 30px;
         position: absolute;
@@ -26,7 +26,7 @@
         display: inline-table;
 
         & > svg {
-            fill: var(--theme-accent-color);
+            fill: var(--mat-sys-primary);
             width: 30px;
             height: 30px;
         }
@@ -55,37 +55,26 @@
     }
 
     &--text {
-        color: var(--adf-theme-foreground-text-color);
-        font-size: var(--theme-subheading-2-font-size);
+        color: var(--mat-sys-on-surface);
+        font-size: var(--mat-sys-title-small-size);
     }
 }
 
 .adf-document-list__this-space-is-empty {
     height: 32px;
-    opacity: 0.26;
-    font-size: var(--theme-headline-font-size);
-    line-height: 1.33;
-    letter-spacing: -1px;
-    color: var(--adf-theme-foreground-text-color);
+    font: var(--mat-sys-display-medium);
 }
 
 .adf-document-list__drag-drop {
     height: 56px;
-    opacity: 0.54;
-    font-size: 56px;
-    line-height: 1;
-    letter-spacing: -2px;
-    color: var(--adf-theme-foreground-text-color);
+    font: var(--mat-sys-display-medium);
     margin-top: 40px;
 }
 
 .adf-document-list__any-files-here-to-add {
     height: 24px;
-    opacity: 0.54;
-    font-size: var(--theme-subheading-2-font-size);
-    line-height: 1.5;
-    letter-spacing: -0.4px;
-    color: var(--adf-theme-foreground-text-color);
+    font: var(--mat-sys-title-medium);
+    color: var(--mat-sys-on-surface);
     margin-top: 17px;
 }
 
@@ -109,15 +98,11 @@
 
 .adf-empty-list-header {
     height: 32px;
-    opacity: 0.26;
-    font-size: var(--theme-headline-font-size);
-    line-height: 1.33;
-    letter-spacing: -1px;
-    color: var(--adf-theme-foreground-text-color);
+    font: var(--mat-sys-display-medium);
 }
 
 .adf-documentlist-pagination {
-    color: var(--adf-theme-foreground-text-color);
+    color: var(--mat-sys-on-surface);
 
     .adf-pagination__block {
         border-right: none;
@@ -127,33 +112,24 @@
 .adf-empty-folder {
     &-this-space-is-empty {
         height: 32px;
-        font-size: var(--theme-headline-font-size);
-        line-height: 1.33;
-        letter-spacing: -1px;
-        color: var(--adf-theme-foreground-text-color-064);
+        font: var(--mat-sys-display-medium);
     }
 
     &-drag-drop {
         min-height: 56px;
-        font-size: 53px;
-        line-height: 1;
-        letter-spacing: -2px;
-        color: var(--adf-theme-foreground-text-color);
+        font: var(--mat-sys-display-medium);
         margin-top: 40px;
         word-break: break-all;
         white-space: pre-line;
 
         @include flex.layout-bp(lt-sm) {
-            font-size: 48px;
+            font: var(--mat-sys-display-small);
         }
     }
 
     &-any-files-here-to-add {
         min-height: 24px;
-        font-size: var(--theme-subheading-2-font-size);
-        line-height: 1.5;
-        letter-spacing: -0.4px;
-        color: var(--adf-theme-foreground-text-color);
+        font: var(--mat-sys-title-medium);
         margin-top: 17px;
         word-break: break-all;
         white-space: pre-line;

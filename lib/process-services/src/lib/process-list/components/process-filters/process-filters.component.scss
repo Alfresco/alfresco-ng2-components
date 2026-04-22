@@ -3,9 +3,6 @@ adf-process-instance-filters {
         &-filters__entry:has(.adf-filter-action-button) {
             padding: 0;
             width: 100%;
-            cursor: pointer;
-            font-size: var(--theme-body-1-font-size);
-            font-weight: bold;
 
             .adf-full-width {
                 display: flex;
@@ -20,13 +17,13 @@ adf-process-instance-filters {
                 .adf-filter-action-button__label {
                     padding-left: 20px;
                     margin: 0 8px;
-                    color: var(--theme-action-button-text-color);
+                    font: var(--mat-sys-body-large);
                 }
             }
 
             &.adf-active {
                 .adf-filter-action-button__label {
-                    color: var(--adf-sidenav-active-text-color);
+                    color: var(--mat-sys-primary);
                 }
             }
         }

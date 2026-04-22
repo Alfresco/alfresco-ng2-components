@@ -20,7 +20,7 @@
     <adf-loading-content-template>
         <ng-template>
             <!--Add your custom loading template here-->
-            <mat-progress-spinner *ngIf="!customLoadingContent" class="adf-task-list-loading-margin" color="primary" mode="indeterminate" />
+            <mat-progress-spinner *ngIf="!customLoadingContent" class="adf-task-list-loading-margin" mode="indeterminate" />
             <ng-content select="adf-custom-loading-content-template" />
         </ng-template>
     </adf-loading-content-template>

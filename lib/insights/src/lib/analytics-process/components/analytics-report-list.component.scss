@@ -3,12 +3,12 @@
         cursor: pointer;
 
         .adf-active {
-            color: var(--theme-primary-color);
+            color: var(--mat-sys-primary);
         }
     }
 
     .adf-activiti-filters__entry-icon {
-        color: var(--theme-primary-color);
+        color: var(--mat-sys-primary);
         position: relative;
         top: 5px;
     }
@@ -32,7 +32,6 @@
         position: relative;
         min-height: 200px;
         overflow: hidden;
-        background-color: var(--theme-background-color);
         display: flex;
         flex-direction: column;
         cursor: pointer;
@@ -44,8 +43,7 @@
             z-index: 6;
 
             &-icon {
-                font-size: 70px;
-                color: var(--theme-accent-color);
+                font-size: var(--mat-sys-headline-large-size);
                 width: 1em;
                 height: 1em;
                 display: inline-block;
@@ -57,7 +55,7 @@
             z-index: 7;
 
             .adf-application-title {
-                font-size: var(--theme-headline-font-size);
+                font-size: var(--mat-sys-headline-small-size);
                 margin: 0;
             }
         }
@@ -68,18 +66,10 @@
         }
 
         &-actions {
-            border-top: 1px solid var(--adf-theme-foreground-divider-color);
+            border-top: 1px solid var(--mat-sys-outline);
             padding: 8px;
             box-sizing: border-box;
             height: 40px;
-
-            &-icon {
-                color: var(--adf-theme-foreground-text-color-054);
-
-                &:hover {
-                    color: var(--adf-theme-foreground-text-color-087);
-                }
-            }
         }
     }
 }

@@ -16,15 +16,15 @@
         cursor: pointer;
         display: block;
         width: 91px;
-        background: var(--theme-background-color);
+        background: var(--mat-sys-surface);
         margin-bottom: 15px;
     }
 
     &__thumb:hover {
-        box-shadow: 0 0 5px 0 var(--adf-theme-foreground-text-color-087);
+        box-shadow: var(--mat-sys-level2);
     }
 
     &__thumb--selected {
-        border: 2px solid var(--theme-accent-color-a200);
+        border: 2px solid var(--mat-sys-primary);
     }
 }

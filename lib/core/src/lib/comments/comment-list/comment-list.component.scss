@@ -1,5 +1,6 @@
 .adf-comment-list {
     padding-bottom: 0;
+
     .adf {
         &-comment-img-container {
             width: 40px;
@@ -10,6 +11,7 @@
         }
 
         &-comment-list-item:has(.adf-comment-img-container) {
+            /* stylelint-disable-next-line declaration-property-value-disallowed-list */
             white-space: initial;
             display: table-row-group;
             padding-top: 12px;
@@ -26,10 +28,8 @@
                     width: 100%;
                     padding: 2px 10px;
                     white-space: pre-line;
-                    font-size: var(--theme-body-1-font-size);
                     letter-spacing: -0.2px;
                     line-height: 1.43;
-                    color: var(--adf-theme-foreground-text-color);
                 }
             }
         }
@@ -37,10 +37,10 @@
         &-comment-user-icon {
             padding: 10px 5px;
             width: 30px;
-            background-color: var(--theme-primary-color);
-            color: var(--theme-primary-color-default-contrast);
+            background-color: var(--mat-sys-primary);
+            color: var(--mat-sys-on-primary);
             border-radius: 50%;
-            font-size: var(--theme-subheading-2-font-size);
+            font-size: var(--mat-sys-title-small-size);
             text-align: center;
             height: 20px;
             background-size: cover;
@@ -50,7 +50,6 @@
             width: 100%;
             padding: 2px 10px;
             font-weight: 600;
-            font-size: var(--theme-body-1-font-size);
         }
 
         &-comment-message-time {
@@ -58,7 +57,6 @@
             width: 100%;
             padding: 2px 10px;
             font-size: unset;
-            color: var(--adf-theme-foreground-text-color);
         }
 
         &-people-img {

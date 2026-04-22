@@ -9,8 +9,7 @@ adf-aspect-list-dialog {
 }
 
 .adf-aspect-list-dialog-title {
-    font-size: large;
-    font-weight: 200;
+    font: var(--mat-sys-headline-medium);
     margin-top: 0;
 }
 
@@ -44,11 +43,6 @@ adf-aspect-list-dialog {
     margin-bottom: 8px;
 
     .adf-aspect-property-table {
-        .adf-aspect-property-table-cell {
-            font-size: smaller;
-            color: var(--adf-theme-foreground-text-color-087);
-        }
-
         .adf-aspect-property-table-column {
             &-name {
                 width: 30%;

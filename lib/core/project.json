@@ -68,7 +68,7 @@
       "options": {
         "commands": [
           {
-            "command": "stylelint lib/core/**/*.scss --config stylelint-config.json"
+            "command": "stylelint \"lib/core/**/*.scss\" --config .stylelintrc.json"
           }
         ]
       }

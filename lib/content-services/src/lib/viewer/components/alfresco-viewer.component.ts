@@ -64,7 +64,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     selector: 'adf-alfresco-viewer',
     imports: [CommonModule, TranslatePipe, MatButtonModule, IconModule, ...VIEWER_DIRECTIVES, NodeDownloadDirective],
     templateUrl: './alfresco-viewer.component.html',
-    styleUrls: ['./alfresco-viewer.component.scss'],
     host: { class: 'adf-alfresco-viewer' },
     encapsulation: ViewEncapsulation.None,
     providers: [ViewUtilService]

@@ -40,9 +40,9 @@ export class HeaderComponent {
         return this.variant === 'extended' ? '100%' : 'auto';
     }
 
-    @HostBinding('style.--adf-header-height')
+    @HostBinding('style.height')
     @Input()
-    headerHeight = getComputedStyle(document.documentElement).getPropertyValue('--adf-header-height');
+    headerHeight: string;
 
     @Input()
     logoSrc: string;
@@ -50,13 +50,11 @@ export class HeaderComponent {
     @Input()
     logoAlt: string;
 
-    @HostBinding('style.--adf-header-logo-height')
     @Input()
-    logoHeight = getComputedStyle(document.documentElement).getPropertyValue('--adf-header-logo-height');
+    logoHeight: string;
 
-    @HostBinding('style.--adf-header-logo-width')
     @Input()
-    logoWidth = getComputedStyle(document.documentElement).getPropertyValue('--adf-header-logo-width');
+    logoWidth: string;
 
     @Input()
     title: string;

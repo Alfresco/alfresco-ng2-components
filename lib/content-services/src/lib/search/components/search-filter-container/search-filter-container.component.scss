@@ -1,5 +1,4 @@
 @use '@angular/material' as mat;
-@use '../../../mat-selectors.scss' as ms;
 
 .adf-filter {
     &-button:has(.adf-filter-icon) {
@@ -7,11 +6,10 @@
     }
 
     &-icon {
-        opacity: 1;
-        color: var(--adf-theme-foreground-icon-color);
+        color: var(--mat-sys-on-surface);
 
         &-active {
-            color: var(--theme-primary-color);
+            color: var(--mat-sys-primary);
         }
     }
 
@@ -25,8 +23,8 @@
     &-container {
         display: flex;
         flex-direction: column;
-        padding: 0;
-        color: var(--adf-theme-foreground-text-color-087);
+        padding: 15.5px 15px 10px;
+        color: var(--mat-sys-on-surface);
 
         .adf-facet-buttons {
             display: none;
@@ -35,16 +33,11 @@
         .adf-search-check-list {
             padding: 5px 0;
         }
-
-        input {
-            background: 2px solid var(--adf-theme-background-card-color);
-        }
     }
 
     &-title {
-        font-size: 1.1em;
+        font: var(--mat-sys-body-medium);
         padding: 16px 0 0 16px;
-        color: var(--adf-theme-foreground-text-color-087);
         -webkit-font-smoothing: subpixel-antialiased;
         float: none;
         width: 100%;
@@ -68,19 +61,13 @@
         display: flex;
         justify-content: flex-end;
         padding: 15px;
-        background-color: var(--adf-theme-background-hover-color);
+        background-color: var(--mat-sys-surface-container);
 
         > button {
-            font-size: 0.9em;
             height: 36px;
             width: auto;
             padding-left: 16px;
             padding-right: 16px;
-            -webkit-font-smoothing: subpixel-antialiased;
-
-            #{ms.$mat-button-label} {
-                font-weight: unset;
-            }
         }
     }
 }

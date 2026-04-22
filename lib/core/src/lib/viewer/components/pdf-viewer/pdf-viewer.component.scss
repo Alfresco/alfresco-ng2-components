@@ -15,7 +15,7 @@
         position: relative;
         height: 100%;
         width: 190px;
-        background-color: rgba(0, 0, 0, 0.12);
+        background-color: var(--mat-sys-surface-container-low);
         display: flex;
         flex-direction: column;
         padding: 0;
@@ -24,7 +24,7 @@
             display: flex;
             flex-direction: column;
             flex: 1;
-            background: #e6e6e6;
+            background: var(--mat-sys-surface-container);
         }
 
         .adf-info-drawer-layout-header {
@@ -59,7 +59,6 @@
             justify-content: flex-end;
             align-items: flex-end;
             display: flex;
-            color: var(--adf-theme-foreground-text-color-064);
         }
     }
 
@@ -100,7 +99,7 @@
 
         .adf-toolbar #{ms.$mat-toolbar} {
             max-height: 48px;
-            background-color: var(--adf-theme-background-card-color);
+            background-color: var(--mat-sys-surface);
             border-width: 0;
             border-radius: 2px;
             box-shadow:
@@ -112,21 +111,19 @@
             padding-left: 10px;
             padding-right: 10px;
             white-space: nowrap;
-            font-size: var(--theme-body-1-font-size);
 
             & > input {
-                border: 1px solid var(--adf-theme-foreground-text-color-007);
-                background-color: var(--adf-theme-background-card-color);
+                border: 1px solid var(--mat-sys-outline-variant);
+                background-color: var(--mat-sys-surface);
                 color: inherit;
-                font-size: var(--theme-body-1-font-size);
                 padding: 5px;
                 height: 24px;
                 line-height: 24px;
                 text-align: right;
                 width: 33px;
-                margin-right: 4px;
+                margin: 0 5px;
                 outline-width: 1px;
-                outline-color: gray;
+                outline-color: var(--mat-sys-surface-container);
             }
         }
 
@@ -134,8 +131,8 @@
             cursor: default;
             width: 79px;
             height: 24px;
-            font-size: var(--theme-body-1-font-size);
-            border: 1px solid var(--adf-theme-foreground-text-color-007);
+            font-size: var(--mat-sys-body-small-size);
+            border: 1px solid var(--mat-sys-outline-variant);
             text-align: center;
             line-height: 24px;
             margin-left: 4px;
