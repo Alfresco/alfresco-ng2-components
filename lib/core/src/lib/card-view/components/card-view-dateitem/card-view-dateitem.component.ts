@@ -60,6 +60,8 @@ const ANGULAR_DATE_PIPE_ALIASES = new Set([
     'fullTime'
 ]);
 
+const DEFAULT_DATE_FORMAT = 'MMM DD';
+
 @Component({
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
@@ -172,7 +174,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
             (this.dateAdapter as AdfDateFnsAdapter).displayFormat = this.property.format;
             (this.datetimeAdapter as AdfDateTimeFnsAdapter).displayFormat = this.property.format;
         } else {
-            (this.dateAdapter as AdfDateFnsAdapter).displayFormat = 'MMM DD';
+            (this.dateAdapter as AdfDateFnsAdapter).displayFormat = DEFAULT_DATE_FORMAT;
             (this.datetimeAdapter as AdfDateTimeFnsAdapter).displayFormat = null;
         }
     }
