@@ -21,6 +21,7 @@ import { Direction } from '@angular/cdk/bidi';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UnitTestingUtils } from '@alfresco/adf-core';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSidenavHarness } from '@angular/material/sidenav/testing';
 
 describe('LayoutContainerComponent', () => {
     let fixture: ComponentFixture<LayoutContainerComponent>;
@@ -55,8 +56,6 @@ describe('LayoutContainerComponent', () => {
         fixture = TestBed.createComponent(LayoutContainerComponent);
         layoutContainerComponent = fixture.componentInstance;
         unitTestingUtils = new UnitTestingUtils(fixture.debugElement, TestbedHarnessEnvironment.loader(fixture));
-        // eslint-disable-next-line
-        console.log(unitTestingUtils);
         layoutContainerComponent.sidenavMin = 70;
         layoutContainerComponent.sidenavMax = 200;
         layoutContainerComponent.mediaQueryList = {
@@ -170,7 +169,13 @@ describe('LayoutContainerComponent', () => {
     });
 
     describe('toggleMenu()', () => {
-        it('should switch to sidenav to compact state', () => {
+        let sidenav: MatSidenavHarness;
+
+        beforeEach(async () => {
+            sidenav = await unitTestingUtils.getMatSidenav();
+        });
+
+        it('should switch to sidenav to compact state', async () => {
             layoutContainerComponent.expandedSidenav = true;
             layoutContainerComponent.ngOnInit();
             layoutContainerComponent.toggleMenu();
@@ -178,9 +183,10 @@ describe('LayoutContainerComponent', () => {
                 value: 'compact',
                 params: { width: layoutContainerComponent.sidenavMin }
             });
+            expect(await sidenav.isOpen()).toBeFalse();
         });
 
-        it('should switch to sidenav to expanded state', () => {
+        it('should switch to sidenav to expanded state', async () => {
             layoutContainerComponent.expandedSidenav = false;
             layoutContainerComponent.ngOnInit();
             layoutContainerComponent.toggleMenu();
@@ -188,10 +194,13 @@ describe('LayoutContainerComponent', () => {
                 value: 'expanded',
                 params: { width: layoutContainerComponent.sidenavMax }
             });
+            expect(await sidenav.isOpen()).toBeTrue();
         });
     });
 
     describe('Media query change', () => {
+        let sidenav: MatSidenavHarness;
+
         const expandedState = {
             value: 'expanded',
             params: { width: 200 }
@@ -209,7 +218,11 @@ describe('LayoutContainerComponent', () => {
             expect(layoutContainerComponent.contentAnimationState).toEqual(expectedContentState);
         };
 
-        it('should close sidenav on mobile and open on desktop', () => {
+        beforeEach(async () => {
+            sidenav = await unitTestingUtils.getMatSidenav();
+        });
+
+        it('should close sidenav on mobile and open on desktop', async () => {
             testMediaQueryChange(true, expandedState, expandedContentState);
             layoutContainerComponent.mediaQueryList.matches = false;
             window.dispatchEvent(new Event('resize'));
@@ -218,10 +231,10 @@ describe('LayoutContainerComponent', () => {
                 value: 'compact',
                 params: { 'margin-left': layoutContainerComponent.sidenavMax }
             });
-            expect(layoutContainerComponent.sidenav.open).toHaveBeenCalled();
+            expect(await sidenav.isOpen()).toBeTrue();
         });
 
-        it('should keep sidenav compact when resized back to desktop and hideSidenav is true', () => {
+        it('should keep sidenav compact when resized back to desktop and hideSidenav is true', async () => {
             layoutContainerComponent.hideSidenav = true;
             testMediaQueryChange(true, expandedState, expandedContentState);
             layoutContainerComponent.mediaQueryList.matches = false;
@@ -231,7 +244,7 @@ describe('LayoutContainerComponent', () => {
                 value: 'expanded',
                 params: { 'margin-left': layoutContainerComponent.sidenavMin }
             });
-            expect(layoutContainerComponent.sidenav.open).not.toHaveBeenCalled();
+            expect(await sidenav.isOpen()).toBeFalse();
         });
     });
 });
