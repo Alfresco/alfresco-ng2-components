@@ -87,6 +87,12 @@
         "NO_LABEL": "Abbrechen"
       }
     },
+    "BUTTON": {
+      "PREVIOUS_TAB": "Vorherige",
+      "PREVIOUS_TAB_TITLE": "Zum vorherigen Tab wechseln",
+      "NEXT_TAB": "Weiter",
+      "NEXT_TAB_TITLE": "Zum nächsten Tab navigieren"
+    },
     "FIELD_STYLE": {
       "FONT_SIZE": "Schriftgröße",
       "FONT_WEIGHT": "Schriftgewicht",
