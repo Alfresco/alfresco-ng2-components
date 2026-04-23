@@ -16,25 +16,12 @@
  */
 
 import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    DestroyRef,
-    inject,
-    Injector,
-    Input,
-    OnDestroy,
-    OnInit,
-    signal,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject, Injector, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
 import { FormService } from '../services/form.service';
@@ -84,7 +71,7 @@ import { FormLayoutColumn, getFormLayoutColumnWidth } from './helpers/column-wid
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class FormRendererComponent<T> implements OnInit, OnDestroy, AfterViewInit {
+export class FormRendererComponent<T> implements OnInit, OnDestroy {
     private readonly middlewareServices = inject<FormFieldModelRenderMiddleware[]>(FORM_FIELD_MODEL_RENDER_MIDDLEWARE, { optional: true }) ?? [];
 
     public readonly formService = inject(FormService);
@@ -99,22 +86,6 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy, AfterViewIni
 
     @Input()
     readOnly = false;
-
-    @ViewChild(MatTabGroup) tabGroup!: MatTabGroup;
-
-    private readonly currentTabIndex = signal(0);
-
-    get canNavigateNext(): boolean {
-        return this.currentTabIndex() < this.visibleTabCount - 1;
-    }
-
-    get canNavigatePrevious(): boolean {
-        return this.currentTabIndex() > 0;
-    }
-
-    get visibleTabCount(): number {
-        return this.visibleTabs().length;
-    }
 
     debugMode: boolean;
 
@@ -134,12 +105,6 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy, AfterViewIni
             .subscribe(() => this.visibilityService.refreshVisibility(this.formDefinition));
     }
 
-    ngAfterViewInit(): void {
-        if (this.tabGroup) {
-            this.tabGroup.selectedIndexChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((index) => this.currentTabIndex.set(index));
-        }
-    }
-
     ngOnDestroy() {
         this.formRulesManager.destroy();
     }
@@ -150,18 +115,6 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy, AfterViewIni
 
     visibleTabs(): TabModel[] {
         return this.formDefinition.tabs.filter((tab) => tab.isVisible);
-    }
-
-    navigateToNextTab(): void {
-        if (this.tabGroup && this.canNavigateNext) {
-            this.tabGroup.selectedIndex = this.tabGroup.selectedIndex + 1;
-        }
-    }
-
-    navigateToPreviousTab(): void {
-        if (this.tabGroup && this.canNavigatePrevious) {
-            this.tabGroup.selectedIndex = this.tabGroup.selectedIndex - 1;
-        }
     }
 
     getNumberOfColumns(content: ContainerModel): number {
