@@ -87,12 +87,6 @@
         "NO_LABEL": "Cancel"
       }
     },
-    "BUTTON": {
-      "PREVIOUS_TAB": "Previous",
-      "PREVIOUS_TAB_TITLE": "Navigate to previous tab",
-      "NEXT_TAB": "Next",
-      "NEXT_TAB_TITLE": "Navigate to next tab"
-    },
     "FIELD_STYLE": {
       "FONT_SIZE": "Font size",
       "FONT_WEIGHT": "Font weight",
