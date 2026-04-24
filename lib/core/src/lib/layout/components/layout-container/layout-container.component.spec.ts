@@ -179,11 +179,11 @@ describe('LayoutContainerComponent', () => {
             layoutContainerComponent.expandedSidenav = true;
             layoutContainerComponent.ngOnInit();
             layoutContainerComponent.toggleMenu();
+            fixture.detectChanges();
             expect(layoutContainerComponent.sidenavAnimationState).toEqual({
                 value: 'compact',
                 params: { width: layoutContainerComponent.sidenavMin }
             });
-            fixture.detectChanges();
             expect(await sidenav.isOpen()).toBeFalse();
         });
 
@@ -191,6 +191,7 @@ describe('LayoutContainerComponent', () => {
             layoutContainerComponent.expandedSidenav = false;
             layoutContainerComponent.ngOnInit();
             layoutContainerComponent.toggleMenu();
+            fixture.detectChanges();
             expect(layoutContainerComponent.sidenavAnimationState).toEqual({
                 value: 'expanded',
                 params: { width: layoutContainerComponent.sidenavMax }
