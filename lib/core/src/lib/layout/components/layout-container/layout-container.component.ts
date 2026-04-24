@@ -110,6 +110,7 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
         } else {
             this.sidenavAnimationState = this.toggledSidenavAnimation;
             this.contentAnimationState = this.toggledContentAnimation;
+            this.hideSidenav = this.sidenavAnimationState === this.SIDENAV_STATES.COMPACT;
         }
     }
 

@@ -17,11 +17,16 @@
 
 import { LayoutContainerComponent } from './layout-container.component';
 import { SimpleChange } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
 import { Direction } from '@angular/cdk/bidi';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSidenavHarness } from '@angular/material/sidenav/testing';
 
 describe('LayoutContainerComponent', () => {
+    let fixture: ComponentFixture<LayoutContainerComponent>;
     let layoutContainerComponent: LayoutContainerComponent;
+    let unitTestingUtils: UnitTestingUtils;
 
     const setupComponent = (expandedSidenav: boolean, position: 'start' | 'end', direction: Direction) => {
         layoutContainerComponent.expandedSidenav = expandedSidenav;
@@ -45,7 +50,12 @@ describe('LayoutContainerComponent', () => {
     };
 
     beforeEach(() => {
-        layoutContainerComponent = new LayoutContainerComponent();
+        TestBed.configureTestingModule({
+            imports: [LayoutContainerComponent]
+        });
+        fixture = TestBed.createComponent(LayoutContainerComponent);
+        layoutContainerComponent = fixture.componentInstance;
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement, TestbedHarnessEnvironment.loader(fixture));
         layoutContainerComponent.sidenavMin = 70;
         layoutContainerComponent.sidenavMax = 200;
         layoutContainerComponent.mediaQueryList = {
@@ -53,11 +63,6 @@ describe('LayoutContainerComponent', () => {
             addListener: jasmine.createSpy('addListener').and.callFake((callback) => window.addEventListener('resize', callback)),
             removeListener: jasmine.createSpy('removeListener').and.callFake((callback) => window.removeEventListener('resize', callback))
         };
-        layoutContainerComponent.sidenav = {
-            open: jasmine.createSpy('open'),
-            close: jasmine.createSpy('close'),
-            toggle: jasmine.createSpy('toggle')
-        } as unknown as MatSidenav;
     });
 
     describe('OnInit', () => {
@@ -164,28 +169,40 @@ describe('LayoutContainerComponent', () => {
     });
 
     describe('toggleMenu()', () => {
-        it('should switch to sidenav to compact state', () => {
+        let sidenav: MatSidenavHarness;
+
+        beforeEach(async () => {
+            sidenav = await unitTestingUtils.getMatSidenav();
+        });
+
+        it('should switch to sidenav to compact state', async () => {
             layoutContainerComponent.expandedSidenav = true;
             layoutContainerComponent.ngOnInit();
             layoutContainerComponent.toggleMenu();
+            fixture.detectChanges();
             expect(layoutContainerComponent.sidenavAnimationState).toEqual({
                 value: 'compact',
                 params: { width: layoutContainerComponent.sidenavMin }
             });
+            expect(await sidenav.isOpen()).toBeFalse();
         });
 
-        it('should switch to sidenav to expanded state', () => {
+        it('should switch to sidenav to expanded state', async () => {
             layoutContainerComponent.expandedSidenav = false;
             layoutContainerComponent.ngOnInit();
             layoutContainerComponent.toggleMenu();
+            fixture.detectChanges();
             expect(layoutContainerComponent.sidenavAnimationState).toEqual({
                 value: 'expanded',
                 params: { width: layoutContainerComponent.sidenavMax }
             });
+            expect(await sidenav.isOpen()).toBeTrue();
         });
     });
 
     describe('Media query change', () => {
+        let sidenav: MatSidenavHarness;
+
         const expandedState = {
             value: 'expanded',
             params: { width: 200 }
@@ -196,14 +213,18 @@ describe('LayoutContainerComponent', () => {
         };
 
         const testMediaQueryChange = (matches: boolean, expectedSidenavState: any, expectedContentState: any) => {
-            layoutContainerComponent.ngOnInit();
+            fixture.detectChanges();
             layoutContainerComponent.mediaQueryList.matches = matches;
             window.dispatchEvent(new Event('resize'));
             expect(layoutContainerComponent.sidenavAnimationState).toEqual(expectedSidenavState);
             expect(layoutContainerComponent.contentAnimationState).toEqual(expectedContentState);
         };
 
-        it('should close sidenav on mobile and open on desktop', () => {
+        beforeEach(async () => {
+            sidenav = await unitTestingUtils.getMatSidenav();
+        });
+
+        it('should close sidenav on mobile and open on desktop', async () => {
             testMediaQueryChange(true, expandedState, expandedContentState);
             layoutContainerComponent.mediaQueryList.matches = false;
             window.dispatchEvent(new Event('resize'));
@@ -212,10 +233,10 @@ describe('LayoutContainerComponent', () => {
                 value: 'compact',
                 params: { 'margin-left': layoutContainerComponent.sidenavMax }
             });
-            expect(layoutContainerComponent.sidenav.open).toHaveBeenCalled();
+            expect(await sidenav.isOpen()).toBeTrue();
         });
 
-        it('should keep sidenav compact when resized back to desktop and hideSidenav is true', () => {
+        it('should keep sidenav compact when resized back to desktop and hideSidenav is true', async () => {
             layoutContainerComponent.hideSidenav = true;
             testMediaQueryChange(true, expandedState, expandedContentState);
             layoutContainerComponent.mediaQueryList.matches = false;
@@ -225,7 +246,7 @@ describe('LayoutContainerComponent', () => {
                 value: 'expanded',
                 params: { 'margin-left': layoutContainerComponent.sidenavMin }
             });
-            expect(layoutContainerComponent.sidenav.open).not.toHaveBeenCalled();
+            expect(await sidenav.isOpen()).toBeFalse();
         });
     });
 });
