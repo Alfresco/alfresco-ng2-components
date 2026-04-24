@@ -183,6 +183,7 @@ describe('LayoutContainerComponent', () => {
                 value: 'compact',
                 params: { width: layoutContainerComponent.sidenavMin }
             });
+            fixture.detectChanges();
             expect(await sidenav.isOpen()).toBeFalse();
         });
 
@@ -211,7 +212,7 @@ describe('LayoutContainerComponent', () => {
         };
 
         const testMediaQueryChange = (matches: boolean, expectedSidenavState: any, expectedContentState: any) => {
-            layoutContainerComponent.ngOnInit();
+            fixture.detectChanges();
             layoutContainerComponent.mediaQueryList.matches = matches;
             window.dispatchEvent(new Event('resize'));
             expect(layoutContainerComponent.sidenavAnimationState).toEqual(expectedSidenavState);
