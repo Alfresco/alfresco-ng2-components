@@ -175,6 +175,15 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     formCloudRepresentationJSON: any;
     fieldValidators: FormFieldValidator[] = [];
 
+    /**
+     * Pre-computed list of outcome buttons to render.
+     * Derived from `form.outcomes` filtered by the visibility rules. Updated whenever
+     * the form or any visibility-affecting input (`readOnly`, `showCompleteButton`,
+     * `showSaveButton`) changes. Prevents function calls in the template that would
+     * re-run on every change detection cycle.
+     */
+    visibleOutcomes: FormOutcomeModel[] = [];
+
     readonly id: string;
     displayMode: string;
     displayConfiguration: FormCloudDisplayModeConfiguration = DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0];
@@ -267,6 +276,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             if (this.disableSaveButton) {
                 this.disableSaveButton = false;
             }
+            if (this.form) {
+                this.visibilityService.refreshVisibility(this.form);
+                this.recomputeVisibleOutcomes();
+            }
         });
     }
 
@@ -317,6 +330,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         if (enableParentVisibilityCheckChange && this.form) {
             this.setCheckParentVisibilityForValidationOnFields();
             this.form.validateForm();
+        }
+
+        if (changes['readOnly'] || changes['showCompleteButton'] || changes['showSaveButton']) {
+            this.recomputeVisibleOutcomes();
         }
     }
 
@@ -511,9 +528,11 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             });
 
             const form = new FormModel(formCloudRepresentationJSON, formValues, this.readOnly, this.formService, undefined, this.fieldValidators);
-            if (!form) {
-                form.outcomes = this.getFormDefinitionOutcomes(form);
+
+            if (this.taskId) {
+                form.outcomes = form.outcomes.filter((outcome) => outcome.id !== FormModel.START_PROCESS_OUTCOME);
             }
+
             return form;
         }
 
@@ -533,6 +552,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     checkVisibility(field: FormFieldModel) {
         if (field?.form) {
             this.visibilityService.refreshVisibility(field.form);
+            this.recomputeVisibleOutcomes();
         }
     }
 
@@ -543,6 +563,16 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             this.onFormLoaded(this.form);
             this.onFormDataRefreshed(this.form);
         }
+    }
+
+    private recomputeVisibleOutcomes(): void {
+        const outcomes = this.form?.outcomes;
+        if (!outcomes) {
+            this.visibleOutcomes = [];
+            return;
+        }
+
+        this.visibleOutcomes = outcomes.filter((outcome) => outcome.isVisible && this.isOutcomeButtonVisible(outcome, this.form.readOnly));
     }
 
     /**

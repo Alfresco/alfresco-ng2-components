@@ -121,20 +121,17 @@
                             }
                             <div class="adf-cloud-form-outcome-buttons">
                                 <ng-content select="adf-cloud-form-custom-outcomes" />
-                                @for (outcome of form.outcomes; track outcome.name) {
-                                    @if (outcome.isVisible) {
-                                        <button
-                                            [id]="'adf-form-' + outcome.name | formatSpace"
-                                            [color]="getColorForOutcome(outcome.name)"
-                                            mat-button
-                                            [disabled]="!isOutcomeButtonEnabled(outcome)"
-                                            [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
-                                            class="adf-cloud-form-custom-outcome-button"
-                                            (click)="onOutcomeClicked(outcome)"
-                                        >
-                                            {{ getCustomOutcomeButtonText(outcome) || (outcome.name | translate | uppercase) }}
-                                        </button>
-                                    }
+                                @for (outcome of visibleOutcomes; track outcome.name) {
+                                    <button
+                                        [id]="'adf-form-' + outcome.name | formatSpace"
+                                        [color]="getColorForOutcome(outcome.name)"
+                                        mat-button
+                                        [disabled]="!isOutcomeButtonEnabled(outcome)"
+                                        class="adf-cloud-form-custom-outcome-button"
+                                        (click)="onOutcomeClicked(outcome)"
+                                    >
+                                        {{ getCustomOutcomeButtonText(outcome) || (outcome.name | translate | uppercase) }}
+                                    </button>
                                 }
                             </div>
                         </mat-card-actions>
