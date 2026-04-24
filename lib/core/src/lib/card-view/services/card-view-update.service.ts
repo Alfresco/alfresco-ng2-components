@@ -37,10 +37,11 @@ export class CardViewUpdateService implements BaseCardViewUpdate {
     updateItem$ = new Subject<CardViewBaseItemModel>();
     autocompleteInputValue$ = new Subject<string>();
 
-    update(property: CardViewBaseItemModel, newValue: any) {
+    update(property: CardViewBaseItemModel, newValue: any, previousValue?: any) {
         this.itemUpdated$.next({
             target: property,
-            changed: transformKeyToObject(property.key, newValue)
+            changed: transformKeyToObject(property.key, newValue),
+            ...(previousValue !== undefined && { previousValue: transformKeyToObject(property.key, previousValue) })
         });
     }
 

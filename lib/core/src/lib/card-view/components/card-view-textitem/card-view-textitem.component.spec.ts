@@ -241,7 +241,7 @@ describe('CardViewTextItemComponent', () => {
                     message: 'Error 2'
                 }
             ] as CardViewItemValidator[]);
-            component.editable = true;
+            component.editedValue = 'Changed Value';
             const textField = await getTextField(component.property.key);
             await textField.blur();
 
@@ -544,6 +544,9 @@ describe('CardViewTextItemComponent', () => {
                 target: { ...component.property, isValidValue: true },
                 changed: {
                     textkey: expectedText
+                },
+                previousValue: {
+                    textkey: 'FAKE-DEFAULT-KEY'
                 }
             });
 
@@ -617,7 +620,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             const property = { ...component.property, isValidValue: true };
-            expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, 'updated-value');
+            expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, 'updated-value', 'Lorem ipsum');
         });
 
         it('should trigger the update event if the editedValue is NOT valid', async () => {
@@ -629,7 +632,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             const property = { ...component.property, isValidValue: false };
-            expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, '@invalid-value');
+            expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, '@invalid-value', 'Lorem ipsum');
         });
 
         it('should trigger the update event if the editedValue is valid', async () => {
@@ -707,6 +710,9 @@ describe('CardViewTextItemComponent', () => {
                 target: { ...component.property, isValidValue: true },
                 changed: {
                     textkey: expectedText
+                },
+                previousValue: {
+                    textkey: 'Lorem ipsum'
                 }
             });
         });
@@ -752,6 +758,9 @@ describe('CardViewTextItemComponent', () => {
                 target: { ...component.property, isValidValue: true },
                 changed: {
                     textkey: expectedText
+                },
+                previousValue: {
+                    textkey: 'Lorem ipsum'
                 }
             });
 
@@ -871,6 +880,9 @@ describe('CardViewTextItemComponent', () => {
                 target: { ...component.property, isValidValue: true },
                 changed: {
                     textkey: expectedNumber.toString()
+                },
+                previousValue: {
+                    textkey: 10
                 }
             });
 
@@ -929,6 +941,9 @@ describe('CardViewTextItemComponent', () => {
                 target: { ...component.property, isValidValue: true },
                 changed: {
                     textkey: expectedNumber.toString()
+                },
+                previousValue: {
+                    textkey: 77.33
                 }
             });
 

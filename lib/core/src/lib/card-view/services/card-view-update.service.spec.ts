@@ -67,6 +67,22 @@ describe('CardViewUpdateService', () => {
             cardViewUpdateService.update(property, 'changed-property-value');
         }));
 
+        it('should include previousValue when provided', fakeAsync(() => {
+            cardViewUpdateService.itemUpdated$.subscribe(({ target, changed, previousValue }) => {
+                expect(target).toBe(property);
+                expect(changed).toEqual({ 'property-key': 'new-value' });
+                expect(previousValue).toEqual({ 'property-key': 'old-value' });
+            });
+            cardViewUpdateService.update(property, 'new-value', 'old-value');
+        }));
+
+        it('should not include previousValue when not provided', fakeAsync(() => {
+            cardViewUpdateService.itemUpdated$.subscribe((notification) => {
+                expect(notification.previousValue).toBeUndefined();
+            });
+            cardViewUpdateService.update(property, 'changed-property-value');
+        }));
+
         it('should send clicked message with proper parameters', fakeAsync(() => {
             cardViewUpdateService.itemClicked$.subscribe(({ target }) => {
                 expect(target).toBe(property);

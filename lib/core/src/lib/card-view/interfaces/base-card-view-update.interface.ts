@@ -25,7 +25,7 @@ export interface BaseCardViewUpdate {
     itemClicked$: Subject<ClickNotification>;
     updateItem$: Subject<CardViewBaseItemModel>;
 
-    update(property: CardViewBaseItemModel, newValue: any);
+    update(property: CardViewBaseItemModel, newValue: any, previousValue?: any);
     clicked(property: CardViewBaseItemModel);
     updateElement(notification: CardViewBaseItemModel);
 }
