@@ -19,7 +19,7 @@ import { LayoutContainerComponent } from './layout-container.component';
 import { SimpleChange } from '@angular/core';
 import { Direction } from '@angular/cdk/bidi';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UnitTestingUtils } from '@alfresco/adf-core';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSidenavHarness } from '@angular/material/sidenav/testing';
 
