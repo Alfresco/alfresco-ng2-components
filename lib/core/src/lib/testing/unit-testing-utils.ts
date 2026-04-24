@@ -36,6 +36,7 @@ import { MatListOptionHarness } from '@angular/material/list/testing';
 import { MatCellHarness } from '@angular/material/table/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { MatMenuHarness } from '@angular/material/menu/testing';
+import { MatSidenavHarness } from '@angular/material/sidenav/testing';
 
 export class UnitTestingUtils {
     constructor(
@@ -495,5 +496,11 @@ export class UnitTestingUtils {
 
     async getMatMenuByCSS(selector: string): Promise<MatMenuHarness> {
         return this.loader.getHarness(MatMenuHarness.with({ selector }));
+    }
+
+    /** MatSidenav related methods */
+
+    async getMatSidenav(): Promise<MatSidenavHarness> {
+        return this.loader.getHarness(MatSidenavHarness);
     }
 }
