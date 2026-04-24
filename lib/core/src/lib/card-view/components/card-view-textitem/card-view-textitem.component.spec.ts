@@ -198,8 +198,11 @@ describe('CardViewTextItemComponent', () => {
                 key: 'namekey',
                 editable: true
             });
-            spyOn(component.property, 'isValid').and.returnValue(false);
             component.editable = true;
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            fixture.detectChanges();
+
+            spyOn(component.property, 'isValid').and.returnValue(false);
             spyOn(component.textInput, 'setErrors');
             const textField = await getTextField(component.property.key);
             await textField.blur();
@@ -216,8 +219,11 @@ describe('CardViewTextItemComponent', () => {
                 key: 'namekey',
                 editable: true
             });
-            spyOn(component.property, 'isValid').and.returnValue(false);
             component.editable = true;
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            fixture.detectChanges();
+
+            spyOn(component.property, 'isValid').and.returnValue(false);
             spyOn(component.textInput, 'markAsTouched');
             const textField = await getTextField(component.property.key);
             await textField.blur();
@@ -232,6 +238,10 @@ describe('CardViewTextItemComponent', () => {
                 key: 'namekey',
                 editable: true
             });
+            component.editable = true;
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            fixture.detectChanges();
+
             spyOn(component.property, 'isValid').and.returnValue(false);
             spyOn(component.property, 'getValidationErrors').and.returnValue([
                 {
@@ -241,7 +251,6 @@ describe('CardViewTextItemComponent', () => {
                     message: 'Error 2'
                 }
             ] as CardViewItemValidator[]);
-            component.editedValue = 'Changed Value';
             const textField = await getTextField(component.property.key);
             await textField.blur();
 
@@ -620,7 +629,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             const property = { ...component.property, isValidValue: true };
-            expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, 'updated-value', 'Lorem ipsum');
+            expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, 'updated-value', { previousValue: 'Lorem ipsum' });
         });
 
         it('should trigger the update event if the editedValue is NOT valid', async () => {
@@ -632,7 +641,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             const property = { ...component.property, isValidValue: false };
-            expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, '@invalid-value', 'Lorem ipsum');
+            expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, '@invalid-value', { previousValue: 'Lorem ipsum' });
         });
 
         it('should trigger the update event if the editedValue is valid', async () => {

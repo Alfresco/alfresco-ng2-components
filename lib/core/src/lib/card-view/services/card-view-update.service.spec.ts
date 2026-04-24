@@ -73,7 +73,7 @@ describe('CardViewUpdateService', () => {
                 expect(changed).toEqual({ 'property-key': 'new-value' });
                 expect(previousValue).toEqual({ 'property-key': 'old-value' });
             });
-            cardViewUpdateService.update(property, 'new-value', 'old-value');
+            cardViewUpdateService.update(property, 'new-value', { previousValue: 'old-value' });
         }));
 
         it('should not include previousValue when not provided', fakeAsync(() => {

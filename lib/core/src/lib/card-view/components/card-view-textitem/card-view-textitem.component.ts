@@ -133,7 +133,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
             this.textInput.setValue(this.editedValue);
         }
 
-        this.initialValue = this.editedValue;
+        this.initialValue = Array.isArray(this.property.value) ? [...this.property.value] : this.property.value;
         this.resetErrorMessages();
     }
 
@@ -149,22 +149,18 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
             this.resetErrorMessages();
             if (this.property.isValid(this.editedValue)) {
                 this.property.value = this.prepareValueForUpload(this.property, this.editedValue);
-                this.cardViewUpdateService.update(
-                    { ...this.property, isValidValue: true } as CardViewTextItemModel,
-                    this.property.value,
+                this.cardViewUpdateService.update({ ...this.property, isValidValue: true } as CardViewTextItemModel, this.property.value, {
                     previousValue
-                );
+                });
+                this.initialValue = Array.isArray(this.property.value) ? [...this.property.value] : this.property.value;
             } else {
                 this.errors = this.property.getValidationErrors(this.editedValue);
                 this.textInput.setErrors({ customError: true });
                 this.textInput.markAsTouched();
-                this.cardViewUpdateService.update(
-                    { ...this.property, isValidValue: false } as CardViewTextItemModel,
-                    this.editedValue,
+                this.cardViewUpdateService.update({ ...this.property, isValidValue: false } as CardViewTextItemModel, this.editedValue, {
                     previousValue
-                );
+                });
             }
-            this.initialValue = this.editedValue;
         }
     }
 

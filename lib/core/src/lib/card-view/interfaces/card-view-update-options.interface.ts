@@ -15,17 +15,6 @@
  * limitations under the License.
  */
 
-import { Subject } from 'rxjs';
-import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
-import { UpdateNotification } from './update-notification.interface';
-import { ClickNotification } from './click-notification.interface';
-
-export interface BaseCardViewUpdate {
-    itemUpdated$: Subject<UpdateNotification>;
-    itemClicked$: Subject<ClickNotification>;
-    updateItem$: Subject<CardViewBaseItemModel>;
-
-    update(property: CardViewBaseItemModel, newValue: any);
-    clicked(property: CardViewBaseItemModel);
-    updateElement(notification: CardViewBaseItemModel);
+export interface CardViewUpdateOptions {
+    previousValue?: any;
 }
