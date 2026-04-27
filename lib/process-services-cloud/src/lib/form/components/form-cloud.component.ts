@@ -277,7 +277,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 this.disableSaveButton = false;
             }
             if (this.form) {
-                this.visibilityService.refreshVisibility(this.form);
                 this.recomputeVisibleOutcomes();
             }
         });
@@ -530,7 +529,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             const form = new FormModel(formCloudRepresentationJSON, formValues, this.readOnly, this.formService, undefined, this.fieldValidators);
 
             if (this.taskId) {
-                form.outcomes = form.outcomes.filter((outcome) => outcome.id !== FormModel.START_PROCESS_OUTCOME);
+                form.outcomes = (form.outcomes ?? []).filter((outcome) => outcome.id !== FormModel.START_PROCESS_OUTCOME);
             }
 
             return form;
@@ -607,6 +606,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             this.displayModeOn.emit(this.displayConfiguration);
         }
 
+        this.recomputeVisibleOutcomes();
         this.changeDetector.detectChanges();
         this.formLoaded.emit(form);
     }
