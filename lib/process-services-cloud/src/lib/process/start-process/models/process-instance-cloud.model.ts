@@ -33,6 +33,7 @@ export interface ProcessInstanceCloud {
     parentId?: string;
     linkedProcessInstanceId?: string;
     linkedProcessInstanceType?: string;
+    type?: string;
     linkedProcesses?: RelatedProcessInstance[];
     subprocesses?: RelatedProcessInstance[];
     processDefinitionId?: string;
