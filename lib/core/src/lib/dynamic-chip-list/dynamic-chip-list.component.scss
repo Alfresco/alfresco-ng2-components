@@ -21,6 +21,10 @@
         cursor: pointer;
         background: none;
 
+        &:disabled {
+            cursor: default;
+        }
+
         &:focus-visible {
             outline-offset: -5px;
         }
