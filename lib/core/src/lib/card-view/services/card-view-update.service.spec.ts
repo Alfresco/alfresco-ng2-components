@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { fakeAsync, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { firstValueFrom } from 'rxjs';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 import { CardViewUpdateService, transformKeyToObject } from './card-view-update.service';
 
@@ -59,35 +60,39 @@ describe('CardViewUpdateService', () => {
             cardViewUpdateService = TestBed.inject(CardViewUpdateService);
         });
 
-        it('should send updated message with proper parameters', fakeAsync(() => {
-            cardViewUpdateService.itemUpdated$.subscribe(({ target, changed }) => {
-                expect(target).toBe(property);
-                expect(changed).toEqual({ 'property-key': 'changed-property-value' });
-            });
+        it('should send updated message with proper parameters', async () => {
+            const updatePromise = firstValueFrom(cardViewUpdateService.itemUpdated$);
             cardViewUpdateService.update(property, 'changed-property-value');
-        }));
 
-        it('should include previousValue when provided', fakeAsync(() => {
-            cardViewUpdateService.itemUpdated$.subscribe(({ target, changed, previousValue }) => {
-                expect(target).toBe(property);
-                expect(changed).toEqual({ 'property-key': 'new-value' });
-                expect(previousValue).toEqual({ 'property-key': 'old-value' });
-            });
+            const { target, changed } = await updatePromise;
+            expect(target).toBe(property);
+            expect(changed).toEqual({ 'property-key': 'changed-property-value' });
+        });
+
+        it('should include previousValue when provided', async () => {
+            const updatePromise = firstValueFrom(cardViewUpdateService.itemUpdated$);
             cardViewUpdateService.update(property, 'new-value', { previousValue: 'old-value' });
-        }));
 
-        it('should not include previousValue when not provided', fakeAsync(() => {
-            cardViewUpdateService.itemUpdated$.subscribe((notification) => {
-                expect(notification.previousValue).toBeUndefined();
-            });
+            const { target, changed, previousValue } = await updatePromise;
+            expect(target).toBe(property);
+            expect(changed).toEqual({ 'property-key': 'new-value' });
+            expect(previousValue).toEqual({ 'property-key': 'old-value' });
+        });
+
+        it('should not include previousValue when not provided', async () => {
+            const updatePromise = firstValueFrom(cardViewUpdateService.itemUpdated$);
             cardViewUpdateService.update(property, 'changed-property-value');
-        }));
 
-        it('should send clicked message with proper parameters', fakeAsync(() => {
-            cardViewUpdateService.itemClicked$.subscribe(({ target }) => {
-                expect(target).toBe(property);
-            });
+            const notification = await updatePromise;
+            expect(notification.previousValue).toBeUndefined();
+        });
+
+        it('should send clicked message with proper parameters', async () => {
+            const clickedPromise = firstValueFrom(cardViewUpdateService.itemClicked$);
             cardViewUpdateService.clicked(property);
-        }));
+
+            const { target } = await clickedPromise;
+            expect(target).toBe(property);
+        });
     });
 });
