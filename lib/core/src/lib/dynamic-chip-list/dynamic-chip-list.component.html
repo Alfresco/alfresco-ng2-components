@@ -21,7 +21,7 @@
                         *ngIf="showDelete"
                         [disabled]="disableDelete"
                         (click)="removedChip.emit(chip.id)"
-                        [attr.data-automation-id]="'adf-dynamic-chip-list-delete-btn-' + chip.name"
+                        [attr.data-automation-id]="'adf-dynamic-chip-list-delete-btn-' + chip.id"
                         class="adf-dynamic-chip-list-delete-btn"
                         [attr.aria-label]="'DYNAMIC_CHIP_LIST.DELETE' | translate: { name: chip.name }"
                         [title]="'DYNAMIC_CHIP_LIST.DELETE' | translate: { name: chip.name }">

@@ -451,10 +451,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         if (this.tags.length === 0) {
             this.tagNameInputElement?.nativeElement?.focus();
         } else {
-            const buttons: NodeListOf<HTMLButtonElement> =
-                this.dynamicChipList?.containerView?.nativeElement?.querySelectorAll('.adf-dynamic-chip-list-delete-btn');
-            const target: HTMLButtonElement = buttons?.[removedIndex] ?? buttons?.[removedIndex - 1];
-            target?.focus();
+            this.dynamicChipList?.focusDeleteButton(removedIndex);
         }
     }
 }
