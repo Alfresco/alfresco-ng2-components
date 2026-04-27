@@ -14,17 +14,24 @@
             [style.border-radius]="roundUpChips ? '20px' : '10px'"
             [style.font-weight]="'bold'"
             role="listitem"
-            [attr.aria-label]="chip.name"
-            (removed)="removedChip.emit(chip.id)">
-            <span id="adf-dynamic-chip-list-chip-name-{{ idx }}">{{ chip.name }}</span>
-            <mat-icon 
-                *ngIf="showDelete"
-                id="adf-dynamic-chip-list-delete-{{ chip.name }}"
-                class="adf-dynamic-chip-list-delete-icon"
-                [disabled]="disableDelete"
-                adf-icon="close"
-                matChipRemove
-            />
+            [attr.aria-label]="chip.name">
+            <div class="adf-dynamic-chip-list-content">
+                <span id="adf-dynamic-chip-list-chip-name-{{ idx }}">{{ chip.name }}</span>
+                <button type="button"
+                        *ngIf="showDelete"
+                        [disabled]="disableDelete"
+                        (click)="removedChip.emit(chip.id)"
+                        [attr.data-automation-id]="'adf-dynamic-chip-list-delete-btn-' + chip.name"
+                        class="adf-dynamic-chip-list-delete-btn"
+                        [attr.aria-label]="'DYNAMIC_CHIP_LIST.DELETE' | translate: { name: chip.name }"
+                        [title]="'DYNAMIC_CHIP_LIST.DELETE' | translate: { name: chip.name }">
+                    <mat-icon
+                        id="adf-dynamic-chip-list-delete-{{ chip.name }}"
+                        class="adf-dynamic-chip-list-delete-icon"
+                        adf-icon="close"
+                    />
+                </button>
+            </div>
         </mat-chip>
     </mat-chip-set>
     <button

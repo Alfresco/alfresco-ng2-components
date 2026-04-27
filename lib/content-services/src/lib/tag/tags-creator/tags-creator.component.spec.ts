@@ -93,7 +93,7 @@ describe('TagsCreatorComponent', () => {
      * @returns list of native elements
      */
     function getRemoveTagButtons(): HTMLButtonElement[] {
-        const elements = fixture.debugElement.queryAll(By.css(`.adf-dynamic-chip-list-delete-icon`));
+        const elements = fixture.debugElement.queryAll(By.css(`.adf-dynamic-chip-list-delete-btn`));
         return elements.map((el) => el.nativeElement);
     }
 
@@ -271,6 +271,51 @@ describe('TagsCreatorComponent', () => {
             fixture.detectChanges();
             expect(await getAddedTags()).toEqual(component.tags);
         });
+
+        it('should focus input when last tag is removed', fakeAsync(() => {
+            addTagToAddedList('Tag 1');
+
+            const input = getNameInput();
+            spyOn(input, 'focus');
+
+            getRemoveTagButtons()[0].click();
+            tick();
+            fixture.detectChanges();
+
+            expect(input.focus).toHaveBeenCalled();
+        }));
+
+        it('should focus button at same index when a non-last tag is removed', fakeAsync(() => {
+            addTagToAddedList('Tag 1');
+            addTagToAddedList('Tag 2');
+
+            getRemoveTagButtons()[0].click();
+            fixture.detectChanges();
+
+            const remainingButton = getRemoveTagButtons()[0];
+            spyOn(remainingButton, 'focus');
+
+            tick();
+            fixture.detectChanges();
+
+            expect(remainingButton.focus).toHaveBeenCalled();
+        }));
+
+        it('should focus previous button when last tag in list is removed', fakeAsync(() => {
+            addTagToAddedList('Tag 1');
+            addTagToAddedList('Tag 2');
+
+            getRemoveTagButtons()[1].click();
+            fixture.detectChanges();
+
+            const remainingButton = getRemoveTagButtons()[0];
+            spyOn(remainingButton, 'focus');
+
+            tick();
+            fixture.detectChanges();
+
+            expect(remainingButton.focus).toHaveBeenCalled();
+        }));
     });
 
     describe('Tag name field', () => {
