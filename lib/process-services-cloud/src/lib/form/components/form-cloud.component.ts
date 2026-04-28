@@ -184,18 +184,17 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     formRenderer!: FormRendererComponent<any>;
 
     private tabNavEnabledByHost = true;
-    private currentTabIndex = 0;
 
     get shouldShowTabNavigation(): boolean {
         return this.tabNavEnabledByHost && this.currentForm?.json?.showBottomTabNavButtons === true && this.visibleTabCount > 1;
     }
 
     get canNavigatePreviousTab(): boolean {
-        return this.currentTabIndex > 0;
+        return this.formRenderer?.canNavigatePrevious ?? false;
     }
 
     get canNavigateNextTab(): boolean {
-        return this.currentTabIndex < this.visibleTabCount - 1;
+        return this.formRenderer?.canNavigateNext ?? this.visibleTabCount > 1;
     }
 
     protected formCloudService = inject(FormCloudService);
@@ -217,15 +216,13 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     navigateToPreviousTab(): void {
-        if (this.canNavigatePreviousTab) {
-            this.currentTabIndex--;
+        if (this.formRenderer?.canNavigatePrevious) {
             this.formRenderer?.navigateToPreviousTab();
         }
     }
 
     navigateToNextTab(): void {
-        if (this.canNavigateNextTab) {
-            this.currentTabIndex++;
+        if (this.formRenderer?.canNavigateNext) {
             this.formRenderer?.navigateToNextTab();
         }
     }
@@ -566,8 +563,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     protected onFormLoaded(form: FormModel) {
-        this.currentTabIndex = 0;
-
         if (form) {
             this.displayModeConfigurations = this.displayModeService.getDisplayModeConfigurations(this.displayModeConfigurations);
             this.displayMode = this.displayModeService.switchToDisplayMode(

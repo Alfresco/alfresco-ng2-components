@@ -1,4 +1,5 @@
 @use '../../mat-selectors' as ms;
+@use '../../flex' as flex;
 
 /* cspell: disable-next-line */
 /* stylelint-disable scss/at-extend-no-missing-placeholder */
@@ -90,7 +91,6 @@
         padding-bottom: 2rem;
         overflow-y: auto;
         position: static;
-        height: 70%;
         border-radius: 14px;
 
         &-fullscreen {
@@ -145,7 +145,7 @@
     flex-wrap: wrap;
     justify-content: flex-end;
 
-    @media (width <= 600px) {
+    @include flex.layout-bp(lt-sm) {
         flex-direction: column;
         align-items: stretch;
     }
@@ -156,7 +156,7 @@
     align-items: center;
     gap: 4px;
 
-    @media (width <= 600px) {
+    @include flex.layout-bp(lt-sm) {
         justify-content: center;
     }
 }
@@ -166,7 +166,7 @@
     height: 24px;
     background-color: var(--mat-sys-outline-variant, rgba(0, 0, 0, 0.12));
 
-    @media (width <= 600px) {
+    @include flex.layout-bp(lt-sm) {
         display: none;
     }
 }
