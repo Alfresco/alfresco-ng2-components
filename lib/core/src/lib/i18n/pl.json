@@ -87,6 +87,12 @@
         "NO_LABEL": "Anuluj"
       }
     },
+    "BUTTON": {
+      "PREVIOUS_TAB": "Previous",
+      "PREVIOUS_TAB_TITLE": "Navigate to previous tab",
+      "NEXT_TAB": "Next",
+      "NEXT_TAB_TITLE": "Navigate to next tab"
+    },
     "FIELD_STYLE": {
       "FONT_SIZE": "Rozmiar czcionki",
       "FONT_WEIGHT": "Waga czcionki",
