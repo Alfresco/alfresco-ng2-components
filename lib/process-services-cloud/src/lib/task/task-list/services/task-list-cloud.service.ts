@@ -62,7 +62,7 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
      * Retrieves a list of tasks using an object with optional query properties.
      *
      * @param requestNode Query object
-     * @param queryUrl Query url
+     * @param queryUrl Query url. If empty, query service will be called.
      * @returns List of tasks
      */
     fetchTaskList(requestNode: TaskListRequestModel, queryUrl?: string): Observable<any> {
@@ -88,6 +88,19 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
                 return response;
             })
         );
+    }
+
+    /**
+     * Available from Activiti version 8.7.0 onwards.
+     * Retrieves a list of tasks using an object with optional query properties.
+     * Calls runtime bundle service.
+     *
+     * @param requestNode Query object
+     * @returns List of tasks
+     */
+    fetchTaskListFromRuntimeBundleService(requestNode: TaskListRequestModel): Observable<any> {
+        const url = `${this.getBasePath(requestNode.appName)}/rb/v1/tasks`;
+        return this.fetchTaskList(requestNode, url);
     }
 
     getTaskListCounter(requestNode: TaskListRequestModel): Observable<number> {

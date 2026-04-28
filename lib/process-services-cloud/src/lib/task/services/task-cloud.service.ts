@@ -169,11 +169,12 @@ export class TaskCloudService extends BaseCloudService {
      *
      * @param appName Name of the app
      * @param taskId ID of the task whose details you want
+     * @param service The service to call. Either Query Service or Runtime Bundle Service.
      * @returns Task details
      */
-    getTaskById(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
+    getTaskById(appName: string, taskId: string, service: 'query' | 'rb' = 'query'): Observable<TaskDetailsCloudModel> {
         if ((appName || appName === '') && taskId) {
-            const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
+            const queryUrl = `${this.getBasePath(appName)}/${service}/v1/tasks/${taskId}`;
 
             return this.get(queryUrl).pipe(map((res: any) => res.entry));
         } else {
