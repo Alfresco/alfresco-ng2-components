@@ -102,12 +102,10 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         this.resetValue();
         this.setTemplateType();
 
-        if (changes.editable) {
-            if (this.isEditable) {
-                this.textInput.enable();
-            } else {
-                this.textInput.disable();
-            }
+        if (this.isEditable) {
+            this.textInput.enable();
+        } else {
+            this.textInput.disable();
         }
     }
 
@@ -152,7 +150,6 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
                 this.cardViewUpdateService.update({ ...this.property, isValidValue: true } as CardViewTextItemModel, this.property.value, {
                     previousValue
                 });
-                this.initialValue = Array.isArray(this.property.value) ? [...this.property.value] : this.property.value;
             } else {
                 this.errors = this.property.getValidationErrors(this.editedValue);
                 this.textInput.setErrors({ customError: true });
