@@ -175,13 +175,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     formCloudRepresentationJSON: any;
     fieldValidators: FormFieldValidator[] = [];
 
-    /**
-     * Pre-computed list of outcome buttons to render.
-     * Derived from `form.outcomes` filtered by the visibility rules. Updated whenever
-     * the form or any visibility-affecting input (`readOnly`, `showCompleteButton`,
-     * `showSaveButton`) changes. Prevents function calls in the template that would
-     * re-run on every change detection cycle.
-     */
+    /** Pre-computed list of outcome buttons to render, filtered by visibility rules. */
     visibleOutcomes: FormOutcomeModel[] = [];
 
     readonly id: string;

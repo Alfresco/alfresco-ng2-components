@@ -89,7 +89,7 @@ The template defined inside `empty-form` will be shown when no form definition i
 | path | `string` |  | Path of the folder where the metadata will be stored. |
 | processInstanceId | `string` |  | ProcessInstanceId id to fetch corresponding form and values. |
 | readOnly | `boolean` | false | Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled. |
-| showCompleteButton | `boolean` | true | Toggle rendering of the `Complete` outcome button. |
+| showCompleteButton | `boolean` | false | Toggle rendering of the `Complete` outcome button. |
 | showRefreshButton | `boolean` | true | Toggle rendering of the `Refresh` button. |
 | showSaveButton | `boolean` | true | Toggle rendering of the `Save` outcome button. |
 | showTitle | `boolean` | true | Toggle rendering of the form title. |
