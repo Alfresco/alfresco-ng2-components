@@ -27,3 +27,4 @@ export * from './card-view-selectitem-properties.interface';
 export * from './base-card-view-update.interface';
 export * from './click-notification.interface';
 export * from './update-notification.interface';
+export * from './card-view-update-options.interface';

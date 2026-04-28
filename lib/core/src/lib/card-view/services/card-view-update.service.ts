@@ -21,6 +21,7 @@ import { BaseCardViewUpdate } from '../interfaces/base-card-view-update.interfac
 import { ClickNotification } from '../interfaces/click-notification.interface';
 import { UpdateNotification } from '../interfaces/update-notification.interface';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
+import { CardViewUpdateOptions } from '../interfaces/card-view-update-options.interface';
 
 export const transformKeyToObject = (key: string, value): any => {
     const objectLevels: string[] = key.split('.').reverse();
@@ -37,10 +38,11 @@ export class CardViewUpdateService implements BaseCardViewUpdate {
     updateItem$ = new Subject<CardViewBaseItemModel>();
     autocompleteInputValue$ = new Subject<string>();
 
-    update(property: CardViewBaseItemModel, newValue: any) {
+    update(property: CardViewBaseItemModel, newValue: any, options?: CardViewUpdateOptions) {
         this.itemUpdated$.next({
             target: property,
-            changed: transformKeyToObject(property.key, newValue)
+            changed: transformKeyToObject(property.key, newValue),
+            ...(options?.previousValue !== undefined && { previousValue: transformKeyToObject(property.key, options.previousValue) })
         });
     }
 

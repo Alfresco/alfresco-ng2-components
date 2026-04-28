@@ -15,10 +15,6 @@
  * limitations under the License.
  */
 
-import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
-
-export interface UpdateNotification {
-    target: CardViewBaseItemModel;
-    changed: any;
+export interface CardViewUpdateOptions {
     previousValue?: any;
 }
