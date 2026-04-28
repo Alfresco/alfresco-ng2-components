@@ -31,7 +31,6 @@
                         'adf-property-value-has-error': isEditable && hasErrors,
                         'adf-property-value-not-editable': !editable
                     }"
-                    [disabled]="isReadonlyProperty || !editable"
                     title="{{ property.label | translate }}"
                     [placeholder]="property.default"
                     [attr.aria-label]="property.label | translate"
@@ -53,7 +52,6 @@
                         'adf-property-value-editable': editable,
                         'adf-property-readonly-value': isReadonlyProperty || !editable,
                     }"
-                    [disabled]="isReadonlyProperty || !editable"
                     [placeholder]="property.default"
                     [attr.aria-label]="property.label | translate"
                     [formControl]="textInput"

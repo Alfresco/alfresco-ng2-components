@@ -81,6 +81,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     errors: CardViewItemValidator[];
     templateType: string;
     textInput = new UntypedFormControl();
+    private initialValue: string | string[];
 
     private readonly destroyRef = inject(DestroyRef);
 
@@ -101,12 +102,10 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         this.resetValue();
         this.setTemplateType();
 
-        if (changes.editable) {
-            if (this.isEditable) {
-                this.textInput.enable();
-            } else {
-                this.textInput.disable();
-            }
+        if (this.isEditable) {
+            this.textInput.enable();
+        } else {
+            this.textInput.disable();
         }
     }
 
@@ -132,6 +131,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
             this.textInput.setValue(this.editedValue);
         }
 
+        this.initialValue = Array.isArray(this.property.value) ? [...this.property.value] : this.property.value;
         this.resetErrorMessages();
     }
 
@@ -143,15 +143,20 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     update(): void {
         if (this.isEditable) {
+            const previousValue = this.initialValue;
             this.resetErrorMessages();
             if (this.property.isValid(this.editedValue)) {
                 this.property.value = this.prepareValueForUpload(this.property, this.editedValue);
-                this.cardViewUpdateService.update({ ...this.property, isValidValue: true } as CardViewTextItemModel, this.property.value);
+                this.cardViewUpdateService.update({ ...this.property, isValidValue: true } as CardViewTextItemModel, this.property.value, {
+                    previousValue
+                });
             } else {
                 this.errors = this.property.getValidationErrors(this.editedValue);
                 this.textInput.setErrors({ customError: true });
                 this.textInput.markAsTouched();
-                this.cardViewUpdateService.update({ ...this.property, isValidValue: false } as CardViewTextItemModel, this.editedValue);
+                this.cardViewUpdateService.update({ ...this.property, isValidValue: false } as CardViewTextItemModel, this.editedValue, {
+                    previousValue
+                });
             }
         }
     }
