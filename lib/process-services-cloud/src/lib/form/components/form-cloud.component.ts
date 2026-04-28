@@ -178,6 +178,16 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     /** Pre-computed list of outcome buttons to render, filtered by visibility rules. */
     visibleOutcomes: FormOutcomeModel[] = [];
 
+    override get form(): FormModel {
+        return super.form;
+    }
+
+    @Input()
+    override set form(form: FormModel) {
+        super.form = form;
+        this.recomputeVisibleOutcomes();
+    }
+
     readonly id: string;
     displayMode: string;
     displayConfiguration: FormCloudDisplayModeConfiguration = DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0];
@@ -270,10 +280,14 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             if (this.disableSaveButton) {
                 this.disableSaveButton = false;
             }
-            if (this.form) {
-                this.recomputeVisibleOutcomes();
-            }
         });
+
+        this.formService.formRulesEvent
+            .pipe(
+                filter((event) => event?.type === 'fieldValueChanged' && event.form?.id === this.form?.id),
+                takeUntilDestroyed()
+            )
+            .subscribe(() => this.recomputeVisibleOutcomes());
     }
 
     @HostListener('keydown', ['$event'])
@@ -600,7 +614,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             this.displayModeOn.emit(this.displayConfiguration);
         }
 
-        this.recomputeVisibleOutcomes();
         this.changeDetector.detectChanges();
         this.formLoaded.emit(form);
     }

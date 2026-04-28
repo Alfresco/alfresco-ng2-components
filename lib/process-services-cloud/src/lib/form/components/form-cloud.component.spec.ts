@@ -1229,6 +1229,7 @@ describe('FormCloudComponent', () => {
     });
 
     it('should clear visibleOutcomes when the form is cleared', () => {
+        formComponent.showCompleteButton = true;
         formComponent.form = new FormModel(cloudFormMock);
         expect(formComponent.visibleOutcomes.length).toBeGreaterThan(0);
 
