@@ -1,18 +1,22 @@
 /*
     Replace 'THEME_CONFIGURATION' placeholder with your theme configuration using '$theme-config' variable map.
 
-    Specify colors for palettes generation, e.g. if for 'primaryColor' the color is going to be 'red'(#fc0313).
-    Then, we are going to generate 'primary' palette based on the 'red' color.
-    Geenerated pallete is going to be used to create material design theme
+    Color values (primaryColor, accentColor) must be Angular Material M3 palette objects.
+    Available built-in palettes: mat.$azure-palette, mat.$blue-palette, mat.$cyan-palette,
+    mat.$green-palette, mat.$magenta-palette, mat.$orange-palette, mat.$red-palette,
+    mat.$rose-palette, mat.$violet-palette, mat.$yellow-palette, mat.$chartreuse-palette,
+    mat.$spring-green-palette.
 
     e.g.
 
+    @use '@angular/material' as mat;
+
     $theme-config: (
-        primaryColor: #5175d2,
+        primaryColor: mat.$azure-palette,
+        accentColor: mat.$rose-palette,
         backgroundColor: #FAFAFA,
         textColor: #793942,
-        accentColor: #C64F73,
-        baseFontSize: 26px,
+        baseFontSize: 16px,
         fontFamily: Cursive
     );
 */

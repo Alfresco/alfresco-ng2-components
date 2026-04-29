@@ -1,36 +1,40 @@
-@use 'sass:map';
 @use '@angular/material' as mat;
 @use './theme/theme-data' as theme;
 
-$custom-theme: mat.m2-define-light-theme(
-    (
-        color: (
-            primary: map.get(theme.$palettes, primary),
-            accent: map.get(theme.$palettes, accent),
-            warn: map.get(theme.$palettes, warning)
-        ),
-        typography: theme.$app-typography
-    )
-);
-
-@if theme.$background-color {
-    $custom-theme: theme.get-custom-background-color(theme.$background-color, $custom-theme);
-}
-
-@if theme.$text-color {
-    $custom-theme: theme.get-custom-text-color(theme.$text-color, $custom-theme);
-}
-
-@if theme.$base-font-size {
-    body,
-    html {
+html {
+    @if theme.$base-font-size {
         font-size: theme.$base-font-size;
     }
-}
 
-@if theme.$font-family {
-    body,
-    html {
+    @if theme.$font-family {
         font-family: theme.$font-family;
+    }
+
+    @include mat.theme(
+        (
+            color: (
+                primary: theme.$primary-palette,
+                tertiary: theme.$tertiary-palette,
+                theme-type: light
+            ),
+            typography: theme.$typography-config,
+            density: 0
+        )
+    );
+
+    @if theme.$background-color {
+        & {
+            --mat-sys-surface: #{theme.$background-color};
+            --mat-sys-surface-container: #{theme.$background-color};
+            --mat-sys-surface-container-low: #{theme.$background-color};
+            --mat-sys-surface-container-lowest: #{theme.$background-color};
+        }
+    }
+
+    @if theme.$text-color {
+        & {
+            --mat-sys-on-surface: #{theme.$text-color};
+            --mat-sys-on-surface-variant: #{theme.$text-color};
+        }
     }
 }

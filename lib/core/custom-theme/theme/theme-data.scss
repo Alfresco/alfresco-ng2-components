@@ -2,17 +2,14 @@
 @use 'theme-configuration';
 @use 'typography';
 @use 'custom-theme-palettes';
-@use 'custom-background-color';
-@use 'custom-text-color';
 
 $primary-color: map.get(theme-configuration.$theme-config, 'primaryColor');
 $accent-color: map.get(theme-configuration.$theme-config, 'accentColor');
 $background-color: map.get(theme-configuration.$theme-config, 'backgroundColor');
-
 $text-color: map.get(theme-configuration.$theme-config, 'textColor');
 $base-font-size: map.get(theme-configuration.$theme-config, 'baseFontSize');
 $font-family: map.get(theme-configuration.$theme-config, 'fontFamily');
 
-$app-typography: typography.get-mat-typography($base-font-size, $font-family);
-
-$palettes: custom-theme-palettes.get-mat-palettes($primary-color, $accent-color);
+$primary-palette: custom-theme-palettes.get-palette($primary-color);
+$tertiary-palette: custom-theme-palettes.get-tertiary-palette($accent-color);
+$typography-config: typography.get-typography-config($font-family);

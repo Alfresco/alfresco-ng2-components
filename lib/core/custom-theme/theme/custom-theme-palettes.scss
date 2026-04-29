@@ -1,27 +1,18 @@
 @use '@angular/material' as mat;
 @use 'default-colors';
-@use 'custom-palette-creator';
 
-@function get-mat-palettes($primary-color, $accent-color) {
-    $mat-primary-palette: null;
-
+@function get-palette($primary-color) {
     @if ($primary-color) {
-        $custom-theme-primary-palette: custom-palette-creator.create-color-palette($primary-color, 'primary');
-        $mat-primary-palette: mat.m2-define-palette($custom-theme-primary-palette, 500);
-    } @else {
-        $mat-primary-palette: mat.m2-define-palette(default-colors.$default-primary, A100);
+        @return $primary-color;
     }
 
-    $mat-accent-palette: null;
+    @return default-colors.$default-primary;
+}
 
+@function get-tertiary-palette($accent-color) {
     @if ($accent-color) {
-        $custom-theme-accent-palette: custom-palette-creator.create-color-palette($accent-color, 'accent');
-        $mat-accent-palette: mat.m2-define-palette($custom-theme-accent-palette, 500);
-    } @else {
-        $mat-accent-palette: mat.m2-define-palette(default-colors.$default-accent);
+        @return $accent-color;
     }
 
-    $mat-warn-palette: mat.m2-define-palette(default-colors.$default-warn, A100);
-
-    @return (primary: $mat-primary-palette, accent: $mat-accent-palette, warning: $mat-warn-palette);
+    @return default-colors.$default-tertiary;
 }
