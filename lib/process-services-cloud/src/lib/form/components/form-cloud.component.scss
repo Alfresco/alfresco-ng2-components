@@ -1,4 +1,5 @@
 @use '../../mat-selectors' as ms;
+@use '../../flex' as flex;
 
 /* cspell: disable-next-line */
 /* stylelint-disable scss/at-extend-no-missing-placeholder */
@@ -137,4 +138,41 @@
     .adf-label {
         white-space: normal;
     }
+}
+
+.adf-cloud-form-content-card-actions.adf-has-tab-navigation {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+
+    @include flex.layout-bp(lt-sm) {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.adf-tab-navigation-buttons {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    @include flex.layout-bp(lt-sm) {
+        justify-content: center;
+    }
+}
+
+.adf-tab-navigation-divider {
+    width: 1px;
+    height: 24px;
+    background-color: var(--mat-sys-outline-variant, rgba(0, 0, 0, 0.12));
+
+    @include flex.layout-bp(lt-sm) {
+        display: none;
+    }
+}
+
+.adf-cloud-form-outcome-buttons {
+    display: flex;
+    align-items: center;
 }

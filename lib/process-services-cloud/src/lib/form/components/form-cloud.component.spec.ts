@@ -46,7 +46,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateLoader, TranslateService, provideTranslateService, provideTranslateLoader } from '@ngx-translate/core';
-import { firstValueFrom, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, of, throwError } from 'rxjs';
 import {
     cloudFormMock,
     conditionalUploadWidgetsMock,
@@ -59,7 +59,7 @@ import {
 import { FormCloudRepresentation } from '../models/form-cloud-representation.model';
 import { FormCloudService } from '../services/form-cloud.service';
 import { DisplayModeService } from '../services/display-mode.service';
-import { FORM_CLOUD_FIELD_VALIDATORS_TOKEN, FormCloudComponent } from './form-cloud.component';
+import { ADF_FORM_TAB_NAV_ENABLED, FORM_CLOUD_FIELD_VALIDATORS_TOKEN, FormCloudComponent } from './form-cloud.component';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
@@ -1701,6 +1701,106 @@ describe('FormCloudComponent', () => {
             expect(outcomeButton.nativeElement.textContent.trim()).toBe('COMPLETE');
         });
     });
+
+    describe('Tab navigation', () => {
+        const tabbedFormJson = {
+            id: 'tabbed-form',
+            name: 'TabbedForm',
+            tabs: [
+                { id: 'tab1', title: 'Tab 1' },
+                { id: 'tab2', title: 'Tab 2' },
+                { id: 'tab3', title: 'Tab 3' }
+            ],
+            fields: [
+                {
+                    id: 'container1',
+                    type: 'container',
+                    tab: 'tab1',
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'text1', type: 'text', name: 'Text 1' }] }
+                },
+                {
+                    id: 'container2',
+                    type: 'container',
+                    tab: 'tab2',
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'text2', type: 'text', name: 'Text 2' }] }
+                },
+                {
+                    id: 'container3',
+                    type: 'container',
+                    tab: 'tab3',
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'text3', type: 'text', name: 'Text 3' }] }
+                }
+            ],
+            outcomes: [],
+            showBottomTabNavButtons: true
+        };
+
+        describe('shouldShowTabNavigation', () => {
+            it('should return false when form json showBottomTabNavButtons is false', () => {
+                formComponent.form = new FormModel({ ...tabbedFormJson, showBottomTabNavButtons: false });
+                fixture.detectChanges();
+
+                expect(formComponent.shouldShowTabNavigation).toBeFalse();
+            });
+
+            it('should return false when form json showBottomTabNavButtons is undefined', () => {
+                const { showBottomTabNavButtons: _unused, ...jsonWithoutFlag } = tabbedFormJson;
+                formComponent.form = new FormModel(jsonWithoutFlag);
+                fixture.detectChanges();
+
+                expect(formComponent.shouldShowTabNavigation).toBeFalse();
+            });
+
+            it('should return false when form has only one visible tab', () => {
+                const singleTabJson = {
+                    ...tabbedFormJson,
+                    tabs: [{ id: 'tab1', title: 'Tab 1' }],
+                    fields: [tabbedFormJson.fields[0]]
+                };
+                formComponent.form = new FormModel(singleTabJson);
+                fixture.detectChanges();
+
+                expect(formComponent.shouldShowTabNavigation).toBeFalse();
+            });
+
+            it('should return true when form json showBottomTabNavButtons is true and there is more than one visible tab', () => {
+                formComponent.form = new FormModel(tabbedFormJson);
+                fixture.detectChanges();
+
+                expect(formComponent.shouldShowTabNavigation).toBeTrue();
+            });
+        });
+
+        describe('template rendering', () => {
+            it('should not render tab navigation buttons when shouldShowTabNavigation is false', () => {
+                formComponent.form = new FormModel({ ...tabbedFormJson, showBottomTabNavButtons: false });
+                fixture.detectChanges();
+
+                expect(fixture.debugElement.query(By.css('.adf-tab-navigation-buttons'))).toBeNull();
+                expect(fixture.debugElement.query(By.css('[data-automation-id="tab-nav-previous-button"]'))).toBeNull();
+                expect(fixture.debugElement.query(By.css('[data-automation-id="tab-nav-next-button"]'))).toBeNull();
+            });
+
+            it('should render Previous and Next tab navigation buttons when shouldShowTabNavigation is true', () => {
+                formComponent.form = new FormModel(tabbedFormJson);
+                fixture.detectChanges();
+
+                expect(fixture.debugElement.query(By.css('.adf-tab-navigation-buttons'))).toBeTruthy();
+                expect(fixture.debugElement.query(By.css('[data-automation-id="tab-nav-previous-button"]'))).toBeTruthy();
+                expect(fixture.debugElement.query(By.css('[data-automation-id="tab-nav-next-button"]'))).toBeTruthy();
+            });
+
+            it('should render the form actions container when only tab nav exists and the form has no outcomes', () => {
+                formComponent.form = new FormModel({ ...tabbedFormJson, outcomes: [] });
+                fixture.detectChanges();
+
+                expect(fixture.debugElement.query(By.css('.adf-cloud-form-content-card-actions'))).toBeTruthy();
+            });
+        });
+    });
 });
 
 describe('Multilingual Form', () => {
@@ -1989,5 +2089,111 @@ describe('retrieve metadata on submit', () => {
         expect(emittedForm.selectedOutcome).toBe(outcome);
         expect(emittedForm.selectedOutcomeId).toBe(outcomeId);
         expect(formComponent['formCloudService'].completeTaskForm).toHaveBeenCalled();
+    });
+});
+
+describe('FormCloudComponent - ADF_FORM_TAB_NAV_ENABLED token', () => {
+    let formComponent: FormCloudComponent;
+    let fixture: ComponentFixture<FormCloudComponent>;
+
+    const tabbedFormJson = {
+        id: 'tabbed-form',
+        name: 'TabbedForm',
+        tabs: [
+            { id: 'tab1', title: 'Tab 1' },
+            { id: 'tab2', title: 'Tab 2' }
+        ],
+        fields: [
+            {
+                id: 'container1',
+                type: 'container',
+                tab: 'tab1',
+                numberOfColumns: 1,
+                fields: { 1: [{ id: 'text1', type: 'text', name: 'Text 1' }] }
+            },
+            {
+                id: 'container2',
+                type: 'container',
+                tab: 'tab2',
+                numberOfColumns: 1,
+                fields: { 1: [{ id: 'text2', type: 'text', name: 'Text 2' }] }
+            }
+        ],
+        outcomes: [],
+        showBottomTabNavButtons: true
+    };
+
+    const createFixture = (tokenValue: any) => {
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+            imports: [NoopTranslateModule, NoopAuthModule, FormCloudComponent],
+            providers: [
+                { provide: VersionCompatibilityService, useValue: {} },
+                { provide: FormRenderingService, useClass: CloudFormRenderingService },
+                { provide: ADF_FORM_TAB_NAV_ENABLED, useValue: tokenValue }
+            ]
+        });
+        const apiService = TestBed.inject(AlfrescoApiService);
+        spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
+        fixture = TestBed.createComponent(FormCloudComponent);
+        formComponent = fixture.componentInstance;
+    };
+
+    it('should render tab navigation buttons when token is absent and form model opts in', () => {
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+            imports: [NoopTranslateModule, NoopAuthModule, FormCloudComponent],
+            providers: [
+                { provide: VersionCompatibilityService, useValue: {} },
+                { provide: FormRenderingService, useClass: CloudFormRenderingService }
+            ]
+        });
+        const apiService = TestBed.inject(AlfrescoApiService);
+        spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
+        fixture = TestBed.createComponent(FormCloudComponent);
+        formComponent = fixture.componentInstance;
+
+        formComponent.form = new FormModel(tabbedFormJson);
+        fixture.detectChanges();
+
+        expect(formComponent.shouldShowTabNavigation).toBeTrue();
+    });
+
+    it('should hide tab navigation buttons when token resolves to static false even if form opts in', () => {
+        createFixture(false);
+
+        formComponent.form = new FormModel(tabbedFormJson);
+        fixture.detectChanges();
+
+        expect(formComponent.shouldShowTabNavigation).toBeFalse();
+    });
+
+    it('should show tab navigation buttons when token resolves to static true and form opts in', () => {
+        createFixture(true);
+
+        formComponent.form = new FormModel(tabbedFormJson);
+        fixture.detectChanges();
+
+        expect(formComponent.shouldShowTabNavigation).toBeTrue();
+    });
+
+    it('should react to observable token emissions', () => {
+        const subject = new BehaviorSubject<boolean>(false);
+        createFixture(subject);
+
+        formComponent.form = new FormModel(tabbedFormJson);
+        fixture.detectChanges();
+
+        expect(formComponent.shouldShowTabNavigation).toBeFalse();
+
+        subject.next(true);
+        fixture.detectChanges();
+
+        expect(formComponent.shouldShowTabNavigation).toBeTrue();
+
+        subject.next(false);
+        fixture.detectChanges();
+
+        expect(formComponent.shouldShowTabNavigation).toBeFalse();
     });
 });

@@ -16,12 +16,24 @@
  */
 
 import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectorRef, Component, DestroyRef, inject, Injector, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    DestroyRef,
+    inject,
+    Injector,
+    Input,
+    OnDestroy,
+    OnInit,
+    signal,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { filter } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
 import { FormService } from '../services/form.service';
@@ -82,10 +94,53 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     private readonly destroyRef = inject(DestroyRef);
 
     @Input({ required: true })
-    formDefinition: FormModel;
+    set formDefinition(formDefinition: FormModel) {
+        this._formDefinition = formDefinition;
+        this.syncCurrentTabIndex();
+    }
+
+    get formDefinition(): FormModel {
+        return this._formDefinition;
+    }
 
     @Input()
     readOnly = false;
+
+    @ViewChild(MatTabGroup)
+    set tabGroup(tabGroup: MatTabGroup | undefined) {
+        this.tabGroupSelectionSubscription?.unsubscribe();
+        this._tabGroup = tabGroup;
+
+        if (tabGroup) {
+            this.syncCurrentTabIndex(tabGroup.selectedIndex);
+            this.tabGroupSelectionSubscription = tabGroup.selectedIndexChange.subscribe((index) => this.syncCurrentTabIndex(index));
+        }
+    }
+
+    get tabGroup(): MatTabGroup {
+        return this._tabGroup as MatTabGroup;
+    }
+
+    private readonly currentTabIndex = signal(0);
+    private _formDefinition: FormModel;
+    private _tabGroup?: MatTabGroup;
+    private tabGroupSelectionSubscription?: Subscription;
+
+    get canNavigateNext(): boolean {
+        return this.currentTabIndex() < this.visibleTabCount - 1;
+    }
+
+    get canNavigatePrevious(): boolean {
+        return this.currentTabIndex() > 0;
+    }
+
+    get visibleTabCount(): number {
+        return this.visibleTabs().length;
+    }
+
+    get selectedTabIndex(): number {
+        return this.currentTabIndex();
+    }
 
     debugMode: boolean;
 
@@ -106,15 +161,37 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+        this.tabGroupSelectionSubscription?.unsubscribe();
         this.formRulesManager.destroy();
     }
 
     hasTabs(): boolean {
-        return this.formDefinition.tabs && this.formDefinition.tabs.length > 0;
+        return this.formDefinition?.tabs && this.formDefinition.tabs.length > 0;
     }
 
     visibleTabs(): TabModel[] {
-        return this.formDefinition.tabs.filter((tab) => tab.isVisible);
+        return this.formDefinition?.tabs?.filter((tab) => tab.isVisible) ?? [];
+    }
+
+    navigateToNextTab(): void {
+        if (this.tabGroup && this.canNavigateNext) {
+            this.tabGroup.selectedIndex = (this.tabGroup.selectedIndex ?? 0) + 1;
+            this.syncCurrentTabIndex(this.tabGroup.selectedIndex);
+        }
+    }
+
+    navigateToPreviousTab(): void {
+        if (this.tabGroup && this.canNavigatePrevious) {
+            this.tabGroup.selectedIndex = (this.tabGroup.selectedIndex ?? 0) - 1;
+            this.syncCurrentTabIndex(this.tabGroup.selectedIndex);
+        }
+    }
+
+    private syncCurrentTabIndex(index = this.tabGroup?.selectedIndex): void {
+        const maxTabIndex = Math.max(this.visibleTabCount - 1, 0);
+        const currentIndex = index ?? 0;
+
+        this.currentTabIndex.set(Math.min(Math.max(currentIndex, 0), maxTabIndex));
     }
 
     getNumberOfColumns(content: ContainerModel): number {
