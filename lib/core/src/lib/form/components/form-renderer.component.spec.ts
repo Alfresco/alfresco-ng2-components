@@ -86,6 +86,30 @@ const expectElementToBeValid = (testingUtils: UnitTestingUtils, fieldId: string)
     expect(invalidElementContainer).toBeFalsy();
 };
 
+const buildTabbedForm = (tabCount: number, hiddenTabIndices: number[] = []): FormModel => {
+    const tabs = Array.from({ length: tabCount }, (_, i) => ({
+        id: `tab-${i}`,
+        title: `Tab ${i}`
+    }));
+    const fields = tabs.map((tab) => ({
+        id: `container-${tab.id}`,
+        type: 'container',
+        tab: tab.id,
+        numberOfColumns: 1,
+        fields: { 1: [{ id: `text-${tab.id}`, type: 'text', name: `Text in ${tab.title}` }] }
+    }));
+
+    const form = new FormModel({ tabs, fields });
+
+    hiddenTabIndices.forEach((tabIndex) => {
+        if (form.tabs[tabIndex]) {
+            form.tabs[tabIndex].isVisible = false;
+        }
+    });
+
+    return form;
+};
+
 describe('Form Renderer Component', () => {
     let formRendererComponent: FormRendererComponent<any>;
     let fixture: ComponentFixture<FormRendererComponent<any>>;
@@ -906,6 +930,117 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
 
             expectElementToBeVisible(testingUtils, mockSectionFieldId);
+        });
+    });
+
+    describe('Tab navigation', () => {
+        describe('visibleTabs', () => {
+            it('should return only tabs where isVisible is true', () => {
+                formRendererComponent.formDefinition = buildTabbedForm(3, [1]);
+                expect(formRendererComponent.visibleTabs().length).toBe(2);
+                expect(formRendererComponent.visibleTabs().every((t) => t.isVisible)).toBeTrue();
+            });
+
+            it('should return all tabs when none are hidden', () => {
+                formRendererComponent.formDefinition = buildTabbedForm(3);
+                expect(formRendererComponent.visibleTabs().length).toBe(3);
+            });
+
+            it('should return empty array when all tabs are hidden', () => {
+                formRendererComponent.formDefinition = buildTabbedForm(3, [0, 1, 2]);
+                expect(formRendererComponent.visibleTabs().length).toBe(0);
+            });
+        });
+
+        describe('canNavigateNext and canNavigatePrevious', () => {
+            beforeEach(() => {
+                fixture.componentRef.setInput('formDefinition', buildTabbedForm(3));
+                fixture.detectChanges();
+            });
+
+            it('should not allow navigating previous on the first tab', () => {
+                expect(formRendererComponent.canNavigatePrevious).toBeFalse();
+                expect(formRendererComponent.canNavigateNext).toBeTrue();
+            });
+
+            it('should allow navigating previous and next between the first and last tabs', async () => {
+                formRendererComponent.navigateToNextTab();
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(formRendererComponent.canNavigatePrevious).toBeTrue();
+                expect(formRendererComponent.canNavigateNext).toBeTrue();
+            });
+
+            it('should not allow navigating next on the last tab', async () => {
+                formRendererComponent.navigateToNextTab();
+                fixture.detectChanges();
+                await fixture.whenStable();
+                formRendererComponent.tabGroup.selectedIndexChange.emit(1);
+                fixture.detectChanges();
+
+                formRendererComponent.navigateToNextTab();
+                fixture.detectChanges();
+                await fixture.whenStable();
+                formRendererComponent.tabGroup.selectedIndexChange.emit(2);
+                fixture.detectChanges();
+
+                expect(formRendererComponent.canNavigatePrevious).toBeTrue();
+                expect(formRendererComponent.canNavigateNext).toBeFalse();
+            });
+        });
+
+        describe('navigateToNextTab and navigateToPreviousTab', () => {
+            beforeEach(() => {
+                fixture.componentRef.setInput('formDefinition', buildTabbedForm(3));
+                fixture.detectChanges();
+                expect(formRendererComponent.tabGroup).toBeDefined();
+            });
+
+            it('should increment selectedIndex when navigating to next tab', async () => {
+                const initialIndex = formRendererComponent.tabGroup.selectedIndex;
+                formRendererComponent.navigateToNextTab();
+                fixture.detectChanges();
+                await fixture.whenStable();
+                expect(formRendererComponent.tabGroup.selectedIndex).toBe(initialIndex + 1);
+            });
+
+            it('should decrement selectedIndex when navigating to previous tab', async () => {
+                formRendererComponent.navigateToNextTab();
+                fixture.detectChanges();
+                await fixture.whenStable();
+                const indexAfterNext = formRendererComponent.tabGroup.selectedIndex;
+                formRendererComponent.navigateToPreviousTab();
+                fixture.detectChanges();
+                await fixture.whenStable();
+                expect(formRendererComponent.tabGroup.selectedIndex).toBe(indexAfterNext - 1);
+            });
+
+            it('should not go below 0 when navigating previous on the first tab', async () => {
+                formRendererComponent.navigateToPreviousTab();
+                fixture.detectChanges();
+                await fixture.whenStable();
+                expect(formRendererComponent.tabGroup.selectedIndex).toBe(0);
+            });
+
+            it('should not exceed last index when navigating next on the last tab', async () => {
+                formRendererComponent.navigateToNextTab();
+                fixture.detectChanges();
+                await fixture.whenStable();
+                formRendererComponent.tabGroup.selectedIndexChange.emit(1);
+                fixture.detectChanges();
+
+                formRendererComponent.navigateToNextTab();
+                fixture.detectChanges();
+                await fixture.whenStable();
+                formRendererComponent.tabGroup.selectedIndexChange.emit(2);
+                fixture.detectChanges();
+                const lastIndex = formRendererComponent.tabGroup.selectedIndex;
+                formRendererComponent.navigateToNextTab();
+                fixture.detectChanges();
+                await fixture.whenStable();
+                expect(formRendererComponent.tabGroup.selectedIndex).toBe(lastIndex);
+            });
         });
     });
 
