@@ -155,10 +155,14 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
-      - uses: ./.github/actions/setup
-      - name: install
+      - name: Setup environment
+        id: setup-env
+        uses: ./.github/actions/setup
+      - name: Install dependencies
+        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
+        run: npm ci
+      - name: Bundle
         run: |
-          npm ci
           npm run bundle:js-api
           npm run bundle:cli
 
@@ -172,8 +176,12 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
-      - uses: ./.github/actions/setup
-      - run: npm ci
+      - name: Setup environment
+        id: setup-env
+        uses: ./.github/actions/setup
+      - name: Install dependencies
+        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
+        run: npm ci
       - run: npx nx affected --target=lint --base=origin/${{ github.event.pull_request.base.ref }} --head=HEAD
 
   trigger-build:
@@ -192,8 +200,10 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup environment
+        id: setup-env
         uses: ./.github/actions/setup
       - name: Install dependencies
+        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
         run: npm ci
       - name: Build Storybook
         run: |

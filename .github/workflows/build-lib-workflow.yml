@@ -16,8 +16,10 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup environment
+        id: setup-env
         uses: ./.github/actions/setup
       - name: Install dependencies
+        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
         run: npm ci
       - name: Generate affected projects matrix
         id: set-matrix
@@ -54,8 +56,10 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup environment
+        id: setup-env
         uses: ./.github/actions/setup
       - name: Install dependencies
+        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
         run: npm ci
       - name: Run build for ${{ matrix.project }}
         env:

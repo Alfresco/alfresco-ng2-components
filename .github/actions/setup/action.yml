@@ -15,6 +15,9 @@ outputs:
   npm-tag:
     description: 'NPM tag'
     value: ${{ steps.set-npm-tag.outputs.npm-tag }}
+  node-modules-cache-hit:
+    description: 'Whether node_modules cache was hit'
+    value: ${{ steps.node-modules-cache.outputs.cache-hit }}
 runs:
   using: "composite"
   steps:
@@ -30,6 +33,7 @@ runs:
         id: set-npm-tag
         uses: ./.github/actions/set-npm-tag
       - name: Cache node modules
+        id: node-modules-cache
         if: ${{ inputs.enable-node-modules-cache == 'true' }}
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
