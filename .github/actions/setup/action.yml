@@ -10,6 +10,11 @@ inputs:
     description: 'Suffix to make Nx cache key unique per job (e.g. matrix project name)'
     required: false
     default: 'default'
+  full-setup:
+    description: 'Run git-latest-tag, npm-tag, and before-install (requires fetch-depth: 0). Set to false for matrix jobs that only need node/cache.'
+    required: false
+    type: boolean
+    default: 'true'
   act:
     description: 'enable act debug'
     required: false
@@ -31,9 +36,11 @@ runs:
           node-version-file: '.nvmrc'
           cache-dependency-path: package-lock.json
       - name: get latest tag sha
+        if: ${{ inputs.full-setup == 'true' }}
         id: tag-sha
         uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@8d76614b374e521d792b4a1c9827409960b66bae # v17.6.0
       - name: load "NPM TAG"
+        if: ${{ inputs.full-setup == 'true' }}
         id: set-npm-tag
         uses: ./.github/actions/set-npm-tag
       - name: Cache node modules
@@ -48,13 +55,16 @@ runs:
       - name: Cache nx
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
-          path: nxcache
+          path: |
+            nxcache
+            .nx/workspace-data
           key: ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-${{ hashFiles('nx.json') }}-${{ github.run_id }}
           restore-keys: |
             ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-${{ hashFiles('nx.json') }}-
             ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-
             ${{ runner.os }}-nxcache-default-
       - name: before install script
+        if: ${{ inputs.full-setup == 'true' }}
         uses: ./.github/actions/before-install
         with:
           act: ${{ inputs.act }}

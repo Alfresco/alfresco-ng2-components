@@ -39,6 +39,5 @@
   },
   "cacheDirectory": "nxcache",
   "defaultBase": "develop",
-  "analytics": false,
-  "legacyCache": true
+  "analytics": false
 }
