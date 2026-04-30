@@ -1,0 +1,64 @@
+name: "Build Lib Workflow"
+
+on:
+  workflow_call: {}
+
+jobs:
+  generate-affected-matrix:
+    name: "Generate affected matrix"
+    runs-on: ubuntu-latest
+    outputs:
+      buildMatrix: ${{ steps.set-matrix.outputs.buildMatrix }}
+      hasProjects: ${{ steps.set-matrix.outputs.hasProjects }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+      - name: Setup environment
+        uses: ./.github/actions/setup
+      - name: Install dependencies
+        run: npm ci
+      - name: Generate affected projects matrix
+        id: set-matrix
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+        run: |
+          echo "Base ref is $BASE_REF"
+          AFFECTED_BUILD=$(npx nx show projects --affected --target=build --base=origin/$BASE_REF --head=HEAD --select=projects --plain --exclude=stories)
+          echo "Affected projects for BUILD: $AFFECTED_BUILD"
+
+          if [ -z "$AFFECTED_BUILD" ]; then
+            echo "No affected projects found"
+            echo "hasProjects=false" >> $GITHUB_OUTPUT
+            echo "buildMatrix=[]" >> $GITHUB_OUTPUT
+          else
+            BUILD_MATRIX_JSON=$(echo "$AFFECTED_BUILD" | xargs -n1 | jq -R -s -c 'split("\n") | map(select(length > 0)) | map({ "project": . })')
+            echo "Matrix BUILD: $BUILD_MATRIX_JSON"
+            echo "hasProjects=true" >> $GITHUB_OUTPUT
+            echo "buildMatrix=$BUILD_MATRIX_JSON" >> $GITHUB_OUTPUT
+          fi
+
+  build:
+    timeout-minutes: 30
+    needs: generate-affected-matrix
+    if: ${{ needs.generate-affected-matrix.outputs.hasProjects == 'true' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.generate-affected-matrix.outputs.buildMatrix) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+      - name: Setup environment
+        uses: ./.github/actions/setup
+      - name: Install dependencies
+        run: npm ci
+      - name: Run build for ${{ matrix.project }}
+        env:
+          NODE_OPTIONS: "--max-old-space-size=5120"
+        run: |
+          NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npx nx run ${{ matrix.project }}:build:production

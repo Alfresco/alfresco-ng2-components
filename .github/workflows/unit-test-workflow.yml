@@ -1,0 +1,64 @@
+name: "Unit Tests Workflow"
+
+on:
+  workflow_call: {}
+
+jobs:
+  generate-affected-matrix:
+    name: "Generate affected matrix"
+    runs-on: ubuntu-latest
+    outputs:
+      unitMatrix: ${{ steps.set-matrix.outputs.unitMatrix }}
+      hasProjects: ${{ steps.set-matrix.outputs.hasProjects }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+      - name: Setup environment
+        uses: ./.github/actions/setup
+      - name: Install dependencies
+        run: npm ci
+      - name: Generate affected projects matrix
+        id: set-matrix
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+        run: |
+          echo "Base ref is $BASE_REF"
+          AFFECTED_UNIT=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --head=HEAD --select=projects --plain --exclude=cli,stories,eslint-angular)
+          echo "Affected projects for UNIT: $AFFECTED_UNIT"
+
+          if [ -z "$AFFECTED_UNIT" ]; then
+            echo "No affected projects found"
+            echo "hasProjects=false" >> $GITHUB_OUTPUT
+            echo "unitMatrix=[]" >> $GITHUB_OUTPUT
+          else
+            UNIT_MATRIX_JSON=$(echo "$AFFECTED_UNIT" | xargs -n1 | jq -R -s -c 'split("\n") | map(select(length > 0)) | map({ "project": . })')
+            echo "Matrix UNIT: $UNIT_MATRIX_JSON"
+            echo "hasProjects=true" >> $GITHUB_OUTPUT
+            echo "unitMatrix=$UNIT_MATRIX_JSON" >> $GITHUB_OUTPUT
+          fi
+
+  unit-tests:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    needs: generate-affected-matrix
+    if: ${{ needs.generate-affected-matrix.outputs.hasProjects == 'true' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.generate-affected-matrix.outputs.unitMatrix) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+      - name: Setup environment
+        uses: ./.github/actions/setup
+      - name: Install dependencies
+        run: npm ci
+      - name: Run unit tests for ${{ matrix.project }}
+        env:
+          NODE_OPTIONS: "--max-old-space-size=5120"
+        run: |
+          xvfb-run --auto-servernum npx nx run ${{ matrix.project }}:test

@@ -25,25 +25,26 @@ runs:
           cache-dependency-path: package-lock.json
       - name: get latest tag sha
         id: tag-sha
-        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@f95467b62527ce087c9a1b7e55c467061cf827a0 # v17.6.1
-# CACHE
-      - name: Node Modules cache
-        id: node-modules-cache
-        if: ${{ inputs.enable-node-modules-cache == 'true' }}
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
-        env:
-          cache-name: node-modules-cache
-        with:
-          path: |
-            node_modules
-          key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            .npm-${{ runner.os }}-build-${{ env.cache-name }}-
-            .npm-${{ runner.os }}-build-
-            .npm-${{ runner.os }}-
+        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@8d76614b374e521d792b4a1c9827409960b66bae # v17.6.0
       - name: load "NPM TAG"
         id: set-npm-tag
         uses: ./.github/actions/set-npm-tag
+      - name: Cache node modules
+        if: ${{ inputs.enable-node-modules-cache == 'true' }}
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+      - name: Cache nx
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: nxcache
+          key: ${{ runner.os }}-nxcache-${{ hashFiles('nx.json') }}-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-nxcache-${{ hashFiles('nx.json') }}-
+            ${{ runner.os }}-nxcache-
       - name: before install script
         uses: ./.github/actions/before-install
         with:

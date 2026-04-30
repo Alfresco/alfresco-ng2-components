@@ -146,7 +146,6 @@ jobs:
           fi
 
   setup:
-    # long timeout required when cache has to be recreated
     timeout-minutes: 30
     name: "Setup"
     runs-on: ubuntu-latest
@@ -155,52 +154,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
+          fetch-depth: 0
       - uses: ./.github/actions/setup
       - name: install
         run: |
           npm ci
           npm run bundle:js-api
           npm run bundle:cli
-      - uses: ./.github/actions/upload-node-modules-and-artifacts
-
-  unit-tests:
-    timeout-minutes: 30
-    name: "Unit tests: ${{ matrix.unit-tests.name }}"
-    runs-on: ubuntu-latest
-    needs: [setup]
-    strategy:
-      fail-fast: false
-      # max-parallel: 4
-      matrix:
-        unit-tests:
-          - name: js-api
-            exclude: "core,insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular"
-          - name: content-services
-            exclude: "insights,core,extensions,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
-          - name: core
-            exclude: "insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
-          - name: insights
-            exclude: "core,extensions,content-services,process-services-cloud,process-services,eslint-plugin-eslint-angular,js-api"
-          - name: process-services
-            exclude: "core,extensions,content-services,process-services-cloud,insights,eslint-plugin-eslint-angular,js-api"
-          - name: process-services-cloud
-            exclude: "insights,core,extensions,content-services,process-services$,eslint-plugin-eslint-angular,js-api"
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: Run unit tests
-        env:
-          EXCLUDE_PATTERN: ${{ matrix.unit-tests.exclude }}
-        run: |
-          /usr/bin/xvfb-run --auto-servernum npm run test:affected -- $NX_CALCULATION_FLAGS --exclude=$EXCLUDE_PATTERN
 
   lint:
-    # long timeout required when cache has to be recreated
     timeout-minutes: 30
     name: "Lint"
     runs-on: ubuntu-latest
@@ -209,41 +171,38 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
+          fetch-depth: 0
       - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - run: npm run lint:affected -- $NX_CALCULATION_FLAGS
+      - run: npm ci
+      - run: npx nx affected --target=lint --base=origin/${{ github.event.pull_request.base.ref }} --head=HEAD
 
-  build-libs:
-    # long timeout required when cache has to be recreated
-    timeout-minutes: 30
-    name: "Build libs"
-    runs-on: ubuntu-latest
+  trigger-build:
+    name: "Build Libs"
     needs: [setup]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - run: NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npm run build:affected -- $NX_CALCULATION_FLAGS --prod
-      - uses: ./.github/actions/upload-node-modules-and-artifacts
+    uses: ./.github/workflows/build-lib-workflow.yml
 
   build-storybook:
     timeout-minutes: 30
-    name: "Build storybook"
-    runs-on: ubuntu-latest
+    name: "Build Storybook"
     needs: [setup]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - run: npm run build-storybook
-      - uses: ./.github/actions/upload-node-modules-and-artifacts
+          fetch-depth: 0
+      - name: Setup environment
+        uses: ./.github/actions/setup
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Storybook
+        run: |
+          NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npx nx affected --target=build-storybook --base=origin/${{ github.event.pull_request.base.ref }} --head=HEAD --configuration=ci
+
+  trigger-unit-tests:
+    name: "Unit Tests"
+    needs: [setup]
+    uses: ./.github/workflows/unit-test-workflow.yml
 
   PR-forbidden-labels:
     if: ${{ inputs.cron-run == '' || inputs.cron-run == 'false' }}
@@ -267,13 +226,6 @@ jobs:
             if(hasLabel) {
               core.setFailed('The PR contains a forbidden label! You are not allowed to merge until the label is there.');
             }
-      - name: Check value after
-        env:
-          STEP_RESULT: ${{ toJson(steps.pr-forbidden.*.result) }}
-          HAS_FAILURE: ${{ contains(toJson(steps.pr-forbidden.*.result), 'failure') }}
-        run: |
-          echo "Step result: $STEP_RESULT"
-          echo "Has failure: $HAS_FAILURE"
 
   finalize:
     if: ${{ always() }}
@@ -283,11 +235,11 @@ jobs:
       [
         check-if-pr-is-approved,
         pre-checks,
-        setup,
-        unit-tests,
+        trigger-unit-tests,
         lint,
-        build-libs,
+        trigger-build,
         build-storybook,
+        PR-forbidden-labels,
       ]
     steps:
       - name: Check job execution status
