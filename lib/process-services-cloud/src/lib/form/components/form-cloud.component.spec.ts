@@ -1210,6 +1210,33 @@ describe('FormCloudComponent', () => {
         expect(formComponent.isOutcomeButtonEnabled(startProcessOutcome)).toBeTruthy();
     });
 
+    it('should not include START_PROCESS outcome when form is loaded for a task', () => {
+        formComponent.taskId = 'mock-task-id';
+        formComponent.appName = 'mock-app';
+
+        const form = formComponent.parseForm(cloudFormMock);
+
+        const startProcessOutcome = form.outcomes.find((outcome) => outcome.id === FormModel.START_PROCESS_OUTCOME);
+        expect(startProcessOutcome).toBeUndefined();
+    });
+
+    it('should populate visibleOutcomes when the form is set', () => {
+        formComponent.showCompleteButton = true;
+        formComponent.form = new FormModel(cloudFormMock);
+
+        expect(formComponent.visibleOutcomes.length).toBeGreaterThan(0);
+        expect(formComponent.visibleOutcomes.every((outcome) => outcome.name !== FormOutcomeModel.START_PROCESS_ACTION)).toBe(true);
+    });
+
+    it('should clear visibleOutcomes when the form is cleared', () => {
+        formComponent.showCompleteButton = true;
+        formComponent.form = new FormModel(cloudFormMock);
+        expect(formComponent.visibleOutcomes.length).toBeGreaterThan(0);
+
+        formComponent.form = null;
+        expect(formComponent.visibleOutcomes).toEqual([]);
+    });
+
     it('should raise [executeOutcome] event for formService', async () => {
         spyOn(formComponent.executeOutcome, 'emit');
 
@@ -1656,6 +1683,7 @@ describe('FormCloudComponent', () => {
 
     describe('Custom outcome button text for default outcomes', () => {
         beforeEach(() => {
+            formComponent.showCompleteButton = true;
             formComponent.form = formComponent.parseForm(emptyFormRepresentationJSON);
         });
 

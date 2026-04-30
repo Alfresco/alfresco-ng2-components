@@ -30,14 +30,14 @@ export const isOutcomeButtonVisible = (outcome: FormOutcomeModel, props: IsOutco
         if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
             return showCompleteButton;
         }
+        if (outcome.name === FormOutcomeModel.START_PROCESS_ACTION) {
+            return false;
+        }
         if (isFormReadOnly) {
             return outcome.isSelected;
         }
         if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
             return showSaveButton;
-        }
-        if (outcome.name === FormOutcomeModel.START_PROCESS_ACTION) {
-            return false;
         }
         return true;
     }
