@@ -1,5 +1,6 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "useLegacyCache": true,
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
@@ -14,14 +15,6 @@
     },
     "stylelint": {
       "cache": true
-    }
-  },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx/tasks-runners/default",
-      "options": {
-        "runtimeCacheInputs": ["node -v"]
-      }
     }
   },
   "namedInputs": {

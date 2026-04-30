@@ -55,9 +55,7 @@ runs:
       - name: Cache nx
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
-          path: |
-            nxcache
-            .nx/workspace-data
+          path: nxcache
           key: ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-${{ hashFiles('nx.json') }}-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-${{ hashFiles('nx.json') }}-
