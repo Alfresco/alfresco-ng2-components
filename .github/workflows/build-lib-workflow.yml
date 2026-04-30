@@ -18,6 +18,8 @@ jobs:
       - name: Setup environment
         id: setup-env
         uses: ./.github/actions/setup
+        with:
+          cache-suffix: build-matrix
       - name: Install dependencies
         if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
         run: npm ci
@@ -58,6 +60,8 @@ jobs:
       - name: Setup environment
         id: setup-env
         uses: ./.github/actions/setup
+        with:
+          cache-suffix: build-${{ matrix.project }}
       - name: Install dependencies
         if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
         run: npm ci

@@ -6,6 +6,10 @@ inputs:
     required: false
     type: boolean
     default: 'true'
+  cache-suffix:
+    description: 'Suffix to make Nx cache key unique per job (e.g. matrix project name)'
+    required: false
+    default: 'default'
   act:
     description: 'enable act debug'
     required: false
@@ -45,10 +49,11 @@ runs:
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: nxcache
-          key: ${{ runner.os }}-nxcache-${{ hashFiles('nx.json') }}-${{ github.run_id }}
+          key: ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-${{ hashFiles('nx.json') }}-${{ github.run_id }}
           restore-keys: |
-            ${{ runner.os }}-nxcache-${{ hashFiles('nx.json') }}-
-            ${{ runner.os }}-nxcache-
+            ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-${{ hashFiles('nx.json') }}-
+            ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-
+            ${{ runner.os }}-nxcache-default-
       - name: before install script
         uses: ./.github/actions/before-install
         with:
