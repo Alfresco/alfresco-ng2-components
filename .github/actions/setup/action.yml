@@ -58,7 +58,7 @@ runs:
           path: |
             nxcache
             .nx/workspace-data
-          key: ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-${{ hashFiles('nx.json') }}-${{ github.run_id }}
+          key: ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-${{ hashFiles('nx.json') }}-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-${{ hashFiles('nx.json') }}-
             ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-

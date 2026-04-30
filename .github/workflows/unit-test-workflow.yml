@@ -9,9 +9,6 @@ on:
         type: string
         default: 'develop'
 
-env:
-  NX_REJECT_UNKNOWN_LOCAL_CACHE: 0
-
 jobs:
   generate-affected-matrix:
     name: "Generate affected matrix"
