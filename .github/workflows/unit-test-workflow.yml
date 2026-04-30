@@ -1,7 +1,13 @@
 name: "Unit Tests Workflow"
 
 on:
-  workflow_call: {}
+  workflow_call:
+    inputs:
+      base_ref:
+        description: 'Base branch for affected calculation'
+        required: false
+        type: string
+        default: 'develop'
 
 jobs:
   generate-affected-matrix:
@@ -26,7 +32,7 @@ jobs:
       - name: Generate affected projects matrix
         id: set-matrix
         env:
-          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          BASE_REF: ${{ inputs.base_ref }}
         run: |
           echo "Base ref is $BASE_REF"
           AFFECTED_UNIT=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --head=HEAD --select=projects --plain --exclude=cli,stories,eslint-angular)

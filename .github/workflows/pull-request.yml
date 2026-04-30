@@ -186,12 +186,14 @@ jobs:
       - name: Install dependencies
         if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
         run: npm ci
-      - run: npx nx affected --target=lint --base=origin/${{ github.event.pull_request.base.ref }} --head=HEAD
+      - run: npx nx affected --target=lint --base=origin/${{ github.base_ref || 'develop' }} --head=HEAD
 
   trigger-build:
     name: "Build Libs"
     needs: [setup]
     uses: ./.github/workflows/build-lib-workflow.yml
+    with:
+      base_ref: ${{ github.base_ref || 'develop' }}
 
   build-storybook:
     timeout-minutes: 30
@@ -213,12 +215,14 @@ jobs:
         run: npm ci
       - name: Build Storybook
         run: |
-          NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npx nx affected --target=build-storybook --base=origin/${{ github.event.pull_request.base.ref }} --head=HEAD --configuration=ci
+          NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npx nx affected --target=build-storybook --base=origin/${{ github.base_ref || 'develop' }} --head=HEAD --configuration=ci
 
   trigger-unit-tests:
     name: "Unit Tests"
     needs: [setup]
     uses: ./.github/workflows/unit-test-workflow.yml
+    with:
+      base_ref: ${{ github.base_ref || 'develop' }}
 
   PR-forbidden-labels:
     if: ${{ inputs.cron-run == '' || inputs.cron-run == 'false' }}
@@ -251,6 +255,7 @@ jobs:
       [
         check-if-pr-is-approved,
         pre-checks,
+        setup,
         trigger-unit-tests,
         lint,
         trigger-build,
