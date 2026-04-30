@@ -88,9 +88,9 @@
       }
     },
     "BUTTON": {
-      "PREVIOUS_TAB": "Previous",
+      "PREVIOUS_TAB": "Anterior",
       "PREVIOUS_TAB_TITLE": "Navigate to previous tab",
-      "NEXT_TAB": "Next",
+      "NEXT_TAB": "Próxima",
       "NEXT_TAB_TITLE": "Navigate to next tab"
     },
     "FIELD_STYLE": {
