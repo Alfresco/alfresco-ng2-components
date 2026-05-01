@@ -86,22 +86,13 @@ jobs:
   check-if-pr-is-approved:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          fetch-depth: 1
-
-      - name: Save commit message
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@f95467b62527ce087c9a1b7e55c467061cf827a0 # v17.6.1
-        with:
-          header-only: true
-
       - name: Check if PR approval can be skipped
         id: skip-check
         env:
           EVENT_NAME: ${{ github.event_name }}
           ACTOR: ${{ github.actor }}
           DEVEL_FLAG: ${{ inputs.devel }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message || github.event.pull_request.title || '' }}
         run: |
           skip="false"
 
