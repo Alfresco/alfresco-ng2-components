@@ -45,21 +45,6 @@ import { IconModule } from '../../../icon/icon.module';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, EMPTY, filter, switchMap } from 'rxjs';
 
-const ANGULAR_DATE_PIPE_ALIASES = new Set([
-    'short',
-    'medium',
-    'long',
-    'full',
-    'shortDate',
-    'mediumDate',
-    'longDate',
-    'fullDate',
-    'shortTime',
-    'mediumTime',
-    'longTime',
-    'fullTime'
-]);
-
 const DEFAULT_DATE_FORMAT = 'MMM DD';
 
 @Component({
@@ -170,7 +155,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     }
 
     private applyFormat(): void {
-        if (this.property.allowManualInput && this.property.format && !ANGULAR_DATE_PIPE_ALIASES.has(this.property.format)) {
+        if (this.property.allowManualInput && this.property.format) {
             (this.dateAdapter as AdfDateFnsAdapter).displayFormat = this.property.format;
             (this.datetimeAdapter as AdfDateTimeFnsAdapter).displayFormat = this.property.format;
         } else {

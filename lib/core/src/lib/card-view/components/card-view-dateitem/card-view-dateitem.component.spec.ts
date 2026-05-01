@@ -731,12 +731,12 @@ describe('CardViewDateItemComponent', () => {
             expect(datetimeAdapter.displayFormat).toBeNull();
         });
 
-        it('should fallback to adapter defaults for Angular alias format when allowManualInput is false', () => {
+        it('should fallback to adapter defaults when allowManualInput is false', () => {
             component.property = new CardViewDateItemModel({
                 label: 'Date label',
                 value: new Date('07/10/2017'),
                 key: 'dateKey',
-                format: 'short',
+                format: 'YYYY-MM-dd',
                 editable: true,
                 allowManualInput: false
             });
