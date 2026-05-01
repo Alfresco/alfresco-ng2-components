@@ -19,6 +19,30 @@
       "cache": true,
       "inputs": ["default", "^production"],
       "outputs": ["{options.outputDir}"]
+    },
+    "build-cjs": {
+      "cache": true,
+      "inputs": ["production", "^production"]
+    },
+    "build-esm2015": {
+      "cache": true,
+      "inputs": ["production", "^production"]
+    },
+    "build-esm5": {
+      "cache": true,
+      "inputs": ["production", "^production"]
+    },
+    "build-types": {
+      "cache": true,
+      "inputs": ["production", "^production"]
+    },
+    "build-schematics": {
+      "cache": true,
+      "inputs": ["production", "^production"]
+    },
+    "license": {
+      "cache": true,
+      "outputs": ["{workspaceRoot}/licenses.txt"]
     }
   },
   "namedInputs": {
