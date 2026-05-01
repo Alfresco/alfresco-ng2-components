@@ -121,12 +121,25 @@ jobs:
 
           echo "skip=$skip" >> $GITHUB_OUTPUT
 
-      - name: Check if PR is approved
+      - name: Get PR number
         if: ${{ steps.skip-check.outputs.skip != 'true' }}
+        id: pr-number
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          PR_NUMBER=${{ github.event.pull_request.number }}
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          if [ -z "$PR_NUMBER" ]; then
+            PR_NUMBER=$(gh pr view --json number --jq '.number' 2>/dev/null || echo "")
+          fi
+          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "PR: $PR_NUMBER"
+
+      - name: Check if PR is approved
+        if: ${{ steps.skip-check.outputs.skip != 'true' && steps.pr-number.outputs.pr_number != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.pr-number.outputs.pr_number }}
+        run: |
           echo "Checking approval for PR: $PR_NUMBER"
           checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
           if [[ $checkApproval ]]; then
