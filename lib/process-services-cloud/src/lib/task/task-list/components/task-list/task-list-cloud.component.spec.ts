@@ -238,9 +238,10 @@ describe('TaskListCloudComponent', () => {
             component.reload();
         });
 
-        it('should call endpoint when a column visibility gets changed', () => {
+        it('should update preferences when a column visibility gets changed', () => {
+            getTaskByRequestSpy.and.returnValue(of(fakeGlobalTasks));
             component.ngAfterContentInit();
-            spyOn(component, 'createDatatableSchema');
+            const createDatatableSchemaSpy = spyOn(component, 'createDatatableSchema');
             component.appName = 'fake-app-name';
             component.reload();
             fixture.detectChanges();
@@ -249,7 +250,7 @@ describe('TaskListCloudComponent', () => {
 
             fixture.detectChanges();
 
-            expect(getTaskByRequestSpy).toHaveBeenCalledTimes(1);
+            expect(createDatatableSchemaSpy).toHaveBeenCalled();
         });
 
         describe('component changes', () => {

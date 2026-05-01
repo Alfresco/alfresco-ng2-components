@@ -17,12 +17,11 @@
 
 import { FileViewerWidgetComponent } from './file-viewer.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldModel, FormModel, FormService, NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('FileViewerWidgetComponent', () => {
     const fakeForm = new FormModel();
     let widget: FileViewerWidgetComponent;
-    let formServiceStub: Partial<FormService>;
     let fixture: ComponentFixture<FileViewerWidgetComponent>;
 
     const fakePngAnswer: any = {
@@ -42,11 +41,9 @@ describe('FileViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAuthModule, FileViewerWidgetComponent],
-            providers: [{ provide: FormService, useValue: formServiceStub }]
+            imports: [NoopTranslateModule, NoopAuthModule, FileViewerWidgetComponent]
         });
 
-        formServiceStub = TestBed.inject(FormService);
         fixture = TestBed.createComponent(FileViewerWidgetComponent);
         widget = fixture.componentInstance;
     });

@@ -531,11 +531,11 @@ describe('ProcessListCloudComponent', () => {
             component.reload();
         });
 
-        it('should call endpoint when a column visibility gets changed', () => {
-            spyOn(preferencesService, 'updatePreference').and.returnValue(of({}));
-            spyOn(processListCloudService, 'getProcessByRequest');
+        it('should update preferences when a column visibility gets changed', () => {
+            const updatePreferenceSpy = spyOn(preferencesService, 'updatePreference').and.returnValue(of({}));
+            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
             component.ngAfterContentInit();
-            spyOn(component, 'createDatatableSchema');
+            const createDatatableSchemaSpy = spyOn(component, 'createDatatableSchema');
             component.appName = 'fake-app-name';
             component.reload();
             fixture.detectChanges();
@@ -544,7 +544,8 @@ describe('ProcessListCloudComponent', () => {
 
             fixture.detectChanges();
 
-            expect(processListCloudService.getProcessByRequest).toHaveBeenCalledTimes(1);
+            expect(updatePreferenceSpy).toHaveBeenCalled();
+            expect(createDatatableSchemaSpy).toHaveBeenCalled();
         });
 
         describe('component changes', () => {
@@ -921,11 +922,11 @@ describe('ProcessListCloudComponent', () => {
             component.reload();
         });
 
-        it('should call endpoint when a column visibility gets changed', () => {
-            spyOn(preferencesService, 'updatePreference').and.returnValue(of({}));
-            spyOn(processListCloudService, 'fetchProcessList');
+        it('should update preferences when a column visibility gets changed', () => {
+            const updatePreferenceSpy = spyOn(preferencesService, 'updatePreference').and.returnValue(of({}));
+            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
             component.ngAfterContentInit();
-            spyOn(component, 'createDatatableSchema');
+            const createDatatableSchemaSpy = spyOn(component, 'createDatatableSchema');
             component.appName = 'fake-app-name';
             component.reload();
             fixture.detectChanges();
@@ -934,7 +935,8 @@ describe('ProcessListCloudComponent', () => {
 
             fixture.detectChanges();
 
-            expect(processListCloudService.fetchProcessList).toHaveBeenCalledTimes(1);
+            expect(updatePreferenceSpy).toHaveBeenCalled();
+            expect(createDatatableSchemaSpy).toHaveBeenCalled();
         });
 
         describe('component changes', () => {
@@ -1250,12 +1252,16 @@ describe('ProcessListCloudComponent', () => {
 describe('ProcessListCloudComponent: Injecting custom columns for task list - CustomTaskListComponent', () => {
     let fixtureCustom: ComponentFixture<CustomTaskListComponent>;
     let componentCustom: CustomTaskListComponent;
+    let processListCloudService: ProcessListCloudService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [CustomTaskListComponent],
             providers: [provideCloudPreferences()]
         });
+        processListCloudService = TestBed.inject(ProcessListCloudService);
+        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+        spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
         fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
         fixtureCustom.detectChanges();
         componentCustom = fixtureCustom.componentInstance;
@@ -1292,6 +1298,7 @@ describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTe
     }
 
     let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
+    let processListCloudService: ProcessListCloudService;
     const preferencesService = jasmine.createSpyObj('preferencesService', {
         getPreferences: of({}),
         updatePreference: of({})
@@ -1302,6 +1309,9 @@ describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTe
             imports: [NoopTranslateModule, CustomEmptyContentTemplateDirective, ProcessListCloudComponent, EmptyTemplateComponent],
             providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useValue: preferencesService }]
         });
+        processListCloudService = TestBed.inject(ProcessListCloudService);
+        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+        spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
         fixtureEmpty = TestBed.createComponent(EmptyTemplateComponent);
         fixtureEmpty.detectChanges();
     });

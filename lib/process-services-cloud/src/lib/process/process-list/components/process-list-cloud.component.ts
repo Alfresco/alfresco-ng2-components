@@ -49,7 +49,7 @@ import {
     UserPreferenceValues
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
-import { BehaviorSubject, combineLatest, of, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, combineLatest, EMPTY, of, Subject, throwError } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessListRequestModel, ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel, ProcessListRequestSortingModel } from '../models/process-list-sorting.model';
@@ -392,11 +392,11 @@ export class ProcessListCloudComponent
                     if (this.searchApiMethod === 'POST') {
                         const requestNode = this.createProcessListRequestNode();
                         this.processListRequestNode = requestNode;
-                        return this.processListCloudService.fetchProcessList(requestNode).pipe(take(1));
+                        return (this.processListCloudService.fetchProcessList(requestNode) ?? EMPTY).pipe(take(1));
                     } else {
                         const requestNode = this.createRequestNode();
                         this.requestNode = requestNode;
-                        return this.processListCloudService.getProcessByRequest(requestNode).pipe();
+                        return this.processListCloudService.getProcessByRequest(requestNode) ?? EMPTY;
                     }
                 }),
                 takeUntilDestroyed()

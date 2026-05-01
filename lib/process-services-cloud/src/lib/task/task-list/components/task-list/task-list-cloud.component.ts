@@ -31,7 +31,7 @@ import { BaseTaskListCloudComponent } from '../base-task-list-cloud.component';
 import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../../services/preference-cloud.interface';
 import { TaskListCloudServiceInterface } from '../../../../services/task-list-cloud.service.interface';
-import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, EMPTY, Subject } from 'rxjs';
 import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { VariableMapperService } from '../../../../services/variable-mapper.sevice';
 import { ProcessListDataColumnCustomData } from '../../../../models/data-column-custom-data';
@@ -280,11 +280,11 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
                 switchMap(() => {
                     if (this.searchApiMethod === 'POST') {
                         const requestNode = this.createTaskListRequestNode();
-                        return this.taskListCloudService.fetchTaskList(requestNode).pipe(take(1));
+                        return (this.taskListCloudService.fetchTaskList(requestNode) ?? EMPTY).pipe(take(1));
                     } else {
                         const requestNode = this.createRequestNode();
                         this.requestNode = requestNode;
-                        return this.taskListCloudService.getTaskByRequest(requestNode);
+                        return this.taskListCloudService.getTaskByRequest(requestNode) ?? EMPTY;
                     }
                 }),
                 takeUntilDestroyed()

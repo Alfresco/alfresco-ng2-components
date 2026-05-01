@@ -121,9 +121,9 @@ describe('TaskAssignmentFilterComponent', () => {
         it('should have floating labels when values are present', async () => {
             const inputLabelsNodes = await loader.getAllHarnesses(MatFormFieldHarness);
 
-            inputLabelsNodes.forEach(async (labelNode) => {
+            for (const labelNode of inputLabelsNodes) {
                 expect(await labelNode.isLabelFloating()).toBeTruthy();
-            });
+            }
         });
     });
 
