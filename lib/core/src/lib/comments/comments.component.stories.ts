@@ -21,6 +21,7 @@ import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { commentsStoriesData } from './mocks/comments.stories.mock';
 import { CommentsServiceStoriesMock } from './mocks/comments.service.stories.mock';
 import { provideStoryCore } from '../stories/core-story.providers';
+import { expect, within } from 'storybook/test';
 
 const meta: Meta<CommentsComponent> = {
     component: CommentsComponent,
@@ -92,6 +93,12 @@ export const SingleCommentWithAvatar: Story = {
     args: {
         comments: [commentsStoriesData[0]],
         readOnly: true
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+
+        const commentText = canvas.getByText(/I've done this task, what's next\?/i);
+        await expect(commentText).toBeVisible();
     }
 };
 
@@ -112,11 +119,23 @@ export const NoComments: Story = {
     args: {
         comments: [],
         readOnly: true
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+
+        const commentElements = canvas.queryAllByText(/I've done this task/i);
+        await expect(commentElements.length).toBe(0);
     }
 };
 
 export const Comments: Story = {
     render: (args) => ({
         props: args
-    })
+    }),
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+
+        const commentInput = canvas.getByRole('textbox');
+        await expect(commentInput).toBeVisible();
+    }
 };
