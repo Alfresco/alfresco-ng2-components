@@ -89,9 +89,9 @@
     },
     "BUTTON": {
       "PREVIOUS_TAB": "Anterior",
-      "PREVIOUS_TAB_TITLE": "Navigate to previous tab",
+      "PREVIOUS_TAB_TITLE": "Ir para o separador anterior",
       "NEXT_TAB": "Próxima",
-      "NEXT_TAB_TITLE": "Navigate to next tab"
+      "NEXT_TAB_TITLE": "Ir para o separador seguinte"
     },
     "FIELD_STYLE": {
       "FONT_SIZE": "Tamanho do tipo de letra",

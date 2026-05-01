@@ -89,9 +89,9 @@
     },
     "BUTTON": {
       "PREVIOUS_TAB": "Poprzednie",
-      "PREVIOUS_TAB_TITLE": "Navigate to previous tab",
+      "PREVIOUS_TAB_TITLE": "Przejdź do poprzedniej karty",
       "NEXT_TAB": "Następny",
-      "NEXT_TAB_TITLE": "Navigate to next tab"
+      "NEXT_TAB_TITLE": "Przejdź do następnej karty"
     },
     "FIELD_STYLE": {
       "FONT_SIZE": "Rozmiar czcionki",

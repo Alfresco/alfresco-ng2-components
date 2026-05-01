@@ -89,9 +89,9 @@
     },
     "BUTTON": {
       "PREVIOUS_TAB": "Vorherige",
-      "PREVIOUS_TAB_TITLE": "Zum vorherigen Tab wechseln",
+      "PREVIOUS_TAB_TITLE": "Zur vorherigen Registerkarte wechseln",
       "NEXT_TAB": "Weiter",
-      "NEXT_TAB_TITLE": "Zum nächsten Tab navigieren"
+      "NEXT_TAB_TITLE": "Zur nächsten Registerkarte wechseln"
     },
     "FIELD_STYLE": {
       "FONT_SIZE": "Schriftgröße",
