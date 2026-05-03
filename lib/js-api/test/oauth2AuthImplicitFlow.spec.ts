@@ -23,29 +23,35 @@ describe('Oauth2 Implicit flow test', () => {
     let alfrescoJsApi: AlfrescoApi;
 
     beforeEach(() => {
+        const mockLocation: any = {
+            ancestorOrigins: null,
+            hash: '',
+            host: 'dummy.com',
+            port: '80',
+            protocol: 'http:',
+            hostname: 'dummy.com',
+            href: 'http://localhost/',
+            origin: 'dummy.com',
+            pathname: null,
+            search: null,
+            assign: (url: string) => {
+                mockLocation.href = url;
+            },
+            reload: null,
+            replace: null
+        };
+
+        (globalThis as any).window = { location: mockLocation, addEventListener: () => {}, removeEventListener: () => {} };
+        (globalThis as any).document = { getElementById: () => null, cookie: '' };
+
         alfrescoJsApi = new AlfrescoApi({
             hostEcm: ''
         });
-        Object.defineProperty(window, 'location', {
-            writable: true,
-            value: {
-                ancestorOrigins: null,
-                hash: '',
-                host: 'dummy.com',
-                port: '80',
-                protocol: 'http:',
-                hostname: 'dummy.com',
-                href: 'http://localhost/',
-                origin: 'dummy.com',
-                pathname: null,
-                search: null,
-                assign: (url: string) => {
-                    window.location.href = url;
-                },
-                reload: null,
-                replace: null
-            }
-        });
+    });
+
+    afterEach(() => {
+        delete (globalThis as any).window;
+        delete (globalThis as any).document;
     });
 
     it('should throw an error if redirectUri is not present', (done) => {

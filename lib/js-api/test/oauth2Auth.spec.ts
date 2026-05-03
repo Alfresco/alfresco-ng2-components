@@ -19,6 +19,7 @@ import assert from 'assert';
 import { AlfrescoApi, ContentApi, Oauth2Auth } from '../src';
 import { EcmAuthMock, OAuthMock } from './mockObjects';
 import { jest } from '@jest/globals';
+import * as browserUtils from '../src/utils/is-browser';
 
 describe('Oauth2  test', () => {
     let alfrescoJsApi: AlfrescoApi;
@@ -65,7 +66,7 @@ describe('Oauth2  test', () => {
 
     afterEach(() => {
         authResponseMock.cleanAll();
-        jest.clearAllMocks();
+        jest.restoreAllMocks();
     });
 
     describe('Discovery urls', () => {
@@ -189,7 +190,7 @@ describe('Oauth2  test', () => {
         });
 
         it('should refresh token when the login not use the implicitFlow ', (done) => {
-            jest.spyOn(window, 'document', 'get').mockReturnValueOnce(undefined);
+            jest.spyOn(browserUtils, 'isBrowser').mockReturnValue(false);
             oauth2Mock.get200Response();
 
             const oauth2Auth = new Oauth2Auth(
@@ -224,7 +225,7 @@ describe('Oauth2  test', () => {
         });
 
         it('should not hang the app also if the logout is missing', (done) => {
-            jest.spyOn(window, 'document', 'get').mockReturnValueOnce(undefined);
+            jest.spyOn(browserUtils, 'isBrowser').mockReturnValue(false);
             oauth2Mock.get200Response();
 
             const oauth2Auth = new Oauth2Auth(

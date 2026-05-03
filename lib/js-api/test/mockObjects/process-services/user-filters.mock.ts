@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 
-import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class UserFiltersMock extends BaseMock {
     get200getUserTaskFilters(): void {
-        nock(this.host, { encodedQueryParams: true })
-            .get('/activiti-app/api/enterprise/filters/tasks')
-            .query({ appId: '1' })
+        this.mock()
+            .get('/activiti-app/api/enterprise/filters/tasks?appId=1')
             .reply(200, {
                 size: 4,
                 total: 4,

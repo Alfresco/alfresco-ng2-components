@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class BpmAuthMock extends BaseMock {
@@ -29,7 +28,7 @@ export class BpmAuthMock extends BaseMock {
     }
 
     get200Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .post(
                 '/activiti-app/app/authentication',
                 'j_username=' + this.username + '&j_password=' + this.password + '&_spring_security_remember_me=true&submit=Login'
@@ -38,11 +37,11 @@ export class BpmAuthMock extends BaseMock {
     }
 
     get200ResponseLogout(): void {
-        nock(this.host, { encodedQueryParams: true }).get('/activiti-app/app/logout', {}).reply(200);
+        this.mock().get('/activiti-app/app/logout').reply(200);
     }
 
     get401Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .post('/activiti-app/app/authentication', 'j_username=wrong&j_password=name&_spring_security_remember_me=true&submit=Login')
             .reply(401, {
                 error: {
@@ -52,8 +51,19 @@ export class BpmAuthMock extends BaseMock {
             });
     }
 
+    get401ResponseAdminCredentials(): void {
+        this.mock()
+            .post('/activiti-app/app/authentication', 'j_username=admin&j_password=admin&_spring_security_remember_me=true&submit=Login')
+            .reply(401, {
+                error: {
+                    message: 'This request requires HTTP authentication.',
+                    statusCode: 401
+                }
+            });
+    }
+
     get403Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .post('/activiti-app/app/authentication', 'j_username=wrong&j_password=name&_spring_security_remember_me=true&submit=Login')
             .reply(403, {
                 error: {

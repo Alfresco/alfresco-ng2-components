@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class EcmAuthMock extends BaseMock {
@@ -31,7 +30,7 @@ export class EcmAuthMock extends BaseMock {
     get201Response(forceTicket?: string): void {
         const returnMockTicket = forceTicket || 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1';
 
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .post('/alfresco/api/-default-/public/authentication/versions/1/tickets', {
                 userId: this.username,
                 password: this.password
@@ -42,13 +41,13 @@ export class EcmAuthMock extends BaseMock {
     get200ValidTicket(forceTicket?: string): void {
         const returnMockTicket = forceTicket || 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1';
 
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .get('/alfresco/api/-default-/public/authentication/versions/1/tickets/-me-')
             .reply(200, { entry: { id: returnMockTicket } });
     }
 
     get401InvalidTicket(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .get('/alfresco/api/-default-/public/authentication/versions/1/tickets/-me-')
             .reply(401, {
                 error: {
@@ -62,7 +61,7 @@ export class EcmAuthMock extends BaseMock {
     }
 
     get403Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .post('/alfresco/api/-default-/public/authentication/versions/1/tickets', {
                 userId: 'wrong',
                 password: 'name'
@@ -79,7 +78,7 @@ export class EcmAuthMock extends BaseMock {
     }
 
     get400Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .post('/alfresco/api/-default-/public/authentication/versions/1/tickets', {
                 userId: null,
                 password: null
@@ -96,7 +95,7 @@ export class EcmAuthMock extends BaseMock {
     }
 
     get401Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .post('/alfresco/api/-default-/public/authentication/versions/1/tickets', {
                 userId: 'wrong',
                 password: 'name'
@@ -112,11 +111,28 @@ export class EcmAuthMock extends BaseMock {
             });
     }
 
+    get401ResponseAdminCredentials(): void {
+        this.mock()
+            .post('/alfresco/api/-default-/public/authentication/versions/1/tickets', {
+                userId: 'admin',
+                password: 'admin'
+            })
+            .reply(401, {
+                error: {
+                    errorKey: 'framework.exception.ApiDefault',
+                    statusCode: 401,
+                    briefSummary: '05210059 Authentication failed for Web Script org/alfresco/api/ResourceWebScript.get',
+                    stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+                    descriptionURL: 'https://api-explorer.alfresco.com'
+                }
+            });
+    }
+
     get204ResponseLogout(): void {
-        nock(this.host, { encodedQueryParams: true }).delete('/alfresco/api/-default-/public/authentication/versions/1/tickets/-me-').reply(204, '');
+        this.mock().delete('/alfresco/api/-default-/public/authentication/versions/1/tickets/-me-').reply(204, '');
     }
 
     get404ResponseLogout(): void {
-        nock(this.host, { encodedQueryParams: true }).delete('/alfresco/api/-default-/public/authentication/versions/1/tickets/-me-').reply(404, '');
+        this.mock().delete('/alfresco/api/-default-/public/authentication/versions/1/tickets/-me-').reply(404, '');
     }
 }

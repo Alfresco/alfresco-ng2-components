@@ -15,14 +15,6 @@
  * limitations under the License.
  */
 
-import { BaseMock } from '../base.mock';
+import { getGlobalMockAgent } from '../test/mockObjects/base.mock';
 
-export class TaskFormMock extends BaseMock {
-    get200getTaskFormVariables(): void {
-        this.mock()
-            .get('/activiti-app/api/enterprise/task-forms/5028/variables')
-            .reply(200, [{ id: 'initiator', type: 'string', value: '1001' }], {
-                'set-cookie': 'ACTIVITI_REMEMBER_ME=NjdOdGwvcUtFTkVEczQyMGh4WFp5QT09OmpUL1UwdFVBTC94QTJMTFFUVFgvdFE9PQ'
-            });
-    }
-}
+getGlobalMockAgent();

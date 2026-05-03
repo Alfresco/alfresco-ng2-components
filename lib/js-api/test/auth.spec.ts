@@ -419,24 +419,20 @@ describe('Auth', () => {
 
                 it('should fail if only ECM fail', (done) => {
                     authResponseBpmMock.get200Response();
-                    authResponseEcmMock.get401Response();
+                    authResponseEcmMock.get401ResponseAdminCredentials();
 
                     alfrescoJsApi.login('admin', 'admin').then(NOOP, () => {
                         done();
                     });
-
-                    authResponseEcmMock.cleanAll();
                 });
 
                 it('should fail if only BPM fail', (done) => {
-                    authResponseBpmMock.get401Response();
+                    authResponseBpmMock.get401ResponseAdminCredentials();
                     authResponseEcmMock.get201Response();
 
                     alfrescoJsApi.login('admin', 'admin').then(NOOP, () => {
                         done();
                     });
-
-                    authResponseBpmMock.cleanAll();
                 });
             });
 

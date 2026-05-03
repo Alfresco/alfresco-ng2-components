@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class ProfileMock extends BaseMock {
     get200getProfile(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .get('/activiti-app/api/enterprise/profile')
             .reply(200, {
                 id: 1,
@@ -94,10 +93,10 @@ export class ProfileMock extends BaseMock {
     }
 
     get401getProfile(): void {
-        nock(this.host, { encodedQueryParams: true }).get('/activiti-app/api/enterprise/profile').reply(401);
+        this.mock().get('/activiti-app/api/enterprise/profile').reply(401);
     }
 
     get200getProfilePicture(): void {
-        nock(this.host, { encodedQueryParams: true }).get('/activiti-app/api/enterprise/profile-picture').reply(200, 'BUFFERSIZE');
+        this.mock().get('/activiti-app/api/enterprise/profile-picture').reply(200, 'BUFFERSIZE');
     }
 }

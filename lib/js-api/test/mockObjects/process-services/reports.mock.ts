@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import nock from 'nock';
+// cspell:ignore collapseable
+
 import { BaseMock } from '../base.mock';
 
 const fakeReportList = [
@@ -154,58 +155,55 @@ const fakeProcessDefinitionsNoApp: any[] = [
 
 export class ReportsMock extends BaseMock {
     get200ResponseCreateDefaultReport(): void {
-        nock(this.host, { encodedQueryParams: true }).post('/activiti-app/app/rest/reporting/default-reports').reply(200);
+        this.mock().post('/activiti-app/app/rest/reporting/default-reports').reply(200);
     }
 
     get200ResponseTasksByProcessDefinitionId(reportId: string, processDefinitionId: string): void {
-        nock(this.host, { encodedQueryParams: true })
-            .get('/activiti-app/app/rest/reporting/report-params/' + reportId + '/tasks')
-            .query({ processDefinitionId })
+        this.mock()
+            .get('/activiti-app/app/rest/reporting/report-params/' + reportId + '/tasks?processDefinitionId=' + processDefinitionId)
             .reply(200, ['Fake Task 1', 'Fake Task 2', 'Fake Task 3']);
     }
 
     get200ResponseReportList(): void {
-        nock(this.host, { encodedQueryParams: true }).get('/activiti-app/app/rest/reporting/reports').reply(200, fakeReportList);
+        this.mock().get('/activiti-app/app/rest/reporting/reports').reply(200, fakeReportList);
     }
 
     get200ResponseReportParams(reportId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .get('/activiti-app/app/rest/reporting/report-params/' + reportId)
             .reply(200, fakeReportParams);
     }
 
     get200ResponseReportsByParams(reportId: string, paramsQuery: { status: string }): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .post('/activiti-app/app/rest/reporting/report-params/' + reportId, paramsQuery)
             .reply(200, fakeChartReports);
     }
 
     get200ResponseProcessDefinitions(): void {
-        nock(this.host, { encodedQueryParams: true })
-            .get('/activiti-app/app/rest/reporting/process-definitions')
-            .reply(200, fakeProcessDefinitionsNoApp);
+        this.mock().get('/activiti-app/app/rest/reporting/process-definitions').reply(200, fakeProcessDefinitionsNoApp);
     }
 
     get200ResponseUpdateReport(reportId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .put('/activiti-app/app/rest/reporting/reports/' + reportId)
             .reply(200);
     }
 
     get200ResponseExportReport(reportId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .post('/activiti-app/app/rest/reporting/reports/' + reportId + '/export-to-csv')
             .reply(200, 'CSV');
     }
 
     get200ResponseSaveReport(reportId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .post('/activiti-app/app/rest/reporting/reports/' + reportId)
             .reply(200);
     }
 
     get200ResponseDeleteReport(reportId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .delete('/activiti-app/app/rest/reporting/reports/' + reportId)
             .reply(200);
     }

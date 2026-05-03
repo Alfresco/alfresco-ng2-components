@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class OAuthMock extends BaseMock {
@@ -29,7 +28,7 @@ export class OAuthMock extends BaseMock {
     }
 
     get200Response(mockToken?: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .post('/auth/realms/springboot/protocol/openid-connect/token')
             .reply(200, {
                 access_token: mockToken || 'test-token',
