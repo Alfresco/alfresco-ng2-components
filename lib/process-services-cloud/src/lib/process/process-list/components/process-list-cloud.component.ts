@@ -396,7 +396,7 @@ export class ProcessListCloudComponent
                     } else {
                         const requestNode = this.createRequestNode();
                         this.requestNode = requestNode;
-                        return this.processListCloudService.getProcessByRequest(requestNode).pipe();
+                        return this.processListCloudService.getProcessByRequest(requestNode);
                     }
                 }),
                 takeUntilDestroyed()

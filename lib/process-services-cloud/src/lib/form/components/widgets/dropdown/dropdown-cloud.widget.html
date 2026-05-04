@@ -24,7 +24,6 @@
                 [title]="field.tooltip"
                 panelClass="adf-select-filter"
                 [multiple]="field.hasMultipleValues"
-                [disabled]="field.readOnly"
                 [required]="field.required"
                 #select
                 (keydown.escape)="select.close()"

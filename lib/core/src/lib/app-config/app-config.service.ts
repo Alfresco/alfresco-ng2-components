@@ -252,7 +252,7 @@ export class AppConfigService {
      * @returns auth config model
      */
     get oauth2(): OauthConfigModel {
-        const config = this.get(AppConfigValues.OAUTHCONFIG, {});
+        const config = this.get(AppConfigValues.OAUTHCONFIG, {}) ?? {};
         const implicitFlow = config['implicitFlow'] === true || config['implicitFlow'] === 'true';
         const silentLogin = config['silentLogin'] === true || config['silentLogin'] === 'true';
         const codeFlow = config['codeFlow'] === true || config['codeFlow'] === 'true';

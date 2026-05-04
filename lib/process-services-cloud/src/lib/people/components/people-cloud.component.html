@@ -24,13 +24,11 @@
             </mat-chip-row>
             <input
                 matInput
-                [disabled]="isReadonly()"
                 [formControl]="searchUserCtrl"
                 [matAutocomplete]="auto"
                 [matChipInputFor]="userMultipleChipList"
                 [required]="required"
                 [placeholder]="placeholder"
-                [disabled]="isReadonly() || isValidationLoading()"
                 (focus)="setFocus(true)"
                 (blur)="setFocus(false); markAsTouched()"
                 class="adf-cloud-input"
