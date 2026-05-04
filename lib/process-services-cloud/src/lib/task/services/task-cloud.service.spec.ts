@@ -26,6 +26,7 @@ import {
 } from '../task-header/mocks/task-details-cloud.mock';
 import { IdentityUserService } from '../../people/services/identity-user.service';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
+import { TASK_COMPLETED_STATE, TASK_CREATED_STATE, TASK_ASSIGNED_STATE } from '../models/task-details-cloud.model';
 
 const fakeTaskDetailsCloud = {
     entry: {
@@ -477,5 +478,47 @@ describe('Task Cloud Service', () => {
                 done();
             }
         );
+    });
+
+    describe('wasTaskCompletedByCurrentUser', () => {
+        it('should return true when task was completed by current user', () => {
+            const completedTaskByCurrentUser = {
+                ...assignedTaskDetailsCloudMock,
+                status: TASK_COMPLETED_STATE,
+                assignee: 'AssignedTaskUser'
+            };
+            const result = service.wasTaskCompletedByCurrentUser(completedTaskByCurrentUser);
+            expect(result).toBe(true);
+        });
+
+        it('should return false when task was completed but not by current user', () => {
+            const completedTaskByDifferentUser = {
+                ...assignedTaskDetailsCloudMock,
+                status: TASK_COMPLETED_STATE,
+                assignee: 'DifferentUser'
+            };
+            const result = service.wasTaskCompletedByCurrentUser(completedTaskByDifferentUser);
+            expect(result).toBe(false);
+        });
+
+        it('should return false when task is not completed', () => {
+            const uncompletedTask = {
+                ...assignedTaskDetailsCloudMock,
+                status: TASK_ASSIGNED_STATE,
+                assignee: 'AssignedTaskUser'
+            };
+            const result = service.wasTaskCompletedByCurrentUser(uncompletedTask);
+            expect(result).toBe(false);
+        });
+
+        it('should return false when task is in other states', () => {
+            const createdTask = {
+                ...assignedTaskDetailsCloudMock,
+                status: TASK_CREATED_STATE,
+                assignee: 'AssignedTaskUser'
+            };
+            const result = service.wasTaskCompletedByCurrentUser(createdTask);
+            expect(result).toBe(false);
+        });
     });
 });

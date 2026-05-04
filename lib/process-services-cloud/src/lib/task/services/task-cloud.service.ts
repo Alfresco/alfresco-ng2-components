@@ -25,7 +25,8 @@ import {
     TASK_ASSIGNED_STATE,
     TASK_CLAIM_PERMISSION,
     TASK_CREATED_STATE,
-    TASK_RELEASE_PERMISSION
+    TASK_RELEASE_PERMISSION,
+    TASK_COMPLETED_STATE
 } from '../models/task-details-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
@@ -67,7 +68,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task can be completed
      */
     canCompleteTask(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails && taskDetails.status === TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
+        return taskDetails?.status === TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
     }
 
     /**
@@ -77,7 +78,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task is editable
      */
     isTaskEditable(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails && taskDetails.status === TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
+        return this.canCompleteTask(taskDetails);
     }
 
     isAssigneePropertyClickable(
@@ -91,6 +92,16 @@ export class TaskCloudService extends BaseCloudService {
             isClickable = states.includes(taskDetails.status);
         }
         return isClickable;
+    }
+
+    /**
+     * Validates if a task was completed by the current user.
+     *
+     * @param taskDetails task details object
+     * @returns Boolean value if the task was completed by the current user
+     */
+    wasTaskCompletedByCurrentUser(taskDetails: TaskDetailsCloudModel): boolean {
+        return taskDetails.status === TASK_COMPLETED_STATE && this.isAssignedToMe(taskDetails.assignee);
     }
 
     /**
