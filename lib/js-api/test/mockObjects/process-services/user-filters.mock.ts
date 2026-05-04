@@ -20,7 +20,8 @@ import { BaseMock } from '../base.mock';
 export class UserFiltersMock extends BaseMock {
     get200getUserTaskFilters(): void {
         this.mock()
-            .get('/activiti-app/api/enterprise/filters/tasks?appId=1')
+            .get('/activiti-app/api/enterprise/filters/tasks')
+            .query({ appId: '1' })
             .reply(200, {
                 size: 4,
                 total: 4,

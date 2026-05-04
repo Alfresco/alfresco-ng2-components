@@ -52,7 +52,8 @@ export class GroupsMock extends BaseMock {
 
     getDeleteGroupSuccessfulResponse(groupName: string): void {
         this.mock()
-            .delete('/alfresco/api/-default-/public/alfresco/versions/1/groups/' + groupName + '?cascade=false')
+            .delete('/alfresco/api/-default-/public/alfresco/versions/1/groups/' + groupName)
+            .query({ cascade: 'false' })
             .reply(200);
     }
 

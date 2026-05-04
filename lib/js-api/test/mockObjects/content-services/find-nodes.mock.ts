@@ -20,7 +20,8 @@ import { BaseMock } from '../base.mock';
 export class FindNodesMock extends BaseMock {
     get200Response(): void {
         this.mock()
-            .get('/alfresco/api/-default-/public/alfresco/versions/1/queries/nodes?term=test')
+            .get('/alfresco/api/-default-/public/alfresco/versions/1/queries/nodes')
+            .query({ term: 'test' })
             .reply(200, {
                 list: {
                     pagination: {
@@ -78,7 +79,8 @@ export class FindNodesMock extends BaseMock {
 
     get401Response(): void {
         this.mock()
-            .get('/alfresco/api/-default-/public/alfresco/versions/1/queries/nodes?term=test')
+            .get('/alfresco/api/-default-/public/alfresco/versions/1/queries/nodes')
+            .query({ term: 'test' })
             .reply(401, {
                 error: {
                     errorKey: 'framework.exception.ApiDefault',

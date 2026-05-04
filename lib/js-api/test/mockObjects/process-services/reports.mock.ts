@@ -160,7 +160,8 @@ export class ReportsMock extends BaseMock {
 
     get200ResponseTasksByProcessDefinitionId(reportId: string, processDefinitionId: string): void {
         this.mock()
-            .get('/activiti-app/app/rest/reporting/report-params/' + reportId + '/tasks?processDefinitionId=' + processDefinitionId)
+            .get('/activiti-app/app/rest/reporting/report-params/' + reportId + '/tasks')
+            .query({ processDefinitionId })
             .reply(200, ['Fake Task 1', 'Fake Task 2', 'Fake Task 3']);
     }
 

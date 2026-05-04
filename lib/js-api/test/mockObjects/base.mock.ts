@@ -23,9 +23,10 @@ export function getGlobalMockAgent(): MockAgent {
         const agent = new MockAgent();
         agent.disableNetConnect();
         (global as any).__mockAgent__ = agent;
-        (process as any).__test_fetch__ = (input: any, init?: any) => undiciFetch(input, { ...init, dispatcher: agent });
     }
-    return (global as any).__mockAgent__;
+    const agent: MockAgent = (global as any).__mockAgent__;
+    (process as any).__test_fetch__ = (input: any, init?: any) => undiciFetch(input, { ...init, dispatcher: agent });
+    return agent;
 }
 
 export function resetGlobalMockAgent(): void {
@@ -34,22 +35,36 @@ export function resetGlobalMockAgent(): void {
         agent.close();
         (global as any).__mockAgent__ = undefined;
     }
+    delete (process as any).__test_fetch__;
 }
 
 interface MockReplyChain {
     reply(statusCode: number, body?: any, headers?: Record<string, string>): void;
 }
 
+interface MockQueryable {
+    query(params: Record<string, string>): MockReplyChain;
+    reply(statusCode: number, body?: any, headers?: Record<string, string>): void;
+}
+
 interface MockInterceptor {
-    get(path: string, body?: any): MockReplyChain;
-    post(path: string, body?: any): MockReplyChain;
-    put(path: string, body?: any): MockReplyChain;
-    delete(path: string, body?: any): MockReplyChain;
+    get(path: string, body?: any): MockQueryable;
+    post(path: string, body?: any): MockQueryable;
+    put(path: string, body?: any): MockQueryable;
+    delete(path: string, body?: any): MockQueryable;
+}
+
+function buildQueryString(params: Record<string, string>): string {
+    const sp = new URLSearchParams();
+    for (const [key, value] of Object.entries(params)) {
+        sp.append(key, value);
+    }
+    return sp.toString();
 }
 
 // cspell:ignore Interceptable
 function createInterceptor(pool: Interceptable): MockInterceptor {
-    const makeChain = (method: string, path: string, body?: any): MockReplyChain => ({
+    const doIntercept = (method: string, path: string, body?: any): MockReplyChain => ({
         reply(statusCode: number, responseBody?: any, headers?: Record<string, string>) {
             const interceptOpts: any = { path, method };
             if (body && method !== 'GET' && method !== 'DELETE') {
@@ -63,6 +78,17 @@ function createInterceptor(pool: Interceptable): MockInterceptor {
                       ? responseBody
                       : JSON.stringify(responseBody);
             pool.intercept(interceptOpts).reply(statusCode, replyBody, { headers: responseHeaders });
+        }
+    });
+
+    const makeChain = (method: string, path: string, body?: any): MockQueryable => ({
+        query(params: Record<string, string>): MockReplyChain {
+            const qs = buildQueryString(params);
+            const separator = path.includes('?') ? '&' : '?';
+            return doIntercept(method, `${path}${separator}${qs}`, body);
+        },
+        reply(statusCode: number, responseBody?: any, headers?: Record<string, string>) {
+            doIntercept(method, path, body).reply(statusCode, responseBody, headers);
         }
     });
 

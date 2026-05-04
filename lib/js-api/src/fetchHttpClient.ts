@@ -68,7 +68,7 @@ export class FetchHttpClient implements HttpClient {
 
         const headers = this.buildHeaders(headerParams, securityOptions, contentType, accept);
         const queryString = FetchHttpClient.buildQueryString(queryParams);
-        const fullUrl = queryString ? `${url}?${queryString}` : url;
+        const fullUrl = queryString ? `${url}${url.includes('?') ? '&' : '?'}${queryString}` : url;
         const body = this.buildBody(contentType, formParams, bodyParam);
         const hasBody = body !== undefined && httpMethod !== 'GET' && httpMethod !== 'HEAD';
         const withCredentials = securityOptions.withCredentials || securityOptions.isBpmRequest;
@@ -106,7 +106,11 @@ export class FetchHttpClient implements HttpClient {
         const timeoutMs = typeof this.timeout === 'number' ? this.timeout : this.timeout?.deadline;
 
         if (timeoutMs) {
-            AbortSignal.timeout(timeoutMs).addEventListener('abort', () => controller.abort());
+            if (typeof AbortSignal.timeout === 'function') {
+                AbortSignal.timeout(timeoutMs).addEventListener('abort', () => controller.abort());
+            } else {
+                setTimeout(() => controller.abort(), timeoutMs);
+            }
         }
 
         const init: RequestInit = {
@@ -335,7 +339,9 @@ export class FetchHttpClient implements HttpClient {
         }
 
         if (securityOptions.isBpmRequest && securityOptions.authentications.cookie && !isBrowser()) {
-            headers['Cookie'] = securityOptions.authentications.cookie;
+            headers['Cookie'] = headers['Cookie']
+                ? headers['Cookie'] + '; ' + securityOptions.authentications.cookie
+                : securityOptions.authentications.cookie;
         }
 
         if (contentType && contentType !== 'multipart/form-data') {

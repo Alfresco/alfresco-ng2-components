@@ -126,6 +126,29 @@ describe('FetchHttpClient', () => {
             expect(result).toEqual({ ok: true });
         });
 
+        it('should append query parameters with & when URL already contains ?', async () => {
+            mockHost(host).get('/api/test?existing=1&foo=bar').reply(200, { ok: true });
+
+            const result = await client.get(
+                host + '/api/test?existing=1',
+                {
+                    httpMethod: 'GET',
+                    queryParams: { foo: 'bar' },
+                    headerParams: {},
+                    formParams: {},
+                    bodyParam: null,
+                    contentType: 'application/json',
+                    accept: 'application/json',
+                    responseType: null,
+                    returnType: null
+                },
+                defaultSecurityOptions,
+                emitters
+            );
+
+            expect(result).toEqual({ ok: true });
+        });
+
         it('should return text for String returnType', async () => {
             mockHost(host).get('/api/text').reply(200, 'plain text', { 'content-type': 'text/plain' });
 
@@ -514,6 +537,16 @@ describe('FetchHttpClient', () => {
             );
 
             expect(securityOptions.authentications.cookie).toBe('JSESSIONID=abc123');
+        });
+
+        it('should not overwrite existing Cookie header when session cookie is appended', () => {
+            const headers: Record<string, string> = { Cookie: 'CSRF-TOKEN=abc;path=/' };
+            const sessionCookie = 'JSESSIONID=xyz';
+
+            headers['Cookie'] = headers['Cookie'] ? headers['Cookie'] + '; ' + sessionCookie : sessionCookie;
+
+            expect(headers['Cookie']).toContain('CSRF-TOKEN=abc');
+            expect(headers['Cookie']).toContain('JSESSIONID=xyz');
         });
     });
 

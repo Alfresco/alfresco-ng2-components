@@ -20,7 +20,8 @@ import { BaseMock } from '../base.mock';
 export class AuthorityClearanceMock extends BaseMock {
     get200AuthorityClearanceForAuthority(authorityId: string): void {
         this.mock()
-            .get('/alfresco/api/-default-/public/gs/versions/1/cleared-authorities/' + authorityId + '/clearing-marks?skipCount=0&maxItems=100')
+            .get('/alfresco/api/-default-/public/gs/versions/1/cleared-authorities/' + authorityId + '/clearing-marks')
+            .query({ skipCount: '0', maxItems: '100' })
             .reply(200, {
                 list: {
                     pagination: {

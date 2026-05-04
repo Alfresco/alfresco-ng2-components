@@ -20,7 +20,8 @@ import { BaseMock } from '../base.mock';
 export class ModelsMock extends BaseMock {
     get200getModels(): void {
         this.mock()
-            .get('/activiti-app/api/enterprise/models?filter=myReusableForms&modelType=2')
+            .get('/activiti-app/api/enterprise/models')
+            .query({ filter: 'myReusableForms', modelType: '2' })
             .reply(200, {
                 size: 1,
                 total: 1,

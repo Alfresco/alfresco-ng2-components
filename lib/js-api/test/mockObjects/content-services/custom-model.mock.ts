@@ -52,7 +52,8 @@ export class CustomModelMock extends BaseMock {
 
     activateCustomModel200(): void {
         this.mock()
-            .put('/alfresco/api/-default-/private/alfresco/versions/1/cmm/testModel?select=status', { status: 'ACTIVE' })
+            .put('/alfresco/api/-default-/private/alfresco/versions/1/cmm/testModel', { status: 'ACTIVE' })
+            .query({ select: 'status' })
             .reply(200, {
                 entry: {
                     author: 'Administrator',

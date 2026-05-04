@@ -47,7 +47,8 @@ export class UploadMock extends BaseMock {
 
     get201CreationFileAutoRename(): void {
         this.mock()
-            .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true')
+            .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children')
+            .query({ autoRename: 'true' })
             .reply(201, {
                 entry: {
                     isFile: true,

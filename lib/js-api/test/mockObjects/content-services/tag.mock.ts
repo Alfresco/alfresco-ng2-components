@@ -25,13 +25,15 @@ export class TagMock extends BaseMock {
 
     getTagsByNameFilteredByMatching200Response(): void {
         this.mock()
-            .get('/alfresco/api/-default-/public/alfresco/versions/1/tags?where=(tag%20matches%20(%27*tag-test*%27))')
+            .get('/alfresco/api/-default-/public/alfresco/versions/1/tags')
+            .query({ where: "(tag matches ('*tag-test*'))" })
             .reply(200, this.getPaginatedListOfTags());
     }
 
     getTagsByNamesFilterByExactTag200Response(): void {
         this.mock()
-            .get('/alfresco/api/-default-/public/alfresco/versions/1/tags?where=(tag%3D%27tag-test-1%27)')
+            .get('/alfresco/api/-default-/public/alfresco/versions/1/tags')
+            .query({ where: "(tag='tag-test-1')" })
             .reply(200, {
                 list: {
                     pagination: {
