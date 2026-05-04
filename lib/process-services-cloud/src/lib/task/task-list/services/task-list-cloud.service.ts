@@ -66,28 +66,7 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
      * @returns List of tasks
      */
     fetchTaskList(requestNode: TaskListRequestModel, queryUrl?: string): Observable<any> {
-        if (!requestNode?.appName) {
-            return throwError(() => new Error('Appname not configured'));
-        }
-
-        queryUrl = queryUrl || `${this.getBasePath(requestNode.appName)}/query/v1/tasks/search`;
-
-        const queryParams = {
-            maxItems: requestNode.pagination?.maxItems || 25,
-            skipCount: requestNode.pagination?.skipCount || 0
-        };
-
-        const queryData = this.buildQueryData(requestNode);
-
-        return this.post<any, TaskCloudNodePaging>(queryUrl, queryData, queryParams).pipe(
-            map((response) => {
-                const entries = response.list?.entries;
-                if (entries) {
-                    response.list.entries = entries.map((entryData) => entryData.entry) as any;
-                }
-                return response;
-            })
-        );
+        return this.fetchTaskListByMethod(requestNode, queryUrl, 'POST');
     }
 
     /**
@@ -100,7 +79,43 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
      */
     fetchTaskListFromRuntimeBundleService(requestNode: TaskListRequestModel): Observable<any> {
         const url = `${this.getBasePath(requestNode.appName)}/rb/v1/tasks`;
-        return this.fetchTaskList(requestNode, url);
+        return this.fetchTaskListByMethod(requestNode, url, 'GET');
+    }
+
+    private fetchTaskListByMethod(
+        requestNode: TaskListRequestModel,
+        queryUrl?: string,
+        httpMethod: 'GET' | 'POST' = 'POST'
+    ): Observable<TaskCloudNodePaging> {
+        if (!requestNode?.appName) {
+            return throwError(() => new Error('Appname not configured'));
+        }
+
+        const finalQueryUrl = queryUrl || `${this.getBasePath(requestNode.appName)}/query/v1/tasks/search`;
+        const queryParams = this.buildPaginationQueryParams(requestNode);
+        const queryData = this.buildQueryData(requestNode);
+
+        const request$ =
+            httpMethod === 'GET'
+                ? this.get<TaskCloudNodePaging>(finalQueryUrl, { ...queryParams, ...queryData })
+                : this.post<object, TaskCloudNodePaging>(finalQueryUrl, queryData, queryParams);
+
+        return request$.pipe(map((response) => this.mapTaskListEntries(response)));
+    }
+
+    private buildPaginationQueryParams(requestNode: TaskListRequestModel): { maxItems: number; skipCount: number } {
+        return {
+            maxItems: requestNode.pagination?.maxItems || 25,
+            skipCount: requestNode.pagination?.skipCount || 0
+        };
+    }
+
+    private mapTaskListEntries(response: TaskCloudNodePaging): TaskCloudNodePaging {
+        const entries = response.list?.entries;
+        if (entries) {
+            response.list.entries = entries.map((entryData) => entryData.entry) as any;
+        }
+        return response;
     }
 
     getTaskListCounter(requestNode: TaskListRequestModel): Observable<number> {
