@@ -66,56 +66,53 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
      * @returns List of tasks
      */
     fetchTaskList(requestNode: TaskListRequestModel, queryUrl?: string): Observable<any> {
-        return this.fetchTaskListByMethod(requestNode, queryUrl, 'POST');
-    }
-
-    /**
-     * Available from Activiti version 8.7.0 onwards.
-     * Retrieves a list of tasks using an object with optional query properties.
-     * Calls runtime bundle service.
-     *
-     * @param requestNode Query object
-     * @returns List of tasks
-     */
-    fetchTaskListFromRuntimeBundleService(requestNode: TaskListRequestModel): Observable<any> {
-        const url = `${this.getBasePath(requestNode.appName)}/rb/v1/tasks`;
-        return this.fetchTaskListByMethod(requestNode, url, 'GET');
-    }
-
-    private fetchTaskListByMethod(
-        requestNode: TaskListRequestModel,
-        queryUrl?: string,
-        httpMethod: 'GET' | 'POST' = 'POST'
-    ): Observable<TaskCloudNodePaging> {
         if (!requestNode?.appName) {
             return throwError(() => new Error('Appname not configured'));
         }
 
-        const finalQueryUrl = queryUrl || `${this.getBasePath(requestNode.appName)}/query/v1/tasks/search`;
-        const queryParams = this.buildPaginationQueryParams(requestNode);
-        const queryData = this.buildQueryData(requestNode);
+        queryUrl = queryUrl || `${this.getBasePath(requestNode.appName)}/query/v1/tasks/search`;
 
-        const request$ =
-            httpMethod === 'GET'
-                ? this.get<TaskCloudNodePaging>(finalQueryUrl, { ...queryParams, ...queryData })
-                : this.post<object, TaskCloudNodePaging>(finalQueryUrl, queryData, queryParams);
-
-        return request$.pipe(map((response) => this.mapTaskListEntries(response)));
-    }
-
-    private buildPaginationQueryParams(requestNode: TaskListRequestModel): { maxItems: number; skipCount: number } {
-        return {
+        const queryParams = {
             maxItems: requestNode.pagination?.maxItems || 25,
             skipCount: requestNode.pagination?.skipCount || 0
         };
+
+        const queryData = this.buildQueryData(requestNode);
+
+        return this.post<any, TaskCloudNodePaging>(queryUrl, queryData, queryParams).pipe(
+            map((response) => {
+                const entries = response.list?.entries;
+                if (entries) {
+                    response.list.entries = entries.map((entryData) => entryData.entry) as any;
+                }
+                return response;
+            })
+        );
     }
 
-    private mapTaskListEntries(response: TaskCloudNodePaging): TaskCloudNodePaging {
-        const entries = response.list?.entries;
-        if (entries) {
-            response.list.entries = entries.map((entryData) => entryData.entry) as any;
+    fetchTaskList_UsingRuntimeBundleService(requestNode: TaskListRequestModel): Observable<any> {
+        if (!requestNode?.appName) {
+            return throwError(() => new Error('Appname not configured'));
         }
-        return response;
+
+        const url = `${this.getBasePath(requestNode.appName)}/rb/v1/tasks`;
+
+        const queryParams = {
+            maxItems: requestNode.pagination?.maxItems || 25,
+            skipCount: requestNode.pagination?.skipCount || 0
+        };
+
+        const queryData = this.buildQueryData(requestNode);
+
+        return this.getWithBody<any, TaskCloudNodePaging>(url, queryData, queryParams).pipe(
+            map((response) => {
+                const entries = response.list?.entries;
+                if (entries) {
+                    response.list.entries = entries.map((entryData) => entryData.entry) as any;
+                }
+                return response;
+            })
+        );
     }
 
     getTaskListCounter(requestNode: TaskListRequestModel): Observable<number> {

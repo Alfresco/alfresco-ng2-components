@@ -159,7 +159,7 @@ describe('TaskListCloudService', () => {
         });
     });
 
-    describe('fetchTaskListFromRuntimeBundleService', () => {
+    describe('fetchTaskList_UsingRuntimeBundleService', () => {
         it('should call runtime bundle endpoint using GET', async () => {
             const taskRequest = {
                 appName: 'fakeName',
@@ -167,7 +167,7 @@ describe('TaskListCloudService', () => {
             } as TaskListRequestModel;
             requestSpy.and.callFake(returnCallQueryParameters);
 
-            const res = await firstValueFrom(service.fetchTaskListFromRuntimeBundleService(taskRequest));
+            const res = await firstValueFrom(service.fetchTaskList_UsingRuntimeBundleService(taskRequest));
 
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -183,7 +183,7 @@ describe('TaskListCloudService', () => {
             } as TaskListRequestModel;
             requestSpy.and.callFake(returnCallQueryParameters);
 
-            const res = await firstValueFrom(service.fetchTaskListFromRuntimeBundleService(taskRequest));
+            const res = await firstValueFrom(service.fetchTaskList_UsingRuntimeBundleService(taskRequest));
 
             expect(res.skipCount).toBe(0);
             expect(res.maxItems).toBe(25);
@@ -194,7 +194,7 @@ describe('TaskListCloudService', () => {
             requestSpy.and.callFake(returnCallUrl);
 
             const res = await firstValueFrom(
-                service.fetchTaskListFromRuntimeBundleService(taskRequest).pipe(catchError((error) => of(error.message)))
+                service.fetchTaskList_UsingRuntimeBundleService(taskRequest).pipe(catchError((error) => of(error.message)))
             );
 
             expect(res).toBe('Appname not configured');

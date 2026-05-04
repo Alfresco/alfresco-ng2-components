@@ -101,7 +101,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task was completed by the current user
      */
     wasTaskCompletedByCurrentUser(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails.status === TASK_COMPLETED_STATE && this.isAssignedToMe(taskDetails.assignee);
+        return taskDetails?.status === TASK_COMPLETED_STATE && this.isAssignedToMe(taskDetails.assignee);
     }
 
     /**
