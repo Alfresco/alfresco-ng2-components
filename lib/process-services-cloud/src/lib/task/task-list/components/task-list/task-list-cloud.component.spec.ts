@@ -250,6 +250,7 @@ describe('TaskListCloudComponent', () => {
 
             fixture.detectChanges();
 
+            expect(preferencesService.updatePreference).toHaveBeenCalled();
             expect(createDatatableSchemaSpy).toHaveBeenCalled();
         });
 

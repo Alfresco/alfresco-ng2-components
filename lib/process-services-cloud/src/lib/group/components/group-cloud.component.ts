@@ -341,6 +341,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
             this.groupChipsCtrlValue(this.selectedGroups[0].name);
 
             this.changedGroups.emit(this.selectedGroups);
+            this.updateSearchControlState();
             this.resetSearchGroups();
         }
     }
@@ -356,6 +357,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
         }
         this.searchGroupsControl.markAsDirty();
         this.searchGroupsControl.markAsTouched();
+        this.updateSearchControlState();
 
         if (this.isValidationEnabled()) {
             this.removeGroupFromValidation(groupToRemove);
@@ -452,7 +454,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     }
 
     updateSearchControlState(): void {
-        if (this.readOnly || this.isValidationLoading()) {
+        if (this.isReadonly() || this.isValidationLoading()) {
             this.searchGroupsControl.disable({ emitEvent: false });
         } else {
             this.searchGroupsControl.enable({ emitEvent: false });

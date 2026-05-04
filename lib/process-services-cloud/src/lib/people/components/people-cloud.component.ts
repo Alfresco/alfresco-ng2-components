@@ -426,6 +426,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
             this.userChipsControlValue(this.selectedUsers[0].username);
 
             this.changedUsers.emit(this.selectedUsers);
+            this.updateSearchControlState();
             this.resetSearchUsers();
         }
     }
@@ -444,6 +445,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
         }
         this.searchUserCtrl.markAsDirty();
         this.searchUserCtrl.markAsTouched();
+        this.updateSearchControlState();
 
         if (this.isValidationEnabled()) {
             this.removeUserFromValidation(userToRemove);
