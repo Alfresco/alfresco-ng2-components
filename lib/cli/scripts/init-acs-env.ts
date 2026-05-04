@@ -178,7 +178,7 @@ async function uploadFile(fileName: string, fileDestination: string): Promise<No
         });
         logger.info(`File ${fileName} was uploaded`);
     } catch (err) {
-        logger.error(`Failed to upload file with error: `, err.stack);
+        logger.error(`Failed to upload file with error: `, err);
     }
     return uploadedFile;
 }
@@ -193,11 +193,11 @@ async function lockFile(nodeId: string): Promise<NodeEntry> {
         type: 'ALLOW_OWNER_CHANGES'
     };
     try {
-        const result = new NodesApi(alfrescoJsApi).lockNode(nodeId, data);
+        const result = await new NodesApi(alfrescoJsApi).lockNode(nodeId, data);
         logger.info('File was locked');
         return result;
     } catch (error) {
-        logger.error('Failed to lock file with error: ', error.stack);
+        logger.error('Failed to lock file with error: ', error);
         return null;
     }
 }
@@ -215,7 +215,7 @@ async function shareFile(nodeId: string) {
         await new SharedlinksApi(alfrescoJsApi).createSharedLink(data);
         logger.info('File was shared');
     } catch (error) {
-        logger.error('Failed to share file with error: ', error.stack);
+        logger.error('Failed to share file with error: ', error);
     }
 }
 
@@ -236,7 +236,7 @@ async function favoriteFile(nodeId: string) {
         await new FavoritesApi(alfrescoJsApi).createFavorite('-me-', data);
         logger.info('File was add to favorites');
     } catch (error) {
-        logger.error('Failed to add the file to favorites with error: ', error.stack);
+        logger.error('Failed to add the file to favorites with error: ', error);
     }
 }
 
