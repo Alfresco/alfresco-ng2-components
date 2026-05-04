@@ -231,6 +231,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
 
     ngOnInit(): void {
         this.initSearch();
+        this.updateSearchControlState();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -247,11 +248,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
             }
         }
 
-        if (this.isReadonly() && this.searchUserCtrl.enabled) {
-            this.searchUserCtrl.disable();
-        } else if (!this.isReadonly() && this.searchUserCtrl.disabled) {
-            this.searchUserCtrl.enable();
-        }
+        this.updateSearchControlState();
     }
 
     ngAfterViewInit(): void {
@@ -348,8 +345,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
         this.userChipsCtrl.setValue(this.selectedUsers[0].username);
         if (this.isValidationEnabled()) {
             this.validationLoading = true;
+            this.updateSearchControlState();
             await this.validatePreselectUsers();
             this.validationLoading = false;
+            this.updateSearchControlState();
         }
     }
 
@@ -427,6 +426,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
             this.userChipsControlValue(this.selectedUsers[0].username);
 
             this.changedUsers.emit(this.selectedUsers);
+            this.updateSearchControlState();
             this.resetSearchUsers();
         }
     }
@@ -445,6 +445,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
         }
         this.searchUserCtrl.markAsDirty();
         this.searchUserCtrl.markAsTouched();
+        this.updateSearchControlState();
 
         if (this.isValidationEnabled()) {
             this.removeUserFromValidation(userToRemove);
@@ -561,6 +562,14 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
 
     isValidationLoading(): boolean {
         return this.isValidationEnabled() && this.validationLoading;
+    }
+
+    updateSearchControlState(): void {
+        if (this.isReadonly() || this.isValidationLoading()) {
+            this.searchUserCtrl.disable({ emitEvent: false });
+        } else {
+            this.searchUserCtrl.enable({ emitEvent: false });
+        }
     }
 
     markAsTouched(): void {

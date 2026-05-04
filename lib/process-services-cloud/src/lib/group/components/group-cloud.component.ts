@@ -169,9 +169,13 @@ export class GroupCloudComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.initSearch();
+        this.updateSearchControlState();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
+        if (changes?.readOnly || changes?.validate) {
+            this.updateSearchControlState();
+        }
         if (this.hasPreselectedGroupsChanged(changes) || this.hasModeChanged(changes) || this.isValidationChanged(changes)) {
             if (this.hasPreSelectGroups()) {
                 this.loadPreSelectGroups();
@@ -312,8 +316,10 @@ export class GroupCloudComponent implements OnInit, OnChanges {
         this.groupChipsCtrl.setValue(this.selectedGroups[0].name);
         if (this.isValidationEnabled()) {
             this.validationLoading = true;
+            this.updateSearchControlState();
             await this.validatePreselectGroups();
             this.validationLoading = false;
+            this.updateSearchControlState();
         }
     }
 
@@ -335,6 +341,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
             this.groupChipsCtrlValue(this.selectedGroups[0].name);
 
             this.changedGroups.emit(this.selectedGroups);
+            this.updateSearchControlState();
             this.resetSearchGroups();
         }
     }
@@ -350,6 +357,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
         }
         this.searchGroupsControl.markAsDirty();
         this.searchGroupsControl.markAsTouched();
+        this.updateSearchControlState();
 
         if (this.isValidationEnabled()) {
             this.removeGroupFromValidation(groupToRemove);
@@ -443,6 +451,14 @@ export class GroupCloudComponent implements OnInit, OnChanges {
 
     isReadonly(): boolean {
         return this.readOnly || this.isSingleSelectionReadonly();
+    }
+
+    updateSearchControlState(): void {
+        if (this.isReadonly() || this.isValidationLoading()) {
+            this.searchGroupsControl.disable({ emitEvent: false });
+        } else {
+            this.searchGroupsControl.enable({ emitEvent: false });
+        }
     }
 
     getDisplayName(group: IdentityGroupModel): string {
