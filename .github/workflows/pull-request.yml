@@ -188,7 +188,10 @@ jobs:
       - name: Install dependencies
         if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
         run: npm ci
-      - run: npx nx affected --target=lint --base=origin/${{ github.base_ref || 'develop' }} --head=HEAD
+      - name: Run lint
+        env:
+          BASE_REF: ${{ github.base_ref || 'develop' }}
+        run: npx nx affected --target=lint --base=origin/$BASE_REF --head=HEAD
       - name: Save nx cache
         if: ${{ success() }}
         uses: ./.github/actions/save-nx-cache
@@ -222,8 +225,10 @@ jobs:
         if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
         run: npm ci
       - name: Build Storybook
+        env:
+          BASE_REF: ${{ github.base_ref || 'develop' }}
         run: |
-          npx nx affected --target=build-storybook --base=origin/${{ github.base_ref || 'develop' }} --head=HEAD --configuration=ci
+          npx nx affected --target=build-storybook --base=origin/$BASE_REF --head=HEAD --configuration=ci
       - name: Save nx cache
         if: ${{ success() }}
         uses: ./.github/actions/save-nx-cache
