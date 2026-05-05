@@ -8,11 +8,6 @@
       "output": "assets/pdfjs"
     },
     {
-      "glob": "custom-theme/**/*",
-      "input": "./",
-      "output": "/"
-    },
-    {
       "glob": "assets/**/*",
       "input": "./src/lib",
       "output": "/bundles/"
