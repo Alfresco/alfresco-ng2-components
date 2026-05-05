@@ -9,13 +9,17 @@ on:
         type: string
         default: 'develop'
 
+env:
+  NODE_OPTIONS: "--max-old-space-size=5120"
+
 jobs:
-  generate-affected-matrix:
-    name: "Generate affected matrix"
+  # ──────────────────────────────────────────────────────────────────────
+  # Strategy A: Single job — Nx handles ordering + internal parallelism
+  # ──────────────────────────────────────────────────────────────────────
+  build-single:
+    name: "[Strategy A] Build all affected"
     runs-on: ubuntu-latest
-    outputs:
-      buildMatrix: ${{ steps.set-matrix.outputs.buildMatrix }}
-      hasProjects: ${{ steps.set-matrix.outputs.hasProjects }}
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -25,44 +29,86 @@ jobs:
         id: setup-env
         uses: ./.github/actions/setup
         with:
-          cache-suffix: build-matrix
+          cache-suffix: build-single
+          full-setup: 'false'
       - name: Install dependencies
         if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
         run: npm ci
-      - name: Generate affected projects matrix
-        id: set-matrix
-        env:
-          BASE_REF: ${{ inputs.base_ref }}
-        run: |
-          echo "Base ref is $BASE_REF"
-          AFFECTED_BUILD=$(npx nx show projects --affected --target=build --base=origin/$BASE_REF --head=HEAD --select=projects --plain --exclude=stories)
-          echo "Affected projects for BUILD: $AFFECTED_BUILD"
-
-          if [ -z "$AFFECTED_BUILD" ]; then
-            echo "No affected projects found"
-            echo "hasProjects=false" >> $GITHUB_OUTPUT
-            echo "buildMatrix=[]" >> $GITHUB_OUTPUT
-          else
-            BUILD_MATRIX_JSON=$(echo "$AFFECTED_BUILD" | xargs -n1 | jq -R -s -c 'split("\n") | map(select(length > 0)) | map({ "project": . })')
-            echo "Matrix BUILD: $BUILD_MATRIX_JSON"
-            echo "hasProjects=true" >> $GITHUB_OUTPUT
-            echo "buildMatrix=$BUILD_MATRIX_JSON" >> $GITHUB_OUTPUT
-          fi
+      - name: Build affected libs
+        run: npx nx affected --target=build --base=origin/${{ inputs.base_ref }} --head=HEAD --configuration=production --exclude=stories
       - name: Save nx cache
         if: ${{ success() }}
         uses: ./.github/actions/save-nx-cache
         with:
-          cache-suffix: build-matrix
+          cache-suffix: build-single
 
-  build:
-    timeout-minutes: 30
-    needs: generate-affected-matrix
-    if: ${{ needs.generate-affected-matrix.outputs.hasProjects == 'true' }}
+  # ──────────────────────────────────────────────────────────────────────
+  # Strategy B: Tiered pipeline — sequential layers with parallel leaf
+  # Each tier uploads dist/ as artifact for the next tier to consume.
+  # ──────────────────────────────────────────────────────────────────────
+  compute-affected:
+    name: "[Strategy B] Compute affected"
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include: ${{ fromJson(needs.generate-affected-matrix.outputs.buildMatrix) }}
+    outputs:
+      js-api: ${{ steps.check.outputs.js-api }}
+      extensions: ${{ steps.check.outputs.extensions }}
+      core: ${{ steps.check.outputs.core }}
+      content-services: ${{ steps.check.outputs.content-services }}
+      leaf-matrix: ${{ steps.check.outputs.leaf-matrix }}
+      has-leaf-projects: ${{ steps.check.outputs.has-leaf-projects }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+      - name: Setup environment
+        id: setup-env
+        uses: ./.github/actions/setup
+        with:
+          cache-suffix: build-tiered
+          full-setup: 'false'
+      - name: Install dependencies
+        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
+        run: npm ci
+      - name: Determine affected projects
+        id: check
+        env:
+          BASE_REF: ${{ inputs.base_ref }}
+        run: |
+          AFFECTED=$(npx nx show projects --affected --target=build --base=origin/$BASE_REF --head=HEAD --select=projects --plain --exclude=stories)
+          echo "Affected projects: $AFFECTED"
+
+          check_affected() {
+            echo "$AFFECTED" | tr ' ' '\n' | grep -qx "$1" && echo "true" || echo "false"
+          }
+
+          echo "js-api=$(check_affected js-api)" >> $GITHUB_OUTPUT
+          echo "extensions=$(check_affected extensions)" >> $GITHUB_OUTPUT
+          echo "core=$(check_affected core)" >> $GITHUB_OUTPUT
+          echo "content-services=$(check_affected content-services)" >> $GITHUB_OUTPUT
+
+          LEAF_PROJECTS=""
+          for proj in insights process-services process-services-cloud; do
+            if echo "$AFFECTED" | tr ' ' '\n' | grep -qx "$proj"; then
+              LEAF_PROJECTS="$LEAF_PROJECTS $proj"
+            fi
+          done
+
+          if [ -z "$LEAF_PROJECTS" ]; then
+            echo "has-leaf-projects=false" >> $GITHUB_OUTPUT
+            echo "leaf-matrix=[]" >> $GITHUB_OUTPUT
+          else
+            MATRIX_JSON=$(echo "$LEAF_PROJECTS" | xargs -n1 | jq -R -s -c 'split("\n") | map(select(length > 0)) | map({ "project": . })')
+            echo "has-leaf-projects=true" >> $GITHUB_OUTPUT
+            echo "leaf-matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
+          fi
+
+  build-tier-0:
+    name: "[Strategy B] Build js-api"
+    needs: compute-affected
+    if: ${{ needs.compute-affected.outputs.js-api == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -70,18 +116,154 @@ jobs:
         id: setup-env
         uses: ./.github/actions/setup
         with:
-          cache-suffix: build-${{ matrix.project }}
+          cache-suffix: build-tiered
           full-setup: 'false'
       - name: Install dependencies
         if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
         run: npm ci
-      - name: Run build for ${{ matrix.project }}
-        env:
-          NODE_OPTIONS: "--max-old-space-size=5120"
-        run: |
-          npx nx run ${{ matrix.project }}:build:production
-      - name: Save nx cache
-        if: ${{ success() }}
-        uses: ./.github/actions/save-nx-cache
+      - name: Build js-api
+        run: npx nx run js-api:build:production
+      - name: Upload dist
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          cache-suffix: build-${{ matrix.project }}
+          name: build-tier-0
+          path: |
+            dist/
+            nxcache/
+            .nx/
+          retention-days: 1
+
+  build-tier-1:
+    name: "[Strategy B] Build extensions"
+    needs: [compute-affected, build-tier-0]
+    if: ${{ always() && needs.compute-affected.outputs.extensions == 'true' && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Setup environment
+        id: setup-env
+        uses: ./.github/actions/setup
+        with:
+          cache-suffix: build-tiered
+          full-setup: 'false'
+      - name: Install dependencies
+        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
+        run: npm ci
+      - name: Download previous tier
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: build-tier-0
+          path: .
+      - name: Build extensions
+        run: npx nx run extensions:build:production
+      - name: Upload dist
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: build-tier-1
+          path: |
+            dist/
+            nxcache/
+            .nx/
+          retention-days: 1
+
+  build-tier-2:
+    name: "[Strategy B] Build core"
+    needs: [compute-affected, build-tier-1]
+    if: ${{ always() && needs.compute-affected.outputs.core == 'true' && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Setup environment
+        id: setup-env
+        uses: ./.github/actions/setup
+        with:
+          cache-suffix: build-tiered
+          full-setup: 'false'
+      - name: Install dependencies
+        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
+        run: npm ci
+      - name: Download previous tier
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: build-tier-1
+          path: .
+      - name: Build core
+        run: npx nx run core:build:production
+      - name: Upload dist
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: build-tier-2
+          path: |
+            dist/
+            nxcache/
+            .nx/
+          retention-days: 1
+
+  build-tier-3:
+    name: "[Strategy B] Build content-services"
+    needs: [compute-affected, build-tier-2]
+    if: ${{ always() && needs.compute-affected.outputs.content-services == 'true' && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Setup environment
+        id: setup-env
+        uses: ./.github/actions/setup
+        with:
+          cache-suffix: build-tiered
+          full-setup: 'false'
+      - name: Install dependencies
+        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
+        run: npm ci
+      - name: Download previous tier
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: build-tier-2
+          path: .
+      - name: Build content-services
+        run: npx nx run content-services:build:production
+      - name: Upload dist
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: build-tier-3
+          path: |
+            dist/
+            nxcache/
+            .nx/
+          retention-days: 1
+
+  build-tier-4:
+    name: "[Strategy B] Build ${{ matrix.project }}"
+    needs: [compute-affected, build-tier-3]
+    if: ${{ always() && needs.compute-affected.outputs.has-leaf-projects == 'true' && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.compute-affected.outputs.leaf-matrix) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Setup environment
+        id: setup-env
+        uses: ./.github/actions/setup
+        with:
+          cache-suffix: build-tiered
+          full-setup: 'false'
+      - name: Install dependencies
+        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
+        run: npm ci
+      - name: Download previous tier
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: build-tier-3
+          path: .
+      - name: Build ${{ matrix.project }}
+        run: npx nx run ${{ matrix.project }}:build:production
