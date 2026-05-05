@@ -1,0 +1,17 @@
+name: 'Save Nx Cache'
+description: 'Save Nx cache and dist outputs only when the job succeeds'
+inputs:
+  cache-suffix:
+    description: 'Must match the cache-suffix used in the setup action'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Save nx cache
+      uses: actions/cache/save@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+      with:
+        path: |
+          nxcache
+          .nx
+          dist
+        key: ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-${{ hashFiles('nx.json') }}-${{ github.sha }}

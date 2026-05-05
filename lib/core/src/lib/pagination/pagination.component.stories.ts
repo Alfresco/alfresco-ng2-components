@@ -18,6 +18,7 @@
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { PaginationComponent } from './pagination.component';
 import { provideStoryCore } from '../stories/core-story.providers';
+import { expect, within } from 'storybook/test';
 
 const meta: Meta<PaginationComponent> = {
     component: PaginationComponent,
@@ -95,5 +96,20 @@ type Story = StoryObj<PaginationComponent>;
 export const Pagination: Story = {
     render: (args) => ({
         props: args
-    })
+    }),
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+
+        const paginationRange = canvas.getByText(/1-25 of 100/i);
+        await expect(paginationRange).toBeVisible();
+
+        const pageSizeSelector = canvas.getByRole('combobox');
+        await expect(pageSizeSelector).toBeVisible();
+
+        const nextButton = canvas.getByRole('button', { name: /next/i });
+        await expect(nextButton).toBeVisible();
+
+        const previousButton = canvas.getByRole('button', { name: /previous/i });
+        await expect(previousButton).toBeVisible();
+    }
 };

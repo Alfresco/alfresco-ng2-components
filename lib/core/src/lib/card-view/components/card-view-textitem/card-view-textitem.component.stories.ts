@@ -19,6 +19,7 @@ import { Meta, StoryObj } from '@storybook/angular';
 import { CardViewTextItemComponent } from './card-view-textitem.component';
 import { CardViewTextItemModel } from '../../public-api';
 import { cardViewSharedMeta } from '../../stories/card-view-shared-meta';
+import { expect, within } from 'storybook/test';
 
 const meta: Meta<CardViewTextItemComponent> = {
     ...cardViewSharedMeta,
@@ -50,6 +51,15 @@ export const ClickableCardViewTextItem: Story = {
             clickable: true,
             icon: 'close'
         })
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+
+        const label = canvas.getByText(/CardView Text Item - Clickable template/i);
+        await expect(label).toBeVisible();
+
+        const value = canvas.getByText(/click here/i);
+        await expect(value).toBeVisible();
     }
 };
 
@@ -104,5 +114,14 @@ export const DefaultCardViewTextItem: Story = {
             icon: 'close',
             multiline: false
         })
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+
+        const label = canvas.getByText(/CardView Text Item - Default template/i);
+        await expect(label).toBeVisible();
+
+        const value = canvas.getByText(/input here/i);
+        await expect(value).toBeVisible();
     }
 };

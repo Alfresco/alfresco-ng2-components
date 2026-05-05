@@ -95,6 +95,7 @@
     },
     "copyToNodeModules": {
       "executor": "nx:run-commands",
+      "cache": false,
       "options": {
         "commands": [
           {
