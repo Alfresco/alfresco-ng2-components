@@ -134,7 +134,7 @@ export class AdfDateTimeFnsAdapter extends DatetimeAdapter<Date> {
     override format(date: Date, displayFormat: any): string {
         displayFormat = DateFnsUtils.convertMomentToDateFnsFormat(displayFormat);
 
-        if (this.displayFormat && displayFormat === this.formats?.display?.datetimeInput) {
+        if (this.displayFormat && (displayFormat === this.formats?.display?.datetimeInput || displayFormat === this.formats?.display?.dateInput)) {
             return this._delegate.format(date, this.displayFormat || displayFormat);
         }
 
