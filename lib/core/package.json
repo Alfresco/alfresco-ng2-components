@@ -14,9 +14,6 @@
   "exports": {
     "./theming": {
       "sass": "./lib/theming/_index.scss"
-    },
-    "./breadcrumbs": {
-      "sass": "./breadcrumbs/styles/_breadcrumb.theme.scss"
     }
   },
   "dependencies": {
