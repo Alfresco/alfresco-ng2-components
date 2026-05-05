@@ -48,6 +48,11 @@ jobs:
             echo "hasProjects=true" >> $GITHUB_OUTPUT
             echo "buildMatrix=$BUILD_MATRIX_JSON" >> $GITHUB_OUTPUT
           fi
+      - name: Save nx cache
+        if: ${{ success() }}
+        uses: ./.github/actions/save-nx-cache
+        with:
+          cache-suffix: build-matrix
 
   build:
     timeout-minutes: 30
@@ -75,3 +80,8 @@ jobs:
           NODE_OPTIONS: "--max-old-space-size=5120"
         run: |
           npx nx run ${{ matrix.project }}:build:production
+      - name: Save nx cache
+        if: ${{ success() }}
+        uses: ./.github/actions/save-nx-cache
+        with:
+          cache-suffix: build-${{ matrix.project }}

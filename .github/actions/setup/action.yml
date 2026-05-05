@@ -55,17 +55,17 @@ runs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('.nvmrc') }}-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-${{ hashFiles('.nvmrc') }}-
-      - name: Cache nx
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+      - name: Restore nx cache
+        uses: actions/cache/restore@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: |
             nxcache
             .nx
+            dist
           key: ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-${{ hashFiles('nx.json') }}-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-${{ hashFiles('nx.json') }}-
             ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-
-            ${{ runner.os }}-nxcache-default-
       - name: before install script
         if: ${{ inputs.full-setup == 'true' }}
         uses: ./.github/actions/before-install

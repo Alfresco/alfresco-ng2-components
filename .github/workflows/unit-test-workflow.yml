@@ -48,6 +48,11 @@ jobs:
             echo "hasProjects=true" >> $GITHUB_OUTPUT
             echo "unitMatrix=$UNIT_MATRIX_JSON" >> $GITHUB_OUTPUT
           fi
+      - name: Save nx cache
+        if: ${{ success() }}
+        uses: ./.github/actions/save-nx-cache
+        with:
+          cache-suffix: test-matrix
 
   unit-tests:
     timeout-minutes: 30
@@ -75,3 +80,8 @@ jobs:
           NODE_OPTIONS: "--max-old-space-size=5120"
         run: |
           xvfb-run --auto-servernum npx nx run ${{ matrix.project }}:test
+      - name: Save nx cache
+        if: ${{ success() }}
+        uses: ./.github/actions/save-nx-cache
+        with:
+          cache-suffix: test-${{ matrix.project }}

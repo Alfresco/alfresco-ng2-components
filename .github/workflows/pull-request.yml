@@ -163,6 +163,11 @@ jobs:
         run: |
           npm run bundle:js-api
           npm run bundle:cli
+      - name: Save nx cache
+        if: ${{ success() }}
+        uses: ./.github/actions/save-nx-cache
+        with:
+          cache-suffix: setup
 
   lint:
     timeout-minutes: 30
@@ -184,6 +189,11 @@ jobs:
         if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
         run: npm ci
       - run: npx nx affected --target=lint --base=origin/${{ github.base_ref || 'develop' }} --head=HEAD
+      - name: Save nx cache
+        if: ${{ success() }}
+        uses: ./.github/actions/save-nx-cache
+        with:
+          cache-suffix: lint
 
   trigger-build:
     name: "Build Libs"
@@ -214,6 +224,11 @@ jobs:
       - name: Build Storybook
         run: |
           npx nx affected --target=build-storybook --base=origin/${{ github.base_ref || 'develop' }} --head=HEAD --configuration=ci
+      - name: Save nx cache
+        if: ${{ success() }}
+        uses: ./.github/actions/save-nx-cache
+        with:
+          cache-suffix: storybook
 
   trigger-unit-tests:
     name: "Unit Tests"
