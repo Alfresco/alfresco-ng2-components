@@ -31,16 +31,14 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  BASE_REF: ${{ github.base_ref }}
-  HEAD_REF: ${{ github.head_ref }}
   GH_COMMIT: ${{ github.sha }}
-  GH_BUILD_NUMBER: ${{ github.run_id }}
-  LOG_LEVEL: "ERROR"
   NODE_OPTIONS: "--max-old-space-size=5120"
 
 jobs:
   pre-checks:
     runs-on: ubuntu-latest
+    outputs:
+      code-changed: ${{ steps.path-filter.outputs.code-changed }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -57,150 +55,121 @@ jobs:
             exit 1
           fi
 
+      - name: Detect code changes
+        id: path-filter
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            echo "Not a PR event — assuming code changed"
+            echo "code-changed=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          FILES=$(gh api /repos/$GITHUB_REPOSITORY/pulls/${{ github.event.pull_request.number }}/files --paginate --jq '.[].filename')
+
+          CODE_CHANGED="false"
+          while IFS= read -r file; do
+            case "$file" in
+              *.md|docs/*|.github/*.md|.github/CODEOWNERS|.github/dependabot.yml|LICENSE*|NOTICE*|.editorconfig|.gitattributes)
+                ;;
+              *)
+                CODE_CHANGED="true"
+                break
+                ;;
+            esac
+          done <<< "$FILES"
+
+          echo "code-changed=$CODE_CHANGED" >> $GITHUB_OUTPUT
+          echo "Code changed: $CODE_CHANGED"
+
   check-if-pr-is-approved:
     runs-on: ubuntu-latest
+    steps:
+      - name: Check if PR approval can be skipped
+        id: skip-check
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          ACTOR: ${{ github.actor }}
+          DEVEL_FLAG: ${{ inputs.devel }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message || github.event.pull_request.title || '' }}
+        run: |
+          skip="false"
+
+          if [ "$EVENT_NAME" == "schedule" ] || [ "$EVENT_NAME" == "workflow_dispatch" ]; then
+            echo -e "\033[32mSchedule/dispatch event — skipping approval check\033[0m"
+            skip="true"
+          elif [ "$ACTOR" == "dependabot[bot]" ] || [ "$ACTOR" == "alfresco-build" ]; then
+            echo -e "\033[32mCommit by $ACTOR — skipping approval check\033[0m"
+            skip="true"
+          elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
+            echo -e "\033[32m[ci:force] flag detected — skipping approval check\033[0m"
+            skip="true"
+          elif [[ "$DEVEL_FLAG" == "true" ]]; then
+            echo -e "\033[32mDevel flag — skipping approval check\033[0m"
+            skip="true"
+          fi
+
+          echo "skip=$skip" >> $GITHUB_OUTPUT
+
+      - name: Get PR number
+        if: ${{ steps.skip-check.outputs.skip != 'true' }}
+        id: pr-number
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          if [ -z "$PR_NUMBER" ]; then
+            PR_NUMBER=$(gh pr view --json number --jq '.number' 2>/dev/null || echo "")
+          fi
+          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "PR: $PR_NUMBER"
+
+      - name: Check if PR is approved
+        if: ${{ steps.skip-check.outputs.skip != 'true' && steps.pr-number.outputs.pr_number != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.pr-number.outputs.pr_number }}
+        run: |
+          echo "Checking approval for PR: $PR_NUMBER"
+          checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
+          if [[ $checkApproval ]]; then
+            echo -e "\033[32mPR approved\033[0m"
+          else
+            echo -e "\033[31mPR NOT approved\033[0m"
+            exit 1
+          fi
+
+  setup:
+    timeout-minutes: 30
+    name: "Setup"
+    runs-on: ubuntu-latest
+    needs: [check-if-pr-is-approved, pre-checks]
+    if: ${{ needs.pre-checks.outputs.code-changed == 'true' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
-
-      - name: Get branch name
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@f95467b62527ce087c9a1b7e55c467061cf827a0 # v17.6.1
-
-      - name: Save commit message
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@f95467b62527ce087c9a1b7e55c467061cf827a0 # v17.6.1
+      - name: Setup environment
+        id: setup-env
+        uses: ./.github/actions/setup
         with:
-          header-only: true
-
-      - name: ci:force flag parser
-        shell: bash
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          ACTOR: ${{ github.actor }}
+          cache-suffix: setup
+      - name: Install dependencies
+        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
+        run: npm ci
+      - name: Bundle
         run: |
-          if [ "$EVENT_NAME" == "schedule" ] || [ "$ACTOR" == "dependabot[bot]" ]; then
-            echo -e "\033[32mci:force check can be skipped\033[0m"
-            skip_check="true"
-          elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
-              echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
-              skip_check="true"
-          fi
-
-      - name: Get PR number
-        if: ${{ github.event_name != 'schedule' && github.event_name != 'workflow_dispatch' }}
-        uses: kamatama41/get-pr-number-action@ff143e03abaa79d346ca5407d49d335b5def979e # v1.0.1
-        id: action
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: show pr number
-        shell: bash
-        env:
-          PR_NUMBER: ${{ steps.action.outputs.number }}
-        run: |
-          echo "PR: $PR_NUMBER"
-
-      - name: check if pr is approved
-        env:
-          DEVEL_FLAG: ${{ inputs.devel }}
-          GH_TOKEN: ${{ github.token }}
-          skip_check: "false"
-          EVENT_NAME: ${{ github.event_name }}
-          ACTOR: ${{ github.actor }}
-          PR_NUMBER: ${{ steps.action.outputs.number }}
-        run: |
-          if [ "$EVENT_NAME" == "schedule" ] || [ "$ACTOR" == "dependabot[bot]" ]; then
-            echo -e "\033[32mci:force check can be skipped\033[0m"
-            skip_check="true"
-          elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
-            echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
-            skip_check="true"
-          fi
-
-          if [ "$ACTOR" == "dependabot[bot]" ] || [ "$ACTOR" == "alfresco-build" ]; then
-            echo -e "\033[32mCommit by $ACTOR. No need for approval.\033[0m"
-            skip_check="true"
-          fi
-          if [ "$EVENT_NAME" == "schedule" ] || [ "$EVENT_NAME" == "workflow_dispatch" ]; then
-            echo -e "\033[32mSchedule event\033[0m"
-            skip_check="true"
-          fi
-
-          if [[ "$DEVEL_FLAG" == "true" ]]; then
-            echo -e "\033[32mDevel flag\033[0m"
-            skip_check="true"
-          fi
-
-          if [ "$skip_check" == "false" ]; then
-            echo "Checking PR approval"
-            prNumber=$PR_NUMBER
-            echo "PR: $prNumber"
-            checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
-            if [[ $checkApproval ]]; then
-              echo -e "\033[32mPR approved\033[0m"
-            else
-              echo -e "\033[31mPR NOT approved\033[0m"
-              exit 1
-            fi
-          fi
-
-  setup:
-    # long timeout required when cache has to be recreated
-    timeout-minutes: 30
-    name: "Setup"
-    runs-on: ubuntu-latest
-    needs: [check-if-pr-is-approved, pre-checks]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - uses: ./.github/actions/setup
-      - name: install
-        run: |
-          npm ci
           npm run bundle:js-api
           npm run bundle:cli
-      - uses: ./.github/actions/upload-node-modules-and-artifacts
-
-  unit-tests:
-    timeout-minutes: 30
-    name: "Unit tests: ${{ matrix.unit-tests.name }}"
-    runs-on: ubuntu-latest
-    needs: [setup]
-    strategy:
-      fail-fast: false
-      # max-parallel: 4
-      matrix:
-        unit-tests:
-          - name: js-api
-            exclude: "core,insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular"
-          - name: content-services
-            exclude: "insights,core,extensions,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
-          - name: core
-            exclude: "insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
-          - name: insights
-            exclude: "core,extensions,content-services,process-services-cloud,process-services,eslint-plugin-eslint-angular,js-api"
-          - name: process-services
-            exclude: "core,extensions,content-services,process-services-cloud,insights,eslint-plugin-eslint-angular,js-api"
-          - name: process-services-cloud
-            exclude: "insights,core,extensions,content-services,process-services$,eslint-plugin-eslint-angular,js-api"
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Save nx cache
+        if: ${{ success() }}
+        uses: ./.github/actions/save-nx-cache
         with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: Run unit tests
-        env:
-          EXCLUDE_PATTERN: ${{ matrix.unit-tests.exclude }}
-        run: |
-          /usr/bin/xvfb-run --auto-servernum npm run test:affected -- $NX_CALCULATION_FLAGS --exclude=$EXCLUDE_PATTERN
+          cache-suffix: setup
 
   lint:
-    # long timeout required when cache has to be recreated
     timeout-minutes: 30
     name: "Lint"
     runs-on: ubuntu-latest
@@ -209,71 +178,133 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - run: npm run lint:affected -- $NX_CALCULATION_FLAGS
-
-  build-libs:
-    # long timeout required when cache has to be recreated
-    timeout-minutes: 30
-    name: "Build libs"
-    runs-on: ubuntu-latest
-    needs: [setup]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+          fetch-depth: 0
+      - name: Setup environment
+        id: setup-env
+        uses: ./.github/actions/setup
         with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - run: NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npm run build:affected -- $NX_CALCULATION_FLAGS --prod
-      - uses: ./.github/actions/upload-node-modules-and-artifacts
+          cache-suffix: lint
+          full-setup: 'false'
+      - name: Install dependencies
+        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
+        run: npm ci
+      - name: Run lint
+        env:
+          BASE_REF: ${{ github.base_ref || 'develop' }}
+        run: npx nx affected --target=lint --base=origin/$BASE_REF --head=HEAD
+      - name: Save nx cache
+        if: ${{ success() }}
+        uses: ./.github/actions/save-nx-cache
+        with:
+          cache-suffix: lint
+
+  trigger-build:
+    name: "Build Libs"
+    needs: [setup]
+    uses: ./.github/workflows/build-lib-workflow.yml
+    with:
+      base_ref: ${{ github.base_ref || 'develop' }}
 
   build-storybook:
     timeout-minutes: 30
-    name: "Build storybook"
-    runs-on: ubuntu-latest
+    name: "Build Storybook"
     needs: [setup]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - run: npm run build-storybook
-      - uses: ./.github/actions/upload-node-modules-and-artifacts
+          fetch-depth: 0
+      - name: Setup environment
+        id: setup-env
+        uses: ./.github/actions/setup
+        with:
+          cache-suffix: storybook
+          full-setup: 'false'
+      - name: Install dependencies
+        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
+        run: npm ci
+      - name: Build Storybook
+        env:
+          BASE_REF: ${{ github.base_ref || 'develop' }}
+        run: |
+          npx nx affected --target=build-storybook --base=origin/$BASE_REF --head=HEAD --configuration=ci
+      - name: Save nx cache
+        if: ${{ success() }}
+        uses: ./.github/actions/save-nx-cache
+        with:
+          cache-suffix: storybook
+
+  trigger-unit-tests:
+    name: "Unit Tests"
+    needs: [setup]
+    uses: ./.github/workflows/unit-test-workflow.yml
+    with:
+      base_ref: ${{ github.base_ref || 'develop' }}
+
+  PR-size-check:
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR size
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+
+            const additions = pr.additions;
+            const deletions = pr.deletions;
+            const totalChanges = additions + deletions;
+            const changedFiles = pr.changed_files;
+
+            let size = 'S';
+            if (totalChanges > 1000 || changedFiles > 30) size = 'XL';
+            else if (totalChanges > 500 || changedFiles > 20) size = 'L';
+            else if (totalChanges > 200 || changedFiles > 10) size = 'M';
+
+            core.summary
+              .addHeading('PR Size: ' + size, 3)
+              .addTable([
+                [{data: 'Metric', header: true}, {data: 'Count', header: true}],
+                ['Files changed', String(changedFiles)],
+                ['Additions', '+' + String(additions)],
+                ['Deletions', '-' + String(deletions)],
+                ['Total changes', String(totalChanges)],
+              ]);
+
+            if (size === 'XL') {
+              core.summary.addRaw('⚠️ This PR is very large. Consider splitting it into smaller PRs for easier review.');
+            }
+
+            await core.summary.write();
+
+            if (size === 'XL') {
+              core.warning('This PR has ' + totalChanges + ' changes across ' + changedFiles + ' files. Consider splitting it for easier review.');
+            }
 
   PR-forbidden-labels:
     if: ${{ inputs.cron-run == '' || inputs.cron-run == 'false' }}
     runs-on: ubuntu-latest
     steps:
-      - id: checkoutRepo
-        name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          fetch-depth: 1
-      - name: PR contains forbidden labels
-        id: pr-forbidden
+      - name: Check for forbidden labels
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
-            const issueHasLabels = require('./scripts/github/update/check-issue-has-label.js');
-            const checkLabels = ['next version ➡️', 'do not merge🙅🏻‍♂️'];
+            const { data: issue } = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const labels = issue.labels?.map(item => item.name) || [];
+            const forbidden = ['next version ➡️', 'do not merge🙅🏻‍♂️'];
 
-            const hasLabel = await issueHasLabels({github, context, checkLabels})
-
-            if(hasLabel) {
+            if (forbidden.some(l => labels.includes(l))) {
               core.setFailed('The PR contains a forbidden label! You are not allowed to merge until the label is there.');
             }
-      - name: Check value after
-        env:
-          STEP_RESULT: ${{ toJson(steps.pr-forbidden.*.result) }}
-          HAS_FAILURE: ${{ contains(toJson(steps.pr-forbidden.*.result), 'failure') }}
-        run: |
-          echo "Step result: $STEP_RESULT"
-          echo "Has failure: $HAS_FAILURE"
 
   finalize:
     if: ${{ always() }}
@@ -284,16 +315,13 @@ jobs:
         check-if-pr-is-approved,
         pre-checks,
         setup,
-        unit-tests,
+        trigger-unit-tests,
         lint,
-        build-libs,
+        trigger-build,
         build-storybook,
+        PR-forbidden-labels,
       ]
     steps:
       - name: Check job execution status
-        if: >-
-          ${{
-              contains(needs.*.result, 'failure')
-            || contains(needs.*.result, 'cancelled')
-          }}
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
         run: exit 1

@@ -19,6 +19,7 @@ import { Meta, StoryObj } from '@storybook/angular';
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
 import { CardViewBoolItemModel } from '../../public-api';
 import { cardViewSharedMeta } from '../../stories/card-view-shared-meta';
+import { expect, within } from 'storybook/test';
 
 const meta: Meta<CardViewBoolItemComponent> = {
     ...cardViewSharedMeta,
@@ -50,5 +51,15 @@ export const CardViewBoolItem: Story = {
             default: false,
             editable: true
         })
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+
+        const label = canvas.getByText(/Agree to all terms and conditions/i);
+        await expect(label).toBeVisible();
+
+        const toggle = canvas.getByRole('checkbox');
+        await expect(toggle).toBeVisible();
+        await expect(toggle).toBeChecked();
     }
 };

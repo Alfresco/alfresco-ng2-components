@@ -6,6 +6,15 @@ inputs:
     required: false
     type: boolean
     default: 'true'
+  cache-suffix:
+    description: 'Suffix to make Nx cache key unique per job (e.g. matrix project name)'
+    required: false
+    default: 'default'
+  full-setup:
+    description: 'Run git-latest-tag, npm-tag, and before-install (requires fetch-depth: 0). Set to false for matrix jobs that only need node/cache.'
+    required: false
+    type: boolean
+    default: 'true'
   act:
     description: 'enable act debug'
     required: false
@@ -15,36 +24,50 @@ outputs:
   npm-tag:
     description: 'NPM tag'
     value: ${{ steps.set-npm-tag.outputs.npm-tag }}
+  node-modules-cache-hit:
+    description: 'Whether node_modules cache was hit'
+    value: ${{ steps.node-modules-cache.outputs.cache-hit }}
 runs:
   using: "composite"
   steps:
+      - name: Set consistent machine ID for Nx cache
+        shell: bash
+        run: echo "nx-github-actions" | sudo tee /etc/machine-id > /dev/null
       - name: install NPM
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version-file: '.nvmrc'
           cache-dependency-path: package-lock.json
       - name: get latest tag sha
+        if: ${{ inputs.full-setup == 'true' }}
         id: tag-sha
-        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@f95467b62527ce087c9a1b7e55c467061cf827a0 # v17.6.1
-# CACHE
-      - name: Node Modules cache
+        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@8d76614b374e521d792b4a1c9827409960b66bae # v17.6.0
+      - name: load "NPM TAG"
+        if: ${{ inputs.full-setup == 'true' }}
+        id: set-npm-tag
+        uses: ./.github/actions/set-npm-tag
+      - name: Cache node modules
         id: node-modules-cache
         if: ${{ inputs.enable-node-modules-cache == 'true' }}
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
-        env:
-          cache-name: node-modules-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('.nvmrc') }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-${{ hashFiles('.nvmrc') }}-
+      - name: Restore nx cache
+        uses: actions/cache/restore@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: |
-            node_modules
-          key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+            nxcache
+            .nx
+            dist
+          key: ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-${{ hashFiles('nx.json') }}-${{ github.sha }}
           restore-keys: |
-            .npm-${{ runner.os }}-build-${{ env.cache-name }}-
-            .npm-${{ runner.os }}-build-
-            .npm-${{ runner.os }}-
-      - name: load "NPM TAG"
-        id: set-npm-tag
-        uses: ./.github/actions/set-npm-tag
+            ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-${{ hashFiles('nx.json') }}-
+            ${{ runner.os }}-nxcache-${{ inputs.cache-suffix }}-
       - name: before install script
+        if: ${{ inputs.full-setup == 'true' }}
         uses: ./.github/actions/before-install
         with:
           act: ${{ inputs.act }}

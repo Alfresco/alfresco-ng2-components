@@ -20,6 +20,7 @@ import { ToolbarComponent } from './toolbar.component';
 import { ToolbarDividerComponent } from './toolbar-divider.component';
 import { ToolbarTitleComponent } from './toolbar-title.component';
 import { provideStoryCore } from '../stories/core-story.providers';
+import { expect, within } from 'storybook/test';
 
 type ToolbarStoryArgs = ToolbarComponent & {
     toolbarTitle?: boolean;
@@ -118,5 +119,11 @@ export const Toolbar: Story = {
         </ng-container>
         <ng-container *ngIf="${args.toolbarDivider}">left<adf-toolbar-divider></adf-toolbar-divider>right</ng-container>
     </adf-toolbar>`
-    })
+    }),
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+
+        const toolbar = canvas.getByRole('toolbar');
+        await expect(toolbar).toBeVisible();
+    }
 };
