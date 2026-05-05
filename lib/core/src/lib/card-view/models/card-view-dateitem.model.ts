@@ -21,13 +21,29 @@ import { CardViewBaseItemModel } from './card-view-baseitem.model';
 import { CardViewDateItemProperties } from '../interfaces/card-view.interfaces';
 import { DatePipe } from '@angular/common';
 import { DateFnsUtils } from '../../common/utils/date-fns-utils';
+import { Subject } from 'rxjs';
 
 type DateItemType = Date | Date[] | null;
 
 export class CardViewDateItemModel extends CardViewBaseItemModel<DateItemType> implements CardViewItem, DynamicComponentModel {
     type = 'date';
-    format: string;
     locale: string;
+    allowManualInput = false;
+
+    private readonly formatChangesSubject = new Subject<string>();
+    readonly formatChanges$ = this.formatChangesSubject.asObservable();
+    private _format: string;
+
+    get format(): string {
+        return this._format;
+    }
+
+    set format(value: string) {
+        if (this._format !== value) {
+            this._format = value;
+            this.formatChangesSubject.next(value);
+        }
+    }
 
     constructor(cardViewDateItemProperties: CardViewDateItemProperties) {
         super(cardViewDateItemProperties);
@@ -38,6 +54,10 @@ export class CardViewDateItemModel extends CardViewBaseItemModel<DateItemType> i
 
         if (cardViewDateItemProperties.locale) {
             this.locale = cardViewDateItemProperties.locale;
+        }
+
+        if (cardViewDateItemProperties.allowManualInput !== undefined) {
+            this.allowManualInput = cardViewDateItemProperties.allowManualInput;
         }
     }
 

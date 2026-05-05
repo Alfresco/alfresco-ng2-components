@@ -22,12 +22,15 @@ import { CardViewDateItemComponent } from './card-view-dateitem.component';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { CardViewDatetimeItemModel } from '../../models/card-view-datetimeitem.model';
 import { AppConfigService } from '../../../app-config/app-config.service';
-import { MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
+import { DatetimeAdapter, MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
+import { DateAdapter } from '@angular/material/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { addMinutes } from 'date-fns';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { MatFormField } from '@angular/material/form-field';
+import { AdfDateFnsAdapter } from '../../../common/utils/date-fns-adapter';
+import { AdfDateTimeFnsAdapter } from '../../../common/utils/datetime-fns-adapter';
 
 describe('CardViewDateItemComponent', () => {
     let loader: HarnessLoader;
@@ -302,6 +305,18 @@ describe('CardViewDateItemComponent', () => {
             expect(component.property.value).toBeNull();
             expect(component.property.default).toBeNull();
         });
+
+        it('should not touch the form control when onDateClear is called and allowManualInput is false', () => {
+            component.editable = true;
+            component.property.editable = true;
+            component.property.value = new Date('Jul 10 2017');
+            fixture.detectChanges();
+
+            const spy = spyOn(component.cardViewDateTimeControl, 'setValue');
+            component.onDateClear();
+
+            expect(spy).not.toHaveBeenCalled();
+        });
     });
 
     it('should be possible update a date-time', async () => {
@@ -358,6 +373,581 @@ describe('CardViewDateItemComponent', () => {
         expect(await chips[0].getText()).toBe('Jul 10, 2017, 0:01');
         expect(await chips[1].getText()).toBe('Jul 11, 2017, 0:01');
         expect(await chips[2].getText()).toBe('Jul 12, 2017, 0:01');
+    });
+
+    describe('allowManualInput', () => {
+        beforeEach(() => {
+            fixture.componentRef.setInput(
+                'property',
+                new CardViewDateItemModel({
+                    label: 'Date label',
+                    value: new Date('07/10/2017'),
+                    key: 'dateKey',
+                    default: '',
+                    format: 'yyyy-MM-dd',
+                    editable: true,
+                    allowManualInput: true
+                })
+            );
+            fixture.componentRef.setInput('editable', true);
+        });
+
+        it('should render a visible typeable input when allowManualInput is true', () => {
+            fixture.detectChanges();
+
+            const manualInput = testingUtils.getByDataAutomationId('datepicker-manual-input-dateKey');
+            expect(manualInput).not.toBeNull();
+            const invisibleInput = fixture.nativeElement.querySelector('.adf-invisible-date-input');
+            expect(invisibleInput).toBeNull();
+        });
+
+        it('should NOT render the span-button when allowManualInput is true', () => {
+            fixture.detectChanges();
+
+            const spanButton = testingUtils.getByDataAutomationId('datepicker-label-toggle-dateKey');
+            expect(spanButton).toBeNull();
+        });
+
+        it('should render the invisible input and span-button when allowManualInput is false', () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: new Date('07/10/2017'),
+                key: 'dateKey',
+                default: '',
+                format: '',
+                editable: true,
+                allowManualInput: false
+            });
+            fixture.detectChanges();
+
+            const invisibleInput = fixture.nativeElement.querySelector('.adf-invisible-date-input');
+            expect(invisibleInput).not.toBeNull();
+            const spanButton = testingUtils.getByDataAutomationId('datepicker-label-toggle-dateKey');
+            expect(spanButton).not.toBeNull();
+        });
+
+        it('should still render the datepicker toggle and picker when allowManualInput is true', () => {
+            fixture.detectChanges();
+
+            const datePickerToggle = testingUtils.getByDataAutomationId(`datepickertoggle-${component.property.key}`);
+            const datePicker = testingUtils.getByDataAutomationId(`datepicker-${component.property.key}`);
+            expect(datePickerToggle).not.toBeNull();
+            expect(datePicker).not.toBeNull();
+        });
+
+        it('should still render the clear icon when allowManualInput is true and value exists', () => {
+            fixture.detectChanges();
+
+            const clearIcon = testingUtils.getByDataAutomationId(`datepicker-date-clear-${component.property.key}`);
+            expect(clearIcon).not.toBeNull();
+        });
+
+        it('should update the property when a date is changed via the picker', () => {
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+            const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
+            fixture.detectChanges();
+
+            const expectedDate = new Date('Jul 10 2018');
+            component.onDateChanged({ value: addMinutes(expectedDate, expectedDate.getTimezoneOffset()) } as MatDatetimepickerInputEvent<Date>);
+
+            expect(itemUpdatedSpy).toHaveBeenCalled();
+        });
+
+        it('should sync the form control value on init', () => {
+            fixture.detectChanges();
+
+            expect(component.cardViewDateTimeControl.value).not.toBeNull();
+        });
+
+        it('should clear the form control value when onDateClear is called', () => {
+            fixture.detectChanges();
+
+            component.onDateClear();
+            expect(component.cardViewDateTimeControl.value).toBeNull();
+        });
+
+        it('should disable the form control when property.editable is false', () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: new Date('07/10/2017'),
+                key: 'dateKey',
+                default: '',
+                format: 'yyyy-MM-dd',
+                editable: false,
+                allowManualInput: true
+            });
+            component.editable = true;
+            fixture.detectChanges();
+
+            expect(component.cardViewDateTimeControl.disabled).toBeTrue();
+        });
+
+        it('should disable the form control when component editable is false', () => {
+            component.editable = false;
+            fixture.detectChanges();
+
+            expect(component.cardViewDateTimeControl.disabled).toBeTrue();
+        });
+
+        it('should disable the form control when editable input changes to false after init', () => {
+            fixture.detectChanges();
+            expect(component.cardViewDateTimeControl.disabled).toBeFalse();
+
+            fixture.componentRef.setInput('editable', false);
+            fixture.detectChanges();
+
+            expect(component.cardViewDateTimeControl.disabled).toBeTrue();
+        });
+
+        it('should re-enable the form control when editable input changes back to true after being disabled', () => {
+            fixture.componentRef.setInput('editable', false);
+            fixture.detectChanges();
+            expect(component.cardViewDateTimeControl.disabled).toBeTrue();
+
+            fixture.componentRef.setInput('editable', true);
+            fixture.detectChanges();
+
+            expect(component.cardViewDateTimeControl.disabled).toBeFalse();
+        });
+
+        it('should disable the form control when property changes to non-editable after init', () => {
+            fixture.detectChanges();
+            expect(component.cardViewDateTimeControl.disabled).toBeFalse();
+
+            fixture.componentRef.setInput(
+                'property',
+                new CardViewDateItemModel({
+                    label: 'Date label',
+                    value: new Date('07/10/2017'),
+                    key: 'dateKey',
+                    default: '',
+                    format: 'yyyy-MM-dd',
+                    editable: false,
+                    allowManualInput: true
+                })
+            );
+            fixture.detectChanges();
+
+            expect(component.cardViewDateTimeControl.disabled).toBeTrue();
+        });
+
+        it('should have null form control value when property has no value', () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: null,
+                key: 'dateKey',
+                default: '',
+                format: 'yyyy-MM-dd',
+                editable: true,
+                allowManualInput: true
+            });
+            component.editable = true;
+            fixture.detectChanges();
+
+            expect(component.cardViewDateTimeControl.value).toBeNull();
+        });
+
+        it('should render placeholder with default value when property has default', () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: null,
+                key: 'dateKey',
+                default: 'Select a date',
+                format: 'yyyy-MM-dd',
+                editable: true,
+                allowManualInput: true
+            });
+            component.editable = true;
+            fixture.detectChanges();
+
+            const manualInput = testingUtils.getByDataAutomationId('datepicker-manual-input-dateKey');
+            expect(manualInput.nativeElement.placeholder).toContain('Select a date');
+        });
+
+        it('should render empty placeholder when property has no default', () => {
+            fixture.detectChanges();
+
+            const manualInput = testingUtils.getByDataAutomationId('datepicker-manual-input-dateKey');
+            expect(manualInput.nativeElement.placeholder).toBe('');
+        });
+
+        it('should sync form control value with valueDate when date is changed via picker', () => {
+            fixture.detectChanges();
+
+            const expectedDate = new Date('Jul 10 2018');
+            component.onDateChanged({ value: addMinutes(expectedDate, expectedDate.getTimezoneOffset()) } as MatDatetimepickerInputEvent<Date>);
+
+            expect(component.cardViewDateTimeControl.value).not.toBeNull();
+            expect(component.cardViewDateTimeControl.value instanceof Date).toBeTrue();
+        });
+
+        it('should re-sync form control value when property input is replaced after init', () => {
+            fixture.detectChanges();
+
+            const newDate = new Date('2020-03-15');
+            fixture.componentRef.setInput(
+                'property',
+                new CardViewDateItemModel({
+                    label: 'Date label',
+                    value: newDate,
+                    key: 'dateKey',
+                    format: 'yyyy-MM-dd',
+                    editable: true,
+                    allowManualInput: true
+                })
+            );
+            fixture.detectChanges();
+
+            expect(component.cardViewDateTimeControl.value).not.toBeNull();
+            expect(component.cardViewDateTimeControl.value.toDateString()).toBe(newDate.toDateString());
+        });
+
+        it('should set form control to null when replacement property has no value', () => {
+            fixture.detectChanges();
+
+            fixture.componentRef.setInput(
+                'property',
+                new CardViewDateItemModel({
+                    label: 'Date label',
+                    value: null,
+                    key: 'dateKey',
+                    format: 'yyyy-MM-dd',
+                    editable: true,
+                    allowManualInput: true
+                })
+            );
+            fixture.detectChanges();
+
+            expect(component.cardViewDateTimeControl.value).toBeNull();
+        });
+
+        it('should re-sync form control and valueDate when updateItem$ emits for matching key', () => {
+            fixture.detectChanges();
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+            const newDate = new Date('2021-06-01');
+
+            cardViewUpdateService.updateItem$.next({ key: 'dateKey', value: newDate } as any);
+            fixture.detectChanges();
+
+            expect(component.valueDate).not.toBeNull();
+            expect(component.cardViewDateTimeControl.value).not.toBeNull();
+        });
+
+        it('should not re-sync form control when updateItem$ emits for a different key', () => {
+            fixture.detectChanges();
+            const originalControlValue = component.cardViewDateTimeControl.value;
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+
+            cardViewUpdateService.updateItem$.next({ key: 'otherKey', value: new Date('2021-06-01') } as any);
+            fixture.detectChanges();
+
+            expect(component.cardViewDateTimeControl.value).toEqual(originalControlValue);
+        });
+    });
+
+    describe('format changes', () => {
+        it('should re-apply format when property.format changes with allowManualInput', () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: new Date('07/10/2017'),
+                key: 'dateKey',
+                format: 'dd/MM/yyyy',
+                editable: true,
+                allowManualInput: true
+            });
+            component.editable = true;
+            fixture.detectChanges();
+
+            const datetimeAdapter = fixture.debugElement.injector.get(DatetimeAdapter) as AdfDateTimeFnsAdapter;
+            expect(datetimeAdapter.displayFormat).toBe('dd/MM/yyyy');
+
+            component.property.format = 'yyyy-MM-dd';
+            fixture.detectChanges();
+
+            expect(datetimeAdapter.displayFormat).toBe('yyyy-MM-dd');
+        });
+
+        it('should not re-apply format when property.format has not changed', () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: new Date('07/10/2017'),
+                key: 'dateKey',
+                format: 'dd/MM/yyyy',
+                editable: true,
+                allowManualInput: true
+            });
+            component.editable = true;
+            fixture.detectChanges();
+
+            const datetimeAdapter = fixture.debugElement.injector.get(DatetimeAdapter) as AdfDateTimeFnsAdapter;
+            const formatBefore = datetimeAdapter.displayFormat;
+            fixture.detectChanges();
+
+            expect(datetimeAdapter.displayFormat).toBe(formatBefore);
+        });
+
+        it('should reset adapters to defaults when custom format is removed in manual input mode', () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: new Date('07/10/2017'),
+                key: 'dateKey',
+                format: 'dd/MM/yyyy',
+                editable: true,
+                allowManualInput: true
+            });
+            component.editable = true;
+            fixture.detectChanges();
+
+            const datetimeAdapter = fixture.debugElement.injector.get(DatetimeAdapter) as AdfDateTimeFnsAdapter;
+            const dateAdapter = fixture.debugElement.injector.get(DateAdapter) as AdfDateFnsAdapter;
+            expect(datetimeAdapter.displayFormat).toBe('dd/MM/yyyy');
+            expect(dateAdapter.displayFormat).toBe('dd/MM/yyyy');
+
+            component.property.format = '';
+            fixture.detectChanges();
+
+            expect(datetimeAdapter.displayFormat).toBeNull();
+            expect(dateAdapter.displayFormat).toBe('MMM dd');
+        });
+
+        it('should reset datetime adapter when custom format is removed for datetime property in manual input mode', () => {
+            component.property = new CardViewDatetimeItemModel({
+                label: 'Datetime label',
+                value: new Date('07/10/2017 10:15'),
+                key: 'datetimeKey',
+                format: 'yyyy-MM-dd HH:mm',
+                editable: true,
+                allowManualInput: true
+            });
+            component.editable = true;
+            fixture.detectChanges();
+
+            const datetimeAdapter = fixture.debugElement.injector.get(DatetimeAdapter) as AdfDateTimeFnsAdapter;
+            expect(datetimeAdapter.displayFormat).toBe('yyyy-MM-dd HH:mm');
+
+            component.property.format = '';
+            fixture.detectChanges();
+
+            expect(datetimeAdapter.displayFormat).toBeNull();
+        });
+
+        it('should fallback to adapter defaults when allowManualInput is false', () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: new Date('07/10/2017'),
+                key: 'dateKey',
+                format: 'YYYY-MM-dd',
+                editable: true,
+                allowManualInput: false
+            });
+            component.editable = true;
+            fixture.detectChanges();
+
+            const dateAdapter = fixture.debugElement.injector.get(DateAdapter) as AdfDateFnsAdapter;
+            const datetimeAdapter = fixture.debugElement.injector.get(DatetimeAdapter) as AdfDateTimeFnsAdapter;
+
+            expect(dateAdapter.displayFormat).toBe('MMM dd');
+            expect(datetimeAdapter.displayFormat).toBeNull();
+        });
+
+        it('should re-set form control value when format changes and control has value', () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: new Date('07/10/2017'),
+                key: 'dateKey',
+                format: 'dd/MM/yyyy',
+                editable: true,
+                allowManualInput: true
+            });
+            component.editable = true;
+            fixture.detectChanges();
+
+            const spy = spyOn(component.cardViewDateTimeControl, 'setValue');
+            component.property.format = 'yyyy-MM-dd';
+            fixture.detectChanges();
+
+            expect(spy).toHaveBeenCalled();
+        });
+
+        it('should not re-set form control value when format changes but allowManualInput is false', () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: new Date('07/10/2017'),
+                key: 'dateKey',
+                format: 'dd/MM/yyyy',
+                editable: true,
+                allowManualInput: false
+            });
+            component.editable = true;
+            fixture.detectChanges();
+
+            const spy = spyOn(component.cardViewDateTimeControl, 'setValue');
+            component.property.format = 'yyyy-MM-dd';
+            fixture.detectChanges();
+
+            expect(spy).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('CardViewDateItemModel allowManualInput', () => {
+        it('should default allowManualInput to false when not specified', () => {
+            const model = new CardViewDateItemModel({
+                label: 'Date label',
+                value: new Date(),
+                key: 'dateKey'
+            });
+            expect(model.allowManualInput).toBeFalse();
+        });
+
+        it('should set allowManualInput to true when specified', () => {
+            const model = new CardViewDateItemModel({
+                label: 'Date label',
+                value: new Date(),
+                key: 'dateKey',
+                allowManualInput: true
+            });
+            expect(model.allowManualInput).toBeTrue();
+        });
+
+        it('should keep allowManualInput false when explicitly set to false', () => {
+            const model = new CardViewDateItemModel({
+                label: 'Date label',
+                value: new Date(),
+                key: 'dateKey',
+                allowManualInput: false
+            });
+            expect(model.allowManualInput).toBeFalse();
+        });
+
+        it('should emit when format changes', () => {
+            const model = new CardViewDateItemModel({
+                label: 'Date label',
+                value: new Date(),
+                key: 'dateKey',
+                format: 'dd/MM/yyyy'
+            });
+            const formatChangeSpy = jasmine.createSpy('formatChangeSpy');
+            model.formatChanges$.subscribe(formatChangeSpy);
+
+            model.format = 'yyyy-MM-dd';
+
+            expect(formatChangeSpy).toHaveBeenCalledOnceWith('yyyy-MM-dd');
+        });
+
+        it('should not emit when format is assigned the same value', () => {
+            const model = new CardViewDateItemModel({
+                label: 'Date label',
+                value: new Date(),
+                key: 'dateKey',
+                format: 'dd/MM/yyyy'
+            });
+            const formatChangeSpy = jasmine.createSpy('formatChangeSpy');
+            model.formatChanges$.subscribe(formatChangeSpy);
+
+            model.format = 'dd/MM/yyyy';
+
+            expect(formatChangeSpy).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('property input replacement', () => {
+        it('should re-sync valueDate when property input is replaced after init', () => {
+            fixture.componentRef.setInput(
+                'property',
+                new CardViewDateItemModel({
+                    label: 'Date label',
+                    value: new Date('07/10/2017'),
+                    key: 'dateKey',
+                    format: '',
+                    editable: true
+                })
+            );
+            fixture.detectChanges();
+
+            const newDate = new Date('2022-11-20');
+            fixture.componentRef.setInput(
+                'property',
+                new CardViewDateItemModel({
+                    label: 'Date label',
+                    value: newDate,
+                    key: 'dateKey',
+                    format: '',
+                    editable: true
+                })
+            );
+            fixture.detectChanges();
+
+            expect(component.valueDate).not.toBeNull();
+            expect(component.valueDate instanceof Date).toBeTrue();
+        });
+
+        it('should set valueDate to null when replacement property has no value', () => {
+            fixture.componentRef.setInput(
+                'property',
+                new CardViewDateItemModel({
+                    label: 'Date label',
+                    value: new Date('07/10/2017'),
+                    key: 'dateKey',
+                    format: '',
+                    editable: true
+                })
+            );
+            fixture.detectChanges();
+
+            fixture.componentRef.setInput(
+                'property',
+                new CardViewDateItemModel({
+                    label: 'Date label',
+                    value: null,
+                    key: 'dateKey',
+                    format: '',
+                    editable: true
+                })
+            );
+            fixture.detectChanges();
+
+            expect(component.valueDate).toBeNull();
+        });
+    });
+
+    describe('updateItem$ re-sync for multivalued', () => {
+        it('should re-sync valueDate when updateItem$ emits for a multivalued property', () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: ['2020-01-01', '2020-02-01'],
+                key: 'dateKey',
+                editable: true,
+                multivalued: true
+            });
+            fixture.detectChanges();
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+            const newDates = [new Date('2021-06-01'), new Date('2021-07-01')];
+
+            component.property.value = newDates;
+            cardViewUpdateService.updateItem$.next({ key: 'dateKey', value: newDates } as any);
+            fixture.detectChanges();
+
+            expect(component.valueDate).not.toBeNull();
+            expect(component.valueDate instanceof Date).toBeTrue();
+        });
+
+        it('should not update valueDate when updateItem$ emits for a different key on multivalued property', () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: ['2020-01-01'],
+                key: 'dateKey',
+                editable: true,
+                multivalued: true
+            });
+            fixture.detectChanges();
+            const originalValueDate = component.valueDate;
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+
+            cardViewUpdateService.updateItem$.next({ key: 'otherKey', value: [new Date('2021-06-01')] } as any);
+            fixture.detectChanges();
+
+            expect(component.valueDate).toEqual(originalValueDate);
+        });
     });
 
     describe('FloatLabel behavior', () => {
