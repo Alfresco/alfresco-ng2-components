@@ -36,53 +36,53 @@ export class WebCryptoJwksValidationHandler extends AbstractValidationHandler {
             throw new Error('Array keys in jwks missing!');
         }
 
-        const kid: string = params.idTokenHeader['kid'];
-        const keys: object[] = params.jwks['keys'];
-        const alg: string = params.idTokenHeader['alg'];
+        const keyId: string = params.idTokenHeader['kid'];
+        const jwksKeys: object[] = params.jwks['keys'];
+        const algorithm: string = params.idTokenHeader['alg'];
 
-        let key: any;
+        let matchedKey: any;
 
-        if (kid) {
-            key = keys.find((k) => k['kid'] === kid);
+        if (keyId) {
+            matchedKey = jwksKeys.find((jwk) => jwk['kid'] === keyId);
         } else {
-            const kty = this.alg2kty(alg);
-            const matchingKeys = keys.filter((k) => k['kty'] === kty && k['use'] === 'sig');
+            const keyType = this.algorithmToKeyType(algorithm);
+            const matchingKeys = jwksKeys.filter((jwk) => jwk['kty'] === keyType && jwk['use'] === 'sig');
 
             if (matchingKeys.length > 1) {
                 return Promise.reject(new Error('More than one matching key found. Please specify a kid in the id_token header.'));
             } else if (matchingKeys.length === 1) {
-                key = matchingKeys[0];
+                matchedKey = matchingKeys[0];
             }
         }
 
-        if (!key && !retry && params.loadKeys) {
+        if (!matchedKey && !retry && params.loadKeys) {
             const loadedKeys = await params.loadKeys();
             params.jwks = loadedKeys;
             return this.validateSignature(params, true);
         }
 
-        if (!key && retry && !kid) {
+        if (!matchedKey && retry && !keyId) {
             return Promise.reject(new Error('No matching key found.'));
         }
 
-        if (!key && retry && kid) {
+        if (!matchedKey && retry && keyId) {
             return Promise.reject(
                 new Error(
                     'expected key not found in property jwks. ' +
                         'This property is most likely loaded with the ' +
                         'discovery document. ' +
                         'Expected key id (kid): ' +
-                        kid
+                        keyId
                 )
             );
         }
 
-        if (!this.allowedAlgorithms.includes(alg)) {
-            return Promise.reject(new Error('Algorithm not supported: ' + alg));
+        if (!this.allowedAlgorithms.includes(algorithm)) {
+            return Promise.reject(new Error('Algorithm not supported: ' + algorithm));
         }
 
-        const cryptoKey = await this.importKey(key, alg);
-        const isValid = await this.verifySignature(params.idToken, cryptoKey, alg);
+        const cryptoKey = await this.importKey(matchedKey, algorithm);
+        const isValid = await this.verifySignature(params.idToken, cryptoKey, algorithm);
 
         if (isValid) {
             return Promise.resolve();
@@ -91,21 +91,21 @@ export class WebCryptoJwksValidationHandler extends AbstractValidationHandler {
         }
     }
 
-    private async importKey(jwk: any, alg: string): Promise<CryptoKey> {
-        const algorithm = this.getImportAlgorithm(alg);
-        return crypto.subtle.importKey('jwk', jwk, algorithm, false, ['verify']);
+    private async importKey(jsonWebKey: any, algorithmName: string): Promise<CryptoKey> {
+        const importAlgorithm = this.getImportAlgorithm(algorithmName);
+        return crypto.subtle.importKey('jwk', jsonWebKey, importAlgorithm, false, ['verify']);
     }
 
-    private async verifySignature(idToken: string, cryptoKey: CryptoKey, alg: string): Promise<boolean> {
-        const parts = idToken.split('.');
-        const headerAndPayload = new TextEncoder().encode(parts[0] + '.' + parts[1]);
-        const signature = this.base64UrlDecode(parts[2]);
-        const algorithm = this.getVerifyAlgorithm(alg);
-        return crypto.subtle.verify(algorithm, cryptoKey, signature, headerAndPayload);
+    private async verifySignature(idToken: string, cryptoKey: CryptoKey, algorithmName: string): Promise<boolean> {
+        const tokenParts = idToken.split('.');
+        const headerAndPayload = new TextEncoder().encode(tokenParts[0] + '.' + tokenParts[1]);
+        const signature = this.base64UrlDecode(tokenParts[2]);
+        const verifyAlgorithm = this.getVerifyAlgorithm(algorithmName);
+        return crypto.subtle.verify(verifyAlgorithm, cryptoKey, signature, headerAndPayload);
     }
 
-    private getImportAlgorithm(alg: string): RsaHashedImportParams | EcKeyImportParams {
-        switch (alg) {
+    private getImportAlgorithm(algorithmName: string): RsaHashedImportParams | EcKeyImportParams {
+        switch (algorithmName) {
             case 'RS256':
                 return { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' };
             case 'RS384':
@@ -123,12 +123,12 @@ export class WebCryptoJwksValidationHandler extends AbstractValidationHandler {
             case 'PS512':
                 return { name: 'RSA-PSS', hash: 'SHA-512' };
             default:
-                throw new Error('Unsupported algorithm: ' + alg);
+                throw new Error('Unsupported algorithm: ' + algorithmName);
         }
     }
 
-    private getVerifyAlgorithm(alg: string): AlgorithmIdentifier | RsaPssParams | EcdsaParams {
-        switch (alg) {
+    private getVerifyAlgorithm(algorithmName: string): AlgorithmIdentifier | RsaPssParams | EcdsaParams {
+        switch (algorithmName) {
             case 'RS256':
             case 'RS384':
             case 'RS512':
@@ -144,7 +144,7 @@ export class WebCryptoJwksValidationHandler extends AbstractValidationHandler {
             case 'PS512':
                 return { name: 'RSA-PSS', saltLength: 64 };
             default:
-                throw new Error('Unsupported algorithm: ' + alg);
+                throw new Error('Unsupported algorithm: ' + algorithmName);
         }
     }
 
@@ -155,8 +155,8 @@ export class WebCryptoJwksValidationHandler extends AbstractValidationHandler {
         }
         const binary = atob(base64);
         const bytes = new Uint8Array(binary.length);
-        for (let i = 0; i < binary.length; i++) {
-            bytes[i] = binary.charCodeAt(i);
+        for (let index = 0; index < binary.length; index++) {
+            bytes[index] = binary.charCodeAt(index);
         }
         return bytes.buffer;
     }
@@ -172,8 +172,8 @@ export class WebCryptoJwksValidationHandler extends AbstractValidationHandler {
         return result;
     }
 
-    private alg2kty(alg: string): string {
-        switch (alg.charAt(0)) {
+    private algorithmToKeyType(algorithmName: string): string {
+        switch (algorithmName.charAt(0)) {
             case 'R':
                 return 'RSA';
             case 'E':
@@ -181,7 +181,7 @@ export class WebCryptoJwksValidationHandler extends AbstractValidationHandler {
             case 'P':
                 return 'RSA';
             default:
-                throw new Error('Cannot infer kty from alg: ' + alg);
+                throw new Error('Cannot infer key type from algorithm: ' + algorithmName);
         }
     }
 }
