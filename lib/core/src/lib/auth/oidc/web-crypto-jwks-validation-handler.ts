@@ -17,6 +17,11 @@
 
 import { AbstractValidationHandler, ValidationParams } from 'angular-oauth2-oidc';
 
+interface JwksKey extends JsonWebKey {
+    kid?: string;
+    use?: string;
+}
+
 export class WebCryptoJwksValidationHandler extends AbstractValidationHandler {
     allowedAlgorithms: string[] = ['RS256', 'RS384', 'RS512', 'ES256', 'ES384', 'PS256', 'PS384', 'PS512'];
 
@@ -26,6 +31,12 @@ export class WebCryptoJwksValidationHandler extends AbstractValidationHandler {
         if (!params.idToken) {
             throw new Error('Parameter idToken expected!');
         }
+
+        const tokenParts = params.idToken.split('.');
+        if (tokenParts.length !== 3 || tokenParts.some((part) => !part)) {
+            throw new Error('Invalid JWT format: token must have exactly 3 non-empty parts separated by dots.');
+        }
+
         if (!params.idTokenHeader) {
             throw new Error('Parameter idTokenHeader expected.');
         }
@@ -37,16 +48,16 @@ export class WebCryptoJwksValidationHandler extends AbstractValidationHandler {
         }
 
         const keyId: string = params.idTokenHeader['kid'];
-        const jwksKeys: object[] = params.jwks['keys'];
+        const jwksKeys: JwksKey[] = params.jwks['keys'];
         const algorithm: string = params.idTokenHeader['alg'];
 
-        let matchedKey: any;
+        let matchedKey: JwksKey | undefined;
 
         if (keyId) {
-            matchedKey = jwksKeys.find((jwk) => jwk['kid'] === keyId);
+            matchedKey = jwksKeys.find((jwk) => jwk.kid === keyId);
         } else {
             const keyType = this.algorithmToKeyType(algorithm);
-            const matchingKeys = jwksKeys.filter((jwk) => jwk['kty'] === keyType && jwk['use'] === 'sig');
+            const matchingKeys = jwksKeys.filter((jwk) => jwk.kty === keyType && jwk.use === 'sig');
 
             if (matchingKeys.length > 1) {
                 return Promise.reject(new Error('More than one matching key found. Please specify a kid in the id_token header.'));
@@ -91,7 +102,7 @@ export class WebCryptoJwksValidationHandler extends AbstractValidationHandler {
         }
     }
 
-    private async importKey(jsonWebKey: any, algorithmName: string): Promise<CryptoKey> {
+    private async importKey(jsonWebKey: JwksKey, algorithmName: string): Promise<CryptoKey> {
         const importAlgorithm = this.getImportAlgorithm(algorithmName);
         return crypto.subtle.importKey('jwk', jsonWebKey, importAlgorithm, false, ['verify']);
     }
