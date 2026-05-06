@@ -179,6 +179,26 @@ describe('WebCryptoJwksValidationHandler', () => {
             });
             await expectAsync(handler.validateSignature(params)).toBeRejectedWithError('Algorithm not supported: none');
         });
+
+        it('should reject when algorithm is missing and no kid is present', async () => {
+            const { publicJwk } = await generateRsaKeyPair();
+            const params = buildValidationParams({
+                idToken: 'a.b.c',
+                idTokenHeader: {},
+                jwks: { keys: [publicJwk] }
+            });
+            await expectAsync(handler.validateSignature(params)).toBeRejectedWithError('Algorithm not supported: <none>');
+        });
+
+        it('should reject when algorithm is unsupported and no kid is present', async () => {
+            const { publicJwk } = await generateRsaKeyPair();
+            const params = buildValidationParams({
+                idToken: 'a.b.c',
+                idTokenHeader: { alg: 'HS256' },
+                jwks: { keys: [publicJwk] }
+            });
+            await expectAsync(handler.validateSignature(params)).toBeRejectedWithError('Algorithm not supported: HS256');
+        });
     });
 
     describe('key selection by kid', () => {

@@ -51,6 +51,10 @@ export class WebCryptoJwksValidationHandler extends AbstractValidationHandler {
         const jwksKeys: JwksKey[] = params.jwks['keys'];
         const algorithm: string = params.idTokenHeader['alg'];
 
+        if (!algorithm || !this.allowedAlgorithms.includes(algorithm)) {
+            throw new Error('Algorithm not supported: ' + (algorithm || '<none>'));
+        }
+
         let matchedKey: JwksKey | undefined;
 
         if (keyId) {
@@ -86,10 +90,6 @@ export class WebCryptoJwksValidationHandler extends AbstractValidationHandler {
                         keyId
                 )
             );
-        }
-
-        if (!this.allowedAlgorithms.includes(algorithm)) {
-            return Promise.reject(new Error('Algorithm not supported: ' + algorithm));
         }
 
         const cryptoKey = await this.importKey(matchedKey, algorithm);
