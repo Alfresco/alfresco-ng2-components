@@ -28,7 +28,6 @@ Labels applied to the PR that affect CI behavior.
 |-------|--------|
 | `do not merge` | Blocks the PR from passing the finalize check. CI will fail until the label is removed. |
 | `next version` | Same as above - blocks the PR from merging. Used to hold PRs for the next release cycle. |
-| `hxp-upstream` | (Release only) Triggers the HxP upstream propagation workflow after a successful release. |
 
 ## Automatic Skip Conditions
 
