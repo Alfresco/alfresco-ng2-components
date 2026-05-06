@@ -36,12 +36,12 @@ export class FetchHttpClient implements HttpClient {
 
     private getFetch(): typeof fetch {
         // eslint-disable-next-line no-underscore-dangle
-        return this.customFetch || (process as any).__test_fetch__ || globalThis.fetch;
+        return this.customFetch || (typeof process !== 'undefined' && (process as any).__test_fetch__) || globalThis.fetch;
     }
 
     private hasNativeXhr(): boolean {
         // eslint-disable-next-line no-underscore-dangle
-        if (this.customFetch || (process as any).__test_fetch__) {
+        if (this.customFetch || (typeof process !== 'undefined' && (process as any).__test_fetch__)) {
             return false;
         }
         return typeof XMLHttpRequest !== 'undefined';
