@@ -135,26 +135,6 @@ jobs:
         with:
           tagName: ${{ needs.release-npm.outputs.release_version }}
 
-  propagate:
-    needs: [release-npm]
-    if: ${{ contains(toJson(github.event.pull_request.labels.*.name), 'hxp-upstream') }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - name: HxP upstream invoke
-        uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
-        with:
-          repo: Alfresco/hxp-frontend-apps
-          ref: develop
-          workflow: upstream-adf.yml
-          token: ${{ secrets.ALFRESCO_BUILD_GH_TOKEN }}
-          wait-for-completion: false
-          inputs: >
-            {
-              "tag_version": "alpha"
-            }
-
   npm-check-bundle:
     needs: [release-npm]
     timeout-minutes: 15
