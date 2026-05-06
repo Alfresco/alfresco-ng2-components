@@ -1058,5 +1058,43 @@ describe('FetchHttpClient', () => {
 
             expect(mockXhr.timeout).toBe(5000);
         });
+
+        it('should propagate progress events to promise.on() listeners', async () => {
+            mockXhr.status = 200;
+            mockXhr.responseText = JSON.stringify({ uploaded: true });
+            mockXhr.getResponseHeader.mockReturnValue('application/json');
+            mockXhr.send.mockImplementation(() => {
+                if (mockXhr.upload.onprogress) {
+                    mockXhr.upload.onprogress({ lengthComputable: true, loaded: 30, total: 100 });
+                    mockXhr.upload.onprogress({ lengthComputable: true, loaded: 100, total: 100 });
+                }
+                setTimeout(() => mockXhr.onload(), 0);
+            });
+
+            const progressEvents: any[] = [];
+            eventEmitter.on('progress', (event: any) => progressEvents.push(event));
+
+            await xhrClient.post(
+                host + '/api/upload',
+                {
+                    httpMethod: 'POST',
+                    queryParams: {},
+                    headerParams: {},
+                    formParams: { file: 'content' },
+                    bodyParam: null,
+                    contentType: 'multipart/form-data',
+                    accept: 'application/json',
+                    responseType: null,
+                    returnType: null
+                },
+                defaultSecurityOptions,
+                emitters
+            );
+
+            expect(progressEvents).toEqual([
+                { total: 100, loaded: 30, percent: 30 },
+                { total: 100, loaded: 100, percent: 100 }
+            ]);
+        });
     });
 });

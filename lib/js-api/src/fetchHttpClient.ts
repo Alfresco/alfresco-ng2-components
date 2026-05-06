@@ -450,11 +450,11 @@ export class FetchHttpClient implements HttpClient {
             return response.text();
         }
 
+        const text = await response.text();
+        if (!text) {
+            return {};
+        }
         try {
-            const text = await response.text();
-            if (!text) {
-                return {};
-            }
             const data = JSON.parse(text);
             if (returnType && Array.isArray(data)) {
                 return data.map((element: any) => new (returnType as any)(element));
@@ -464,7 +464,7 @@ export class FetchHttpClient implements HttpClient {
             }
             return data;
         } catch {
-            return response.text().catch(() => '');
+            return text;
         }
     }
 
