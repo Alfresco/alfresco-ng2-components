@@ -158,6 +158,49 @@ describe('TaskListCloudService', () => {
             expect(res).toBe('Appname not configured');
         });
     });
+
+    describe('fetchTaskList_UsingRuntimeBundleService', () => {
+        it('should call runtime bundle endpoint using GET', async () => {
+            const taskRequest = {
+                appName: 'fakeName',
+                pagination: { skipCount: 0, maxItems: 20 }
+            } as TaskListRequestModel;
+            requestSpy.and.callFake(returnCallQueryParameters);
+
+            const res = await firstValueFrom(service.fetchTaskList_UsingRuntimeBundleService(taskRequest));
+
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.skipCount).toBe(0);
+            expect(res.maxItems).toBe(20);
+            expect(requestSpy.calls.mostRecent().args[0]).toContain('/fakeName/rb/v1/tasks');
+            expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
+        });
+
+        it('should use default pagination values when pagination is not specified', async () => {
+            const taskRequest = {
+                appName: 'fakeName'
+            } as TaskListRequestModel;
+            requestSpy.and.callFake(returnCallQueryParameters);
+
+            const res = await firstValueFrom(service.fetchTaskList_UsingRuntimeBundleService(taskRequest));
+
+            expect(res.skipCount).toBe(0);
+            expect(res.maxItems).toBe(25);
+        });
+
+        it('should return an error when app name is not specified', async () => {
+            const taskRequest = { appName: null } as TaskListRequestModel;
+            requestSpy.and.callFake(returnCallUrl);
+
+            const res = await firstValueFrom(
+                service.fetchTaskList_UsingRuntimeBundleService(taskRequest).pipe(catchError((error) => of(error.message)))
+            );
+
+            expect(res).toBe('Appname not configured');
+        });
+    });
+
     describe('getTaskListCount', () => {
         it('should concat the app name to the request url', async () => {
             const taskRequest = {

@@ -62,7 +62,7 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
      * Retrieves a list of tasks using an object with optional query properties.
      *
      * @param requestNode Query object
-     * @param queryUrl Query url
+     * @param queryUrl Query url. If empty, query service will be called.
      * @returns List of tasks
      */
     fetchTaskList(requestNode: TaskListRequestModel, queryUrl?: string): Observable<any> {
@@ -80,6 +80,31 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
         const queryData = this.buildQueryData(requestNode);
 
         return this.post<any, TaskCloudNodePaging>(queryUrl, queryData, queryParams).pipe(
+            map((response) => {
+                const entries = response.list?.entries;
+                if (entries) {
+                    response.list.entries = entries.map((entryData) => entryData.entry) as any;
+                }
+                return response;
+            })
+        );
+    }
+
+    fetchTaskList_UsingRuntimeBundleService(requestNode: TaskListRequestModel): Observable<any> {
+        if (!requestNode?.appName) {
+            return throwError(() => new Error('Appname not configured'));
+        }
+
+        const url = `${this.getBasePath(requestNode.appName)}/rb/v1/tasks`;
+
+        const queryParams = {
+            maxItems: requestNode.pagination?.maxItems || 25,
+            skipCount: requestNode.pagination?.skipCount || 0
+        };
+
+        const queryData = this.buildQueryData(requestNode);
+
+        return this.getWithBody<any, TaskCloudNodePaging>(url, queryData, queryParams).pipe(
             map((response) => {
                 const entries = response.list?.entries;
                 if (entries) {

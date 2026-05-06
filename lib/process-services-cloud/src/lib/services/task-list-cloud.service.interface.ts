@@ -34,8 +34,18 @@ export interface TaskListCloudServiceInterface {
      * Retrieves a list of tasks using an object with optional query properties.
      *
      * @param requestNode Query object
-     * @param queryUrl Query url
+     * @param queryUrl Query url. If empty, query service will be called.
      * @returns List of tasks
      */
     fetchTaskList(requestNode: TaskListRequestModel, queryUrl?: string): Observable<any>;
+
+    /**
+     * Available from Activiti version 8.7.0 onwards.
+     * Retrieves a list of tasks using an object with optional query properties.
+     * Calls runtime bundle service.
+     *
+     * @param requestNode Query object
+     * @returns List of tasks
+     */
+    fetchTaskList_UsingRuntimeBundleService(requestNode: TaskListRequestModel): Observable<any>;
 }
