@@ -28,6 +28,36 @@ export class WebCryptoJwksValidationHandler extends AbstractValidationHandler {
     gracePeriodInSec = 600;
 
     async validateSignature(params: ValidationParams, retry = false): Promise<any> {
+        this.validateParams(params);
+
+        const keyId: string = params.idTokenHeader['kid'];
+        const jwksKeys: JwksKey[] = params.jwks['keys'];
+        const algorithm: string = params.idTokenHeader['alg'];
+
+        if (!algorithm || !this.allowedAlgorithms.includes(algorithm)) {
+            throw new Error('Algorithm not supported: ' + (algorithm || '<none>'));
+        }
+
+        const matchedKey = this.findMatchingKey(jwksKeys, keyId, algorithm);
+
+        if (!matchedKey && !retry && params.loadKeys) {
+            params.jwks = await params.loadKeys();
+            return this.validateSignature(params, true);
+        }
+
+        if (!matchedKey && retry) {
+            throw this.buildKeyNotFoundError(keyId);
+        }
+
+        const cryptoKey = await this.importKey(matchedKey, algorithm);
+        const isValid = await this.verifySignature(params.idToken, cryptoKey, algorithm);
+
+        if (!isValid) {
+            throw new Error('Signature not valid');
+        }
+    }
+
+    private validateParams(params: ValidationParams): void {
         if (!params.idToken) {
             throw new Error('Parameter idToken expected!');
         }
@@ -46,60 +76,34 @@ export class WebCryptoJwksValidationHandler extends AbstractValidationHandler {
         if (!params.jwks['keys'] || !Array.isArray(params.jwks['keys']) || params.jwks['keys'].length === 0) {
             throw new Error('Array keys in jwks missing!');
         }
+    }
 
-        const keyId: string = params.idTokenHeader['kid'];
-        const jwksKeys: JwksKey[] = params.jwks['keys'];
-        const algorithm: string = params.idTokenHeader['alg'];
-
-        if (!algorithm || !this.allowedAlgorithms.includes(algorithm)) {
-            throw new Error('Algorithm not supported: ' + (algorithm || '<none>'));
-        }
-
-        let matchedKey: JwksKey | undefined;
-
+    private findMatchingKey(jwksKeys: JwksKey[], keyId: string, algorithm: string): JwksKey | undefined {
         if (keyId) {
-            matchedKey = jwksKeys.find((jwk) => jwk.kid === keyId);
-        } else {
-            const keyType = this.algorithmToKeyType(algorithm);
-            const matchingKeys = jwksKeys.filter((jwk) => jwk.kty === keyType && jwk.use === 'sig');
-
-            if (matchingKeys.length > 1) {
-                return Promise.reject(new Error('More than one matching key found. Please specify a kid in the id_token header.'));
-            } else if (matchingKeys.length === 1) {
-                matchedKey = matchingKeys[0];
-            }
+            return jwksKeys.find((jwk) => jwk.kid === keyId);
         }
 
-        if (!matchedKey && !retry && params.loadKeys) {
-            const loadedKeys = await params.loadKeys();
-            params.jwks = loadedKeys;
-            return this.validateSignature(params, true);
+        const keyType = this.algorithmToKeyType(algorithm);
+        const matchingKeys = jwksKeys.filter((jwk) => jwk.kty === keyType && jwk.use === 'sig');
+
+        if (matchingKeys.length > 1) {
+            throw new Error('More than one matching key found. Please specify a kid in the id_token header.');
         }
 
-        if (!matchedKey && retry && !keyId) {
-            return Promise.reject(new Error('No matching key found.'));
-        }
+        return matchingKeys[0];
+    }
 
-        if (!matchedKey && retry && keyId) {
-            return Promise.reject(
-                new Error(
-                    'expected key not found in property jwks. ' +
-                        'This property is most likely loaded with the ' +
-                        'discovery document. ' +
-                        'Expected key id (kid): ' +
-                        keyId
-                )
-            );
+    private buildKeyNotFoundError(keyId: string): Error {
+        if (!keyId) {
+            return new Error('No matching key found.');
         }
-
-        const cryptoKey = await this.importKey(matchedKey, algorithm);
-        const isValid = await this.verifySignature(params.idToken, cryptoKey, algorithm);
-
-        if (isValid) {
-            return Promise.resolve();
-        } else {
-            return Promise.reject(new Error('Signature not valid'));
-        }
+        return new Error(
+            'expected key not found in property jwks. ' +
+                'This property is most likely loaded with the ' +
+                'discovery document. ' +
+                'Expected key id (kid): ' +
+                keyId
+        );
     }
 
     private async importKey(jsonWebKey: JwksKey, algorithmName: string): Promise<CryptoKey> {
