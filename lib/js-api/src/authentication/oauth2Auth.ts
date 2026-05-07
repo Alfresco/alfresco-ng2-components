@@ -24,6 +24,7 @@ import { AlfrescoApi } from '../alfrescoApi';
 import { Storage } from '../storage';
 import { HttpClient } from '../api-clients/http-client.interface';
 import { PathMatcher } from '../utils/path-matcher';
+import { isBrowser } from '../utils';
 
 declare const Buffer: any;
 
@@ -355,7 +356,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
     }
 
     isRedirectionUrl() {
-        return window.location.hash && window.location.hash.split('&')[0].indexOf('session_state') === -1;
+        return window.location.hash?.split('&')[0].indexOf('session_state') === -1;
     }
 
     genNonce(): string {
@@ -500,7 +501,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
     }
 
     silentRefresh(): void {
-        if (typeof document === 'undefined') {
+        if (!isBrowser()) {
             this.pollingRefreshToken();
             return;
         }
@@ -591,7 +592,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
                 resolve(data);
             },
             (error) => {
-                if ((error.error && error.error.status === 401) || error.status === 401) {
+                if (error.error?.status === 401 || error.status === 401) {
                     this.emit('unauthorized');
                 }
                 this.emit('error');
@@ -640,7 +641,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
                     resolve(data);
                 },
                 (error) => {
-                    if (error.error && error.error.status === 401) {
+                    if (error.error?.status === 401) {
                         this.emit('unauthorized');
                     }
                     this.emit('error');

@@ -17,7 +17,7 @@
 
 import assert from 'assert';
 import { ProcessAuth } from '../src';
-import { SuperagentHttpClient } from '../src/superagentHttpClient';
+import { FetchHttpClient } from '../src/fetchHttpClient';
 import { BpmAuthMock } from './mockObjects';
 
 describe('Bpm Auth test', () => {
@@ -256,16 +256,16 @@ describe('Bpm Auth test', () => {
             let setCsrfTokenCalled = false;
 
             beforeEach(() => {
-                originalMethod = SuperagentHttpClient.prototype.setCsrfToken;
+                originalMethod = FetchHttpClient.prototype.setCsrfToken;
                 setCsrfTokenCalled = false;
 
-                SuperagentHttpClient.prototype.setCsrfToken = () => {
+                FetchHttpClient.prototype.setCsrfToken = () => {
                     setCsrfTokenCalled = true;
                 };
             });
 
             afterEach(() => {
-                SuperagentHttpClient.prototype.setCsrfToken = originalMethod;
+                FetchHttpClient.prototype.setCsrfToken = originalMethod;
                 setCsrfTokenCalled = false;
             });
 

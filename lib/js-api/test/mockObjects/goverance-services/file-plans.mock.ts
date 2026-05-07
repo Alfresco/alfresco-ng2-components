@@ -16,40 +16,32 @@
  */
 
 import { BaseMock } from '../base.mock';
-import nock from 'nock';
 import { FilePlanRolePaging } from '@alfresco/js-api';
 
 export class FilePlansMock extends BaseMock {
     get200FilePlanRoles(filePlanId: string): void {
-        this.nock200FilePlanRoles(filePlanId).query({}).reply(200, this.mockFilePlanRolePaging());
+        this.mock().get(`/alfresco/api/-default-/public/gs/versions/1/file-plans/${filePlanId}/roles`).reply(200, this.mockFilePlanRolePaging());
     }
 
     get200FilePlanRolesWithFilteringByCapabilityNames(filePlanId: string): void {
-        this.nock200FilePlanRoles(filePlanId)
-            .query({
-                where: "(capabilityName in ('capability1', 'capability2'))"
-            })
+        this.mock()
+            .get(`/alfresco/api/-default-/public/gs/versions/1/file-plans/${filePlanId}/roles`)
+            .query({ where: "(capabilityName in ('capability1', 'capability2'))" })
             .reply(200, this.mockFilePlanRolePaging());
     }
 
     get200FilePlanRolesWithFilteringByPersonId(filePlanId: string): void {
-        this.nock200FilePlanRoles(filePlanId)
-            .query({
-                where: "(personId='someUser')"
-            })
+        this.mock()
+            .get(`/alfresco/api/-default-/public/gs/versions/1/file-plans/${filePlanId}/roles`)
+            .query({ where: "(personId='someUser')" })
             .reply(200, this.mockFilePlanRolePaging());
     }
 
     get200FilePlanRolesWithFilteringByPersonIdAndCapabilityNames(filePlanId: string): void {
-        this.nock200FilePlanRoles(filePlanId)
-            .query({
-                where: "(personId='someUser' and capabilityName in ('capability1', 'capability2'))"
-            })
+        this.mock()
+            .get(`/alfresco/api/-default-/public/gs/versions/1/file-plans/${filePlanId}/roles`)
+            .query({ where: "(personId='someUser' and capabilityName in ('capability1', 'capability2'))" })
             .reply(200, this.mockFilePlanRolePaging());
-    }
-
-    private nock200FilePlanRoles(filePlanId: string): nock.Interceptor {
-        return nock(this.host, { encodedQueryParams: true }).get(`/alfresco/api/-default-/public/gs/versions/1/file-plans/${filePlanId}/roles`);
     }
 
     private mockFilePlanRolePaging(): FilePlanRolePaging {

@@ -60,9 +60,13 @@ describe('PeopleApi', () => {
     it('should get list of people', (done) => {
         peopleMock.get200ResponsePersons();
 
-        peopleApi.listPeople().then(() => {
-            peopleMock.play();
-            done();
-        });
+        peopleApi.listPeople().then(
+            () => {
+                done();
+            },
+            (err) => {
+                done(new Error('listPeople rejected: ' + JSON.stringify(err)));
+            }
+        );
     });
 });
