@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class PeopleMock extends BaseMock {
     get201Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .post('/alfresco/api/-default-/public/alfresco/versions/1/people')
             .reply(201, {
                 entry: {
@@ -36,7 +35,7 @@ export class PeopleMock extends BaseMock {
     }
 
     get200ResponsePersons(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .get('/alfresco/api/-default-/public/alfresco/versions/1/people')
             .reply(200, {
                 list: {

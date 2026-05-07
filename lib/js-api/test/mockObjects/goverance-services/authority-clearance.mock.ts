@@ -16,12 +16,12 @@
  */
 
 import { BaseMock } from '../base.mock';
-import nock from 'nock';
 
 export class AuthorityClearanceMock extends BaseMock {
     get200AuthorityClearanceForAuthority(authorityId: string): void {
-        nock(this.host, { encodedQueryParams: true })
-            .get('/alfresco/api/-default-/public/gs/versions/1/cleared-authorities/' + authorityId + '/clearing-marks?skipCount=0&maxItems=100')
+        this.mock()
+            .get('/alfresco/api/-default-/public/gs/versions/1/cleared-authorities/' + authorityId + '/clearing-marks')
+            .query({ skipCount: '0', maxItems: '100' })
             .reply(200, {
                 list: {
                     pagination: {
@@ -94,7 +94,7 @@ export class AuthorityClearanceMock extends BaseMock {
     }
 
     post200AuthorityClearanceWithSingleItem(authorityId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .post('/alfresco/api/-default-/public/gs/versions/1/cleared-authorities/' + authorityId + '/clearing-marks')
             .reply(200, {
                 entry: {
@@ -106,7 +106,7 @@ export class AuthorityClearanceMock extends BaseMock {
     }
 
     post200AuthorityClearanceWithList(authorityId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .post('/alfresco/api/-default-/public/gs/versions/1/cleared-authorities/' + authorityId + '/clearing-marks')
             .reply(200, {
                 list: {

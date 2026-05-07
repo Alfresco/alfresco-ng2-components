@@ -17,7 +17,6 @@
 
 'use strict';
 
-import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 const adminUser = {
@@ -40,7 +39,7 @@ const adminUser = {
 
 export class CommentMock extends BaseMock {
     post201Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/74cd8a96-8a21-47e5-9b3b-a1b3e296787d/comments', {
                 content: 'This is a comment'
             })
@@ -60,7 +59,7 @@ export class CommentMock extends BaseMock {
     }
 
     get200Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .get('/alfresco/api/-default-/public/alfresco/versions/1/nodes/74cd8a96-8a21-47e5-9b3b-a1b3e296787d/comments')
             .reply(200, {
                 list: {

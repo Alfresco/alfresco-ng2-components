@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class CustomModelMock extends BaseMock {
     get200AllCustomModel(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .get('/alfresco/api/-default-/private/alfresco/versions/1/cmm')
             .reply(200, {
                 list: {
@@ -37,7 +36,7 @@ export class CustomModelMock extends BaseMock {
     }
 
     create201CustomModel(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .post('/alfresco/api/-default-/private/alfresco/versions/1/cmm')
             .reply(201, {
                 entry: {
@@ -52,7 +51,7 @@ export class CustomModelMock extends BaseMock {
     }
 
     activateCustomModel200(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.mock()
             .put('/alfresco/api/-default-/private/alfresco/versions/1/cmm/testModel', { status: 'ACTIVE' })
             .query({ select: 'status' })
             .reply(200, {
