@@ -3,11 +3,6 @@
   "dest": "../../dist/libs/core",
   "assets": [
     {
-      "glob": "pdf.worker.mjs",
-      "input": "./assets/pdfjs",
-      "output": "assets/pdfjs"
-    },
-    {
       "glob": "assets/**/*",
       "input": "./src/lib",
       "output": "/bundles/"
@@ -38,7 +33,6 @@
   "allowedNonPeerDependencies": [
     "cropperjs",
     "angular-oauth2-oidc",
-    "date-fns",
-    "rxjs"
+    "date-fns"
   ]
 }

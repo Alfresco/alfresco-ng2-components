@@ -18,26 +18,33 @@
 import { AppExtensionService, ExtensionsModule, ViewerExtensionRef, PreviewExtensionComponent } from '@alfresco/adf-extensions';
 import { NgForOf, NgTemplateOutlet } from '@angular/common';
 import {
+    AfterViewChecked,
     Component,
+    ComponentRef,
     EventEmitter,
     Injector,
     Input,
     OnChanges,
+    OnDestroy,
     OnInit,
     Output,
     TemplateRef,
+    Type,
     ViewChild,
+    ViewContainerRef,
     ViewEncapsulation,
     inject
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { Track } from '../../models/viewer.model';
 import { ViewUtilService } from '../../services/view-util.service';
+import { PDF_VIEWER_COMPONENT } from '../../tokens/pdf-viewer.token';
+import { PdfViewerRef } from '../../tokens/pdf-viewer-ref';
 import { ImgViewerComponent } from '../img-viewer/img-viewer.component';
 import { MediaPlayerComponent } from '../media-player/media-player.component';
-import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
 import { TxtViewerComponent } from '../txt-viewer/txt-viewer.component';
 import { UnknownFormatComponent } from '../unknown-format/unknown-format.component';
 
@@ -50,7 +57,6 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
     imports: [
         TranslatePipe,
         MatProgressSpinnerModule,
-        PdfViewerComponent,
         ImgViewerComponent,
         MediaPlayerComponent,
         TxtViewerComponent,
@@ -62,11 +68,19 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
     ],
     providers: [ViewUtilService]
 })
-export class ViewerRenderComponent implements OnChanges, OnInit {
+export class ViewerRenderComponent implements OnChanges, OnInit, AfterViewChecked, OnDestroy {
     private readonly viewUtilService = inject(ViewUtilService);
     private readonly extensionService = inject(AppExtensionService);
     dialog = inject(MatDialog);
     readonly injector = inject(Injector);
+
+    readonly pdfViewerComponent: Type<PdfViewerRef> | null = inject(PDF_VIEWER_COMPONENT, { optional: true });
+
+    @ViewChild('pdfViewerAnchor', { read: ViewContainerRef })
+    private readonly pdfViewerAnchor: ViewContainerRef;
+    private pdfViewerRef: ComponentRef<PdfViewerRef> | null = null;
+    private pdfOutputSubs: Subscription[] = [];
+    private pdfViewerDirty = false;
 
     /**
      * If you want to load an external file that does not come from ACS you
@@ -192,11 +206,23 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     ngOnChanges() {
         this.isLoading = true;
+        this.pdfViewerDirty = true;
         if (this.blobFile) {
             this.setUpBlobData();
         } else if (this.urlFile) {
             this.setUpUrlFile();
         }
+    }
+
+    ngAfterViewChecked() {
+        if (this.pdfViewerDirty && this.viewerType === 'pdf' && this.pdfViewerAnchor) {
+            this.pdfViewerDirty = false;
+            this.renderPdfViewer();
+        }
+    }
+
+    ngOnDestroy() {
+        this.destroyPdfViewer();
     }
 
     markAsLoaded() {
@@ -249,5 +275,38 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     onClose() {
         this.close.next(true);
+    }
+
+    private renderPdfViewer(): void {
+        this.destroyPdfViewer();
+
+        if (!this.pdfViewerComponent || !this.pdfViewerAnchor) {
+            return;
+        }
+
+        this.pdfViewerRef = this.pdfViewerAnchor.createComponent(this.pdfViewerComponent);
+        const instance = this.pdfViewerRef.instance;
+
+        instance.urlFile = this.urlFile;
+        instance.blobFile = this.blobFile;
+        instance.fileName = this.internalFileName;
+        instance.allowThumbnails = this.allowThumbnails;
+        instance.thumbnailsTemplate = this.thumbnailsTemplate;
+        instance.cacheType = this.cacheTypeForContent;
+
+        this.pdfOutputSubs = [
+            instance.pagesLoaded.subscribe(() => this.markAsLoaded()),
+            instance.close.subscribe(() => this.onClose()),
+            instance.error.subscribe(() => this.onUnsupportedFile())
+        ];
+    }
+
+    private destroyPdfViewer(): void {
+        this.pdfOutputSubs.forEach((sub) => sub.unsubscribe());
+        this.pdfOutputSubs = [];
+        if (this.pdfViewerRef) {
+            this.pdfViewerRef.destroy();
+            this.pdfViewerRef = null;
+        }
     }
 }

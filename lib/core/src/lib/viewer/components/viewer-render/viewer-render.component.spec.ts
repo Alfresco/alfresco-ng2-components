@@ -18,13 +18,30 @@
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
-import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, EventEmitter, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, DeferBlockBehavior, TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { UnitTestingUtils } from '../../../testing';
-import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { ViewerRenderComponent } from './viewer-render.component';
-import { ImgViewerComponent, MediaPlayerComponent, PdfViewerComponent, ViewerExtensionDirective } from '@alfresco/adf-core';
+import { PDF_VIEWER_COMPONENT } from '../../tokens/pdf-viewer.token';
+import { PdfViewerRef } from '../../tokens/pdf-viewer-ref';
+import { ImgViewerComponent, MediaPlayerComponent, ViewerExtensionDirective } from '@alfresco/adf-core';
+
+@Component({
+    selector: 'adf-pdf-viewer',
+    template: '<div class="adf-pdf-viewer-mock"></div>'
+})
+class MockPdfViewerComponent implements PdfViewerRef {
+    urlFile = '';
+    blobFile: Blob;
+    fileName = '';
+    allowThumbnails = false;
+    thumbnailsTemplate: TemplateRef<unknown> = null;
+    cacheType = '';
+    pagesLoaded = new EventEmitter<void>();
+    error = new EventEmitter<void>();
+    close = new EventEmitter<void>();
+}
 
 @Component({
     selector: 'adf-double-viewer',
@@ -69,7 +86,7 @@ describe('ViewerComponent', () => {
     beforeEach(async () => {
         TestBed.configureTestingModule({
             imports: [MatDialogModule, ViewerRenderComponent, DoubleViewerComponent],
-            providers: [RenderingQueueServices, { provide: Location, useClass: SpyLocation }, MatDialog],
+            providers: [{ provide: Location, useClass: SpyLocation }, MatDialog, { provide: PDF_VIEWER_COMPONENT, useValue: MockPdfViewerComponent }],
             deferBlockBehavior: DeferBlockBehavior.Playthrough
         });
         fixture = TestBed.createComponent(ViewerRenderComponent);
@@ -532,7 +549,7 @@ describe('ViewerComponent', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            const imgViewer = testingUtils.getByDirective(PdfViewerComponent);
+            const imgViewer = testingUtils.getByDirective(MockPdfViewerComponent);
             imgViewer.triggerEventHandler('pagesLoaded', null);
             fixture.detectChanges();
 

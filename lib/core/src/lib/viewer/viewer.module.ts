@@ -19,10 +19,6 @@ import { NgModule } from '@angular/core';
 import { DownloadPromptDialogComponent } from './components/download-prompt-dialog/download-prompt-dialog.component';
 import { ImgViewerComponent } from './components/img-viewer/img-viewer.component';
 import { MediaPlayerComponent } from './components/media-player/media-player.component';
-import { PdfPasswordDialogComponent } from './components/pdf-viewer-password-dialog/pdf-viewer-password-dialog';
-import { PdfThumbComponent } from './components/pdf-viewer-thumb/pdf-viewer-thumb.component';
-import { PdfThumbListComponent } from './components/pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
-import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
 import { TxtViewerComponent } from './components/txt-viewer/txt-viewer.component';
 import { UnknownFormatComponent } from './components/unknown-format/unknown-format.component';
 import { ViewerMoreActionsComponent } from './components/viewer-more-actions.component';
@@ -36,14 +32,10 @@ import { ViewerComponent } from './components/viewer.component';
 import { ViewerExtensionDirective } from './directives/viewer-extension.directive';
 
 export const VIEWER_DIRECTIVES = [
-    PdfPasswordDialogComponent,
     ViewerRenderComponent,
     ImgViewerComponent,
     TxtViewerComponent,
     MediaPlayerComponent,
-    PdfViewerComponent,
-    PdfThumbComponent,
-    PdfThumbListComponent,
     ViewerExtensionDirective,
     UnknownFormatComponent,
     ViewerToolbarComponent,

@@ -5,6 +5,11 @@
       "description": "Update alfresco-api imports",
       "version": "7.0.0",
       "factory": "./7_0_0/index#updateAlfrescoApiImports"
+    },
+    "migrate-pdf-viewer-imports": {
+      "description": "Move PDF viewer imports to @alfresco/adf-core/viewer/pdf secondary entrypoint",
+      "version": "9.0.0",
+      "factory": "./9_0_0/index#migratePdfViewerImports"
     }
   },
   "packageJsonUpdates": {
