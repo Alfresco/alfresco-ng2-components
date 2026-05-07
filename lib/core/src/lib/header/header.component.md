@@ -12,7 +12,6 @@ Displaying a minimal header with a logo and navbar:
 <adf-header
     variant="minimal"
     headerHeight="64px"
-    color="primary"
     [logoSrc]="src"
     [logoAlt]="alt"
     [logoHeight]="logoHeight"
@@ -47,8 +46,7 @@ Displaying an extended header with toolbar actions:
 ```html
 <adf-header variant="extended" [logoSrc]="src" [title]="title" [navbarItems]="items">
     <div adf-toolbar-actions>
-        <mat-button variant="flat">Secondary</mat-button>
-        <mat-button variant="flat" color="accent">Primary</mat-button>
+        <mat-button variant="flat">Primary</mat-button>
 
         <adf-toolbar-divider></adf-toolbar-divider>
 
@@ -90,8 +88,7 @@ import { HeaderComponent } from '@alfresco/adf-core';
 | `logoAlt`      | `string`        |              | The alt text for the logo.                                 |
 | `logoHeight`   | `string`        | `36px`       | The height of the logo.                                    |
 | `logoWidth`    | `string`        | `logoHeight` | The width of the logo.                                     |
-| `title`        | `string`        |              | The title to display in the header.                        |
-| `color`        | `ThemePalette`  |              | The theme color palette for the header.                    |
+| `title`        | `string`        |              | The title to display in the header.                    |
 | `navbarItems`  | `NavbarItem[]`  | `[]`         | Navigation items to display in the header.                 |
 
 ## Theming

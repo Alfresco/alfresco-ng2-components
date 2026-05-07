@@ -40,21 +40,6 @@ ADF is based on Angular Material library, which offers solutions for theming you
 
 If you already setup Angular Material theming in the application you use ADF in, there is no need for taking additional steps to theme ADF components - colors, typography and other parts of the theme will be taken from your setup.
 
-## Customizing deprecated theme variables
-
-Currently we have an amount of custom variables around components to mange libraries look and feel consistently and globally. 
-
-While they are getting deprecated to be replaced with [Angular Material system variables](https://material.angular.dev/guide/system-variables), for seamless integration with Angular Material's theming, you can provide values for those variables inside the `:root` element.
-
-For example:
-```css
-:root {
-    --theme-primary-color: --mat-sys-primary;
-    --theme-accent-color: --mat-sys-tertiary;
-}
-```
-**No new variables should be added to the project**
-
 [Reference list of overridable variables](https://github.com/Alfresco/alfresco-ng2-components/blob/29d341cc3b6a0842a776464027dcb1154875a8f0/lib/core/src/lib/styles/_index.scss#L25)
 
 ## Default reusable class
@@ -73,14 +58,14 @@ For example:
 
 Avoid adding css variables with names related to components:
 ```
---my-component-nr-xxx-background-color: mat.get-color-from-palette($primary, 50),  // bad
---theme-primary-color-50: mat.get-color-from-palette($primary, 50)  // good
+--my-component-nr-xxx-background-color: var(--mat-sys-primary),  // bad
+--theme-primary-color-50: var(--mat-sys-primary)  // good
 ```
 
 Avoid adding css variables with custom values, values should come from the theme:
 ```
 --new-variable: yellow  // bad
---new-variable: mat.get-color-from-palette($primary, 50), // good 
+--new-variable: var(--mat-sys-primary), // good 
 ```
 
 When styling components use Angular Material system variables (colors, typography, elevation):

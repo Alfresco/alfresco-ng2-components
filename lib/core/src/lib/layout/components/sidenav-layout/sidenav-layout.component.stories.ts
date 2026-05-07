@@ -23,7 +23,7 @@ import { IconModule } from '../../../icon/icon.module';
 
 type SidenavLayoutStoryArgs = SidenavLayoutComponent & {
     title?: string;
-    color?: 'primary' | 'accent' | 'warn';
+    backgroundColor?: string;
     clicked?: any;
 };
 
@@ -112,14 +112,14 @@ const meta: Meta<SidenavLayoutStoryArgs> = {
                 category: 'Header'
             }
         },
-        color: {
+        backgroundColor: {
             control: 'radio',
-            options: ['primary', 'accent', 'warn', undefined],
+            options: ['#42f57e', '#f54242', '#4287f5', 'var(--mat-sys-surface)'],
             description: `Background color for the header.
-                It can be any hex color code or one of the Material theme colors: 'primary', 'accent' or 'warn'`,
+                It can be any hex color code or CSS variable.`,
             table: {
-                type: { summary: 'ThemePalette' },
-                defaultValue: { summary: 'undefined' },
+                type: { summary: 'string' },
+                defaultValue: { summary: 'var(--mat-sys-surface)' },
                 category: 'Header'
             }
         },
@@ -157,7 +157,7 @@ export const SidenavLayout: Story = {
         <div class="adf-sidenav-layout-full-space">
             <adf-sidenav-layout-header>
                 <ng-template>
-                    <adf-layout-header [title]="title" [color]="color"></adf-layout-header>
+                    <adf-layout-header [title]="title" [backgroundColor]="backgroundColor"></adf-layout-header>
                 </ng-template>
             </adf-sidenav-layout-header>
 

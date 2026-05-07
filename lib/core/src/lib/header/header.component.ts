@@ -17,7 +17,6 @@
 
 import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ThemePalette } from '@angular/material/core';
 import { TOOLBAR_DIRECTIVES } from '../toolbar';
 import { NavbarItem } from './navbar/navbar-item.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -58,9 +57,6 @@ export class HeaderComponent {
 
     @Input()
     title: string;
-
-    @Input()
-    color: ThemePalette;
 
     @Input()
     navbarItems: NavbarItem[] = [];

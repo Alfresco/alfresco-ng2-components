@@ -19,7 +19,6 @@ Simple container for headers, titles, actions and breadcrumbs.
     -   [Properties](#properties)
 -   [Details](#details)
     -   [Dropdown menu](#dropdown-menu)
-    -   [Custom color](#custom-color)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -74,7 +73,6 @@ pushed to the right by a spacer:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| color | [`ThemePalette`](https://github.com/angular/components/blob/master/src/material/core/common-behaviors/color.ts) |  | Toolbar color. Can be changed to empty value (default), `primary`, `accent` or `warn`. |
 | title | `string` | "" | Toolbar title. |
 
 ## Details
@@ -115,21 +113,6 @@ With the menu set up like this, you would see the following menu items as define
 when you click the menu button:
 
 ![](../../docassets/images/adf-toolbar-04.png)
-
-### Custom color
-
-Besides the default color you can use 'primary', 'accent', or 'warn' values:
-
-You might also want to change colors to follow your application's color
-[theme](../../user-guide/theming.md):
-
-For example:
-
-![](../../docassets/images/adf-toolbar-05.png)
-
-![](../../docassets/images/adf-toolbar-06.png)
-
-![](../../docassets/images/adf-toolbar-07.png)
 
 ## See also
 
