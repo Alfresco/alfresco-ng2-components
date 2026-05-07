@@ -4,7 +4,7 @@
 # the repo. Unless a later match takes precedence,
 # these users will be requested for
 # review when someone opens a pull request.
-*   @eromano @popovicsandras @DenysVuika
+*   @eromano
 
  # Order is important; the last matching pattern takes the most
 # precedence. When someone opens a pull request that only
