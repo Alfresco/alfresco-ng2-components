@@ -18,7 +18,6 @@
 import { AppExtensionService, ExtensionsModule, ViewerExtensionRef, PreviewExtensionComponent } from '@alfresco/adf-extensions';
 import { NgForOf, NgTemplateOutlet } from '@angular/common';
 import {
-    AfterViewChecked,
     Component,
     ComponentRef,
     EventEmitter,
@@ -68,7 +67,7 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
     ],
     providers: [ViewUtilService]
 })
-export class ViewerRenderComponent implements OnChanges, OnInit, AfterViewChecked, OnDestroy {
+export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     private readonly viewUtilService = inject(ViewUtilService);
     private readonly extensionService = inject(AppExtensionService);
     dialog = inject(MatDialog);
@@ -76,11 +75,17 @@ export class ViewerRenderComponent implements OnChanges, OnInit, AfterViewChecke
 
     readonly pdfViewerComponent: Type<PdfViewerRef> | null = inject(PDF_VIEWER_COMPONENT, { optional: true });
 
-    @ViewChild('pdfViewerAnchor', { read: ViewContainerRef })
-    private readonly pdfViewerAnchor: ViewContainerRef;
+    private pdfViewerAnchor: ViewContainerRef | null = null;
     private pdfViewerRef: ComponentRef<PdfViewerRef> | null = null;
     private pdfOutputSubs: Subscription[] = [];
-    private pdfViewerDirty = false;
+
+    @ViewChild('pdfViewerAnchor', { read: ViewContainerRef })
+    set pdfViewerAnchorRef(vcr: ViewContainerRef) {
+        this.pdfViewerAnchor = vcr ?? null;
+        if (vcr) {
+            this.renderPdfViewer();
+        }
+    }
 
     /**
      * If you want to load an external file that does not come from ACS you
@@ -205,19 +210,12 @@ export class ViewerRenderComponent implements OnChanges, OnInit, AfterViewChecke
     }
 
     ngOnChanges() {
+        this.destroyPdfViewer();
         this.isLoading = true;
-        this.pdfViewerDirty = true;
         if (this.blobFile) {
             this.setUpBlobData();
         } else if (this.urlFile) {
             this.setUpUrlFile();
-        }
-    }
-
-    ngAfterViewChecked() {
-        if (this.pdfViewerDirty && this.viewerType === 'pdf' && this.pdfViewerAnchor) {
-            this.pdfViewerDirty = false;
-            this.renderPdfViewer();
         }
     }
 
