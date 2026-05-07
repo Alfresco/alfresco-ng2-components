@@ -21,3 +21,4 @@ export * from './oidc-auth.guard';
 export * from './redirect-auth.service';
 export * from './view/authentication-confirmation/authentication-confirmation.component';
 export * from './oidc-authentication.service';
+export * from './web-crypto-jwks-validation-handler';

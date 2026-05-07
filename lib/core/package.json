@@ -18,8 +18,7 @@
   },
   "dependencies": {
     "cropperjs": "^1.6.2",
-    "angular-oauth2-oidc": "17.0.2",
-    "angular-oauth2-oidc-jwks": "17.0.2",
+    "angular-oauth2-oidc": "19.0.0",
     "date-fns": "^2.30.0",
     "rxjs": "7.8.2"
   },
