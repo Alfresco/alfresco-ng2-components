@@ -89,7 +89,7 @@ export class SearchFacetFiltersService {
     }
 
     private parseFacets(context: ResultSetContext) {
-        context.facets?.forEach((facet) => (facet.label = facet.label.replace(/^"|"$/g, '')));
+        context.facets?.forEach((facet) => (facet.label = facet.label ? facet.label.replace(/^"|"$/g, '') : ''));
         this.parseFacetFields(context);
         this.parseFacetIntervals(context);
         this.parseFacetQueries(context);
