@@ -28,7 +28,7 @@ import {
     OAuthSuccessEvent,
     OAuthLogger
 } from 'angular-oauth2-oidc';
-import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
+import { WebCryptoJwksValidationHandler } from './web-crypto-jwks-validation-handler';
 import { from, Observable, race, ReplaySubject } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay, switchMap, take } from 'rxjs/operators';
 import { AuthService } from './auth.service';
@@ -338,7 +338,7 @@ export class RedirectAuthService extends AuthService {
 
     private configureAuth(config: AuthConfig): Promise<boolean> {
         this.oauthService.configure(config);
-        this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+        this.oauthService.tokenValidationHandler = new WebCryptoJwksValidationHandler();
 
         if (config.sessionChecksEnabled) {
             this.oauthService.events.pipe(filter((event) => event.type === 'session_terminated')).subscribe(() => {
