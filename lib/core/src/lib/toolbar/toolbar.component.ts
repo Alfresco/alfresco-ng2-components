@@ -16,7 +16,6 @@
  */
 
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
-import { ThemePalette } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NgIf } from '@angular/common';
@@ -34,8 +33,4 @@ export class ToolbarComponent {
     /** Toolbar title. */
     @Input()
     title: string = '';
-
-    /** Toolbar color. Can be changed to empty value (default), `primary`, `accent` or `warn`. */
-    @Input()
-    color: ThemePalette;
 }

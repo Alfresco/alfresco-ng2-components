@@ -1,7 +1,6 @@
 <mat-toolbar
     class="adf-toolbar-container-row"
-    [color]="color"
-    [style.background-color]="color"
+    [style.background-color]="backgroundColor"
     [style.background-image]="backgroundImage ? 'url(' + backgroundImage + ')' : 'none'">
     <button
         *ngIf="showSidenavToggle && position === 'start'"

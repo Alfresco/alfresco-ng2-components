@@ -16,7 +16,6 @@
                                 [attr.aria-label]="'ADF_VIEWER.ACTIONS.INFO' | translate"
                                 title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
                                 data-automation-id="adf-toolbar-left-sidebar"
-                                [color]="showLeftSidebar ? 'accent' : null"
                                 (click)="toggleLeftSidebar()">
                             <mat-icon adf-icon="info_outline" />
                         </button>
@@ -111,7 +110,6 @@
                             [attr.aria-label]="'ADF_VIEWER.ACTIONS.INFO' | translate"
                             title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
                             data-automation-id="adf-toolbar-sidebar"
-                            [color]="showRightSidebar ? 'accent' : null"
                             (click)="toggleRightSidebar()">
                         <mat-icon adf-icon="info_outline" />
                     </button>

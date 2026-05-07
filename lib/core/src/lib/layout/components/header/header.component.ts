@@ -16,7 +16,6 @@
  */
 
 import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit, inject } from '@angular/core';
-import { ThemePalette } from '@angular/material/core';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -52,10 +51,9 @@ export class HeaderLayoutComponent implements OnInit {
     @Input() tooltip: string;
 
     /**
-     * Background color for the header. It can be any hex color code or one
-     * of the Material theme colors: 'primary', 'accent' or 'warn'.
+     * Background color for the header. It can be any hex color code or CSS variable.
      */
-    @Input() color: ThemePalette | string;
+    @Input() backgroundColor = 'var(--mat-sys-surface)';
 
     /** Path to a background image for the header. */
     @Input() backgroundImage = '';
