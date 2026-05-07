@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit, inject } from '@angular/core';
-import { AppConfigService } from '../../../app-config/app-config.service';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,8 +32,6 @@ import { IconModule } from '../../../icon/icon.module';
     host: { class: 'adf-layout-header' }
 })
 export class HeaderLayoutComponent implements OnInit {
-    private readonly appConfigService = inject(AppConfigService);
-
     /** Title of the application. */
     @Input() title: string;
 
@@ -82,11 +79,6 @@ export class HeaderLayoutComponent implements OnInit {
     }
 
     ngOnInit() {
-        const textColor = this.appConfigService.get<string | undefined>('headerTextColor');
-        if (textColor) {
-            document.documentElement.style.setProperty('--theme-header-text-color', textColor);
-        }
-
         if (!this.logo) {
             this.logo = './assets/images/logo.svg';
         }
