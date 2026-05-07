@@ -17,7 +17,7 @@
                                 title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
                                 data-automation-id="adf-toolbar-left-sidebar"
                                 (click)="toggleLeftSidebar()">
-                            <mat-icon adf-icon="info_outline" />
+                            <mat-icon [class.adf-viewer-toolbar-left-sidebar-icon]="showLeftSidebar" adf-icon="info_outline" />
                         </button>
                     </ng-container>
 
@@ -111,7 +111,7 @@
                             title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
                             data-automation-id="adf-toolbar-sidebar"
                             (click)="toggleRightSidebar()">
-                        <mat-icon adf-icon="info_outline" />
+                        <mat-icon [class.adf-viewer-toolbar-right-sidebar-icon]="showRightSidebar" adf-icon="info_outline" />
                     </button>
 
                 </ng-container>

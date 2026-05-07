@@ -6,7 +6,7 @@
             [title]="report.title"
             (click)="selectCurrent(idx)"
         >
-            <mat-icon>{{ report.icon }}</mat-icon>
+            <mat-icon [class.adf-report-icons--selected]="isCurrent(idx)">{{ report.icon }}</mat-icon>
         </button>
     </div>
     <div class="adf-clear-both"></div>
