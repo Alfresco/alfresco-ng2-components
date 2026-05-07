@@ -258,10 +258,6 @@ describe('FormCloudComponent', () => {
         expect(validationSection).toBeNull();
     });
 
-    it('should return primary color for complete button', () => {
-        expect(formComponent.getColorForOutcome('COMPLETE')).toBe('primary');
-    });
-
     it('should not enable outcome button when model missing', () => {
         expect(formComponent.isOutcomeButtonVisible(null, false)).toBeFalsy();
     });

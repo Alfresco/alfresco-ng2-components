@@ -351,7 +351,6 @@ while the data for the table is loading:
             <!--Add your custom loading template here-->
             <mat-progress-spinner
                 class="adf-document-list-loading-margin"
-                [color]="'primary'"
                 [mode]="'indeterminate'">
             </mat-progress-spinner>
         </ng-template>

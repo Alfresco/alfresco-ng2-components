@@ -16,7 +16,6 @@
  */
 
 import { Directive, EventEmitter, Input, Output } from '@angular/core';
-import { ThemePalette } from '@angular/material/core';
 import { FormFieldModel, FormFieldValidator, FormModel, FormOutcomeEvent, FormOutcomeModel } from './widgets';
 import { isOutcomeButtonVisible } from './helpers/buttons-visibility';
 
@@ -43,7 +42,6 @@ export abstract class FormBaseComponent {
     static readonly START_PROCESS_OUTCOME_ID: string = FormModel.START_PROCESS_OUTCOME;
 
     static readonly CUSTOM_OUTCOME_ID: string = '$custom';
-    static readonly COMPLETE_BUTTON_COLOR: ThemePalette = 'primary';
 
     /**
      * @deprecated Use {@link FormOutcomeModel.COMPLETE_ACTION} instead.
@@ -151,10 +149,6 @@ export abstract class FormBaseComponent {
             titleEnabled = true;
         }
         return titleEnabled;
-    }
-
-    getColorForOutcome(outcomeName: string): ThemePalette {
-        return outcomeName === FormOutcomeModel.COMPLETE_ACTION ? FormBaseComponent.COMPLETE_BUTTON_COLOR : null;
     }
 
     isOutcomeButtonEnabled(outcome?: FormOutcomeModel): boolean {

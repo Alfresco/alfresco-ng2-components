@@ -10,6 +10,10 @@
 .adf-report-icons {
     margin: 20px 0;
     float: left;
+
+    &--selected {
+        color: var(--mat-sys-primary);
+    }
 }
 
 .adf-full-width {

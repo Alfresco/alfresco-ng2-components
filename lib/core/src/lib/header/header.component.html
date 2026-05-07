@@ -1,6 +1,6 @@
 <ng-container [ngSwitch]="variant">
     <ng-container *ngSwitchCase="'minimal'">
-        <adf-toolbar [color]="color">
+        <adf-toolbar>
             <adf-toolbar-title>
                 <ng-container *ngTemplateOutlet="toolbarTitleContent" />
             </adf-toolbar-title>
@@ -11,13 +11,13 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="'extended'">
-        <adf-toolbar [color]="color">
+        <adf-toolbar>
             <adf-toolbar-title>
                 <ng-container *ngTemplateOutlet="toolbarTitleContent" />
             </adf-toolbar-title>
             <ng-container *ngTemplateOutlet="toolbarActions" />
         </adf-toolbar>
-        <adf-toolbar [color]="color">
+        <adf-toolbar>
             <ng-container *ngTemplateOutlet="navbarTemplate" />
         </adf-toolbar>
     </ng-container>

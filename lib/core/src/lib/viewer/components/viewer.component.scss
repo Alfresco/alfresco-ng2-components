@@ -15,6 +15,16 @@
         width: auto;
     }
 
+    &-toolbar {
+        &-left-sidebar-icon {
+            color: var(--mat-sys-primary);
+        }
+
+        &-right-sidebar-icon {
+            color: var(--mat-sys-secondary);
+        }
+    }
+
     &-main {
         width: 0;
     }

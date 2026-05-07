@@ -124,7 +124,6 @@
                                 @for (outcome of visibleOutcomes; track outcome.name) {
                                     <button
                                         [id]="'adf-form-' + outcome.name | formatSpace"
-                                        [color]="getColorForOutcome(outcome.name)"
                                         mat-button
                                         [disabled]="!isOutcomeButtonEnabled(outcome)"
                                         class="adf-cloud-form-custom-outcome-button"

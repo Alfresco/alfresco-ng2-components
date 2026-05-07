@@ -40,15 +40,6 @@ const meta: Meta<ToolbarStoryArgs> = {
         })
     ],
     argTypes: {
-        color: {
-            control: 'radio',
-            options: ['primary', 'accent', 'warn', undefined],
-            description: 'Toolbar color.',
-            table: {
-                type: { summary: 'ThemePalette' },
-                defaultValue: { summary: 'undefined' }
-            }
-        },
         title: {
             control: 'text',
             description: 'Toolbar title.',
@@ -112,7 +103,7 @@ export const Toolbar: Story = {
     render: (args: ToolbarComponent & { anyContentProjection: boolean } & { toolbarDivider: boolean } & { toolbarTitle: boolean }) => ({
         props: args,
         template: `
-    <adf-toolbar color="${args.color}" title="${args.title}">
+    <adf-toolbar title="${args.title}">
         <ng-container *ngIf="${args.toolbarTitle}"><adf-toolbar-title>Projected Title</adf-toolbar-title></ng-container>
         <ng-container *ngIf="${args.anyContentProjection}">
             <span style="color:red">projected content</span>

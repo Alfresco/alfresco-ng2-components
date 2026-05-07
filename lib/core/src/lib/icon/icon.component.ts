@@ -16,7 +16,6 @@
  */
 
 import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy, inject, ElementRef, AfterContentInit } from '@angular/core';
-import { ThemePalette } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ICON_ALIAS_MAP_TOKEN } from './icon-alias-map.token';
 
@@ -38,10 +37,6 @@ export class IconComponent implements AfterContentInit {
 
     private _value = DEFAULT_ICON_VALUE;
     private _isSvg = false;
-
-    /** Theme color palette for the component. */
-    @Input()
-    color: ThemePalette;
 
     /** Icon font set */
     @Input()

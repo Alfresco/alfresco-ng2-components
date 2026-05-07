@@ -16,7 +16,6 @@ Reusable header for Alfresco applications.
     title="title" 
     logo="logo.svg" 
     [redirectUrl]="'/home'"
-    color="primary"
     (clicked)=toggleMenu($event)>
 </adf-layout-header>
 ```
@@ -38,7 +37,7 @@ body of the element:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| color | [`ThemePalette`](https://github.com/angular/components/blob/master/src/material/core/common-behaviors/color.ts) |  | Background color for the header. It can be any hex color code or one of the Material theme colors: 'primary', 'accent' or 'warn'. |
+| backgroundColor | [`string`] | Background color for the header. It can be any hex color code or CSS variable. |
 | expandedSidenav | `boolean` | true | expandedSidenav: Toggles the expanded state of the component. |
 | logo | `string` |  | Path to an image file for the application logo. |
 | position | `string` | "start" | The side of the page that the drawer is attached to (can be 'start' or 'end') |
@@ -58,5 +57,5 @@ body of the element:
 ## Details
 
 This component displays a customizable header that can be reused. Use the input properties to
-configure the left side (title, button) and the primary color of the header. The right part of the
+configure the left side (title, button) and the background color of the header. The right part of the
 header can contain other components which are transcluded in the header component.

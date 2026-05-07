@@ -34,20 +34,20 @@ const meta: Meta<HeaderLayoutComponent> = {
         docs: {
             description: {
                 component: `This component displays a customizable header for Alfresco applications that can be reused.
-                 Use the input properties to configure the left side (title, button) and the primary color of the header.
+                 Use the input properties to configure the left side (title, button) and the background color of the header.
                  The right part of the header can contain other components which are transcluded in the header component.`
             }
         }
     },
     argTypes: {
-        color: {
+        backgroundColor: {
             control: 'radio',
-            options: ['primary', 'accent', 'warn', '#42f57e', undefined],
+            options: ['#42f57e', '#f54242', '#4287f5', 'var(--mat-sys-surface)'],
             description: `Background color for the header.
-                It can be any hex color code or one of the Material theme colors: 'primary', 'accent' or 'warn'`,
+                It can be any hex color code or CSS variable.`,
             table: {
-                type: { summary: 'ThemePalette' },
-                defaultValue: { summary: 'undefined' }
+                type: { summary: 'string' },
+                defaultValue: { summary: 'var(--mat-sys-surface)' }
             }
         },
         expandedSidenav: {
