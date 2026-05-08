@@ -90,41 +90,46 @@ function movePdfImports(sourceFile: ts.SourceFile, fileContent: string): string 
         return fileContent;
     }
 
-    const pdfImportNames = pdfImports.map((el) => el.name.text).join(', ');
-    const newImportStatement = `import { ${pdfImportNames} } from '${NEW_SOURCE}';`;
+    const pdfImportNames = pdfImports.map((el) => el.name.text);
 
-    let updatedContent: string;
+    const existingNewImport = importDeclarations.find((decl) => decl.moduleSpecifier.getText().replace(/['"]/g, '') === NEW_SOURCE);
+
+    const existingNewImportNames: string[] = [];
+    if (existingNewImport?.importClause?.namedBindings && ts.isNamedImports(existingNewImport.importClause.namedBindings)) {
+        existingNewImportNames.push(...existingNewImport.importClause.namedBindings.elements.map((el) => el.name.text));
+    }
+
+    const mergedNames = [...new Set([...existingNewImportNames, ...pdfImportNames])];
+    const mergedImportStatement = `import { ${mergedNames.join(', ')} } from '${NEW_SOURCE}';`;
+
+    const edits: { start: number; end: number; replacement: string }[] = [];
 
     if (remainingImports.length === 0) {
-        updatedContent = removeTextRange(fileContent, coreImport.getFullStart(), coreImport.getEnd());
+        edits.push({ start: coreImport.getFullStart(), end: coreImport.getEnd(), replacement: '' });
     } else {
         const remainingNames = remainingImports.map((el) => el.getText()).join(', ');
         const updatedImport = `import { ${remainingNames} } from '${OLD_SOURCE}';`;
-        updatedContent = fileContent.slice(0, coreImport.getStart()) + updatedImport + fileContent.slice(coreImport.getEnd());
+        edits.push({ start: coreImport.getStart(), end: coreImport.getEnd(), replacement: updatedImport });
     }
 
-    const existingNewImport = sourceFile.statements
-        .filter(ts.isImportDeclaration)
-        .find((decl) => decl.moduleSpecifier.getText().replace(/['"]/g, '') === NEW_SOURCE);
+    if (existingNewImport) {
+        edits.push({ start: existingNewImport.getStart(), end: existingNewImport.getEnd(), replacement: mergedImportStatement });
+    }
+
+    edits.sort((a, b) => b.start - a.start);
+    let updatedContent = fileContent;
+    for (const edit of edits) {
+        updatedContent = updatedContent.slice(0, edit.start) + edit.replacement + updatedContent.slice(edit.end);
+    }
 
     if (!existingNewImport) {
-        const firstNonImport = sourceFile.statements.find((stmt) => !ts.isImportDeclaration(stmt));
+        const updatedSource = ts.createSourceFile('temp.ts', updatedContent, ts.ScriptTarget.Latest, true);
+        const firstNonImport = updatedSource.statements.find((stmt) => !ts.isImportDeclaration(stmt));
         const insertPos = firstNonImport ? firstNonImport.getFullStart() : updatedContent.length;
-        const adjustedPos = Math.min(insertPos, updatedContent.length);
-        updatedContent = updatedContent.slice(0, adjustedPos).trimEnd() + '\n' + newImportStatement + '\n' + updatedContent.slice(adjustedPos);
+        updatedContent = updatedContent.slice(0, insertPos).trimEnd() + '\n' + mergedImportStatement + '\n' + updatedContent.slice(insertPos);
     }
 
     return updatedContent.replace(/\n{3,}/g, '\n\n');
-}
-
-/**
- * @param text - the source text
- * @param start - start index of the range to remove
- * @param end - end index of the range to remove
- * @returns text with the specified range removed
- */
-function removeTextRange(text: string, start: number, end: number): string {
-    return text.slice(0, start) + text.slice(end);
 }
 
 export default migratePdfViewerImports;
