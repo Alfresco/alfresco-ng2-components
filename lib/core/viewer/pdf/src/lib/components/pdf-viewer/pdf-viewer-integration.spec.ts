@@ -75,7 +75,7 @@ describe('PdfViewer Integration with ViewerRenderComponent', () => {
         expect(pdfViewer.componentInstance.allowThumbnails).toBe(true);
     });
 
-    it('should not render PdfViewerComponent when token is not provided', async () => {
+    it('should show unknown format when token is not provided', async () => {
         TestBed.resetTestingModule();
         TestBed.configureTestingModule({
             imports: [ViewerRenderComponent],

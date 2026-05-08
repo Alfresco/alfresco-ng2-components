@@ -36,6 +36,8 @@ const NEW_SOURCE = '@alfresco/adf-core/viewer/pdf';
  */
 export function migratePdfViewerImports(): Rule {
     return (tree: Tree) => {
+        let providerAdded = false;
+
         tree.visit((filePath: string) => {
             if (
                 !filePath.includes('/.git/') &&
@@ -50,18 +52,26 @@ export function migratePdfViewerImports(): Rule {
                 }
 
                 const fileContent = bufferContent.toString();
-                if (!PDF_SYMBOLS.some((sym) => fileContent.includes(sym))) {
-                    return;
+
+                if (PDF_SYMBOLS.some((sym) => fileContent.includes(sym))) {
+                    const sourceFile = ts.createSourceFile(filePath, fileContent, ts.ScriptTarget.Latest, true);
+                    const updatedContent = movePdfImports(sourceFile, fileContent);
+
+                    if (updatedContent !== fileContent) {
+                        tree.overwrite(filePath, updatedContent);
+                    }
                 }
 
-                const sourceFile = ts.createSourceFile(filePath, fileContent, ts.ScriptTarget.Latest, true);
-                const updatedContent = movePdfImports(sourceFile, fileContent);
-
-                if (updatedContent !== fileContent) {
-                    tree.overwrite(filePath, updatedContent);
+                if (!providerAdded && fileContent.includes('providePdfViewer')) {
+                    providerAdded = true;
                 }
             }
         });
+
+        if (!providerAdded) {
+            addProvidePdfViewerToAppConfig(tree);
+        }
+
         return tree;
     };
 }
@@ -130,6 +140,135 @@ function movePdfImports(sourceFile: ts.SourceFile, fileContent: string): string 
     }
 
     return updatedContent.replace(/\n{3,}/g, '\n\n');
+}
+
+/**
+ * @param tree - the schematic file tree
+ */
+function addProvidePdfViewerToAppConfig(tree: Tree): void {
+    const candidates = ['src/app/app.config.ts', 'src/app/app.module.ts', 'src/main.ts'];
+    let targetPath: string | null = null;
+
+    for (const candidate of candidates) {
+        if (tree.exists(`/${candidate}`)) {
+            targetPath = `/${candidate}`;
+            break;
+        }
+    }
+
+    if (!targetPath) {
+        tree.visit((filePath: string) => {
+            if (targetPath) {
+                return;
+            }
+            if (!filePath.includes('/node_modules/') && !filePath.includes('/.git/') && /\.ts$/.test(filePath)) {
+                const content = tree.read(filePath)?.toString() ?? '';
+                if (content.includes('bootstrapApplication') || content.includes('ApplicationConfig')) {
+                    targetPath = filePath;
+                }
+            }
+        });
+    }
+
+    if (!targetPath) {
+        return;
+    }
+
+    const buffer = tree.read(targetPath);
+    if (!buffer) {
+        return;
+    }
+    const content = buffer.toString();
+
+    if (content.includes('providePdfViewer')) {
+        return;
+    }
+
+    const sourceFile = ts.createSourceFile(targetPath, content, ts.ScriptTarget.Latest, true);
+    const result = insertProvidePdfViewer(sourceFile, content);
+
+    if (result !== content) {
+        tree.overwrite(targetPath, result);
+    }
+}
+
+/**
+ * @param sourceFile - the parsed TypeScript source file
+ * @param content - the raw file content
+ * @returns updated content with providePdfViewer() added to providers
+ */
+function insertProvidePdfViewer(sourceFile: ts.SourceFile, content: string): string {
+    const providersArray = findProvidersArray(sourceFile);
+    if (!providersArray) {
+        return content;
+    }
+
+    const lastElement = providersArray.elements[providersArray.elements.length - 1];
+    let insertPos: number;
+    let prefix: string;
+
+    if (lastElement) {
+        insertPos = lastElement.getEnd();
+        prefix = ', providePdfViewer()';
+    } else {
+        insertPos = providersArray.getStart() + 1;
+        prefix = 'providePdfViewer()';
+    }
+
+    let updatedContent = content.slice(0, insertPos) + prefix + content.slice(insertPos);
+
+    const importStatement = `import { providePdfViewer } from '${NEW_SOURCE}';\n`;
+    const existingPdfImport = sourceFile.statements
+        .filter(ts.isImportDeclaration)
+        .find((decl) => decl.moduleSpecifier.getText().replace(/['"]/g, '') === NEW_SOURCE);
+
+    if (existingPdfImport) {
+        if (!content.includes('providePdfViewer')) {
+            const updatedSource = ts.createSourceFile('temp.ts', updatedContent, ts.ScriptTarget.Latest, true);
+            const existingDecl = updatedSource.statements
+                .filter(ts.isImportDeclaration)
+                .find((decl) => decl.moduleSpecifier.getText().replace(/['"]/g, '') === NEW_SOURCE);
+
+            if (existingDecl?.importClause?.namedBindings && ts.isNamedImports(existingDecl.importClause.namedBindings)) {
+                const names = existingDecl.importClause.namedBindings.elements.map((el) => el.name.text);
+                if (!names.includes('providePdfViewer')) {
+                    names.push('providePdfViewer');
+                    const newImport = `import { ${names.join(', ')} } from '${NEW_SOURCE}';`;
+                    updatedContent = updatedContent.slice(0, existingDecl.getStart()) + newImport + updatedContent.slice(existingDecl.getEnd());
+                }
+            }
+        }
+    } else {
+        const firstImport = sourceFile.statements.find(ts.isImportDeclaration);
+        const importInsertPos = firstImport ? firstImport.getFullStart() : 0;
+        updatedContent = updatedContent.slice(0, importInsertPos) + importStatement + updatedContent.slice(importInsertPos);
+    }
+
+    return updatedContent;
+}
+
+/**
+ * @param sourceFile - the TypeScript source file to search
+ * @returns the providers ArrayLiteralExpression if found
+ */
+function findProvidersArray(sourceFile: ts.SourceFile): ts.ArrayLiteralExpression | null {
+    let result: ts.ArrayLiteralExpression | null = null;
+
+    const visit = (node: ts.Node): void => {
+        if (result) {
+            return;
+        }
+
+        if (ts.isPropertyAssignment(node) && node.name.getText() === 'providers' && ts.isArrayLiteralExpression(node.initializer)) {
+            result = node.initializer;
+            return;
+        }
+
+        ts.forEachChild(node, visit);
+    };
+
+    visit(sourceFile);
+    return result;
 }
 
 export default migratePdfViewerImports;
