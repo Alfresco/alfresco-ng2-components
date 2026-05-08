@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { Component, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { provideCoreAuthTesting } from '@alfresco/adf-core';
 import { PdfViewerComponent } from './pdf-viewer.component';
@@ -59,9 +59,39 @@ class RealPdfTestHostComponent {
     blobFile = createRealPdfBlob();
 }
 
+/**
+ * @param predicate - condition to wait for
+ * @param timeout - max wait time in ms
+ * @returns a promise that resolves when the predicate returns true
+ */
+function waitFor(predicate: () => boolean, timeout = 5000): Promise<void> {
+    const start = Date.now();
+    return new Promise((resolve, reject) => {
+        const check = () => {
+            if (predicate()) {
+                resolve();
+            } else if (Date.now() - start > timeout) {
+                reject(new Error('waitFor timed out'));
+            } else {
+                setTimeout(check, 50);
+            }
+        };
+        check();
+    });
+}
+
 describe('PdfViewerComponent with real pdfjs-dist', () => {
     let fixture: ComponentFixture<RealPdfTestHostComponent>;
     let component: PdfViewerComponent;
+
+    beforeAll(async () => {
+        const workerModule = await import('pdfjs-dist/build/pdf.worker.min.mjs');
+        (globalThis as any).pdfjsWorker = { WorkerMessageHandler: workerModule.WorkerMessageHandler };
+    });
+
+    afterAll(() => {
+        delete (globalThis as any).pdfjsWorker;
+    });
 
     beforeEach(async () => {
         pdfjsLib.GlobalWorkerOptions.workerSrc = '';
@@ -81,22 +111,16 @@ describe('PdfViewerComponent with real pdfjs-dist', () => {
         fixture.destroy();
     });
 
-    it('should load a real PDF blob and detect page count', fakeAsync(() => {
-        const change = new SimpleChange(null, fixture.componentInstance.blobFile, true);
-        component.ngOnChanges({ blobFile: change });
-        tick(500);
-        flush();
-
+    it('should load a real PDF blob and detect page count', async () => {
+        fixture.detectChanges();
+        await waitFor(() => component.totalPages > 0);
         expect(component.totalPages).toBe(1);
-    }));
+    });
 
-    it('should emit pagesLoaded when a real PDF is rendered', fakeAsync(() => {
+    it('should emit pagesLoaded when a real PDF is rendered', async () => {
         const pagesLoadedSpy = spyOn(component.pagesLoaded, 'emit');
-        const change = new SimpleChange(null, fixture.componentInstance.blobFile, true);
-        component.ngOnChanges({ blobFile: change });
-        tick(500);
-        flush();
-
+        fixture.detectChanges();
+        await waitFor(() => pagesLoadedSpy.calls.count() > 0);
         expect(pagesLoadedSpy).toHaveBeenCalled();
-    }));
+    });
 });

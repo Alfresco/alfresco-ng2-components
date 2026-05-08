@@ -33,7 +33,9 @@
 
                     @case ('pdf') {
                         @if (pdfViewerComponent) {
-                            <ng-container #pdfViewerAnchor />
+                            <ng-container
+                                [ngComponentOutlet]="pdfViewerComponent"
+                                [ngComponentOutletInputs]="pdfViewerInputs" />
                         } @else {
                             <adf-viewer-unknown-format />
                         }

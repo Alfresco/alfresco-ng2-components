@@ -16,10 +16,9 @@
  */
 
 import { AppExtensionService, ExtensionsModule, ViewerExtensionRef, PreviewExtensionComponent } from '@alfresco/adf-extensions';
-import { NgForOf, NgTemplateOutlet } from '@angular/common';
+import { NgComponentOutlet, NgForOf, NgTemplateOutlet } from '@angular/common';
 import {
     Component,
-    ComponentRef,
     EventEmitter,
     Injector,
     Input,
@@ -30,7 +29,6 @@ import {
     TemplateRef,
     Type,
     ViewChild,
-    ViewContainerRef,
     ViewEncapsulation,
     inject
 } from '@angular/core';
@@ -56,6 +54,7 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
     imports: [
         TranslatePipe,
         MatProgressSpinnerModule,
+        NgComponentOutlet,
         ImgViewerComponent,
         MediaPlayerComponent,
         TxtViewerComponent,
@@ -75,16 +74,12 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
 
     readonly pdfViewerComponent: Type<PdfViewerRef> | null = inject(PDF_VIEWER_COMPONENT, { optional: true });
 
-    private pdfViewerAnchor: ViewContainerRef | null = null;
-    private pdfViewerRef: ComponentRef<PdfViewerRef> | null = null;
+    pdfViewerInputs: Record<string, unknown> = {};
     private pdfOutputSubs: Subscription[] = [];
 
-    @ViewChild('pdfViewerAnchor', { read: ViewContainerRef })
-    set pdfViewerAnchorRef(vcr: ViewContainerRef) {
-        this.pdfViewerAnchor = vcr ?? null;
-        if (vcr) {
-            this.renderPdfViewer();
-        }
+    @ViewChild(NgComponentOutlet, { static: false })
+    set pdfOutletRef(outlet: NgComponentOutlet) {
+        this.subscribeToPdfOutputs(outlet?.componentInstance as PdfViewerRef);
     }
 
     /**
@@ -210,17 +205,18 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnChanges() {
-        this.destroyPdfViewer();
         this.isLoading = true;
         if (this.blobFile) {
             this.setUpBlobData();
         } else if (this.urlFile) {
             this.setUpUrlFile();
         }
+        this.updatePdfViewerInputs();
     }
 
     ngOnDestroy() {
-        this.destroyPdfViewer();
+        this.pdfOutputSubs.forEach((sub) => sub.unsubscribe());
+        this.pdfOutputSubs = [];
     }
 
     markAsLoaded() {
@@ -275,36 +271,27 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
         this.close.next(true);
     }
 
-    private renderPdfViewer(): void {
-        this.destroyPdfViewer();
-
-        if (!this.pdfViewerComponent || !this.pdfViewerAnchor) {
-            return;
-        }
-
-        this.pdfViewerRef = this.pdfViewerAnchor.createComponent(this.pdfViewerComponent);
-        const instance = this.pdfViewerRef.instance;
-
-        instance.urlFile = this.urlFile;
-        instance.blobFile = this.blobFile;
-        instance.fileName = this.internalFileName;
-        instance.allowThumbnails = this.allowThumbnails;
-        instance.thumbnailsTemplate = this.thumbnailsTemplate;
-        instance.cacheType = this.cacheTypeForContent;
-
-        this.pdfOutputSubs = [
-            instance.pagesLoaded.subscribe(() => this.markAsLoaded()),
-            instance.close.subscribe(() => this.onClose()),
-            instance.error.subscribe(() => this.onUnsupportedFile())
-        ];
+    private updatePdfViewerInputs(): void {
+        this.pdfViewerInputs = {
+            urlFile: this.urlFile,
+            blobFile: this.blobFile,
+            fileName: this.internalFileName,
+            allowThumbnails: this.allowThumbnails,
+            thumbnailsTemplate: this.thumbnailsTemplate,
+            cacheType: this.cacheTypeForContent
+        };
     }
 
-    private destroyPdfViewer(): void {
+    private subscribeToPdfOutputs(instance: PdfViewerRef | null): void {
         this.pdfOutputSubs.forEach((sub) => sub.unsubscribe());
         this.pdfOutputSubs = [];
-        if (this.pdfViewerRef) {
-            this.pdfViewerRef.destroy();
-            this.pdfViewerRef = null;
+
+        if (instance) {
+            this.pdfOutputSubs = [
+                instance.pagesLoaded.subscribe(() => this.markAsLoaded()),
+                instance.close.subscribe(() => this.onClose()),
+                instance.error.subscribe(() => this.onUnsupportedFile())
+            ];
         }
     }
 }
