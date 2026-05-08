@@ -226,6 +226,12 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
         } else if (this.urlFile) {
             this.setUpUrlFile();
         }
+        if (this.viewerType === 'pdf' && !this.pdfViewerComponent) {
+            console.error(
+                '@alfresco/adf-core: PDF viewer is not configured. ' +
+                    'Add providePdfViewer() from @alfresco/adf-core/viewer/pdf to your application providers.'
+            );
+        }
         this.updatePdfViewerInputs();
     }
 
