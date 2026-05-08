@@ -22,6 +22,8 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import {
     ADF_DATE_FORMATS,
     AdfDateFnsAdapter,
+    ADF_DATETIME_FORMATS,
+    AdfDateTimeFnsAdapter,
     DateFnsUtils,
     DEFAULT_DATE_FORMAT,
     ErrorMessageModel,
@@ -30,10 +32,9 @@ import {
     WidgetComponent,
     ReactiveFormWidget
 } from '@alfresco/adf-core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { addDays, parseISO } from 'date-fns';
 import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { NgIf } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -41,10 +42,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'date-widget',
-    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, ErrorWidgetComponent],
+    imports: [TranslatePipe, MatFormFieldModule, MatInputModule, MatDatetimepickerModule, ReactiveFormsModule, ErrorWidgetComponent],
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
-        { provide: DateAdapter, useClass: AdfDateFnsAdapter }
+        { provide: DateAdapter, useClass: AdfDateFnsAdapter },
+        { provide: MAT_DATETIME_FORMATS, useValue: ADF_DATETIME_FORMATS },
+        { provide: DatetimeAdapter, useClass: AdfDateTimeFnsAdapter }
     ],
     templateUrl: './date-cloud.widget.html',
     styleUrls: ['./date-cloud.widget.scss'],
@@ -73,7 +76,7 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
     public readonly formService = inject(FormService);
 
     private readonly destroyRef = inject(DestroyRef);
-    private readonly dateAdapter = inject(DateAdapter);
+    private readonly dateAdapter = inject(DatetimeAdapter);
 
     ngOnInit(): void {
         this.setFormControlValue();
@@ -174,7 +177,7 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
 
     private initDateAdapter(): void {
         if (this.field?.dateDisplayFormat) {
-            const adapter = this.dateAdapter as AdfDateFnsAdapter;
+            const adapter = this.dateAdapter as AdfDateTimeFnsAdapter;
             adapter.displayFormat = this.field.dateDisplayFormat;
         }
     }
