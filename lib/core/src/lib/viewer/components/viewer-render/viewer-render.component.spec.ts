@@ -18,7 +18,7 @@
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
-import { Component, DebugElement, EventEmitter, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, DeferBlockBehavior, TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { UnitTestingUtils } from '../../../testing';
@@ -32,15 +32,15 @@ import { ImgViewerComponent, MediaPlayerComponent, ViewerExtensionDirective } fr
     template: '<div class="adf-pdf-viewer-mock"></div>'
 })
 class MockPdfViewerComponent implements PdfViewerRef {
-    urlFile = '';
-    blobFile: Blob;
-    fileName = '';
-    allowThumbnails = false;
-    thumbnailsTemplate: TemplateRef<unknown> = null;
-    cacheType = '';
-    pagesLoaded = new EventEmitter<void>();
-    error = new EventEmitter<void>();
-    close = new EventEmitter<void>();
+    @Input() urlFile = '';
+    @Input() blobFile: Blob;
+    @Input() fileName = '';
+    @Input() allowThumbnails = false;
+    @Input() thumbnailsTemplate: TemplateRef<unknown> = null;
+    @Input() cacheType = '';
+    @Output() pagesLoaded = new EventEmitter<void>();
+    @Output() error = new EventEmitter<void>();
+    @Output() close = new EventEmitter<void>();
 }
 
 @Component({

@@ -19,18 +19,19 @@ import { AppExtensionService, ExtensionsModule, ViewerExtensionRef, PreviewExten
 import { NgComponentOutlet, NgForOf, NgTemplateOutlet } from '@angular/common';
 import {
     Component,
+    effect,
     EventEmitter,
     Injector,
     Input,
     OnChanges,
-    OnDestroy,
     OnInit,
     Output,
     TemplateRef,
     Type,
     ViewChild,
     ViewEncapsulation,
-    inject
+    inject,
+    viewChild
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -66,7 +67,7 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
     ],
     providers: [ViewUtilService]
 })
-export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
+export class ViewerRenderComponent implements OnChanges, OnInit {
     private readonly viewUtilService = inject(ViewUtilService);
     private readonly extensionService = inject(AppExtensionService);
     dialog = inject(MatDialog);
@@ -75,11 +76,25 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     readonly pdfViewerComponent: Type<PdfViewerRef> | null = inject(PDF_VIEWER_COMPONENT, { optional: true });
 
     pdfViewerInputs: Record<string, unknown> = {};
-    private pdfOutputSubs: Subscription[] = [];
 
-    @ViewChild(NgComponentOutlet, { static: false })
-    set pdfOutletRef(outlet: NgComponentOutlet) {
-        this.subscribeToPdfOutputs(outlet?.componentInstance as PdfViewerRef);
+    private readonly pdfOutlet = viewChild(NgComponentOutlet);
+
+    constructor() {
+        effect((onCleanup) => {
+            const outlet = this.pdfOutlet();
+            const instance = outlet?.componentInstance as PdfViewerRef | null;
+            if (!instance) {
+                return;
+            }
+
+            const subs: Subscription[] = [
+                instance.pagesLoaded.subscribe(() => this.markAsLoaded()),
+                instance.close.subscribe(() => this.onClose()),
+                instance.error.subscribe(() => this.onUnsupportedFile())
+            ];
+
+            onCleanup(() => subs.forEach((s) => s.unsubscribe()));
+        });
     }
 
     /**
@@ -214,11 +229,6 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
         this.updatePdfViewerInputs();
     }
 
-    ngOnDestroy() {
-        this.pdfOutputSubs.forEach((sub) => sub.unsubscribe());
-        this.pdfOutputSubs = [];
-    }
-
     markAsLoaded() {
         this.isLoading = false;
     }
@@ -280,18 +290,5 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
             thumbnailsTemplate: this.thumbnailsTemplate,
             cacheType: this.cacheTypeForContent
         };
-    }
-
-    private subscribeToPdfOutputs(instance: PdfViewerRef | null): void {
-        this.pdfOutputSubs.forEach((sub) => sub.unsubscribe());
-        this.pdfOutputSubs = [];
-
-        if (instance) {
-            this.pdfOutputSubs = [
-                instance.pagesLoaded.subscribe(() => this.markAsLoaded()),
-                instance.close.subscribe(() => this.onClose()),
-                instance.error.subscribe(() => this.onUnsupportedFile())
-            ];
-        }
     }
 }
