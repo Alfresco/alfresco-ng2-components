@@ -20,8 +20,6 @@ export * from './changelog';
 export * from './check-cs-env';
 export * from './check-plugin-env';
 export * from './init-aae-env';
-export * from './init-acs-env';
-export * from './init-aps-env';
 export * from './licenses';
 export * from './logger';
 export * from './resources';

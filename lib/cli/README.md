@@ -73,7 +73,6 @@ cd ../../dist/libs/cli && npm link
 | check-cs-env     | Check cs env is up                                             |
 | check-plugin-env | Check plugin status                                            |
 | init-aae-env     | Init env                                                       |
-| init-aps-env     | Init aps                                                       |
 | licenses         | Create a 3th party license file                                |
 | audit            | Check the security risk dependency in your package.json        |
 
