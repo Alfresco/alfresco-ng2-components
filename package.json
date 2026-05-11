@@ -101,7 +101,7 @@
     "@types/node": "^18.16.9",
     "@types/pdfjs-dist": "2.10.378",
     "@typescript-eslint/eslint-plugin": "8.57.2",
-    "@typescript-eslint/parser": "8.57.2",
+    "@typescript-eslint/parser": "8.59.3",
     "@typescript-eslint/typescript-estree": "8.41.0",
     "@typescript-eslint/utils": "^8.51.0",
     "ajv": "^8.18.0",
