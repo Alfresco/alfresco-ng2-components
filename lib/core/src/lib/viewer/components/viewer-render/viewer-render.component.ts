@@ -16,9 +16,10 @@
  */
 
 import { AppExtensionService, ExtensionsModule, ViewerExtensionRef, PreviewExtensionComponent } from '@alfresco/adf-extensions';
-import { NgForOf, NgTemplateOutlet } from '@angular/common';
+import { NgComponentOutlet, NgForOf, NgTemplateOutlet } from '@angular/common';
 import {
     Component,
+    effect,
     EventEmitter,
     Injector,
     Input,
@@ -26,18 +27,22 @@ import {
     OnInit,
     Output,
     TemplateRef,
+    Type,
     ViewChild,
     ViewEncapsulation,
-    inject
+    inject,
+    viewChild
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { Track } from '../../models/viewer.model';
 import { ViewUtilService } from '../../services/view-util.service';
+import { PDF_VIEWER_COMPONENT } from '../../tokens/pdf-viewer.token';
+import { PdfViewerRef } from '../../tokens/pdf-viewer-ref';
 import { ImgViewerComponent } from '../img-viewer/img-viewer.component';
 import { MediaPlayerComponent } from '../media-player/media-player.component';
-import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
 import { TxtViewerComponent } from '../txt-viewer/txt-viewer.component';
 import { UnknownFormatComponent } from '../unknown-format/unknown-format.component';
 
@@ -50,7 +55,7 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
     imports: [
         TranslatePipe,
         MatProgressSpinnerModule,
-        PdfViewerComponent,
+        NgComponentOutlet,
         ImgViewerComponent,
         MediaPlayerComponent,
         TxtViewerComponent,
@@ -67,6 +72,30 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     private readonly extensionService = inject(AppExtensionService);
     dialog = inject(MatDialog);
     readonly injector = inject(Injector);
+
+    readonly pdfViewerComponent: Type<PdfViewerRef> | null = inject(PDF_VIEWER_COMPONENT, { optional: true });
+
+    pdfViewerInputs: Record<string, unknown> = {};
+
+    private readonly pdfOutlet = viewChild(NgComponentOutlet);
+
+    constructor() {
+        effect((onCleanup) => {
+            const outlet = this.pdfOutlet();
+            const instance = outlet?.componentInstance as PdfViewerRef | null;
+            if (!instance) {
+                return;
+            }
+
+            const subs: Subscription[] = [
+                instance.pagesLoaded.subscribe(() => this.markAsLoaded()),
+                instance.close.subscribe(() => this.onClose()),
+                instance.error.subscribe(() => this.onUnsupportedFile())
+            ];
+
+            onCleanup(() => subs.forEach((s) => s.unsubscribe()));
+        });
+    }
 
     /**
      * If you want to load an external file that does not come from ACS you
@@ -197,6 +226,13 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
         } else if (this.urlFile) {
             this.setUpUrlFile();
         }
+        if (this.viewerType === 'pdf' && !this.pdfViewerComponent) {
+            console.error(
+                '@alfresco/adf-core: PDF viewer is not configured. ' +
+                    'Add providePdfViewer() from @alfresco/adf-core/viewer/pdf to your application providers.'
+            );
+        }
+        this.updatePdfViewerInputs();
     }
 
     markAsLoaded() {
@@ -249,5 +285,16 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     onClose() {
         this.close.next(true);
+    }
+
+    private updatePdfViewerInputs(): void {
+        this.pdfViewerInputs = {
+            urlFile: this.urlFile,
+            blobFile: this.blobFile,
+            fileName: this.internalFileName,
+            allowThumbnails: this.allowThumbnails,
+            thumbnailsTemplate: this.thumbnailsTemplate,
+            cacheType: this.cacheTypeForContent
+        };
     }
 }

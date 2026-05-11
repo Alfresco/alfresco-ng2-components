@@ -26,8 +26,5 @@
       "../core/src/lib"
     ]
   },
-  "allowedNonPeerDependencies": [
-    "@apollo/client",
-    "apollo-angular"
-  ]
+  "allowedNonPeerDependencies": []
 }
