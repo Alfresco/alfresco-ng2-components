@@ -21,9 +21,7 @@ import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { AppConfigService } from '../../../app-config';
-import { EventMock } from '../../../mock';
-import { UnitTestingUtils, provideCoreAuthTesting } from '../../../testing';
+import { AppConfigService, EventMock, UnitTestingUtils, provideCoreAuthTesting } from '@alfresco/adf-core';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 import { PDFJS_MODULE, PDFJS_VIEWER_MODULE, PdfViewerComponent } from './pdf-viewer.component';
@@ -461,7 +459,7 @@ describe('Test PdfViewer - User interaction', () => {
 
         component.urlFile = './fake-test-file.pdf';
         fixture.detectChanges();
-        component.ngOnChanges({ 
+        component.ngOnChanges({
             urlFile: new SimpleChange(null, './fake-test-file.pdf', true)
         });
 

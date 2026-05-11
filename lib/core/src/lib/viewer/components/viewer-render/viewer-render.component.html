@@ -32,17 +32,13 @@
                     }
 
                     @case ('pdf') {
-                        <adf-pdf-viewer
-                            [thumbnailsTemplate]="thumbnailsTemplate"
-                            [allowThumbnails]="allowThumbnails"
-                            [blobFile]="blobFile"
-                            [urlFile]="urlFile"
-                            [fileName]="internalFileName"
-                            [cacheType]="cacheTypeForContent"
-                            (pagesLoaded)="markAsLoaded()"
-                            (close)="onClose()"
-                            (error)="onUnsupportedFile()"
-                        />
+                        @if (pdfViewerComponent) {
+                            <ng-container
+                                [ngComponentOutlet]="pdfViewerComponent"
+                                [ngComponentOutletInputs]="pdfViewerInputs" />
+                        } @else {
+                            <adf-viewer-unknown-format />
+                        }
                     }
 
                     @case ('image') {

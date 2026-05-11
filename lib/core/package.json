@@ -19,8 +19,7 @@
   "dependencies": {
     "cropperjs": "^1.6.2",
     "angular-oauth2-oidc": "19.0.0",
-    "date-fns": "^2.30.0",
-    "rxjs": "7.8.2"
+    "date-fns": "^2.30.0"
   },
   "peerDependencies": {
     "@angular/animations": ">=16.0.0",
@@ -37,7 +36,13 @@
     "@alfresco/js-api": ">=9.4.1",
     "@alfresco/adf-extensions": ">=8.4.1",
     "minimatch": ">=10.0.0",
-    "pdfjs-dist": ">=3.3.122"
+    "pdfjs-dist": ">=3.3.122",
+    "rxjs": ">=7.8.0"
+  },
+  "peerDependenciesMeta": {
+    "pdfjs-dist": {
+      "optional": true
+    }
   },
   "keywords": [
     "core",

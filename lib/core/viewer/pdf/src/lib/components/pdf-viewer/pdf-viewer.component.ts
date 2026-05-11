@@ -40,8 +40,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { from, Subject, switchMap } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AppConfigService } from '../../../app-config';
-import { ToolbarComponent, ToolbarDividerComponent } from '../../../toolbar';
+import { AppConfigService, IconModule, ToolbarComponent, ToolbarDividerComponent } from '@alfresco/adf-core';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from '../pdf-viewer-password-dialog/pdf-viewer-password-dialog';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
@@ -49,7 +48,6 @@ import * as pdfjsLib from 'pdfjs-dist/build/pdf.min.mjs';
 import { PDFDateString } from 'pdfjs-dist/build/pdf.min.mjs';
 import { EventBus, PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
 import { OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist/types/src/display/api';
-import { IconModule } from '../../../icon/icon.module';
 
 export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto';
 
@@ -630,7 +628,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * @param event.source.container.id - the container id
      */
     onPageChange(event: PageChangingEvent) {
-        if (event.source && event.source.container.id === `${this.randomPdfId}-viewer-pdf-viewer`) {
+        if (event.source?.container.id === `${this.randomPdfId}-viewer-pdf-viewer`) {
             this.page = event.pageNumber;
             this.displayPage = event.pageNumber;
         }

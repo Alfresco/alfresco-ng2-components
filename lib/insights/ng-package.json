@@ -21,9 +21,6 @@
     ]
   },
   "allowedNonPeerDependencies": [
-    "@alfresco/adf-core",
-    "@alfresco/adf-content-services",
-    "@ngx-translate/core",
     "chart.js",
     "ng2-charts",
     "raphael"
