@@ -86,7 +86,7 @@
     "@nx/angular": "22.6.5",
     "@nx/eslint-plugin": "22.6.5",
     "@nx/js": "22.6.5",
-    "@nx/node": "22.6.5",
+    "@nx/node": "22.7.1",
     "@nx/storybook": "^22.6.5",
     "@nx/workspace": "22.6.5",
     "@schematics/angular": "19.2.22",
