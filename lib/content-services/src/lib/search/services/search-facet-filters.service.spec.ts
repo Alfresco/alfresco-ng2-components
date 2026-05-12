@@ -198,6 +198,53 @@ describe('SearchFacetFiltersService', () => {
         expect(searchFacetFiltersService.responseFacets[1].buckets.length).toEqual(2);
     });
 
+    it('should parse facets when response labels are wrapped in quotes', () => {
+        searchFacetFiltersService.responseFacets = null;
+
+        queryBuilder.config = {
+            id: 'test-config',
+            categories: [],
+            facetFields: {
+                fields: [
+                    { label: 'test1', field: 'test1', mincount: 0 },
+                    { label: 'test2 test3', field: 'test2 test3', mincount: 0 },
+                    { label: 'test4 "" test5', field: 'test4 "" test5', mincount: 0 }
+                ]
+            }
+        };
+
+        const data = {
+            list: {
+                context: {
+                    facets: [
+                        {
+                            type: 'field',
+                            label: 'test1',
+                            buckets: [{ label: 'test1', metrics: [{ value: { count: 1 } }] }]
+                        },
+                        {
+                            type: 'field',
+                            label: '"test2 test3"',
+                            buckets: [{ label: 'test2 test3', metrics: [{ value: { count: 1 } }] }]
+                        },
+                        {
+                            type: 'field',
+                            label: '"test4 "" test5"',
+                            buckets: [{ label: 'test4 "" test5', metrics: [{ value: { count: 1 } }] }]
+                        }
+                    ]
+                }
+            }
+        };
+
+        searchFacetFiltersService.onDataLoaded(data);
+
+        expect(searchFacetFiltersService.responseFacets.length).toBe(3);
+        expect(searchFacetFiltersService.responseFacets[0].label).toBe('test1');
+        expect(searchFacetFiltersService.responseFacets[1].label).toBe('test2 test3');
+        expect(searchFacetFiltersService.responseFacets[2].label).toBe('test4 "" test5');
+    });
+
     it('should filter response facet fields based on search filter config method', () => {
         queryBuilder.config = {
             id: 'test-config',

@@ -109,7 +109,10 @@ describe('SearchChipListComponent', () => {
                     label: 'test',
                     filterQuery: 'query'
                 },
-                field: null
+                field: {
+                    field: 'test',
+                    label: 'test'
+                }
             }
         ];
 
