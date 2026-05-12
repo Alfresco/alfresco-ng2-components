@@ -21,6 +21,9 @@ updates:
       nrwl:
         patterns:
           - "@nrwl/*"
+      typescript-eslint:
+        patterns:
+          - "@typescript-eslint/*"
     ignore:
       - dependency-name: "pdfjs-dist"
       - dependency-name: "@types/*"
