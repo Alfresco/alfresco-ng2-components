@@ -76,7 +76,8 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
     public readonly formService = inject(FormService);
 
     private readonly destroyRef = inject(DestroyRef);
-    private readonly dateAdapter = inject(DatetimeAdapter);
+    private readonly dateAdapter = inject(DateAdapter);
+    private readonly dateTimeAdapter = inject(DatetimeAdapter);
 
     ngOnInit(): void {
         this.setFormControlValue();
@@ -177,14 +178,16 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
 
     private initDateAdapter(): void {
         if (this.field?.dateDisplayFormat) {
-            const adapter = this.dateAdapter as AdfDateTimeFnsAdapter;
+            const adapter = this.dateAdapter as AdfDateFnsAdapter;
             adapter.displayFormat = this.field.dateDisplayFormat;
+            const dateTimeAdapter = this.dateTimeAdapter as AdfDateTimeFnsAdapter;
+            dateTimeAdapter.displayFormat = this.field.dateDisplayFormat;
         }
     }
 
     private initStartAt(): void {
         if (this.field?.value) {
-            this.startAt = this.dateAdapter.parse(this.field.value, DEFAULT_DATE_FORMAT);
+            this.startAt = this.dateTimeAdapter.parse(this.field.value, DEFAULT_DATE_FORMAT);
         }
     }
 
@@ -201,14 +204,14 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
             this.minDate = null;
             this.field.minValue = null;
         } else {
-            this.minDate = addDays(this.dateAdapter.today(), this.field.minDateRangeValue);
+            this.minDate = addDays(this.dateTimeAdapter.today(), this.field.minDateRangeValue);
             this.field.minValue = DateFnsUtils.formatDate(this.minDate, DEFAULT_DATE_FORMAT);
         }
         if (this.field.maxDateRangeValue === null) {
             this.maxDate = null;
             this.field.maxValue = null;
         } else {
-            this.maxDate = addDays(this.dateAdapter.today(), this.field.maxDateRangeValue);
+            this.maxDate = addDays(this.dateTimeAdapter.today(), this.field.maxDateRangeValue);
             this.field.maxValue = DateFnsUtils.formatDate(this.maxDate, DEFAULT_DATE_FORMAT);
         }
     }
