@@ -50,7 +50,7 @@
     "@angular/platform-browser-dynamic": "19.2.20",
     "@angular/router": "19.2.20",
     "@apollo/client": "3.13.1",
-    "@cspell/eslint-plugin": "9.4.0",
+    "@cspell/eslint-plugin": "10.0.0",
     "@mat-datetimepicker/core": "15.0.2",
     "@ngx-translate/core": "^17.0.0",
     "angular-oauth2-oidc": "19.0.0",
