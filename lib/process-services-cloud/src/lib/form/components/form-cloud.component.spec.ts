@@ -2221,3 +2221,257 @@ describe('FormCloudComponent - ADF_FORM_TAB_NAV_ENABLED token', () => {
         expect(formComponent.shouldShowTabNavigation).toBeFalse();
     });
 });
+
+describe('FormCloudComponent — runtime state preservation on data refresh', () => {
+    let fixture: ComponentFixture<FormCloudComponent>;
+    let formComponent: FormCloudComponent;
+    let visibilityService: WidgetVisibilityService;
+
+    const formJson = {
+        id: 'test-form',
+        name: 'Test Form',
+        fields: [
+            {
+                fieldType: 'ContainerRepresentation',
+                id: 'container1',
+                name: 'Container',
+                type: 'container',
+                tab: null,
+                numberOfColumns: 2,
+                fields: {
+                    1: [
+                        {
+                            fieldType: 'FormFieldRepresentation',
+                            id: 'text1',
+                            name: 'Text1',
+                            type: 'text',
+                            value: null,
+                            required: false,
+                            readOnly: false,
+                            visibilityCondition: null,
+                            params: { existingColspan: 1, maxColspan: 2 }
+                        }
+                    ],
+                    2: [
+                        {
+                            fieldType: 'FormFieldRepresentation',
+                            id: 'dropdown1',
+                            name: 'Dropdown1',
+                            type: 'dropdown',
+                            value: '',
+                            required: false,
+                            readOnly: false,
+                            optionType: 'manual',
+                            options: [
+                                { id: 'opt1', name: 'Option 1' },
+                                { id: 'opt2', name: 'Option 2' }
+                            ],
+                            visibilityCondition: null,
+                            params: { existingColspan: 1, maxColspan: 2 }
+                        }
+                    ]
+                }
+            }
+        ]
+    };
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [NoopTranslateModule, NoopAuthModule, FormCloudComponent],
+            providers: [
+                { provide: VersionCompatibilityService, useValue: {} },
+                { provide: FormRenderingService, useClass: CloudFormRenderingService }
+            ]
+        });
+
+        const apiService = TestBed.inject(AlfrescoApiService);
+        spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
+
+        visibilityService = TestBed.inject(WidgetVisibilityService);
+        spyOn(visibilityService, 'refreshVisibility').and.callThrough();
+
+        fixture = TestBed.createComponent(FormCloudComponent);
+        formComponent = fixture.componentInstance;
+
+        formComponent.form = formComponent.parseForm(JSON.parse(JSON.stringify(formJson)));
+        formComponent.formCloudRepresentationJSON = new FormCloudRepresentation(JSON.parse(JSON.stringify(formJson)));
+
+        fixture.detectChanges();
+    });
+
+    describe('data binding change triggers refreshFormData', () => {
+        it('should emit formDataRefreshed when data changes', (done) => {
+            const data = [new TaskVariableCloud({ name: 'text1', value: 'hello' })];
+            const change = new SimpleChange([], data, false);
+            formComponent.data = data;
+
+            formComponent.formDataRefreshed.subscribe((form) => {
+                expect(form).toBeTruthy();
+                done();
+            });
+
+            formComponent.ngOnChanges({ data: change });
+        });
+
+        it('should call visibilityService.refreshVisibility during data refresh', () => {
+            const data = [new TaskVariableCloud({ name: 'text1', value: 'hello' })];
+            const change = new SimpleChange([], data, false);
+            formComponent.data = data;
+
+            formComponent.ngOnChanges({ data: change });
+
+            expect(visibilityService.refreshVisibility).toHaveBeenCalled();
+        });
+
+        it('should call validateForm on the new form instance after data refresh', () => {
+            const data = [new TaskVariableCloud({ name: 'text1', value: 'hello' })];
+            const change = new SimpleChange([], data, false);
+            formComponent.data = data;
+
+            formComponent.ngOnChanges({ data: change });
+
+            expect(formComponent.form).toBeTruthy();
+            expect(formComponent.form.isValid).toBeDefined();
+        });
+    });
+
+    describe('runtime state restoration', () => {
+        it('should preserve text field value that was not in the new data payload', (done) => {
+            const textField = formComponent.form.getFieldById('text1');
+            textField.value = 'rule-set-value';
+
+            const data = [new TaskVariableCloud({ name: 'dropdown1', value: 'opt1' })];
+            const prevData: TaskVariableCloud[] = [];
+            const change = new SimpleChange(prevData, data, false);
+            formComponent.data = data;
+
+            formComponent.formLoaded.subscribe((form) => {
+                const restoredText = form.getFieldById('text1');
+                expect(restoredText.value).toBe('rule-set-value');
+                done();
+            });
+
+            formComponent.ngOnChanges({ data: change });
+        });
+
+        it('should preserve field that is unchanged between previous and current data', (done) => {
+            const prev = [new TaskVariableCloud({ name: 'text1', value: 'same' })];
+            formComponent.form.getFieldById('text1').value = 'same';
+
+            const next = [new TaskVariableCloud({ name: 'text1', value: 'same' })];
+            const change = new SimpleChange(prev, next, false);
+            formComponent.data = next;
+
+            formComponent.formLoaded.subscribe((form) => {
+                const textField = form.getFieldById('text1');
+                expect(textField.value).toBe('same');
+                done();
+            });
+
+            formComponent.ngOnChanges({ data: change });
+        });
+
+        it('should override field that changed between previous and current data', (done) => {
+            const prev = [new TaskVariableCloud({ name: 'text1', value: 'old' })];
+            formComponent.form.getFieldById('text1').value = 'old';
+
+            const next = [new TaskVariableCloud({ name: 'text1', value: 'updated' })];
+            const change = new SimpleChange(prev, next, false);
+            formComponent.data = next;
+
+            formComponent.formLoaded.subscribe((form) => {
+                const textField = form.getFieldById('text1');
+                expect(textField.value).toBe('updated');
+                done();
+            });
+
+            formComponent.ngOnChanges({ data: change });
+        });
+
+        it('should restore readOnly and required state for unchanged fields', (done) => {
+            const textField = formComponent.form.getFieldById('text1');
+            textField.readOnly = true;
+            textField.required = true;
+
+            const data = [new TaskVariableCloud({ name: 'dropdown1', value: 'opt1' })];
+            const change = new SimpleChange([], data, false);
+            formComponent.data = data;
+
+            formComponent.formLoaded.subscribe((form) => {
+                const restoredField = form.getFieldById('text1');
+                expect(restoredField.readOnly).toBe(true);
+                expect(restoredField.required).toBe(true);
+                done();
+            });
+
+            formComponent.ngOnChanges({ data: change });
+        });
+
+        it('should enable Start Process outcome button after data refresh populates all required fields', (done) => {
+            const requiredFormJson = {
+                id: 'required-form',
+                name: 'Required Form',
+                fields: [
+                    {
+                        fieldType: 'ContainerRepresentation',
+                        id: 'container1',
+                        name: 'Container',
+                        type: 'container',
+                        tab: null,
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [
+                                {
+                                    fieldType: 'FormFieldRepresentation',
+                                    id: 'requiredText',
+                                    name: 'Required Text',
+                                    type: 'text',
+                                    value: null,
+                                    required: true,
+                                    readOnly: false,
+                                    visibilityCondition: null,
+                                    params: { existingColspan: 1, maxColspan: 1 }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            };
+
+            formComponent.form = formComponent.parseForm(JSON.parse(JSON.stringify(requiredFormJson)));
+            formComponent.formCloudRepresentationJSON = new FormCloudRepresentation(JSON.parse(JSON.stringify(requiredFormJson)));
+
+            const startProcessOutcome = formComponent.form.outcomes.find((o) => o.name === FormOutcomeModel.START_PROCESS_ACTION);
+            expect(formComponent.isOutcomeButtonEnabled(startProcessOutcome)).toBeFalse();
+
+            const data = [new TaskVariableCloud({ name: 'requiredText', value: 'filled' })];
+            const change = new SimpleChange([], data, false);
+            formComponent.data = data;
+
+            formComponent.formLoaded.subscribe(() => {
+                expect(formComponent.form.isValid).toBeTrue();
+                const refreshedOutcome = formComponent.form.outcomes.find((o) => o.name === FormOutcomeModel.START_PROCESS_ACTION);
+                expect(formComponent.isOutcomeButtonEnabled(refreshedOutcome)).toBeTrue();
+                done();
+            });
+
+            formComponent.ngOnChanges({ data: change });
+        });
+
+        it('should pass previousValue from the SimpleChange to getChangedFieldIds comparison', (done) => {
+            const prev = [new TaskVariableCloud({ name: 'text1', value: 'old' })];
+            formComponent.form.getFieldById('text1').value = 'old';
+
+            const next = [new TaskVariableCloud({ name: 'text1', value: 'old' }), new TaskVariableCloud({ name: 'dropdown1', value: 'opt2' })];
+            const change = new SimpleChange(prev, next, false);
+            formComponent.data = next;
+
+            formComponent.formLoaded.subscribe((form) => {
+                expect(form.getFieldById('text1').value).toBe('old');
+                done();
+            });
+
+            formComponent.ngOnChanges({ data: change });
+        });
+    });
+});
