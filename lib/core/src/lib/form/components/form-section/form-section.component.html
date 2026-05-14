@@ -1,13 +1,13 @@
 <div class="adf-grid-list-section-single-column"
     [id]="'field-' + field?.id + '-container'"
     [style.display]="field?.isVisible ? 'flex' : 'none'">
-    @for (sectionColumn of field.columns; track sectionColumn; let columnIndex = $index) {
-            <div [style.width.%]="getSectionColumnWidth(field.numberOfColumns, field.columns, columnIndex)">
-                @for (sectionField of sectionColumn.fields; track sectionField) {
-                    <div class="adf-grid-list-section-column-view-item">
-                        <adf-form-field [field]="sectionField"/>
-                    </div>
-                }
-            </div>
+    @for (sectionColumn of field.columns; track sectionColumn.id; let columnIndex = $index) {
+        <div [style.width.%]="getSectionColumnWidth(field.numberOfColumns, field.columns, columnIndex)">
+            @for (sectionField of sectionColumn.fields; track sectionField) {
+                <div class="adf-grid-list-section-column-view-item">
+                    <adf-form-field [field]="sectionField"/>
+                </div>
+            }
+        </div>
     }
 </div>

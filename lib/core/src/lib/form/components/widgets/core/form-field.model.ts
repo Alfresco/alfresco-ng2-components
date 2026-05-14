@@ -607,6 +607,21 @@ export class FormFieldModel extends FormWidgetModel {
         this.form.onFormFieldChanged(this);
     }
 
+    restoreRuntimeValue(value: any): void {
+        this._value = value;
+        const formValue = this.getFormValue();
+        if (this.parent) {
+            this.updateRepeatableSectionValue(formValue);
+        } else {
+            this.updateValue(formValue);
+        }
+    }
+
+    restoreRuntimeFlags(required: boolean, readOnly: boolean): void {
+        this._required = required;
+        this._readOnly = readOnly;
+    }
+
     getFormValue() {
         switch (this.type) {
             case FormFieldTypes.DROPDOWN: {
