@@ -39,6 +39,7 @@ import {
     FormBaseComponent,
     FormEvent,
     FormFieldModel,
+    FormRulesEvent,
     FormFieldValidator,
     FormModel,
     FormOutcomeEvent,
@@ -66,6 +67,14 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { A11yModule } from '@angular/cdk/a11y';
+
+interface FormFieldRuntimeState {
+    value: any;
+    required: boolean;
+    readOnly: boolean;
+    isVisible: boolean;
+    visibilityCondition: any;
+}
 
 export const FORM_CLOUD_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldValidator[]>('FORM_CLOUD_FIELD_VALIDATORS_TOKEN');
 export const ADF_FORM_TAB_NAV_ENABLED = new InjectionToken<Observable<boolean> | boolean>('ADF_FORM_TAB_NAV_ENABLED');
@@ -319,9 +328,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             return;
         }
 
-        const data = changes['data']?.currentValue;
-        if (data?.length > 0) {
-            this.refreshFormData();
+        const dataChange = changes['data'];
+        if (dataChange?.currentValue?.length > 0) {
+            this.refreshFormData(dataChange.previousValue ?? []);
             return;
         }
 
@@ -563,12 +572,77 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
     }
 
-    private refreshFormData() {
+    private refreshFormData(previousData: TaskVariableCloud[] = []) {
+        const snapshot = this.snapshotRuntimeState();
+
         this.form = this.parseForm(this.formCloudRepresentationJSON);
-        if (this.form) {
-            this.setCheckParentVisibilityForValidationOnFields();
-            this.onFormLoaded(this.form);
-            this.onFormDataRefreshed(this.form);
+        if (!this.form) {
+            return;
+        }
+
+        const changedFieldIds = this.getChangedFieldIds(previousData, this.data ?? []);
+        this.restoreRuntimeState(this.form, snapshot, changedFieldIds);
+
+        this.setCheckParentVisibilityForValidationOnFields();
+        this.visibilityService.refreshVisibility(this.form);
+        this.form.validateForm();
+        this.recomputeVisibleOutcomes();
+        this.onFormLoaded(this.form);
+        this.formService.formRulesEvent.next(new FormRulesEvent('dataRefreshed', new FormEvent(this.form)));
+        this.onFormDataRefreshed(this.form);
+    }
+
+    private snapshotRuntimeState(): Map<string, FormFieldRuntimeState> {
+        const snapshot = new Map<string, FormFieldRuntimeState>();
+        if (!this.form) {
+            return snapshot;
+        }
+
+        for (const field of this.form.getFormFields()) {
+            snapshot.set(field.id, {
+                value: field.value,
+                required: field.required,
+                readOnly: field.readOnly,
+                isVisible: field.isVisible,
+                visibilityCondition: field.visibilityCondition
+            });
+        }
+
+        return snapshot;
+    }
+
+    private getChangedFieldIds(previousData: TaskVariableCloud[], nextData: TaskVariableCloud[]): Set<string> {
+        const prevMap = new Map(previousData.map((v) => [v.name, v.value]));
+        const changed = new Set<string>();
+
+        for (const variable of nextData) {
+            const prev = prevMap.get(variable.name);
+            const next = variable.value;
+            const isPrimitive = (v: unknown) => v === null || (typeof v !== 'object' && typeof v !== 'function');
+            const equal = isPrimitive(prev) && isPrimitive(next) ? Object.is(prev, next) : JSON.stringify(prev) === JSON.stringify(next);
+            if (!equal) {
+                changed.add(variable.name);
+            }
+        }
+
+        return changed;
+    }
+
+    private restoreRuntimeState(form: FormModel, snapshot: Map<string, FormFieldRuntimeState>, changedFieldIds: Set<string>): void {
+        for (const field of form.getFormFields()) {
+            if (changedFieldIds.has(field.id)) {
+                continue;
+            }
+
+            const prior = snapshot.get(field.id);
+            if (!prior) {
+                continue;
+            }
+
+            field.restoreRuntimeValue(prior.value);
+            field.restoreRuntimeFlags(prior.required, prior.readOnly);
+            field.isVisible = prior.isVisible;
+            field.visibilityCondition = prior.visibilityCondition;
         }
     }
 

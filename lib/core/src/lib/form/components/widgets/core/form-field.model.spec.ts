@@ -1757,4 +1757,69 @@ describe('FormFieldModel', () => {
             });
         });
     });
+
+    describe('restoreRuntimeValue', () => {
+        it('should set _value and write to form.values for a top-level text field', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, { id: 'text1', type: 'text', value: null });
+
+            field.restoreRuntimeValue('restored');
+
+            expect(field.value).toBe('restored');
+            expect(form.values['text1']).toBe('restored');
+        });
+
+        it('should not call onFormFieldChanged unlike updateForm', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, { id: 'text1', type: 'text', value: null });
+            spyOn(form, 'onFormFieldChanged');
+
+            field.restoreRuntimeValue('restored');
+
+            expect(form.onFormFieldChanged).not.toHaveBeenCalled();
+        });
+
+        it('should resolve dropdown option object from string id via getFormValue', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'dd1',
+                type: 'dropdown',
+                optionType: 'manual',
+                options: [
+                    { id: 'opt1', name: 'Option 1' },
+                    { id: 'opt2', name: 'Option 2' }
+                ],
+                value: null
+            });
+
+            field.restoreRuntimeValue('opt1');
+
+            expect(form.values['dd1']).toEqual({ id: 'opt1', name: 'Option 1' });
+        });
+
+        it('should set form.values to null when dropdown option id does not match any option', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'dd1',
+                type: 'dropdown',
+                optionType: 'manual',
+                options: [{ id: 'opt1', name: 'Option 1' }],
+                value: null
+            });
+
+            field.restoreRuntimeValue('nonexistent');
+
+            expect(form.values['dd1']).toBeNull();
+        });
+
+        it('should not update form.values when resolved value is undefined', () => {
+            const form = new FormModel();
+            form.values['text1'] = 'existing';
+            const field = new FormFieldModel(form, { id: 'text1', type: 'text', value: 'existing' });
+
+            field.restoreRuntimeValue(undefined);
+
+            expect(form.values['text1']).toBe('existing');
+        });
+    });
 });
