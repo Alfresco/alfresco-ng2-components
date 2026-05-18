@@ -459,6 +459,21 @@ describe('CardViewDateItemComponent', () => {
             expect(component.cardViewDateTimeControl.value).not.toBeNull();
         });
 
+        it('should render error message when manual input has invalid date format', async () => {
+            fixture.detectChanges();
+
+            const manualInput = await testingUtils.getMatInputByDataAutomationId('datepicker-manual-input-dateKey');
+            await manualInput.setValue('not-a-date');
+            await manualInput.blur();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            expect(component.cardViewDateTimeControl.invalid).toBeTrue();
+            const formField = await testingUtils.getMatFormFieldByCSS('.adf-dateitem-editable');
+            expect(await formField.getTextErrors()).toContain('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT');
+        });
+
         it('should clear the form control value when onDateClear is called', () => {
             fixture.detectChanges();
 
