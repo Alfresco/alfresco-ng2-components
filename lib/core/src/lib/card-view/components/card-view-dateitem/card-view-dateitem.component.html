@@ -82,6 +82,11 @@
                 [startAt]="valueDate"
                 [ngClass]="{ 'cdk-visually-hidden': !editable || isReadonlyProperty}"
             />
+            @if (cardViewDateTimeControl.hasError('matDatepickerParse')) {
+                <mat-error>
+                    {{ 'FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT' | translate: { format: property.format ?? '' } }}
+                </mat-error>
+            }
         </mat-form-field>
     } @else {
         <mat-form-field class="adf-property-field adf-dateitem-editable" [floatLabel]="property.default ? 'always' : null">
