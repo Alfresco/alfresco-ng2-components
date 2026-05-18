@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/// <reference types="node" />
+
 import { Injectable, inject } from '@angular/core';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { Authentication } from '../interfaces/authentication.interface';
