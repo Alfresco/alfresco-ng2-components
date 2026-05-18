@@ -574,7 +574,7 @@ describe('CardViewSelectItemComponent', () => {
 
         it('should filter out already selected options from filteredOptions', fakeAsync(() => {
             component.filteredOptions = [...multivaluedOptions];
-            component.property.value = ['Option 1'];
+            component.property.value = ['option1'];
             component.editedValue = '';
             component.editable = true;
             component.ngOnInit();
@@ -599,7 +599,7 @@ describe('CardViewSelectItemComponent', () => {
 
             const event: MatAutocompleteSelectedEvent = {
                 option: {
-                    value: 'option1' // key, not label
+                    value: 'option1'
                 }
             } as MatAutocompleteSelectedEvent;
 
@@ -607,34 +607,25 @@ describe('CardViewSelectItemComponent', () => {
             tick(50);
 
             expect(component.property.value).toContain('option1');
-            // Note: filterOptions compares property.value (keys) against option.label,
-            // so filtering won't work correctly - all options remain
-            expect(component.filteredOptions.length).toBe(3);
-            expect(component.filteredOptions[0].label).toBe('Option 1');
-            expect(component.filteredOptions[1].label).toBe('Option 2');
-            expect(component.filteredOptions[2].label).toBe('Option 3');
+            expect(component.filteredOptions.length).toBe(2);
+            expect(component.filteredOptions[0].label).toBe('Option 2');
+            expect(component.filteredOptions[1].label).toBe('Option 3');
         }));
 
         it('should update filteredOptions after chip removal', fakeAsync(() => {
-            component.property.value = ['option1', 'option2']; // Use keys, not labels
-            component.filteredOptions = [multivaluedOptions[2]]; // Only Option 3
+            component.property.value = ['option1', 'option2'];
+            component.filteredOptions = [multivaluedOptions[2]];
             component.editable = true;
             component.ngOnChanges({ property: { firstChange: true } } as any);
             fixture.detectChanges();
 
-            const initialValueLength = component.property.value.length;
-
             component.removeChip('option1');
-            tick(50);
+            tick(100);
 
-            expect(component.property.value.length).toBe(initialValueLength - 1);
             expect(component.property.value).not.toContain('option1');
-            // Note: filterOptions compares property.value (keys) against option.label,
-            // so filtering won't work correctly - all options remain
-            expect(component.filteredOptions.length).toBe(3);
-            expect(component.filteredOptions.some((opt) => opt.label === 'Option 1')).toBe(true);
-            expect(component.filteredOptions.some((opt) => opt.label === 'Option 2')).toBe(true);
-            expect(component.filteredOptions.some((opt) => opt.label === 'Option 3')).toBe(true);
+            expect(component.filteredOptions.length).toBe(2);
+            expect(component.filteredOptions[0].label).toBe('Option 1');
+            expect(component.filteredOptions[1].label).toBe('Option 3');
         }));
     });
 

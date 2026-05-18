@@ -22,7 +22,7 @@ import { CardViewSelectItemOption } from '../../interfaces/card-view.interfaces'
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { BaseCardView } from '../base-card-view';
 import { AppConfigService } from '../../../app-config/app-config.service';
-import { map, debounceTime, filter } from 'rxjs/operators';
+import { map, debounceTime, filter, take } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -150,6 +150,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
                 this.property.value.push(event.option.value);
             } else {
                 this.property.value = event.option.value;
+                this.autocompleteControl.setValue(selectedOption.label);
             }
             this.cardViewUpdateService.update({ ...this.property } as CardViewSelectItemModel<string>, this.property.value);
             this.filterOptions();
@@ -173,9 +174,9 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     addValueToList(newListItem: MatChipInputEvent) {
-        const selectedOption = this.filteredOptions.find((option) => option.key === newListItem.value);
+        const selectedOption = this.filteredOptions.find((option) => option.key === newListItem.value || option.label === newListItem.value);
         if (selectedOption) {
-            this.property.value.push(newListItem.value);
+            this.property.value.push(selectedOption.key);
             this.cardViewUpdateService.update({ ...this.property } as CardViewSelectItemModel<string>, this.property.value);
             newListItem.chipInput.clear();
             this.filterOptions();
@@ -184,6 +185,13 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
 
     get showProperty(): boolean {
         return this.displayEmpty || !this.property.isEmpty();
+    }
+
+    getOptionLabel(value: string | number): Observable<string> {
+        return this.getOptions().pipe(
+            take(1),
+            map((options) => options.find((option) => option.key === value)?.label)
+        );
     }
 
     private get optionsLimit(): number {
@@ -196,13 +204,13 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
                 map((options) =>
                     options.filter((option) => {
                         const isSelected = this.property.multivalued
-                            ? this.property.value.some((val) => val === option.label)
-                            : this.property.value === option.label;
+                            ? this.property.value.some((val) => val === option.key)
+                            : this.property.value === option.key;
                         return !isSelected && option.label.toLowerCase().includes(this.editedValue.toLowerCase());
                     })
                 )
             )
-            .pipe(takeUntilDestroyed(this.destroyRef))
+            .pipe(take(1))
             .subscribe((options: CardViewSelectItemOption<string | number>[]) => {
                 this.filteredOptions = options;
             });
