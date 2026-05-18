@@ -72,5 +72,35 @@ describe('CardViewSelectItemModel', () => {
             const itemModel = new CardViewSelectItemModel(properties);
             expect(itemModel.autocompleteBased).toBe(true);
         }));
+
+        it('should return comma-separated labels for multivalued array', (done) => {
+            properties.value = ['one', 'three'];
+            const itemModel = new CardViewSelectItemModel(properties);
+
+            itemModel.displayValue.subscribe((value) => {
+                expect(value).toBe('One, Three');
+                done();
+            });
+        });
+
+        it('should return empty string for multivalued array with no matching options', (done) => {
+            properties.value = ['nonexistent'];
+            const itemModel = new CardViewSelectItemModel(properties);
+
+            itemModel.displayValue.subscribe((value) => {
+                expect(value).toBe('');
+                done();
+            });
+        });
+
+        it('should handle empty multivalued array', (done) => {
+            properties.value = [];
+            const itemModel = new CardViewSelectItemModel(properties);
+
+            itemModel.displayValue.subscribe((value) => {
+                expect(value).toBe('');
+                done();
+            });
+        });
     });
 });

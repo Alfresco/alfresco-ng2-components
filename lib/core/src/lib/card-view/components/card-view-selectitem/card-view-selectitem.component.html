@@ -13,7 +13,8 @@
                         >{{ property.label | translate }}
                     </mat-label>
                     <mat-select
-                        [(ngModel)]="value"
+                        [multiple]="property.multivalued"
+                        [(ngModel)]="property.value"
                         [disabled]="isReadonlyProperty || !editable"
                         [ngClass]="{ 'adf-property-readonly-value': isReadonlyProperty || !editable }"
                         panelClass="adf-select-filter"
@@ -25,7 +26,7 @@
                         (validated)="onValidation($event)"
                     >
                         <adf-select-filter-input *ngIf="showInputFilter" (change)="onFilterInputChange($event)" />
-                        <mat-option *ngIf="displayNoneOption">{{ 'CORE.CARDVIEW.NONE' | translate }}</mat-option>
+                        <mat-option *ngIf="displayNoneOption && !property.multivalued">{{ 'CORE.CARDVIEW.NONE' | translate }}</mat-option>
                         <mat-option *ngFor="let option of list$ | async" [value]="option.key">
                             {{ option.label | translate }}
                         </mat-option>
@@ -50,24 +51,58 @@
                 >
                     {{ property.label | translate }}
                 </mat-label>
-                <input
-                    matInput
-                    [matAutocomplete]="auto"
-                    class="adf-property-value"
-                    [ngClass]="{
-                        'adf-property-value-editable': isEditable,
-                        'adf-property-readonly-value': isReadonlyProperty || !editable
-                    }"
-                    title="{{ property.label | translate }}"
-                    [placeholder]="property.default"
-                    [attr.aria-label]="property.label | translate"
-                    [formControl]="autocompleteControl"
-                    [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
-                    [attr.data-automation-id]="'card-autocomplete-based-selectitem-value-' + property.key"
-                />
-                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+                @if (property.multivalued) {
+                    <mat-chip-grid #chipGrid [attr.aria-label]="'CORE.CARDVIEW.SELECTED_VALUES' | translate">
+                        @for (val of property.value; track $index) {
+                          <mat-chip-row (removed)="removeChip(val)">
+                            {{val}}
+                            <button matChipRemove [attr.aria-label]="'CORE.CARDVIEW.REMOVE' | translate: { value: val }">
+                                <mat-icon
+                                    adf-icon="close"
+                                    matChipRemove
+                                />
+                            </button>
+                          </mat-chip-row>
+                        }
+                    </mat-chip-grid>
+                    <input
+                        matInput
+                        [matAutocomplete]="auto"
+                        [matChipInputFor]="chipGrid"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        (matChipInputTokenEnd)="addValueToList($event)"
+                        class="adf-property-value"
+                        [ngClass]="{
+                            'adf-property-value-editable': isEditable,
+                            'adf-property-readonly-value': isReadonlyProperty || !editable
+                        }"
+                        title="{{ property.label | translate }}"
+                        [placeholder]="property.default"
+                        [attr.aria-label]="property.label | translate"
+                        [formControl]="autocompleteControl"
+                        [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+                        [attr.data-automation-id]="'card-autocomplete-based-selectitem-value-' + property.key"
+                    />
+                } @else {
+                    <input
+                        matInput
+                        [matAutocomplete]="auto"
+                        class="adf-property-value"
+                        [ngClass]="{
+                            'adf-property-value-editable': isEditable,
+                            'adf-property-readonly-value': isReadonlyProperty || !editable
+                        }"
+                        title="{{ property.label | translate }}"
+                        [placeholder]="property.default"
+                        [attr.aria-label]="property.label | translate"
+                        [formControl]="autocompleteControl"
+                        [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+                        [attr.data-automation-id]="'card-autocomplete-based-selectitem-value-' + property.key"
+                    />
+                }
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
                     <mat-option
-                        *ngFor="let option of property.options$ | async"
+                        *ngFor="let option of filteredOptions"
                         [value]="option.key"
                         [attr.data-automation-id]="'card-autocomplete-based-selectitem-option-' + property.key"
                     >
