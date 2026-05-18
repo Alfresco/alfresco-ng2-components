@@ -137,7 +137,7 @@
     "ng-packagr": "19.2.2",
     "nx": "22.6.5",
     "prettier": "3.6.2",
-    "react": "^19.2.4",
+    "react": "^19.2.6",
     "react-dom": "^19.2.4",
     "rimraf": "^6.1.2",
     "sass-loader": "16.0.8",
