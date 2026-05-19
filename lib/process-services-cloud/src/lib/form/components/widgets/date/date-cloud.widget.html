@@ -4,17 +4,15 @@
     [class.adf-invalid]="dateInputControl.invalid && dateInputControl.touched"
     [class.adf-left-label-input-container]="field.leftLabels"
 >
-    @if (field.leftLabels) {
-        <div>
-            <label class="adf-label adf-left-label" [attr.for]="field.id"
-                >{{field.name | translate }} ({{field.dateDisplayFormat}})<span
-                    class="adf-asterisk"
-                    [style.visibility]="isRequired() ? 'visible' : 'hidden'"
-                    >*</span
-                ></label
-            >
-        </div>
-    }
+    <div *ngIf="field.leftLabels">
+        <label class="adf-label adf-left-label" [attr.for]="field.id"
+            >{{field.name | translate }} ({{field.dateDisplayFormat}})<span
+                class="adf-asterisk"
+                [style.visibility]="isRequired() ? 'visible' : 'hidden'"
+                >*</span
+            ></label
+        >
+    </div>
     <div class="adf-date-widget-container">
         <mat-form-field class="adf-date-widget adf-form-field-input" [class.adf-left-label-input-datepicker]="field.leftLabels">
             @if ( (field.name || field?.required) && !field.leftLabels) {
@@ -25,7 +23,7 @@
             <input
                 matInput
                 class="adf-input"
-                [matDatetimepicker]="datetimePicker"
+                [matDatepicker]="datePicker"
                 [id]="field.id"
                 [formControl]="dateInputControl"
                 [placeholder]="field.placeholder"
@@ -34,13 +32,11 @@
                 [max]="maxDate"
                 [title]="field.tooltip"
             />
-            <mat-datetimepicker-toggle matSuffix [for]="datetimePicker" [disabled]="field.readOnly" />
-            <mat-datetimepicker #datetimePicker type="date" [startAt]="startAt" [disabled]="field.readOnly" />
+            <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly" />
+            <mat-datepicker #datePicker [startAt]="startAt" [disabled]="field.readOnly" />
         </mat-form-field>
         <div class="adf-error-messages-container">
-            @if (dateInputControl.invalid && dateInputControl.touched) {
-                <error-widget [error]="field.validationSummary" />
-            }
+            <error-widget *ngIf="dateInputControl.invalid && dateInputControl.touched" [error]="field.validationSummary" />
         </div>
     </div>
 </div>
