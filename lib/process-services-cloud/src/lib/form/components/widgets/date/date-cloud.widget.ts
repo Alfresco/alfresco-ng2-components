@@ -22,8 +22,6 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import {
     ADF_DATE_FORMATS,
     AdfDateFnsAdapter,
-    ADF_DATETIME_FORMATS,
-    AdfDateTimeFnsAdapter,
     DateFnsUtils,
     DEFAULT_DATE_FORMAT,
     ErrorMessageModel,
@@ -32,9 +30,10 @@ import {
     WidgetComponent,
     ReactiveFormWidget
 } from '@alfresco/adf-core';
-import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerModule } from '@mat-datetimepicker/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { addDays, parseISO } from 'date-fns';
 import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { NgIf } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -42,12 +41,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'date-widget',
-    imports: [TranslatePipe, MatFormFieldModule, MatInputModule, MatDatetimepickerModule, ReactiveFormsModule, ErrorWidgetComponent],
+    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, ErrorWidgetComponent],
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
-        { provide: DateAdapter, useClass: AdfDateFnsAdapter },
-        { provide: MAT_DATETIME_FORMATS, useValue: ADF_DATETIME_FORMATS },
-        { provide: DatetimeAdapter, useClass: AdfDateTimeFnsAdapter }
+        { provide: DateAdapter, useClass: AdfDateFnsAdapter }
     ],
     templateUrl: './date-cloud.widget.html',
     styleUrls: ['./date-cloud.widget.scss'],
@@ -77,7 +74,6 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
 
     private readonly destroyRef = inject(DestroyRef);
     private readonly dateAdapter = inject(DateAdapter);
-    private readonly dateTimeAdapter = inject(DatetimeAdapter);
 
     ngOnInit(): void {
         this.setFormControlValue();
@@ -180,14 +176,12 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
         if (this.field?.dateDisplayFormat) {
             const adapter = this.dateAdapter as AdfDateFnsAdapter;
             adapter.displayFormat = this.field.dateDisplayFormat;
-            const dateTimeAdapter = this.dateTimeAdapter as AdfDateTimeFnsAdapter;
-            dateTimeAdapter.displayFormat = this.field.dateDisplayFormat;
         }
     }
 
     private initStartAt(): void {
         if (this.field?.value) {
-            this.startAt = this.dateTimeAdapter.parse(this.field.value, DEFAULT_DATE_FORMAT);
+            this.startAt = this.dateAdapter.parse(this.field.value, DEFAULT_DATE_FORMAT);
         }
     }
 
@@ -204,14 +198,14 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
             this.minDate = null;
             this.field.minValue = null;
         } else {
-            this.minDate = addDays(this.dateTimeAdapter.today(), this.field.minDateRangeValue);
+            this.minDate = addDays(this.dateAdapter.today(), this.field.minDateRangeValue);
             this.field.minValue = DateFnsUtils.formatDate(this.minDate, DEFAULT_DATE_FORMAT);
         }
         if (this.field.maxDateRangeValue === null) {
             this.maxDate = null;
             this.field.maxValue = null;
         } else {
-            this.maxDate = addDays(this.dateTimeAdapter.today(), this.field.maxDateRangeValue);
+            this.maxDate = addDays(this.dateAdapter.today(), this.field.maxDateRangeValue);
             this.field.maxValue = DateFnsUtils.formatDate(this.maxDate, DEFAULT_DATE_FORMAT);
         }
     }
