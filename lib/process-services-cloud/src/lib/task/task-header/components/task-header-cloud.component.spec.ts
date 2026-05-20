@@ -20,7 +20,7 @@ import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed, fakeAsync, flush, discardPeriodicTasks } from '@angular/core/testing';
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
-import { AppConfigService, NoopAuthModule } from '@alfresco/adf-core';
+import { AppConfigService, ClipboardService, NoopAuthModule } from '@alfresco/adf-core';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import {
     assignedTaskDetailsCloudMock,
@@ -106,7 +106,7 @@ describe('TaskHeaderCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             expect(getTaskByIdSpy).toHaveBeenCalled();
-            expect(component.taskDetails).toBe(assignedTaskDetailsCloudMock);
+            expect(component.taskDetails).toEqual(assignedTaskDetailsCloudMock);
         });
 
         it('should display assignee', async () => {
@@ -157,6 +157,35 @@ describe('TaskHeaderCloudComponent', () => {
 
             expect(labelEl.nativeElement.textContent.trim()).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.PROCESS_INSTANCE_ID');
             expect(valueEl.nativeElement.value).toBe('67c4z2a8f-01f3-11e9-8e36-0a58646002ad');
+        });
+
+        it('should use processInstanceId input when task details omit it', async () => {
+            const taskWithoutProcessInstanceId = { ...assignedTaskDetailsCloudMock, processInstanceId: null };
+            getTaskByIdSpy.and.returnValue(of(taskWithoutProcessInstanceId));
+            component.processInstanceId = 'input-process-instance-id';
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-processInstanceId"]'));
+
+            expect(valueEl.nativeElement.value).toBe('input-process-instance-id');
+            expect(component.taskDetails.processInstanceId).toBe('input-process-instance-id');
+        });
+
+        it('should copy process instance id to clipboard when clicked', async () => {
+            const clipboardService = TestBed.inject(ClipboardService);
+            const copySpy = spyOn(clipboardService, 'copyContentToClipboard').and.stub();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const processInstanceIdToggle = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-toggle-processInstanceId"]'));
+            processInstanceIdToggle.nativeElement.click();
+
+            expect(copySpy).toHaveBeenCalledWith('67c4z2a8f-01f3-11e9-8e36-0a58646002ad', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
         });
 
         it('should display placeholder if no due date', async () => {
