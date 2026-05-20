@@ -26,6 +26,11 @@
         padding-left: 0;
     }
 
+    &-multiline-error-container {
+        width: 100%;
+        font-size: var(--mat-sys-body-small-size);
+    }
+
     &-multiline-required-message {
         display: flex;
     }

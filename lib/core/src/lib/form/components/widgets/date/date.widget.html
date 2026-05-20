@@ -1,5 +1,5 @@
 <div class="{{ field.className }} date-widget-container" id="data-widget" [class.adf-invalid]="dateInputControl.invalid && dateInputControl.touched">
-    <mat-form-field class="adf-date-widget adf-form-field-input" [floatLabel]="field.placeholder ? 'always' : null">
+    <mat-form-field class="adf-date-widget adf-form-field-input" [floatLabel]="field.placeholder ? 'always' : null" subscriptSizing="dynamic">
         <mat-label class="adf-label"
                    [id]="field.id + '-label'"
                    [attr.for]="field.id">
@@ -19,11 +19,10 @@
         <mat-datepicker #datePicker
                         [startAt]="startAt"
                         [disabled]="field.readOnly" />
+        @if (dateInputControl.invalid && dateInputControl.touched && field.validationSummary?.message) {
+            <mat-error>
+                {{ field.validationSummary.message | translate:translateParameters }}
+            </mat-error>
+        }
     </mat-form-field>
-    <div class="adf-error-messages-container">
-        <error-widget
-            *ngIf="dateInputControl.invalid && dateInputControl.touched"
-            [error]="field.validationSummary"
-        />
-    </div>
 </div>

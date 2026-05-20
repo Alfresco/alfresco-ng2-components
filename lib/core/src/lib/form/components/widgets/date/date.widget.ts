@@ -17,7 +17,6 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { NgIf } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
@@ -27,7 +26,6 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter, DateFnsUtils, DEFAULT_DATE_FORMAT } from '../../../../common';
 import { FormService } from '../../../services/form.service';
-import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 import { ErrorMessageModel } from '../core/error-message.model';
 import { parseISO } from 'date-fns';
@@ -53,13 +51,14 @@ import { ReactiveFormWidget } from '../reactive-widget.interface';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [MatFormFieldModule, TranslatePipe, MatInputModule, MatDatepickerModule, ReactiveFormsModule, ErrorWidgetComponent, NgIf],
+    imports: [MatFormFieldModule, TranslatePipe, MatInputModule, MatDatepickerModule, ReactiveFormsModule],
     encapsulation: ViewEncapsulation.None
 })
 export class DateWidgetComponent extends WidgetComponent implements OnInit, ReactiveFormWidget {
     minDate: Date;
     maxDate: Date;
     startAt: Date;
+    translateParameters: Record<string, string> = {};
 
     dateInputControl: FormControl<Date> = new FormControl<Date>(null);
 
@@ -125,6 +124,15 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, Reac
         } else {
             this.resetErrors();
             this.field.markAsValid();
+        }
+        this.updateTranslateParameters();
+    }
+
+    private updateTranslateParameters(): void {
+        if (this.field.validationSummary?.isActive()) {
+            this.translateParameters = this.field.validationSummary.getAttributesAsJsonObj();
+        } else {
+            this.translateParameters = {};
         }
     }
 

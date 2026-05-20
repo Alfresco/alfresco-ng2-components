@@ -19,11 +19,11 @@
 
 import { CurrencyPipe, NgIf } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation, InjectionToken, inject, DestroyRef } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 import { filter, isObservable, Observable } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -52,7 +52,7 @@ export const ADF_AMOUNT_SETTINGS = new InjectionToken<Observable<AmountWidgetSet
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent, TranslatePipe, NgIf],
+    imports: [MatFormFieldModule, MatInputModule, FormsModule, TranslatePipe, NgIf],
     providers: [CurrencyPipe],
     encapsulation: ViewEncapsulation.None
 })
@@ -69,11 +69,13 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     currencyDisplay: string | boolean = 'symbol';
     decimalProperty: string;
     enableDisplayBasedOnLocale: boolean;
+    errorStateMatcher: ErrorStateMatcher;
     isInputInFocus = false;
     locale: string;
     notShowDecimalDigits = '1.0-0';
     showDecimalDigits = '1.2-2';
     showReadonlyPlaceholder: boolean;
+    translateParameters: Record<string, string> = {};
     valueAsNumber: number;
 
     get placeholder(): string {
@@ -117,6 +119,23 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
             }
             this.subscribeToFieldChanges();
             this.setInitialValues();
+            this.initErrorStateMatcher();
+            this.updateTranslateParameters();
+        }
+    }
+
+    private initErrorStateMatcher(): void {
+        this.errorStateMatcher = {
+            isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
+                !this.field.isValid && this.isTouched()
+        };
+    }
+
+    private updateTranslateParameters(): void {
+        if (this.field.validationSummary?.isActive()) {
+            this.translateParameters = this.field.validationSummary.getAttributesAsJsonObj();
+        } else {
+            this.translateParameters = {};
         }
     }
 
@@ -138,6 +157,7 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
             }
         }
         this.markAsTouched();
+        this.updateTranslateParameters();
     }
 
     amountWidgetOnFocus(): void {
@@ -156,6 +176,8 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     onFieldChangedAmountWidget(): void {
         this.field.value = this.amountWidgetValue;
         super.onFieldChanged(this.field);
+        this.markAsTouched();
+        this.updateTranslateParameters();
     }
 
     setInitialValues(): void {
@@ -180,6 +202,7 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
                 } else if (!this.isInputInFocus) {
                     this.amountWidgetValue = ev.field.value;
                 }
+                this.updateTranslateParameters();
             });
     }
 

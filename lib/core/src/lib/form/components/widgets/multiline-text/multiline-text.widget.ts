@@ -17,16 +17,15 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { NgIf } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { isObservable } from 'rxjs';
 import { ADF_CUSTOM_MESSAGE } from '../core/custom-validation-message.token';
-import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
@@ -44,14 +43,18 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [MatFormFieldModule, NgIf, TranslatePipe, MatInputModule, FormsModule, ErrorWidgetComponent],
+    imports: [MatFormFieldModule, TranslatePipe, MatInputModule, FormsModule],
     encapsulation: ViewEncapsulation.None
 })
 export class MultilineTextWidgetComponentComponent extends WidgetComponent implements OnInit {
     private readonly destroyRef = inject(DestroyRef);
     private readonly enableCustomMessage = inject(ADF_CUSTOM_MESSAGE, { optional: true });
 
+    errorStateMatcher: ErrorStateMatcher;
+    translateParameters: Record<string, string> = {};
+
     ngOnInit(): void {
+        this.initErrorStateMatcher();
         if (this.enableCustomMessage != null) {
             if (isObservable(this.enableCustomMessage)) {
                 this.enableCustomMessage.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((enabled: boolean) => {
@@ -65,5 +68,25 @@ export class MultilineTextWidgetComponentComponent extends WidgetComponent imple
         } else {
             this.field.enableCustomValidationMessage = false;
         }
+    }
+
+    private initErrorStateMatcher(): void {
+        this.errorStateMatcher = {
+            isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
+                !this.field.isValid && this.isTouched()
+        };
+    }
+
+    private updateTranslateParameters(): void {
+        if (this.field.validationSummary?.isActive()) {
+            this.translateParameters = this.field.validationSummary.getAttributesAsJsonObj();
+        } else {
+            this.translateParameters = {};
+        }
+    }
+
+    onBlur(): void {
+        this.markAsTouched();
+        this.updateTranslateParameters();
     }
 }
