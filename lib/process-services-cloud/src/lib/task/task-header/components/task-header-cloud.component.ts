@@ -293,10 +293,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
     private applyProcessInstanceIdToTaskDetails(taskDetails: TaskDetailsCloudModel): TaskDetailsCloudModel {
         const resolvedProcessInstanceId = taskDetails.processInstanceId || this.processInstanceId;
 
-        if (!resolvedProcessInstanceId) {
-            return taskDetails;
-        }
-
         return { ...taskDetails, processInstanceId: resolvedProcessInstanceId };
     }
 
@@ -307,10 +303,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
     }
 
     private copyProcessInstanceIdToClipboard(processInstanceId: string): void {
-        if (!processInstanceId) {
-            return;
-        }
-
         const clipboardMessage = this.translationService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
         this.clipboardService.copyContentToClipboard(processInstanceId, clipboardMessage);
     }
