@@ -302,7 +302,7 @@ describe('CardViewSelectItemComponent', () => {
                 { key: '1', label: 'Option 1' },
                 { key: '2', label: 'Option 2' }
             ];
-            const event: MatAutocompleteSelectedEvent = {
+            const event = {
                 option: {
                     value: '1'
                 }
@@ -597,7 +597,7 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({ property: new SimpleChange(null, component.property, true) } as SimpleChanges);
             fixture.detectChanges();
 
-            const event: MatAutocompleteSelectedEvent = {
+            const event = {
                 option: {
                     value: 'option1'
                 }
