@@ -20,7 +20,7 @@ import { DebugElement, Type } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatOptionHarness } from '@angular/material/core/testing';
-import { MatChipGridHarness, MatChipHarness, MatChipListboxHarness } from '@angular/material/chips/testing';
+import { MatChipGridHarness, MatChipHarness, MatChipInputHarness, MatChipListboxHarness } from '@angular/material/chips/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
@@ -342,6 +342,20 @@ export class UnitTestingUtils {
 
     async checkIfMatChipGridExists(): Promise<boolean> {
         return this.loader.hasHarness(MatChipGridHarness);
+    }
+
+    /** MatChipInput related methods */
+
+    async getMatChipInput(): Promise<MatChipInputHarness> {
+        return this.loader.getHarness(MatChipInputHarness);
+    }
+
+    async getMatChipInputByDataAutomationId(dataAutomationId: string): Promise<MatChipInputHarness> {
+        return this.loader.getHarness(MatChipInputHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
+    async getMatChipInputByCSS(selector: string): Promise<MatChipInputHarness> {
+        return this.loader.getHarness(MatChipInputHarness.with({ selector }));
     }
 
     /** MatFromField related methods */

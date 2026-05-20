@@ -120,7 +120,7 @@ export class PropertyGroupTranslatorService {
 
         if (this.isListOfValues(propertyDefinition.constraints)) {
             const options = propertyDefinition.constraints[0].parameters.allowedValues.map((value) => ({ key: value, label: value }));
-            const properties = Object.assign(propertyDefinition, { options$: of(options) });
+            const properties = Object.assign(propertyDefinition, { options$: of(options), multivalued: isMultiValued });
 
             cardViewItemProperty = new CardViewSelectItemModel(properties);
         } else {

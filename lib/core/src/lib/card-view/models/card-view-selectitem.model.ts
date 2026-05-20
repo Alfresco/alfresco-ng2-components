@@ -40,8 +40,10 @@ export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements
 
         this.valueFetch$ = this.options$.pipe(
             switchMap((options) => {
-                const option = options.find((o) => o.key === this.value?.toString());
-                return of(option ? option.label : '');
+                if (Array.isArray(this.value)) {
+                    return of(this.value.map((v) => options.find((o) => o.key === v)?.label).join(', '));
+                }
+                return of(options.find((o) => o.key === this.value?.toString())?.label ?? '');
             })
         );
     }

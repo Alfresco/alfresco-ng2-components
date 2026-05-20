@@ -367,6 +367,33 @@ describe('PropertyGroupTranslatorService', () => {
             expect(cardViewProperty.value).toBe('two');
         });
 
+        it('should translate property for type LIST constraint with multivalued property', () => {
+            const definition: Definition = {
+                properties: [
+                    {
+                        id: 'FAS:PLAGUE',
+                        constraints: [
+                            {
+                                type: 'LIST',
+                                parameters: {
+                                    allowedValues: ['one', 'two', 'three']
+                                }
+                            }
+                        ]
+                    } as Constraint
+                ]
+            };
+            property.dataType = 'd:text';
+            property.multiValued = true;
+            propertyValues = { 'FAS:PLAGUE': ['one', 'three'] };
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, definition);
+
+            const cardViewProperty = cardViewGroup[0].properties[0] as CardViewSelectItemModel<string>;
+            expect(cardViewProperty instanceof CardViewSelectItemModel).toBeTruthy();
+            expect(cardViewProperty.multivalued).toBe(true);
+            expect(cardViewProperty.value).toEqual(['one', 'three']);
+        });
+
         it('should translate content type properties into card items', () => {
             const propertyBase = {
                 id: 'fk:brendonstare',

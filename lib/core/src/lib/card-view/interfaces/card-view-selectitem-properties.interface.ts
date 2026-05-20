@@ -24,7 +24,7 @@ export interface CardViewSelectItemOption<T> {
 }
 
 export interface CardViewSelectItemProperties<T> extends CardViewItemProperties {
-    value: string | number;
+    value: T | T[];
     options$: Observable<CardViewSelectItemOption<T>[]>;
     displayNoneOption?: boolean;
     autocompleteBased?: boolean;

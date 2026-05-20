@@ -22,7 +22,7 @@ import { CardViewSelectItemOption } from '../../interfaces/card-view.interfaces'
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { BaseCardView } from '../base-card-view';
 import { AppConfigService } from '../../../app-config/app-config.service';
-import { map, debounceTime, filter, first } from 'rxjs/operators';
+import { map, debounceTime, filter, take } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,6 +32,9 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator.directive';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import { ENTER } from '@angular/cdk/keycodes';
+import { IconModule } from '../../../icon/icon.module';
 
 @Component({
     selector: 'adf-card-view-selectitem',
@@ -45,7 +48,9 @@ import { CardViewPropertyValidatorDirective } from '../../directives/card-view-p
         MatInputModule,
         ReactiveFormsModule,
         CardViewPropertyValidatorDirective,
-        FormsModule
+        FormsModule,
+        MatChipsModule,
+        IconModule
     ],
     templateUrl: './card-view-selectitem.component.html',
     styleUrls: ['./card-view-selectitem.component.scss'],
@@ -54,6 +59,7 @@ import { CardViewPropertyValidatorDirective } from '../../directives/card-view-p
 })
 export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItemModel<string | number>> implements OnInit, OnChanges {
     static HIDE_FILTER_LIMIT = 5;
+    readonly separatorKeysCodes = [ENTER] as const;
 
     @Input() options$: Observable<CardViewSelectItemOption<string | number>[]>;
 
@@ -63,13 +69,13 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     @Input()
     displayEmpty: boolean = true;
 
-    value: string | number;
     filter$ = new BehaviorSubject<string>('');
     showInputFilter: boolean = false;
     list$: Observable<CardViewSelectItemOption<string | number>[]> = null;
     templateType = '';
     autocompleteControl = new UntypedFormControl();
-    editedValue: string | number;
+    editedValue = '';
+    filteredOptions: CardViewSelectItemOption<string | number>[] = [];
 
     private readonly destroyRef = inject(DestroyRef);
     private readonly appConfig = inject(AppConfigService);
@@ -81,17 +87,21 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        this.value = this.property.value;
+        if (!this.property.value && this.property.multivalued) {
+            this.property.value = [];
+        }
+
         if (changes.property?.firstChange) {
             this.autocompleteControl.valueChanges
                 .pipe(
-                    filter((textInputValue) => textInputValue !== this.editedValue && textInputValue !== null),
+                    filter((textInputValue) => textInputValue !== this.editedValue && textInputValue !== null && !Array.isArray(textInputValue)),
                     debounceTime(50),
                     takeUntilDestroyed(this.destroyRef)
                 )
                 .subscribe((textInputValue) => {
                     this.editedValue = textInputValue;
                     this.cardViewUpdateService.autocompleteInputValue$.next(textInputValue);
+                    this.filterOptions();
                 });
         }
 
@@ -120,7 +130,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     onFilterInputChange(value: string) {
-        this.filter$.next(value.toString());
+        this.filter$.next(value);
     }
 
     private getOptions(): Observable<CardViewSelectItemOption<string | number>[]> {
@@ -134,32 +144,75 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     onOptionSelected(event: MatAutocompleteSelectedEvent) {
-        this.getOptions()
-            .pipe(first())
-            .subscribe((options) => {
-                const selectedOption = options.find((option) => option.key === event.option.value);
-                if (selectedOption) {
-                    this.autocompleteControl.setValue(selectedOption.label);
-                    this.cardViewUpdateService.update({ ...this.property } as CardViewSelectItemModel<string>, selectedOption.key);
-                }
-            });
+        const selectedOption = this.filteredOptions.find((option) => option.key === event.option.value);
+        if (selectedOption) {
+            if (this.property.multivalued) {
+                this.property.value.push(event.option.value);
+            } else {
+                this.property.value = event.option.value;
+                this.autocompleteControl.setValue(selectedOption.label);
+            }
+            this.cardViewUpdateService.update(this.property, this.property.value);
+            this.filterOptions();
+        }
     }
 
     onChange(event: MatSelectChange): void {
-        const selectedOption = event.value !== undefined ? event.value : null;
-        this.cardViewUpdateService.update({ ...this.property } as CardViewSelectItemModel<string>, selectedOption);
-        this.property.value = selectedOption;
+        const selectedOptions = event.value !== undefined ? event.value : null;
+        this.cardViewUpdateService.update(this.property, selectedOptions);
+        this.property.value = selectedOptions;
     }
 
     onValidation(errors: string[]): void {
         this._error = errors.join('<br>');
     }
 
+    removeChip(value: string | number) {
+        this.property.value = this.property.value.filter((v) => v !== value);
+        this.cardViewUpdateService.update(this.property, this.property.value);
+        this.filterOptions();
+    }
+
+    addValueToList(newListItem: MatChipInputEvent) {
+        const selectedOption = this.filteredOptions.find((option) => option.key === newListItem.value || option.label === newListItem.value);
+        if (selectedOption) {
+            this.property.value.push(selectedOption.key);
+            this.cardViewUpdateService.update(this.property, this.property.value);
+            newListItem.chipInput.clear();
+            this.filterOptions();
+        }
+    }
+
     get showProperty(): boolean {
         return this.displayEmpty || !this.property.isEmpty();
     }
 
+    getOptionLabel(value: string | number): Observable<string> {
+        return this.getOptions().pipe(
+            take(1),
+            map((options) => options.find((option) => option.key === value)?.label)
+        );
+    }
+
     private get optionsLimit(): number {
         return this.appConfig.get<number>('content-metadata.selectFilterLimit', CardViewSelectItemComponent.HIDE_FILTER_LIMIT);
+    }
+
+    private filterOptions() {
+        this.getOptions()
+            .pipe(
+                map((options) =>
+                    options.filter((option) => {
+                        const isSelected = this.property.multivalued
+                            ? this.property.value.some((val) => val === option.key)
+                            : this.property.value === option.key;
+                        return !isSelected && option.label.toLowerCase().includes(this.editedValue.toLowerCase());
+                    })
+                )
+            )
+            .pipe(take(1))
+            .subscribe((options: CardViewSelectItemOption<string | number>[]) => {
+                this.filteredOptions = options;
+            });
     }
 }
