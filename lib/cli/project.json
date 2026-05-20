@@ -8,7 +8,6 @@
     "build": {
       "executor": "nx:run-commands",
       "outputs": ["{workspaceRoot}/dist/libs/cli"],
-      "dependsOn": ["installDeps"],
       "options": {
         "command": "cd lib/cli && npm run dist"
       },
@@ -47,7 +46,7 @@
       "options": {
         "commands": [
           {
-            "command": "cd lib/cli && npm i --omit=prod --no-audit --no-fund"
+            "command": "cd lib/cli && npm i"
           }
         ]
       }
