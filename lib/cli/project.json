@@ -47,7 +47,7 @@
       "options": {
         "commands": [
           {
-            "command": "cd lib/cli && npm i"
+            "command": "cd lib/cli && npm i --omit=prod --no-audit --no-fund"
           }
         ]
       }
