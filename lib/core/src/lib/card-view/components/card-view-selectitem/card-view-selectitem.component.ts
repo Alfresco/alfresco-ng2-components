@@ -152,14 +152,14 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
                 this.property.value = event.option.value;
                 this.autocompleteControl.setValue(selectedOption.label);
             }
-            this.cardViewUpdateService.update({ ...this.property } as CardViewSelectItemModel<string>, this.property.value);
+            this.cardViewUpdateService.update(this.property, this.property.value);
             this.filterOptions();
         }
     }
 
     onChange(event: MatSelectChange): void {
         const selectedOptions = event.value !== undefined ? event.value : null;
-        this.cardViewUpdateService.update({ ...this.property } as CardViewSelectItemModel<string>, selectedOptions);
+        this.cardViewUpdateService.update(this.property, selectedOptions);
         this.property.value = selectedOptions;
     }
 
@@ -169,7 +169,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
 
     removeChip(value: string | number) {
         this.property.value = this.property.value.filter((v) => v !== value);
-        this.cardViewUpdateService.update({ ...this.property } as CardViewSelectItemModel<string>, this.property.value);
+        this.cardViewUpdateService.update(this.property, this.property.value);
         this.filterOptions();
     }
 
@@ -177,7 +177,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
         const selectedOption = this.filteredOptions.find((option) => option.key === newListItem.value || option.label === newListItem.value);
         if (selectedOption) {
             this.property.value.push(selectedOption.key);
-            this.cardViewUpdateService.update({ ...this.property } as CardViewSelectItemModel<string>, this.property.value);
+            this.cardViewUpdateService.update(this.property, this.property.value);
             newListItem.chipInput.clear();
             this.filterOptions();
         }

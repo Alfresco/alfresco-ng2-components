@@ -25,7 +25,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { DebugElement } from '@angular/core';
+import { DebugElement, SimpleChange, SimpleChanges } from '@angular/core';
 import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator.directive';
 import { MatError } from '@angular/material/form-field';
 import { FormControl, NgModel } from '@angular/forms';
@@ -286,7 +286,7 @@ describe('CardViewSelectItemComponent', () => {
             const autocompleteValueSpy = spyOn(cardViewUpdateService.autocompleteInputValue$, 'next');
             component.editedValue = '';
             component.editable = true;
-            component.ngOnChanges({ property: { firstChange: true } } as any);
+            component.ngOnChanges({ property: new SimpleChange(null, component.property, true) } as SimpleChanges);
             fixture.detectChanges();
 
             component.autocompleteControl.setValue('new value');
@@ -349,7 +349,7 @@ describe('CardViewSelectItemComponent', () => {
         it('should update filteredOptions when autocompleteControl value changes', fakeAsync(() => {
             component.editedValue = '';
             component.editable = true;
-            component.ngOnChanges({ property: { firstChange: true } } as any);
+            component.ngOnChanges({ property: new SimpleChange(null, component.property, true) } as SimpleChanges);
             fixture.detectChanges();
 
             component.autocompleteControl.setValue('Option 1');
@@ -480,7 +480,7 @@ describe('CardViewSelectItemComponent', () => {
         it('should add value to array when option is selected', async () => {
             component.editable = true;
             component.filteredOptions = multivaluedOptions;
-            component.ngOnChanges({ property: { firstChange: true } } as any);
+            component.ngOnChanges({ property: new SimpleChange(null, component.property, true) } as SimpleChanges);
             fixture.detectChanges();
 
             const options = await testingUtils.typeAndGetOptionsForMatAutoComplete(fixture, 'Option');
@@ -531,7 +531,7 @@ describe('CardViewSelectItemComponent', () => {
             ];
             component.editable = true;
             component.ngOnInit();
-            component.ngOnChanges({ property: { firstChange: true } } as any);
+            component.ngOnChanges({ property: new SimpleChange(null, component.property, true) } as SimpleChanges);
             fixture.detectChanges();
             tick(50);
 
@@ -556,7 +556,7 @@ describe('CardViewSelectItemComponent', () => {
             ];
             component.editable = true;
             component.ngOnInit();
-            component.ngOnChanges({ property: { firstChange: true } } as any);
+            component.ngOnChanges({ property: new SimpleChange(null, component.property, true) } as SimpleChanges);
             fixture.detectChanges();
             tick(50);
 
@@ -578,7 +578,7 @@ describe('CardViewSelectItemComponent', () => {
             component.editedValue = '';
             component.editable = true;
             component.ngOnInit();
-            component.ngOnChanges({ property: { firstChange: true } } as any);
+            component.ngOnChanges({ property: new SimpleChange(null, component.property, true) } as SimpleChanges);
             fixture.detectChanges();
 
             component.autocompleteControl.setValue('Op');
@@ -594,7 +594,7 @@ describe('CardViewSelectItemComponent', () => {
         it('should update filteredOptions after option selection', fakeAsync(() => {
             component.filteredOptions = [...multivaluedOptions];
             component.editable = true;
-            component.ngOnChanges({ property: { firstChange: true } } as any);
+            component.ngOnChanges({ property: new SimpleChange(null, component.property, true) } as SimpleChanges);
             fixture.detectChanges();
 
             const event: MatAutocompleteSelectedEvent = {
@@ -616,7 +616,7 @@ describe('CardViewSelectItemComponent', () => {
             component.property.value = ['option1', 'option2'];
             component.filteredOptions = [multivaluedOptions[2]];
             component.editable = true;
-            component.ngOnChanges({ property: { firstChange: true } } as any);
+            component.ngOnChanges({ property: new SimpleChange(null, component.property, true) } as SimpleChanges);
             fixture.detectChanges();
 
             component.removeChip('option1');
