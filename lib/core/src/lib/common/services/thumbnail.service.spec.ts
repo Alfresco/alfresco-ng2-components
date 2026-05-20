@@ -19,7 +19,6 @@ import { TestBed } from '@angular/core/testing';
 import { ThumbnailService } from './thumbnail.service';
 
 describe('ThumbnailService', () => {
-
     let service: ThumbnailService;
 
     beforeEach(() => {
@@ -52,5 +51,9 @@ describe('ThumbnailService', () => {
 
     it('should return the correct icon for a mht file', () => {
         expect(service.getMimeTypeIcon('multipart/related')).toContain('ft_ic_website.svg');
+    });
+
+    it('should return the correct icon for a file link', () => {
+        expect(service.getMimeTypeIcon('fileLink')).toContain('ft_ic_file_link.svg');
     });
 });

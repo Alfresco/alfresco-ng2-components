@@ -102,6 +102,7 @@
     "ATTACH": "Attach",
     "CHOOSE_ITEM": "Select content to attach from '{{ name }}'",
     "COPY": "Copy",
+    "LINK": "Create Link",
     "COPY_ITEM": "Copy '{{ name }}' to...",
     "LOCATION": "Location",
     "MOVE": "Move",

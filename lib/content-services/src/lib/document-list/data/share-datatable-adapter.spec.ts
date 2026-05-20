@@ -16,7 +16,7 @@
  */
 
 import { DataColumn, DataRow, DataSorting, NoopAuthModule, ThumbnailService } from '@alfresco/adf-core';
-import { FileNode, FolderNode, SmartFolderNode, RuleFolderNode, LinkFolderNode } from './../../mock';
+import { FileNode, FileLinkNode, FolderNode, SmartFolderNode, RuleFolderNode, LinkFolderNode } from './../../mock';
 import { ERR_OBJECT_NOT_FOUND, ShareDataRow } from './share-data-row.model';
 import { ERR_COL_NOT_FOUND, ERR_ROW_NOT_FOUND, ShareDataTableAdapter } from './share-datatable-adapter';
 import { TestBed } from '@angular/core/testing';
@@ -235,6 +235,19 @@ describe('ShareDataTableAdapter', () => {
         const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_folder_shortcut_link`);
         expect(value).toContain(`svg`);
+    });
+
+    it('should resolve file link icon for app:filelink node', () => {
+        spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_file_link.svg`);
+
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
+
+        const row = new ShareDataRow(new FileLinkNode(), contentService, null);
+        const col = { type: 'image', key: '$thumbnail' } as DataColumn;
+
+        const value = adapter.getValue(row, col);
+        expect(thumbnailService.getMimeTypeIcon).toHaveBeenCalledWith('fileLink');
+        expect(value).toContain('ft_ic_file_link');
     });
 
     it('should resolve rule folder icon', () => {
