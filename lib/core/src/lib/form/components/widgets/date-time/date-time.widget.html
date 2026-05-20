@@ -10,7 +10,8 @@
     <div class="adf-date-time-widget-container">
         <mat-form-field class="adf-date-time-widget adf-form-field-input"
                         [class.adf-left-label-input-datepicker]="field.leftLabels"
-                        [floatLabel]="field.placeholder ? 'always' : null">
+                        [floatLabel]="field.placeholder ? 'always' : null"
+                        subscriptSizing="dynamic">
             @if( (field.name || field?.required) && !field.leftLabels) {
             <mat-label class="adf-label" [attr.for]="field.id">
                 {{ field.name | translate }} ({{ field.dateDisplayFormat }})
@@ -36,9 +37,11 @@
                 [touchUi]="true"
                 [timeInterval]="5"
                 [disabled]="field.readOnly" />
+            @if (datetimeInputControl.invalid && datetimeInputControl.touched && field.validationSummary?.message) {
+                <mat-error>
+                    {{ field.validationSummary.message | translate:translateParameters }}
+                </mat-error>
+            }
         </mat-form-field>
-        <div class="adf-error-messages-container">
-            <error-widget *ngIf="datetimeInputControl.invalid && datetimeInputControl.touched" [error]="field.validationSummary" />
-        </div>
     </div>
 </div>

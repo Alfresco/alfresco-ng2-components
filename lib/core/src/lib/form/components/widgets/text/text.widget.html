@@ -8,7 +8,7 @@
         </label>
     </div>
     <div class="adf-text-widget-container">
-        <mat-form-field class="adf-form-field-input" [floatLabel]="placeholder ? 'always' : null" subscriptSizing="fixed">
+        <mat-form-field class="adf-form-field-input" [floatLabel]="placeholder ? 'always' : null" subscriptSizing="dynamic">
             @if ( (field.name || this.field?.required) && !field.leftLabels) { <mat-label class="adf-label" [attr.for]="field.id">
                 {{ field.name | translate }}
             </mat-label>
