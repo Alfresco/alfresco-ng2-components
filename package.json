@@ -129,7 +129,6 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "5.0.1",
     "karma-jasmine-html-reporter": "^2.1.0",
-    "license-checker": "^25.0.1",
     "lint-staged": "15.5.2",
     "ng-packagr": "19.2.2",
     "nx": "22.7.2",

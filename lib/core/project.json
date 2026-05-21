@@ -78,7 +78,7 @@
       "options": {
         "commands": [
           {
-            "command": "license-checker --production --failOn 'GPL;GPL-2.0' > licenses.txt"
+            "command": "node scripts/check-licenses.mjs --out licenses.txt --deny GPL,GPL-2.0"
           }
         ]
       }
