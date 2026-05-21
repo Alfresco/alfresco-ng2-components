@@ -136,7 +136,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
             )
             .subscribe(
                 ([taskDetails, candidateUsers, candidateGroups]) => {
-                    this.taskDetails = this.applyProcessInstanceIdToTaskDetails(taskDetails);
+                    this.taskDetails = taskDetails;
                     this.candidateGroups = candidateGroups.map((user) => ({ icon: 'group', value: user }) as CardViewArrayItem);
                     this.candidateUsers = candidateUsers.map((group) => ({ icon: 'person', value: group }) as CardViewArrayItem);
                     if (this.taskDetails.parentTaskId) {
@@ -262,6 +262,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
      */
     refreshData() {
         if (this.taskDetails) {
+            this.taskDetails = this.applyProcessInstanceIdToTaskDetails(this.taskDetails);
             const defaultProperties = this.initDefaultProperties();
             const filteredProperties: string[] = this.appConfig.get('adf-cloud-task-header.presets.properties');
             this.properties = defaultProperties.filter((cardItem) => this.isValidSelection(filteredProperties, cardItem));
@@ -284,16 +285,18 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
             )
             .subscribe((taskDetails) => {
                 if (taskDetails) {
-                    this.taskDetails = this.applyProcessInstanceIdToTaskDetails(taskDetails);
+                    this.taskDetails = taskDetails;
                     this.refreshData();
                 }
             });
     }
 
     private applyProcessInstanceIdToTaskDetails(taskDetails: TaskDetailsCloudModel): TaskDetailsCloudModel {
-        const resolvedProcessInstanceId = taskDetails.processInstanceId || this.processInstanceId;
+        const resolvedProcessInstanceId = taskDetails.processInstanceId ?? this.processInstanceId;
 
-        return { ...taskDetails, processInstanceId: resolvedProcessInstanceId };
+        return resolvedProcessInstanceId === taskDetails.processInstanceId
+            ? taskDetails
+            : { ...taskDetails, processInstanceId: resolvedProcessInstanceId };
     }
 
     private onPropertyClicked(clickNotification: ClickNotification): void {
