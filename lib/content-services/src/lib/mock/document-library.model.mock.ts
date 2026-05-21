@@ -87,3 +87,17 @@ export class LinkFolderNode extends NodeEntry {
         this.entry.properties = {};
     }
 }
+
+export class FileLinkNode extends NodeEntry {
+    constructor(name?: string) {
+        super();
+        this.entry = new Node();
+        this.entry.id = 'file-link-id';
+        this.entry.isFile = true;
+        this.entry.isFolder = false;
+        this.entry.nodeType = 'app:filelink';
+        this.entry.name = name;
+        this.entry.path = new PathInfo();
+        this.entry.properties = {};
+    }
+}

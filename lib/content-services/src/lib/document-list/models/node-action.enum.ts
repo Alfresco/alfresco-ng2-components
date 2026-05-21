@@ -23,7 +23,8 @@ export const NodeAction = {
     CHOOSE: 'CHOOSE',
     COPY: 'COPY',
     MOVE: 'MOVE',
-    NEXT: 'NEXT'
+    NEXT: 'NEXT',
+    LINK: 'LINK'
 } as const;
 
 export type NodeAction = (typeof NodeAction)[keyof typeof NodeAction];

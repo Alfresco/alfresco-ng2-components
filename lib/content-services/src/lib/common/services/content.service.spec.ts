@@ -210,6 +210,13 @@ describe('ContentService', () => {
             expect(contentService.getNodeIcon(node)).toContain('assets/images/ft_ic_ms_word.svg');
         });
 
+        it('should resolve file link icon for app:filelink node', () => {
+            node.isFolder = false;
+            node.isFile = true;
+            node.nodeType = 'app:filelink';
+            expect(contentService.getNodeIcon(node)).toContain('assets/images/ft_ic_file_link.svg');
+        });
+
         it('should resolve fallback file icon for unknown node', () => {
             node.isFolder = false;
             node.isFile = false;

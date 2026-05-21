@@ -151,6 +151,9 @@ export class ContentService {
             return this.getFolderIcon(node);
         }
         if (node?.isFile) {
+            if (node?.nodeType === 'app:filelink') {
+                return this.thumbnailService.getMimeTypeIcon('fileLink');
+            }
             return this.thumbnailService.getMimeTypeIcon(node?.content?.mimeType);
         }
         return this.thumbnailService.getDefaultMimeTypeIcon();
