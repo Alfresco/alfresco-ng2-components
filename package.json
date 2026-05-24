@@ -83,7 +83,7 @@
     "@angular-eslint/template-parser": "19.8.1",
     "@angular/compiler-cli": "19.2.20",
     "@chromatic-com/storybook": "4.1.3",
-    "@nx/angular": "22.7.2",
+    "@nx/angular": "22.7.3",
     "@nx/eslint-plugin": "22.7.2",
     "@nx/jest": "22.7.2",
     "@nx/js": "22.7.2",
