@@ -255,6 +255,8 @@
         "VALUE": "Valeur"
       },
       "NONE": "Aucun",
+      "SELECTED_VALUES": "Selected values",
+      "REMOVE": "Remove {{ value }}",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utiliser un format de numéro",
         "INT_VALIDATION_ERROR": "Utiliser un format d'entier",
