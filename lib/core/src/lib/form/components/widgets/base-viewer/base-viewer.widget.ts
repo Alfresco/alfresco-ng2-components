@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
+import { NgIf } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ViewerComponent } from '../../../../viewer';
-import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 
 /* eslint-disable @angular-eslint/component-selector */
@@ -30,7 +31,7 @@ import { WidgetComponent } from '../widget.component';
     host: {
         '(click)': 'event($event)'
     },
-    imports: [TranslatePipe, ViewerComponent, ErrorWidgetComponent],
+    imports: [NgIf, MatIconModule, TranslatePipe, ViewerComponent],
     encapsulation: ViewEncapsulation.None
 })
 export class BaseViewerWidgetComponent extends WidgetComponent implements OnInit {

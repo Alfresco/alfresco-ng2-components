@@ -16,17 +16,18 @@
  */
 
 import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
-import { BaseViewerWidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
+import { BaseViewerWidgetComponent } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { PropertiesViewerWrapperComponent } from './properties-viewer-wrapper/properties-viewer-wrapper.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'adf-properties-viewer-widget',
-    imports: [CommonModule, ErrorWidgetComponent, PropertiesViewerWrapperComponent, TranslatePipe],
+    imports: [CommonModule, PropertiesViewerWrapperComponent, TranslatePipe, MatIconModule],
     templateUrl: './properties-viewer.widget.html',
     styleUrls: ['./properties-viewer.widget.scss'],
     encapsulation: ViewEncapsulation.None

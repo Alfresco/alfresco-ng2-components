@@ -105,7 +105,11 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
         });
 
         it('should display the error message', () => {
-            const errorElement = element.querySelector('error-widget');
+            widget.propertyControl.markAsTouched();
+            widget.propertyControl.setErrors({ loadFailed: true });
+            fixture.detectChanges();
+
+            const errorElement = element.querySelector('[data-automation-id="adf-field-error"]');
             expect(errorElement.textContent.trim()).toContain('FORM.FIELD.EXTERNAL_PROPERTY_LOAD_FAILED');
         });
     });
@@ -124,7 +128,7 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
         });
 
         it('should NOT display the error message', () => {
-            const errorElement = element.querySelector('error-widget');
+            const errorElement = element.querySelector('[data-automation-id="adf-field-error"]');
             expect(errorElement).toBeFalsy();
         });
 

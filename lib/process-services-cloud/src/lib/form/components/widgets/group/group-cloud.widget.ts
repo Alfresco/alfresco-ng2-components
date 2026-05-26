@@ -16,7 +16,7 @@
  */
 
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { ErrorWidgetComponent, WidgetComponent } from '@alfresco/adf-core';
+import { WidgetComponent } from '@alfresco/adf-core';
 import { UntypedFormControl } from '@angular/forms';
 import { filter } from 'rxjs/operators';
 import { ComponentSelectionMode } from '../../../../types';
@@ -25,12 +25,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { GroupCloudComponent } from '../../../../group/components/group-cloud.component';
+import { MatIconModule } from '@angular/material/icon';
 
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'group-cloud-widget',
-    imports: [CommonModule, TranslatePipe, ErrorWidgetComponent, GroupCloudComponent],
+    imports: [CommonModule, TranslatePipe, GroupCloudComponent, MatIconModule],
     templateUrl: './group-cloud.widget.html',
     host: {
         '(click)': 'event($event)',

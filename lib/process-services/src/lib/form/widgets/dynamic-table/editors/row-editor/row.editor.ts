@@ -29,8 +29,9 @@ import { DateTimeEditorComponent } from '../datetime/datetime.editor';
 import { BooleanEditorComponent } from '../boolean/boolean.editor';
 import { AmountEditorComponent } from '../amount/amount.editor';
 import { TextEditorComponent } from '../text/text.editor';
-import { ErrorWidgetComponent } from '@alfresco/adf-core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
 
 export interface RowEditorReturnType {
     table: DynamicTableModel;
@@ -48,8 +49,9 @@ export interface RowEditorReturnType {
         BooleanEditorComponent,
         AmountEditorComponent,
         TextEditorComponent,
-        ErrorWidgetComponent,
-        MatButtonModule
+        MatButtonModule,
+        MatIconModule,
+        TranslatePipe
     ],
     templateUrl: './row.editor.html',
     styleUrls: ['./row.editor.css']

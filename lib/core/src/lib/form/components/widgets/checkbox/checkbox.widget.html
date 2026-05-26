@@ -11,13 +11,13 @@
                   (click)="markAsTouched()"
                   >
         {{ field.name | translate }}
-        <span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
     </mat-checkbox>
-    <div class="adf-error-messages-container">
-        <error-widget [error]="field.validationSummary" />
-        <error-widget
-            *ngIf="isInvalidFieldRequired() && isTouched()"
-            required="{{ 'FORM.FIELD.REQUIRED' | translate }}"
-        />
+    <div class="adf-error-message" role="alert" aria-live="polite" *ngIf="field.validationSummary?.isActive()">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ field.validationSummary.message | translate:field.validationSummary.getAttributesAsJsonObj() }}</span>
+    </div>
+    <div class="adf-error-message" role="alert" aria-live="polite" *ngIf="isInvalidFieldRequired() && isTouched()">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ 'FORM.FIELD.REQUIRED' | translate }}</span>
     </div>
 </div>

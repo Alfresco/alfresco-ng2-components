@@ -161,10 +161,9 @@ describe('DropdownWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+            const requiredSelect: HTMLElement = element.querySelector('.adf-select[required]');
 
-            expect(asterisk).toBeTruthy();
-            expect(asterisk.textContent).toEqual('*');
+            expect(requiredSelect).toBeTruthy();
         });
 
         it('should be invalid if no default option after interaction', async () => {

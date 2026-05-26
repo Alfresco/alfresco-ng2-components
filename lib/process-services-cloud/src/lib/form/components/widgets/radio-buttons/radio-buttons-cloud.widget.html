@@ -1,8 +1,7 @@
 <div class="adf-radio-buttons-widget-cloud {{field.className}}"
     [class.adf-readonly]="field.readOnly" [id]="field.id">
     <div [ngClass]="(field.alignmentType === 'vertical') ? 'adf-radio-button-container': 'adf-radio-button-container-horizontal'">
-        <label class="adf-label"
-               [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
+        <label [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
         </label>
         <mat-radio-group
             [ngClass]="(field.alignmentType === 'vertical') ? 'adf-radio-group': 'adf-radio-group-horizontal'"
@@ -21,5 +20,11 @@
             </mat-radio-button>
         </mat-radio-group>
     </div>
-    <error-widget class="adf-radio-group-error-message" [error]="hasError()" />
+    <div class="adf-radio-group-error-message adf-error-message"
+         role="alert"
+         aria-live="polite"
+         *ngIf="hasError()?.isActive()">
+        <mat-icon data-automation-id="adf-field-error-icon">error_outline</mat-icon>
+        <span data-automation-id="adf-field-error-text">{{ hasError().message | translate:hasError().getAttributesAsJsonObj() }}</span>
+    </div>
 </div>

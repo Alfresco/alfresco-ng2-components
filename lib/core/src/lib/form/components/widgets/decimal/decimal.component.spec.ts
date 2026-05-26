@@ -179,10 +179,9 @@ describe('DecimalComponent', () => {
             });
 
             fixture.detectChanges();
-            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
+            const requiredInput = testingUtils.getByCSS('input[required]').nativeElement;
 
-            expect(asterisk).toBeTruthy();
-            expect(asterisk?.textContent).toEqual('*');
+            expect(requiredInput).toBeTruthy();
         });
     });
 });

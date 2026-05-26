@@ -1,15 +1,16 @@
 <div class="adf-base-viewer-widget {{ field.className }}"
      [class.adf-invalid]="!field.isValid"
      [class.adf-readonly]="field.readOnly">
-    <label class="adf-label" [attr.for]="field.id">
+    <label [attr.for]="field.id">
         {{ field.name | translate }}
-        <span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label>
+    </label>
     <adf-viewer [urlFile]="field.value.urlFile"
                 [blobFile]="field.value.blobFile"
                 [fileName]="field.value.fileName"
                 [showViewer]="field.value?.blobFile || field.value?.urlFile"
                 [allowGoBack]="false" />
-    <div class="adf-error-messages-container">
-        <error-widget [error]="field.validationSummary" />
+    <div class="adf-error-message" role="alert" aria-live="polite" *ngIf="field.validationSummary?.isActive()">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ field.validationSummary.message | translate:field.validationSummary.getAttributesAsJsonObj() }}</span>
     </div>
 </div>

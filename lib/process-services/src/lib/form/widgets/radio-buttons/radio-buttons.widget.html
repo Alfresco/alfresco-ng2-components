@@ -1,9 +1,13 @@
 <div class="adf-radio-buttons-widget {{field.className}}" [class.adf-readonly]="field.readOnly" [id]="field.id">
     <div class="adf-radio-button-container">
-        <label class="adf-label" [attr.for]="field.id"
-            >{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
-        >
-        <mat-radio-group class="adf-radio-group" [(ngModel)]="field.value" [disabled]="field.readOnly">
+        <label [attr.for]="field.id" data-automation-id="adf-field-label">{{field.name | translate }}</label>
+        <mat-radio-group
+            class="adf-radio-group"
+            [(ngModel)]="field.value"
+            [disabled]="field.readOnly"
+            [required]="isRequired()"
+            [attr.aria-required]="isRequired() ? 'true' : null"
+            [attr.aria-invalid]="field.validationSummary?.isActive() ? 'true' : null">
             <mat-radio-button
                 [title]="field.tooltip"
                 [id]="field.id + '-' + opt.id"
@@ -18,5 +22,8 @@
             </mat-radio-button>
         </mat-radio-group>
     </div>
-    <error-widget [error]="field.validationSummary" />
+    <div class="adf-error-message adf-radio-group-error-message" role="alert" aria-live="polite" *ngIf="field.validationSummary?.isActive()">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ field.validationSummary.message | translate:field.validationSummary.getAttributesAsJsonObj() }}</span>
+    </div>
 </div>

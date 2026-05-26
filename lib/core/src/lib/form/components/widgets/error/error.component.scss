@@ -1,3 +1,7 @@
+// DEPRECATED: ErrorWidgetComponent is being replaced by Angular Material mat-error
+// This component is kept for backward compatibility only
+// New code should use mat-error inside mat-form-field instead
+
 .adf-error {
     display: flex;
     align-items: center;
@@ -21,5 +25,27 @@
             margin-right: 4px;
             flex: 0 0 auto;
         }
+    }
+}
+
+// Phase 3 Error Message - For widgets without mat-form-field
+.adf-error-message {
+    display: flex;
+    align-items: center;
+    padding-top: 4px;
+    color: var(--mat-sys-error);
+    font: var(--mat-sys-body-small);
+    gap: 4px;
+
+    mat-icon {
+        width: 16px;
+        height: 16px;
+        font-size: 16px;
+        flex: 0 0 auto;
+    }
+
+    .adf-error-text {
+        font: var(--mat-sys-body-small);
+        color: var(--mat-sys-error);
     }
 }

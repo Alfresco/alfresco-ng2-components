@@ -124,21 +124,25 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
 
                 await testingUtils.fillMatInput('TEXT');
+                widget.markAsTouched();
+                fixture.detectChanges();
 
-                errorWidget = testingUtils.getByCSS('.adf-error-text').nativeElement;
-                expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.AT_LEAST_LONG');
+                errorWidget = testingUtils.getByCSS('[data-automation-id="adf-field-error"]').nativeElement;
+                expect(errorWidget.textContent.trim()).toBe('FORM.FIELD.VALIDATOR.AT_LEAST_LONG');
                 expect(widget.field.isValid).toBe(false);
 
                 await testingUtils.fillMatInput('TEXT VALUE');
 
-                errorWidget = testingUtils.getByCSS('.adf-error-text')?.nativeElement;
+                errorWidget = testingUtils.getByCSS('[data-automation-id="adf-field-error"]')?.nativeElement;
                 expect(widget.field.isValid).toBe(true);
 
                 await testingUtils.fillMatInput('TEXT VALUE TOO LONG');
                 expect(widget.field.isValid).toBe(false);
+                widget.markAsTouched();
+                fixture.detectChanges();
 
-                errorWidget = testingUtils.getByCSS('.adf-error-text').nativeElement;
-                expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+                errorWidget = testingUtils.getByCSS('[data-automation-id="adf-field-error"]').nativeElement;
+                expect(errorWidget.textContent.trim()).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
             });
 
             it('should be able to set regex pattern property for Text widget', async () => {
@@ -469,10 +473,9 @@ describe('TextWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
+            const requiredInput = testingUtils.getByCSS('input[required]').nativeElement;
 
-            expect(asterisk).toBeTruthy();
-            expect(asterisk.textContent).toEqual('*');
+            expect(requiredInput).toBeTruthy();
         });
     });
 
@@ -486,7 +489,7 @@ describe('TextWidgetComponent', () => {
             `
         })
         class FieldStatusTemplateTestComponent {
-            @ViewChild('fieldStatusTemplate', { static: true }) fieldStatusTemplate: TextWidgetComponent['fieldStatusTemplate'];
+            @ViewChild('fieldStatusTemplate', { static: true }) fieldStatusTemplate!: TextWidgetComponent['fieldStatusTemplate'];
         }
 
         beforeEach(() => {
@@ -501,6 +504,7 @@ describe('TextWidgetComponent', () => {
                 type: FormFieldTypes.TEXT
             });
             fixture.detectChanges();
+            fixture.whenStable();
             const customStatusMessage = testingUtils.getByCSS('.custom-status-message').nativeElement;
             expect(customStatusMessage?.textContent).toBe(`custom status message for ${widget.field.name}`);
         });

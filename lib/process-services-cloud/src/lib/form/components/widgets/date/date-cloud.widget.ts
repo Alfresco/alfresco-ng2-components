@@ -27,7 +27,6 @@ import {
     DateFnsUtils,
     DEFAULT_DATE_FORMAT,
     ErrorMessageModel,
-    ErrorWidgetComponent,
     FormService,
     WidgetComponent,
     ReactiveFormWidget
@@ -39,10 +38,11 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'date-widget',
-    imports: [TranslatePipe, MatFormFieldModule, MatInputModule, MatDatetimepickerModule, ReactiveFormsModule, ErrorWidgetComponent],
+    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, MatDatetimepickerModule, ReactiveFormsModule],
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter },

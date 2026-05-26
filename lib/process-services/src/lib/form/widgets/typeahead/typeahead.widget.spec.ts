@@ -16,6 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { FormFieldOption, FormFieldTypes, FormFieldModel, FormModel } from '@alfresco/adf-core';
@@ -295,15 +296,21 @@ describe('TypeaheadWidgetComponent', () => {
                 typeaheadWidgetComponent.value = 'Fake Name';
                 typeaheadWidgetComponent.field.value = 'Fake Name';
                 typeaheadWidgetComponent.field.options = fakeOptionList;
-                expect(element.querySelector('.adf-error-text')).toBeNull();
+                expect(element.querySelector('[data-automation-id="adf-field-error"]')).toBeNull();
                 const keyboardEvent = new KeyboardEvent('keypress');
                 typeaheadWidgetComponent.onKeyUp(keyboardEvent);
+
+                const ngControl = fixture.debugElement.query(By.css('input')).injector.get(NgControl);
+                ngControl.control.setErrors({ invalidValue: true });
+                ngControl.control.markAsTouched();
 
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(element.querySelector('.adf-error-text')).not.toBeNull();
-                expect(element.querySelector('.adf-error-text').textContent).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
+                expect(element.querySelector('[data-automation-id="adf-field-error"]')).not.toBeNull();
+                expect(element.querySelector('[data-automation-id="adf-field-error"]').textContent.trim()).toContain(
+                    'FORM.FIELD.VALIDATOR.INVALID_VALUE'
+                );
             });
         });
 

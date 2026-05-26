@@ -1,8 +1,6 @@
 <div class="{{ field.className }} date-widget-container" id="data-widget" [class.adf-invalid]="dateInputControl.invalid && dateInputControl.touched">
     <mat-form-field class="adf-date-widget adf-form-field-input" [floatLabel]="field.placeholder ? 'always' : null" subscriptSizing="dynamic">
-        <mat-label class="adf-label"
-                   [id]="field.id + '-label'"
-                   [attr.for]="field.id">
+        <mat-label [id]="field.id + '-label'" data-automation-id="adf-field-label">
             {{ field.name | translate }} ({{ field.dateDisplayFormat }})
         </mat-label>
         <input matInput

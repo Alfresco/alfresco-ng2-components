@@ -40,7 +40,10 @@
             </div>
         </div>
     </div>
-    <error-widget [error]="validationSummary" />
+    <div class="adf-error-message" role="alert" aria-live="polite" *ngIf="!validationSummary.isValid && validationSummary.message">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ validationSummary.message | translate }}</span>
+    </div>
     <div>
         <button mat-button (click)="onCancelChanges()">Cancel</button>
         <button mat-button (click)="onSaveChanges()">Save</button>

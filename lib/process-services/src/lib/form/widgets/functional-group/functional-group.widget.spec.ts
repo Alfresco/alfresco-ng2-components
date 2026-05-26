@@ -176,10 +176,9 @@ describe('FunctionalGroupWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+            const requiredInput: HTMLElement = element.querySelector('input[required]');
 
-            expect(asterisk).toBeTruthy();
-            expect(asterisk.textContent).toEqual('*');
+            expect(requiredInput).toBeTruthy();
         });
     });
 

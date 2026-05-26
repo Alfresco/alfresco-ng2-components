@@ -2,9 +2,9 @@
      [class.adf-invalid]="!field.isValid && isTouched()"
      [class.adf-readonly]="field.readOnly"
      id="people-widget-content">
-    <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label>
     <mat-form-field
         class="adf-people-widget-field">
+        <mat-label data-automation-id="adf-field-label">{{field.name | translate }}</mat-label>
         <mat-chip-grid #chipGrid [attr.aria-label]="'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECTED_PEOPLE' | translate">
             <mat-chip-row
                 *ngFor="let user of selectedUsers"
@@ -24,6 +24,7 @@
                    data-automation-id="adf-people-search-input"
                    type="text"
                    [disabled]="!multiSelect && selectedUsers.length > 0 || field.readOnly"
+                   [required]="isRequired()"
                    [id]="field.id"
                    [formControl]="searchTerm"
                    [placeholder]="selectedUsers.length > 0 ? '' : field.placeholder"
@@ -47,7 +48,11 @@
                 </div>
             </mat-option>
         </mat-autocomplete>
+        <mat-error data-automation-id="adf-field-error" *ngIf="field.validationSummary?.isActive()">
+            {{ field.validationSummary.message | translate:field.validationSummary.getAttributesAsJsonObj() }}
+        </mat-error>
+        <mat-error *ngIf="isInvalidFieldRequired() && isTouched()">
+            {{ 'FORM.FIELD.REQUIRED' | translate }}
+        </mat-error>
     </mat-form-field>
-    <error-widget [error]="field.validationSummary" />
-    <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
 </div>

@@ -1,5 +1,5 @@
 <div class="adf-upload-widget {{field.className}}" [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
-    <label class="adf-label" [attr.for]="field.id"
+    <label [attr.for]="field.id"
         >{{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
     >
     <div class="adf-cloud-upload-widget-container">
@@ -49,6 +49,18 @@
 
         <div *ngIf="!hasFile && field.readOnly">{{ 'FORM.FIELD.NO_FILE_ATTACHED' | translate }}</div>
     </div>
-    <error-widget [error]="field.validationSummary" />
-    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
+    <div class="adf-error-message"
+         role="alert"
+         aria-live="polite"
+         *ngIf="field.validationSummary?.isActive()">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ field.validationSummary.message | translate:field.validationSummary.getAttributesAsJsonObj() }}</span>
+    </div>
+    <div class="adf-error-message"
+         role="alert"
+         aria-live="polite"
+         *ngIf="isInvalidFieldRequired()">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ 'FORM.FIELD.REQUIRED' | translate }}</span>
+    </div>
 </div>

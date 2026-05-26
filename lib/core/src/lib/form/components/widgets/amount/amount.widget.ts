@@ -132,7 +132,7 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     private updateTranslateParameters(): void {
-        if (this.field.validationSummary?.isActive()) {
+        if (this.field?.validationSummary?.isActive()) {
             this.translateParameters = this.field.validationSummary.getAttributesAsJsonObj();
         } else {
             this.translateParameters = {};

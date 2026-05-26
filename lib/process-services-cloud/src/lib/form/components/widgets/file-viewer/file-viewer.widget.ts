@@ -16,15 +16,17 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BaseViewerWidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
+import { BaseViewerWidgetComponent } from '@alfresco/adf-core';
 import { AlfrescoViewerComponent } from '@alfresco/adf-content-services';
 import { TranslatePipe } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'file-viewer-widget',
-    imports: [ErrorWidgetComponent, AlfrescoViewerComponent, TranslatePipe],
+    imports: [CommonModule, AlfrescoViewerComponent, TranslatePipe, MatIconModule],
     templateUrl: './file-viewer.widget.html',
     styleUrls: ['./file-viewer.widget.scss'],
     encapsulation: ViewEncapsulation.None

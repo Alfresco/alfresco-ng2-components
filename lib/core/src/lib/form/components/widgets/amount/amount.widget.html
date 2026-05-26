@@ -5,13 +5,11 @@
     [class.adf-left-label-input-container]="field.leftLabels"
 >
     <div *ngIf="field.leftLabels">
-        <label class="adf-label adf-left-label" [attr.for]="field.id"
-            >{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
-        >
+        <label class="adf-left-label" [attr.for]="field.id">{{field.name | translate }}</label>
     </div>
     <div class="adf-amount-widget-container">
         <mat-form-field class="adf-amount-widget__input adf-form-field-input" [floatLabel]="placeholder ? 'always' : null" subscriptSizing="dynamic">
-            @if ( (field.name || field?.required) && !field.leftLabels) { <mat-label class="adf-label" [attr.for]="field.id">{{field.name | translate }}</mat-label> }
+            @if ( (field.name || field?.required) && !field.leftLabels) { <mat-label data-automation-id="adf-field-label">{{field.name | translate }}</mat-label> }
             @if(!enableDisplayBasedOnLocale) {
                 <span matTextPrefix class="adf-amount-widget__prefix-spacing">{{ currency }}&nbsp;</span>
             }
@@ -31,7 +29,7 @@
                 (focus)="amountWidgetOnFocus()"
                 (blur)="amountWidgetOnBlur()"
                 />
-            <mat-error *ngIf="field.validationSummary?.message">
+            <mat-error data-automation-id="adf-field-error" *ngIf="field.validationSummary?.isActive()">
                 {{ field.validationSummary.message | translate:translateParameters }}
             </mat-error>
             <mat-error *ngIf="isInvalidFieldRequired() && isTouched()">

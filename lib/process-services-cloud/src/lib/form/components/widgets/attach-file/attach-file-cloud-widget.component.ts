@@ -18,15 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, EventEmitter, inject, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import {
-    FormValues,
-    ContentLinkModel,
-    AppConfigService,
-    UploadWidgetContentLinkModel,
-    DestinationFolderPath,
-    ErrorWidgetComponent,
-    IconModule
-} from '@alfresco/adf-core';
+import { FormValues, ContentLinkModel, AppConfigService, UploadWidgetContentLinkModel, DestinationFolderPath, IconModule } from '@alfresco/adf-core';
 import { LazyApi, Node, NodesApi, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
 import { UploadCloudWidgetComponent } from '../upload/upload-cloud.widget';
@@ -52,7 +44,7 @@ const VALID_ALIAS = [ALIAS_ROOT_FOLDER, ALIAS_USER_FOLDER, '-shared-'];
 
 @Component({
     selector: 'adf-cloud-attach-file-cloud-widget',
-    imports: [CommonModule, ErrorWidgetComponent, TranslatePipe, IconModule, FilePropertiesTableCloudComponent, MatButtonModule],
+    imports: [CommonModule, TranslatePipe, IconModule, FilePropertiesTableCloudComponent, MatButtonModule],
     templateUrl: './attach-file-cloud-widget.component.html',
     styleUrls: ['./attach-file-cloud-widget.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -1,7 +1,5 @@
 <div class="adf-attach-folder-widget {{ field.className }}" [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
-    <label class="adf-label" [attr.for]="field.id"
-        >{{ field.name | translate }}<span [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
-    >
+    <label [attr.for]="field.id">{{ field.name | translate }}</label>
     <div class="adf-attach-folder-widget-container">
         <div *ngIf="hasFolder" class="adf-attach-folder-result">
             <mat-icon>folder</mat-icon>
@@ -19,12 +17,20 @@
                 (click)="openSelectDialogFromFileSource()"
                 [id]="'folder-' + field?.id + '-button'"
                 class="adf-attach-folder-menu-trigger"
+                [attr.aria-required]="isRequired() ? 'true' : null"
+                [attr.aria-invalid]="!field.isValid ? 'true' : null"
             >
                 {{ 'FORM.FIELD.UPLOAD' | translate }}
                 <mat-icon>cloud_upload</mat-icon>
             </button>
         </div>
     </div>
-    <error-widget [error]="field.validationSummary" />
-    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
+    <div class="adf-error-message" role="alert" aria-live="polite" *ngIf="field.validationSummary?.isActive()">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ field.validationSummary.message | translate:field.validationSummary.getAttributesAsJsonObj() }}</span>
+    </div>
+    <div class="adf-error-message" role="alert" aria-live="polite" *ngIf="isInvalidFieldRequired()">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ 'FORM.FIELD.REQUIRED' | translate }}</span>
+    </div>
 </div>

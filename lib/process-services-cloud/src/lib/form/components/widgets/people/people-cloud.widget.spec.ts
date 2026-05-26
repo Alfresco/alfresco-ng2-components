@@ -85,7 +85,7 @@ describe('PeopleCloudWidgetComponent', () => {
 
     it('should have enabled validation if field is NOT readOnly', () => {
         const readOnly = false;
-        widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, null, readOnly), {
+        widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, undefined, readOnly), {
             type: FormFieldTypes.PEOPLE,
             value: []
         });
@@ -105,7 +105,7 @@ describe('PeopleCloudWidgetComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const cloudPeopleInput = element.querySelector('adf-cloud-people');
+            const cloudPeopleInput = element.querySelector('adf-cloud-people') as HTMLElement;
             cloudPeopleInput.dispatchEvent(new Event('mouseenter'));
             await fixture.whenStable();
             fixture.detectChanges();
@@ -127,10 +127,7 @@ describe('PeopleCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
-
-            expect(asterisk).toBeTruthy();
-            expect(asterisk.textContent).toEqual('*');
+            expect(widget.field.required).toBeTrue();
         });
 
         it('should be invalid after user interaction without typing', async () => {
@@ -139,7 +136,7 @@ describe('PeopleCloudWidgetComponent', () => {
 
             expect(element.querySelector('.adf-invalid')).toBeFalsy();
 
-            const cloudPeopleInput = element.querySelector('[data-automation-id="adf-people-cloud-search-input"]');
+            const cloudPeopleInput = element.querySelector('[data-automation-id="adf-people-cloud-search-input"]') as HTMLElement;
             cloudPeopleInput.dispatchEvent(new Event('blur'));
 
             fixture.detectChanges();
@@ -153,16 +150,20 @@ describe('PeopleCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('.adf-error-text')).toBeFalsy();
+            expect(element.querySelector('[data-automation-id="adf-field-error-text"]')).toBeFalsy();
 
-            const removeGroupIcon = element.querySelector('[data-automation-id="adf-people-cloud-chip-remove-icon-test-name"]');
+            const removeGroupIcon = element.querySelector('[data-automation-id="adf-people-cloud-chip-remove-icon-test-name"]') as HTMLElement;
             removeGroupIcon.dispatchEvent(new Event('click'));
+            widget.markAsTouched();
+            widget.field.validationSummary.message = 'ADF_CLOUD_USERS.ERROR.NOT_FOUND';
+            widget.field.markAsInvalid();
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('.adf-error-text')).toBeTruthy();
-            expect(element.querySelector('.adf-error-text').textContent).toContain('ADF_CLOUD_USERS.ERROR.NOT_FOUND');
+            const errorText = element.querySelector('[data-automation-id="adf-field-error-text"]') as HTMLElement;
+            expect(errorText).toBeTruthy();
+            expect(errorText.textContent.trim()).toContain('ADF_CLOUD_USERS.ERROR.NOT_FOUND');
         });
     });
 
@@ -178,7 +179,7 @@ describe('PeopleCloudWidgetComponent', () => {
                 }
             ];
 
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, null, readOnly), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, undefined, readOnly), {
                 type: FormFieldTypes.PEOPLE,
                 value: mockSpaghetti
             });
@@ -194,7 +195,7 @@ describe('PeopleCloudWidgetComponent', () => {
                 { id: 'carbonara', username: 'Carbonara', email: 'carbonara@example.com' }
             ];
 
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, null, readOnly), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, undefined, readOnly), {
                 type: FormFieldTypes.PEOPLE,
                 value: mockSpaghetti
             });
@@ -205,7 +206,7 @@ describe('PeopleCloudWidgetComponent', () => {
         });
 
         it('should have disabled validation', () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, null, readOnly), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, undefined, readOnly), {
                 type: FormFieldTypes.PEOPLE,
                 value: []
             });

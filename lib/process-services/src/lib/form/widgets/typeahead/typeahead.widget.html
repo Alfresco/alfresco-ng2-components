@@ -5,7 +5,7 @@
         [class.adf-readonly]="field.readOnly"
         id="typehead-div">
         <mat-form-field>
-            <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}</label>
+            <mat-label data-automation-id="adf-field-label">{{field.name | translate }}</mat-label>
             <input matInput class="adf-input"
                    type="text"
                    [id]="field.id"
@@ -13,6 +13,7 @@
                    (ngModelChange)="validate()"
                    (keyup)="onKeyUp($event)"
                    [disabled]="field.readOnly"
+                   [required]="isRequired()"
                    data-automation-id="adf-typeahed-search-input"
                    placeholder="{{field.placeholder}}"
                    [matAutocomplete]="auto">
@@ -21,9 +22,12 @@
                     <span id="adf-typeahed-label-name">{{item.name}}</span>
                 </mat-option>
             </mat-autocomplete>
+            <mat-error data-automation-id="adf-field-error" *ngIf="field.validationSummary?.isActive()">
+                {{ field.validationSummary.message | translate:field.validationSummary.getAttributesAsJsonObj() }}
+            </mat-error>
+            <mat-error *ngIf="isInvalidFieldRequired()">
+                {{ 'FORM.FIELD.REQUIRED' | translate }}
+            </mat-error>
         </mat-form-field>
-
-        <error-widget [error]="field.validationSummary" />
-        <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
     </div>
 </div>

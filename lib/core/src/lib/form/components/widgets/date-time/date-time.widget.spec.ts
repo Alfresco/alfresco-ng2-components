@@ -613,8 +613,8 @@ describe('DateTimeWidgetComponent', () => {
                 required: true
             });
             fixture.detectChanges();
-            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
-            expect(asterisk?.textContent).toEqual('*');
+            const requiredInput = testingUtils.getByCSS('input[required]').nativeElement;
+            expect(requiredInput).toBeTruthy();
         });
     });
 

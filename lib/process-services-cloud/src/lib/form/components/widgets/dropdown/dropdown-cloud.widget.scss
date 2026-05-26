@@ -19,16 +19,6 @@
             flex-direction: column;
         }
 
-        &-dropdown-required-message {
-            .adf-error-container {
-                margin-top: 1px;
-            }
-        }
-
-        &-dropdown-failed-message .adf-error-container {
-            margin-top: 1px;
-        }
-
         #{ms.$mat-select-arrow-wrapper} {
             height: auto;
         }

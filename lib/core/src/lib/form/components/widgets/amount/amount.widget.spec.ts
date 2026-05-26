@@ -324,7 +324,7 @@ describe('AmountWidgetComponent - rendering', () => {
         expect(inputField).toBeTruthy();
         expect(await field.getPrefixText()).toBe('$');
 
-        const widgetLabel = testingUtils.getByCSS('.adf-label').nativeElement;
+        const widgetLabel = testingUtils.getByCSS('[data-automation-id="adf-field-label"]').nativeElement;
         expect(widgetLabel.textContent.trim()).toBe('Test Amount');
         expect(widget.field.isValid).toBe(false);
 
@@ -335,8 +335,8 @@ describe('AmountWidgetComponent - rendering', () => {
         await input.setValue('gdfgdf');
         expect(widget.field.isValid).toBe(false);
 
-        const errorWidget = testingUtils.getByCSS('error-widget .adf-error-text').nativeElement;
-        expect(errorWidget.textContent).toBe('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
+        const errorWidget = testingUtils.getByCSS('[data-automation-id="adf-field-error"]').nativeElement;
+        expect(errorWidget.textContent.trim()).toBe('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
     });
 
     it('[C309693] - Should be possible to set the Advanced Properties for Amount Widget', async () => {
@@ -360,7 +360,7 @@ describe('AmountWidgetComponent - rendering', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const widgetLabel = testingUtils.getByCSS('.adf-label').nativeElement;
+        const widgetLabel = testingUtils.getByCSS('[data-automation-id="adf-field-label"]').nativeElement;
         expect(widgetLabel.textContent.trim()).toBe('Test Amount');
 
         const field = await testingUtils.getMatFormField();
@@ -372,12 +372,12 @@ describe('AmountWidgetComponent - rendering', () => {
         await input.setValue('8');
         expect(widget.field.isValid).toBe(false);
 
-        let errorMessage = testingUtils.getByCSS('.adf-error-text').nativeElement;
+        let errorMessage = testingUtils.getByCSS('[data-automation-id="adf-field-error"]').nativeElement;
         expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
 
         await input.setValue('99');
         expect(widget.field.isValid).toBe(false);
-        errorMessage = testingUtils.getByCSS('.adf-error-text').nativeElement;
+        errorMessage = testingUtils.getByCSS('[data-automation-id="adf-field-error"]').nativeElement;
         expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN');
 
         await input.setValue('80');
@@ -388,7 +388,7 @@ describe('AmountWidgetComponent - rendering', () => {
 
         await input.setValue('incorrect format');
         expect(widget.field.isValid).toBe(false);
-        errorMessage = testingUtils.getByCSS('.adf-error-text').nativeElement;
+        errorMessage = testingUtils.getByCSS('[data-automation-id="adf-field-error"]').nativeElement;
         expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
     });
 
@@ -456,10 +456,9 @@ describe('AmountWidgetComponent - rendering', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
+            const requiredInput = testingUtils.getByCSS('input[required]').nativeElement;
 
-            expect(asterisk).toBeTruthy();
-            expect(asterisk.textContent).toEqual('*');
+            expect(requiredInput).toBeTruthy();
         });
     });
 

@@ -21,8 +21,8 @@ import { NgClass, NgIf } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
@@ -47,7 +47,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgClass, MatCheckboxModule, FormsModule, TranslatePipe, ErrorWidgetComponent, NgIf],
+    imports: [NgClass, MatCheckboxModule, MatIconModule, FormsModule, TranslatePipe, NgIf],
     encapsulation: ViewEncapsulation.None
 })
 export class CheckboxWidgetComponent extends WidgetComponent {}

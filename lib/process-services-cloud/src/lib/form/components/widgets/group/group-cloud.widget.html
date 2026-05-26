@@ -5,8 +5,8 @@
     [class.adf-left-label-input-container]="field.leftLabels"
 >
     <div *ngIf="field.leftLabels">
-        <label class="adf-label adf-left-label" [attr.for]="field.id"
-            >{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
+        <label class="adf-left-label" [attr.for]="field.id"
+            >{{field.name | translate }}</label
         >
     </div>
     <div>
@@ -24,11 +24,19 @@
             [attr.title]="field.tooltip"
             [label] = "field.name | translate"
         />
-        <error-widget [error]="field.validationSummary" />
-        <error-widget
-            class="adf-dropdown-required-message"
-            *ngIf="isInvalidFieldRequired() && isTouched()"
-            required="{{ 'FORM.FIELD.REQUIRED' | translate }}"
-        />
+        <div class="adf-error-message"
+             role="alert"
+             aria-live="polite"
+             *ngIf="field.validationSummary?.isActive()">
+            <mat-icon data-automation-id="adf-field-error-icon">error_outline</mat-icon>
+            <span data-automation-id="adf-field-error-text">{{ field.validationSummary.message | translate:field.validationSummary.getAttributesAsJsonObj() }}</span>
+        </div>
+        <div class="adf-dropdown-required-message adf-error-message"
+             role="alert"
+             aria-live="polite"
+             *ngIf="isInvalidFieldRequired() && isTouched()">
+            <mat-icon>error_outline</mat-icon>
+            <span>{{ 'FORM.FIELD.REQUIRED' | translate }}</span>
+        </div>
     </div>
 </div>

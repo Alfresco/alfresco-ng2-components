@@ -15,17 +15,18 @@
  * limitations under the License.
  */
 
-import { BaseViewerWidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
+import { BaseViewerWidgetComponent } from '@alfresco/adf-core';
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AlfrescoViewerComponent } from '@alfresco/adf-content-services';
+import { MatIconModule } from '@angular/material/icon';
 
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'file-viewer-widget',
-    imports: [CommonModule, TranslatePipe, AlfrescoViewerComponent, ErrorWidgetComponent],
+    imports: [CommonModule, TranslatePipe, AlfrescoViewerComponent, MatIconModule],
     templateUrl: './file-viewer.widget.html',
     styleUrls: ['./file-viewer.widget.scss'],
     encapsulation: ViewEncapsulation.None

@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ViewEncapsulation, OnInit, inject } from '@angular/core';
-import { WidgetComponent, FormService, ErrorWidgetComponent } from '@alfresco/adf-core';
+import { WidgetComponent, FormService } from '@alfresco/adf-core';
 import { ContentNodeDialogService, NodesApiService } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
@@ -29,7 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'attach-folder-widget',
-    imports: [CommonModule, TranslatePipe, MatIconModule, MatLineModule, MatButtonModule, ErrorWidgetComponent],
+    imports: [CommonModule, TranslatePipe, MatIconModule, MatLineModule, MatButtonModule],
     templateUrl: './attach-folder-widget.component.html',
     styleUrls: ['./attach-folder-widget.component.scss'],
     host: {

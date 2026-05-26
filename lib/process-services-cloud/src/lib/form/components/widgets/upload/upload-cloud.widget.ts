@@ -21,7 +21,7 @@ import { Component, ElementRef, EventEmitter, inject, OnInit, Output, ViewChild,
 import { Node } from '@alfresco/js-api';
 import { Observable, from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { WidgetComponent, ThumbnailService, NotificationService, ErrorWidgetComponent, IconModule } from '@alfresco/adf-core';
+import { WidgetComponent, ThumbnailService, NotificationService, IconModule } from '@alfresco/adf-core';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { FileSourceTypes, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
 import { VersionManagerUploadData } from '@alfresco/adf-content-services';
@@ -33,7 +33,7 @@ import { MatLineModule } from '@angular/material/core';
 
 @Component({
     selector: 'upload-cloud-widget',
-    imports: [CommonModule, TranslatePipe, ErrorWidgetComponent, IconModule, MatButtonModule, MatListModule, MatLineModule],
+    imports: [CommonModule, TranslatePipe, IconModule, MatButtonModule, MatListModule, MatLineModule],
     templateUrl: './upload-cloud.widget.html',
     styleUrls: ['./upload-cloud.widget.scss'],
     host: {

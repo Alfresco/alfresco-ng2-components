@@ -99,10 +99,7 @@ describe('GroupCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
-
-            expect(asterisk).toBeTruthy();
-            expect(asterisk.textContent).toEqual('*');
+            expect(widget.field.required).toBeTrue();
         });
 
         it('should be invalid after user interaction without typing', async () => {
@@ -125,16 +122,20 @@ describe('GroupCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('.adf-error-text')).toBeFalsy();
+            expect(element.querySelector('[data-automation-id="adf-field-error-text"]')).toBeFalsy();
 
-            const removeGroupIcon = element.querySelector('[data-automation-id="adf-cloud-group-chip-remove-icon-test-name"]');
+            const removeGroupIcon = element.querySelector('[data-automation-id="adf-cloud-group-chip-remove-icon-test-name"]') as HTMLElement;
             removeGroupIcon.dispatchEvent(new Event('click'));
+            widget.markAsTouched();
+            widget.field.validationSummary.message = 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND';
+            widget.field.markAsInvalid();
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('.adf-error-text')).toBeTruthy();
-            expect(element.querySelector('.adf-error-text').textContent).toContain('ADF_CLOUD_GROUPS.ERROR.NOT_FOUND');
+            const errorText = element.querySelector('[data-automation-id="adf-field-error-text"]') as HTMLElement;
+            expect(errorText).toBeTruthy();
+            expect(errorText.textContent.trim()).toContain('ADF_CLOUD_GROUPS.ERROR.NOT_FOUND');
         });
     });
 

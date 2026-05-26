@@ -1,18 +1,19 @@
 <div class="adf-attach-widget {{ field.className }}" [class.adf-readonly]="field.readOnly">
-    <label class="adf-label" [attr.for]="field.id"
-        >{{ field.name | translate }}
-        <span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
-    </label>
+    <label [attr.for]="field.id">{{ field.name | translate }}</label>
     <div class="adf-attach-widget-container">
         <div id="adf-attach-widget-simple-upload" *ngIf="isSimpleUploadButton() && isUploadButtonVisible()">
-            <a mat-raised-button>
+            <a mat-raised-button
+                [attr.aria-required]="isRequired() ? 'true' : null"
+                [attr.aria-invalid]="!field.isValid ? 'true' : null">
                 {{ 'FORM.FIELD.UPLOAD' | translate }}
                 <mat-icon>file_upload</mat-icon>
                 <input #uploadFiles [multiple]="multipleOption" type="file" [id]="field.id" (change)="onAttachFileChanged($event)" />
             </a>
         </div>
         <div class="adf-attach-widget__menu-upload" (focusout)="markAsTouched()" *ngIf="isUploadButtonVisible() && isMultipleSourceUpload()">
-            <button mat-raised-button [matMenuTriggerFor]="menu" [id]="field.id">
+            <button mat-raised-button [matMenuTriggerFor]="menu" [id]="field.id"
+                [attr.aria-required]="isRequired() ? 'true' : null"
+                [attr.aria-invalid]="!field.isValid ? 'true' : null">
                 <mat-icon>attach_file</mat-icon>
                 {{ 'FORM.FIELD.UPLOAD' | translate }}
             </button>
@@ -114,5 +115,11 @@
     </mat-list>
 </div>
 
-<error-widget [error]="field.validationSummary" />
-<error-widget *ngIf="!field.isValid && isTouched() && !isSelected()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
+<div class="adf-error-message" role="alert" aria-live="polite" *ngIf="field.validationSummary?.isActive()">
+    <mat-icon>error_outline</mat-icon>
+    <span>{{ field.validationSummary.message | translate:field.validationSummary.getAttributesAsJsonObj() }}</span>
+</div>
+<div class="adf-error-message" role="alert" aria-live="polite" *ngIf="!field.isValid && isTouched() && !isSelected()">
+    <mat-icon>error_outline</mat-icon>
+    <span>{{ 'FORM.FIELD.REQUIRED' | translate }}</span>
+</div>

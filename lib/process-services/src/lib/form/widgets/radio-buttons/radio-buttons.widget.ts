@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { ErrorWidgetComponent, WidgetComponent } from '@alfresco/adf-core';
+import { WidgetComponent } from '@alfresco/adf-core';
 import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
@@ -25,10 +25,11 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'radio-buttons-widget',
-    imports: [CommonModule, TranslatePipe, MatRadioModule, FormsModule, ErrorWidgetComponent],
+    imports: [CommonModule, TranslatePipe, MatRadioModule, FormsModule, MatIconModule],
     templateUrl: './radio-buttons.widget.html',
     styleUrls: ['./radio-buttons.widget.scss'],
     host: {

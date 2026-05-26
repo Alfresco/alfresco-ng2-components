@@ -9,7 +9,7 @@
         [floatLabel]="field.placeholder ? 'always' : null"
     >
         @if(field.name || field.required) {
-        <mat-label class="adf-label" [attr.for]="field.id"> {{ field.name | translate }} </mat-label>
+        <mat-label> {{ field.name | translate }} </mat-label>
         }
         <textarea
             matInput
@@ -28,14 +28,7 @@
             (blur)="onBlur()"
         >
         </textarea>
-    </mat-form-field>
-    @if (field.maxLength > 0) {
-        <div class="adf-multiline-word-counter">
-            <span class="adf-multiline-word-counter-value">{{ field?.value?.length || 0 }}/{{ field.maxLength }}</span>
-        </div>
-    }
-    <div class="adf-multiline-error-container">
-        @if (field.validationSummary?.message) {
+        @if (field.validationSummary?.isActive()) {
             <mat-error>
                 {{ field.validationSummary.message | translate:translateParameters }}
             </mat-error>
@@ -45,5 +38,8 @@
                 {{ 'FORM.FIELD.REQUIRED' | translate }}
             </mat-error>
         }
-    </div>
+        @if (field.maxLength > 0) {
+            <mat-hint align="end">{{ field?.value?.length || 0 }}/{{ field.maxLength }}</mat-hint>
+        }
+    </mat-form-field>
 </div>

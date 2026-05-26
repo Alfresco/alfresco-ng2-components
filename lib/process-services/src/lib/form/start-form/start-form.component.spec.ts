@@ -191,7 +191,7 @@ describe('StartFormComponent', () => {
             const formFields = component.form.getFormFields();
             const labelField = formFields.find((field) => field.id === 'mocktext');
             const textWidget = fixture.debugElement.nativeElement.querySelector('text-widget');
-            const textWidgetLabel = fixture.debugElement.nativeElement.querySelector('.adf-label');
+            const textWidgetLabel = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-field-label"]');
 
             expect(labelField.type).toBe('text');
             expect(textWidget).toBeTruthy();
@@ -210,7 +210,9 @@ describe('StartFormComponent', () => {
             const formFields = component.form.getFormFields();
             const labelField = formFields.find((field) => field.id === 'radio-but');
             const radioButtonWidget = fixture.debugElement.nativeElement.querySelector('radio-buttons-widget');
-            const radioButtonWidgetLabel = fixture.debugElement.nativeElement.querySelector('.adf-radio-button-container .adf-label');
+            const radioButtonWidgetLabel = fixture.debugElement.nativeElement.querySelector(
+                '.adf-radio-button-container [data-automation-id="adf-field-label"]'
+            );
 
             expect(labelField.type).toBe('radio-buttons');
             expect(radioButtonWidget).toBeDefined();
@@ -262,7 +264,7 @@ describe('StartFormComponent', () => {
             const formFields = component.form.getFormFields();
             const dropdownField = formFields.find((field) => field.id === 'mockTypeDropDown');
             const dropdownWidget = fixture.debugElement.nativeElement.querySelector('dropdown-widget');
-            const dropdownLabel = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget .adf-label');
+            const dropdownLabel = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget [data-automation-id="adf-field-label"]');
             const selectElement = await loader.getHarness(MatSelectHarness);
             await selectElement.open();
 
@@ -287,7 +289,7 @@ describe('StartFormComponent', () => {
             const formFields = component.form.getFormFields();
             const labelField = formFields.find((field) => field.id === 'date');
             const dateWidget = fixture.debugElement.nativeElement.querySelector('date-widget');
-            const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .adf-label');
+            const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget [data-automation-id="adf-field-label"]');
 
             expect(dateWidget).toBeTruthy();
             expect(labelField.type).toBe('date');
@@ -320,11 +322,13 @@ describe('StartFormComponent', () => {
 
             const formFieldsWidget = fixture.debugElement.nativeElement.querySelector('form-field');
             const inputElement = fixture.debugElement.nativeElement.querySelector('.adf-input');
-            const inputLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-label');
+            const inputLabelElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-field-label"]');
             const dateElement = fixture.debugElement.nativeElement.querySelector('#billdate');
-            const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .adf-label');
+            const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget [data-automation-id="adf-field-label"]');
             const selectElement = fixture.debugElement.nativeElement.querySelector('#claimtype');
-            const selectLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget > .adf-label');
+            const selectLabelElement = fixture.debugElement.nativeElement.querySelector(
+                '.adf-dropdown-widget [data-automation-id="adf-field-label"]'
+            );
 
             expect(formFieldsWidget).toBeDefined();
             expect(inputElement).toBeDefined();
@@ -348,7 +352,9 @@ describe('StartFormComponent', () => {
 
             /* cspell:disable-next-line */
             const selectElement = fixture.debugElement.nativeElement.querySelector('#claimtype');
-            const selectLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget > .adf-label');
+            const selectLabelElement = fixture.debugElement.nativeElement.querySelector(
+                '.adf-dropdown-widget [data-automation-id="adf-field-label"]'
+            );
             expect(refreshElement).toBeDefined();
             expect(selectElement).toBeDefined();
             expect(translate.instant(selectLabelElement.innerText)).toBe('ClaimType');

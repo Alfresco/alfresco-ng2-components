@@ -6,19 +6,15 @@
 >
     @if (field.leftLabels) {
         <div>
-            <label class="adf-label adf-left-label" [attr.for]="field.id"
-                >{{field.name | translate }} ({{field.dateDisplayFormat}})<span
-                    class="adf-asterisk"
-                    [style.visibility]="isRequired() ? 'visible' : 'hidden'"
-                    >*</span
-                ></label
+            <label class="adf-left-label" [attr.for]="field.id"
+                >{{field.name | translate }} ({{field.dateDisplayFormat}})</label
             >
         </div>
     }
     <div class="adf-date-widget-container">
         <mat-form-field class="adf-date-widget adf-form-field-input" [class.adf-left-label-input-datepicker]="field.leftLabels">
             @if ( (field.name || field?.required) && !field.leftLabels) {
-                <mat-label class="adf-label" [attr.for]="field.id">
+                <mat-label>
                     {{field.name | translate }} ({{field.dateDisplayFormat}})
                 </mat-label>
             }
@@ -36,11 +32,9 @@
             />
             <mat-datetimepicker-toggle matSuffix [for]="datetimePicker" [disabled]="field.readOnly" />
             <mat-datetimepicker #datetimePicker type="date" [startAt]="startAt" [disabled]="field.readOnly" />
+            <mat-error *ngIf="dateInputControl.invalid && dateInputControl.touched && field.validationSummary?.isActive()">
+                {{ field.validationSummary.message | translate:field.validationSummary.getAttributesAsJsonObj() }}
+            </mat-error>
         </mat-form-field>
-        <div class="adf-error-messages-container">
-            @if (dateInputControl.invalid && dateInputControl.touched) {
-                <error-widget [error]="field.validationSummary" />
-            }
-        </div>
     </div>
 </div>

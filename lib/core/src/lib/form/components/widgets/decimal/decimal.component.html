@@ -3,14 +3,14 @@
      [class.adf-readonly]="field.readOnly"
      [class.adf-left-label-input-container]="field.leftLabels">
     <div *ngIf="field.leftLabels">
-        <label class="adf-label adf-left-label" [attr.for]="field.id">
-            {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
+        <label class="adf-left-label" [attr.for]="field.id">
+            {{ field.name | translate }}
         </label>
     </div>
 
     <div class="adf-decimal-widget-container">
         <mat-form-field class="adf-form-field-input" [floatLabel]="field.placeholder ? 'always' : null" subscriptSizing="dynamic">
-           @if ( (field.name || field?.required) && !field.leftLabels) { <mat-label class="adf-label" [attr.for]="field.id">{{ field.name | translate }}</mat-label> }
+           @if ( (field.name || field?.required) && !field.leftLabels) { <mat-label>{{ field.name | translate }}</mat-label> }
             <input matInput
                    class="adf-input"
                    type="text"
@@ -24,7 +24,7 @@
                    [title]="field.tooltip"
                    [errorStateMatcher]="errorStateMatcher"
                    (blur)="onBlur()" />
-            @if (field.validationSummary?.message) {
+            @if (field.validationSummary?.isActive()) {
                 <mat-error>
                     {{ field.validationSummary.message | translate:translateParameters }}
                 </mat-error>

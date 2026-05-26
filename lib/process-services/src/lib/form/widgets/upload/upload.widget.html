@@ -1,7 +1,5 @@
 <div class="adf-upload-widget {{field.className}}" [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
-    <label class="adf-label" [attr.for]="field.id"
-        >{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
-    >
+    <label [attr.for]="field.id">{{field.name | translate }}</label>
     <div class="adf-upload-widget-container">
         <div>
             <mat-list *ngIf="hasFile">
@@ -41,12 +39,20 @@
         </div>
 
         <div *ngIf="(!hasFile || multipleOption) && !field.readOnly">
-            <button mat-raised-button (click)="uploadFiles.click()">
+            <button mat-raised-button (click)="uploadFiles.click()"
+                [attr.aria-required]="isRequired() ? 'true' : null"
+                [attr.aria-invalid]="!field.isValid ? 'true' : null">
                 {{ 'FORM.FIELD.UPLOAD' | translate }}<mat-icon>file_upload</mat-icon>
                 <input #uploadFiles [multiple]="multipleOption" type="file" [id]="field.id" (change)="onFileChanged($event)" />
             </button>
         </div>
     </div>
-    <error-widget [error]="field.validationSummary" />
-    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
+    <div class="adf-error-message" role="alert" aria-live="polite" *ngIf="field.validationSummary?.isActive()">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ field.validationSummary.message | translate:field.validationSummary.getAttributesAsJsonObj() }}</span>
+    </div>
+    <div class="adf-error-message" role="alert" aria-live="polite" *ngIf="isInvalidFieldRequired()">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ 'FORM.FIELD.REQUIRED' | translate }}</span>
+    </div>
 </div>

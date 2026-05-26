@@ -18,7 +18,6 @@
 import {
     AppConfigService,
     ErrorMessageModel,
-    ErrorWidgetComponent,
     FormFieldEvent,
     FormFieldModel,
     FormFieldOption,
@@ -29,7 +28,7 @@ import {
     SelectFilterInputComponent,
     WidgetComponent
 } from '@alfresco/adf-core';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -60,16 +59,7 @@ export const DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE = 100;
         '(click)': 'event($event)'
     },
     encapsulation: ViewEncapsulation.None,
-    imports: [
-        NgClass,
-        AsyncPipe,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        ErrorWidgetComponent,
-        TranslatePipe,
-        SelectFilterInputComponent
-    ]
+    imports: [AsyncPipe, ReactiveFormsModule, MatFormFieldModule, MatSelectModule, TranslatePipe, SelectFilterInputComponent]
 })
 export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit, ReactiveFormWidget {
     public formService = inject(FormService);

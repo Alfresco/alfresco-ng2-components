@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { ThumbnailService, ContentLinkModel, WidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
+import { ThumbnailService, ContentLinkModel, WidgetComponent } from '@alfresco/adf-core';
 import { Component, ElementRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { ProcessContentService } from '../../services/process-content.service';
@@ -30,7 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'upload-widget',
-    imports: [CommonModule, TranslatePipe, MatListModule, MatButtonModule, MatIconModule, ErrorWidgetComponent],
+    imports: [CommonModule, TranslatePipe, MatListModule, MatButtonModule, MatIconModule],
     templateUrl: './upload.widget.html',
     styleUrls: ['./upload.widget.scss'],
     host: {

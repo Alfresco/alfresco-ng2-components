@@ -389,11 +389,12 @@ describe('Form Renderer Component', () => {
             expectElementToBeVisible(testingUtils, 'Number2');
 
             typeIntoInput(testingUtils, '#Number1', '123');
+            testingUtils.blurByCSS('#Number1');
             fixture.detectChanges();
             await fixture.whenStable();
             expectElementToBeHidden(testingUtils, 'Number2');
-            const errorWidgetText = testingUtils.getByCSS('#field-Number1-container error-widget .adf-error-text').nativeElement;
-            expect(errorWidgetText.textContent).toBe(`FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`);
+            const errorWidgetText = testingUtils.getByCSS('#field-Number1-container [data-automation-id="adf-field-error"]').nativeElement;
+            expect(errorWidgetText.textContent.trim()).toBe(`FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`);
             expect(formRendererComponent.formDefinition.isValid).toBe(false, 'Form should not be valid without mandatory field');
         });
 
@@ -569,16 +570,16 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             expectElementToBeInvalid(testingUtils, 'Number0x8cbv');
-            let errorWidgetText = testingUtils.getByCSS('#field-Number0x8cbv-container error-widget .adf-error-text').nativeElement;
-            expect(errorWidgetText.textContent).toBe(`FORM.FIELD.VALIDATOR.INVALID_NUMBER`);
+            let errorWidgetText = testingUtils.getByCSS('#field-Number0x8cbv-container [data-automation-id="adf-field-error"]').nativeElement;
+            expect(errorWidgetText.textContent.trim()).toBe(`FORM.FIELD.VALIDATOR.INVALID_NUMBER`);
             expect(formRendererComponent.formDefinition.isValid).toBe(false, 'Form should not be valid without mandatory field');
 
             typeIntoInput(testingUtils, '#Number0x8cbv', '?');
             fixture.detectChanges();
             await fixture.whenStable();
             expectElementToBeInvalid(testingUtils, 'Number0x8cbv');
-            errorWidgetText = testingUtils.getByCSS('#field-Number0x8cbv-container error-widget .adf-error-text').nativeElement;
-            expect(errorWidgetText.textContent).toBe(`FORM.FIELD.VALIDATOR.INVALID_NUMBER`);
+            errorWidgetText = testingUtils.getByCSS('#field-Number0x8cbv-container [data-automation-id="adf-field-error"]').nativeElement;
+            expect(errorWidgetText.textContent.trim()).toBe(`FORM.FIELD.VALIDATOR.INVALID_NUMBER`);
             expect(formRendererComponent.formDefinition.isValid).toBe(false, 'Form should not be valid without mandatory field');
 
             typeIntoInput(testingUtils, '#Number0x8cbv', '-5');
@@ -600,8 +601,8 @@ describe('Form Renderer Component', () => {
             await fixture.whenStable();
 
             expectElementToBeInvalid(testingUtils, 'Number0him2z');
-            let errorWidgetText = testingUtils.getByCSS('#field-Number0him2z-container error-widget .adf-error-text').nativeElement;
-            expect(errorWidgetText.textContent).toBe(`FORM.FIELD.VALIDATOR.NOT_LESS_THAN`);
+            let errorWidgetText = testingUtils.getByCSS('#field-Number0him2z-container [data-automation-id="adf-field-error"]').nativeElement;
+            expect(errorWidgetText.textContent.trim()).toBe(`FORM.FIELD.VALIDATOR.NOT_LESS_THAN`);
             expect(formRendererComponent.formDefinition.isValid).toBe(false, 'Form should not be valid without valid field');
 
             typeIntoInput(testingUtils, '#Number0him2z', '10');
@@ -621,8 +622,8 @@ describe('Form Renderer Component', () => {
             await fixture.whenStable();
 
             expectElementToBeInvalid(testingUtils, 'Number0him2z');
-            errorWidgetText = testingUtils.getByCSS('#field-Number0him2z-container error-widget .adf-error-text').nativeElement;
-            expect(errorWidgetText.textContent).toBe(`FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`);
+            errorWidgetText = testingUtils.getByCSS('#field-Number0him2z-container [data-automation-id="adf-field-error"]').nativeElement;
+            expect(errorWidgetText.textContent.trim()).toBe(`FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`);
             expect(formRendererComponent.formDefinition.isValid).toBe(false, 'Form should not be valid without valid field');
         });
 

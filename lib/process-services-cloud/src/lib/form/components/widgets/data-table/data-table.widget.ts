@@ -33,10 +33,11 @@ import { FormCloudService } from '../../../services/form-cloud.service';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { WidgetDataTableAdapter } from './data-table-adapter.widget';
 import { DataTablePathParserHelper } from './helpers/data-table-path-parser.helper';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     standalone: true,
-    imports: [NgIf, TranslatePipe, FormBaseModule, DataTableComponent, NoContentTemplateDirective, EmptyContentComponent],
+    imports: [NgIf, TranslatePipe, FormBaseModule, DataTableComponent, NoContentTemplateDirective, EmptyContentComponent, MatIconModule],
     selector: 'data-table',
     templateUrl: './data-table.widget.html',
     styleUrls: ['./data-table.widget.scss'],

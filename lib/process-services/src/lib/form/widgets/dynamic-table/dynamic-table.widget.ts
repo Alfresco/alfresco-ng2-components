@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { WidgetVisibilityService, WidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
+import { WidgetVisibilityService, WidgetComponent } from '@alfresco/adf-core';
 import { ChangeDetectorRef, Component, ElementRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { DynamicTableColumn } from './editors/models/dynamic-table-column.model';
 import { DynamicTableRow } from './editors/models/dynamic-table-row.model';
@@ -31,7 +31,7 @@ import { RowEditorComponent } from './editors/row-editor/row.editor';
 
 @Component({
     selector: 'dynamic-table-widget',
-    imports: [CommonModule, TranslatePipe, MatCheckboxModule, MatButtonModule, MatIconModule, RowEditorComponent, ErrorWidgetComponent],
+    imports: [CommonModule, TranslatePipe, MatCheckboxModule, MatButtonModule, MatIconModule, RowEditorComponent],
     templateUrl: './dynamic-table.widget.html',
     styleUrls: ['./dynamic-table.widget.scss'],
     host: {

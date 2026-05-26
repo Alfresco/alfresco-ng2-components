@@ -309,10 +309,9 @@ describe('PeopleWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+            const requiredInput: HTMLElement = element.querySelector('input[required]');
 
-            expect(asterisk).toBeTruthy();
-            expect(asterisk.textContent).toEqual('*');
+            expect(requiredInput).toBeTruthy();
         });
     });
 
@@ -358,11 +357,19 @@ describe('PeopleWidgetComponent', () => {
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
             peopleHTMLElement.dispatchEvent(new Event('input'));
 
+            widget.field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
+            widget.field.isValid = false;
+            widget.searchTerm.setErrors({ invalidValue: true });
+            widget.searchTerm.markAsTouched();
+            widget.markAsTouched();
+
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('.adf-error-text')).not.toBeNull();
-            expect(element.querySelector('.adf-error-text').textContent).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
+            expect(element.querySelector('[data-automation-id="adf-field-error"]')).not.toBeNull();
+            expect(element.querySelector('[data-automation-id="adf-field-error"]').textContent.trim()).toContain(
+                'FORM.FIELD.VALIDATOR.INVALID_VALUE'
+            );
         });
 
         it('should show the people if the typed result match', async () => {

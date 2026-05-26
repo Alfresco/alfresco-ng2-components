@@ -6,15 +6,15 @@
 >
     @if(field.leftLabels) {
         <div>
-            <label class="adf-label adf-left-label" [attr.for]="field.id">
-                {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
+            <label class="adf-left-label" [attr.for]="field.id">
+                {{ field.name | translate }}
             </label>
         </div>
     }
     <div class="adf-dropdown-widget-container">
         <mat-form-field class="adf-form-field-input">
             @if ( (field.name || this.field?.required) && !field.leftLabels) {
-                <mat-label class="adf-label" [attr.for]="field.id">{{ field.name | translate }}</mat-label>
+                <mat-label data-automation-id="adf-field-label">{{ field.name | translate }}</mat-label>
             }
             <mat-select
                 class="adf-select"
@@ -47,27 +47,21 @@
                     </mat-option>
                 }
             </mat-select>
-        </mat-form-field>
-
-        <div
-            class="adf-error-messages-container"
-            [ngClass]="!field.readOnly ? 'adf-error-messages-container-visible' : 'adf-error-messages-container-hidden'"
-        >
             @if(showRequiredMessage) {
-                <error-widget class="adf-dropdown-required-message" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
+                <mat-error class="adf-dropdown-required-message">
+                    {{ 'FORM.FIELD.REQUIRED' | translate }}
+                </mat-error>
             }
             @if(!previewState && isRestApiFailed) {
-                <error-widget
-                    class="adf-dropdown-failed-message"
-                    required="{{ 'FORM.FIELD.REST_API_FAILED' | translate: { hostname: restApiHostName } }}"
-                />
+                <mat-error class="adf-dropdown-failed-message">
+                    {{ 'FORM.FIELD.REST_API_FAILED' | translate: { hostname: restApiHostName } }}
+                </mat-error>
             }
             @if(!previewState && variableOptionsFailed) {
-                <error-widget
-                    class="adf-dropdown-failed-message"
-                    required="{{ 'FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED' | translate }}"
-                />
+                <mat-error class="adf-dropdown-failed-message">
+                    {{ 'FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED' | translate }}
+                </mat-error>
             }
-        </div>
+        </mat-form-field>
     </div>
 </div>

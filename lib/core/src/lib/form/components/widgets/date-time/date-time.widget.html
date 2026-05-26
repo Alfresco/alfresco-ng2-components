@@ -3,8 +3,8 @@
      [class.adf-invalid]="datetimeInputControl.invalid && datetimeInputControl.touched"
      [class.adf-left-label-input-container]="field.leftLabels">
     <div *ngIf="field.leftLabels">
-        <label class="adf-label adf-left-label" [attr.for]="field.id">
-            {{ field.name | translate }} ({{ field.dateDisplayFormat }})<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
+        <label class="adf-left-label" [attr.for]="field.id">
+            {{ field.name | translate }} ({{ field.dateDisplayFormat }})
         </label>
     </div>
     <div class="adf-date-time-widget-container">
@@ -13,7 +13,7 @@
                         [floatLabel]="field.placeholder ? 'always' : null"
                         subscriptSizing="dynamic">
             @if( (field.name || field?.required) && !field.leftLabels) {
-            <mat-label class="adf-label" [attr.for]="field.id">
+            <mat-label data-automation-id="adf-field-label">
                 {{ field.name | translate }} ({{ field.dateDisplayFormat }})
             </mat-label>
             }

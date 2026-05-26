@@ -277,8 +277,8 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        const errorMessage = element.querySelector('.adf-radio-group-error-message .adf-error-text');
-        const errorIcon = element.querySelector('.adf-radio-group-error-message .adf-error-icon');
+        const errorMessage = element.querySelector('[data-automation-id="adf-field-error-text"]');
+        const errorIcon = element.querySelector('[data-automation-id="adf-field-error-icon"]');
 
         expect(errorIcon.textContent).toBe('error_outline');
         expect(errorMessage.textContent).toBe('FORM.FIELD.REST_API_FAILED');
