@@ -96,5 +96,6 @@ $dropdown-horizontal-offset: 30px;
 }
 
 #{ms.$cdk-overlay-pane}:has(> .adf-breadcrumb-dropdown-panel) {
+    margin-top: 12px;
     min-width: fit-content;
 }
