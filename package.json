@@ -144,11 +144,11 @@
     "ts-node": "^10.9.2",
     "typescript": "5.8.3",
     "undici": "^8.3.0",
-    "webpack": "5.105.3"
+    "webpack": "5.107.2"
   },
   "overrides": {
     "@storybook/angular": {
-      "webpack": "5.105.3"
+      "webpack": "5.107.2"
     },
     "picomatch": "4.0.4",
     "path-to-regexp": "^0.1.13",
