@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+/**
+ * @deprecated This library is deprecated.
+ */
 export * from './lib/process-services-cloud.module';
 export * from './lib/app/public-api';
 export * from './lib/process/public-api';

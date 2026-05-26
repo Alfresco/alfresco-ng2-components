@@ -15,4 +15,7 @@
  * limitations under the License.
  */
 
+/**
+ * @deprecated This library is deprecated.
+ */
 export * from './src/public-api';

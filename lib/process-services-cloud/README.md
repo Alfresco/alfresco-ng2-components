@@ -1,4 +1,7 @@
-# Alfresco Process Services Cloud Library
+
+# ⚠️ DEPRECATED: Alfresco Process Services Cloud Library
+
+**This library is deprecated and will no longer receive updates or support.**
 
 Contains a variety of components, directives and services used throughout ADF
 

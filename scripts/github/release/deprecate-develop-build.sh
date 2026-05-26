@@ -8,8 +8,7 @@ eval projects=( "adf-core"
     "adf-insights"
     "adf-content-services"
     "adf-extensions"
-    "adf-process-services"
-    "adf-process-services-cloud" )
+    "adf-process-services" )
 
 show_help() {
     echo "Usage: deprecate-develop-build.sh"

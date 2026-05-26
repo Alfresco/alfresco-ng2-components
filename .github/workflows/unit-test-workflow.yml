@@ -35,7 +35,7 @@ jobs:
           BASE_REF: ${{ inputs.base_ref }}
         run: |
           echo "Base ref is $BASE_REF"
-          AFFECTED_UNIT=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --head=HEAD --select=projects --plain --exclude=cli,stories,eslint-angular)
+          AFFECTED_UNIT=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --head=HEAD --select=projects --plain --exclude=cli,stories,eslint-angular,process-services-cloud)
           echo "Affected projects for UNIT: $AFFECTED_UNIT"
 
           if [ -z "$AFFECTED_UNIT" ]; then
