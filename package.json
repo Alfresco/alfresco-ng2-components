@@ -156,7 +156,7 @@
   },
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=22.19.0"
+    "node": ">=24.14.0"
   },
   "module": "./index.js",
   "typings": "./index.d.ts"
