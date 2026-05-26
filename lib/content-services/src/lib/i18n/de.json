@@ -102,6 +102,7 @@
     "ATTACH": "Anhängen",
     "CHOOSE_ITEM": "Wählen Sie aus '{{ name }}' Content zum Anhängen aus",
     "COPY": "Kopieren",
+    "LINK": "Link erstellen",
     "COPY_ITEM": "'{{ name }}' kopieren nach...",
     "LOCATION": "Speicherort",
     "MOVE": "Verschieben",

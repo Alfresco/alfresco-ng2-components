@@ -102,6 +102,7 @@
     "ATTACH": "Załącz",
     "CHOOSE_ITEM": "Wybierz treść do dołączenia z „{{ name }}”",
     "COPY": "Kopiuj",
+    "LINK": "Create Link",
     "COPY_ITEM": "Kopiuj '{{ name }}' do...",
     "LOCATION": "Lokalizacja",
     "MOVE": "Przenieś",
