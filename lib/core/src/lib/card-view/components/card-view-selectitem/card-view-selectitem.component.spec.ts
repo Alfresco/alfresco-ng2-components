@@ -276,7 +276,8 @@ describe('CardViewSelectItemComponent', () => {
         });
 
         it('should set initial value to autocompleteControl', () => {
-            component.ngOnChanges({});
+            fixture.componentRef.setInput('property', component.property);
+            fixture.componentRef.setInput('editable', true);
             fixture.detectChanges();
 
             expect(component.autocompleteControl.value).toBe('initial value');
@@ -390,6 +391,70 @@ describe('CardViewSelectItemComponent', () => {
             const input = testingUtils.getInputByCSS('.adf-property-value');
             expect(input).toBeTruthy();
             expect(input.getAttribute('aria-label')).toBe('Test Label');
+        });
+    });
+
+    describe('Numeric initial value', () => {
+        const priorityOptions = [
+            { key: 0, label: 'PROCESS_EDITOR.PRIORITIES.NONE' },
+            { key: 1, label: 'PROCESS_EDITOR.PRIORITIES.LOW' },
+            { key: 2, label: 'PROCESS_EDITOR.PRIORITIES.MEDIUM' },
+            { key: 3, label: 'PROCESS_EDITOR.PRIORITIES.HIGH' }
+        ];
+
+        const createNumericProperty = (config: {
+            autocompleteBased: boolean;
+            value: number;
+            label?: string;
+            displayNoneOption?: boolean;
+            options?: { key: number; label: string }[];
+        }) =>
+            new CardViewSelectItemModel({
+                label: config.label ?? 'Priority',
+                value: config.value,
+                key: 'priority',
+                editable: true,
+                autocompleteBased: config.autocompleteBased,
+                displayNoneOption: config.displayNoneOption,
+                options$: of(config.options ?? priorityOptions)
+            });
+
+        const applyInputs = (property: CardViewSelectItemModel<number>) => {
+            fixture.componentRef.setInput('property', property);
+            fixture.componentRef.setInput('editable', true);
+            fixture.detectChanges();
+        };
+
+        it('should not throw when autocompleteBased and initial value is numeric', fakeAsync(() => {
+            const property = createNumericProperty({
+                autocompleteBased: true,
+                value: 1,
+                options: [
+                    { key: 1, label: 'Option 1' },
+                    { key: 2, label: 'Option 2' }
+                ]
+            });
+            const filterOptionsSpy = spyOn<any>(component, 'filterOptions').and.callThrough();
+
+            applyInputs(property);
+            tick(50);
+
+            expect(filterOptionsSpy).toHaveBeenCalled();
+        }));
+
+        it('should not call filterOptions when autocompleteBased is false and initial value is numeric', () => {
+            const property = createNumericProperty({
+                autocompleteBased: false,
+                value: 0,
+                label: 'PROCESS_EDITOR.ELEMENT_PROPERTIES.PRIORITY',
+                displayNoneOption: false
+            });
+            const filterOptionsSpy = spyOn<any>(component, 'filterOptions');
+
+            applyInputs(property);
+
+            expect(component.property.value).toBe(0);
+            expect(filterOptionsSpy).not.toHaveBeenCalled();
         });
     });
 

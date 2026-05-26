@@ -91,7 +91,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
             this.property.value = [];
         }
 
-        if (changes.property?.firstChange) {
+        if (changes.property?.firstChange && this.property.autocompleteBased) {
             this.autocompleteControl.valueChanges
                 .pipe(
                     filter((textInputValue) => textInputValue !== this.editedValue && textInputValue !== null && !Array.isArray(textInputValue)),
@@ -126,7 +126,10 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
             });
 
         this.list$ = this.getList();
-        this.autocompleteControl.setValue(this.property.value);
+
+        if (this.property.autocompleteBased) {
+            this.autocompleteControl.setValue(this.property.value);
+        }
     }
 
     onFilterInputChange(value: string) {
@@ -199,16 +202,21 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     private filterOptions() {
+        if (!this.property.autocompleteBased) {
+            return;
+        }
+
         this.getOptions()
             .pipe(
-                map((options) =>
-                    options.filter((option) => {
+                map((options) => {
+                    const filterValue = String(this.editedValue ?? '').toLowerCase();
+                    return options.filter((option) => {
                         const isSelected = this.property.multivalued
                             ? this.property.value.some((val) => val === option.key)
                             : this.property.value === option.key;
-                        return !isSelected && option.label.toLowerCase().includes(this.editedValue.toLowerCase());
-                    })
-                )
+                        return !isSelected && option.label.toLowerCase().includes(filterValue);
+                    });
+                })
             )
             .pipe(take(1))
             .subscribe((options: CardViewSelectItemOption<string | number>[]) => {
