@@ -40,7 +40,7 @@
                 {{ field.validationSummary.message | translate:translateParameters }}
             </mat-error>
         }
-        @if (isInvalidFieldRequired() && isTouched()) {
+        @if (!field.validationSummary?.message && isInvalidFieldRequired() && isTouched()) {
             <mat-error>
                 {{ 'FORM.FIELD.REQUIRED' | translate }}
             </mat-error>

@@ -34,7 +34,7 @@
             <mat-error *ngIf="field.validationSummary?.message">
                 {{ field.validationSummary.message | translate:translateParameters }}
             </mat-error>
-            <mat-error *ngIf="isInvalidFieldRequired() && isTouched()">
+            <mat-error *ngIf="!field.validationSummary?.message && isInvalidFieldRequired() && isTouched()">
                 {{ 'FORM.FIELD.REQUIRED' | translate }}
             </mat-error>
         </mat-form-field>
