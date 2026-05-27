@@ -67,12 +67,12 @@
         padding-right: 2px;
         overflow: hidden;
         display: flex;
+        align-items: center;
         font: var(--mat-sys-body-medium);
         text-align: left;
         color: var(--mat-sys-on-secondary-container);
         flex: 0 1 auto;
         min-width: 35px;
-        margin-top: auto;
         text-overflow: ellipsis;
 
         &.adf-active {
