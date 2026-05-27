@@ -277,7 +277,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
             this.loadProperties(this.node);
         }
 
-        if (changes.displayAspect?.currentValue) {
+        if (changes.displayAspect?.currentValue && changes.displayAspect.currentValue !== '') {
             this.currentPanel.panelTitle = changes.displayAspect.currentValue;
             this.currentPanel.expanded = true;
         }
