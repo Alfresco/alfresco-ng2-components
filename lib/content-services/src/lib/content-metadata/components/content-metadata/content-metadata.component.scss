@@ -18,6 +18,11 @@ $panel-properties-height: 56px !default;
             height: $panel-properties-height;
         }
 
+        .adf-metadata-categories-header {
+            display: block;
+            margin-top: 16px;
+        }
+
         .adf-edit-icon-buttons {
             color: var(--mat-sys-on-secondary-container);
         }
