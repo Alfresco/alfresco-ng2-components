@@ -35,7 +35,7 @@
                 {{ field.validationSummary.message | translate:translateParameters }}
             </mat-error>
             <mat-error *ngIf="!field.validationSummary?.message && isInvalidFieldRequired() && isTouched()">
-                {{ 'FORM.FIELD.REQUIRED' | translate }}
+                {{ 'FORM.FIELD.REQUIRED' | translate }} [ADF-TEST]
             </mat-error>
         </mat-form-field>
     </div>
