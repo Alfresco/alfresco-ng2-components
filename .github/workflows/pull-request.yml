@@ -86,15 +86,28 @@ jobs:
   check-if-pr-is-approved:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 1
+
       - name: Check if PR approval can be skipped
         id: skip-check
         env:
           EVENT_NAME: ${{ github.event_name }}
           ACTOR: ${{ github.actor }}
           DEVEL_FLAG: ${{ inputs.devel }}
-          COMMIT_MESSAGE: ${{ github.event.head_commit.message || github.event.pull_request.title || '' }}
+          PUSH_COMMIT_MESSAGE: ${{ github.event.head_commit.message || '' }}
         run: |
           skip="false"
+
+          if [ "$EVENT_NAME" == "pull_request" ]; then
+            COMMIT_MESSAGE=$(git log -1 --format=%B)
+          else
+            COMMIT_MESSAGE="$PUSH_COMMIT_MESSAGE"
+          fi
 
           if [ "$EVENT_NAME" == "schedule" ] || [ "$EVENT_NAME" == "workflow_dispatch" ]; then
             echo -e "\033[32mSchedule/dispatch event — skipping approval check\033[0m"
