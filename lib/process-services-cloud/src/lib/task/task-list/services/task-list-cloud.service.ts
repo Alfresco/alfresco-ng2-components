@@ -97,14 +97,16 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
 
         const url = `${this.getBasePath(requestNode.appName)}/rb/v1/tasks`;
 
-        const queryParams = {
+        const queryParams: { maxItems: number; skipCount: number; sort?: string } = {
             maxItems: requestNode.pagination?.maxItems || 25,
             skipCount: requestNode.pagination?.skipCount || 0
         };
 
-        const queryData = this.buildQueryData(requestNode);
+        if (requestNode.sorting?.orderBy) {
+            queryParams.sort = `${requestNode.sorting.orderBy},${requestNode.sorting.direction}`;
+        }
 
-        return this.getWithBody<any, TaskCloudNodePaging>(url, queryData, queryParams).pipe(
+        return this.get<TaskCloudNodePaging>(url, queryParams).pipe(
             map((response) => {
                 const entries = response.list?.entries;
                 if (entries) {

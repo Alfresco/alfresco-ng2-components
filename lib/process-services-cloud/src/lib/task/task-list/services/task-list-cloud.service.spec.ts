@@ -189,6 +189,44 @@ describe('TaskListCloudService', () => {
             expect(res.maxItems).toBe(25);
         });
 
+        it('should include sort parameter when sorting.orderBy is set', async () => {
+            const taskRequest = {
+                appName: 'fakeName',
+                pagination: { skipCount: 0, maxItems: 20 },
+                sorting: { orderBy: 'NAME', direction: 'DESC', isFieldProcessVariable: false }
+            } as TaskListRequestModel;
+            requestSpy.and.callFake(returnCallQueryParameters);
+
+            const res = await firstValueFrom(service.fetchTaskList_UsingRuntimeBundleService(taskRequest));
+
+            expect(res.sort).toBe('NAME,DESC');
+        });
+
+        it('should not include sort parameter when sorting is not set', async () => {
+            const taskRequest = {
+                appName: 'fakeName',
+                pagination: { skipCount: 0, maxItems: 20 }
+            } as TaskListRequestModel;
+            requestSpy.and.callFake(returnCallQueryParameters);
+
+            const res = await firstValueFrom(service.fetchTaskList_UsingRuntimeBundleService(taskRequest));
+
+            expect(res.sort).toBeUndefined();
+        });
+
+        it('should not include sort parameter when sorting.orderBy is empty', async () => {
+            const taskRequest = {
+                appName: 'fakeName',
+                pagination: { skipCount: 0, maxItems: 20 },
+                sorting: { orderBy: '', direction: 'DESC', isFieldProcessVariable: false }
+            } as TaskListRequestModel;
+            requestSpy.and.callFake(returnCallQueryParameters);
+
+            const res = await firstValueFrom(service.fetchTaskList_UsingRuntimeBundleService(taskRequest));
+
+            expect(res.sort).toBeUndefined();
+        });
+
         it('should return an error when app name is not specified', async () => {
             const taskRequest = { appName: null } as TaskListRequestModel;
             requestSpy.and.callFake(returnCallUrl);
