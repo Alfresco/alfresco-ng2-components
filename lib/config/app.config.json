@@ -4,5 +4,5 @@
   "bpmHost": "http://{hostname}:{port}/bpm",
   "baseShareUrl": null,
   "logLevel" : "silent",
-  "locale" : "en-GB"
+  "locale" : "en"
 }

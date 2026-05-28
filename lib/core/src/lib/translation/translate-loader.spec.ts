@@ -42,7 +42,7 @@ describe('TranslateLoader', () => {
     });
 
     it('should complete observer when gets full translation json', fakeAsync(() => {
-        const language = 'en-GB';
+        const language = 'en';
         let nextInvoked = false;
         let completeInvoked = false;
 

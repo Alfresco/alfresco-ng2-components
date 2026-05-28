@@ -29,15 +29,15 @@ describe('LanguageService', () => {
     let userPreferencesService: jasmine.SpyObj<UserPreferencesService>;
 
     const customLanguages: LanguageItem[] = [
-        { key: 'en-GB', label: 'English' },
-        { key: 'fr-FR', label: 'French' },
-        { key: 'ar-SA', label: 'Arabic', direction: 'rtl' }
+        { key: 'en', label: 'English' },
+        { key: 'fr', label: 'French' },
+        { key: 'ar', label: 'Arabic', direction: 'rtl' }
     ];
 
     beforeEach(() => {
         const appConfigSpy = jasmine.createSpyObj('AppConfigService', ['get']);
         const userPrefsSpy = jasmine.createSpyObj('UserPreferencesService', ['set'], {
-            locale: 'en-GB'
+            locale: 'en'
         });
 
         TestBed.configureTestingModule({
@@ -100,7 +100,7 @@ describe('LanguageService', () => {
         try {
             service.changeLanguage(customLanguages[1]);
 
-            expect(setAttributeSpy).toHaveBeenCalledWith('lang', 'fr-FR');
+            expect(setAttributeSpy).toHaveBeenCalledWith('lang', 'fr');
         } finally {
             document.documentElement.setAttribute = originalSetAttribute;
         }

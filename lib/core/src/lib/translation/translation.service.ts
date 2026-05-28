@@ -61,7 +61,8 @@ export class TranslationService {
     constructor() {
         this.customLoader = this.translate.currentLoader as TranslateLoaderService;
 
-        this.defaultLang = 'en-GB';
+        this.defaultLang = 'en';
+        this.customLoader.setDefaultLang(this.defaultLang);
         this.translate.setFallbackLang(this.defaultLang);
 
         if (this.providers && this.providers.length > 0) {

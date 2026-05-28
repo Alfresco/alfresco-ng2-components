@@ -31,11 +31,11 @@ describe('TranslationService', () => {
 
         getTranslation = (lang: string) => {
             const translations = {
-                'en-GB': {
+                en: {
                     TEST: 'This is a test',
                     TEST2: 'This is another test'
                 },
-                'fr-FR': {
+                fr: {
                     TEST: 'This is a test',
                     TEST2: 'This is another test'
                 }
@@ -103,10 +103,10 @@ describe('TranslationService', () => {
         });
 
         it('falls back to the provided default locale when navigator is unavailable', () => {
-            translationService.userLang = 'en-GB';
+            translationService.userLang = 'en';
             const mockLanguages = spyOnProperty(window, 'navigator').and.returnValue(undefined);
 
-            expect(translationService.getLocale()).toBe('en-GB');
+            expect(translationService.getLocale()).toBe('en');
             expect(mockLanguages).toHaveBeenCalled();
         });
     });

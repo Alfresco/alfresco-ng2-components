@@ -24,7 +24,7 @@ import { LanguageItem } from '../common/services/language-item.interface';
 export class LanguageServiceMock implements LanguageServiceInterface {
     private readonly languages = new BehaviorSubject<LanguageItem[]>([
         { key: 'de-DE', label: 'Deutsch' },
-        { key: 'en-GB', label: 'English' },
+        { key: 'en', label: 'English' },
         { key: 'es-ES', label: 'Español' },
         { key: 'fr-FR', label: 'Français' },
         { key: 'it-IT', label: 'Italiano' },

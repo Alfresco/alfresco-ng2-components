@@ -66,7 +66,7 @@ export class DateFnsUtils {
     };
 
     static getLocaleFromString(locale: string): Locale {
-        return this.localeMap[locale] ?? enGB;
+        return this.localeMap[locale] ?? enUS;
     }
 
     private static readonly momentToDateFnsMap = {

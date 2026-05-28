@@ -123,7 +123,7 @@ export class CoreModule {
             providers: [
                 provideTranslateService({
                     loader: provideTranslateLoader(TranslateLoaderService),
-                    fallbackLang: 'en-GB'
+                    fallbackLang: 'en'
                 }),
                 provideAppConfig()
             ]

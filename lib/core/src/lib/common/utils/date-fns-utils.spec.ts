@@ -65,14 +65,14 @@ describe('DateFnsUtils', () => {
             });
         });
 
-        it('should return enGB locale for unknown locale code', () => {
+        it('should return enUS locale for unknown locale code', () => {
             const locale = DateFnsUtils.getLocaleFromString('unknown');
-            expect(locale).toBe(enGB);
+            expect(locale).toBe(enUS);
         });
 
-        it('should return enGB locale for empty string', () => {
+        it('should return enUS locale for empty string', () => {
             const locale = DateFnsUtils.getLocaleFromString('');
-            expect(locale).toBe(enGB);
+            expect(locale).toBe(enUS);
         });
     });
 

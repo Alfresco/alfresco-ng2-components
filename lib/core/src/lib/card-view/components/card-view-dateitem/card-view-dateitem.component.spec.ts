@@ -77,7 +77,7 @@ describe('CardViewDateItemComponent', () => {
         fixture.detectChanges();
 
         expect(getPropertyLabel()).toBe('Date label');
-        expect(getPropertyValue().trim()).toBe('10/07/2017');
+        expect(getPropertyValue().trim()).toBe('07/10/2017');
     });
 
     it('should NOT render the default as value if the value is empty, editable:false and displayEmpty is false', () => {

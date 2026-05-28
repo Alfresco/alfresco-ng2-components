@@ -111,7 +111,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     }
 
     clone(date: Moment): Moment {
-        const locale = this.locale || 'en-GB';
+        const locale = this.locale || 'en';
         return date.clone().locale(locale);
     }
 
@@ -120,12 +120,12 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     }
 
     today(): Moment {
-        const locale = this.locale || 'en-GB';
+        const locale = this.locale || 'en';
         return moment().locale(locale);
     }
 
     parse(value: any, parseFormat: any): Moment {
-        const locale = this.locale || 'en-GB';
+        const locale = this.locale || 'en';
 
         if (value && typeof value === 'string') {
             let m = moment(value, parseFormat, locale, true);
@@ -230,7 +230,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     }
 
     fromIso8601(iso8601String: string): Moment | null {
-        const locale = this.locale || 'en-GB';
+        const locale = this.locale || 'en';
         const d = moment(iso8601String, moment.ISO_8601).locale(locale);
         return this.isValid(d) ? d : null;
     }
