@@ -35,7 +35,7 @@ import { StorageService } from '../../common/services/storage.service';
 import { PaginationModel } from '../../models/pagination.model';
 import { MatButton, MatButtonModule, MatIconButton } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatBadgeModule } from '@angular/material/badge';
+import { MatBadgeModule, MatBadgeSize } from '@angular/material/badge';
 import { MatListModule } from '@angular/material/list';
 import { NgForOf, NgIf } from '@angular/common';
 import { InitialUsernamePipe, TimeAgoPipe } from '../../pipes';
@@ -85,6 +85,10 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
     /** Maximum number of notifications to display. The rest will remain hidden until load more is clicked */
     @Input()
     maxNotifications: number = 5;
+
+    /** Size of the badge. Can be `small`, `medium` or `large` */
+    @Input()
+    badgeSize: MatBadgeSize = 'small';
 
     notifications: NotificationModel[] = [];
     paginatedNotifications: NotificationModel[] = [];

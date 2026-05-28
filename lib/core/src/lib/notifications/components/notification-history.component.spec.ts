@@ -25,6 +25,7 @@ import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 import { provideCoreAuthTesting } from '../../testing/noop-auth.module';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatBadgeHarness } from '@angular/material/badge/testing';
 
 describe('Notification History Component', () => {
     let fixture: ComponentFixture<NotificationHistoryComponent>;
@@ -183,6 +184,16 @@ describe('Notification History Component', () => {
                 done();
             });
         }, 45000);
+
+        it('should be able to change the size of the badge', async () => {
+            component.badgeSize = 'medium';
+            fixture.detectChanges();
+            notificationService.showInfo('Example Message');
+            fixture.detectChanges();
+
+            const badgeHarness = await TestbedHarnessEnvironment.loader(fixture).getHarness(MatBadgeHarness);
+            expect(await badgeHarness.getSize()).toBe('medium');
+        });
 
         describe('focus change', () => {
             let markAllAsReadButton: HTMLButtonElement;
