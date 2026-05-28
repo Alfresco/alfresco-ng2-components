@@ -7,28 +7,6 @@
   {
     "source": "/**/**/i18n/en.json",
     "translation": "/%original_path%/%locale%.%file_extension%",
-    "languages_mapping": {
-      "locale": {
-        "de": "de-DE",
-        "es-ES": "es-ES",
-        "fr": "fr-FR",
-        "it": "it-IT",
-        "ja": "ja-JP",
-        "nl": "nl-NL",
-        "ru": "ru-RU",
-        "cs": "cs-CZ",
-        "da": "da-DK",
-        "fi": "fi-FI",
-        "pl": "pl-PL",
-        "sv-SE": "sv-SE",
-        "ar": "ar-SA",
-        "nb": "nb-NO",
-        "pt-PT": "pt-PT",
-        "pt-BR": "pt-BR",
-        "zh-CN": "zh-CN",
-        "en-AU": "en-AU"
-      }
-    },
     "export_only_approved": "true",
     "update_option": "update_without_changes"
   }
