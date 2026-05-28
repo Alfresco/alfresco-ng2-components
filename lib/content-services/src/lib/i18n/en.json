@@ -194,15 +194,15 @@
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
-      "MINIMIZE": "Minimise",
-      "MAXIMIZE": "Maximise",
+      "MINIMIZE": "Minimize",
+      "MAXIMIZE": "Maximize",
       "CLOSE": "Close",
       "STOP_ALL": "Stop uploads",
       "STOP_FILE": "Stop upload",
       "UPLOAD_SUCCESSFUL": "Upload successful"
     },
     "STATUS": {
-      "FILE_CANCELED_STATUS": "Cancelled",
+      "FILE_CANCELED_STATUS": "Canceled",
       "FILE_DONE_STATUS": "Uploaded"
     },
     "CONFIRMATION": {
@@ -218,9 +218,9 @@
     "ARIA-LABEL": {
       "VERSION": "File version {{ version }}",
       "DIALOG": "Upload list",
-      "DIALOG_MAXIMIZE": "Maximise upload dialogue",
-      "DIALOG_MINIMIZE": "Minimise upload dialogue",
-      "DIALOG_CLOSE": "Close upload dialogue",
+      "DIALOG_MAXIMIZE": "Maximize upload dialog",
+      "DIALOG_MINIMIZE": "Minimize upload dialog",
+      "DIALOG_CLOSE": "Close upload dialog",
       "STOP_ALL": "Stop uploads",
       "UPLOAD_SUCCESSFUL": "Uploaded successfully file {{ file }}",
       "STOP_FILE": "Stop file {{ file }}",
@@ -245,7 +245,7 @@
       }
     },
     "MESSAGES": {
-      "UPLOAD_CANCELED": "Upload cancelled",
+      "UPLOAD_CANCELED": "Upload canceled",
       "UPLOAD_PROGRESS": "Uploaded {{ completed }} / {{ total }}",
       "UPLOAD_ERROR": "{{ total }} upload unsuccessful",
       "UPLOAD_ERRORS": "{{ total }} uploads unsuccessful",
@@ -695,7 +695,7 @@
     "DESCRIPTION": "Description",
     "DATA_TYPE": "Data Type",
     "DIALOG": {
-      "TITLE": "Customise Properties",
+      "TITLE": "Customize Properties",
       "DESCRIPTION": "Manage the properties associated with selected file(s). Choose from property aspects listed below, to expose and apply additional metadata and functionality",
       "RESET": "Reset",
       "CLEAR": "Clear",
@@ -721,7 +721,7 @@
     },
     "INFO": {
       "JOINED": "Library joined",
-      "JOIN_CANCELED": "Cancelled the request to join the library",
+      "JOIN_CANCELED": "Canceled the request to join the library",
       "JOIN_REQUESTED": "Request sent to join this library"
     }
   },

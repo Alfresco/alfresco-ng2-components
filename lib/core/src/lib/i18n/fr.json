@@ -62,7 +62,6 @@
         "INVALID_DECIMAL_NUMBER": "Utilisez un autre format de nombre décimal",
         "INVALID_DECIMAL_PRECISION": "Valeur décimale incorrecte, un maximum de {{precision}} chiffres est attendu après la virgule.",
         "INVALID_DATE": "Utiliser un format de date différent",
-        "INVALID_DATE_FORMAT": "Format de date invalide, utilisez le format : {{ format }}",
         "INVALID_VALUE": "Saisir une valeur différente",
         "NOT_GREATER_THAN": "Ne peut pas être supérieur à {{ maxValue }}",
         "NOT_LESS_THAN": "Ne peut pas être inférieur à {{ minValue }}",
@@ -86,12 +85,6 @@
         "YES_LABEL": "Supprimer la ligne",
         "NO_LABEL": "Annuler"
       }
-    },
-    "BUTTON": {
-      "PREVIOUS_TAB": "Précédent",
-      "PREVIOUS_TAB_TITLE": "Aller à l'onglet précédent",
-      "NEXT_TAB": "Suivant",
-      "NEXT_TAB_TITLE": "Aller à l'onglet suivant"
     },
     "FIELD_STYLE": {
       "FONT_SIZE": "Taille de la police",
@@ -255,8 +248,6 @@
         "VALUE": "Valeur"
       },
       "NONE": "Aucun",
-      "SELECTED_VALUES": "Selected values",
-      "REMOVE": "Remove {{ value }}",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utiliser un format de numéro",
         "INT_VALIDATION_ERROR": "Utiliser un format d'entier",
@@ -407,8 +398,8 @@
       "ACTIONS": "Actions",
       "SELECT_ALL": "Tout sélectionner",
       "SELECT_FILE": "Sélectionner un fichier",
-      "SELECTED": "Sélectionné",
-      "ROW_SELECTION": "Appuyez sur Espace pour activer/désactiver la sélection de ligne",
+      "SELECTED": "Selected",
+      "ROW_SELECTION": "Press Space to toggle row selection",
       "SORT_ASCENDING": "Ascendant",
       "SORT_DESCENDING": "Descendant",
       "SORT_NONE": "Aucun",
@@ -419,7 +410,7 @@
       "ICON_DISABLED": "Désactivé",
       "ROW_OPTION_BUTTON": "Actions",
       "DRAG": "Bouton de déplacement",
-      "DRAGGABLE": "Déplaçable",
+      "DRAGGABLE": "Draggable",
       "EMPTY_HEADER": "En-tête vide",
       "RESIZE_COLUMN": "Redimensionnez la colonne {{ column }}. Utilisez les flèches de direction pour ajuster la largeur et la touche Maj pour des incréments plus importants.",
       "COLUMN_WIDTH_CHANGED": "Largeur de la colonne {{ column }} : {{ width }} pixels"
