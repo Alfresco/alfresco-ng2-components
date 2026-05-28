@@ -16,7 +16,7 @@
  */
 
 import { format, parse, parseISO, isValid, isBefore, isAfter } from 'date-fns';
-import { ar, cs, da, de, enUS, es, fi, fr, it, ja, nb, nl, pl, ptBR, ru, sv, zhCN } from 'date-fns/locale';
+import { ar, arSA, cs, da, de, enGB, enUS, es, fi, fr, it, ja, nb, nl, pl, pt, ptBR, ru, sv, zhCN } from 'date-fns/locale';
 
 const panDate = (num: number = 1): string => {
     let text = num.toString();
@@ -27,66 +27,46 @@ const panDate = (num: number = 1): string => {
 };
 
 export class DateFnsUtils {
+    private static readonly localeMap: Record<string, Locale> = {
+        'ar-SA': arSA,
+        ar: ar,
+        'cs-CZ': cs,
+        cs: cs,
+        'da-DK': da,
+        da: da,
+        'de-DE': de,
+        de: de,
+        'en-GB': enGB,
+        'en-AU': enGB,
+        en: enUS,
+        'es-ES': es,
+        es: es,
+        'fi-FI': fi,
+        fi: fi,
+        'fr-FR': fr,
+        fr: fr,
+        'it-IT': it,
+        it: it,
+        'ja-JP': ja,
+        ja: ja,
+        'nb-NO': nb,
+        nb: nb,
+        'nl-NL': nl,
+        nl: nl,
+        'pl-PL': pl,
+        pl: pl,
+        'pt-PT': pt,
+        'pt-BR': ptBR,
+        pt: ptBR,
+        'ru-RU': ru,
+        ru: ru,
+        'sv-SE': sv,
+        sv: sv,
+        'zh-CN': zhCN
+    };
+
     static getLocaleFromString(locale: string): Locale {
-        let dateFnsLocale: Locale;
-        switch (locale) {
-            case 'ar':
-                dateFnsLocale = ar;
-                break;
-            case 'cs':
-                dateFnsLocale = cs;
-                break;
-            case 'da':
-                dateFnsLocale = da;
-                break;
-            case 'de':
-                dateFnsLocale = de;
-                break;
-            case 'en':
-                dateFnsLocale = enUS;
-                break;
-            case 'es':
-                dateFnsLocale = es;
-                break;
-            case 'fi':
-                dateFnsLocale = fi;
-                break;
-            case 'fr':
-                dateFnsLocale = fr;
-                break;
-            case 'it':
-                dateFnsLocale = it;
-                break;
-            case 'ja':
-                dateFnsLocale = ja;
-                break;
-            case 'nb':
-                dateFnsLocale = nb;
-                break;
-            case 'nl':
-                dateFnsLocale = nl;
-                break;
-            case 'pl':
-                dateFnsLocale = pl;
-                break;
-            case 'pt':
-            case 'pt-BR':
-                dateFnsLocale = ptBR;
-                break;
-            case 'ru':
-                dateFnsLocale = ru;
-                break;
-            case 'sv':
-                dateFnsLocale = sv;
-                break;
-            case 'zh-CN':
-                dateFnsLocale = zhCN;
-                break;
-            default:
-                dateFnsLocale = enUS;
-                break;
-        }
-        return dateFnsLocale;
+        return this.localeMap[locale] ?? enGB;
     }
 
     private static readonly momentToDateFnsMap = {

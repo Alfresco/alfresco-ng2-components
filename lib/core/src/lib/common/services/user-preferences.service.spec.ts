@@ -129,7 +129,7 @@ describe('UserPreferencesService', () => {
 
         it('should return as default locale the component property as third ', () => {
             spyOn(translate, 'getBrowserCultureLang').and.stub();
-            expect(preferences.getDefaultLocale()).toBe('en');
+            expect(preferences.getDefaultLocale()).toBe('en-GB');
         });
 
         it('should return as locale the store locate', () => {
@@ -170,13 +170,13 @@ describe('UserPreferencesService', () => {
             const spySetWithoutStore = spyOn(preferences, 'setWithoutStore').and.callThrough();
             const spySet = spyOn(preferences, 'set').and.callThrough();
 
-            storage.setItem('GUEST__locale', 'fr');
-            appConfig.config.locale = 'en';
+            storage.setItem('GUEST__locale', 'fr-FR');
+            appConfig.config.locale = 'en-GB';
 
             preferences.setStoragePrefix(null);
 
-            expect(preferences.locale).toBe('fr');
-            expect(spySetWithoutStore).toHaveBeenCalledWith(UserPreferenceValues.Locale, 'fr');
+            expect(preferences.locale).toBe('fr-FR');
+            expect(spySetWithoutStore).toHaveBeenCalledWith(UserPreferenceValues.Locale, 'fr-FR');
             expect(spySet).not.toHaveBeenCalledWith(UserPreferenceValues.Locale, jasmine.any(String));
         });
 
@@ -201,8 +201,8 @@ describe('UserPreferencesService', () => {
 
             preferences.setStoragePrefix(null);
 
-            expect(preferences.locale).toBe('en'); // default
-            expect(spySetWithoutStore).toHaveBeenCalledWith(UserPreferenceValues.Locale, 'en');
+            expect(preferences.locale).toBe('en-GB'); // default
+            expect(spySetWithoutStore).toHaveBeenCalledWith(UserPreferenceValues.Locale, 'en-GB');
             expect(spySet).not.toHaveBeenCalledWith(UserPreferenceValues.Locale, jasmine.any(String));
         });
 
@@ -271,7 +271,7 @@ describe('UserPreferencesService', () => {
                     direction: 'ltr'
                 }
             ];
-            appConfig.config.locale = 'ar';
+            appConfig.config.locale = 'ar-SA';
             appConfig.load();
             const textOrientation = preferences.getPropertyKey('textOrientation');
             expect(storage.getItem(textOrientation)).toBe('rtl');

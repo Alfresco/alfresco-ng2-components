@@ -26,7 +26,7 @@ export interface LangChangeEvent {
 /** @deprecated use `NoopTranslateModule` instead */
 @Injectable()
 export class TranslationMock {
-    defaultLang: string = 'en';
+    defaultLang: string = 'en-GB';
     userLang: string;
     customLoader: any;
 

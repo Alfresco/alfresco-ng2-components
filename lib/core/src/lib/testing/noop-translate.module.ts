@@ -25,13 +25,13 @@ import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class NoopTranslationService implements TranslateLoader {
-    defaultLang: string = 'en';
+    defaultLang: string = 'en-GB';
     userLang: string;
     customLoader: any;
 
     translate: any = {
         onLangChange: new EventEmitter<LangChangeEvent>(),
-        getCurrentLang: (): Language => 'en'
+        getCurrentLang: (): Language => 'en-GB'
     };
 
     addTranslationFolder() {}

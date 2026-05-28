@@ -38,9 +38,9 @@ describe('provideI18N', () => {
             expect(translateService).toBeDefined();
         });
 
-        it('should set default language to "en" when not specified', () => {
+        it('should set default language to "en-GB" when not specified', () => {
             const translateService = TestBed.inject(TranslateService);
-            expect(translateService.getFallbackLang()).toBe('en');
+            expect(translateService.getFallbackLang()).toBe('en-GB');
         });
     });
 
@@ -81,7 +81,7 @@ describe('provideI18N', () => {
             // Services should be properly configured
             expect(translateService).toBeDefined();
             expect(translationService).toBeDefined();
-            expect(translateService.getFallbackLang()).toBe('en');
+            expect(translateService.getFallbackLang()).toBe('en-GB');
         });
     });
 
@@ -119,10 +119,10 @@ describe('provideI18N', () => {
             const translateService = TestBed.inject(TranslateService);
 
             // Set some initial translations
-            translateService.setTranslation('en', { EXISTING_KEY: 'Existing value' });
+            translateService.setTranslation('en-GB', { EXISTING_KEY: 'Existing value' });
 
             // Set translations again to simulate the APP_INITIALIZER behavior
-            translateService.setTranslation('en', mockTranslations, true);
+            translateService.setTranslation('en-GB', mockTranslations, true);
 
             // The translations from config should be merged (merge flag is true)
             expect(translateService.instant('WELCOME_MESSAGE')).toBe('Welcome!');
@@ -170,7 +170,7 @@ describe('provideI18N', () => {
                     provideHttpClientTesting(),
                     provideAppConfigTesting(),
                     provideI18N({
-                        defaultLanguage: 'en',
+                        defaultLanguage: 'en-GB',
                         assets: [['adf-core', 'assets/adf-core']],
                         translations: mockTranslations
                     })
@@ -184,7 +184,7 @@ describe('provideI18N', () => {
             const translateService = TestBed.inject(TranslateService);
             const loader = translateService.currentLoader as TranslateLoaderService;
 
-            expect(translateService.getFallbackLang()).toBe('en');
+            expect(translateService.getFallbackLang()).toBe('en-GB');
             expect(loader).toBeDefined();
             expect(loader.providerRegistered).toBeDefined();
             expect(loader.providerRegistered('adf-core')).toBeTruthy();
@@ -211,7 +211,7 @@ describe('provideI18N', () => {
         it('should handle empty translations object', () => {
             const translateService = TestBed.inject(TranslateService);
             expect(translateService).toBeDefined();
-            expect(translateService.getFallbackLang()).toBe('en');
+            expect(translateService.getFallbackLang()).toBe('en-GB');
         });
     });
 });

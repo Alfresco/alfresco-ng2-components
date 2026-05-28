@@ -29,17 +29,13 @@ describe('TranslationService', () => {
             // No implementation needed for this test
         };
 
-        setDefaultLang = (_lang: string): void => {
-            // No implementation needed for this test
-        };
-
         getTranslation = (lang: string) => {
             const translations = {
-                en: {
+                'en-GB': {
                     TEST: 'This is a test',
                     TEST2: 'This is another test'
                 },
-                fr: {
+                'fr-FR': {
                     TEST: 'This is a test',
                     TEST2: 'This is another test'
                 }
@@ -107,10 +103,10 @@ describe('TranslationService', () => {
         });
 
         it('falls back to the provided default locale when navigator is unavailable', () => {
-            translationService.userLang = 'en';
+            translationService.userLang = 'en-GB';
             const mockLanguages = spyOnProperty(window, 'navigator').and.returnValue(undefined);
 
-            expect(translationService.getLocale()).toBe('en');
+            expect(translationService.getLocale()).toBe('en-GB');
             expect(mockLanguages).toHaveBeenCalled();
         });
     });

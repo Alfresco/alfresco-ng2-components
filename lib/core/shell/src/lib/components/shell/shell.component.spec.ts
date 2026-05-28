@@ -61,7 +61,7 @@ describe('AppLayoutComponent', () => {
 
     beforeEach(() => {
         appConfig.config.languages = [];
-        appConfig.config.locale = 'en';
+        appConfig.config.locale = 'en-GB';
     });
 
     describe('sidenav state', () => {

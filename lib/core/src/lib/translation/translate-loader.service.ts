@@ -38,11 +38,6 @@ export class TranslateLoaderService implements TranslateLoader {
         })
     ];
     private queue: string[][] = [];
-    private defaultLang: string = 'en';
-
-    setDefaultLang(value: string) {
-        this.defaultLang = value || 'en';
-    }
 
     registerProvider(name: string, path: string) {
         const registered = this.providers.find((provider) => provider.name === name);
@@ -57,26 +52,15 @@ export class TranslateLoaderService implements TranslateLoader {
         return this.providers.some((x) => x.name === name);
     }
 
-    fetchLanguageFile(lang: string, component: ComponentTranslationModel, fallbackUrl?: string): Observable<void> {
-        const translationUrl = fallbackUrl || `${component.path}/${this.prefix}/${lang}${this.suffix}?v=${Date.now()}`;
+    fetchLanguageFile(lang: string, component: ComponentTranslationModel): Observable<void> {
+        const translationUrl = `${component.path}/${this.prefix}/${lang}${this.suffix}?v=${Date.now()}`;
 
         return this.http.get(translationUrl).pipe(
             map((res: any) => {
                 component.json[lang] = res;
             }),
             retry(3),
-            catchError(() => {
-                if (!fallbackUrl && lang.includes('-')) {
-                    const [langId] = lang.split('-');
-
-                    if (langId && langId !== this.defaultLang) {
-                        const url = `${component.path}/${this.prefix}/${langId}${this.suffix}?v=${Date.now()}`;
-
-                        return this.fetchLanguageFile(lang, component, url);
-                    }
-                }
-                return throwError(() => new Error(`Failed to load ${translationUrl}`));
-            })
+            catchError(() => throwError(() => new Error(`Failed to load ${translationUrl}`)))
         );
     }
 

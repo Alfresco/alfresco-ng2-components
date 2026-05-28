@@ -23,7 +23,7 @@ import { provideTranslations } from './translation.service';
 export interface ProvideI18NConfig {
     /**
      * The default language to use for translations.
-     * If not provided, it defaults to 'en'.
+     * If not provided, it defaults to 'en-GB'.
      */
     defaultLanguage?: string;
     /**
@@ -49,7 +49,7 @@ export interface ProvideI18NConfig {
  * @returns An array of providers for the i18n service.
  */
 export function provideI18N(config?: ProvideI18NConfig): (Provider | EnvironmentProviders)[] {
-    const defaultLanguage = config?.defaultLanguage || 'en';
+    const defaultLanguage = config?.defaultLanguage || 'en-GB';
 
     const result: (Provider | EnvironmentProviders)[] = [
         provideTranslateService({

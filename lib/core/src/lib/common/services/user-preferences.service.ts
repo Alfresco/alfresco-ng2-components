@@ -51,7 +51,7 @@ export class UserPreferencesService {
     defaults = {
         paginationSize: 25,
         supportedPageSizes: [5, 10, 15, 20],
-        locale: 'en',
+        locale: 'en-GB',
         expandedSidenav: true
     };
 
@@ -341,11 +341,11 @@ export class UserPreferencesService {
      * @returns Default locale language code
      */
     getDefaultLocale(): string {
-        return this.appConfig.get<string>(UserPreferenceValues.Locale) || this.translate.getBrowserCultureLang() || 'en';
+        return this.appConfig.get<string>(UserPreferenceValues.Locale) || this.translate.getBrowserCultureLang() || 'en-GB';
     }
 
     private getLanguageByKey(key: string): LanguageItem {
-        const defaultLanguage = { key: 'en' } as LanguageItem;
+        const defaultLanguage = { key: 'en-GB' } as LanguageItem;
         let language: LanguageItem;
 
         const customLanguages = this.appConfig.get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
