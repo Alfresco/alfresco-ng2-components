@@ -173,9 +173,6 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes?.readOnly || changes?.validate) {
-            this.updateSearchControlState();
-        }
         if (this.hasPreselectedGroupsChanged(changes) || this.hasModeChanged(changes) || this.isValidationChanged(changes)) {
             if (this.hasPreSelectGroups()) {
                 this.loadPreSelectGroups();
@@ -188,6 +185,8 @@ export class GroupCloudComponent implements OnInit, OnChanges {
                 this.invalidGroups = [];
             }
         }
+
+        this.updateSearchControlState();
     }
 
     private initSearch(): void {

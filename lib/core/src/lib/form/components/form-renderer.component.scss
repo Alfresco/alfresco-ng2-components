@@ -1,4 +1,5 @@
 /* stylelint-disable selector-class-pattern */
+@use '@angular/material' as mat;
 @use '../../styles/flex' as flex;
 @use '../../styles/mat-selectors' as ms;
 
@@ -273,4 +274,50 @@
 
 form-field {
     width: 100%;
+}
+
+.adf-readonly {
+    @include mat.form-field-overrides(
+        (
+            filled-disabled-input-text-color: var(--mat-sys-on-surface),
+            filled-disabled-label-text-color: var(--mat-sys-on-surface-variant),
+            filled-active-indicator-color: color-mix(in srgb, var(--mat-sys-on-surface) 6%, transparent),
+            filled-hover-active-indicator-color: color-mix(in srgb, var(--mat-sys-on-surface) 6%, transparent),
+            outlined-disabled-input-text-color: var(--mat-sys-on-surface),
+            outlined-disabled-label-text-color: var(--mat-sys-on-surface-variant),
+            outlined-outline-color: color-mix(in srgb, var(--mat-sys-on-surface) 6%, transparent),
+            outlined-hover-outline-color: color-mix(in srgb, var(--mat-sys-on-surface) 6%, transparent)
+        )
+    );
+    @include mat.select-overrides(
+        (
+            disabled-trigger-text-color: var(--mat-sys-on-surface)
+        )
+    );
+    @include mat.checkbox-overrides(
+        (
+            disabled-label-color: var(--mat-sys-on-surface),
+            disabled-selected-checkmark-color: var(--mat-sys-surface),
+            disabled-selected-icon-color: var(--mat-sys-outline)
+        )
+    );
+    @include mat.radio-overrides(
+        (
+            disabled-label-color: var(--mat-sys-on-surface),
+            disabled-selected-icon-color: var(--mat-sys-primary)
+        )
+    );
+    @include mat.button-overrides(
+        (
+            filled-disabled-label-text-color: var(--mat-sys-on-surface)
+        )
+    );
+
+    .mat-datepicker-toggle.mat-mdc-button-disabled {
+        color: var(--mat-sys-on-surface-variant);
+    }
+
+    mat-chip[disabled] {
+        opacity: 1;
+    }
 }

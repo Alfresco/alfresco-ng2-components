@@ -1,6 +1,7 @@
 <div class="{{ field.className }}"
      id="data-time-widget"
      [class.adf-invalid]="datetimeInputControl.invalid && datetimeInputControl.touched"
+     [class.adf-readonly]="field.readOnly"
      [class.adf-left-label-input-container]="field.leftLabels">
     <div *ngIf="field.leftLabels">
         <label class="adf-label adf-left-label" [attr.for]="field.id">
