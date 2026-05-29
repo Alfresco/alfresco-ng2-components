@@ -38,6 +38,7 @@ export class TranslateLoaderService implements TranslateLoader {
         })
     ];
     private queue: string[][] = [];
+    private defaultLang: string = 'en';
 
     private readonly localeAliases: Record<string, string> = {
         'en-US': 'en',
@@ -59,6 +60,14 @@ export class TranslateLoaderService implements TranslateLoader {
         ar: 'ar-SA',
         pt: 'pt-BR'
     };
+
+    setDefaultLang(lang: string): void {
+        this.defaultLang = lang;
+    }
+
+    getDefaultLang(): string {
+        return this.defaultLang;
+    }
 
     registerProvider(name: string, path: string) {
         const registered = this.providers.find((provider) => provider.name === name);
