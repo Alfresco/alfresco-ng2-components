@@ -20,9 +20,9 @@
 /**
  * Post-install Security Script
  *
- * This runs after `npm install` / `npm ci` (via prepare hook).
- * Preinstall already checked the lockfile - this is a defense-in-depth
- * check against installed packages + rebuilds trusted native bindings.
+ * Runs after `npm install` / `npm ci` via the prepare hook.
+ * The preinstall hook already checked package.json and lockfile - this is
+ * a defense-in-depth check against installed packages.
  *
  * This script:
  * 1. Runs security check against OSV + GitHub Advisory (defense in depth)
@@ -138,7 +138,7 @@ async function main() {
         trustedInstalled.forEach(pkg => console.log(`  ✓ ${pkg}`));
         console.log('');
 
-        run(`npm rebuild ${trustedInstalled.join(' ')}`);
+        run(`npm rebuild --ignore-scripts=false ${trustedInstalled.join(' ')}`);
     } else {
         console.log('No trusted packages require rebuilding.\n');
     }
