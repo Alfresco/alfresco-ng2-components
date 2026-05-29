@@ -41,7 +41,7 @@ runs:
       - name: get latest tag sha
         if: ${{ inputs.full-setup == 'true' }}
         id: tag-sha
-        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@ed7779a4bda83d699c1acaf72922ef21636a3dc2 # v18.4.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@a6a8be7429080c132815d0482a55ae4fd28f15ba # v18.7.0
       - name: load "NPM TAG"
         if: ${{ inputs.full-setup == 'true' }}
         id: set-npm-tag
