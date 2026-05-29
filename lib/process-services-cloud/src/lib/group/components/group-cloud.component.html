@@ -16,7 +16,7 @@
                    [formControl]="searchGroupsControl"
                    [matAutocomplete]="auto"
                    [matChipInputFor]="groupChipList"
-                   [placeholder]="readOnly ? '' : (title | translate)"
+                   [placeholder]="isReadonly() ? '' : (title | translate)"
                    [required]="required"
                    (focus)="setFocus(true)"
                    (blur)="setFocus(false); markAsTouched()"

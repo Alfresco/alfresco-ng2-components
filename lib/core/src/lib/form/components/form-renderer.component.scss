@@ -317,7 +317,7 @@ form-field {
         color: var(--mat-sys-on-surface-variant);
     }
 
-    mat-chip[disabled] {
+    .mat-mdc-chip-disabled {
         opacity: 1;
     }
 }
