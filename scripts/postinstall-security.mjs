@@ -38,6 +38,13 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = join(__dirname, '..');
 
+// Use npm_execpath from environment (set by npm during lifecycle scripts)
+// Falls back to 'npm' if not available (e.g., running script directly)
+const NPM_PATH = process.env.npm_execpath || 'npm';
+const NPX_CMD = NPM_PATH.endsWith('npm-cli.js')
+    ? `"${process.execPath}" "${NPM_PATH.replace('npm-cli.js', 'npx-cli.js')}"`
+    : 'npx';
+
 // Packages that are trusted to run postinstall/install scripts
 // These typically need to compile native bindings or setup tooling
 const TRUSTED_PACKAGES = [
@@ -122,8 +129,8 @@ async function main() {
     console.log('Step 1/3: Running security check...\n');
     const securityCheckPath = join(__dirname, 'check-security.mjs');
 
-    // Run security check as subprocess (it calls process.exit)
-    const securityPassed = run(`node "${securityCheckPath}"`);
+    // Run security check as subprocess using process.execPath to avoid PATH-based attacks
+    const securityPassed = run(`"${process.execPath}" "${securityCheckPath}"`);
     if (!securityPassed) {
         console.error('\n❌ Security check failed - installation aborted\n');
         process.exit(1);
@@ -138,7 +145,8 @@ async function main() {
         trustedInstalled.forEach(pkg => console.log(`  ✓ ${pkg}`));
         console.log('');
 
-        run(`npm rebuild --ignore-scripts=false ${trustedInstalled.join(' ')}`);
+        const npmCmd = NPM_PATH === 'npm' ? 'npm' : `"${process.execPath}" "${NPM_PATH}"`;
+        run(`${npmCmd} rebuild --ignore-scripts=false ${trustedInstalled.join(' ')}`);
     } else {
         console.log('No trusted packages require rebuilding.\n');
     }
@@ -147,7 +155,7 @@ async function main() {
     console.log('Step 3/3: Setting up husky...\n');
     const huskyPath = join(ROOT_DIR, 'node_modules', 'husky');
     if (existsSync(huskyPath)) {
-        run('npx husky');
+        run(`${NPX_CMD} husky`);
     }
 
     console.log('='.repeat(70));

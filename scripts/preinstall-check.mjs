@@ -147,7 +147,7 @@ function parseVersionRange(range, version) {
 
     const parts = range.split(',').map(p => p.trim());
     for (const part of parts) {
-        const match = part.match(/^([<>=]+)\s*(.+)$/);
+        const match = part.match(/^([<>=]+)\s*(\S+)$/);
         if (!match) {
             if (part === version) return true;
             continue;
@@ -179,7 +179,8 @@ function compareVersions(a, b) {
 function extractVersionNumber(versionSpec) {
     if (!versionSpec) return null;
     // Remove ^, ~, >=, <=, >, <, = prefixes
-    const match = versionSpec.match(/[\d]+\.[\d]+\.[\d]+(?:-[\w.]+)?/);
+    // Use atomic pattern to prevent backtracking: match version then optional prerelease
+    const match = versionSpec.match(/(\d+)\.(\d+)\.(\d+)(?:-([a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*))?/);
     return match ? match[0] : null;
 }
 

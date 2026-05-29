@@ -254,8 +254,9 @@ async function checkWithMeterian(dependencies) {
         }));
 
         // Run Meterian CLI check using the found path
+        // Use process.execPath to avoid PATH-based attacks
         const cliScript = join(cliPath, 'src', 'cli.js');
-        const result = spawnSync('node', [cliScript, 'check'], {
+        const result = spawnSync(process.execPath, [cliScript, 'check'], {
             input: JSON.stringify(input),
             encoding: 'utf-8',
             timeout: 60000, // 60 second timeout
@@ -490,7 +491,7 @@ function matchesVersionRange(version, range) {
     const conditions = range.split(',').map(c => c.trim());
 
     for (const condition of conditions) {
-        const match = condition.match(/^(>=|<=|>|<|=)?\s*(.+)$/);
+        const match = condition.match(/^(>=|<=|>|<|=)?\s*(\S+)$/);
         if (!match) continue;
 
         const [, operator = '=', targetVersion] = match;
