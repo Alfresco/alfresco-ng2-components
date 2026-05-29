@@ -19,8 +19,8 @@
             rows="3"
             [id]="field.id"
             [required]="field.required"
-            [(ngModel)]="field.value"
-            (ngModelChange)="onFieldChanged(field)"
+            [ngModel]="displayValue"
+            (ngModelChange)="onValueChange($event)"
             [disabled]="field.readOnly || readOnly"
             [placeholder]="field.placeholder"
             [title]="field.tooltip"
@@ -29,7 +29,7 @@
         </textarea>
     </mat-form-field>
     <div *ngIf="field.maxLength > 0" class="adf-multiline-word-counter">
-        <span class="adf-multiline-word-counter-value">{{ field?.value?.length || 0 }}/{{ field.maxLength }}</span>
+        <span class="adf-multiline-word-counter-value">{{ displayValue?.length || 0 }}/{{ field.maxLength }}</span>
     </div>
     <div class="adf-error-messages-container">
         <error-widget [error]="field.validationSummary" />

@@ -25,10 +25,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { isObservable } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { FormRulesEvent } from '../../../events/form-rules.event';
 import { ADF_CUSTOM_MESSAGE } from '../core/custom-validation-message.token';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 import { InputMaskDirective } from './text-mask.component';
+import { FormFieldValueFormatterService } from '../../../services/form-field-value-formatter.service';
+import { ADF_TYPED_VALUE_FORMATTING_ENABLED } from '../../../services/form-field-value-formatter.token';
 
 type FieldStatusTemplate = TemplateRef<{ $implicit: WidgetComponent }>;
 const FIELD_STATUS_TEMPLATE = new InjectionToken<FieldStatusTemplate>('FIELD_STATUS_TEMPLATE');
@@ -74,8 +78,44 @@ export class TextWidgetComponent extends WidgetComponent implements OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
     private readonly enableCustomMessage = inject(ADF_CUSTOM_MESSAGE, { optional: true });
+    private readonly formatter = inject(FormFieldValueFormatterService);
+    private readonly formattingEnabledToken = inject(ADF_TYPED_VALUE_FORMATTING_ENABLED, { optional: true });
+    private formattingEnabled = false;
+    displayValue = '';
+
+    onValueChange(value: string): void {
+        this.field.value = value;
+        this.displayValue = this.computeDisplayValue();
+        this.onFieldChanged(this.field);
+    }
+
+    private computeDisplayValue(): string {
+        const value = this.field.value;
+        if (this.formattingEnabled && (this.field.readOnly || this.readOnly) && value !== null && value !== undefined && typeof value !== 'string') {
+            return this.formatter.format(this.field);
+        }
+        return value as string;
+    }
 
     ngOnInit() {
+        if (isObservable(this.formattingEnabledToken)) {
+            this.formattingEnabledToken.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((enabled: boolean) => {
+                this.formattingEnabled = enabled ?? false;
+                this.displayValue = this.computeDisplayValue();
+            });
+        } else {
+            this.formattingEnabled = this.formattingEnabledToken ?? false;
+            this.displayValue = this.computeDisplayValue();
+        }
+
+        this.formService.formRulesEvent
+            .pipe(
+                filter((event: FormRulesEvent) => event?.type === 'fieldValueChanged'),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe(() => {
+                this.displayValue = this.computeDisplayValue();
+            });
         if (this.enableCustomMessage != null) {
             if (isObservable(this.enableCustomMessage)) {
                 this.enableCustomMessage.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((enabled: boolean) => {

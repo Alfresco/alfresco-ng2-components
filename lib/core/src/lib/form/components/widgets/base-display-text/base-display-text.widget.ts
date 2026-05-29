@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, inject, AfterViewInit, DestroyRef, InjectionToken } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, AfterViewInit, OnInit, DestroyRef, InjectionToken } from '@angular/core';
 import { debounceTime, filter, isObservable, Observable } from 'rxjs';
 import { FormRulesEvent } from '../../../events';
 import { FormExpressionService } from '../../../services/form-expression.service';
+import { FormFieldValueFormatterService } from '../../../services/form-field-value-formatter.service';
+import { ADF_TYPED_VALUE_FORMATTING_ENABLED } from '../../../services/form-field-value-formatter.token';
 import { WidgetComponent } from '../widget.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -33,11 +35,14 @@ export const ADF_DISPLAY_TEXT_SETTINGS = new InjectionToken<DisplayTextWidgetSet
     template: '',
     standalone: true
 })
-export abstract class BaseDisplayTextWidgetComponent extends WidgetComponent implements AfterViewInit {
+export abstract class BaseDisplayTextWidgetComponent extends WidgetComponent implements OnInit, AfterViewInit {
     private readonly formExpressionService = inject(FormExpressionService);
     private readonly cdr = inject(ChangeDetectorRef);
     private enableExpressionEvaluation: boolean = false;
     protected originalFieldValue?: string;
+    protected readonly formatter = inject(FormFieldValueFormatterService);
+    private readonly formattingEnabledToken = inject(ADF_TYPED_VALUE_FORMATTING_ENABLED, { optional: true });
+    protected formattingEnabled = false;
 
     private readonly settings = inject<Observable<DisplayTextWidgetSettings> | DisplayTextWidgetSettings>(ADF_DISPLAY_TEXT_SETTINGS, {
         optional: true
@@ -45,12 +50,27 @@ export abstract class BaseDisplayTextWidgetComponent extends WidgetComponent imp
 
     constructor() {
         super();
+        if (isObservable(this.formattingEnabledToken)) {
+            this.formattingEnabledToken.pipe(takeUntilDestroyed()).subscribe((enabled: boolean) => {
+                this.formattingEnabled = enabled ?? false;
+            });
+        } else {
+            this.formattingEnabled = this.formattingEnabledToken ?? false;
+        }
         if (isObservable(this.settings)) {
             this.settings.pipe(takeUntilDestroyed()).subscribe((data: DisplayTextWidgetSettings) => {
                 this.updateSettingsBasedProperties(data);
             });
         } else {
             this.updateSettingsBasedProperties(this.settings);
+        }
+    }
+
+    ngOnInit() {
+        if (this.formattingEnabled && this.field?.value !== null && this.field?.value !== undefined && typeof this.field?.value !== 'string') {
+            if (this.formatter.hasFormatter(this.field.type)) {
+                this.field.value = this.formatter.format(this.field);
+            }
         }
     }
 
