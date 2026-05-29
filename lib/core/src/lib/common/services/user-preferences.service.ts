@@ -51,7 +51,7 @@ export class UserPreferencesService {
     defaults = {
         paginationSize: 25,
         supportedPageSizes: [5, 10, 15, 20],
-        locale: 'en-GB',
+        locale: 'en',
         expandedSidenav: true
     };
 
@@ -341,18 +341,23 @@ export class UserPreferencesService {
      * @returns Default locale language code
      */
     getDefaultLocale(): string {
-        return this.appConfig.get<string>(UserPreferenceValues.Locale) || this.translate.getBrowserCultureLang() || 'en-GB';
+        return this.appConfig.get<string>(UserPreferenceValues.Locale) || this.translate.getBrowserCultureLang() || 'en';
     }
 
     private getLanguageByKey(key: string): LanguageItem {
-        const defaultLanguage = { key: 'en-GB' } as LanguageItem;
+        const defaultLanguage = { key: 'en' } as LanguageItem;
         let language: LanguageItem;
 
         const customLanguages = this.appConfig.get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
         if (Array.isArray(customLanguages)) {
             language = customLanguages.find((customLanguage) => key.includes(customLanguage.key));
         }
-        language ??= DEFAULT_LANGUAGE_LIST.find((defaultLang) => defaultLang.key === key) ?? defaultLanguage;
+        // Try exact match first, then try base language (e.g., 'ar' matches 'ar-SA')
+        language ??= DEFAULT_LANGUAGE_LIST.find((defaultLang) => defaultLang.key === key);
+        language ??= DEFAULT_LANGUAGE_LIST.find(
+            (defaultLang) => defaultLang.key.startsWith(key + '-') || key.startsWith(defaultLang.key.split('-')[0])
+        );
+        language ??= defaultLanguage;
         return language;
     }
 }
