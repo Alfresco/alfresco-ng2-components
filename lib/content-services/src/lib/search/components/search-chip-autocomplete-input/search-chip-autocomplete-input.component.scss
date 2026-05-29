@@ -31,12 +31,12 @@ adf-search-chip-autocomplete-input {
     }
 
     .adf-option-chips-delete-button.adf-autocomplete-added-option-chips-delete-button {
-        font: var(--mat-sys-body-small);
+        font-size: var(--mat-sys-body-small-size);
         height: var(--mat-sys-body-small-size);
         width: var(--mat-sys-body-small-size);
 
         .adf-option-chips-delete-icon.adf-autocomplete-added-option-chips-delete-icon {
-            font: var(--mat-sys-body-small);
+            font-size: var(--mat-sys-body-small-size);
             height: var(--mat-sys-body-small-size);
             width: var(--mat-sys-body-small-size);
         }
