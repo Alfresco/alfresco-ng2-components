@@ -8,7 +8,6 @@ bundles
 dist
 tmp
 temp
-*.npmrc
 .history
 .ng_pkg_build/
 coverage/
