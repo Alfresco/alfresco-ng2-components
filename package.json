@@ -4,6 +4,7 @@
   "version": "8.5.0",
   "author": "Hyland Software, Inc. and its affiliates",
   "scripts": {
+    "preinstall": "node scripts/preinstall-check.mjs",
     "prepare": "node scripts/postinstall-security.mjs",
     "bundle:js-api": "nx run js-api:bundle",
     "bundle:cli": "nx run cli:bundle",

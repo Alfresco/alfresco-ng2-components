@@ -29,11 +29,13 @@ npm install   # or npm ci
 
 This project has built-in supply chain attack protection. When you run `npm install`:
 
-1. All packages install with scripts disabled (via `.npmrc`)
-2. Security check runs against OSV + GitHub Advisory databases (109+ known threats)
-3. Only trusted packages (esbuild, nx, husky, etc.) get their scripts executed
+1. **Preinstall check** scans both `package.json` AND `package-lock.json` against OSV + GitHub Advisory databases
+2. If malicious packages detected → installation blocked BEFORE any code runs
+3. Packages install normally
+4. **Post-install check** verifies installed packages (defense in depth)
+5. Only trusted packages (esbuild, nx, husky, etc.) get their native bindings rebuilt
 
-If a malicious package is detected, installation is blocked and `node_modules` is deleted.
+Checking `package.json` catches new dependencies added during upgrades (e.g., `nx migrate`) before the lockfile is updated. If a malicious package is detected at any stage, installation is blocked.
 
 ## Components
 

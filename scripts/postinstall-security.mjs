@@ -21,11 +21,12 @@
  * Post-install Security Script
  *
  * This runs after `npm install` / `npm ci` (via prepare hook).
- * Since .npmrc has ignore-scripts=true, no package scripts run during install.
+ * Preinstall already checked the lockfile - this is a defense-in-depth
+ * check against installed packages + rebuilds trusted native bindings.
  *
  * This script:
- * 1. Runs security check against OSV + GitHub Advisory
- * 2. If safe, rebuilds only trusted packages that need native bindings
+ * 1. Runs security check against OSV + GitHub Advisory (defense in depth)
+ * 2. Rebuilds trusted packages that need native bindings
  * 3. Sets up husky
  */
 

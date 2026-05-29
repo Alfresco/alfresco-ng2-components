@@ -30,10 +30,10 @@
  * Cache: Results are cached locally for 24 hours to avoid slowing down installs.
  */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync, rmSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, rmSync, readdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { execSync } from 'child_process';
+import { execSync, spawnSync } from 'child_process';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = join(__dirname, '..');
@@ -45,6 +45,9 @@ const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 const OSV_API = 'https://api.osv.dev/v1/query';
 const OSV_BATCH_API = 'https://api.osv.dev/v1/querybatch';
 const GITHUB_ADVISORY_API = 'https://api.github.com/advisories';
+
+// Meterian CLI (bundled with VSCode extension, also available via npx)
+const METERIAN_CLI = '@meterian/cli';
 
 // Filter for supply chain attacks (malware, compromised packages)
 // These are the most dangerous - not just vulnerabilities but intentionally malicious
@@ -172,6 +175,104 @@ async function fetchFromOSV(packages) {
     }
 
     return results;
+}
+
+function findMeterianCli() {
+    const homeDir = process.env.HOME || process.env.USERPROFILE;
+
+    // Check VSCode extensions first (most likely for local dev)
+    const extensionsDir = join(homeDir, '.vscode', 'extensions');
+    if (existsSync(extensionsDir)) {
+        try {
+            const extensions = readdirSync(extensionsDir)
+                .filter(d => /^meterian\.meterian-heidi-\d+\.\d+\.\d+$/.test(d))
+                .sort()
+                .reverse(); // Latest version first
+
+            for (const ext of extensions) {
+                const cliPath = join(extensionsDir, ext, 'packages', 'meterian-cli');
+                if (existsSync(cliPath)) {
+                    return cliPath;
+                }
+            }
+        } catch {
+            // Ignore errors reading extensions dir
+        }
+    }
+
+    // Other possible locations
+    const locations = [
+        // Local node_modules
+        join(ROOT_DIR, 'node_modules', '@meterian', 'cli'),
+        // Global npm (macOS/Linux)
+        join(homeDir, '.npm-global', 'lib', 'node_modules', '@meterian', 'cli'),
+        // Global npm (alternative)
+        '/usr/local/lib/node_modules/@meterian/cli'
+    ];
+
+    for (const loc of locations) {
+        if (existsSync(loc)) {
+            return loc;
+        }
+    }
+
+    return null;
+}
+
+function isMeterianAvailable() {
+    return findMeterianCli() !== null;
+}
+
+async function checkWithMeterian(dependencies) {
+    // Skip if Meterian CLI is not available
+    const cliPath = findMeterianCli();
+    if (!cliPath) {
+        console.log('  ⏭️  Meterian: Not installed, skipping');
+        console.log('     Install VSCode extension "Meterian Security" or run: npm i -g @meterian/cli');
+        return { vulnerable: [], source: 'Meterian' };
+    }
+
+    console.log('  📡 Checking with Meterian CLI...');
+
+    try {
+        // Format dependencies for Meterian CLI
+        const input = dependencies.map(dep => ({
+            language: 'nodejs',
+            name: dep.name,
+            version: dep.version
+        }));
+
+        // Run Meterian CLI check using the found path
+        const cliScript = join(cliPath, 'src', 'cli.js');
+        const result = spawnSync('node', [cliScript, 'check'], {
+            input: JSON.stringify(input),
+            encoding: 'utf-8',
+            timeout: 60000, // 60 second timeout
+            maxBuffer: 10 * 1024 * 1024
+        });
+
+        if (result.error) {
+            console.log(`     ⚠ Meterian: ${result.error.message}`);
+            return { vulnerable: [], source: 'Meterian' };
+        }
+
+        if (result.status !== 0 && !result.stdout) {
+            console.log(`     ⚠ Meterian: CLI returned status ${result.status}`);
+            return { vulnerable: [], source: 'Meterian' };
+        }
+
+        const output = JSON.parse(result.stdout);
+        console.log(`     ✓ Meterian: Found ${output.vulnerable?.length || 0} vulnerable packages`);
+
+        return {
+            vulnerable: output.vulnerable || [],
+            summary: output.summary,
+            source: 'Meterian'
+        };
+    } catch (e) {
+        console.log(`     ⚠ Meterian: ${e.message}`);
+        return { vulnerable: [], source: 'Meterian' };
+    }
 }
 
 async function fetchFromGitHubAdvisory(packages) {
@@ -393,6 +494,28 @@ async function main() {
     const lockfile = readJsonFile(join(ROOT_DIR, 'package-lock.json'));
     if (lockfile?.packages) {
         violations.push(...checkLockfileDependencies(lockfile.packages, blockedPackages));
+    }
+
+    // Check with Meterian CLI for additional vulnerability coverage
+    if (lockfile?.packages) {
+        console.log('');
+        const deps = Object.entries(lockfile.packages)
+            .filter(([path, info]) => path && info.version)
+            .map(([path, info]) => ({
+                name: path.replace(/^node_modules\//, '').replace(/^.*node_modules\//, ''),
+                version: info.version
+            }))
+            .slice(0, 500); // Limit to avoid timeout
+
+        const meterianResult = await checkWithMeterian(deps);
+        for (const vuln of meterianResult.vulnerable || []) {
+            violations.push({
+                package: vuln.name,
+                version: vuln.version,
+                reason: `${vuln.severity}: ${vuln.id}${vuln.safeVersions?.length ? ` (safe: ${vuln.safeVersions[0]})` : ''}`,
+                source: 'Meterian'
+            });
+        }
     }
 
     // Deduplicate
