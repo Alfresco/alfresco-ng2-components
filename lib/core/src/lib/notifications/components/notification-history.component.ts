@@ -43,6 +43,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { IconModule } from '../../icon/icon.module';
+import { AppConfigService } from '../../app-config/app-config.service';
 
 @Component({
     selector: 'adf-notification-history',
@@ -67,6 +68,7 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
     private readonly notificationService = inject(NotificationService);
     private readonly storageService = inject(StorageService);
     private readonly cd = inject(ChangeDetectorRef);
+    private readonly appConfig = inject(AppConfigService);
 
     public static MAX_NOTIFICATION_STACK_LENGTH = 100;
     public static NOTIFICATION_STORAGE = 'notification-history';
@@ -109,6 +111,8 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.notifications = JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)) || [];
+        const configBadgeSize = this.appConfig.get<MatBadgeSize>('notification.badgeSize', null);
+        this.badgeSize = configBadgeSize ?? this.badgeSize;
     }
 
     ngAfterViewInit(): void {

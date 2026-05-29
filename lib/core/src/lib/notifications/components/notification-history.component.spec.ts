@@ -26,6 +26,7 @@ import { provideCoreAuthTesting } from '../../testing/noop-auth.module';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatBadgeHarness } from '@angular/material/badge/testing';
+import { AppConfigService } from '../../app-config/app-config.service';
 
 describe('Notification History Component', () => {
     let fixture: ComponentFixture<NotificationHistoryComponent>;
@@ -185,14 +186,34 @@ describe('Notification History Component', () => {
             });
         }, 45000);
 
-        it('should be able to change the size of the badge', async () => {
-            component.badgeSize = 'medium';
-            fixture.detectChanges();
-            notificationService.showInfo('Example Message');
-            fixture.detectChanges();
+        it('should apply badge size from app config on init', async () => {
+            const appConfig = TestBed.inject(AppConfigService);
+            spyOn(appConfig, 'get').and.callFake(
+                <T>(key: string, defaultValue?: T): T => (key === 'notification.badgeSize' ? 'large' : defaultValue) as T
+            );
 
-            const badgeHarness = await TestbedHarnessEnvironment.loader(fixture).getHarness(MatBadgeHarness);
-            expect(await badgeHarness.getSize()).toBe('medium');
+            const configFixture = TestBed.createComponent(NotificationHistoryComponent);
+            const configComponent = configFixture.componentInstance;
+            configComponent.notifications = [];
+            configFixture.detectChanges();
+
+            expect(configComponent.badgeSize).toBe('large');
+
+            notificationService.showInfo('Example Message');
+            configFixture.detectChanges();
+
+            const badgeHarness = await TestbedHarnessEnvironment.loader(configFixture).getHarness(MatBadgeHarness);
+            expect(await badgeHarness.getSize()).toBe('large');
+        });
+
+        it('should use default badge size when app config is not set', () => {
+            const appConfig = TestBed.inject(AppConfigService);
+            spyOn(appConfig, 'get').and.returnValue(null);
+
+            const configFixture = TestBed.createComponent(NotificationHistoryComponent);
+            configFixture.detectChanges();
+
+            expect(configFixture.componentInstance.badgeSize).toBe('small');
         });
 
         describe('focus change', () => {

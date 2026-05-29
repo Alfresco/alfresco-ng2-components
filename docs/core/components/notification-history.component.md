@@ -27,6 +27,21 @@ The main purpose of the [Notification history component](../../core/components/n
 | maxNotifications | `number` | 5 | Maximum number of notifications to display. The rest will remain hidden until load more is clicked |
 | menuPositionX | [`MenuPositionX`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "after" | Custom choice for opening the menu at the bottom. Can be `before` or `after`. |
 | menuPositionY | [`MenuPositionY`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "below" | Custom choice for opening the menu at the bottom. Can be `above` or `below`. |
+| badgeSize | [`MatBadgeSize`](https://v19.material.angular.dev/components/badge/api#MatBadgeSize) | `small` | Badge size. Can be `small`, `medium` or `large`. |
+
+### App config
+
+You can set a default badge size in `app.config.json`:
+
+```json
+{
+    "notification": {
+        "badgeSize": "medium"
+    }
+}
+```
+
+The `notification.badgeSize` value is applied on init when the `badgeSize` input is not set explicitly on the component.
 
 ## See also
 
