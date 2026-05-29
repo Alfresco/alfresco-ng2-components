@@ -28,16 +28,15 @@
  * (e.g., nx migrate) before the lockfile is updated.
  */
 
-import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = join(__dirname, '..');
 const CACHE_DIR = join(ROOT_DIR, 'node_modules', '.cache', 'security-check');
-const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
+const CACHE_TTL = 24 * 60 * 60 * 1000;
 
-// Known supply chain attack packages (fallback if APIs fail)
 const KNOWN_MALICIOUS = new Set([
     'event-stream@3.3.6',
     'flatmap-stream@0.1.1',
@@ -52,47 +51,85 @@ const KNOWN_MALICIOUS = new Set([
     '@primevue/themes@4.3.0', '@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3'
 ]);
 
-function readCache() {
-    const cachePath = join(CACHE_DIR, 'threats.json');
-    if (!existsSync(cachePath)) return null;
+// ============================================================================
+// FILE UTILITIES
+// ============================================================================
+
+function readJsonFile(filePath) {
     try {
-        const data = JSON.parse(readFileSync(cachePath, 'utf8'));
-        if (Date.now() - data.timestamp < CACHE_TTL) {
-            return {
-                threats: new Set(data.threats),
-                ranges: data.ranges || []
-            };
-        }
-    } catch { /* ignore */ }
-    return null;
+        return JSON.parse(readFileSync(filePath, 'utf8'));
+    } catch {
+        return null;
+    }
+}
+
+function writeJsonFile(filePath, data) {
+    try {
+        writeFileSync(filePath, JSON.stringify(data));
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+function ensureDirectory(path) {
+    try {
+        mkdirSync(path, { recursive: true });
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+// ============================================================================
+// CACHE MANAGEMENT
+// ============================================================================
+
+function readCache() {
+    const data = readJsonFile(join(CACHE_DIR, 'threats.json'));
+
+    if (!data || Date.now() - data.timestamp >= CACHE_TTL) {
+        return null;
+    }
+
+    return {
+        threats: new Set(data.threats),
+        ranges: data.ranges || []
+    };
 }
 
 function writeCache(threats, ranges) {
-    try {
-        if (!existsSync(CACHE_DIR)) {
-            mkdirSync(CACHE_DIR, { recursive: true });
-        }
-        writeFileSync(join(CACHE_DIR, 'threats.json'), JSON.stringify({
-            timestamp: Date.now(),
-            threats: [...threats],
-            ranges: ranges
-        }));
-    } catch { /* ignore */ }
+    ensureDirectory(CACHE_DIR);
+    writeJsonFile(join(CACHE_DIR, 'threats.json'), {
+        timestamp: Date.now(),
+        threats: [...threats],
+        ranges
+    });
+}
+
+// ============================================================================
+// SECURITY PROVIDERS
+// ============================================================================
+
+function splitIntoBatches(items, batchSize) {
+    const batches = [];
+    for (let index = 0; index < items.length; index += batchSize) {
+        batches.push(items.slice(index, index + batchSize));
+    }
+    return batches;
 }
 
 async function fetchOSV(projectDependencies) {
-    // Query OSV batch API for the project's actual dependencies
-    if (!projectDependencies || projectDependencies.length === 0) {
+    if (!projectDependencies?.length) {
         return new Set();
     }
 
     const malicious = new Set();
 
     try {
-        // Process in batches of 1000
-        const batchSize = 1000;
-        for (let i = 0; i < projectDependencies.length; i += batchSize) {
-            const batch = projectDependencies.slice(i, i + batchSize);
+        const batches = splitIntoBatches(projectDependencies, 1000);
+
+        for (const batch of batches) {
             const response = await fetch('https://api.osv.dev/v1/querybatch', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -111,18 +148,14 @@ async function fetchOSV(projectDependencies) {
             for (const result of data.results || []) {
                 for (const vuln of result.vulns || []) {
                     const summary = [vuln.summary || '', vuln.details || ''].join(' ').toLowerCase();
-                    const isMalware = summary.includes('malware') ||
-                        summary.includes('malicious') ||
-                        summary.includes('compromised') ||
-                        summary.includes('supply chain') ||
-                        summary.includes('backdoor');
+                    const isMalware = ['malware', 'malicious', 'compromised', 'supply chain', 'backdoor']
+                        .some(keyword => summary.includes(keyword));
 
                     if (isMalware && vuln.affected) {
                         for (const affected of vuln.affected) {
                             if (affected.package?.ecosystem === 'npm' && affected.package?.name) {
-                                const versions = affected.versions || [];
-                                for (const v of versions) {
-                                    malicious.add(`${affected.package.name}@${v}`);
+                                for (const version of affected.versions || []) {
+                                    malicious.add(`${affected.package.name}@${version}`);
                                 }
                             }
                         }
@@ -131,7 +164,7 @@ async function fetchOSV(projectDependencies) {
             }
         }
     } catch {
-        // Ignore errors, return what we have
+        // Ignore errors
     }
 
     return malicious;
@@ -143,126 +176,143 @@ async function fetchGitHubAdvisory() {
             headers: { 'Accept': 'application/vnd.github+json' },
             signal: AbortSignal.timeout(10000)
         });
-        if (!response.ok) return new Set();
+
+        if (!response.ok) {
+            return new Set();
+        }
 
         const advisories = await response.json();
         const malicious = new Set();
 
         for (const advisory of advisories) {
-            if (advisory.vulnerabilities) {
-                for (const vuln of advisory.vulnerabilities) {
-                    if (vuln.package?.ecosystem === 'npm' && vuln.package?.name) {
-                        // GitHub uses version ranges, we'll mark the package name
-                        // and check ranges in the scan
-                        if (vuln.vulnerable_version_range) {
-                            malicious.add(`${vuln.package.name}:${vuln.vulnerable_version_range}`);
-                        }
-                    }
+            for (const vuln of advisory.vulnerabilities || []) {
+                if (vuln.package?.ecosystem === 'npm' && vuln.package?.name && vuln.vulnerable_version_range) {
+                    malicious.add(`${vuln.package.name}:${vuln.vulnerable_version_range}`);
                 }
             }
         }
+
         return malicious;
     } catch {
         return new Set();
     }
 }
 
+// ============================================================================
+// VERSION COMPARISON
+// ============================================================================
+
+function compareVersions(versionA, versionB) {
+    const partsA = versionA.split('.').map(Number);
+    const partsB = versionB.split('.').map(Number);
+    const maxLength = Math.max(partsA.length, partsB.length);
+
+    let result = 0;
+
+    for (let index = 0; index < maxLength && result === 0; index++) {
+        const numA = partsA[index] || 0;
+        const numB = partsB[index] || 0;
+        result = Math.sign(numA - numB);
+    }
+
+    return result;
+}
+
 function parseVersionRange(range, version) {
-    // Simple version range parser for GitHub advisory format
-    // Handles: "= 1.0.0", "< 1.0.0", "<= 1.0.0", "> 1.0.0", ">= 1.0.0"
     if (!range || !version) return false;
 
-    const parts = range.split(',').map(p => p.trim());
+    const parts = range.split(',').map(part => part.trim());
+
     for (const part of parts) {
         const match = part.match(/^([<>=]+)\s*(\S+)$/);
+
         if (!match) {
             if (part === version) return true;
             continue;
         }
-        const [, op, rangeVer] = match;
-        const cmp = compareVersions(version, rangeVer);
 
-        if (op === '=' && cmp !== 0) return false;
-        if (op === '<' && cmp >= 0) return false;
-        if (op === '<=' && cmp > 0) return false;
-        if (op === '>' && cmp <= 0) return false;
-        if (op === '>=' && cmp < 0) return false;
+        const [, operator, rangeVersion] = match;
+        const comparison = compareVersions(version, rangeVersion);
+
+        const checks = {
+            '=': comparison === 0,
+            '<': comparison < 0,
+            '<=': comparison <= 0,
+            '>': comparison > 0,
+            '>=': comparison >= 0
+        };
+
+        if (!checks[operator]) return false;
     }
+
     return true;
 }
 
-function compareVersions(a, b) {
-    const pa = a.split('.').map(Number);
-    const pb = b.split('.').map(Number);
-    for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
-        const na = pa[i] || 0;
-        const nb = pb[i] || 0;
-        if (na > nb) return 1;
-        if (na < nb) return -1;
-    }
-    return 0;
-}
+// ============================================================================
+// PACKAGE EXTRACTION
+// ============================================================================
 
 function extractVersionNumber(versionSpec) {
     if (!versionSpec) return null;
-    // Remove ^, ~, >=, <=, >, <, = prefixes
-    // Use atomic pattern to prevent backtracking: match version then optional prerelease
+
     const match = versionSpec.match(/(\d+)\.(\d+)\.(\d+)(?:-([a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*))?/);
     return match ? match[0] : null;
 }
 
 function getPackagesFromPackageJson() {
-    const packageJsonPath = join(ROOT_DIR, 'package.json');
-    if (!existsSync(packageJsonPath)) return [];
+    const packageJson = readJsonFile(join(ROOT_DIR, 'package.json'));
 
-    const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
-    const packages = [];
-
-    const depTypes = ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies'];
-    for (const depType of depTypes) {
-        const deps = packageJson[depType] || {};
-        for (const [name, versionSpec] of Object.entries(deps)) {
-            // Skip file: and link: dependencies
-            if (typeof versionSpec === 'string' && !versionSpec.startsWith('file:') && !versionSpec.startsWith('link:')) {
-                const version = extractVersionNumber(versionSpec);
-                if (version) {
-                    packages.push({ name, version, source: 'package.json' });
-                }
-            }
-        }
-    }
-
-    return packages;
-}
-
-function getPackagesFromLockfile() {
-    const lockfilePath = join(ROOT_DIR, 'package-lock.json');
-    if (!existsSync(lockfilePath)) {
+    if (!packageJson) {
         return [];
     }
 
-    const lockfile = JSON.parse(readFileSync(lockfilePath, 'utf8'));
+    const depTypes = ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies'];
+
+    return depTypes
+        .flatMap(depType => Object.entries(packageJson[depType] || {}))
+        .filter(([, versionSpec]) =>
+            typeof versionSpec === 'string' &&
+            !versionSpec.startsWith('file:') &&
+            !versionSpec.startsWith('link:')
+        )
+        .map(([name, versionSpec]) => ({
+            name,
+            version: extractVersionNumber(versionSpec),
+            source: 'package.json'
+        }))
+        .filter(pkg => pkg.version);
+}
+
+function getPackagesFromLockfile() {
+    const lockfile = readJsonFile(join(ROOT_DIR, 'package-lock.json'));
+
+    if (!lockfile) {
+        return [];
+    }
+
     const packages = [];
 
-    // npm v2+ lockfile format
     if (lockfile.packages) {
         for (const [path, info] of Object.entries(lockfile.packages)) {
-            if (!path || path === '') continue; // skip root
-            const name = path.replace(/^node_modules\//, '').replace(/\/node_modules\//g, '/');
-            if (info.version) {
-                packages.push({ name, version: info.version, source: 'lockfile' });
-            }
+            if (!path || path === '' || !info.version) continue;
+
+            packages.push({
+                name: path.replace(/^node_modules\//, '').replace(/\/node_modules\//g, '/'),
+                version: info.version,
+                source: 'lockfile'
+            });
         }
     }
 
-    // npm v1 lockfile format
     if (lockfile.dependencies) {
         const extractDeps = (deps, prefix = '') => {
             for (const [name, info] of Object.entries(deps)) {
                 const fullName = prefix ? `${prefix}/${name}` : name;
+
                 if (info.version) {
                     packages.push({ name: fullName, version: info.version, source: 'lockfile' });
                 }
+
                 if (info.dependencies) {
                     extractDeps(info.dependencies, fullName);
                 }
@@ -278,11 +328,12 @@ function getAllPackages() {
     const packageJsonPkgs = getPackagesFromPackageJson();
     const lockfilePkgs = getPackagesFromLockfile();
 
-    // Combine and dedupe (lockfile takes precedence for same name)
     const seen = new Map();
+
     for (const pkg of lockfilePkgs) {
         seen.set(`${pkg.name}@${pkg.version}`, pkg);
     }
+
     for (const pkg of packageJsonPkgs) {
         const key = `${pkg.name}@${pkg.version}`;
         if (!seen.has(key)) {
@@ -293,96 +344,110 @@ function getAllPackages() {
     return [...seen.values()];
 }
 
-async function main() {
-    console.log('\n🔒 ADF SECURITY CHECK');
-    console.log('='.repeat(70));
-    console.log('Scanning for known supply chain attacks and compromised packages...\n');
+// ============================================================================
+// VIOLATION DETECTION
+// ============================================================================
 
-    // Get all packages from both package.json and lockfile
-    const packages = getAllPackages();
-    if (packages.length === 0) {
-        console.log('  ⚠️  No packages found to check');
-        console.log('='.repeat(70) + '\n');
-        process.exit(0);
-    }
-
-    const fromPackageJson = packages.filter(p => p.source === 'package.json').length;
-    const fromLockfile = packages.filter(p => p.source === 'lockfile').length;
-    console.log(`  Checking ${packages.length} packages (${fromPackageJson} from package.json, ${fromLockfile} from lockfile)\n`);
-
-    // Try to use cache first
-    const cache = readCache();
-    let threats;
-    let ghRanges;
-
-    if (!cache) {
-        console.log('  Fetching latest security databases...\n');
-
-        const [osvThreats, ghThreats] = await Promise.all([
-            fetchOSV(packages).then(r => { console.log(`  📡 OSV: ${r.size} malware entries`); return r; }),
-            fetchGitHubAdvisory().then(r => { console.log(`  📡 GitHub Advisory: ${r.size} malware entries`); return r; })
-        ]);
-
-        threats = new Set([...KNOWN_MALICIOUS, ...osvThreats]);
-        ghRanges = [...ghThreats];
-
-        // Cache the results including ranges
-        writeCache(threats, ghRanges);
-    } else {
-        threats = cache.threats;
-        ghRanges = cache.ranges;
-        console.log(`  Using cached security database (${threats.size} exact + ${ghRanges.length} ranges)\n`);
-    }
-
-    // Check packages against exact matches and ranges
-    const found = [];
+function findViolations(packages, threats, ghRanges) {
+    const violations = [];
 
     for (const pkg of packages) {
-        const exact = `${pkg.name}@${pkg.version}`;
+        const exactKey = `${pkg.name}@${pkg.version}`;
 
-        // Check exact match
-        if (threats.has(exact)) {
-            found.push({ ...pkg, source: 'exact match' });
+        if (threats.has(exactKey)) {
+            violations.push({ ...pkg, detectionSource: 'exact match' });
             continue;
         }
 
-        // Check GitHub Advisory ranges
         for (const entry of ghRanges) {
             const [name, range] = entry.split(':');
             if (pkg.name === name && parseVersionRange(range, pkg.version)) {
-                found.push({ ...pkg, source: 'GitHub Advisory' });
+                violations.push({ ...pkg, detectionSource: 'GitHub Advisory' });
                 break;
             }
         }
     }
 
-    if (found.length > 0) {
-        console.log('\n' + '!'.repeat(70));
-        console.log('🚨 MALICIOUS PACKAGES DETECTED - BLOCKING INSTALLATION');
-        console.log('!'.repeat(70) + '\n');
+    return violations;
+}
 
-        for (const pkg of found) {
-            console.log(`  ❌ ${pkg.name}@${pkg.version} (${pkg.source})`);
-        }
+// ============================================================================
+// REPORTING
+// ============================================================================
 
-        console.log('\nThese packages are known to contain malware or malicious code.');
-        console.log('Installation has been blocked to protect your system.\n');
-        console.log('Actions:');
-        console.log('  1. Remove these packages from package.json');
-        console.log('  2. Find safe alternatives');
-        console.log('  3. Run npm install again\n');
-        console.log('='.repeat(70) + '\n');
+function reportViolations(violations) {
+    console.log('\n' + '!'.repeat(70));
+    console.log('🚨 MALICIOUS PACKAGES DETECTED - BLOCKING INSTALLATION');
+    console.log('!'.repeat(70) + '\n');
 
-        process.exit(1);
+    for (const pkg of violations) {
+        console.log(`  ❌ ${pkg.name}@${pkg.version} (${pkg.detectionSource})`);
     }
 
-    console.log(`\n✅ Security check passed (${threats.size} exact + ${ghRanges.length} ranges checked)`)
-
+    console.log('\nThese packages are known to contain malware or malicious code.');
+    console.log('Installation has been blocked to protect your system.\n');
+    console.log('Actions:');
+    console.log('  1. Remove these packages from package.json');
+    console.log('  2. Find safe alternatives');
+    console.log('  3. Run npm install again\n');
     console.log('='.repeat(70) + '\n');
 }
 
-main().catch(err => {
-    console.error('Security check error:', err.message);
-    // Don't block on errors - allow install to proceed
+// ============================================================================
+// MAIN
+// ============================================================================
+
+async function main() {
+    console.log('\n🔒 ADF SECURITY CHECK');
+    console.log('='.repeat(70));
+    console.log('Scanning for known supply chain attacks and compromised packages...\n');
+
+    const packages = getAllPackages();
+
+    if (!packages.length) {
+        console.log('  ⚠️  No packages found to check');
+        console.log('='.repeat(70) + '\n');
+        process.exit(0);
+    }
+
+    const fromPackageJson = packages.filter(pkg => pkg.source === 'package.json').length;
+    const fromLockfile = packages.filter(pkg => pkg.source === 'lockfile').length;
+    console.log(`  Checking ${packages.length} packages (${fromPackageJson} from package.json, ${fromLockfile} from lockfile)\n`);
+
+    const cache = readCache();
+    let threats;
+    let ghRanges;
+
+    if (cache) {
+        threats = cache.threats;
+        ghRanges = cache.ranges;
+        console.log(`  Using cached security database (${threats.size} exact + ${ghRanges.length} ranges)\n`);
+    } else {
+        console.log('  Fetching latest security databases...\n');
+
+        const [osvThreats, ghThreats] = await Promise.all([
+            fetchOSV(packages).then(result => { console.log(`  📡 OSV: ${result.size} malware entries`); return result; }),
+            fetchGitHubAdvisory().then(result => { console.log(`  📡 GitHub Advisory: ${result.size} malware entries`); return result; })
+        ]);
+
+        threats = new Set([...KNOWN_MALICIOUS, ...osvThreats]);
+        ghRanges = [...ghThreats];
+
+        writeCache(threats, ghRanges);
+    }
+
+    const violations = findViolations(packages, threats, ghRanges);
+
+    if (violations.length) {
+        reportViolations(violations);
+        process.exit(1);
+    }
+
+    console.log(`\n✅ Security check passed (${threats.size} exact + ${ghRanges.length} ranges checked)`);
+    console.log('='.repeat(70) + '\n');
+}
+
+main().catch(error => {
+    console.error('Security check error:', error.message);
     process.exit(0);
 });

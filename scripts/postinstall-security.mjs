@@ -30,23 +30,19 @@
  * 3. Sets up husky
  */
 
-import { execSync } from 'child_process';
-import { existsSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { execSync } from 'node:child_process';
+import { statSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = join(__dirname, '..');
 
-// Use npm_execpath from environment (set by npm during lifecycle scripts)
-// Falls back to 'npm' if not available (e.g., running script directly)
 const NPM_PATH = process.env.npm_execpath || 'npm';
 const NPX_CMD = NPM_PATH.endsWith('npm-cli.js')
     ? `"${process.execPath}" "${NPM_PATH.replace('npm-cli.js', 'npx-cli.js')}"`
     : 'npx';
 
-// Packages that are trusted to run postinstall/install scripts
-// These typically need to compile native bindings or setup tooling
 const TRUSTED_PACKAGES = [
     'esbuild',
     'sharp',
@@ -66,7 +62,6 @@ const TRUSTED_PACKAGES = [
     'core-js-pure'
 ];
 
-// Scoped packages that need rebuild (full package names)
 const TRUSTED_SCOPED_PACKAGES = [
     '@esbuild/darwin-arm64',
     '@esbuild/darwin-x64',
@@ -80,6 +75,14 @@ const TRUSTED_SCOPED_PACKAGES = [
     '@nx/nx-win32-x64-msvc',
     '@swc/core'
 ];
+
+function directoryExists(path) {
+    try {
+        return statSync(path).isDirectory();
+    } catch {
+        return false;
+    }
+}
 
 function run(command, options = {}) {
     try {
@@ -96,28 +99,59 @@ function run(command, options = {}) {
 
 function getInstalledTrustedPackages() {
     const nodeModulesPath = join(ROOT_DIR, 'node_modules');
-    if (!existsSync(nodeModulesPath)) return [];
 
-    const installed = [];
-
-    // Check non-scoped packages
-    for (const pkg of TRUSTED_PACKAGES) {
-        const pkgPath = join(nodeModulesPath, pkg);
-        if (existsSync(pkgPath)) {
-            installed.push(pkg);
-        }
+    if (!directoryExists(nodeModulesPath)) {
+        return [];
     }
 
-    // Check scoped packages
-    for (const pkg of TRUSTED_SCOPED_PACKAGES) {
-        const [scope, name] = pkg.split('/');
-        const pkgPath = join(nodeModulesPath, scope, name);
-        if (existsSync(pkgPath)) {
-            installed.push(pkg);
-        }
+    const nonScopedInstalled = TRUSTED_PACKAGES
+        .filter(pkg => directoryExists(join(nodeModulesPath, pkg)));
+
+    const scopedInstalled = TRUSTED_SCOPED_PACKAGES
+        .filter(pkg => {
+            const [scope, name] = pkg.split('/');
+            return directoryExists(join(nodeModulesPath, scope, name));
+        });
+
+    return [...new Set([...nonScopedInstalled, ...scopedInstalled])];
+}
+
+function runSecurityCheck() {
+    console.log('Step 1/3: Running security check...\n');
+    const securityCheckPath = join(__dirname, 'check-security.mjs');
+    const securityPassed = run(`"${process.execPath}" "${securityCheckPath}"`);
+
+    if (!securityPassed) {
+        console.error('\n❌ Security check failed - installation aborted\n');
+        process.exit(1);
+    }
+}
+
+function rebuildTrustedPackages() {
+    console.log('\nStep 2/3: Rebuilding trusted packages...\n');
+    const trustedInstalled = getInstalledTrustedPackages();
+
+    if (!trustedInstalled.length) {
+        console.log('No trusted packages require rebuilding.\n');
+        return;
     }
 
-    return [...new Set(installed)];
+    console.log('Trusted packages to rebuild:');
+    for (const pkg of trustedInstalled) {
+        console.log(`  ✓ ${pkg}`);
+    }
+
+    const npmCmd = NPM_PATH === 'npm' ? 'npm' : `"${process.execPath}" "${NPM_PATH}"`;
+    run(`${npmCmd} rebuild --ignore-scripts=false ${trustedInstalled.join(' ')}`);
+}
+
+function setupHusky() {
+    console.log('\nStep 3/3: Setting up husky...\n');
+    const huskyPath = join(ROOT_DIR, 'node_modules', 'husky');
+
+    if (directoryExists(huskyPath)) {
+        run(`${NPX_CMD} husky`);
+    }
 }
 
 async function main() {
@@ -125,45 +159,16 @@ async function main() {
     console.log('🔒 ADF POST-INSTALL SECURITY');
     console.log('='.repeat(70) + '\n');
 
-    // Step 1: Run security check
-    console.log('Step 1/3: Running security check...\n');
-    const securityCheckPath = join(__dirname, 'check-security.mjs');
-
-    // Run security check as subprocess using process.execPath to avoid PATH-based attacks
-    const securityPassed = run(`"${process.execPath}" "${securityCheckPath}"`);
-    if (!securityPassed) {
-        console.error('\n❌ Security check failed - installation aborted\n');
-        process.exit(1);
-    }
-
-    // Step 2: Rebuild trusted packages
-    console.log('\nStep 2/3: Rebuilding trusted packages...\n');
-    const trustedInstalled = getInstalledTrustedPackages();
-
-    if (trustedInstalled.length > 0) {
-        console.log('Trusted packages to rebuild:');
-        trustedInstalled.forEach(pkg => console.log(`  ✓ ${pkg}`));
-        console.log('');
-
-        const npmCmd = NPM_PATH === 'npm' ? 'npm' : `"${process.execPath}" "${NPM_PATH}"`;
-        run(`${npmCmd} rebuild --ignore-scripts=false ${trustedInstalled.join(' ')}`);
-    } else {
-        console.log('No trusted packages require rebuilding.\n');
-    }
-
-    // Step 3: Setup husky
-    console.log('Step 3/3: Setting up husky...\n');
-    const huskyPath = join(ROOT_DIR, 'node_modules', 'husky');
-    if (existsSync(huskyPath)) {
-        run(`${NPX_CMD} husky`);
-    }
+    runSecurityCheck();
+    rebuildTrustedPackages();
+    setupHusky();
 
     console.log('='.repeat(70));
     console.log('✅ Post-install security complete');
     console.log('='.repeat(70) + '\n');
 }
 
-main().catch(err => {
-    console.error('Post-install failed:', err.message);
+main().catch(error => {
+    console.error('Post-install failed:', error.message);
     process.exit(1);
 });
