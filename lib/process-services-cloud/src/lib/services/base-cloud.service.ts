@@ -84,18 +84,6 @@ export class BaseCloudService {
         );
     }
 
-    protected getWithBody<T, R>(url: string, data?: T, queryParams?: any): Observable<R> {
-        return from(
-            this.callApi<R>(url, {
-                ...this.defaultParams,
-                path: url,
-                httpMethod: 'GET',
-                bodyParam: data,
-                queryParams
-            })
-        );
-    }
-
     protected callApi<T>(url: string, params: RequestOptions): Promise<T> {
         return this.adfHttpClient.request(url, params);
     }
