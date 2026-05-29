@@ -21,6 +21,20 @@ for full details on what you may need to install before using ADF.
 - [Node Version Manager](docs/tutorials/nvm.md)
 - [CORS guide](ALFRESCOCORS.md)
 
+## Installation
+
+```bash
+npm install   # or npm ci
+```
+
+This project has built-in supply chain attack protection. When you run `npm install`:
+
+1. All packages install with scripts disabled (via `.npmrc`)
+2. Security check runs against OSV + GitHub Advisory databases (109+ known threats)
+3. Only trusted packages (esbuild, nx, husky, etc.) get their scripts executed
+
+If a malicious package is detected, installation is blocked and `node_modules` is deleted.
+
 ## Components
 
 You can find the sources for all ADF components in the [`lib`](/lib) folder.
