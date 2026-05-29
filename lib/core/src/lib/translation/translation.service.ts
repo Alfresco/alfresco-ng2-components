@@ -62,7 +62,9 @@ export class TranslationService {
         this.customLoader = this.translate.currentLoader as TranslateLoaderService;
 
         this.defaultLang = 'en';
-        this.customLoader.setDefaultLang(this.defaultLang);
+        if (typeof this.customLoader?.setDefaultLang === 'function') {
+            this.customLoader.setDefaultLang(this.defaultLang);
+        }
         this.translate.setFallbackLang(this.defaultLang);
 
         if (this.providers && this.providers.length > 0) {
