@@ -29,10 +29,6 @@ describe('TranslationService', () => {
             // No implementation needed for this test
         };
 
-        setDefaultLang = (_lang: string): void => {
-            // No implementation needed for this test
-        };
-
         getTranslation = (lang: string) => {
             const translations = {
                 en: {
