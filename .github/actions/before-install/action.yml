@@ -25,14 +25,19 @@ runs:
 
     - name: affected:* flag parser
       shell: bash
+      env:
+        EVENT_NAME: ${{ github.event_name }}
+        PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       run: |
-        if [ "${{ github.event_name }}" == "pull_request" ]; then
-          COMMIT_MSG=$(git log -1 --format=%B)
+        # Get commit message safely from git to avoid script injection
+        # For PRs, use the PR head SHA; for other events use HEAD
+        if [ "$EVENT_NAME" == "pull_request" ] && [ -n "$PR_HEAD_SHA" ]; then
+          COMMIT_MSG=$(git log -1 --format=%B "$PR_HEAD_SHA" 2>/dev/null || echo "")
         else
-          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          COMMIT_MSG=$(git log -1 --format=%B 2>/dev/null || echo "")
         fi
 
-        if [[ "$COMMIT_MSG" == *"[affected:*]"* ]]; then
+        if echo "$COMMIT_MSG" | grep -qF "[affected:*]"; then
           echo "Setting up CI to run with commit flag [affected:*] flag."
           echo "BREAK_ACTION=true" >> $GITHUB_ENV
         fi

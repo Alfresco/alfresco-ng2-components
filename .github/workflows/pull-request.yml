@@ -99,14 +99,16 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
           ACTOR: ${{ github.actor }}
           DEVEL_FLAG: ${{ inputs.devel }}
-          PUSH_COMMIT_MESSAGE: ${{ github.event.head_commit.message || '' }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           skip="false"
 
-          if [ "$EVENT_NAME" == "pull_request" ]; then
-            COMMIT_MESSAGE=$(git log -1 --format=%B)
+          # Get commit message safely from git to avoid script injection
+          if [ "$EVENT_NAME" == "pull_request" ] && [ -n "$PR_HEAD_SHA" ]; then
+            COMMIT_MESSAGE=$(git log -1 --format=%B "$PR_HEAD_SHA" 2>/dev/null || echo "")
           else
-            COMMIT_MESSAGE="$PUSH_COMMIT_MESSAGE"
+            COMMIT_MESSAGE=$(git log -1 --format=%B 2>/dev/null || echo "")
           fi
 
           if [ "$EVENT_NAME" == "schedule" ] || [ "$EVENT_NAME" == "workflow_dispatch" ]; then
@@ -115,8 +117,11 @@ jobs:
           elif [ "$ACTOR" == "dependabot[bot]" ] || [ "$ACTOR" == "alfresco-build" ]; then
             echo -e "\033[32mCommit by $ACTOR — skipping approval check\033[0m"
             skip="true"
-          elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
-            echo -e "\033[32m[ci:force] flag detected — skipping approval check\033[0m"
+          elif echo "$PR_TITLE" | grep -qF "[ci:force]"; then
+            echo -e "\033[32m[ci:force] flag detected in PR title — skipping approval check\033[0m"
+            skip="true"
+          elif echo "$COMMIT_MESSAGE" | grep -qF "[ci:force]"; then
+            echo -e "\033[32m[ci:force] flag detected in commit message — skipping approval check\033[0m"
             skip="true"
           elif [[ "$DEVEL_FLAG" == "true" ]]; then
             echo -e "\033[32mDevel flag — skipping approval check\033[0m"
