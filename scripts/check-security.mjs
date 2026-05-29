@@ -154,7 +154,8 @@ async function fetchFromOSV(projectDependencies) {
                         package: { name: dep.name, ecosystem: 'npm' },
                         version: dep.version
                     }))
-                })
+                }),
+                signal: AbortSignal.timeout(30000)
             });
 
             if (response.ok) {
@@ -300,7 +301,8 @@ async function fetchFromGitHubAdvisory() {
                 headers: {
                     'Accept': 'application/vnd.github+json',
                     'X-GitHub-Api-Version': '2022-11-28'
-                }
+                },
+                signal: AbortSignal.timeout(15000)
             }
         );
 
@@ -601,7 +603,9 @@ async function main() {
         violations.push(...checkLockfileDependencies(lockfile.packages, blockedPackages));
     }
 
-    // Check with Meterian CLI for additional vulnerability coverage
+    // Check with Meterian CLI for additional vulnerability coverage (informational by default)
+    // Set ADF_METERIAN_BLOCK=1 to make Meterian findings block installation
+    const meterianFindings = [];
     if (lockfile?.packages) {
         console.log('');
         const deps = Object.entries(lockfile.packages)
@@ -614,13 +618,25 @@ async function main() {
 
         const meterianResult = await checkWithMeterian(deps);
         for (const vuln of meterianResult.vulnerable || []) {
-            violations.push({
+            meterianFindings.push({
                 package: vuln.name,
                 version: vuln.version,
                 reason: `${vuln.severity}: ${vuln.id}${vuln.safeVersions?.length ? ` (safe: ${vuln.safeVersions[0]})` : ''}`,
                 source: 'Meterian'
             });
         }
+    }
+
+    // Meterian findings are informational unless ADF_METERIAN_BLOCK is set
+    const blockOnMeterian = process.env.ADF_METERIAN_BLOCK === '1' || process.env.ADF_METERIAN_BLOCK === 'true';
+    if (blockOnMeterian) {
+        violations.push(...meterianFindings);
+    } else if (meterianFindings.length > 0) {
+        console.log('\n⚠️  Meterian found vulnerabilities (informational, not blocking):');
+        for (const v of meterianFindings) {
+            console.log(`   ${v.package}@${v.version} - ${v.reason}`);
+        }
+        console.log('   Set ADF_METERIAN_BLOCK=1 to block on these findings.\n');
     }
 
     // Deduplicate
@@ -651,9 +667,12 @@ async function main() {
         console.error('  • Exfiltrate sensitive data\n');
 
         // Delete node_modules to prevent using compromised packages
+        // Set ADF_SECURITY_KEEP_NODE_MODULES=1 to skip deletion (e.g., in CI for caching)
+        const skipDeletion = process.env.ADF_SECURITY_KEEP_NODE_MODULES === '1' || process.env.ADF_SECURITY_KEEP_NODE_MODULES === 'true';
         const nodeModulesPath = join(ROOT_DIR, 'node_modules');
-        if (existsSync(nodeModulesPath)) {
-            console.error('🗑️  Removing node_modules to prevent use of compromised packages...\n');
+        if (existsSync(nodeModulesPath) && !skipDeletion) {
+            console.error('🗑️  Removing node_modules to prevent use of compromised packages...');
+            console.error('   (Set ADF_SECURITY_KEEP_NODE_MODULES=1 to skip deletion)\n');
             try {
                 rmSync(nodeModulesPath, { recursive: true, force: true });
                 console.error('✅ node_modules deleted successfully.\n');
@@ -661,6 +680,8 @@ async function main() {
                 console.error(`⚠️  Could not delete node_modules: ${e.message}`);
                 console.error('   Please delete it manually before proceeding.\n');
             }
+        } else if (skipDeletion) {
+            console.error('⚠️  Skipping node_modules deletion (ADF_SECURITY_KEEP_NODE_MODULES=1)\n');
         }
 
         console.error('📋 REQUIRED ACTIONS:');

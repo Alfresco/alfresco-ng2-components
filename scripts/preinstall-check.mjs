@@ -58,56 +58,83 @@ function readCache() {
     try {
         const data = JSON.parse(readFileSync(cachePath, 'utf8'));
         if (Date.now() - data.timestamp < CACHE_TTL) {
-            return new Set(data.threats);
+            return {
+                threats: new Set(data.threats),
+                ranges: data.ranges || []
+            };
         }
     } catch { /* ignore */ }
     return null;
 }
 
-function writeCache(threats) {
+function writeCache(threats, ranges) {
     try {
         if (!existsSync(CACHE_DIR)) {
             mkdirSync(CACHE_DIR, { recursive: true });
         }
         writeFileSync(join(CACHE_DIR, 'threats.json'), JSON.stringify({
             timestamp: Date.now(),
-            threats: [...threats]
+            threats: [...threats],
+            ranges: ranges
         }));
     } catch { /* ignore */ }
 }
 
-async function fetchOSV() {
+async function fetchOSV(projectDependencies) {
+    // Query OSV batch API for the project's actual dependencies
+    if (!projectDependencies || projectDependencies.length === 0) {
+        return new Set();
+    }
+
+    const malicious = new Set();
+
     try {
-        const response = await fetch('https://osv-vulnerabilities.storage.googleapis.com/npm/all.zip', {
-            signal: AbortSignal.timeout(10000)
-        });
-        if (!response.ok) return new Set();
+        // Process in batches of 1000
+        const batchSize = 1000;
+        for (let i = 0; i < projectDependencies.length; i += batchSize) {
+            const batch = projectDependencies.slice(i, i + batchSize);
+            const response = await fetch('https://api.osv.dev/v1/querybatch', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    queries: batch.map(dep => ({
+                        package: { name: dep.name, ecosystem: 'npm' },
+                        version: dep.version
+                    }))
+                }),
+                signal: AbortSignal.timeout(30000)
+            });
 
-        const buffer = await response.arrayBuffer();
-        const text = new TextDecoder().decode(buffer);
-        const malicious = new Set();
+            if (!response.ok) continue;
 
-        // Parse JSONL format looking for MALWARE type
-        for (const line of text.split('\n')) {
-            if (!line.trim()) continue;
-            try {
-                const vuln = JSON.parse(line);
-                if (vuln.database_specific?.type === 'MALWARE' && vuln.affected) {
-                    for (const affected of vuln.affected) {
-                        if (affected.package?.ecosystem === 'npm' && affected.package?.name) {
-                            const versions = affected.versions || [];
-                            for (const v of versions) {
-                                malicious.add(`${affected.package.name}@${v}`);
+            const data = await response.json();
+            for (const result of data.results || []) {
+                for (const vuln of result.vulns || []) {
+                    const summary = [vuln.summary || '', vuln.details || ''].join(' ').toLowerCase();
+                    const isMalware = summary.includes('malware') ||
+                        summary.includes('malicious') ||
+                        summary.includes('compromised') ||
+                        summary.includes('supply chain') ||
+                        summary.includes('backdoor');
+
+                    if (isMalware && vuln.affected) {
+                        for (const affected of vuln.affected) {
+                            if (affected.package?.ecosystem === 'npm' && affected.package?.name) {
+                                const versions = affected.versions || [];
+                                for (const v of versions) {
+                                    malicious.add(`${affected.package.name}@${v}`);
+                                }
                             }
                         }
                     }
                 }
-            } catch { /* skip invalid lines */ }
+            }
         }
-        return malicious;
     } catch {
-        return new Set();
+        // Ignore errors, return what we have
     }
+
+    return malicious;
 }
 
 async function fetchGitHubAdvisory() {
@@ -284,93 +311,72 @@ async function main() {
     console.log(`  Checking ${packages.length} packages (${fromPackageJson} from package.json, ${fromLockfile} from lockfile)\n`);
 
     // Try to use cache first
-    let threats = readCache();
-    let fromCache = true;
+    const cache = readCache();
+    let threats;
+    let ghRanges;
 
-    if (!threats) {
-        fromCache = false;
+    if (!cache) {
         console.log('  Fetching latest security databases...\n');
 
         const [osvThreats, ghThreats] = await Promise.all([
-            fetchOSV().then(r => { console.log(`  📡 OSV: ${r.size} malware entries`); return r; }),
+            fetchOSV(packages).then(r => { console.log(`  📡 OSV: ${r.size} malware entries`); return r; }),
             fetchGitHubAdvisory().then(r => { console.log(`  📡 GitHub Advisory: ${r.size} malware entries`); return r; })
         ]);
 
         threats = new Set([...KNOWN_MALICIOUS, ...osvThreats]);
+        ghRanges = [...ghThreats];
 
-        // Store GitHub advisories separately (they have version ranges)
-        const ghRanges = [...ghThreats];
-
-        // Check packages against exact matches and ranges
-        const found = [];
-
-        for (const pkg of packages) {
-            const exact = `${pkg.name}@${pkg.version}`;
-
-            // Check exact match
-            if (threats.has(exact)) {
-                found.push({ ...pkg, source: 'exact match' });
-                continue;
-            }
-
-            // Check GitHub Advisory ranges
-            for (const entry of ghRanges) {
-                const [name, range] = entry.split(':');
-                if (pkg.name === name && parseVersionRange(range, pkg.version)) {
-                    found.push({ ...pkg, source: 'GitHub Advisory' });
-                    break;
-                }
-            }
-        }
-
-        if (found.length > 0) {
-            console.log('\n' + '!'.repeat(70));
-            console.log('🚨 MALICIOUS PACKAGES DETECTED - BLOCKING INSTALLATION');
-            console.log('!'.repeat(70) + '\n');
-
-            for (const pkg of found) {
-                console.log(`  ❌ ${pkg.name}@${pkg.version} (${pkg.source})`);
-            }
-
-            console.log('\nThese packages are known to contain malware or malicious code.');
-            console.log('Installation has been blocked to protect your system.\n');
-            console.log('Actions:');
-            console.log('  1. Remove these packages from package.json');
-            console.log('  2. Find safe alternatives');
-            console.log('  3. Run npm install again\n');
-            console.log('='.repeat(70) + '\n');
-
-            process.exit(1);
-        }
-
-        // Cache the results
-        writeCache(threats);
-        console.log(`\n✅ Security check passed (${threats.size + ghRanges.length} known threats checked)`);
+        // Cache the results including ranges
+        writeCache(threats, ghRanges);
     } else {
-        // Quick check against cached threats
-        const found = [];
-        for (const pkg of packages) {
-            const exact = `${pkg.name}@${pkg.version}`;
-            if (threats.has(exact)) {
-                found.push(pkg);
-            }
-        }
-
-        if (found.length > 0) {
-            console.log('\n' + '!'.repeat(70));
-            console.log('🚨 MALICIOUS PACKAGES DETECTED - BLOCKING INSTALLATION');
-            console.log('!'.repeat(70) + '\n');
-
-            for (const pkg of found) {
-                console.log(`  ❌ ${pkg.name}@${pkg.version}`);
-            }
-
-            console.log('\n='.repeat(70) + '\n');
-            process.exit(1);
-        }
-
-        console.log(`✅ Security check passed (cached, ${threats.size} known threats)`);
+        threats = cache.threats;
+        ghRanges = cache.ranges;
+        console.log(`  Using cached security database (${threats.size} exact + ${ghRanges.length} ranges)\n`);
     }
+
+    // Check packages against exact matches and ranges
+    const found = [];
+
+    for (const pkg of packages) {
+        const exact = `${pkg.name}@${pkg.version}`;
+
+        // Check exact match
+        if (threats.has(exact)) {
+            found.push({ ...pkg, source: 'exact match' });
+            continue;
+        }
+
+        // Check GitHub Advisory ranges
+        for (const entry of ghRanges) {
+            const [name, range] = entry.split(':');
+            if (pkg.name === name && parseVersionRange(range, pkg.version)) {
+                found.push({ ...pkg, source: 'GitHub Advisory' });
+                break;
+            }
+        }
+    }
+
+    if (found.length > 0) {
+        console.log('\n' + '!'.repeat(70));
+        console.log('🚨 MALICIOUS PACKAGES DETECTED - BLOCKING INSTALLATION');
+        console.log('!'.repeat(70) + '\n');
+
+        for (const pkg of found) {
+            console.log(`  ❌ ${pkg.name}@${pkg.version} (${pkg.source})`);
+        }
+
+        console.log('\nThese packages are known to contain malware or malicious code.');
+        console.log('Installation has been blocked to protect your system.\n');
+        console.log('Actions:');
+        console.log('  1. Remove these packages from package.json');
+        console.log('  2. Find safe alternatives');
+        console.log('  3. Run npm install again\n');
+        console.log('='.repeat(70) + '\n');
+
+        process.exit(1);
+    }
+
+    console.log(`\n✅ Security check passed (${threats.size} exact + ${ghRanges.length} ranges checked)`)
 
     console.log('='.repeat(70) + '\n');
 }
