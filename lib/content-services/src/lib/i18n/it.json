@@ -1,0 +1,744 @@
+{
+  "COMMON": {
+    "APPLY": "Applica",
+    "CANCEL": "Annulla",
+    "NAME": "Nome",
+    "CLEAR": "Cancella"
+  },
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "Ripristina",
+      "DELETE": "Elimina",
+      "DOWNLOAD": "Scarica",
+      "VIEW": "Visualizza",
+      "UPLOAD": {
+        "TITLE": "Carica la nuova versione",
+        "TOOLTIP": "Limite: è necessario caricare un file con lo stesso nome per crearne una nuova versione.",
+        "MAJOR": "modifiche essenziali ({{version}})",
+        "MINOR": "modifiche non essenziali ({{version}})",
+        "COMMENT": "Lasciare un commento",
+        "ADD": "Aggiungi nuova versione",
+        "CANCEL": "Annulla",
+        "VERSION_TYPE_LABEL": "Seleziona tipo di versione"
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "Elimina versione",
+      "MESSAGE": "Le versioni eliminate del file non possono essere ripristinate. Continuare?",
+      "YES_LABEL": "Sì",
+      "NO_LABEL": "No"
+    },
+    "MANAGE_VERSION_OPTIONS": "Gestisci opzioni di versione"
+  },
+  "ADF-NEW-VERSION-UPLOADER": {
+    "DIALOG_LIST": {
+      "TITLE": "Gestione versioni",
+      "CLOSE": "Chiudi"
+    },
+    "DIALOG_UPLOAD": {
+      "TITLE": "Caricare la nuova versione",
+      "CANCEL": "Annulla",
+      "UPLOAD": "Carica"
+    }
+  },
+  "ADF_VERSION_COMPARISON": {
+    "CURRENT_VERSION": "Corrente",
+    "NEW_VERSION": "Nuovo",
+    "ACCESSIBILITY": {
+      "ICON_TEXT": "Tipo di elemento {{ type }}",
+      "ARROW_ICON": "Icona freccia destra"
+    }
+  },
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "Questa cartella è vuota"
+    },
+    "NO_PERMISSION": "Non si dispone dell'autorizzazione per visualizzare questo file o questa cartella.",
+    "LAYOUT": {
+      "CREATED": "Creato",
+      "CREATED_BY": "Creato da",
+      "THUMBNAIL": "Miniatura",
+      "NAME": "Nome",
+      "LOCATION": "Località",
+      "SIZE": "Dimensione",
+      "DELETED_ON": "Eliminato",
+      "DELETED_BY": "Eliminato da",
+      "STATUS": "Stato",
+      "MODIFIED_ON": "Modificato",
+      "MODIFIED_BY": "Modificato da",
+      "SHARED_BY": "Condiviso da",
+      "LOAD_MORE": "Carica altro"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "Visualizza",
+      "REMOVE": "Rimuovi",
+      "DOWNLOAD": "Scarica"
+    },
+    "LOADER_LABEL": "Caricatore elenco documenti",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "Il processo di caricamento dell'anteprima non risponde",
+      "LABEL": "Scaricare per visualizzare il documento o annullare per continuare senza anteprima.",
+      "ACTIONS": {
+        "CANCEL": "Annulla",
+        "DOWNLOAD": "Scarica"
+      }
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Crea...",
+      "ACTION_NEW_FOLDER": "Nuova cartella",
+      "CREATE": "Crea",
+      "CANCEL": "Annulla"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Elenco sito",
+    "MY_FILES_OPTION": "I miei file"
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Annulla",
+    "CHOOSE": "Seleziona",
+    "ATTACH": "Allega",
+    "CHOOSE_ITEM": "Selezionare il contenuto da allegare da \"{{ name }}\"",
+    "COPY": "Copia",
+    "LINK": "Create Link",
+    "COPY_ITEM": "Copia '{{ name }}' in...",
+    "LOCATION": "Posizione",
+    "MOVE": "Sposta",
+    "MOVE_ITEM": "Sposta '{{ name }}' in...",
+    "NO_RESULTS": "Nessun risultato trovato",
+    "SEARCH": "Cerca",
+    "SEARCH_RESULTS": "Risultati della ricerca",
+    "SELECT_LIBRARY": "Seleziona una libreria",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Impossibile caricare un file mentre è ancora in esecuzione una ricerca",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "L'utente non dispone dell'autorizzazione per caricare il contenuto nella cartella",
+    "REPOSITORY": "Repository",
+    "UPLOAD_FROM_DEVICE": "Carica dal dispositivo"
+  },
+  "OPERATION": {
+    "SUCCESS": {
+      "CONTENT": {
+        "COPY": "Copia completata",
+        "MOVE": "Spostamento completato"
+      },
+      "FOLDER": {
+        "COPY": "Copia completata",
+        "MOVE": "Spostamento completato"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "Nome già in uso, provare un nome diverso.",
+      "UNKNOWN": "Azione non eseguita correttamente. Riprovare o contattare il team IT.",
+      "PERMISSION": "Non si dispone dell'accesso per eseguire questa azione."
+    }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Nuovo tag"
+    },
+    "MESSAGES": {
+      "EXIST": "Tag già presente"
+    },
+    "BUTTON": {
+      "ADD": "Aggiungi tag"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "Tag esistenti:",
+      "EXISTING_TAGS_SELECTION": "Selezionare un tag esistente:",
+      "NO_TAGS_CREATED": "Nessun tag creato",
+      "NO_EXISTING_TAGS": "Nessun tag esistente",
+      "TITLE": "Crea tag",
+      "CREATE_TAG": "Creare: {{tag}}",
+      "TAG_SEARCH_PLACEHOLDER": "Cerca tag",
+      "ERRORS": {
+        "EXISTING_TAG": "Tag già presente",
+        "ALREADY_ADDED_TAG": "Il tag è già stato aggiunto",
+        "EMPTY_TAG": "Il nome del tag non può contenere solo spazi",
+        "FETCH_TAGS": "Errore durante il recupero dei tag",
+        "CREATE_TAGS": "Errore durante la creazione dei tag",
+        "SPECIAL_CHARACTERS": "Il nome tag non può contenere caratteri vietati"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "Elimina tag"
+      },
+      "TAGS_LOADING": "Caricamento dei tag in corso",
+      "CREATE_TAGS_SUCCESS": "Tag creati correttamente"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "Categorie",
+    "NO_CATEGORIES_CREATED": "Nessuna categoria creata",
+    "NO_CATEGORIES_ASSIGNED": "Nessuna categoria assegnata",
+    "UNASSIGN_CATEGORY": "Annulla assegnazione categoria",
+    "DELETE_CATEGORY": "Elimina categoria",
+    "EXISTING_CATEGORIES": "Categorie esistenti:",
+    "SELECT_EXISTING_CATEGORY": "Selezionare una categoria esistente:",
+    "NO_EXISTING_CATEGORIES": "Nessuna categoria esistente",
+    "GENERIC_CREATE": "Creare: {{name}}",
+    "NAME": "Nome categoria",
+    "LOADING": "Caricamento in corso",
+    "NO_CATEGORIES_ADDED": "Al momento non vi sono categorie aggiunte",
+    "ERRORS": {
+      "NOT_FOUND": "Categorie non trovate",
+      "REQUIRED": "Il nome della categoria è obbligatorio",
+      "EMPTY_CATEGORY": "Il nome della categoria non può contenere solo spazi",
+      "ALREADY_EXISTS": "La categoria esiste già",
+      "DUPLICATED_CATEGORY": "La categoria è già stata aggiunta",
+      "CREATE_CATEGORIES": "Errore durante la creazione delle categorie",
+      "EXISTING_CATEGORIES": "Alcune categorie esistono già",
+      "SPECIAL_CHARACTERS": "Il nome della categoria non può contenere caratteri vietati",
+      "ENDS_WITH_DOT": "Il nome della categoria non può terminare con un punto"
+    },
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Cerca categorie"
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Minimizzare",
+      "MAXIMIZE": "Massimizzare",
+      "CLOSE": "Chiudi",
+      "STOP_ALL": "Interrompi i caricamenti",
+      "STOP_FILE": "Interrompi il caricamento",
+      "UPLOAD_SUCCESSFUL": "Caricamento completato"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Annullato",
+      "FILE_DONE_STATUS": "Caricato"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Sì",
+        "CONTINUE": "No"
+      },
+      "MESSAGE": {
+        "TITLE": "Interrompi il caricamento",
+        "TEXT": "Interrompi e annulla tutti i caricamenti in corso e in sospeso."
+      }
+    },
+    "ARIA-LABEL": {
+      "VERSION": "Versione file {{ version }}",
+      "DIALOG": "Carica elenco",
+      "DIALOG_MAXIMIZE": "Massimizza finestra di caricamento",
+      "DIALOG_MINIMIZE": "Minimizza finestra di caricamento",
+      "DIALOG_CLOSE": "Chiudi finestra di caricamento",
+      "STOP_ALL": "Interrompi i caricamenti",
+      "UPLOAD_SUCCESSFUL": "File {{ file }} caricato correttamente",
+      "STOP_FILE": "Interrompi file {{ file }}",
+      "STOP_FILE_UPLOAD": "Interrompi caricamento file {{ file }}",
+      "UPLOAD_FILE_ERROR": "Errore di caricamento {{ error }}",
+      "CONFIRMATION": {
+        "CANCEL": "Conferma annullamento",
+        "CONTINUE": "Continua caricamento"
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Carica file",
+      "UPLOAD_FOLDER": "Carica cartella",
+      "PERMISSION_CHECK_ERROR": "Errore durante la verifica delle autorizzazioni."
+    },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "L'impostazione \"acceptedFilesType\" non influisce sui caricamenti di nuove versioni. Il tipo di file sarà identifico al file originale.",
+        "INCOMPATIBLE_VERSION": "È possibile caricare solo un file dello stesso tipo come nuova versione."
+      }
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Caricamento annullato",
+      "UPLOAD_PROGRESS": "Caricato {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "Caricamento di {{ total }} non eseguito correttamente",
+      "UPLOAD_ERRORS": "{{ total }} caricamenti eseguiti correttamente",
+      "PROGRESS": "Caricamento in corso...",
+      "FOLDER_ALREADY_EXIST": "Cartella {0} già presente",
+      "FOLDER_NOT_SUPPORTED": "Il browser non supporta il caricamento di cartelle, prova con un altro browser",
+      "REMOVE_FILE_ERROR": "Impossibile rimuovere {{ fileName }}, riprova o verifica con il team IT.",
+      "REMOVE_FILES_ERROR": "Impossibile rimuovere {{ total }} file. Riprova o verifica con il team IT.",
+      "EXCEED_MAX_FILE_SIZE": "Il file {{ fileName }} è più grande delle dimensioni del file consentite"
+    },
+    "ACTION": {
+      "UNDO": "Annulla"
+    },
+    "ERRORS": {
+      "GENERIC": "Caricamento non riuscito. Se il problema persiste, contattare l'IT",
+      "500": "Errore interno del server. Riprovare o contattare il supporto IT [500]",
+      "504": "Timeout del server. Riprovare o contattare il supporto IT [504]",
+      "403": "Autorizzazioni insufficienti per caricare in questa posizione [403]",
+      "404": "La posizione di caricamento non esiste più [404]",
+      "409": "Esiste già un file con lo stesso nome [409]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "Carica errore"
+    }
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "BUTTON": {
+      "TOOLTIP": "Cerca",
+      "ARIA-LABEL": "Pulsante di ricerca"
+    },
+    "INPUT": {
+      "LABEL": "Cerca",
+      "PLACEHOLDER": "Cerca richiesta",
+      "ARIA-LABEL": "Stringa di ricerca"
+    },
+    "RESULTS": {
+      "SUMMARY": "Trovati {{numResults}} risultati per {{searchTerm}}",
+      "NONE": "Nessun risultato trovato per {{searchTerm}}",
+      "ERROR": "Si è verificato un problema durante la ricerca. Riprovare.",
+      "WILL_CONTAIN": "I risultati includeranno '{{searchTerm}}'",
+      "COLUMNS": {
+        "NAME": "Nome visualizzato",
+        "MODIFIED_BY": "Modificato da",
+        "MODIFIED_AT": "Modificato in"
+      }
+    },
+    "FILTER": {
+      "ACTIONS": {
+        "SEARCH": "Cerca",
+        "CLEAR": "Cancella",
+        "APPLY": "Applica",
+        "CLEAR-ALL": "Cancella tutto",
+        "SHOW-MORE": "Altro",
+        "SHOW-LESS": "Nascondi",
+        "ADD_OPTION": "Aggiungi opzione..."
+      },
+      "BUTTONS": {
+        "CLOSE": "Chiudi",
+        "CLEAR": "Cancella",
+        "REMOVE": "Rimuovi",
+        "APPLY": "Applica",
+        "CLEAR-ALL": {
+          "LABEL": "Cancella tutto",
+          "TOOLTIP": "Tutte le selezioni verranno rimosse"
+        },
+        "RESET-ALL": {
+          "LABEL": "Reimposta tutto",
+          "TOOLTIP": "Tutte le selezioni e tutti i filtri verranno reimpostati"
+        }
+      },
+      "RANGE": {
+        "FROM": "Da",
+        "TO": "A",
+        "FROM-DATE": "Da",
+        "TO-DATE": "A"
+      },
+      "VALIDATION": {
+        "REQUIRED-VALUE": "Valore obbligatorio",
+        "NO-DAYS": "Nessun giorno selezionato.",
+        "INVALID-FORMAT": "Formato non valido.",
+        "INVALID-DATE": "Data non valida. La data deve essere nel formato '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATE": "La data è successiva alla data massima.",
+        "INVALID-DATETIME": "Data/ora non valida. La data/ora deve essere specificata nel formato '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATETIME": "La data/ora supera il valore massimo consentito."
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "Cerca elenco filtri",
+        "OPTIONS-SELECTION": "Selezione opzioni"
+      },
+      "ANY": "Qualsiasi",
+      "PEOPLE": "Persone"
+    },
+    "FACET_FIELDS": {
+      "MODIFIER_LABEL": "Modificato da",
+      "CREATOR_LABEL": "Creato da"
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "File di immagine",
+      "ft_ic_pdf": "Documento PDF",
+      "ft_ic_ms_excel": "File Microsoft Excel",
+      "ft_ic_ms_word": "Documento di Microsoft Word",
+      "ft_ic_ms_powerpoint": "File di Microsoft PowerPoint",
+      "ft_ic_video": "File video",
+      "ft_ic_document": "File di documento",
+      "ft_ic_website": "Risorsa Web",
+      "ft_ic_archive": "File di archivio",
+      "ft_ic_presentation": "File di presentazione",
+      "ft_ic_spreadsheet": "File di foglio di calcolo"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Nome visualizzato",
+        "CREATED_BY": "Creato da",
+        "CREATED_ON": "Creato"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Elimina",
+          "MOVE": "Sposta",
+          "COPY": "Copia"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "Scarica",
+          "DELETE": "Elimina",
+          "MOVE": "Sposta",
+          "COPY": "Copia",
+          "PROCESS_ACTION": "Avvia processo"
+        }
+      }
+    },
+    "UNKNOWN_CONFIGURATION": "Configurazione sconosciuta",
+    "SEARCH_HEADER": {
+      "TITLE": "Filtro",
+      "TYPE": "Tipo",
+      "FILTER_BY": "Filtra per {{ category }}",
+      "ACTIVE_FILTER": "Filtro attivo",
+      "CLEAR": "Cancella",
+      "APPLY": "Applica",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "Nome",
+          "PLACEHOLDER": "Immettere il nome"
+        },
+        "TYPE": {
+          "TITLE": "Selezionare il tipo",
+          "FOLDER": "Cartella",
+          "DOCUMENT": "Documento"
+        },
+        "SIZE": {
+          "TITLE": "Dimensioni contenuto (intervallo)",
+          "SMALL": "Piccola",
+          "MEDIUM": "Media",
+          "LARGE": "Grande",
+          "HUGE": "Enorme"
+        },
+        "DATE": {
+          "TITLE": "Data di creazione (intervallo)"
+        }
+      }
+    },
+    "LOGICAL_SEARCH": {
+      "MATCH_ALL": "TUTTE",
+      "MATCH_ALL_LABEL": "Trova corrispondenza di TUTTE queste frasi",
+      "MATCH_ALL_HINT": "I risultati corrisponderanno a tutte le parole inserite qui",
+      "MATCH_ANY": "QUALSIASI",
+      "MATCH_ANY_LABEL": "Trova corrispondenza di una QUALSIASI di queste frasi",
+      "MATCH_ANY_HINT": "I risultati corrisponderanno a qualsiasi parola inserita qui",
+      "MATCH_EXACT": "ESATTO",
+      "MATCH_EXACT_LABEL": "Corrispondenza ESATTA per questa FRASE",
+      "MATCH_EXACT_HINT": "I risultati corrisponderanno alla frase intera",
+      "EXCLUDE": "ESCLUDI",
+      "EXCLUDE_LABEL": "ESCLUDI queste frasi",
+      "EXCLUDE_HINT": "I risultati escluderanno le corrispondenze con queste parole"
+    },
+    "DATE_RANGE_ADVANCED": {
+      "OPTIONS": {
+        "ANYTIME": "sempre",
+        "IN_LAST": "Nell’ultimo",
+        "BETWEEN": "Tra"
+      },
+      "IN_LAST_LABELS": {
+        "DAYS": "Giorni",
+        "WEEKS": "Settimane",
+        "MONTHS": "Mesi",
+        "QUANTITY": "Quantità"
+      },
+      "IN_LAST_DISPLAY_LABELS": {
+        "DAYS": "Negli ultimi {{value}} giorni",
+        "WEEKS": "Nelle ultime {{value}} settimane",
+        "MONTHS": "Negli ultimi {{value}} mesi"
+      },
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "Data di inizio",
+        "END_DATE": "Data di fine",
+        "DATE_RANGE": "Intervallo di date"
+      },
+      "ERROR": {
+        "IN_LAST": "Valore obbligatorio",
+        "START_DATE": {
+          "REQUIRED": "Data di inizio obbligatoria",
+          "INVALID_FORMAT": "Data di inizio non valida. La data deve avere il formato '{{ requiredFormat }}'"
+        },
+        "END_DATE": {
+          "REQUIRED": "Data di fine obbligatoria",
+          "INVALID_FORMAT": "Data di fine non valida. La data deve avere il formato '{{ requiredFormat }}'"
+        }
+      },
+      "ARIA_LABEL": {
+        "NUMBER_INPUT": "Inserimento numero"
+      }
+    },
+    "SEARCH_PROPERTIES": {
+      "FILE_SIZE": "Dimensioni file",
+      "FILE_SIZE_PLACEHOLDER": "Immettere dimensioni file",
+      "FILE_SIZE_OPERATOR": {
+        "AT_LEAST": "Almeno",
+        "AT_MOST": "Al massimo",
+        "EXACTLY": "Esattamente"
+      },
+      "FILE_SIZE_UNIT_ABBREVIATION": {
+        "KB": "KB",
+        "MB": "MB",
+        "GB": "GB"
+      },
+      "FILE_TYPE": "Tipo di file",
+      "FILE_TYPE_PLACEHOLDER": "Aggiungi tipo di file",
+      "ACCESSIBILITY": {
+        "CONDITION": "Condizione",
+        "SIZE_VALUE": "Valore dimensione del file",
+        "UNIT": "Unità"
+      }
+    }
+  },
+  "PERMISSION": {
+    "LACKOF": "Non si dispone dell'autorizzazione {{permission}} per {{action}} {{type}}"
+  },
+  "METADATA": {
+    "BASIC": {
+      "HEADER": "Proprietà",
+      "NAME": "Nome",
+      "TITLE": "Titolo",
+      "DESCRIPTION": "Descrizione",
+      "AUTHOR": "Autore",
+      "MIMETYPE": "Tipo MIME",
+      "SIZE": "Dimensione",
+      "CREATOR": "Creatore",
+      "CREATED_DATE": "Data di creazione",
+      "MODIFIER": "Modificatore",
+      "MODIFIED_DATE": "Data di modifica",
+      "CONTENT_TYPE": "Tipo di contenuto",
+      "TAGS": "Tag",
+      "NO_TAGS_ADDED": "Al momento non vi sono tag aggiunti",
+      "NO_ITEMS_MESSAGE": "Al momento non vi sono {{ groupTitle }} aggiunti",
+      "SAVE_OR_DISCARD_CHANGES": "Salva or ignora modifiche per continuare"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "Modifica il tipo di contenuto",
+        "DESCRIPTION": "Se si apporta questa modifica al tipo di contenuto, alcune proprietà e metadati memorizzati verranno aggiunti al documento in modo definitivo.",
+        "CONFIRM": "Modificare il tipo di contenuto?",
+        "CANCEL": "Annulla",
+        "APPLY": "Salva modifiche",
+        "VIEW_DETAILS": "Visualizza dettagli",
+        "PROPERTY": {
+          "NAME": "Nome",
+          "DESCRIPTION": "Descrizione",
+          "DATA_TYPE": "Tipo di dati"
+        }
+      }
+    },
+    "ERRORS": {
+      "GENERIC": "Errore nell’aggiornamento della proprietà",
+      "409": "Nome duplicato della sottodirectory non consentito [409]",
+      "422": "Valore della proprietà non valido"
+    }
+  },
+  "SHARE": {
+    "PUBLIC-LINK": "Link pubblico",
+    "DIALOG-TITLE": "Condividi",
+    "DESCRIPTION": "Per copiarlo negli appunti, fai clic sul link seguente.",
+    "TITLE": "Link da condividere",
+    "SHARE-LINK": "Condividi link",
+    "SHARABLE-LINK-CREATED": "È stato creato un link condivisibile",
+    "PUBLIC-CONTENT": "Questo contenuto è reso pubblicamente accessibile tramite questo link",
+    "LINK-WITH-EXPIRY-SETTINGS": "Il nuovo link è stato creato con impostazioni di scadenza",
+    "EXPIRES": "Scade il",
+    "LINK-EXPIRY-DATE": "Data di scadenza link",
+    "EXPIRATION-LABEL": "Data scadenza. Immettere la data nel formato MM/GG/AAAA",
+    "EXPIRATION-PLACEHOLDER": "MM/GG/AAAA",
+    "CLIPBOARD-MESSAGE": "Link copiato negli appunti",
+    "CLOSE": "Chiudi",
+    "COPY_BUTTON_LABEL": "Copia link",
+    "CONFIRMATION": {
+      "DIALOG-TITLE": "Rimuovi link condiviso",
+      "MESSAGE": "Il link verrà eliminato e verrà creato un nuovo link per il prossimo file condiviso",
+      "CANCEL": "Annulla",
+      "REMOVE": "Rimuovi"
+    },
+    "UNSHARE_ERROR": "Errore durante l'annullamento della condivisione di questo file",
+    "UNSHARE_PERMISSION_ERROR": "Non si dispone dell'autorizzazione per rimuovere la condivisione di questo file",
+    "INVALID_DATE_ERROR": "Data non valida"
+  },
+  "PERMISSION_MANAGER": {
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "Ereditato",
+      "AUTHORITY_ID": "ID autorità",
+      "ROLE": "Ruolo",
+      "LOCALLY_SET": "Impostato localmente",
+      "NO_PERMISSIONS": "Nessuna autorizzazione"
+    },
+    "ADD-PERMISSION": {
+      "SEARCH": "Cerca utenti o gruppi da aggiungere",
+      "TITLE": "Aggiungi autorizzazione",
+      "TYPE-MESSAGE": "Digita per iniziare a cercare gruppi o persone",
+      "NO-RESULT": "Nessun risultato trovato per la ricerca",
+      "SELECT-ACTION": "Seleziona",
+      "ADD-ACTION": "Aggiungi",
+      "CLOSE-ACTION": "Annulla",
+      "BASE-DIALOG-TITLE": "Cerca un gruppo o una persona da aggiungere...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "Aggiungi permessi utente o gruppo",
+      "EVERYONE": "Tutti",
+      "USER-GROUP-LIST": "Elenco di utenti o gruppi",
+      "REMOVE_USER_GROUP": "Rimuovi"
+    },
+    "COLUMN": {
+      "NAME": "Utenti e gruppi ({{ count }})",
+      "LOCATION": "Località",
+      "BULK-ROLE": "Imposta tutti i ruoli su"
+    },
+    "LABELS": {
+      "HIDE": "Nascondi",
+      "SHOW": "Mostra",
+      "ON": "Attivata",
+      "OFF": "Disattivata",
+      "DIRECT-PERMISSIONS": "Autorizzazione applicata direttamente",
+      "INHERITED-PERMISSIONS": "Autorizzazione ereditata",
+      "INHERITED-SUBTITLE": "{{count}} utenti o gruppi ereditano l'autorizzazione da una cartella principale",
+      "SELECT-ROLE": "Seleziona ruolo",
+      "INHERITED_PERMISSION_TOGGLE": "Abilita/disabilita autorizzazione ereditata"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "Nessun utente/gruppo",
+      "EMPTY-SUBTITLE": "Aggiungere un utente/gruppo per gestire l'autorizzazione.",
+      "NO-MEMBERS": "Aggiungi gruppi o utenti per gestire i ruoli",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "{{user}} utenti {{group}} gruppi aggiornati",
+      "PERMISSION-UPDATE-SUCCESS": "Utente/gruppo aggiornato",
+      "PERMISSION-UPDATE-FAIL": "Impossibile aggiornare utente/gruppo",
+      "PERMISSION-BULK-DELETE-SUCCESS": "{{user}} utenti {{group}} gruppi eliminati",
+      "PERMISSION-DELETE-SUCCESS": "Utente/gruppo eliminato",
+      "PERMISSION-DELETE-FAIL": "Impossibile eliminare utente/gruppo",
+      "PERMISSION-ADD-SUCCESS": "{{user}} utenti {{group}} gruppi aggiunti",
+      "PERMISSION-ADD-FAIL": "Impossibile aggiungere utente/gruppo",
+      "INHERIT-ENABLE-SUCCESS": "Autorizzazione ereditata abilitata",
+      "INHERIT-DISABLE-SUCCESS": "Autorizzazione ereditata disabilitata",
+      "TOGGLE-PERMISSION-FAILED": "Impossibile abilitare/disabilitare autorizzazione ereditata"
+    },
+    "ACTION": {
+      "DELETE": "Elimina",
+      "ADD-PERMISSION": "Aggiungi utente o gruppo"
+    },
+    "ERROR": {
+      "NOT-FOUND": "Questo elemento non esiste più o non si dispone delle autorizzazioni per visualizzarlo.",
+      "DUPLICATE-PERMISSION": "Uno o più autorizzazioni impostate sono già presenti: {{list}}",
+      "NOT-ALLOWED": "Non è consentito modificare le autorizzazioni"
+    }
+  },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "Icona del gruppo",
+    "GROUP_USER_SELECTED_ALT": "Gruppo selezionato o icona utente"
+  },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "Nessun ID nodo specificato.",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Attiva/Disattiva {{ name }}"
+    }
+  },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Carica altri {{ name }}",
+    "ACTIONS": {
+      "TOOLTIP": "Apri menu azioni"
+    }
+  },
+  "LIBRARY": {
+    "DIALOG": {
+      "CREATE_TITLE": "Crea libreria",
+      "CREATE": "Crea",
+      "UPDATE": "Aggiorna",
+      "EDIT": "Modifica",
+      "CANCEL": "Annulla",
+      "FORM": {
+        "DESCRIPTION": "Descrizione",
+        "SITE_ID": "ID libreria",
+        "NAME": "Nome",
+        "VISIBILITY": "Visibilità"
+      }
+    },
+    "ROLE": {
+      "MANAGER": "Manager",
+      "COLLABORATOR": "Collaboratore",
+      "CONTRIBUTOR": "Contributore",
+      "CONSUMER": "Consumatore",
+      "NONE": "Non è un membro"
+    },
+    "VISIBILITY": {
+      "PRIVATE": "Privato",
+      "PUBLIC": "Pubblico",
+      "MODERATED": "Moderato"
+    },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "Nome libreria già utilizzato"
+    },
+    "ERRORS": {
+      "GENERIC": "Si è verificato un problema",
+      "EXISTENT_SITE": "L'ID libreria non è disponibile. Provare con un altro ID libreria.",
+      "CONFLICT": "L'ID libreria specificato è già in uso. Verificare il cestino.",
+      "ID_TOO_LONG": "Utilizzare 72 caratteri o meno per il nome URL",
+      "DESCRIPTION_TOO_LONG": "Utilizzare 512 o meno per la descrizione",
+      "TITLE_TOO_LONG": "Utilizzare 256 caratteri o meno per il titolo",
+      "TITLE_TOO_SHORT": "Il titolo deve contenere almeno 2 caratteri",
+      "ILLEGAL_CHARACTERS": "Utilizzare solo lettere e numeri",
+      "ONLY_SPACES": "Il nome della libreria non può contenere solo spazi",
+      "LIBRARY_UPDATE_ERROR": "Si è verificato un errore di caricamento delle proprietà della libreria",
+      "NAME_REQUIRED": "Il nome della libreria è obbligatorio",
+      "ID_REQUIRED": "L'ID della libreria è obbligatorio"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "Proprietà della libreria aggiornate"
+    }
+  },
+  "BREADCRUMB": {
+    "ARIA-LABEL": {
+      "BREADCRUMB": "Navigazione breadcrump",
+      "DROPDOWN": "Apri il menu breadcrump per {{folderName}}"
+    },
+    "HEADER": {
+      "SELECTED": "Selezionate ({{ count }})"
+    }
+  },
+  "NAME_COLUMN_LINK": {
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Apri {{ name }}"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "Nome proprietà",
+    "DESCRIPTION": "Descrizione",
+    "DATA_TYPE": "Tipo di dati",
+    "DIALOG": {
+      "TITLE": "Personalizza proprietà",
+      "DESCRIPTION": "Consente di gestire le proprietà associate ai file selezionati. Per visualizzare e applicare altri metadati e funzionalità aggiuntive, è possibile scegliere tra gli aspetti delle proprietà elencati di seguito",
+      "RESET": "Reimposta",
+      "CLEAR": "Cancella",
+      "CANCEL": "Annulla",
+      "APPLY": "Applica",
+      "OVER-TABLE-MESSAGE": "Seleziona aspetti proprietà",
+      "SELECTED": "Selezionato"
+    }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "{{ count }} selezionati"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "Visualizza altri {{ count }}"
+  },
+  "swsdp": "Esempio: Progetto di sviluppo di sito Web",
+  "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
+    "ERRORS": {
+      "INVALID_RECEIVER_EMAIL": "Indirizzo email del destinatario non valido. Contattare l'IT.",
+      "INVALID_SENDER_EMAIL": "L'indirizzo email deve essere valido prima della richiesta di accesso.",
+      "JOIN_CANCEL_FAILED": "Impossibile annullare la richiesta di partecipazione",
+      "JOIN_REQUEST_FAILED": "Impossibile partecipare alla libreria"
+    },
+    "INFO": {
+      "JOINED": "Partecipazione alla libreria confermata",
+      "JOIN_CANCELED": "Richiesta di partecipazione alla libreria annullata",
+      "JOIN_REQUESTED": "Richiesta di partecipazione alla libreria inviata"
+    }
+  },
+  "KNOWLEDGE_RETRIEVAL": {
+    "SEARCH": {
+      "WARNINGS": {
+        "TOO_MANY_FILES_SELECTED": "Selezionare più di {{ maxFiles }} file.",
+        "FOLDER_SELECTED": "Le cartelle non sono compatibili con gli agenti IA."
+      }
+    }
+  },
+  "NODE_FAVORITE_DIRECTIVE": {
+    "MESSAGES": {
+      "NODE_ADDED": "Aggiunto {{ name }} ai preferiti",
+      "NODES_ADDED": "Aggiunti {{ number }} elementi ai preferiti",
+      "NODE_REMOVED": "Rimosso {{ name }} dai preferiti",
+      "NODES_REMOVED": "Rimosso {{ number }} elementi dai preferiti"
+    }
+  }
+}
