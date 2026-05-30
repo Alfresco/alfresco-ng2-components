@@ -1,0 +1,386 @@
+{
+  "ADF_CLOUD_PROCESS_LIST": {
+    "MESSAGES": {
+      "TITLE": "No se han encontrado procesos",
+      "SUBTITLE": "Cree un nuevo proceso que desee encontrar fácilmente después",
+      "NONE": "No se ha seleccionado ningún filtro de instancias."
+    },
+    "PROPERTIES": {
+      "NAME": "Nombre del proceso",
+      "CREATED": "Creado",
+      "STATUS": "Estado",
+      "START_DATE": "Fecha de inicio",
+      "COMPLETED_DATE": "Fecha completada",
+      "COMPLETED_BY": "Completado por",
+      "ID": "ID",
+      "INITIATOR": "Iniciador",
+      "STARTED_BY": "Iniciado por",
+      "APP_NAME": "Nombre de la aplicación",
+      "BUSINESS_KEY": "Clave de negocio",
+      "DESCRIPTION": "Descripción",
+      "LAST_MODIFIED": "Modificada por última vez",
+      "PROCESS_NAME": "Nombre del proceso",
+      "PROCESS_DEFINITION_NAME": "Nombre de definición de proceso",
+      "PARENT_TASK_ID": "ID de tarea primaria",
+      "PROCESS_DEF_ID": "ID de definición del proceso",
+      "PROCESS_DEF_KEY": "Clave de definición de proceso",
+      "APP_VERSION": "Versión de la aplicación"
+    },
+    "ADF_CLOUD_START_PROCESS": {
+      "BUTTON": "Iniciar proceso",
+      "NO_PROCESS_DEFINITIONS": "No puede iniciar un proceso porque no hay definiciones de procesos disponibles",
+      "FORM": {
+        "TITLE": "Iniciar proceso",
+        "LABEL": {
+          "TYPE": "Seleccionar proceso",
+          "NAME": "Nombre del proceso"
+        },
+        "TYPE_PLACEHOLDER": "Elegir un...",
+        "ACTION": {
+          "START": "Iniciar proceso",
+          "CANCEL": "Cancelar"
+        },
+        "SELECT_PROCESS_DROPDOWN": "Botón de menú desplegable para seleccionar proceso"
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "No se han podido cargar las definiciones de procesos; compruebe que tiene acceso.",
+        "START": "No se ha podido iniciar una nueva instancia de proceso; compruebe que tiene acceso.",
+        "PROCESS_NAME_REQUIRED": "Se requiere el nombre del proceso",
+        "PROCESS_DEFINITION_REQUIRED": "Se requiere la definición del proceso",
+        "MAXIMUM_LENGTH": "Longitud excedida, {{characters}} caracteres como máx.",
+        "SPACE_VALIDATOR": "No puede comenzar ni terminar con un espacio."
+      }
+    },
+    "LOADING": "Cargando"
+  },
+  "ADF_CLOUD_TASK_LIST": {
+    "START_TASK": {
+      "FORM": {
+        "TITLE": "Iniciar tarea",
+        "LABEL": {
+          "NAME": "Nombre",
+          "DESCRIPTION": "Descripción",
+          "ATTACHFORM": "Adjuntar formulario",
+          "ASSIGNEE": "Usuario asignado",
+          "CANDIDATE_GROUP": "Grupo de candidatos",
+          "DATE": "Elegir fecha",
+          "PRIORITY": "Prioridad"
+        },
+        "ACTION": {
+          "START": "Comenzar",
+          "CANCEL": "Cancelar"
+        }
+      }
+    },
+    "PROPERTIES": {
+      "NAME": "Nombre de la tarea",
+      "ASSIGNEE": "Usuario asignado",
+      "ID": "ID",
+      "STATUS": "Estado",
+      "PRIORITY": "Prioridad",
+      "CREATED_DATE": "Fecha de creación",
+      "LAST_MODIFIED": "Modificada por última vez",
+      "DUE_DATE": "Fecha de vencimiento",
+      "CREATED": "Creado",
+      "JSON_CELL": "Json",
+      "COMPLETED_BY": "Completado por",
+      "PRIORITY_VALUES": {
+        "NONE": "Ninguna",
+        "LOW": "Baja",
+        "NORMAL": "Media",
+        "HIGH": "Alta"
+      },
+      "DESCRIPTION": "Descripción"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "Ninguna tarea encontrada",
+        "SUBTITLE": "Cree una nueva tarea que desee encontrar fácilmente más adelante",
+        "NONE": "No se han encontrado listas de tareas"
+      }
+    },
+    "LOADING": "Cargando"
+  },
+  "ADF_CLOUD_SERVICE_TASK_LIST": {
+    "PROPERTIES": {
+      "ACTIVITY_NAME": "Nombre de actividad",
+      "ACTIVITY_TYPE": "Estado",
+      "ID": "ID",
+      "COMPLETED_DATE": "Fecha completada",
+      "STARTED_DATE": "Fecha iniciada",
+      "STATUS": "Estado"
+    }
+  },
+  "ADF_CLOUD_TASK_FILTERS": {
+    "MY_TASKS": "Mis tareas",
+    "QUEUED_TASKS": "Tareas en cola",
+    "COMPLETED_TASKS": "Tareas completadas",
+    "STATUS": {
+      "ALL": "Todos",
+      "CREATED": "Creado",
+      "ASSIGNED": "Asignado",
+      "SUSPENDED": "Suspendido",
+      "CANCELLED": "Cancelado",
+      "COMPLETED": "Completado"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Ascendente",
+      "DESCENDING": "Descendente"
+    }
+  },
+  "ADF_CLOUD_SERVICE_TASK_FILTERS": {
+    "ALL_SERVICE_TASKS": "Todas las tareas de servicio",
+    "ERRORED_TASKS": "Tareas con errores",
+    "COMPLETED_TASKS": "Tareas completadas",
+    "STATUS": {
+      "ALL": "Todos",
+      "STARTED": "Iniciado",
+      "COMPLETED": "Completado",
+      "CANCELLED": "Cancelado",
+      "ERROR": "Error"
+    }
+  },
+  "ADF_CLOUD_PROCESS_FILTERS": {
+    "ALL_PROCESSES": "Todos",
+    "RUNNING_PROCESSES": "Ejecutándose",
+    "COMPLETED_PROCESSES": "Completado",
+    "STATUS": {
+      "ALL": "Todos",
+      "RUNNING": "Ejecutándose",
+      "SUSPENDED": "Suspendido",
+      "CANCELLED": "Cancelado",
+      "COMPLETED": "Completado"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Ascendente",
+      "DESCENDING": "Descendente"
+    }
+  },
+  "ADF_CLOUD_START_TASK": {
+    "ERROR": {
+      "MESSAGE": "Introducir un valor diferente",
+      "REQUIRED": "Campo obligatorio",
+      "DATE": "Formato de fecha DD/MM/AAAA",
+      "MAXIMUM_LENGTH": "Longitud excedida, {{characters}} caracteres como máx."
+    }
+  },
+  "ADF_CLOUD_EDIT_TASK_FILTER": {
+    "TITLE": "Personalice su filtro",
+    "FILTER_NAME": "Nombre de filtro",
+    "TOOL_TIP": {
+      "SAVE": "Guardar filtro",
+      "SAVE_AS": "Guardar filtro como",
+      "DELETE": "Eliminar filtro"
+    },
+    "LABEL": {
+      "APP_NAME": "Nombre de aplicación",
+      "TASK_ID": "ID de tarea",
+      "PROCESS_DEF_NAME": "Nombre de definición de proceso",
+      "PROCESS_DEF_ID": "ID de definición de proceso",
+      "STATUS": "Estado",
+      "ASSIGNMENT": "Usuario asignado",
+      "DIRECTION": "Dirección",
+      "PROCESS_INSTANCE_ID": "ID de instancia de proceso",
+      "TASK_NAME": "Nombre de tarea",
+      "PARENT_TASK_ID": "ID de tarea primaria",
+      "PRIORITY": "Prioridad",
+      "STAND_ALONE": "Independiente",
+      "LAST_MODIFIED_FROM": "Última modificación desde",
+      "LAST_MODIFIED_TO": "Última modificación hasta",
+      "OWNER": "Propietario",
+      "DUE_DATE": "Fecha de vencimiento",
+      "SORT": "Clasificar",
+      "START_DATE": "Fecha de inicio",
+      "COMPLETED_BY": "Completado por",
+      "COMPLETED_DATE": "Fecha de finalización",
+      "CREATED_DATE": "Fecha de creación",
+      "CANDIDATE_GROUPS": "Grupos candidatos"
+    },
+    "DIALOG": {
+      "TITLE": "Guardar filtro como",
+      "SAVE": "Guardar",
+      "CANCEL": "Cancelar"
+    }
+  },
+  "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
+    "LABEL": {
+      "APP_NAME": "Nombre de aplicación",
+      "SERVICE_TASK_ID": "ID de tarea de servicio",
+      "SERVICE_NAME": "Nombre de servicio",
+      "ELEMENT_ID": "ID de elemento",
+      "PROCESS_DEF_NAME": "Nombre de definición de proceso",
+      "PROCESS_DEF_ID": "ID de definición de proceso",
+      "PROCESS_INSTANCE_ID": "ID de instancia de proceso",
+      "STATUS": "Estado",
+      "DIRECTION": "Dirección",
+      "ACTIVITY_NAME": "Nombre de actividad",
+      "ACTIVITY_TYPE": "Tipo de actividad",
+      "SORT": "Clasificar",
+      "STARTED_DATE": "Fecha de inicio",
+      "COMPLETED_DATE": "Fecha de finalización"
+    }
+  },
+  "ADF_CLOUD_EDIT_PROCESS_FILTER": {
+    "TITLE": "Personalice su filtro",
+    "FILTER_NAME": "Nombre de filtro",
+    "LABEL": {
+      "APP_NAME": "Nombre de aplicación",
+      "PROCESS_INS_ID": "ID de instancia de proceso",
+      "STATUS": "Estado",
+      "INITIATOR": "Iniciador",
+      "ASSIGNMENT": "Usuario asignado",
+      "SORT": "Clasificar",
+      "DIRECTION": "Dirección",
+      "PROCESS_DEF_ID": "ID de definición de proceso",
+      "PROCESS_DEF_NAME": "Nombre de definición de proceso",
+      "PROCESS_DEF_KEY": "Clave de definición de procesos",
+      "LAST_MODIFIED": "Modificada por última vez",
+      "LAST_MODIFIED_DATE_FORM": "Última modificación desde",
+      "LAST_MODIFIED_TO": "Última modificación hasta",
+      "PROCESS_NAME": "Nombre del proceso",
+      "APP_VERSION": "Versión de la aplicación",
+      "STARTED_DATE": "Fecha iniciada",
+      "SUSPENDED_DATE": "Fecha de suspensión",
+      "STARTED_BY": "Iniciado por",
+      "COMPLETED_DATE": "Fecha completada",
+      "MAIN_PROCESS_ID": "Id. de proceso principal",
+      "DATE_RANGE": {
+        "NO_DATE": "Sin fecha",
+        "TODAY": "Hoy",
+        "TOMORROW": "Mañana",
+        "NEXT_7_DAYS": "En los próximos 7 días",
+        "WEEK": "Esta semana",
+        "MONTH": "Este mes",
+        "QUARTER": "Este trimestre",
+        "YEAR": "Este año",
+        "RANGE": "Dentro de la fecha"
+      },
+      "DATE_RANGE_TITLE": "Fecha de inicio - Fecha de fin",
+      "START_DATE": "Fecha de inicio",
+      "END_DATE": "Fecha de fin",
+      "ID": "ID",
+      "BUSINESS_KEY": "Clave de negocio"
+    },
+    "ERROR": {
+      "DATE": "Formato de fecha DD/MM/AAAA",
+      "INDALID_START_DATE": "Fecha de inicio no válida",
+      "INDALID_END_DATE": "Fecha de fin no válida",
+      "INVALID_DATE_FILTER": "No es posible usar la opción de filtro de fecha"
+    },
+    "TOOL_TIP": {
+      "SAVE": "Guardar filtro",
+      "SAVE_AS": "Guardar filtro como",
+      "DELETE": "Eliminar filtro",
+      "RESTORE": "Restaurar filtro"
+    },
+    "DIALOG": {
+      "TITLE": "Guardar filtro como",
+      "SAVE": "Guardar",
+      "CANCEL": "Cancelar"
+    }
+  },
+  "ADF_CLOUD_GROUPS": {
+    "SEARCH-GROUP": "Grupos",
+    "MANDATORY": "Obligatorio",
+    "ERROR": {
+      "NOT_FOUND": "No se ha encontrado ningún grupo"
+    }
+  },
+  "ADF_CLOUD_USERS": {
+    "ERROR": {
+      "NOT_FOUND": "No se ha encontrado ningún usuario con el nombre de usuario {{userName}}"
+    }
+  },
+  "ADF_CLOUD_PEOPLE_GROUPS": {
+    "ERROR": {
+      "INVALID_PATTERN": "Debe coincidir con el patrón {{pattern}}",
+      "INVALID_MIN_LENGTH": "Debe tener al menos {{requiredLength}} caracteres",
+      "INVALID_MAX_LENGTH": "Longitud excedida, {{requiredLength}} caracteres máx.",
+      "REQUIRED": "Campo obligatorio"
+    }
+  },
+  "ADF_CLOUD_TASK_HEADER": {
+    "BUTTON": {
+      "CLAIM": "Pedir",
+      "RELEASE": "Liberar"
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Tarea",
+      "THUMBNAIL": "Miniatura",
+      "DURATION": "Duración",
+      "PARENT_TASK_ID": "ID de tarea primaria",
+      "NAME": "Nombre",
+      "ASSIGNEE": "Usuario asignado",
+      "ASSIGNEE_DEFAULT": "Sin asignado",
+      "PRIORITY": "Prioridad",
+      "DUE_DATE": "Fecha de vencimiento",
+      "DUE_DATE_DEFAULT": "Sin fecha",
+      "STATUS": "Estado",
+      "CATEGORY": "Categoría",
+      "CATEGORY_DEFAULT": "Sin categoría",
+      "PARENT_NAME": "Nombre del elemento primario",
+      "PARENT_NAME_DEFAULT": "Sin elemento primario",
+      "CREATED_BY": "Creado por",
+      "CREATED": "Creado",
+      "END_DATE": "Fecha de fin",
+      "ID": "ID",
+      "PROCESS_INSTANCE_ID": "ID de instancia de proceso",
+      "PROCESS_INSTANCE_ID_DEFAULT": "Sin ID de instacia de proceso",
+      "DESCRIPTION": "Descripción",
+      "DESCRIPTION_DEFAULT": "Sin descripción",
+      "FORM_NAME": "Nombre del formulario",
+      "FORM_NAME_DEFAULT": "No hay formulario",
+      "CANDIDATE_USERS": "Usuarios candidatos",
+      "CANDIDATE_USERS_DEFAULT": "Sin usuarios candidatos",
+      "CANDIDATE_GROUPS": "Grupos candidatos",
+      "CANDIDATE_GROUPS_DEFAULT": "Sin grupos candidatos"
+    },
+    "FORM_VALIDATION": {
+      "INVALID_FIELD": "Introducir un valor diferente"
+    }
+  },
+  "ADF_CLOUD_PROCESS_HEADER": {
+    "PROPERTIES": {
+      "ID": "ID",
+      "NAME": "Nombre del proceso",
+      "NAME_DEFAULT": "Sin nombre",
+      "DESCRIPTION": "Descripción",
+      "DESCRIPTION_DEFAULT": "Sin descripción",
+      "STATUS": "Estado",
+      "BUSINESS_KEY": "Clave de negocio",
+      "INITIATOR": "Iniciador",
+      "START_DATE": "Iniciado",
+      "LAST_MODIFIED": "Actualizado",
+      "PARENT_ID": "ID de elemento primario",
+      "NONE": "Ninguno"
+    }
+  },
+  "ADF_CLOUD_TASK_FORM": {
+    "EMPTY_FORM": {
+      "TITLE": "Sin formulario disponible",
+      "SUBTITLE": "Adjunte un formulario que pueda verse más tarde",
+      "BUTTONS": {
+        "COMPLETE": "Completar",
+        "CANCEL": "Cancelar",
+        "CLAIM": "Pedir",
+        "UNCLAIM": "Liberar"
+      }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "Ruta de carpeta de destino no válida",
+      "DESTINATION_FOLDER_PATH_ERROR": "La ruta de destino es incorrecta o no existe, vuelva a -mi- ubicación"
+    }
+  },
+  "ADF_CLOUD_FORM_COMPONENT": {
+    "RETRIEVE_METADATA": "Rellenar los campos del formulario"
+  },
+  "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
+    "ASSIGNED_TO": "Asignado a",
+    "CURRENT_USER": "Asignado a mí",
+    "UNASSIGNED": "No asignado",
+    "NONE": "Ninguno",
+    "CANDIDATE_GROUPS": "Lista de grupos de candidatos",
+    "ASSIGNEE": "Usuario asignado",
+    "ASSIGNMENT_TYPE": "Tipo de asignación"
+  }
+}
