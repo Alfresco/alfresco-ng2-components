@@ -1,0 +1,386 @@
+{
+  "ADF_CLOUD_PROCESS_LIST": {
+    "MESSAGES": {
+      "TITLE": "Nie znaleziono żadnego procesu.",
+      "SUBTITLE": "Utwórz nowy proces, który później będzie łatwo znaleźć.",
+      "NONE": "Nie wybrano filtra wystąpień procesu."
+    },
+    "PROPERTIES": {
+      "NAME": "Nazwa procesu",
+      "CREATED": "Utworzono",
+      "STATUS": "Status",
+      "START_DATE": "Data rozpoczęcia",
+      "COMPLETED_DATE": "Data ukończenia",
+      "COMPLETED_BY": "Ukończone przez",
+      "ID": "Identyfikator",
+      "INITIATOR": "Inicjator",
+      "STARTED_BY": "Uruchomione przez",
+      "APP_NAME": "Nazwa aplikacji",
+      "BUSINESS_KEY": "Klucz biznesowy",
+      "DESCRIPTION": "Opis",
+      "LAST_MODIFIED": "Ostatnia modyfikacja",
+      "PROCESS_NAME": "Nazwa procesu",
+      "PROCESS_DEFINITION_NAME": "Nazwa definicji procesu",
+      "PARENT_TASK_ID": "Identyfikator zadania nadrzędnego",
+      "PROCESS_DEF_ID": "Identyfikator definicji procesu",
+      "PROCESS_DEF_KEY": "Klucz definicji procesu",
+      "APP_VERSION": "Wersja aplikacji"
+    },
+    "ADF_CLOUD_START_PROCESS": {
+      "BUTTON": "Rozpocznij proces",
+      "NO_PROCESS_DEFINITIONS": "Nie można rozpocząć procesu, ponieważ brak dostępnych definicji procesu.",
+      "FORM": {
+        "TITLE": "Rozpocznij proces",
+        "LABEL": {
+          "TYPE": "Wybierz proces",
+          "NAME": "Nazwa procesu"
+        },
+        "TYPE_PLACEHOLDER": "Wybierz jeden...",
+        "ACTION": {
+          "START": "Rozpocznij proces",
+          "CANCEL": "Anuluj"
+        },
+        "SELECT_PROCESS_DROPDOWN": "PRZYCISK menu rozwijanego wyboru procesu"
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Nie można wczytać definicji procesu. Sprawdź, czy masz dostęp.",
+        "START": "Nie można rozpocząć nowego wystąpienia procesu. Sprawdź, czy masz dostęp.",
+        "PROCESS_NAME_REQUIRED": "Nazwa procesu jest wymagana",
+        "PROCESS_DEFINITION_REQUIRED": "Definicja procesu jest wymagana",
+        "MAXIMUM_LENGTH": "Przekroczono długość, maksymalna długość wynosi {{characters}} znaków",
+        "SPACE_VALIDATOR": "Spacje na początku lub końcu są zabronione."
+      }
+    },
+    "LOADING": "Ładowanie"
+  },
+  "ADF_CLOUD_TASK_LIST": {
+    "START_TASK": {
+      "FORM": {
+        "TITLE": "Rozpocznij zadanie",
+        "LABEL": {
+          "NAME": "Nazwa",
+          "DESCRIPTION": "Opis",
+          "ATTACHFORM": "Załącz formularz",
+          "ASSIGNEE": "Osoba przypisana",
+          "CANDIDATE_GROUP": "Grupa kandydatów",
+          "DATE": "Wybierz datę",
+          "PRIORITY": "Priorytet"
+        },
+        "ACTION": {
+          "START": "Uruchom",
+          "CANCEL": "Anuluj"
+        }
+      }
+    },
+    "PROPERTIES": {
+      "NAME": "Nazwa zadania",
+      "ASSIGNEE": "Osoba przypisana",
+      "ID": "Identyfikator",
+      "STATUS": "Status",
+      "PRIORITY": "Priorytet",
+      "CREATED_DATE": "Data utworzenia",
+      "LAST_MODIFIED": "Ostatnia modyfikacja",
+      "DUE_DATE": "Data ukończenia",
+      "CREATED": "Utworzono",
+      "JSON_CELL": "Json",
+      "COMPLETED_BY": "Ukończone przez",
+      "PRIORITY_VALUES": {
+        "NONE": "Brak",
+        "LOW": "Niska",
+        "NORMAL": "Średni",
+        "HIGH": "Wysoki"
+      },
+      "DESCRIPTION": "Opis"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "Nie znaleziono zadań.",
+        "SUBTITLE": "Utwórz nowe zadanie, które później będzie łatwo znaleźć.",
+        "NONE": "Nie znaleziono list zadań."
+      }
+    },
+    "LOADING": "Ładowanie"
+  },
+  "ADF_CLOUD_SERVICE_TASK_LIST": {
+    "PROPERTIES": {
+      "ACTIVITY_NAME": "Nazwa działania",
+      "ACTIVITY_TYPE": "Status",
+      "ID": "Identyfikator",
+      "COMPLETED_DATE": "Data ukończenia",
+      "STARTED_DATE": "Data rozpoczęcia",
+      "STATUS": "Status"
+    }
+  },
+  "ADF_CLOUD_TASK_FILTERS": {
+    "MY_TASKS": "Moje zadania",
+    "QUEUED_TASKS": "Oczekujące zadania",
+    "COMPLETED_TASKS": "Ukończone zadania",
+    "STATUS": {
+      "ALL": "Wszystkie",
+      "CREATED": "Utworzono",
+      "ASSIGNED": "Przypisane",
+      "SUSPENDED": "Zawieszone",
+      "CANCELLED": "Anulowane",
+      "COMPLETED": "Zakończone"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Rosnąco",
+      "DESCENDING": "Malejąco"
+    }
+  },
+  "ADF_CLOUD_SERVICE_TASK_FILTERS": {
+    "ALL_SERVICE_TASKS": "Wszystkie zadania serwisowe",
+    "ERRORED_TASKS": "Zadania błędne",
+    "COMPLETED_TASKS": "Ukończone zadania",
+    "STATUS": {
+      "ALL": "Wszystkie",
+      "STARTED": "Uruchomione",
+      "COMPLETED": "Zakończone",
+      "CANCELLED": "Anulowane",
+      "ERROR": "Błąd"
+    }
+  },
+  "ADF_CLOUD_PROCESS_FILTERS": {
+    "ALL_PROCESSES": "Wszystkie",
+    "RUNNING_PROCESSES": "Uruchomione",
+    "COMPLETED_PROCESSES": "Zakończone",
+    "STATUS": {
+      "ALL": "Wszystkie",
+      "RUNNING": "Uruchomione",
+      "SUSPENDED": "Zawieszone",
+      "CANCELLED": "Anulowane",
+      "COMPLETED": "Zakończone"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Rosnąco",
+      "DESCENDING": "Malejąco"
+    }
+  },
+  "ADF_CLOUD_START_TASK": {
+    "ERROR": {
+      "MESSAGE": "Wprowadź inną wartość.",
+      "REQUIRED": "Pole wymagane",
+      "DATE": "Format daty DD/MM/RRRR",
+      "MAXIMUM_LENGTH": "Przekroczono długość, maksymalna długość wynosi {{characters}} znaków"
+    }
+  },
+  "ADF_CLOUD_EDIT_TASK_FILTER": {
+    "TITLE": "Dostosuj swój filtr",
+    "FILTER_NAME": "Nazwa filtra",
+    "TOOL_TIP": {
+      "SAVE": "Zapisz filtr",
+      "SAVE_AS": "Zapisz filtr jako",
+      "DELETE": "Usuń filtr"
+    },
+    "LABEL": {
+      "APP_NAME": "Nazwa aplikacji",
+      "TASK_ID": "Identyfikator zadania",
+      "PROCESS_DEF_NAME": "Nazwa definicji procesu",
+      "PROCESS_DEF_ID": "Identyfikator definicji procesu",
+      "STATUS": "Status",
+      "ASSIGNMENT": "Osoba przypisana",
+      "DIRECTION": "Kolejność",
+      "PROCESS_INSTANCE_ID": "Identyfikator wystąpienia procesu",
+      "TASK_NAME": "Nazwa zadania",
+      "PARENT_TASK_ID": "Identyfikator zadania nadrzędnego",
+      "PRIORITY": "Priorytet",
+      "STAND_ALONE": "Autonomiczne",
+      "LAST_MODIFIED_FROM": "Ostatnia modyfikacja - od",
+      "LAST_MODIFIED_TO": "Ostatnia modyfikacja - do",
+      "OWNER": "Właściciel",
+      "DUE_DATE": "Data ukończenia",
+      "SORT": "Sortuj",
+      "START_DATE": "Data rozpoczęcia",
+      "COMPLETED_BY": "Ukończone przez",
+      "COMPLETED_DATE": "Data ukończenia",
+      "CREATED_DATE": "Data utworzenia",
+      "CANDIDATE_GROUPS": "Grupy kandydatów"
+    },
+    "DIALOG": {
+      "TITLE": "Zapisz filtr jako",
+      "SAVE": "Zapisz",
+      "CANCEL": "Anuluj"
+    }
+  },
+  "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
+    "LABEL": {
+      "APP_NAME": "Nazwa aplikacji",
+      "SERVICE_TASK_ID": "Identyfikator zadania serwisowego",
+      "SERVICE_NAME": "Nazwa usługi",
+      "ELEMENT_ID": "Identyfikator elementu",
+      "PROCESS_DEF_NAME": "Nazwa definicji procesu",
+      "PROCESS_DEF_ID": "Identyfikator definicji procesu",
+      "PROCESS_INSTANCE_ID": "Identyfikator wystąpienia procesu",
+      "STATUS": "Status",
+      "DIRECTION": "Kolejność",
+      "ACTIVITY_NAME": "Nazwa działania",
+      "ACTIVITY_TYPE": "Typ działania",
+      "SORT": "Sortuj",
+      "STARTED_DATE": "Data rozpoczęcia",
+      "COMPLETED_DATE": "Data ukończenia"
+    }
+  },
+  "ADF_CLOUD_EDIT_PROCESS_FILTER": {
+    "TITLE": "Dostosuj swój filtr",
+    "FILTER_NAME": "Nazwa filtra",
+    "LABEL": {
+      "APP_NAME": "Nazwa aplikacji",
+      "PROCESS_INS_ID": "Identyfikator wystąpienia procesu",
+      "STATUS": "Status",
+      "INITIATOR": "Inicjator",
+      "ASSIGNMENT": "Osoba przypisana",
+      "SORT": "Sortuj",
+      "DIRECTION": "Kolejność",
+      "PROCESS_DEF_ID": "Identyfikator definicji procesu",
+      "PROCESS_DEF_NAME": "Nazwa definicji procesu",
+      "PROCESS_DEF_KEY": "Klucz definicji procesu",
+      "LAST_MODIFIED": "Ostatnia modyfikacja",
+      "LAST_MODIFIED_DATE_FORM": "Ostatnia modyfikacja - od",
+      "LAST_MODIFIED_TO": "Ostatnia modyfikacja - do",
+      "PROCESS_NAME": "Nazwa procesu",
+      "APP_VERSION": "Wersja aplikacji",
+      "STARTED_DATE": "Data rozpoczęcia",
+      "SUSPENDED_DATE": "Data zawieszenia",
+      "STARTED_BY": "Uruchomione przez",
+      "COMPLETED_DATE": "Data ukończenia",
+      "MAIN_PROCESS_ID": "Identyfikator głównego procesu",
+      "DATE_RANGE": {
+        "NO_DATE": "Brak daty",
+        "TODAY": "Dzisiaj",
+        "TOMORROW": "Jutro",
+        "NEXT_7_DAYS": "Następne 7 dni",
+        "WEEK": "W tym tygodniu",
+        "MONTH": "W tym miesiącu",
+        "QUARTER": "W tym kwartale",
+        "YEAR": "W tym roku",
+        "RANGE": "Zakres daty"
+      },
+      "DATE_RANGE_TITLE": "Data początkowa - data końcowa",
+      "START_DATE": "Data rozpoczęcia",
+      "END_DATE": "Data zakończenia",
+      "ID": "Identyfikator",
+      "BUSINESS_KEY": "Klucz biznesowy"
+    },
+    "ERROR": {
+      "DATE": "Format daty DD/MM/RRRR",
+      "INDALID_START_DATE": "Nieprawidłowa data początkowa",
+      "INDALID_END_DATE": "Nieprawidłowa data końcowa",
+      "INVALID_DATE_FILTER": "Opcja filtra danych nie jest obsługiwana"
+    },
+    "TOOL_TIP": {
+      "SAVE": "Zapisz filtr",
+      "SAVE_AS": "Zapisz filtr jako",
+      "DELETE": "Usuń filtr",
+      "RESTORE": "Przywróć filtr"
+    },
+    "DIALOG": {
+      "TITLE": "Zapisz filtr jako",
+      "SAVE": "Zapisz",
+      "CANCEL": "Anuluj"
+    }
+  },
+  "ADF_CLOUD_GROUPS": {
+    "SEARCH-GROUP": "Grupy",
+    "MANDATORY": "Obowiązkowe",
+    "ERROR": {
+      "NOT_FOUND": "Nie znaleziono grupy"
+    }
+  },
+  "ADF_CLOUD_USERS": {
+    "ERROR": {
+      "NOT_FOUND": "Nie znaleziono użytkownika o nazwie {{userName}}"
+    }
+  },
+  "ADF_CLOUD_PEOPLE_GROUPS": {
+    "ERROR": {
+      "INVALID_PATTERN": "Musi być zgodne ze wzorem {{pattern}}",
+      "INVALID_MIN_LENGTH": "Musi mieć przynajmniej {{requiredLength}} znaki(-ów)",
+      "INVALID_MAX_LENGTH": "Przekroczono długość, maksymalna długość wynosi {{requiredLength}}",
+      "REQUIRED": "Pole wymagane"
+    }
+  },
+  "ADF_CLOUD_TASK_HEADER": {
+    "BUTTON": {
+      "CLAIM": "Przejmij",
+      "RELEASE": "Zwolnij"
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Zadanie",
+      "THUMBNAIL": "Miniatura",
+      "DURATION": "Czas trwania",
+      "PARENT_TASK_ID": "Identyfikator zadania nadrzędnego",
+      "NAME": "Nazwa",
+      "ASSIGNEE": "Osoba przypisana",
+      "ASSIGNEE_DEFAULT": "Brak osoby przypisanej",
+      "PRIORITY": "Priorytet",
+      "DUE_DATE": "Data ukończenia",
+      "DUE_DATE_DEFAULT": "Brak daty",
+      "STATUS": "Status",
+      "CATEGORY": "Kategoria",
+      "CATEGORY_DEFAULT": "Brak kategorii",
+      "PARENT_NAME": "Nazwa obiektu nadrzędnego",
+      "PARENT_NAME_DEFAULT": "Brak obiektu nadrzędnego",
+      "CREATED_BY": "Utworzone przez",
+      "CREATED": "Utworzono",
+      "END_DATE": "Data zakończenia",
+      "ID": "Identyfikator",
+      "PROCESS_INSTANCE_ID": "Identyfikator instancji procesu",
+      "PROCESS_INSTANCE_ID_DEFAULT": "Brak identyfikatora instancji procesu",
+      "DESCRIPTION": "Opis",
+      "DESCRIPTION_DEFAULT": "Brak opisu",
+      "FORM_NAME": "Nazwa formularza",
+      "FORM_NAME_DEFAULT": "Brak formularza",
+      "CANDIDATE_USERS": "Kandydujący użytkownicy",
+      "CANDIDATE_USERS_DEFAULT": "Brak kandydujący użytkowników",
+      "CANDIDATE_GROUPS": "Kandydujące grupy",
+      "CANDIDATE_GROUPS_DEFAULT": "Brak kandydujących grup"
+    },
+    "FORM_VALIDATION": {
+      "INVALID_FIELD": "Wprowadź inną wartość."
+    }
+  },
+  "ADF_CLOUD_PROCESS_HEADER": {
+    "PROPERTIES": {
+      "ID": "Identyfikator",
+      "NAME": "Nazwa procesu",
+      "NAME_DEFAULT": "Bez nazwy",
+      "DESCRIPTION": "Opis",
+      "DESCRIPTION_DEFAULT": "Brak opisu",
+      "STATUS": "Status",
+      "BUSINESS_KEY": "Klucz biznesowy",
+      "INITIATOR": "Inicjator",
+      "START_DATE": "Uruchomione",
+      "LAST_MODIFIED": "Zaktualizowane",
+      "PARENT_ID": "Identyfikator obiektu nadrzędnego",
+      "NONE": "Brak"
+    }
+  },
+  "ADF_CLOUD_TASK_FORM": {
+    "EMPTY_FORM": {
+      "TITLE": "Brak dostępnego formularza",
+      "SUBTITLE": "Dołącz formularz do wyświetlania później",
+      "BUTTONS": {
+        "COMPLETE": "Zakończ",
+        "CANCEL": "Anuluj",
+        "CLAIM": "Przejmij",
+        "UNCLAIM": "Zwolnij"
+      }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "Nieprawidłowa ścieżka folderu docelowego",
+      "DESTINATION_FOLDER_PATH_ERROR": "Ścieżka docelowa jest nieprawidłowa lub nie istnieje. Cofnij do mojej lokalizacji"
+    }
+  },
+  "ADF_CLOUD_FORM_COMPONENT": {
+    "RETRIEVE_METADATA": "Automatycznie wypełnij formularz"
+  },
+  "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
+    "ASSIGNED_TO": "Przypisane do",
+    "CURRENT_USER": "Przypisane do mnie",
+    "UNASSIGNED": "Nieprzypisane",
+    "NONE": "Brak",
+    "CANDIDATE_GROUPS": "Lista kandydujących grup",
+    "ASSIGNEE": "Osoba przypisana",
+    "ASSIGNMENT_TYPE": "Typ przypisania"
+  }
+}
