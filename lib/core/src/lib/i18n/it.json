@@ -1,0 +1,670 @@
+{
+  "ADF": {
+    "LANGUAGE": "Lingua",
+    "ROLES": {
+      "ALL": "Tutti",
+      "CONTRIBUTOR": "Contributore",
+      "COLLABORATOR": "Collaboratore",
+      "COORDINATOR": "Coordinatore",
+      "EDITOR": "Redattore",
+      "CONSUMER": "Consumatore",
+      "SITECOLLABORATOR": "Collaboratore sito",
+      "SITECONSUMER": "Consumatore sito",
+      "SITECONTRIBUTOR": "Contributore sito",
+      "SITEMANAGER": "Manager sito"
+    }
+  },
+  "SAVE": "Salva",
+  "COMPLETE": "Completa",
+  "CANCEL": "Annulla",
+  "CLAIM": "Richiedi",
+  "UNCLAIM": "Rilascia",
+  "START PROCESS": "Avvia processo",
+  "DATA_LOADING": "Caricamento dei dati in corso",
+  "CLOSE": "Chiudi",
+  "NOTIFICATIONS": {
+    "NO_MESSAGE": "Non sono presenti notifiche in questo momento.",
+    "UNREAD_MESSAGES": "Hai delle notifiche non lette.",
+    "TITLE": "Notifiche",
+    "MARK_AS_READ": "Seleziona tutti come già letti",
+    "SYSTEM": "Sistema",
+    "LOAD_MORE": "Carica altro",
+    "OPEN_HISTORY": "Apri cronologia notifiche"
+  },
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Modulo di inizio"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Anteprima non disponibile",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "In modalità di anteprima non è possibile allegare un file"
+      }
+    },
+    "FIELD": {
+      "LOCALSTORAGE": "Archivio locale",
+      "SOURCE": "Seleziona origine da ",
+      "VIEW_FILE": "Visualizza",
+      "DOWNLOAD_FILE": "Scarica",
+      "REMOVE_FILE": "Rimuovi",
+      "UPLOAD": "Carica",
+      "REQUIRED": "Campo obbligatorio",
+      "REST_API_FAILED": "Il server '{{ hostname }}' non è raggiungibile",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Si è verificato un problema durante il caricamento degli elementi a discesa. Si prega di contattare l’amministratore.",
+      "DATA_TABLE_LOAD_FAILED": "Si è verificato un problema durante il caricamento degli elementi della tabella. Si prega di contattare l’amministratore.",
+      "DATA_TABLE_EMPTY_CONTENT": "Nessun dato trovato",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "Si è verificato un problema durante il caricamento delle proprietà esterne. Si prega di contattare l’amministratore.",
+      "FILE_NAME": "Nome file",
+      "TITLE": "Titolo",
+      "NO_FILE_ATTACHED": "Nessun file allegato",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Utilizzare un formato numerico diverso",
+        "INVALID_DECIMAL_NUMBER": "Utilizzare un formato numerico decimale",
+        "INVALID_DECIMAL_PRECISION": "Valore decimale errato, devono esserci massimo {{precision}} cifre dopo il punto decimale.",
+        "INVALID_DATE": "Utilizzare un formato data diverso",
+        "INVALID_DATE_FORMAT": "Formato data non valido, usare il formato: {{ format }}",
+        "INVALID_VALUE": "Immettere un altro valore",
+        "NOT_GREATER_THAN": "Non può essere maggiore di {{ maxValue }}",
+        "NOT_LESS_THAN": "Non può essere minore di {{ minValue }}",
+        "AT_LEAST_LONG": "Immettere almeno {{ minLength }} caratteri",
+        "NO_LONGER_THAN": "Immettere non più di {{ maxLength }} caratteri"
+      },
+      "FILE_ALREADY_UPLOADED": "È già stato caricato un file con lo stesso nome.",
+      "ATTACH": "Allega",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "aggiungi",
+        "ROW_LIMIT_REACHED": "Righe limite ({{ limit }}) raggiunto."
+      }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "Compito senza nome",
+      "ROW_LABEL": "Riga {{ number }}",
+      "DELETE_ROW": "Elimina riga",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Elimina la riga",
+        "MESSAGE": "Sei sicuro di voler eliminare questa riga?",
+        "YES_LABEL": "Elimina riga",
+        "NO_LABEL": "Annulla"
+      }
+    },
+    "BUTTON": {
+      "PREVIOUS_TAB": "Precedente",
+      "PREVIOUS_TAB_TITLE": "Vai alla scheda precedente",
+      "NEXT_TAB": "Avanti",
+      "NEXT_TAB_TITLE": "Vai alla scheda successiva"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "Dimensioni carattere",
+      "FONT_WEIGHT": "Peso carattere",
+      "FONT_COLOR": "Colore del carattere",
+      "FONT_WEIGHTS": {
+        "REGULAR": "regolare",
+        "BOLD": "grassetto"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "colore sistema",
+        "BLACK": "nero",
+        "GREY": "grigio",
+        "RED": "rosso",
+        "GREEN": "verde",
+        "BLUE": "blu",
+        "YELLOW": "giallo"
+      },
+      "PREDEFINED": {
+        "HEADER": {
+          "NORMAL": "normale",
+          "HEADING": "intestazione",
+          "TITLE": "titolo"
+        },
+        "RADIO_BUTTONS": {
+          "NORMAL": "normale",
+          "STRONG": "forte",
+          "HEADING": "intestazione"
+        },
+        "READONLY_TEXT": {
+          "NORMAL": "normale",
+          "STRONG": "forte",
+          "HEADING": "intestazione",
+          "TITLE": "titolo",
+          "ANNOTATION": "annotazione"
+        }
+      }
+    }
+  },
+  "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "Logo azienda",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Cambia menu"
+      }
+    },
+    "FILE_SIZE": {
+      "BYTES": "byte",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
+    "PAGINATION": {
+      "ARIA": {
+        "ITEMS_PER_PAGE": "Selettore dimensioni pagina",
+        "CURRENT_PAGE": "Selettore pagina corrente",
+        "PREVIOUS_PAGE": "Pulsante Pagina precedente",
+        "NEXT_PAGE": "Pulsante Pagina successiva"
+      },
+      "ITEMS_RANGE": "Visualizzazione di {{ range }} su {{ total }}",
+      "ITEMS_PER_PAGE": "Elementi per pagina",
+      "CURRENT_PAGE": "Pagina {{ number }}",
+      "TOTAL_PAGES": "di {{ total }}"
+    },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Annulla"
+        },
+        "TITLE": "Aggiunta dei file allo zip in corso. Questa operazione potrebbe richiedere alcuni minuti",
+        "COMPLETE": "completo"
+      },
+      "EDIT_JSON": {
+        "CLOSE": "Chiudi",
+        "UPDATE": "Aggiorna"
+      },
+      "UNSAVED_CHANGES": {
+        "TITLE": "Modifiche non salvate",
+        "DESCRIPTION": "Vi sono modifiche non salvate in questa schermata. Uscire senza salvare le modifiche?",
+        "DISCARD_CHANGES_BUTTON": "Annulla modifiche"
+      }
+    },
+    "BREADCRUMBS": {
+      "TITLE": "Breadcrumb",
+      "SHOWALL": "Mostra tutto"
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Blocca file",
+      "ALLOW_OTHERS_CHECKBOX": "Consenti al proprietario di modificare questo file",
+      "FILE_LOCK_CHECKBOX": "Blocca file",
+      "TIME_LOCK_CHECKBOX": "Durata blocco",
+      "SAVE_BUTTON": {
+        "LABEL": "Salva"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Annulla"
+      }
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Crea nuova cartella",
+      "EDIT_FOLDER_TITLE": "Modifica cartella",
+      "FOLDER_NAME": {
+        "LABEL": "Nome",
+        "ERRORS": {
+          "REQUIRED": "Nome cartella obbligatorio",
+          "SPECIAL_CHARACTERS": "Il nome della cartella non può contenere questi caratteri * \" < > \\ / ? : |",
+          "ENDING_DOT": "Il nome della cartella non può terminare con un punto .",
+          "ONLY_SPACES": "Il nome della cartella non può contenere solo spazi"
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Descrizione"
+      },
+      "FOLDER_TITLE": {
+        "LABEL": "Titolo"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Crea"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Aggiorna"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Annulla"
+      },
+      "FOLDER_CREATED_SUCCESS": "Cartella '{{ name }}' creata correttamente",
+      "FOLDER_UPDATED_SUCCESS": "Cartella '{{ name }}' aggiornata correttamente"
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "Azione non eseguita correttamente. Riprovare o contattare il team IT.",
+        "EXISTENT_FOLDER": "Esiste già una cartella con questo nome. Provare un nome diverso."
+      }
+    },
+    "RESTORE_NODE": {
+      "VIEW": "Visualizza",
+      "PARTIAL_PLURAL": "{{ number }} elementi non ripristinati a causa dei problemi con il percorso di ripristino",
+      "NODE_EXISTS": "Impossibile ripristinare, elemento {{ name }} già esistente",
+      "LOCATION_MISSING": "Impossibile ripristinare l'elemento {{ name }}, il percorso originale non esiste più",
+      "GENERIC": "Si è verificato un problema nel ripristino dell'elemento {{ name }}",
+      "PLURAL": "Ripristino eseguito correttamente",
+      "SINGULAR": "Elemento {{ name }} ripristinato"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "{{ name }} eliminato",
+      "PLURAL": "{{ number }} elementi eliminati",
+      "PARTIAL_SINGULAR": "Elemento {{ success }} eliminato, impossibile eliminare {{ failed }}",
+      "PARTIAL_PLURAL": "Elementi {{ success }} eliminati, impossibile eliminare {{ failed }}",
+      "ERROR_SINGULAR": "Impossibile eliminare {{ name }}",
+      "ERROR_PLURAL": "Impossibile eliminare {{ number }} elementi"
+    },
+    "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "Aggiungi nuova",
+        "NAME": "Nome",
+        "VALUE": "Valore"
+      },
+      "NONE": "Nessuno",
+      "SELECTED_VALUES": "Selected values",
+      "REMOVE": "Remove {{ value }}",
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "Utilizzare un formato numerico",
+        "INT_VALIDATION_ERROR": "Utilizzare numeri interi",
+        "LONG_VALIDATION_ERROR": "Utilizzare un formato lungo",
+        "LENGTH_VALIDATION_ERROR": "La lunghezza del valore deve essere compresa tra {{ minLength }} e {{ maxLength }}",
+        "MATCH_VALIDATION_ERROR": "Il valore non corrisponde al modello: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "Il valore deve essere compreso tra {{ minValue }} e {{ maxValue }}",
+        "ONLY_POSITIVE_NUMBER": "È ammesso solo un valore positivo"
+      },
+      "MORE": "Altro"
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "Proprietà",
+        "NAME": "Nome",
+        "TITLE": "Titolo",
+        "DESCRIPTION": "Descrizione",
+        "AUTHOR": "Autore",
+        "MIMETYPE": "Tipo MIME",
+        "SIZE": "Dimensione",
+        "CREATOR": "Creatore",
+        "CREATED_DATE": "Data di creazione",
+        "MODIFIER": "Modificatore",
+        "MODIFIED_DATE": "Data di modifica",
+        "CONTENT_TYPE": "Tipo di contenuto"
+      },
+      "CONTENT_TYPE": {
+        "DIALOG": {
+          "TITLE": "Modifica il tipo di contenuto",
+          "DESCRIPTION": "Se si apporta questa modifica al tipo di contenuto, alcune proprietà e metadati memorizzati verranno aggiunti al documento in modo definitivo.",
+          "CONFIRM": "Modificare il tipo di contenuto?",
+          "CANCEL": "Annulla",
+          "APPLY": "Salva modifiche",
+          "VIEW_DETAILS": "Visualizza dettagli",
+          "PROPERTY": {
+            "NAME": "Nome",
+            "DESCRIPTION": "Descrizione",
+            "DATA_TYPE": "Tipo di dati"
+          }
+        }
+      },
+      "ACTIONS": {
+        "EDIT": "Modifica",
+        "SAVE": "Salva",
+        "CANCEL": "Annulla",
+        "CLEAR": "Cancella",
+        "TOGGLE": "Cambiare valore",
+        "COPY_TO_CLIPBOARD": "Fare doppio clic per copiare il valore",
+        "EDIT_ASPECTS": "Modifica aspetto"
+      },
+      "ACCESSIBILITY": {
+        "EDIT": "Modifica {{ sectionName }}",
+        "DATEPICKER": "Usare i tasti freccia per spostarsi fra le date. I tasti Su e Giù passano alla settimana successiva o precedente, ma nello stesso giorno. I tasti Sinistra e Destra passano al giorno successivo o precedente. Premere Invio per selezionare una data.",
+        "COPY_TO_CLIPBOARD_MESSAGE": "Valore copiato negli appunti",
+        "EDIT_ASPECTS": "Modifica aspetto",
+        "SECTION": "Sezione {{ sectionName }}"
+      }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "Ordina i risultati in modo crescente o decrescente",
+      "SORT_BY": "Ordina per",
+      "BUTTON": {
+        "TOOLTIP": "Cerca",
+        "ARIA-LABEL": "Pulsante di ricerca"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "Stringa di ricerca"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "Chiudi"
+        }
+      }
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "Ridefinizioni flag funzione",
+      "FILTER_OR_ADD_NEW": "Filtra o aggiungi nuovo",
+      "FILTER": "Filtro",
+      "ADD_NEW": "Aggiungi nuova flag funzione (MAIUSC+Invio)"
+    }
+  },
+  "COMMENTS": {
+    "PROFILE_IMAGE": "Immagine profilo",
+    "NONE": "Nessun commento",
+    "ADD": "Aggiungi",
+    "HEADER": "Commenti ({{ count }})",
+    "CREATED_BY_HEADER": "Creato da",
+    "MESSAGE_HEADER": "Messaggio",
+    "EMPTY_ERROR": "Il commento non può essere vuoto",
+    "DIALOG": {
+      "TITLE": "Nuovo commento",
+      "LABELS": {
+        "MESSAGE": "Messaggio"
+      },
+      "BUTTON": {
+        "ADD": "Aggiungi commento",
+        "CANCEL": "Annulla"
+      }
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco, agevola il flusso delle attività di business",
+    "LABEL": {
+      "LOGIN": "Accedi",
+      "USERNAME": "Nome utente",
+      "PASSWORD": "Password",
+      "REMEMBER": "Ricordami"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "Mostra password",
+      "HIDE-PASSWORD": "Nascondi password"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Obbligatorio",
+      "USERNAME-MIN": "Il nome utente deve essere lungo almeno {{ minLength }} caratteri.",
+      "PASSWORD-REQUIRED": "Immetti la password per accedere",
+      "LOGIN-ERROR-CREDENTIALS": "Nome utente o password sconosciuti",
+      "LOGIN-ERROR-PROVIDERS": "I provider non possono essere non definiti",
+      "LOGIN-ERROR-CORS": "Eccezione CORS, controlla la configurazione del server",
+      "LOGIN-ERROR-CSRF": "Eccezione CSRF, impostare \"disableCSRF\": true in app.config.json",
+      "LOGIN-ECM-LICENSE": "Il repository Alfresco Content Services è in modalità di sola lettura",
+      "SSO-WRONG-CONFIGURATION": "Server di autenticazione SSO non raggiungibile"
+    },
+    "BUTTON": {
+      "LOGIN": "Accedi",
+      "CHECKING": "Verifica in corso",
+      "WELCOME": "Benvenuto",
+      "SSO": "Accedi con SSO"
+    },
+    "ACTION": {
+      "HELP": "Hai bisogno di aiuto?",
+      "REGISTER": "Registrati"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Questo elenco è vuoto",
+      "DRAG-AND-DROP": {
+        "TITLE": "Trascinare e rilasciare",
+        "SUBTITLE": "per caricare i file"
+      }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "Azioni contenuti",
+      "SELECT_COLUMNS": "Seleziona colonne"
+    },
+    "ACCESSIBILITY": {
+      "ACTIONS": "Azioni",
+      "SELECT_ALL": "Seleziona tutto",
+      "SELECT_FILE": "Selezionare un file",
+      "SELECTED": "Selezionato",
+      "ROW_SELECTION": "Premi Spazio per attivare/disattivare la selezione della riga",
+      "SORT_ASCENDING": "Ascendente",
+      "SORT_DESCENDING": "Discendente",
+      "SORT_NONE": "Nessuno",
+      "SORT_DEFAULT": "Ordinabile",
+      "SORT_ASCENDING_BY": "Ordine crescente per {{ string }}",
+      "SORT_DESCENDING_BY": "Ordine decrescente per {{ string }}",
+      "ICON_TEXT": "Tipo di elemento {{ type }}",
+      "ICON_DISABLED": "Disabilitato",
+      "ROW_OPTION_BUTTON": "Azioni",
+      "DRAG": "Pulsante di trascinamento",
+      "DRAGGABLE": "Trascinabile",
+      "EMPTY_HEADER": "Intestazione vuota",
+      "RESIZE_COLUMN": "Ridimensiona colonna {{ column }}. Utilizzare i tasti freccia per regolare la larghezza, Maiusc per passi più grandi.",
+      "COLUMN_WIDTH_CHANGED": "Larghezza colonna {{ column }}: {{ width }} pixel"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "Documento",
+      "FOLDER": "Cartella",
+      "PDF": "PDF",
+      "IMAGE": "Immagine",
+      "EXCEL": "Foglio di calcolo Excel",
+      "WORD": "Documento Word",
+      "POWERPOINT": "Presentazione Powerpoint",
+      "VIDEO": "Video",
+      "AUDIO": "Audio",
+      "WEBSITE": "Sito web",
+      "ARCHIVE": "Archivio",
+      "PRESENTATION": "Presentazione",
+      "SPREADSHEET": "Foglio di calcolo",
+      "MISCELLANEOUS": "Vari"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "Scegli colonne visibili",
+      "SEARCH": "Cerca",
+      "APPLY": "Applica",
+      "COLUMNS_VISIBILITY": "Seleziona le colonne da visualizzare"
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Professione"
+      },
+      "BPM": {
+        "TENANT": "Proprietario"
+      },
+      "MY_PROFILE": "Il mio profilo"
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
+    }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Indietro",
+      "OPEN_WITH": "Apri con",
+      "DOWNLOAD": "Scarica",
+      "PRINT": "Stampa",
+      "SHARE": "Condividi",
+      "MORE_ACTIONS": "Altre azioni",
+      "INFO": "Informazioni",
+      "FULLSCREEN": "Attiva modalità schermo intero",
+      "CLOSE": "Chiudi",
+      "NEXT_FILE": "File successivo",
+      "PREV_FILE": "File precedente",
+      "WAIT": "Attendi"
+    },
+    "ARIA": {
+      "MIME_TYPE_ICON": "Icona tipo di file",
+      "PREVIOUS_PAGE": "Pagina precedente",
+      "NEXT_PAGE": "Pagina successiva",
+      "ZOOM_IN": "Zoom avanti",
+      "ZOOM_OUT": "Zoom indietro",
+      "FIT_PAGE": "Adatta pagina",
+      "ROTATE": "Ruota",
+      "CROP": "Ritaglia",
+      "SAVE": "Salva rotazione o ritaglio",
+      "CANCEL": "Annulla rotazione o ritaglio",
+      "RESET": "Reimposta",
+      "THUMBNAILS": "Miniature documento",
+      "THUMBNAILS_PANLEL_CLOSE": "Chiudi pannello miniature",
+      "LOADING": "Il documento è in fase di caricamento",
+      "NOTE_ANNOTATION_IMG": "Annotazione di nota"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Visualizzazione di",
+      "OF": "di",
+      "PAGE_SELECTOR_LABEL": "Selettore pagina"
+    },
+    "LOADING": "Caricamento in corso",
+    "UNKNOWN_FORMAT": "Impossibile caricare l'anteprima. Formato sconosciuto.",
+    "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "Pagina {{ pageNum }}"
+      }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Invia",
+      "CLOSE": "Chiudi",
+      "PLACEHOLDER": "Password",
+      "ERROR": "Password errata"
+    },
+    "SUBTITLES": "Sottotitoli",
+    "NON_RESPONSIVE_DIALOG": {
+      "HEADER": "Caricamento anteprima ritardato",
+      "LABEL": "Attendere ancora o caricare il documento."
+    }
+  },
+  "ERROR_CONTENT": {
+    "UNKNOWN": {
+      "TITLE": "Si è verificato un problema.",
+      "DESCRIPTION": "Sembra che si sia verificato un errore.",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Torna alla home"
+      }
+    },
+    "403": {
+      "TITLE": "Non si dispone dell'autorizzazione per accedere al server.",
+      "DESCRIPTION": "Accesso alla risorsa sul server non consentito.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "Segnala errore"
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Torna alla home"
+      }
+    },
+    "404": {
+      "TITLE": "Si è verificato un errore.",
+      "DESCRIPTION": "Impossibile trovare la pagina.",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Torna alla home"
+      }
+    },
+    "500": {
+      "TITLE": "Si è verificato un errore.",
+      "DESCRIPTION": "Errore interno del server. Riprovare o contattare il supporto IT [500].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Torna alla home"
+      }
+    },
+    "502": {
+      "TITLE": "Si è verificato un errore.",
+      "DESCRIPTION": "Gateway non valido. Riprovare o contattare il supporto IT [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Torna alla home"
+      }
+    },
+    "503": {
+      "TITLE": "Si è verificato un errore.",
+      "DESCRIPTION": "Servizio temporaneamente non disponibile [503].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Torna alla home"
+      }
+    },
+    "504": {
+      "TITLE": "Si è verificato un errore.",
+      "DESCRIPTION": "Time out del server. Riprovare o contattare il supporto [504].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Torna alla home"
+      }
+    }
+  },
+  "ABOUT": {
+    "VERSION": "Versione",
+    "SERVER_SETTINGS": {
+      "TITLE": "Impostazioni server",
+      "CONTENT_SERVICE_HOST": "URL di Alfresco Content Services: {{ value }}",
+      "PROCESS_SERVICE_HOST": "URL di Alfresco Process Services: {{ value }}"
+    },
+    "REPOSITORY": "Repository",
+    "PACKAGES": {
+      "TITLE": "Pacchetti",
+      "NAME": "Nome",
+      "VERSION": "Versione"
+    },
+    "EXTENSIONS": {
+      "TITLE": "Plug-in",
+      "TABLE_HEADERS": {
+        "ID": "ID",
+        "NAME": "Nome",
+        "VERSION": "Versione",
+        "VENDOR": "Venditore",
+        "LICENSE": "Licenza",
+        "RUNTIME": "Runtime",
+        "DESCRIPTION": "Descrizione"
+      }
+    },
+    "LICENSE": {
+      "TITLE": "Licenza",
+      "PROPERTY": "Proprietà",
+      "VALUE": "Valore",
+      "ENABLED": "Abilitato",
+      "DISABLED": "Disabilitato"
+    },
+    "STATUS": {
+      "TITLE": "Stato",
+      "PROPERTY": "Proprietà",
+      "VALUE": "Valore"
+    },
+    "MODULES": {
+      "TITLE": "Moduli",
+      "NAME": "Nome",
+      "VERSION": "Versione"
+    },
+    "PLUGINS": {
+      "TITLE": "Plug-in",
+      "NAME": "Nome",
+      "VERSION": "Versione"
+    }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "Fare clic per copiare",
+    "SUCCESS_COPY": "Testo copiato negli appunti"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "Cerca",
+      "ARIA_LABEL": "Opzioni di ricerca"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "Cancella"
+    }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "Caricamento in corso...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} casella combinata {{selectedOption}}"
+  },
+  "INFO_DRAWER": {
+    "ICON": "Icona nodo"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "Carica di più"
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Conferma",
+    "ACTION": "Procedere?",
+    "YES_LABEL": "Sì",
+    "NO_LABEL": "No"
+  }
+}
