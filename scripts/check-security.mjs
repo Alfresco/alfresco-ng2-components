@@ -29,7 +29,14 @@
  * 3. Blocks installation if a compromised package is found
  *
  * Cache: Results are cached locally for 24 hours to avoid slowing down installs.
+ *
+ * Set ADF_SKIP_SECURITY_CHECK=1 to disable (useful for CI environments).
  */
+
+if (process.env.ADF_SKIP_SECURITY_CHECK === '1' || process.env.ADF_SKIP_SECURITY_CHECK === 'true') {
+    console.log('🔒 ADF Security Check: Skipped (ADF_SKIP_SECURITY_CHECK=1)\n');
+    process.exit(0);
+}
 
 import { readFileSync, writeFileSync, mkdirSync, rmSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';

@@ -26,7 +26,14 @@
  *
  * Checking package.json catches new dependencies added during upgrades
  * (e.g., nx migrate) before the lockfile is updated.
+ *
+ * Set ADF_SKIP_SECURITY_CHECK=1 to disable (useful for CI environments).
  */
+
+if (process.env.ADF_SKIP_SECURITY_CHECK === '1' || process.env.ADF_SKIP_SECURITY_CHECK === 'true') {
+    console.log('🔒 ADF Security Check: Skipped (ADF_SKIP_SECURITY_CHECK=1)\n');
+    process.exit(0);
+}
 
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
