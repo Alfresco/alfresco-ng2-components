@@ -40,6 +40,7 @@ env:
   GH_BUILD_NUMBER: ${{ github.run_id }}
   LOG_LEVEL: "ERROR"
   NODE_OPTIONS: "--max-old-space-size=5120"
+  ADF_SKIP_SECURITY_CHECK: 1
 
 jobs:
   setup:

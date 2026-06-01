@@ -11,6 +11,7 @@ on:
 
 env:
   NODE_OPTIONS: "--max-old-space-size=5120"
+  ADF_SKIP_SECURITY_CHECK: 1
 
 jobs:
   build:

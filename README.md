@@ -31,11 +31,21 @@ This project has built-in supply chain attack protection. When you run `npm inst
 
 1. **Preinstall check** scans both `package.json` AND `package-lock.json` against OSV + GitHub Advisory databases
 2. If malicious packages detected → installation blocked BEFORE any code runs
-3. Packages install normally
-4. **Post-install check** verifies installed packages (defense in depth)
-5. Only trusted packages (esbuild, nx, husky, etc.) get their native bindings rebuilt
+3. Packages install with `--ignore-scripts` (lifecycle scripts disabled for security)
+4. **Post-install check** re-runs the security scan (defense in depth) and deletes `node_modules` if violations found
+5. Trusted packages (esbuild, nx, husky, etc.) are rebuilt via `npm rebuild` to run their lifecycle scripts
 
 Checking `package.json` catches new dependencies added during upgrades (e.g., `nx migrate`) before the lockfile is updated. If a malicious package is detected at any stage, installation is blocked.
+
+To disable security checks (e.g., in CI environments):
+```bash
+ADF_SKIP_SECURITY_CHECK=1 npm install
+```
+
+To keep `node_modules` on violations (for debugging):
+```bash
+ADF_SECURITY_KEEP_NODE_MODULES=1 npm install
+```
 
 ## Components
 

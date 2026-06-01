@@ -39,6 +39,10 @@ function listDirectories(path) {
 }
 
 function findVSCodeExtensionCli(homeDir) {
+    if (!homeDir) {
+        return null;
+    }
+
     const extensionsDir = join(homeDir, '.vscode', 'extensions');
     const extensions = listDirectories(extensionsDir)
         .filter(dir => /^meterian\.meterian-heidi-\d+\.\d+\.\d+$/.test(dir))
@@ -58,9 +62,9 @@ function findVSCodeExtensionCli(homeDir) {
 function findGlobalCli(homeDir, rootDir) {
     const possibleLocations = [
         join(rootDir, 'node_modules', '@meterian', 'cli'),
-        join(homeDir, '.npm-global', 'lib', 'node_modules', '@meterian', 'cli'),
+        homeDir ? join(homeDir, '.npm-global', 'lib', 'node_modules', '@meterian', 'cli') : null,
         '/usr/local/lib/node_modules/@meterian/cli'
-    ];
+    ].filter(Boolean);
 
     for (const location of possibleLocations) {
         if (isDirectory(location)) {

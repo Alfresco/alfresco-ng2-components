@@ -455,6 +455,8 @@ async function main() {
 }
 
 main().catch(error => {
-    console.error('Security check error:', error.message);
-    process.exit(0);
+    console.error('\n❌ Security check crashed unexpectedly:', error.message);
+    console.error('   Blocking installation as a precaution.');
+    console.error('   Set ADF_SKIP_SECURITY_CHECK=1 to bypass.\n');
+    process.exit(1);
 });

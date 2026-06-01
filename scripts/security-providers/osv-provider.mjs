@@ -36,18 +36,51 @@ function isMalwareRelated(text) {
     return MALWARE_KEYWORDS.some(keyword => lowerText.includes(keyword.toLowerCase()));
 }
 
+function extractRangesFromEvents(events) {
+    const ranges = [];
+    let introduced = null;
+
+    for (const event of events) {
+        if (event.introduced !== undefined) {
+            introduced = event.introduced;
+        } else if (event.fixed !== undefined && introduced !== null) {
+            if (introduced === '0') {
+                ranges.push(`< ${event.fixed}`);
+            } else {
+                ranges.push(`>= ${introduced}, < ${event.fixed}`);
+            }
+            introduced = null;
+        } else if (event.last_affected !== undefined && introduced !== null) {
+            if (introduced === '0') {
+                ranges.push(`<= ${event.last_affected}`);
+            } else {
+                ranges.push(`>= ${introduced}, <= ${event.last_affected}`);
+            }
+            introduced = null;
+        }
+    }
+
+    if (introduced !== null && introduced !== '0') {
+        ranges.push(`>= ${introduced}`);
+    }
+
+    return ranges;
+}
+
 function extractVersionsFromVulnerability(vulnerability) {
     const affectedEntries = vulnerability.affected || [];
 
-    const introducedVersions = affectedEntries
+    const versionRanges = affectedEntries
         .flatMap(entry => entry.ranges || [])
-        .flatMap(range => range.events || [])
-        .filter(event => event.introduced && event.introduced !== '0')
-        .map(event => event.introduced);
+        .filter(range => range.type === 'SEMVER' || range.type === 'ECOSYSTEM')
+        .flatMap(range => extractRangesFromEvents(range.events || []));
 
     const explicitVersions = affectedEntries.flatMap(entry => entry.versions || []);
 
-    return [...new Set([...introducedVersions, ...explicitVersions])];
+    return {
+        versions: [...new Set(explicitVersions)],
+        versionRanges: [...new Set(versionRanges)]
+    };
 }
 
 function splitIntoBatches(items, batchSize) {
@@ -95,14 +128,15 @@ function extractMalwareInfo(vulnerability) {
         return null;
     }
 
-    const versions = extractVersionsFromVulnerability(vulnerability);
-    if (versions.length === 0) {
+    const { versions, versionRanges } = extractVersionsFromVulnerability(vulnerability);
+    if (versions.length === 0 && versionRanges.length === 0) {
         return null;
     }
 
     return {
         packageName,
         versions,
+        versionRanges,
         reason: vulnerability.summary || 'Malware detected by OSV'
     };
 }
@@ -116,9 +150,15 @@ function processBatchResults(batchResults, malwareRegistry) {
 
             if (malwareInfo) {
                 if (!malwareRegistry[malwareInfo.packageName]) {
-                    malwareRegistry[malwareInfo.packageName] = { versions: [], reason: '', source: 'OSV' };
+                    malwareRegistry[malwareInfo.packageName] = {
+                        versions: [],
+                        versionRanges: [],
+                        reason: '',
+                        source: 'OSV'
+                    };
                 }
                 malwareRegistry[malwareInfo.packageName].versions.push(...malwareInfo.versions);
+                malwareRegistry[malwareInfo.packageName].versionRanges.push(...malwareInfo.versionRanges);
                 malwareRegistry[malwareInfo.packageName].reason = malwareInfo.reason;
             }
         }
