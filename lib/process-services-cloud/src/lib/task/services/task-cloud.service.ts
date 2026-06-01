@@ -131,6 +131,32 @@ export class TaskCloudService extends BaseCloudService {
     }
 
     /**
+     * Returns the next recommended task to process.
+     *
+     * @param appName Name of the app
+     * @param strategy The task identification strategy
+     * @returns Details of the returned task
+     */
+    nextTask(appName: string, strategy: string): Observable<TaskDetailsCloudModel> {
+        if (!appName?.trim()) {
+            return throwError(() => 'AppName not configured');
+        }
+
+        let queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/next`;
+
+        if (strategy) {
+            queryUrl += `?strategy=${strategy}`;
+        }
+
+        return this.post(queryUrl).pipe(
+            map((res: any) => {
+                this.dataChangesDetected$.next(res);
+                return res.entry;
+            })
+        );
+    }
+
+    /**
      * Claims a task for an assignee.
      *
      * @param appName Name of the app
