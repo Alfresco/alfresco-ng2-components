@@ -35,7 +35,7 @@ updates:
       interval: "weekly"
     ignore:
       # Managed by gh aw add. Version-locked to the gh-aw compiler; do not bump.
-      - dependency-name: "github/gh-aw-actions/**"
+      - dependency-name: "github/gh-aw-actions"
   - package-ecosystem: "github-actions"
     directory: "/.github/actions/before-install"
     schedule:
