@@ -14,10 +14,11 @@ Example: `[AAE-12345] Fix pagination component [ci:force]`
 
 ## Commit Message Flags
 
-Include these flags in a **commit message** to modify how Nx calculates affected projects.
+Include these flags in a **commit message** to modify CI behavior.
 
 | Flag | Effect |
 |------|--------|
+| `[ci:force]` | Skips the PR approval check (same as PR title flag). |
 | `[affected:*]` | Forces all Nx targets to run against all projects, ignoring the affected calculation. Equivalent to `--all`. |
 
 ## PR Labels
