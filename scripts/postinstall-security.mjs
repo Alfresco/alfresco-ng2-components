@@ -168,7 +168,9 @@ async function main() {
     console.log('='.repeat(70) + '\n');
 }
 
-main().catch(error => {
+try {
+    await main();
+} catch (error) {
     console.error('Post-install failed:', error.message);
     process.exit(1);
-});
+}

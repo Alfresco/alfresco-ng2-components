@@ -118,12 +118,72 @@ function writeCache(threats, ranges) {
 // SECURITY PROVIDERS
 // ============================================================================
 
+const MALWARE_KEYWORDS = ['malware', 'malicious', 'compromised', 'supply chain', 'backdoor'];
+const OSV_BATCH_SIZE = 1000;
+const OSV_TIMEOUT_MS = 30000;
+
 function splitIntoBatches(items, batchSize) {
     const batches = [];
     for (let index = 0; index < items.length; index += batchSize) {
         batches.push(items.slice(index, index + batchSize));
     }
     return batches;
+}
+
+function buildOSVQueryPayload(dependencies) {
+    return {
+        queries: dependencies.map(dep => ({
+            package: { name: dep.name, ecosystem: 'npm' },
+            version: dep.version
+        }))
+    };
+}
+
+function isMalwareVulnerability(vulnerability) {
+    const summary = [vulnerability.summary || '', vulnerability.details || ''].join(' ').toLowerCase();
+    return MALWARE_KEYWORDS.some(keyword => summary.includes(keyword));
+}
+
+function extractMaliciousPackages(vulnerability) {
+    const packages = [];
+
+    for (const affected of vulnerability.affected || []) {
+        const isNpmPackage = affected.package?.ecosystem === 'npm' && affected.package?.name;
+        if (isNpmPackage) {
+            for (const version of affected.versions || []) {
+                packages.push(`${affected.package.name}@${version}`);
+            }
+        }
+    }
+
+    return packages;
+}
+
+function processOSVResults(results, maliciousSet) {
+    for (const result of results) {
+        for (const vulnerability of result.vulns || []) {
+            if (isMalwareVulnerability(vulnerability)) {
+                const packages = extractMaliciousPackages(vulnerability);
+                packages.forEach(pkg => maliciousSet.add(pkg));
+            }
+        }
+    }
+}
+
+async function queryOSVBatch(dependencies) {
+    const response = await fetch('https://api.osv.dev/v1/querybatch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(buildOSVQueryPayload(dependencies)),
+        signal: AbortSignal.timeout(OSV_TIMEOUT_MS)
+    });
+
+    if (!response.ok) {
+        return [];
+    }
+
+    const data = await response.json();
+    return data.results || [];
 }
 
 async function fetchOSV(projectDependencies) {
@@ -134,44 +194,14 @@ async function fetchOSV(projectDependencies) {
     const malicious = new Set();
 
     try {
-        const batches = splitIntoBatches(projectDependencies, 1000);
+        const batches = splitIntoBatches(projectDependencies, OSV_BATCH_SIZE);
 
         for (const batch of batches) {
-            const response = await fetch('https://api.osv.dev/v1/querybatch', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    queries: batch.map(dep => ({
-                        package: { name: dep.name, ecosystem: 'npm' },
-                        version: dep.version
-                    }))
-                }),
-                signal: AbortSignal.timeout(30000)
-            });
-
-            if (!response.ok) continue;
-
-            const data = await response.json();
-            for (const result of data.results || []) {
-                for (const vuln of result.vulns || []) {
-                    const summary = [vuln.summary || '', vuln.details || ''].join(' ').toLowerCase();
-                    const isMalware = ['malware', 'malicious', 'compromised', 'supply chain', 'backdoor']
-                        .some(keyword => summary.includes(keyword));
-
-                    if (isMalware && vuln.affected) {
-                        for (const affected of vuln.affected) {
-                            if (affected.package?.ecosystem === 'npm' && affected.package?.name) {
-                                for (const version of affected.versions || []) {
-                                    malicious.add(`${affected.package.name}@${version}`);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            const results = await queryOSVBatch(batch);
+            processOSVResults(results, malicious);
         }
     } catch {
-        // Ignore errors
+        // Network errors are non-fatal
     }
 
     return malicious;
@@ -454,9 +484,11 @@ async function main() {
     console.log('='.repeat(70) + '\n');
 }
 
-main().catch(error => {
+try {
+    await main();
+} catch (error) {
     console.error('\n❌ Security check crashed unexpectedly:', error.message);
     console.error('   Blocking installation as a precaution.');
     console.error('   Set ADF_SKIP_SECURITY_CHECK=1 to bypass.\n');
     process.exit(1);
-});
+}

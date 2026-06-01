@@ -36,32 +36,51 @@ function isMalwareRelated(text) {
     return MALWARE_KEYWORDS.some(keyword => lowerText.includes(keyword.toLowerCase()));
 }
 
+function formatRangeWithUpperBound(introduced, upperVersion, upperOperator) {
+    if (introduced === '0') {
+        return `${upperOperator} ${upperVersion}`;
+    }
+    return `>= ${introduced}, ${upperOperator} ${upperVersion}`;
+}
+
+function formatOpenEndedRange(introduced) {
+    if (introduced === null || introduced === '0') {
+        return null;
+    }
+    return `>= ${introduced}`;
+}
+
+function processRangeEvent(event, introduced) {
+    if (event.introduced !== undefined) {
+        return { introduced: event.introduced, range: null };
+    }
+
+    if (event.fixed !== undefined && introduced !== null) {
+        return { introduced: null, range: formatRangeWithUpperBound(introduced, event.fixed, '<') };
+    }
+
+    if (event.last_affected !== undefined && introduced !== null) {
+        return { introduced: null, range: formatRangeWithUpperBound(introduced, event.last_affected, '<=') };
+    }
+
+    return { introduced, range: null };
+}
+
 function extractRangesFromEvents(events) {
     const ranges = [];
     let introduced = null;
 
     for (const event of events) {
-        if (event.introduced !== undefined) {
-            introduced = event.introduced;
-        } else if (event.fixed !== undefined && introduced !== null) {
-            if (introduced === '0') {
-                ranges.push(`< ${event.fixed}`);
-            } else {
-                ranges.push(`>= ${introduced}, < ${event.fixed}`);
-            }
-            introduced = null;
-        } else if (event.last_affected !== undefined && introduced !== null) {
-            if (introduced === '0') {
-                ranges.push(`<= ${event.last_affected}`);
-            } else {
-                ranges.push(`>= ${introduced}, <= ${event.last_affected}`);
-            }
-            introduced = null;
+        const result = processRangeEvent(event, introduced);
+        introduced = result.introduced;
+        if (result.range) {
+            ranges.push(result.range);
         }
     }
 
-    if (introduced !== null && introduced !== '0') {
-        ranges.push(`>= ${introduced}`);
+    const openEndedRange = formatOpenEndedRange(introduced);
+    if (openEndedRange) {
+        ranges.push(openEndedRange);
     }
 
     return ranges;
