@@ -6,6 +6,8 @@ updates:
       interval: "weekly"
       day: "sunday"
       time: "07:00"
+    cooldown:
+      default-days: 3
     open-pull-requests-limit: 5
     target-branch: develop
     groups:
@@ -33,6 +35,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 3
     ignore:
       # Managed by gh aw add. Version-locked to the gh-aw compiler; do not bump.
       - dependency-name: "github/gh-aw-actions"
@@ -40,31 +44,47 @@ updates:
     directory: "/.github/actions/before-install"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 3
   - package-ecosystem: "github-actions"
     directory: "/.github/actions/download-node-modules-and-artifacts"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 3
   - package-ecosystem: "github-actions"
     directory: "/.github/actions/enable-dryrun"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 3
   - package-ecosystem: "github-actions"
     directory: "/.github/actions/get-latest-tag-sha"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 3
   - package-ecosystem: "github-actions"
     directory: "/.github/actions/npm-check-bundle"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 3
   - package-ecosystem: "github-actions"
     directory: "/.github/actions/set-npm-tag"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 3
   - package-ecosystem: "github-actions"
     directory: "/.github/actions/setup"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 3
   - package-ecosystem: "github-actions"
     directory: "/.github/actions/upload-node-modules-and-artifacts"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 3
