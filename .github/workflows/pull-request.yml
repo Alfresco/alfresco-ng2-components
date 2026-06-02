@@ -33,7 +33,6 @@ concurrency:
 env:
   GH_COMMIT: ${{ github.sha }}
   NODE_OPTIONS: "--max-old-space-size=5120"
-  ADF_SKIP_SECURITY_CHECK: 1
 
 jobs:
   pre-checks:
@@ -177,11 +176,11 @@ jobs:
           cache-suffix: setup
       - name: Install dependencies
         if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - name: Bundle
         run: |
-          npm run bundle:js-api
-          npm run bundle:cli
+          pnpm run bundle:js-api
+          pnpm run bundle:cli
       - name: Save nx cache
         if: ${{ success() }}
         uses: ./.github/actions/save-nx-cache
@@ -206,7 +205,7 @@ jobs:
           full-setup: 'false'
       - name: Install dependencies
         if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - name: Run lint
         env:
           BASE_REF: ${{ github.base_ref || 'develop' }}
@@ -242,7 +241,7 @@ jobs:
           full-setup: 'false'
       - name: Install dependencies
         if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - name: Build Storybook
         env:
           BASE_REF: ${{ github.base_ref || 'develop' }}

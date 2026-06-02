@@ -11,7 +11,6 @@ on:
 
 env:
   NODE_OPTIONS: "--max-old-space-size=5120"
-  ADF_SKIP_SECURITY_CHECK: 1
 
 jobs:
   build:
@@ -31,7 +30,7 @@ jobs:
           full-setup: 'false'
       - name: Install dependencies
         if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - name: Build affected libs
         env:
           BASE_REF: ${{ inputs.base_ref }}

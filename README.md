@@ -23,29 +23,26 @@ for full details on what you may need to install before using ADF.
 
 ## Installation
 
+This project uses **pnpm** for package management with built-in supply chain attack protection.
+
 ```bash
-npm install   # or npm ci
+pnpm install            # install all packages
+pnpm run add <package>  # add a new package (with security check)
 ```
 
-This project has built-in supply chain attack protection. When you run `npm install`:
+### Supply Chain Security
 
-1. **Preinstall check** scans both `package.json` AND `package-lock.json` against OSV + GitHub Advisory databases
-2. If malicious packages detected → installation blocked BEFORE any code runs
-3. Packages install with `--ignore-scripts` (lifecycle scripts disabled for security)
-4. **Post-install check** re-runs the security scan (defense in depth) and deletes `node_modules` if violations found
-5. Trusted packages (esbuild, nx, husky, etc.) are rebuilt via `npm rebuild` to run their lifecycle scripts
+**Layer 1: pnpm script blocking**
+- All lifecycle scripts (postinstall, etc.) are blocked by default
+- Only trusted packages in `pnpm-workspace.yaml` can run scripts
+- Protects during `pnpm install` and `pnpm add`
 
-Checking `package.json` catches new dependencies added during upgrades (e.g., `nx migrate`) before the lockfile is updated. If a malicious package is detected at any stage, installation is blocked.
+**Layer 2: Security database check**
+- `pnpm run add` checks packages against OSV and GitHub Advisory databases BEFORE installing
+- Pre-commit hook blocks commits containing known malicious packages
 
-To disable security checks (e.g., in CI environments):
-```bash
-ADF_SKIP_SECURITY_CHECK=1 npm install
-```
-
-To keep `node_modules` on violations (for debugging):
-```bash
-ADF_SECURITY_KEEP_NODE_MODULES=1 npm install
-```
+**Layer 3: npm blocked**
+- Running `npm install` will fail - enforces pnpm usage
 
 ## Components
 

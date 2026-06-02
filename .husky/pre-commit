@@ -1,4 +1,10 @@
 #!/bin/sh
 
 export NODE_OPTIONS=--max_old_space_size=8192
+
+# Check new packages against security databases
+if git diff --cached --name-only | grep -q "pnpm-lock.yaml"; then
+    node scripts/check-new-packages.mjs
+fi
+
 lint-staged
