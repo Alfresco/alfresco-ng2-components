@@ -62,6 +62,7 @@
         "INVALID_DECIMAL_NUMBER": "Utilizar um formato de número decimal",
         "INVALID_DECIMAL_PRECISION": "Valor decimal incorreto, deve haver um máximo de {{precision}} dígitos após o ponto decimal.",
         "INVALID_DATE": "Utilizar um formato de data diferente",
+        "INVALID_DATE_FORMAT": "Formato de data inválido, use o formato: {{ format }}",
         "INVALID_VALUE": "Introduzir um valor diferente",
         "NOT_GREATER_THAN": "Não pode ser maior do que {{ maxValue }}",
         "NOT_LESS_THAN": "Não pode ser inferior a {{ minValue }}",
@@ -85,6 +86,12 @@
         "YES_LABEL": "Excluir linha",
         "NO_LABEL": "Cancelar"
       }
+    },
+    "BUTTON": {
+      "PREVIOUS_TAB": "Anterior",
+      "PREVIOUS_TAB_TITLE": "Ir para o separador anterior",
+      "NEXT_TAB": "Próxima",
+      "NEXT_TAB_TITLE": "Ir para o separador seguinte"
     },
     "FIELD_STYLE": {
       "FONT_SIZE": "Tamanho do tipo de letra",
@@ -248,6 +255,8 @@
         "VALUE": "Valor"
       },
       "NONE": "Nenhum",
+      "SELECTED_VALUES": "Selected values",
+      "REMOVE": "Remove {{ value }}",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utilizar um formato numérico",
         "INT_VALIDATION_ERROR": "Utilizar um formato inteiro",
@@ -398,8 +407,8 @@
       "ACTIONS": "Ações",
       "SELECT_ALL": "Selecionar tudo",
       "SELECT_FILE": "Selecionar ficheiro",
-      "SELECTED": "Selected",
-      "ROW_SELECTION": "Press Space to toggle row selection",
+      "SELECTED": "Selecionado",
+      "ROW_SELECTION": "Pressione Espaço para alternar a seleção de linha",
       "SORT_ASCENDING": "Crescente",
       "SORT_DESCENDING": "Decrescente",
       "SORT_NONE": "Nenhum",
@@ -410,7 +419,7 @@
       "ICON_DISABLED": "Desativado",
       "ROW_OPTION_BUTTON": "Ações",
       "DRAG": "Botão Arrastar",
-      "DRAGGABLE": "Draggable",
+      "DRAGGABLE": "Arrastável",
       "EMPTY_HEADER": "Cabeçalho vazio",
       "RESIZE_COLUMN": "Redimensione a coluna {{ column }} Use as teclas de seta para ajustar a largura e Shift para passos maiores.",
       "COLUMN_WIDTH_CHANGED": "{{ column }} Largura da coluna: {{ width }} pixels"
