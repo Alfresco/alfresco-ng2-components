@@ -111,6 +111,12 @@ Options:
 
     await checkEnv(opts);
 
+    const alreadyInitialized = await isApsEnvironmentAlreadyInitialized();
+    if (alreadyInitialized) {
+        logger.info(`APS environment already initialized (terraform). Skipping.`);
+        return;
+    }
+
     logger.info(`***** Step 1 - Check License *****`);
 
     let licenceUploaded = false;
@@ -174,6 +180,36 @@ Options:
 }
 
 /**
+ * Check if APS environment was already initialized (e.g. by terraform).
+ * Verifies that e2e-Application is deployed and available for hruser.
+ * If the app is missing but hruser can log in, uploads and deploys the app directly.
+ */
+async function isApsEnvironmentAlreadyInitialized(): Promise<boolean> {
+    try {
+        await alfrescoJsApi.login('hruser', 'password');
+        const runtimeAppDefinitionsApi = new RuntimeAppDefinitionsApi(alfrescoJsApi);
+        const availableApps = await runtimeAppDefinitionsApi.getAppDefinitions();
+        const e2eApp = availableApps.data?.filter((app) => app.name?.includes('e2e-Application'));
+        if (e2eApp && e2eApp.length > 0) {
+            logger.info(`e2e-Application is already deployed for hruser`);
+            return true;
+        }
+        logger.info(`e2e-Application not found for hruser - uploading and deploying it now`);
+        const appDefinition = await importPublishApp('e2e-Application');
+        if (appDefinition?.appDefinition?.id) {
+            await deployApp(appDefinition.appDefinition.id);
+            logger.info(`e2e-Application successfully deployed for hruser`);
+            return true;
+        }
+        logger.info(`Failed to import/deploy e2e-Application for hruser - proceeding with full initialization`);
+        return false;
+    } catch (error) {
+        logger.info(`Unable to verify APS state for hruser - proceeding with initialization`);
+        return false;
+    }
+}
+
+/**
  * Initialise default applications
  */
 async function initializeDefaultApps() {
@@ -210,8 +246,8 @@ async function checkEnv(opts: InitApsEnvArgs) {
             }
         });
         await alfrescoJsApi.login(opts.username, opts.password);
-    } catch (e) {
-        if (e.error.code === 'ETIMEDOUT') {
+    } catch (e: any) {
+        if (e?.error?.code === 'ETIMEDOUT') {
             logger.error('The env is not reachable. Terminating');
             exit(1);
         }

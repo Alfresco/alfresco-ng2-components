@@ -92,8 +92,48 @@ Options:
 
     await checkEnv(opts);
 
+    const alreadyInitialized = await isEnvironmentAlreadyInitialized();
+    if (alreadyInitialized) {
+        logger.info(`ACS environment already initialized (terraform). Skipping.`);
+        return;
+    }
+
     logger.info(`***** Step initialize ACS *****`);
     await initializeDefaultFiles();
+}
+
+/**
+ * Check if the ACS environment was already initialized (e.g. by terraform).
+ * Verifies the e2e-test-data folder and expected files exist.
+ */
+async function isEnvironmentAlreadyInitialized(): Promise<boolean> {
+    const folderName = ACS_DEFAULT.e2eFolder.name;
+    const expectedFiles: string[] = ACS_DEFAULT.files.map((f: { name: string }) => f.name);
+
+    try {
+        const nodesApi = new NodesApi(alfrescoJsApi);
+        const relativePath = `/${folderName}`;
+        const folder = await nodesApi.getNode('-my-', { relativePath });
+
+        if (!folder?.entry?.id) {
+            return false;
+        }
+
+        const children = await nodesApi.listNodeChildren(folder.entry.id, { maxItems: 100 });
+        const existingFileNames = children.list.entries.map((entry) => entry.entry.name);
+        const allFilesPresent = expectedFiles.every((name: string) => existingFileNames.includes(name));
+
+        if (allFilesPresent) {
+            logger.info(`All expected files found in folder '${folderName}'`);
+            return true;
+        }
+
+        logger.info(`Some expected files are missing in folder '${folderName}'`);
+        return false;
+    } catch (error) {
+        logger.info(`Folder '${folderName}' not found or not accessible - environment needs initialization`);
+        return false;
+    }
 }
 
 /**
@@ -261,8 +301,8 @@ async function checkEnv(opts: InitAcsEnvArgs) {
             contextRoot: 'alfresco'
         });
         await alfrescoJsApi.login(opts.username, opts.password);
-    } catch (e) {
-        if (e.error.code === 'ETIMEDOUT') {
+    } catch (e: any) {
+        if (e?.error?.code === 'ETIMEDOUT') {
             logger.error('The env is not reachable. Terminating');
             exit(1);
         }
