@@ -74,7 +74,7 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
         super();
         // Use effect to react to locale signal changes (must be in injection context)
         effect(() => {
-            this.userLocale = this.userPreferencesService.localeSignal() || 'en-GB';
+            this.userLocale = this.userPreferencesService.localeSignal() || 'en';
             this.setConfig();
         });
     }

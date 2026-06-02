@@ -352,12 +352,7 @@ export class UserPreferencesService {
         if (Array.isArray(customLanguages)) {
             language = customLanguages.find((customLanguage) => key.includes(customLanguage.key));
         }
-        // Try exact match first, then try base language (e.g., 'ar' matches 'ar-SA')
-        language ??= DEFAULT_LANGUAGE_LIST.find((defaultLang) => defaultLang.key === key);
-        language ??= DEFAULT_LANGUAGE_LIST.find(
-            (defaultLang) => defaultLang.key.startsWith(key + '-') || key.startsWith(defaultLang.key.split('-')[0])
-        );
-        language ??= defaultLanguage;
+        language ??= DEFAULT_LANGUAGE_LIST.find((defaultLang) => defaultLang.key === key) ?? defaultLanguage;
         return language;
     }
 }
