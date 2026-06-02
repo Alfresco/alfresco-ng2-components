@@ -205,7 +205,7 @@ async function ensureE2eApplicationDeployed(): Promise<boolean> {
         logger.info(`Failed to import/deploy e2e-Application for hruser - proceeding with full initialization`);
         return false;
     } catch (error) {
-        logger.info(`Unable to verify APS state for hruser - proceeding with initialization`);
+        logger.info(`Unable to verify APS state for hruser - proceeding with initialization`, error);
         return false;
     }
 }
