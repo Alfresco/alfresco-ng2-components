@@ -21,13 +21,13 @@
 .adf-readonly {
     .adf-container-widget {
         &-repeat__text {
-            color: var(--mdc-text-button-disabled-label-text-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent));
-            border-bottom: 1px solid var(--mdc-text-button-disabled-label-text-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent));
+            color: var(--mat-sys-on-surface);
+            border-bottom: 1px solid var(--mat-sys-outline-variant);
             cursor: default;
         }
 
         &-row-limit {
-            color: var(--mdc-text-button-disabled-label-text-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent));
+            color: var(--mat-sys-on-surface-variant);
             font-size: 12px;
         }
     }

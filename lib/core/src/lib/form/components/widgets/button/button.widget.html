@@ -1,10 +1,12 @@
-<button
-    mat-flat-button
-    class="adf-button-widget__button"
-    [matTooltip]="field?.tooltip"
-    [matTooltipShowDelay]="tooltipShowDelay"
-    [disabled]="field?.readOnly ?? false"
-    (click)="onClick($event)"
->
-    {{ field?.name | translate }}
-</button>
+<div [class.adf-readonly]="field?.readOnly">
+    <button
+        mat-flat-button
+        class="adf-button-widget__button"
+        [matTooltip]="field?.tooltip"
+        [matTooltipShowDelay]="tooltipShowDelay"
+        [disabled]="field?.readOnly ?? false"
+        (click)="onClick($event)"
+    >
+        {{ field?.name | translate }}
+    </button>
+</div>
