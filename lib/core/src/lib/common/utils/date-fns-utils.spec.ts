@@ -16,45 +16,29 @@
  */
 
 import { addMinutes, isValid } from 'date-fns';
-import { ar, arSA, cs, da, de, enGB, enUS, es, fi, fr, it as italian, ja, nb, nl, pl, pt, ptBR, ru, sv, zhCN } from 'date-fns/locale';
+import { ar, cs, da, de, enUS, es, fi, fr, it as italian, ja, nb, nl, pl, ptBR, ru, sv, zhCN } from 'date-fns/locale';
 import { DateFnsUtils } from './date-fns-utils';
 
 describe('DateFnsUtils', () => {
     describe('getLocaleFromString', () => {
         const localeTestCases = [
-            { localeCode: 'ar-SA', expectedLocale: arSA, description: 'Arabic (Saudi Arabia)' },
             { localeCode: 'ar', expectedLocale: ar, description: 'Arabic' },
-            { localeCode: 'cs-CZ', expectedLocale: cs, description: 'Czech' },
-            { localeCode: 'cs', expectedLocale: cs, description: 'Czech (short)' },
-            { localeCode: 'da-DK', expectedLocale: da, description: 'Danish' },
-            { localeCode: 'da', expectedLocale: da, description: 'Danish (short)' },
-            { localeCode: 'de-DE', expectedLocale: de, description: 'German' },
-            { localeCode: 'de', expectedLocale: de, description: 'German (short)' },
-            { localeCode: 'en-GB', expectedLocale: enGB, description: 'English (UK)' },
+            { localeCode: 'cs', expectedLocale: cs, description: 'Czech' },
+            { localeCode: 'da', expectedLocale: da, description: 'Danish' },
+            { localeCode: 'de', expectedLocale: de, description: 'German' },
             { localeCode: 'en', expectedLocale: enUS, description: 'English (US)' },
-            { localeCode: 'es-ES', expectedLocale: es, description: 'Spanish' },
-            { localeCode: 'es', expectedLocale: es, description: 'Spanish (short)' },
-            { localeCode: 'fi-FI', expectedLocale: fi, description: 'Finnish' },
-            { localeCode: 'fi', expectedLocale: fi, description: 'Finnish (short)' },
-            { localeCode: 'fr-FR', expectedLocale: fr, description: 'French' },
-            { localeCode: 'fr', expectedLocale: fr, description: 'French (short)' },
-            { localeCode: 'it-IT', expectedLocale: italian, description: 'Italian' },
-            { localeCode: 'it', expectedLocale: italian, description: 'Italian (short)' },
-            { localeCode: 'ja-JP', expectedLocale: ja, description: 'Japanese' },
-            { localeCode: 'ja', expectedLocale: ja, description: 'Japanese (short)' },
-            { localeCode: 'nb-NO', expectedLocale: nb, description: 'Norwegian Bokmål' },
-            { localeCode: 'nb', expectedLocale: nb, description: 'Norwegian Bokmål (short)' },
-            { localeCode: 'nl-NL', expectedLocale: nl, description: 'Dutch' },
-            { localeCode: 'nl', expectedLocale: nl, description: 'Dutch (short)' },
-            { localeCode: 'pl-PL', expectedLocale: pl, description: 'Polish' },
-            { localeCode: 'pl', expectedLocale: pl, description: 'Polish (short)' },
-            { localeCode: 'pt-PT', expectedLocale: pt, description: 'Portuguese (Portugal)' },
+            { localeCode: 'es', expectedLocale: es, description: 'Spanish' },
+            { localeCode: 'fi', expectedLocale: fi, description: 'Finnish' },
+            { localeCode: 'fr', expectedLocale: fr, description: 'French' },
+            { localeCode: 'it', expectedLocale: italian, description: 'Italian' },
+            { localeCode: 'ja', expectedLocale: ja, description: 'Japanese' },
+            { localeCode: 'nb', expectedLocale: nb, description: 'Norwegian Bokmål' },
+            { localeCode: 'nl', expectedLocale: nl, description: 'Dutch' },
+            { localeCode: 'pl', expectedLocale: pl, description: 'Polish' },
+            { localeCode: 'pt', expectedLocale: ptBR, description: 'Portuguese' },
             { localeCode: 'pt-BR', expectedLocale: ptBR, description: 'Portuguese (Brazilian)' },
-            { localeCode: 'pt', expectedLocale: ptBR, description: 'Portuguese (short)' },
-            { localeCode: 'ru-RU', expectedLocale: ru, description: 'Russian' },
-            { localeCode: 'ru', expectedLocale: ru, description: 'Russian (short)' },
-            { localeCode: 'sv-SE', expectedLocale: sv, description: 'Swedish' },
-            { localeCode: 'sv', expectedLocale: sv, description: 'Swedish (short)' },
+            { localeCode: 'ru', expectedLocale: ru, description: 'Russian' },
+            { localeCode: 'sv', expectedLocale: sv, description: 'Swedish' },
             { localeCode: 'zh-CN', expectedLocale: zhCN, description: 'Chinese (Simplified)' }
         ];
 

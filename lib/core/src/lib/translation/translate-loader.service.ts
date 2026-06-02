@@ -21,7 +21,7 @@ import { TranslateLoader } from '@ngx-translate/core';
 import { Observable, forkJoin, throwError, of } from 'rxjs';
 import { ComponentTranslationModel } from '../models/component.model';
 import { ObjectUtils } from '../common/utils/object-utils';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, retry } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -40,33 +40,8 @@ export class TranslateLoaderService implements TranslateLoader {
     private queue: string[][] = [];
     private defaultLang: string = 'en';
 
-    private readonly localeAliases: Record<string, string> = {
-        'en-US': 'en',
-        'en-GB': 'en',
-        'en-AU': 'en',
-        de: 'de-DE',
-        es: 'es-ES',
-        fr: 'fr-FR',
-        it: 'it-IT',
-        ja: 'ja-JP',
-        nb: 'nb-NO',
-        nl: 'nl-NL',
-        ru: 'ru-RU',
-        cs: 'cs-CZ',
-        da: 'da-DK',
-        fi: 'fi-FI',
-        pl: 'pl-PL',
-        sv: 'sv-SE',
-        ar: 'ar-SA',
-        pt: 'pt-BR'
-    };
-
-    setDefaultLang(lang: string): void {
-        this.defaultLang = lang;
-    }
-
-    getDefaultLang(): string {
-        return this.defaultLang;
+    setDefaultLang(value: string) {
+        this.defaultLang = value || 'en';
     }
 
     registerProvider(name: string, path: string) {
@@ -82,49 +57,23 @@ export class TranslateLoaderService implements TranslateLoader {
         return this.providers.some((x) => x.name === name);
     }
 
-    private resolveLocale(lang: string): string {
-        if (this.localeAliases[lang]) {
-            return this.localeAliases[lang];
-        }
-        return lang;
-    }
-
-    private getLocaleFallbacks(lang: string): string[] {
-        const fallbacks: string[] = [lang];
-        const resolved = this.resolveLocale(lang);
-        if (resolved !== lang) {
-            fallbacks.push(resolved);
-        }
-        const baseLang = lang.split('-')[0];
-        if (baseLang !== lang && !fallbacks.includes(baseLang)) {
-            const resolvedBase = this.resolveLocale(baseLang);
-            if (!fallbacks.includes(resolvedBase)) {
-                fallbacks.push(resolvedBase);
-            }
-        }
-        return fallbacks;
-    }
-
-    fetchLanguageFile(lang: string, component: ComponentTranslationModel): Observable<void> {
-        const fallbacks = this.getLocaleFallbacks(lang);
-        return this.tryFetchWithFallbacks(lang, fallbacks, component);
-    }
-
-    private tryFetchWithFallbacks(originalLang: string, fallbacks: string[], component: ComponentTranslationModel): Observable<void> {
-        if (fallbacks.length === 0) {
-            return throwError(() => new Error(`Failed to load translations for ${originalLang}`));
-        }
-
-        const [currentLocale, ...remainingFallbacks] = fallbacks;
-        const translationUrl = `${component.path}/${this.prefix}/${currentLocale}${this.suffix}?v=${Date.now()}`;
+    fetchLanguageFile(lang: string, component: ComponentTranslationModel, fallbackUrl?: string): Observable<void> {
+        const translationUrl = fallbackUrl || `${component.path}/${this.prefix}/${lang}${this.suffix}?v=${Date.now()}`;
 
         return this.http.get(translationUrl).pipe(
             map((res: any) => {
-                component.json[originalLang] = res;
+                component.json[lang] = res;
             }),
+            retry(3),
             catchError(() => {
-                if (remainingFallbacks.length > 0) {
-                    return this.tryFetchWithFallbacks(originalLang, remainingFallbacks, component);
+                if (!fallbackUrl && lang.includes('-')) {
+                    const [langId] = lang.split('-');
+
+                    if (langId && langId !== this.defaultLang) {
+                        const url = `${component.path}/${this.prefix}/${langId}${this.suffix}?v=${Date.now()}`;
+
+                        return this.fetchLanguageFile(lang, component, url);
+                    }
                 }
                 return throwError(() => new Error(`Failed to load ${translationUrl}`));
             })
