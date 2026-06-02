@@ -15,12 +15,8 @@
  * limitations under the License.
  */
 
-import { inject, Injectable } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { isObservable } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { FormModel } from '../components/widgets/core';
-import { FormFieldValueFormatterService } from './form-field-value-formatter.service';
-import { ADF_TYPED_VALUE_FORMATTING_ENABLED } from './form-field-value-formatter.token';
 
 @Injectable({
     providedIn: 'root'
@@ -30,20 +26,6 @@ export class FormExpressionService {
     private readonly FIELD_PREFIX = 'field.';
     private readonly VARIABLE_PREFIX = 'variable.';
     private readonly VARIABLES_REGEX = /(?:field|variable)\.[a-zA-Z_$][a-zA-Z0-9_$]*/g;
-
-    private readonly formFieldValueFormatter = inject(FormFieldValueFormatterService);
-    private readonly formattingEnabledToken = inject(ADF_TYPED_VALUE_FORMATTING_ENABLED, { optional: true });
-    private formattingEnabled = false;
-
-    constructor() {
-        if (isObservable(this.formattingEnabledToken)) {
-            this.formattingEnabledToken.pipe(takeUntilDestroyed()).subscribe((enabled: boolean) => {
-                this.formattingEnabled = enabled ?? false;
-            });
-        } else {
-            this.formattingEnabled = this.formattingEnabledToken ?? false;
-        }
-    }
 
     resolveExpressions(form: FormModel, formField: string, escapeHtml?: boolean): string {
         let result = formField || '';
@@ -55,46 +37,29 @@ export class FormExpressionService {
         }
 
         for (const match of matches) {
-            const rawResult = this.resolveExpression(form, match);
-            let expressionResult = this.normalizeExpressionResult(form, match, rawResult);
+            let expressionResult = this.resolveExpression(form, match);
+            if (expressionResult === null || expressionResult === undefined) {
+                expressionResult = '';
+            } else if (typeof expressionResult !== 'string') {
+                expressionResult = JSON.stringify(expressionResult);
+            }
             if (escapeHtml) {
-                expressionResult = this.escapeHtmlEntities(expressionResult);
+                expressionResult = expressionResult
+                    .split('&')
+                    .join('&amp;')
+                    .split('<')
+                    .join('&lt;')
+                    .split('>')
+                    .join('&gt;')
+                    .split('"')
+                    .join('&quot;')
+                    .split("'")
+                    .join('&#039;');
             }
             result = result.replace(match, expressionResult);
         }
 
         return result;
-    }
-
-    private normalizeExpressionResult(form: FormModel, match: string, expressionResult: any): string {
-        if (expressionResult == null) {
-            return '';
-        }
-
-        if (typeof expressionResult === 'string') {
-            return expressionResult;
-        }
-
-        return this.formatTypedExpressionResult(form, match, expressionResult);
-    }
-
-    private formatTypedExpressionResult(form: FormModel, match: string, expressionResult: any): string {
-        if (!this.formattingEnabled) {
-            return JSON.stringify(expressionResult);
-        }
-
-        const fieldId = this.extractFieldIdFromMatch(match);
-        const sourceField = fieldId ? form.getFieldById(fieldId) : undefined;
-
-        if (sourceField && this.formFieldValueFormatter.hasFormatter(sourceField.type)) {
-            return this.formFieldValueFormatter.formatValue(expressionResult, sourceField);
-        }
-
-        return JSON.stringify(expressionResult);
-    }
-
-    private escapeHtmlEntities(value: string): string {
-        return value.split('&').join('&amp;').split('<').join('&lt;').split('>').join('&gt;').split('"').join('&quot;').split("'").join('&#039;');
     }
 
     private resolveExpression(form: FormModel, expression: any): any {
@@ -129,14 +94,6 @@ export class FormExpressionService {
         } else {
             return '';
         }
-    }
-
-    private extractFieldIdFromMatch(match: string): string | null {
-        const inner = match.slice(2, -1).trim();
-        if (inner.startsWith(this.FIELD_PREFIX)) {
-            return inner.slice(this.FIELD_PREFIX.length);
-        }
-        return null;
     }
 
     getFieldDependencies(expression: string): string[] {

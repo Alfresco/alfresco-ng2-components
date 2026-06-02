@@ -30,8 +30,6 @@ export * from './services/form.service';
 export * from './services/form-expression.service';
 export * from './services/form-validation-service.interface';
 export * from './services/widget-visibility.service';
-export * from './services/form-field-value-formatter.service';
-export * from './services/form-field-value-formatter.token';
 
 export * from './pipes';
 

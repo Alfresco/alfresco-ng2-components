@@ -18,10 +18,6 @@
 import { TestBed } from '@angular/core/testing';
 import { FormExpressionService } from './form-expression.service';
 import { FormModel } from '../components/widgets/core';
-import { FormFieldValueFormatterService } from './form-field-value-formatter.service';
-import { FormFieldTypes } from '../components/widgets/core/form-field-types';
-import { ADF_TYPED_VALUE_FORMATTING_ENABLED } from './form-field-value-formatter.token';
-import { of } from 'rxjs';
 
 describe('FormExpressionService', () => {
     let service: FormExpressionService;
@@ -271,67 +267,6 @@ describe('FormExpressionService', () => {
             const result = service.resolveExpressions(formModel, input);
 
             expect(result).toBe('true');
-        });
-
-        describe('when ADF_TYPED_VALUE_FORMATTING_ENABLED token is provided as true', () => {
-            let formattingService: FormExpressionService;
-            let formatter: FormFieldValueFormatterService;
-
-            beforeEach(() => {
-                TestBed.resetTestingModule();
-                TestBed.configureTestingModule({
-                    providers: [FormExpressionService, { provide: ADF_TYPED_VALUE_FORMATTING_ENABLED, useValue: of(true) }]
-                });
-                formattingService = TestBed.inject(FormExpressionService);
-                formatter = TestBed.inject(FormFieldValueFormatterService);
-            });
-
-            it('should format object field values via the registered formatter', () => {
-                const mockField = {
-                    id: 'peopleField',
-                    type: FormFieldTypes.PEOPLE,
-                    value: { firstName: 'Alyssa', lastName: 'Adcock' }
-                };
-                spyOn(formModel, 'getFieldById').and.returnValue(mockField as any);
-                spyOn(formatter, 'hasFormatter').and.returnValue(true);
-                spyOn(formatter, 'formatValue').and.returnValue('Alyssa Adcock');
-
-                const result = formattingService.resolveExpressions(formModel, '${field.peopleField}');
-
-                expect(result).toBe('Alyssa Adcock');
-            });
-
-            it('should fall back to JSON.stringify when no formatter is registered', () => {
-                const mockField = {
-                    id: 'objectField',
-                    type: 'unregistered-type',
-                    value: { a: 1 }
-                };
-                spyOn(formModel, 'getFieldById').and.returnValue(mockField as any);
-                spyOn(formatter, 'hasFormatter').and.returnValue(false);
-
-                const result = formattingService.resolveExpressions(formModel, '${field.objectField}');
-
-                expect(result).toBe('{"a":1}');
-            });
-        });
-
-        describe('when ADF_TYPED_VALUE_FORMATTING_ENABLED token is not provided', () => {
-            it('should default to JSON.stringify even if a formatter exists', () => {
-                const formatter = TestBed.inject(FormFieldValueFormatterService);
-                const mockField = {
-                    id: 'peopleField',
-                    type: FormFieldTypes.PEOPLE,
-                    value: { firstName: 'Alyssa', lastName: 'Adcock' }
-                };
-                spyOn(formModel, 'getFieldById').and.returnValue(mockField as any);
-                const hasFormatterSpy = spyOn(formatter, 'hasFormatter');
-
-                const result = service.resolveExpressions(formModel, '${field.peopleField}');
-
-                expect(hasFormatterSpy).not.toHaveBeenCalled();
-                expect(result).toBe('{"firstName":"Alyssa","lastName":"Adcock"}');
-            });
         });
 
         describe('when escapeHtml is true', () => {

@@ -25,7 +25,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../../../../testing/unit-testing-utils';
 import { ADF_CUSTOM_MESSAGE } from '../core/custom-validation-message.token';
-import { ADF_TYPED_VALUE_FORMATTING_ENABLED } from '../../../services/form-field-value-formatter.token';
 import { of, Subject } from 'rxjs';
 
 describe('TextWidgetComponent', () => {
@@ -697,118 +696,6 @@ describe('TextWidgetComponent - ADF_CUSTOM_MESSAGE', () => {
             await testingUtils.fillMatInput('invalid text');
             expect(widget.field.isValid).toBeFalse();
             expect(widget.field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_VALUE');
-        });
-    });
-
-    describe('typed value formatting', () => {
-        describe('when flag is on', () => {
-            beforeEach(() => {
-                TestBed.resetTestingModule();
-                TestBed.configureTestingModule({
-                    imports: [TextWidgetComponent],
-                    providers: [{ provide: ADF_TYPED_VALUE_FORMATTING_ENABLED, useValue: true }]
-                });
-                fixture = TestBed.createComponent(TextWidgetComponent);
-                widget = fixture.componentInstance;
-                testingUtils = new UnitTestingUtils(fixture.debugElement);
-            });
-
-            it('should return formatted name for a People value in read-only mode', () => {
-                widget.field = new FormFieldModel(new FormModel(), {
-                    id: 'people-field',
-                    type: FormFieldTypes.PEOPLE,
-                    value: [{ firstName: 'Alyssa', lastName: 'Adcock' }],
-                    readOnly: true
-                });
-                fixture.detectChanges();
-
-                expect(widget.displayValue).toBe('Alyssa Adcock');
-            });
-
-            it('should return comma-separated labels for a multi-select dropdown in read-only mode', () => {
-                widget.field = new FormFieldModel(new FormModel(), {
-                    id: 'dropdown-field',
-                    type: FormFieldTypes.DROPDOWN,
-                    value: [
-                        { id: 'a', name: 'Apple' },
-                        { id: 'b', name: 'Banana' }
-                    ],
-                    readOnly: true
-                });
-                fixture.detectChanges();
-
-                expect(widget.displayValue).toBe('Apple, Banana');
-            });
-
-            it('should not return [object Object] for a complex field value', () => {
-                widget.field = new FormFieldModel(new FormModel(), {
-                    id: 'people-field',
-                    type: FormFieldTypes.PEOPLE,
-                    value: { firstName: 'Alice', lastName: 'Brown' },
-                    readOnly: true
-                });
-                fixture.detectChanges();
-
-                expect(String(widget.displayValue)).not.toContain('[object Object]');
-            });
-
-            it('should pass through plain string values unchanged', () => {
-                widget.field = new FormFieldModel(new FormModel(), {
-                    id: 'text-id',
-                    type: FormFieldTypes.TEXT,
-                    value: 'hello',
-                    readOnly: true
-                });
-                fixture.detectChanges();
-
-                expect(widget.displayValue).toBe('hello');
-            });
-        });
-
-        describe('when flag is off', () => {
-            beforeEach(() => {
-                TestBed.resetTestingModule();
-                TestBed.configureTestingModule({
-                    imports: [TextWidgetComponent]
-                });
-                fixture = TestBed.createComponent(TextWidgetComponent);
-                widget = fixture.componentInstance;
-            });
-
-            it('should not format complex field values (default behaviour preserved)', () => {
-                widget.field = new FormFieldModel(new FormModel(), {
-                    id: 'people-field',
-                    type: FormFieldTypes.PEOPLE,
-                    value: [{ firstName: 'Alyssa', lastName: 'Adcock' }],
-                    readOnly: true
-                });
-                fixture.detectChanges();
-
-                expect(widget.displayValue).not.toBe('Alyssa Adcock');
-            });
-        });
-
-        describe('when flag emits via observable', () => {
-            it('should format value after observable emits true', () => {
-                TestBed.resetTestingModule();
-                TestBed.configureTestingModule({
-                    imports: [TextWidgetComponent],
-                    providers: [{ provide: ADF_TYPED_VALUE_FORMATTING_ENABLED, useValue: of(true) }]
-                });
-                fixture = TestBed.createComponent(TextWidgetComponent);
-                widget = fixture.componentInstance;
-                testingUtils = new UnitTestingUtils(fixture.debugElement);
-
-                widget.field = new FormFieldModel(new FormModel(), {
-                    id: 'people-field',
-                    type: FormFieldTypes.PEOPLE,
-                    value: [{ firstName: 'Alyssa', lastName: 'Adcock' }],
-                    readOnly: true
-                });
-                fixture.detectChanges();
-
-                expect(widget.displayValue).toBe('Alyssa Adcock');
-            });
         });
     });
 });

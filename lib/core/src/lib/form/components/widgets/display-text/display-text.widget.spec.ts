@@ -17,10 +17,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldModel, FormModel } from '../core';
-import { FormFieldTypes } from '../core/form-field-types';
 import { DisplayTextWidgetComponent } from './display-text.widget';
 import { ADF_DISPLAY_TEXT_SETTINGS } from '../base-display-text/base-display-text.widget';
-import { ADF_TYPED_VALUE_FORMATTING_ENABLED } from '../../../services/form-field-value-formatter.token';
 import { FormService } from '../../../services/form.service';
 import { of } from 'rxjs';
 
@@ -240,119 +238,6 @@ describe('DisplayTextWidgetComponent', () => {
                 expect(widget.field.value).toBe('Hello John');
                 done();
             }, 100);
-        });
-    });
-
-    describe('typed value formatting', () => {
-        describe('when flag is on', () => {
-            beforeEach(() => {
-                TestBed.resetTestingModule();
-                TestBed.configureTestingModule({
-                    imports: [DisplayTextWidgetComponent],
-                    providers: [
-                        FormService,
-                        { provide: ADF_DISPLAY_TEXT_SETTINGS, useValue: { enableExpressionEvaluation: true } },
-                        { provide: ADF_TYPED_VALUE_FORMATTING_ENABLED, useValue: true }
-                    ]
-                });
-                fixture = TestBed.createComponent(DisplayTextWidgetComponent);
-                widget = fixture.componentInstance;
-            });
-
-            it('should format a direct People value to full name', () => {
-                widget.field = new FormFieldModel(new FormModel(), {
-                    id: 'f1',
-                    type: FormFieldTypes.PEOPLE,
-                    value: [{ firstName: 'Alyssa', lastName: 'Adcock' }]
-                });
-                fixture.detectChanges();
-
-                expect(widget.field.value).toBe('Alyssa Adcock');
-            });
-
-            it('should format a direct Group value to group name', () => {
-                widget.field = new FormFieldModel(new FormModel(), {
-                    id: 'f1',
-                    type: FormFieldTypes.FUNCTIONAL_GROUP,
-                    value: [{ id: 'g1', name: 'Engineering' }]
-                });
-                fixture.detectChanges();
-
-                expect(widget.field.value).toBe('Engineering');
-            });
-
-            it('should not contain [object Object] for a complex value', () => {
-                widget.field = new FormFieldModel(new FormModel(), {
-                    id: 'f1',
-                    type: FormFieldTypes.PEOPLE,
-                    value: [{ firstName: 'Alice', lastName: 'Brown' }]
-                });
-                fixture.detectChanges();
-
-                expect(String(widget.field.value)).not.toContain('[object Object]');
-            });
-
-            it('should resolve expression templates for People via FormExpressionService', () => {
-                const form = new FormModel({
-                    fields: [
-                        { id: 'displayText1', type: 'display-text', value: 'Selected: ${field.peopleField}' },
-                        { id: 'peopleField', type: FormFieldTypes.PEOPLE, value: [{ firstName: 'Alyssa', lastName: 'Adcock' }] }
-                    ]
-                });
-
-                widget.field = form.getFieldById('displayText1');
-                fixture.detectChanges();
-
-                expect(widget.field.value).toBe('Selected: Alyssa Adcock');
-            });
-
-            it('should re-evaluate expression with formatted value when dependent People field changes', (done) => {
-                const form = new FormModel({
-                    fields: [
-                        { id: 'displayText1', type: 'display-text', value: 'Selected: ${field.peopleField}' },
-                        { id: 'peopleField', type: FormFieldTypes.PEOPLE, value: [{ firstName: 'Alyssa', lastName: 'Adcock' }] }
-                    ]
-                });
-                formService = TestBed.inject(FormService);
-
-                widget.field = form.getFieldById('displayText1');
-                const peopleField = form.getFieldById('peopleField');
-                fixture.detectChanges();
-
-                expect(widget.field.value).toBe('Selected: Alyssa Adcock');
-
-                peopleField.value = [{ firstName: 'Jane', lastName: 'Smith' }];
-                formService.formRulesEvent.next({ type: 'fieldValueChanged', field: peopleField } as any);
-
-                setTimeout(() => {
-                    expect(widget.field.value).toBe('Selected: Jane Smith');
-                    done();
-                }, 350);
-            });
-        });
-
-        describe('when flag is off', () => {
-            it('should not format a complex field value (default behaviour preserved)', () => {
-                TestBed.resetTestingModule();
-                TestBed.configureTestingModule({
-                    imports: [DisplayTextWidgetComponent],
-                    providers: [FormService]
-                });
-                fixture = TestBed.createComponent(DisplayTextWidgetComponent);
-                widget = fixture.componentInstance;
-
-                const rawValue = [{ firstName: 'Alyssa', lastName: 'Adcock' }];
-                widget.field = new FormFieldModel(new FormModel(), {
-                    id: 'f1',
-                    type: FormFieldTypes.PEOPLE,
-                    value: rawValue
-                });
-
-                // Trigger only ngOnInit (no full render — raw array would crash TranslatePipe without the flag)
-                widget.ngOnInit();
-
-                expect(widget.field.value).toEqual(rawValue);
-            });
         });
     });
 });
