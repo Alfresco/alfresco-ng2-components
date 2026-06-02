@@ -112,24 +112,24 @@ async function isEnvironmentAlreadyInitialized(): Promise<boolean> {
 
     try {
         const nodesApi = new NodesApi(alfrescoJsApi);
-        const relativePath = `/${folderName}`;
-        const folder = await nodesApi.getNode('-my-', { relativePath });
+        const folderPath = `/${folderName}`;
+        const folder = await nodesApi.getNode('-my-', { relativePath: folderPath });
 
         if (!folder?.entry?.id) {
             return false;
         }
 
-        const children = await nodesApi.listNodeChildren(folder.entry.id, { maxItems: 100 });
-        const existingFileNames = children.list.entries.map((entry) => entry.entry.name);
-        const allFilesPresent = expectedFiles.every((name: string) => existingFileNames.includes(name));
-
-        if (allFilesPresent) {
-            logger.info(`All expected files found in folder '${folderName}'`);
-            return true;
+        for (const fileName of expectedFiles) {
+            try {
+                await nodesApi.getNode(folder.entry.id, { relativePath: `/${fileName}` });
+            } catch {
+                logger.info(`File '${fileName}' missing in folder '${folderName}'`);
+                return false;
+            }
         }
 
-        logger.info(`Some expected files are missing in folder '${folderName}'`);
-        return false;
+        logger.info(`All expected files found in folder '${folderName}'`);
+        return true;
     } catch (error) {
         logger.info(`Folder '${folderName}' not found or not accessible - environment needs initialization`);
         return false;

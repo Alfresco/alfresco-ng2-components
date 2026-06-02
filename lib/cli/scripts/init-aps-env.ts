@@ -111,8 +111,8 @@ Options:
 
     await checkEnv(opts);
 
-    const alreadyInitialized = await isApsEnvironmentAlreadyInitialized();
-    if (alreadyInitialized) {
+    const e2eAppReady = await ensureE2eApplicationDeployed();
+    if (e2eAppReady) {
         logger.info(`APS environment already initialized (terraform). Skipping.`);
         return;
     }
@@ -180,11 +180,12 @@ Options:
 }
 
 /**
- * Check if APS environment was already initialized (e.g. by terraform).
- * Verifies that e2e-Application is deployed and available for hruser.
- * If the app is missing but hruser can log in, uploads and deploys the app directly.
+ * Ensure e2e-Application is deployed for hruser.
+ * If the app is already present, returns true (skip full init).
+ * If hruser can log in but the app is missing, imports, publishes and deploys it.
+ * Returns false only if hruser cannot log in or deployment fails.
  */
-async function isApsEnvironmentAlreadyInitialized(): Promise<boolean> {
+async function ensureE2eApplicationDeployed(): Promise<boolean> {
     try {
         await alfrescoJsApi.login('hruser', 'password');
         const runtimeAppDefinitionsApi = new RuntimeAppDefinitionsApi(alfrescoJsApi);
