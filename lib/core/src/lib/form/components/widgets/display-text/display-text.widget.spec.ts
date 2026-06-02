@@ -313,7 +313,7 @@ describe('DisplayTextWidgetComponent', () => {
                         { id: 'peopleField', type: FormFieldTypes.PEOPLE, value: [{ firstName: 'Alyssa', lastName: 'Adcock' }] }
                     ]
                 });
-                const formService = TestBed.inject(FormService);
+                formService = TestBed.inject(FormService);
 
                 widget.field = form.getFieldById('displayText1');
                 const peopleField = form.getFieldById('peopleField');
