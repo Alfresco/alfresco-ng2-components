@@ -23,6 +23,8 @@ import {
     FormFieldModel,
     FormFieldOption,
     FormFieldTypes,
+    FormFieldValueFormatterService,
+    ADF_TYPED_VALUE_FORMATTING_ENABLED,
     FormService,
     ReactiveFormWidget,
     RuleEntry,
@@ -31,15 +33,15 @@ import {
 } from '@alfresco/adf-core';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslatePipe } from '@ngx-translate/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, isObservable, Subject } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { FormCloudService } from '../../../services/form-cloud.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormUtilsService } from '../../../services/form-utils.service';
 import { defaultValueValidator } from './validators';
 
@@ -77,6 +79,10 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     private readonly appConfig = inject(AppConfigService);
     private readonly formUtilsService = inject(FormUtilsService);
     private readonly destroyRef = inject(DestroyRef);
+    private readonly formatter = inject(FormFieldValueFormatterService);
+    private readonly formattingEnabledToken = inject(ADF_TYPED_VALUE_FORMATTING_ENABLED, { optional: true });
+    private formattingEnabled = false;
+    readOnlyDisplayValue: string | undefined;
 
     typeId = 'DropdownCloudWidgetComponent';
     showInputFilter = false;
@@ -132,6 +138,16 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     ngOnInit() {
+        if (isObservable(this.formattingEnabledToken)) {
+            this.formattingEnabledToken.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((enabled: boolean) => {
+                this.formattingEnabled = enabled ?? false;
+                this.readOnlyDisplayValue = this.computeReadOnlyDisplayValue();
+            });
+        } else {
+            this.formattingEnabled = this.formattingEnabledToken ?? false;
+            this.readOnlyDisplayValue = this.computeReadOnlyDisplayValue();
+        }
+
         /*
             We can have a lot of 'control.setValue' caused by form rules events
             e.g. every time if we focusin/focusout etc. we are calling a setValue.
@@ -161,8 +177,17 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         });
     }
 
+    private computeReadOnlyDisplayValue(): string | undefined {
+        const value = this.field.value;
+        const isFormattableValue = value != null && (typeof value !== 'string' || this.formatter.hasFormatter(this.field.type));
+        const shouldFormatValue = this.formattingEnabled && isFormattableValue;
+
+        return shouldFormatValue ? this.formatter.format(this.field) : value;
+    }
+
     updateReactiveFormControl(): void {
         this.setFormControlValue();
+        this.readOnlyDisplayValue = this.computeReadOnlyDisplayValue();
 
         this.updateFormControlState();
         if (this.field?.form?.showAllValidationErrors) {

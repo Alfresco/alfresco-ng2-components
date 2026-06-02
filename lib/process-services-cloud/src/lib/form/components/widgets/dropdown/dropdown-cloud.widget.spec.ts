@@ -27,7 +27,8 @@ import {
     FormFieldTypes,
     UnitTestingUtils,
     FormFieldComponent,
-    FormRenderingService
+    FormRenderingService,
+    ADF_TYPED_VALUE_FORMATTING_ENABLED
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import {
@@ -1514,5 +1515,101 @@ describe('DropdownCloudWidgetComponent instantiated by FormFieldComponent wrappe
 
         expect(selectedOption).toEqual('option1');
         expect(setValueSpy).toHaveBeenCalledTimes(1);
+    });
+
+    describe('typed value formatting (readOnlyDisplayValue)', () => {
+        const options = [
+            { id: 'a', name: 'Apple' },
+            { id: 'b', name: 'Banana' }
+        ];
+
+        let fixture: ComponentFixture<DropdownCloudWidgetComponent>;
+        let widget: DropdownCloudWidgetComponent;
+
+        describe('when flag is on', () => {
+            beforeEach(() => {
+                TestBed.resetTestingModule();
+                TestBed.configureTestingModule({
+                    imports: [DropdownCloudWidgetComponent],
+                    providers: [{ provide: ADF_TYPED_VALUE_FORMATTING_ENABLED, useValue: true }]
+                });
+                fixture = TestBed.createComponent(DropdownCloudWidgetComponent);
+                widget = fixture.componentInstance;
+            });
+
+            it('should return formatted label for an object value', () => {
+                widget.field = new FormFieldModel(new FormModel(), {
+                    id: 'dropdown-field',
+                    type: FormFieldTypes.DROPDOWN,
+                    value: { id: 'a', name: 'Apple' }
+                });
+                widget.field.options = options;
+                fixture.detectChanges();
+
+                expect(widget.readOnlyDisplayValue).toBe('Apple');
+            });
+
+            it('should return comma-separated labels for an array value', () => {
+                widget.field = new FormFieldModel(new FormModel(), {
+                    id: 'dropdown-field',
+                    type: FormFieldTypes.DROPDOWN,
+                    value: [
+                        { id: 'a', name: 'Apple' },
+                        { id: 'b', name: 'Banana' }
+                    ]
+                });
+                widget.field.options = options;
+                fixture.detectChanges();
+
+                expect(widget.readOnlyDisplayValue).toBe('Apple, Banana');
+            });
+
+            it('should not contain [object Object] for an object value', () => {
+                widget.field = new FormFieldModel(new FormModel(), {
+                    id: 'dropdown-field',
+                    type: FormFieldTypes.DROPDOWN,
+                    value: { id: 'a', name: 'Apple' }
+                });
+                widget.field.options = options;
+                fixture.detectChanges();
+
+                expect(widget.readOnlyDisplayValue).not.toContain('[object Object]');
+            });
+
+            it('should pass through a plain string value unchanged', () => {
+                widget.field = new FormFieldModel(new FormModel(), {
+                    id: 'dropdown-field',
+                    type: FormFieldTypes.DROPDOWN,
+                    value: 'a'
+                });
+                widget.field.options = options;
+                fixture.detectChanges();
+
+                expect(widget.readOnlyDisplayValue).toBe('Apple');
+            });
+        });
+
+        describe('when flag is off', () => {
+            beforeEach(() => {
+                TestBed.resetTestingModule();
+                TestBed.configureTestingModule({
+                    imports: [DropdownCloudWidgetComponent]
+                });
+                fixture = TestBed.createComponent(DropdownCloudWidgetComponent);
+                widget = fixture.componentInstance;
+            });
+
+            it('should return the raw field value (default behaviour preserved)', () => {
+                widget.field = new FormFieldModel(new FormModel(), {
+                    id: 'dropdown-field',
+                    type: FormFieldTypes.DROPDOWN,
+                    value: { id: 'a', name: 'Apple' }
+                });
+                widget.field.options = options;
+                fixture.detectChanges();
+
+                expect(widget.readOnlyDisplayValue).not.toBe('Apple');
+            });
+        });
     });
 });
