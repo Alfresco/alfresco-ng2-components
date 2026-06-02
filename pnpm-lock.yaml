@@ -132,6 +132,9 @@ importers:
       '@angular-eslint/template-parser':
         specifier: 19.8.1
         version: 19.8.1(eslint@8.57.1)(typescript@5.8.3)
+      '@angular-eslint/utils':
+        specifier: 19.8.1
+        version: 19.8.1(@typescript-eslint/utils@8.59.4(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3)
       '@angular/compiler-cli':
         specifier: 19.2.20
         version: 19.2.20(@angular/compiler@19.2.20)(typescript@5.8.3)

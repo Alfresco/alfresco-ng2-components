@@ -9,16 +9,9 @@
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/eslint-plugin-eslint-angular",
+        "outputPath": "lib/eslint-angular/dist",
         "main": "lib/eslint-angular/index.ts",
-        "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json"
-      },
-      "configurations": {
-        "production": {
-          "optimization": true,
-          "sourceMap": false,
-          "extractLicenses": true
-        }
+        "tsConfig": "lib/eslint-angular/tsconfig.lib.json"
       }
     },
     "lint": {
