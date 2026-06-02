@@ -67,10 +67,12 @@ export abstract class BaseDisplayTextWidgetComponent extends WidgetComponent imp
     }
 
     ngOnInit() {
-        if (this.formattingEnabled && this.field?.value !== null && this.field?.value !== undefined && typeof this.field?.value !== 'string') {
-            if (this.formatter.hasFormatter(this.field.type)) {
-                this.field.value = this.formatter.format(this.field);
-            }
+        const value = this.field?.value;
+        const isFormattableValue = value != null && typeof value !== 'string';
+        const shouldFormatValue = this.formattingEnabled && isFormattableValue && this.formatter.hasFormatter(this.field.type);
+
+        if (shouldFormatValue) {
+            this.field.value = this.formatter.format(this.field);
         }
     }
 

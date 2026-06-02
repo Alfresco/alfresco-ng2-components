@@ -179,12 +179,10 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     private computeReadOnlyDisplayValue(): string | undefined {
         const value = this.field.value;
-        if (this.formattingEnabled && value !== null && value !== undefined) {
-            if (typeof value !== 'string' || this.formatter.hasFormatter(this.field.type)) {
-                return this.formatter.format(this.field);
-            }
-        }
-        return value;
+        const isFormattableValue = value != null && (typeof value !== 'string' || this.formatter.hasFormatter(this.field.type));
+        const shouldFormatValue = this.formattingEnabled && isFormattableValue;
+
+        return shouldFormatValue ? this.formatter.format(this.field) : value;
     }
 
     updateReactiveFormControl(): void {

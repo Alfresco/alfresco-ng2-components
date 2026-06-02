@@ -55,39 +55,46 @@ export class FormExpressionService {
         }
 
         for (const match of matches) {
-            let expressionResult = this.resolveExpression(form, match);
-            if (expressionResult === null || expressionResult === undefined) {
-                expressionResult = '';
-            } else if (typeof expressionResult !== 'string') {
-                if (this.formattingEnabled) {
-                    const fieldId = this.extractFieldIdFromMatch(match);
-                    const sourceField = fieldId ? form.getFieldById(fieldId) : undefined;
-                    if (sourceField && this.formFieldValueFormatter.hasFormatter(sourceField.type)) {
-                        expressionResult = this.formFieldValueFormatter.formatValue(expressionResult, sourceField);
-                    } else {
-                        expressionResult = JSON.stringify(expressionResult);
-                    }
-                } else {
-                    expressionResult = JSON.stringify(expressionResult);
-                }
-            }
+            const rawResult = this.resolveExpression(form, match);
+            let expressionResult = this.normalizeExpressionResult(form, match, rawResult);
             if (escapeHtml) {
-                expressionResult = expressionResult
-                    .split('&')
-                    .join('&amp;')
-                    .split('<')
-                    .join('&lt;')
-                    .split('>')
-                    .join('&gt;')
-                    .split('"')
-                    .join('&quot;')
-                    .split("'")
-                    .join('&#039;');
+                expressionResult = this.escapeHtmlEntities(expressionResult);
             }
             result = result.replace(match, expressionResult);
         }
 
         return result;
+    }
+
+    private normalizeExpressionResult(form: FormModel, match: string, expressionResult: any): string {
+        if (expressionResult == null) {
+            return '';
+        }
+
+        if (typeof expressionResult === 'string') {
+            return expressionResult;
+        }
+
+        return this.formatTypedExpressionResult(form, match, expressionResult);
+    }
+
+    private formatTypedExpressionResult(form: FormModel, match: string, expressionResult: any): string {
+        if (!this.formattingEnabled) {
+            return JSON.stringify(expressionResult);
+        }
+
+        const fieldId = this.extractFieldIdFromMatch(match);
+        const sourceField = fieldId ? form.getFieldById(fieldId) : undefined;
+
+        if (sourceField && this.formFieldValueFormatter.hasFormatter(sourceField.type)) {
+            return this.formFieldValueFormatter.formatValue(expressionResult, sourceField);
+        }
+
+        return JSON.stringify(expressionResult);
+    }
+
+    private escapeHtmlEntities(value: string): string {
+        return value.split('&').join('&amp;').split('<').join('&lt;').split('>').join('&gt;').split('"').join('&quot;').split("'").join('&#039;');
     }
 
     private resolveExpression(form: FormModel, expression: any): any {
