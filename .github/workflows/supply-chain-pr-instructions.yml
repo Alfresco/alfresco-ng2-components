@@ -5,9 +5,8 @@ on:
     types: [opened, reopened, synchronize]
     paths:
       - "package.json"
-      - "package-lock.json"
+      - "pnpm-lock.yaml"
       - "**/package.json"
-      - "**/package-lock.json"
       - "pom.xml"
       - "**/pom.xml"
 

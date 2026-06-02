@@ -18,124 +18,137 @@
  */
 
 /**
- * Safe add - checks packages against security databases before installing.
+ * Safe add package.
  *
+ * Checks packages against security databases before installing.
  * Usage: pnpm run add <package>[@version] [-- -D]
  */
 
 import { execSync } from 'node:child_process';
 
-const MALWARE_KEYWORDS = ['malware', 'malicious', 'compromised', 'supply chain', 'backdoor'];
+import { checkSinglePackageForMalware } from './security/malware-checker.mjs';
+import {
+    printSecurityCheckHeader,
+    printPackageClean,
+    printInstallBlockedWarning
+} from './security/report-printer.mjs';
 
-function parsePackageArg(arg) {
-    const match = arg.match(/^(@?[^@]+)(?:@(.+))?$/);
-    return match ? { name: match[1], version: match[2] || 'latest' } : null;
+const NPM_REGISTRY_URL = 'https://registry.npmjs.org';
+const REQUEST_TIMEOUT_MS = 5000;
+
+// ============================================================================
+// ARGUMENT PARSING
+// ============================================================================
+
+function parsePackageArgument(argument) {
+    const packageMatch = argument.match(/^(@?[^@]+)(?:@(.+))?$/);
+
+    if (!packageMatch) {
+        return null;
+    }
+
+    return {
+        name: packageMatch[1],
+        version: packageMatch[2] || 'latest'
+    };
 }
 
-async function resolveVersion(name, version) {
-    if (version !== 'latest') return version;
+function separatePackagesAndFlags(args) {
+    const packageArguments = args.filter(arg => !arg.startsWith('-'));
+    const flagArguments = args.filter(arg => arg.startsWith('-'));
 
+    return {
+        packages: packageArguments,
+        flags: flagArguments.join(' ')
+    };
+}
+
+// ============================================================================
+// VERSION RESOLUTION
+// ============================================================================
+
+async function fetchLatestVersion(packageName) {
     try {
-        const response = await fetch(`https://registry.npmjs.org/${name}/latest`, {
-            signal: AbortSignal.timeout(5000)
+        const response = await fetch(`${NPM_REGISTRY_URL}/${packageName}/latest`, {
+            signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS)
         });
-        if (response.ok) {
-            const data = await response.json();
-            return data.version;
+
+        if (!response.ok) {
+            return null;
         }
-    } catch {}
-    return null;
+
+        const packageData = await response.json();
+        return packageData.version;
+    } catch {
+        return null;
+    }
 }
 
-async function checkOSV(name, version) {
-    try {
-        const response = await fetch('https://api.osv.dev/v1/query', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ package: { name, ecosystem: 'npm' }, version }),
-            signal: AbortSignal.timeout(10000)
-        });
+async function resolvePackageVersion(packageName, requestedVersion) {
+    if (requestedVersion !== 'latest') {
+        return requestedVersion;
+    }
 
-        if (!response.ok) return null;
-
-        const data = await response.json();
-        for (const vuln of data.vulns || []) {
-            const summary = [vuln.summary || '', vuln.details || ''].join(' ').toLowerCase();
-            if (MALWARE_KEYWORDS.some(kw => summary.includes(kw))) {
-                return vuln.summary || 'Malware detected';
-            }
-        }
-    } catch {}
-    return null;
+    return fetchLatestVersion(packageName);
 }
 
-async function checkGitHub(name) {
-    try {
-        const response = await fetch(
-            'https://api.github.com/advisories?ecosystem=npm&type=malware&per_page=100',
-            {
-                headers: { 'Accept': 'application/vnd.github+json' },
-                signal: AbortSignal.timeout(10000)
-            }
-        );
+// ============================================================================
+// PACKAGE INSTALLATION
+// ============================================================================
 
-        if (!response.ok) return null;
+function installPackages(packageNames, flags) {
+    const packageList = packageNames.join(' ');
+    const installCommand = `pnpm add ${packageList} ${flags}`.trim();
 
-        const advisories = await response.json();
-        for (const advisory of advisories) {
-            for (const vuln of advisory.vulnerabilities || []) {
-                if (vuln.package?.name === name) {
-                    return advisory.summary || 'Malware advisory';
-                }
-            }
-        }
-    } catch {}
-    return null;
+    execSync(installCommand, { stdio: 'inherit' });
+}
+
+// ============================================================================
+// MAIN
+// ============================================================================
+
+async function validateAndCheckPackage(packageArgument) {
+    const parsedPackage = parsePackageArgument(packageArgument);
+
+    if (!parsedPackage) {
+        console.error(`Invalid package argument: ${packageArgument}`);
+        process.exit(1);
+    }
+
+    const resolvedVersion = await resolvePackageVersion(parsedPackage.name, parsedPackage.version);
+
+    if (!resolvedVersion) {
+        console.error(`Could not resolve version for ${parsedPackage.name}`);
+        process.exit(1);
+    }
+
+    const malwareReason = await checkSinglePackageForMalware(parsedPackage.name, resolvedVersion);
+
+    if (malwareReason) {
+        printInstallBlockedWarning(parsedPackage.name, resolvedVersion, malwareReason);
+        process.exit(1);
+    }
+
+    printPackageClean(parsedPackage.name, resolvedVersion);
 }
 
 async function main() {
-    const args = process.argv.slice(2);
-    const packages = args.filter(arg => !arg.startsWith('-'));
-    const flags = args.filter(arg => arg.startsWith('-')).join(' ');
+    const commandLineArgs = process.argv.slice(2);
+    const { packages, flags } = separatePackagesAndFlags(commandLineArgs);
 
     if (!packages.length) {
         console.log('Usage: pnpm run add <package>[@version] [-- -D]');
         process.exit(1);
     }
 
-    console.log('\n🔒 Checking packages against security databases...\n');
+    printSecurityCheckHeader();
 
-    for (const arg of packages) {
-        const pkg = parsePackageArg(arg);
-        if (!pkg) {
-            console.error(`Invalid package: ${arg}`);
-            process.exit(1);
-        }
-
-        const version = await resolveVersion(pkg.name, pkg.version);
-        if (!version) {
-            console.error(`Could not resolve version for ${pkg.name}`);
-            process.exit(1);
-        }
-
-        console.log(`  📦 ${pkg.name}@${version}`);
-
-        const [osvResult, ghResult] = await Promise.all([
-            checkOSV(pkg.name, version),
-            checkGitHub(pkg.name)
-        ]);
-
-        if (osvResult || ghResult) {
-            console.error(`\n❌ BLOCKED: ${pkg.name}@${version}`);
-            console.error(`   ${osvResult || ghResult}\n`);
-            process.exit(1);
-        }
-
-        console.log(`     ✅ Clean\n`);
+    for (const packageArgument of packages) {
+        await validateAndCheckPackage(packageArgument);
     }
 
     console.log('Installing...\n');
-    execSync(`pnpm add ${packages.join(' ')} ${flags}`, { stdio: 'inherit' });
+    installPackages(packages, flags);
 }
 
 try {

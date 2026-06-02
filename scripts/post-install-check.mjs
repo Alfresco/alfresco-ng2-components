@@ -3,161 +3,49 @@
 /*!
  * @license
  * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 /**
- * Post-install security check - warns if any installed packages are known malware.
+ * Post-install security check.
+ *
  * Runs after pnpm install via the prepare hook.
+ * Warns if any installed packages are known malware.
  */
 
-import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { readAllPackagesFromLockfile } from './security/lockfile-parser.mjs';
+import { checkPackagesForMalware } from './security/malware-checker.mjs';
+import { printMalwareWarning } from './security/report-printer.mjs';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = join(__dirname, '..');
-const MALWARE_KEYWORDS = ['malware', 'malicious', 'compromised', 'supply chain', 'backdoor'];
-
-function getInstalledPackages() {
-    try {
-        const lockfile = readFileSync(join(ROOT_DIR, 'pnpm-lock.yaml'), 'utf-8');
-        const packages = [];
-        const regex = /^\s+'?\/([^'(]+)'/gm;
-        let match;
-
-        while ((match = regex.exec(lockfile)) !== null) {
-            const fullPath = match[1];
-            const lastAt = fullPath.lastIndexOf('@');
-            if (lastAt > 0) {
-                const name = fullPath.substring(0, lastAt);
-                const version = fullPath.substring(lastAt + 1);
-                packages.push({ name, version });
-            }
-        }
-
-        return packages;
-    } catch {
-        return [];
-    }
-}
-
-async function checkWithOSV(packages) {
-    const findings = [];
-    const batches = [];
-
-    for (let i = 0; i < packages.length; i += 1000) {
-        batches.push(packages.slice(i, i + 1000));
-    }
-
-    for (const batch of batches) {
-        try {
-            const response = await fetch('https://api.osv.dev/v1/querybatch', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    queries: batch.map(pkg => ({
-                        package: { name: pkg.name, ecosystem: 'npm' },
-                        version: pkg.version
-                    }))
-                }),
-                signal: AbortSignal.timeout(30000)
-            });
-
-            if (!response.ok) continue;
-
-            const data = await response.json();
-            for (let i = 0; i < (data.results || []).length; i++) {
-                for (const vuln of data.results[i].vulns || []) {
-                    const summary = [vuln.summary || '', vuln.details || ''].join(' ').toLowerCase();
-                    if (MALWARE_KEYWORDS.some(kw => summary.includes(kw))) {
-                        findings.push({
-                            name: batch[i].name,
-                            version: batch[i].version,
-                            reason: vuln.summary || 'Malware detected',
-                            source: 'OSV'
-                        });
-                    }
-                }
-            }
-        } catch {}
-    }
-
-    return findings;
-}
-
-async function checkWithGitHub(packages) {
-    const findings = [];
-
-    try {
-        const response = await fetch(
-            'https://api.github.com/advisories?ecosystem=npm&type=malware&per_page=100',
-            {
-                headers: { 'Accept': 'application/vnd.github+json' },
-                signal: AbortSignal.timeout(10000)
-            }
-        );
-
-        if (!response.ok) return findings;
-
-        const advisories = await response.json();
-        const malwareNames = new Set();
-
-        for (const advisory of advisories) {
-            for (const vuln of advisory.vulnerabilities || []) {
-                if (vuln.package?.name) {
-                    malwareNames.add(vuln.package.name);
-                }
-            }
-        }
-
-        for (const pkg of packages) {
-            if (malwareNames.has(pkg.name)) {
-                findings.push({
-                    name: pkg.name,
-                    version: pkg.version,
-                    reason: 'Known malware package',
-                    source: 'GitHub Advisory'
-                });
-            }
-        }
-    } catch {}
-
-    return findings;
-}
+const LOCKFILE_PATH = join(ROOT_DIR, 'pnpm-lock.yaml');
 
 async function main() {
-    const packages = getInstalledPackages();
+    const installedPackages = readAllPackagesFromLockfile(LOCKFILE_PATH);
 
-    if (!packages.length) {
+    if (!installedPackages.length) {
         return;
     }
 
-    const [osvFindings, ghFindings] = await Promise.all([
-        checkWithOSV(packages),
-        checkWithGitHub(packages)
-    ]);
+    const malwareFindings = await checkPackagesForMalware(installedPackages);
 
-    const allFindings = [...osvFindings, ...ghFindings];
-
-    // Dedupe
-    const unique = allFindings.filter((f, i, arr) =>
-        arr.findIndex(x => x.name === f.name && x.version === f.version) === i
-    );
-
-    if (unique.length > 0) {
-        console.error('\n' + '!'.repeat(70));
-        console.error('🚨 WARNING: MALICIOUS PACKAGES DETECTED');
-        console.error('!'.repeat(70) + '\n');
-
-        for (const finding of unique) {
-            console.error(`  ❌ ${finding.name}@${finding.version}`);
-            console.error(`     ${finding.reason} (${finding.source})\n`);
-        }
-
-        console.error('Remove these packages immediately:');
-        console.error('  pnpm remove <package-name>\n');
-        console.error('!'.repeat(70) + '\n');
-
+    if (malwareFindings.length > 0) {
+        printMalwareWarning(malwareFindings);
         process.exit(1);
     }
 }

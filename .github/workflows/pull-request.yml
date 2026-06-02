@@ -46,12 +46,18 @@ jobs:
       - name: Ensure SHA pinned actions
         uses: hyland/github-actions-ensure-sha-pinned-actions@7d494b6b53e71f75194d74b4dd890a2266d060b5 # v2.0.0
 
-      - name: Check package-lock.json version
+      - name: Check pnpm-lock.yaml version
         run: |
-          if [[ $(jq '.lockfileVersion == 3' package-lock.json) == "true" ]] ; then
-            echo "package-lock.json has a correct version"
+          if [[ -f "pnpm-lock.yaml" ]]; then
+            LOCKFILE_VERSION=$(grep "^lockfileVersion:" pnpm-lock.yaml | cut -d"'" -f2)
+            if [[ "$LOCKFILE_VERSION" == "9.0" ]]; then
+              echo "pnpm-lock.yaml has correct version: $LOCKFILE_VERSION"
+            else
+              echo "pnpm-lock.yaml must be version 9.0, found: $LOCKFILE_VERSION"
+              exit 1
+            fi
           else
-            echo "package-lock must be version 3"
+            echo "pnpm-lock.yaml is missing"
             exit 1
           fi
 
