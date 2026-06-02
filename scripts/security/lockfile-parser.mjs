@@ -54,8 +54,9 @@ function parsePackageFromDiffLine(line) {
     }
 
     const isScoped = fullPath.startsWith('@');
+    const lastAtIndex = fullPath.lastIndexOf('@');
     const packageName = isScoped
-        ? fullPath.replace(/@[^/]+$/, '')
+        ? fullPath.substring(0, lastAtIndex)
         : fullPath.split('@')[0];
 
     return { name: packageName, version: versionMatch[1] };
@@ -65,18 +66,39 @@ function parsePackageFromDiffLine(line) {
 // LOCKFILE READING
 // ============================================================================
 
+function extractPackagePathFromLine(line) {
+    const trimmed = line.trim();
+
+    if (!trimmed.startsWith("'/") && !trimmed.startsWith('/')) {
+        return null;
+    }
+
+    const startIndex = trimmed.indexOf('/') + 1;
+    const endQuoteIndex = trimmed.indexOf("'", startIndex);
+    const endParenIndex = trimmed.indexOf('(', startIndex);
+
+    let endIndex = trimmed.length;
+    if (endQuoteIndex > 0) endIndex = Math.min(endIndex, endQuoteIndex);
+    if (endParenIndex > 0) endIndex = Math.min(endIndex, endParenIndex);
+
+    return trimmed.substring(startIndex, endIndex);
+}
+
 export function readAllPackagesFromLockfile(lockfilePath) {
     try {
         const lockfileContent = readFileSync(lockfilePath, 'utf-8');
         const packages = [];
-        const packagePathRegex = /^\s+'?\/([^'(]+)'/gm;
+        const lines = lockfileContent.split('\n');
 
-        let match;
-        while ((match = packagePathRegex.exec(lockfileContent)) !== null) {
-            const parsedPackage = parsePackagePathEntry(match[1]);
+        for (const line of lines) {
+            const packagePath = extractPackagePathFromLine(line);
 
-            if (parsedPackage) {
-                packages.push(parsedPackage);
+            if (packagePath) {
+                const parsedPackage = parsePackagePathEntry(packagePath);
+
+                if (parsedPackage) {
+                    packages.push(parsedPackage);
+                }
             }
         }
 
@@ -88,7 +110,7 @@ export function readAllPackagesFromLockfile(lockfilePath) {
 
 export function readChangedPackagesFromGitDiff() {
     try {
-        const diffOutput = execSync('git diff --cached pnpm-lock.yaml', { encoding: 'utf-8' });
+        const diffOutput = execSync('/usr/bin/git diff --cached pnpm-lock.yaml', { encoding: 'utf-8' });
         const changedPackages = [];
         const diffLines = diffOutput.split('\n');
 
