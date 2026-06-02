@@ -28,9 +28,6 @@ jobs:
         with:
           cache-suffix: build
           full-setup: 'false'
-      - name: Install dependencies
-        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
-        run: pnpm install --frozen-lockfile
       - name: Build affected libs
         env:
           BASE_REF: ${{ inputs.base_ref }}

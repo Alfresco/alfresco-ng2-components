@@ -26,9 +26,6 @@ jobs:
         uses: ./.github/actions/setup
         with:
           cache-suffix: test-matrix
-      - name: Install dependencies
-        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
-        run: pnpm install --frozen-lockfile
       - name: Generate affected projects matrix
         id: set-matrix
         env:
@@ -72,9 +69,6 @@ jobs:
         with:
           cache-suffix: test-${{ matrix.project }}
           full-setup: 'false'
-      - name: Install dependencies
-        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
-        run: pnpm install --frozen-lockfile
       - name: Run unit tests for ${{ matrix.project }}
         env:
           NODE_OPTIONS: "--max-old-space-size=5120"

@@ -180,9 +180,6 @@ jobs:
         uses: ./.github/actions/setup
         with:
           cache-suffix: setup
-      - name: Install dependencies
-        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
-        run: pnpm install --frozen-lockfile
       - name: Bundle
         run: |
           pnpm run bundle:js-api
@@ -209,9 +206,6 @@ jobs:
         with:
           cache-suffix: lint
           full-setup: 'false'
-      - name: Install dependencies
-        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
-        run: pnpm install --frozen-lockfile
       - name: Run lint
         env:
           BASE_REF: ${{ github.base_ref || 'develop' }}
@@ -245,9 +239,6 @@ jobs:
         with:
           cache-suffix: storybook
           full-setup: 'false'
-      - name: Install dependencies
-        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
-        run: pnpm install --frozen-lockfile
       - name: Build Storybook
         env:
           BASE_REF: ${{ github.base_ref || 'develop' }}
