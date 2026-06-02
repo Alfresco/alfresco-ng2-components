@@ -123,7 +123,7 @@ async function isEnvironmentAlreadyInitialized(): Promise<boolean> {
             try {
                 await nodesApi.getNode(folder.entry.id, { relativePath: `/${fileName}` });
             } catch (error) {
-                logger.info(`File '${fileName}' missing in folder '${folderName}'`, error);
+                logger.info(`File '${fileName}' missing in folder '${folderName}': ${JSON.stringify(error)}`);
                 return false;
             }
         }
@@ -131,7 +131,7 @@ async function isEnvironmentAlreadyInitialized(): Promise<boolean> {
         logger.info(`All expected files found in folder '${folderName}'`);
         return true;
     } catch (error) {
-        logger.info(`Folder '${folderName}' not found or not accessible - environment needs initialization`, error);
+        logger.info(`Folder '${folderName}' not found or not accessible - environment needs initialization: ${JSON.stringify(error)}`);
         return false;
     }
 }
