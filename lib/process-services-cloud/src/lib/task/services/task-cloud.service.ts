@@ -17,16 +17,16 @@
 
 import { inject, Injectable } from '@angular/core';
 import { CardViewArrayItem, TranslationService } from '@alfresco/adf-core';
-import { throwError, Observable, of, Subject } from 'rxjs';
+import { Observable, of, Subject, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
-    TaskDetailsCloudModel,
     StartTaskCloudResponseModel,
     TASK_ASSIGNED_STATE,
     TASK_CLAIM_PERMISSION,
+    TASK_COMPLETED_STATE,
     TASK_CREATED_STATE,
     TASK_RELEASE_PERMISSION,
-    TASK_COMPLETED_STATE
+    TaskDetailsCloudModel
 } from '../models/task-details-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
@@ -127,6 +127,26 @@ export class TaskCloudService extends BaseCloudService {
             taskDetails?.assignee === currentUser &&
             taskDetails?.permissions.includes(TASK_RELEASE_PERMISSION) &&
             !taskDetails?.standalone
+        );
+    }
+
+    /**
+     * Returns the next recommended task to process.
+     *
+     * @param appName Name of the app
+     * @param strategy The task identification strategy
+     * @returns Details of the returned task
+     */
+    nextTask(appName: string, strategy?: string): Observable<TaskDetailsCloudModel> {
+        if (!appName || appName === '') {
+            return throwError(() => 'AppName not configured');
+        }
+
+        return this.post(`${this.getBasePath(appName)}/rb/v1/tasks/next`, null, strategy ? { strategy } : null).pipe(
+            map((res: any) => {
+                this.dataChangesDetected$.next(res);
+                return res.entry;
+            })
         );
     }
 
