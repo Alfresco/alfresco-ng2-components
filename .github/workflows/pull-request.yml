@@ -182,8 +182,8 @@ jobs:
           cache-suffix: setup
       - name: Bundle
         run: |
-          pnpm run bundle:js-api
-          pnpm run bundle:cli
+          pnpm bundle:js-api
+          pnpm bundle:cli
       - name: Save nx cache
         if: ${{ success() }}
         uses: ./.github/actions/save-nx-cache
