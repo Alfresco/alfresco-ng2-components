@@ -30,6 +30,8 @@ import {
     CardViewSelectItemModel,
     CardViewTextItemModel,
     CardViewUpdateService,
+    ClipboardService,
+    ClickNotification,
     TranslationService,
     UpdateNotification
 } from '@alfresco/adf-core';
@@ -65,6 +67,10 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
     @Input()
     showTitle: boolean = true;
 
+    /** Process instance id used when task details do not include it. */
+    @Input()
+    processInstanceId?: string;
+
     /** Emitted when the task is claimed. */
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
@@ -87,9 +93,9 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
     dateLocale: string;
     displayDateClearAction = false;
     isLoading = true;
-    processInstanceId: string;
 
     private readonly destroyRef = inject(DestroyRef);
+    private readonly clipboardService = inject(ClipboardService);
 
     constructor() {
         this.dateFormat = this.appConfig.get('adf-cloud-task-header.defaultDateFormat');
@@ -102,6 +108,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
         });
 
         this.cardViewUpdateService.itemUpdated$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(this.updateTaskDetails.bind(this));
+        this.cardViewUpdateService.itemClicked$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(this.onPropertyClicked.bind(this));
     }
 
     ngOnChanges() {
@@ -132,7 +139,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
                     this.taskDetails = taskDetails;
                     this.candidateGroups = candidateGroups.map((user) => ({ icon: 'group', value: user }) as CardViewArrayItem);
                     this.candidateUsers = candidateUsers.map((group) => ({ icon: 'person', value: group }) as CardViewArrayItem);
-                    this.processInstanceId = taskDetails.processInstanceId;
                     if (this.taskDetails.parentTaskId) {
                         this.loadParentName(`${this.taskDetails.parentTaskId}`);
                     } else {
@@ -217,7 +223,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
             }),
             new CardViewTextItemModel({
                 label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PROCESS_INSTANCE_ID',
-                value: this.processInstanceId,
+                value: this.taskDetails.processInstanceId,
                 default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.PROCESS_INSTANCE_ID_DEFAULT'),
                 key: 'processInstanceId',
                 clickable: true
@@ -256,6 +262,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
      */
     refreshData() {
         if (this.taskDetails) {
+            this.taskDetails = this.applyProcessInstanceIdToTaskDetails(this.taskDetails);
             const defaultProperties = this.initDefaultProperties();
             const filteredProperties: string[] = this.appConfig.get('adf-cloud-task-header.presets.properties');
             this.properties = defaultProperties.filter((cardItem) => this.isValidSelection(filteredProperties, cardItem));
@@ -279,8 +286,28 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
             .subscribe((taskDetails) => {
                 if (taskDetails) {
                     this.taskDetails = taskDetails;
+                    this.refreshData();
                 }
             });
+    }
+
+    private applyProcessInstanceIdToTaskDetails(taskDetails: TaskDetailsCloudModel): TaskDetailsCloudModel {
+        const resolvedProcessInstanceId = taskDetails.processInstanceId ?? this.processInstanceId;
+
+        return resolvedProcessInstanceId === taskDetails.processInstanceId
+            ? taskDetails
+            : { ...taskDetails, processInstanceId: resolvedProcessInstanceId };
+    }
+
+    private onPropertyClicked(clickNotification: ClickNotification): void {
+        if (clickNotification.target.key === 'processInstanceId') {
+            this.copyProcessInstanceIdToClipboard(clickNotification.target.value);
+        }
+    }
+
+    private copyProcessInstanceIdToClipboard(processInstanceId: string): void {
+        const clipboardMessage = this.translationService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
+        this.clipboardService.copyContentToClipboard(processInstanceId, clipboardMessage);
     }
 
     private loadParentName(taskId: string) {
