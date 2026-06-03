@@ -35,10 +35,12 @@ updates:
     directories:
       - "/"
       - "/.github/actions/before-install"
+      - "/.github/actions/create-git-tag"
       - "/.github/actions/download-node-modules-and-artifacts"
       - "/.github/actions/enable-dryrun"
       - "/.github/actions/get-latest-tag-sha"
       - "/.github/actions/npm-check-bundle"
+      - "/.github/actions/save-nx-cache"
       - "/.github/actions/set-npm-tag"
       - "/.github/actions/setup"
       - "/.github/actions/upload-node-modules-and-artifacts"
