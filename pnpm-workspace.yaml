@@ -1,6 +1,16 @@
 packages:
   - 'lib/eslint-angular'
 
+overrides:
+  serialize-javascript: '>=7.0.5'
+  picomatch: '>=4.0.4'
+  tmp: '>=0.2.6'
+  ws: '>=8.20.1'
+  path-to-regexp: '>=0.1.13'
+  postcss: '>=8.5.10'
+  webpack-dev-server: '>=5.2.4'
+  uuid: '>=11.1.1'
+
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true
@@ -32,3 +42,4 @@ allowBuilds:
   '@nx/nx-linux-x64-musl': true
   '@nx/nx-win32-x64-msvc': true
   '@swc/core': true
+  less: set this to true or false
