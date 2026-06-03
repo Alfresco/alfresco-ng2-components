@@ -104,13 +104,16 @@ importers:
       tslib:
         specifier: 2.8.1
         version: 2.8.1
+      uuid:
+        specifier: 8.3.2
+        version: 8.3.2
       zone.js:
         specifier: 0.15.0
         version: 0.15.0
     devDependencies:
       '@alfresco/eslint-plugin-eslint-angular':
-        specifier: file:lib/eslint-angular
-        version: file:lib/eslint-angular
+        specifier: workspace:*
+        version: link:lib/eslint-angular
       '@angular-devkit/architect':
         specifier: 0.1902.22
         version: 0.1902.22(chokidar@4.0.3)
@@ -189,6 +192,9 @@ importers:
       '@types/node':
         specifier: 25.9.1
         version: 25.9.1
+      '@types/uuid':
+        specifier: 8.3.4
+        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: 8.59.4
         version: 8.59.4(@typescript-eslint/parser@8.59.4(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3)
@@ -328,6 +334,8 @@ importers:
         specifier: 5.107.2
         version: 5.107.2(postcss@8.5.15)
 
+  lib/eslint-angular: {}
+
 packages:
 
   '@acemir/cssom@0.9.31':
@@ -335,9 +343,6 @@ packages:
 
   '@adobe/css-tools@4.4.4':
     resolution: {integrity: sha512-Elp+iwUx5rN5+Y8xLt5/GRoG20WGoDCQ/1Fb+1LiGtvwbDavuSk0jhD/eZdckHAuzcDzccnkv+rEjyWfRx18gg==}
-
-  '@alfresco/eslint-plugin-eslint-angular@file:lib/eslint-angular':
-    resolution: {directory: lib/eslint-angular, type: directory}
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -3311,6 +3316,9 @@ packages:
 
   '@types/tough-cookie@4.0.5':
     resolution: {integrity: sha512-/Ad8+nIOV7Rl++6f1BdKxFSMgmoqEoYbHRpPcx3JEfv8VRsQe9Z4mCXeJBzxs7mbHY/XOZZuXlRNfhpVPbs6ZA==}
+
+  '@types/uuid@8.3.4':
+    resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
 
   '@types/ws@8.18.1':
     resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
@@ -9193,8 +9201,6 @@ snapshots:
 
   '@adobe/css-tools@4.4.4': {}
 
-  '@alfresco/eslint-plugin-eslint-angular@file:lib/eslint-angular': {}
-
   '@ampproject/remapping@2.3.0':
     dependencies:
       '@jridgewell/gen-mapping': 0.3.13
@@ -13613,6 +13619,8 @@ snapshots:
   '@types/stack-utils@2.0.3': {}
 
   '@types/tough-cookie@4.0.5': {}
+
+  '@types/uuid@8.3.4': {}
 
   '@types/ws@8.18.1':
     dependencies:
