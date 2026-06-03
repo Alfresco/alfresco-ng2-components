@@ -31,7 +31,7 @@ jobs:
       - name: Build affected libs
         env:
           BASE_REF: ${{ inputs.base_ref }}
-        run: npx nx affected --target=build --base=origin/$BASE_REF --head=HEAD --configuration=production --exclude=stories
+        run: pnpm nx affected --target=build --base=origin/$BASE_REF --head=HEAD --configuration=production --exclude=stories
       - name: Save nx cache
         if: ${{ success() }}
         uses: ./.github/actions/save-nx-cache

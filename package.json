@@ -5,8 +5,7 @@
   "author": "Hyland Software, Inc. and its affiliates",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky && nx run eslint-angular:build && node scripts/post-install-check.mjs",
-    "add": "node scripts/safe-add.mjs",
+    "prepare": "husky && nx run eslint-angular:build && pnpm audit --audit-level=critical",
     "bundle:js-api": "nx run js-api:bundle",
     "bundle:cli": "nx run cli:bundle",
     "test:affected": "nx affected:test",

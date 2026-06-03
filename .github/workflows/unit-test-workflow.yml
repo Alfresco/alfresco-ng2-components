@@ -32,7 +32,7 @@ jobs:
           BASE_REF: ${{ inputs.base_ref }}
         run: |
           echo "Base ref is $BASE_REF"
-          AFFECTED_UNIT=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --head=HEAD --select=projects --plain --exclude=cli,stories,eslint-angular)
+          AFFECTED_UNIT=$(pnpm nx show projects --affected --target=test --base=origin/$BASE_REF --head=HEAD --select=projects --plain --exclude=cli,stories,eslint-angular)
           echo "Affected projects for UNIT: $AFFECTED_UNIT"
 
           if [ -z "$AFFECTED_UNIT" ]; then
@@ -73,7 +73,7 @@ jobs:
         env:
           NODE_OPTIONS: "--max-old-space-size=5120"
         run: |
-          xvfb-run --auto-servernum npx nx run ${{ matrix.project }}:test
+          xvfb-run --auto-servernum pnpm nx run ${{ matrix.project }}:test
       - name: Save nx cache
         if: ${{ success() }}
         uses: ./.github/actions/save-nx-cache

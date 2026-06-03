@@ -43,6 +43,9 @@ runs:
       - name: Install dependencies
         shell: bash
         run: pnpm install --frozen-lockfile
+      - name: Security audit
+        shell: bash
+        run: pnpm audit --audit-level=critical
       - name: Restore nx cache
         uses: actions/cache/restore@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:

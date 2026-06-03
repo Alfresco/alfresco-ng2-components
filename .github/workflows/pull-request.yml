@@ -209,7 +209,7 @@ jobs:
       - name: Run lint
         env:
           BASE_REF: ${{ github.base_ref || 'develop' }}
-        run: npx nx affected --target=lint --base=origin/$BASE_REF --head=HEAD
+        run: pnpm nx affected --target=lint --base=origin/$BASE_REF --head=HEAD
       - name: Save nx cache
         if: ${{ success() }}
         uses: ./.github/actions/save-nx-cache
@@ -243,7 +243,7 @@ jobs:
         env:
           BASE_REF: ${{ github.base_ref || 'develop' }}
         run: |
-          npx nx affected --target=build-storybook --base=origin/$BASE_REF --head=HEAD --configuration=ci
+          pnpm nx affected --target=build-storybook --base=origin/$BASE_REF --head=HEAD --configuration=ci
       - name: Save nx cache
         if: ${{ success() }}
         uses: ./.github/actions/save-nx-cache
