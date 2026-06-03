@@ -1,6 +1,10 @@
 packages:
   - 'lib/eslint-angular'
 
+# Block packages published less than 5 days ago (7200 minutes)
+minimumReleaseAge: 7200
+minimumReleaseAgeStrict: true
+
 overrides:
   serialize-javascript: '>=7.0.5'
   picomatch: '>=4.0.4'
