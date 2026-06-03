@@ -480,6 +480,63 @@ describe('Task Cloud Service', () => {
         );
     });
 
+    describe('nextTask', () => {
+        const appName = 'task-app';
+        const nextTaskResponse = {
+            entry: {
+                appName: 'task-app',
+                id: 'next-task-id',
+                name: 'Next Task',
+                status: 'CREATED',
+                assignee: null
+            }
+        };
+
+        it('should return the next task details when called with a valid appName', (done) => {
+            requestSpy.and.returnValue(Promise.resolve(nextTaskResponse));
+
+            service.nextTask(appName).subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(res.id).toBe('next-task-id');
+                expect(res.appName).toBe('task-app');
+                done();
+            });
+        });
+
+        it('should call the API without strategy when strategy is not provided', (done) => {
+            requestSpy.and.returnValue(Promise.resolve(nextTaskResponse));
+
+            service.nextTask(appName).subscribe(() => {
+                const [url, options] = requestSpy.calls.mostRecent().args;
+                expect(url).toContain('/rb/v1/tasks/next');
+                expect(options?.queryParams?.strategy).toBeUndefined();
+                done();
+            });
+        });
+
+        it('should pass strategy query param when strategy is provided', (done) => {
+            requestSpy.and.returnValue(Promise.resolve(nextTaskResponse));
+
+            service.nextTask(appName, 'FIFO').subscribe(() => {
+                const [url, options] = requestSpy.calls.mostRecent().args;
+                expect(url).toContain('/rb/v1/tasks/next');
+                expect(options?.queryParams?.strategy).toBe('FIFO');
+                done();
+            });
+        });
+
+        it('should emit dataChangesDetected$ when next task is returned', (done) => {
+            requestSpy.and.returnValue(Promise.resolve(nextTaskResponse));
+            const dataChangeSpy = jasmine.createSpy('dataChangesDetected$');
+            service.dataChangesDetected$.subscribe(dataChangeSpy);
+
+            service.nextTask(appName).subscribe(() => {
+                expect(dataChangeSpy).toHaveBeenCalledWith(nextTaskResponse);
+                done();
+            });
+        });
+    });
+
     describe('wasTaskCompletedByCurrentUser', () => {
         it('should return true when task was completed by current user', () => {
             const completedTaskByCurrentUser = {
