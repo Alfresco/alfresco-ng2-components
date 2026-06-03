@@ -110,6 +110,8 @@ Options:
         return;
     }
 
+    await alfrescoJsApi.login(opts.username, opts.password);
+
     logger.info(`***** Step 1 - Check License *****`);
 
     let licenceUploaded = false;
@@ -191,8 +193,14 @@ async function ensureE2eApplicationDeployed(): Promise<boolean> {
         const appDefinition = await importPublishApp('e2e-Application');
         if (appDefinition?.appDefinition?.id) {
             await deployApp(appDefinition.appDefinition.id);
-            logger.info(`e2e-Application successfully deployed for hruser`);
-            return true;
+            const verifyApps = await runtimeAppDefinitionsApi.getAppDefinitions();
+            const deployed = verifyApps.data?.some((app) => app.name?.includes('e2e-Application'));
+            if (deployed) {
+                logger.info(`e2e-Application successfully deployed for hruser`);
+                return true;
+            }
+            logger.info(`e2e-Application deployment could not be verified - proceeding with full initialization`);
+            return false;
         }
         logger.info(`Failed to import/deploy e2e-Application for hruser - proceeding with full initialization`);
         return false;

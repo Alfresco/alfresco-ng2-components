@@ -241,7 +241,7 @@ async function uploadFile(fileName: string, destinationId: string): Promise<Node
  * @param fileName file name (for logging)
  * @param isAlreadyLocked whether the node is already locked
  */
-async function ensureLocked(nodeId: string, fileName: string, isAlreadyLocked?: boolean) {
+async function ensureLocked(nodeId: string, fileName: string, isAlreadyLocked = false) {
     if (isAlreadyLocked) {
         logger.info(`File ${fileName} is already locked.`);
         return;
@@ -266,7 +266,7 @@ async function ensureShared(nodeId: string, fileName: string) {
         await sharedlinksApi.createSharedLink({ nodeId });
         logger.info(`File ${fileName} was shared`);
     } catch (error: any) {
-        if (error?.status === 409 && error?.message?.includes('sharedId already exists')) {
+        if (error?.status === 409) {
             logger.info(`File ${fileName} is already shared.`);
             return;
         }
