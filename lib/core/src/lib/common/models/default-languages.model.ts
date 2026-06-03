@@ -18,21 +18,21 @@
 import { LanguageItem } from '../services/language-item.interface';
 
 export const DEFAULT_LANGUAGE_LIST: LanguageItem[] = [
-    { key: 'de-DE', label: 'Deutsch' },
+    { key: 'de', label: 'Deutsch' },
     { key: 'en', label: 'English' },
-    { key: 'es-ES', label: 'Español' },
-    { key: 'fr-FR', label: 'Français' },
-    { key: 'it-IT', label: 'Italiano' },
-    { key: 'ja-JP', label: '日本語' },
-    { key: 'nb-NO', label: 'Bokmål' },
-    { key: 'nl-NL', label: 'Nederlands' },
+    { key: 'es', label: 'Español' },
+    { key: 'fr', label: 'Français' },
+    { key: 'it', label: 'Italiano' },
+    { key: 'ja', label: '日本語' },
+    { key: 'nb', label: 'Bokmål' },
+    { key: 'nl', label: 'Nederlands' },
     { key: 'pt-BR', label: 'Português (Brasil)' },
-    { key: 'ru-RU', label: 'Русский' },
+    { key: 'ru', label: 'Русский' },
     { key: 'zh-CN', label: '中文简体' },
-    { key: 'cs-CZ', label: 'Čeština' },
-    { key: 'da-DK', label: 'Dansk' },
-    { key: 'fi-FI', label: 'Suomi' },
-    { key: 'pl-PL', label: 'Polski' },
-    { key: 'sv-SE', label: 'Svenska' },
-    { key: 'ar-SA', label: 'العربية', direction: 'rtl' }
+    { key: 'cs', label: 'Čeština' },
+    { key: 'da', label: 'Dansk' },
+    { key: 'fi', label: 'Suomi' },
+    { key: 'pl', label: 'Polski' },
+    { key: 'sv', label: 'Svenska' },
+    { key: 'ar', label: 'العربية', direction: 'rtl' }
 ];

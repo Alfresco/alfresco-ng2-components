@@ -17,7 +17,6 @@
 
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideHttpClient } from '@angular/common/http';
 import { TranslateLoaderService } from './translate-loader.service';
 
 describe('TranslateLoader', () => {
@@ -26,7 +25,7 @@ describe('TranslateLoader', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [provideHttpClient(), provideHttpClientTesting(), TranslateLoaderService]
+            providers: [provideHttpClientTesting(), TranslateLoaderService]
         });
         customLoader = TestBed.inject(TranslateLoaderService);
         httpMock = TestBed.inject(HttpTestingController);
@@ -61,107 +60,4 @@ describe('TranslateLoader', () => {
         subscription.unsubscribe();
         httpMock.verify();
     }));
-
-    describe('locale fallback', () => {
-        it('should fallback from en-US to en when en-US file does not exist', fakeAsync(() => {
-            let nextInvoked = false;
-
-            const subscription = customLoader.getTranslation('en-US').subscribe({
-                next: () => (nextInvoked = true),
-                error: () => fail('Should not call error handler')
-            });
-
-            const enUsRequest = httpMock.expectOne((request) => request.url.includes('assets/adf-core/i18n/en-US.json'));
-            enUsRequest.flush(null, { status: 404, statusText: 'Not Found' });
-            tick();
-
-            const enRequest = httpMock.expectOne((request) => request.url.includes('assets/adf-core/i18n/en.json'));
-            enRequest.flush({ 'TEST.KEY': 'Test value' });
-            tick();
-
-            expect(nextInvoked).toBeTrue();
-            subscription.unsubscribe();
-            httpMock.verify();
-        }));
-
-        it('should fallback from en-GB to en when en-GB file does not exist', fakeAsync(() => {
-            let nextInvoked = false;
-
-            const subscription = customLoader.getTranslation('en-GB').subscribe({
-                next: () => (nextInvoked = true),
-                error: () => fail('Should not call error handler')
-            });
-
-            const enGbRequest = httpMock.expectOne((request) => request.url.includes('assets/adf-core/i18n/en-GB.json'));
-            enGbRequest.flush(null, { status: 404, statusText: 'Not Found' });
-            tick();
-
-            const enRequest = httpMock.expectOne((request) => request.url.includes('assets/adf-core/i18n/en.json'));
-            enRequest.flush({ 'TEST.KEY': 'Test value' });
-            tick();
-
-            expect(nextInvoked).toBeTrue();
-            subscription.unsubscribe();
-            httpMock.verify();
-        }));
-
-        it('should fallback from short locale (de) to full locale (de-DE)', fakeAsync(() => {
-            let nextInvoked = false;
-
-            const subscription = customLoader.getTranslation('de').subscribe({
-                next: () => (nextInvoked = true),
-                error: () => fail('Should not call error handler')
-            });
-
-            const deRequest = httpMock.expectOne((request) => request.url.includes('assets/adf-core/i18n/de.json'));
-            deRequest.flush(null, { status: 404, statusText: 'Not Found' });
-            tick();
-
-            const deDeRequest = httpMock.expectOne((request) => request.url.includes('assets/adf-core/i18n/de-DE.json'));
-            deDeRequest.flush({ 'TEST.KEY': 'Testwert' });
-            tick();
-
-            expect(nextInvoked).toBeTrue();
-            subscription.unsubscribe();
-            httpMock.verify();
-        }));
-
-        it('should use the file directly when it exists without fallback', fakeAsync(() => {
-            let nextInvoked = false;
-
-            const subscription = customLoader.getTranslation('fr-FR').subscribe({
-                next: () => (nextInvoked = true),
-                error: () => fail('Should not call error handler')
-            });
-
-            const frFrRequest = httpMock.expectOne((request) => request.url.includes('assets/adf-core/i18n/fr-FR.json'));
-            frFrRequest.flush({ 'TEST.KEY': 'Valeur de test' });
-            tick();
-
-            expect(nextInvoked).toBeTrue();
-            subscription.unsubscribe();
-            httpMock.verify();
-        }));
-
-        it('should register translations under the original requested locale', fakeAsync(() => {
-            let translationResult: any;
-
-            const subscription = customLoader.getTranslation('en-US').subscribe({
-                next: (result) => (translationResult = result),
-                error: () => fail('Should not call error handler')
-            });
-
-            const enUsRequest = httpMock.expectOne((request) => request.url.includes('assets/adf-core/i18n/en-US.json'));
-            enUsRequest.flush(null, { status: 404, statusText: 'Not Found' });
-            tick();
-
-            const enRequest = httpMock.expectOne((request) => request.url.includes('assets/adf-core/i18n/en.json'));
-            enRequest.flush({ 'TEST.KEY': 'Test value' });
-            tick();
-
-            expect(translationResult).toEqual({ 'TEST.KEY': 'Test value' });
-            subscription.unsubscribe();
-            httpMock.verify();
-        }));
-    });
 });

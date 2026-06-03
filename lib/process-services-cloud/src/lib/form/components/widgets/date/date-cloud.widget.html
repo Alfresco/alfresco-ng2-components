@@ -2,6 +2,7 @@
     class="{{field.className}}"
     id="data-widget"
     [class.adf-invalid]="dateInputControl.invalid && dateInputControl.touched"
+    [class.adf-readonly]="field.readOnly"
     [class.adf-left-label-input-container]="field.leftLabels"
 >
     <div *ngIf="field.leftLabels">

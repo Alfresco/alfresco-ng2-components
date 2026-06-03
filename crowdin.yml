@@ -3,32 +3,10 @@
 "base_path": "."
 "base_url": "https://hyland.api.crowdin.com"
 "preserve_hierarchy": true
-"languages_mapping": {
-  "osx_locale": {
-    "ar": "ar-SA",
-    "cs": "cs-CZ",
-    "da": "da-DK",
-    "de": "de-DE",
-    "en-AU": "en-AU",
-    "es": "es-ES",
-    "fi": "fi-FI",
-    "fr": "fr-FR",
-    "it": "it-IT",
-    "ja": "ja-JP",
-    "nb": "nb-NO",
-    "nl": "nl-NL",
-    "pl": "pl-PL",
-    "pt": "pt-PT",
-    "pt-BR": "pt-BR",
-    "ru": "ru-RU",
-    "sv": "sv-SE",
-    "zh-CN": "zh-CN"
-  }
-}
 "files": [
   {
     "source": "/**/**/i18n/en.json",
-    "translation": "/%original_path%/%osx_locale%.%file_extension%",
+    "translation": "/%original_path%/%two_letters_code%.%file_extension%",
     "export_only_approved": "true",
     "update_option": "update_without_changes"
   }

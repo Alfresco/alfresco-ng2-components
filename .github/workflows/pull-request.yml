@@ -86,15 +86,30 @@ jobs:
   check-if-pr-is-approved:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 1
+
       - name: Check if PR approval can be skipped
         id: skip-check
         env:
           EVENT_NAME: ${{ github.event_name }}
           ACTOR: ${{ github.actor }}
           DEVEL_FLAG: ${{ inputs.devel }}
-          COMMIT_MESSAGE: ${{ github.event.head_commit.message || github.event.pull_request.title || '' }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           skip="false"
+
+          # Get commit message safely from git to avoid script injection
+          if [ "$EVENT_NAME" == "pull_request" ] && [ -n "$PR_HEAD_SHA" ]; then
+            COMMIT_MESSAGE=$(git log -1 --format=%B "$PR_HEAD_SHA" 2>/dev/null || echo "")
+          else
+            COMMIT_MESSAGE=$(git log -1 --format=%B 2>/dev/null || echo "")
+          fi
 
           if [ "$EVENT_NAME" == "schedule" ] || [ "$EVENT_NAME" == "workflow_dispatch" ]; then
             echo -e "\033[32mSchedule/dispatch event — skipping approval check\033[0m"
@@ -102,8 +117,11 @@ jobs:
           elif [ "$ACTOR" == "dependabot[bot]" ] || [ "$ACTOR" == "alfresco-build" ]; then
             echo -e "\033[32mCommit by $ACTOR — skipping approval check\033[0m"
             skip="true"
-          elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
-            echo -e "\033[32m[ci:force] flag detected — skipping approval check\033[0m"
+          elif echo "$PR_TITLE" | grep -qF "[ci:force]"; then
+            echo -e "\033[32m[ci:force] flag detected in PR title — skipping approval check\033[0m"
+            skip="true"
+          elif echo "$COMMIT_MESSAGE" | grep -qF "[ci:force]"; then
+            echo -e "\033[32m[ci:force] flag detected in commit message — skipping approval check\033[0m"
             skip="true"
           elif [[ "$DEVEL_FLAG" == "true" ]]; then
             echo -e "\033[32mDevel flag — skipping approval check\033[0m"

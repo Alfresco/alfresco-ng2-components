@@ -1,5 +1,7 @@
 <div [ngClass]="field.className"
-     [class.adf-invalid]="!field.isValid && isTouched()" class="adf-checkbox-widget-container"
+     [class.adf-invalid]="!field.isValid && isTouched()"
+     [class.adf-readonly]="field.readOnly || readOnly"
+     class="adf-checkbox-widget-container"
 >
     <mat-checkbox [id]="field.id"
                   class="adf-checkbox"
