@@ -102,7 +102,7 @@
     "ATTACH": "Joindre",
     "CHOOSE_ITEM": "Sélectionner le contenu à joindre à partir de '{{ name }}'",
     "COPY": "Copier",
-    "LINK": "Create Link",
+    "LINK": "Créer un lien",
     "COPY_ITEM": "Copier '{{ name }}' dans...",
     "LOCATION": "Emplacement",
     "MOVE": "Déplacer",
