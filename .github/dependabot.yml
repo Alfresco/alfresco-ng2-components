@@ -32,59 +32,29 @@ updates:
       - dependency-name: "typescript"
 
   - package-ecosystem: "github-actions"
-    directory: "/"
+    directories:
+      - "/"
+      - "/.github/actions/before-install"
+      - "/.github/actions/create-git-tag"
+      - "/.github/actions/download-node-modules-and-artifacts"
+      - "/.github/actions/enable-dryrun"
+      - "/.github/actions/get-latest-tag-sha"
+      - "/.github/actions/npm-check-bundle"
+      - "/.github/actions/save-nx-cache"
+      - "/.github/actions/set-npm-tag"
+      - "/.github/actions/setup"
+      - "/.github/actions/upload-node-modules-and-artifacts"
     schedule:
       interval: "weekly"
     cooldown:
       default-days: 3
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
     ignore:
       # Managed by gh aw add. Version-locked to the gh-aw compiler; do not bump.
       - dependency-name: "github/gh-aw-actions"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/before-install"
-    schedule:
-      interval: "weekly"
-    cooldown:
-      default-days: 3
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/download-node-modules-and-artifacts"
-    schedule:
-      interval: "weekly"
-    cooldown:
-      default-days: 3
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/enable-dryrun"
-    schedule:
-      interval: "weekly"
-    cooldown:
-      default-days: 3
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/get-latest-tag-sha"
-    schedule:
-      interval: "weekly"
-    cooldown:
-      default-days: 3
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/npm-check-bundle"
-    schedule:
-      interval: "weekly"
-    cooldown:
-      default-days: 3
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/set-npm-tag"
-    schedule:
-      interval: "weekly"
-    cooldown:
-      default-days: 3
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/setup"
-    schedule:
-      interval: "weekly"
-    cooldown:
-      default-days: 3
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/upload-node-modules-and-artifacts"
-    schedule:
-      interval: "weekly"
-    cooldown:
-      default-days: 3
