@@ -28,12 +28,16 @@ interface InitAcsEnvArgs {
     username?: string;
     password?: string;
 }
+
 const MAX_RETRY = 10;
-let counter = 0;
-const TIMEOUT = 6000;
+const RETRY_DELAY_MS = 6000;
 const ACS_DEFAULT = require('./resources').ACS_DEFAULT;
 
 let alfrescoJsApi: AlfrescoApi;
+let nodesApi: NodesApi;
+let uploadApi: UploadApi;
+let sharedlinksApi: SharedlinksApi;
+let favoritesApi: FavoritesApi;
 
 /**
  * Init ACS environment command
@@ -46,18 +50,12 @@ Usage: init-acs-env [options]
 Initialize ACS environment
 
 Options:
-  -v, --version         Output the version number
   --host <host>         Remote environment host
   --clientId <id>       SSO client (default: "alfresco")
   -p, --password <pass> Password
   -u, --username <user> Username
   -h, --help            Display help for command
 `);
-        exit(0);
-    }
-
-    if (argv.includes('-v') || argv.includes('--version')) {
-        console.log('0.1.0');
         exit(0);
     }
 
@@ -92,200 +90,291 @@ Options:
 
     await checkEnv(opts);
 
-    const alreadyInitialized = await isEnvironmentAlreadyInitialized();
-    if (alreadyInitialized) {
-        logger.info(`ACS environment already initialized (terraform). Skipping.`);
-        return;
-    }
-
-    logger.info(`***** Step initialize ACS *****`);
+    logger.info('***** Step initialize ACS *****');
     await initializeDefaultFiles();
 }
 
 /**
- * Check if the ACS environment was already initialized (e.g. by terraform).
- * Verifies the e2e-test-data folder and expected files exist.
- */
-async function isEnvironmentAlreadyInitialized(): Promise<boolean> {
-    const folderName = ACS_DEFAULT.e2eFolder.name;
-    const expectedFiles: string[] = ACS_DEFAULT.files.map((f: { name: string }) => f.name);
-
-    try {
-        const nodesApi = new NodesApi(alfrescoJsApi);
-        const folderPath = `/${folderName}`;
-        const folder = await nodesApi.getNode('-my-', { relativePath: folderPath });
-
-        if (!folder?.entry?.id) {
-            return false;
-        }
-
-        for (const fileName of expectedFiles) {
-            try {
-                await nodesApi.getNode(folder.entry.id, { relativePath: `/${fileName}` });
-            } catch (error) {
-                logger.info(`File '${fileName}' missing in folder '${folderName}': ${JSON.stringify(error)}`);
-                return false;
-            }
-        }
-
-        logger.info(`All expected files found in folder '${folderName}'`);
-        return true;
-    } catch (error) {
-        logger.info(`Folder '${folderName}' not found or not accessible - environment needs initialization: ${JSON.stringify(error)}`);
-        return false;
-    }
-}
-
-/**
- * Setup default files
+ * Initialize default files. Creates the e2e folder and ensures each file
+ * exists with its required state (locked, shared, favorited).
+ * Idempotent: only creates/modifies what is missing.
  */
 async function initializeDefaultFiles() {
-    const e2eFolder = ACS_DEFAULT.e2eFolder;
-    const parentFolder = await createFolder(e2eFolder.name, '-my-');
-    const parentFolderId = parentFolder.entry.id;
+    const e2eFolderName: string = ACS_DEFAULT.e2eFolder.name;
 
-    for (let j = 0; j < ACS_DEFAULT.files.length; j++) {
-        const fileInfo = ACS_DEFAULT.files[j];
-        switch (fileInfo.action) {
-            case 'UPLOAD': {
-                await uploadFile(fileInfo.name, parentFolderId);
-                break;
-            }
-            case 'LOCK': {
-                const fileToLock = await uploadFile(fileInfo.name, parentFolderId);
-                await lockFile(fileToLock.entry.id);
-                break;
-            }
-            case 'SHARE': {
-                const fileToShare = await uploadFile(fileInfo.name, parentFolderId);
-                await shareFile(fileToShare.entry.id);
-                break;
-            }
-            case 'FAVORITE': {
-                const fileToFav = await uploadFile(fileInfo.name, parentFolderId);
-                await favoriteFile(fileToFav.entry.id);
-                break;
-            }
-            default: {
-                logger.error('No action found for file ', fileInfo.name, parentFolderId);
-                break;
-            }
-        }
+    const parentFolder = await withRetry(() => ensureFolder(e2eFolderName, '-my-'), `ensure folder ${e2eFolderName}`);
+
+    if (!parentFolder) {
+        logger.warn('Skipping file initialization: test-data folder could not be created.');
+        return;
+    }
+
+    const parentFolderId = getEntryId(parentFolder, `folder ${e2eFolderName}`);
+
+    for (const fileInfo of ACS_DEFAULT.files) {
+        await withRetry(() => processFile(fileInfo, parentFolderId), `initialize ${fileInfo.name}`);
     }
 }
 
 /**
- * Create folder
+ * Process a single file: upload if missing, then apply its action (lock/share/favorite).
+ *
+ * @param fileInfo file descriptor from ACS_DEFAULT
+ * @param parentFolderId parent folder node id
+ */
+async function processFile(fileInfo: { name: string; action: string }, parentFolderId: string) {
+    const existingNode = await findNodeByRelativePath(parentFolderId, fileInfo.name);
+
+    let nodeId: string;
+    if (existingNode?.entry?.id) {
+        logger.info(`File ${fileInfo.name} already exists, verifying required state.`);
+        nodeId = existingNode.entry.id;
+    } else {
+        const createdNode = await uploadFile(fileInfo.name, parentFolderId);
+        nodeId = getEntryId(createdNode, `file ${fileInfo.name}`);
+    }
+
+    switch (fileInfo.action) {
+        case 'LOCK':
+            await ensureLocked(nodeId, fileInfo.name, existingNode?.entry?.isLocked);
+            break;
+        case 'SHARE':
+            await ensureShared(nodeId, fileInfo.name);
+            break;
+        case 'FAVORITE':
+            await ensureFavorited(nodeId, fileInfo.name);
+            break;
+        default:
+            break;
+    }
+}
+
+/**
+ * Ensure a folder exists under the given parent. Creates it if missing.
+ * Handles 409 conflict (race condition) by fetching the existing folder.
  *
  * @param folderName folder name
- * @param parentId parent folder id
+ * @param parentId parent node id
  */
-async function createFolder(folderName: string, parentId: string) {
-    let createdFolder: NodeEntry;
-    const body = {
-        name: folderName,
-        nodeType: 'cm:folder'
-    };
-    try {
-        createdFolder = await new NodesApi(alfrescoJsApi).createNode(parentId, body, { overwrite: true });
+async function ensureFolder(folderName: string, parentId: string): Promise<NodeEntry> {
+    const existingFolder = await findNodeByRelativePath(parentId, folderName);
 
-        logger.info(`Folder ${folderName} was created`);
-    } catch (err) {
-        if (err.status === 409) {
-            const relativePath = `/${folderName}`;
-            createdFolder = await new NodesApi(alfrescoJsApi).getNode('-my-', { relativePath });
+    if (existingFolder?.entry?.id) {
+        if (!existingFolder.entry.isFolder) {
+            throw new Error(
+                `Cannot use ${folderName} as test-data folder: a non-folder node with that name already exists (nodeType: ${existingFolder.entry.nodeType}, id: ${existingFolder.entry.id}).`
+            );
         }
+        logger.info(`Folder ${folderName} already exists.`);
+        return existingFolder;
     }
-    return createdFolder;
+
+    try {
+        const createdFolder = await nodesApi.createNode(parentId, { name: folderName, nodeType: 'cm:folder' }, { overwrite: true });
+        logger.info(`Folder ${folderName} was created`);
+        return createdFolder;
+    } catch (error: any) {
+        if (error?.status === 409) {
+            const conflictingFolder = await findNodeByRelativePath(parentId, folderName);
+
+            if (conflictingFolder?.entry?.id) {
+                if (!conflictingFolder.entry.isFolder) {
+                    throw new Error(
+                        `Cannot use ${folderName} as test-data folder: a non-folder node with that name already exists (nodeType: ${conflictingFolder.entry.nodeType}, id: ${conflictingFolder.entry.id}).`
+                    );
+                }
+                logger.info(`Folder ${folderName} already exists.`);
+                return conflictingFolder;
+            }
+        }
+
+        throw new Error(`Failed to ensure folder ${folderName}: ${formatError(error)}`);
+    }
 }
 
 /**
- * Upload file
+ * Find a node by relative path under a parent. Returns null if not found (404).
+ *
+ * @param parentId parent node id
+ * @param fileName relative path / file name
+ */
+async function findNodeByRelativePath(parentId: string, fileName: string): Promise<NodeEntry | null> {
+    try {
+        return await nodesApi.getNode(parentId, { relativePath: `/${fileName}`, include: ['isLocked'] });
+    } catch (error: any) {
+        if (error?.status === 404) {
+            return null;
+        }
+
+        throw new Error(`Failed to fetch ${fileName}: ${formatError(error)}`);
+    }
+}
+
+/**
+ * Upload a file to the given destination folder.
  *
  * @param fileName file name
- * @param fileDestination destination path
+ * @param destinationId destination folder node id
  */
-async function uploadFile(fileName: string, fileDestination: string): Promise<NodeEntry> {
+async function uploadFile(fileName: string, destinationId: string): Promise<NodeEntry> {
     const filePath = `../resources/content/${fileName}`;
     const file = createReadStream(path.join(__dirname, filePath));
-    let uploadedFile: NodeEntry;
+
     try {
-        uploadedFile = await new UploadApi(alfrescoJsApi).uploadFile(file, '', fileDestination, null, {
+        const uploadedFile = await uploadApi.uploadFile(file, '', destinationId, null, {
             name: fileName,
             nodeType: 'cm:content',
             renditions: 'doclib',
             overwrite: true
         });
         logger.info(`File ${fileName} was uploaded`);
-    } catch (err) {
-        logger.error(`Failed to upload file with error: `, err);
+        return uploadedFile;
+    } catch (error: any) {
+        throw new Error(`Failed to upload ${fileName}: ${formatError(error)}`);
     }
-    return uploadedFile;
 }
 
 /**
- * Lock file node
+ * Ensure a file is locked. Skips if already locked.
  *
  * @param nodeId node id
+ * @param fileName file name (for logging)
+ * @param isAlreadyLocked whether the node is already locked
  */
-async function lockFile(nodeId: string): Promise<NodeEntry> {
-    const data = {
-        type: 'ALLOW_OWNER_CHANGES'
-    };
+async function ensureLocked(nodeId: string, fileName: string, isAlreadyLocked?: boolean) {
+    if (isAlreadyLocked) {
+        logger.info(`File ${fileName} is already locked.`);
+        return;
+    }
+
     try {
-        const result = await new NodesApi(alfrescoJsApi).lockNode(nodeId, data);
-        logger.info('File was locked');
-        return result;
-    } catch (error) {
-        logger.error('Failed to lock file with error: ', error);
-        return null;
+        await nodesApi.lockNode(nodeId, { type: 'ALLOW_OWNER_CHANGES' });
+        logger.info(`File ${fileName} was locked`);
+    } catch (error: any) {
+        throw new Error(`Failed to lock ${fileName}: ${formatError(error)}`);
     }
 }
 
 /**
- * Share file node
+ * Ensure a file is shared. Handles 409 (already shared) gracefully.
  *
  * @param nodeId node id
+ * @param fileName file name (for logging)
  */
-async function shareFile(nodeId: string) {
-    const data = {
-        nodeId
-    };
+async function ensureShared(nodeId: string, fileName: string) {
     try {
-        await new SharedlinksApi(alfrescoJsApi).createSharedLink(data);
-        logger.info('File was shared');
-    } catch (error) {
-        logger.error('Failed to share file with error: ', error);
-    }
-}
-
-/**
- * Favorite file node
- *
- * @param nodeId node id
- */
-async function favoriteFile(nodeId: string) {
-    const data = {
-        target: {
-            ['file']: {
-                guid: nodeId
-            }
+        await sharedlinksApi.createSharedLink({ nodeId });
+        logger.info(`File ${fileName} was shared`);
+    } catch (error: any) {
+        if (error?.status === 409 && error?.message?.includes('sharedId already exists')) {
+            logger.info(`File ${fileName} is already shared.`);
+            return;
         }
-    };
-    try {
-        await new FavoritesApi(alfrescoJsApi).createFavorite('-me-', data);
-        logger.info('File was add to favorites');
-    } catch (error) {
-        logger.error('Failed to add the file to favorites with error: ', error);
+
+        throw new Error(`Failed to share ${fileName}: ${formatError(error)}`);
     }
 }
 
 /**
- * Check environment state
+ * Ensure a file is favorited. Handles 409 (already favorited) gracefully.
+ *
+ * @param nodeId node id
+ * @param fileName file name (for logging)
+ */
+async function ensureFavorited(nodeId: string, fileName: string) {
+    try {
+        await favoritesApi.createFavorite('-me-', {
+            target: {
+                file: {
+                    guid: nodeId
+                }
+            }
+        });
+        logger.info(`File ${fileName} was added to favorites`);
+    } catch (error: any) {
+        if (error?.status === 409) {
+            logger.info(`File ${fileName} is already a favorite.`);
+            return;
+        }
+
+        throw new Error(`Failed to favorite ${fileName}: ${formatError(error)}`);
+    }
+}
+
+/**
+ * Extract entry id from a node response. Throws if missing.
+ *
+ * @param nodeEntry node entry response
+ * @param label label for error message
+ */
+function getEntryId(nodeEntry: NodeEntry, label: string): string {
+    const nodeId = nodeEntry?.entry?.id;
+
+    if (nodeId) {
+        return nodeId;
+    }
+
+    throw new Error(`Missing ACS response entry for ${label}.`);
+}
+
+/**
+ * Format an error for logging.
+ *
+ * @param error error object
+ */
+function formatError(error: any): string {
+    if (!error) {
+        return 'Unknown error';
+    }
+
+    if (typeof error === 'string') {
+        return error;
+    }
+
+    return error?.message || error?.stack || JSON.stringify(error);
+}
+
+/**
+ * Retry wrapper for transient failures.
+ *
+ * @param fn async function to execute
+ * @param label label for logging
+ * @param maxAttempts maximum retry attempts
+ */
+async function withRetry<T>(fn: () => Promise<T>, label: string, maxAttempts = 3): Promise<T> {
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        try {
+            return await fn();
+        } catch (error: any) {
+            if (attempt === maxAttempts) {
+                logger.error(`${label}: failed after ${maxAttempts} attempts: ${formatError(error)}`);
+                throw error;
+            }
+
+            logger.warn(`${label}: attempt ${attempt} failed, retrying in ${RETRY_DELAY_MS / 1000}s: ${formatError(error)}`);
+            await wait(RETRY_DELAY_MS);
+        }
+    }
+
+    throw new Error(`${label}: exhausted all ${maxAttempts} attempts`);
+}
+
+/**
+ * Async delay.
+ *
+ * @param ms milliseconds to wait
+ */
+function wait(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
+ * Check environment state and authenticate. Retries on transient failures.
  *
  * @param opts command options
+ * @param attempt current attempt number
  */
-async function checkEnv(opts: InitAcsEnvArgs) {
+async function checkEnv(opts: InitAcsEnvArgs, attempt = 1) {
     try {
         alfrescoJsApi = new AlfrescoApi({
             provider: 'ALL',
@@ -300,31 +389,29 @@ async function checkEnv(opts: InitAcsEnvArgs) {
             },
             contextRoot: 'alfresco'
         });
+
         await alfrescoJsApi.login(opts.username, opts.password);
-    } catch (e: any) {
-        if (e?.error?.code === 'ETIMEDOUT') {
-            logger.error('The env is not reachable. Terminating');
-            exit(1);
+
+        nodesApi = new NodesApi(alfrescoJsApi);
+        uploadApi = new UploadApi(alfrescoJsApi);
+        sharedlinksApi = new SharedlinksApi(alfrescoJsApi);
+        favoritesApi = new FavoritesApi(alfrescoJsApi);
+    } catch (error: any) {
+        const errorCode = error?.error?.code;
+
+        if (errorCode === 'ETIMEDOUT' || error?.status === 504) {
+            logger.warn('Login attempt timed out or received a gateway error, environment may still be starting up.');
+        } else {
+            logger.error('Login error, environment down or inaccessible.');
         }
-        logger.error('Login error environment down or inaccessible');
-        counter++;
-        if (MAX_RETRY === counter) {
+
+        if (attempt >= MAX_RETRY) {
             logger.error('Give up');
             exit(1);
-        } else {
-            logger.error(`Retry in 1 minute attempt N ${counter}`);
-            sleep(TIMEOUT);
-            await checkEnv(opts);
         }
-    }
-}
 
-/**
- * Perform a delay
- *
- * @param delay timeout in milliseconds
- */
-function sleep(delay: number) {
-    const start = new Date().getTime();
-    while (new Date().getTime() < start + delay) {}
+        logger.warn(`Retry in ${RETRY_DELAY_MS / 1000} seconds, attempt ${attempt}`);
+        await wait(RETRY_DELAY_MS);
+        await checkEnv(opts, attempt + 1);
+    }
 }

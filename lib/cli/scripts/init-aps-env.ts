@@ -40,8 +40,7 @@ interface InitApsEnvArgs {
     license?: string;
 }
 const MAX_RETRY = 10;
-let counter = 0;
-const TIMEOUT = 6000;
+const RETRY_DELAY_MS = 6000;
 const TENANT_DEFAULT_ID = 1;
 const TENANT_DEFAULT_NAME = 'default';
 const CONTENT_DEFAULT_NAME = 'adw-content';
@@ -60,7 +59,6 @@ Usage: init-aps-env [options]
 Initialize APS environment
 
 Options:
-  -v, --version         Output the version number
   --host <host>         Remote environment host
   --clientId <id>       SSO client (default: "alfresco")
   -p, --password <pass> Password
@@ -68,11 +66,6 @@ Options:
   --license <path>      APS license S3 path
   -h, --help            Display help for command
 `);
-        exit(0);
-    }
-
-    if (argv.includes('-v') || argv.includes('--version')) {
-        console.log('0.1.0');
         exit(0);
     }
 
@@ -152,25 +145,24 @@ Options:
             logger.info(`***** Step 4 - Create users *****`);
             const users = await getDefaultApsUsersFromRealm(opts);
             if (tenantId && users && users.length > 0) {
-                for (let i = 0; i < users.length; i++) {
-                    await createUsers(tenantId, users[i]);
+                for (const user of users) {
+                    await createUsers(tenantId, user);
                 }
-                for (let i = 0; i < users.length; i++) {
-                    logger.info('Impersonate user: ' + users[i].username);
-                    await alfrescoJsApi.login(users[i].username, 'password');
-                    await authorizeUserToContentRepo(opts, users[i]);
+                for (const user of users) {
+                    logger.info('Impersonate user: ' + user.username);
+                    await alfrescoJsApi.login(user.username, 'password');
+                    await authorizeUserToContentRepo(opts, user);
 
-                    const defaultUser = 'hruser';
-                    if (users[i].username.includes(defaultUser)) {
-                        logger.info(`***** Step initialize APS apps for user ${defaultUser} *****`);
+                    if (user.username.includes('hruser')) {
+                        logger.info(`***** Step initialize APS apps for user hruser *****`);
                         await initializeDefaultApps();
                     }
                 }
             } else {
                 logger.info('Something went wrong. Was not able to create the users');
             }
-        } catch (error) {
-            logger.error(`Aps something went wrong. Tenant id ${tenantId}`, error);
+        } catch (error: any) {
+            logger.error(`Aps something went wrong. Tenant id ${tenantId}: ${formatError(error)}`);
             exit(1);
         }
     } else {
@@ -204,8 +196,8 @@ async function ensureE2eApplicationDeployed(): Promise<boolean> {
         }
         logger.info(`Failed to import/deploy e2e-Application for hruser - proceeding with full initialization`);
         return false;
-    } catch (error) {
-        logger.info(`Unable to verify APS state for hruser - proceeding with initialization: ${JSON.stringify(error)}`);
+    } catch (error: any) {
+        logger.info(`Unable to verify APS state for hruser - proceeding with initialization: ${formatError(error)}`);
         return false;
     }
 }
@@ -214,11 +206,14 @@ async function ensureE2eApplicationDeployed(): Promise<boolean> {
  * Initialise default applications
  */
 async function initializeDefaultApps() {
-    for (let x = 0; x < ACTIVITI_APPS.apps.length; x++) {
-        const appInfo = ACTIVITI_APPS.apps[x];
+    for (const appInfo of ACTIVITI_APPS.apps) {
         const isDeployed = await isDefaultAppDeployed(appInfo.name);
-        if (isDeployed !== undefined && !isDeployed) {
-            const appDefinition = await importPublishApp(`${appInfo.name}`);
+        if (!isDeployed) {
+            const appDefinition = await importPublishApp(appInfo.name);
+            if (!appDefinition?.appDefinition?.id) {
+                logger.error(`Failed to import app ${appInfo.name}, skipping deployment.`);
+                continue;
+            }
             await deployApp(appDefinition.appDefinition.id);
         } else {
             logger.info(`***** App ${appInfo.name} already deployed *****`);
@@ -227,11 +222,12 @@ async function initializeDefaultApps() {
 }
 
 /**
- * Check environment
+ * Check environment state and authenticate. Retries on transient failures.
  *
  * @param opts command options
+ * @param attempt current attempt number
  */
-async function checkEnv(opts: InitApsEnvArgs) {
+async function checkEnv(opts: InitApsEnvArgs, attempt = 1) {
     try {
         alfrescoJsApi = new AlfrescoApi({
             provider: 'ALL',
@@ -247,21 +243,23 @@ async function checkEnv(opts: InitApsEnvArgs) {
             }
         });
         await alfrescoJsApi.login(opts.username, opts.password);
-    } catch (e: any) {
-        if (e?.error?.code === 'ETIMEDOUT') {
-            logger.error('The env is not reachable. Terminating');
-            exit(1);
+    } catch (error: any) {
+        const errorCode = error?.error?.code;
+
+        if (errorCode === 'ETIMEDOUT' || error?.status === 504) {
+            logger.warn('Login attempt timed out or received a gateway error, environment may still be starting up.');
+        } else {
+            logger.error('Login error, environment down or inaccessible.');
         }
-        logger.info('Login error environment down or inaccessible');
-        counter++;
-        if (MAX_RETRY === counter) {
+
+        if (attempt >= MAX_RETRY) {
             logger.error('Give up');
             exit(1);
-        } else {
-            logger.error(`Retry in 1 minute attempt N ${counter}`);
-            sleep(TIMEOUT);
-            await checkEnv(opts);
         }
+
+        logger.warn(`Retry in ${RETRY_DELAY_MS / 1000} seconds, attempt ${attempt}`);
+        await wait(RETRY_DELAY_MS);
+        await checkEnv(opts, attempt + 1);
     }
 }
 
@@ -310,8 +308,8 @@ async function createDefaultTenant(tenantName: string) {
         const tenant = await adminTenantsApi.createTenant(tenantPost);
         logger.info(`APS: Tenant ${tenantName} created with id: ${tenant.id}`);
         return tenant.id;
-    } catch (error) {
-        logger.info(`APS: not able to create the default tenant: ${JSON.parse(error.message)}`);
+    } catch (error: any) {
+        logger.info(`APS: not able to create the default tenant: ${formatError(error)}`);
         return null;
     }
 }
@@ -340,8 +338,8 @@ async function createUsers(tenantId: number, user: any) {
         const userInfo = await adminUsersApi.createNewUser(userJson);
         logger.info(`APS: User ${userInfo.email} created with id: ${userInfo.id}`);
         return user;
-    } catch (error) {
-        logger.info(`APS: not able to create the default user: ${error.message}`);
+    } catch (error: any) {
+        logger.info(`APS: not able to create the default user: ${formatError(error)}`);
     }
 }
 
@@ -367,8 +365,8 @@ async function updateLicense(opts: InitApsEnvArgs) {
         );
         logger.info(`Aps License uploaded!`);
         return true;
-    } catch (error) {
-        logger.error(`Aps License failed!`, error.message);
+    } catch (error: any) {
+        logger.error(`Aps License failed! ${formatError(error)}`);
         return false;
     }
 }
@@ -386,8 +384,8 @@ async function isDefaultAppDeployed(appName: string): Promise<boolean> {
         const availableApps = await runtimeAppDefinitionsApi.getAppDefinitions();
         const defaultApp = availableApps.data?.filter((app) => app.name?.includes(appName));
         return defaultApp && defaultApp.length > 0;
-    } catch (error) {
-        logger.error(`Aps app failed to import/Publish!`);
+    } catch (error: any) {
+        logger.error(`Failed to check if ${appName} is deployed: ${formatError(error)}`);
         return false;
     }
 }
@@ -408,8 +406,8 @@ async function importPublishApp(appName: string): Promise<AppDefinitionUpdateRes
         const result = await appDefinitionsApi.importAndPublishApp(fileContent, { renewIdmEntries: true });
         logger.info(`Aps app imported and published!`);
         return result;
-    } catch (error) {
-        logger.error(`Aps app failed to import/Publish!`, error.message);
+    } catch (error: any) {
+        logger.error(`Aps app failed to import/Publish! ${formatError(error)}`);
         return null;
     }
 }
@@ -429,8 +427,8 @@ async function deployApp(appDefinitionId: number) {
         const runtimeAppDefinitionsApi = new RuntimeAppDefinitionsApi(alfrescoJsApi);
         await runtimeAppDefinitionsApi.deployAppDefinitions(body);
         logger.info(`Aps app deployed`);
-    } catch (error) {
-        logger.error(`Aps app failed to deploy!`);
+    } catch (error: any) {
+        logger.error(`Aps app failed to deploy: ${formatError(error)}`);
     }
 }
 
@@ -486,8 +484,8 @@ async function getDefaultApsUsersFromRealm(opts: InitApsEnvArgs) {
         const apsDefaultUsers = users.filter((user) => usernamesOfApsDefaultUsers.includes(user.username));
         logger.info(`Keycloak found ${apsDefaultUsers.length} users`);
         return apsDefaultUsers;
-    } catch (error) {
-        logger.error(`APS: not able to fetch user: ${error.message}`);
+    } catch (error: any) {
+        logger.error(`APS: not able to fetch user: ${formatError(error)}`);
         return null;
     }
 }
@@ -513,8 +511,8 @@ async function isContentRepoPresent(opts: InitApsEnvArgs, tenantId: number, cont
             ['application/json']
         );
         return !!contentRepos.data.find((repo) => repo.name === contentName);
-    } catch (error) {
-        logger.error(`APS: not able to create content: ${error.message}`);
+    } catch (error: any) {
+        logger.error(`APS: not able to check content repo: ${formatError(error)}`);
         return null;
     }
 }
@@ -554,8 +552,8 @@ async function addContentRepoWithBasic(opts: InitApsEnvArgs, tenantId: number, n
         );
         logger.info(`Content created!`);
         return content;
-    } catch (error) {
-        logger.error(`APS: not able to create content: ${error.message}`);
+    } catch (error: any) {
+        logger.error(`APS: not able to create content: ${formatError(error)}`);
     }
 }
 
@@ -588,8 +586,8 @@ async function authorizeUserToContentRepo(opts: InitApsEnvArgs, user: any) {
             }
         }
         return;
-    } catch (error) {
-        logger.error(`APS: not able to authorize content: ${error.message}`);
+    } catch (error: any) {
+        logger.error(`APS: not able to authorize content: ${formatError(error)}`);
     }
 }
 
@@ -617,8 +615,8 @@ async function authorizeUserToContentWithBasic(opts: InitApsEnvArgs, username: s
         );
         logger.info(`User authorized!`);
         return content;
-    } catch (error) {
-        logger.error(`APS: not able to authorize content: ${error.message}`);
+    } catch (error: any) {
+        logger.error(`APS: not able to authorize content: ${formatError(error)}`);
     }
 }
 
@@ -643,11 +641,27 @@ async function downloadLicenseFile(apsLicensePath: string) {
 }
 
 /**
- * Perform a delay
+ * Format an error for logging.
  *
- * @param delay timeout in milliseconds
+ * @param error error object
  */
-function sleep(delay: number) {
-    const start = new Date().getTime();
-    while (new Date().getTime() < start + delay) {}
+function formatError(error: any): string {
+    if (!error) {
+        return 'Unknown error';
+    }
+
+    if (typeof error === 'string') {
+        return error;
+    }
+
+    return error?.message || error?.stack || JSON.stringify(error);
+}
+
+/**
+ * Async delay.
+ *
+ * @param ms milliseconds to wait
+ */
+function wait(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }
