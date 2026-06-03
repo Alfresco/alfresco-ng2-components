@@ -47,4 +47,4 @@ allowBuilds:
   '@nx/nx-linux-x64-musl': true
   '@nx/nx-win32-x64-msvc': true
   '@swc/core': true
-  less: set this to true or false
+  less: true
