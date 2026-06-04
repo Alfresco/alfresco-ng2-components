@@ -90,7 +90,7 @@
         "cwd": "dist/libs/core",
         "commands": [
           {
-            "command": "npm publish --tag {args.tag}",
+            "command": "pnpm publish --no-git-checks --tag {args.tag}",
             "forwardAllArgs": true
           }
         ],

@@ -55,7 +55,7 @@
         "cwd": "dist/libs/content-services",
         "commands": [
           {
-            "command": "npm publish --tag {args.tag}",
+            "command": "pnpm publish --no-git-checks --tag {args.tag}",
             "forwardAllArgs": true
           }
         ]
