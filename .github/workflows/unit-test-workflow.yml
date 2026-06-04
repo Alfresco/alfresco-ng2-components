@@ -26,16 +26,13 @@ jobs:
         uses: ./.github/actions/setup
         with:
           cache-suffix: test-matrix
-      - name: Install dependencies
-        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
-        run: npm ci
       - name: Generate affected projects matrix
         id: set-matrix
         env:
           BASE_REF: ${{ inputs.base_ref }}
         run: |
           echo "Base ref is $BASE_REF"
-          AFFECTED_UNIT=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --head=HEAD --select=projects --plain --exclude=cli,stories,eslint-angular)
+          AFFECTED_UNIT=$(pnpm nx show projects --affected --target=test --base=origin/$BASE_REF --head=HEAD --select=projects --plain --exclude=cli,stories,eslint-angular)
           echo "Affected projects for UNIT: $AFFECTED_UNIT"
 
           if [ -z "$AFFECTED_UNIT" ]; then
@@ -72,14 +69,11 @@ jobs:
         with:
           cache-suffix: test-${{ matrix.project }}
           full-setup: 'false'
-      - name: Install dependencies
-        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
-        run: npm ci
       - name: Run unit tests for ${{ matrix.project }}
         env:
           NODE_OPTIONS: "--max-old-space-size=5120"
         run: |
-          xvfb-run --auto-servernum npx nx run ${{ matrix.project }}:test
+          xvfb-run --auto-servernum pnpm nx run ${{ matrix.project }}:test
       - name: Save nx cache
         if: ${{ success() }}
         uses: ./.github/actions/save-nx-cache

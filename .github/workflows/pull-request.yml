@@ -46,12 +46,18 @@ jobs:
       - name: Ensure SHA pinned actions
         uses: hyland/github-actions-ensure-sha-pinned-actions@7d494b6b53e71f75194d74b4dd890a2266d060b5 # v2.0.0
 
-      - name: Check package-lock.json version
+      - name: Check pnpm-lock.yaml version
         run: |
-          if [[ $(jq '.lockfileVersion == 3' package-lock.json) == "true" ]] ; then
-            echo "package-lock.json has a correct version"
+          if [[ -f "pnpm-lock.yaml" ]]; then
+            LOCKFILE_VERSION=$(grep "^lockfileVersion:" pnpm-lock.yaml | cut -d"'" -f2)
+            if [[ "$LOCKFILE_VERSION" == "9.0" ]]; then
+              echo "pnpm-lock.yaml has correct version: $LOCKFILE_VERSION"
+            else
+              echo "pnpm-lock.yaml must be version 9.0, found: $LOCKFILE_VERSION"
+              exit 1
+            fi
           else
-            echo "package-lock must be version 3"
+            echo "pnpm-lock.yaml is missing"
             exit 1
           fi
 
@@ -174,13 +180,10 @@ jobs:
         uses: ./.github/actions/setup
         with:
           cache-suffix: setup
-      - name: Install dependencies
-        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
-        run: npm ci
       - name: Bundle
         run: |
-          npm run bundle:js-api
-          npm run bundle:cli
+          pnpm bundle:js-api
+          pnpm bundle:cli
       - name: Save nx cache
         if: ${{ success() }}
         uses: ./.github/actions/save-nx-cache
@@ -203,13 +206,10 @@ jobs:
         with:
           cache-suffix: lint
           full-setup: 'false'
-      - name: Install dependencies
-        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
-        run: npm ci
       - name: Run lint
         env:
           BASE_REF: ${{ github.base_ref || 'develop' }}
-        run: npx nx affected --target=lint --base=origin/$BASE_REF --head=HEAD
+        run: pnpm nx affected --target=lint --base=origin/$BASE_REF --head=HEAD
       - name: Save nx cache
         if: ${{ success() }}
         uses: ./.github/actions/save-nx-cache
@@ -239,14 +239,11 @@ jobs:
         with:
           cache-suffix: storybook
           full-setup: 'false'
-      - name: Install dependencies
-        if: ${{ steps.setup-env.outputs.node-modules-cache-hit != 'true' }}
-        run: npm ci
       - name: Build Storybook
         env:
           BASE_REF: ${{ github.base_ref || 'develop' }}
         run: |
-          npx nx affected --target=build-storybook --base=origin/$BASE_REF --head=HEAD --configuration=ci
+          pnpm nx affected --target=build-storybook --base=origin/$BASE_REF --head=HEAD --configuration=ci
       - name: Save nx cache
         if: ${{ success() }}
         uses: ./.github/actions/save-nx-cache

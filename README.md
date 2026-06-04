@@ -21,6 +21,29 @@ for full details on what you may need to install before using ADF.
 - [Node Version Manager](docs/tutorials/nvm.md)
 - [CORS guide](ALFRESCOCORS.md)
 
+## Installation
+
+This project uses **pnpm** for package management with built-in supply chain attack protection.
+
+```bash
+pnpm install            # install all packages
+pnpm run add <package>  # add a new package (with security check)
+```
+
+### Supply Chain Security
+
+**Layer 1: pnpm script blocking**
+- All lifecycle scripts (postinstall, etc.) are blocked by default
+- Only trusted packages in `pnpm-workspace.yaml` can run scripts
+- Protects during `pnpm install` and `pnpm add`
+
+**Layer 2: Security database check**
+- `pnpm run add` checks packages against OSV and GitHub Advisory databases BEFORE installing
+- Pre-commit hook blocks commits containing known malicious packages
+
+**Layer 3: npm blocked**
+- Running `npm install` will fail - enforces pnpm usage
+
 ## Components
 
 You can find the sources for all ADF components in the [`lib`](/lib) folder.

@@ -41,7 +41,8 @@ const nodeToReport = (node: TSESTree.Node) => {
     if (!ASTUtils.isProperty(node)) {
         return node;
     }
-    return ASTUtils.isMemberExpression(node.value) ? node.value.property : node.value;
+    const propertyNode = node as TSESTree.Property;
+    return ASTUtils.isMemberExpression(propertyNode.value) ? propertyNode.value.property : propertyNode.value;
 };
 
 /**
@@ -88,9 +89,12 @@ export default createESLintRule<unknown[], MessageIds>({
                                             moduleName: '@angular/core',
                                             node: node.parent
                                         }),
-                                        ASTUtils.isMemberExpression(node.value)
-                                            ? fixer.replaceText(node.value.property, 'None')
-                                            : fixer.replaceText(node.value, viewEncapsulationNone)
+                                        (() => {
+                                            const propValue = (node as TSESTree.Property).value;
+                                            return ASTUtils.isMemberExpression(propValue)
+                                                ? fixer.replaceText(propValue.property, 'None')
+                                                : fixer.replaceText(propValue, viewEncapsulationNone);
+                                        })()
                                     ].filter(isNotNullOrUndefined);
                                 }
 
