@@ -34,8 +34,7 @@
     "alfresco",
     "activiti",
     "content services",
-    "process services",
-    "process services-cloud"
+    "process services"
   ],
   "dependencies": {
     "@angular/animations": "19.2.20",

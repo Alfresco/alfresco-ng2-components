@@ -22,7 +22,6 @@ eval projects=( "js-api"
     "adf-content-services"
     "adf-extensions"
     "adf-process-services"
-    "adf-process-services-cloud"
     "eslint-plugin-eslint-angular" )
 
 error_out() {

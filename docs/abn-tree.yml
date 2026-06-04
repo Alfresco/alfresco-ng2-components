@@ -57,13 +57,7 @@
         - components: 'Components'
         - directives: 'Directives'
         - services: 'Services'
-- process-services-cloud:
-    title: 'Process Services Cloud API'
-    children:
-        - components: 'Components'
-        - directives: 'Directives'
-        - pipes: 'Pipes'
-        - services: 'Services'
+
 - extensions:
     title: 'Extensions API'
     children:

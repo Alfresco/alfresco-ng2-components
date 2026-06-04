@@ -1,6 +1,7 @@
 {
   "name": "@alfresco/adf-process-services-cloud",
-  "description": "Alfresco ADF process services cloud",
+  "deprecated": true,
+  "description": "DEPRECATED: This package is no longer maintained.",
   "version": "8.5.0",
   "author": "Hyland Software, Inc. and its affiliates",
   "repository": {
