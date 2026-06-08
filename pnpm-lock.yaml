@@ -18,6 +18,9 @@ importers:
 
   .:
     dependencies:
+      '@angular-eslint/utils':
+        specifier: 20.7.0
+        version: 20.7.0(@typescript-eslint/utils@8.59.4(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
       '@angular/animations':
         specifier: 20.3.9
         version: 20.3.9(@angular/core@20.3.9(@angular/compiler@20.3.9)(rxjs@7.8.2)(zone.js@0.15.0))
