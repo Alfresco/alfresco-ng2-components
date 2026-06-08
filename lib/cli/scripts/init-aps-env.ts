@@ -178,6 +178,7 @@ Options:
  * If the app is already present, returns true (skip full init).
  * If hruser can log in but the app is missing, imports, publishes and deploys it.
  * Returns false only if hruser cannot log in or deployment fails.
+ * @returns `true` if app is deployed, otherwise `false`
  */
 async function ensureE2eApplicationDeployed(): Promise<boolean> {
     try {
@@ -231,7 +232,6 @@ async function initializeDefaultApps() {
 
 /**
  * Check environment state and authenticate. Retries on transient failures.
- *
  * @param opts command options
  * @param attempt current attempt number
  */
@@ -273,7 +273,6 @@ async function checkEnv(opts: InitApsEnvArgs, attempt = 1) {
 
 /**
  * Check if the default tenant is present
- *
  * @param tenantId tenant id
  * @param tenantName tenant name
  * @returns `true` if tenant is found, otherwise `false`
@@ -284,7 +283,7 @@ async function hasDefaultTenant(tenantId: number, tenantName: string): Promise<b
     try {
         const adminTenantsApi = new AdminTenantsApi(alfrescoJsApi);
         tenant = await adminTenantsApi.getTenant(tenantId);
-    } catch (error) {
+    } catch {
         logger.info(`Aps: does not have tenant with id: ${tenantId}`);
         return false;
     }
@@ -301,8 +300,8 @@ async function hasDefaultTenant(tenantId: number, tenantName: string): Promise<b
 
 /**
  * Create default tenant
- *
  * @param tenantName tenant name
+ * @returns the tenant id or null
  */
 async function createDefaultTenant(tenantName: string) {
     const tenantPost = {
@@ -324,9 +323,9 @@ async function createDefaultTenant(tenantName: string) {
 
 /**
  * Create users
- *
  * @param tenantId tenant id
  * @param user user object
+ * @returns the created user
  */
 async function createUsers(tenantId: number, user: any) {
     logger.info(`Create user ${user.email} on tenant: ${tenantId}`);
@@ -353,8 +352,8 @@ async function createUsers(tenantId: number, user: any) {
 
 /**
  * Update Activiti license
- *
  * @param opts command options
+ * @returns `true` if license uploaded successfully, otherwise `false`
  */
 async function updateLicense(opts: InitApsEnvArgs) {
     const fileContent = createReadStream(path.join(__dirname, '/activiti.lic'));
@@ -381,7 +380,6 @@ async function updateLicense(opts: InitApsEnvArgs) {
 
 /**
  * Check if default application is deployed
- *
  * @param appName application name
  * @returns `true` if application is deployed, otherwise `false`
  */
@@ -400,8 +398,8 @@ async function isDefaultAppDeployed(appName: string): Promise<boolean> {
 
 /**
  * Import and publish the application
- *
  * @param appName application name
+ * @returns the app definition result
  */
 async function importPublishApp(appName: string): Promise<AppDefinitionUpdateResultRepresentation> {
     const appNameExtension = `../resources/${appName}.zip`;
@@ -422,7 +420,6 @@ async function importPublishApp(appName: string): Promise<AppDefinitionUpdateRes
 
 /**
  * Deploy application
- *
  * @param appDefinitionId app definition id
  */
 async function deployApp(appDefinitionId: number) {
@@ -442,8 +439,8 @@ async function deployApp(appDefinitionId: number) {
 
 /**
  * Checks if Activiti app has license
- *
  * @param opts command options
+ * @returns `true` if license is valid, otherwise `false`
  */
 async function hasLicense(opts: InitApsEnvArgs): Promise<boolean> {
     try {
@@ -458,13 +455,13 @@ async function hasLicense(opts: InitApsEnvArgs): Promise<boolean> {
             ['application/json'],
             ['application/json']
         );
-        if (license && license.status === 'valid') {
+        if (license?.status === 'valid') {
             logger.info(`Aps has a valid License!`);
             return true;
         }
         logger.info(`Aps does NOT have a valid License!`);
         return false;
-    } catch (error) {
+    } catch {
         logger.error(`Aps not able to check the license`);
         return false;
     }
@@ -472,8 +469,8 @@ async function hasLicense(opts: InitApsEnvArgs): Promise<boolean> {
 
 /**
  * Get default users from the realm
- *
  * @param opts command options
+ * @returns array of default APS users or null
  */
 async function getDefaultApsUsersFromRealm(opts: InitApsEnvArgs) {
     try {
@@ -500,10 +497,10 @@ async function getDefaultApsUsersFromRealm(opts: InitApsEnvArgs) {
 
 /**
  * Validate that ACS repo for Activiti is present
- *
  * @param opts command options
  * @param tenantId tenant id
  * @param contentName content service name
+ * @returns `true` if content repo is present, otherwise `false`
  */
 async function isContentRepoPresent(opts: InitApsEnvArgs, tenantId: number, contentName: string): Promise<boolean> {
     try {
@@ -527,10 +524,10 @@ async function isContentRepoPresent(opts: InitApsEnvArgs, tenantId: number, cont
 
 /**
  * Add content service with basic auth
- *
  * @param opts command options
  * @param tenantId tenant id
  * @param name content name
+ * @returns the created content repo
  */
 async function addContentRepoWithBasic(opts: InitApsEnvArgs, tenantId: number, name: string) {
     logger.info(`Create Content with name ${name} and basic auth`);
@@ -567,7 +564,6 @@ async function addContentRepoWithBasic(opts: InitApsEnvArgs, tenantId: number, n
 
 /**
  * Authorize activiti user to ACS repo
- *
  * @param opts command options
  * @param user user object
  */
@@ -601,10 +597,10 @@ async function authorizeUserToContentRepo(opts: InitApsEnvArgs, user: any) {
 
 /**
  * Authorize user with content using basic auth
- *
  * @param opts command options
  * @param username username
  * @param contentId content id
+ * @returns the authorized content
  */
 async function authorizeUserToContentWithBasic(opts: InitApsEnvArgs, username: string, contentId: string) {
     logger.info(`Authorize ${username} on contentId: ${contentId} in basic auth`);
@@ -630,8 +626,8 @@ async function authorizeUserToContentWithBasic(opts: InitApsEnvArgs, username: s
 
 /**
  * Download APS license file
- *
  * @param apsLicensePath path to license file
+ * @returns `true` if download succeeded, otherwise `false`
  */
 async function downloadLicenseFile(apsLicensePath: string) {
     const args = [`s3`, `cp`, apsLicensePath, `./`];
@@ -650,8 +646,8 @@ async function downloadLicenseFile(apsLicensePath: string) {
 
 /**
  * Format an error for logging.
- *
  * @param error error object
+ * @returns formatted error string
  */
 function formatError(error: any): string {
     if (!error) {
@@ -667,8 +663,8 @@ function formatError(error: any): string {
 
 /**
  * Async delay.
- *
  * @param ms milliseconds to wait
+ * @returns a promise that resolves after the delay
  */
 function wait(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
