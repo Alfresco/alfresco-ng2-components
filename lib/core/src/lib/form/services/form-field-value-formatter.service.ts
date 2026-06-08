@@ -18,7 +18,10 @@
 import { Injectable } from '@angular/core';
 import { FormFieldModel } from '../components/widgets/core/form-field.model';
 import { FormFieldTypes } from '../components/widgets/core/form-field-types';
+import { FormFieldOption } from '../components/widgets/core/form-field-option';
+import { GroupModel } from '../components/widgets/core/group.model';
 import { FullNamePipe } from '../../pipes/full-name.pipe';
+import { UserLike } from '../../pipes/user-like.interface';
 
 export type FormFieldValueFormatter = (value: any, field: FormFieldModel) => string;
 
@@ -73,7 +76,7 @@ export class FormFieldValueFormatterService {
         return String(value);
     }
 
-    private formatPeople(value: any): string {
+    private formatPeople(value: UserLike | UserLike[]): string {
         if (!value) {
             return '';
         }
@@ -87,7 +90,7 @@ export class FormFieldValueFormatterService {
             .join(', ');
     }
 
-    private formatGroup(value: any): string {
+    private formatGroup(value: GroupModel | GroupModel[]): string {
         if (!value) {
             return '';
         }
@@ -101,7 +104,7 @@ export class FormFieldValueFormatterService {
             .join(', ');
     }
 
-    private formatDropdown(value: any, field: FormFieldModel): string {
+    private formatDropdown(value: string | FormFieldOption | Array<string | FormFieldOption>, field: FormFieldModel): string {
         if (value === null || value === undefined) {
             return '';
         }
@@ -129,7 +132,7 @@ export class FormFieldValueFormatterService {
         return value?.name ?? JSON.stringify(value);
     }
 
-    private formatRadio(value: any, field: FormFieldModel): string {
+    private formatRadio(value: string | FormFieldOption, field: FormFieldModel): string {
         if (value === null || value === undefined) {
             return '';
         }
