@@ -24,6 +24,7 @@ import { MultilineTextWidgetComponentComponent } from './multiline-text.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UnitTestingUtils } from '../../../../testing/unit-testing-utils';
 import { ADF_CUSTOM_MESSAGE } from '../core/custom-validation-message.token';
+import { ADF_TYPED_VALUE_FORMATTING_ENABLED } from '../../../services/form-field-value-formatter.token';
 import { of, Subject } from 'rxjs';
 
 describe('MultilineTextWidgetComponentComponent', () => {
@@ -296,6 +297,94 @@ describe('MultilineTextWidgetComponentComponent - ADF_CUSTOM_MESSAGE', () => {
             await testingUtils.fillMatInput('invalid text');
             expect(widget.field.isValid).toBeFalse();
             expect(widget.field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_VALUE');
+        });
+    });
+
+    describe('typed value formatting', () => {
+        describe('when flag is on', () => {
+            beforeEach(() => {
+                TestBed.resetTestingModule();
+                TestBed.configureTestingModule({
+                    imports: [MultilineTextWidgetComponentComponent],
+                    providers: [{ provide: ADF_TYPED_VALUE_FORMATTING_ENABLED, useValue: true }]
+                });
+                fixture = TestBed.createComponent(MultilineTextWidgetComponentComponent);
+                widget = fixture.componentInstance;
+                testingUtils = new UnitTestingUtils(fixture.debugElement);
+            });
+
+            it('should return formatted name for a People value in read-only mode', () => {
+                widget.field = new FormFieldModel(new FormModel(), {
+                    id: 'people-field',
+                    type: FormFieldTypes.PEOPLE,
+                    value: [{ firstName: 'Alice', lastName: 'Brown' }],
+                    readOnly: true
+                });
+                fixture.detectChanges();
+
+                expect(widget.displayValue).toBe('Alice Brown');
+            });
+
+            it('should not return [object Object] for a complex field value', () => {
+                widget.field = new FormFieldModel(new FormModel(), {
+                    id: 'people-field',
+                    type: FormFieldTypes.PEOPLE,
+                    value: [{ firstName: 'Alice', lastName: 'Brown' }],
+                    readOnly: true
+                });
+                fixture.detectChanges();
+
+                expect(String(widget.displayValue)).not.toContain('[object Object]');
+            });
+
+            it('should pass through plain string values unchanged', () => {
+                widget.field = new FormFieldModel(new FormModel(), {
+                    id: 'multiline-id',
+                    type: FormFieldTypes.MULTILINE_TEXT,
+                    value: 'plain text',
+                    readOnly: true
+                });
+                fixture.detectChanges();
+
+                expect(widget.displayValue).toBe('plain text');
+            });
+
+            it('should not JSON-stringify a Date value for an unregistered type', () => {
+                const date = new Date('2026-06-02T14:30:00.000Z');
+                widget.field = new FormFieldModel(new FormModel(), {
+                    id: 'date-id',
+                    type: FormFieldTypes.MULTILINE_TEXT,
+                    value: date,
+                    readOnly: true
+                });
+                fixture.detectChanges();
+
+                expect(String(widget.displayValue)).toBe(String(date));
+                expect(String(widget.displayValue)).not.toContain('"');
+            });
+        });
+
+        describe('when flag is off', () => {
+            beforeEach(() => {
+                TestBed.resetTestingModule();
+                TestBed.configureTestingModule({
+                    imports: [MultilineTextWidgetComponentComponent]
+                });
+                fixture = TestBed.createComponent(MultilineTextWidgetComponentComponent);
+                widget = fixture.componentInstance;
+            });
+
+            it('should not format complex field values (default behaviour preserved)', () => {
+                widget.field = new FormFieldModel(new FormModel(), {
+                    id: 'people-field',
+                    type: FormFieldTypes.PEOPLE,
+                    value: [{ firstName: 'Alice', lastName: 'Brown' }],
+                    readOnly: true
+                });
+                fixture.detectChanges();
+
+                expect(widget.displayValue).not.toBe('Alice Brown');
+            });
         });
     });
 });

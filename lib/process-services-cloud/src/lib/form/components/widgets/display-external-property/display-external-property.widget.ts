@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormBaseModule } from '@alfresco/adf-core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { WidgetComponent, FormBaseModule, FormFieldValueFormatterService, ADF_TYPED_VALUE_FORMATTING_ENABLED } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { isObservable } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     standalone: true,
@@ -50,18 +52,41 @@ export class DisplayExternalPropertyWidgetComponent extends WidgetComponent impl
     propertyControl: FormControl;
 
     private readonly formCloudService = inject(FormCloudService);
+    private readonly formatter = inject(FormFieldValueFormatterService);
+    private readonly formattingEnabledToken = inject(ADF_TYPED_VALUE_FORMATTING_ENABLED, { optional: true });
+    private readonly destroyRef = inject(DestroyRef);
+    private formattingEnabled = false;
 
     ngOnInit(): void {
+        if (isObservable(this.formattingEnabledToken)) {
+            this.formattingEnabledToken.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((enabled: boolean) => {
+                this.formattingEnabled = enabled ?? false;
+                if (this.propertyControl) {
+                    this.propertyControl.setValue(this.computeDisplayValue());
+                }
+            });
+        } else {
+            this.formattingEnabled = this.formattingEnabledToken ?? false;
+        }
         this.initFormControl();
         this.initPreviewState();
         this.handleFailedPropertyLoad();
     }
 
+    private computeDisplayValue(): unknown {
+        const value = this.field?.value;
+        const isFormattableValue = value != null && typeof value !== 'string';
+        if (this.formattingEnabled && isFormattableValue && this.formatter.hasFormatter(this.field?.type ?? '')) {
+            return this.formatter.format(this.field);
+        }
+        return value;
+    }
+
     private initFormControl(): void {
         this.propertyControl = new FormControl(
             {
-                value: this.field?.value,
-                disabled: this.field?.readOnly || this.readOnly
+                value: this.computeDisplayValue(),
+                disabled: !!(this.field?.readOnly || this.readOnly)
             },
             this.isRequired() ? [Validators.required] : []
         );

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormModel, FormFieldTypes, UnitTestingUtils } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, FormFieldTypes, UnitTestingUtils, ADF_TYPED_VALUE_FORMATTING_ENABLED } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -205,6 +205,87 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
 
             const adfLeftLabel = element.querySelector('.adf-left-label');
             expect(adfLeftLabel).toBeNull();
+        });
+    });
+
+    describe('typed value formatting', () => {
+        describe('when flag is on', () => {
+            beforeEach(() => {
+                TestBed.resetTestingModule();
+                TestBed.configureTestingModule({
+                    imports: [DisplayExternalPropertyWidgetComponent],
+                    providers: [{ provide: ADF_TYPED_VALUE_FORMATTING_ENABLED, useValue: true }]
+                });
+                fixture = TestBed.createComponent(DisplayExternalPropertyWidgetComponent);
+                widget = fixture.componentInstance;
+                loader = TestbedHarnessEnvironment.loader(fixture);
+            });
+
+            it('should display formatted full name for a People value', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                    type: FormFieldTypes.PEOPLE,
+                    readOnly: true,
+                    value: [{ firstName: 'Alyssa', lastName: 'Adcock' }]
+                });
+                fixture.detectChanges();
+
+                const input = await loader.getHarness(MatInputHarness);
+                expect(await input.getValue()).toBe('Alyssa Adcock');
+            });
+
+            it('should display comma-separated group names for a Group value', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                    type: FormFieldTypes.FUNCTIONAL_GROUP,
+                    readOnly: true,
+                    value: [{ name: 'Eng' }, { name: 'QA' }]
+                });
+                fixture.detectChanges();
+
+                const input = await loader.getHarness(MatInputHarness);
+                expect(await input.getValue()).toBe('Eng, QA');
+            });
+
+            it('should not contain [object Object] for a complex value', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                    type: FormFieldTypes.PEOPLE,
+                    readOnly: true,
+                    value: [{ firstName: 'Alice', lastName: 'Brown' }]
+                });
+                fixture.detectChanges();
+
+                const input = await loader.getHarness(MatInputHarness);
+                expect(await input.getValue()).not.toContain('[object Object]');
+            });
+
+            it('should not JSON-stringify a Date value for an unregistered type', async () => {
+                const date = new Date('2026-06-02T14:30:00.000Z');
+                widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                    type: FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
+                    readOnly: true,
+                    externalProperty: 'prop',
+                    value: date
+                });
+                fixture.detectChanges();
+
+                const input = await loader.getHarness(MatInputHarness);
+                expect(await input.getValue()).toBe(String(date));
+                expect(await input.getValue()).not.toContain('"');
+            });
+        });
+
+        describe('when flag is off', () => {
+            it('should leave raw string value unchanged (default behaviour preserved)', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                    type: FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
+                    readOnly: true,
+                    externalProperty: 'prop',
+                    value: 'banana'
+                });
+                fixture.detectChanges();
+
+                const input = await loader.getHarness(MatInputHarness);
+                expect(await input.getValue()).toBe('banana');
+            });
         });
     });
 });

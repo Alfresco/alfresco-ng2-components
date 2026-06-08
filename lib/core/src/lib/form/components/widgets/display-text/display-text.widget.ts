@@ -48,7 +48,13 @@ export class DisplayTextWidgetComponent extends BaseDisplayTextWidgetComponent {
 
     protected evaluateExpressions(): void {
         if (this.field) {
-            this.field.value = this.resolveExpressions(this.field.value);
+            const value = this.field.value;
+            const isFormattableValue = value != null && typeof value !== 'string';
+            if (this.formattingEnabled && isFormattableValue && this.formatter.hasFormatter(this.field.type)) {
+                this.field.value = this.formatter.format(this.field);
+            } else {
+                this.field.value = this.resolveExpressions(value);
+            }
         }
     }
 

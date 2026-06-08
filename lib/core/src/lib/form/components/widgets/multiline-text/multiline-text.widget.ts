@@ -18,16 +18,13 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { NgIf } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { isObservable } from 'rxjs';
-import { ADF_CUSTOM_MESSAGE } from '../core/custom-validation-message.token';
 import { ErrorWidgetComponent } from '../error/error.component';
-import { WidgetComponent } from '../widget.component';
+import { FormattableTextWidgetComponent } from '../core/formattable-text.widget';
 
 @Component({
     selector: 'multiline-text-widget',
@@ -47,23 +44,4 @@ import { WidgetComponent } from '../widget.component';
     imports: [MatFormFieldModule, NgIf, TranslatePipe, MatInputModule, FormsModule, ErrorWidgetComponent],
     encapsulation: ViewEncapsulation.None
 })
-export class MultilineTextWidgetComponentComponent extends WidgetComponent implements OnInit {
-    private readonly destroyRef = inject(DestroyRef);
-    private readonly enableCustomMessage = inject(ADF_CUSTOM_MESSAGE, { optional: true });
-
-    ngOnInit(): void {
-        if (this.enableCustomMessage != null) {
-            if (isObservable(this.enableCustomMessage)) {
-                this.enableCustomMessage.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((enabled: boolean) => {
-                    if (this.field) {
-                        this.field.enableCustomValidationMessage = enabled ?? false;
-                    }
-                });
-            } else {
-                this.field.enableCustomValidationMessage = this.enableCustomMessage;
-            }
-        } else {
-            this.field.enableCustomValidationMessage = false;
-        }
-    }
-}
+export class MultilineTextWidgetComponentComponent extends FormattableTextWidgetComponent {}
