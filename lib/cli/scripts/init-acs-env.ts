@@ -96,7 +96,7 @@ Options:
 
 /**
  * Initialize default files. Creates the e2e folder and ensures each file
- * exists with its required state (locked, shared, favorited).
+ * exists with its required state (locked, shared, favorite).
  * Idempotent: only creates/modifies what is missing.
  */
 async function initializeDefaultFiles() {
@@ -118,8 +118,9 @@ async function initializeDefaultFiles() {
 
 /**
  * Process a single file: upload if missing, then apply its action (lock/share/favorite).
- *
  * @param fileInfo file descriptor from ACS_DEFAULT
+ * @param fileInfo.name file name
+ * @param fileInfo.action action to apply (LOCK, SHARE, FAVORITE)
  * @param parentFolderId parent folder node id
  */
 async function processFile(fileInfo: { name: string; action: string }, parentFolderId: string) {
@@ -142,7 +143,7 @@ async function processFile(fileInfo: { name: string; action: string }, parentFol
             await ensureShared(nodeId, fileInfo.name);
             break;
         case 'FAVORITE':
-            await ensureFavorited(nodeId, fileInfo.name);
+            await ensureFavorite(nodeId, fileInfo.name);
             break;
         default:
             break;
@@ -152,9 +153,9 @@ async function processFile(fileInfo: { name: string; action: string }, parentFol
 /**
  * Ensure a folder exists under the given parent. Creates it if missing.
  * Handles 409 conflict (race condition) by fetching the existing folder.
- *
  * @param folderName folder name
  * @param parentId parent node id
+ * @returns the folder node entry
  */
 async function ensureFolder(folderName: string, parentId: string): Promise<NodeEntry> {
     const existingFolder = await findNodeByRelativePath(parentId, folderName);
@@ -194,9 +195,9 @@ async function ensureFolder(folderName: string, parentId: string): Promise<NodeE
 
 /**
  * Find a node by relative path under a parent. Returns null if not found (404).
- *
  * @param parentId parent node id
  * @param fileName relative path / file name
+ * @returns the node entry or null if not found
  */
 async function findNodeByRelativePath(parentId: string, fileName: string): Promise<NodeEntry | null> {
     try {
@@ -212,9 +213,9 @@ async function findNodeByRelativePath(parentId: string, fileName: string): Promi
 
 /**
  * Upload a file to the given destination folder.
- *
  * @param fileName file name
  * @param destinationId destination folder node id
+ * @returns the uploaded node entry
  */
 async function uploadFile(fileName: string, destinationId: string): Promise<NodeEntry> {
     const filePath = `../resources/content/${fileName}`;
@@ -236,7 +237,6 @@ async function uploadFile(fileName: string, destinationId: string): Promise<Node
 
 /**
  * Ensure a file is locked. Skips if already locked.
- *
  * @param nodeId node id
  * @param fileName file name (for logging)
  * @param isAlreadyLocked whether the node is already locked
@@ -257,7 +257,6 @@ async function ensureLocked(nodeId: string, fileName: string, isAlreadyLocked = 
 
 /**
  * Ensure a file is shared. Handles 409 (already shared) gracefully.
- *
  * @param nodeId node id
  * @param fileName file name (for logging)
  */
@@ -276,12 +275,11 @@ async function ensureShared(nodeId: string, fileName: string) {
 }
 
 /**
- * Ensure a file is favorited. Handles 409 (already favorited) gracefully.
- *
+ * Ensure a file is favorite. Handles 409 (already favorite) gracefully.
  * @param nodeId node id
  * @param fileName file name (for logging)
  */
-async function ensureFavorited(nodeId: string, fileName: string) {
+async function ensureFavorite(nodeId: string, fileName: string) {
     try {
         await favoritesApi.createFavorite('-me-', {
             target: {
@@ -303,9 +301,9 @@ async function ensureFavorited(nodeId: string, fileName: string) {
 
 /**
  * Extract entry id from a node response. Throws if missing.
- *
  * @param nodeEntry node entry response
  * @param label label for error message
+ * @returns the node id
  */
 function getEntryId(nodeEntry: NodeEntry, label: string): string {
     const nodeId = nodeEntry?.entry?.id;
@@ -319,8 +317,8 @@ function getEntryId(nodeEntry: NodeEntry, label: string): string {
 
 /**
  * Format an error for logging.
- *
  * @param error error object
+ * @returns formatted error string
  */
 function formatError(error: any): string {
     if (!error) {
@@ -336,10 +334,10 @@ function formatError(error: any): string {
 
 /**
  * Retry wrapper for transient failures.
- *
  * @param fn async function to execute
  * @param label label for logging
  * @param maxAttempts maximum retry attempts
+ * @returns the result of the function
  */
 async function withRetry<T>(fn: () => Promise<T>, label: string, maxAttempts = 3): Promise<T> {
     for (let attempt = 1; attempt <= maxAttempts; attempt++) {
@@ -361,8 +359,8 @@ async function withRetry<T>(fn: () => Promise<T>, label: string, maxAttempts = 3
 
 /**
  * Async delay.
- *
  * @param ms milliseconds to wait
+ * @returns a promise that resolves after the delay
  */
 function wait(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -370,7 +368,6 @@ function wait(ms: number): Promise<void> {
 
 /**
  * Check environment state and authenticate. Retries on transient failures.
- *
  * @param opts command options
  * @param attempt current attempt number
  */
