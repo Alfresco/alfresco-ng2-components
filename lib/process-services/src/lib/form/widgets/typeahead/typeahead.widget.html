@@ -21,9 +21,12 @@
                     <span id="adf-typeahed-label-name">{{item.name}}</span>
                 </mat-option>
             </mat-autocomplete>
+            @if (field.validationSummary?.message) {
+                <mat-error class="adf-error"><mat-icon class="adf-error-icon">error_outline</mat-icon>{{ field.validationSummary.message | translate }}</mat-error>
+            }
+            @if (!field.validationSummary?.message && isInvalidFieldRequired()) {
+                <mat-error class="adf-error"><mat-icon class="adf-error-icon">error_outline</mat-icon>{{ 'FORM.FIELD.REQUIRED' | translate }}</mat-error>
+            }
         </mat-form-field>
-
-        <error-widget [error]="field.validationSummary" />
-        <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
     </div>
 </div>

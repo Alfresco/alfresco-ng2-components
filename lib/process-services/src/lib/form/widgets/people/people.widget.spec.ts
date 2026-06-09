@@ -26,6 +26,7 @@ import { LightUserRepresentation } from '@alfresco/js-api';
 import { MatChipHarness } from '@angular/material/chips/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
 describe('PeopleWidgetComponent', () => {
     let widget: PeopleWidgetComponent;
@@ -367,7 +368,7 @@ describe('PeopleWidgetComponent', () => {
             expect(element.querySelector('#people-widget-content')).not.toBeNull();
         });
 
-        it('should show an error message if the user is invalid', fakeAsync(() => {
+        it('should show an error message if the user is invalid', fakeAsync(async () => {
             const peopleHTMLElement = element.querySelector<HTMLInputElement>('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'K';
@@ -377,8 +378,10 @@ describe('PeopleWidgetComponent', () => {
             tick(300);
             fixture.detectChanges();
 
-            expect(element.querySelector('.adf-error-text')).not.toBeNull();
-            expect(element.querySelector('.adf-error-text').textContent).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            const errors = await formField.getTextErrors();
+            expect(errors.length).toBeGreaterThan(0);
+            expect(errors[0]).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
         }));
 
         it('should show the people if the typed result match', fakeAsync(() => {

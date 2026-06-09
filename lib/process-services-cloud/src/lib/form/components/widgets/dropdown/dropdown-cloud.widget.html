@@ -25,6 +25,7 @@
                 panelClass="adf-select-filter"
                 [multiple]="field.hasMultipleValues"
                 [required]="field.required"
+                [errorStateMatcher]="dropdownErrorStateMatcher"
                 #select
                 (keydown.escape)="select.close()"
             >
@@ -47,27 +48,15 @@
                     </mat-option>
                 }
             </mat-select>
+            @if (dropdownControl.hasError('required') && !isRestApiFailed && !variableOptionsFailed) {
+                <mat-error class="adf-error"><mat-icon class="adf-error-icon">error_outline</mat-icon>{{ 'FORM.FIELD.REQUIRED' | translate }}</mat-error>
+            }
+            @if (!previewState && isRestApiFailed) {
+                <mat-error class="adf-error"><mat-icon class="adf-error-icon">error_outline</mat-icon>{{ 'FORM.FIELD.REST_API_FAILED' | translate: { hostname: restApiHostName } }}</mat-error>
+            }
+            @if (!previewState && variableOptionsFailed) {
+                <mat-error class="adf-error"><mat-icon class="adf-error-icon">error_outline</mat-icon>{{ 'FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED' | translate }}</mat-error>
+            }
         </mat-form-field>
-
-        <div
-            class="adf-error-messages-container"
-            [ngClass]="!field.readOnly ? 'adf-error-messages-container-visible' : 'adf-error-messages-container-hidden'"
-        >
-            @if(showRequiredMessage) {
-                <error-widget class="adf-dropdown-required-message" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
-            }
-            @if(!previewState && isRestApiFailed) {
-                <error-widget
-                    class="adf-dropdown-failed-message"
-                    required="{{ 'FORM.FIELD.REST_API_FAILED' | translate: { hostname: restApiHostName } }}"
-                />
-            }
-            @if(!previewState && variableOptionsFailed) {
-                <error-widget
-                    class="adf-dropdown-failed-message"
-                    required="{{ 'FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED' | translate }}"
-                />
-            }
-        </div>
     </div>
 </div>

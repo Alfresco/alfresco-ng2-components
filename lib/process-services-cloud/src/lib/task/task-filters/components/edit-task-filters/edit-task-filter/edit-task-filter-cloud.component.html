@@ -75,12 +75,10 @@
                                                    [attr.data-automation-id]="'adf-cloud-edit-task-property-date-toggle-' + taskFilterProperty.key" />
                             <mat-datepicker #dateController
                                             [attr.data-automation-id]="'adf-cloud-edit-task-property-date-picker-' + taskFilterProperty.key" />
-                            <div class="adf-edit-task-filter-date-error-container">
-                                <mat-error *ngIf="hasError(taskFilterProperty)">
-                                    <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</div>
-                                    <mat-icon class="adf-error-icon" adf-icon="warning" />
-                                </mat-error>
-                            </div>
+                            <mat-error class="adf-error" *ngIf="hasError(taskFilterProperty)">
+                                <mat-icon class="adf-error-icon">error_outline</mat-icon>
+                                {{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}
+                            </mat-error>
                         </mat-form-field>
                         <div class="adf-edit-task-filter-checkbox"
                              *ngIf="taskFilterProperty.type === 'checkbox'">

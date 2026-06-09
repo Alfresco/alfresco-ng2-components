@@ -18,21 +18,26 @@
                    type="text"
                    [id]="field.id"
                    [required]="field.required"
-                   [ngModel]="displayValue"
-                   (ngModelChange)="onValueChange($event)"
+                   [value]="field.value"
+                   [(ngModel)]="field.value"
+                   (ngModelChange)="onTextFieldChanged()"
                    [disabled]="field.readOnly || readOnly"
                    [textMask]="{mask: mask, isReversed: isMaskReversed}"
                    [placeholder]="placeholder"
                    [title]="field.tooltip"
-                   (blur)="markAsTouched()">
+                   [errorStateMatcher]="errorStateMatcher"
+                   (blur)="onBlur()">
+            @if (field.validationSummary?.message || (isInvalidFieldRequired() && isTouched())) {
+                <mat-error class="adf-error">
+                    <mat-icon class="adf-error-icon">error_outline</mat-icon>
+                    @if (field.validationSummary?.message) {
+                        {{ field.validationSummary.message | translate:translateParameters }}
+                    } @else {
+                        {{ 'FORM.FIELD.REQUIRED' | translate }}
+                    }
+                </mat-error>
+            }
         </mat-form-field>
-        <ng-container *ngTemplateOutlet="fieldStatusTemplate ?? defaultErrorMessageTemplate; context: { $implicit: this }" />
-        <ng-template #defaultErrorMessageTemplate>
-            <div class="adf-error-messages-container">
-                <error-widget [error]="field.validationSummary" />
-                <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
-                              required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
-            </div>
-        </ng-template>
+        <ng-container *ngTemplateOutlet="fieldStatusTemplate ?? null" />
     </div>
 </div>

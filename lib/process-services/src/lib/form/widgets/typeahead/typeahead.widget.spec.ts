@@ -23,6 +23,9 @@ import { TypeaheadWidgetComponent } from './typeahead.widget';
 import { TranslateService } from '@ngx-translate/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
 describe('TypeaheadWidgetComponent', () => {
     let widget: TypeaheadWidgetComponent;
@@ -181,6 +184,7 @@ describe('TypeaheadWidgetComponent', () => {
         let typeaheadWidgetComponent: TypeaheadWidgetComponent;
         let fixture: ComponentFixture<TypeaheadWidgetComponent>;
         let element: HTMLElement;
+        let loader: HarnessLoader;
         let stubProcessDefinitionService;
         const fakeOptionList: FormFieldOption[] = [
             {
@@ -198,6 +202,7 @@ describe('TypeaheadWidgetComponent', () => {
             fixture = TestBed.createComponent(TypeaheadWidgetComponent);
             typeaheadWidgetComponent = fixture.componentInstance;
             element = fixture.nativeElement;
+            loader = TestbedHarnessEnvironment.loader(fixture);
         });
 
         afterEach(() => {
@@ -295,15 +300,18 @@ describe('TypeaheadWidgetComponent', () => {
                 typeaheadWidgetComponent.value = 'Fake Name';
                 typeaheadWidgetComponent.field.value = 'Fake Name';
                 typeaheadWidgetComponent.field.options = fakeOptionList;
-                expect(element.querySelector('.adf-error-text')).toBeNull();
+                const formField = await loader.getHarness(MatFormFieldHarness);
+                let errors = await formField.getTextErrors();
+                expect(errors.length).toBe(0);
                 const keyboardEvent = new KeyboardEvent('keypress');
                 typeaheadWidgetComponent.onKeyUp(keyboardEvent);
 
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(element.querySelector('.adf-error-text')).not.toBeNull();
-                expect(element.querySelector('.adf-error-text').textContent).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
+                errors = await formField.getTextErrors();
+                expect(errors.length).toBeGreaterThan(0);
+                expect(errors[0]).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
             });
         });
 

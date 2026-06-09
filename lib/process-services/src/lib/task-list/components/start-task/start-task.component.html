@@ -11,10 +11,12 @@
                         matInput
                         id="name_id"
                         formControlName="name">
-                        <mat-error *ngIf="nameController.hasError('required') || nameController.hasError('whitespace')">
+                        <mat-error class="adf-error" *ngIf="nameController.hasError('required') || nameController.hasError('whitespace')">
+                            <mat-icon class="adf-error-icon">error_outline</mat-icon>
                             {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.REQUIRED' | translate }}
                         </mat-error>
-                        <mat-error *ngIf="nameController.hasError('maxlength')">
+                        <mat-error class="adf-error" *ngIf="nameController.hasError('maxlength')">
+                            <mat-icon class="adf-error-icon">error_outline</mat-icon>
                             {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxTaskNameLength } }}
                         </mat-error>
                 </mat-form-field>
@@ -28,7 +30,8 @@
                         id="description_id"
                         formControlName="description">
                     </textarea>
-                    <mat-error *ngIf="descriptionController.hasError('whitespace')">
+                    <mat-error class="adf-error" *ngIf="descriptionController.hasError('whitespace')">
+                        <mat-icon class="adf-error-icon">error_outline</mat-icon>
                         {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MESSAGE' | translate }}
                     </mat-error>
                 </mat-form-field>
@@ -40,6 +43,7 @@
                         (keyup)="onDateChanged($any($event).srcElement.value)"
                         (dateInput)="onDateChanged($any($event).value)"
                         [matDatepicker]="taskDatePicker"
+                        [errorStateMatcher]="dateErrorStateMatcher"
                         placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
                         id="date_id">
                     <mat-datepicker-toggle
@@ -48,12 +52,10 @@
                     <mat-datepicker
                         #taskDatePicker
                         [touchUi]="true" />
-                    <div class="adf-error-text-container">
-                        <div *ngIf="dateError">
-                            <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</div>
-                            <mat-icon class="adf-error-icon">warning</mat-icon>
-                        </div>
-                    </div>
+                    <mat-error class="adf-error" *ngIf="dateError">
+                        <mat-icon class="adf-error-icon">error_outline</mat-icon>
+                        {{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}
+                    </mat-error>
                 </mat-form-field>
                 <people-widget
                     (peopleSelected)="setAssigneeId($event)"

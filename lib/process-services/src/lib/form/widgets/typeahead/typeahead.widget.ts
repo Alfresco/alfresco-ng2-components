@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { FormFieldOption, WidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
+import { FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { TaskFormService } from '../../services/task-form.service';
@@ -25,13 +25,14 @@ import { ProcessDefinitionService } from '../../services/process-definition.serv
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'typeahead-widget',
-    imports: [CommonModule, TranslatePipe, MatFormFieldModule, FormsModule, MatAutocompleteModule, ErrorWidgetComponent, MatInputModule],
+    imports: [CommonModule, TranslatePipe, MatFormFieldModule, FormsModule, MatAutocompleteModule, MatInputModule, MatIconModule],
     templateUrl: './typeahead.widget.html',
     styleUrls: ['./typeahead.widget.scss'],
     host: {

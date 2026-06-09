@@ -7,6 +7,7 @@
             flex-wrap: inherit;
             align-items: center;
             gap: 1%;
+            margin-bottom: 20px;
 
             @include flex.layout-bp(lt-md) {
                 /* stylelint-disable-next-line declaration-no-important */
@@ -35,5 +36,22 @@
             flex-grow: 1;
             box-sizing: border-box;
         }
+    }
+}
+
+.adf-error {
+    display: flex;
+    align-items: center;
+    font: var(--mat-sys-body-small);
+    color: var(--mat-sys-error);
+    line-height: 20px;
+
+    .adf-error-icon {
+        width: 16px;
+        height: 16px;
+        font-size: 16px;
+        margin-right: 4px;
+        flex: 0 0 auto;
+        overflow: visible;
     }
 }

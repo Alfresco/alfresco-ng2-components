@@ -18,15 +18,20 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { NgIf, NgTemplateOutlet } from '@angular/common';
-import { Component, Directive, inject, InjectionToken, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, DestroyRef, Directive, inject, InjectionToken, Input, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ErrorWidgetComponent } from '../error/error.component';
+import { isObservable } from 'rxjs';
+import { ADF_CUSTOM_MESSAGE } from '../core/custom-validation-message.token';
 import { WidgetComponent } from '../widget.component';
 import { FormattableTextWidgetComponent } from '../core/formattable-text.widget';
 import { InputMaskDirective } from './text-mask.component';
+import { IconModule } from '../../../../icon/icon.module';
 
 type FieldStatusTemplate = TemplateRef<{ $implicit: WidgetComponent }>;
 const FIELD_STATUS_TEMPLATE = new InjectionToken<FieldStatusTemplate>('FIELD_STATUS_TEMPLATE');
@@ -61,7 +66,7 @@ export class FieldStatusTemplateDirective {
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent, InputMaskDirective, NgTemplateOutlet],
+    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, InputMaskDirective, NgTemplateOutlet, IconModule, MatIconModule],
     encapsulation: ViewEncapsulation.None
 })
 export class TextWidgetComponent extends FormattableTextWidgetComponent {
@@ -69,6 +74,8 @@ export class TextWidgetComponent extends FormattableTextWidgetComponent {
     placeholder: string;
     isMaskReversed: boolean;
     fieldStatusTemplate = inject(FIELD_STATUS_TEMPLATE, { optional: true });
+    errorStateMatcher: ErrorStateMatcher;
+    translateParameters: Record<string, string> = {};
 
     override ngOnInit() {
         super.ngOnInit();
@@ -81,5 +88,31 @@ export class TextWidgetComponent extends FormattableTextWidgetComponent {
                     : this.field.placeholder;
             this.isMaskReversed = this.field.params['inputMaskReversed'] ? this.field.params['inputMaskReversed'] : false;
         }
+        this.initErrorStateMatcher();
+    }
+
+    private initErrorStateMatcher(): void {
+        this.errorStateMatcher = {
+            isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
+                !this.field.isValid && this.isTouched()
+        };
+    }
+
+    private updateTranslateParameters(): void {
+        if (this.field.validationSummary?.isActive()) {
+            this.translateParameters = this.field.validationSummary.getAttributesAsJsonObj();
+        } else {
+            this.translateParameters = {};
+        }
+    }
+
+    onBlur(): void {
+        this.markAsTouched();
+        this.updateTranslateParameters();
+    }
+
+    onTextFieldChanged(): void {
+        this.onFieldChanged(this.field);
+        this.updateTranslateParameters();
     }
 }

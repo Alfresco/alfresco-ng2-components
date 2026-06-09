@@ -31,6 +31,7 @@ import { mockShepherdsPie, mockYorkshirePudding } from '../../../../people/mock/
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipRowHarness } from '@angular/material/chips/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
 describe('PeopleCloudWidgetComponent', () => {
     let fixture: ComponentFixture<PeopleCloudWidgetComponent>;
@@ -161,7 +162,9 @@ describe('PeopleCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('.adf-error-text')).toBeFalsy();
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            let errors = await formField.getTextErrors();
+            expect(errors.length).toBe(0);
 
             const removeGroupIcon = element.querySelector('[data-automation-id="adf-people-cloud-chip-remove-icon-test-name"]');
             removeGroupIcon.dispatchEvent(new Event('click'));
@@ -169,8 +172,9 @@ describe('PeopleCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('.adf-error-text')).toBeTruthy();
-            expect(element.querySelector('.adf-error-text').textContent).toContain('ADF_CLOUD_USERS.ERROR.NOT_FOUND');
+            errors = await formField.getTextErrors();
+            expect(errors.length).toBeGreaterThan(0);
+            expect(errors[0]).toContain('ADF_CLOUD_USERS.ERROR.NOT_FOUND');
         });
     });
 

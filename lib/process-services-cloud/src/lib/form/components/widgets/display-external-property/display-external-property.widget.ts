@@ -21,14 +21,16 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { isObservable } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     standalone: true,
-    imports: [CommonModule, TranslatePipe, ReactiveFormsModule, MatFormFieldModule, MatInputModule, FormBaseModule],
+    imports: [CommonModule, TranslatePipe, ReactiveFormsModule, MatFormFieldModule, MatInputModule, FormBaseModule, MatIconModule],
     selector: 'adf-cloud-display-external-property',
     templateUrl: './display-external-property.widget.html',
     styleUrls: ['./display-external-property.widget.scss'],
@@ -50,6 +52,10 @@ export class DisplayExternalPropertyWidgetComponent extends WidgetComponent impl
     propertyLoadFailed = false;
     previewState = false;
     propertyControl: FormControl;
+
+    propertyErrorStateMatcher: ErrorStateMatcher = {
+        isErrorState: () => this.propertyLoadFailed && !this.previewState
+    };
 
     private readonly formCloudService = inject(FormCloudService);
     private readonly formatter = inject(FormFieldValueFormatterService);

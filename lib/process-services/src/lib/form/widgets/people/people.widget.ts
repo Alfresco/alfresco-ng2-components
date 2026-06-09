@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { ErrorWidgetComponent, InitialUsernamePipe, WidgetComponent } from '@alfresco/adf-core';
+import { InitialUsernamePipe, WidgetComponent } from '@alfresco/adf-core';
 import { Component, ElementRef, EventEmitter, inject, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
@@ -43,8 +43,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         MatIconModule,
         ReactiveFormsModule,
         MatAutocompleteModule,
-        InitialUsernamePipe,
-        ErrorWidgetComponent
+        InitialUsernamePipe
     ],
     templateUrl: './people.widget.html',
     styleUrls: ['./people.widget.scss'],

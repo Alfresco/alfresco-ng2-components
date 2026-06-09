@@ -17,14 +17,17 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { NgIf } from '@angular/common';
-import { Component, ViewEncapsulation } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ErrorWidgetComponent } from '../error/error.component';
-import { FormattableTextWidgetComponent } from '../core/formattable-text.widget';
+import { isObservable } from 'rxjs';
+import { ADF_CUSTOM_MESSAGE } from '../core/custom-validation-message.token';
+import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'multiline-text-widget',
@@ -41,7 +44,55 @@ import { FormattableTextWidgetComponent } from '../core/formattable-text.widget'
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [MatFormFieldModule, NgIf, TranslatePipe, MatInputModule, FormsModule, ErrorWidgetComponent],
+    imports: [MatFormFieldModule, TranslatePipe, MatInputModule, FormsModule, MatIconModule],
     encapsulation: ViewEncapsulation.None
 })
-export class MultilineTextWidgetComponentComponent extends FormattableTextWidgetComponent {}
+export class MultilineTextWidgetComponentComponent extends WidgetComponent implements OnInit {
+    private readonly destroyRef = inject(DestroyRef);
+    private readonly enableCustomMessage = inject(ADF_CUSTOM_MESSAGE, { optional: true });
+
+    errorStateMatcher: ErrorStateMatcher;
+    translateParameters: Record<string, string> = {};
+
+    ngOnInit(): void {
+        this.initErrorStateMatcher();
+        if (this.enableCustomMessage != null) {
+            if (isObservable(this.enableCustomMessage)) {
+                this.enableCustomMessage.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((enabled: boolean) => {
+                    if (this.field) {
+                        this.field.enableCustomValidationMessage = enabled ?? false;
+                    }
+                });
+            } else {
+                this.field.enableCustomValidationMessage = this.enableCustomMessage;
+            }
+        } else {
+            this.field.enableCustomValidationMessage = false;
+        }
+    }
+
+    private initErrorStateMatcher(): void {
+        this.errorStateMatcher = {
+            isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
+                !this.field.isValid && this.isTouched()
+        };
+    }
+
+    private updateTranslateParameters(): void {
+        if (this.field.validationSummary?.isActive()) {
+            this.translateParameters = this.field.validationSummary.getAttributesAsJsonObj();
+        } else {
+            this.translateParameters = {};
+        }
+    }
+
+    onBlur(): void {
+        this.markAsTouched();
+        this.updateTranslateParameters();
+    }
+
+    onMultilineTextFieldChanged(): void {
+        this.onFieldChanged(this.field);
+        this.updateTranslateParameters();
+    }
+}

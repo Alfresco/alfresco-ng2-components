@@ -48,7 +48,15 @@
                 <span id="adf-group-label-name">{{item.name}}</span>
             </mat-option>
         </mat-autocomplete>
+        @if (field.validationSummary?.message || (isInvalidFieldRequired() && isTouched())) {
+            <mat-error class="adf-error">
+                <mat-icon class="adf-error-icon">error_outline</mat-icon>
+                @if (field.validationSummary?.message) {
+                    {{ field.validationSummary.message | translate }}
+                } @else {
+                    {{ 'FORM.FIELD.REQUIRED' | translate }}
+                }
+            </mat-error>
+        }
     </mat-form-field>
-    <error-widget [error]="field.validationSummary" />
-    <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
 </div>
