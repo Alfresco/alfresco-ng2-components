@@ -899,6 +899,26 @@ describe('CardViewTextItemComponent', () => {
             expect(await getTextFieldValue(component.property.key)).toEqual(expectedNumber.toString());
             expect(component.property.value).toBe(expectedNumber.toString());
         });
+
+        it('should set property value to empty string when value is cleared', async () => {
+            const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
+
+            await updateTextField(component.property.key, '');
+            await fixture.whenStable();
+
+            expect(itemUpdatedSpy).toHaveBeenCalledWith({
+                target: { ...component.property, isValidValue: true },
+                changed: {
+                    textkey: ''
+                },
+                previousValue: {
+                    textkey: 10
+                }
+            });
+
+            verifyNoErrors(component.property.key);
+            expect(component.property.value).toBe('');
+        });
     });
 
     describe('float', () => {
