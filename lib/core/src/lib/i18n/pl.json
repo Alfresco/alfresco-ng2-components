@@ -62,7 +62,7 @@
         "INVALID_DECIMAL_NUMBER": "Użyj formatu liczby dziesiętnej",
         "INVALID_DECIMAL_PRECISION": "Niepoprawna wartość dziesiętna, po przecinku powinna być maksymalnie liczba {{precision}}.",
         "INVALID_DATE": "Użyj innego formatu daty.",
-        "INVALID_DATE_FORMAT": "Nieprawidłowy format daty, użyj formatu: {{ format }}",
+        "INVALID_DATE_FORMAT": "Nieprawidłowy format daty.",
         "INVALID_VALUE": "Wprowadź inną wartość.",
         "NOT_GREATER_THAN": "Wartość nie może być większa niż {{ maxValue }}.",
         "NOT_LESS_THAN": "Wartość nie może być mniejsza niż {{ minValue }}.",

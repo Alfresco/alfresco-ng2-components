@@ -62,7 +62,7 @@
         "INVALID_DECIMAL_NUMBER": "Dezimalzahlformat verwenden",
         "INVALID_DECIMAL_PRECISION": "Falscher Dezimalwert, nach dem Dezimalpunkt sollte ein Maximum von {{precision}} Ziffern angegeben werden.",
         "INVALID_DATE": "Verwenden Sie ein anderes Datumsformat",
-        "INVALID_DATE_FORMAT": "Ungültiges Datumsformat. Bitte das Format verwenden: {{ format }}",
+        "INVALID_DATE_FORMAT": "Ungültiges Datumsformat.",
         "INVALID_VALUE": "Geben Sie einen anderen Wert ein",
         "NOT_GREATER_THAN": "Darf nicht größer als {{ maxValue }} sein",
         "NOT_LESS_THAN": "Darf nicht kleiner als {{ minValue }} sein",
