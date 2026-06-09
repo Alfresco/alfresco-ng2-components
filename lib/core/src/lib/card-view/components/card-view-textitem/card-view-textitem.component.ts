@@ -251,9 +251,9 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     }
 
     private prepareIntLongValue(value: string): string {
-        // if (value === '') {
-        //     return '';
-        // }
+        if (value === '') {
+            return '';
+        }
 
         return String(Math.trunc(Number(value)));
     }
