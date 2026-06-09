@@ -17,7 +17,7 @@
 
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter, DateFnsUtils, FormFieldModel, FormModel } from '@alfresco/adf-core';
 import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { DateAdapter, ErrorStateMatcher, MAT_DATE_FORMATS } from '@angular/material/core';
 import { EMPTY, Observable } from 'rxjs';
 import { Form } from '../../models/form.model';
 import { TaskListService } from '../../services/tasklist.service';
@@ -95,6 +95,10 @@ export class StartTaskComponent implements OnInit {
     dateError: boolean = false;
     maxTaskNameLength: number = MAX_LENGTH;
     loading = false;
+
+    dateErrorStateMatcher: ErrorStateMatcher = {
+        isErrorState: () => this.dateError
+    };
 
     private readonly destroyRef = inject(DestroyRef);
 

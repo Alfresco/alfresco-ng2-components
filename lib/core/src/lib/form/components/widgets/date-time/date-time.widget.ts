@@ -22,12 +22,12 @@ import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angul
 import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ADF_DATE_FORMATS, ADF_DATETIME_FORMATS, AdfDateFnsAdapter, AdfDateTimeFnsAdapter, DateFnsUtils } from '../../../../common';
 import { FormService } from '../../../services/form.service';
-import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 import { ErrorMessageModel } from '../core/error-message.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -46,13 +46,14 @@ import { ReactiveFormWidget } from '../reactive-widget.interface';
     host: {
         '(click)': 'event($event)'
     },
-    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, MatDatetimepickerModule, ReactiveFormsModule, ErrorWidgetComponent],
+    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, MatDatetimepickerModule, ReactiveFormsModule, MatIconModule],
     encapsulation: ViewEncapsulation.None
 })
 export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, ReactiveFormWidget {
     minDate: Date;
     maxDate: Date;
     datetimeInputControl: FormControl<Date> = new FormControl<Date>(null);
+    translateParameters: Record<string, string> = {};
 
     public readonly formService = inject(FormService);
     private readonly destroyRef = inject(DestroyRef);
@@ -115,6 +116,15 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
         } else {
             this.resetErrors();
             this.field.markAsValid();
+        }
+        this.updateTranslateParameters();
+    }
+
+    private updateTranslateParameters(): void {
+        if (this.field.validationSummary?.isActive()) {
+            this.translateParameters = this.field.validationSummary.getAttributesAsJsonObj();
+        } else {
+            this.translateParameters = {};
         }
     }
 

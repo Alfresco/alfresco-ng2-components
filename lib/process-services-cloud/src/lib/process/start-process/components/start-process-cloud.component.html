@@ -53,7 +53,8 @@
                                     </button>
                                 </div>
                                 @if (processDefinition.hasError('required')) {
-                                    <mat-error class="adf-error-pb">
+                                    <mat-error class="adf-error">
+                                        <mat-icon class="adf-error-icon">error_outline</mat-icon>
                                         {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.PROCESS_DEFINITION_REQUIRED' | translate }}
                                     </mat-error>
                                 }

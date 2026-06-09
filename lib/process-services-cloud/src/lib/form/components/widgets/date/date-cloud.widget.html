@@ -35,9 +35,20 @@
             />
             <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly" />
             <mat-datepicker #datePicker [startAt]="startAt" [disabled]="field.readOnly" />
+            @if (dateInputControl.invalid) {
+                <mat-error class="adf-error">
+                    <mat-icon class="adf-error-icon">error_outline</mat-icon>
+                    @if (dateInputControl.hasError('required')) {
+                        {{ 'FORM.FIELD.REQUIRED' | translate }}
+                    } @else if (dateInputControl.hasError('matDatepickerParse')) {
+                        {{ 'FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT' | translate: { format: field.dateDisplayFormat || field.defaultDateTimeFormat } }}
+                    } @else if (dateInputControl.hasError('matDatepickerMin')) {
+                        {{ 'FORM.FIELD.VALIDATOR.NOT_LESS_THAN' | translate: { minValue: formattedMinDate } }}
+                    } @else if (dateInputControl.hasError('matDatepickerMax')) {
+                        {{ 'FORM.FIELD.VALIDATOR.NOT_GREATER_THAN' | translate: { maxValue: formattedMaxDate } }}
+                    }
+                </mat-error>
+            }
         </mat-form-field>
-        <div class="adf-error-messages-container">
-            <error-widget *ngIf="dateInputControl.invalid && dateInputControl.touched" [error]="field.validationSummary" />
-        </div>
     </div>
 </div>

@@ -23,6 +23,7 @@
                 [id]="field.id"
                 [formControl]="propertyControl"
                 [required]="field.required"
+                [errorStateMatcher]="propertyErrorStateMatcher"
             />
 
             <ng-container *ngIf="previewState">
@@ -30,13 +31,9 @@
                     {{ field.params.externalPropertyLabel }}
                 </span>
             </ng-container>
+            @if (propertyLoadFailed && !previewState) {
+                <mat-error class="adf-error"><mat-icon class="adf-error-icon">error_outline</mat-icon>{{ 'FORM.FIELD.EXTERNAL_PROPERTY_LOAD_FAILED' | translate }}</mat-error>
+            }
         </mat-form-field>
-
-        <div
-            class="adf-error-messages-container"
-            [ngClass]="!previewState ? 'adf-error-messages-container-visible' : 'adf-error-messages-container-hidden'"
-        >
-            <error-widget *ngIf="propertyLoadFailed" [required]="'FORM.FIELD.EXTERNAL_PROPERTY_LOAD_FAILED' | translate" />
-        </div>
     </div>
 </div>

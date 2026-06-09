@@ -48,8 +48,6 @@ describe('DataTableWidgetComponent', () => {
     let formCloudService: FormCloudService;
     let formService: FormService;
 
-    const errorIcon: string = 'error_outline';
-
     const getDataVariable = (
         variableConfig: VariableConfig,
         schemaDefinition: DataColumn[],
@@ -70,9 +68,10 @@ describe('DataTableWidgetComponent', () => {
     };
 
     const checkDataTableErrorMessage = () => {
-        const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-data-table-widget-failed-message'));
+        const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-error'));
 
-        expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe(errorIcon.concat('FORM.FIELD.DATA_TABLE_LOAD_FAILED'));
+        expect(failedErrorMsgElement).toBeTruthy();
+        expect(failedErrorMsgElement.nativeElement.textContent).toContain('FORM.FIELD.DATA_TABLE_LOAD_FAILED');
     };
 
     const getPreview = () => fixture.nativeElement.querySelector('[data-automation-id="adf-data-table-widget-preview"]');
@@ -269,7 +268,7 @@ describe('DataTableWidgetComponent', () => {
             spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
             fixture.detectChanges();
 
-            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-data-table-widget-failed-message'));
+            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-error'));
             const previewDataTable = getPreview();
 
             expect(failedErrorMsgElement).toBeNull();
@@ -280,7 +279,7 @@ describe('DataTableWidgetComponent', () => {
             widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinition, [], mockJsonFormVariableWithEmptyData);
             fixture.detectChanges();
 
-            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-data-table-widget-failed-message'));
+            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-error'));
 
             assertData(mockCountryColumns, []);
             expect(failedErrorMsgElement).toBeNull();
@@ -291,7 +290,7 @@ describe('DataTableWidgetComponent', () => {
             widget.field.value = mockJsonNestedResponseEuropeCountriesData;
             fixture.detectChanges();
 
-            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-data-table-widget-failed-message'));
+            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-error'));
 
             assertData(mockCountryColumns, [mockEuropeCountriesRows[1]]);
             expect(failedErrorMsgElement).toBeNull();
