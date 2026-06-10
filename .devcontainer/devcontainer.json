@@ -17,6 +17,7 @@
   // "features": {},
 
   "remoteUser": "node",
+  "containerUser": "node",
   "updateRemoteUserUID": true,
   "overrideCommand": true,
   "init": true,
