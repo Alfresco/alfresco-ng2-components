@@ -115,6 +115,23 @@ describe('FormFieldValueAdapterService', () => {
             expect(service.adapt([], field)).toBeNull();
         });
 
+        it('single-select: should return null for an empty or whitespace string', () => {
+            const field = makeField(FormFieldTypes.PEOPLE, null);
+            expect(service.adapt('', field)).toBeNull();
+            expect(service.adapt('   ', field)).toBeNull();
+        });
+
+        it('single-select: should return null for stringified empty collections', () => {
+            const field = makeField(FormFieldTypes.PEOPLE, null);
+            expect(service.adapt('[]', field)).toBeNull();
+            expect(service.adapt('{}', field)).toBeNull();
+        });
+
+        it('multi-select: should drop blank entries and keep valid users', () => {
+            const field = makeField(FormFieldTypes.PEOPLE, null, { multiple: true });
+            expect(service.adapt(['', 'Alyssa Adcock'], field)).toEqual([{ firstName: 'Alyssa', lastName: 'Adcock' }]);
+        });
+
         it('multi-select: should wrap a single object into an array', () => {
             const field = makeField(FormFieldTypes.PEOPLE, null, { multiple: true });
             expect(service.adapt({ firstName: 'Alyssa' }, field)).toEqual([{ firstName: 'Alyssa' }]);
@@ -149,6 +166,12 @@ describe('FormFieldValueAdapterService', () => {
             expect(service.adapt('Engineering', field)).toEqual([{ name: 'Engineering' }]);
         });
 
+        it('single-select: should return null for an empty string or stringified empty collection', () => {
+            const field = makeField(FormFieldTypes.FUNCTIONAL_GROUP, null);
+            expect(service.adapt('', field)).toBeNull();
+            expect(service.adapt('[]', field)).toBeNull();
+        });
+
         it('multi-select: should wrap a single group into an array', () => {
             const field = makeField(FormFieldTypes.FUNCTIONAL_GROUP, null, { multiple: true });
             expect(service.adapt({ name: 'Engineering' }, field)).toEqual([{ name: 'Engineering' }]);
@@ -179,6 +202,16 @@ describe('FormFieldValueAdapterService', () => {
         it('single-select: should extract id from an object', () => {
             const field = makeField(FormFieldTypes.DROPDOWN, null, { options });
             expect(service.adapt({ id: 'a', name: 'Apple' }, field)).toBe('a');
+        });
+
+        it('single-select: should extract the first id from an array', () => {
+            const field = makeField(FormFieldTypes.DROPDOWN, null, { options });
+            expect(service.adapt(['a'], field)).toBe('a');
+        });
+
+        it('single-select: should return null for an empty array', () => {
+            const field = makeField(FormFieldTypes.DROPDOWN, null, { options });
+            expect(service.adapt([], field)).toBeNull();
         });
 
         it('multi-select: should keep FormFieldOption array (idempotent)', () => {
@@ -223,6 +256,16 @@ describe('FormFieldValueAdapterService', () => {
         it('should extract id from an object', () => {
             const field = makeField(FormFieldTypes.RADIO_BUTTONS, null, { options });
             expect(service.adapt({ id: 'yes', name: 'Yes' }, field)).toBe('yes');
+        });
+
+        it('should extract the first id from an array', () => {
+            const field = makeField(FormFieldTypes.RADIO_BUTTONS, null, { options });
+            expect(service.adapt(['yes'], field)).toBe('yes');
+        });
+
+        it('should return null for an empty array', () => {
+            const field = makeField(FormFieldTypes.RADIO_BUTTONS, null, { options });
+            expect(service.adapt([], field)).toBeNull();
         });
     });
 

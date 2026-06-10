@@ -15,7 +15,15 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormFieldTypes, FormModel, IdentityGroupModel, NoopAuthModule } from '@alfresco/adf-core';
+import {
+    ADF_TYPED_VALUE_FORMATTING_ENABLED,
+    FormFieldModel,
+    FormFieldTypes,
+    FormModel,
+    FormService,
+    IdentityGroupModel,
+    NoopAuthModule
+} from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GroupCloudWidgetComponent } from './group-cloud.widget';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -244,6 +252,87 @@ describe('GroupCloudWidgetComponent', () => {
 
             const adfLeftLabel = element.querySelector('.adf-left-label');
             expect(adfLeftLabel).toBeNull();
+        });
+    });
+
+    describe('reactive sync on form rules event', () => {
+        describe('when flag is on', () => {
+            let formService: FormService;
+
+            beforeEach(() => {
+                TestBed.resetTestingModule();
+                TestBed.configureTestingModule({
+                    imports: [NoopAuthModule, GroupCloudWidgetComponent],
+                    providers: [{ provide: ADF_TYPED_VALUE_FORMATTING_ENABLED, useValue: true }]
+                });
+                formService = TestBed.inject(FormService);
+                fixture = TestBed.createComponent(GroupCloudWidgetComponent);
+                widget = fixture.componentInstance;
+            });
+
+            it('should sync preSelectGroup with a new array reference when the selection changes', () => {
+                const groups = [{ id: 'g1', name: 'Engineering' }];
+                widget.field = new FormFieldModel(new FormModel(), { type: FormFieldTypes.FUNCTIONAL_GROUP, value: null });
+                fixture.detectChanges();
+                widget.field.value = groups;
+
+                formService.formRulesEvent.next({ type: 'fieldValueChanged' } as any);
+
+                expect(widget.preSelectGroup).toEqual(groups);
+                expect(widget.preSelectGroup).not.toBe(groups);
+            });
+
+            it('should not reassign preSelectGroup when the selection is unchanged', () => {
+                widget.field = new FormFieldModel(new FormModel(), {
+                    type: FormFieldTypes.FUNCTIONAL_GROUP,
+                    value: [{ id: 'g1', name: 'Engineering' }]
+                });
+                fixture.detectChanges();
+                const initial = widget.preSelectGroup;
+                widget.field.value = [{ id: 'g1', name: 'Engineering' }];
+
+                formService.formRulesEvent.next({ type: 'fieldValueChanged' } as any);
+
+                expect(widget.preSelectGroup).toBe(initial);
+            });
+
+            it('should wrap a single group object into an array', () => {
+                const group = { id: 'g1', name: 'Engineering' };
+                widget.field = new FormFieldModel(new FormModel(), { type: FormFieldTypes.FUNCTIONAL_GROUP, value: null });
+                fixture.detectChanges();
+                widget.field.value = group;
+
+                formService.formRulesEvent.next({ type: 'fieldValueChanged' } as any);
+
+                expect(widget.preSelectGroup).toEqual([group]);
+            });
+
+            it('should reset preSelectGroup to empty array when value is cleared', () => {
+                widget.field = new FormFieldModel(new FormModel(), {
+                    type: FormFieldTypes.FUNCTIONAL_GROUP,
+                    value: [{ id: 'g1', name: 'Engineering' }]
+                });
+                fixture.detectChanges();
+                widget.field.value = null;
+
+                formService.formRulesEvent.next({ type: 'fieldValueChanged' } as any);
+
+                expect(widget.preSelectGroup).toEqual([]);
+            });
+        });
+
+        describe('when flag is off', () => {
+            it('should not react to form rules events', () => {
+                const formService = TestBed.inject(FormService);
+                widget.field = new FormFieldModel(new FormModel(), { type: FormFieldTypes.FUNCTIONAL_GROUP, value: [] });
+                fixture.detectChanges();
+                const initial = widget.preSelectGroup;
+                widget.field.value = [{ id: 'g1', name: 'Engineering' }];
+
+                formService.formRulesEvent.next({ type: 'fieldValueChanged' } as any);
+
+                expect(widget.preSelectGroup).toBe(initial);
+            });
         });
     });
 });

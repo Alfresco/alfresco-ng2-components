@@ -22,6 +22,7 @@ import { filter } from 'rxjs/operators';
 import { ComponentSelectionMode } from '../../../../types';
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ReactivePreselectionService } from '../reactive-preselection.service';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { GroupCloudComponent } from '../../../../group/components/group-cloud.component';
@@ -43,9 +44,12 @@ import { GroupCloudComponent } from '../../../../group/components/group-cloud.co
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    providers: [ReactivePreselectionService]
 })
 export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit {
+    private readonly reactivePreselection: ReactivePreselectionService<IdentityGroupModel> = inject(ReactivePreselectionService);
+
     typeId = 'GroupCloudWidgetComponent';
     roles: string[];
     mode: ComponentSelectionMode;
@@ -57,6 +61,13 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
     private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit() {
+        this.reactivePreselection.connect({
+            getFieldValue: () => this.field?.value,
+            getPreselection: () => this.preSelectGroup,
+            setPreselection: (value) => (this.preSelectGroup = value),
+            identityOf: (group) => group?.id ?? group?.name
+        });
+
         if (this.field) {
             this.roles = this.field.roles;
             this.mode = this.field.optionType as ComponentSelectionMode;
@@ -85,6 +96,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
                 this.field.form.validateForm();
             });
     }
+
     onChangedGroup(groups: IdentityGroupModel[]): void {
         this.field.value = groups?.length ? [...groups] : null;
         this.onFieldChanged(this.field);
