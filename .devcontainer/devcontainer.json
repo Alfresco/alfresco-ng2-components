@@ -5,7 +5,7 @@
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   "build": {
     "dockerfile": "Dockerfile",
-    "context": "..",
+    "context": ".",
     "args": {
       "VARIANT": "24-bookworm",
       "PNPM_VERSION": "11.5.0",
