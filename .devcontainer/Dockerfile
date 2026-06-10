@@ -11,8 +11,7 @@ ENV PATH=${PNPM_HOME}:${PNPM_GLOBAL_BIN}:${PATH}
 # Configure Corepack-managed pnpm globally at image build time.
 RUN corepack enable \
     && corepack prepare pnpm@${PNPM_VERSION} --activate \
-    && mkdir -p ${PNPM_HOME} ${PNPM_GLOBAL_BIN} \
-    && chown -R node:node /home/node/.local \
+    && mkdir -p ${PNPM_HOME} ${PNPM_GLOBAL_BIN} /home/node/.pnpm-store \
+    && chown -R node:node /home/node/.local /home/node/.pnpm-store \
     && su node -c "pnpm config set global-bin-dir ${PNPM_GLOBAL_BIN} && pnpm add --global nx@${NX_VERSION}"
-
 USER node
