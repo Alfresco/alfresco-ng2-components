@@ -26,6 +26,7 @@ import { ComponentRegisterService } from './component-register.service';
 import { RuleService } from './rule.service';
 import { ExtensionElement } from '../config/extension-element';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { CanActivateFn } from '@angular/router';
 
 /**
  * The default extensions factory
@@ -87,7 +88,7 @@ export class ExtensionService {
     routes: Array<RouteRef> = [];
     actions: Array<ActionRef> = [];
     features: Array<any> = [];
-    authGuards: Record<string, unknown> = {};
+    authGuards: Record<string, CanActivateFn> = {};
 
     setup$: Observable<ExtensionConfig>;
 
@@ -162,7 +163,7 @@ export class ExtensionService {
      * Adds one or more new auth guards to the existing set.
      * @param values The new auth guards to add
      */
-    setAuthGuards(values: Record<string, unknown>) {
+    setAuthGuards(values: Record<string, CanActivateFn>) {
         if (values) {
             this.authGuards = Object.assign({}, this.authGuards, values);
         }
@@ -190,7 +191,7 @@ export class ExtensionService {
      * @param ids Array of ID value to look for
      * @returns Array of auth guards or empty array if none were found
      */
-    getAuthGuards(ids: string[]): Array<unknown> {
+    getAuthGuards(ids: string[]): Array<CanActivateFn> {
         return (ids || []).map((id) => this.authGuards[id]).filter((guard) => guard);
     }
 
