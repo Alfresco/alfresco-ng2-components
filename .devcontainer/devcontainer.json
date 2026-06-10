@@ -1,0 +1,44 @@
+//devcontainer.json
+{
+  "name": "alfresco-ng2-components",
+
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": {
+      "VARIANT": "24-bookworm",
+      "PNPM_VERSION": "11.5.0"
+    }
+  },
+
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  // "features": {},
+
+  "remoteUser": "node",
+  "updateRemoteUserUID": true,
+  "overrideCommand": true,
+  "init": true,
+
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": ["streetsidesoftware.code-spell-checker"]
+    }
+  },
+
+  "containerEnv": {
+    "CI": "true",
+    "NODE_ENV": "development",
+    "NPM_CONFIG_AUDIT": "true",
+    "NPM_CONFIG_FUND": "false",
+    "NO_UPDATE_NOTIFIER": "1",
+    "PNPM_STORE_DIR": "/home/node/.pnpm-store"
+  },
+
+  "mounts": ["source=alfresco-ng2-pnpm-store,target=/home/node/.pnpm-store,type=volume"],
+
+  "postCreateCommand": "pnpm install --frozen-lockfile",
+
+  "runArgs": ["--cap-drop=ALL", "--security-opt=no-new-privileges:true", "--pids-limit=512"]
+}
