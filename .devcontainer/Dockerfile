@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/javascript-node:24-bookworm@sha256:21b17a0c1fd000eff7280c9eea21f04779d1825531b144e400e5d028a0d967b1
+FROM mcr.microsoft.com/devcontainers/javascript-node@sha256:21b17a0c1fd000eff7280c9eea21f04779d1825531b144e400e5d028a0d967b1 # 24-bookworm
 
 ARG PNPM_VERSION=11.5.0
 
