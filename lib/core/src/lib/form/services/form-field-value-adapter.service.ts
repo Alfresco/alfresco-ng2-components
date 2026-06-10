@@ -110,12 +110,14 @@ export class FormFieldValueAdapterService {
         }
         const separatorIndex = trimmed.indexOf(' ');
         if (separatorIndex === -1) {
-            return { firstName: trimmed } as AdaptedUser;
+            const user: AdaptedUser = { firstName: trimmed };
+            return user;
         }
-        return {
+        const user: AdaptedUser = {
             firstName: trimmed.slice(0, separatorIndex),
             lastName: trimmed.slice(separatorIndex + 1)
-        } as AdaptedUser;
+        };
+        return user;
     }
 
     private toGroup(entry: unknown): unknown {
@@ -126,7 +128,8 @@ export class FormFieldValueAdapterService {
         if (this.isBlankToken(trimmed)) {
             return null;
         }
-        return { name: trimmed } as AdaptedGroup;
+        const group: AdaptedGroup = { name: trimmed };
+        return group;
     }
 
     private isBlankToken(value: string): boolean {
