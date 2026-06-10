@@ -7,30 +7,22 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "dependsOn": ["build-esm5"],
-      "options": {
-        "outputPath": "dist/libs/js-api/typings",
-        "main": "lib/js-api/src/index.ts",
-        "tsConfig": "lib/js-api/tsconfig/tsconfig.types.json"
-      },
+      "executor": "nx:noop",
+      "dependsOn": ["build-esm2015", "build-types"],
       "configurations": {
         "test": {
-          "outputPath": "dist/tmp/libs/js-api",
-          "tsConfig": "lib/js-api/tsconfig.spec.json",
-          "assets": ["lib/js-api/test/mockObjects/assets/**/*"]
+          "dependsOn": []
         }
       }
     },
-    "build-esm5": {
+    "build-cjs": {
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
-      "dependsOn": ["build-esm2015"],
       "options": {
-        "outputPath": "dist/libs/js-api/esm5",
-        "main": "lib/js-api/src/index.ts",
-        "tsConfig": "lib/js-api/tsconfig/tsconfig.esm5.json"
+        "outputPath": "dist/libs/js-api",
+        "main": "lib/js-api/index.ts",
+        "tsConfig": "lib/js-api/tsconfig/tsconfig.cjs.json",
+        "assets": ["lib/js-api/*.md", "lib/js-api/LICENSE.txt"]
       }
     },
     "build-esm2015": {
@@ -39,26 +31,17 @@
       "dependsOn": ["build-cjs"],
       "options": {
         "outputPath": "dist/libs/js-api/esm2015",
-        "main": "lib/js-api/src/index.ts",
+        "main": "lib/js-api/index.ts",
         "tsConfig": "lib/js-api/tsconfig/tsconfig.esm2015.json"
-      }
-    },
-    "build-cjs": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/js-api",
-        "main": "lib/js-api/src/index.ts",
-        "tsConfig": "lib/js-api/tsconfig/tsconfig.cjs.json",
-        "assets": ["lib/js-api/*.md", "lib/js-api/LICENSE.txt"]
       }
     },
     "build-types": {
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
+      "dependsOn": ["build-cjs"],
       "options": {
         "outputPath": "dist/libs/js-api/typings",
-        "main": "lib/js-api/src/index.ts",
+        "main": "lib/js-api/index.ts",
         "tsConfig": "lib/js-api/tsconfig/tsconfig.types.json"
       }
     },
@@ -81,17 +64,6 @@
       "options": {
         "lintFilePatterns": ["lib/js-api/**/*.ts"]
       }
-    },
-    "bundle": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          {
-            "command": "echo cli bundle created"
-          }
-        ]
-      },
-      "dependsOn": ["copyToNodeModules"]
     },
     "copyToNodeModules": {
       "executor": "nx:run-commands",
