@@ -72,7 +72,14 @@ export class ReactivePreselectionService<T = unknown> {
             return;
         }
         const value = this.host.getFieldValue();
-        const next = value ? (Array.isArray(value) ? value : [value]) : [];
+        let next: T[];
+        if (!value) {
+            next = [];
+        } else if (Array.isArray(value)) {
+            next = value;
+        } else {
+            next = [value as T];
+        }
         if (this.isSamePreselection(this.host.getPreselection(), next)) {
             return;
         }
