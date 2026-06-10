@@ -19,6 +19,7 @@ import { EnvironmentProviders, inject, provideAppInitializer, Provider, Type } f
 import { AppExtensionService } from './services/app-extension.service';
 import { ExtensionService } from './services/extension.service';
 import { RuleEvaluator } from './config/rule.extensions';
+import { CanActivateFn } from '@angular/router';
 
 /**
  * Provides all necessary entries for the app extensibility
@@ -61,7 +62,7 @@ export function provideAppExtensions(): (Provider | EnvironmentProviders)[] {
  * @returns list of Angular providers
  */
 export function provideExtensions(params: {
-    authGuards?: Record<string, unknown>;
+    authGuards?: Record<string, CanActivateFn>;
     evaluators?: Record<string, RuleEvaluator>;
     components?: Record<string, Type<any>>;
 }) {
