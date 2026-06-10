@@ -8,7 +8,8 @@
     "context": "..",
     "args": {
       "VARIANT": "24-bookworm",
-      "PNPM_VERSION": "11.5.0"
+      "PNPM_VERSION": "11.5.0",
+      "NX_VERSION": "22.7.4"
     }
   },
 
@@ -22,8 +23,24 @@
 
   "customizations": {
     "vscode": {
-      "settings": {},
-      "extensions": ["streetsidesoftware.code-spell-checker"]
+      "settings": {
+        "stylelint.enable": true,
+        "css.validate": false,
+        "scss.validate": false,
+        "stylelint.configFile": "${workspaceFolder}/.stylelintrc.json",
+        "stylelint.configBasedir": "${workspaceFolder}",
+        "stylelint.validate": ["css", "less", "postcss", "scss"],
+        "editor.guides.indentation": true
+      },
+      "extensions": [
+        "streetsidesoftware.code-spell-checker",
+        "dbaeumer.vscode-eslint",
+        "angular.ng-template",
+        "esbenp.prettier-vscode",
+        "nrwl.angular-console",
+        "editorconfig.editorconfig",
+        "stylelint.vscode-stylelint"
+      ]
     }
   },
 
