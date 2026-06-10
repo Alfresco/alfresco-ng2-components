@@ -14,3 +14,5 @@ RUN corepack enable \
     && mkdir -p ${PNPM_HOME} ${PNPM_GLOBAL_BIN} \
     && chown -R node:node /home/node/.local \
     && su node -c "pnpm config set global-bin-dir ${PNPM_GLOBAL_BIN} && pnpm add --global nx@${NX_VERSION}"
+
+USER node
