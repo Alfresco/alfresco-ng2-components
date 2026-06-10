@@ -7,7 +7,6 @@
     "dockerfile": "Dockerfile",
     "context": ".",
     "args": {
-      "VARIANT": "24-bookworm",
       "PNPM_VERSION": "11.5.0",
       "NX_VERSION": "22.7.4"
     }
