@@ -1,16 +1,13 @@
 FROM mcr.microsoft.com/devcontainers/javascript-node:24-bookworm@sha256:21b17a0c1fd000eff7280c9eea21f04779d1825531b144e400e5d028a0d967b1
 
 ARG PNPM_VERSION=11.5.0
-ARG NX_VERSION=22.7.4
 
 ENV PNPM_HOME=/home/node/.local/share/pnpm
-ENV PNPM_GLOBAL_BIN=/home/node/.local/share/pnpm/bin
-ENV PATH=${PNPM_HOME}:${PNPM_GLOBAL_BIN}:${PATH}
+ENV PATH=${PNPM_HOME}:${PATH}
 
 # Configure Corepack-managed pnpm globally at image build time.
 RUN corepack enable \
     && corepack prepare pnpm@${PNPM_VERSION} --activate \
-    && mkdir -p ${PNPM_HOME} ${PNPM_GLOBAL_BIN} /home/node/.pnpm-store \
-    && chown -R node:node /home/node/.local /home/node/.pnpm-store \
-    && su node -c "pnpm config set global-bin-dir ${PNPM_GLOBAL_BIN} && pnpm add --global nx@${NX_VERSION}"
+    && mkdir -p ${PNPM_HOME} /home/node/.pnpm-store \
+    && chown -R node:node /home/node/.local /home/node/.pnpm-store
 USER node

@@ -7,8 +7,7 @@
     "dockerfile": "Dockerfile",
     "context": ".",
     "args": {
-      "PNPM_VERSION": "11.5.0",
-      "NX_VERSION": "22.7.4"
+      "PNPM_VERSION": "11.5.0"
     }
   },
 
