@@ -63,7 +63,7 @@ export class FormFieldValueAdapterService {
             return value;
         }
         const entries = Array.isArray(value) ? value : [value];
-        const adapted = entries.map((entry) => this.toUser(entry));
+        const adapted = entries.map((entry) => this.toUser(entry)).filter((user) => user !== null);
         return adapted.length > 0 ? adapted : null;
     }
 
@@ -72,7 +72,7 @@ export class FormFieldValueAdapterService {
             return value;
         }
         const entries = Array.isArray(value) ? value : [value];
-        const adapted = entries.map((entry) => this.toGroup(entry));
+        const adapted = entries.map((entry) => this.toGroup(entry)).filter((group) => group !== null);
         return adapted.length > 0 ? adapted : null;
     }
 
@@ -105,6 +105,9 @@ export class FormFieldValueAdapterService {
             return entry;
         }
         const trimmed = entry.trim();
+        if (this.isBlankToken(trimmed)) {
+            return null;
+        }
         const separatorIndex = trimmed.indexOf(' ');
         if (separatorIndex === -1) {
             return { firstName: trimmed } as AdaptedUser;
@@ -119,7 +122,15 @@ export class FormFieldValueAdapterService {
         if (typeof entry !== 'string') {
             return entry;
         }
-        return { name: entry } as AdaptedGroup;
+        const trimmed = entry.trim();
+        if (this.isBlankToken(trimmed)) {
+            return null;
+        }
+        return { name: trimmed } as AdaptedGroup;
+    }
+
+    private isBlankToken(value: string): boolean {
+        return value === '' || value === '[]' || value === '{}';
     }
 
     private toOptionId(entry: unknown): unknown {
