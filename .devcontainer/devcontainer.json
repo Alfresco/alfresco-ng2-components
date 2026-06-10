@@ -48,8 +48,6 @@
   "containerEnv": {
     "CI": "true",
     "NODE_ENV": "development",
-    "NPM_CONFIG_AUDIT": "true",
-    "NPM_CONFIG_FUND": "false",
     "NO_UPDATE_NOTIFIER": "1",
     "PNPM_STORE_DIR": "/home/node/.pnpm-store"
   },
