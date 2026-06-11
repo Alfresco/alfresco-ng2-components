@@ -7,7 +7,7 @@
     "dockerfile": "Dockerfile",
     "context": ".",
     "args": {
-      "PNPM_VERSION": "11.5.0"
+      "PNPM_VERSION": "11.5.3"
     }
   },
 
@@ -44,7 +44,7 @@
   },
 
   "containerEnv": {
-    "CI": "true",
+    "NX_DAEMON": "true",
     "NODE_ENV": "development",
     "NO_UPDATE_NOTIFIER": "1",
     "PNPM_STORE_DIR": "/home/node/.pnpm-store",
