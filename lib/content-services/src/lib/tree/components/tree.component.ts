@@ -108,7 +108,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     @ViewChildren(MatCheckbox)
     public nodeCheckboxes: QueryList<MatCheckbox>;
 
-    /** Reference to the underlying MatTree used to reinitialize keyboard focus after data reloads. */
     @ViewChild(MatTree)
     private readonly matTree: MatTree<T>;
 
