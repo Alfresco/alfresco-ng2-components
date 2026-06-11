@@ -36,6 +36,18 @@ You can replace `<project>` with any workspace project name, for example `core`,
 
 Tip: to discover available projects and targets, run `pn nx show projects` and inspect each project's `project.json` (or workspace configuration).
 
+## Nx Daemon and Graph Ports in Dev Containers
+
+For this repository's VS Code Dev Container, Nx daemon is enabled (`NX_DAEMON=true`) to speed up repeated local Nx commands by keeping project graph state warm between runs.
+
+Notes:
+
+- Avoid forcing `CI=true` in day-to-day dev containers if you want daemon benefits.
+- Keep `CI=true` for real CI pipelines and short-lived/ephemeral containers.
+- If needed, disable daemon for a single command with `NX_DAEMON=false pn nx <target>`.
+
+When running Nx commands, VS Code may show a notification about a port being opened by Nx Graph. This is expected when Nx serves the graph UI locally; it is typically a localhost-only temporary port used for visualization.
+
 ## Git Operations and Signing
 
 You can use Git inside the container, outside the container, or split responsibilities for better key safety.
@@ -107,3 +119,38 @@ Useful files to inspect:
 - [.devcontainer/devcontainer.json](../.devcontainer/devcontainer.json)
 - [.devcontainer/Dockerfile](../.devcontainer/Dockerfile)
 - VS Code Dev Containers logs under your local VS Code logs directory
+
+### Nx Daemon Not Starting in Container
+
+If `NX_DAEMON=true` is set but `pn nx daemon` still reports that the daemon is not running, Nx may have persisted a stale disable marker from a previous startup failure.
+
+Recovery steps:
+
+1. Reset Nx local state:
+
+	```bash
+	pnpm nx reset
+	```
+
+2. Run any Nx command to trigger daemon startup:
+
+	```bash
+	pnpm nx show projects
+	```
+
+3. Verify daemon status:
+
+	```bash
+	pnpm nx daemon
+	```
+
+4. If still not running, inspect logs:
+
+	```bash
+	cat .nx/workspace-data/d/daemon.log
+	```
+
+Notes:
+
+- In Docker/dev containers, Nx disables daemon by default unless explicitly enabled.
+- This repository enables it via `NX_DAEMON=true` in [.devcontainer/devcontainer.json](../.devcontainer/devcontainer.json).
