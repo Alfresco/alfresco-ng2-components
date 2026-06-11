@@ -401,7 +401,7 @@ async function isDefaultAppDeployed(appName: string): Promise<boolean> {
  * @param appName application name
  * @returns the app definition result
  */
-async function importPublishApp(appName: string): Promise<AppDefinitionUpdateResultRepresentation> {
+async function importPublishApp(appName: string): Promise<AppDefinitionUpdateResultRepresentation | null> {
     const appNameExtension = `../resources/${appName}.zip`;
     logger.info(`Import app ${appNameExtension}`);
     const pathFile = path.join(__dirname, appNameExtension);
@@ -518,7 +518,7 @@ async function isContentRepoPresent(opts: InitApsEnvArgs, tenantId: number, cont
         return !!contentRepos.data.find((repo) => repo.name === contentName);
     } catch (error: any) {
         logger.error(`APS: not able to check content repo: ${formatError(error)}`);
-        return null;
+        return false;
     }
 }
 
@@ -658,7 +658,11 @@ function formatError(error: any): string {
         return error;
     }
 
-    return error?.message || error?.stack || JSON.stringify(error);
+    try {
+        return error?.message || error?.stack || JSON.stringify(error);
+    } catch {
+        return 'Unknown error (unable to serialize)';
+    }
 }
 
 /**

@@ -102,10 +102,11 @@ Options:
 async function initializeDefaultFiles() {
     const e2eFolderName: string = ACS_DEFAULT.e2eFolder.name;
 
-    const parentFolder = await withRetry(() => ensureFolder(e2eFolderName, '-my-'), `ensure folder ${e2eFolderName}`);
-
-    if (!parentFolder) {
-        logger.warn('Skipping file initialization: test-data folder could not be created.');
+    let parentFolder: NodeEntry;
+    try {
+        parentFolder = await withRetry(() => ensureFolder(e2eFolderName, '-my-'), `ensure folder ${e2eFolderName}`);
+    } catch (error: any) {
+        logger.warn(`Skipping file initialization: test-data folder could not be created: ${formatError(error)}`);
         return;
     }
 
@@ -329,7 +330,11 @@ function formatError(error: any): string {
         return error;
     }
 
-    return error?.message || error?.stack || JSON.stringify(error);
+    try {
+        return error?.message || error?.stack || JSON.stringify(error);
+    } catch {
+        return 'Unknown error (unable to serialize)';
+    }
 }
 
 /**
