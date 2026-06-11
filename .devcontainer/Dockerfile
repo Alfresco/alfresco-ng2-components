@@ -1,4 +1,7 @@
-FROM mcr.microsoft.com/devcontainers/javascript-node@sha256:21b17a0c1fd000eff7280c9eea21f04779d1825531b144e400e5d028a0d967b1 # 24-bookworm
+# Base image pinned by digest for reproducible devcontainer builds.
+# Important: keep this FROM line comment-free (no inline trailing comment),
+# or some Docker/Buildx versions can fail to parse it.
+FROM mcr.microsoft.com/devcontainers/javascript-node@sha256:21b17a0c1fd000eff7280c9eea21f04779d1825531b144e400e5d028a0d967b1
 
 ARG PNPM_VERSION=11.5.0
 
