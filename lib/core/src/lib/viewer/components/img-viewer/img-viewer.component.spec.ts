@@ -180,6 +180,34 @@ describe('Test Img viewer component ', () => {
             }).not.toThrow(new Error('Attribute urlFile or blobFile is required'));
             expect(component.urlFile).toEqual('fake-blob-url');
         });
+
+        it('should call replace on cropper with new blob url when blobFile changes after init', () => {
+            component.urlFile = 'fake-url';
+            fixture.detectChanges();
+            fixture.componentInstance.ngAfterViewInit();
+            spyOn(component.cropper, 'replace').and.stub();
+            spyOn(urlService, 'createTrustedUrl').and.returnValue('fake-blob-url-2');
+
+            const blobFile = new SimpleChange(createFakeBlob(), createFakeBlob(), false);
+            component.ngOnChanges({ blobFile });
+
+            expect(component.cropper.replace).toHaveBeenCalledWith('fake-blob-url-2');
+            expect(component.urlFile).toEqual('fake-blob-url-2');
+        });
+
+        it('should not call replace on cropper on the first blobFile change', () => {
+            component.urlFile = 'fake-url';
+            fixture.detectChanges();
+            fixture.componentInstance.ngAfterViewInit();
+            spyOn(component.cropper, 'replace').and.stub();
+            spyOn(urlService, 'createTrustedUrl').and.returnValue('fake-blob-url');
+
+            const blobFile = new SimpleChange(null, createFakeBlob(), true);
+            component.ngOnChanges({ blobFile });
+
+            expect(component.cropper.replace).not.toHaveBeenCalled();
+            expect(component.urlFile).toEqual('fake-blob-url');
+        });
     });
 
     describe('toolbar actions', () => {
