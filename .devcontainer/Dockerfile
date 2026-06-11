@@ -8,6 +8,11 @@ ARG PNPM_VERSION=11.5.0
 ENV PNPM_HOME=/home/node/.local/share/pnpm
 ENV PATH=${PNPM_HOME}:${PATH}
 
+# Install Chromium for Karma/ChromeHeadless test execution inside the container.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends chromium \
+    && rm -rf /var/lib/apt/lists/*
+
 # Configure Corepack-managed pnpm globally at image build time.
 RUN corepack enable \
     && corepack prepare pnpm@${PNPM_VERSION} --activate \

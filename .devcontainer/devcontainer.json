@@ -47,7 +47,8 @@
     "CI": "true",
     "NODE_ENV": "development",
     "NO_UPDATE_NOTIFIER": "1",
-    "PNPM_STORE_DIR": "/home/node/.pnpm-store"
+    "PNPM_STORE_DIR": "/home/node/.pnpm-store",
+    "CHROME_BIN": "/usr/bin/chromium"
   },
 
   "mounts": ["source=alfresco-ng2-pnpm-store,target=/home/node/.pnpm-store,type=volume"],

@@ -23,6 +23,19 @@ Typical day-to-day actions:
 - Reopen in container after dependency or toolchain updates
 - Keep local Docker Desktop running before opening the container
 
+## Running Nx Targets From the Workspace
+
+From the repository root (inside the container terminal), run Nx targets with the package manager wrapper.
+
+Common examples:
+
+- `pn nx test <project>`
+- `pn nx build <project>`
+
+You can replace `<project>` with any workspace project name, for example `core`, `content-services`, or `process-services-cloud`.
+
+Tip: to discover available projects and targets, run `pn nx show projects` and inspect each project's `project.json` (or workspace configuration).
+
 ## Git Operations and Signing
 
 You can use Git inside the container, outside the container, or split responsibilities for better key safety.
