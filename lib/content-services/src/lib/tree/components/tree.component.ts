@@ -25,7 +25,6 @@ import {
     Output,
     QueryList,
     TemplateRef,
-    ViewChild,
     ViewChildren,
     ViewEncapsulation,
     inject
@@ -41,7 +40,7 @@ import { TreeContextMenuResult } from '../models/tree-context-menu-result.interf
 import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatTree, MatTreeModule } from '@angular/material/tree';
+import { MatTreeModule, MatTreeNode } from '@angular/material/tree';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
@@ -108,8 +107,8 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     @ViewChildren(MatCheckbox)
     public nodeCheckboxes: QueryList<MatCheckbox>;
 
-    @ViewChild(MatTree)
-    private readonly matTree: MatTree<T>;
+    @ViewChildren(MatTreeNode)
+    private readonly matTreeNodes: QueryList<MatTreeNode<T>>;
 
     private readonly loadingRootSource = new BehaviorSubject<boolean>(false);
     private _contextMenuSource: T;
@@ -157,7 +156,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.loadingRoot$ = this.loadingRootSource.asObservable();
         this.refreshTree(0, this.userPreferenceService.paginationSize);
-        this.treeNodesSelection.changed.subscribe((selectionChange: SelectionChange<T>) => {
+        this.treeNodesSelection.changed.pipe(takeUntil(this.destroy$)).subscribe((selectionChange: SelectionChange<T>) => {
             this.onTreeSelectionChange(selectionChange);
         });
         this.treeService.treeControl.expansionModel.changed.pipe(takeUntil(this.destroy$)).subscribe((change: SelectionChange<T>) => {
@@ -218,16 +217,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
             this.treeNodesSelection.deselect(...response.entries);
             this.paginationChanged.emit(response.pagination);
             this.loadingRootSource.next(false);
-            setTimeout(() => {
-                // eslint-disable-next-line no-underscore-dangle
-                const keyManager = (this.matTree as any)?._keyManager;
-                if (keyManager) {
-                    // eslint-disable-next-line no-underscore-dangle
-                    keyManager._hasInitialFocused = false;
-                    // eslint-disable-next-line no-underscore-dangle
-                    keyManager._initializeFocus();
-                }
-            });
+            setTimeout(() => this.matTreeNodes?.first?.makeFocusable());
         });
     }
 
@@ -316,15 +306,22 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
             return;
         }
         node.isLoading = true;
-        this.treeService.getSubNodes(node.id, 0, this.userPreferenceService.paginationSize).subscribe((response: TreeResponse<T>) => {
-            this.treeService.expandNode(node, response.entries);
-            if (this.treeNodesSelection.isSelected(node)) {
-                // timeout used to update nodeCheckboxes query list after new nodes are added so they can be selected
-                setTimeout(() => {
-                    this.treeNodesSelection.select(...response.entries);
-                });
-            }
-        });
+        this.treeService
+            .getSubNodes(node.id, 0, this.userPreferenceService.paginationSize)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((response: TreeResponse<T>) => {
+                if (!this.treeService.treeControl.isExpanded(node)) {
+                    node.isLoading = false;
+                    return;
+                }
+                this.treeService.expandNode(node, response.entries);
+                if (this.treeNodesSelection.isSelected(node)) {
+                    // timeout used to update nodeCheckboxes query list after new nodes are added so they can be selected
+                    setTimeout(() => {
+                        this.treeNodesSelection.select(...response.entries);
+                    });
+                }
+            });
     }
 
     private handleNodeCollapsed(node: T): void {

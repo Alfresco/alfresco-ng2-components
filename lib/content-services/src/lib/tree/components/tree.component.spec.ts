@@ -203,8 +203,9 @@ describe('TreeComponent', () => {
         component.treeService.treeNodes[0].isLoading = false;
         fixture.detectChanges();
         component.treeService.treeNodes = Array.from(treeNodesMock);
+        component.treeService.treeNodes[0].isLoading = false;
+        fixture.detectChanges();
         const expandSpy = spyOn(component.treeService, 'expandNode');
-        spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(false);
         clickExpandCollapseBtn(component.treeService.treeNodes[0].id);
         expect(expandSpy).toHaveBeenCalledWith(component.treeService.treeNodes[0], treeNodesMockExpanded);
     });
@@ -226,7 +227,6 @@ describe('TreeComponent', () => {
         component.treeService.treeNodes[0].isLoading = false;
         fixture.detectChanges();
         spyOn(component.treeService, 'expandNode');
-        spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(false);
         clickDisplayNameElement(component.treeService.treeNodes[0].id);
         expect(component.treeService.expandNode).toHaveBeenCalledWith(component.treeService.treeNodes[0], treeNodesMockExpanded);
     });
