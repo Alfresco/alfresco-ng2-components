@@ -17,11 +17,13 @@
 
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ADF_TYPED_VALUE_FORMATTING_ENABLED, FormService } from '@alfresco/adf-core';
+import { ADF_TYPED_VALUE_FORMATTING_ENABLED, FormRulesEvent, FormService } from '@alfresco/adf-core';
 import { isObservable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 export interface ReactivePreselectionHost<T> {
+    getFieldId(): string;
+    getFormId(): string;
     getFieldValue(): unknown;
     getPreselection(): T[];
     setPreselection(value: T[]): void;
@@ -61,29 +63,38 @@ export class ReactivePreselectionService<T = unknown> {
         this.subscribed = true;
         this.formService.formRulesEvent
             .pipe(
-                filter((event) => event?.type === 'fieldValueChanged'),
+                filter((event) => event?.type === 'fieldValueChanged' && this.isExternalChange(event)),
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(() => this.sync());
+    }
+
+    private isExternalChange(event: FormRulesEvent): boolean {
+        const eventFieldId = event?.field?.id;
+        if (eventFieldId && eventFieldId === this.host.getFieldId()) {
+            return false;
+        }
+        const eventFormId = event?.form?.id;
+        return !eventFormId || eventFormId === this.host.getFormId();
     }
 
     private sync(): void {
         if (!this.formattingEnabled || !this.host) {
             return;
         }
-        const value = this.host.getFieldValue();
-        let next: T[];
-        if (!value) {
-            next = [];
-        } else if (Array.isArray(value)) {
-            next = value;
-        } else {
-            next = [value as T];
-        }
+        const next = this.toPreselection(this.host.getFieldValue());
         if (this.isSamePreselection(this.host.getPreselection(), next)) {
             return;
         }
-        this.host.setPreselection([...next]);
+        this.host.setPreselection(next);
+    }
+
+    private toPreselection(value: unknown): T[] {
+        if (!value) {
+            return [];
+        }
+        const entries = Array.isArray(value) ? value : [value];
+        return entries.filter((entry): entry is T => !!entry && typeof entry === 'object');
     }
 
     private isSamePreselection(current: T[], next: T[]): boolean {

@@ -67,6 +67,8 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
 
     ngOnInit() {
         this.reactivePreselection.connect({
+            getFieldId: () => this.field?.id,
+            getFormId: () => this.field?.form?.id,
             getFieldValue: () => this.field?.value,
             getPreselection: () => this.preSelectUsers,
             setPreselection: (value) => (this.preSelectUsers = value),

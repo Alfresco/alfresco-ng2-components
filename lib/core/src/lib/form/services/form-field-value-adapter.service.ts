@@ -138,7 +138,7 @@ export class FormFieldValueAdapterService {
 
     private toOptionId(entry: unknown): unknown {
         if (entry && typeof entry === 'object') {
-            return (entry as Record<string, unknown>)['id'] ?? entry;
+            return (entry as Record<string, unknown>)['id'] ?? null;
         }
         return entry;
     }
