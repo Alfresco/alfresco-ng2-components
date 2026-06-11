@@ -25,6 +25,7 @@ import {
     Output,
     QueryList,
     TemplateRef,
+    ViewChild,
     ViewChildren,
     ViewEncapsulation,
     inject
@@ -40,7 +41,7 @@ import { TreeContextMenuResult } from '../models/tree-context-menu-result.interf
 import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatTreeModule } from '@angular/material/tree';
+import { MatTree, MatTreeModule } from '@angular/material/tree';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
@@ -107,10 +108,15 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     @ViewChildren(MatCheckbox)
     public nodeCheckboxes: QueryList<MatCheckbox>;
 
+    /** Reference to the underlying MatTree used to reinitialize keyboard focus after data reloads. */
+    @ViewChild(MatTree)
+    private readonly matTree: MatTree<T>;
+
     private readonly loadingRootSource = new BehaviorSubject<boolean>(false);
     private _contextMenuSource: T;
     private _contextMenuOptions: any[];
     private readonly contextMenuOptionsChanged$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     public loadingRoot$: Observable<boolean>;
     public treeNodesSelection = new SelectionModel<T>(true, [], true, (node1: T, node2: T) => node1.id === node2.id);
 
@@ -155,11 +161,17 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
         this.treeNodesSelection.changed.subscribe((selectionChange: SelectionChange<T>) => {
             this.onTreeSelectionChange(selectionChange);
         });
+        this.treeService.treeControl.expansionModel.changed.pipe(takeUntil(this.destroy$)).subscribe((change: SelectionChange<T>) => {
+            change.added.forEach((node: T) => this.handleNodeExpanded(node));
+            change.removed.forEach((node: T) => this.handleNodeCollapsed(node));
+        });
     }
 
     ngOnDestroy() {
         this.contextMenuOptionsChanged$.next();
         this.contextMenuOptionsChanged$.complete();
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     /**
@@ -207,6 +219,16 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
             this.treeNodesSelection.deselect(...response.entries);
             this.paginationChanged.emit(response.pagination);
             this.loadingRootSource.next(false);
+            setTimeout(() => {
+                // eslint-disable-next-line no-underscore-dangle
+                const keyManager = (this.matTree as any)?._keyManager;
+                if (keyManager) {
+                    // eslint-disable-next-line no-underscore-dangle
+                    keyManager._hasInitialFocused = false;
+                    // eslint-disable-next-line no-underscore-dangle
+                    keyManager._initializeFocus();
+                }
+            });
         });
     }
 
@@ -217,21 +239,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
      */
     public expandCollapseNode(node: T): void {
         if (node.hasChildren && !node.isLoading) {
-            if (this.treeService.treeControl.isExpanded(node)) {
-                this.treeService.collapseNode(node);
-            } else {
-                node.isLoading = true;
-                this.treeService.getSubNodes(node.id, 0, this.userPreferenceService.paginationSize).subscribe((response: TreeResponse<T>) => {
-                    this.treeService.expandNode(node, response.entries);
-                    node.isLoading = false;
-                    if (this.treeNodesSelection.isSelected(node)) {
-                        //timeout used to update nodeCheckboxes query list after new nodes are added so they can be selected
-                        setTimeout(() => {
-                            this.treeNodesSelection.select(...response.entries);
-                        });
-                    }
-                });
-            }
+            this.treeService.treeControl.toggle(node);
         }
     }
 
@@ -299,6 +307,31 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
             !this.descendantsAllSelected(node) &&
             descendants.some((descendant: T) => this.treeNodesSelection.isSelected(descendant))
         );
+    }
+
+    private handleNodeExpanded(node: T): void {
+        if (!node.hasChildren || node.isLoading) {
+            return;
+        }
+        if (this.treeService.getChildren(node).length > 0) {
+            return;
+        }
+        node.isLoading = true;
+        this.treeService.getSubNodes(node.id, 0, this.userPreferenceService.paginationSize).subscribe((response: TreeResponse<T>) => {
+            this.treeService.expandNode(node, response.entries);
+            if (this.treeNodesSelection.isSelected(node)) {
+                // timeout used to update nodeCheckboxes query list after new nodes are added so they can be selected
+                setTimeout(() => {
+                    this.treeNodesSelection.select(...response.entries);
+                });
+            }
+        });
+    }
+
+    private handleNodeCollapsed(node: T): void {
+        if (!node.isLoading) {
+            this.treeService.collapseNode(node);
+        }
     }
 
     private checkParentsSelection(node: T): void {
