@@ -31,6 +31,9 @@ describe('ReactivePreselectionService', () => {
     let preselection: TestItem[];
     let host: ReactivePreselectionHost<TestItem>;
 
+    const HOST_FIELD_ID = 'target';
+    const HOST_FORM_ID = 'form-1';
+
     const emit = () => formRulesEvent.next({ type: 'fieldValueChanged' });
 
     const createService = (token: Observable<boolean> | boolean | null): ReactivePreselectionService<TestItem> => {
@@ -50,6 +53,8 @@ describe('ReactivePreselectionService', () => {
         fieldValue = null;
         preselection = [];
         host = {
+            getFieldId: () => HOST_FIELD_ID,
+            getFormId: () => HOST_FORM_ID,
             getFieldValue: () => fieldValue,
             getPreselection: () => preselection,
             setPreselection: (value) => (preselection = value),
@@ -104,6 +109,40 @@ describe('ReactivePreselectionService', () => {
             formRulesEvent.next({ type: 'formLoaded' });
 
             expect(preselection).toBe(initial);
+        });
+
+        it('should ignore changes originating from the host field itself', () => {
+            const initial = preselection;
+            fieldValue = [{ id: 'a' }];
+
+            formRulesEvent.next({ type: 'fieldValueChanged', field: { id: HOST_FIELD_ID } });
+
+            expect(preselection).toBe(initial);
+        });
+
+        it('should ignore changes from a different form', () => {
+            const initial = preselection;
+            fieldValue = [{ id: 'a' }];
+
+            formRulesEvent.next({ type: 'fieldValueChanged', form: { id: 'other-form' } });
+
+            expect(preselection).toBe(initial);
+        });
+
+        it('should react to changes from another field in the same form', () => {
+            fieldValue = [{ id: 'a' }];
+
+            formRulesEvent.next({ type: 'fieldValueChanged', field: { id: 'source' }, form: { id: HOST_FORM_ID } });
+
+            expect(preselection).toEqual([{ id: 'a' }]);
+        });
+
+        it('should drop non-object entries instead of preselecting primitives', () => {
+            fieldValue = 'AMolodyh';
+
+            emit();
+
+            expect(preselection).toEqual([]);
         });
     });
 

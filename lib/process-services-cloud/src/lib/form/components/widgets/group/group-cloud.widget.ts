@@ -62,6 +62,8 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
 
     ngOnInit() {
         this.reactivePreselection.connect({
+            getFieldId: () => this.field?.id,
+            getFormId: () => this.field?.form?.id,
             getFieldValue: () => this.field?.value,
             getPreselection: () => this.preSelectGroup,
             setPreselection: (value) => (this.preSelectGroup = value),

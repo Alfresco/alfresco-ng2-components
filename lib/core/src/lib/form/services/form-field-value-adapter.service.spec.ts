@@ -204,6 +204,11 @@ describe('FormFieldValueAdapterService', () => {
             expect(service.adapt({ id: 'a', name: 'Apple' }, field)).toBe('a');
         });
 
+        it('single-select: should return null for an object without an id', () => {
+            const field = makeField(FormFieldTypes.DROPDOWN, null, { options });
+            expect(service.adapt({ name: 'Apple' }, field)).toBeNull();
+        });
+
         it('single-select: should extract the first id from an array', () => {
             const field = makeField(FormFieldTypes.DROPDOWN, null, { options });
             expect(service.adapt(['a'], field)).toBe('a');
@@ -256,6 +261,11 @@ describe('FormFieldValueAdapterService', () => {
         it('should extract id from an object', () => {
             const field = makeField(FormFieldTypes.RADIO_BUTTONS, null, { options });
             expect(service.adapt({ id: 'yes', name: 'Yes' }, field)).toBe('yes');
+        });
+
+        it('should return null for an object without an id', () => {
+            const field = makeField(FormFieldTypes.RADIO_BUTTONS, null, { options });
+            expect(service.adapt({ name: 'Yes' }, field)).toBeNull();
         });
 
         it('should extract the first id from an array', () => {
