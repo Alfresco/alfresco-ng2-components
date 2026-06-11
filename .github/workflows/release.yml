@@ -173,6 +173,7 @@ jobs:
     secrets:
       BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
       CROWDIN_TRANSLATIONS_TOKEN: ${{ secrets.CROWDIN_TRANSLATIONS_TOKEN }}
+      HXP_GIT_COMMIT_SIGNING_PRIVATE_KEY: ${{ secrets.HXP_GIT_COMMIT_SIGNING_PRIVATE_KEY }}
 
   finalize:
     if: always()
