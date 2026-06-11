@@ -32,7 +32,28 @@ export class UrlService {
      * @returns URL string
      */
     createTrustedUrl(blob: Blob): string {
-        const url = window.URL.createObjectURL(blob);
+        return this.trustUrl(this.createObjectUrl(blob));
+    }
+
+    /**
+     * Creates a raw object URL from the Blob without Angular sanitization. Use this for
+     * non-Angular consumers (third-party DOM APIs, libraries) that need a real URL string.
+     *
+     * @param  blob Data to wrap into object URL
+     * @returns Raw object URL string
+     */
+    createObjectUrl(blob: Blob): string {
+        return window.URL.createObjectURL(blob);
+    }
+
+    /**
+     * Wraps a URL string with Angular's bypassSecurityTrustUrl so it can be used in template bindings.
+     * WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
+     *
+     * @param  url URL to mark as safe
+     * @returns SafeUrl wrapper cast to string for template binding
+     */
+    trustUrl(url: string): string {
         return this.sanitizer.bypassSecurityTrustUrl(url) as string;
     }
 }
