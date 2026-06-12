@@ -23,6 +23,7 @@ import { ComponentSelectionMode } from '../../../../types';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ReactivePreselectionService } from '../reactive-preselection.service';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { PeopleCloudComponent } from '../../../../people/components/people-cloud.component';
@@ -45,10 +46,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    providers: [ReactivePreselectionService]
 })
 export class PeopleCloudWidgetComponent extends WidgetComponent implements OnInit {
     private readonly identityUserService = inject(IdentityUserService);
+    private readonly reactivePreselection: ReactivePreselectionService<IdentityUserModel> = inject(ReactivePreselectionService);
 
     typeId = 'PeopleCloudWidgetComponent';
     appName: string;
@@ -63,6 +66,15 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
     private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit() {
+        this.reactivePreselection.connect({
+            getFieldId: () => this.field?.id,
+            getFormId: () => this.field?.form?.id,
+            getFieldValue: () => this.field?.value,
+            getPreselection: () => this.preSelectUsers,
+            setPreselection: (value) => (this.preSelectUsers = value),
+            identityOf: (user) => user?.id ?? user?.username ?? user?.email
+        });
+
         if (this.field) {
             this.roles = this.field.roles;
             this.mode = this.field.optionType as ComponentSelectionMode;
