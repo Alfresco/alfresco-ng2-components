@@ -33,7 +33,7 @@
     "@angular/router": ">=16.0.0",
     "@mat-datetimepicker/core": ">=12.0.1",
     "@ngx-translate/core": ">=17.0.0",
-    "@alfresco/js-api": ">=9.4.0",
+    "@alfresco/js-api": ">=9.5.0",
     "@alfresco/adf-extensions": ">=8.5.0",
     "minimatch": ">=10.0.0",
     "pdfjs-dist": ">=3.3.122",
