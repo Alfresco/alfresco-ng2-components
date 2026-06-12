@@ -19,6 +19,7 @@ import { TreeComponent } from './tree.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContextMenuDirective, UnitTestingUtils, UserPreferencesService } from '@alfresco/adf-core';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
+import { TreeResponse } from '../models/tree-response.interface';
 import { singleNode, treeNodesChildrenMockExpanded, treeNodesMock, treeNodesMockExpanded, treeNodesNoChildrenMock } from '../mock/tree-node.mock';
 import { of, Subject } from 'rxjs';
 import { TreeService } from '../services/tree.service';
@@ -404,6 +405,23 @@ describe('TreeComponent', () => {
             const expandSpy = spyOn(component.treeService, 'expandNode');
             component.treeService.treeControl.expand(component.treeService.treeNodes[0]);
             expect(expandSpy).not.toHaveBeenCalled();
+        });
+
+        it('should reset isLoading and collapse node when getSubNodes fails during expansion', () => {
+            fixture.detectChanges();
+            component.treeService.treeNodes = Array.from(treeNodesMock);
+            component.treeService.treeNodes[0].isLoading = false;
+
+            const subject = new Subject<TreeResponse<TreeNode>>();
+            spyOn(component.treeService, 'getSubNodes').and.returnValue(subject.asObservable());
+
+            component.treeService.treeControl.expand(component.treeService.treeNodes[0]);
+            expect(component.treeService.treeNodes[0].isLoading).toBeTrue();
+
+            subject.error(new Error('error'));
+
+            expect(component.treeService.treeNodes[0].isLoading).toBeFalse();
+            expect(component.treeService.treeControl.isExpanded(component.treeService.treeNodes[0])).toBeFalse();
         });
     });
 

@@ -17,6 +17,7 @@
 
 import {
     Component,
+    DestroyRef,
     EventEmitter,
     HostBinding,
     Input,
@@ -29,7 +30,7 @@ import {
     ViewEncapsulation,
     inject
 } from '@angular/core';
-import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, merge, Observable, Subject, EMPTY } from 'rxjs';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
 import { TreeService } from '../services/tree.service';
 import { ContextMenuDirective, IconModule, PaginationModel, UserPreferencesService } from '@alfresco/adf-core';
@@ -37,13 +38,14 @@ import { SelectionChange, SelectionModel } from '@angular/cdk/collections';
 import { TreeResponse } from '../models/tree-response.interface';
 import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
 import { TreeContextMenuResult } from '../models/tree-context-menu-result.interface';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, catchError } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatTreeModule, MatTreeNode } from '@angular/material/tree';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-tree',
@@ -66,6 +68,7 @@ import { MatMenuModule } from '@angular/material/menu';
 export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     treeService = inject<TreeService<T>>(TreeService);
     private readonly userPreferenceService = inject(UserPreferencesService);
+    private readonly destroyRef = inject(DestroyRef);
 
     /** TemplateRef to provide empty template when no nodes are loaded */
     @Input()
@@ -114,7 +117,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     private _contextMenuSource: T;
     private _contextMenuOptions: any[];
     private readonly contextMenuOptionsChanged$ = new Subject<void>();
-    private readonly destroy$ = new Subject<void>();
     public loadingRoot$: Observable<boolean>;
     public treeNodesSelection = new SelectionModel<T>(true, [], true, (node1: T, node2: T) => node1.id === node2.id);
 
@@ -156,10 +158,10 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.loadingRoot$ = this.loadingRootSource.asObservable();
         this.refreshTree(0, this.userPreferenceService.paginationSize);
-        this.treeNodesSelection.changed.pipe(takeUntil(this.destroy$)).subscribe((selectionChange: SelectionChange<T>) => {
+        this.treeNodesSelection.changed.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((selectionChange: SelectionChange<T>) => {
             this.onTreeSelectionChange(selectionChange);
         });
-        this.treeService.treeControl.expansionModel.changed.pipe(takeUntil(this.destroy$)).subscribe((change: SelectionChange<T>) => {
+        this.treeService.treeControl.expansionModel.changed.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((change: SelectionChange<T>) => {
             change.added.forEach((node: T) => this.handleNodeExpanded(node));
             change.removed.forEach((node: T) => this.handleNodeCollapsed(node));
         });
@@ -168,8 +170,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.contextMenuOptionsChanged$.next();
         this.contextMenuOptionsChanged$.complete();
-        this.destroy$.next();
-        this.destroy$.complete();
     }
 
     /**
@@ -299,16 +299,20 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     }
 
     private handleNodeExpanded(node: T): void {
-        if (!node.hasChildren || node.isLoading) {
-            return;
-        }
-        if (this.treeService.getChildren(node).length > 0) {
+        if (!node.hasChildren || node.isLoading || this.treeService.getChildren(node).length > 0) {
             return;
         }
         node.isLoading = true;
         this.treeService
             .getSubNodes(node.id, 0, this.userPreferenceService.paginationSize)
-            .pipe(takeUntil(this.destroy$))
+            .pipe(
+                catchError(() => {
+                    node.isLoading = false;
+                    this.treeService.treeControl.collapse(node);
+                    return EMPTY;
+                }),
+                takeUntilDestroyed(this.destroyRef)
+            )
             .subscribe((response: TreeResponse<T>) => {
                 if (!this.treeService.treeControl.isExpanded(node)) {
                     node.isLoading = false;
