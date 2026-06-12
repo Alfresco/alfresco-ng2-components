@@ -19,6 +19,7 @@ import { TreeComponent } from './tree.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContextMenuDirective, UnitTestingUtils, UserPreferencesService } from '@alfresco/adf-core';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
+import { TreeResponse } from '../models/tree-response.interface';
 import { singleNode, treeNodesChildrenMockExpanded, treeNodesMock, treeNodesMockExpanded, treeNodesNoChildrenMock } from '../mock/tree-node.mock';
 import { of, Subject } from 'rxjs';
 import { TreeService } from '../services/tree.service';
@@ -29,6 +30,7 @@ import { DebugElement } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('TreeComponent', () => {
     let fixture: ComponentFixture<TreeComponent<TreeNode>>;
@@ -181,6 +183,7 @@ describe('TreeComponent', () => {
         component.refreshTree();
         component.treeService.treeNodes[0].isLoading = false;
         fixture.detectChanges();
+        component.treeService.treeControl.expand(component.treeService.treeNodes[0]);
         const collapseSpy = spyOn(component.treeService, 'collapseNode');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(true);
         clickExpandCollapseBtn(component.treeService.treeNodes[0].id);
@@ -201,15 +204,18 @@ describe('TreeComponent', () => {
         component.refreshTree();
         component.treeService.treeNodes[0].isLoading = false;
         fixture.detectChanges();
-        const collapseSpy = spyOn(component.treeService, 'expandNode');
-        spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(false);
+        component.treeService.treeNodes = Array.from(treeNodesMock);
+        component.treeService.treeNodes[0].isLoading = false;
+        fixture.detectChanges();
+        const expandSpy = spyOn(component.treeService, 'expandNode');
         clickExpandCollapseBtn(component.treeService.treeNodes[0].id);
-        expect(collapseSpy).toHaveBeenCalledWith(component.treeService.treeNodes[0], treeNodesMockExpanded);
+        expect(expandSpy).toHaveBeenCalledWith(component.treeService.treeNodes[0], treeNodesMockExpanded);
     });
 
     it('should call collapseNode on TreeService when collapsing node by clicking at node label and node has children', () => {
         component.refreshTree();
         fixture.detectChanges();
+        component.treeService.treeControl.expand(component.treeService.treeNodes[0]);
         spyOn(component.treeService, 'collapseNode');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(true);
         clickDisplayNameElement(component.treeService.treeNodes[0].id);
@@ -219,8 +225,10 @@ describe('TreeComponent', () => {
     it('should call expandNode on TreeService when expanding node by clicking at node label and node has children', () => {
         component.refreshTree();
         fixture.detectChanges();
+        component.treeService.treeNodes = Array.from(treeNodesMock);
+        component.treeService.treeNodes[0].isLoading = false;
+        fixture.detectChanges();
         spyOn(component.treeService, 'expandNode');
-        spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(false);
         clickDisplayNameElement(component.treeService.treeNodes[0].id);
         expect(component.treeService.expandNode).toHaveBeenCalledWith(component.treeService.treeNodes[0], treeNodesMockExpanded);
     });
@@ -355,6 +363,86 @@ describe('TreeComponent', () => {
             });
             component.loadMoreSubnodes(component.treeService.treeNodes.find((node: TreeNode) => node.nodeType === TreeNodeType.LoadMoreNode));
             fixture.detectChanges();
+        });
+
+        describe('announcement', () => {
+            let translateSpy: jasmine.Spy<TranslateService['instant']>;
+
+            beforeEach(() => {
+                fixture.detectChanges();
+                translateSpy = spyOn(TestBed.inject(TranslateService), 'instant');
+            });
+
+            it('should use selected key when node is selected', () => {
+                component.onNodeSelected(component.treeService.treeNodes[0]);
+                expect(translateSpy).toHaveBeenCalledWith('ADF-TREE.ARIA.SELECTED', { name: 'testName1' });
+            });
+
+            it('should use deselected key when node is deselected', () => {
+                component.treeNodesSelection.select(component.treeService.treeNodes[0]);
+                component.onNodeSelected(component.treeService.treeNodes[0]);
+                expect(translateSpy).toHaveBeenCalledWith('ADF-TREE.ARIA.DESELECTED', { name: 'testName1' });
+            });
+        });
+    });
+
+    describe('expansionModel.changed subscription', () => {
+        it('should load and expand node when expansionModel fires added event', () => {
+            fixture.detectChanges();
+            component.treeService.treeNodes = Array.from(treeNodesMock);
+            component.treeService.treeNodes[0].isLoading = false;
+            const expandSpy = spyOn(component.treeService, 'expandNode');
+            component.treeService.treeControl.expand(component.treeService.treeNodes[0]);
+            expect(expandSpy).toHaveBeenCalledWith(component.treeService.treeNodes[0], treeNodesMockExpanded);
+        });
+
+        it('should collapse node when expansionModel fires removed event', () => {
+            fixture.detectChanges();
+            component.treeService.treeControl.expand(component.treeService.treeNodes[0]);
+            const collapseSpy = spyOn(component.treeService, 'collapseNode');
+            component.treeService.treeControl.collapse(component.treeService.treeNodes[0]);
+            expect(collapseSpy).toHaveBeenCalledWith(component.treeService.treeNodes[0]);
+        });
+
+        it('should not expand node when expansionModel fires added event and node is already loading', () => {
+            fixture.detectChanges();
+            component.treeService.treeNodes[0].isLoading = true;
+            const expandSpy = spyOn(component.treeService, 'expandNode');
+            component.treeService.treeControl.expand(component.treeService.treeNodes[0]);
+            expect(expandSpy).not.toHaveBeenCalled();
+        });
+
+        it('should not collapse node when expansionModel fires removed event and node is loading', () => {
+            fixture.detectChanges();
+            component.treeService.treeControl.expand(component.treeService.treeNodes[0]);
+            component.treeService.treeNodes[0].isLoading = true;
+            const collapseSpy = spyOn(component.treeService, 'collapseNode');
+            component.treeService.treeControl.collapse(component.treeService.treeNodes[0]);
+            expect(collapseSpy).not.toHaveBeenCalled();
+        });
+
+        it('should not load children when node is expanded but children are already loaded', () => {
+            fixture.detectChanges();
+            const expandSpy = spyOn(component.treeService, 'expandNode');
+            component.treeService.treeControl.expand(component.treeService.treeNodes[0]);
+            expect(expandSpy).not.toHaveBeenCalled();
+        });
+
+        it('should reset isLoading and collapse node when getSubNodes fails during expansion', () => {
+            fixture.detectChanges();
+            component.treeService.treeNodes = Array.from(treeNodesMock);
+            component.treeService.treeNodes[0].isLoading = false;
+
+            const subject = new Subject<TreeResponse<TreeNode>>();
+            spyOn(component.treeService, 'getSubNodes').and.returnValue(subject.asObservable());
+
+            component.treeService.treeControl.expand(component.treeService.treeNodes[0]);
+            expect(component.treeService.treeNodes[0].isLoading).toBeTrue();
+
+            subject.error(new Error('error'));
+
+            expect(component.treeService.treeNodes[0].isLoading).toBeFalse();
+            expect(component.treeService.treeControl.isExpanded(component.treeService.treeNodes[0])).toBeFalse();
         });
     });
 

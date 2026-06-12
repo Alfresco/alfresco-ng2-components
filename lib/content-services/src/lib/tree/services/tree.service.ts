@@ -70,7 +70,9 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
      */
     public collapseNode(nodeToCollapse: T): void {
         if (nodeToCollapse?.hasChildren) {
-            this.treeControl.collapse(nodeToCollapse);
+            if (this.treeControl.isExpanded(nodeToCollapse)) {
+                this.treeControl.collapse(nodeToCollapse);
+            }
             const children: T[] = this.treeNodes.filter((node: T) => nodeToCollapse.id === node.parentId);
             children.forEach((child: T) => {
                 this.collapseInnerNode(child);

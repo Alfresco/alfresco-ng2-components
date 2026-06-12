@@ -43,7 +43,6 @@ $tree-header-font-size: 12px !default;
     &:focus {
         background-color: var(--mat-sys-surface-container);
         outline-offset: -1px;
-        outline: 1px solid var(--mat-sys-secondary);
     }
 
     .adf-tree-expand-collapse-button,
