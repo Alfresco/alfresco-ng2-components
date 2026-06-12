@@ -150,7 +150,11 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     ngOnChanges(changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
         if (blobFile?.currentValue) {
-            this.urlFile = this.urlService.createTrustedUrl(this.blobFile);
+            const rawUrl = this.urlService.createObjectUrl(this.blobFile);
+            if (!blobFile.firstChange && this.cropper) {
+                this.cropper.replace(rawUrl);
+            }
+            this.urlFile = this.urlService.trustUrl(rawUrl);
             return;
         }
 
