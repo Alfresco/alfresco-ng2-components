@@ -30,6 +30,7 @@ import { DebugElement } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('TreeComponent', () => {
     let fixture: ComponentFixture<TreeComponent<TreeNode>>;
@@ -362,6 +363,26 @@ describe('TreeComponent', () => {
             });
             component.loadMoreSubnodes(component.treeService.treeNodes.find((node: TreeNode) => node.nodeType === TreeNodeType.LoadMoreNode));
             fixture.detectChanges();
+        });
+
+        describe('announcement', () => {
+            let translateSpy: jasmine.Spy<TranslateService['instant']>;
+
+            beforeEach(() => {
+                fixture.detectChanges();
+                translateSpy = spyOn(TestBed.inject(TranslateService), 'instant');
+            });
+
+            it('should use selected key when node is selected', () => {
+                component.onNodeSelected(component.treeService.treeNodes[0]);
+                expect(translateSpy).toHaveBeenCalledWith('ADF-TREE.ARIA.SELECTED', { name: 'testName1' });
+            });
+
+            it('should use deselected key when node is deselected', () => {
+                component.treeNodesSelection.select(component.treeService.treeNodes[0]);
+                component.onNodeSelected(component.treeService.treeNodes[0]);
+                expect(translateSpy).toHaveBeenCalledWith('ADF-TREE.ARIA.DESELECTED', { name: 'testName1' });
+            });
         });
     });
 

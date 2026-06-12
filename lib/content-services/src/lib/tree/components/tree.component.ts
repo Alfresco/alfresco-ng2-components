@@ -40,7 +40,8 @@ import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
 import { TreeContextMenuResult } from '../models/tree-context-menu-result.interface';
 import { takeUntil, catchError } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatTreeModule, MatTreeNode } from '@angular/material/tree';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
@@ -69,6 +70,8 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     treeService = inject<TreeService<T>>(TreeService);
     private readonly userPreferenceService = inject(UserPreferencesService);
     private readonly destroyRef = inject(DestroyRef);
+    private readonly translateService = inject(TranslateService);
+    private readonly liveAnnouncer = inject(LiveAnnouncer);
 
     /** TemplateRef to provide empty template when no nodes are loaded */
     @Input()
@@ -262,6 +265,9 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
      * @param node selected node
      */
     public onNodeSelected(node: T): void {
+        if (!this.selectableNodes) {
+            return;
+        }
         this.treeNodesSelection.toggle(node);
         const descendants: T[] = this.treeService.treeControl.getDescendants(node).filter(this.isRegularNode);
         if (descendants.length > 0) {
@@ -270,6 +276,13 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
                 : this.treeNodesSelection.deselect(...descendants);
         }
         this.checkParentsSelection(node);
+
+        void this.liveAnnouncer.announce(
+            this.translateService.instant(this.treeNodesSelection.isSelected(node) ? 'ADF-TREE.ARIA.SELECTED' : 'ADF-TREE.ARIA.DESELECTED', {
+                name: node.nodeName
+            }),
+            'assertive'
+        );
     }
 
     /**

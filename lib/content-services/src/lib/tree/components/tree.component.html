@@ -50,7 +50,7 @@
                 [adf-context-menu-enabled]="!!contextMenuOptions"
                 (contextmenu)="contextMenuSource = node"
                 (keydown.enter)="expandCollapseNode(node); $event.stopPropagation()"
-                (keydown.space)="expandCollapseNode(node); $event.preventDefault(); $event.stopPropagation()"
+                (keydown.space)="onNodeSelected(node); $event.preventDefault(); $event.stopPropagation()"
             >
                 <div class="adf-tree-expand-collapse-container">
                     <button
