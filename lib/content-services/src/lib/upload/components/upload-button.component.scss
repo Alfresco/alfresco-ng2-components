@@ -17,4 +17,11 @@
         box-shadow: var(--mat-sys-level2);
         border-radius: 4px;
     }
+
+    &-upload-button-file-container input:disabled + .adf-upload-button-label {
+        cursor: not-allowed;
+        color: var(--mat-sys-outline);
+        box-shadow: none;
+        background-color: var(--mat-sys-surface);
+    }
 }
