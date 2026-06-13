@@ -335,8 +335,9 @@ describe('AmountWidgetComponent - rendering', () => {
         await input.setValue('gdfgdf');
         expect(widget.field.isValid).toBe(false);
 
-        const errorWidget = testingUtils.getByCSS('error-widget .adf-error-text').nativeElement;
-        expect(errorWidget.textContent).toBe('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
+        const formField = await testingUtils.getMatFormField();
+        const errors = await formField.getTextErrors();
+        expect(errors[0]).toContain('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
     });
 
     it('[C309693] - Should be possible to set the Advanced Properties for Amount Widget', async () => {
@@ -372,13 +373,14 @@ describe('AmountWidgetComponent - rendering', () => {
         await input.setValue('8');
         expect(widget.field.isValid).toBe(false);
 
-        let errorMessage = testingUtils.getByCSS('.adf-error-text').nativeElement;
-        expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
+        const formField = await testingUtils.getMatFormField();
+        let errors = await formField.getTextErrors();
+        expect(errors[0].trim()).toContain('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
 
         await input.setValue('99');
         expect(widget.field.isValid).toBe(false);
-        errorMessage = testingUtils.getByCSS('.adf-error-text').nativeElement;
-        expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN');
+        errors = await formField.getTextErrors();
+        expect(errors[0].trim()).toContain('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN');
 
         await input.setValue('80');
         expect(widget.field.isValid).toBe(true);
@@ -388,8 +390,8 @@ describe('AmountWidgetComponent - rendering', () => {
 
         await input.setValue('incorrect format');
         expect(widget.field.isValid).toBe(false);
-        errorMessage = testingUtils.getByCSS('.adf-error-text').nativeElement;
-        expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
+        errors = await formField.getTextErrors();
+        expect(errors[0].trim()).toContain('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
     });
 
     describe('when form model has left labels', () => {

@@ -34,7 +34,6 @@ describe('TextWidgetComponent', () => {
     let loader: HarnessLoader;
     let widget: TextWidgetComponent;
     let fixture: ComponentFixture<TextWidgetComponent>;
-    let errorWidget: HTMLElement;
     let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
@@ -126,20 +125,21 @@ describe('TextWidgetComponent', () => {
 
                 await testingUtils.fillMatInput('TEXT');
 
-                errorWidget = testingUtils.getByCSS('.adf-error-text').nativeElement;
-                expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.AT_LEAST_LONG');
+                const formField = await testingUtils.getMatFormField();
+                let errors = await formField.getTextErrors();
+                expect(errors[0]).toContain('FORM.FIELD.VALIDATOR.AT_LEAST_LONG');
                 expect(widget.field.isValid).toBe(false);
 
                 await testingUtils.fillMatInput('TEXT VALUE');
 
-                errorWidget = testingUtils.getByCSS('.adf-error-text')?.nativeElement;
+                errors = await formField.getTextErrors();
                 expect(widget.field.isValid).toBe(true);
 
                 await testingUtils.fillMatInput('TEXT VALUE TOO LONG');
                 expect(widget.field.isValid).toBe(false);
 
-                errorWidget = testingUtils.getByCSS('.adf-error-text').nativeElement;
-                expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+                errors = await formField.getTextErrors();
+                expect(errors[0]).toContain('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
             });
 
             it('should be able to set regex pattern property for Text widget', async () => {

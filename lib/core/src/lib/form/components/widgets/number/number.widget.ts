@@ -19,12 +19,13 @@
 
 import { NgIf } from '@angular/common';
 import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DecimalNumberPipe } from '../../../../pipes';
-import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
@@ -42,12 +43,14 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent],
+    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, MatIconModule],
     providers: [DecimalNumberPipe],
     encapsulation: ViewEncapsulation.None
 })
 export class NumberWidgetComponent extends WidgetComponent implements OnInit {
     displayValue: number;
+    errorStateMatcher: ErrorStateMatcher;
+    translateParameters: Record<string, string> = {};
 
     private readonly decimalNumberPipe = inject(DecimalNumberPipe);
 
@@ -57,6 +60,27 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
         } else {
             this.displayValue = this.field.value;
         }
+        this.initErrorStateMatcher();
+    }
+
+    private initErrorStateMatcher(): void {
+        this.errorStateMatcher = {
+            isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
+                !this.field.isValid && this.isTouched()
+        };
+    }
+
+    private updateTranslateParameters(): void {
+        if (this.field.validationSummary?.isActive()) {
+            this.translateParameters = this.field.validationSummary.getAttributesAsJsonObj();
+        } else {
+            this.translateParameters = {};
+        }
+    }
+
+    onBlur(): void {
+        this.markAsTouched();
+        this.updateTranslateParameters();
     }
 
     protected onNumberChange(value: string) {
@@ -65,5 +89,6 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
         }
 
         this.onFieldChanged(this.field);
+        this.updateTranslateParameters();
     }
 }

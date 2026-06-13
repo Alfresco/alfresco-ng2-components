@@ -25,7 +25,6 @@ import {
     DateFnsUtils,
     DEFAULT_DATE_FORMAT,
     ErrorMessageModel,
-    ErrorWidgetComponent,
     FormService,
     WidgetComponent,
     ReactiveFormWidget
@@ -36,12 +35,13 @@ import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '
 import { NgIf } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'date-widget',
-    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, ErrorWidgetComponent],
+    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, MatIconModule],
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }
@@ -123,6 +123,16 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
     private updateField(): void {
         this.validateField();
         this.onFieldChanged(this.field);
+    }
+
+    get formattedMinDate(): string {
+        const min = this.dateInputControl.errors?.matDatepickerMin?.min;
+        return min ? DateFnsUtils.formatDate(min, this.field.dateDisplayFormat).toLocaleUpperCase() : '';
+    }
+
+    get formattedMaxDate(): string {
+        const max = this.dateInputControl.errors?.matDatepickerMax?.max;
+        return max ? DateFnsUtils.formatDate(max, this.field.dateDisplayFormat).toLocaleUpperCase() : '';
     }
 
     private validateField(): void {
