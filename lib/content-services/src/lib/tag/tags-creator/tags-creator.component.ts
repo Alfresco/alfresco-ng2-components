@@ -186,6 +186,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private readonly tagsListElement: ElementRef;
     @ViewChild('tagNameInput')
     private readonly tagNameInputElement: ElementRef;
+    @ViewChild(DynamicChipListComponent)
+    private readonly dynamicChipList: DynamicChipListComponent;
 
     private readonly destroyRef = inject(DestroyRef);
 
@@ -271,7 +273,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      * or if user is still typing what means that validation for input is not called yet.
      */
     addTag(): void {
-        if (!this._typing && !this.tagNameControl.invalid) {
+        if (!this._typing && !this.tagNameControl.invalid && this.tagNameControl.value.trim()) {
             this.tags = [...this.tags, this.tagNameControl.value.trim()];
             this.clearTagNameInput();
             this.checkScrollbarVisibility();
@@ -286,6 +288,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      * @param tag tag's name which should be removed from top list.
      */
     removeTag(tag: string): void {
+        const removedIndex = this.tagsToDisplay.findIndex((chip) => chip.id === tag);
         this.removeTagFromArray(this.tags, tag);
         this.tags = [...this.tags];
         this.tagNameControl.updateValueAndValidity();
@@ -293,6 +296,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.exactTagSet$.next();
         this.checkScrollbarVisibility();
         this.tagsChange.emit(this.tags);
+        setTimeout(() => this.focusAfterRemoval(removedIndex));
     }
 
     /**
@@ -441,5 +445,13 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private clearTagNameInput() {
         this.tagNameControl.setValue('');
         this.tagNameControl.markAsUntouched();
+    }
+
+    private focusAfterRemoval(removedIndex: number): void {
+        if (this.tags.length === 0) {
+            this.tagNameInputElement?.nativeElement?.focus();
+        } else {
+            this.dynamicChipList?.focusDeleteButton(removedIndex);
+        }
     }
 }

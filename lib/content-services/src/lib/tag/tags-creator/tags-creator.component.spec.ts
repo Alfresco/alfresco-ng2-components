@@ -16,7 +16,7 @@
  */
 
 import { TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
-import { NotificationService } from '@alfresco/adf-core';
+import { NotificationService, UnitTestingUtils } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { DebugElement } from '@angular/core';
@@ -24,7 +24,6 @@ import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick
 import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatError } from '@angular/material/form-field';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
-import { By } from '@angular/platform-browser';
 import { EMPTY, of, throwError } from 'rxjs';
 import { TagsCreatorComponent } from './tags-creator.component';
 
@@ -34,6 +33,7 @@ describe('TagsCreatorComponent', () => {
     let tagService: TagService;
     let notificationService: NotificationService;
     let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -65,6 +65,7 @@ describe('TagsCreatorComponent', () => {
         component = fixture.componentInstance;
         tagService = TestBed.inject(TagService);
         notificationService = TestBed.inject(NotificationService);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
 
         fixture.detectChanges();
     });
@@ -75,7 +76,7 @@ describe('TagsCreatorComponent', () => {
      * @returns native element
      */
     function getNameInput(): HTMLInputElement {
-        return fixture.debugElement.query(By.css(`.adf-tag-name-field input`))?.nativeElement;
+        return testingUtils.getInputByCSS('.adf-tag-name-field input');
     }
 
     /**
@@ -84,7 +85,7 @@ describe('TagsCreatorComponent', () => {
      * @returns native element
      */
     function getCreateTagLabel(): HTMLSpanElement {
-        return fixture.debugElement.query(By.css('.adf-create-tag-label'))?.nativeElement;
+        return testingUtils.getByCSS('.adf-create-tag-label')?.nativeElement;
     }
 
     /**
@@ -93,8 +94,7 @@ describe('TagsCreatorComponent', () => {
      * @returns list of native elements
      */
     function getRemoveTagButtons(): HTMLButtonElement[] {
-        const elements = fixture.debugElement.queryAll(By.css(`.adf-dynamic-chip-list-delete-icon`));
-        return elements.map((el) => el.nativeElement);
+        return testingUtils.getAllByCSS('.adf-dynamic-chip-list-delete-btn').map((el) => el.nativeElement);
     }
 
     /**
@@ -122,7 +122,7 @@ describe('TagsCreatorComponent', () => {
         typeTag(tagName, typingTimeout);
 
         if (addUsingEnter) {
-            getNameInput().dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
+            testingUtils.keyBoardEventByCSS('.adf-tag-name-field input', 'keyup', 'Enter', 'Enter');
         } else {
             getCreateTagLabel().click();
         }
@@ -141,9 +141,7 @@ describe('TagsCreatorComponent', () => {
         component.tagNameControlVisible = true;
         fixture.detectChanges();
 
-        const tagNameInput = getNameInput();
-        tagNameInput.value = tagName;
-        tagNameInput.dispatchEvent(new InputEvent('input'));
+        testingUtils.fillInputByCSS('.adf-tag-name-field input', tagName);
 
         tick(timeout);
         fixture.detectChanges();
@@ -155,12 +153,12 @@ describe('TagsCreatorComponent', () => {
      * @returns label
      */
     function getExistingTagsLabel(): string {
-        return fixture.debugElement.query(By.css('.adf-existing-tags-label')).nativeElement.textContent.trim();
+        return testingUtils.getByCSS('.adf-existing-tags-label').nativeElement.textContent.trim();
     }
 
     describe('Created tags list', () => {
         it('should display no tags created message after initialization', () => {
-            const message = fixture.debugElement.query(By.css('.adf-no-tags-message')).nativeElement.textContent.trim();
+            const message = testingUtils.getByCSS('.adf-no-tags-message').nativeElement.textContent.trim();
             expect(message).toBe('TAG.TAGS_CREATOR.NO_TAGS_CREATED');
         });
 
@@ -271,6 +269,51 @@ describe('TagsCreatorComponent', () => {
             fixture.detectChanges();
             expect(await getAddedTags()).toEqual(component.tags);
         });
+
+        it('should focus input when last tag is removed', fakeAsync(() => {
+            addTagToAddedList('Tag 1');
+
+            const input = getNameInput();
+            spyOn(input, 'focus');
+
+            getRemoveTagButtons()[0].click();
+            tick();
+            fixture.detectChanges();
+
+            expect(input.focus).toHaveBeenCalled();
+        }));
+
+        it('should focus button at same index when a non-last tag is removed', fakeAsync(() => {
+            addTagToAddedList('Tag 1');
+            addTagToAddedList('Tag 2');
+
+            getRemoveTagButtons()[0].click();
+            fixture.detectChanges();
+
+            const remainingButton = getRemoveTagButtons()[0];
+            spyOn(remainingButton, 'focus');
+
+            tick();
+            fixture.detectChanges();
+
+            expect(remainingButton.focus).toHaveBeenCalled();
+        }));
+
+        it('should focus previous button when last tag in list is removed', fakeAsync(() => {
+            addTagToAddedList('Tag 1');
+            addTagToAddedList('Tag 2');
+
+            getRemoveTagButtons()[1].click();
+            fixture.detectChanges();
+
+            const remainingButton = getRemoveTagButtons()[0];
+            spyOn(remainingButton, 'focus');
+
+            tick();
+            fixture.detectChanges();
+
+            expect(remainingButton.focus).toHaveBeenCalled();
+        }));
     });
 
     describe('Tag name field', () => {
@@ -316,16 +359,14 @@ describe('TagsCreatorComponent', () => {
              * @returns error text
              */
             function getFirstError(): string {
-                const error = fixture.debugElement.query(By.directive(MatError));
-                return error?.nativeElement.textContent.trim();
+                return testingUtils.getByDirective(MatError)?.nativeElement.textContent.trim();
             }
 
             it('should show error for only spaces', fakeAsync(() => {
                 typeTag('  ');
                 component.tagNameControl.markAsTouched();
                 fixture.detectChanges();
-                const error = getFirstError();
-                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EMPTY_TAG');
+                expect(getFirstError()).toBe('TAG.TAGS_CREATOR.ERRORS.EMPTY_TAG');
             }));
 
             it('should show error for only spaces if tags are changed', fakeAsync(() => {
@@ -342,8 +383,7 @@ describe('TagsCreatorComponent', () => {
                 addTagToAddedList(tag);
                 typeTag(tag);
 
-                const error = getFirstError();
-                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.ALREADY_ADDED_TAG');
+                expect(getFirstError()).toBe('TAG.TAGS_CREATOR.ERRORS.ALREADY_ADDED_TAG');
             }));
 
             it('should show error when duplicated already added tag if tags are changed', fakeAsync(() => {
@@ -361,8 +401,7 @@ describe('TagsCreatorComponent', () => {
                 typeTag('tag*"<>\\/?:|{}()^.');
                 component.tagNameControl.markAsTouched();
                 fixture.detectChanges();
-                const error = getFirstError();
-                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.SPECIAL_CHARACTERS');
+                expect(getFirstError()).toBe('TAG.TAGS_CREATOR.ERRORS.SPECIAL_CHARACTERS');
             }));
 
             it('should show error when duplicated already existing tag', fakeAsync(() => {
@@ -378,8 +417,7 @@ describe('TagsCreatorComponent', () => {
                 );
                 typeTag(tag);
 
-                const error = getFirstError();
-                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EXISTING_TAG');
+                expect(getFirstError()).toBe('TAG.TAGS_CREATOR.ERRORS.EXISTING_TAG');
             }));
 
             it('should show error when duplicated already existing tag with spaces', fakeAsync(() => {
@@ -395,8 +433,7 @@ describe('TagsCreatorComponent', () => {
                 );
                 typeTag(tag + ' ');
 
-                const error = getFirstError();
-                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EXISTING_TAG');
+                expect(getFirstError()).toBe('TAG.TAGS_CREATOR.ERRORS.EXISTING_TAG');
             }));
 
             it('should show error when deleting other Tag1 and Tag2 is typed and already existing tag', fakeAsync(() => {
@@ -418,8 +455,7 @@ describe('TagsCreatorComponent', () => {
                 component.removeTag(tag1);
                 tick();
                 fixture.detectChanges();
-                const error = getFirstError();
-                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EXISTING_TAG');
+                expect(getFirstError()).toBe('TAG.TAGS_CREATOR.ERRORS.EXISTING_TAG');
             }));
         });
     });
@@ -431,7 +467,7 @@ describe('TagsCreatorComponent', () => {
          * @returns debug element
          */
         function getPanel(): DebugElement {
-            return fixture.debugElement.query(By.css(`.adf-existing-tags-panel`));
+            return testingUtils.getByCSS('.adf-existing-tags-panel');
         }
 
         it('should be visible when input is visible and something is typed in input', fakeAsync(() => {
@@ -521,8 +557,7 @@ describe('TagsCreatorComponent', () => {
              * @returns list of tags
              */
             function getExistingTags(): string[] {
-                const tagElements = fixture.debugElement.queryAll(By.css(`.adf-existing-tags-panel .adf-tag`));
-                return tagElements.map((el) => el.nativeElement.textContent.trim());
+                return testingUtils.getAllByCSS('.adf-existing-tags-panel .adf-tag').map((el) => el.nativeElement.textContent.trim());
             }
 
             it('should call findTagByName on tagService using name set in input', fakeAsync(() => {
@@ -571,8 +606,7 @@ describe('TagsCreatorComponent', () => {
                 component.tagNameControl.markAsTouched();
                 fixture.detectChanges();
 
-                const tagElements = getExistingTags();
-                expect(tagElements).toEqual([tag1, tag2]);
+                expect(getExistingTags()).toEqual([tag1, tag2]);
             }));
 
             it('should exclude tags passed through tags input from loaded existing tags', fakeAsync(() => {
@@ -617,8 +651,7 @@ describe('TagsCreatorComponent', () => {
 
                 typeTag(tag);
 
-                const tagElements = getExistingTags();
-                expect(tagElements).toEqual([tag]);
+                expect(getExistingTags()).toEqual([tag]);
             }));
 
             it('should not display exact tag if that tag was passed through tags input', fakeAsync(() => {
@@ -671,8 +704,7 @@ describe('TagsCreatorComponent', () => {
                 );
                 typeTag(tag);
 
-                const tagElements = getExistingTags();
-                expect(tagElements).toEqual([tag, tag1, tag2]);
+                expect(getExistingTags()).toEqual([tag, tag1, tag2]);
             }));
 
             it('should selection be disabled if mode is Create', fakeAsync(() => {
@@ -715,9 +747,7 @@ describe('TagsCreatorComponent', () => {
              * @returns debug element
              */
             async function getSpinner(): Promise<MatProgressSpinnerHarness> {
-                const progressSpinner = await loader.getHarnessOrNull(MatProgressSpinnerHarness);
-
-                return progressSpinner;
+                return loader.getHarnessOrNull(MatProgressSpinnerHarness);
             }
 
             it('should be displayed when existing tags are loading', fakeAsync(async () => {
@@ -725,8 +755,7 @@ describe('TagsCreatorComponent', () => {
                 component.tagNameControl.markAsTouched();
                 fixture.detectChanges();
 
-                const spinner = await getSpinner();
-                expect(spinner).toBeTruthy();
+                expect(await getSpinner()).toBeTruthy();
 
                 discardPeriodicTasks();
                 flush();
@@ -735,8 +764,7 @@ describe('TagsCreatorComponent', () => {
             it('should not be displayed when existing tags stopped loading', fakeAsync(async () => {
                 typeTag('tag');
 
-                const spinner = await getSpinner();
-                expect(spinner).toBeFalsy();
+                expect(await getSpinner()).toBeFalsy();
             }));
 
             it('should have correct diameter', fakeAsync(async () => {
