@@ -42,26 +42,24 @@ describe('Oauth2  test', () => {
         });
 
         alfrescoJsApi.storage.setStorage(mockStorage);
-        Object.defineProperty(window, 'location', {
-            writable: true,
-            value: {
-                ancestorOrigins: null,
-                hash: null,
-                host: 'dummy.com',
-                port: '80',
-                protocol: 'http:',
-                hostname: 'dummy.com',
-                href: 'http://localhost/',
-                origin: 'dummy.com',
-                pathname: null,
-                search: null,
-                assign: (url: string) => {
-                    window.location.href = url;
-                },
-                reload: null,
-                replace: null
-            }
-        });
+        delete (window as any).location;
+        (window as any).location = {
+            ancestorOrigins: null,
+            hash: null,
+            host: 'dummy.com',
+            port: '80',
+            protocol: 'http:',
+            hostname: 'dummy.com',
+            href: 'http://localhost/',
+            origin: 'dummy.com',
+            pathname: null,
+            search: null,
+            assign: jest.fn((url: string) => {
+                window.location.href = url;
+            }),
+            reload: jest.fn(),
+            replace: jest.fn()
+        };
     });
 
     afterEach(() => {
@@ -209,6 +207,10 @@ describe('Oauth2  test', () => {
                 alfrescoJsApi
             );
 
+            jest.spyOn(oauth2Auth as any, 'silentRefresh').mockImplementation(function (this: any) {
+                this.pollingRefreshToken();
+            });
+
             let calls = 0;
             oauth2Auth.refreshToken = () => {
                 calls++;
@@ -244,6 +246,10 @@ describe('Oauth2  test', () => {
                 },
                 alfrescoJsApi
             );
+
+            jest.spyOn(oauth2Auth as any, 'silentRefresh').mockImplementation(function (this: any) {
+                this.pollingRefreshToken();
+            });
 
             let calls = 0;
             oauth2Auth.refreshToken = () => {

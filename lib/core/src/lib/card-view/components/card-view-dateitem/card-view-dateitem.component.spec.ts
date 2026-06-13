@@ -751,7 +751,7 @@ describe('CardViewDateItemComponent', () => {
                 label: 'Date label',
                 value: new Date('07/10/2017'),
                 key: 'dateKey',
-                format: 'YYYY-MM-dd',
+                format: 'yyyy-MM-dd',
                 editable: true,
                 allowManualInput: false
             });

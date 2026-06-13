@@ -92,7 +92,7 @@ export default createESLintRule<unknown[], MessageIds>({
                                         (() => {
                                             const propValue = (node as TSESTree.Property).value;
                                             return ASTUtils.isMemberExpression(propValue)
-                                                ? fixer.replaceText(propValue.property, 'None')
+                                                ? fixer.replaceText((propValue as TSESTree.MemberExpression).property, 'None')
                                                 : fixer.replaceText(propValue, viewEncapsulationNone);
                                         })()
                                     ].filter(isNotNullOrUndefined);

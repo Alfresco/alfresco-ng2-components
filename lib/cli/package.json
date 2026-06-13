@@ -24,6 +24,7 @@
   "dependencies": {
     "@alfresco/js-api": ">=9.5.0",
     "ejs": "^3.1.10",
+    "license-checker": "^25.0.1",
     "node-fetch": "^2.7.0",
     "spdx-license-list": "^5.0.0"
   },

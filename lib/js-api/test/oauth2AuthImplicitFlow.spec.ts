@@ -90,8 +90,8 @@ describe('Oauth2 Implicit flow test', () => {
             alfrescoJsApi
         );
 
-        oauth2Auth.on('implicit_redirect', () => {
-            assert.equal(window.location.href.includes('https://myOauthUrl:30081/auth/realms/springboot/protocol/openid-connect/auth?'), true);
+        oauth2Auth.on('implicit_redirect', (href: string) => {
+            assert.equal(href.includes('https://myOauthUrl:30081/auth/realms/springboot/protocol/openid-connect/auth?'), true);
             done();
         });
 
@@ -116,8 +116,8 @@ describe('Oauth2 Implicit flow test', () => {
         let setItemCalled = false;
         alfrescoJsApi.storage.setItem = () => (setItemCalled = true);
 
-        oauth2Auth.on('implicit_redirect', () => {
-            assert.equal(window.location.href.includes('https://myOauthUrl:30081/auth/realms/springboot/protocol/openid-connect/auth?'), true);
+        oauth2Auth.on('implicit_redirect', (href: string) => {
+            assert.equal(href.includes('https://myOauthUrl:30081/auth/realms/springboot/protocol/openid-connect/auth?'), true);
             assert.equal(setItemCalled, true);
             done();
         });
@@ -174,8 +174,8 @@ describe('Oauth2 Implicit flow test', () => {
         let lastValues: [string, any];
         alfrescoJsApi.storage.setItem = (key, value) => (lastValues = [key, value]);
 
-        oauth2Auth.on('implicit_redirect', () => {
-            assert.equal(window.location.href.includes('https://myOauthUrl:30081/auth/realms/springboot/protocol/openid-connect/auth?'), true);
+        oauth2Auth.on('implicit_redirect', (href: string) => {
+            assert.equal(href.includes('https://myOauthUrl:30081/auth/realms/springboot/protocol/openid-connect/auth?'), true);
             assert.deepEqual(lastValues, ['loginFragment', '/redirect-path&session_state=eqfqwfqwf']);
             done();
         });
