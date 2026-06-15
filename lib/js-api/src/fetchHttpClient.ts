@@ -367,7 +367,12 @@ export class FetchHttpClient implements HttpClient {
             const normalizedParams = FetchHttpClient.normalizeParams(formParams);
             const formData = new FormData();
             for (const [key, value] of Object.entries(normalizedParams)) {
-                formData.append(key, value as any);
+                const { data, filename } = FetchHttpClient.toFormDataValue(value);
+                if (filename) {
+                    formData.append(key, data, filename);
+                } else {
+                    formData.append(key, data);
+                }
             }
             return formData;
         }
@@ -523,5 +528,25 @@ export class FetchHttpClient implements HttpClient {
             return true;
         }
         return false;
+    }
+
+    private static toFormDataValue(value: any): { data: any; filename?: string } {
+        if (value && typeof value === 'object' && value.path && typeof value.path === 'string' && !(value instanceof Blob)) {
+            try {
+                const nodeFs = Function('return require("fs")')();
+                const nodePath = Function('return require("path")')();
+                const buffer = nodeFs.readFileSync(value.path);
+                const filename: string = nodePath.basename(value.path);
+                return { data: new Blob([buffer]), filename };
+            } catch {
+                return { data: value };
+            }
+        }
+
+        if (typeof Buffer === 'function' && value instanceof Buffer) {
+            return { data: new Blob([value]) };
+        }
+
+        return { data: value };
     }
 }

@@ -19,6 +19,8 @@
 import { FetchHttpClient } from '../src/fetchHttpClient';
 import { EventEmitter } from 'eventemitter3';
 import { getGlobalMockAgent, mockHost } from './mockObjects/base.mock';
+import * as fs from 'fs';
+import * as path from 'path';
 
 describe('FetchHttpClient', () => {
     const host = 'https://127.0.0.1:8080';
@@ -1095,6 +1097,125 @@ describe('FetchHttpClient', () => {
                 { total: 100, loaded: 30, percent: 30 },
                 { total: 100, loaded: 100, percent: 100 }
             ]);
+        });
+    });
+
+    describe('multipart form data upload', () => {
+        let originalFunction: typeof global.Function;
+
+        beforeEach(() => {
+            originalFunction = global.Function;
+            global.Function = ((code: string) => {
+                if (code.includes('require')) {
+                    return () => require(/"([^"]+)"/.exec(code)?.[1] || '');
+                }
+                return originalFunction(code);
+            }) as FunctionConstructor;
+        });
+
+        afterEach(() => {
+            global.Function = originalFunction;
+        });
+
+        it('should send Blob when form param is a Blob', async () => {
+            mockHost(host).post('/api/upload').reply(200, { success: true });
+
+            const blob = new Blob(['content'], { type: 'text/plain' });
+            const result = await client.post(
+                host + '/api/upload',
+                {
+                    httpMethod: 'POST',
+                    queryParams: {},
+                    headerParams: {},
+                    formParams: { file: blob },
+                    bodyParam: null,
+                    contentType: 'multipart/form-data',
+                    accept: 'application/json',
+                    responseType: null,
+                    returnType: null
+                },
+                defaultSecurityOptions,
+                emitters
+            );
+
+            expect(result).toEqual({ success: true });
+        });
+
+        it('should convert Buffer to Blob when form param is a Buffer', async () => {
+            mockHost(host).post('/api/upload').reply(200, { success: true });
+
+            const buffer = Buffer.from('file content');
+            const result = await client.post(
+                host + '/api/upload',
+                {
+                    httpMethod: 'POST',
+                    queryParams: {},
+                    headerParams: {},
+                    formParams: { file: buffer },
+                    bodyParam: null,
+                    contentType: 'multipart/form-data',
+                    accept: 'application/json',
+                    responseType: null,
+                    returnType: null
+                },
+                defaultSecurityOptions,
+                emitters
+            );
+
+            expect(result).toEqual({ success: true });
+        });
+
+        it('should read file and send as Blob when form param has .path property', async () => {
+            mockHost(host).post('/api/upload').reply(200, { success: true });
+
+            const tmpFile = path.join(__dirname, '__test_upload__.txt');
+            fs.writeFileSync(tmpFile, 'test content');
+
+            try {
+                const result = await client.post(
+                    host + '/api/upload',
+                    {
+                        httpMethod: 'POST',
+                        queryParams: {},
+                        headerParams: {},
+                        formParams: { file: { path: tmpFile } },
+                        bodyParam: null,
+                        contentType: 'multipart/form-data',
+                        accept: 'application/json',
+                        responseType: null,
+                        returnType: null
+                    },
+                    defaultSecurityOptions,
+                    emitters
+                );
+
+                expect(result).toEqual({ success: true });
+            } finally {
+                fs.unlinkSync(tmpFile);
+            }
+        });
+
+        it('should pass through string values when form params are strings', async () => {
+            mockHost(host).post('/api/upload').reply(200, { success: true });
+
+            const result = await client.post(
+                host + '/api/upload',
+                {
+                    httpMethod: 'POST',
+                    queryParams: {},
+                    headerParams: {},
+                    formParams: { name: 'test-file', description: 'a test' },
+                    bodyParam: null,
+                    contentType: 'multipart/form-data',
+                    accept: 'application/json',
+                    responseType: null,
+                    returnType: null
+                },
+                defaultSecurityOptions,
+                emitters
+            );
+
+            expect(result).toEqual({ success: true });
         });
     });
 });
