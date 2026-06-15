@@ -1110,7 +1110,7 @@ describe('FetchHttpClient', () => {
                     return () => require(code.match(/"([^"]+)"/)?.[1] || '');
                 }
                 return originalFunction(code);
-            }) as any;
+            }) as FunctionConstructor;
         });
 
         afterEach(() => {
