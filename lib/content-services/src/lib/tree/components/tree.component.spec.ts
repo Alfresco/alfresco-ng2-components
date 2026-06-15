@@ -42,7 +42,8 @@ describe('TreeComponent', () => {
     const composeNodeSelector = (nodeId: string) => `[data-automation-id="node_${nodeId}"]`;
     const getNode = (nodeId: string) => testingUtils.getByCSS(composeNodeSelector(nodeId));
 
-    const clickDisplayNameElement = (nodeId: string) => testingUtils.clickByCSS(`${composeNodeSelector(nodeId)} .adf-tree-cell-value`);
+    const clickDisplayNameElement = (nodeId: string) =>
+        testingUtils.getByCSS(`${composeNodeSelector(nodeId)} .adf-tree-cell-value`).nativeElement.click();
 
     const getDisplayNameValue = (nodeId: string) => testingUtils.getInnerTextByCSS(`${composeNodeSelector(nodeId)} .adf-tree-cell-value`);
 
