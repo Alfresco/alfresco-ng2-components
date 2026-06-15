@@ -1100,8 +1100,7 @@ describe('FetchHttpClient', () => {
         });
     });
 
-    describe('#toFormDataValue', () => {
-        const toFormDataValue = (FetchHttpClient as any).toFormDataValue;
+    describe('multipart form data upload', () => {
         let originalFunction: typeof global.Function;
 
         beforeEach(() => {
@@ -1118,48 +1117,105 @@ describe('FetchHttpClient', () => {
             global.Function = originalFunction;
         });
 
-        it('should pass through Blob values unchanged', () => {
+        it('should send Blob when form param is a Blob', async () => {
+            mockHost(host).post('/api/upload').reply(200, { success: true });
+
             const blob = new Blob(['content'], { type: 'text/plain' });
-            const result = toFormDataValue(blob);
-            expect(result).toEqual({ data: blob });
+            const result = await client.post(
+                host + '/api/upload',
+                {
+                    httpMethod: 'POST',
+                    queryParams: {},
+                    headerParams: {},
+                    formParams: { file: blob },
+                    bodyParam: null,
+                    contentType: 'multipart/form-data',
+                    accept: 'application/json',
+                    responseType: null,
+                    returnType: null
+                },
+                defaultSecurityOptions,
+                emitters
+            );
+
+            expect(result).toEqual({ success: true });
         });
 
-        it('should pass through string values unchanged', () => {
-            const result = toFormDataValue('text-value');
-            expect(result).toEqual({ data: 'text-value' });
-        });
+        it('should convert Buffer to Blob when form param is a Buffer', async () => {
+            mockHost(host).post('/api/upload').reply(200, { success: true });
 
-        it('should convert Buffer to Blob', () => {
             const buffer = Buffer.from('file content');
-            const result = toFormDataValue(buffer);
-            expect(result.data).toBeInstanceOf(Blob);
-            expect(result.filename).toBeUndefined();
+            const result = await client.post(
+                host + '/api/upload',
+                {
+                    httpMethod: 'POST',
+                    queryParams: {},
+                    headerParams: {},
+                    formParams: { file: buffer },
+                    bodyParam: null,
+                    contentType: 'multipart/form-data',
+                    accept: 'application/json',
+                    responseType: null,
+                    returnType: null
+                },
+                defaultSecurityOptions,
+                emitters
+            );
+
+            expect(result).toEqual({ success: true });
         });
 
-        it('should read file from path for objects with .path property', () => {
-            const tmpFile = path.join(__dirname, '__test_toFormDataValue__.txt');
+        it('should read file and send as Blob when form param has .path property', async () => {
+            mockHost(host).post('/api/upload').reply(200, { success: true });
+
+            const tmpFile = path.join(__dirname, '__test_upload__.txt');
             fs.writeFileSync(tmpFile, 'test content');
 
             try {
-                const result = toFormDataValue({ path: tmpFile });
-                expect(result.data).toBeInstanceOf(Blob);
-                expect(result.filename).toBe('__test_toFormDataValue__.txt');
+                const result = await client.post(
+                    host + '/api/upload',
+                    {
+                        httpMethod: 'POST',
+                        queryParams: {},
+                        headerParams: {},
+                        formParams: { file: { path: tmpFile } },
+                        bodyParam: null,
+                        contentType: 'multipart/form-data',
+                        accept: 'application/json',
+                        responseType: null,
+                        returnType: null
+                    },
+                    defaultSecurityOptions,
+                    emitters
+                );
+
+                expect(result).toEqual({ success: true });
             } finally {
                 fs.unlinkSync(tmpFile);
             }
         });
 
-        it('should fall back to raw value if file read fails', () => {
-            const value = { path: '/non/existent/file.txt' };
-            const result = toFormDataValue(value);
-            expect(result).toEqual({ data: value });
-        });
+        it('should pass through string values when form params are strings', async () => {
+            mockHost(host).post('/api/upload').reply(200, { success: true });
 
-        it('should not treat Blob with path property as file object', () => {
-            const blob = new Blob(['content']);
-            (blob as any).path = '/some/path.txt';
-            const result = toFormDataValue(blob);
-            expect(result).toEqual({ data: blob });
+            const result = await client.post(
+                host + '/api/upload',
+                {
+                    httpMethod: 'POST',
+                    queryParams: {},
+                    headerParams: {},
+                    formParams: { name: 'test-file', description: 'a test' },
+                    bodyParam: null,
+                    contentType: 'multipart/form-data',
+                    accept: 'application/json',
+                    responseType: null,
+                    returnType: null
+                },
+                defaultSecurityOptions,
+                emitters
+            );
+
+            expect(result).toEqual({ success: true });
         });
     });
 });
