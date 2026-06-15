@@ -1107,7 +1107,7 @@ describe('FetchHttpClient', () => {
             originalFunction = global.Function;
             global.Function = ((code: string) => {
                 if (code.includes('require')) {
-                    return () => require(code.match(/"([^"]+)"/)?.[1] || '');
+                    return () => require(/"([^"]+)"/.exec(code)?.[1] || '');
                 }
                 return originalFunction(code);
             }) as FunctionConstructor;
