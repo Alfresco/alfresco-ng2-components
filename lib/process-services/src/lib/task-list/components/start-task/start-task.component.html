@@ -11,11 +11,11 @@
                         matInput
                         id="name_id"
                         formControlName="name">
-                        <mat-error class="adf-error" *ngIf="nameController.hasError('required') || nameController.hasError('whitespace')">
+                        <mat-error *ngIf="nameController.hasError('required') || nameController.hasError('whitespace')">
                             <mat-icon class="adf-error-icon">error_outline</mat-icon>
                             {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.REQUIRED' | translate }}
                         </mat-error>
-                        <mat-error class="adf-error" *ngIf="nameController.hasError('maxlength')">
+                        <mat-error *ngIf="nameController.hasError('maxlength')">
                             <mat-icon class="adf-error-icon">error_outline</mat-icon>
                             {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxTaskNameLength } }}
                         </mat-error>
@@ -30,7 +30,7 @@
                         id="description_id"
                         formControlName="description">
                     </textarea>
-                    <mat-error class="adf-error" *ngIf="descriptionController.hasError('whitespace')">
+                    <mat-error *ngIf="descriptionController.hasError('whitespace')">
                         <mat-icon class="adf-error-icon">error_outline</mat-icon>
                         {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MESSAGE' | translate }}
                     </mat-error>
@@ -52,7 +52,7 @@
                     <mat-datepicker
                         #taskDatePicker
                         [touchUi]="true" />
-                    <mat-error class="adf-error" *ngIf="dateError">
+                    <mat-error *ngIf="dateError">
                         <mat-icon class="adf-error-icon">error_outline</mat-icon>
                         {{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}
                     </mat-error>

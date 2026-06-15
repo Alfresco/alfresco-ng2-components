@@ -22,10 +22,10 @@
                 </mat-option>
             </mat-autocomplete>
             @if (field.validationSummary?.message) {
-                <mat-error class="adf-error"><mat-icon class="adf-error-icon">error_outline</mat-icon>{{ field.validationSummary.message | translate }}</mat-error>
+                <mat-error><mat-icon class="adf-error-icon">error_outline</mat-icon>{{ field.validationSummary.message | translate }}</mat-error>
             }
             @if (!field.validationSummary?.message && isInvalidFieldRequired()) {
-                <mat-error class="adf-error"><mat-icon class="adf-error-icon">error_outline</mat-icon>{{ 'FORM.FIELD.REQUIRED' | translate }}</mat-error>
+                <mat-error><mat-icon class="adf-error-icon">error_outline</mat-icon>{{ 'FORM.FIELD.REQUIRED' | translate }}</mat-error>
             }
         </mat-form-field>
     </div>

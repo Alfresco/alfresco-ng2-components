@@ -18,16 +18,13 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { NgIf, NgTemplateOutlet } from '@angular/common';
-import { Component, DestroyRef, Directive, inject, InjectionToken, Input, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, Directive, inject, InjectionToken, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { isObservable } from 'rxjs';
-import { ADF_CUSTOM_MESSAGE } from '../core/custom-validation-message.token';
 import { WidgetComponent } from '../widget.component';
 import { FormattableTextWidgetComponent } from '../core/formattable-text.widget';
 import { InputMaskDirective } from './text-mask.component';

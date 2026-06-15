@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldModel, FormFieldOption, FormFieldTypes, FormModel, FormService } from '@alfresco/adf-core';
-import { By } from '@angular/platform-browser';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { RadioButtonsCloudWidgetComponent } from './radio-buttons-cloud.widget';
 import { of, throwError } from 'rxjs';
@@ -278,13 +277,11 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        const errorEl = fixture.debugElement.query(By.css('.adf-error'));
-        expect(errorEl).toBeTruthy();
-        expect(errorEl.nativeElement.textContent).toContain('FORM.FIELD.REST_API_FAILED');
+        const errorMessage = element.querySelector('.adf-radio-group-error-message .adf-error-text');
+        const errorIcon = element.querySelector('.adf-radio-group-error-message .adf-error-icon');
 
-        const errorIconEl = errorEl.query(By.css('.adf-error-icon'));
-        expect(errorIconEl).toBeTruthy();
-        expect(errorIconEl.nativeElement.textContent.trim()).toBe('error_outline');
+        expect(errorIcon.textContent).toBe('error_outline');
+        expect(errorMessage.textContent).toBe('FORM.FIELD.REST_API_FAILED');
     });
 
     it('should change the value of the form when an option is clicked', async () => {

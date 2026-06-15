@@ -26,7 +26,7 @@
                     [(ngModel)]="newTagName"
                     [errorStateMatcher]="tagErrorStateMatcher"
                 />
-                <mat-error class="adf-error" data-automation-id="errorMessage" *ngIf="errorMsg">
+                <mat-error data-automation-id="errorMessage" *ngIf="errorMsg">
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
                     {{ errorMsg }}
                 </mat-error>

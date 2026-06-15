@@ -39,19 +39,7 @@
     }
 }
 
-.adf-error {
-    display: flex;
-    align-items: center;
-    font: var(--mat-sys-body-small);
-    color: var(--mat-sys-error);
-    line-height: 20px;
-
-    .adf-error-icon {
-        width: 16px;
-        height: 16px;
-        font-size: 16px;
-        margin-right: 4px;
-        flex: 0 0 auto;
-        overflow: visible;
-    }
+.adf-error-icon {
+    font-size: 16px;
+    margin-right: 4px;
 }

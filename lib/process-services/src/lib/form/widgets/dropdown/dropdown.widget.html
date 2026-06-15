@@ -12,7 +12,7 @@
             <mat-option id="readonlyOption" *ngIf="dropdownControl.disabled" [value]="field.value">{{field.value}}</mat-option>
         </mat-select>
         @if (dropdownControl.hasError('required')) {
-            <mat-error class="adf-error"><mat-icon class="adf-error-icon">error_outline</mat-icon>{{ 'FORM.FIELD.REQUIRED' | translate }}</mat-error>
+            <mat-error data-automation-id="adf-dropdown-error"><mat-icon class="adf-error-icon">error_outline</mat-icon>{{ 'FORM.FIELD.REQUIRED' | translate }}</mat-error>
         }
     </mat-form-field>
 </div>

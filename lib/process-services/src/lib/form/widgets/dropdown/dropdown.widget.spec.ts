@@ -117,7 +117,7 @@ describe('DropdownWidgetComponent', () => {
         widget.ngOnInit();
         fixture.detectChanges();
 
-        expect(element.querySelector('.adf-error')).toBeNull();
+        expect(element.querySelector('[data-automation-id="adf-dropdown-error"]')).toBeNull();
     });
 
     it('should NOT preserve empty option when loading fields', () => {

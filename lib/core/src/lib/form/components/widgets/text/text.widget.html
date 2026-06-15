@@ -28,7 +28,7 @@
                    [errorStateMatcher]="errorStateMatcher"
                    (blur)="onBlur()">
             @if (field.validationSummary?.message || (isInvalidFieldRequired() && isTouched())) {
-                <mat-error class="adf-error">
+                <mat-error>
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
                     @if (field.validationSummary?.message) {
                         {{ field.validationSummary.message | translate:translateParameters }}

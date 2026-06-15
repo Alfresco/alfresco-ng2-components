@@ -75,7 +75,7 @@
                                                    [attr.data-automation-id]="'adf-cloud-edit-task-property-date-toggle-' + taskFilterProperty.key" />
                             <mat-datepicker #dateController
                                             [attr.data-automation-id]="'adf-cloud-edit-task-property-date-picker-' + taskFilterProperty.key" />
-                            <mat-error class="adf-error" *ngIf="hasError(taskFilterProperty)">
+                            <mat-error *ngIf="hasError(taskFilterProperty)">
                                 <mat-icon class="adf-error-icon">error_outline</mat-icon>
                                 {{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}
                             </mat-error>
