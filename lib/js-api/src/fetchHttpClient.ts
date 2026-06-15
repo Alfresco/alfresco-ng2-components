@@ -367,7 +367,12 @@ export class FetchHttpClient implements HttpClient {
             const normalizedParams = FetchHttpClient.normalizeParams(formParams);
             const formData = new FormData();
             for (const [key, value] of Object.entries(normalizedParams)) {
-                formData.append(key, value as any);
+                const { blob, filename } = FetchHttpClient.toFormDataValue(value);
+                if (filename) {
+                    formData.append(key, blob, filename);
+                } else {
+                    formData.append(key, blob);
+                }
             }
             return formData;
         }
@@ -523,5 +528,29 @@ export class FetchHttpClient implements HttpClient {
             return true;
         }
         return false;
+    }
+
+    private static toFormDataValue(value: any): { blob: any; filename?: string } {
+        // ReadStream (has .path) — read into a Blob so native FormData can serialize it
+        if (value && typeof value === 'object' && value.path && typeof value.path === 'string' && !(value instanceof Blob)) {
+            try {
+                /* eslint-disable @typescript-eslint/no-require-imports */
+                const nodeFs = Function('return require("fs")')();
+                const nodePath = Function('return require("path")')();
+                /* eslint-enable @typescript-eslint/no-require-imports */
+                const buffer = nodeFs.readFileSync(value.path);
+                const filename: string = nodePath.basename(value.path);
+                return { blob: new Blob([buffer]), filename };
+            } catch {
+                return { blob: value };
+            }
+        }
+
+        // Buffer — wrap in a Blob
+        if (typeof Buffer === 'function' && value instanceof Buffer) {
+            return { blob: new Blob([value]) };
+        }
+
+        return { blob: value };
     }
 }
