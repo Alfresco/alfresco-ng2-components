@@ -277,7 +277,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
         }
         this.checkParentsSelection(node);
 
-        void this.liveAnnouncer.announce(
+        this.liveAnnouncer.announce(
             this.translateService.instant(this.treeNodesSelection.isSelected(node) ? 'ADF-TREE.ARIA.SELECTED' : 'ADF-TREE.ARIA.DESELECTED', {
                 name: node.nodeName
             }),
