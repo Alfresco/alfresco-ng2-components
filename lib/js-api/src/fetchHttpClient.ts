@@ -367,11 +367,11 @@ export class FetchHttpClient implements HttpClient {
             const normalizedParams = FetchHttpClient.normalizeParams(formParams);
             const formData = new FormData();
             for (const [key, value] of Object.entries(normalizedParams)) {
-                const { blob, filename } = FetchHttpClient.toFormDataValue(value);
+                const { data, filename } = FetchHttpClient.toFormDataValue(value);
                 if (filename) {
-                    formData.append(key, blob, filename);
+                    formData.append(key, data, filename);
                 } else {
-                    formData.append(key, blob);
+                    formData.append(key, data);
                 }
             }
             return formData;
@@ -530,23 +530,23 @@ export class FetchHttpClient implements HttpClient {
         return false;
     }
 
-    private static toFormDataValue(value: any): { blob: any; filename?: string } {
+    private static toFormDataValue(value: any): { data: any; filename?: string } {
         if (value && typeof value === 'object' && value.path && typeof value.path === 'string' && !(value instanceof Blob)) {
             try {
                 const nodeFs = Function('return require("fs")')();
                 const nodePath = Function('return require("path")')();
                 const buffer = nodeFs.readFileSync(value.path);
                 const filename: string = nodePath.basename(value.path);
-                return { blob: new Blob([buffer]), filename };
+                return { data: new Blob([buffer]), filename };
             } catch {
-                return { blob: value };
+                return { data: value };
             }
         }
 
         if (typeof Buffer === 'function' && value instanceof Buffer) {
-            return { blob: new Blob([value]) };
+            return { data: new Blob([value]) };
         }
 
-        return { blob: value };
+        return { data: value };
     }
 }

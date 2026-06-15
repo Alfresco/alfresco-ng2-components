@@ -19,6 +19,8 @@
 import { FetchHttpClient } from '../src/fetchHttpClient';
 import { EventEmitter } from 'eventemitter3';
 import { getGlobalMockAgent, mockHost } from './mockObjects/base.mock';
+import * as fs from 'fs';
+import * as path from 'path';
 
 describe('FetchHttpClient', () => {
     const host = 'https://127.0.0.1:8080';
@@ -1095,6 +1097,69 @@ describe('FetchHttpClient', () => {
                 { total: 100, loaded: 30, percent: 30 },
                 { total: 100, loaded: 100, percent: 100 }
             ]);
+        });
+    });
+
+    describe('#toFormDataValue', () => {
+        const toFormDataValue = (FetchHttpClient as any).toFormDataValue;
+        let originalFunction: typeof global.Function;
+
+        beforeEach(() => {
+            originalFunction = global.Function;
+            global.Function = ((code: string) => {
+                if (code.includes('require')) {
+                    return () => require(code.match(/"([^"]+)"/)?.[1] || '');
+                }
+                return originalFunction(code);
+            }) as any;
+        });
+
+        afterEach(() => {
+            global.Function = originalFunction;
+        });
+
+        it('should pass through Blob values unchanged', () => {
+            const blob = new Blob(['content'], { type: 'text/plain' });
+            const result = toFormDataValue(blob);
+            expect(result).toEqual({ data: blob });
+        });
+
+        it('should pass through string values unchanged', () => {
+            const result = toFormDataValue('text-value');
+            expect(result).toEqual({ data: 'text-value' });
+        });
+
+        it('should convert Buffer to Blob', () => {
+            const buffer = Buffer.from('file content');
+            const result = toFormDataValue(buffer);
+            expect(result.data).toBeInstanceOf(Blob);
+            expect(result.filename).toBeUndefined();
+        });
+
+        it('should read file from path for objects with .path property', () => {
+            const tmpFile = path.join(__dirname, '__test_toFormDataValue__.txt');
+            fs.writeFileSync(tmpFile, 'test content');
+
+            try {
+                const result = toFormDataValue({ path: tmpFile });
+                expect(result.data).toBeInstanceOf(Blob);
+                expect(result.filename).toBe('__test_toFormDataValue__.txt');
+            } finally {
+                fs.unlinkSync(tmpFile);
+            }
+        });
+
+        it('should fall back to raw value if file read fails', () => {
+            const value = { path: '/non/existent/file.txt' };
+            const result = toFormDataValue(value);
+            expect(result).toEqual({ data: value });
+        });
+
+        it('should not treat Blob with path property as file object', () => {
+            const blob = new Blob(['content']);
+            (blob as any).path = '/some/path.txt';
+            const result = toFormDataValue(blob);
+            expect(result).toEqual({ data: blob });
         });
     });
 });
