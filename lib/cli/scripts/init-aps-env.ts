@@ -333,14 +333,13 @@ async function createDefaultTenant(tenantName: string) {
  */
 async function createUsers(tenantId: number, user: any) {
     logger.info(`Create user ${user.email} on tenant: ${tenantId}`);
-    const passwordCamelCase = 'Password';
     const userJson = new UserRepresentation({
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
         status: 'active',
         type: 'enterprise',
-        password: passwordCamelCase,
+        password: E2E_USER_PASSWORD,
         tenantId
     });
 
