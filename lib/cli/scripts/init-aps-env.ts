@@ -30,7 +30,10 @@ import { parseArgs } from 'node:util';
 import { spawnSync } from 'node:child_process';
 import { createReadStream } from 'node:fs';
 import * as path from 'path';
+import { config } from 'dotenv';
 import { logger } from './logger';
+
+config({ path: path.resolve(__dirname, '../../../.env') });
 
 interface InitApsEnvArgs {
     host?: string;
@@ -45,6 +48,7 @@ const TENANT_DEFAULT_ID = 1;
 const TENANT_DEFAULT_NAME = 'default';
 const CONTENT_DEFAULT_NAME = 'adw-content';
 const ACTIVITI_APPS = require('./resources').ACTIVITI_APPS;
+const E2E_USER_PASSWORD = process.env.HR_USER_PASSWORD;
 
 let alfrescoJsApi: AlfrescoApi;
 
@@ -152,7 +156,7 @@ Options:
                 }
                 for (const user of users) {
                     logger.info('Impersonate user: ' + user.username);
-                    await alfrescoJsApi.login(user.username, 'password');
+                    await alfrescoJsApi.login(user.username, E2E_USER_PASSWORD);
                     await authorizeUserToContentRepo(opts, user);
 
                     if (user.username.includes('hruser')) {
@@ -182,7 +186,7 @@ Options:
  */
 async function ensureE2eApplicationDeployed(): Promise<boolean> {
     try {
-        await alfrescoJsApi.login('hruser', 'password');
+        await alfrescoJsApi.login('hruser', E2E_USER_PASSWORD);
         const runtimeAppDefinitionsApi = new RuntimeAppDefinitionsApi(alfrescoJsApi);
         const availableApps = await runtimeAppDefinitionsApi.getAppDefinitions();
         const e2eApp = availableApps.data?.filter((app) => app.name?.includes('e2e-Application'));
@@ -329,14 +333,13 @@ async function createDefaultTenant(tenantName: string) {
  */
 async function createUsers(tenantId: number, user: any) {
     logger.info(`Create user ${user.email} on tenant: ${tenantId}`);
-    const passwordCamelCase = 'Password';
     const userJson = new UserRepresentation({
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
         status: 'active',
         type: 'enterprise',
-        password: passwordCamelCase,
+        password: E2E_USER_PASSWORD,
         tenantId
     });
 
@@ -605,7 +608,7 @@ async function authorizeUserToContentRepo(opts: InitApsEnvArgs, user: any) {
 async function authorizeUserToContentWithBasic(opts: InitApsEnvArgs, username: string, contentId: string) {
     logger.info(`Authorize ${username} on contentId: ${contentId} in basic auth`);
     try {
-        const body = { username, password: 'password' };
+        const body = { username, password: E2E_USER_PASSWORD };
         const content = await alfrescoJsApi.oauth2Auth.callCustomApi(
             `${opts.host}/activiti-app/api/enterprise/integration/alfresco/${contentId}/account`,
             'POST',
@@ -673,3 +676,5 @@ function formatError(error: any): string {
 function wait(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+main();
