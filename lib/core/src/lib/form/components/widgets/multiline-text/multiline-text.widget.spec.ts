@@ -79,6 +79,37 @@ describe('MultilineTextWidgetComponentComponent', () => {
         });
     });
 
+    describe('auto grow', () => {
+        it('should not apply the capped modifier when autoGrow is not set (default unbounded)', () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.MULTILINE_TEXT
+            });
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('.adf-multiline-text-widget--capped')).toBeFalsy();
+        });
+
+        it('should not apply the capped modifier when autoGrow is true', () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.MULTILINE_TEXT,
+                params: { autoGrow: true }
+            });
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('.adf-multiline-text-widget--capped')).toBeFalsy();
+        });
+
+        it('should apply the capped modifier when autoGrow is false', () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.MULTILINE_TEXT,
+                params: { autoGrow: false }
+            });
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('.adf-multiline-text-widget--capped')).toBeTruthy();
+        });
+    });
+
     describe('when is required', () => {
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {

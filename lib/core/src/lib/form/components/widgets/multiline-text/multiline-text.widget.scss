@@ -8,6 +8,12 @@
         .adf-label {
             top: 20px;
         }
+
+        &--capped textarea.adf-input {
+            max-height: 72px;
+            overflow-y: auto;
+            resize: vertical;
+        }
     }
 
     &-multiline-word-counter:has(.adf-multiline-word-counter-value) {

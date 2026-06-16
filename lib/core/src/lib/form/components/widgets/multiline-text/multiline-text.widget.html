@@ -2,6 +2,7 @@
     class="adf-multiline-text-widget {{ field.className }}"
     [class.adf-invalid]="!field.isValid && isTouched()"
     [class.adf-readonly]="field.readOnly"
+    [class.adf-multiline-text-widget--capped]="field.params?.autoGrow === false"
 >
     <mat-form-field
         floatPlaceholder="never"
