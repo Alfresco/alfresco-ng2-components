@@ -65,6 +65,17 @@
         "lintFilePatterns": ["lib/js-api/**/*.ts"]
       }
     },
+    "bundle": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "echo js-api bundle created"
+          }
+        ]
+      },
+      "dependsOn": ["copyToNodeModules"]
+    },
     "copyToNodeModules": {
       "executor": "nx:run-commands",
       "cache": false,
