@@ -2,7 +2,7 @@
 Title: Document List service
 Added: v2.0.0
 Status: Active
-Last reviewed: 2019-01-16
+Last reviewed: 2026-06-16
 ---
 
 # Document List Service
@@ -21,10 +21,11 @@ import { DocumentListService } from '@alfresco/adf-core';
 
 ### Events
 
-| Name              | Description                                     |
-|-------------------|-------------------------------------------------|
-| `reload$`         | Emits when the document list should be reloaded |
-| `resetSelection$` | Emits when the selection should be reset        |
+| Name              | Description                                                                                  |
+|-------------------|----------------------------------------------------------------------------------------------|
+| `reload$`         | Emits when the document list should be reloaded.                                             |
+| `resetSelection$` | Emits when the selection should be reset.                                                    |
+| `reloadSilently$` | Emits when the document list should be reloaded **without** resetting the current selection. |
 
 ### Methods
 
@@ -32,6 +33,8 @@ import { DocumentListService } from '@alfresco/adf-core';
     Reloads the document list.
 - **resetSelection**(): `void`<br/>
     Resets the selection.
+- **reloadSilently**(): `void`<br/>
+    Reloads the document list **without** resetting the current selection.
 -   **copyNode**(nodeId: `string`, targetParentId: `string`): `Observable<NodeEntry>`<br/>
     Copy a node to destination node
     -   _nodeId:_ `string`  - The id of the node to be copied

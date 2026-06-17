@@ -175,6 +175,16 @@ describe('DocumentList', () => {
         expect(documentList.resetSelection).not.toHaveBeenCalled();
     });
 
+    it('should call reloadWithoutResettingSelection and NOT resetSelection when reloadSilently$ is emitted', () => {
+        spyOn(documentList, 'reloadWithoutResettingSelection').and.callThrough();
+        spyOn(documentList, 'resetSelection').and.callThrough();
+
+        documentListService.reloadSilently();
+
+        expect(documentList.reloadWithoutResettingSelection).toHaveBeenCalled();
+        expect(documentList.resetSelection).not.toHaveBeenCalled();
+    });
+
     describe('presets', () => {
         const validatePreset = (keys: string[]) => {
             const columns = documentList.data.getColumns();
