@@ -91,23 +91,23 @@ describe('FormFieldValueAdapterService', () => {
 
         it('single-select: should wrap a user object into a single-element array', () => {
             const field = makeField(FormFieldTypes.PEOPLE, null);
-            const user = { firstName: 'Alyssa', lastName: 'Adcock' };
+            const user = { firstName: 'Test', lastName: 'User' };
             expect(service.adapt(user, field)).toEqual([user]);
         });
 
         it('single-select: should parse a string into a single-element array of firstName/lastName', () => {
             const field = makeField(FormFieldTypes.PEOPLE, null);
-            expect(service.adapt('Alyssa Adcock', field)).toEqual([{ firstName: 'Alyssa', lastName: 'Adcock' }]);
+            expect(service.adapt('Test User', field)).toEqual([{ firstName: 'Test', lastName: 'User' }]);
         });
 
         it('single-select: should parse a single-word string into a single-element array with firstName only', () => {
             const field = makeField(FormFieldTypes.PEOPLE, null);
-            expect(service.adapt('Alyssa', field)).toEqual([{ firstName: 'Alyssa' }]);
+            expect(service.adapt('Test', field)).toEqual([{ firstName: 'Test' }]);
         });
 
         it('single-select: should keep a single-element array', () => {
             const field = makeField(FormFieldTypes.PEOPLE, null);
-            expect(service.adapt([{ firstName: 'Alyssa' }], field)).toEqual([{ firstName: 'Alyssa' }]);
+            expect(service.adapt([{ firstName: 'Test' }], field)).toEqual([{ firstName: 'Test' }]);
         });
 
         it('single-select: should return null when given an empty array', () => {
@@ -129,12 +129,12 @@ describe('FormFieldValueAdapterService', () => {
 
         it('multi-select: should drop blank entries and keep valid users', () => {
             const field = makeField(FormFieldTypes.PEOPLE, null, { multiple: true });
-            expect(service.adapt(['', 'Alyssa Adcock'], field)).toEqual([{ firstName: 'Alyssa', lastName: 'Adcock' }]);
+            expect(service.adapt(['', 'Test User'], field)).toEqual([{ firstName: 'Test', lastName: 'User' }]);
         });
 
         it('multi-select: should wrap a single object into an array', () => {
             const field = makeField(FormFieldTypes.PEOPLE, null, { multiple: true });
-            expect(service.adapt({ firstName: 'Alyssa' }, field)).toEqual([{ firstName: 'Alyssa' }]);
+            expect(service.adapt({ firstName: 'Test' }, field)).toEqual([{ firstName: 'Test' }]);
         });
 
         it('multi-select: should keep an array of users (idempotent)', () => {
@@ -145,7 +145,7 @@ describe('FormFieldValueAdapterService', () => {
 
         it('multi-select: should parse an array of strings', () => {
             const field = makeField(FormFieldTypes.PEOPLE, null, { multiple: true });
-            expect(service.adapt(['Alyssa Adcock'], field)).toEqual([{ firstName: 'Alyssa', lastName: 'Adcock' }]);
+            expect(service.adapt(['Test User'], field)).toEqual([{ firstName: 'Test', lastName: 'User' }]);
         });
     });
 

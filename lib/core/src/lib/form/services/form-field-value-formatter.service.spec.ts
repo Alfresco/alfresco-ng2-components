@@ -139,13 +139,13 @@ describe('FormFieldValueFormatterService', () => {
         });
 
         it('should format a single user object (single-select mode)', () => {
-            const field = makeField(FormFieldTypes.PEOPLE, { firstName: 'Alyssa', lastName: 'Adcock' });
-            expect(service.format(field)).toBe('Alyssa Adcock');
+            const field = makeField(FormFieldTypes.PEOPLE, { firstName: 'Test', lastName: 'User' });
+            expect(service.format(field)).toBe('Test User');
         });
 
         it('should format an array with one user', () => {
-            const field = makeField(FormFieldTypes.PEOPLE, [{ firstName: 'Alyssa', lastName: 'Adcock' }]);
-            expect(service.format(field)).toBe('Alyssa Adcock');
+            const field = makeField(FormFieldTypes.PEOPLE, [{ firstName: 'Test', lastName: 'User' }]);
+            expect(service.format(field)).toBe('Test User');
         });
 
         it('should format multiple users separated by comma', () => {

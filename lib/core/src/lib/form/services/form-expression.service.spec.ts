@@ -290,15 +290,15 @@ describe('FormExpressionService', () => {
                 const mockField = {
                     id: 'peopleField',
                     type: FormFieldTypes.PEOPLE,
-                    value: { firstName: 'Alyssa', lastName: 'Adcock' }
+                    value: { firstName: 'Test', lastName: 'User' }
                 };
                 spyOn(formModel, 'getFieldById').and.returnValue(mockField as any);
                 spyOn(formatter, 'hasFormatter').and.returnValue(true);
-                spyOn(formatter, 'formatValue').and.returnValue('Alyssa Adcock');
+                spyOn(formatter, 'formatValue').and.returnValue('Test User');
 
                 const result = formattingService.resolveExpressions(formModel, '${field.peopleField}');
 
-                expect(result).toBe('Alyssa Adcock');
+                expect(result).toBe('Test User');
             });
 
             it('should fall back to JSON.stringify when no formatter is registered', () => {
@@ -338,7 +338,7 @@ describe('FormExpressionService', () => {
                 const mockField = {
                     id: 'peopleField',
                     type: FormFieldTypes.PEOPLE,
-                    value: { firstName: 'Alyssa', lastName: 'Adcock' }
+                    value: { firstName: 'Test', lastName: 'User' }
                 };
                 spyOn(formModel, 'getFieldById').and.returnValue(mockField as any);
                 const hasFormatterSpy = spyOn(formatter, 'hasFormatter');
@@ -346,7 +346,7 @@ describe('FormExpressionService', () => {
                 const result = service.resolveExpressions(formModel, '${field.peopleField}');
 
                 expect(hasFormatterSpy).not.toHaveBeenCalled();
-                expect(result).toBe('{"firstName":"Alyssa","lastName":"Adcock"}');
+                expect(result).toBe('{"firstName":"Test","lastName":"User"}');
             });
         });
 

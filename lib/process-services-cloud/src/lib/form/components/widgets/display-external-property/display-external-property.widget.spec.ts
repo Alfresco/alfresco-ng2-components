@@ -225,12 +225,12 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                     type: FormFieldTypes.PEOPLE,
                     readOnly: true,
-                    value: [{ firstName: 'Alyssa', lastName: 'Adcock' }]
+                    value: [{ firstName: 'Test', lastName: 'User' }]
                 });
                 fixture.detectChanges();
 
                 const input = await loader.getHarness(MatInputHarness);
-                expect(await input.getValue()).toBe('Alyssa Adcock');
+                expect(await input.getValue()).toBe('Test User');
             });
 
             it('should display comma-separated group names for a Group value', async () => {
