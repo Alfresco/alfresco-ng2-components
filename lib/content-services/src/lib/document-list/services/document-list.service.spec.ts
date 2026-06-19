@@ -93,6 +93,13 @@ describe('DocumentListService', () => {
         service.reload();
     });
 
+    it('should emit reloadSilently$ when reloadSilently is called', (done) => {
+        service.reloadSilently$.subscribe(() => {
+            done();
+        });
+        service.reloadSilently();
+    });
+
     it('should return the folder info', fakeAsync(() => {
         spyOn(service.nodes, 'listNodeChildren').and.returnValue(Promise.resolve(fakeFolder as any));
 

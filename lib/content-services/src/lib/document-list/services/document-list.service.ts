@@ -41,9 +41,13 @@ export class DocumentListService implements DocumentListLoader {
 
     private readonly _reload = new Subject<void>();
     private readonly _resetSelection = new Subject<void>();
+    private readonly _reloadSilently = new Subject<void>();
 
     /** Gets an observable that emits when the document list should be reloaded. */
     reload$ = this._reload.asObservable();
+
+    /** Gets an observable that emits when the document list should be reloaded without resetting the current selection. */
+    reloadSilently$ = this._reloadSilently.asObservable();
 
     /** Gets an observable that emits when the selection should be reset. */
     resetSelection$ = this._resetSelection.asObservable();
@@ -51,6 +55,11 @@ export class DocumentListService implements DocumentListLoader {
     /** Reloads the document list. */
     reload() {
         this._reload.next();
+    }
+
+    /** Reloads the document list without resetting the current selection. */
+    reloadSilently() {
+        this._reloadSilently.next();
     }
 
     /** Resets the selection. */
