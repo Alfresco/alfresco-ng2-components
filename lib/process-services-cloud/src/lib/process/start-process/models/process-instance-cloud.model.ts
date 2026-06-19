@@ -34,8 +34,8 @@ export interface ProcessInstanceCloud {
     linkedProcessInstanceId?: string;
     linkedProcessInstanceType?: string;
     type?: string;
-    linkedProcesses?: RelatedProcessInstance[];
-    subprocesses?: RelatedProcessInstance[];
+    linkedProcessesCount?: number;
+    subprocessesCount?: number;
     processDefinitionId?: string;
     processDefinitionKey?: string;
     processDefinitionName?: string;
