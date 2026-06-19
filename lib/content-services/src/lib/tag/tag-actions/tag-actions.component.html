@@ -26,10 +26,12 @@
                     [(ngModel)]="newTagName"
                     [errorStateMatcher]="tagErrorStateMatcher"
                 />
-                <mat-error data-automation-id="errorMessage" *ngIf="errorMsg">
-                    <mat-icon class="adf-error-icon">error_outline</mat-icon>
-                    {{ errorMsg }}
-                </mat-error>
+                @if (errorMsg) {
+                    <mat-error data-automation-id="errorMessage">
+                        <mat-icon class="adf-error-icon">error_outline</mat-icon>
+                        {{ errorMsg }}
+                    </mat-error>
+                }
             </mat-form-field>
         </td>
         <td>
