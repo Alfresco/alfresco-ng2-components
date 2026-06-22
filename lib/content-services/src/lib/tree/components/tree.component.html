@@ -42,18 +42,23 @@
             <mat-tree-node
                 class="adf-tree-row"
                 [attr.data-automation-id]="'node_' + node.id"
+                [attr.aria-label]="node.nodeName"
+                [attr.aria-selected]="treeNodesSelection.isSelected(node)"
                 *matTreeNodeDef="let node"
                 matTreeNodePadding
                 [adf-context-menu]="contextMenuOptions"
                 [adf-context-menu-enabled]="!!contextMenuOptions"
                 (contextmenu)="contextMenuSource = node"
+                (click)="expandCollapseNode(node)"
+                (keydown.enter)="expandCollapseNode(node); $event.stopPropagation()"
+                (keydown.space)="onNodeSelected(node); $event.preventDefault(); $event.stopPropagation()"
             >
                 <div class="adf-tree-expand-collapse-container">
                     <button
                         *ngIf="node.hasChildren"
                         class="adf-tree-expand-collapse-button"
-                        (click)="expandCollapseNode(node)"
                         mat-icon-button
+                        matTreeNodeToggle
                     >
                         <mat-progress-spinner
                                 mode="indeterminate"
@@ -70,24 +75,26 @@
                                             [id]="node.id"
                                   [checked]="descendantsAllSelected(node)"
                                   [indeterminate]="descendantsPartiallySelected(node)"
-                                  (change)="onNodeSelected(node)"
+                                  (change)="onNodeSelected(node);"
+                                  (click)="$event.stopPropagation()"
+                                  (keydown.enter)="$event.stopPropagation()"
+                                  (keydown.space)="$event.stopPropagation()"
                                   data-automation-id="has-children-node-checkbox" />
                     <ng-template #noChildrenNodeCheckbox>
                         <mat-checkbox
                                 [id]="node.id"
                             [checked]="treeNodesSelection.isSelected(node)"
                             (change)="onNodeSelected(node)"
+                            (click)="$event.stopPropagation()"
+                            (keydown.enter)="$event.stopPropagation()"
+                            (keydown.space)="$event.stopPropagation()"
                             data-automation-id="no-children-node-checkbox" />
                     </ng-template>
                 </ng-container>
                 <div class="adf-tree-cell">
                     <span
                         class="adf-tree-cell-value"
-                        [class.adf-tree-clickable-cell-value]="node.hasChildren"
-                        tabindex="0"
-                        role="button"
-                        (keyup.enter)="expandCollapseNode(node)"
-                        (click)="expandCollapseNode(node)">
+                        [class.adf-tree-clickable-cell-value]="node.hasChildren">
                         {{ node.nodeName }}
                     </span>
                 </div>
@@ -95,7 +102,10 @@
                     <button mat-icon-button
                             [matMenuTriggerFor]="menu"
                             [attr.aria-label]="'ADF-TREE.ACTIONS.TOOLTIP' | translate"
-                            [attr.id]="'action_menu_right_' + node.id">
+                            [attr.id]="'action_menu_right_' + node.id"
+                            (click)="$event.stopPropagation()"
+                            (keydown.enter)="$event.stopPropagation()"
+                            (keydown.space)="$event.stopPropagation()">
                         <mat-icon adf-icon="more_vert" />
                     </button>
                     <mat-menu #menu="matMenu">

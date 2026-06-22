@@ -58,11 +58,21 @@ describe('TreeService', () => {
     it('should collapse node containing children', () => {
         const treeNodesMockExpandedCopy = Array.from(treeNodesMockExpanded);
         service.treeNodes = treeNodesMockExpandedCopy;
+        service.treeControl.expand(treeNodesMockExpandedCopy[0]);
         const nodesSourceSpy = spyOn(service.treeNodesSource, 'next');
         const treeControlCollapseSpy = spyOn(service.treeControl, 'collapse');
         service.collapseNode(treeNodesMockExpandedCopy[0]);
         expect(nodesSourceSpy).toHaveBeenCalled();
         expect(treeControlCollapseSpy).toHaveBeenCalledWith(treeNodesMockExpandedCopy[0]);
+        expect(service.treeNodes.length).toEqual(treeNodesMock.length);
+    });
+
+    it('should not call treeControl.collapse when node is not in expansionModel (re-entrant safety)', () => {
+        const treeNodesMockExpandedCopy = Array.from(treeNodesMockExpanded);
+        service.treeNodes = treeNodesMockExpandedCopy;
+        const treeControlCollapseSpy = spyOn(service.treeControl, 'collapse');
+        service.collapseNode(treeNodesMockExpandedCopy[0]);
+        expect(treeControlCollapseSpy).not.toHaveBeenCalled();
         expect(service.treeNodes.length).toEqual(treeNodesMock.length);
     });
 

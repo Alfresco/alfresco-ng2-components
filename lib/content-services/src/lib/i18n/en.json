@@ -627,6 +627,10 @@
     "LOAD-MORE-BUTTON": "Load more {{ name }}",
     "ACTIONS": {
       "TOOLTIP": "Open actions menu"
+    },
+    "ARIA": {
+      "SELECTED": "{{ name }} selected",
+      "DESELECTED": "{{ name }} deselected"
     }
   },
   "LIBRARY": {
