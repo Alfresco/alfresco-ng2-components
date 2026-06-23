@@ -263,11 +263,11 @@ describe('DisplayTextWidgetComponent', () => {
                 widget.field = new FormFieldModel(new FormModel(), {
                     id: 'f1',
                     type: FormFieldTypes.PEOPLE,
-                    value: [{ firstName: 'Alyssa', lastName: 'Adcock' }]
+                    value: [{ firstName: 'Test', lastName: 'User' }]
                 });
                 fixture.detectChanges();
 
-                expect(widget.field.value).toBe('Alyssa Adcock');
+                expect(widget.field.value).toBe('Test User');
             });
 
             it('should format a direct Group value to group name', () => {
@@ -296,21 +296,21 @@ describe('DisplayTextWidgetComponent', () => {
                 const form = new FormModel({
                     fields: [
                         { id: 'displayText1', type: 'display-text', value: 'Selected: ${field.peopleField}' },
-                        { id: 'peopleField', type: FormFieldTypes.PEOPLE, value: [{ firstName: 'Alyssa', lastName: 'Adcock' }] }
+                        { id: 'peopleField', type: FormFieldTypes.PEOPLE, value: [{ firstName: 'Test', lastName: 'User' }] }
                     ]
                 });
 
                 widget.field = form.getFieldById('displayText1');
                 fixture.detectChanges();
 
-                expect(widget.field.value).toBe('Selected: Alyssa Adcock');
+                expect(widget.field.value).toBe('Selected: Test User');
             });
 
             it('should re-evaluate expression with formatted value when dependent People field changes', (done) => {
                 const form = new FormModel({
                     fields: [
                         { id: 'displayText1', type: 'display-text', value: 'Selected: ${field.peopleField}' },
-                        { id: 'peopleField', type: FormFieldTypes.PEOPLE, value: [{ firstName: 'Alyssa', lastName: 'Adcock' }] }
+                        { id: 'peopleField', type: FormFieldTypes.PEOPLE, value: [{ firstName: 'Test', lastName: 'User' }] }
                     ]
                 });
                 formService = TestBed.inject(FormService);
@@ -319,7 +319,7 @@ describe('DisplayTextWidgetComponent', () => {
                 const peopleField = form.getFieldById('peopleField');
                 fixture.detectChanges();
 
-                expect(widget.field.value).toBe('Selected: Alyssa Adcock');
+                expect(widget.field.value).toBe('Selected: Test User');
 
                 peopleField.value = [{ firstName: 'Jane', lastName: 'Smith' }];
                 formService.formRulesEvent.next({ type: 'fieldValueChanged', field: peopleField } as any);
@@ -341,7 +341,7 @@ describe('DisplayTextWidgetComponent', () => {
                 fixture = TestBed.createComponent(DisplayTextWidgetComponent);
                 widget = fixture.componentInstance;
 
-                const rawValue = [{ firstName: 'Alyssa', lastName: 'Adcock' }];
+                const rawValue = [{ firstName: 'Test', lastName: 'User' }];
                 widget.field = new FormFieldModel(new FormModel(), {
                     id: 'f1',
                     type: FormFieldTypes.PEOPLE,

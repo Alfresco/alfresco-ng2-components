@@ -15,7 +15,15 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormFieldTypes, FormModel, IdentityUserModel, NoopAuthModule } from '@alfresco/adf-core';
+import {
+    ADF_TYPED_VALUE_FORMATTING_ENABLED,
+    FormFieldModel,
+    FormFieldTypes,
+    FormModel,
+    FormService,
+    IdentityUserModel,
+    NoopAuthModule
+} from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeopleCloudWidgetComponent } from './people-cloud.widget';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
@@ -274,6 +282,81 @@ describe('PeopleCloudWidgetComponent', () => {
 
             const adfLeftLabel = element.querySelector('.adf-left-label');
             expect(adfLeftLabel).toBeNull();
+        });
+    });
+
+    describe('reactive sync on form rules event', () => {
+        describe('when flag is on', () => {
+            let formService: FormService;
+
+            beforeEach(() => {
+                TestBed.resetTestingModule();
+                TestBed.configureTestingModule({
+                    imports: [NoopAuthModule, PeopleCloudWidgetComponent],
+                    providers: [{ provide: ADF_TYPED_VALUE_FORMATTING_ENABLED, useValue: true }]
+                });
+                formService = TestBed.inject(FormService);
+                fixture = TestBed.createComponent(PeopleCloudWidgetComponent);
+                widget = fixture.componentInstance;
+            });
+
+            it('should sync preSelectUsers with a new array reference when the selection changes', () => {
+                const users = [{ id: 'a', username: 'alpha' }];
+                widget.field = new FormFieldModel(new FormModel(), { type: FormFieldTypes.PEOPLE, value: null });
+                fixture.detectChanges();
+                widget.field.value = users;
+
+                formService.formRulesEvent.next({ type: 'fieldValueChanged' } as any);
+
+                expect(widget.preSelectUsers).toEqual(users);
+                expect(widget.preSelectUsers).not.toBe(users);
+            });
+
+            it('should not reassign preSelectUsers when the selection is unchanged', () => {
+                widget.field = new FormFieldModel(new FormModel(), { type: FormFieldTypes.PEOPLE, value: [{ id: 'a', username: 'alpha' }] });
+                fixture.detectChanges();
+                const initial = widget.preSelectUsers;
+                widget.field.value = [{ id: 'a', username: 'alpha' }];
+
+                formService.formRulesEvent.next({ type: 'fieldValueChanged' } as any);
+
+                expect(widget.preSelectUsers).toBe(initial);
+            });
+
+            it('should wrap a single user object into an array', () => {
+                const user = { id: 'a', username: 'alpha' };
+                widget.field = new FormFieldModel(new FormModel(), { type: FormFieldTypes.PEOPLE, value: null });
+                fixture.detectChanges();
+                widget.field.value = user;
+
+                formService.formRulesEvent.next({ type: 'fieldValueChanged' } as any);
+
+                expect(widget.preSelectUsers).toEqual([user]);
+            });
+
+            it('should reset preSelectUsers to empty array when value is cleared', () => {
+                widget.field = new FormFieldModel(new FormModel(), { type: FormFieldTypes.PEOPLE, value: [{ id: 'a', username: 'alpha' }] });
+                fixture.detectChanges();
+                widget.field.value = null;
+
+                formService.formRulesEvent.next({ type: 'fieldValueChanged' } as any);
+
+                expect(widget.preSelectUsers).toEqual([]);
+            });
+        });
+
+        describe('when flag is off', () => {
+            it('should not react to form rules events', () => {
+                const formService = TestBed.inject(FormService);
+                widget.field = new FormFieldModel(new FormModel(), { type: FormFieldTypes.PEOPLE, value: [] });
+                fixture.detectChanges();
+                const initial = widget.preSelectUsers;
+                widget.field.value = [{ id: 'a', username: 'alpha' }];
+
+                formService.formRulesEvent.next({ type: 'fieldValueChanged' } as any);
+
+                expect(widget.preSelectUsers).toBe(initial);
+            });
         });
     });
 });

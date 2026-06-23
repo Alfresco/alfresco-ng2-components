@@ -717,12 +717,12 @@ describe('TextWidgetComponent - ADF_CUSTOM_MESSAGE', () => {
                 widget.field = new FormFieldModel(new FormModel(), {
                     id: 'people-field',
                     type: FormFieldTypes.PEOPLE,
-                    value: [{ firstName: 'Alyssa', lastName: 'Adcock' }],
+                    value: [{ firstName: 'Test', lastName: 'User' }],
                     readOnly: true
                 });
                 fixture.detectChanges();
 
-                expect(widget.displayValue).toBe('Alyssa Adcock');
+                expect(widget.displayValue).toBe('Test User');
             });
 
             it('should return comma-separated labels for a multi-select dropdown in read-only mode', () => {
@@ -806,12 +806,12 @@ describe('TextWidgetComponent - ADF_CUSTOM_MESSAGE', () => {
                 widget.field = new FormFieldModel(new FormModel(), {
                     id: 'people-field',
                     type: FormFieldTypes.PEOPLE,
-                    value: [{ firstName: 'Alyssa', lastName: 'Adcock' }],
+                    value: [{ firstName: 'Test', lastName: 'User' }],
                     readOnly: true
                 });
                 fixture.detectChanges();
 
-                expect(widget.displayValue).not.toBe('Alyssa Adcock');
+                expect(widget.displayValue).not.toBe('Test User');
             });
         });
 
@@ -829,12 +829,12 @@ describe('TextWidgetComponent - ADF_CUSTOM_MESSAGE', () => {
                 widget.field = new FormFieldModel(new FormModel(), {
                     id: 'people-field',
                     type: FormFieldTypes.PEOPLE,
-                    value: [{ firstName: 'Alyssa', lastName: 'Adcock' }],
+                    value: [{ firstName: 'Test', lastName: 'User' }],
                     readOnly: true
                 });
                 fixture.detectChanges();
 
-                expect(widget.displayValue).toBe('Alyssa Adcock');
+                expect(widget.displayValue).toBe('Test User');
             });
         });
     });
