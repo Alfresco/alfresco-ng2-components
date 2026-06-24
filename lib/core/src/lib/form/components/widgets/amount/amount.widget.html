@@ -39,10 +39,9 @@
             } @else if (isInvalidFieldRequired() && isTouched()) {
                 <mat-error>
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
-                    {{ 'FORM.FIELD.REQUIRED' | translate }}
+                    {{ 'FORM.FIELD.REQUIRED' | translate }} [ADF-TEST-2028]
                 </mat-error>
             }
         </mat-form-field>
     </div>
-    <span style="color: red; font-size: 10px;">ADF-LATEST-BUILD-TEST</span>
 </div>
