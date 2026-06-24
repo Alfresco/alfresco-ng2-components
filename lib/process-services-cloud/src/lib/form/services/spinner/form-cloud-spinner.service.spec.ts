@@ -96,4 +96,18 @@ describe('FormCloudSpinnerService', () => {
         const spinners = await rootLoader.getAllHarnesses(MatProgressSpinnerHarness);
         expect(spinners.length).toBe(1);
     });
+
+    it('should dispose the spinner overlay when the host destroyRef fires without a hide event', async () => {
+        spinnerService.initSpinnerHandling(destroyRef);
+        formService.toggleFormSpinner.next(showSpinnerEvent);
+        fixture.detectChanges();
+
+        expect(await rootLoader.hasHarness(MatProgressSpinnerHarness)).toBeTrue();
+
+        fixture.destroy();
+
+        const overlayContainer = document.querySelector('.cdk-overlay-container');
+        expect(overlayContainer?.querySelector('.cdk-overlay-pane')).toBeNull();
+        expect(overlayContainer?.querySelector('.cdk-overlay-backdrop')).toBeNull();
+    });
 });

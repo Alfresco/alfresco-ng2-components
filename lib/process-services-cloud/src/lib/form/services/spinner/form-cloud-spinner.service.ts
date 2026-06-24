@@ -40,9 +40,15 @@ export class FormCloudSpinnerService {
                 const componentRef = this.overlayRef.attach(userProfilePortal);
                 componentRef.instance.message = event.payload.message;
             } else if (event?.payload.showSpinner === false) {
-                this.overlayRef?.detach();
-                this.overlayRef = null;
+                this.disposeOverlay();
             }
         });
+
+        destroyRef.onDestroy(() => this.disposeOverlay());
+    }
+
+    private disposeOverlay(): void {
+        this.overlayRef?.dispose();
+        this.overlayRef = null;
     }
 }
