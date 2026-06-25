@@ -15,12 +15,7 @@
  * limitations under the License.
  */
 
-import { provideHttpClient } from '@angular/common/http';
-import { HttpTestingController, provideHttpClientTesting, TestRequest } from '@angular/common/http/testing';
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { OAuthLogger } from 'angular-oauth2-oidc';
-import { firstValueFrom } from 'rxjs';
-import { AppConfigService } from '../../app-config/app-config.service';
+import { TestBed } from '@angular/core/testing';
 import { TimeSyncService } from './time-sync.service';
 
 const SERVER_NOW = Date.UTC(2025, 0, 15, 12, 0, 0);
@@ -51,93 +46,37 @@ interface TimeSyncResult {
 
 describe('TimeSyncService', () => {
     let service: TimeSyncService;
-    let httpMock: HttpTestingController;
-    let appConfigService: AppConfigService;
-    let oauthLoggerSpy: jasmine.SpyObj<OAuthLogger>;
 
-    const clockSkewScenarios: ClockSkewScenario[] = [
-        { id: 'TC-01', description: 'baseline login with an accurate clock', skewSeconds: 0, direction: 'behind' },
-        { id: 'TC-02', description: 'login with a slow clock 119s behind', skewSeconds: 119, direction: 'behind' },
-        { id: 'TC-03', description: 'login with a slow clock 120s behind', skewSeconds: 120, direction: 'behind' },
-        { id: 'TC-04', description: 'login with a slow clock 121s behind', skewSeconds: 121, direction: 'behind' },
-        { id: 'TC-05', description: 'login with a slow clock 3m58s behind', skewSeconds: 238, direction: 'behind' },
-        { id: 'TC-06', description: 'login with a fast clock 119s ahead', skewSeconds: 119, direction: 'ahead' },
-        { id: 'TC-07', description: 'login with a fast clock 120s ahead', skewSeconds: 120, direction: 'ahead' },
-        { id: 'TC-08', description: 'login with a fast clock 121s ahead', skewSeconds: 121, direction: 'ahead' },
-        { id: 'TC-09', description: 'login with a fast clock 3m58s ahead', skewSeconds: 238, direction: 'ahead' },
-        { id: 'TC-10', description: 'runtime drift 119s behind after login', skewSeconds: 119, direction: 'behind' },
-        { id: 'TC-11', description: 'runtime drift 120s behind after login', skewSeconds: 120, direction: 'behind' },
-        { id: 'TC-12', description: 'runtime drift 121s behind after login', skewSeconds: 121, direction: 'behind' },
-        { id: 'TC-13', description: 'runtime drift 3m58s behind after login', skewSeconds: 238, direction: 'behind' },
-        { id: 'TC-14', description: 'runtime drift 119s ahead after login', skewSeconds: 119, direction: 'ahead' },
-        { id: 'TC-15', description: 'runtime drift 120s ahead after login', skewSeconds: 120, direction: 'ahead' },
-        { id: 'TC-16', description: 'runtime drift 121s ahead after login', skewSeconds: 121, direction: 'ahead' },
-        { id: 'TC-17', description: 'runtime drift 3m58s ahead after login', skewSeconds: 238, direction: 'ahead' },
-        { id: 'TC-18', description: 'browser refresh while 3m58s behind', skewSeconds: 238, direction: 'behind' },
-        { id: 'TC-19', description: 'browser refresh while 3m58s ahead', skewSeconds: 238, direction: 'ahead' },
-        { id: 'TC-20', description: 'multiple tabs while 3m58s behind', skewSeconds: 238, direction: 'behind' },
-        { id: 'TC-21', description: 'idle session while 3m58s behind', skewSeconds: 238, direction: 'behind' },
-        { id: 'TC-22', description: 'idle session while 3m58s ahead', skewSeconds: 238, direction: 'ahead' },
-        { id: 'TC-23', description: 'time API failure while up to 120s behind', skewSeconds: 120, direction: 'behind' },
-        { id: 'TC-24', description: 'time API failure while up to 120s ahead', skewSeconds: 120, direction: 'ahead' },
-        { id: 'TC-25', description: 'relogin after logout while 3m58s behind', skewSeconds: 238, direction: 'behind' },
-        { id: 'TC-26', description: 'relogin after logout while 3m58s ahead', skewSeconds: 238, direction: 'ahead' }
-    ];
+    // Timestamps used across tests:
+    // requestStartTimeMs  = 1728911579000 → Monday, October 14, 2024 1:12:59 PM GMT
+    // responseReceivedTimeMs = 1728911580000 → Monday, October 14, 2024 1:13:00 PM GMT (round trip = 1 s)
+    // serverTimeMs        = 1728911640000 → Monday, October 14, 2024 1:14:00 PM GMT
+    //
+    // adjustedServerAtCapture = 1728911640000 + 500 = 1728911640500
+    // When Date.now() returns 1728911580000 (= responseReceivedTimeMs, i.e. elapsed = 0):
+    //   estimatedCurrentServer = 1728911640500
+    //   offset = |1728911580000 − 1728911640500| = 60500 ms = 60.5 s
 
-    const configureApp = (options: AppConfigOptions = {}): void => {
-        appConfigService.config = {
-            oauth2: options.omitTimeSync ? {} : { timeSync: options.timeSync ?? true, showDebugInformation: options.showDebugInformation ?? false }
-        };
-    };
-
-    const rawLocalInstantFor = ({ skewSeconds, direction }: Pick<ClockSkewScenario, 'skewSeconds' | 'direction'>): number =>
-        direction === 'behind' ? SERVER_NOW - skewSeconds * 1000 : SERVER_NOW + skewSeconds * 1000;
-
-    const expectedOffsetInMsFor = (localNow: number, serverNow = SERVER_NOW): number => serverNow - localNow;
-
-    const appRootUrl = (): string => window.location.href.split('?')[0].split('#')[0];
-
-    const expectAppRootTimeRequest = (expectCacheBusting = true): TestRequest => {
-        const request = httpMock.expectOne((req) => req.url === appRootUrl());
-
-        expect(request.request.method).toBe('GET');
-        expect(request.request.responseType).toBe('text');
-        if (expectCacheBusting) {
-            expect(request.request.headers.get('Cache-Control')).toBe('no-cache');
-            expect(request.request.headers.get('Pragma')).toBe('no-cache');
-            expect(request.request.params.has('adf-time-sync')).toBeTrue();
-        } else {
-            expect(request.request.headers.has('Cache-Control')).toBeFalse();
-            expect(request.request.headers.has('Pragma')).toBeFalse();
-            expect(request.request.params.has('adf-time-sync')).toBeFalse();
-        }
-
-        return request;
-    };
-
-    const flushDateHeader = (request: TestRequest, serverNow = SERVER_NOW): void => {
-        request.flush('', { headers: { date: new Date(serverNow).toUTCString() } });
-    };
-
-    const expectTimeSyncResult = (result: TimeSyncResult, expected: TimeSyncResult): void => {
-        expect(result).toEqual(expected);
-    };
+    const requestStartTimeMs = 1728911579000;
+    const responseReceivedTimeMs = 1728911580000;
+    const serverTimeMs = 1728911640000;
 
     beforeEach(() => {
-        oauthLoggerSpy = jasmine.createSpyObj<OAuthLogger>('OAuthLogger', ['debug', 'info', 'log', 'warn', 'error']);
-
         TestBed.configureTestingModule({
-            providers: [TimeSyncService, { provide: OAuthLogger, useValue: oauthLoggerSpy }, provideHttpClient(), provideHttpClientTesting()]
+            providers: [TimeSyncService]
         });
-
         service = TestBed.inject(TimeSyncService);
-        httpMock = TestBed.inject(HttpTestingController);
-        appConfigService = TestBed.inject(AppConfigService);
-        configureApp();
     });
 
-    afterEach(() => {
-        httpMock.verify();
+    describe('updateServerTime', () => {
+        it('should store the provided snapshot so that checkTimeSync can use it', async () => {
+            service.updateServerTime({ serverTimeMs, requestStartTimeMs, responseReceivedTimeMs });
+
+            spyOn(Date, 'now').and.returnValue(responseReceivedTimeMs);
+
+            const sync = await firstValueFrom(service.checkTimeSync(61));
+            expect(sync).toBeDefined();
+        });
     });
 
     describe('syncClockOffset', () => {
@@ -230,218 +169,77 @@ describe('TimeSyncService', () => {
     });
 
     describe('checkTimeSync', () => {
-        it('should error when the server time request fails', async () => {
-            spyOn(Date, 'now').and.returnValue(SERVER_NOW);
+        it('should return outOfSync as false when offset is within the allowed skew', async () => {
+            service.updateServerTime({ serverTimeMs, requestStartTimeMs, responseReceivedTimeMs });
+            spyOn(Date, 'now').and.returnValue(responseReceivedTimeMs);
 
-            const check = firstValueFrom(service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC));
-            expectAppRootTimeRequest().error(new ProgressEvent('error'));
-
-            await expectAsync(check).toBeRejectedWithError('Error: Failed to get server time');
+            // offset is 60.5 s → within 61 s limit
+            const sync = await firstValueFrom(service.checkTimeSync(61));
+            expect(sync.outOfSync).toBeFalse();
+            expect(sync.localDateTimeISO).toEqual('2024-10-14T13:13:00.000Z');
+            expect(sync.serverDateTimeISO).toEqual('2024-10-14T13:14:00.500Z');
         });
 
-        it('should use the app root Date header as the server time source', async () => {
-            spyOn(Date, 'now').and.returnValue(SERVER_NOW);
+        it('should return outOfSync as true when offset exceeds the allowed skew', async () => {
+            service.updateServerTime({ serverTimeMs, requestStartTimeMs, responseReceivedTimeMs });
+            spyOn(Date, 'now').and.returnValue(responseReceivedTimeMs);
 
-            const check = firstValueFrom(service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC));
-            flushDateHeader(expectAppRootTimeRequest());
-
-            expectTimeSyncResult(await check, {
-                outOfSync: false,
-                timeOffsetInSec: 0,
-                localDateTimeISO: new Date(SERVER_NOW).toISOString(),
-                serverDateTimeISO: new Date(SERVER_NOW).toISOString()
-            });
-        });
-    });
-
-    describe('server time request sharing', () => {
-        it('should perform a single HTTP request when multiple callers subscribe concurrently', fakeAsync(() => {
-            spyOn(Date, 'now').and.returnValue(SERVER_NOW - 60_000);
-            const emitted: number[] = [];
-
-            service.syncClockOffset().subscribe(() => emitted.push(service.getCorrectedNow()));
-            service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC).subscribe((result) => emitted.push(new Date(result.serverDateTimeISO).getTime()));
-
-            flushDateHeader(expectAppRootTimeRequest());
-
-            expect(emitted).toEqual([SERVER_NOW, SERVER_NOW]);
-
-            tick(SERVER_TIME_CACHE_WINDOW_IN_MS);
-        }));
-
-        it('should reuse the cached server time for callers within the 2s window without a new request', fakeAsync(() => {
-            spyOn(Date, 'now').and.returnValue(SERVER_NOW - 60_000);
-
-            service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC).subscribe();
-            flushDateHeader(expectAppRootTimeRequest());
-
-            service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC).subscribe();
-            httpMock.expectNone((req) => req.url === appRootUrl());
-
-            tick(SERVER_TIME_CACHE_WINDOW_IN_MS);
-        }));
-
-        it('should perform a new request once the 2s cache window has expired', fakeAsync(() => {
-            spyOn(Date, 'now').and.returnValue(SERVER_NOW - 60_000);
-
-            service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC).subscribe();
-            flushDateHeader(expectAppRootTimeRequest());
-
-            tick(SERVER_TIME_CACHE_WINDOW_IN_MS);
-
-            service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC).subscribe();
-            flushDateHeader(expectAppRootTimeRequest());
-
-            tick(SERVER_TIME_CACHE_WINDOW_IN_MS);
-        }));
-
-        it('should not cache errors and let the next caller retry immediately with a new request', fakeAsync(() => {
-            spyOn(Date, 'now').and.returnValue(SERVER_NOW - 60_000);
-            const errors: string[] = [];
-
-            service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC).subscribe({ error: (error: Error) => errors.push(error.message) });
-            expectAppRootTimeRequest().error(new ProgressEvent('error'));
-
-            expect(errors.length).toBe(1);
-
-            service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC).subscribe();
-            flushDateHeader(expectAppRootTimeRequest());
-
-            tick(SERVER_TIME_CACHE_WINDOW_IN_MS);
-        }));
-    });
-
-    describe('clock skew scenario matrix', () => {
-        describe('timeSync not configured', () => {
-            clockSkewScenarios.forEach((scenario) => {
-                it(`${scenario.id}: should keep raw local time for ${scenario.description}`, async () => {
-                    configureApp({ omitTimeSync: true });
-                    const rawLocalNow = rawLocalInstantFor(scenario);
-                    spyOn(Date, 'now').and.returnValue(rawLocalNow);
-
-                    await firstValueFrom(service.syncClockOffset());
-
-                    httpMock.expectNone(() => true);
-                    expect(service.getCorrectedNow()).toBe(rawLocalNow);
-                });
-            });
+            // offset is 60.5 s → exceeds 60 s limit
+            const sync = await firstValueFrom(service.checkTimeSync(60));
+            expect(sync.outOfSync).toBeTrue();
+            expect(sync.localDateTimeISO).toEqual('2024-10-14T13:13:00.000Z');
+            expect(sync.serverDateTimeISO).toEqual('2024-10-14T13:14:00.500Z');
         });
 
-        describe('timeSync false', () => {
-            clockSkewScenarios.forEach((scenario) => {
-                it(`${scenario.id}: should run the old raw-clock skew check for ${scenario.description}`, async () => {
-                    configureApp({ timeSync: false });
-                    const rawLocalNow = rawLocalInstantFor(scenario);
-                    spyOn(Date, 'now').and.returnValue(rawLocalNow);
+        it('should account for time elapsed since the snapshot was captured', async () => {
+            service.updateServerTime({ serverTimeMs, requestStartTimeMs, responseReceivedTimeMs });
 
-                    const check = firstValueFrom(service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC));
-                    flushDateHeader(expectAppRootTimeRequest(false));
+            // 10 seconds have passed since the snapshot was received
+            const tenSecondsLater = responseReceivedTimeMs + 10_000;
+            spyOn(Date, 'now').and.returnValue(tenSecondsLater);
 
-                    expectTimeSyncResult(await check, {
-                        outOfSync: scenario.skewSeconds > MAX_ALLOWED_CLOCK_SKEW_IN_SEC,
-                        timeOffsetInSec: scenario.skewSeconds,
-                        localDateTimeISO: new Date(rawLocalNow).toISOString(),
-                        serverDateTimeISO: new Date(SERVER_NOW).toISOString()
-                    });
-                    expect(service.getCorrectedNow()).toBe(rawLocalNow);
-                });
-            });
+            // estimatedCurrentServer = 1728911640500 + 10000 = 1728911650500
+            // offset = |1728911590000 − 1728911650500| = 60500 ms — unchanged by elapsed time
+            const sync = await firstValueFrom(service.checkTimeSync(61));
+            expect(sync.outOfSync).toBeFalse();
+            expect(sync.localDateTimeISO).toEqual(new Date(tenSecondsLater).toISOString());
         });
 
-        describe('timeSync true but server time fails', () => {
-            clockSkewScenarios.forEach((scenario) => {
-                it(`${scenario.id}: should fall back to raw local time for ${scenario.description}`, async () => {
-                    const rawLocalNow = rawLocalInstantFor(scenario);
-                    spyOn(Date, 'now').and.returnValue(rawLocalNow);
+        it('should populate timeOutOfSyncInSec with the offset in seconds', async () => {
+            service.updateServerTime({ serverTimeMs, requestStartTimeMs, responseReceivedTimeMs });
+            spyOn(Date, 'now').and.returnValue(responseReceivedTimeMs);
 
-                    const sync = firstValueFrom(service.syncClockOffset());
-                    expectAppRootTimeRequest().error(new ProgressEvent('error'));
-                    await sync;
-
-                    expect(service.getCorrectedNow()).toBe(rawLocalNow);
-                });
-            });
+            const sync = await firstValueFrom(service.checkTimeSync(61));
+            expect(sync.timeOutOfSyncInSec).toBeCloseTo(60.5);
         });
 
-        describe('timeSync true and server time succeeds', () => {
-            clockSkewScenarios.forEach((scenario) => {
-                it(`${scenario.id}: should correct ${scenario.description} and report the clock as in sync`, async () => {
-                    const rawLocalNow = rawLocalInstantFor(scenario);
-                    spyOn(Date, 'now').and.returnValue(rawLocalNow);
-
-                    const check = firstValueFrom(service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC));
-                    flushDateHeader(expectAppRootTimeRequest());
-
-                    expectTimeSyncResult(await check, {
-                        outOfSync: false,
-                        timeOffsetInSec: 0,
-                        localDateTimeISO: new Date(SERVER_NOW).toISOString(),
-                        serverDateTimeISO: new Date(SERVER_NOW).toISOString()
-                    });
-                    expect(service.getCorrectedNow()).toBe(SERVER_NOW);
-                    expect(service.getCorrectedNow()).toBe(rawLocalNow + expectedOffsetInMsFor(rawLocalNow));
-                });
-            });
+        it('should error when no server time snapshot has been provided yet', async () => {
+            try {
+                await firstValueFrom(service.checkTimeSync(60));
+                fail('Expected an error to be thrown');
+            } catch (error) {
+                expect(error.message).toContain('No server time available');
+            }
         });
     });
 
-    describe('debug logging', () => {
-        describe('syncClockOffset', () => {
-            it('should log time sync debug information when showDebugInformation is true', async () => {
-                configureApp({ timeSync: true, showDebugInformation: true });
-                spyOn(Date, 'now').and.returnValue(SERVER_NOW - 60_000);
+    describe('isLocalTimeOutOfSync', () => {
+        it('should return true when the clock is out of sync', async () => {
+            service.updateServerTime({ serverTimeMs, requestStartTimeMs, responseReceivedTimeMs });
+            spyOn(Date, 'now').and.returnValue(responseReceivedTimeMs);
 
-                const sync = firstValueFrom(service.syncClockOffset());
-                flushDateHeader(expectAppRootTimeRequest());
-                await sync;
-
-                expect(oauthLoggerSpy.info).toHaveBeenCalledWith(jasmine.stringContaining('[TimeSync] syncClockOffset: offset set to'));
-            });
-
-            it('should not log time sync debug information when showDebugInformation is false', async () => {
-                configureApp({ timeSync: true, showDebugInformation: false });
-                spyOn(Date, 'now').and.returnValue(SERVER_NOW - 60_000);
-
-                const sync = firstValueFrom(service.syncClockOffset());
-                flushDateHeader(expectAppRootTimeRequest());
-                await sync;
-
-                expect(oauthLoggerSpy.info).not.toHaveBeenCalled();
-            });
-
-            it('should not log time sync debug information when timeSync is disabled even if showDebugInformation is true', async () => {
-                configureApp({ timeSync: false, showDebugInformation: true });
-                spyOn(Date, 'now').and.returnValue(SERVER_NOW - 60_000);
-
-                await firstValueFrom(service.syncClockOffset());
-
-                httpMock.expectNone(() => true);
-                expect(oauthLoggerSpy.info).not.toHaveBeenCalled();
-            });
+            // offset is 60.5 s → exceeds 60 s limit
+            const isOutOfSync = await firstValueFrom(service.isLocalTimeOutOfSync(60));
+            expect(isOutOfSync).toBeTrue();
         });
 
-        describe('checkTimeSync', () => {
-            it('should log time sync debug information for checkTimeSync when showDebugInformation is true', async () => {
-                configureApp({ timeSync: true, showDebugInformation: true });
-                spyOn(Date, 'now').and.returnValue(SERVER_NOW);
+        it('should return false when the clock is within the allowed skew', async () => {
+            service.updateServerTime({ serverTimeMs, requestStartTimeMs, responseReceivedTimeMs });
+            spyOn(Date, 'now').and.returnValue(responseReceivedTimeMs);
 
-                const check = firstValueFrom(service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC));
-                flushDateHeader(expectAppRootTimeRequest());
-                await check;
-
-                expect(oauthLoggerSpy.info).toHaveBeenCalledWith(jasmine.stringContaining('[TimeSync] checkTimeSync: outOfSync='));
-            });
-
-            it('should log checkTimeSync debug information even when timeSync is disabled', async () => {
-                configureApp({ timeSync: false, showDebugInformation: true });
-                spyOn(Date, 'now').and.returnValue(SERVER_NOW);
-
-                const check = firstValueFrom(service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC));
-                flushDateHeader(expectAppRootTimeRequest(false));
-                await check;
-
-                expect(oauthLoggerSpy.info).toHaveBeenCalledWith(jasmine.stringContaining('[TimeSync] checkTimeSync: outOfSync='));
-            });
+            // offset is 60.5 s → within 61 s limit
+            const isOutOfSync = await firstValueFrom(service.isLocalTimeOutOfSync(61));
+            expect(isOutOfSync).toBeFalse();
         });
     });
 });
