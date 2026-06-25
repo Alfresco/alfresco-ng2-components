@@ -18,7 +18,8 @@
 import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { AppConfigService } from '../../app-config/app-config.service';
 import { TimeSyncService } from '../services/time-sync.service';
 import { DEFAULT_SERVER_TIME_HEADER, ServerTimeHeaderInterceptor } from './server-time-header.interceptor';
 
@@ -27,15 +28,15 @@ describe('ServerTimeHeaderInterceptor', () => {
     let httpClient: HttpClient;
     let timeSyncServiceSpy: jasmine.SpyObj<TimeSyncService>;
     let appConfigSpy: jasmine.SpyObj<AppConfigService>;
+    let oauthServiceSpy: jasmine.SpyObj<OAuthService>;
 
-    const ecmHost = 'http://ecm.example.com';
-    const bpmHost = 'http://bpm.example.com';
-    const ecmApiUrl = `${ecmHost}/alfresco/api/some-resource`;
-    const bpmApiUrl = `${bpmHost}/activiti-app/api/some-resource`;
-    const thirdPartyUrl = 'https://idp.external.com/token';
+    const issuer = 'https://keycloak.example.com/auth/realms/my-realm';
+    const discoveryUrl = `${issuer}/.well-known/openid-configuration`;
+    const tokenUrl = `${issuer}/protocol/openid-connect/token`;
+    const nonIssuerUrl = 'https://ecm.example.com/alfresco/api/resource';
 
     const serverDateHeader = 'Mon, 14 Oct 2024 13:14:00 GMT';
-    const serverTimeMs = new Date(serverDateHeader).getTime(); // 1728911640000
+    const serverTimeMs = new Date(serverDateHeader).getTime();
 
     const requestStartTime = 1728911579000;
     const responseReceivedTime = 1728911580000;
@@ -43,15 +44,9 @@ describe('ServerTimeHeaderInterceptor', () => {
     beforeEach(() => {
         timeSyncServiceSpy = jasmine.createSpyObj('TimeSyncService', ['updateServerTime']);
         appConfigSpy = jasmine.createSpyObj('AppConfigService', ['get']);
+        appConfigSpy.get.and.returnValue(DEFAULT_SERVER_TIME_HEADER);
 
-        // Default config: ecmHost + bpmHost set, no explicit allowlist, default header
-        appConfigSpy.get.and.callFake((key: string, defaultValue?: unknown) => {
-            if (key === 'serverTimeAllowedOrigins') { return []; }
-            if (key === AppConfigValues.ECMHOST) { return ecmHost; }
-            if (key === AppConfigValues.BPMHOST) { return bpmHost; }
-            if (key === 'serverTimeHeader') { return DEFAULT_SERVER_TIME_HEADER; }
-            return defaultValue;
-        });
+        oauthServiceSpy = jasmine.createSpyObj('OAuthService', [], { issuer });
 
         TestBed.configureTestingModule({
             providers: [
@@ -59,7 +54,8 @@ describe('ServerTimeHeaderInterceptor', () => {
                 provideHttpClientTesting(),
                 { provide: HTTP_INTERCEPTORS, useClass: ServerTimeHeaderInterceptor, multi: true },
                 { provide: TimeSyncService, useValue: timeSyncServiceSpy },
-                { provide: AppConfigService, useValue: appConfigSpy }
+                { provide: AppConfigService, useValue: appConfigSpy },
+                { provide: OAuthService, useValue: oauthServiceSpy }
             ]
         });
 
@@ -71,13 +67,13 @@ describe('ServerTimeHeaderInterceptor', () => {
         httpMock.verify();
     });
 
-    describe('when the response comes from an allowed backend origin', () => {
-        it('should call updateServerTime for a response from ecmHost', () => {
+    describe('when the request targets the OIDC issuer', () => {
+        it('should capture server time from a discovery-document response', () => {
             spyOn(Date, 'now').and.returnValues(requestStartTime, responseReceivedTime);
 
-            httpClient.get(ecmApiUrl).subscribe();
+            httpClient.get(discoveryUrl).subscribe();
 
-            httpMock.expectOne(ecmApiUrl).flush({}, { headers: { [DEFAULT_SERVER_TIME_HEADER]: serverDateHeader } });
+            httpMock.expectOne(discoveryUrl).flush({}, { headers: { [DEFAULT_SERVER_TIME_HEADER]: serverDateHeader } });
 
             expect(timeSyncServiceSpy.updateServerTime).toHaveBeenCalledOnceWith({
                 serverTimeMs,
@@ -86,12 +82,12 @@ describe('ServerTimeHeaderInterceptor', () => {
             });
         });
 
-        it('should call updateServerTime for a response from bpmHost', () => {
+        it('should capture server time from a token endpoint response', () => {
             spyOn(Date, 'now').and.returnValues(requestStartTime, responseReceivedTime);
 
-            httpClient.get(bpmApiUrl).subscribe();
+            httpClient.post(tokenUrl, {}).subscribe();
 
-            httpMock.expectOne(bpmApiUrl).flush({}, { headers: { [DEFAULT_SERVER_TIME_HEADER]: serverDateHeader } });
+            httpMock.expectOne(tokenUrl).flush({}, { headers: { [DEFAULT_SERVER_TIME_HEADER]: serverDateHeader } });
 
             expect(timeSyncServiceSpy.updateServerTime).toHaveBeenCalledOnceWith({
                 serverTimeMs,
@@ -101,90 +97,50 @@ describe('ServerTimeHeaderInterceptor', () => {
         });
     });
 
-    describe('when the response comes from a non-backend origin', () => {
-        it('should not call updateServerTime for third-party URLs (e.g. IdP)', () => {
-            httpClient.get(thirdPartyUrl).subscribe();
+    describe('when the request does not target the OIDC issuer', () => {
+        it('should pass the request through unchanged without capturing server time', () => {
+            httpClient.get(nonIssuerUrl).subscribe();
 
-            httpMock.expectOne(thirdPartyUrl).flush({}, { headers: { [DEFAULT_SERVER_TIME_HEADER]: serverDateHeader } });
-
-            expect(timeSyncServiceSpy.updateServerTime).not.toHaveBeenCalled();
-        });
-    });
-
-    describe('when serverTimeAllowedOrigins is explicitly configured', () => {
-        it('should only capture from the explicitly listed origins', () => {
-            const customOrigin = 'https://my-custom-backend.example.com';
-            appConfigSpy.get.and.callFake((key: string, defaultValue?: unknown) => {
-                if (key === 'serverTimeAllowedOrigins') { return [customOrigin]; }
-                if (key === 'serverTimeHeader') { return DEFAULT_SERVER_TIME_HEADER; }
-                return defaultValue;
-            });
-
-            spyOn(Date, 'now').and.returnValues(requestStartTime, responseReceivedTime);
-
-            httpClient.get(`${customOrigin}/api/resource`).subscribe();
-            httpMock.expectOne(`${customOrigin}/api/resource`).flush({}, { headers: { [DEFAULT_SERVER_TIME_HEADER]: serverDateHeader } });
-
-            expect(timeSyncServiceSpy.updateServerTime).toHaveBeenCalledTimes(1);
-        });
-
-        it('should not capture from ecmHost or bpmHost when an explicit allowlist is set', () => {
-            const customOrigin = 'https://my-custom-backend.example.com';
-            appConfigSpy.get.and.callFake((key: string, defaultValue?: unknown) => {
-                if (key === 'serverTimeAllowedOrigins') { return [customOrigin]; }
-                if (key === 'serverTimeHeader') { return DEFAULT_SERVER_TIME_HEADER; }
-                return defaultValue;
-            });
-
-            httpClient.get(ecmApiUrl).subscribe();
-            httpMock.expectOne(ecmApiUrl).flush({}, { headers: { [DEFAULT_SERVER_TIME_HEADER]: serverDateHeader } });
+            httpMock.expectOne(nonIssuerUrl).flush({}, { headers: { [DEFAULT_SERVER_TIME_HEADER]: serverDateHeader } });
 
             expect(timeSyncServiceSpy.updateServerTime).not.toHaveBeenCalled();
         });
     });
 
-    describe('when no backend origins are configured at all', () => {
-        it('should accept responses from any origin as a fallback', () => {
-            appConfigSpy.get.and.callFake((key: string, defaultValue?: unknown) => {
-                if (key === 'serverTimeAllowedOrigins') { return []; }
-                if (key === AppConfigValues.ECMHOST) { return ''; }
-                if (key === AppConfigValues.BPMHOST) { return ''; }
-                if (key === 'serverTimeHeader') { return DEFAULT_SERVER_TIME_HEADER; }
-                return defaultValue;
-            });
+    describe('when the OAuthService issuer is not yet configured', () => {
+        it('should not capture server time before the OAuth service is initialised', () => {
+            oauthServiceSpy = jasmine.createSpyObj('OAuthService', [], { issuer: '' });
+            TestBed.overrideProvider(OAuthService, { useValue: oauthServiceSpy });
 
-            spyOn(Date, 'now').and.returnValues(requestStartTime, responseReceivedTime);
+            httpClient.get(discoveryUrl).subscribe();
 
-            httpClient.get(thirdPartyUrl).subscribe();
-            httpMock.expectOne(thirdPartyUrl).flush({}, { headers: { [DEFAULT_SERVER_TIME_HEADER]: serverDateHeader } });
+            httpMock.expectOne(discoveryUrl).flush({}, { headers: { [DEFAULT_SERVER_TIME_HEADER]: serverDateHeader } });
 
-            expect(timeSyncServiceSpy.updateServerTime).toHaveBeenCalledTimes(1);
+            expect(timeSyncServiceSpy.updateServerTime).not.toHaveBeenCalled();
         });
     });
 
     describe('when the response header is absent or invalid', () => {
         it('should not call updateServerTime when the header is missing', () => {
-            httpClient.get(ecmApiUrl).subscribe();
+            httpClient.get(discoveryUrl).subscribe();
 
-            httpMock.expectOne(ecmApiUrl).flush({});
+            httpMock.expectOne(discoveryUrl).flush({});
 
             expect(timeSyncServiceSpy.updateServerTime).not.toHaveBeenCalled();
         });
 
         it('should not call updateServerTime when the header contains an unparseable date', () => {
-            httpClient.get(ecmApiUrl).subscribe();
+            httpClient.get(discoveryUrl).subscribe();
 
-            httpMock.expectOne(ecmApiUrl).flush({}, { headers: { [DEFAULT_SERVER_TIME_HEADER]: 'not-a-date' } });
+            httpMock.expectOne(discoveryUrl).flush({}, { headers: { [DEFAULT_SERVER_TIME_HEADER]: 'not-a-date' } });
 
             expect(timeSyncServiceSpy.updateServerTime).not.toHaveBeenCalled();
         });
 
         it('should not call updateServerTime when the header value has no timezone indicator (ambiguous local time)', () => {
-            // A custom backend might send "2024-10-14T13:14:00" without a timezone.
-            // new Date() would treat this as local time — silently wrong. We must reject it.
-            httpClient.get(ecmApiUrl).subscribe();
+            httpClient.get(discoveryUrl).subscribe();
 
-            httpMock.expectOne(ecmApiUrl).flush({}, { headers: { [DEFAULT_SERVER_TIME_HEADER]: '2024-10-14T13:14:00' } });
+            httpMock.expectOne(discoveryUrl).flush({}, { headers: { [DEFAULT_SERVER_TIME_HEADER]: '2024-10-14T13:14:00' } });
 
             expect(timeSyncServiceSpy.updateServerTime).not.toHaveBeenCalled();
         });
@@ -203,9 +159,9 @@ describe('ServerTimeHeaderInterceptor', () => {
             it(`should call updateServerTime for a value with ${label}`, () => {
                 spyOn(Date, 'now').and.returnValues(requestStartTime, responseReceivedTime);
 
-                httpClient.get(ecmApiUrl).subscribe();
+                httpClient.get(discoveryUrl).subscribe();
 
-                httpMock.expectOne(ecmApiUrl).flush({}, { headers: { [DEFAULT_SERVER_TIME_HEADER]: value } });
+                httpMock.expectOne(discoveryUrl).flush({}, { headers: { [DEFAULT_SERVER_TIME_HEADER]: value } });
 
                 expect(timeSyncServiceSpy.updateServerTime).toHaveBeenCalledTimes(1);
             });
@@ -215,18 +171,13 @@ describe('ServerTimeHeaderInterceptor', () => {
     describe('when a custom header name is configured', () => {
         it('should read the server time from the configured header', () => {
             const customHeader = 'X-Server-Time';
-            appConfigSpy.get.and.callFake((key: string, defaultValue?: unknown) => {
-                if (key === 'serverTimeAllowedOrigins') { return []; }
-                if (key === AppConfigValues.ECMHOST) { return ecmHost; }
-                if (key === AppConfigValues.BPMHOST) { return bpmHost; }
-                if (key === 'serverTimeHeader') { return customHeader; }
-                return defaultValue;
-            });
+            appConfigSpy.get.and.returnValue(customHeader);
 
             spyOn(Date, 'now').and.returnValues(requestStartTime, responseReceivedTime);
 
-            httpClient.get(ecmApiUrl).subscribe();
-            httpMock.expectOne(ecmApiUrl).flush({}, { headers: { [customHeader]: serverDateHeader } });
+            httpClient.get(discoveryUrl).subscribe();
+
+            httpMock.expectOne(discoveryUrl).flush({}, { headers: { [customHeader]: serverDateHeader } });
 
             expect(timeSyncServiceSpy.updateServerTime).toHaveBeenCalledOnceWith({
                 serverTimeMs,

@@ -19,7 +19,8 @@ import { inject, Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { AppConfigService } from '../../app-config/app-config.service';
 import { TimeSyncService } from '../services/time-sync.service';
 
 /**
@@ -45,41 +46,43 @@ export const DEFAULT_SERVER_TIME_HEADER = 'Date';
 const UTC_TIMEZONE_PATTERN = /(?:GMT|UTC|Z|[+-]\d{2}:\d{2})$/i;
 
 /**
- * `ServerTimeHeaderInterceptor` intercepts HTTP requests targeting the configured backend
- * origins and reads the server time from a response header (default: `Date`). The captured
- * snapshot is forwarded to {@link TimeSyncService} so that clock-skew checks can be performed
+ * `ServerTimeHeaderInterceptor` intercepts HTTP requests sent to the OIDC issuer
+ * (the identity provider configured as `oauth2.host`) and extracts the server time
+ * from a response header (default: `Date`, RFC 7231). The captured snapshot is
+ * forwarded to {@link TimeSyncService} so that clock-skew checks can be performed
  * without making dedicated REST calls to a separate time endpoint.
  *
- * Only responses from trusted backend origins are considered. The interceptor resolves the
- * allowed origins in the following priority order:
- *  1. `serverTimeAllowedOrigins` — an explicit list of URL prefixes in `app.config.json`.
- *  2. `ecmHost` and `bpmHost` — the standard ADF backend host keys.
- *  3. If none of the above are configured, **all** origins are accepted as a safe fallback.
+ * Only responses from the OIDC issuer are processed. This deliberately targets
+ * authentication-related traffic — discovery-document fetches, token exchanges and
+ * token refreshes — because it is the identity provider's clock that signs JWT tokens
+ * and whose time is most relevant to the clock-skew check.
  *
  * Register this interceptor in your application providers, for example:
  * ```typescript
  * { provide: HTTP_INTERCEPTORS, useClass: ServerTimeHeaderInterceptor, multi: true }
  * ```
  *
- * Optional `app.config.json` overrides:
+ * The response header name can be overridden via `app.config.json`:
  * ```json
- * {
- *   "serverTimeHeader": "X-Server-Time",
- *   "serverTimeAllowedOrigins": ["https://my-backend.example.com"]
- * }
+ * { "serverTimeHeader": "X-Server-Time" }
  * ```
  */
 @Injectable()
 export class ServerTimeHeaderInterceptor implements HttpInterceptor {
     private readonly _timeSyncService = inject(TimeSyncService);
     private readonly _appConfigService = inject(AppConfigService);
+    private readonly _oauthService = inject(OAuthService);
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+        if (!this.isAuthRelatedRequest(request.url)) {
+            return next.handle(request);
+        }
+
         const requestStartTimeMs = Date.now();
 
         return next.handle(request).pipe(
             tap((event) => {
-                if (event instanceof HttpResponse && this.isAllowedOrigin(request.url)) {
+                if (event instanceof HttpResponse) {
                     this.captureServerTime(event, requestStartTimeMs);
                 }
             })
@@ -87,36 +90,16 @@ export class ServerTimeHeaderInterceptor implements HttpInterceptor {
     }
 
     /**
-     * Returns `true` when the given URL belongs to one of the trusted backend origins.
-     * Falls back to `true` (allow all) when no origins are configured.
+     * Returns `true` when the request URL targets the configured OIDC issuer.
+     * This covers all auth-related calls: discovery document, token endpoint,
+     * token refresh, and userinfo endpoint.
+     *
+     * Returns `false` — and skips header capture — when the issuer is not yet
+     * configured (i.e. before the OAuth service has been initialised).
      */
-    private isAllowedOrigin(url: string): boolean {
-        const allowedOrigins = this.resolveAllowedOrigins();
-        return allowedOrigins.length === 0 || allowedOrigins.some((origin) => url.startsWith(origin));
-    }
-
-    /**
-     * Resolves the list of trusted origin prefixes from the app config.
-     * Returns an empty array when none are configured, which signals "allow all".
-     */
-    private resolveAllowedOrigins(): string[] {
-        const explicit = this._appConfigService.get<string[]>('serverTimeAllowedOrigins', []);
-        if (explicit.length > 0) {
-            return explicit;
-        }
-
-        const origins: string[] = [];
-        const ecmHost = this._appConfigService.get<string>(AppConfigValues.ECMHOST, '');
-        const bpmHost = this._appConfigService.get<string>(AppConfigValues.BPMHOST, '');
-
-        if (ecmHost) {
-            origins.push(ecmHost);
-        }
-        if (bpmHost) {
-            origins.push(bpmHost);
-        }
-
-        return origins;
+    private isAuthRelatedRequest(url: string): boolean {
+        const issuer = this._oauthService.issuer;
+        return !!issuer && url.startsWith(issuer);
     }
 
     private captureServerTime(response: HttpResponse<unknown>, requestStartTimeMs: number): void {
