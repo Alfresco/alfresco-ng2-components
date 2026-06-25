@@ -66,7 +66,10 @@ const UTC_TIMEZONE_PATTERN = /(?:GMT|UTC|Z|[+-]\d{2}:\d{2})$/i;
  * ```json
  * { "serverTimeHeader": "X-Server-Time" }
  * ```
- */
+ *
+ * Note: If the OIDC issuer is on a different origin, ensure the issuer exposes the configured
+ * header via CORS (e.g. `Access-Control-Expose-Headers: Date, X-Server-Time`), otherwise
+ * `response.headers.get(...)` will return `null` in the browser.
 @Injectable()
 export class ServerTimeHeaderInterceptor implements HttpInterceptor {
     private readonly _timeSyncService = inject(TimeSyncService);
