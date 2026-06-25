@@ -98,7 +98,7 @@ describe('DynamicChipListComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            testingUtils.clickByCSS('#adf-dynamic-chip-list-delete-test1');
+            testingUtils.clickByDataAutomationId('adf-dynamic-chip-list-delete-btn-0ee933fa-57fc-4587-8a77-b787e814f1d2');
 
             expect(component.removedChip.emit).toHaveBeenCalledWith('0ee933fa-57fc-4587-8a77-b787e814f1d2');
         });
@@ -149,7 +149,7 @@ describe('DynamicChipListComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const chip = testingUtils.getByCSS('.adf-dynamic-chip-list-delete-icon');
+            const chip = testingUtils.getByCSS('.adf-dynamic-chip-list-delete-btn');
             expect(Object.keys(chip.attributes)).toContain('disabled');
         });
 

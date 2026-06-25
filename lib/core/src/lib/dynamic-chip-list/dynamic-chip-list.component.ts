@@ -159,6 +159,12 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
         this.displayNext.emit();
     }
 
+    focusDeleteButton(index: number): void {
+        const buttons: NodeListOf<HTMLButtonElement> = this.containerView.nativeElement.querySelectorAll('.adf-dynamic-chip-list-delete-btn');
+        const target: HTMLButtonElement = buttons[index] ?? buttons[index - 1];
+        target?.focus();
+    }
+
     private calculateChipsToDisplay(): void {
         if (this.requestedDisplayingAllChips || !this.chips.length) {
             return;
