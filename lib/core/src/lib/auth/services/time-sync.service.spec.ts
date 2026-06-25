@@ -213,13 +213,9 @@ describe('TimeSyncService', () => {
             expect(sync.timeOutOfSyncInSec).toBeCloseTo(60.5);
         });
 
-        it('should error when no server time snapshot has been provided yet', async () => {
-            try {
-                await firstValueFrom(service.checkTimeSync(60));
-                fail('Expected an error to be thrown');
-            } catch (error) {
-                expect(error.message).toContain('No server time available');
-            }
+        it('should return outOfSync false when no server time snapshot has been provided yet', async () => {
+            const sync = await firstValueFrom(service.checkTimeSync(60));
+            expect(sync.outOfSync).toBeFalse();
         });
     });
 

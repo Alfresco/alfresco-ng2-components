@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface TimeSync {
@@ -60,13 +60,19 @@ export class TimeSyncService {
      * The server time is derived from the most recent HTTP response header captured by
      * {@link ServerTimeHeaderInterceptor} — no dedicated REST call is made.
      *
+     * When no server time snapshot is available yet (e.g. the interceptor has not captured
+     * a response header), the method returns a soft-failure result with `outOfSync: false`
+     * so that callers such as auth error-handling streams are not terminated by an unhandled
+     * error. Once a snapshot is available the full clock-skew calculation is performed.
+     *
      * @param maxAllowedClockSkewInSec - The maximum allowed clock skew in seconds.
-     * @returns An Observable that emits a {@link TimeSync} result, or errors when no server
-     *          time snapshot is available yet.
+     * @returns An Observable that emits a {@link TimeSync} result. When no snapshot is
+     *          available, emits `{ outOfSync: false }` as a safe default.
      */
     checkTimeSync(maxAllowedClockSkewInSec: number): Observable<TimeSync> {
         if (!this._serverTimeSnapshot) {
-            return throwError(() => new Error('No server time available. Ensure ServerTimeHeaderInterceptor is configured and a backend request has been made.'));
+            const nowISO = new Date().toISOString();
+            return of({ outOfSync: false, localDateTimeISO: nowISO, serverDateTimeISO: nowISO });
         }
 
         const { serverTimeMs, requestStartTimeMs, responseReceivedTimeMs } = this._serverTimeSnapshot;

@@ -29,6 +29,7 @@ import { provideRouter } from '@angular/router';
 import { AUTH_ROUTES } from './auth.routes';
 import { Authentication, AuthenticationInterceptor } from '@alfresco/adf-core/auth';
 import { TimeSyncDateTimeProvider } from './time-sync-date-time-provider';
+import { ServerTimeHeaderInterceptor } from './server-time-header.interceptor';
 
 export const JWT_STORAGE_SERVICE = new InjectionToken<OAuthStorage>('JWT_STORAGE_SERVICE', {
     providedIn: 'root',
@@ -70,6 +71,7 @@ export function provideCoreAuth(config: AuthModuleConfig = { useHash: false }): 
         }),
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ServerTimeHeaderInterceptor, multi: true },
         { provide: AUTH_MODULE_CONFIG, useValue: config },
         { provide: Authentication, useClass: AuthenticationService }
     ];
