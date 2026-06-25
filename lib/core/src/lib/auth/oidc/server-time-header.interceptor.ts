@@ -118,14 +118,14 @@ export class ServerTimeHeaderInterceptor implements HttpInterceptor {
             return;
         }
 
-        const serverTimeMs = new Date(headerValue).getTime();
+        const serverTimeEpoch = new Date(headerValue).getTime();
 
-        if (isNaN(serverTimeMs)) {
+        if (isNaN(serverTimeEpoch)) {
             return;
         }
 
         this._timeSyncService.updateServerTime({
-            serverTimeMs,
+            serverTimeMs: serverTimeEpoch,
             requestStartTimeMs,
             responseReceivedTimeMs: Date.now()
         });
