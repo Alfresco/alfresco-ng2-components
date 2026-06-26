@@ -1,0 +1,43 @@
+/*!
+ * @license
+ * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { EnvironmentProviders, inject, makeEnvironmentProviders, provideAppInitializer } from '@angular/core';
+import { SESSION_TIMEOUT_OPTIONS, SessionTimeoutOptions } from './session-timeout.config';
+import { IdleActivityTracker } from './idle-activity-tracker';
+import { SessionTimeoutSyncChannel } from './session-timeout-sync-channel';
+import { SessionTimeoutService } from './session-timeout.service';
+
+/**
+ * Provides the session timeout feature: idle tracking, the countdown dialog and cross-tab sync.
+ *
+ * When the countdown dialog is not answered, the local session state expires without redirecting
+ * to an ADF-owned timeout page. Applications remain responsible for their authenticated shell state.
+ *
+ * @param options - Optional overrides that take precedence over the `sessionTimeout` app config block
+ * @returns Environment providers that register the service and start it during app initialization
+ */
+export function provideSessionTimeout(options?: SessionTimeoutOptions): EnvironmentProviders {
+    return makeEnvironmentProviders([
+        { provide: SESSION_TIMEOUT_OPTIONS, useValue: options ?? {} },
+        IdleActivityTracker,
+        SessionTimeoutSyncChannel,
+        SessionTimeoutService,
+        provideAppInitializer(() => {
+            inject(SessionTimeoutService).start();
+        })
+    ]);
+}

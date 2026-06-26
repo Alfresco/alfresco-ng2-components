@@ -49,4 +49,5 @@ export * from './models/identity-role.model';
 export * from './models/user-access.model';
 export * from './models/application-access.model';
 
+export * from './session-timeout/public-api';
 export * from './oidc/public-api';

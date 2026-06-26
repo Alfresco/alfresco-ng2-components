@@ -13,6 +13,42 @@ The authType parameter specifies the authentication method, with BASIC and OAUTH
     "authType": "OAUTH"
 }
 ```
+
+## Session Timeout
+
+ADF can track user activity and show a countdown dialog before logging out an idle authenticated session. Register the feature with `provideSessionTimeout` in your application providers:
+
+```ts
+import { ApplicationConfig } from '@angular/core';
+import { provideSessionTimeout } from '@alfresco/adf-core';
+
+export const appConfig: ApplicationConfig = {
+    providers: [
+        provideSessionTimeout({
+            enabled: true,
+            idleTimeoutMs: 5 * 60 * 1000,
+            dialogTimeoutMs: 60 * 1000
+        })
+    ]
+};
+```
+
+The same values can be configured in `app.config.json` with the `sessionTimeout` key:
+
+```json
+{
+    "sessionTimeout": {
+        "enabled": true,
+        "idleTimeoutMs": 300000,
+        "dialogTimeoutMs": 60000
+    }
+}
+```
+
+Registering `provideSessionTimeout` enables the feature: `enabled` defaults to `true`, so the countdown is active unless you set `enabled` to `false` in `app.config.json` or in the options passed to `provideSessionTimeout`. The default idle timeout is 5 minutes, and the default dialog timeout is 60 seconds. Values passed to `provideSessionTimeout` take precedence over values from `app.config.json`.
+
+When the user clicks **Log out** in the countdown dialog, the normal logout flow runs. When the dialog is left unanswered, the local session state expires without redirecting to an ADF-owned timeout page. Applications should own any shell-level timeout messaging, recovery flow or re-authentication route.
+
 # OAuth2 Configuration
 OAuth2 is a protocol that allows the application to authorize operations without exposing user credentials. The configuration includes several parameters essential for setting up OAuth2 authentication.
 
