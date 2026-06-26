@@ -186,6 +186,16 @@ describe('UserTaskCloudComponent', () => {
             expect(errorEmitSpy).not.toHaveBeenCalled();
         });
 
+        it('should fall back to the Query Service when taskDetailsSource is an unsupported value', () => {
+            fixture.componentRef.setInput('taskDetailsSource', 'unsupported');
+            fixture.componentRef.setInput('taskId', 'task1');
+            fixture.detectChanges();
+
+            expect(getTaskSpy).toHaveBeenCalledWith('app1', 'task1');
+            expect(component.taskDetails).toEqual(taskDetails);
+            expect(errorEmitSpy).not.toHaveBeenCalled();
+        });
+
         it('should emit error when the Runtime Bundle fails with a non-404 error', () => {
             const error = { status: 500 };
             getTaskSpy.withArgs('app1', 'task1', 'rb').and.returnValue(throwError(() => error));

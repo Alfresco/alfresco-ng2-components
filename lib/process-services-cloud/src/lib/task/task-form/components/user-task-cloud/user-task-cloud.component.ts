@@ -345,7 +345,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     }
 
     private get taskDetailsStrategy(): TaskDetailsSourceStrategy {
-        return this.taskDetailsSourceStrategies[this.taskDetailsSource];
+        return this.taskDetailsSourceStrategies[this.taskDetailsSource] ?? this.taskDetailsSourceStrategies.query;
     }
 
     public switchToDisplayMode(newDisplayMode?: string): void {
