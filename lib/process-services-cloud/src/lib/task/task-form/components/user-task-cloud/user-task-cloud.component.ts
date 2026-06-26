@@ -223,6 +223,12 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
             this.loadTask();
             return;
         }
+
+        const taskDetailsSource = changes['taskDetailsSource'];
+        if (taskDetailsSource && !taskDetailsSource.firstChange && this.appName && this.taskId) {
+            this.loadTask();
+            return;
+        }
     }
 
     ngOnInit() {

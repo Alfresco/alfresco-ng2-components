@@ -196,6 +196,18 @@ describe('UserTaskCloudComponent', () => {
             expect(errorEmitSpy).not.toHaveBeenCalled();
         });
 
+        it('should reload the task from the new source when taskDetailsSource changes after init', () => {
+            fixture.componentRef.setInput('taskId', 'task1');
+            fixture.detectChanges();
+            expect(getTaskSpy).toHaveBeenCalledWith('app1', 'task1');
+
+            getTaskSpy.calls.reset();
+            fixture.componentRef.setInput('taskDetailsSource', 'rb');
+            fixture.detectChanges();
+
+            expect(getTaskSpy).toHaveBeenCalledWith('app1', 'task1', 'rb');
+        });
+
         it('should emit error when the Runtime Bundle fails with a non-404 error', () => {
             const error = { status: 500 };
             getTaskSpy.withArgs('app1', 'task1', 'rb').and.returnValue(throwError(() => error));
