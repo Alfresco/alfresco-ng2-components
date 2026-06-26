@@ -426,6 +426,15 @@ describe('UserTaskCloudComponent', () => {
 
             expect(errorEmitSpy).toHaveBeenCalledWith('getTaskyById error');
         });
+
+        it('should reset the loading state when getTaskById fails', async () => {
+            getTaskSpy.and.returnValue(throwError(() => 'getTaskyById error'));
+            component.taskId = 'task1';
+            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
+            await fixture.whenStable();
+
+            expect(component.loading).toBe(false);
+        });
     });
 
     describe('Events', () => {

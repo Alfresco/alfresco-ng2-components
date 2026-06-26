@@ -330,6 +330,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
             .pipe(
                 takeUntilDestroyed(this.destroyRef),
                 catchError((error) => {
+                    this.loading = false;
                     this.onError(error);
                     return EMPTY;
                 })
