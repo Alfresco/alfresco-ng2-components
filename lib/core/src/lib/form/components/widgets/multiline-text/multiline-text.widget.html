@@ -37,12 +37,13 @@
                 } @else {
                     {{ 'FORM.FIELD.REQUIRED' | translate }}
                 }
+                @if (field.maxLength > 0) {
+                    <span class="adf-multiline-counter">{{ field?.value?.length || 0 }}/{{ field.maxLength }}</span>
+                }
             </mat-error>
+        } @else if (field.maxLength > 0) {
+            <mat-hint align="end">{{ field?.value?.length || 0 }}/{{ field.maxLength }}</mat-hint>
         }
+   
     </mat-form-field>
-    <div class="adf-multiline-subscript">
-        @if (field.maxLength > 0) {
-            <span class="adf-multiline-word-counter-value">{{ field?.value?.length || 0 }}/{{ field.maxLength }}</span>
-        }
-    </div>
 </div>

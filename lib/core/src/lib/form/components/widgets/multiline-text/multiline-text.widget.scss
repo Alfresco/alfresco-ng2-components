@@ -17,16 +17,9 @@
         }
     }
 
-    &-multiline-subscript {
-        position: absolute;
-        right: 16px;
-        bottom: 2px;
-        font-size: var(--mat-sys-body-small-size);
-        line-height: 16px;
-
-        .adf-multiline-word-counter-value {
-            color: var(--mat-sys-on-surface-variant, rgba(0, 0, 0, 0.6));
-        }
+    &-multiline-counter {
+        float: right;
+        color: var(--mat-sys-on-surface-variant, rgba(0, 0, 0, 0.6));
     }
 
     &-multiline-required-message {
