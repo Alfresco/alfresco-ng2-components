@@ -578,4 +578,49 @@ describe('Task Cloud Service', () => {
             expect(result).toBe(false);
         });
     });
+
+    describe('canClaimTaskByState', () => {
+        it('should return true for a created, non-standalone task without relying on permissions', () => {
+            const task = { ...createdTaskDetailsCloudMock, status: TASK_CREATED_STATE, standalone: false, permissions: undefined };
+            expect(service.canClaimTaskByState(task)).toBe(true);
+        });
+
+        it('should return false when the task is not in the created state', () => {
+            const task = { ...createdTaskDetailsCloudMock, status: TASK_ASSIGNED_STATE, standalone: false };
+            expect(service.canClaimTaskByState(task)).toBe(false);
+        });
+
+        it('should return false when the task is standalone', () => {
+            const task = { ...createdTaskDetailsCloudMock, status: TASK_CREATED_STATE, standalone: true };
+            expect(service.canClaimTaskByState(task)).toBe(false);
+        });
+    });
+
+    describe('canUnclaimTaskByState', () => {
+        it('should return true for an assigned, non-standalone task assigned to the current user without relying on permissions', () => {
+            const task = {
+                ...assignedTaskDetailsCloudMock,
+                status: TASK_ASSIGNED_STATE,
+                assignee: 'AssignedTaskUser',
+                standalone: false,
+                permissions: undefined
+            };
+            expect(service.canUnclaimTaskByState(task)).toBe(true);
+        });
+
+        it('should return false when the task is assigned to a different user', () => {
+            const task = { ...assignedTaskDetailsCloudMock, status: TASK_ASSIGNED_STATE, assignee: 'DifferentUser', standalone: false };
+            expect(service.canUnclaimTaskByState(task)).toBe(false);
+        });
+
+        it('should return false when the task is not in the assigned state', () => {
+            const task = { ...assignedTaskDetailsCloudMock, status: TASK_CREATED_STATE, assignee: 'AssignedTaskUser', standalone: false };
+            expect(service.canUnclaimTaskByState(task)).toBe(false);
+        });
+
+        it('should return false when the task is standalone', () => {
+            const task = { ...assignedTaskDetailsCloudMock, status: TASK_ASSIGNED_STATE, assignee: 'AssignedTaskUser', standalone: true };
+            expect(service.canUnclaimTaskByState(task)).toBe(false);
+        });
+    });
 });
