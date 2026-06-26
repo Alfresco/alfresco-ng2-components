@@ -225,6 +225,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
 
     versionEntry: VersionEntry;
     urlFileContent: string;
+    blobFileContent: Blob;
     fileName: string;
     mimeType: string;
     nodeMimeType: string;
@@ -274,6 +275,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     private async onNodeUpdated(node: Node) {
         if (node && node.id === this.nodeId) {
             this.generateCacheBusterNumber();
+            this.blobFileContent = null;
 
             await this.setUpNodeFile(node);
         }
@@ -298,6 +300,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
 
     private async setupNode() {
         try {
+            this.blobFileContent = null;
             this.nodeEntry = await this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] });
             if (this.versionId) {
                 this.versionEntry = await this.versionsApi.getVersion(this.nodeId, this.versionId);
@@ -348,12 +351,34 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
             }
         } else if (viewerType === 'media') {
             this.tracks = await this.renditionService.generateMediaTracksRendition(this.nodeId);
+        } else if (viewerType === 'pdf') {
+            try {
+                const contentUrl = versionData
+                    ? this.contentApi.getVersionContentUrl(this.nodeId, versionData.id)
+                    : this.contentApi.getContentUrl(this.nodeId);
+
+                // Fetch the content as Blob using fetch API with credentials
+                const response = await fetch(contentUrl, {
+                    credentials: 'include',
+                    headers: {
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                this.blobFileContent = await response.blob();
+                urlFileContent = null;
+            } catch (error) {
+                console.error('[ADF DEBUG] Failed to fetch PDF as blob, falling back to URL', error);
+            }
         }
 
         this.mimeType = mimeType;
         this.nodeMimeType = nodeMimeType;
         this.fileName = versionData ? versionData.name : nodeData.name;
-        this.urlFileContent = urlFileContent + (this.cacheBusterNumber ? '&' + this.cacheBusterNumber : '');
+        this.urlFileContent = urlFileContent ? urlFileContent + (this.cacheBusterNumber ? '&' + this.cacheBusterNumber : '') : null;
         this.sidebarRightTemplateContext.node = nodeData;
         this.sidebarLeftTemplateContext.node = nodeData;
     }

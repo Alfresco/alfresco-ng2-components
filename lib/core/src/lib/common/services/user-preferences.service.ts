@@ -135,7 +135,8 @@ export class UserPreferencesService {
 
         this.select('textOrientation').subscribe((direction: Direction) => {
             renderer.setAttribute(this.document.body, 'dir', direction);
-            (this.directionality as any).value = direction;
+            this.directionality.valueSignal.set(direction);
+            this.directionality.change.emit(direction);
         });
     }
 

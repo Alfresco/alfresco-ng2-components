@@ -100,7 +100,7 @@ describe('SearchChipListComponent', () => {
     });
 
     it('should remove the entry upon remove button click', async () => {
-        spyOn(searchFacetFiltersService, 'unselectFacetBucket').and.callThrough();
+        spyOn(searchFacetFiltersService, 'unselectFacetBucket').and.stub();
 
         searchFacetFiltersService.selectedBuckets = [
             {
