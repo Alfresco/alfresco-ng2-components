@@ -115,6 +115,6 @@ export class SessionTimeoutSyncChannel implements OnDestroy {
             return Array.from(buffer, (value) => value.toString(16)).join('-');
         }
 
-        return `${Date.now()}-${performance.now()}`;
+        return `${Date.now()}-${this.window?.performance?.now?.() ?? 0}`;
     }
 }
