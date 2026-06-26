@@ -131,6 +131,32 @@ export class TaskCloudService extends BaseCloudService {
     }
 
     /**
+     * Validate if a task can be claimed based solely on its state, ignoring candidate
+     * `permissions`. Intended for callers reading the task from the Runtime Bundle, whose
+     * responses do not include the `permissions` evaluated by the (eventually consistent)
+     * Query Service.
+     *
+     * @param taskDetails task details object
+     * @returns Boolean value if the task can be claimed
+     */
+    canClaimTaskByState(taskDetails: TaskDetailsCloudModel): boolean {
+        return taskDetails?.status === TASK_CREATED_STATE && !taskDetails?.standalone;
+    }
+
+    /**
+     * Validate if a task can be unclaimed based solely on its state and assignee, ignoring
+     * candidate `permissions`. Intended for callers reading the task from the Runtime Bundle,
+     * whose responses do not include the `permissions` evaluated by the (eventually consistent)
+     * Query Service.
+     *
+     * @param taskDetails task details object
+     * @returns Boolean value if the task can be unclaimed
+     */
+    canUnclaimTaskByState(taskDetails: TaskDetailsCloudModel): boolean {
+        return taskDetails?.status === TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails?.assignee) && !taskDetails?.standalone;
+    }
+
+    /**
      * Returns the next recommended task to process.
      *
      * @param appName Name of the app
