@@ -1,3 +1,5 @@
+@use '../../mixins' as mixins;
+
 .adf {
     &-cloud-group-list {
         margin: 5px 0;
@@ -41,4 +43,8 @@
             }
         }
     }
+}
+
+.adf-error-messages-container .adf-error-icon {
+    @include mixins.adf-error-icon;
 }

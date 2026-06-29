@@ -1,3 +1,5 @@
+@use '../../../../mixins' as mixins;
+
 .adf {
     &-display-external-property-widget {
         width: 100%;
@@ -10,4 +12,8 @@
             word-break: break-all;
         }
     }
+}
+
+.adf-form-field-input .adf-error-icon {
+    @include mixins.adf-error-icon;
 }

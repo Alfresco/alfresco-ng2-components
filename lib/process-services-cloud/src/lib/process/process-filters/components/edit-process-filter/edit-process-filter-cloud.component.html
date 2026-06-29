@@ -73,7 +73,7 @@
                                 placeholder="{{processFilterProperty.label | translate}}"
                                 [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"/>
                         </mat-form-field>
-                        <mat-form-field [floatLabel]="'auto'" *ngIf="processFilterProperty.type === 'date'" [attr.data-automation-id]="processFilterProperty.key">
+                        <mat-form-field [floatLabel]="'auto'" class="adf-form-field-input" *ngIf="processFilterProperty.type === 'date'" [attr.data-automation-id]="processFilterProperty.key">
                             <mat-label>{{processFilterProperty.label | translate}}</mat-label>
                             <input
                                 matInput

@@ -1,4 +1,5 @@
 @use '../../../../mat-selectors' as ms;
+@use '../../../../mixins' as mixins;
 
 .adf {
     &-dropdown-widget {
@@ -33,4 +34,8 @@
             height: auto;
         }
     }
+}
+
+.adf-form-field-input .adf-error-icon {
+    @include mixins.adf-error-icon;
 }

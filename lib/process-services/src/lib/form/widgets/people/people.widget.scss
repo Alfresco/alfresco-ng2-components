@@ -1,3 +1,5 @@
+@use '../../../styles/mixins' as mixins;
+
 .adf {
     &-people-widget {
         width: 100%;
@@ -58,4 +60,8 @@
     &-people-label-name {
         padding-left: 10px;
     }
+}
+
+.adf-people-widget-field .adf-error-icon {
+    @include mixins.adf-error-icon;
 }

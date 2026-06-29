@@ -1,3 +1,5 @@
+@use '../../../../styles/mixins' as mixins;
+
 .adf {
     &-decimal-widget {
         width: 100%;
@@ -8,4 +10,8 @@
             flex-direction: column;
         }
     }
+}
+
+.adf-form-field-input .adf-error-icon {
+    @include mixins.adf-error-icon;
 }

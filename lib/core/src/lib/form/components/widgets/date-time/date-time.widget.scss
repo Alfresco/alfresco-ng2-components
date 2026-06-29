@@ -1,5 +1,6 @@
 /* stylelint-disable selector-class-pattern */
 @use '../../../../styles/mat-selectors' as ms;
+@use '../../../../styles/mixins' as mixins;
 
 .adf {
     &-date-time-widget {
@@ -21,6 +22,10 @@
             width: 100%;
         }
     }
+}
+
+.adf-form-field-input .adf-error-icon {
+    @include mixins.adf-error-icon;
 }
 
 #{ms.$mat-datetimepicker-toggle} {

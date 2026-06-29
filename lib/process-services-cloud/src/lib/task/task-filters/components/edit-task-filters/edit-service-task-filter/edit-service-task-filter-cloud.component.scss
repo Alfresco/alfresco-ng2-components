@@ -1,4 +1,5 @@
 @use '../../../../../flex' as flex;
+@use '../../../../../mixins' as mixins;
 
 .adf-edit-task-filter-checkbox {
     padding-top: 10px;
@@ -70,4 +71,8 @@
             }
         }
     }
+}
+
+.adf-form-field-input .adf-error-icon {
+    @include mixins.adf-error-icon;
 }

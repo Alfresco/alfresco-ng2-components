@@ -1,3 +1,5 @@
+@use '../../../../styles/mixins' as mixins;
+
 .adf {
     &-multiline-text-widget {
         width: 100%;
@@ -25,4 +27,8 @@
     &-multiline-required-message {
         display: flex;
     }
+}
+
+.adf-form-field-input .adf-error-icon {
+    @include mixins.adf-error-icon;
 }

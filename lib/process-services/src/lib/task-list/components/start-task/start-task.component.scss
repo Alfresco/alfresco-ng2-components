@@ -1,4 +1,5 @@
 @use '../../../styles/flex' as flex;
+@use '../../../styles/mixins' as mixins;
 
 /* stylelint-disable no-descending-specificity */
 .adf-new-task-heading {
@@ -112,11 +113,6 @@ adf-start-task {
             width: auto;
         }
 
-        &-error-icon {
-            font: var(--mat-sys-body-medium);
-            color: var(--mat-sys-error);
-        }
-
         &-label {
             color: var(--mat-sys-outline);
         }
@@ -139,4 +135,8 @@ adf-start-task {
             }
         }
     }
+}
+
+.adf-form-field-input .adf-error-icon {
+    @include mixins.adf-error-icon;
 }
