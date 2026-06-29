@@ -17,8 +17,8 @@
 
 import { DOCUMENT } from '@angular/common';
 import { NgZone } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
-import { IdleActivityTracker } from './idle-activity-tracker';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ACTIVITY_THROTTLE_MS, IdleActivityTracker } from './idle-activity-tracker';
 
 describe('IdleActivityTracker', () => {
     let tracker: IdleActivityTracker;
@@ -41,6 +41,25 @@ describe('IdleActivityTracker', () => {
 
         expect(spy).toHaveBeenCalledTimes(1);
     });
+
+    it('throttles a burst of activity events within the throttle window', fakeAsync(() => {
+        const spy = jasmine.createSpy('activity');
+        tracker.activity$.subscribe(spy);
+        tracker.start();
+
+        // Leading edge emits immediately, the rest of the burst is throttled.
+        for (let i = 0; i < 10; i++) {
+            doc.dispatchEvent(new Event('mousemove'));
+        }
+        expect(spy).toHaveBeenCalledTimes(1);
+
+        // After the throttle window, activity emits again.
+        tick(ACTIVITY_THROTTLE_MS);
+        doc.dispatchEvent(new Event('mousemove'));
+        expect(spy.calls.count()).toBeGreaterThan(1);
+
+        tick(ACTIVITY_THROTTLE_MS);
+    }));
 
     it('does not emit after stop()', () => {
         const spy = jasmine.createSpy('activity');

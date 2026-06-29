@@ -19,9 +19,9 @@ import { DOCUMENT } from '@angular/common';
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-const SESSION_TIMEOUT_CHANNEL_NAME = 'hxp-session-timeout';
+const SESSION_TIMEOUT_CHANNEL_NAME = 'adf-session-timeout';
 
-export const SESSION_TIMEOUT_SYNC_EVENT_TYPES = ['activity', 'timeout', 'continue', 'logout', 'expired'] as const;
+export const SESSION_TIMEOUT_SYNC_EVENT_TYPES = ['activity', 'timeout', 'continue', 'logout'] as const;
 
 export type SessionTimeoutSyncEventType = (typeof SESSION_TIMEOUT_SYNC_EVENT_TYPES)[number];
 
@@ -68,7 +68,7 @@ export class SessionTimeoutSyncChannel implements OnDestroy {
                 createdAt: Date.now()
             } satisfies SessionTimeoutSyncEvent);
         } catch {
-            // Cross-tab sync is best-effort; local tab timeout behavior still works.
+            /* empty */
         }
     }
 

@@ -25,8 +25,8 @@ import { filter, take } from 'rxjs/operators';
 /**
  * Provides the session timeout feature: idle tracking, the countdown dialog and cross-tab sync.
  *
- * When the countdown dialog is not answered, the local session state expires without redirecting
- * to an ADF-owned timeout page. Applications remain responsible for their authenticated shell state.
+ * When the countdown dialog is not answered (or the user clicks "Log out"), the normal logout flow
+ * runs and the user is redirected to the configured IdP/login page.
  *
  * @param options - Optional overrides that take precedence over the `sessionTimeout` app config block
  * @returns Environment providers that register the service and start it during app initialization

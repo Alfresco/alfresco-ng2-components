@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{ 'SESSION_TIMEOUT.TITLE' | translate }}</h2>
 
-<mat-dialog-content>
+<mat-dialog-content aria-live="polite">
     {{ 'SESSION_TIMEOUT.MESSAGE' | translate: { seconds: remainingSeconds } }}
 </mat-dialog-content>
 

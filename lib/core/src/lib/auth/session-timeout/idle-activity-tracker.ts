@@ -18,8 +18,12 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, NgZone, OnDestroy, inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { throttleTime } from 'rxjs/operators';
 
 export const ACTIVITY_EVENTS = ['click', 'keydown', 'mousedown', 'mousemove', 'pointerdown', 'scroll', 'touchstart', 'wheel'] as const;
+
+/** High-frequency activity events (e.g. mousemove, scroll) are throttled to avoid rescheduling the idle timer on every DOM event. */
+export const ACTIVITY_THROTTLE_MS = 1000;
 
 @Injectable()
 export class IdleActivityTracker implements OnDestroy {
@@ -29,7 +33,9 @@ export class IdleActivityTracker implements OnDestroy {
     private readonly visibilitySubject = new Subject<DocumentVisibilityState>();
     private isRegistered = false;
 
-    readonly activity$: Observable<void> = this.activitySubject.asObservable();
+    readonly activity$: Observable<void> = this.activitySubject
+        .asObservable()
+        .pipe(throttleTime(ACTIVITY_THROTTLE_MS, undefined, { leading: true, trailing: true }));
     readonly visibilityChange$: Observable<DocumentVisibilityState> = this.visibilitySubject.asObservable();
 
     start(): void {

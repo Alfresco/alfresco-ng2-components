@@ -301,7 +301,7 @@ describe('SessionTimeoutService', () => {
         expect(dialog.open).toHaveBeenCalledTimes(2);
     }));
 
-    it('should expire the local session without redirecting when the dialog auto-closes', fakeAsync(() => {
+    it('should run the full logout flow when the dialog auto-closes on timeout', fakeAsync(() => {
         configureTestingModule({ enabled: true, idleTimeoutMs: 1000, dialogTimeoutMs: 500 });
 
         startService();
@@ -309,28 +309,12 @@ describe('SessionTimeoutService', () => {
         tick(500);
         flushMicrotasks();
 
-        expect(authService.reset).toHaveBeenCalledTimes(1);
-        // The unresponsive (timed-out) path must not trigger the IdP logout redirect.
-        expect(authService.logout).not.toHaveBeenCalled();
-        // Other tabs are told to expire immediately.
-        expect(syncChannel.post).toHaveBeenCalledWith('expired');
-        expect(tracker.stop).toHaveBeenCalledTimes(1);
-        expect(syncChannel.close).toHaveBeenCalledTimes(1);
-    }));
-
-    it('should expire the local session when another tab broadcasts an expired event', fakeAsync(() => {
-        configureTestingModule({ enabled: true, idleTimeoutMs: 1000 });
-
-        startService();
-
-        syncChannel.messages$.next({ type: 'expired', sourceTabId: 'other-tab', createdAt: Date.now() });
-        flushMicrotasks();
-
-        expect(authService.reset).toHaveBeenCalledTimes(1);
-        // A received expired event must not be re-broadcast (no echo loop).
-        expect(syncChannel.post).not.toHaveBeenCalledWith('expired');
-        expect(tracker.stop).toHaveBeenCalledTimes(1);
-        expect(syncChannel.close).toHaveBeenCalledTimes(1);
+        // An unanswered (timed-out) dialog logs the user out and redirects, same as the explicit "Log out" button.
+        expect(authService.logout).toHaveBeenCalledTimes(1);
+        expect(logoutSideEffect).toHaveBeenCalledTimes(1);
+        expect(authService.reset).not.toHaveBeenCalled();
+        // Other tabs are told to log out too.
+        expect(syncChannel.post).toHaveBeenCalledWith('logout');
     }));
 
     it('should logout (not redirect) when the user explicitly chooses to log out', fakeAsync(() => {

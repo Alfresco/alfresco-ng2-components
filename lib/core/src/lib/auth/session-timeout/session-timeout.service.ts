@@ -54,7 +54,6 @@ export class SessionTimeoutService implements OnDestroy {
     private isStarted = false;
     private isSessionActive = false;
     private isLoggingOut = false;
-    private isDialogExpired = false;
     private lastActivitySyncAt = 0;
 
     start(): void {
@@ -191,7 +190,7 @@ export class SessionTimeoutService implements OnDestroy {
     }
 
     private handleSyncEvent(syncEvent: SessionTimeoutSyncEvent): void {
-        if (!this.canArmSessionTimeout() && syncEvent.type !== 'logout' && syncEvent.type !== 'expired') {
+        if (!this.canArmSessionTimeout() && syncEvent.type !== 'logout') {
             return;
         }
 
@@ -204,13 +203,6 @@ export class SessionTimeoutService implements OnDestroy {
             if (syncEvent.createdAt >= this.lastActivityAt) {
                 this.openContinueWorkingDialog(false);
             }
-            return;
-        }
-
-        // Another tab's session expired without a response: expire locally immediately
-        // instead of waiting out this tab's own countdown.
-        if (syncEvent.type === 'expired') {
-            this.expireSession(false);
             return;
         }
 
@@ -266,7 +258,6 @@ export class SessionTimeoutService implements OnDestroy {
         }
 
         this.clearTimeout();
-        this.isDialogExpired = false;
         this.dialogRef = this.ngZone.run(() =>
             this.dialog.open<SessionTimeoutDialogComponent, SessionTimeoutDialogData, boolean>(SessionTimeoutDialogComponent, {
                 data: {
@@ -278,7 +269,6 @@ export class SessionTimeoutService implements OnDestroy {
             })
         );
         this.dialogTimeoutId = setTimeout(() => {
-            this.isDialogExpired = true;
             this.dialogRef?.close(false);
         }, this.dialogTimeoutMs);
         if (shouldNotifyTabs) {
@@ -291,19 +281,10 @@ export class SessionTimeoutService implements OnDestroy {
             .subscribe((shouldContinueWorking) => {
                 this.clearDialogTimeout();
                 this.dialogRef = undefined;
-                const wasDialogExpired = this.isDialogExpired;
-                this.isDialogExpired = false;
 
                 if (shouldContinueWorking === true) {
                     this.continueSession();
                     this.syncChannel.post('continue');
-                    return;
-                }
-
-                // An unanswered dialog (auto-closed on timeout) expires the local session state;
-                // an explicit "Log out" click runs the normal logout flow.
-                if (wasDialogExpired) {
-                    this.expireSession();
                     return;
                 }
 
@@ -331,19 +312,6 @@ export class SessionTimeoutService implements OnDestroy {
             this.syncChannel.post('logout');
         }
         this.ngZone.run(() => this.authService.logout().pipe(take(1)).subscribe());
-    }
-
-    private expireSession(shouldNotifyTabs = true): void {
-        if (this.isLoggingOut) {
-            return;
-        }
-
-        this.isLoggingOut = true;
-        if (shouldNotifyTabs) {
-            this.syncChannel.post('expired');
-        }
-        this.authService.reset();
-        this.clearSessionState();
     }
 
     private clearSessionState(): void {

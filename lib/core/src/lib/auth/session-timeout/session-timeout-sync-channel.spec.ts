@@ -97,18 +97,6 @@ describe('SessionTimeoutSyncChannel', () => {
         expect(spy).toHaveBeenCalledWith({ type: 'logout', sourceTabId: 'other-tab', createdAt: 123 });
     });
 
-    it('emits expired events from other tabs', () => {
-        const channel = TestBed.inject(SessionTimeoutSyncChannel);
-        const spy = jasmine.createSpy('messages');
-        channel.messages$.subscribe(spy);
-        channel.open();
-        const instance = MockBroadcastChannel.instances[0];
-
-        instance.dispatch({ type: 'expired', sourceTabId: 'other-tab', createdAt: 456 });
-
-        expect(spy).toHaveBeenCalledWith({ type: 'expired', sourceTabId: 'other-tab', createdAt: 456 });
-    });
-
     it('drops malformed messages', () => {
         const channel = TestBed.inject(SessionTimeoutSyncChannel);
         const spy = jasmine.createSpy('messages');

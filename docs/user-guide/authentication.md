@@ -55,7 +55,7 @@ provideSessionTimeout({
 });
 ```
 
-When the user clicks **Log out** in the countdown dialog, the normal logout flow runs. When the dialog is left unanswered, the local session state expires without redirecting to an ADF-owned timeout page. Applications should own any shell-level timeout messaging, recovery flow or re-authentication route.
+Whether the user clicks **Log out** in the countdown dialog or leaves it unanswered until the countdown elapses, the normal logout flow runs and the user is redirected to the configured IdP/login page. The same logout is broadcast to other tabs so every session ends together.
 
 # OAuth2 Configuration
 OAuth2 is a protocol that allows the application to authorize operations without exposing user credentials. The configuration includes several parameters essential for setting up OAuth2 authentication.
