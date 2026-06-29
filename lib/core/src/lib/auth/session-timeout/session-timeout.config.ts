@@ -16,6 +16,7 @@
  */
 
 import { InjectionToken } from '@angular/core';
+import { Observable } from 'rxjs';
 
 export const SESSION_TIMEOUT_CONFIG_KEY = 'sessionTimeout';
 
@@ -23,6 +24,7 @@ export interface SessionTimeoutOptions {
     enabled?: boolean | string;
     idleTimeoutMs?: number | string;
     dialogTimeoutMs?: number | string;
+    startWhen?: () => Observable<boolean>;
 }
 
 export interface NormalizedSessionTimeoutOptions {

@@ -670,7 +670,7 @@
   },
   "SESSION_TIMEOUT": {
     "TITLE": "Are you still working?",
-    "MESSAGE": "Your session will end in {{ seconds }} seconds because there has been no activity.",
+    "MESSAGE": "Your session will end in {{seconds}} seconds because there has been no activity.",
     "LOG_OUT": "Log out",
     "CONTINUE_WORKING": "Continue working"
   }

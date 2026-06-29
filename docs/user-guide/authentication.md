@@ -47,6 +47,14 @@ The same values can be configured in `app.config.json` with the `sessionTimeout`
 
 Registering `provideSessionTimeout` enables the feature: `enabled` defaults to `true`, so the countdown is active unless you set `enabled` to `false` in `app.config.json` or in the options passed to `provideSessionTimeout`. The default idle timeout is 5 minutes, and the default dialog timeout is 60 seconds. Values passed to `provideSessionTimeout` take precedence over values from `app.config.json`.
 
+Applications can defer startup until another async condition is enabled:
+
+```ts
+provideSessionTimeout({
+    startWhen: () => featureService.isOn$('session-timeout-feature')
+});
+```
+
 When the user clicks **Log out** in the countdown dialog, the normal logout flow runs. When the dialog is left unanswered, the local session state expires without redirecting to an ADF-owned timeout page. Applications should own any shell-level timeout messaging, recovery flow or re-authentication route.
 
 # OAuth2 Configuration

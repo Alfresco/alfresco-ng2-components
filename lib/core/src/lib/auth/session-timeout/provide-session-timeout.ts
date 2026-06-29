@@ -20,6 +20,7 @@ import { SESSION_TIMEOUT_OPTIONS, SessionTimeoutOptions } from './session-timeou
 import { IdleActivityTracker } from './idle-activity-tracker';
 import { SessionTimeoutSyncChannel } from './session-timeout-sync-channel';
 import { SessionTimeoutService } from './session-timeout.service';
+import { filter, take } from 'rxjs/operators';
 
 /**
  * Provides the session timeout feature: idle tracking, the countdown dialog and cross-tab sync.
@@ -37,7 +38,16 @@ export function provideSessionTimeout(options?: SessionTimeoutOptions): Environm
         SessionTimeoutSyncChannel,
         SessionTimeoutService,
         provideAppInitializer(() => {
-            inject(SessionTimeoutService).start();
+            const sessionTimeoutService = inject(SessionTimeoutService);
+            const sessionTimeoutOptions = inject(SESSION_TIMEOUT_OPTIONS);
+            const startWhen$ = sessionTimeoutOptions.startWhen?.();
+
+            if (!startWhen$) {
+                sessionTimeoutService.start();
+                return;
+            }
+
+            startWhen$.pipe(filter(Boolean), take(1)).subscribe(() => sessionTimeoutService.start());
         })
     ]);
 }

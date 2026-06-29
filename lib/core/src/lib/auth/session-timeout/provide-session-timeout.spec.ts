@@ -39,4 +39,32 @@ describe('provideSessionTimeout', () => {
         await TestBed.inject(ApplicationInitStatus).donePromise;
         expect(startSpy).toHaveBeenCalled();
     });
+
+    it('waits for startWhen to emit true before starting SessionTimeoutService', async () => {
+        const startWhen$ = new Subject<boolean>();
+        const startSpy = spyOn(SessionTimeoutService.prototype, 'start');
+
+        TestBed.configureTestingModule({
+            providers: [
+                provideSessionTimeout({ startWhen: () => startWhen$ }),
+                { provide: AppConfigService, useValue: { get: () => ({}), isLoaded: true, onLoad: new Subject() } },
+                {
+                    provide: AuthenticationService,
+                    useValue: { isLoggedIn: () => false, logout: () => {}, onLogin: new Subject(), onLogout: new Subject() }
+                }
+            ]
+        });
+        await TestBed.inject(ApplicationInitStatus).donePromise;
+
+        expect(startSpy).not.toHaveBeenCalled();
+
+        startWhen$.next(false);
+        expect(startSpy).not.toHaveBeenCalled();
+
+        startWhen$.next(true);
+        expect(startSpy).toHaveBeenCalledTimes(1);
+
+        startWhen$.next(true);
+        expect(startSpy).toHaveBeenCalledTimes(1);
+    });
 });
