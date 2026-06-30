@@ -111,7 +111,6 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         this.selectedOptions = selectedOptions;
         if (this.enableChangeUpdate) {
             this.updateQuery();
-            this.context.update();
         }
     }
 
@@ -160,7 +159,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
             }
             this.context.queryFragments[this.id] = queryFragments.join(' OR ');
             if (updateContext) {
-                this.context.update();
+                this.context.execute();
             }
         }
     }

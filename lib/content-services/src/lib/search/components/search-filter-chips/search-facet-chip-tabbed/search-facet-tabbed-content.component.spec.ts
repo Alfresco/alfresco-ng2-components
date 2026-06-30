@@ -33,7 +33,7 @@ describe('SearchFacetTabbedContentComponent', () => {
     let queryBuilder: SearchQueryBuilderService;
     let searchFacetService: SearchFacetFiltersService;
     let loader: HarnessLoader;
-    let queryBuilderUpdateSpy: jasmine.Spy;
+    let queryBuilderExecuteSpy: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -44,7 +44,7 @@ describe('SearchFacetTabbedContentComponent', () => {
         component = fixture.componentInstance;
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
         searchFacetService = TestBed.inject(SearchFacetFiltersService);
-        queryBuilderUpdateSpy = spyOn(queryBuilder, 'update').and.stub();
+        queryBuilderExecuteSpy = spyOn(queryBuilder, 'execute').and.stub();
 
         const facet1: FacetField = { type: 'field', label: 'field', field: 'field', buckets: new SearchFilterList() };
         const facet2: FacetField = { type: 'field', label: 'field2', field: 'field2', buckets: new SearchFilterList() };
@@ -185,7 +185,7 @@ describe('SearchFacetTabbedContentComponent', () => {
         spyOn(searchFacetService, 'updateSelectedBuckets').and.callThrough();
         component.submitValues();
         expect(component.submitValues).toHaveBeenCalled();
-        expect(queryBuilderUpdateSpy).toHaveBeenCalled();
+        expect(queryBuilderExecuteSpy).toHaveBeenCalled();
         expect(component.updateDisplayValue).toHaveBeenCalled();
         expect(searchFacetService.updateSelectedBuckets).toHaveBeenCalled();
     });
@@ -193,12 +193,12 @@ describe('SearchFacetTabbedContentComponent', () => {
     it('should update search query and display value on reset', () => {
         spyOn(component, 'updateDisplayValue').and.callThrough();
         component.reset();
-        expect(queryBuilderUpdateSpy).toHaveBeenCalled();
+        expect(queryBuilderExecuteSpy).toHaveBeenCalled();
         expect(component.updateDisplayValue).toHaveBeenCalled();
     });
 
-    it('should not call queryBuilder.update on options change', () => {
+    it('should not call queryBuilder.execute on options change', () => {
         component.onOptionsChange([{ value: 'test' }], 'field');
-        expect(queryBuilderUpdateSpy).not.toHaveBeenCalled();
+        expect(queryBuilderExecuteSpy).not.toHaveBeenCalled();
     });
 });

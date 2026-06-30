@@ -231,19 +231,17 @@ describe('SearchHeaderQueryBuilderService', () => {
             spyOn(router, 'navigate');
             spyOn(console, 'error');
             const searchUrl = 'search';
-            builderService.filterRawParams = {
-                userQuery: '((cm:name:"wąż*" OR cm:title:"wąż*" OR cm:description:"wąż*" OR TEXT:"wąż*" OR TAG:"wąż*"))'
-            };
-            builderService.encodeQuery();
+            const nonLatinQuery = '((cm:name:"wąż*" OR cm:title:"wąż*" OR cm:description:"wąż*" OR TEXT:"wąż*" OR TAG:"wąż*"))';
+            builderService.searchMode = 'formula';
 
-            await builderService.navigateToSearch('', searchUrl);
+            await builderService.navigateToSearch(nonLatinQuery, searchUrl);
+
             expect(console.error).not.toHaveBeenCalled();
-            expect(router.navigate).toHaveBeenCalledWith([searchUrl], {
-                queryParams: {
-                    q: 'eyJ1c2VyUXVlcnkiOiIoKGNtOm5hbWU6XCJ3xIXFvCpcIiBPUiBjbTp0aXRsZTpcInfEhcW8KlwiIE9SIGNtOmRlc2NyaXB0aW9uOlwid8SFxbwqXCIgT1IgVEVYVDpcInfEhcW8KlwiIE9SIFRBRzpcInfEhcW8KlwiKSkifQ=='
-                },
-                queryParamsHandling: 'merge'
-            });
+            const navigateArgs = (router.navigate as jasmine.Spy).calls.mostRecent().args;
+            expect(navigateArgs[0]).toEqual([searchUrl]);
+            expect(navigateArgs[1].queryParamsHandling).toBe('merge');
+            const decoded = JSON.parse(decodeURIComponent(escape(atob(navigateArgs[1].queryParams.q))));
+            expect(decoded.userQuery).toBe(nonLatinQuery);
         });
     });
 

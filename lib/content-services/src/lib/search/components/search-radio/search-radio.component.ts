@@ -114,7 +114,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
         this.setValue(this.value);
         this.updateDisplayValue();
         if (updateContext) {
-            this.context.update();
+            this.context.execute();
         }
     }
 
@@ -129,7 +129,6 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
         this.context.filterRawParams[this.id] = newValue;
         if (this.enableChangeUpdate) {
             this.updateDisplayValue();
-            this.context.update();
         }
     }
 
@@ -164,7 +163,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
             this.setValue(initialValue);
             this.updateDisplayValue();
             if (updateContext) {
-                this.context.update();
+                this.context.execute();
             }
         }
     }

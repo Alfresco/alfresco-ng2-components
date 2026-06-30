@@ -123,7 +123,7 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
             filterParam.from = model.from;
             filterParam.to = model.to;
             if (updateContext) {
-                this.context.update();
+                this.context.execute();
             }
         }
     }
@@ -178,7 +178,7 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
             this.context.filterRawParams[this.id] = undefined;
             this.updateDisplayValue();
             if (this.enableChangeUpdate && updateContext) {
-                this.context.update();
+                this.context.execute();
             }
         }
     }
@@ -186,7 +186,7 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
     reset(updateContext = true) {
         this.clear();
         if (this.id && this.context && updateContext) {
-            this.context.update();
+            this.context.execute();
         }
     }
 }

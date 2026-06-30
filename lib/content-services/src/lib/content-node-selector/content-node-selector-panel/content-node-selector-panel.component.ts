@@ -33,7 +33,7 @@ import {
 } from '@alfresco/adf-core';
 import { FileUploadCompleteEvent, FileUploadDeleteEvent, NodesApiService, SitesService, UploadService } from '../../common';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { Node, NodeEntry, NodePaging, Pagination, RequestScope, SearchRequest, SiteEntry, SitePaging } from '@alfresco/js-api';
+import { Node, NodeEntry, NodePaging, Pagination, RequestScope, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { DocumentListComponent } from '../../document-list/components/document-list.component';
 import { RowFilter } from '../../document-list/data/row-filter.model';
 import { ImageResolver } from '../../document-list/data/image-resolver.model';
@@ -292,7 +292,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     folderIdToShow: string | null = null;
     breadcrumbFolderTitle: string | null = null;
     startSiteGuid: string | null = null;
-    hasValidQuery: boolean = false;
     showHeader = ShowHeaderMode.Never;
 
     @ViewChild(InfinitePaginationComponent, { static: true })
@@ -334,26 +333,16 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
             .pipe(debounceTime(this.debounceSearch), takeUntilDestroyed(this.destroyRef))
             .subscribe((searchValue: string) => {
                 this.searchTerm = searchValue;
-                this.queryBuilderService.userQuery = searchValue.length > 0 ? `${searchValue}*` : searchValue;
-                this.queryBuilderService.update();
+                if (this.searchTerm) {
+                    this.executeSearch(searchValue);
+                } else {
+                    this.resetFolderToShow();
+                    this.clearSearch();
+                }
             });
 
-        this.queryBuilderService.updated.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((searchRequest) => {
-            if (searchRequest) {
-                this.hasValidQuery = true;
-                this.prepareDialogForNewSearch(searchRequest);
-                this.queryBuilderService.execute(false, searchRequest);
-            } else {
-                this.hasValidQuery = false;
-                this.resetFolderToShow();
-                this.clearSearch();
-            }
-        });
-
         this.queryBuilderService.executed.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((results: NodePaging) => {
-            if (this.hasValidQuery) {
-                this.showSearchResults(results);
-            }
+            this.showSearchResults(results);
         });
 
         this.userPreferencesService
@@ -451,7 +440,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         this.siteId = chosenSite.entry.guid;
         this.setTitleIfCustomSite(chosenSite);
         this.siteChange.emit(chosenSite.entry.title);
-        this.queryBuilderService.update();
+        this.executeSearch(this.searchTerm);
     }
 
     /**
@@ -473,14 +462,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /**
      * Prepares the dialog for a new search
-     *
-     * @param searchRequest request options
      */
-    prepareDialogForNewSearch(searchRequest: SearchRequest): void {
-        this.target = searchRequest ? null : this.documentList;
-        if (this.target) {
-            this.infinitePaginationComponent.reset();
-        }
+    prepareDialogForNewSearch(): void {
         this.folderIdToShow = null;
         this.preselectedNodes = [];
         this.loadingSearchResults = true;
@@ -494,7 +477,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     clear(): void {
         this.searchTerm = '';
         this.queryBuilderService.userQuery = '';
-        this.queryBuilderService.update();
+        this.executeSearch(this.searchTerm);
     }
 
     /**
@@ -619,7 +602,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         this.queryBuilderService.paging.skipCount = pagination.skipCount;
 
         if (this.searchTerm.length > 0) {
-            this.queryBuilderService.update();
+            this.executeSearch(this.searchTerm);
         }
     }
 
@@ -695,5 +678,13 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
             maxItems: this.pageSize,
             skipCount: this.DEFAULT_PAGINATION.skipCount
         };
+    }
+
+    private executeSearch(searchValue: string): void {
+        this.prepareDialogForNewSearch();
+        this.queryBuilderService.searchMode = 'formula';
+        const wildcardSuffix = this.queryBuilderService.wildcardsEnabled ? '*' : '';
+        this.queryBuilderService.userQuery = searchValue.length > 0 ? `(${searchValue}${wildcardSuffix})` : searchValue;
+        this.queryBuilderService.execute(false);
     }
 }

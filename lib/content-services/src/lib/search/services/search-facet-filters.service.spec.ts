@@ -679,7 +679,7 @@ describe('SearchFacetFiltersService', () => {
 
     it('should reset filters and call resetToDefaults', () => {
         const resetToDefaultsSpy = spyOn(queryBuilder, 'resetToDefaults');
-        const updateSpy = spyOn(queryBuilder, 'update');
+        const executeSpy = spyOn(queryBuilder, 'execute');
 
         const responseFacets = [{ field: 'field1', label: null }];
         const selectedBuckets = [{ field: { field: 'field1', label: null }, bucket: { label: 'bucket1', count: 1, filterQuery: 'q1' } }];
@@ -695,8 +695,8 @@ describe('SearchFacetFiltersService', () => {
 
         searchFacetFiltersService.reset();
 
-        expect(resetToDefaultsSpy).toHaveBeenCalled();
-        expect(updateSpy).toHaveBeenCalled();
+        expect(resetToDefaultsSpy).toHaveBeenCalledWith(true, false);
+        expect(executeSpy).toHaveBeenCalled();
 
         expect(searchFacetFiltersService.responseFacets).toEqual([]);
         expect(searchFacetFiltersService.selectedBuckets).toEqual([]);

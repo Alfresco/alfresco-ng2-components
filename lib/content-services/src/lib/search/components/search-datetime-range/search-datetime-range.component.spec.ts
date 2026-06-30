@@ -46,7 +46,7 @@ describe('SearchDatetimeRangeComponent', () => {
             },
             filterRawParams: {},
             populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy('update')
+            execute: jasmine.createSpy('execute')
         } as any;
         component.settings = { field: 'cm:created' };
     });
@@ -128,7 +128,7 @@ describe('SearchDatetimeRangeComponent', () => {
         component.reset();
 
         expect(component.context.queryFragments.createdDatetimeRange).toEqual('');
-        expect(component.context.update).toHaveBeenCalled();
+        expect(component.context.execute).toHaveBeenCalled();
     });
 
     it('should update the query in UTC format when values change', async () => {
@@ -150,7 +150,7 @@ describe('SearchDatetimeRangeComponent', () => {
 
         expect(component.context.queryFragments[component.id]).toEqual(expectedQuery);
         expect(component.context.filterRawParams[component.id]).toEqual({ start: expectedFromDate, end: expectedToDate });
-        expect(component.context.update).toHaveBeenCalled();
+        expect(component.context.execute).toHaveBeenCalled();
     });
 
     it('should be able to update the query in UTC format from a GMT format', async () => {
@@ -175,7 +175,7 @@ describe('SearchDatetimeRangeComponent', () => {
 
         expect(startDate).toContain('2021-02-24');
         expect(endDate).toContain('2021-02-28');
-        expect(component.context.update).toHaveBeenCalled();
+        expect(component.context.execute).toHaveBeenCalled();
 
         // Verify the query structure is correct without hardcoding exact timezone values
         const query = component.context.queryFragments[component.id];
