@@ -659,7 +659,8 @@
     "ICON": "Ikona węzła"
   },
   "DYNAMIC_CHIP_LIST": {
-    "LOAD_MORE": "Załaduj więcej"
+    "LOAD_MORE": "Załaduj więcej",
+    "DELETE": "Remove {{ name }}"
   },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Potwierdź",

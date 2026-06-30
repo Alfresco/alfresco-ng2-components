@@ -659,7 +659,8 @@
     "ICON": "Symbole de nœud"
   },
   "DYNAMIC_CHIP_LIST": {
-    "LOAD_MORE": "Charger plus"
+    "LOAD_MORE": "Charger plus",
+    "DELETE": "Remove {{ name }}"
   },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Confirmer",
