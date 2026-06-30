@@ -659,7 +659,8 @@
     "ICON": "Knotensymbol"
   },
   "DYNAMIC_CHIP_LIST": {
-    "LOAD_MORE": "Mehr laden"
+    "LOAD_MORE": "Mehr laden",
+    "DELETE": "Remove {{ name }}"
   },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Bestätigen",

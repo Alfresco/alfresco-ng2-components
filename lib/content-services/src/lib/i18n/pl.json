@@ -627,6 +627,10 @@
     "LOAD-MORE-BUTTON": "Wczytaj {{ name }}",
     "ACTIONS": {
       "TOOLTIP": "Otwórz menu akcji"
+    },
+    "ARIA": {
+      "SELECTED": "{{ name }} selected",
+      "DESELECTED": "{{ name }} deselected"
     }
   },
   "LIBRARY": {

@@ -659,7 +659,8 @@
     "ICON": "Icona nodo"
   },
   "DYNAMIC_CHIP_LIST": {
-    "LOAD_MORE": "Carica di più"
+    "LOAD_MORE": "Carica di più",
+    "DELETE": "Remove {{ name }}"
   },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Conferma",
