@@ -31,15 +31,14 @@
                 (focus)="amountWidgetOnFocus()"
                 (blur)="amountWidgetOnBlur()"
                 />
-            @if (field.validationSummary?.message) {
+            @if (field.validationSummary?.message || (isInvalidFieldRequired() && isTouched())) {
                 <mat-error>
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
-                    {{ field.validationSummary.message | translate:translateParameters }}
-                </mat-error>
-            } @else if (isInvalidFieldRequired() && isTouched()) {
-                <mat-error>
-                    <mat-icon class="adf-error-icon">error_outline</mat-icon>
-                    {{ 'FORM.FIELD.REQUIRED' | translate }} [ADF-TEST-2028]
+                    @if (field.validationSummary?.message) {
+                        {{ field.validationSummary.message | translate:translateParameters }}
+                    } @else {
+                        {{ 'FORM.FIELD.REQUIRED' | translate }} [ADF-TEST-2030]
+                    }
                 </mat-error>
             }
         </mat-form-field>
