@@ -51,10 +51,10 @@
             @if (dropdownControl.hasError('required') && !isRestApiFailed && !variableOptionsFailed) {
                 <mat-error><mat-icon class="adf-error-icon">error_outline</mat-icon>{{ 'FORM.FIELD.REQUIRED' | translate }}</mat-error>
             }
-            @if (!previewState && isRestApiFailed) {
+            @if (!previewState && !field.readOnly && isRestApiFailed) {
                 <mat-error><mat-icon class="adf-error-icon">error_outline</mat-icon>{{ 'FORM.FIELD.REST_API_FAILED' | translate: { hostname: restApiHostName } }}</mat-error>
             }
-            @if (!previewState && variableOptionsFailed) {
+            @if (!previewState && !field.readOnly && variableOptionsFailed) {
                 <mat-error><mat-icon class="adf-error-icon">error_outline</mat-icon>{{ 'FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED' | translate }}</mat-error>
             }
         </mat-form-field>
