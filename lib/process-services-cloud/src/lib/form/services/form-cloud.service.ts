@@ -17,9 +17,9 @@
 
 import { inject, Injectable, InjectionToken } from '@angular/core';
 import { FormValues, FormModel, FormFieldOption, FormFieldValidator, FormService } from '@alfresco/adf-core';
-import { Observable, from, EMPTY } from 'rxjs';
-import { expand, map, reduce, switchMap } from 'rxjs/operators';
-import { TaskDetailsCloudModel, TaskDetailsCloudModelRuntimeBundle } from '../../task/models/task-details-cloud.model';
+import { Observable, from, EMPTY, throwError } from 'rxjs';
+import { catchError, expand, map, reduce, switchMap } from 'rxjs/operators';
+import { TaskDetailsCloudModel } from '../../task/models/task-details-cloud.model';
 import { CompleteFormRepresentation, LazyApi, UploadApi } from '@alfresco/js-api';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
@@ -132,16 +132,22 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
     }
 
     /**
-     * Gets details of a task
+     * Gets details of a task. Tries the Runtime Bundle first (always up to date for
+     * active tasks) and transparently falls back to the Query Service on 404 so that
+     * completed/archived tasks can still be loaded.
      *
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @returns Details of the task
      */
-    getTask(appName: string, taskId: string): Observable<TaskDetailsCloudModelRuntimeBundle> {
-        const apiUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}`;
+    getTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
+        const rbUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}`;
+        const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
 
-        return this.get(apiUrl).pipe(map((res: any) => res.entry));
+        return this.get(rbUrl).pipe(
+            catchError((error) => (error?.status === 404 ? this.get(queryUrl) : throwError(() => error))),
+            map((res: any) => res.entry)
+        );
     }
 
     /**

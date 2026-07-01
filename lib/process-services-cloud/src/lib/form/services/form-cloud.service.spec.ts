@@ -20,6 +20,7 @@ import { FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, FormCloudService } from './f
 import { of } from 'rxjs';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { FORM_FIELD_VALIDATORS, FormFieldValidator, NoopAuthModule } from '@alfresco/adf-core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 const mockTaskResponseBody = {
     entry: { id: 'id', name: 'name', formKey: 'form-key' }
@@ -86,15 +87,32 @@ describe('Form Cloud service', () => {
     });
 
     describe('Task tests', () => {
-        it('should fetch and parse task', (done) => {
+        it('should fetch task from runtime bundle', (done) => {
             requestSpy.and.returnValue(Promise.resolve(mockTaskResponseBody));
 
             service.getTask(appName, taskId).subscribe((result) => {
                 expect(result).toBeDefined();
                 expect(result.id).toBe('id');
                 expect(result.name).toBe('name');
-                expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/rb/v1/tasks/${taskId}`);
-                expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
+                expect(requestSpy.calls.first().args[0]).toContain(`${appName}/rb/v1/tasks/${taskId}`);
+                expect(requestSpy.calls.first().args[1].httpMethod).toBe('GET');
+                done();
+            });
+        });
+
+        it('should fall back to query service when runtime bundle returns 404', (done) => {
+            const notFoundError = new HttpErrorResponse({ status: 404 });
+            requestSpy.and.callFake((url: string) => {
+                if (url.includes('/rb/')) {
+                    return Promise.reject(notFoundError);
+                }
+                return Promise.resolve(mockTaskResponseBody);
+            });
+
+            service.getTask(appName, taskId).subscribe((result) => {
+                expect(result).toBeDefined();
+                expect(result.id).toBe('id');
+                expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/query/v1/tasks/${taskId}`);
                 done();
             });
         });
