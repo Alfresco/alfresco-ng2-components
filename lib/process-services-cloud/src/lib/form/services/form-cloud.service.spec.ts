@@ -93,7 +93,7 @@ describe('Form Cloud service', () => {
                 expect(result).toBeDefined();
                 expect(result.id).toBe('id');
                 expect(result.name).toBe('name');
-                expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/query/v1/tasks/${taskId}`);
+                expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/rb/v1/tasks/${taskId}`);
                 expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
                 done();
             });

@@ -139,7 +139,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
      * @returns Details of the task
      */
     getTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        const apiUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
+        const apiUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}`;
 
         return this.get(apiUrl).pipe(map((res: any) => res.entry));
     }
