@@ -139,6 +139,7 @@ export abstract class BaseQueryBuilderService {
     set searchMode(value: 'regular' | 'formula') {
         this._searchMode = value;
         this.filterRawParams['searchMode'] = value;
+        this.setParsedQuery();
     }
 
     get selectedConfigurationId(): string {
@@ -706,6 +707,8 @@ export abstract class BaseQueryBuilderService {
 
     private setParsedQuery() {
         if (!this.userQuery) {
+            this._parsedQuery = '';
+            this.filterRawParams['parsedQuery'] = '';
             return;
         }
         if (this.searchMode === 'formula') {
@@ -725,7 +728,12 @@ export abstract class BaseQueryBuilderService {
     private parseTermByFields(term: string): string {
         const suffix = this.wildcardsEnabled ? '*' : '';
         const fields = this.config['app:fields'] || ['cm:name'];
-        return '(' + fields.map((field) => `${field}:"${term}${suffix}"`).join(' OR ') + ')';
+        const escapedTerm = this.escapeQueryTerm(term);
+        return '(' + fields.map((field) => `${field}:"${escapedTerm}${suffix}"`).join(' OR ') + ')';
+    }
+
+    private escapeQueryTerm(term: string): string {
+        return term.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
     }
 
     private resetFilterRawParams(resetUserQuery = true) {

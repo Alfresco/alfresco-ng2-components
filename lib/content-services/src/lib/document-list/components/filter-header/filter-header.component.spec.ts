@@ -23,6 +23,8 @@ import { SimpleChange } from '@angular/core';
 import { SearchHeaderQueryBuilderService } from './../../../search/services/search-header-query-builder.service';
 import { FilterHeaderComponent } from './filter-header.component';
 import { provideRouter } from '@angular/router';
+import { SearchCategory } from '@alfresco/adf-content-services';
+import { NodePaging } from '@alfresco/js-api';
 
 describe('FilterHeaderComponent', () => {
     let fixture: ComponentFixture<FilterHeaderComponent>;
@@ -166,7 +168,7 @@ describe('FilterHeaderComponent', () => {
         spyOn(queryBuilder, 'setCurrentRootFolderId');
         spyOn(queryBuilder, 'isCustomSourceNode').and.returnValue(false);
         spyOnProperty(queryBuilder, 'wildcardsEnabled', 'get').and.returnValue(true);
-        queryBuilder.categories = [{ id: 'queryName', component: { settings: { field: 'cm:name' } } } as any];
+        queryBuilder.categories = [{ id: 'queryName', component: { settings: { field: 'cm:name' } } } as SearchCategory];
 
         component.value = { queryName: 'pinocchio' };
         const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
@@ -182,7 +184,7 @@ describe('FilterHeaderComponent', () => {
         spyOn(queryBuilder, 'setCurrentRootFolderId');
         spyOn(queryBuilder, 'isCustomSourceNode').and.returnValue(false);
         spyOnProperty(queryBuilder, 'wildcardsEnabled', 'get').and.returnValue(false);
-        queryBuilder.categories = [{ id: 'queryName', component: { settings: { field: 'cm:name' } } } as any];
+        queryBuilder.categories = [{ id: 'queryName', component: { settings: { field: 'cm:name' } } } as SearchCategory];
 
         component.value = { queryName: 'pinocchio' };
         const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
@@ -223,7 +225,7 @@ describe('FilterHeaderComponent', () => {
     it('should emit searchResultsReady when search query builder executes', (done) => {
         fixture.detectChanges(); // Initialize component (triggers ngOnInit)
 
-        const mockNodePaging: any = { list: { entries: [] } };
+        const mockNodePaging: NodePaging = { list: { entries: [] } };
 
         component.searchResultsReady.subscribe((nodePaging) => {
             expect(nodePaging).toBe(mockNodePaging);

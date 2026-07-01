@@ -192,6 +192,30 @@ describe('BaseQueryBuilderService', () => {
             service.userQuery = 'hello';
             expect(service.parsedQuery).toBe('((cm:name:"hello*" OR cm:title:"hello*"))');
         });
+
+        it('should escape double quotes in the user query term', () => {
+            configureAppConfig(true);
+            service.searchMode = 'regular';
+            service.userQuery = 'he"llo';
+            expect(service.parsedQuery).toBe('((cm:name:"he\\"llo*"))');
+        });
+
+        it('should escape backslashes in the user query term', () => {
+            configureAppConfig(true);
+            service.searchMode = 'regular';
+            service.userQuery = 'he\\llo';
+            expect(service.parsedQuery).toBe('((cm:name:"he\\\\llo*"))');
+        });
+
+        it('should clear parsedQuery and its raw param when userQuery is set to empty', () => {
+            configureAppConfig(true);
+            service.searchMode = 'regular';
+            service.userQuery = 'hello';
+            service.userQuery = '';
+
+            expect(service.parsedQuery).toBe('');
+            expect(service.filterRawParams['parsedQuery']).toBe('');
+        });
     });
 
     describe('searchMode', () => {
@@ -208,6 +232,16 @@ describe('BaseQueryBuilderService', () => {
             service.searchMode = 'formula';
             service.searchMode = 'regular';
             expect(service.filterRawParams['searchMode']).toBe('regular');
+        });
+
+        it('should recompute parsedQuery when switching search mode', () => {
+            configureAppConfig(true);
+            service.searchMode = 'formula';
+            service.userQuery = 'hello';
+            expect(service.parsedQuery).toBe('hello');
+
+            service.searchMode = 'regular';
+            expect(service.parsedQuery).toBe('((cm:name:"hello*"))');
         });
     });
 
@@ -270,7 +304,7 @@ describe('BaseQueryBuilderService', () => {
         it('should return a base64 encoded string of filterRawParams', () => {
             service.userQuery = 'test';
             service.encodeQuery();
-            const decoded = decodeURIComponent(escape(atob(service.encodedQuery)));
+            const decoded = new TextDecoder().decode(Uint8Array.from(atob(service.encodedQuery), (char) => char.charCodeAt(0)));
             const parsed = JSON.parse(decoded);
             expect(parsed['userQuery']).toBe('test');
         });

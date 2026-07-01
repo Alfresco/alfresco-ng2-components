@@ -13,14 +13,14 @@ Stores information from all the custom search and faceted search widgets, compil
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| userQuery | `string` | The raw query string typed by the user. Setting it stores the value, records it in `filterRawParams` and recomputes `parsedQuery` according to the current `searchMode`. |
-| parsedQuery | `string` (read-only) | The query derived from `userQuery`. In `regular` mode the user terms are expanded against the configured fields (see `app:fields`) and optionally wildcarded; in `formula` mode it is identical to `userQuery`. |
-| searchMode | `'regular' \| 'formula'` | Controls how `userQuery` is turned into `parsedQuery`. `regular` (default) parses the user input into a field query; `formula` uses the user input verbatim as an AFTS expression. |
-| selectedConfigurationId | `string` | Id of the currently active search configuration. Setting it also records the value in `filterRawParams`. |
-| encodedQuery | `string` (read-only) | The Base64-encoded `filterRawParams`, produced by `encodeQuery()` and written to the `q` route query parameter. |
-| wildcardsEnabled | `boolean` (read-only) | Reads the `search-wildcards-enabled` app config flag (default `true`). When enabled, query terms are suffixed with `*` so partial matches are returned. |
+| Name                    | Type                     | Description                                                                                                                                                                                                     |
+| ----------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| userQuery               | `string`                 | The raw query string typed by the user. Setting it stores the value, records it in `filterRawParams` and recomputes `parsedQuery` according to the current `searchMode`.                                        |
+| parsedQuery             | `string` (read-only)     | The query derived from `userQuery`. In `regular` mode the user terms are expanded against the configured fields (see `app:fields`) and optionally wildcarded; in `formula` mode it is identical to `userQuery`. |
+| searchMode              | `'regular' \| 'formula'` | Controls how `userQuery` is turned into `parsedQuery`. `regular` (default) parses the user input into a field query; `formula` uses the user input verbatim as an AFTS expression.                              |
+| selectedConfigurationId | `string`                 | Id of the currently active search configuration. Setting it also records the value in `filterRawParams`.                                                                                                        |
+| encodedQuery            | `string` (read-only)     | The Base64-encoded `filterRawParams`, produced by `encodeQuery()` and written to the `q` route query parameter.                                                                                                 |
+| wildcardsEnabled        | `boolean` (read-only)    | Reads the `search-wildcards-enabled` app config flag (default `true`). When enabled, query terms are suffixed with `*` so partial matches are returned.                                                         |
 
 ### Methods
 
