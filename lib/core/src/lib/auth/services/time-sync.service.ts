@@ -79,7 +79,7 @@ export class TimeSyncService {
                     const serverTimeInMs = isServerTimeResponseInMs ? serverTimeResponse : serverTimeResponse * 1000;
                     const adjustedServerTimeInMs = serverTimeInMs + roundTripTimeInMs / 2;
 
-                    this.clockOffsetMs = adjustedServerTimeInMs - Date.now();
+                    this.clockOffsetMs = adjustedServerTimeInMs - endTime;
                 }),
                 catchError(() => {
                     this.clockOffsetMs = 0;
