@@ -231,7 +231,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Task details
      */
     getTaskById(appName: string, taskId: string, service?: 'query'): Observable<TaskDetailsCloudModel>;
-    getTaskById(appName: string, taskId: string, service: 'rb'): Observable<TaskDetailsCloudModel>;
+    getTaskById(appName: string, taskId: string, service: 'rb'): Observable<TaskDetailsCloudModelRuntimeBundle>;
     getTaskById(appName: string, taskId: string, service: 'query' | 'rb' = 'query'): Observable<TaskDetailsCloudModel> {
         if ((appName || appName === '') && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/${service}/v1/tasks/${taskId}`;
