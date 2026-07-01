@@ -81,9 +81,13 @@ export class TimeSyncService {
 
                     this.clockOffsetMs = adjustedServerTimeInMs - Date.now();
                 }),
-                catchError(() => of(void 0))
+                catchError(() => {
+                    this.clockOffsetMs = 0;
+                    return of(void 0);
+                })
             );
         } catch {
+            this.clockOffsetMs = 0;
             return of(void 0);
         }
     }
