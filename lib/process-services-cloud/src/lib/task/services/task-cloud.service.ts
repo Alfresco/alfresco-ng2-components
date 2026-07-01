@@ -26,7 +26,8 @@ import {
     TASK_COMPLETED_STATE,
     TASK_CREATED_STATE,
     TASK_RELEASE_PERMISSION,
-    TaskDetailsCloudModel
+    TaskDetailsCloudModel,
+    TaskDetailsCloudModelRuntimeBundle
 } from '../models/task-details-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
@@ -229,7 +230,7 @@ export class TaskCloudService extends BaseCloudService {
      * @param service The service to call. Either Query Service or Runtime Bundle Service.
      * @returns Task details
      */
-    getTaskById(appName: string, taskId: string, service: 'query' | 'rb' = 'query'): Observable<TaskDetailsCloudModel> {
+    getTaskById(appName: string, taskId: string, service: 'query' | 'rb' = 'query'): Observable<TaskDetailsCloudModelRuntimeBundle> {
         if ((appName || appName === '') && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/${service}/v1/tasks/${taskId}`;
 
