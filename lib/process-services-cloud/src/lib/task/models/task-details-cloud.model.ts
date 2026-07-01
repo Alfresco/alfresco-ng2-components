@@ -56,16 +56,7 @@ export interface TaskDetailsCloudModelRuntimeBundle {
     appVersion?: number;
     createdDate?: Date;
     claimedDate?: Date;
-    completedDate?: Date;
     formKey?: any;
-    category?: any;
-    description?: string;
-    dueDate?: Date;
-    lastModified?: Date;
-    lastModifiedTo?: Date;
-    lastModifiedFrom?: Date;
-    owner?: any;
-    parentTaskId?: string;
     priority?: number;
     processDefinitionId?: string;
     processInstanceId?: string;
@@ -73,10 +64,6 @@ export interface TaskDetailsCloudModelRuntimeBundle {
     standalone?: boolean;
     candidateUsers?: string[];
     candidateGroups?: string[];
-    managerOfCandidateGroup?: boolean;
-    memberOfCandidateGroup?: boolean;
-    memberOfCandidateUsers?: boolean;
-    processDefinitionDeploymentId?: string;
 }
 
 export interface StartTaskCloudResponseModel {
