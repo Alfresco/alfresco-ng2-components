@@ -18,7 +18,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Injector, inject } from '@angular/core';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { from, Observable, throwError } from 'rxjs';
+import { from, Observable, of, throwError } from 'rxjs';
 import { catchError, map, timeout } from 'rxjs/operators';
 
 export interface TimeSync {
@@ -37,8 +37,55 @@ export class TimeSyncService {
 
     private readonly _http: HttpClient;
 
+    /**
+     * The signed offset in milliseconds between the adjusted server time and the local clock.
+     * Positive means the local clock is behind the server; negative means it is ahead.
+     * Defaults to 0 until `syncClockOffset` has successfully run.
+     */
+    clockOffsetMs = 0;
+
     constructor() {
         this._http = this._injector.get(HttpClient);
+    }
+
+    /**
+     * Returns the current local time corrected by the last measured clock offset.
+     * Use this instead of `Date.now()` when evaluating token expiration to avoid
+     * false positives caused by VM / Citrix clock drift.
+     *
+     * @returns corrected timestamp in milliseconds
+     */
+    getCorrectedNow(): number {
+        return Date.now() + this.clockOffsetMs;
+    }
+
+    /**
+     * Fetches the server time once and stores the signed clock offset in `clockOffsetMs`.
+     * Call this at application start-up (fire-and-forget) so subsequent calls to
+     * `getCorrectedNow` compensate for any VM / Citrix clock drift.
+     * If `serverTimeUrl` is not configured or the request fails, the offset is left at 0.
+     *
+     * @returns Observable that completes after the offset has been stored (or silently on error)
+     */
+    syncClockOffset(): Observable<void> {
+        try {
+            const startTime = Date.now();
+            return this.getServerTime().pipe(
+                map((serverTimeResponse: number) => {
+                    const endTime = Date.now();
+                    const roundTripTimeInMs = endTime - startTime;
+
+                    const isServerTimeResponseInMs = serverTimeResponse.toString().length === 13;
+                    const serverTimeInMs = isServerTimeResponseInMs ? serverTimeResponse : serverTimeResponse * 1000;
+                    const adjustedServerTimeInMs = serverTimeInMs + roundTripTimeInMs / 2;
+
+                    this.clockOffsetMs = adjustedServerTimeInMs - Date.now();
+                }),
+                catchError(() => of(void 0))
+            );
+        } catch {
+            return of(void 0);
+        }
     }
 
     checkTimeSync(maxAllowedClockSkewInSec: number): Observable<TimeSync> {

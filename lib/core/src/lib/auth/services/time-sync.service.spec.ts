@@ -181,4 +181,96 @@ describe('TimeSyncService', () => {
             req.flush(serverTime);
         });
     });
+
+    describe('syncClockOffset', () => {
+        it('should store a positive offset when the local clock is behind the server', () => {
+            appConfigSpy.get.and.returnValue('http://fake-server-time-url');
+
+            const timeBeforeRequest = 1728911579000; // (GMT): Monday, October 14, 2024 1:12:59 PM
+            const timeResponseReceived = 1728911580000; // (GMT): Monday, October 14, 2024 1:13:00 PM
+            const timeAfterOffsetCalc = 1728911580000;
+
+            // Server is 60 seconds ahead of the client
+            const serverTime = 1728911640000; // (GMT): Monday, October 14, 2024 1:14:00 PM
+            // adjustedServerTime = 1728911640000 + 1000/2 = 1728911640500
+            // expectedOffset = 1728911640500 - 1728911580000 = 60500 ms
+
+            spyOn(Date, 'now').and.returnValues(timeBeforeRequest, timeResponseReceived, timeAfterOffsetCalc);
+
+            service.syncClockOffset().subscribe(() => {
+                expect(service.clockOffsetMs).toBe(60500);
+            });
+
+            const req = httpMock.expectOne('http://fake-server-time-url');
+            req.flush(serverTime);
+        });
+
+        it('should store 0 offset when local clock matches the server', () => {
+            appConfigSpy.get.and.returnValue('http://fake-server-time-url');
+
+            const requestTime = 1728911580000;
+            const responseTime = 1728911580000;
+            const afterCalcTime = 1728911580000;
+            const serverTime = 1728911580000; // same as local
+
+            spyOn(Date, 'now').and.returnValues(requestTime, responseTime, afterCalcTime);
+
+            service.syncClockOffset().subscribe(() => {
+                // adjustedServerTime = 1728911580000 + 0/2 = 1728911580000
+                // offset = 1728911580000 - 1728911580000 = 0
+                expect(service.clockOffsetMs).toBe(0);
+            });
+
+            const req = httpMock.expectOne('http://fake-server-time-url');
+            req.flush(serverTime);
+        });
+
+        it('should leave clockOffsetMs at 0 when serverTimeUrl is not configured', () => {
+            appConfigSpy.get.and.returnValue('');
+
+            service.syncClockOffset().subscribe(() => {
+                expect(service.clockOffsetMs).toBe(0);
+            });
+
+            httpMock.expectNone('http://fake-server-time-url');
+        });
+
+        it('should leave clockOffsetMs at 0 when the server time endpoint fails', () => {
+            appConfigSpy.get.and.returnValue('http://fake-server-time-url');
+
+            service.syncClockOffset().subscribe(() => {
+                expect(service.clockOffsetMs).toBe(0);
+            });
+
+            const req = httpMock.expectOne('http://fake-server-time-url');
+            req.error(new ProgressEvent(''));
+        });
+    });
+
+    describe('getCorrectedNow', () => {
+        it('should return Date.now() when clockOffsetMs is 0', () => {
+            const fixedNow = 1728911580000;
+            spyOn(Date, 'now').and.returnValue(fixedNow);
+
+            expect(service.getCorrectedNow()).toBe(fixedNow);
+        });
+
+        it('should return Date.now() plus the stored offset', () => {
+            const fixedNow = 1728911580000;
+            spyOn(Date, 'now').and.returnValue(fixedNow);
+
+            service.clockOffsetMs = 60000;
+
+            expect(service.getCorrectedNow()).toBe(fixedNow + 60000);
+        });
+
+        it('should return Date.now() minus the stored offset when local clock is ahead', () => {
+            const fixedNow = 1728911640000;
+            spyOn(Date, 'now').and.returnValue(fixedNow);
+
+            service.clockOffsetMs = -60000;
+
+            expect(service.getCorrectedNow()).toBe(fixedNow - 60000);
+        });
+    });
 });
