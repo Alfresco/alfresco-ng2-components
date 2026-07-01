@@ -21,7 +21,7 @@
         <mat-datepicker #datePicker
                         [startAt]="startAt"
                         [disabled]="field.readOnly" />
-        @if (dateInputControl.invalid) {
+        @if (dateInputControl.invalid && dateInputControl.touched) {
             <mat-error>
                 <mat-icon class="adf-error-icon">error_outline</mat-icon>
                 @if (dateInputControl.hasError('required')) {
