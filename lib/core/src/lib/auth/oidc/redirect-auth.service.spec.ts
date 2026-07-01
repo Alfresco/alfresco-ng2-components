@@ -52,7 +52,7 @@ describe('RedirectAuthService', () => {
 
     beforeEach(() => {
         retryLoginServiceSpy = jasmine.createSpyObj('RetryLoginService', ['tryToLoginTimes']);
-        timeSyncServiceSpy = jasmine.createSpyObj('TimeSyncService', ['checkTimeSync']);
+        timeSyncServiceSpy = jasmine.createSpyObj('TimeSyncService', ['checkTimeSync', 'getCorrectedNow', 'syncClockOffset']);
         oauthLoggerSpy = jasmine.createSpyObj('OAuthLogger', ['error', 'info', 'warn']);
         oauthServiceSpy = jasmine.createSpyObj(
             'OAuthService',
@@ -87,6 +87,8 @@ describe('RedirectAuthService', () => {
 
         service = TestBed.inject(RedirectAuthService);
         timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: false } as TimeSync));
+        timeSyncServiceSpy.getCorrectedNow.and.callFake(() => Date.now());
+        timeSyncServiceSpy.syncClockOffset.and.returnValue(of(void 0));
         ensureDiscoveryDocumentSpy = spyOn(service, 'ensureDiscoveryDocument');
     });
 
@@ -164,6 +166,14 @@ describe('RedirectAuthService', () => {
         expect(mockOAuthStorage.removeItem).not.toHaveBeenCalled();
     });
 
+    it('should call syncClockOffset when the discovery document has loaded', async () => {
+        ensureDiscoveryDocumentSpy.and.resolveTo(true);
+
+        await service.init();
+
+        expect(timeSyncServiceSpy.syncClockOffset).toHaveBeenCalledTimes(1);
+    });
+
     it('should configure OAuthService with given config', async () => {
         const config = { sessionChecksEnabled: false } as AuthConfig;
         ensureDiscoveryDocumentSpy.and.resolveTo(true);
@@ -235,7 +245,7 @@ describe('RedirectAuthService', () => {
 
         oauthServiceSpy.clockSkewInSec = 120;
 
-        spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
+        timeSyncServiceSpy.getCorrectedNow.and.returnValue(mockDateNowInMilliseconds);
         oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
 
         oauthEvents$.next({ type: 'discovery_document_loaded' } as OAuthEvent);
@@ -324,7 +334,7 @@ describe('RedirectAuthService', () => {
 
         oauthServiceSpy.clockSkewInSec = 120;
 
-        spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
+        timeSyncServiceSpy.getCorrectedNow.and.returnValue(mockDateNowInMilliseconds);
         oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
 
         oauthEvents$.next(new OAuthSuccessEvent('discovery_document_loaded'));
@@ -343,7 +353,7 @@ describe('RedirectAuthService', () => {
 
         oauthServiceSpy.clockSkewInSec = 120;
 
-        spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
+        timeSyncServiceSpy.getCorrectedNow.and.returnValue(mockDateNowInMilliseconds);
         oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
 
         oauthEvents$.next(new OAuthSuccessEvent('discovery_document_loaded'));
@@ -360,7 +370,7 @@ describe('RedirectAuthService', () => {
 
         oauthServiceSpy.clockSkewInSec = 120;
 
-        spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
+        timeSyncServiceSpy.getCorrectedNow.and.returnValue(mockDateNowInMilliseconds);
         oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
 
         oauthEvents$.next(new OAuthSuccessEvent('discovery_document_loaded'));
@@ -377,7 +387,7 @@ describe('RedirectAuthService', () => {
 
         oauthServiceSpy.clockSkewInSec = 120;
 
-        spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
+        timeSyncServiceSpy.getCorrectedNow.and.returnValue(mockDateNowInMilliseconds);
         oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
 
         oauthEvents$.next(new OAuthSuccessEvent('discovery_document_loaded'));

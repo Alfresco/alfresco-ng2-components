@@ -350,6 +350,7 @@ export class RedirectAuthService extends AuthService {
             .then(() => {
                 this._isDiscoveryDocumentLoadedSubject$.next(true);
                 this.oauthService.setupAutomaticSilentRefresh();
+                this._timeSyncService.syncClockOffset().subscribe();
                 return void this.allowRefreshTokenAndSilentRefreshOnMultipleTabs();
             })
             .catch(() => {
@@ -419,7 +420,7 @@ export class RedirectAuthService extends AuthService {
             this._oauthLogger.warn('No claims found in the token');
             return false;
         }
-        const now = Date.now();
+        const now = this._timeSyncService.getCorrectedNow();
         const issuedAtMSec = claims.iat * 1000;
         const expiresAtMSec = claims.exp * 1000;
         const clockSkewInMSec = this.oauthService.clockSkewInSec * 1000;
