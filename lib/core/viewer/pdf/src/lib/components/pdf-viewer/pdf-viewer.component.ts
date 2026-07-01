@@ -292,7 +292,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 .then(() => {
                     setTimeout(() => this.scalePage('init'));
                 })
-                .catch(() => this.error.emit());
+                .catch((err) => {
+                    console.error('[ADF-PDF-VIEWER] executePdf failed:', err);
+                    this.error.emit();
+                });
         });
     }
 

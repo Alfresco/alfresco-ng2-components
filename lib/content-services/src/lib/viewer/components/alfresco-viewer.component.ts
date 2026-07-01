@@ -275,9 +275,9 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     private async onNodeUpdated(node: Node) {
         if (node && node.id === this.nodeId) {
             this.generateCacheBusterNumber();
-            this.blobFileContent = null;
 
             await this.setUpNodeFile(node);
+            this.cdr.detectChanges();
         }
     }
 
@@ -300,7 +300,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
 
     private async setupNode() {
         try {
-            this.blobFileContent = null;
             this.nodeEntry = await this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] });
             if (this.versionId) {
                 this.versionEntry = await this.versionsApi.getVersion(this.nodeId, this.versionId);
@@ -318,6 +317,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
         this.canEditNode = this.contentService.hasAllowableOperations(nodeData, 'update');
         let mimeType: string;
         let urlFileContent: string;
+        let blobContent: Blob = null;
 
         if (versionData?.content) {
             mimeType = versionData.content.mimeType;
@@ -368,16 +368,19 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
-                this.blobFileContent = await response.blob();
+                blobContent = await response.blob();
                 urlFileContent = null;
             } catch (error) {
                 console.error('[ADF DEBUG] Failed to fetch PDF as blob, falling back to URL', error);
             }
         }
 
+        // Assign all bound properties atomically to prevent intermediate states
+        // from propagating to child components during Zone.js-triggered change detection
         this.mimeType = mimeType;
         this.nodeMimeType = nodeMimeType;
         this.fileName = versionData ? versionData.name : nodeData.name;
+        this.blobFileContent = blobContent;
         this.urlFileContent = urlFileContent ? urlFileContent + (this.cacheBusterNumber ? '&' + this.cacheBusterNumber : '') : null;
         this.sidebarRightTemplateContext.node = nodeData;
         this.sidebarLeftTemplateContext.node = nodeData;

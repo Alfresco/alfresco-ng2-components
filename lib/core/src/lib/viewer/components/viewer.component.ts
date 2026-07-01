@@ -347,8 +347,9 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         const { blobFile, urlFile, mimeType, nodeMimeType } = changes;
 
         if (blobFile?.currentValue) {
-            this.mimeType = blobFile.currentValue.type;
-            this.mimeTypeIconUrl = this.thumbnailService.getMimeTypeIcon(blobFile.currentValue.type);
+            const blobMimeType = (blobFile.currentValue.type || '').split(';')[0].trim();
+            this.mimeType = blobMimeType;
+            this.mimeTypeIconUrl = this.thumbnailService.getMimeTypeIcon(blobMimeType);
         }
 
         if (urlFile?.currentValue) {

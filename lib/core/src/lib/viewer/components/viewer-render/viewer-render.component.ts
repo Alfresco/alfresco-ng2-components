@@ -241,13 +241,32 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     private setUpBlobData() {
         this.internalFileName = this.fileName;
-        this.viewerType = this.viewUtilService.getViewerTypeByMimeType(this.blobFile.type);
+        const blobMimeType = this.extractMimeTypeEssence(this.blobFile.type);
+        this.viewerType = this.viewUtilService.getViewerTypeByMimeType(blobMimeType);
+        if (this.viewerType === 'unknown' && this.mimeType) {
+            this.viewerType = this.viewUtilService.getViewerTypeByMimeType(this.extractMimeTypeEssence(this.mimeType));
+        }
         if (this.viewerType === 'unknown') {
             this.isLoading = false;
         }
 
-        this.extensionChange.emit(this.blobFile.type);
+        this.extensionChange.emit(blobMimeType || this.mimeType);
         this.scrollTop();
+    }
+
+    /**
+     * Extracts the MIME type essence (type/subtype) stripping any parameters like charset.
+     * Firefox includes parameters in blob.type (e.g. "application/pdf;charset=utf-8"),
+     * while Chrome strips them. This normalizes the behavior.
+     *
+     * @param mimeType - raw MIME type string potentially containing parameters
+     * @returns the type/subtype portion without parameters
+     */
+    private extractMimeTypeEssence(mimeType: string): string {
+        if (!mimeType) {
+            return mimeType;
+        }
+        return mimeType.split(';')[0].trim();
     }
 
     private setUpUrlFile() {
