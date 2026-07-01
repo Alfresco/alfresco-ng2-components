@@ -19,7 +19,7 @@ import { inject, Injectable, InjectionToken } from '@angular/core';
 import { FormValues, FormModel, FormFieldOption, FormFieldValidator, FormService } from '@alfresco/adf-core';
 import { Observable, from, EMPTY } from 'rxjs';
 import { expand, map, reduce, switchMap } from 'rxjs/operators';
-import { TaskDetailsCloudModel } from '../../task/models/task-details-cloud.model';
+import { TaskDetailsCloudModel, TaskDetailsCloudModelRuntimeBundle } from '../../task/models/task-details-cloud.model';
 import { CompleteFormRepresentation, LazyApi, UploadApi } from '@alfresco/js-api';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
@@ -138,7 +138,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
      * @param taskId ID of the target task
      * @returns Details of the task
      */
-    getTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
+    getTask(appName: string, taskId: string): Observable<TaskDetailsCloudModelRuntimeBundle> {
         const apiUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}`;
 
         return this.get(apiUrl).pipe(map((res: any) => res.entry));
