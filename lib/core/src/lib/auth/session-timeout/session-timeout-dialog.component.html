@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>{{ 'SESSION_TIMEOUT.TITLE' | translate }}</h2>
+
+<mat-dialog-content aria-live="polite">
+    {{ 'SESSION_TIMEOUT.MESSAGE' | translate: { seconds: remainingSeconds } }}
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button type="button" data-automation-id="session-timeout-dialog__logout-button" (click)="logout()">
+        {{ 'SESSION_TIMEOUT.LOG_OUT' | translate }}
+    </button>
+    <button mat-flat-button color="primary" type="button" data-automation-id="session-timeout-dialog__continue-button" (click)="continueWorking()">
+        {{ 'SESSION_TIMEOUT.CONTINUE_WORKING' | translate }}
+    </button>
+</mat-dialog-actions>
