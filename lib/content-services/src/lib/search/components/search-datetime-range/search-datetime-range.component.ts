@@ -171,7 +171,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
             filterParam.end = end;
             this.updateDisplayValue();
             if (updateContext) {
-                this.context.update();
+                this.context.execute();
             }
         }
     }
@@ -242,7 +242,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
     private updateQuery() {
         if (this.id && this.context) {
             this.updateDisplayValue();
-            this.context.update();
+            this.context.execute();
         }
     }
 

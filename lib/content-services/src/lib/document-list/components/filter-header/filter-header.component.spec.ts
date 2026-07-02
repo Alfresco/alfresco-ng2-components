@@ -23,6 +23,8 @@ import { SimpleChange } from '@angular/core';
 import { SearchHeaderQueryBuilderService } from './../../../search/services/search-header-query-builder.service';
 import { FilterHeaderComponent } from './filter-header.component';
 import { provideRouter } from '@angular/router';
+import { SearchCategory } from '@alfresco/adf-content-services';
+import { NodePaging } from '@alfresco/js-api';
 
 describe('FilterHeaderComponent', () => {
     let fixture: ComponentFixture<FilterHeaderComponent>;
@@ -150,7 +152,7 @@ describe('FilterHeaderComponent', () => {
 
         fixture.detectChanges();
         await fixture.whenStable();
-        expect(Object.keys(queryBuilder.filterRawParams).length).toBe(0);
+        expect(queryBuilder.filterRawParams['name']).toBeUndefined();
 
         component.value = { name: 'pinocchio' };
         const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
@@ -158,9 +160,39 @@ describe('FilterHeaderComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(Object.keys(queryBuilder.filterRawParams).length).toBe(1);
         expect(queryBuilder.filterRawParams['name']).toBe('pinocchio');
         expect(queryBuilder.queryFragments['name']).toBe('pinocchio');
+    });
+
+    it('should build a wildcard field query fragment for the queryName filter when wildcards are enabled', async () => {
+        spyOn(queryBuilder, 'setCurrentRootFolderId');
+        spyOn(queryBuilder, 'isCustomSourceNode').and.returnValue(false);
+        spyOnProperty(queryBuilder, 'wildcardsEnabled', 'get').and.returnValue(true);
+        queryBuilder.categories = [{ id: 'queryName', component: { settings: { field: 'cm:name' } } } as SearchCategory];
+
+        component.value = { queryName: 'pinocchio' };
+        const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
+        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(queryBuilder.filterRawParams['queryName']).toBe('pinocchio');
+        expect(queryBuilder.queryFragments['queryName']).toBe(`cm:name:'*pinocchio*'`);
+    });
+
+    it('should build a non-wildcard field query fragment for the queryName filter when wildcards are disabled', async () => {
+        spyOn(queryBuilder, 'setCurrentRootFolderId');
+        spyOn(queryBuilder, 'isCustomSourceNode').and.returnValue(false);
+        spyOnProperty(queryBuilder, 'wildcardsEnabled', 'get').and.returnValue(false);
+        queryBuilder.categories = [{ id: 'queryName', component: { settings: { field: 'cm:name' } } } as SearchCategory];
+
+        component.value = { queryName: 'pinocchio' };
+        const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
+        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(queryBuilder.queryFragments['queryName']).toBe(`cm:name:'pinocchio'`);
     });
 
     it('should emit filterSelection when a filter is changed', (done) => {
@@ -193,7 +225,7 @@ describe('FilterHeaderComponent', () => {
     it('should emit searchResultsReady when search query builder executes', (done) => {
         fixture.detectChanges(); // Initialize component (triggers ngOnInit)
 
-        const mockNodePaging: any = { list: { entries: [] } };
+        const mockNodePaging: NodePaging = { list: { entries: [] } };
 
         component.searchResultsReady.subscribe((nodePaging) => {
             expect(nodePaging).toBe(mockNodePaging);

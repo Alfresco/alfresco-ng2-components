@@ -72,7 +72,7 @@ describe('SearchPropertiesComponent', () => {
             },
             filterRawParams: {},
             populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy('update')
+            execute: jasmine.createSpy('execute')
         } as any;
     });
 
@@ -208,7 +208,7 @@ describe('SearchPropertiesComponent', () => {
 
             component.submitValues();
             expect(component.displayValue$.next).not.toHaveBeenCalled();
-            expect(component.context.update).not.toHaveBeenCalled();
+            expect(component.context.execute).not.toHaveBeenCalled();
         });
 
         it('should not search when context is not set', () => {
@@ -227,7 +227,7 @@ describe('SearchPropertiesComponent', () => {
                 fileExtensions: undefined,
                 fileSizeCondition: { fileSize: null, fileSizeOperator: FileSizeOperator.AT_LEAST, fileSizeUnit: FileSizeUnit.KB }
             });
-            expect(component.context.update).toHaveBeenCalled();
+            expect(component.context.execute).toHaveBeenCalled();
         });
 
         it('should search by at least KB by default when any size is typed', () => {
@@ -246,7 +246,7 @@ describe('SearchPropertiesComponent', () => {
                     fileSizeUnit: FileSizeUnit.KB
                 }
             });
-            expect(component.context.update).toHaveBeenCalled();
+            expect(component.context.execute).toHaveBeenCalled();
         });
 
         it('should search by at most MB after selecting proper options', () => {
@@ -271,7 +271,7 @@ describe('SearchPropertiesComponent', () => {
                     fileSizeUnit: FileSizeUnit.MB
                 }
             });
-            expect(component.context.update).toHaveBeenCalled();
+            expect(component.context.execute).toHaveBeenCalled();
         });
 
         it('should search by exactly GB after selecting proper options', () => {
@@ -296,7 +296,7 @@ describe('SearchPropertiesComponent', () => {
                     fileSizeUnit: FileSizeUnit.GB
                 }
             });
-            expect(component.context.update).toHaveBeenCalled();
+            expect(component.context.execute).toHaveBeenCalled();
         });
 
         it('should search by single file type', () => {
@@ -314,7 +314,7 @@ describe('SearchPropertiesComponent', () => {
                     fileSizeUnit: FileSizeUnit.KB
                 }
             });
-            expect(component.context.update).toHaveBeenCalled();
+            expect(component.context.execute).toHaveBeenCalled();
         });
 
         it('should search by multiple file types', () => {
@@ -331,7 +331,7 @@ describe('SearchPropertiesComponent', () => {
                     fileSizeUnit: FileSizeUnit.KB
                 }
             });
-            expect(component.context.update).toHaveBeenCalled();
+            expect(component.context.execute).toHaveBeenCalled();
         });
 
         it('should search by file size and type', () => {
@@ -351,7 +351,7 @@ describe('SearchPropertiesComponent', () => {
                     fileSizeUnit: FileSizeUnit.KB
                 }
             });
-            expect(component.context.update).toHaveBeenCalled();
+            expect(component.context.execute).toHaveBeenCalled();
         });
     });
 
@@ -439,7 +439,7 @@ describe('SearchPropertiesComponent', () => {
 
             expect(component.context.queryFragments[component.id]).toBe('');
             expect(component.context.filterRawParams[component.id]).toBeUndefined();
-            expect(component.context.update).toHaveBeenCalled();
+            expect(component.context.execute).toHaveBeenCalled();
         });
     });
 
@@ -484,7 +484,7 @@ describe('SearchPropertiesComponent', () => {
                     fileSizeUnit: FileSizeUnit.MB
                 }
             });
-            expect(component.context.update).toHaveBeenCalled();
+            expect(component.context.execute).toHaveBeenCalled();
         });
     });
 

@@ -206,7 +206,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
             this.context.queryFragments[this.id] = '';
             this.context.filterRawParams[this.id] = undefined;
             if (updateContext) {
-                this.context.update();
+                this.context.execute();
             }
         }
         this.reset$.next();
@@ -272,7 +272,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         this.displayValue$.next(displayedValue);
         this.context.queryFragments[this.id] = query;
         if (updateContext) {
-            this.context.update();
+            this.context.execute();
         }
     }
 

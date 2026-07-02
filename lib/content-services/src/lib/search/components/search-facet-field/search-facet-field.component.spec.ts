@@ -44,7 +44,7 @@ describe('SearchFacetFieldComponent', () => {
     });
 
     it('should update bucket model and query builder on facet toggle', () => {
-        spyOn(queryBuilder, 'update').and.stub();
+        spyOn(queryBuilder, 'execute').and.stub();
         spyOn(queryBuilder, 'addUserFacetBucket').and.callThrough();
 
         const event: any = { checked: true };
@@ -57,12 +57,12 @@ describe('SearchFacetFieldComponent', () => {
 
         expect(bucket.checked).toBeTruthy();
         expect(queryBuilder.addUserFacetBucket).toHaveBeenCalledWith(facetField.field, bucket);
-        expect(queryBuilder.update).toHaveBeenCalled();
+        expect(queryBuilder.execute).toHaveBeenCalled();
         expect(searchFacetFiltersService.updateSelectedBuckets).toHaveBeenCalled();
     });
 
     it('should update bucket model and query builder on facet un-toggle', () => {
-        spyOn(queryBuilder, 'update').and.stub();
+        spyOn(queryBuilder, 'execute').and.stub();
         spyOn(queryBuilder, 'removeUserFacetBucket').and.callThrough();
 
         const event: any = { checked: false };
@@ -75,12 +75,12 @@ describe('SearchFacetFieldComponent', () => {
         component.onToggleBucket(event, facetField, bucket);
 
         expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith(facetField.field, bucket);
-        expect(queryBuilder.update).toHaveBeenCalled();
+        expect(queryBuilder.execute).toHaveBeenCalled();
         expect(searchFacetFiltersService.updateSelectedBuckets).toHaveBeenCalled();
     });
 
     it('should unselect facet query and update builder', () => {
-        spyOn(queryBuilder, 'update').and.stub();
+        spyOn(queryBuilder, 'execute').and.stub();
         spyOn(queryBuilder, 'removeUserFacetBucket').and.callThrough();
 
         const event: any = { checked: false };
@@ -94,17 +94,17 @@ describe('SearchFacetFieldComponent', () => {
 
         expect(query.checked).toEqual(false);
         expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith(facetField.field, query);
-        expect(queryBuilder.update).toHaveBeenCalled();
+        expect(queryBuilder.execute).toHaveBeenCalled();
         expect(searchFacetFiltersService.updateSelectedBuckets).toHaveBeenCalled();
     });
 
     it('should update query builder only when has bucket to unselect', () => {
-        spyOn(queryBuilder, 'update').and.stub();
+        spyOn(queryBuilder, 'execute').and.stub();
 
         const field: FacetField = { field: 'f1', label: 'f1' };
         component.onToggleBucket({ checked: true } as any, field, null);
 
-        expect(queryBuilder.update).not.toHaveBeenCalled();
+        expect(queryBuilder.execute).not.toHaveBeenCalled();
     });
 
     it('should allow to to reset selected buckets', () => {
@@ -166,7 +166,7 @@ describe('SearchFacetFieldComponent', () => {
     });
 
     it('should update query builder upon resetting buckets', () => {
-        spyOn(queryBuilder, 'update').and.stub();
+        spyOn(queryBuilder, 'execute').and.stub();
 
         const buckets: FacetFieldBucket[] = [
             { label: 'bucket1', checked: false, count: 1, filterQuery: 'q1' },
@@ -183,6 +183,6 @@ describe('SearchFacetFieldComponent', () => {
         fixture.detectChanges();
 
         component.resetSelectedBuckets(field);
-        expect(queryBuilder.update).toHaveBeenCalled();
+        expect(queryBuilder.execute).toHaveBeenCalled();
     });
 });

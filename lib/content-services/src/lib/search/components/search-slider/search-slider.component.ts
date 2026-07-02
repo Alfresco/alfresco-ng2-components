@@ -135,7 +135,7 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
                 this.context.queryFragments[this.id] = `${this.settings.field}:[0 TO ${value}]`;
             }
             if (updateContext) {
-                this.context.update();
+                this.context.execute();
             }
         }
     }

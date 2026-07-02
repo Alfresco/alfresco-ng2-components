@@ -115,9 +115,16 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
 
                 const operator = this.searchFilterQueryBuilder.getOperatorForFilterId(key) || 'OR';
                 this.searchFilterQueryBuilder.filterRawParams[key] = this.value[key];
-                this.searchFilterQueryBuilder.queryFragments[key] = Array.isArray(this.value[key])
-                    ? this.value[key].join(` ${operator} `)
-                    : this.value[key];
+                if (key === 'queryName') {
+                    const filterConfig = this.searchFilterQueryBuilder.categories.find((category) => category.id === key);
+                    const wildcardSuffix = this.searchFilterQueryBuilder.wildcardsEnabled ? '*' : '';
+                    this.searchFilterQueryBuilder.queryFragments[key] =
+                        `${filterConfig.component.settings.field}:'${wildcardSuffix}${this.value[key]}${wildcardSuffix}'`;
+                } else {
+                    this.searchFilterQueryBuilder.queryFragments[key] = Array.isArray(this.value[key])
+                        ? this.value[key].join(` ${operator} `)
+                        : this.value[key];
+                }
             });
         }
         this.searchFilterQueryBuilder.setCurrentRootFolderId(currentFolderId);

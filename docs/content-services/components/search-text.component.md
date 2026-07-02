@@ -46,9 +46,9 @@ Implements a [search widget](../../../lib/content-services/src/lib/search/models
 | field | string | Field to apply the query fragment to. Required value |
 | pattern | string | Regular expression pattern to restrict the format of the input text |
 | placeholder | string | Text displayed in the widget when the input string is empty |
-| searchSuffix | string | Text to append always in the search of a string |
-| searchPrefix | string | Text to prepend always in the search of a string |
-| allowUpdateOnChange | `boolean` | Enable/Disable the update fire event when text has been changed. By default is true. |
+| searchSuffix | string | Text to append in the search of a string. Only applied when wildcard matching is enabled (the `search-wildcards-enabled` app config flag, default `true`). |
+| searchPrefix | string | Text to prepend in the search of a string. Only applied when wildcard matching is enabled (the `search-wildcards-enabled` app config flag, default `true`). |
+| allowUpdateOnChange | `boolean` | Enable/Disable firing the search update when the text changes. Defaults to `false`; when disabled the search runs only when the user submits the value. |
 | hideDefaultAction | boolean | Show/hide the widget actions. By default is false. |
 
 ## Details

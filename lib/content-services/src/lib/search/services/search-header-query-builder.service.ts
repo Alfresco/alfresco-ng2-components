@@ -21,7 +21,6 @@ import { SearchConfiguration } from '../models/search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
 import { SearchCategory } from '../models/search-category.interface';
 import { Node } from '@alfresco/js-api';
-import { filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { SearchSortingDefinition } from '../models/search-sorting-definition.interface';
 import { FilterSearch } from '../models/filter-search.interface';
@@ -43,10 +42,6 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         const alfrescoApiService = inject(AlfrescoApiService);
 
         super(appConfig, alfrescoApiService);
-
-        this.updated.pipe(filter((query) => !!query)).subscribe(() => {
-            this.execute();
-        });
     }
 
     public isFilterServiceActive(): boolean {

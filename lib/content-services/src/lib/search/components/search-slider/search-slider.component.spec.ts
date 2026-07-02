@@ -36,7 +36,7 @@ describe('SearchSliderComponent', () => {
             },
             filterRawParams: {},
             populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy('update')
+            execute: jasmine.createSpy('execute')
         } as any;
         component.settings = {
             field: 'field1',
@@ -64,7 +64,7 @@ describe('SearchSliderComponent', () => {
         component.onChangedHandler();
         expect(component.context.queryFragments[component.id]).toEqual('cm:content.size:[0 TO 10]');
         expect(component.context.filterRawParams[component.id]).toEqual(10);
-        expect(component.context.update).toHaveBeenCalled();
+        expect(component.context.execute).toHaveBeenCalled();
 
         component.value = 20;
         component.onChangedHandler();
@@ -81,7 +81,7 @@ describe('SearchSliderComponent', () => {
         expect(component.value).toBe(10);
         expect(component.context.queryFragments[component.id]).toBe('');
         expect(component.context.filterRawParams[component.id]).toBe(null);
-        expect(component.context.update).toHaveBeenCalled();
+        expect(component.context.execute).toHaveBeenCalled();
     });
 
     it('should reset to 0 if min not provided', () => {
@@ -93,7 +93,7 @@ describe('SearchSliderComponent', () => {
 
         expect(component.value).toBe(0);
         expect(component.context.queryFragments['slider']).toBe('');
-        expect(component.context.update).toHaveBeenCalled();
+        expect(component.context.execute).toHaveBeenCalled();
     });
 
     it('should populate filter state when populate filters event has been observed', async () => {

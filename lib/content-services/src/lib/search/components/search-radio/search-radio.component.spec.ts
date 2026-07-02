@@ -43,7 +43,7 @@ describe('SearchRadioComponent', () => {
             },
             filterRawParams: {},
             populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy('update')
+            execute: jasmine.createSpy('execute')
         } as any;
         component.settings = { options: sizeOptions } as any;
     });
@@ -91,6 +91,15 @@ describe('SearchRadioComponent', () => {
 
         expect(component.context.queryFragments[component.id]).toBe(sizeOptions[0].value);
         expect(component.context.filterRawParams[component.id]).toBe(sizeOptions[0].value);
+    });
+
+    it('should call context.execute when reset is called', async () => {
+        const group = await loader.getHarness(MatRadioGroupHarness);
+        await group.checkRadioButton({ selector: `[data-automation-id="search-radio-${sizeOptions[2].name}"]` });
+
+        component.reset();
+
+        expect(component.context.execute).toHaveBeenCalled();
     });
 
     it('should populate filter state when populate filters event has been observed', async () => {

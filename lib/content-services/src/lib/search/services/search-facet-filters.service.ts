@@ -70,8 +70,6 @@ export class SearchFacetFiltersService {
             this.responseFacets = null;
         });
 
-        this.queryBuilder.updated.pipe(takeUntilDestroyed()).subscribe((query) => this.queryBuilder.execute(true, query));
-
         this.queryBuilder.executed.pipe(takeUntilDestroyed()).subscribe((resultSetPaging: ResultSetPaging) => {
             this.onDataLoaded(resultSetPaging);
             this.searchService.dataLoaded.next(resultSetPaging);
@@ -397,7 +395,7 @@ export class SearchFacetFiltersService {
             bucket.checked = false;
             this.queryBuilder.removeUserFacetBucket(facetField?.field, bucket);
             this.updateSelectedBuckets();
-            this.queryBuilder.update();
+            this.queryBuilder.execute();
         }
     }
 
@@ -432,7 +430,7 @@ export class SearchFacetFiltersService {
                 this.updateSelectedBuckets();
             }
         });
-        this.queryBuilder.update();
+        this.queryBuilder.execute();
     }
 
     resetQueryFragments() {
@@ -444,7 +442,7 @@ export class SearchFacetFiltersService {
         this.responseFacets = [];
         this.selectedBuckets = [];
         this.tabbedFacet = null;
-        this.queryBuilder.resetToDefaults(true);
-        this.queryBuilder.update();
+        this.queryBuilder.resetToDefaults(true, false);
+        this.queryBuilder.execute();
     }
 }
