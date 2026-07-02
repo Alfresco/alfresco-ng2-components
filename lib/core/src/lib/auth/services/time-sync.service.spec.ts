@@ -39,6 +39,7 @@ describe('TimeSyncService', () => {
     });
 
     afterEach(() => {
+        service.stopPeriodicSync();
         httpMock.verify();
     });
 
@@ -235,15 +236,61 @@ describe('TimeSyncService', () => {
             httpMock.expectNone('http://fake-server-time-url');
         });
 
-        it('should leave clockOffsetMs at 0 when the server time endpoint fails', () => {
+        it('should leave clockOffsetMs unchanged when the server time endpoint fails', () => {
             appConfigSpy.get.and.returnValue('http://fake-server-time-url');
+            service.clockOffsetMs = 5000;
 
             service.syncClockOffset().subscribe(() => {
-                expect(service.clockOffsetMs).toBe(0);
+                expect(service.clockOffsetMs).toBe(5000);
             });
 
             const req = httpMock.expectOne('http://fake-server-time-url');
             req.error(new ProgressEvent(''));
+        });
+
+        it('should not update offset when it exceeds maxAllowedOffsetMs', () => {
+            appConfigSpy.get.and.returnValue('http://fake-server-time-url');
+
+            const timeBeforeRequest = 1728911579000;
+            const timeResponseReceived = 1728911580000;
+
+            // Server is 600 seconds ahead (way beyond our cap)
+            const serverTime = 1728912180000;
+
+            spyOn(Date, 'now').and.returnValues(timeBeforeRequest, timeResponseReceived);
+
+            service.clockOffsetMs = 1000;
+
+            // Cap at 60 seconds (60000 ms)
+            service.syncClockOffset(60000).subscribe(() => {
+                // Offset should remain unchanged because computed offset exceeds cap
+                expect(service.clockOffsetMs).toBe(1000);
+            });
+
+            const req = httpMock.expectOne('http://fake-server-time-url');
+            req.flush(serverTime);
+        });
+
+        it('should update offset when it is within maxAllowedOffsetMs', () => {
+            appConfigSpy.get.and.returnValue('http://fake-server-time-url');
+
+            const timeBeforeRequest = 1728911579000;
+            const timeResponseReceived = 1728911580000;
+
+            // Server is 30 seconds ahead (within our cap)
+            const serverTime = 1728911610000;
+            // adjustedServerTime = 1728911610000 + 1000/2 = 1728911610500
+            // offset = 1728911610500 - 1728911580000 = 30500 ms
+
+            spyOn(Date, 'now').and.returnValues(timeBeforeRequest, timeResponseReceived);
+
+            // Cap at 60 seconds (60000 ms)
+            service.syncClockOffset(60000).subscribe(() => {
+                expect(service.clockOffsetMs).toBe(30500);
+            });
+
+            const req = httpMock.expectOne('http://fake-server-time-url');
+            req.flush(serverTime);
         });
     });
 
@@ -271,6 +318,65 @@ describe('TimeSyncService', () => {
             service.clockOffsetMs = -60000;
 
             expect(service.getCorrectedNow()).toBe(fixedNow - 60000);
+        });
+    });
+
+    describe('startPeriodicSync', () => {
+        it('should re-sync on visibility change', () => {
+            appConfigSpy.get.and.returnValue('http://fake-server-time-url');
+
+            const timeBeforeRequest = 1728911579000;
+            const timeResponseReceived = 1728911580000;
+            const serverTime = 1728911610000;
+
+            spyOn(Date, 'now').and.returnValues(timeBeforeRequest, timeResponseReceived);
+
+            service.startPeriodicSync(60000);
+
+            Object.defineProperty(document, 'visibilityState', { value: 'visible', writable: true, configurable: true });
+            document.dispatchEvent(new Event('visibilitychange'));
+
+            const req = httpMock.expectOne('http://fake-server-time-url');
+            req.flush(serverTime);
+
+            expect(service.clockOffsetMs).toBe(30500);
+        });
+
+        it('should apply maxAllowedOffsetMs cap during visibility re-sync', () => {
+            appConfigSpy.get.and.returnValue('http://fake-server-time-url');
+
+            const timeBeforeRequest = 1728911579000;
+            const timeResponseReceived = 1728911580000;
+            // Server is 600 seconds ahead — exceeds cap
+            const serverTime = 1728912180000;
+
+            spyOn(Date, 'now').and.returnValues(timeBeforeRequest, timeResponseReceived);
+
+            service.clockOffsetMs = 1000;
+            service.startPeriodicSync(60000, 60000);
+
+            Object.defineProperty(document, 'visibilityState', { value: 'visible', writable: true, configurable: true });
+            document.dispatchEvent(new Event('visibilitychange'));
+
+            const req = httpMock.expectOne('http://fake-server-time-url');
+            req.flush(serverTime);
+
+            // Offset should remain unchanged
+            expect(service.clockOffsetMs).toBe(1000);
+        });
+    });
+
+    describe('stopPeriodicSync', () => {
+        it('should remove visibility change listener', () => {
+            appConfigSpy.get.and.returnValue('http://fake-server-time-url');
+
+            service.startPeriodicSync(60000);
+            service.stopPeriodicSync();
+
+            Object.defineProperty(document, 'visibilityState', { value: 'visible', writable: true, configurable: true });
+            document.dispatchEvent(new Event('visibilitychange'));
+
+            httpMock.expectNone('http://fake-server-time-url');
         });
     });
 });

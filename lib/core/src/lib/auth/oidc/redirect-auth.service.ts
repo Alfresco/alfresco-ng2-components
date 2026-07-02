@@ -261,6 +261,7 @@ export class RedirectAuthService extends AuthService {
     }
 
     logout() {
+        this._timeSyncService.stopPeriodicSync();
         this.oauthService.logOut();
     }
 
@@ -351,6 +352,7 @@ export class RedirectAuthService extends AuthService {
                 this._isDiscoveryDocumentLoadedSubject$.next(true);
                 this.oauthService.setupAutomaticSilentRefresh();
                 this._timeSyncService.syncClockOffset().subscribe();
+                this._timeSyncService.startPeriodicSync(undefined, this.oauthService.clockSkewInSec * 1000);
                 return void this.allowRefreshTokenAndSilentRefreshOnMultipleTabs();
             })
             .catch(() => {
