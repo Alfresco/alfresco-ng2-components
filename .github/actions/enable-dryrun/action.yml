@@ -23,8 +23,8 @@ runs:
       env:
         DRY_RUN_FLAG: ${{ inputs.dry-run-flag }}
       run: |
-          if [[ '$DRY_RUN_FLAG' == 'true' ]]; then
-            echo "dryrun=--dryrun" >> $GITHUB_OUTPUT;
+          if [[ "$DRY_RUN_FLAG" == 'true' ]]; then
+            echo "dryrun=--dry-run" >> $GITHUB_OUTPUT;
             echo "enabling dryrun"
           else
             echo "dryrun=" >> $GITHUB_OUTPUT;
