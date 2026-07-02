@@ -16,10 +16,10 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Injector, inject } from '@angular/core';
+import { Injectable, Injector, NgZone, inject } from '@angular/core';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { from, Observable, of, throwError } from 'rxjs';
-import { catchError, map, timeout } from 'rxjs/operators';
+import { from, interval, Observable, of, Subscription, throwError } from 'rxjs';
+import { catchError, map, switchMap, timeout } from 'rxjs/operators';
 
 export interface TimeSync {
     outOfSync: boolean;
@@ -28,12 +28,16 @@ export interface TimeSync {
     serverDateTimeISO: string;
 }
 
+/** Default interval for periodic clock re-sync (5 minutes). */
+const DEFAULT_PERIODIC_SYNC_INTERVAL_MS = 5 * 60 * 1000;
+
 @Injectable({
     providedIn: 'root'
 })
 export class TimeSyncService {
     private readonly _injector = inject(Injector);
     private readonly _appConfigService = inject(AppConfigService);
+    private readonly _ngZone = inject(NgZone);
 
     private readonly _http: HttpClient;
 
@@ -43,6 +47,9 @@ export class TimeSyncService {
      * Defaults to 0 until `syncClockOffset` has successfully run.
      */
     clockOffsetMs = 0;
+
+    private _periodicSyncSubscription: Subscription | null = null;
+    private _visibilityChangeHandler: (() => void) | null = null;
 
     constructor() {
         this._http = this._injector.get(HttpClient);
@@ -63,11 +70,15 @@ export class TimeSyncService {
      * Fetches the server time once and stores the signed clock offset in `clockOffsetMs`.
      * Call this at application start-up (fire-and-forget) so subsequent calls to
      * `getCorrectedNow` compensate for any VM / Citrix clock drift.
-     * If `serverTimeUrl` is not configured or the request fails, the offset is left at 0.
+     * If `serverTimeUrl` is not configured or the request fails, the offset is left unchanged
+     * (or at 0 if this is the first call).
      *
+     * @param maxAllowedOffsetMs Optional safety cap. If the computed offset exceeds this value,
+     *                           it is ignored to prevent a compromised time endpoint from
+     *                           tricking the client into accepting expired tokens.
      * @returns Observable that completes after the offset has been stored (or silently on error)
      */
-    syncClockOffset(): Observable<void> {
+    syncClockOffset(maxAllowedOffsetMs?: number): Observable<void> {
         try {
             const startTime = Date.now();
             return this.getServerTime().pipe(
@@ -79,15 +90,17 @@ export class TimeSyncService {
                     const serverTimeInMs = isServerTimeResponseInMs ? serverTimeResponse : serverTimeResponse * 1000;
                     const adjustedServerTimeInMs = serverTimeInMs + roundTripTimeInMs / 2;
 
-                    this.clockOffsetMs = adjustedServerTimeInMs - endTime;
+                    const newOffset = adjustedServerTimeInMs - endTime;
+
+                    if (maxAllowedOffsetMs != null && Math.abs(newOffset) > maxAllowedOffsetMs) {
+                        return;
+                    }
+
+                    this.clockOffsetMs = newOffset;
                 }),
-                catchError(() => {
-                    this.clockOffsetMs = 0;
-                    return of(void 0);
-                })
+                catchError(() => of(void 0))
             );
         } catch {
-            this.clockOffsetMs = 0;
             return of(void 0);
         }
     }
@@ -133,6 +146,50 @@ export class TimeSyncService {
      */
     isLocalTimeOutOfSync(maxAllowedClockSkewInSec: number): Observable<boolean> {
         return this.checkTimeSync(maxAllowedClockSkewInSec).pipe(map((sync) => sync.outOfSync));
+    }
+
+    /**
+     * Starts periodic re-synchronization of the clock offset to protect against
+     * progressive clock drift during a user session (common in Citrix/VM environments).
+     *
+     * Re-sync is triggered:
+     * - On a regular interval (default: every 5 minutes)
+     * - When the document becomes visible again (e.g., Citrix session resumes after idle)
+     *
+     * @param intervalMs How often to re-sync in milliseconds (default: 5 minutes)
+     * @param maxAllowedOffsetMs Safety cap for the offset. If exceeded, the new offset is ignored.
+     */
+    startPeriodicSync(intervalMs: number = DEFAULT_PERIODIC_SYNC_INTERVAL_MS, maxAllowedOffsetMs?: number): void {
+        this.stopPeriodicSync();
+
+        this._ngZone.runOutsideAngular(() => {
+            this._periodicSyncSubscription = interval(intervalMs)
+                .pipe(switchMap(() => this.syncClockOffset(maxAllowedOffsetMs)))
+                .subscribe();
+
+            this._visibilityChangeHandler = () => {
+                if (typeof document !== 'undefined' && document.visibilityState === 'visible') {
+                    this.syncClockOffset(maxAllowedOffsetMs).subscribe();
+                }
+            };
+
+            if (typeof document !== 'undefined') {
+                document.addEventListener('visibilitychange', this._visibilityChangeHandler);
+            }
+        });
+    }
+
+    /**
+     * Stops the periodic clock re-synchronization and removes the visibility change listener.
+     */
+    stopPeriodicSync(): void {
+        this._periodicSyncSubscription?.unsubscribe();
+        this._periodicSyncSubscription = null;
+
+        if (this._visibilityChangeHandler && typeof document !== 'undefined') {
+            document.removeEventListener('visibilitychange', this._visibilityChangeHandler);
+            this._visibilityChangeHandler = null;
+        }
     }
 
     private getServerTime(): Observable<number> {

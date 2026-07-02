@@ -52,7 +52,13 @@ describe('RedirectAuthService', () => {
 
     beforeEach(() => {
         retryLoginServiceSpy = jasmine.createSpyObj('RetryLoginService', ['tryToLoginTimes']);
-        timeSyncServiceSpy = jasmine.createSpyObj('TimeSyncService', ['checkTimeSync', 'getCorrectedNow', 'syncClockOffset']);
+        timeSyncServiceSpy = jasmine.createSpyObj('TimeSyncService', [
+            'checkTimeSync',
+            'getCorrectedNow',
+            'syncClockOffset',
+            'startPeriodicSync',
+            'stopPeriodicSync'
+        ]);
         oauthLoggerSpy = jasmine.createSpyObj('OAuthLogger', ['error', 'info', 'warn']);
         oauthServiceSpy = jasmine.createSpyObj(
             'OAuthService',
