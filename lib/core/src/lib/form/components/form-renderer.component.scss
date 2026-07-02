@@ -50,7 +50,9 @@
             gap: 8px;
 
             @include flex.layout-bp(lt-md) {
-                display: flow;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
             }
 
             &-item {
