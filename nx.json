@@ -47,7 +47,7 @@
   },
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "sharedGlobals": ["{workspaceRoot}/angular.json", "{workspaceRoot}/e2e/protractor.excludes.json", "{workspaceRoot}/e2e/protractor.conf.js"],
+    "sharedGlobals": ["{workspaceRoot}/package.json", "{workspaceRoot}/angular.json", "{workspaceRoot}/e2e/protractor.excludes.json", "{workspaceRoot}/e2e/protractor.conf.js"],
     "production": [
       "default",
       "!{projectRoot}/.storybook/**/*",
