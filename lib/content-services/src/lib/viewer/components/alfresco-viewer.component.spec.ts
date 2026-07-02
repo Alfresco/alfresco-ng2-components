@@ -1063,4 +1063,111 @@ describe('AlfrescoViewerComponent', () => {
             });
         });
     });
+
+    describe('PDF blob fetch and atomic state assignment', () => {
+        it('should assign blobFileContent and null urlFileContent when PDF blob fetch succeeds', async () => {
+            const mockBlob = new Blob(['pdf content'], { type: 'application/pdf' });
+            const mockResponse = { ok: true, blob: () => Promise.resolve(mockBlob) } as Response;
+            spyOn(window, 'fetch').and.returnValue(Promise.resolve(mockResponse));
+
+            spyOn(component.nodesApi, 'getNode').and.returnValue(
+                Promise.resolve(
+                    new NodeEntry({
+                        entry: new Node({ name: 'test.pdf', id: 'node-1', content: new ContentInfo({ mimeType: 'application/pdf' }) })
+                    })
+                )
+            );
+
+            component.nodeId = 'node-1';
+            component.showViewer = true;
+            component.ngOnChanges(getSimpleChanges('node-1'));
+
+            await fixture.whenStable();
+
+            expect(component.blobFileContent).toBe(mockBlob);
+            expect(component.urlFileContent).toBeNull();
+            expect(component.mimeType).toBe('application/pdf');
+        });
+
+        it('should fall back to URL-based viewing when PDF blob fetch fails', async () => {
+            spyOn(window, 'fetch').and.returnValue(Promise.reject(new Error('Network error')));
+            spyOn(component.contentApi, 'getContentUrl').and.returnValue('/content/url');
+
+            spyOn(component.nodesApi, 'getNode').and.returnValue(
+                Promise.resolve(
+                    new NodeEntry({
+                        entry: new Node({
+                            name: 'test.pdf',
+                            id: 'node-1',
+                            content: new ContentInfo({ mimeType: 'application/pdf' }),
+                            properties: { 'cm:versionLabel': '1.0' }
+                        })
+                    })
+                )
+            );
+
+            component.nodeId = 'node-1';
+            component.showViewer = true;
+            component.ngOnChanges(getSimpleChanges('node-1'));
+
+            await fixture.whenStable();
+
+            expect(component.blobFileContent).toBeNull();
+            expect(component.urlFileContent).not.toBeNull();
+            expect(component.mimeType).toBe('application/pdf');
+        });
+
+        it('should fall back to URL-based viewing when PDF fetch returns non-ok response', async () => {
+            const mockResponse = { ok: false, status: 403 } as Response;
+            spyOn(window, 'fetch').and.returnValue(Promise.resolve(mockResponse));
+            spyOn(component.contentApi, 'getContentUrl').and.returnValue('/content/url');
+
+            spyOn(component.nodesApi, 'getNode').and.returnValue(
+                Promise.resolve(
+                    new NodeEntry({
+                        entry: new Node({
+                            name: 'test.pdf',
+                            id: 'node-1',
+                            content: new ContentInfo({ mimeType: 'application/pdf' }),
+                            properties: { 'cm:versionLabel': '1.0' }
+                        })
+                    })
+                )
+            );
+
+            component.nodeId = 'node-1';
+            component.showViewer = true;
+            component.ngOnChanges(getSimpleChanges('node-1'));
+
+            await fixture.whenStable();
+
+            expect(component.blobFileContent).toBeNull();
+            expect(component.urlFileContent).not.toBeNull();
+            expect(component.mimeType).toBe('application/pdf');
+        });
+
+        it('should not expose intermediate null state during node setup', async () => {
+            const mockBlob = new Blob(['pdf content'], { type: 'application/pdf' });
+            const mockResponse = { ok: true, blob: () => Promise.resolve(mockBlob) } as Response;
+            spyOn(window, 'fetch').and.returnValue(Promise.resolve(mockResponse));
+
+            spyOn(component.nodesApi, 'getNode').and.returnValue(
+                Promise.resolve(
+                    new NodeEntry({
+                        entry: new Node({ name: 'test.pdf', id: 'node-1', content: new ContentInfo({ mimeType: 'application/pdf' }) })
+                    })
+                )
+            );
+
+            component.nodeId = 'node-1';
+            component.showViewer = true;
+            component.ngOnChanges(getSimpleChanges('node-1'));
+
+            await fixture.whenStable();
+
+            expect(component.blobFileContent).toBe(mockBlob);
+            expect(component.urlFileContent).toBeNull();
+            expect(component.fileName).toBe('test.pdf');
+        });
+    });
 });

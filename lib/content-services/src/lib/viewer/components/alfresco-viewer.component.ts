@@ -352,30 +352,20 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
         } else if (viewerType === 'media') {
             this.tracks = await this.renditionService.generateMediaTracksRendition(this.nodeId);
         } else if (viewerType === 'pdf') {
-            try {
-                const contentUrl = versionData
-                    ? this.contentApi.getVersionContentUrl(this.nodeId, versionData.id)
-                    : this.contentApi.getContentUrl(this.nodeId);
+            const contentUrl = versionData
+                ? this.contentApi.getVersionContentUrl(this.nodeId, versionData.id)
+                : this.contentApi.getContentUrl(this.nodeId);
 
-                // Fetch the content as Blob using fetch API with credentials
-                const response = await fetch(contentUrl, {
-                    credentials: 'include',
-                    headers: {
-                        'Cache-Control': 'no-cache'
-                    }
-                });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+            const blob = await fetch(contentUrl, { credentials: 'include', headers: { 'Cache-Control': 'no-cache' } })
+                .then((response) => (response.ok ? response.blob() : null))
+                .catch(() => null);
 
-                blobContent = await response.blob();
+            if (blob) {
+                blobContent = blob;
                 urlFileContent = null;
-            } catch (error) {
-                console.error('[ADF DEBUG] Failed to fetch PDF as blob, falling back to URL', error);
             }
         }
 
-        // Assign all bound properties atomically to prevent intermediate states
         // from propagating to child components during Zone.js-triggered change detection
         this.mimeType = mimeType;
         this.nodeMimeType = nodeMimeType;

@@ -585,4 +585,68 @@ describe('ViewerComponent', () => {
             expect(component.viewerType).toBe('unknown');
         });
     });
+
+    describe('Blob MIME type handling', () => {
+        it('should resolve viewerType from blob type when blob has valid MIME type', () => {
+            component.blobFile = new Blob(['content'], { type: 'application/pdf' });
+            component.ngOnChanges();
+
+            expect(component.viewerType).toBe('pdf');
+        });
+
+        it('should fall back to mimeType input when blob type resolves to unknown', () => {
+            component.blobFile = new Blob(['content'], { type: '' });
+            component.mimeType = 'application/pdf';
+            component.ngOnChanges();
+
+            expect(component.viewerType).toBe('pdf');
+        });
+
+        it('should remain unknown when both blob type and mimeType input are empty', () => {
+            component.blobFile = new Blob(['content'], { type: '' });
+            component.mimeType = '';
+            component.ngOnChanges();
+
+            expect(component.viewerType).toBe('unknown');
+        });
+
+        it('should strip MIME type parameters (e.g. charset) from blob type before resolving viewer type', () => {
+            component.blobFile = new Blob(['content'], { type: 'application/pdf;charset=utf-8' });
+            component.ngOnChanges();
+
+            expect(component.viewerType).toBe('pdf');
+        });
+
+        it('should strip MIME type parameters from mimeType input during fallback', () => {
+            component.blobFile = new Blob(['content'], { type: '' });
+            component.mimeType = 'application/pdf;charset=utf-8';
+            component.ngOnChanges();
+
+            expect(component.viewerType).toBe('pdf');
+        });
+
+        it('should resolve image viewer from blob type with parameters', () => {
+            component.blobFile = new Blob(['content'], { type: 'image/png; charset=binary' });
+            component.ngOnChanges();
+
+            expect(component.viewerType).toBe('image');
+        });
+
+        it('should emit extensionChange with blob MIME type when available', () => {
+            spyOn(component.extensionChange, 'emit');
+            component.blobFile = new Blob(['content'], { type: 'application/pdf' });
+            component.ngOnChanges();
+
+            expect(component.extensionChange.emit).toHaveBeenCalledWith('application/pdf');
+        });
+
+        it('should emit extensionChange with mimeType input when blob type is empty', () => {
+            spyOn(component.extensionChange, 'emit');
+            component.blobFile = new Blob(['content'], { type: '' });
+            component.mimeType = 'application/pdf';
+            component.ngOnChanges();
+
+            expect(component.extensionChange.emit).toHaveBeenCalledWith('application/pdf');
+        });
+    });
 });

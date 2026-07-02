@@ -117,6 +117,47 @@ describe('ViewerComponent', () => {
             expect(component.mimeType).toBe('image/png');
         });
 
+        it('should strip MIME type parameters from blob type', () => {
+            const mockSimpleChanges: SimpleChanges = {
+                blobFile: new SimpleChange(null, { type: 'application/pdf;charset=utf-8' }, true)
+            };
+
+            component.ngOnChanges(mockSimpleChanges);
+
+            expect(component.mimeType).toBe('application/pdf');
+        });
+
+        it('should strip MIME type parameters with spaces from blob type', () => {
+            const mockSimpleChanges: SimpleChanges = {
+                blobFile: new SimpleChange(null, { type: 'image/png; charset=binary' }, true)
+            };
+
+            component.ngOnChanges(mockSimpleChanges);
+
+            expect(component.mimeType).toBe('image/png');
+        });
+
+        it('should handle empty blob type gracefully', () => {
+            const mockSimpleChanges: SimpleChanges = {
+                blobFile: new SimpleChange(null, { type: '' }, true)
+            };
+
+            component.ngOnChanges(mockSimpleChanges);
+
+            expect(component.mimeType).toBe('');
+        });
+
+        it('should set mimeTypeIconUrl with stripped MIME type from blob', () => {
+            spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('icon-url');
+            const mockSimpleChanges: SimpleChanges = {
+                blobFile: new SimpleChange(null, { type: 'application/pdf;charset=utf-8' }, true)
+            };
+
+            component.ngOnChanges(mockSimpleChanges);
+
+            expect(thumbnailService.getMimeTypeIcon).toHaveBeenCalledWith('application/pdf');
+        });
+
         it('should set mimeTypeIconUrl when mimeType changes and no nodeMimeType is provided', () => {
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('image/png');
             const mockSimpleChanges: SimpleChanges = {

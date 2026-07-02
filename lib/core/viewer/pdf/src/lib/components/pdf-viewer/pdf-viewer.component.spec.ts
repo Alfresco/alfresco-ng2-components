@@ -160,6 +160,44 @@ describe('Test PdfViewer component', () => {
         });
     });
 
+    describe('executePdf error handling', () => {
+        it('should emit error event when PDF loading fails', fakeAsync(() => {
+            spyOn(component.error, 'emit');
+            spyOn(console, 'error');
+
+            const failingLoadingTask = {
+                promise: Promise.reject(new Error('PDF load failed')),
+                onPassword: null,
+                onProgress: null
+            };
+            spyOn(component as any, 'setupPdfJsWorker').and.returnValue(Promise.resolve());
+            (component as any).pdfjsLib = { getDocument: () => failingLoadingTask, GlobalWorkerOptions: {} };
+
+            component.executePdf({ data: new ArrayBuffer(0) });
+            flush();
+
+            expect(component.error.emit).toHaveBeenCalled();
+        }));
+
+        it('should log error to console when PDF loading fails', fakeAsync(() => {
+            spyOn(component.error, 'emit');
+            spyOn(console, 'error');
+
+            const failingLoadingTask = {
+                promise: Promise.reject(new Error('PDF load failed')),
+                onPassword: null,
+                onProgress: null
+            };
+            spyOn(component as any, 'setupPdfJsWorker').and.returnValue(Promise.resolve());
+            (component as any).pdfjsLib = { getDocument: () => failingLoadingTask, GlobalWorkerOptions: {} };
+
+            component.executePdf({ data: new ArrayBuffer(0) });
+            flush();
+
+            expect(console.error).toHaveBeenCalledWith('[ADF-PDF-VIEWER] executePdf failed:', jasmine.any(Error));
+        }));
+    });
+
     describe('View with url file', () => {
         let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
         let elementUrlTestComponent: HTMLElement;
