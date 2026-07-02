@@ -139,13 +139,13 @@ describe('SessionTimeoutService', () => {
         expect(authService.logout).not.toHaveBeenCalled();
     }));
 
-    it('should activate by default when enabled is not configured', fakeAsync(() => {
+    it('should not activate by default when enabled is not configured', fakeAsync(() => {
         configureTestingModule({ idleTimeoutMs: 1000 });
 
         startService();
 
-        expect(tracker.start).toHaveBeenCalledTimes(1);
-        expect(syncChannel.open).toHaveBeenCalledTimes(1);
+        expect(tracker.start).not.toHaveBeenCalled();
+        expect(syncChannel.open).not.toHaveBeenCalled();
     }));
 
     it('should wait for app config to load before starting', fakeAsync(() => {
