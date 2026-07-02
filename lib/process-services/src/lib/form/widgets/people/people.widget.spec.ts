@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FormFieldTypes, FormFieldModel, FormModel } from '@alfresco/adf-core';
 import { Observable, of } from 'rxjs';
@@ -250,6 +250,22 @@ describe('PeopleWidgetComponent', () => {
         expect(widget.searchTerm.value).toBe('');
     });
 
+    it('should call the users API only once when the user types several characters quickly', fakeAsync(() => {
+        const getWorkflowUsersSpy = spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([]));
+
+        widget.searchTerm.setValue('T');
+        tick(100);
+        widget.searchTerm.setValue('Te');
+        tick(100);
+        widget.searchTerm.setValue('Tes');
+        tick(100);
+        widget.searchTerm.setValue('Test');
+        tick(300);
+
+        expect(getWorkflowUsersSpy).toHaveBeenCalledTimes(1);
+        expect(getWorkflowUsersSpy).toHaveBeenCalledWith(undefined, 'Test', widget.groupId);
+    }));
+
     it('should remove user from selectedUsers if user exists', () => {
         const users: LightUserRepresentation[] = [
             { id: 1, firstName: 'John', lastName: 'Doe' },
@@ -351,21 +367,21 @@ describe('PeopleWidgetComponent', () => {
             expect(element.querySelector('#people-widget-content')).not.toBeNull();
         });
 
-        it('should show an error message if the user is invalid', async () => {
+        it('should show an error message if the user is invalid', fakeAsync(() => {
             const peopleHTMLElement = element.querySelector<HTMLInputElement>('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'K';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
             peopleHTMLElement.dispatchEvent(new Event('input'));
 
+            tick(300);
             fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(element.querySelector('.adf-error-text')).not.toBeNull();
             expect(element.querySelector('.adf-error-text').textContent).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
-        });
+        }));
 
-        it('should show the people if the typed result match', async () => {
+        it('should show the people if the typed result match', fakeAsync(() => {
             const peopleHTMLElement = element.querySelector<HTMLInputElement>('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'T';
@@ -373,13 +389,14 @@ describe('PeopleWidgetComponent', () => {
             peopleHTMLElement.dispatchEvent(new Event('input'));
 
             fixture.detectChanges();
-            await fixture.whenStable();
+            tick(300);
+            fixture.detectChanges();
 
             expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).not.toBeNull();
             expect(fixture.debugElement.query(By.css('#adf-people-widget-user-1'))).not.toBeNull();
-        });
+        }));
 
-        it('should hide result list if input is empty', async () => {
+        it('should hide result list if input is empty', fakeAsync(() => {
             const peopleHTMLElement = element.querySelector<HTMLInputElement>('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = '';
@@ -388,14 +405,14 @@ describe('PeopleWidgetComponent', () => {
             peopleHTMLElement.dispatchEvent(new Event('input'));
 
             fixture.detectChanges();
-            await fixture.whenStable();
+            tick(300);
 
             expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).toBeNull();
-        });
+        }));
 
-        it('should display two options if we tap one letter', async () => {
+        it('should display two options if we tap one letter', fakeAsync(() => {
             fixture.detectChanges();
-            await fixture.whenStable();
+            tick(300);
 
             const peopleHTMLElement = element.querySelector<HTMLInputElement>('input');
             peopleHTMLElement.focus();
@@ -404,11 +421,12 @@ describe('PeopleWidgetComponent', () => {
             peopleHTMLElement.dispatchEvent(new Event('input'));
 
             fixture.detectChanges();
-            await fixture.whenStable();
+            tick(300);
+            fixture.detectChanges();
 
             expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).not.toBeNull();
             expect(fixture.debugElement.query(By.css('#adf-people-widget-user-1'))).not.toBeNull();
-        });
+        }));
 
         it('should emit peopleSelected if option is valid', async () => {
             const selectEmitSpy = spyOn(widget.peopleSelected, 'emit');
