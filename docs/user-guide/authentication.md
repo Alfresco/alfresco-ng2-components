@@ -26,7 +26,7 @@ export const appConfig: ApplicationConfig = {
     providers: [
         provideSessionTimeout({
             enabled: true,
-            idleTimeoutMs: 5 * 60 * 1000,
+            idleTimeoutMs: 30 * 60 * 1000,
             dialogTimeoutMs: 60 * 1000
         })
     ]
@@ -39,13 +39,13 @@ The same values can be configured in `app.config.json` with the `sessionTimeout`
 {
     "sessionTimeout": {
         "enabled": true,
-        "idleTimeoutMs": 300000,
+        "idleTimeoutMs": 1800000,
         "dialogTimeoutMs": 60000
     }
 }
 ```
 
-Registering `provideSessionTimeout` enables the feature: `enabled` defaults to `true`, so the countdown is active unless you set `enabled` to `false` in `app.config.json` or in the options passed to `provideSessionTimeout`. The default idle timeout is 5 minutes, and the default dialog timeout is 60 seconds. Values passed to `provideSessionTimeout` take precedence over values from `app.config.json`.
+Registering `provideSessionTimeout` enables the feature: `enabled` defaults to `true`, so the countdown is active unless you set `enabled` to `false` in `app.config.json` or in the options passed to `provideSessionTimeout`. The default idle timeout is 30 minutes, and the default dialog timeout is 60 seconds. Values passed to `provideSessionTimeout` take precedence over values from `app.config.json`.
 
 Applications can defer startup until another async condition is enabled:
 

@@ -35,7 +35,7 @@ export interface NormalizedSessionTimeoutOptions {
 
 export const DEFAULT_SESSION_TIMEOUT_OPTIONS: NormalizedSessionTimeoutOptions = {
     enabled: true,
-    idleTimeoutMs: 5 * 60 * 1000,
+    idleTimeoutMs: 30 * 60 * 1000,
     dialogTimeoutMs: 60 * 1000
 };
 
