@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable, Injector, inject } from '@angular/core';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { from, Observable, throwError } from 'rxjs';
 import { catchError, map, timeout } from 'rxjs/operators';
+import { BYPASS_APP_AUTH } from '../authentication-interceptor/auth-bearer.interceptor';
 
 export interface TimeSync {
     outOfSync: boolean;
@@ -85,7 +86,7 @@ export class TimeSyncService {
     }
 
     private getServerTime(): Observable<number> {
-        return from(this._http.get<number>(this.getServerTimeUrl())).pipe(
+        return from(this._http.get<number>(this.getServerTimeUrl(), { context: new HttpContext().set(BYPASS_APP_AUTH, true) })).pipe(
             timeout(5000),
             catchError(() => throwError(() => new Error('Failed to get server time')))
         );

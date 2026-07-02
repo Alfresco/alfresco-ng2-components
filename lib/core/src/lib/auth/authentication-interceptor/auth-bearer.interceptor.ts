@@ -18,6 +18,7 @@
 import { throwError as observableThrowError, Observable } from 'rxjs';
 import { Injectable, inject } from '@angular/core';
 import {
+    HttpContextToken,
     HttpHandler,
     HttpInterceptor,
     HttpRequest,
@@ -30,6 +31,8 @@ import {
 } from '@angular/common/http';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
+
+export const BYPASS_APP_AUTH = new HttpContextToken<boolean>(() => false);
 
 @Injectable()
 export class AuthBearerInterceptor implements HttpInterceptor {
@@ -48,6 +51,10 @@ export class AuthBearerInterceptor implements HttpInterceptor {
         req: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
+        if (req.context.get(BYPASS_APP_AUTH)) {
+            return next.handle(req).pipe(catchError((error) => observableThrowError(error)));
+        }
+
         if (!this.excludedUrlsRegex) {
             this.loadExcludedUrlsRegex();
         }

@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { HttpClient, HttpHandler, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpHandler, HttpRequest } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { EMPTY, Observable, of } from 'rxjs';
-import { AuthBearerInterceptor } from './auth-bearer.interceptor';
+import { AuthBearerInterceptor, BYPASS_APP_AUTH } from './auth-bearer.interceptor';
 import { AuthenticationService } from '../services/authentication.service';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 
@@ -104,5 +104,14 @@ describe('AuthBearerInterceptor', () => {
         });
 
         expect(addTokenToHeaderSpy).toHaveBeenCalledTimes(mockUrls.length);
+    });
+
+    it('should not add auth token when BYPASS_APP_AUTH context token is set to true, even for a non-excluded URL', () => {
+        const context = new HttpContext().set(BYPASS_APP_AUTH, true);
+        const req = new HttpRequest('GET', 'https://example.com/someotherpath', null, { context });
+
+        interceptor.intercept(req, mockNext);
+
+        expect(addTokenToHeaderSpy).not.toHaveBeenCalled();
     });
 });

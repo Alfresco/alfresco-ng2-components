@@ -21,6 +21,7 @@ import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { TimeSyncService } from './time-sync.service';
 import { firstValueFrom } from 'rxjs';
+import { BYPASS_APP_AUTH } from '../authentication-interceptor/auth-bearer.interceptor';
 
 describe('TimeSyncService', () => {
     let service: TimeSyncService;
@@ -126,6 +127,17 @@ describe('TimeSyncService', () => {
             const req = httpMock.expectOne(expectedServerTimeUrl);
             expect(req.request.method).toBe('GET');
             req.error(new ProgressEvent(''));
+        });
+
+        it('should set BYPASS_APP_AUTH context token and not send Authorization header on the server time request', () => {
+            appConfigSpy.get.and.returnValue('http://fake-server-time-url');
+
+            service.checkTimeSync(60).subscribe();
+
+            const req = httpMock.expectOne('http://fake-server-time-url');
+            expect(req.request.context.get(BYPASS_APP_AUTH)).toBeTrue();
+            expect(req.request.headers.has('Authorization')).toBeFalse();
+            req.flush(Date.now());
         });
     });
 
