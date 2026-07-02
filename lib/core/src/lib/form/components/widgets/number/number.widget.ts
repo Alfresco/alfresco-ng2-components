@@ -63,6 +63,20 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
         this.initErrorStateMatcher();
     }
 
+    onBlur(): void {
+        this.markAsTouched();
+        this.updateTranslateParameters();
+    }
+
+    protected onNumberChange(value: string) {
+        if (value === null || value === undefined || value === '') {
+            this.field.value = null;
+        }
+
+        this.onFieldChanged(this.field);
+        this.updateTranslateParameters();
+    }
+
     private initErrorStateMatcher(): void {
         this.errorStateMatcher = {
             isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
@@ -76,19 +90,5 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
         } else {
             this.translateParameters = {};
         }
-    }
-
-    onBlur(): void {
-        this.markAsTouched();
-        this.updateTranslateParameters();
-    }
-
-    protected onNumberChange(value: string) {
-        if (value === null || value === undefined || value === '') {
-            this.field.value = null;
-        }
-
-        this.onFieldChanged(this.field);
-        this.updateTranslateParameters();
     }
 }

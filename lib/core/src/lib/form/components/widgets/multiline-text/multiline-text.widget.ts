@@ -71,6 +71,16 @@ export class MultilineTextWidgetComponentComponent extends WidgetComponent imple
         }
     }
 
+    onBlur(): void {
+        this.markAsTouched();
+        this.updateTranslateParameters();
+    }
+
+    onMultilineTextFieldChanged(): void {
+        this.onFieldChanged(this.field);
+        this.updateTranslateParameters();
+    }
+
     private initErrorStateMatcher(): void {
         this.errorStateMatcher = {
             isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
@@ -84,15 +94,5 @@ export class MultilineTextWidgetComponentComponent extends WidgetComponent imple
         } else {
             this.translateParameters = {};
         }
-    }
-
-    onBlur(): void {
-        this.markAsTouched();
-        this.updateTranslateParameters();
-    }
-
-    onMultilineTextFieldChanged(): void {
-        this.onFieldChanged(this.field);
-        this.updateTranslateParameters();
     }
 }

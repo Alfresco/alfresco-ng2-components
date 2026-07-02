@@ -51,6 +51,16 @@ export class DecimalWidgetComponent extends WidgetComponent implements OnInit {
         this.initErrorStateMatcher();
     }
 
+    onBlur(): void {
+        this.markAsTouched();
+        this.updateTranslateParameters();
+    }
+
+    onDecimalFieldChanged(): void {
+        this.onFieldChanged(this.field);
+        this.updateTranslateParameters();
+    }
+
     private initErrorStateMatcher(): void {
         this.errorStateMatcher = {
             isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
@@ -64,15 +74,5 @@ export class DecimalWidgetComponent extends WidgetComponent implements OnInit {
         } else {
             this.translateParameters = {};
         }
-    }
-
-    onBlur(): void {
-        this.markAsTouched();
-        this.updateTranslateParameters();
-    }
-
-    onDecimalFieldChanged(): void {
-        this.onFieldChanged(this.field);
-        this.updateTranslateParameters();
     }
 }

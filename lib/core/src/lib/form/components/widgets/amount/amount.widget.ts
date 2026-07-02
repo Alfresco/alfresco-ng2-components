@@ -125,21 +125,6 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    private initErrorStateMatcher(): void {
-        this.errorStateMatcher = {
-            isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
-                !this.field.isValid && this.isTouched()
-        };
-    }
-
-    private updateTranslateParameters(): void {
-        if (this.field.validationSummary?.isActive()) {
-            this.translateParameters = this.field.validationSummary.getAttributesAsJsonObj();
-        } else {
-            this.translateParameters = {};
-        }
-    }
-
     amountWidgetOnBlur(): void {
         this.isInputInFocus = false;
         if (this.enableDisplayBasedOnLocale) {
@@ -215,5 +200,20 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     updateSettingsBasedProperties(data: AmountWidgetSettings): void {
         this.enableDisplayBasedOnLocale = data?.enableDisplayBasedOnLocale ?? false;
         this.showReadonlyPlaceholder = data?.showReadonlyPlaceholder;
+    }
+
+    private initErrorStateMatcher(): void {
+        this.errorStateMatcher = {
+            isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
+                !this.field.isValid && this.isTouched()
+        };
+    }
+
+    private updateTranslateParameters(): void {
+        if (this.field.validationSummary?.isActive()) {
+            this.translateParameters = this.field.validationSummary.getAttributesAsJsonObj();
+        } else {
+            this.translateParameters = {};
+        }
     }
 }
