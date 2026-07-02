@@ -23,7 +23,7 @@ import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable, of } from 'rxjs';
-import { catchError, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
@@ -77,6 +77,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     searchTerms$ = this.searchTerm.valueChanges;
 
     users$: Observable<LightUserRepresentation[]> = this.searchTerms$.pipe(
+        debounceTime(300),
         distinctUntilChanged(),
         switchMap((searchTerm) => {
             if (!searchTerm) {
