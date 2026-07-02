@@ -22,6 +22,11 @@ describe('normalizeSessionTimeoutOptions', () => {
         expect(normalizeSessionTimeoutOptions({ enabled: 'true' }).enabled).toBe(true);
     });
 
+    it('preserves boolean enabled values', () => {
+        expect(normalizeSessionTimeoutOptions({ enabled: true }).enabled).toBe(true);
+        expect(normalizeSessionTimeoutOptions({ enabled: false }).enabled).toBe(false);
+    });
+
     it('treats non-"true" strings and missing as disabled', () => {
         expect(normalizeSessionTimeoutOptions({ enabled: 'false' }).enabled).toBe(false);
         expect(normalizeSessionTimeoutOptions({}).enabled).toBe(false);
@@ -35,6 +40,7 @@ describe('normalizeSessionTimeoutOptions', () => {
 
     it('falls back to defaults for non-positive or invalid numbers', () => {
         const result = normalizeSessionTimeoutOptions({ idleTimeoutMs: 0, dialogTimeoutMs: 'abc' });
+        expect(result.enabled).toBe(DEFAULT_SESSION_TIMEOUT_OPTIONS.enabled);
         expect(result.idleTimeoutMs).toBe(DEFAULT_SESSION_TIMEOUT_OPTIONS.idleTimeoutMs);
         expect(result.dialogTimeoutMs).toBe(DEFAULT_SESSION_TIMEOUT_OPTIONS.dialogTimeoutMs);
     });

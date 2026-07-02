@@ -34,7 +34,7 @@ export interface NormalizedSessionTimeoutOptions {
 }
 
 export const DEFAULT_SESSION_TIMEOUT_OPTIONS: NormalizedSessionTimeoutOptions = {
-    enabled: true,
+    enabled: false,
     idleTimeoutMs: 30 * 60 * 1000,
     dialogTimeoutMs: 60 * 1000
 };
@@ -56,7 +56,7 @@ const toPositiveNumber = (value: number | string | undefined, fallback: number):
  */
 export function normalizeSessionTimeoutOptions(merged: SessionTimeoutOptions): NormalizedSessionTimeoutOptions {
     return {
-        enabled: toBoolean(merged.enabled),
+        enabled: merged.enabled === undefined ? DEFAULT_SESSION_TIMEOUT_OPTIONS.enabled : toBoolean(merged.enabled),
         idleTimeoutMs: toPositiveNumber(merged.idleTimeoutMs, DEFAULT_SESSION_TIMEOUT_OPTIONS.idleTimeoutMs),
         dialogTimeoutMs: toPositiveNumber(merged.dialogTimeoutMs, DEFAULT_SESSION_TIMEOUT_OPTIONS.dialogTimeoutMs)
     };
