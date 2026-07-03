@@ -382,7 +382,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 component.siteChanged({ entry: { guid: '-sites-' } } as SiteEntry);
 
-                // corresponding node ids not resolved yet - no search must be executed
                 expect(searchSpy).not.toHaveBeenCalled();
 
                 nodeIds$.next(['123456testId']);
