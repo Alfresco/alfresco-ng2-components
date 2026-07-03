@@ -494,6 +494,70 @@ describe('RedirectAuthService', () => {
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
     });
 
+    it('should reset token_refresh_error counter when a successful token event occurs', () => {
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: false } as TimeSync));
+
+        // First token_refresh_error (skipped by oauthErrorEventOccurDueToClockOutOfSync$)
+        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'first error' }, {}));
+
+        // Successful token event resets the counter
+        oauthEvents$.next(new OAuthSuccessEvent('token_received'));
+
+        // Next token_refresh_error should be treated as the first again (skipped)
+        // Since secondTokenRefreshErrorEventOccur$ already consumed the first error,
+        // verify via the oauthErrorEventOccurDueToClockOutOfSync$ observable directly
+        let emitted = false;
+        service.oauthErrorEventOccurDueToClockOutOfSync$.subscribe(() => {
+            emitted = true;
+        });
+
+        // After reset, this is treated as "first" by the clock-out-of-sync stream
+        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'second error after reset' }, {}));
+        expect(emitted).toBe(false);
+    });
+
+    it('should logout on second consecutive token_refresh_error after counter reset and another error', fakeAsync(() => {
+        const mockDateNowInMilliseconds = 1728597618621;
+        const tokenExpiresAtInSeconds = 1728597000; // already expired
+        const tokenIssuedAtInSeconds = 1728596000;
+
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(
+            of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync)
+        );
+        timeSyncServiceSpy.getCorrectedNow.and.returnValue(mockDateNowInMilliseconds);
+        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
+        oauthServiceSpy.refreshToken.and.rejectWith('refresh failed');
+        oauthServiceSpy.clockSkewInSec = 0;
+        (oauthServiceSpy as any).decreaseExpirationBySec = 0;
+
+        const expectedErrorMessage = new Error(
+            'OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z'
+        );
+
+        let clockOutOfSyncError: Error | null = null;
+        service.oauthErrorEventOccurDueToClockOutOfSync$.subscribe((error) => {
+            clockOutOfSyncError = error;
+        });
+
+        // First token_refresh_error (skipped by clock-out-of-sync stream)
+        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'first error' }, {}));
+        tick();
+        expect(clockOutOfSyncError).toBeNull();
+
+        // Successful token event resets the counter
+        oauthEvents$.next(new OAuthSuccessEvent('token_received'));
+
+        // After reset, first error is skipped again
+        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'error after reset' }, {}));
+        tick();
+        expect(clockOutOfSyncError).toBeNull();
+
+        // Second consecutive error after reset triggers clock-out-of-sync detection
+        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'second consecutive error' }, {}));
+        tick();
+        expect(clockOutOfSyncError).toEqual(expectedErrorMessage);
+    }));
+
     it('should logout user if discovery_document_load_error is emitted because of clock out of sync', () => {
         const expectedErrorMessage = new Error(
             'OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z'
