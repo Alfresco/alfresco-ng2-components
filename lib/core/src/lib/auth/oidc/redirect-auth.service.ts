@@ -250,14 +250,20 @@ export class RedirectAuthService extends AuthService {
             error: () => {}
         });
 
-        this.oauthService.events.pipe(take(1)).subscribe(() => {
-            if (this.oauthService.getAccessToken() && !this.oauthService.hasValidAccessToken()) {
-                if (this.oauthService.showDebugInformation) {
-                    this._oauthLogger.warn('Access token not valid. Removing all auth items from storage');
+        this.oauthService.events
+            .pipe(
+                take(1),
+                filter(() => !!this.oauthService.getAccessToken() && !this.oauthService.hasValidAccessToken()),
+                switchMap(() => this._timeSyncService.syncClockOffset())
+            )
+            .subscribe(() => {
+                if (!this.oauthService.hasValidAccessToken()) {
+                    if (this.oauthService.showDebugInformation) {
+                        this._oauthLogger.warn('Access token not valid after clock resync. Removing all auth items from storage');
+                    }
+                    this.AUTH_STORAGE_ITEMS.map((item: string) => this._oauthStorage.removeItem(item));
                 }
-                this.AUTH_STORAGE_ITEMS.map((item: string) => this._oauthStorage.removeItem(item));
-            }
-        });
+            });
 
         this.onLogin = this.authenticated$.pipe(
             filter((authenticated) => authenticated),
