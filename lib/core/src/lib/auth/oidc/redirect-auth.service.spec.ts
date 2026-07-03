@@ -172,6 +172,18 @@ describe('RedirectAuthService', () => {
         expect(mockOAuthStorage.removeItem).not.toHaveBeenCalled();
     });
 
+    it('should NOT remove auth items if token becomes valid after clock resync', () => {
+        oauthServiceSpy.getAccessToken.and.returnValue('fake-access-token');
+        oauthServiceSpy.hasValidAccessToken.and.returnValues(false, true);
+
+        (mockOAuthStorage.removeItem as any).calls.reset();
+
+        oauthEvents$.next(new OAuthSuccessEvent('discovery_document_loaded'));
+
+        expect(timeSyncServiceSpy.syncClockOffset).toHaveBeenCalled();
+        expect(mockOAuthStorage.removeItem).not.toHaveBeenCalled();
+    });
+
     it('should call syncClockOffset when the discovery document has loaded', async () => {
         ensureDiscoveryDocumentSpy.and.resolveTo(true);
 
