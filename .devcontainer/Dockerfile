@@ -11,14 +11,13 @@ ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
 # Install Chromium for Karma/ChromeHeadless test execution inside the container.
 # gnupg2 is required so VS Code can forward the host gpg-agent for signed commits.
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends chromium gnupg2 \
-    && rm -rf /var/lib/apt/lists/*
-
-# Enable Corepack shims. The pnpm version is not pinned here: Corepack reads
+# Enable Corepack shims too. The pnpm version is not pinned here: Corepack reads
 # package.json#packageManager (the single source of truth) and provisions the
 # matching pnpm on first use during postCreateCommand.
-RUN corepack enable \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends chromium gnupg2 \
+    && rm -rf /var/lib/apt/lists/* \
+    && corepack enable \
     && mkdir -p ${PNPM_HOME} /home/node/.pnpm-store \
     && chown -R node:node /home/node/.local /home/node/.pnpm-store
 USER node
