@@ -23,4 +23,3 @@ export * from './view/authentication-confirmation/authentication-confirmation.co
 export * from './oidc-authentication.service';
 export * from './web-crypto-jwks-validation-handler';
 export * from './time-sync-date-time-provider';
-export * from './date-header-time-sync.interceptor';

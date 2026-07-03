@@ -17,8 +17,7 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Injector, NgZone, inject } from '@angular/core';
-import { AppConfigService } from '../../app-config/app-config.service';
-import { from, interval, Observable, of, Subscription, throwError } from 'rxjs';
+import { interval, Observable, of, Subscription } from 'rxjs';
 import { catchError, map, switchMap, timeout } from 'rxjs/operators';
 
 export interface TimeSync {
@@ -36,7 +35,6 @@ const DEFAULT_PERIODIC_SYNC_INTERVAL_MS = 5 * 60 * 1000;
 })
 export class TimeSyncService {
     private readonly _injector = inject(Injector);
-    private readonly _appConfigService = inject(AppConfigService);
     private readonly _ngZone = inject(NgZone);
 
     private readonly _http: HttpClient;
@@ -67,35 +65,40 @@ export class TimeSyncService {
     }
 
     /**
-     * Fetches the server time once and stores the signed clock offset in `clockOffsetMs`.
-     * Call this at application start-up (fire-and-forget) so subsequent calls to
-     * `getCorrectedNow` compensate for any VM / Citrix clock drift.
-     * If `serverTimeUrl` is not configured or the request fails, the offset is left unchanged
-     * (or at 0 if this is the first call). When `serverTimeUrl` is absent the clock offset
-     * is maintained passively by the `DateHeaderTimeSyncInterceptor`, so calling this method
-     * without a configured URL is a safe no-op.
+     * Syncs the clock offset by making a HEAD request to the application root URL
+     * (served by nginx) and reading the `Date` response header. This avoids any
+     * dependency on a dedicated time endpoint or on IAM being reachable.
+     *
+     * The HEAD request is lightweight (no response body) and targets the same origin,
+     * so there are no CORS issues. Nginx always includes a `Date` header in its responses.
      *
      * @param maxAllowedOffsetMs Optional safety cap. If the computed offset exceeds this value,
-     *                           it is ignored to prevent a compromised time endpoint from
+     *                           it is ignored to prevent a compromised proxy from
      *                           tricking the client into accepting expired tokens.
      * @returns Observable that completes after the offset has been stored (or silently on error)
      */
     syncClockOffset(maxAllowedOffsetMs?: number): Observable<void> {
-        if (!this.getServerTimeUrl()) {
-            return of(void 0);
-        }
+        const appRootUrl = this.getAppRootUrl();
 
         try {
             const startTime = Date.now();
-            return this.getServerTime().pipe(
-                map((serverTimeResponse: number) => {
+            return this._http.head(appRootUrl, { observe: 'response', responseType: 'text' }).pipe(
+                timeout(5000),
+                map((response) => {
                     const endTime = Date.now();
+                    const dateHeader = response.headers.get('date');
+
+                    if (!dateHeader) {
+                        return;
+                    }
+
+                    const serverTimeInMs = new Date(dateHeader).getTime();
+                    if (isNaN(serverTimeInMs)) {
+                        return;
+                    }
+
                     const roundTripTimeInMs = endTime - startTime;
-
-                    const isServerTimeResponseInMs = serverTimeResponse.toString().length === 13;
-                    const serverTimeInMs = isServerTimeResponseInMs ? serverTimeResponse : serverTimeResponse * 1000;
                     const adjustedServerTimeInMs = serverTimeInMs + roundTripTimeInMs / 2;
-
                     const newOffset = adjustedServerTimeInMs - endTime;
 
                     if (maxAllowedOffsetMs != null && Math.abs(newOffset) > maxAllowedOffsetMs) {
@@ -112,79 +115,23 @@ export class TimeSyncService {
     }
 
     /**
-     * Updates `clockOffsetMs` using the value of the HTTP `Date` response header.
-     * Called by the `DateHeaderTimeSyncInterceptor` so the offset is maintained
-     * passively on every HTTP response without requiring a dedicated time endpoint.
+     * Checks the time synchronisation status using the stored clock offset.
      *
-     * @param dateHeader The raw value of the `Date` response header (RFC 7231 format).
-     * @param requestStartTime The `Date.now()` timestamp recorded just before the request was sent.
-     * @param maxAllowedOffsetMs Optional safety cap. If the computed offset exceeds this value
-     *                           it is ignored.
+     * @param maxAllowedClockSkewInSec - The maximum allowed clock skew in seconds.
+     * @returns An Observable that emits a TimeSync result.
      */
-    updateClockOffsetFromDateHeader(dateHeader: string, requestStartTime: number, maxAllowedOffsetMs?: number): void {
-        const endTime = Date.now();
-        const serverTimeInMs = new Date(dateHeader).getTime();
-
-        if (isNaN(serverTimeInMs)) {
-            return;
-        }
-
-        const roundTripTimeInMs = endTime - requestStartTime;
-        const adjustedServerTimeInMs = serverTimeInMs + roundTripTimeInMs / 2;
-        const newOffset = adjustedServerTimeInMs - endTime;
-
-        if (maxAllowedOffsetMs != null && Math.abs(newOffset) > maxAllowedOffsetMs) {
-            return;
-        }
-
-        this.clockOffsetMs = newOffset;
-    }
-
     checkTimeSync(maxAllowedClockSkewInSec: number): Observable<TimeSync> {
-        if (!this.getServerTimeUrl()) {
-            const localCurrentTimeInMs = Date.now();
-            const adjustedServerTimeInMs = localCurrentTimeInMs + this.clockOffsetMs;
-            const timeOffsetInMs = Math.abs(this.clockOffsetMs);
-            const maxAllowedClockSkewInMs = maxAllowedClockSkewInSec * 1000;
+        const localCurrentTimeInMs = Date.now();
+        const adjustedServerTimeInMs = localCurrentTimeInMs + this.clockOffsetMs;
+        const timeOffsetInMs = Math.abs(this.clockOffsetMs);
+        const maxAllowedClockSkewInMs = maxAllowedClockSkewInSec * 1000;
 
-            return of({
-                outOfSync: timeOffsetInMs > maxAllowedClockSkewInMs,
-                timeOutOfSyncInSec: timeOffsetInMs / 1000,
-                localDateTimeISO: new Date(localCurrentTimeInMs).toISOString(),
-                serverDateTimeISO: new Date(adjustedServerTimeInMs).toISOString()
-            });
-        }
-
-        const startTime = Date.now();
-
-        return this.getServerTime().pipe(
-            map((serverTimeResponse: number) => {
-                let serverTimeInMs: number;
-
-                const endTime = Date.now();
-                const roundTripTimeInMs = endTime - startTime;
-
-                const isServerTimeResponseInMs = serverTimeResponse.toString().length === 13;
-                if (!isServerTimeResponseInMs) {
-                    serverTimeInMs = serverTimeResponse * 1000;
-                } else {
-                    serverTimeInMs = serverTimeResponse;
-                }
-
-                const adjustedServerTimeInMs = serverTimeInMs + roundTripTimeInMs / 2;
-                const localCurrentTimeInMs = Date.now();
-                const timeOffsetInMs = Math.abs(localCurrentTimeInMs - adjustedServerTimeInMs);
-                const maxAllowedClockSkewInMs = maxAllowedClockSkewInSec * 1000;
-
-                return {
-                    outOfSync: timeOffsetInMs > maxAllowedClockSkewInMs,
-                    timeOutOfSyncInSec: timeOffsetInMs / 1000,
-                    localDateTimeISO: new Date(localCurrentTimeInMs).toISOString(),
-                    serverDateTimeISO: new Date(adjustedServerTimeInMs).toISOString()
-                };
-            }),
-            catchError((error) => throwError(() => new Error(error)))
-        );
+        return of({
+            outOfSync: timeOffsetInMs > maxAllowedClockSkewInMs,
+            timeOutOfSyncInSec: timeOffsetInMs / 1000,
+            localDateTimeISO: new Date(localCurrentTimeInMs).toISOString(),
+            serverDateTimeISO: new Date(adjustedServerTimeInMs).toISOString()
+        });
     }
 
     /**
@@ -241,14 +188,17 @@ export class TimeSyncService {
         }
     }
 
-    private getServerTime(): Observable<number> {
-        return from(this._http.get<number>(this.getServerTimeUrl())).pipe(
-            timeout(5000),
-            catchError(() => throwError(() => new Error('Failed to get server time')))
-        );
-    }
-
-    private getServerTimeUrl(): string {
-        return this._appConfigService.get('serverTimeUrl', '').trim();
+    /**
+     * Returns the application root URL to use for time sync HEAD requests.
+     * Uses the current page's base path (everything up to and including the last `/`
+     * in the pathname) so that nginx handles the request regardless of app deployment path.
+     *
+     * Example: for `https://host/aae-xxx/ui/workspace-lprbu/`, returns that same URL.
+     */
+    private getAppRootUrl(): string {
+        if (typeof window !== 'undefined') {
+            return window.location.href.split('?')[0].split('#')[0];
+        }
+        return '/';
     }
 }
