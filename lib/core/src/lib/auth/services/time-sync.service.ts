@@ -249,6 +249,6 @@ export class TimeSyncService {
     }
 
     private getServerTimeUrl(): string {
-        return this._appConfigService.get('serverTimeUrl', '');
+        return this._appConfigService.get('serverTimeUrl', '').trim();
     }
 }

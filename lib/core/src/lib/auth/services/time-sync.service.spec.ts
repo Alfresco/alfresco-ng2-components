@@ -260,6 +260,16 @@ describe('TimeSyncService', () => {
             httpMock.expectNone('http://fake-server-time-url');
         });
 
+        it('should complete silently when serverTimeUrl is whitespace only', () => {
+            appConfigSpy.get.and.returnValue('   ');
+
+            service.syncClockOffset().subscribe(() => {
+                expect(service.clockOffsetMs).toBe(0);
+            });
+
+            httpMock.expectNone('http://fake-server-time-url');
+        });
+
         it('should leave clockOffsetMs unchanged when the server time endpoint fails', () => {
             appConfigSpy.get.and.returnValue('http://fake-server-time-url');
             service.clockOffsetMs = 5000;
