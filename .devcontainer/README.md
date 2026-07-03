@@ -21,7 +21,7 @@ Rebuild (**Dev Containers: Rebuild Container**) after changing
 
 ## What's Included
 
-- Node base image (digest-pinned) with Corepack-activated **pnpm**
+- Node base image (digest-pinned) with **pnpm** provisioned by Corepack from `package.json#packageManager`
 - **Chromium** for Karma / `ChromeHeadless` tests (`CHROME_BIN` is preset)
 - **GitHub CLI** (`gh`) via the `github-cli` dev container feature
 - **gnupg2** so the host `gpg-agent` can be forwarded for signed commits

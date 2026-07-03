@@ -6,7 +6,7 @@ This repository includes a Dev Container configuration to provide a consistent l
 
 - Node-based development image defined in [.devcontainer/Dockerfile](../.devcontainer/Dockerfile)
 - Workspace configuration in [.devcontainer/devcontainer.json](../.devcontainer/devcontainer.json)
-- Pinned pnpm version via build arg and Corepack activation
+- pnpm provisioned by Corepack from `package.json#packageManager` (single source of truth)
 - Non-root development user configuration (node)
 - Persistent pnpm store volume for faster reinstall times
 
