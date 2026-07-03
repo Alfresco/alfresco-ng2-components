@@ -13,13 +13,12 @@
                         formControlName="name">
                         @if (nameController.invalid) {
                             <mat-error>
-                                <span class="adf-error-text">
-                                    @if (nameController.hasError('required') || nameController.hasError('whitespace')) {
+                                <span class="adf-error-text"
+                                    >@if (nameController.hasError('required') || nameController.hasError('whitespace')) {
                                         {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.REQUIRED' | translate }}
                                     } @else if (nameController.hasError('maxlength')) {
                                         {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxTaskNameLength } }}
-                                    }
-                                </span>
+                                    }</span>
                             </mat-error>
                         }
                 </mat-form-field>

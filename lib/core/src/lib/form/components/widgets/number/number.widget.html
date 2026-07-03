@@ -32,13 +32,12 @@
             @if (field.validationSummary?.message || (isInvalidFieldRequired() && isTouched())) {
                 <mat-error>
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
-                    <span class="adf-error-text">
-                        @if (field.validationSummary?.message) {
+                    <span class="adf-error-text"
+                        >@if (field.validationSummary?.message) {
                             {{ field.validationSummary.message | translate:translateParameters }}
                         } @else {
                             {{ 'FORM.FIELD.REQUIRED' | translate }}
-                        }
-                    </span>
+                        }</span>
                 </mat-error>
             }
         </mat-form-field>
