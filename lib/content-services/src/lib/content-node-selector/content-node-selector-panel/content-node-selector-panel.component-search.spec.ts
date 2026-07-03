@@ -19,7 +19,7 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Node, NodeEntry, NodePaging, RequestScope, ResultSetPaging, SiteEntry, SitePaging, SitePagingList } from '@alfresco/js-api';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { DocumentListService } from '../../document-list/services/document-list.service';
 import { DocumentListComponent } from '../../document-list/components/document-list.component';
@@ -294,6 +294,32 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(searchQueryBuilderService.addFilterQuery).toHaveBeenCalledWith(expectedRequest);
             }));
 
+            it('should remove the previous site filter query when changing the selected site', fakeAsync(() => {
+                spyOn(searchQueryBuilderService, 'addFilterQuery').and.callThrough();
+                spyOn(searchQueryBuilderService, 'removeFilterQuery').and.callThrough();
+                typeToSearchBox('search-term');
+                tick(debounceSearch);
+
+                component.siteChanged({ entry: { guid: 'namek' } } as SiteEntry);
+                component.siteChanged({ entry: { guid: 'vegeta' } } as SiteEntry);
+
+                expect(searchQueryBuilderService.removeFilterQuery).toHaveBeenCalledWith(`ANCESTOR:'workspace://SpacesStore/namek'`);
+                expect(searchQueryBuilderService.addFilterQuery).toHaveBeenCalledWith(`ANCESTOR:'workspace://SpacesStore/vegeta'`);
+                expect(searchQueryBuilderService.filterQueries).toEqual([{ query: `ANCESTOR:'workspace://SpacesStore/vegeta'` }]);
+            }));
+
+            it('should browse the selected site folder without searching when no search term is present', fakeAsync(() => {
+                expect(searchSpy.calls.count()).toBe(0);
+
+                component.siteChanged({ entry: { guid: 'namek' } } as SiteEntry);
+                tick(debounceSearch);
+
+                expect(searchSpy).not.toHaveBeenCalled();
+                expect(component.searchTerm).toBe('');
+                expect(component.folderIdToShow).toBe('namek');
+                expect(component.showingSearchResults).toBe(false);
+            }));
+
             it('should create the query with the right parameters on changing the site selectBox value from a custom dropdown menu', fakeAsync(() => {
                 spyOn(searchQueryBuilderService, 'addFilterQuery').and.callThrough();
                 component.dropdownSiteList = { list: { entries: [{ entry: { guid: '-sites-' } }, { entry: { guid: 'namek' } }] } } as SitePaging;
@@ -341,6 +367,29 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.siteChanged({ entry: { guid: '-sites-' } } as SiteEntry);
                 expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(1);
                 expect(getCorrespondingNodeIdsSpy.calls.mostRecent().args[0]).toEqual('-sites-');
+            }));
+
+            it('should execute the search only after the corresponding node ids filter query is applied for aliases', fakeAsync(() => {
+                component.documentList.folderNode = { id: 'fakeNodeId', isFolder: true, path: {} } as Node;
+                spyOn(searchQueryBuilderService, 'addFilterQuery').and.callThrough();
+                const nodeIds$ = new Subject<string[]>();
+                getCorrespondingNodeIdsSpy.and.returnValue(nodeIds$.asObservable());
+
+                typeToSearchBox('vegeta');
+                tick(debounceSearch);
+
+                searchSpy.calls.reset();
+
+                component.siteChanged({ entry: { guid: '-sites-' } } as SiteEntry);
+
+                expect(searchSpy).not.toHaveBeenCalled();
+
+                nodeIds$.next(['123456testId']);
+                nodeIds$.complete();
+
+                const expectedRequest = `ANCESTOR:'workspace://SpacesStore/-sites-' OR ANCESTOR:'workspace://SpacesStore/123456testId'`;
+                expect(searchQueryBuilderService.addFilterQuery).toHaveBeenCalledWith(expectedRequest);
+                expect(searchSpy).toHaveBeenCalledWith(false);
             }));
 
             it('should NOT get the corresponding node ids on search when NOTHING is selected from dropdown', fakeAsync(() => {
@@ -508,6 +557,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             it('should the query restrict the search to the site and not to the currentFolderId in case is changed', async () => {
                 spyOn(searchQueryBuilderService, 'addFilterQuery').and.callThrough();
+                component.searchTerm = 'search-term';
                 searchQueryBuilderService.userQuery = 'search-term*';
                 component.currentFolderId = 'my-root-id';
                 component.restrictRootToCurrentFolderId = true;

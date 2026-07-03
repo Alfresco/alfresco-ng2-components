@@ -154,7 +154,8 @@ export class ContentNodeDialogService {
                 where: '(isFolder=true)',
                 isSelectionValid: this.isCopyMoveSelectionValid.bind(this),
                 excludeSiteContent: excludeSiteContent || ContentNodeDialogService.nonDocumentSiteContent,
-                select
+                select,
+                showFilesInResult: false
             };
 
             const dialogRef = this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
@@ -196,7 +197,8 @@ export class ContentNodeDialogService {
             imageResolver: this.imageResolver.bind(this),
             isSelectionValid: this.hasAllowableOperationsOnNodeFolder.bind(this),
             where: '(isFolder=true)',
-            select
+            select,
+            showFilesInResult: false
         };
 
         const dialogRef = this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');

@@ -38,8 +38,12 @@ export class InfiniteSelectScrollDirective implements AfterViewInit {
     ngAfterViewInit() {
         this.matSelect.openedChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((opened: boolean) => {
             if (opened) {
-                this.itemHeightToWaitBeforeLoadNext = this.getItemHeight() * (InfiniteSelectScrollDirective.MAX_ITEMS / 2);
-                this.matSelect.panel.nativeElement.addEventListener('scroll', (event: Event) => this.handleScrollEvent(event));
+                setTimeout(() => {
+                    if (this.matSelect.panel?.nativeElement) {
+                        this.itemHeightToWaitBeforeLoadNext = this.getItemHeight() * (InfiniteSelectScrollDirective.MAX_ITEMS / 2);
+                        this.matSelect.panel.nativeElement.addEventListener('scroll', (event: Event) => this.handleScrollEvent(event));
+                    }
+                });
             }
         });
     }
@@ -56,6 +60,7 @@ export class InfiniteSelectScrollDirective implements AfterViewInit {
     }
 
     private getItemHeight(): number {
-        return parseFloat(getComputedStyle(this.matSelect.panel.nativeElement).fontSize || '0') * SELECT_ITEM_HEIGHT_EM;
+        const panelElement = this.matSelect.panel?.nativeElement;
+        return panelElement ? parseFloat(getComputedStyle(panelElement).fontSize || '0') * SELECT_ITEM_HEIGHT_EM : 0;
     }
 }
