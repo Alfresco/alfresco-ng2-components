@@ -99,15 +99,39 @@ describe('TimeSyncService', () => {
             req.flush(serverTime);
         });
 
-        it('should throw an error if serverTimeUrl is not configured', async () => {
+        it('should use clockOffsetMs to determine sync when serverTimeUrl is not configured', async () => {
             appConfigSpy.get.and.returnValue('');
 
-            try {
-                await firstValueFrom(service.checkTimeSync(60));
-                fail('Expected to throw an error');
-            } catch (error) {
-                expect(error.message).toBe('serverTimeUrl is not configured.');
-            }
+            // Simulate a 70-second offset already captured via Date header interception
+            service.clockOffsetMs = 70000;
+
+            const localNow = 1728911580000; // (GMT): Monday, October 14, 2024 1:13:00 PM
+            spyOn(Date, 'now').and.returnValue(localNow);
+
+            const sync = await firstValueFrom(service.checkTimeSync(60));
+
+            expect(sync.outOfSync).toBeTrue();
+            expect(sync.timeOutOfSyncInSec).toBe(70);
+            expect(sync.localDateTimeISO).toEqual('2024-10-14T13:13:00.000Z');
+            expect(sync.serverDateTimeISO).toEqual('2024-10-14T13:14:10.000Z');
+
+            httpMock.expectNone('http://fake-server-time-url');
+        });
+
+        it('should return outOfSync as false using clockOffsetMs when serverTimeUrl is not configured and offset is within skew', async () => {
+            appConfigSpy.get.and.returnValue('');
+
+            service.clockOffsetMs = 30000; // 30 seconds offset
+
+            const localNow = 1728911580000;
+            spyOn(Date, 'now').and.returnValue(localNow);
+
+            const sync = await firstValueFrom(service.checkTimeSync(60));
+
+            expect(sync.outOfSync).toBeFalse();
+            expect(sync.timeOutOfSyncInSec).toBe(30);
+
+            httpMock.expectNone('http://fake-server-time-url');
         });
 
         it('should throw an error if the server time endpoint returns an error', () => {
@@ -226,7 +250,7 @@ describe('TimeSyncService', () => {
             req.flush(serverTime);
         });
 
-        it('should leave clockOffsetMs at 0 when serverTimeUrl is not configured', () => {
+        it('should complete silently when serverTimeUrl is not configured', () => {
             appConfigSpy.get.and.returnValue('');
 
             service.syncClockOffset().subscribe(() => {
@@ -291,6 +315,54 @@ describe('TimeSyncService', () => {
 
             const req = httpMock.expectOne('http://fake-server-time-url');
             req.flush(serverTime);
+        });
+    });
+
+    describe('updateClockOffsetFromDateHeader', () => {
+        it('should update clockOffsetMs from a valid Date header', () => {
+            // requestStartTime: 1728911579000, endTime: 1728911580000
+            // serverTime in header: Mon, 14 Oct 2024 13:14:00 GMT = 1728911640000
+            // roundTripTime = 1000ms, adjustedServerTime = 1728911640000 + 500 = 1728911640500
+            // offset = 1728911640500 - 1728911580000 = 60500
+            const requestStartTime = 1728911579000;
+            spyOn(Date, 'now').and.returnValue(1728911580000);
+
+            service.updateClockOffsetFromDateHeader('Mon, 14 Oct 2024 13:14:00 GMT', requestStartTime);
+
+            expect(service.clockOffsetMs).toBe(60500);
+        });
+
+        it('should not update clockOffsetMs when the Date header is invalid', () => {
+            service.clockOffsetMs = 5000;
+
+            service.updateClockOffsetFromDateHeader('not-a-date', Date.now());
+
+            expect(service.clockOffsetMs).toBe(5000);
+        });
+
+        it('should not update clockOffsetMs when offset exceeds maxAllowedOffsetMs', () => {
+            const requestStartTime = 1728911579000;
+            spyOn(Date, 'now').and.returnValue(1728911580000);
+
+            service.clockOffsetMs = 1000;
+
+            // Server is 600 seconds ahead — exceeds cap of 60 seconds
+            service.updateClockOffsetFromDateHeader('Mon, 14 Oct 2024 13:22:59 GMT', requestStartTime, 60000);
+
+            expect(service.clockOffsetMs).toBe(1000);
+        });
+
+        it('should update clockOffsetMs when offset is within maxAllowedOffsetMs', () => {
+            // Server is 30 seconds ahead (within cap of 60 seconds)
+            // requestStartTime: 1728911579000, endTime: 1728911580000
+            // serverTime: 1728911610000, roundTrip: 1000ms
+            // adjustedServerTime = 1728911610500, offset = 30500ms
+            const requestStartTime = 1728911579000;
+            spyOn(Date, 'now').and.returnValue(1728911580000);
+
+            service.updateClockOffsetFromDateHeader('Mon, 14 Oct 2024 13:13:30 GMT', requestStartTime, 60000);
+
+            expect(service.clockOffsetMs).toBe(30500);
         });
     });
 
