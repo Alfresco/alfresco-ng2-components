@@ -88,9 +88,9 @@
                                [attr.data-automation-id]="'adf-cloud-edit-process-property-date-toggle-' + processFilterProperty.key" />
                             <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-process-property-date-picker-' + processFilterProperty.key" />
                             @if (hasError(processFilterProperty)) {
-                                <mat-error class="adf-error-text">
+                                <mat-error>
                                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
-                                    {{'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.DATE' | translate}}
+                                    <span class="adf-error-text">{{'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.DATE' | translate}}</span>
                                 </mat-error>
                             }
                         </mat-form-field>

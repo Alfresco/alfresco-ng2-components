@@ -32,7 +32,7 @@
                 </span>
             </ng-container>
             @if (propertyLoadFailed && !previewState) {
-                <mat-error class="adf-error-text"><mat-icon class="adf-error-icon">error_outline</mat-icon>{{ 'FORM.FIELD.EXTERNAL_PROPERTY_LOAD_FAILED' | translate }}</mat-error>
+                <mat-error><mat-icon class="adf-error-icon">error_outline</mat-icon><span class="adf-error-text">{{ 'FORM.FIELD.EXTERNAL_PROPERTY_LOAD_FAILED' | translate }}</span></mat-error>
             }
         </mat-form-field>
     </div>

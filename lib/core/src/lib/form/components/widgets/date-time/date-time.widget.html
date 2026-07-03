@@ -38,9 +38,9 @@
                 [timeInterval]="5"
                 [disabled]="field.readOnly" />
             @if (datetimeInputControl.invalid && datetimeInputControl.touched && field.validationSummary?.message) {
-                <mat-error class="adf-error-text">
+                <mat-error>
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
-                    {{ field.validationSummary.message | translate:translateParameters }}
+                    <span class="adf-error-text">{{ field.validationSummary.message | translate:translateParameters }}</span>
                 </mat-error>
             }
         </mat-form-field>
