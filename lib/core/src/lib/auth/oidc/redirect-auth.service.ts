@@ -29,12 +29,12 @@ import {
     OAuthLogger
 } from 'angular-oauth2-oidc';
 import { WebCryptoJwksValidationHandler } from './web-crypto-jwks-validation-handler';
-import { from, Observable, race, ReplaySubject } from 'rxjs';
-import { distinctUntilChanged, filter, map, scan, shareReplay, skip, switchMap, take } from 'rxjs/operators';
+import { from, Observable, of, race, ReplaySubject } from 'rxjs';
+import { catchError, distinctUntilChanged, filter, map, scan, shareReplay, switchMap, take } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { AUTH_MODULE_CONFIG, AuthModuleConfig } from './auth-config';
 import { RetryLoginService } from './retry-login.service';
-import { TimeSyncService } from '../services/time-sync.service';
+import { TimeSync, TimeSyncService } from '../services/time-sync.service';
 
 const isPromise = <T>(value: T | Promise<T>): value is Promise<T> => value && typeof (value as Promise<T>).then === 'function';
 
@@ -90,14 +90,10 @@ export class RedirectAuthService extends AuthService {
     secondTokenRefreshErrorEventOccur$: Observable<OAuthErrorEvent>;
 
     /**
-     * Observable that emits an error when the token has expired due to
-     * the local machine clock being out of sync with the server time.
-     */
-    tokenHasExpiredDueToClockOutOfSync$: Observable<Error>;
-
-    /**
      * Observable that emits an error when the OAuth error event occurs due to
      * the local machine clock being out of sync with the server time.
+     * When clock drift is detected, it re-syncs the clock and requests a new token
+     * before propagating the error (if the refresh still fails).
      */
     oauthErrorEventOccurDueToClockOutOfSync$: Observable<Error>;
 
@@ -192,6 +188,15 @@ export class RedirectAuthService extends AuthService {
             map(({ event }) => event as OAuthErrorEvent),
             switchMap(() => this._timeSyncService.checkTimeSync(this.oauthService.clockSkewInSec)),
             filter((timeSync) => timeSync?.outOfSync),
+            // Re-sync the clock with the detected server time and attempt a token refresh
+            switchMap((timeSync) =>
+                this._timeSyncService.syncClockOffset().pipe(
+                    switchMap(() => from(this.oauthService.refreshToken())),
+                    map(() => null as TimeSync | null),
+                    catchError(() => of(timeSync))
+                )
+            ),
+            filter((timeSync): timeSync is TimeSync => timeSync !== null),
             map(
                 (timeSync) =>
                     new Error(
@@ -207,24 +212,6 @@ export class RedirectAuthService extends AuthService {
             shareReplay(1)
         );
 
-        this.tokenHasExpiredDueToClockOutOfSync$ = this.oauthService.events.pipe(
-            map(() => !!this.oauthService.getIdentityClaims() && this.tokenHasExpired()),
-            filter((hasExpired) => hasExpired),
-            // Skip the first occurrence: the library will attempt an automatic token
-            // refresh. Only check for clock drift if the token is still expired after
-            // that refresh attempt has had a chance to run.
-            skip(1),
-            switchMap(() => this._timeSyncService.checkTimeSync(this.oauthService.clockSkewInSec)),
-            filter((timeSync) => timeSync?.outOfSync),
-            map(
-                (timeSync) =>
-                    new Error(
-                        `Token has expired due to local machine clock ${timeSync.localDateTimeISO} being out of sync with server time ${timeSync.serverDateTimeISO}`
-                    )
-            ),
-            take(1)
-        );
-
         this.onLogout$ = this.oauthService.events.pipe(
             filter((event) => event.type === 'logout'),
             map(() => undefined)
@@ -233,7 +220,6 @@ export class RedirectAuthService extends AuthService {
         this.combinedOAuthErrorsStream$ = race([
             this.oauthErrorEventOccurDueToClockOutOfSync$,
             this.firstOauthErrorEventExcludingTokenRefreshError$,
-            this.tokenHasExpiredDueToClockOutOfSync$,
             this.secondTokenRefreshErrorEventOccur$
         ]);
 
