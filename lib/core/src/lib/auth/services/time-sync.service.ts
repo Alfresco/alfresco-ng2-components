@@ -72,12 +72,9 @@ export class TimeSyncService {
      * The HEAD request is lightweight (no response body) and targets the same origin,
      * so there are no CORS issues. Nginx always includes a `Date` header in its responses.
      *
-     * @param maxAllowedOffsetMs Optional safety cap. If the computed offset exceeds this value,
-     *                           it is ignored to prevent a compromised proxy from
-     *                           tricking the client into accepting expired tokens.
      * @returns Observable that completes after the offset has been stored (or silently on error)
      */
-    syncClockOffset(maxAllowedOffsetMs?: number): Observable<void> {
+    syncClockOffset(): Observable<void> {
         const appRootUrl = this.getAppRootUrl();
 
         try {
@@ -100,10 +97,6 @@ export class TimeSyncService {
                     const roundTripTimeInMs = endTime - startTime;
                     const adjustedServerTimeInMs = serverTimeInMs + roundTripTimeInMs / 2;
                     const newOffset = adjustedServerTimeInMs - endTime;
-
-                    if (maxAllowedOffsetMs != null && Math.abs(newOffset) > maxAllowedOffsetMs) {
-                        return;
-                    }
 
                     this.clockOffsetMs = newOffset;
                 }),
@@ -153,19 +146,18 @@ export class TimeSyncService {
      * - When the document becomes visible again (e.g., Citrix session resumes after idle)
      *
      * @param intervalMs How often to re-sync in milliseconds (default: 5 minutes)
-     * @param maxAllowedOffsetMs Safety cap for the offset. If exceeded, the new offset is ignored.
      */
-    startPeriodicSync(intervalMs: number = DEFAULT_PERIODIC_SYNC_INTERVAL_MS, maxAllowedOffsetMs?: number): void {
+    startPeriodicSync(intervalMs: number = DEFAULT_PERIODIC_SYNC_INTERVAL_MS): void {
         this.stopPeriodicSync();
 
         this._ngZone.runOutsideAngular(() => {
             this._periodicSyncSubscription = interval(intervalMs)
-                .pipe(switchMap(() => this.syncClockOffset(maxAllowedOffsetMs)))
+                .pipe(switchMap(() => this.syncClockOffset()))
                 .subscribe();
 
             this._visibilityChangeHandler = () => {
                 if (typeof document !== 'undefined' && document.visibilityState === 'visible') {
-                    this.syncClockOffset(maxAllowedOffsetMs).subscribe();
+                    this.syncClockOffset().subscribe();
                 }
             };
 

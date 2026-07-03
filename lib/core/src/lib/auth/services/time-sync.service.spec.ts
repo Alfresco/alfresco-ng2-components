@@ -102,42 +102,6 @@ describe('TimeSyncService', () => {
             await promise;
             expect(service.clockOffsetMs).toBe(5000);
         });
-
-        it('should not update offset when it exceeds maxAllowedOffsetMs', async () => {
-            const timeBeforeRequest = 1728911579000;
-            const timeResponseReceived = 1728911580000;
-
-            spyOn(Date, 'now').and.returnValues(timeBeforeRequest, timeResponseReceived);
-
-            service.clockOffsetMs = 1000;
-
-            const promise = firstValueFrom(service.syncClockOffset(60000));
-
-            const req = httpMock.expectOne(() => true);
-            // Server is 600 seconds ahead — exceeds cap of 60 seconds
-            req.flush(null, { headers: { date: 'Mon, 14 Oct 2024 13:22:59 GMT' } });
-
-            await promise;
-            expect(service.clockOffsetMs).toBe(1000);
-        });
-
-        it('should update offset when it is within maxAllowedOffsetMs', async () => {
-            const timeBeforeRequest = 1728911579000;
-            const timeResponseReceived = 1728911580000;
-
-            spyOn(Date, 'now').and.returnValues(timeBeforeRequest, timeResponseReceived);
-
-            // Server is 30 seconds ahead (within cap of 60 seconds)
-            // serverTime = 1728911610000, roundTrip = 1000ms
-            // adjustedServerTime = 1728911610500, offset = 30500ms
-            const promise = firstValueFrom(service.syncClockOffset(60000));
-
-            const req = httpMock.expectOne(() => true);
-            req.flush(null, { headers: { date: 'Mon, 14 Oct 2024 13:13:30 GMT' } });
-
-            await promise;
-            expect(service.clockOffsetMs).toBe(30500);
-        });
     });
 
     describe('checkTimeSync', () => {
@@ -232,25 +196,6 @@ describe('TimeSyncService', () => {
             req.flush(null, { headers: { date: 'Mon, 14 Oct 2024 13:13:30 GMT' } });
 
             expect(service.clockOffsetMs).toBe(30500);
-        });
-
-        it('should apply maxAllowedOffsetMs cap during visibility re-sync', () => {
-            const timeBeforeRequest = 1728911579000;
-            const timeResponseReceived = 1728911580000;
-
-            spyOn(Date, 'now').and.returnValues(timeBeforeRequest, timeResponseReceived);
-
-            service.clockOffsetMs = 1000;
-            service.startPeriodicSync(60000, 60000);
-
-            Object.defineProperty(document, 'visibilityState', { value: 'visible', writable: true, configurable: true });
-            document.dispatchEvent(new Event('visibilitychange'));
-
-            const req = httpMock.expectOne(() => true);
-            // Server is 600 seconds ahead — exceeds cap
-            req.flush(null, { headers: { date: 'Mon, 14 Oct 2024 13:22:59 GMT' } });
-
-            expect(service.clockOffsetMs).toBe(1000);
         });
     });
 
