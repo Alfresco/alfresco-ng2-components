@@ -24,7 +24,6 @@ import { AuthService } from './auth.service';
 import { RedirectAuthService } from './redirect-auth.service';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withXsrfConfiguration } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor';
-import { DateHeaderTimeSyncInterceptor } from './date-header-time-sync.interceptor';
 import { StorageService } from '../../common/services/storage.service';
 import { provideRouter } from '@angular/router';
 import { AUTH_ROUTES } from './auth.routes';
@@ -70,7 +69,6 @@ export function provideCoreAuth(config: AuthModuleConfig = { useHash: false }): 
             return redirectService.init();
         }),
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: DateHeaderTimeSyncInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
         { provide: AUTH_MODULE_CONFIG, useValue: config },
         { provide: Authentication, useClass: AuthenticationService }
