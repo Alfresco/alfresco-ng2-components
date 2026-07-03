@@ -22,7 +22,7 @@
                         [startAt]="startAt"
                         [disabled]="field.readOnly" />
         @if (dateInputControl.invalid && dateInputControl.touched) {
-            <mat-error>
+            <mat-error class="adf-error-text">
                 <mat-icon class="adf-error-icon">error_outline</mat-icon>
                 @if (dateInputControl.hasError('required')) {
                     {{ 'FORM.FIELD.REQUIRED' | translate }}

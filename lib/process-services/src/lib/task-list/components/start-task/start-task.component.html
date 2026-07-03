@@ -12,7 +12,7 @@
                         id="name_id"
                         formControlName="name">
                         @if (nameController.invalid) {
-                            <mat-error>
+                            <mat-error class="adf-error-text">
                                 @if (nameController.hasError('required') || nameController.hasError('whitespace')) {
                                     {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.REQUIRED' | translate }}
                                 } @else if (nameController.hasError('maxlength')) {
@@ -32,7 +32,7 @@
                         formControlName="description">
                     </textarea>
                     @if (descriptionController.hasError('whitespace')) {
-                        <mat-error>
+                        <mat-error class="adf-error-text">
                             {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MESSAGE' | translate }}
                         </mat-error>
                     }
@@ -55,7 +55,7 @@
                         #taskDatePicker
                         [touchUi]="true" />
                     @if (dateError) {
-                        <mat-error>
+                        <mat-error class="adf-error-text">
                             <mat-icon class="adf-error-icon">warning</mat-icon>
                             {{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}
                         </mat-error>

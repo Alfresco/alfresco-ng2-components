@@ -12,7 +12,7 @@
             <mat-option id="readonlyOption" *ngIf="dropdownControl.disabled" [value]="field.value">{{field.value}}</mat-option>
         </mat-select>
         @if (!isReadOnlyField && dropdownControl.touched && (field.validationSummary?.message || dropdownControl.hasError('required'))) {
-            <mat-error data-automation-id="adf-dropdown-error">
+            <mat-error class="adf-error-text" data-automation-id="adf-dropdown-error">
                 <mat-icon class="adf-error-icon">error_outline</mat-icon>
                 @if (field.validationSummary?.message) {
                     {{ field.validationSummary.message | translate }}

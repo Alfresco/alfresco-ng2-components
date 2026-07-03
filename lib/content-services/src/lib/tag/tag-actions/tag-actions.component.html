@@ -27,7 +27,7 @@
                     [errorStateMatcher]="tagErrorStateMatcher"
                 />
                 @if (errorMsg) {
-                    <mat-error data-automation-id="errorMessage">
+                    <mat-error class="adf-error-text" data-automation-id="errorMessage">
                         <mat-icon class="adf-error-icon">error_outline</mat-icon>
                         {{ errorMsg }}
                     </mat-error>

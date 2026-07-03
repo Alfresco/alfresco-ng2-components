@@ -49,7 +49,7 @@
                 }
             </mat-select>
             @if ((dropdownControl.hasError('required') && !isRestApiFailed && !variableOptionsFailed) || (!previewState && !field.readOnly && (isRestApiFailed || variableOptionsFailed))) {
-                <mat-error>
+                <mat-error class="adf-error-text">
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
                     @if (dropdownControl.hasError('required') && !isRestApiFailed && !variableOptionsFailed) {
                         {{ 'FORM.FIELD.REQUIRED' | translate }}

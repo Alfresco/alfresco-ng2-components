@@ -22,7 +22,7 @@
                 </mat-option>
             </mat-autocomplete>
             @if (field.validationSummary?.message || isInvalidFieldRequired()) {
-                <mat-error>
+                <mat-error class="adf-error-text">
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
                     @if (field.validationSummary?.message) {
                         {{ field.validationSummary.message | translate }}

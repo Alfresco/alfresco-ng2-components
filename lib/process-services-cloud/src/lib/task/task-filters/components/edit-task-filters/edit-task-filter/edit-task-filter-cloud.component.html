@@ -77,7 +77,7 @@
                             <mat-datepicker #dateController
                                             [attr.data-automation-id]="'adf-cloud-edit-task-property-date-picker-' + taskFilterProperty.key" />
                             @if (hasError(taskFilterProperty)) {
-                                <mat-error>
+                                <mat-error class="adf-error-text">
                                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
                                     {{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}
                                 </mat-error>

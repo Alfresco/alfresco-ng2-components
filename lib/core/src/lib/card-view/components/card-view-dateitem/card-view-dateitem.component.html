@@ -83,7 +83,7 @@
                 [ngClass]="{ 'cdk-visually-hidden': !editable || isReadonlyProperty}"
             />
             @if (cardViewDateTimeControl.hasError('matDatepickerParse')) {
-                <mat-error>
+                <mat-error class="adf-error-text">
                     {{ 'FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT' | translate }}
                 </mat-error>
             }
