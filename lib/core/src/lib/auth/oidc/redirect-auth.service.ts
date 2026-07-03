@@ -171,17 +171,27 @@ export class RedirectAuthService extends AuthService {
             filter((_, index) => index === 1)
         );
 
-        this.oauthErrorEventOccurDueToClockOutOfSync$ = this.oauthErrorEvent$.pipe(
+        this.oauthErrorEventOccurDueToClockOutOfSync$ = this.oauthService.events.pipe(
             // For token_refresh_error, skip the first occurrence so the library's
             // built-in retry (secondTokenRefreshErrorEventOccur$) has a chance to run
             // before we conclude the issue is clock drift. All other error types are
-            // checked immediately.
+            // checked immediately. The counter resets when a successful token event
+            // occurs, so intermittent errors that self-correct don't accumulate.
             scan(
-                (acc, event) => ({
-                    event,
-                    shouldProcess: event.type !== 'token_refresh_error' || acc.tokenRefreshErrorCount >= 1,
-                    tokenRefreshErrorCount: event.type === 'token_refresh_error' ? acc.tokenRefreshErrorCount + 1 : acc.tokenRefreshErrorCount
-                }),
+                (acc, event) => {
+                    if (event instanceof OAuthErrorEvent) {
+                        return {
+                            event,
+                            shouldProcess: event.type !== 'token_refresh_error' || acc.tokenRefreshErrorCount >= 1,
+                            tokenRefreshErrorCount: event.type === 'token_refresh_error' ? acc.tokenRefreshErrorCount + 1 : acc.tokenRefreshErrorCount
+                        };
+                    }
+                    return {
+                        event: null,
+                        shouldProcess: false,
+                        tokenRefreshErrorCount: event.type === 'token_received' || event.type === 'token_refreshed' ? 0 : acc.tokenRefreshErrorCount
+                    };
+                },
                 { event: null as OAuthErrorEvent | null, shouldProcess: false, tokenRefreshErrorCount: 0 }
             ),
             filter(({ shouldProcess }) => shouldProcess),
