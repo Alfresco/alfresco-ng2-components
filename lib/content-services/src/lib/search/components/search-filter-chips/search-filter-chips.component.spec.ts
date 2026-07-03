@@ -223,7 +223,7 @@ describe('SearchFilterChipsComponent', () => {
     });
 
     it('should update query builder upon resetting selected queries', async () => {
-        spyOn(queryBuilder, 'update').and.stub();
+        spyOn(queryBuilder, 'execute').and.stub();
         spyOn(queryBuilder, 'removeUserFacetBucket').and.callThrough();
 
         const queryResponse = {
@@ -247,7 +247,7 @@ describe('SearchFilterChipsComponent', () => {
         facetField.resetSelectedBuckets(queryResponse);
 
         expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledTimes(3);
-        expect(queryBuilder.update).toHaveBeenCalled();
+        expect(queryBuilder.execute).toHaveBeenCalled();
 
         for (const entry of searchFacetFiltersService.responseFacets[0].buckets.items) {
             expect(entry.checked).toEqual(false);
@@ -276,7 +276,7 @@ describe('SearchFilterChipsComponent', () => {
         });
 
         it('should be update the search query when name changed', async () => {
-            spyOn(queryBuilder, 'update').and.stub();
+            spyOn(queryBuilder, 'execute').and.stub();
             appConfigService.config.search = searchFilter;
             queryBuilder.resetToDefaults();
 
@@ -290,7 +290,7 @@ describe('SearchFilterChipsComponent', () => {
 
             const inputElement = fixture.debugElement.query(By.css('[data-automation-id="search-field-Name"] input'));
             inputElement.triggerEventHandler('change', { target: { value: '*' } });
-            expect(queryBuilder.update).toHaveBeenCalled();
+            expect(queryBuilder.execute).toHaveBeenCalled();
 
             queryBuilder.executed.next(mockSearchResult);
 
@@ -404,7 +404,7 @@ describe('SearchFilterChipsComponent', () => {
             queryBuilder.executed.next(mockSearchResult);
             fixture.detectChanges();
 
-            spyOn(queryBuilder, 'update').and.stub();
+            spyOn(queryBuilder, 'execute').and.stub();
 
             const searchChip = fixture.debugElement.query(By.css(`[data-automation-id="search-filter-chip-Size facet queries"]`));
             searchChip.triggerEventHandler('click', { stopPropagation: () => null });
@@ -441,7 +441,7 @@ describe('SearchFilterChipsComponent', () => {
             await filteredMenu[0].check();
 
             expect(await filteredMenu[0].getLabelText()).toEqual('Extra Small (10239)');
-            expect(queryBuilder.update).toHaveBeenCalledTimes(1);
+            expect(queryBuilder.execute).toHaveBeenCalledTimes(1);
         });
     });
 });

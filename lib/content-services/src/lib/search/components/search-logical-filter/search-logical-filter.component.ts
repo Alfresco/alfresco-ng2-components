@@ -128,7 +128,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
             });
             this.context.queryFragments[this.id] = query;
             if (updateContext) {
-                this.context.update();
+                this.context.execute();
             }
         } else {
             this.reset(updateContext);
@@ -154,7 +154,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
             this.clearSearchInputs();
             this.context.filterRawParams[this.id] = this.searchCondition;
             if (updateContext) {
-                this.context.update();
+                this.context.execute();
             }
         }
     }

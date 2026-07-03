@@ -45,7 +45,7 @@ describe('SearchWidgetChipComponent', () => {
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
         fixture = TestBed.createComponent(SearchWidgetChipComponent);
         component = fixture.componentInstance;
-        spyOn(queryBuilder, 'update').and.stub();
+        spyOn(queryBuilder, 'execute').and.stub();
 
         component.category = simpleCategories[1];
         fixture.detectChanges();
@@ -60,7 +60,7 @@ describe('SearchWidgetChipComponent', () => {
         const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
         applyButton.triggerEventHandler('click', {});
 
-        expect(queryBuilder.update).toHaveBeenCalled();
+        expect(queryBuilder.execute).toHaveBeenCalled();
     });
 
     it('should update search query on cancel click', async () => {
@@ -69,7 +69,7 @@ describe('SearchWidgetChipComponent', () => {
 
         const applyButton = fixture.debugElement.query(By.css('#cancel-filter-button'));
         applyButton.triggerEventHandler('click', {});
-        expect(queryBuilder.update).toHaveBeenCalled();
+        expect(queryBuilder.execute).toHaveBeenCalled();
     });
 
     it('should display arrow down icon', async () => {

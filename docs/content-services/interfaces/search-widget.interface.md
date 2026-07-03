@@ -115,8 +115,8 @@ that will be used when performing the actual query.
 Every query fragment is stored and retrieved using its widget `id`.
 It is your responsibility to format the query correctly.
 
-Once your change to the query is finished, update the context and call the `update` method
-to inform other components about the change:
+Once your change to the query is finished, update the context and call the `execute` method
+to rebuild and run the query so the results reflect your change:
 
 ```ts
 @Component({...})
@@ -126,11 +126,14 @@ export class MyComponent implements SearchWidget, OnInit {
 
     onUIChanged() {
         this.context.queryFragments[this.id] = `some query`;
-        this.context.update();
+        void this.context.execute();
     }
 
 }
 ```
+
+> **Note:** Earlier versions called `this.context.update()` here. The `update()` method and the
+> `updated` stream have been removed; call `this.context.execute()` directly instead.
 
 When executed, your fragment will be injected into the resulting query based on the category order in the application configuration file.
 

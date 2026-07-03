@@ -54,9 +54,6 @@ export abstract class BaseQueryBuilderService {
     /*  Stream that emits the event each time when search filter finishes loading initial value */
     filterLoaded = new Subject<void>();
 
-    /*  Stream that emits the query before search whenever user search  */
-    updated = new Subject<SearchRequest>();
-
     /*  Stream that emits the results whenever user search  */
     executed = new Subject<ResultSetPaging>();
 
@@ -85,11 +82,13 @@ export abstract class BaseQueryBuilderService {
     sorting: SearchSortingDefinition[] = [];
     sortingOptions: SearchSortingDefinition[] = [];
 
-    private encodedQuery: string;
+    private _encodedQuery: string;
     private scope: RequestScope;
-    private selectedConfigurationId: string;
-    private _userQuery = '';
+    private _selectedConfigurationId: string;
     private _queryFragments: { [id: string]: string } = {};
+    private _parsedQuery: string;
+    private _userQuery: string;
+    private _searchMode: 'regular' | 'formula';
 
     private readonly selectedConfigurationKey = 'selectedConfigurationId';
     private readonly queryFragmentsHandler: ProxyHandler<{ [key: string]: any }> = {
@@ -111,13 +110,45 @@ export abstract class BaseQueryBuilderService {
         this.queryFragmentsUpdate.next(this._queryFragments);
     }
 
+    get encodedQuery(): string {
+        return this._encodedQuery;
+    }
+
+    get wildcardsEnabled(): boolean {
+        return this.appConfig.get<boolean>('search-wildcards-enabled', true);
+    }
+
     get userQuery(): string {
         return this._userQuery;
     }
 
     set userQuery(value: string) {
-        value = (value || '').trim();
-        this._userQuery = value ? `(${value})` : '';
+        this._userQuery = value;
+        this.filterRawParams['userQuery'] = value;
+        this.setParsedQuery();
+    }
+
+    get parsedQuery(): string {
+        return this._parsedQuery;
+    }
+
+    get searchMode(): 'regular' | 'formula' {
+        return this._searchMode;
+    }
+
+    set searchMode(value: 'regular' | 'formula') {
+        this._searchMode = value;
+        this.filterRawParams['searchMode'] = value;
+        this.setParsedQuery();
+    }
+
+    get selectedConfigurationId(): string {
+        return this._selectedConfigurationId;
+    }
+
+    set selectedConfigurationId(value: string) {
+        this._selectedConfigurationId = value;
+        this.filterRawParams[this.selectedConfigurationKey] = value;
     }
 
     config: SearchConfiguration = {
@@ -132,17 +163,17 @@ export abstract class BaseQueryBuilderService {
         protected readonly appConfig: AppConfigService,
         protected readonly alfrescoApiService: AlfrescoApiService
     ) {
+        this.searchMode = 'regular';
+        this.userQuery = '';
         this.resetToDefaults();
         this._queryFragments = this.createQueryFragmentsProxy({});
-
-        this.populateFilters.subscribe((filters) => this.handleSelectedConfigurationChange(filters));
     }
 
     public abstract loadConfiguration(): SearchConfiguration | SearchConfiguration[];
 
     public abstract isFilterServiceActive(): boolean;
 
-    public resetToDefaults(withNavigate = false) {
+    public resetToDefaults(withNavigate = false, resetUserQuery = true) {
         if (withNavigate) {
             this.router.navigate([], {
                 queryParams: { q: null },
@@ -151,7 +182,7 @@ export abstract class BaseQueryBuilderService {
             });
         }
         const currentConfig = this.getDefaultConfiguration();
-        this.resetSearchOptions();
+        this.resetSearchOptions(resetUserQuery);
         this.configUpdated.next(currentConfig);
         this.searchForms.next(this.getSearchFormDetails());
         this.setUpSearchConfiguration(currentConfig);
@@ -170,23 +201,26 @@ export abstract class BaseQueryBuilderService {
         return configurations;
     }
 
-    public updateSelectedConfiguration(id: string): void {
+    public updateSelectedConfiguration(id: string, resetFilters = true, shouldExecute = true): void {
         const currentConfig = this.loadConfiguration();
         if (Array.isArray(currentConfig)) {
             const selectedConfig = currentConfig.find((config) => config.id === id);
             if (selectedConfig) {
+                if (resetFilters) {
+                    this.resetSearchOptions(false);
+                }
                 this.selectedConfigurationId = id;
                 this.searchForms.next(this.getSearchFormDetails());
-                this.resetSearchOptions();
                 this.setUpSearchConfiguration(selectedConfig);
-                this.filterRawParams[this.selectedConfigurationKey] = id;
                 this.configUpdated.next(selectedConfig);
-                this.execute();
+                if (shouldExecute) {
+                    this.execute(true);
+                }
             }
         }
     }
 
-    private resetSearchOptions(): void {
+    private resetSearchOptions(resetUserQuery = true): void {
         this.categories = [];
         this.queryFragments = {};
         this.filterQueries = [];
@@ -194,8 +228,10 @@ export abstract class BaseQueryBuilderService {
         this.sortingOptions = [];
         this.resetUserFacetBucket();
         this.scope = null;
-        this.filterRawParams = {};
-        this._userQuery = '';
+        if (resetUserQuery) {
+            this.userQuery = '';
+        }
+        this.resetFilterRawParams(resetUserQuery);
         this.populateFilters.next({});
     }
 
@@ -229,6 +265,7 @@ export abstract class BaseQueryBuilderService {
             this.categories = (this.config.categories || []).filter((category) => category.enabled);
             this.filterQueries = this.config.filterQueries || [];
             this.userFacetBuckets = {};
+            this.userQuery = this.filterRawParams['userQuery'] || '';
             if (this.config.sorting) {
                 this.sorting = this.config.sorting.defaults || [];
                 this.sortingOptions = this.config.sorting.options || [];
@@ -353,16 +390,6 @@ export abstract class BaseQueryBuilderService {
 
     getScope(): RequestScope {
         return this.scope;
-    }
-
-    /**
-     * Builds the current query and triggers the `updated` event.
-     *
-     * @param queryBody query settings
-     */
-    update(queryBody?: SearchRequest): void {
-        const query = queryBody ? queryBody : this.buildQuery();
-        this.updated.next(query);
     }
 
     /**
@@ -552,12 +579,9 @@ export abstract class BaseQueryBuilderService {
 
     protected getFinalQuery(): string {
         let query = '';
-        if (this.userQuery) {
-            this.filterRawParams['userQuery'] = this.userQuery;
-        }
         this.categories.forEach((facet) => {
             const customQuery = this.queryFragments[facet.id];
-            if (customQuery) {
+            if (customQuery && JSON.stringify(customQuery) !== JSON.stringify({ matchAll: '', matchAny: '', matchExact: '', exclude: '' })) {
                 if (query.length > 0) {
                     query += ' AND ';
                 }
@@ -565,7 +589,8 @@ export abstract class BaseQueryBuilderService {
             }
         });
 
-        let result = [this.userQuery, query].filter((entry) => entry).join(' AND ');
+        const parsedQuery = this.searchMode === 'regular' ? this.parsedQuery : this.userQuery;
+        let result = [parsedQuery, query].filter((entry) => entry).join(' AND ');
 
         if (this.userFacetBuckets) {
             Object.keys(this.userFacetBuckets).forEach((key) => {
@@ -626,10 +651,10 @@ export abstract class BaseQueryBuilderService {
      */
     encodeQuery() {
         try {
-            this.encodedQuery = btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(this.filterRawParams))));
+            this._encodedQuery = btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(this.filterRawParams))));
         } catch (error) {
             console.error('Failed to encode query parameters:', error);
-            this.encodedQuery = '';
+            this._encodedQuery = '';
         }
     }
 
@@ -640,7 +665,7 @@ export abstract class BaseQueryBuilderService {
         this.encodeQuery();
         this.router.navigate([], {
             relativeTo: this.activatedRoute,
-            queryParams: { q: this.encodedQuery },
+            queryParams: { q: this._encodedQuery },
             queryParamsHandling: 'merge'
         });
     }
@@ -653,50 +678,71 @@ export abstract class BaseQueryBuilderService {
      */
     async navigateToSearch(query: string, searchUrl: string) {
         this.userQuery = query;
+        this.encodeQuery();
+
         await this.execute();
         await this.router.navigate([searchUrl], {
-            queryParams: { q: this.encodedQuery },
+            queryParams: { q: this._encodedQuery },
             queryParamsHandling: 'merge'
         });
+    }
+
+    /**
+     * Checks if string is an AND or OR operator
+     *
+     * @param input string to check if it is an operator
+     * @returns boolean
+     */
+    isOperator(input: string): boolean {
+        if (input) {
+            const operators = ['AND', 'OR'];
+            return operators.includes(input.trim());
+        }
+        return false;
     }
 
     private createQueryFragmentsProxy(target: { [key: string]: any }): { [key: string]: any } {
         return new Proxy(target, this.queryFragmentsHandler);
     }
 
-    private setSelectedConfiguration(id: string): void {
-        const currentConfig = this.loadConfiguration();
-        if (Array.isArray(currentConfig)) {
-            const selectedConfig = currentConfig.find((config) => config.id === id);
-            if (selectedConfig) {
-                this.selectedConfigurationId = id;
-                this.searchForms.next(this.getSearchFormDetails());
-                this.setUpSearchConfiguration(selectedConfig);
-                this.filterRawParams[this.selectedConfigurationKey] = id;
-                this.configUpdated.next(selectedConfig);
-            }
-        }
-    }
-
-    private handleSelectedConfigurationChange(filters: { [key: string]: string }): void {
-        if (Object.keys(filters ?? {}).length === 0) {
+    private setParsedQuery() {
+        if (!this.userQuery) {
+            this._parsedQuery = '';
+            this.filterRawParams['parsedQuery'] = '';
             return;
         }
-
-        const newSelectedConfig = filters?.[this.selectedConfigurationKey];
-
-        if (newSelectedConfig) {
-            if (newSelectedConfig !== this.selectedConfigurationId) {
-                this.setSelectedConfiguration(newSelectedConfig);
-            }
+        if (this.searchMode === 'formula') {
+            this._parsedQuery = this.userQuery;
         } else {
-            const configurations = this.loadConfiguration();
-            if (Array.isArray(configurations)) {
-                const defaultConfig = configurations.find((config) => config.default);
-                if (defaultConfig && this.selectedConfigurationId !== defaultConfig.id) {
-                    this.setSelectedConfiguration(defaultConfig.id);
-                }
+            const words = this.userQuery.split(/\s+/);
+            if (words.length > 1) {
+                const separator = words.some(this.isOperator) ? ' ' : ' AND ';
+                this._parsedQuery = '(' + words.map((term) => (this.isOperator(term) ? term : this.parseTermByFields(term))).join(separator) + ')';
+            } else {
+                this._parsedQuery = '(' + this.parseTermByFields(this.userQuery) + ')';
             }
         }
+        this.filterRawParams['parsedQuery'] = this._parsedQuery;
+    }
+
+    private parseTermByFields(term: string): string {
+        const suffix = this.wildcardsEnabled ? '*' : '';
+        const fields = this.config['app:fields'] || ['cm:name'];
+        const escapedTerm = this.escapeQueryTerm(term);
+        return '(' + fields.map((field) => `${field}:"${escapedTerm}${suffix}"`).join(' OR ') + ')';
+    }
+
+    private escapeQueryTerm(term: string): string {
+        return term.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+    }
+
+    private resetFilterRawParams(resetUserQuery = true) {
+        this.filterRawParams = {
+            userQuery: resetUserQuery ? '' : this.userQuery,
+            parsedQuery: resetUserQuery ? '' : this.parsedQuery,
+            searchMode: this.searchMode,
+            [this.selectedConfigurationKey]: this.selectedConfigurationId,
+            logic: { matchAll: '', matchAny: '', matchExact: '', exclude: '' }
+        };
     }
 }

@@ -47,14 +47,15 @@ jobs:
     if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*' || github.event_name == 'workflow_dispatch'
     name: "Setup"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
       - uses: ./.github/actions/setup
-        with:
-          enable-node-modules-cache: false
       - name: install
         run: |
           pnpm install --frozen-lockfile
@@ -73,6 +74,7 @@ jobs:
       id-token: write  # Required for OIDC
       contents: read
       packages: write
+      actions: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
@@ -80,8 +82,6 @@ jobs:
           fetch-depth: 0
       - id: setup
         uses: ./.github/actions/setup
-        with:
-          enable-node-modules-cache: false
       - id: set-dryrun
         uses: ./.github/actions/enable-dryrun
         with:

@@ -22,11 +22,13 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { ReplaySubject } from 'rxjs';
+import { AppConfigService } from '@alfresco/adf-core';
 
 describe('SearchTextComponent', () => {
     let loader: HarnessLoader;
     let fixture: ComponentFixture<SearchTextComponent>;
     let component: SearchTextComponent;
+    let appConfig: AppConfigService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -34,6 +36,7 @@ describe('SearchTextComponent', () => {
         });
         fixture = TestBed.createComponent(SearchTextComponent);
         component = fixture.componentInstance;
+        appConfig = TestBed.inject(AppConfigService);
         component.id = 'text';
         component.settings = {
             pattern: `cm:name:'(.*?)'`,
@@ -46,7 +49,10 @@ describe('SearchTextComponent', () => {
             },
             filterRawParams: {},
             populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy('update')
+            execute: jasmine.createSpy('execute'),
+            get wildcardsEnabled(): boolean {
+                return appConfig.get<boolean>('search-wildcards-enabled', true);
+            }
         } as any;
 
         loader = TestbedHarnessEnvironment.loader(fixture);
@@ -67,7 +73,10 @@ describe('SearchTextComponent', () => {
         expect(component.value).toEqual('');
     });
 
-    it('should update query builder on change', () => {
+    it('should update query builder on change when change updates are enabled', () => {
+        component.settings.allowUpdateOnChange = true;
+        fixture.detectChanges();
+
         component.onChangedHandler({
             target: {
                 value: 'top-secret.doc'
@@ -77,10 +86,27 @@ describe('SearchTextComponent', () => {
         expect(component.value).toBe('top-secret.doc');
         expect(component.context.queryFragments[component.id]).toBe(`cm:name:'top-secret.doc'`);
         expect(component.context.filterRawParams[component.id]).toBe('top-secret.doc');
-        expect(component.context.update).toHaveBeenCalled();
+        expect(component.context.execute).toHaveBeenCalled();
     });
 
-    it('should reset query builder', () => {
+    it('should not update query builder on change when change updates are disabled', () => {
+        fixture.detectChanges();
+
+        component.onChangedHandler({
+            target: {
+                value: 'top-secret.doc'
+            }
+        });
+
+        expect(component.value).toBe('top-secret.doc');
+        expect(component.context.queryFragments[component.id]).toBe('');
+        expect(component.context.execute).not.toHaveBeenCalled();
+    });
+
+    it('should reset query builder when change updates are enabled', () => {
+        component.settings.allowUpdateOnChange = true;
+        fixture.detectChanges();
+
         component.onChangedHandler({
             target: {
                 value: 'top-secret.doc'
@@ -125,13 +151,21 @@ describe('SearchTextComponent', () => {
         expect(component.context.filterRawParams[component.id]).toBeUndefined();
     });
 
-    it('should update query with startValue on init, if provided', () => {
+    it('should set value from startValue on init, if provided', () => {
         component.startValue = 'mock-start-value';
         fixture.detectChanges();
 
-        expect(component.context.queryFragments[component.id]).toBe(`cm:name:'mock-start-value'`);
         expect(component.value).toBe('mock-start-value');
-        expect(component.context.update).toHaveBeenCalled();
+    });
+
+    it('should build the query fragment from the current value when submitted', () => {
+        component.startValue = 'mock-start-value';
+        fixture.detectChanges();
+
+        component.submitValues();
+
+        expect(component.context.queryFragments[component.id]).toBe(`cm:name:'mock-start-value'`);
+        expect(component.context.execute).toHaveBeenCalled();
     });
 
     it('should parse value and set query context as blank, and not call query update, if no start value was provided', () => {
@@ -141,7 +175,7 @@ describe('SearchTextComponent', () => {
 
         expect(component.context.queryFragments[component.id]).toBe('');
         expect(component.value).toBe('secret.pdf');
-        expect(component.context.update).not.toHaveBeenCalled();
+        expect(component.context.execute).not.toHaveBeenCalled();
     });
 
     it('should populate filter state when populate filters event has been observed', async () => {
@@ -156,5 +190,31 @@ describe('SearchTextComponent', () => {
         expect(component.value).toBe('secret.pdf');
         expect(component.context.filterRawParams[component.id]).toBe('secret.pdf');
         expect(component.context.filterLoaded.next).toHaveBeenCalled();
+    });
+
+    it('should add the search prefix and suffix to the query fragment when wildcards are enabled', () => {
+        spyOn(appConfig, 'get').and.callFake((key: string, defaultValue?: any) => (key === 'search-wildcards-enabled' ? true : defaultValue));
+        component.settings.searchPrefix = '*';
+        component.settings.searchSuffix = '*';
+        fixture.detectChanges();
+
+        component.onChangedHandler({ target: { value: 'secret' } });
+        component.submitValues();
+
+        expect(component.context.wildcardsEnabled).toBeTrue();
+        expect(component.context.queryFragments[component.id]).toBe(`cm:name:'*secret*'`);
+    });
+
+    it('should NOT add the search prefix and suffix to the query fragment when wildcards are disabled', () => {
+        spyOn(appConfig, 'get').and.callFake((key: string, defaultValue?: any) => (key === 'search-wildcards-enabled' ? false : defaultValue));
+        component.settings.searchPrefix = '*';
+        component.settings.searchSuffix = '*';
+        fixture.detectChanges();
+
+        component.onChangedHandler({ target: { value: 'secret' } });
+        component.submitValues();
+
+        expect(component.context.wildcardsEnabled).toBeFalse();
+        expect(component.context.queryFragments[component.id]).toBe(`cm:name:'secret'`);
     });
 });

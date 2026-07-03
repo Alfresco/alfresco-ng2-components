@@ -47,7 +47,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
             },
             filterRawParams: {},
             populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy('update')
+            execute: jasmine.createSpy('execute')
         } as any;
         component.settings = {
             field: 'test',
@@ -102,7 +102,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         clearBtn.click();
 
         expect(component.context.queryFragments[component.id]).toBe('');
-        expect(component.context.update).toHaveBeenCalled();
+        expect(component.context.execute).toHaveBeenCalled();
         expect(component.selectedOptions).toEqual([]);
         expect(component.displayValue$.next).toHaveBeenCalledWith('');
         expect(component.context.filterRawParams[component.id]).toBeUndefined();
@@ -116,7 +116,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         applyBtn.click();
         fixture.detectChanges();
 
-        expect(component.context.update).toHaveBeenCalled();
+        expect(component.context.execute).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe('test:"option2" OR test:"option1"');
         expect(component.context.filterRawParams[component.id]).toEqual([{ value: 'option2' }, { value: 'option1' }]);
 

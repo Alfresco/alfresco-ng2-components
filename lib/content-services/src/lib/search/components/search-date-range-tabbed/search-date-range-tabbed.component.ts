@@ -138,7 +138,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
         this.context.queryFragments[this.id] = this.combinedQuery;
         this.displayValue$.next(this.combinedDisplayValue);
         if (this.id && this.context && updateContext) {
-            this.context.update();
+            this.context.execute();
         }
     }
     onDateRangedValueChanged(value: Partial<SearchDateRange>, field: string) {

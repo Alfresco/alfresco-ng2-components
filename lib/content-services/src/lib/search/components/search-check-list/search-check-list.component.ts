@@ -107,7 +107,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
         this.clearOptions();
         if (this.id && this.context && this.enableChangeUpdate) {
             this.updateDisplayValue();
-            this.context.update();
+            this.context.execute();
         }
     }
 
@@ -128,7 +128,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
         if (this.id && this.context) {
             this.updateDisplayValue();
             if (updateContext) {
-                this.context.update();
+                this.context.execute();
             }
         }
     }
@@ -178,7 +178,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
             this.context.queryFragments[this.id] = query;
             this.updateDisplayValue();
             if (updateContext) {
-                this.context.update();
+                this.context.execute();
             }
         }
     }

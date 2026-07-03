@@ -69,6 +69,12 @@ describe('BaseQueryBuilderService', () => {
         { ...mockSearchConfig, id: 'config-3', name: 'Config 3', default: false }
     ];
 
+    const configureAppConfig = (wildcards?: boolean): void => {
+        (appConfig.get as jasmine.Spy).and.callFake((key: string, defaultValue?: any) =>
+            key === 'search-wildcards-enabled' ? (wildcards ?? defaultValue) : false
+        );
+    };
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
@@ -89,19 +95,218 @@ describe('BaseQueryBuilderService', () => {
     });
 
     describe('userQuery', () => {
-        it('should set userQuery with parentheses', () => {
+        it('should set userQuery to raw value without wrapping', () => {
             service.userQuery = 'test query';
-            expect(service.userQuery).toBe('(test query)');
+            expect(service.userQuery).toBe('test query');
         });
 
-        it('should trim userQuery', () => {
-            service.userQuery = '  test query  ';
-            expect(service.userQuery).toBe('(test query)');
+        it('should store userQuery in filterRawParams', () => {
+            service.userQuery = 'test';
+            expect(service.filterRawParams['userQuery']).toBe('test');
         });
 
-        it('should return empty string for null input', () => {
-            service.userQuery = null;
+        it('should set parsedQuery when userQuery is set in regular mode', () => {
+            service.searchMode = 'regular';
+            service.userQuery = 'hello';
+            expect(service.parsedQuery).toBe('((cm:name:"hello*"))');
+        });
+
+        it('should set parsedQuery equal to userQuery in formula mode', () => {
+            service.searchMode = 'formula';
+            service.userQuery = '(cm:name:"test*")';
+            expect(service.parsedQuery).toBe('(cm:name:"test*")');
+        });
+
+        it('should clear userQuery and its raw param when set to empty', () => {
+            configureAppConfig(true);
+            service.searchMode = 'regular';
+            service.userQuery = 'something';
+            service.userQuery = '';
+
             expect(service.userQuery).toBe('');
+            expect(service.filterRawParams['userQuery']).toBe('');
+        });
+    });
+
+    describe('parsedQuery', () => {
+        it('should wrap a single term with field query and parentheses in regular mode', () => {
+            configureAppConfig(true);
+            service.searchMode = 'regular';
+            service.userQuery = 'hello';
+            expect(service.parsedQuery).toContain('cm:name:"hello*"');
+        });
+
+        it('should join multiple terms with AND in regular mode when no operator present', () => {
+            configureAppConfig(true);
+            service.searchMode = 'regular';
+            service.userQuery = 'hello world';
+            expect(service.parsedQuery).toContain(' AND ');
+        });
+
+        it('should preserve AND/OR operators in regular mode when present in query', () => {
+            configureAppConfig(true);
+            service.searchMode = 'regular';
+            service.userQuery = 'hello AND world';
+            expect(service.parsedQuery).toBe('((cm:name:"hello*") AND (cm:name:"world*"))');
+        });
+
+        it('should store parsedQuery in filterRawParams', () => {
+            configureAppConfig(true);
+            service.searchMode = 'regular';
+            service.userQuery = 'hello';
+            expect(service.filterRawParams['parsedQuery']).toBe(service.parsedQuery);
+        });
+
+        it('should not add wildcard suffix when wildcards are disabled', () => {
+            configureAppConfig(false);
+            service.searchMode = 'regular';
+            service.userQuery = 'hello';
+            expect(service.parsedQuery).toBe('((cm:name:"hello"))');
+        });
+
+        it('should build the exact single-term parsed query against the default cm:name field', () => {
+            configureAppConfig(true);
+            service.searchMode = 'regular';
+            service.userQuery = 'hello';
+            expect(service.parsedQuery).toBe('((cm:name:"hello*"))');
+        });
+
+        it('should join each multi-term word with AND wrapped in parentheses', () => {
+            configureAppConfig(true);
+            service.searchMode = 'regular';
+            service.userQuery = 'hello world';
+            expect(service.parsedQuery).toBe('((cm:name:"hello*") AND (cm:name:"world*"))');
+        });
+
+        it('should keep explicit operators as separators between terms', () => {
+            configureAppConfig(true);
+            service.searchMode = 'regular';
+            service.userQuery = 'hello OR world';
+            expect(service.parsedQuery).toBe('((cm:name:"hello*") OR (cm:name:"world*"))');
+        });
+
+        it('should parse each term against every configured app:fields entry', () => {
+            configureAppConfig(true);
+            service.searchMode = 'regular';
+            service.config = { id: 'test-config', categories: [], 'app:fields': ['cm:name', 'cm:title'] } as any;
+            service.userQuery = 'hello';
+            expect(service.parsedQuery).toBe('((cm:name:"hello*" OR cm:title:"hello*"))');
+        });
+
+        it('should escape double quotes in the user query term', () => {
+            configureAppConfig(true);
+            service.searchMode = 'regular';
+            service.userQuery = 'he"llo';
+            expect(service.parsedQuery).toBe('((cm:name:"he\\"llo*"))');
+        });
+
+        it('should escape backslashes in the user query term', () => {
+            configureAppConfig(true);
+            service.searchMode = 'regular';
+            service.userQuery = 'he\\llo';
+            expect(service.parsedQuery).toBe('((cm:name:"he\\\\llo*"))');
+        });
+
+        it('should clear parsedQuery and its raw param when userQuery is set to empty', () => {
+            configureAppConfig(true);
+            service.searchMode = 'regular';
+            service.userQuery = 'hello';
+            service.userQuery = '';
+
+            expect(service.parsedQuery).toBe('');
+            expect(service.filterRawParams['parsedQuery']).toBe('');
+        });
+    });
+
+    describe('searchMode', () => {
+        it('should default to regular mode', () => {
+            expect(service.searchMode).toBe('regular');
+        });
+
+        it('should store searchMode in filterRawParams', () => {
+            service.searchMode = 'formula';
+            expect(service.filterRawParams['searchMode']).toBe('formula');
+        });
+
+        it('should update filterRawParams when changed back to regular', () => {
+            service.searchMode = 'formula';
+            service.searchMode = 'regular';
+            expect(service.filterRawParams['searchMode']).toBe('regular');
+        });
+
+        it('should recompute parsedQuery when switching search mode', () => {
+            configureAppConfig(true);
+            service.searchMode = 'formula';
+            service.userQuery = 'hello';
+            expect(service.parsedQuery).toBe('hello');
+
+            service.searchMode = 'regular';
+            expect(service.parsedQuery).toBe('((cm:name:"hello*"))');
+        });
+    });
+
+    describe('wildcardsEnabled', () => {
+        it('should return true by default', () => {
+            configureAppConfig();
+            expect(service.wildcardsEnabled).toBe(true);
+        });
+
+        it('should return false when config disables wildcards', () => {
+            configureAppConfig(false);
+            expect(service.wildcardsEnabled).toBe(false);
+        });
+    });
+
+    describe('isOperator', () => {
+        it('should return true for AND', () => {
+            expect(service.isOperator('AND')).toBeTrue();
+        });
+
+        it('should return true for OR', () => {
+            expect(service.isOperator('OR')).toBeTrue();
+        });
+
+        it('should return true for AND with surrounding spaces', () => {
+            expect(service.isOperator(' AND ')).toBeTrue();
+        });
+
+        it('should return false for regular word', () => {
+            expect(service.isOperator('hello')).toBeFalse();
+        });
+
+        it('should return false for empty string', () => {
+            expect(service.isOperator('')).toBeFalse();
+        });
+
+        it('should return false for null/undefined', () => {
+            expect(service.isOperator(null)).toBeFalse();
+            expect(service.isOperator(undefined)).toBeFalse();
+        });
+    });
+
+    describe('selectedConfigurationId', () => {
+        it('should store selectedConfigurationId in filterRawParams when set', () => {
+            (appConfig.get as jasmine.Spy).and.returnValue(mockMultipleConfigs);
+            service.resetToDefaults();
+
+            service.selectedConfigurationId = 'config-2';
+            expect(service.filterRawParams['selectedConfigurationId']).toBe('config-2');
+        });
+    });
+
+    describe('encodedQuery', () => {
+        it('should return encoded query after encodeQuery is called', () => {
+            service.userQuery = 'test';
+            service.encodeQuery();
+            expect(service.encodedQuery).toBeTruthy();
+        });
+
+        it('should return a base64 encoded string of filterRawParams', () => {
+            service.userQuery = 'test';
+            service.encodeQuery();
+            const decoded = new TextDecoder().decode(Uint8Array.from(atob(service.encodedQuery), (char) => char.charCodeAt(0)));
+            const parsed = JSON.parse(decoded);
+            expect(parsed['userQuery']).toBe('test');
         });
     });
 
@@ -215,15 +420,27 @@ describe('BaseQueryBuilderService', () => {
             expect(service.buildQuery()).toBeNull();
         });
 
-        it('should build query with userQuery', () => {
+        it('should build query with parsedQuery in regular mode', () => {
+            configureAppConfig(true);
+            service.searchMode = 'regular';
             service.userQuery = 'test';
             const query = service.buildQuery();
 
             expect(query).toBeTruthy();
-            expect(query.query.query).toBe('(test)');
+            expect(query.query.query).toContain('cm:name:"test*"');
+        });
+
+        it('should build query using userQuery directly in formula mode', () => {
+            service.searchMode = 'formula';
+            service.userQuery = '(cm:name:"test*")';
+            const query = service.buildQuery();
+
+            expect(query).toBeTruthy();
+            expect(query.query.query).toBe('(cm:name:"test*")');
         });
 
         it('should include scope in query when set', () => {
+            service.searchMode = 'formula';
             service.userQuery = 'test';
             service.setScope({ locations: 'nodes' });
             const query = service.buildQuery();
@@ -233,6 +450,7 @@ describe('BaseQueryBuilderService', () => {
 
         it('should include default includes when none configured', () => {
             service.config = { id: 'test-config', categories: [] };
+            service.searchMode = 'formula';
             service.userQuery = 'test';
             const query = service.buildQuery();
 
@@ -241,29 +459,25 @@ describe('BaseQueryBuilderService', () => {
         });
     });
 
-    describe('update', () => {
-        it('should emit updated event with built query', (done) => {
+    describe('getFinalQuery', () => {
+        it('should skip query fragments that are empty match-all objects', () => {
+            service.searchMode = 'formula';
             service.userQuery = 'test';
+            service.categories = [{ id: 'cat1', name: 'Cat1', enabled: true, expanded: false, component: { selector: 'test', settings: undefined } }];
+            service.queryFragments['cat1'] = { matchAll: '', matchAny: '', matchExact: '', exclude: '' };
 
-            service.updated.subscribe((query) => {
-                expect(query.query.query).toBe('(test)');
-                done();
-            });
-
-            service.update();
+            const query = service.buildQuery();
+            expect(query.query.query).toBe('test');
         });
 
-        it('should emit updated event with provided query body', (done) => {
-            const customQuery = {
-                query: { query: 'custom query', language: 'afts' }
-            };
+        it('should include non-empty query fragments', () => {
+            service.searchMode = 'formula';
+            service.userQuery = 'test';
+            service.categories = [{ id: 'cat1', name: 'Cat1', enabled: true, expanded: false, component: { selector: 'test', settings: undefined } }];
+            service.queryFragments['cat1'] = 'cm:name:"hello"';
 
-            service.updated.subscribe((query) => {
-                expect(query.query.query).toBe('custom query');
-                done();
-            });
-
-            service.update(customQuery);
+            const query = service.buildQuery();
+            expect(query.query.query).toContain('cm:name:"hello"');
         });
     });
 
@@ -450,79 +664,24 @@ describe('BaseQueryBuilderService', () => {
 
             expect(service.execute).toHaveBeenCalled();
         });
-    });
 
-    describe('populateFilters and selectedConfiguration restoration', () => {
-        beforeEach(() => {
-            (appConfig.get as jasmine.Spy<<T>(key: string, defaultValue?: T) => T>).and.returnValue(mockMultipleConfigs);
-            service.resetToDefaults();
-        });
-
-        it('should restore selectedConfiguration from populateFilters', (done) => {
+        it('should not call execute when shouldExecute is false', async () => {
             spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
+            spyOn(service, 'execute');
 
-            service.configUpdated.subscribe((config) => {
-                expect(config.name).toBe('Config 3');
-                done();
-            });
+            service.updateSelectedConfiguration('config-2', true, false);
 
-            service.populateFilters.next({ selectedConfigurationId: 'config-3', someOtherFilter: 'value' });
+            expect(service.execute).not.toHaveBeenCalled();
         });
 
-        it('should reset to default configuration when populateFilters has no selectedConfigurationId', (done) => {
+        it('should not reset search options when resetFilters is false', () => {
             spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
             spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve({ list: { entries: [] } } as ResultSetPaging));
 
-            service.updateSelectedConfiguration('config-3');
+            service.queryFragments['someFilter'] = 'some value';
+            service.updateSelectedConfiguration('config-2', false, false);
 
-            setTimeout(() => {
-                service.configUpdated.subscribe((config) => {
-                    expect(config.name).toBe('Config 1');
-                    done();
-                });
-
-                service.populateFilters.next({ someOtherFilter: 'value' });
-            }, 0);
-        });
-
-        it('should not change configuration when populateFilters is empty', () => {
-            spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
-            const configUpdatedSpy = jasmine.createSpy('configUpdatedSpy');
-
-            service.configUpdated.subscribe(configUpdatedSpy);
-            configUpdatedSpy.calls.reset();
-
-            service.populateFilters.next({});
-
-            expect(configUpdatedSpy).not.toHaveBeenCalled();
-        });
-
-        it('should not change configuration when same configuration is already selected', (done) => {
-            spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
-            spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve({ list: { entries: [] } } as ResultSetPaging));
-
-            service.updateSelectedConfiguration('config-2');
-
-            setTimeout(() => {
-                const configUpdatedSpy = jasmine.createSpy('configUpdatedSpy');
-                service.configUpdated.subscribe(configUpdatedSpy);
-
-                service.populateFilters.next({ selectedConfigurationId: 'config-2' });
-
-                setTimeout(() => {
-                    expect(configUpdatedSpy).not.toHaveBeenCalled();
-                    done();
-                }, 0);
-            }, 0);
-        });
-
-        it('should update filterRawParams when restoring configuration from populateFilters', (done) => {
-            service.configUpdated.subscribe(() => {
-                expect(service.filterRawParams['selectedConfigurationId']).toBe('config-2');
-                done();
-            });
-
-            service.populateFilters.next({ selectedConfigurationId: 'config-2' });
+            expect(service.queryFragments['someFilter']).toBe('some value');
         });
     });
 
@@ -576,6 +735,18 @@ describe('BaseQueryBuilderService', () => {
 
             expect(service.categories.length).toBe(1);
             expect(service.categories[0].id).toBe('cat1');
+        });
+
+        it('should reset userQuery when resetUserQuery is true (default)', () => {
+            service.userQuery = 'some query';
+            service.resetToDefaults(false, true);
+            expect(service.userQuery).toBe('');
+        });
+
+        it('should preserve userQuery when resetUserQuery is false', () => {
+            service.userQuery = 'some query';
+            service.resetToDefaults(false, false);
+            expect(service.userQuery).toBe('some query');
         });
     });
 });

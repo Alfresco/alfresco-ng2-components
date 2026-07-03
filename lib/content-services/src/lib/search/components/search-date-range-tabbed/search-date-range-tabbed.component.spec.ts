@@ -79,7 +79,7 @@ describe('SearchDateRangeTabbedComponent', () => {
             },
             filterRawParams: {},
             populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy('update')
+            execute: jasmine.createSpy('execute')
         } as any;
         component.settings = {
             hideDefaultAction: false,
@@ -210,7 +210,7 @@ describe('SearchDateRangeTabbedComponent', () => {
         expect(component.context.filterRawParams[component.id].modifiedDate).toEqual(anyMockDate);
     });
 
-    it('should trigger context.update() when values are submitted', () => {
+    it('should trigger context.execute() when values are submitted', () => {
         component.onDateRangedValueChanged(betweenMockData, 'createdDate');
         component.onDateRangedValueChanged(inLastMockData, 'modifiedDate');
         fixture.detectChanges();
@@ -221,7 +221,7 @@ describe('SearchDateRangeTabbedComponent', () => {
             `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}']` +
             ` AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
         expect(component.context.queryFragments['dateRange']).toEqual(query);
-        expect(component.context.update).toHaveBeenCalled();
+        expect(component.context.execute).toHaveBeenCalled();
     });
 
     it('should clear values and search filter when widget is reset', (done) => {
@@ -231,7 +231,7 @@ describe('SearchDateRangeTabbedComponent', () => {
             expect(component.combinedDisplayValue).toBe('');
             expect(component.displayValue$.next).toHaveBeenCalledWith('');
             expect(component.context.queryFragments['dateRange']).toEqual('');
-            expect(component.context.update).toHaveBeenCalled();
+            expect(component.context.execute).toHaveBeenCalled();
             component.fields.forEach((field) => expect(component.context.filterRawParams[field]).toBeUndefined());
             done();
         });

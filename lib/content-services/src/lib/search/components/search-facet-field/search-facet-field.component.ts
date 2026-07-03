@@ -69,7 +69,7 @@ export class SearchFacetFieldComponent implements FacetWidget {
             this.searchFacetFiltersService.updateSelectedBuckets();
             if (this.canUpdateOnChange) {
                 this.updateDisplayValue();
-                this.queryBuilder.update();
+                this.queryBuilder.execute();
             }
         }
     }
@@ -81,7 +81,7 @@ export class SearchFacetFieldComponent implements FacetWidget {
             this.searchFacetFiltersService.updateSelectedBuckets();
             if (this.canUpdateOnChange) {
                 this.updateDisplayValue();
-                this.queryBuilder.update();
+                this.queryBuilder.execute();
             }
         }
     }
@@ -101,7 +101,7 @@ export class SearchFacetFieldComponent implements FacetWidget {
             }
             this.searchFacetFiltersService.updateSelectedBuckets();
             if (this.canUpdateOnChange) {
-                this.queryBuilder.update();
+                this.queryBuilder.execute();
             }
         }
     }
@@ -125,11 +125,11 @@ export class SearchFacetFieldComponent implements FacetWidget {
     reset(): void {
         this.resetSelectedBuckets(this.field);
         this.updateDisplayValue();
-        this.queryBuilder.update();
+        this.queryBuilder.execute();
     }
 
     submitValues(): void {
         this.updateDisplayValue();
-        this.queryBuilder.update();
+        this.queryBuilder.execute();
     }
 }
