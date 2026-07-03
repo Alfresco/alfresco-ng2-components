@@ -188,12 +188,21 @@ export class RedirectAuthService extends AuthService {
             map(({ event }) => event as OAuthErrorEvent),
             switchMap(() => this._timeSyncService.checkTimeSync(this.oauthService.clockSkewInSec)),
             filter((timeSync) => timeSync?.outOfSync),
-            // Re-sync the clock with the detected server time and attempt a token refresh
+            // Re-sync the clock with the detected server time; then check whether the
+            // token is actually still valid with the corrected clock. Only attempt a
+            // refresh if the token is truly expired — retrying a refresh when the
+            // triggering error was itself a token_refresh_error would just fail again.
             switchMap((timeSync) =>
                 this._timeSyncService.syncClockOffset().pipe(
-                    switchMap(() => from(this.oauthService.refreshToken())),
-                    map(() => null as TimeSync | null),
-                    catchError(() => of(timeSync))
+                    switchMap(() => {
+                        if (!this.tokenHasExpired()) {
+                            return of(null as TimeSync | null);
+                        }
+                        return from(this.oauthService.refreshToken()).pipe(
+                            map(() => null as TimeSync | null),
+                            catchError(() => of(timeSync))
+                        );
+                    })
                 )
             ),
             filter((timeSync): timeSync is TimeSync => timeSync !== null),
