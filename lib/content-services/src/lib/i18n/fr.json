@@ -629,8 +629,8 @@
       "TOOLTIP": "Ouvrir le menu actions"
     },
     "ARIA": {
-      "SELECTED": "{{ name }} selected",
-      "DESELECTED": "{{ name }} deselected"
+      "SELECTED": "{{name}} sélectionné",
+      "DESELECTED": "{{name}} désélectionné"
     }
   },
   "LIBRARY": {
