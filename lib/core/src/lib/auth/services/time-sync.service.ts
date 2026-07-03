@@ -71,7 +71,9 @@ export class TimeSyncService {
      * Call this at application start-up (fire-and-forget) so subsequent calls to
      * `getCorrectedNow` compensate for any VM / Citrix clock drift.
      * If `serverTimeUrl` is not configured or the request fails, the offset is left unchanged
-     * (or at 0 if this is the first call).
+     * (or at 0 if this is the first call). When `serverTimeUrl` is absent the clock offset
+     * is maintained passively by the `DateHeaderTimeSyncInterceptor`, so calling this method
+     * without a configured URL is a safe no-op.
      *
      * @param maxAllowedOffsetMs Optional safety cap. If the computed offset exceeds this value,
      *                           it is ignored to prevent a compromised time endpoint from
@@ -79,6 +81,10 @@ export class TimeSyncService {
      * @returns Observable that completes after the offset has been stored (or silently on error)
      */
     syncClockOffset(maxAllowedOffsetMs?: number): Observable<void> {
+        if (!this.getServerTimeUrl()) {
+            return of(void 0);
+        }
+
         try {
             const startTime = Date.now();
             return this.getServerTime().pipe(
@@ -105,7 +111,50 @@ export class TimeSyncService {
         }
     }
 
+    /**
+     * Updates `clockOffsetMs` using the value of the HTTP `Date` response header.
+     * Called by the `DateHeaderTimeSyncInterceptor` so the offset is maintained
+     * passively on every HTTP response without requiring a dedicated time endpoint.
+     *
+     * @param dateHeader The raw value of the `Date` response header (RFC 7231 format).
+     * @param requestStartTime The `Date.now()` timestamp recorded just before the request was sent.
+     * @param maxAllowedOffsetMs Optional safety cap. If the computed offset exceeds this value
+     *                           it is ignored.
+     */
+    updateClockOffsetFromDateHeader(dateHeader: string, requestStartTime: number, maxAllowedOffsetMs?: number): void {
+        const endTime = Date.now();
+        const serverTimeInMs = new Date(dateHeader).getTime();
+
+        if (isNaN(serverTimeInMs)) {
+            return;
+        }
+
+        const roundTripTimeInMs = endTime - requestStartTime;
+        const adjustedServerTimeInMs = serverTimeInMs + roundTripTimeInMs / 2;
+        const newOffset = adjustedServerTimeInMs - endTime;
+
+        if (maxAllowedOffsetMs != null && Math.abs(newOffset) > maxAllowedOffsetMs) {
+            return;
+        }
+
+        this.clockOffsetMs = newOffset;
+    }
+
     checkTimeSync(maxAllowedClockSkewInSec: number): Observable<TimeSync> {
+        if (!this.getServerTimeUrl()) {
+            const localCurrentTimeInMs = Date.now();
+            const adjustedServerTimeInMs = localCurrentTimeInMs + this.clockOffsetMs;
+            const timeOffsetInMs = Math.abs(this.clockOffsetMs);
+            const maxAllowedClockSkewInMs = maxAllowedClockSkewInSec * 1000;
+
+            return of({
+                outOfSync: timeOffsetInMs > maxAllowedClockSkewInMs,
+                timeOutOfSyncInSec: timeOffsetInMs / 1000,
+                localDateTimeISO: new Date(localCurrentTimeInMs).toISOString(),
+                serverDateTimeISO: new Date(adjustedServerTimeInMs).toISOString()
+            });
+        }
+
         const startTime = Date.now();
 
         return this.getServerTime().pipe(
@@ -129,7 +178,7 @@ export class TimeSyncService {
 
                 return {
                     outOfSync: timeOffsetInMs > maxAllowedClockSkewInMs,
-                    timeOffsetInSec: timeOffsetInMs / 1000,
+                    timeOutOfSyncInSec: timeOffsetInMs / 1000,
                     localDateTimeISO: new Date(localCurrentTimeInMs).toISOString(),
                     serverDateTimeISO: new Date(adjustedServerTimeInMs).toISOString()
                 };
@@ -200,10 +249,6 @@ export class TimeSyncService {
     }
 
     private getServerTimeUrl(): string {
-        const serverTimeUrl = this._appConfigService.get('serverTimeUrl', '');
-        if (!serverTimeUrl) {
-            throw new Error('serverTimeUrl is not configured.');
-        }
-        return serverTimeUrl;
+        return this._appConfigService.get('serverTimeUrl', '');
     }
 }
