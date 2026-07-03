@@ -30,7 +30,7 @@ import {
 } from 'angular-oauth2-oidc';
 import { WebCryptoJwksValidationHandler } from './web-crypto-jwks-validation-handler';
 import { from, Observable, race, ReplaySubject } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, switchMap, take } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, scan, shareReplay, skip, switchMap, take } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { AUTH_MODULE_CONFIG, AuthModuleConfig } from './auth-config';
 import { RetryLoginService } from './retry-login.service';
@@ -176,6 +176,20 @@ export class RedirectAuthService extends AuthService {
         );
 
         this.oauthErrorEventOccurDueToClockOutOfSync$ = this.oauthErrorEvent$.pipe(
+            // For token_refresh_error, skip the first occurrence so the library's
+            // built-in retry (secondTokenRefreshErrorEventOccur$) has a chance to run
+            // before we conclude the issue is clock drift. All other error types are
+            // checked immediately.
+            scan(
+                (acc, event) => ({
+                    event,
+                    shouldProcess: event.type !== 'token_refresh_error' || acc.tokenRefreshErrorCount >= 1,
+                    tokenRefreshErrorCount: event.type === 'token_refresh_error' ? acc.tokenRefreshErrorCount + 1 : acc.tokenRefreshErrorCount
+                }),
+                { event: null as OAuthErrorEvent | null, shouldProcess: false, tokenRefreshErrorCount: 0 }
+            ),
+            filter(({ shouldProcess }) => shouldProcess),
+            map(({ event }) => event as OAuthErrorEvent),
             switchMap(() => this._timeSyncService.checkTimeSync(this.oauthService.clockSkewInSec)),
             filter((timeSync) => timeSync?.outOfSync),
             map(
@@ -196,6 +210,10 @@ export class RedirectAuthService extends AuthService {
         this.tokenHasExpiredDueToClockOutOfSync$ = this.oauthService.events.pipe(
             map(() => !!this.oauthService.getIdentityClaims() && this.tokenHasExpired()),
             filter((hasExpired) => hasExpired),
+            // Skip the first occurrence: the library will attempt an automatic token
+            // refresh. Only check for clock drift if the token is still expired after
+            // that refresh attempt has had a chance to run.
+            skip(1),
             switchMap(() => this._timeSyncService.checkTimeSync(this.oauthService.clockSkewInSec)),
             filter((timeSync) => timeSync?.outOfSync),
             map(
