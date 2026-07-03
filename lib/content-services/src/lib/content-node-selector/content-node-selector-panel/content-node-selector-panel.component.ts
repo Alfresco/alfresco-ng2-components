@@ -40,7 +40,8 @@ import { ImageResolver } from '../../document-list/data/image-resolver.model';
 import { CustomResourcesService } from '../../document-list/services/custom-resources.service';
 import { ShareDataRow } from '../../document-list/data/share-data-row.model';
 import { NodeEntryEvent } from '../../document-list/components/node.event';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -110,6 +111,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     private showSearchField = true;
     private showCounter = false;
     private _emptyList = true;
+    private lastParentFilterQuery: string | null = null;
 
     /** If true will restrict the search and breadcrumbs to the currentFolderId */
     @Input()
@@ -440,7 +442,12 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         this.siteId = chosenSite.entry.guid;
         this.setTitleIfCustomSite(chosenSite);
         this.siteChange.emit(chosenSite.entry.title);
-        this.executeSearch(this.searchTerm);
+        if (this.searchTerm) {
+            this.executeSearch(this.searchTerm);
+        } else {
+            this.resetFolderToShow();
+            this.clearSearch();
+        }
     }
 
     /**
@@ -467,7 +474,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         this.folderIdToShow = null;
         this.preselectedNodes = [];
         this.loadingSearchResults = true;
-        this.addCorrespondingNodeIdsQuery();
         this.resetChosenNode();
     }
 
@@ -499,25 +505,35 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         this.showingSearch.emit(this.showingSearchResults);
     }
 
-    private addCorrespondingNodeIdsQuery() {
-        let extraParentFiltering = '';
-
+    private addCorrespondingNodeIdsQuery(): Observable<void> {
         if (this.customResourcesService.hasCorrespondingNodeIds(this.siteId)) {
-            this.customResourcesService.getCorrespondingNodeIds(this.siteId).subscribe((nodeIds) => {
-                if (nodeIds?.length) {
-                    nodeIds
-                        .filter((id) => id !== this.siteId)
-                        .forEach((extraId) => {
-                            extraParentFiltering += ` OR ANCESTOR:'workspace://SpacesStore/${extraId}'`;
-                        });
-                }
-                const parentFiltering = this.siteId ? `ANCESTOR:'workspace://SpacesStore/${this.siteId}'${extraParentFiltering}` : '';
-                this.queryBuilderService.addFilterQuery(parentFiltering);
-            });
-        } else {
-            const parentFiltering = this.siteId ? `ANCESTOR:'workspace://SpacesStore/${this.siteId}'` : '';
-            this.queryBuilderService.addFilterQuery(parentFiltering);
+            return this.customResourcesService.getCorrespondingNodeIds(this.siteId).pipe(
+                map((nodeIds) => {
+                    let extraParentFiltering = '';
+                    if (nodeIds?.length) {
+                        nodeIds
+                            .filter((id) => id !== this.siteId)
+                            .forEach((extraId) => {
+                                extraParentFiltering += ` OR ANCESTOR:'workspace://SpacesStore/${extraId}'`;
+                            });
+                    }
+                    const parentFiltering = this.siteId ? `ANCESTOR:'workspace://SpacesStore/${this.siteId}'${extraParentFiltering}` : '';
+                    this.setParentFilterQuery(parentFiltering);
+                })
+            );
         }
+
+        const parentFiltering = this.siteId ? `ANCESTOR:'workspace://SpacesStore/${this.siteId}'` : '';
+        this.setParentFilterQuery(parentFiltering);
+        return of(undefined);
+    }
+
+    private setParentFilterQuery(parentFiltering: string) {
+        if (this.lastParentFilterQuery) {
+            this.queryBuilderService.removeFilterQuery(this.lastParentFilterQuery);
+        }
+        this.lastParentFilterQuery = parentFiltering || null;
+        this.queryBuilderService.addFilterQuery(parentFiltering);
     }
 
     private setSearchScopeToNodes() {
@@ -685,6 +701,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         this.queryBuilderService.searchMode = 'formula';
         const wildcardSuffix = this.queryBuilderService.wildcardsEnabled ? '*' : '';
         this.queryBuilderService.userQuery = searchValue.length > 0 ? `(${searchValue}${wildcardSuffix})` : searchValue;
-        this.queryBuilderService.execute(false);
+        this.addCorrespondingNodeIdsQuery()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => this.queryBuilderService.execute(false));
     }
 }
