@@ -223,7 +223,14 @@ export class AdfHttpClient implements JsApiHttpClient {
                     // for backwards compatibility we need to convert it to error class as the HttpErrorResponse only implements Error interface, not extending it,
                     // and we need to be able to correctly pass instanceof Error conditions used inside repository
                     // we also need to pass error as Stringify string as we are detecting statusCodes using JSON.parse(error.message) in some places
-                    const msg = typeof err.error === 'string' ? err.error : JSON.stringify(err.error);
+                    let msg: string;
+                    if (err.error == null) {
+                        msg = `${err.status} ${err.statusText ?? 'Unknown error'}`;
+                    } else if (typeof err.error === 'string') {
+                        msg = err.error;
+                    } else {
+                        msg = JSON.stringify(err.error);
+                    }
 
                     // for backwards compatibility to handle cases in code where we try read response.error.response.body;
 
