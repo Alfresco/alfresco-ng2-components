@@ -660,12 +660,18 @@
   },
   "DYNAMIC_CHIP_LIST": {
     "LOAD_MORE": "Carregar mais",
-    "DELETE": "Remove {{ name }}"
+    "DELETE": "Remover {{ name }}"
   },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Confirmar",
     "ACTION": "Pretende prosseguir?",
     "YES_LABEL": "Sim",
     "NO_LABEL": "Não"
+  },
+  "SESSION_TIMEOUT": {
+    "TITLE": "Are you still working?",
+    "MESSAGE": "Your session will end in {{seconds}} seconds because there has been no activity.",
+    "LOG_OUT": "Log out",
+    "CONTINUE_WORKING": "Continue working"
   }
 }
