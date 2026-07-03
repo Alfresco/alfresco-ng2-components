@@ -142,6 +142,186 @@ describe('TextWidgetComponent', () => {
                 expect(errors[0]).toContain('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
             });
 
+            it('should validate against default max length when maxLength is not configured', async () => {
+                widget.field = new FormFieldModel(form, {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false
+                });
+                fixture.detectChanges();
+
+                await testingUtils.fillMatInput('a'.repeat(1025));
+
+                expect(widget.field.isValid).toBe(false);
+                expect(widget.field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+                expect(widget.field.validationSummary.attributes.get('maxLength')).toBe('1,024');
+            });
+
+            it('should block paste when resulting value exceeds configured max length', () => {
+                widget.field = new FormFieldModel(form, {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '1234',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    maxLength: 5
+                });
+                fixture.detectChanges();
+                const inputElement = testingUtils.getByCSS('#text-id').nativeElement;
+                inputElement.value = '1234';
+                inputElement.setSelectionRange(4, 4);
+                const pasteEvent = {
+                    target: inputElement,
+                    clipboardData: { getData: () => '56' },
+                    preventDefault: jasmine.createSpy('preventDefault')
+                } as unknown as ClipboardEvent;
+
+                widget.onPaste(pasteEvent);
+
+                expect(pasteEvent.preventDefault).toHaveBeenCalled();
+                expect(widget.maxLengthPasteError.message).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+                expect(widget.maxLengthPasteError.attributes.get('maxLength')).toBe('5');
+
+                widget.field.validate();
+                fixture.detectChanges();
+
+                errorWidget = testingUtils.getByCSS('.adf-error-text').nativeElement;
+                expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+                expect(widget.maxLengthPasteError.isActive()).toBe(true);
+            });
+
+            it('should keep paste max length error when value change emits after blocked paste', () => {
+                widget.field = new FormFieldModel(form, {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '1234',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    maxLength: 5
+                });
+                fixture.detectChanges();
+                const inputElement = testingUtils.getByCSS('#text-id').nativeElement;
+                inputElement.value = '1234';
+                inputElement.setSelectionRange(4, 4);
+                const pasteEvent = {
+                    target: inputElement,
+                    clipboardData: { getData: () => '56' },
+                    preventDefault: jasmine.createSpy('preventDefault')
+                } as unknown as ClipboardEvent;
+
+                widget.onPaste(pasteEvent);
+                widget.onValueChange('123456');
+                fixture.detectChanges();
+
+                expect(widget.maxLengthPasteError.isActive()).toBe(true);
+                errorWidget = testingUtils.getByCSS('.adf-error-text').nativeElement;
+                expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+            });
+
+            it('should keep paste max length error when paste input event emits after blocked paste', () => {
+                widget.field = new FormFieldModel(form, {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '1234',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    maxLength: 5
+                });
+                fixture.detectChanges();
+                const inputElement = testingUtils.getByCSS('#text-id').nativeElement;
+                inputElement.value = '1234';
+                inputElement.setSelectionRange(4, 4);
+                const pasteEvent = {
+                    target: inputElement,
+                    clipboardData: { getData: () => '56' },
+                    preventDefault: jasmine.createSpy('preventDefault')
+                } as unknown as ClipboardEvent;
+
+                widget.onPaste(pasteEvent);
+
+                widget.onInput(new InputEvent('input', { inputType: 'insertFromPaste' }));
+
+                expect(widget.maxLengthPasteError.isActive()).toBe(true);
+            });
+
+            it('should clear paste max length error when non-paste input happens after blocked paste', () => {
+                widget.field = new FormFieldModel(form, {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '1234',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    maxLength: 5
+                });
+                fixture.detectChanges();
+                const inputElement = testingUtils.getByCSS('#text-id').nativeElement;
+                inputElement.value = '1234';
+                inputElement.setSelectionRange(4, 4);
+                const pasteEvent = {
+                    target: inputElement,
+                    clipboardData: { getData: () => '56' },
+                    preventDefault: jasmine.createSpy('preventDefault')
+                } as unknown as ClipboardEvent;
+
+                widget.onPaste(pasteEvent);
+                widget.onInput(new InputEvent('input', { inputType: 'insertText' }));
+
+                expect(widget.maxLengthPasteError.isActive()).toBe(false);
+            });
+
+            it('should allow paste when selected text keeps resulting value within max length', () => {
+                widget.field = new FormFieldModel(form, {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '12345',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    maxLength: 5
+                });
+                fixture.detectChanges();
+                const inputElement = testingUtils.getByCSS('#text-id').nativeElement;
+                inputElement.value = '12345';
+                inputElement.setSelectionRange(2, 5);
+                const pasteEvent = {
+                    target: inputElement,
+                    clipboardData: { getData: () => 'abc' },
+                    preventDefault: jasmine.createSpy('preventDefault')
+                } as unknown as ClipboardEvent;
+
+                widget.onPaste(pasteEvent);
+
+                expect(pasteEvent.preventDefault).not.toHaveBeenCalled();
+                expect(widget.maxLengthPasteError.isActive()).toBe(false);
+            });
+
+            it('should block paste when resulting value exceeds default max length', () => {
+                widget.field = new FormFieldModel(form, {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: 'a'.repeat(1024),
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false
+                });
+                fixture.detectChanges();
+                const inputElement = testingUtils.getByCSS('#text-id').nativeElement;
+                inputElement.value = 'a'.repeat(1024);
+                inputElement.setSelectionRange(1024, 1024);
+                const pasteEvent = {
+                    target: inputElement,
+                    clipboardData: { getData: () => 'b' },
+                    preventDefault: jasmine.createSpy('preventDefault')
+                } as unknown as ClipboardEvent;
+
+                widget.onPaste(pasteEvent);
+
+                expect(pasteEvent.preventDefault).toHaveBeenCalled();
+                expect(widget.maxLengthPasteError.message).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+                expect(widget.maxLengthPasteError.attributes.get('maxLength')).toBe('1,024');
+                expect(widget.maxLengthPasteError.isActive()).toBe(true);
+            });
+
             it('should be able to set regex pattern property for Text widget', async () => {
                 widget.field = new FormFieldModel(form, {
                     id: 'text-id',
@@ -504,6 +684,59 @@ describe('TextWidgetComponent', () => {
             fixture.detectChanges();
             const customStatusMessage = testingUtils.getByCSS('.custom-status-message').nativeElement;
             expect(customStatusMessage?.textContent).toBe(`custom status message for ${widget.field.name}`);
+        });
+
+        it('should display paste max length error with custom status template', () => {
+            widget.field = new FormFieldModel(form, {
+                id: 'text-id',
+                name: 'text-name',
+                value: '1234',
+                type: FormFieldTypes.TEXT,
+                readOnly: false,
+                maxLength: 5
+            });
+            fixture.detectChanges();
+            const inputElement = testingUtils.getByCSS('#text-id').nativeElement;
+            inputElement.value = '1234';
+            inputElement.setSelectionRange(4, 4);
+            const pasteEvent = {
+                target: inputElement,
+                clipboardData: { getData: () => '56' },
+                preventDefault: jasmine.createSpy('preventDefault')
+            } as unknown as ClipboardEvent;
+
+            widget.onPaste(pasteEvent);
+            fixture.detectChanges();
+
+            const pasteErrorWidget = testingUtils.getByCSS('.adf-error-text').nativeElement;
+            expect(pasteErrorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+        });
+
+        it('should replace custom status template with paste max length error', () => {
+            widget.field = new FormFieldModel(form, {
+                id: 'text-id',
+                name: 'text-name',
+                value: '1234',
+                type: FormFieldTypes.TEXT,
+                readOnly: false,
+                maxLength: 5
+            });
+            fixture.detectChanges();
+            const inputElement = testingUtils.getByCSS('#text-id').nativeElement;
+            inputElement.value = '1234';
+            inputElement.setSelectionRange(4, 4);
+            const pasteEvent = {
+                target: inputElement,
+                clipboardData: { getData: () => '56' },
+                preventDefault: jasmine.createSpy('preventDefault')
+            } as unknown as ClipboardEvent;
+
+            widget.onPaste(pasteEvent);
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('.custom-status-message')).toBeNull();
+            const pasteErrorWidget = testingUtils.getByCSS('.adf-error-text').nativeElement;
+            expect(pasteErrorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
         });
     });
 });

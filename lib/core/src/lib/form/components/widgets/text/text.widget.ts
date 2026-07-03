@@ -26,7 +26,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { WidgetComponent } from '../widget.component';
+import { ErrorMessageModel } from '../core/error-message.model';
 import { FormattableTextWidgetComponent } from '../core/formattable-text.widget';
+import { DEFAULT_TEXT_MAX_LENGTH } from '../core/form-field-validator';
 import { InputMaskDirective } from './text-mask.component';
 import { IconModule } from '../../../../icon/icon.module';
 
@@ -67,12 +69,21 @@ export class FieldStatusTemplateDirective {
     encapsulation: ViewEncapsulation.None
 })
 export class TextWidgetComponent extends FormattableTextWidgetComponent {
-    mask: string;
-    placeholder: string;
-    isMaskReversed: boolean;
+    mask = '';
+    placeholder = '';
+    isMaskReversed = false;
     fieldStatusTemplate = inject(FIELD_STATUS_TEMPLATE, { optional: true });
-    errorStateMatcher: ErrorStateMatcher;
+    errorStateMatcher!: ErrorStateMatcher;
     translateParameters: Record<string, string> = {};
+    maxLengthPasteError = new ErrorMessageModel();
+
+    get resolvedMaxLength(): number {
+        return this.field?.maxLength > 0 ? this.field.maxLength : DEFAULT_TEXT_MAX_LENGTH;
+    }
+
+    get maxLengthPasteErrorParameters(): Record<string, string> {
+        return this.maxLengthPasteError.getAttributesAsJsonObj();
+    }
 
     override ngOnInit() {
         super.ngOnInit();
@@ -88,10 +99,47 @@ export class TextWidgetComponent extends FormattableTextWidgetComponent {
         this.initErrorStateMatcher();
     }
 
+    onBlur(): void {
+        this.markAsTouched();
+        this.updateTranslateParameters();
+    }
+
+    onTextFieldChanged(): void {
+        this.onFieldChanged(this.field);
+        this.updateTranslateParameters();
+    }
+
+    onPaste(event: ClipboardEvent): void {
+        const input = event.target instanceof HTMLInputElement ? event.target : null;
+        const pastedValue = event.clipboardData?.getData('text') ?? '';
+
+        if (!input || this.getLengthAfterPaste(input, pastedValue) <= this.resolvedMaxLength) {
+            this.clearMaxLengthPasteError();
+            return;
+        }
+
+        event.preventDefault();
+        this.markAsTouched();
+        this.setMaxLengthPasteError();
+    }
+
+    onInput(event: Event): void {
+        const inputType = 'inputType' in event ? event.inputType : undefined;
+
+        if (inputType === 'insertFromPaste') {
+            return;
+        }
+
+        this.clearMaxLengthPasteError();
+    }
+
     private initErrorStateMatcher(): void {
         this.errorStateMatcher = {
             isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
-                !this.fieldStatusTemplate && (!!this.field.validationSummary?.message || (this.isInvalidFieldRequired() && this.isTouched()))
+                !this.fieldStatusTemplate &&
+                (this.maxLengthPasteError.isActive() ||
+                    !!this.field.validationSummary?.message ||
+                    (this.isInvalidFieldRequired() && this.isTouched()))
         };
     }
 
@@ -103,13 +151,22 @@ export class TextWidgetComponent extends FormattableTextWidgetComponent {
         }
     }
 
-    onBlur(): void {
-        this.markAsTouched();
-        this.updateTranslateParameters();
+    private getLengthAfterPaste(input: HTMLInputElement, pastedValue: string): number {
+        const value = input.value ?? '';
+        const selectionStart = input.selectionStart ?? value.length;
+        const selectionEnd = input.selectionEnd ?? selectionStart;
+
+        return value.length - Math.max(selectionEnd - selectionStart, 0) + pastedValue.length;
     }
 
-    onTextFieldChanged(): void {
-        this.onFieldChanged(this.field);
-        this.updateTranslateParameters();
+    private setMaxLengthPasteError(): void {
+        this.maxLengthPasteError = new ErrorMessageModel({
+            message: 'FORM.FIELD.VALIDATOR.NO_LONGER_THAN',
+            attributes: new Map([['maxLength', this.resolvedMaxLength.toLocaleString()]])
+        });
+    }
+
+    private clearMaxLengthPasteError(): void {
+        this.maxLengthPasteError = new ErrorMessageModel();
     }
 }

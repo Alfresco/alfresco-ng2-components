@@ -21,6 +21,8 @@ import { FormFieldTypes } from './form-field-types';
 import { isNumberValue } from './form-field-utils';
 import { FormFieldModel } from './form-field.model';
 
+export const DEFAULT_TEXT_MAX_LENGTH = 1024;
+
 export interface FormFieldValidator {
     isSupported(field: FormFieldModel): boolean;
     validate(field: FormFieldModel): boolean;
@@ -135,7 +137,8 @@ export class MinLengthFieldValidator implements FormFieldValidator {
 export class MaxLengthFieldValidator implements FormFieldValidator {
     constructor(
         private readonly supportedTypes: FormFieldTypes[] = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT],
-        private readonly maxLength?: number
+        private readonly maxLength?: number,
+        private readonly fallbackMaxLength?: number
     ) {}
 
     isSupported(field: FormFieldModel): boolean {
@@ -158,7 +161,11 @@ export class MaxLengthFieldValidator implements FormFieldValidator {
     }
 
     getMaxLength(field: FormFieldModel): number | undefined {
-        return this.maxLength ?? field.maxLength;
+        if (this.maxLength !== undefined) {
+            return this.maxLength;
+        }
+
+        return field.maxLength > 0 ? field.maxLength : this.fallbackMaxLength;
     }
 }
 
@@ -317,7 +324,8 @@ export const FORM_FIELD_VALIDATORS = [
     new RequiredFieldValidator(),
     new NumberFieldValidator(),
     new MinLengthFieldValidator(),
-    new MaxLengthFieldValidator(),
+    new MaxLengthFieldValidator([FormFieldTypes.TEXT], undefined, DEFAULT_TEXT_MAX_LENGTH),
+    new MaxLengthFieldValidator([FormFieldTypes.MULTILINE_TEXT]),
     new MaxLengthFieldValidator([FormFieldTypes.NUMBER], 10),
     new MinValueFieldValidator(),
     new MaxValueFieldValidator(),
