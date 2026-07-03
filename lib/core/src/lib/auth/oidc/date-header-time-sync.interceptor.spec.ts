@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { TimeSyncService } from '../services/time-sync.service';
 import { DateHeaderTimeSyncInterceptor } from './date-header-time-sync.interceptor';
-import { HttpClient } from '@angular/common/http';
 
 describe('DateHeaderTimeSyncInterceptor', () => {
     let httpMock: HttpTestingController;
