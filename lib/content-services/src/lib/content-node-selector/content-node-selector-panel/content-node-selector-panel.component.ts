@@ -523,8 +523,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
             );
         }
 
-        const parentFiltering = this.siteId ? `ANCESTOR:'workspace://SpacesStore/${this.siteId}'` : '';
-        this.setParentFilterQuery(parentFiltering);
+        const siteFilter = this.siteId ? `ANCESTOR:'workspace://SpacesStore/${this.siteId}'` : '';
+        this.setParentFilterQuery(siteFilter);
         return of(undefined);
     }
 
