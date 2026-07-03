@@ -12,7 +12,9 @@
   },
 
   // Features to add to the dev container. More info: https://containers.dev/features.
-  // "features": {},
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
 
   "remoteUser": "node",
   "containerUser": "node",

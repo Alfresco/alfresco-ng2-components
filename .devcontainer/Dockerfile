@@ -9,8 +9,9 @@ ENV PNPM_HOME=/home/node/.local/share/pnpm
 ENV PATH=${PNPM_HOME}:${PATH}
 
 # Install Chromium for Karma/ChromeHeadless test execution inside the container.
+# gnupg2 is required so VS Code can forward the host gpg-agent for signed commits.
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends chromium \
+    && apt-get install -y --no-install-recommends chromium gnupg2 \
     && rm -rf /var/lib/apt/lists/*
 
 # Configure Corepack-managed pnpm globally at image build time.

@@ -50,33 +50,53 @@ When running Nx commands, VS Code may show a notification about a port being ope
 
 ## Git Operations and Signing
 
-You can use Git inside the container, outside the container, or split responsibilities for better key safety.
+The container is set up so you can do all Git work — including signed commits and
+pushes — inside it, using your host credentials and settings. Your private keys
+never enter the container: only the agent socket is forwarded.
 
-Recommended secure default:
+### Option A: Commit and Sign in Container (Recommended)
 
-1. Build, test, and edit code inside the container.
-2. Create signed commits outside the container on the host machine.
+The VS Code Dev Containers extension wires this up automatically:
 
-This reduces exposure of signing keys to container processes while keeping day-to-day development reproducible.
+- Your host `.gitconfig` (including `user.signingkey` and `commit.gpgsign`) is
+  copied into the container.
+- Your host `gpg-agent` is forwarded (this is why `gnupg2` is installed in the
+  image), and your GPG public keys are imported into the container.
+- Your host SSH agent is forwarded, so `git push` over SSH uses your host keys.
 
-### Option A: Sign Commits on Host (Recommended)
+One-time host setup (this is what gets copied in):
+
+```bash
+git config --global user.signingkey <YOUR_KEY_ID>
+git config --global commit.gpgsign true
+```
+
+Then work entirely inside the container:
+
+```bash
+gpg --list-secret-keys            # verify the forwarded key is visible
+git commit -S -m "your message"   # -S optional when commit.gpgsign is true
+git push
+```
+
+If signing fails with `gpg failed to sign the data` / `no secret key`, the agent
+forwarding did not attach — rebuild the container or reload the VS Code window.
+
+> Note: the automatic gitconfig / GPG / SSH forwarding is a feature of the VS Code
+> Dev Containers extension. If you run this configuration via the plain
+> `@devcontainers/cli`, mount `~/.gnupg`, `~/.gitconfig`, and the agent sockets
+> yourself, or fall back to Option B.
+
+### Option B: Sign Commits on Host
+
+For the strongest key isolation, keep signing on the host:
 
 - Keep private signing keys only on the host.
 - Do normal development in the container.
-- Stage and commit from a host terminal in the same repository checkout.
-- Run signed commit commands on host (for example, `git commit -S ...`).
+- Stage and commit from a host terminal in the same repository checkout
+  (for example, `git commit -S ...`).
 
-Good fit when your policy requires strong key isolation.
-
-### Option B: Commit and Sign in Container (With Care)
-
-If your team prefers full in-container Git operations, use one of these approaches:
-
-- Forward SSH agent into the container and use SSH signing.
-- Forward GPG agent/socket into the container instead of copying private keys.
-- Avoid storing raw private keys directly in container filesystems.
-
-This keeps workflows convenient, but still requires careful host and container trust settings.
+Good fit when your policy forbids forwarding signing agents into containers.
 
 ### Option C: Unsigned Commits in Container, Signed Merge in CI/Host
 
@@ -88,8 +108,8 @@ This can simplify local setup for contributors while preserving integrity checks
 ### Practical Daily Pattern
 
 1. Code, lint, and test in the container.
-2. Review and commit on host with signing enabled.
-3. Push from host (or container) based on your credential policy.
+2. Commit and sign in the container using the forwarded host keys.
+3. Push from the container (SSH agent or `gh` credentials are forwarded).
 4. Keep branch protection checks active (status checks, review, signature policy if used).
 
 ## Updating Base Image Safely
