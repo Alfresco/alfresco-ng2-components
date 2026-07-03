@@ -20,26 +20,31 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } fr
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { TimeSyncService } from '../services/time-sync.service';
+import { AppConfigService } from '../../app-config/app-config.service';
 
 /**
  * HTTP interceptor that passively keeps the clock offset in `TimeSyncService` up-to-date
- * by reading the standard `Date` response header (RFC 7231) from every HTTP response.
+ * by reading the standard `Date` response header (RFC 7231) from IAM API responses.
  *
- * This removes the need for a dedicated `serverTimeUrl` endpoint: as long as HTTP responses
- * include a `Date` header (all well-behaved HTTP/1.1 and HTTP/2 servers do), the clock drift
- * correction will be applied transparently without an extra network round-trip.
+ * Only responses whose URL starts with the configured OAuth2 host (`oauth2.host`) are
+ * processed, avoiding unnecessary offset recalculations on every HTTP call.
+ *
+ * This removes the need for a dedicated `serverTimeUrl` endpoint: as long as IAM responses
+ * include a `Date` header, the clock drift correction will be applied transparently
+ * without an extra network round-trip.
  *
  * The interceptor is registered automatically when `provideCoreAuth()` is used.
  */
 @Injectable()
 export class DateHeaderTimeSyncInterceptor implements HttpInterceptor {
     private readonly _timeSyncService = inject(TimeSyncService);
+    private readonly _appConfigService = inject(AppConfigService);
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
         const requestStartTime = Date.now();
         return next.handle(request).pipe(
             tap((event) => {
-                if (event instanceof HttpResponse) {
+                if (event instanceof HttpResponse && this.isIamRequest(event.url ?? request.url)) {
                     const dateHeader = event.headers.get('date');
                     if (dateHeader) {
                         this._timeSyncService.updateClockOffsetFromDateHeader(dateHeader, requestStartTime);
@@ -47,5 +52,10 @@ export class DateHeaderTimeSyncInterceptor implements HttpInterceptor {
                 }
             })
         );
+    }
+
+    private isIamRequest(url: string): boolean {
+        const iamHost = this._appConfigService.oauth2?.host;
+        return !!iamHost && url.startsWith(iamHost);
     }
 }
