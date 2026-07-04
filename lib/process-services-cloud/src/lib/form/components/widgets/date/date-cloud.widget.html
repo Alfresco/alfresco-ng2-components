@@ -39,15 +39,7 @@
                 <mat-error>
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
                     <span class="adf-error-text"
-                        >@if (dateInputControl.hasError('required')) {
-                            {{ 'FORM.FIELD.REQUIRED' | translate }}
-                        } @else if (dateInputControl.hasError('matDatepickerParse')) {
-                            {{ 'FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT' | translate: { format: field.dateDisplayFormat || field.defaultDateTimeFormat } }}
-                        } @else if (dateInputControl.hasError('matDatepickerMin')) {
-                            {{ 'FORM.FIELD.VALIDATOR.NOT_LESS_THAN' | translate: { minValue: formattedMinDate } }}
-                        } @else if (dateInputControl.hasError('matDatepickerMax')) {
-                            {{ 'FORM.FIELD.VALIDATOR.NOT_GREATER_THAN' | translate: { maxValue: formattedMaxDate } }}
-                        }</span>
+                        >@if (dateInputControl.hasError('required')) {{{ 'FORM.FIELD.REQUIRED' | translate }}} @else if (dateInputControl.hasError('matDatepickerParse')) {{{ 'FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT' | translate: { format: field.dateDisplayFormat || field.defaultDateTimeFormat } }}} @else if (dateInputControl.hasError('matDatepickerMin')) {{{ 'FORM.FIELD.VALIDATOR.NOT_LESS_THAN' | translate: { minValue: formattedMinDate } }}} @else if (dateInputControl.hasError('matDatepickerMax')) {{{ 'FORM.FIELD.VALIDATOR.NOT_GREATER_THAN' | translate: { maxValue: formattedMaxDate } }}}</span>
                 </mat-error>
             }
         </mat-form-field>

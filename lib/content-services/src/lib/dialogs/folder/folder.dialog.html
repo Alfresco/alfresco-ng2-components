@@ -17,11 +17,7 @@
             @if (form.controls['name'].dirty && form.controls['name'].invalid) {
                 <mat-error>
                     <span class="adf-error-text"
-                        >@if (form.controls['name'].errors?.required) {
-                            {{ 'CORE.FOLDER_DIALOG.FOLDER_NAME.ERRORS.REQUIRED' | translate }}
-                        } @else if (form.controls['name'].errors?.message) {
-                            {{ form.controls['name'].errors?.message | translate }}
-                        }</span>
+                        >@if (form.controls['name'].errors?.required) {{{ 'CORE.FOLDER_DIALOG.FOLDER_NAME.ERRORS.REQUIRED' | translate }}} @else if (form.controls['name'].errors?.message) {{{ form.controls['name'].errors?.message | translate }}}</span>
                 </mat-error>
             }
         </mat-form-field>

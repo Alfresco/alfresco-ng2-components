@@ -52,13 +52,7 @@
                 <mat-error>
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
                     <span class="adf-error-text"
-                        >@if (dropdownControl.hasError('required') && !isRestApiFailed && !variableOptionsFailed) {
-                            {{ 'FORM.FIELD.REQUIRED' | translate }}
-                        } @else if (isRestApiFailed) {
-                            {{ 'FORM.FIELD.REST_API_FAILED' | translate: { hostname: restApiHostName } }}
-                        } @else if (variableOptionsFailed) {
-                            {{ 'FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED' | translate }}
-                        }</span>
+                        >@if (dropdownControl.hasError('required') && !isRestApiFailed && !variableOptionsFailed) {{{ 'FORM.FIELD.REQUIRED' | translate }}} @else if (isRestApiFailed) {{{ 'FORM.FIELD.REST_API_FAILED' | translate: { hostname: restApiHostName } }}} @else if (variableOptionsFailed) {{{ 'FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED' | translate }}}</span>
                 </mat-error>
             }
         </mat-form-field>
