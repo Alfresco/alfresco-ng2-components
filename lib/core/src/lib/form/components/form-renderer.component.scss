@@ -39,6 +39,10 @@
 }
 
 .adf-container-widget {
+    .adf-form-field-input {
+        margin-bottom: 35px;
+    }
+
     .adf-grid-list {
         display: grid;
         row-gap: 16px;
