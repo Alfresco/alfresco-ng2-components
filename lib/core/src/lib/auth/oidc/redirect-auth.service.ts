@@ -381,7 +381,7 @@ export class RedirectAuthService extends AuthService {
                 this._isDiscoveryDocumentLoadedSubject$.next(true);
                 this.oauthService.setupAutomaticSilentRefresh();
                 this._timeSyncService.syncClockOffset().subscribe();
-                this._timeSyncService.startPeriodicSync(undefined, this.oauthService.clockSkewInSec * 1000);
+                this._timeSyncService.startPeriodicSync();
                 return void this.allowRefreshTokenAndSilentRefreshOnMultipleTabs();
             })
             .catch(() => {
