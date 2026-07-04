@@ -35,6 +35,6 @@
                 </mat-error>
             }
         </mat-form-field>
-        <ng-container *ngTemplateOutlet="fieldStatusTemplate ?? null" />
+        <ng-container *ngTemplateOutlet="fieldStatusTemplate ?? null; context: { $implicit: this }" />
     </div>
 </div>
