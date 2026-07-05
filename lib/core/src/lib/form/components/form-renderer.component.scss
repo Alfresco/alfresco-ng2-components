@@ -39,13 +39,14 @@
 }
 
 .adf-container-widget {
-    .adf-form-field-input {
-        margin-bottom: 8px;
+    .adf-form-field-input:not(.adf-inplace-input-mat-form-field) {
+        margin-bottom: 35px;
     }
 
     .adf-grid-list {
         display: grid;
-        row-gap: 16px;
+
+        // row-gap: 16px;
 
         &-column-view {
             display: flex;
@@ -71,7 +72,6 @@
             display: flex;
             flex-direction: column;
             flex: 1 1 auto;
-            gap: 16px;
         }
 
         &-item {
