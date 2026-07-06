@@ -22,6 +22,7 @@
   "customizations": {
     "vscode": {
       "settings": {
+        "dev.containers.copyGitConfig": true,
         "stylelint.enable": true,
         "css.validate": false,
         "scss.validate": false,
