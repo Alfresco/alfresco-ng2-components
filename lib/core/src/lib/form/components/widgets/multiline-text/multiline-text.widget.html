@@ -7,6 +7,7 @@
     <mat-form-field
         floatPlaceholder="never"
         class="adf-form-field-input"
+        [class.adf-has-counter]="field.maxLength > 0"
         [floatLabel]="field.placeholder ? 'always' : null"
     >
         @if(field.name || field.required) {
