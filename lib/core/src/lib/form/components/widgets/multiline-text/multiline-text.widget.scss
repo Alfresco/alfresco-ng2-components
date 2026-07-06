@@ -29,6 +29,11 @@
         color: var(--mat-sys-on-surface-variant, rgba(0, 0, 0, 0.6));
     }
 
+    &-multiline-hint {
+        margin-top: 7px;
+        line-height: 14px;
+    }
+
     &-multiline-required-message {
         display: flex;
     }

@@ -38,7 +38,7 @@
                     >@if (field.validationSummary?.message) {{{ field.validationSummary.message | translate:translateParameters }}} @else {{{ 'FORM.FIELD.REQUIRED' | translate }}}</span>
             </mat-error>
         } @else if (field.maxLength > 0) {
-            <mat-hint>{{ field?.value?.length || 0 }}/{{ field.maxLength }}</mat-hint>
+            <mat-hint class="adf-multiline-hint">{{ field?.value?.length || 0 }}/{{ field.maxLength }}</mat-hint>
         }
     </mat-form-field>
 </div>
