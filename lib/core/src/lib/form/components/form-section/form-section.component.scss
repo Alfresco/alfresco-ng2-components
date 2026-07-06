@@ -8,14 +8,10 @@
             align-items: center;
             gap: 1%;
 
-            // margin-bottom: 20px;
-
             @include flex.layout-bp(lt-md) {
                 /* stylelint-disable-next-line declaration-no-important */
                 flex: 1 1 100% !important;
                 flex-direction: column;
-
-                // gap: 16px;
             }
 
             .adf-section-widget {
