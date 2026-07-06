@@ -107,7 +107,8 @@ entry in the container's local keyring (to select the key) and the forwarded age
    ```
 
 3. Rebuild the container. The `postStartCommand` auto-imports `.git/signing.pub`
-   and removes it.
+   on every container start, so signing survives restarts and rebuilds without
+   re-running the export script.
 
 The helper auto-selects `gpg2`/`gpg` based on where your key is visible, which
 avoids host setups where the two binaries use different keyrings.

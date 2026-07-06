@@ -94,7 +94,8 @@ This is the one-time host-side setup:
 	```
 
 3. Rebuild the container. The `postStartCommand` auto-imports `.git/signing.pub`
-   and removes it.
+   on every container start, so signing survives restarts and rebuilds without
+   re-running the export script.
 
 Then verify inside the container:
 
