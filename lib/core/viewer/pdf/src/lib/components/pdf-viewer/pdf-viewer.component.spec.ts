@@ -365,7 +365,7 @@ describe('Test PdfViewer - executePdf error handling', () => {
             onPassword: null,
             onProgress: null,
             destroy: () => Promise.resolve()
-        } as unknown as PDFDocumentLoadingTask;
+        } as PDFDocumentLoadingTask;
 
         const pdfjsLibMock = {
             GlobalWorkerOptions: {},

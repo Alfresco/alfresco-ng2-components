@@ -254,14 +254,6 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
         this.scrollTop();
     }
 
-    /**
-     * Extracts the MIME type essence (type/subtype) stripping any parameters like charset.
-     * Firefox includes parameters in blob.type (e.g. "application/pdf;charset=utf-8"),
-     * while Chrome strips them. This normalizes the behavior.
-     *
-     * @param mimeType - raw MIME type string potentially containing parameters
-     * @returns the type/subtype portion without parameters
-     */
     private extractMimeTypeEssence(mimeType: string): string {
         if (!mimeType) {
             return mimeType;

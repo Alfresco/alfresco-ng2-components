@@ -539,7 +539,7 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
 
             expect(getMainLoader()).toBeNull();
-            expect(component.viewerType).toBe('media');
+            expect(testingUtils.getByDirective(MediaPlayerComponent)).not.toBeNull();
         });
 
         it('should display spinner when viewerType is pdf', () => {
@@ -553,7 +553,7 @@ describe('ViewerComponent', () => {
             imgViewer.triggerEventHandler('pagesLoaded', null);
             fixture.detectChanges();
 
-            expect(component.viewerType).toBe('pdf');
+            expect(testingUtils.getByDirective(MockPdfViewerComponent)).not.toBeNull();
         });
 
         it('should show spinner until renderer calls markAsLoaded', () => {
@@ -570,7 +570,7 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
 
             expect(getMainLoader()).toBeNull();
-            expect(component.viewerType).toBe('image');
+            expect(testingUtils.getByDirective(ImgViewerComponent)).not.toBeNull();
             expect(component.markAsLoaded).toHaveBeenCalled();
         });
 
@@ -582,7 +582,7 @@ describe('ViewerComponent', () => {
             component.onUnsupportedFile();
             fixture.detectChanges();
             expect(getMainLoader()).toBeNull();
-            expect(component.viewerType).toBe('unknown');
+            expect(testingUtils.getByCSS('adf-viewer-unknown-format')).not.toBeNull();
         });
     });
 
@@ -590,46 +590,52 @@ describe('ViewerComponent', () => {
         it('should resolve viewerType from blob type when blob has valid MIME type', () => {
             component.blobFile = new Blob(['content'], { type: 'application/pdf' });
             component.ngOnChanges();
+            fixture.detectChanges();
 
-            expect(component.viewerType).toBe('pdf');
+            expect(testingUtils.getByDirective(MockPdfViewerComponent)).not.toBeNull();
         });
 
         it('should fall back to mimeType input when blob type resolves to unknown', () => {
             component.blobFile = new Blob(['content'], { type: '' });
             component.mimeType = 'application/pdf';
             component.ngOnChanges();
+            fixture.detectChanges();
 
-            expect(component.viewerType).toBe('pdf');
+            expect(testingUtils.getByDirective(MockPdfViewerComponent)).not.toBeNull();
         });
 
         it('should remain unknown when both blob type and mimeType input are empty', () => {
             component.blobFile = new Blob(['content'], { type: '' });
             component.mimeType = '';
             component.ngOnChanges();
+            fixture.detectChanges();
 
-            expect(component.viewerType).toBe('unknown');
+            expect(testingUtils.getByCSS('adf-viewer-unknown-format')).not.toBeNull();
         });
 
         it('should strip MIME type parameters (e.g. charset) from blob type before resolving viewer type', () => {
             component.blobFile = new Blob(['content'], { type: 'application/pdf;charset=utf-8' });
             component.ngOnChanges();
+            fixture.detectChanges();
 
-            expect(component.viewerType).toBe('pdf');
+            expect(testingUtils.getByDirective(MockPdfViewerComponent)).not.toBeNull();
         });
 
         it('should strip MIME type parameters from mimeType input during fallback', () => {
             component.blobFile = new Blob(['content'], { type: '' });
             component.mimeType = 'application/pdf;charset=utf-8';
             component.ngOnChanges();
+            fixture.detectChanges();
 
-            expect(component.viewerType).toBe('pdf');
+            expect(testingUtils.getByDirective(MockPdfViewerComponent)).not.toBeNull();
         });
 
         it('should resolve image viewer from blob type with parameters', () => {
             component.blobFile = new Blob(['content'], { type: 'image/png; charset=binary' });
             component.ngOnChanges();
+            fixture.detectChanges();
 
-            expect(component.viewerType).toBe('image');
+            expect(testingUtils.getByDirective(ImgViewerComponent)).not.toBeNull();
         });
 
         it('should emit extensionChange with blob MIME type when available', () => {

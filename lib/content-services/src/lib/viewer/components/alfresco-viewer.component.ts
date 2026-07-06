@@ -366,7 +366,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
             }
         }
 
-        // from propagating to child components during Zone.js-triggered change detection
         this.mimeType = mimeType;
         this.nodeMimeType = nodeMimeType;
         this.fileName = versionData ? versionData.name : nodeData.name;
