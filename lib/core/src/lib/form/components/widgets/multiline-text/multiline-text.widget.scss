@@ -24,13 +24,14 @@
         color: var(--mat-sys-on-surface-variant, rgba(0, 0, 0, 0.6));
     }
 
+    &-multiline-counter-block {
+        display: block;
+        color: var(--mat-sys-on-surface-variant, rgba(0, 0, 0, 0.6));
+    }
+
     &-multiline-required-message {
         display: flex;
     }
-}
-
-.adf-container-widget .adf-multiline-text-widget .adf-form-field-input.adf-has-counter {
-    margin-bottom: 31px;
 }
 
 .adf-form-field-input .adf-error-icon {
