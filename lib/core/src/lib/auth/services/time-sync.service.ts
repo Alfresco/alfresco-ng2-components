@@ -17,15 +17,26 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Injector, NgZone, inject } from '@angular/core';
-import { interval, Observable, of, Subscription } from 'rxjs';
+import { interval, Observable, of, Subject, Subscription } from 'rxjs';
 import { catchError, map, switchMap, timeout } from 'rxjs/operators';
 import { LogService } from '../../common/services/log.service';
+import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 
 export interface TimeSync {
     outOfSync: boolean;
     timeOutOfSyncInSec?: number;
     localDateTimeISO: string;
     serverDateTimeISO: string;
+}
+
+/**
+ * Emitted when a measured clock offset is rejected for exceeding `maxAllowedOffsetMs`.
+ * Consumers can subscribe to `implausibleOffsetDetected$` and forward this to central
+ * telemetry to detect misconfigured proxies or `Date`-header tampering across the fleet.
+ */
+export interface ImplausibleClockOffsetEvent {
+    measuredOffsetMs: number;
+    maxAllowedOffsetMs: number;
 }
 
 /** Default interval for periodic clock re-sync (5 minutes). */
@@ -51,6 +62,7 @@ export class TimeSyncService {
     private readonly _injector = inject(Injector);
     private readonly _ngZone = inject(NgZone);
     private readonly _logService = inject(LogService);
+    private readonly _appConfig = inject(AppConfigService);
 
     private readonly _http: HttpClient;
 
@@ -70,6 +82,15 @@ export class TimeSyncService {
      */
     maxAllowedOffsetMs = DEFAULT_MAX_ALLOWED_OFFSET_MS;
 
+    private readonly _implausibleOffsetDetected = new Subject<ImplausibleClockOffsetEvent>();
+
+    /**
+     * Emits whenever a measured offset is rejected for exceeding `maxAllowedOffsetMs`.
+     * Surface this to monitoring/telemetry to detect potential `Date`-header tampering or a
+     * misconfigured time source; the client console alone is not a reliable security signal.
+     */
+    readonly implausibleOffsetDetected$ = this._implausibleOffsetDetected.asObservable();
+
     private _periodicSyncSubscription: Subscription | null = null;
     private _visibilityChangeHandler: (() => void) | null = null;
     private _lastSyncAtMs = 0;
@@ -83,9 +104,15 @@ export class TimeSyncService {
      * Use this instead of `Date.now()` when evaluating token expiration to avoid
      * false positives caused by VM / Citrix clock drift.
      *
+     * When the feature is disabled via AppConfig, this returns the raw local time so the
+     * consuming application behaves exactly as it did before clock-skew correction existed.
+     *
      * @returns corrected timestamp in milliseconds
      */
     getCorrectedNow(): number {
+        if (!this.isEnabled()) {
+            return Date.now();
+        }
         return Date.now() + this.clockOffsetMs;
     }
 
@@ -105,6 +132,10 @@ export class TimeSyncService {
      * @returns Observable that completes after the offset has been stored (or silently on error)
      */
     syncClockOffset(): Observable<void> {
+        if (!this.isEnabled()) {
+            return of(void 0);
+        }
+
         const appRootUrl = this.getAppRootUrl();
 
         try {
@@ -149,6 +180,10 @@ export class TimeSyncService {
                             `TimeSyncService: ignoring implausible clock offset of ${Math.round(newOffset)} ms ` +
                                 `(exceeds the maximum allowed ${this.maxAllowedOffsetMs} ms). Falling back to the local clock.`
                         );
+                        this._implausibleOffsetDetected.next({
+                            measuredOffsetMs: Math.round(newOffset),
+                            maxAllowedOffsetMs: this.maxAllowedOffsetMs
+                        });
                         return;
                     }
 
@@ -206,6 +241,10 @@ export class TimeSyncService {
      * @param intervalMs How often to re-sync in milliseconds (default: 5 minutes)
      */
     startPeriodicSync(intervalMs: number = DEFAULT_PERIODIC_SYNC_INTERVAL_MS): void {
+        if (!this.isEnabled()) {
+            return;
+        }
+
         this.stopPeriodicSync();
 
         this._ngZone.runOutsideAngular(() => {
@@ -257,6 +296,18 @@ export class TimeSyncService {
             return window.location.href.split('?')[0].split('#')[0];
         }
         return '/';
+    }
+
+    /**
+     * Whether clock-skew correction is enabled. Controlled by the `auth.timeSync.enabled`
+     * AppConfig flag so a consuming application can turn the feature on without code changes.
+     * The feature is opt-in: it defaults to `false` when the flag is absent, so an application
+     * behaves exactly as it did before clock-skew correction existed until it explicitly enables it.
+     *
+     * @returns true when the feature is enabled
+     */
+    private isEnabled(): boolean {
+        return this._appConfig.get<boolean>(AppConfigValues.AUTH_TIME_SYNC_ENABLED, false);
     }
 
     /**

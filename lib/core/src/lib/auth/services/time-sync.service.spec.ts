@@ -20,6 +20,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { TestBed } from '@angular/core/testing';
 import { TimeSyncService } from './time-sync.service';
 import { LogService } from '../../common/services/log.service';
+import { AppConfigService } from '../../app-config/app-config.service';
 import { firstValueFrom } from 'rxjs';
 
 // A fixed reference instant (Wed, 15 Jan 2025 12:00:00 GMT), aligned to a whole second.
@@ -31,6 +32,7 @@ const toHttpDate = (epochMs: number): string => new Date(epochMs).toUTCString();
 describe('TimeSyncService', () => {
     let service: TimeSyncService;
     let httpMock: HttpTestingController;
+    let appConfigGetSpy: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -39,6 +41,12 @@ describe('TimeSyncService', () => {
 
         service = TestBed.inject(TimeSyncService);
         httpMock = TestBed.inject(HttpTestingController);
+
+        // Enable clock-skew correction for the behavioural suites so they exercise the new
+        // functionality (the behaviour that ships with this feature). The production default is
+        // opt-in (disabled); the 'auth.timeSync.enabled configuration' block below overrides this
+        // spy to assert both the disabled-by-default path and the old raw-clock behaviour.
+        appConfigGetSpy = spyOn(TestBed.inject(AppConfigService), 'get').and.returnValue(true);
     });
 
     afterEach(() => {
@@ -358,6 +366,24 @@ describe('TimeSyncService', () => {
 
             expect(service.clockOffsetMs).toBe(4000);
         });
+
+        it('should emit implausibleOffsetDetected$ with the measured offset and bound when rejected', async () => {
+            const events: { measuredOffsetMs: number; maxAllowedOffsetMs: number }[] = [];
+            service.implausibleOffsetDetected$.subscribe((event) => events.push(event));
+
+            await syncWithDrift(BASE, BASE + 660_000);
+
+            expect(events).toEqual([{ measuredOffsetMs: 660_000, maxAllowedOffsetMs: 600_000 }]);
+        });
+
+        it('should not emit implausibleOffsetDetected$ when the offset is within the bound', async () => {
+            const events: { measuredOffsetMs: number; maxAllowedOffsetMs: number }[] = [];
+            service.implausibleOffsetDetected$.subscribe((event) => events.push(event));
+
+            await syncWithDrift(BASE, BASE + 60_000);
+
+            expect(events).toEqual([]);
+        });
     });
 
     describe('time zone independence', () => {
@@ -379,6 +405,57 @@ describe('TimeSyncService', () => {
             await syncWithDrift(localNow, BASE);
 
             expect(service.clockOffsetMs).toBe(-120_000);
+        });
+    });
+
+    describe('legacy raw-clock behaviour when disabled (auth.timeSync.enabled = false)', () => {
+        it('should be disabled by default (opt-in) and behave like the raw local clock', async () => {
+            // Fall back to the real AppConfigService: the flag is absent, so it returns the
+            // opt-in default (false) — i.e. the old behaviour from before clock-skew correction.
+            appConfigGetSpy.and.callThrough();
+            service.clockOffsetMs = 60_000; // a stored offset that must be ignored while disabled
+
+            spyOn(Date, 'now').and.returnValue(BASE);
+            expect(service.getCorrectedNow()).toBe(BASE);
+
+            await firstValueFrom(service.syncClockOffset());
+            httpMock.expectNone(() => true);
+        });
+
+        it('should return the raw local time from getCorrectedNow when disabled', () => {
+            appConfigGetSpy.and.returnValue(false);
+            service.clockOffsetMs = 60_000; // a stored offset that must be ignored while disabled
+
+            spyOn(Date, 'now').and.returnValue(BASE);
+
+            expect(service.getCorrectedNow()).toBe(BASE);
+        });
+
+        it('should not issue any HTTP request from syncClockOffset when disabled', async () => {
+            appConfigGetSpy.and.returnValue(false);
+
+            await firstValueFrom(service.syncClockOffset());
+
+            httpMock.expectNone(() => true);
+            expect(service.clockOffsetMs).toBe(0);
+        });
+
+        it('should not register a periodic sync or visibility listener when disabled', () => {
+            appConfigGetSpy.and.returnValue(false);
+            const addEventListenerSpy = spyOn(document, 'addEventListener');
+
+            service.startPeriodicSync(1000);
+
+            expect(addEventListenerSpy).not.toHaveBeenCalled();
+            httpMock.expectNone(() => true);
+        });
+
+        it('should restore the new clock-skew correction when explicitly enabled', async () => {
+            appConfigGetSpy.and.returnValue(true); // explicit opt-in
+
+            await syncWithDrift(BASE, BASE + 60_000);
+
+            expect(service.clockOffsetMs).toBe(60_000);
         });
     });
 
