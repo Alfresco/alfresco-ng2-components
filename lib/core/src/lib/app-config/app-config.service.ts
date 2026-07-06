@@ -44,6 +44,7 @@ export const AppConfigValues = {
     LOGIN_ROUTE: 'loginRoute',
     DISABLECSRF: 'disableCSRF',
     AUTH_WITH_CREDENTIALS: 'auth.withCredentials',
+    AUTH_TIME_SYNC_ENABLED: 'auth.timeSync.enabled',
     APPLICATION: 'application',
     STORAGE_PREFIX: 'application.storagePrefix',
     NOTIFY_DURATION: 'notificationDefaultDuration',
