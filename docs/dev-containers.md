@@ -79,31 +79,46 @@ git commit -S -m "your message"   # -S optional when commit.gpgsign is true
 git push
 ```
 
-If signing fails with `gpg failed to sign the data` / `no secret key`, the agent
-forwarding did not attach — rebuild the container or reload the VS Code window.
+For rebuild-safe signing, export your public key into `.git/signing.pub` on the
+host so the devcontainer can auto-import it on startup:
+
+```bash
+./.devcontainer/export-signing-key.sh
+```
+
+On Windows PowerShell:
+
+```powershell
+.\.devcontainer\export-signing-key.ps1
+```
+
+If you rotate keys, run the helper again before the next rebuild.
+
+Expected behavior after rebuild:
+
+- Signing keeps working when host forwarding/import and `.git/signing.pub` are in sync.
+- If signing breaks after rebuild (especially after key rotation), regenerate `.git/signing.pub` with the helper and rebuild again.
+
+If signing still fails, follow [Signing (GPG/PGP) Troubleshooting](#signing-gpgpgp-troubleshooting).
 
 > Note: the automatic gitconfig / GPG / SSH forwarding is a feature of the VS Code
 > Dev Containers extension. If you run this configuration via the plain
 > `@devcontainers/cli`, mount `~/.gnupg`, `~/.gitconfig`, and the agent sockets
-> yourself, or fall back to Option B.
+> yourself.
 
 ### Option B: Sign Commits on Host
 
-For the strongest key isolation, keep signing on the host:
+Policy alternative for strongest key isolation:
 
 - Keep private signing keys only on the host.
-- Do normal development in the container.
-- Stage and commit from a host terminal in the same repository checkout
-  (for example, `git commit -S ...`).
-
-Good fit when your policy forbids forwarding signing agents into containers.
+- Do development in the container, then commit from a host terminal.
 
 ### Option C: Unsigned Commits in Container, Signed Merge in CI/Host
 
-- Commit in container without local signing.
-- Enforce signing at merge/release time using host or CI controls.
+Policy alternative for simpler contributor setup:
 
-This can simplify local setup for contributors while preserving integrity checks in protected branches.
+- Commit in container without local signing.
+- Enforce signing at merge/release time in host/CI controls.
 
 ### Practical Daily Pattern
 
@@ -139,6 +154,50 @@ Useful files to inspect:
 - [.devcontainer/devcontainer.json](../.devcontainer/devcontainer.json)
 - [.devcontainer/Dockerfile](../.devcontainer/Dockerfile)
 - VS Code Dev Containers logs under your local VS Code logs directory
+
+### Signing (GPG/PGP) Troubleshooting
+
+If `git commit -S` fails in the container:
+
+1. Confirm host signing config:
+
+	```bash
+	git config --global user.signingkey
+	git config --global commit.gpgsign
+	```
+
+2. Refresh the rebuild-safe public key file on the host:
+
+	```bash
+	./.devcontainer/export-signing-key.sh
+	```
+
+	Windows PowerShell:
+
+	```powershell
+	.\.devcontainer\export-signing-key.ps1
+	```
+
+3. Rebuild the container.
+
+4. Verify inside container:
+
+	```bash
+	gpg --list-secret-keys --keyid-format=long
+	git commit -S -m "test signed commit"
+	```
+
+5. If it still fails, restart host agent forwarding and rebuild:
+
+	```bash
+	gpgconf --launch gpg-agent
+	echo test | gpg2 --clearsign
+	```
+
+Notes:
+
+- `gpg-connect-agent 'keyinfo --list' /bye` reporting restricted mode is expected in Dev Containers.
+- If you run via plain `@devcontainers/cli` instead of the VS Code extension, mount `.gnupg`, `.gitconfig`, and agent sockets manually.
 
 ### Nx Daemon Not Starting in Container
 
