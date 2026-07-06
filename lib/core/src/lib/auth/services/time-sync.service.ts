@@ -19,6 +19,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, Injector, NgZone, inject } from '@angular/core';
 import { interval, Observable, of, Subscription } from 'rxjs';
 import { catchError, map, switchMap, timeout } from 'rxjs/operators';
+import { LogService } from '../../common/services/log.service';
 
 export interface TimeSync {
     outOfSync: boolean;
@@ -30,12 +31,26 @@ export interface TimeSync {
 /** Default interval for periodic clock re-sync (5 minutes). */
 const DEFAULT_PERIODIC_SYNC_INTERVAL_MS = 5 * 60 * 1000;
 
+/**
+ * Default upper bound, in milliseconds, for a clock offset that will be trusted (10 minutes).
+ * Offsets larger than this are treated as implausible and ignored so that a single unsigned
+ * `Date` header cannot arbitrarily extend client-side token validity. See `maxAllowedOffsetMs`.
+ */
+const DEFAULT_MAX_ALLOWED_OFFSET_MS = 10 * 60 * 1000;
+
+/** Minimum delay between visibility-triggered re-syncs (30 seconds) to avoid request storms. */
+const VISIBILITY_SYNC_DEBOUNCE_MS = 30 * 1000;
+
+/** Timeout applied to the time-sync HEAD request (5 seconds). */
+const SYNC_REQUEST_TIMEOUT_MS = 5000;
+
 @Injectable({
     providedIn: 'root'
 })
 export class TimeSyncService {
     private readonly _injector = inject(Injector);
     private readonly _ngZone = inject(NgZone);
+    private readonly _logService = inject(LogService);
 
     private readonly _http: HttpClient;
 
@@ -46,8 +61,18 @@ export class TimeSyncService {
      */
     clockOffsetMs = 0;
 
+    /**
+     * Maximum magnitude, in milliseconds, of a measured clock offset that will be trusted and
+     * applied. Any measured offset whose absolute value exceeds this bound is treated as
+     * implausible (a hostile / misconfigured `Date` header or an unreliable measurement) and is
+     * ignored, so a single response can never arbitrarily extend client-side token validity.
+     * Defaults to 10 minutes.
+     */
+    maxAllowedOffsetMs = DEFAULT_MAX_ALLOWED_OFFSET_MS;
+
     private _periodicSyncSubscription: Subscription | null = null;
     private _visibilityChangeHandler: (() => void) | null = null;
+    private _lastSyncAtMs = 0;
 
     constructor() {
         this._http = this._injector.get(HttpClient);
@@ -72,6 +97,11 @@ export class TimeSyncService {
      * The HEAD request is lightweight (no response body) and targets the same origin,
      * so there are no CORS issues. Nginx always includes a `Date` header in its responses.
      *
+     * Trust model: the `Date` header is unsigned metadata, so it is treated as a best-effort
+     * hint only. The measured offset is bounded by `maxAllowedOffsetMs` (see the security guard
+     * below) and client-side expiry is only ever a convenience check — the server remains the
+     * sole authority on token validity and enforces `exp` against its own clock on every call.
+     *
      * @returns Observable that completes after the offset has been stored (or silently on error)
      */
     syncClockOffset(): Observable<void> {
@@ -79,18 +109,27 @@ export class TimeSyncService {
 
         try {
             const startTime = Date.now();
+            this._lastSyncAtMs = startTime;
             return this._http.head(appRootUrl, { observe: 'response', responseType: 'text' }).pipe(
-                timeout(5000),
+                timeout(SYNC_REQUEST_TIMEOUT_MS),
                 map((response) => {
                     const endTime = Date.now();
                     const dateHeader = response.headers.get('date');
 
                     if (!dateHeader) {
+                        this._logService.debug('TimeSyncService: response has no Date header; keeping the current clock offset.');
                         return;
                     }
 
+                    // The HTTP `Date` header is always expressed in GMT (RFC 7231), and both
+                    // `new Date(...).getTime()` and `Date.now()` return absolute epoch
+                    // milliseconds in UTC. The offset math below is therefore independent of the
+                    // browser's local time zone or daylight-saving settings.
                     const serverTimeInMs = new Date(dateHeader).getTime();
                     if (isNaN(serverTimeInMs)) {
+                        this._logService.debug(
+                            `TimeSyncService: unable to parse Date header "${this.sanitizeForLog(dateHeader)}"; keeping the current clock offset.`
+                        );
                         return;
                     }
 
@@ -98,11 +137,30 @@ export class TimeSyncService {
                     const adjustedServerTimeInMs = serverTimeInMs + roundTripTimeInMs / 2;
                     const newOffset = adjustedServerTimeInMs - endTime;
 
+                    // Security guard: never trust an implausibly large correction. The `Date`
+                    // header is unsigned, so a hostile / misconfigured proxy could try to push the
+                    // corrected clock backwards to keep expired tokens looking valid on the client
+                    // (a negative offset extends client-side token lifetime). Bounding the
+                    // magnitude caps the worst-case client-side exposure window to
+                    // `maxAllowedOffsetMs`; beyond that we ignore the measurement and fall back to
+                    // the raw local clock.
+                    if (Math.abs(newOffset) > this.maxAllowedOffsetMs) {
+                        this._logService.warn(
+                            `TimeSyncService: ignoring implausible clock offset of ${Math.round(newOffset)} ms ` +
+                                `(exceeds the maximum allowed ${this.maxAllowedOffsetMs} ms). Falling back to the local clock.`
+                        );
+                        return;
+                    }
+
                     this.clockOffsetMs = newOffset;
                 }),
-                catchError(() => of(void 0))
+                catchError((error) => {
+                    this._logService.debug('TimeSyncService: failed to synchronise the clock offset; falling back to the local clock.', error);
+                    return of(void 0);
+                })
             );
-        } catch {
+        } catch (error) {
+            this._logService.debug('TimeSyncService: unexpected error while synchronising the clock offset; falling back to the local clock.', error);
             return of(void 0);
         }
     }
@@ -157,6 +215,11 @@ export class TimeSyncService {
 
             this._visibilityChangeHandler = () => {
                 if (typeof document !== 'undefined' && document.visibilityState === 'visible') {
+                    // Debounce rapid visibility toggles (and multiple resumes across tabs) so we
+                    // do not issue a burst of redundant HEAD requests when a session resumes.
+                    if (Date.now() - this._lastSyncAtMs < VISIBILITY_SYNC_DEBOUNCE_MS) {
+                        return;
+                    }
                     this.syncClockOffset().subscribe();
                 }
             };
@@ -186,11 +249,26 @@ export class TimeSyncService {
      * in the pathname) so that nginx handles the request regardless of app deployment path.
      *
      * Example: for `https://host/aae-xxx/ui/workspace-lprbu/`, returns that same URL.
+     *
+     * @returns the application root URL used for time-sync HEAD requests
      */
     private getAppRootUrl(): string {
         if (typeof window !== 'undefined') {
             return window.location.href.split('?')[0].split('#')[0];
         }
         return '/';
+    }
+
+    /**
+     * Sanitizes an untrusted, in-path-controllable value (e.g. the server `Date` header) before
+     * it is written to a log. Strips control characters (including CR/LF) to prevent log forging
+     * if the log bus is ever forwarded to a backend store, and caps the length to bound noise.
+     *
+     * @param value raw value to sanitize
+     * @returns a log-safe representation of the value
+     */
+    private sanitizeForLog(value: string): string {
+        // eslint-disable-next-line no-control-regex
+        return value.replace(/[\u0000-\u001F\u007F]/g, ' ').slice(0, 100);
     }
 }
