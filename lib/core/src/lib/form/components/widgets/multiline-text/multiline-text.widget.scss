@@ -34,10 +34,10 @@
     }
 }
 
-.adf-container-widget .adf-multiline-text-widget .adf-form-field-input.adf-has-counter {
-    margin-bottom: 31px;
-}
-
 .adf-form-field-input .adf-error-icon {
     @include mixins.adf-error-icon;
+}
+
+.adf-container-widget .adf-multiline-text-widget .adf-form-field-input.adf-has-counter {
+    margin-bottom: 39px;
 }
