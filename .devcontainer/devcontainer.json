@@ -28,6 +28,7 @@
         "stylelint.configFile": "${workspaceFolder}/.stylelintrc.json",
         "stylelint.configBasedir": "${workspaceFolder}",
         "stylelint.validate": ["css", "less", "postcss", "scss"],
+        "nxConsole.enableNxMcpServer": false,
         "editor.guides.indentation": true
       },
       "extensions": [
