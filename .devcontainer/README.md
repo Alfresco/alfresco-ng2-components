@@ -104,6 +104,16 @@ So the easiest setup is:
 ./.devcontainer/export-signing-key.sh <YOUR_KEY_ID>
 ```
 
+On Windows PowerShell, use:
+
+```powershell
+# on the HOST, from repo root (auto-uses git user.signingkey)
+.\.devcontainer\export-signing-key.ps1
+
+# or pass a key explicitly
+.\.devcontainer\export-signing-key.ps1 <YOUR_KEY_ID>
+```
+
 The helper auto-selects `gpg2`/`gpg` based on where your key is visible, which
 avoids host setups where the two binaries use different keyrings.
 
