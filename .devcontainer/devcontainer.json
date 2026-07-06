@@ -55,5 +55,7 @@
 
   "postCreateCommand": "pnpm install --frozen-lockfile",
 
+  "postStartCommand": "if [ -f .git/signing.pub ]; then gpg --import .git/signing.pub && rm .git/signing.pub; fi",
+
   "runArgs": ["--cap-drop=ALL", "--security-opt=no-new-privileges:true", "--pids-limit=512"]
 }

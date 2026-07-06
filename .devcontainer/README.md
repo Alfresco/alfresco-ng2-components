@@ -88,6 +88,32 @@ git commit -S -m "your message"   # -S optional if commit.gpgsign is true
 git push
 ```
 
+### Easiest rebuild-safe import flow
+
+This devcontainer auto-imports a public key from `.git/signing.pub` on start.
+If present, it runs `gpg --import .git/signing.pub` and removes the file after a
+successful import.
+
+So the easiest setup is:
+
+```bash
+# on the HOST, from repo root (auto-uses git user.signingkey)
+./.devcontainer/export-signing-key.sh
+
+# or pass a key explicitly
+./.devcontainer/export-signing-key.sh <YOUR_KEY_ID>
+```
+
+The helper auto-selects `gpg2`/`gpg` based on where your key is visible, which
+avoids host setups where the two binaries use different keyrings.
+
+After **Rebuild Container** (or next container start), verify in the container:
+
+```bash
+gpg --list-secret-keys --keyid-format=long
+git commit -S -m "test signed commit"
+```
+
 ### Manually importing your public key
 
 If `git commit -S` fails with `gpg: signing failed: No secret key`, the forwarded
