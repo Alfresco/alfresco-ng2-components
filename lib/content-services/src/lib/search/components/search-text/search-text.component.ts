@@ -48,7 +48,7 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     context: SearchQueryBuilderService;
     startValue: string;
     isActive = false;
-    enableChangeUpdate = true;
+    enableChangeUpdate = false;
     displayValue$ = new ReplaySubject<string>(1);
 
     private readonly destroyRef = inject(DestroyRef);
@@ -121,7 +121,7 @@ export class SearchTextComponent implements SearchWidget, OnInit {
         if (this.context?.queryFragments && this.settings?.field) {
             this.context.queryFragments[this.id] = value ? `${this.settings.field}:'${this.getSearchPrefix()}${value}${this.getSearchSuffix()}'` : '';
             if (updateContext) {
-                this.context.update();
+                this.context.execute();
             }
         }
     }
@@ -141,14 +141,13 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     setValue(value: string) {
         this.value = value;
         this.displayValue$.next(this.value);
-        this.submitValues();
     }
 
     private getSearchPrefix(): string {
-        return this.settings.searchPrefix ? this.settings.searchPrefix : '';
+        return this.settings.searchPrefix && this.context.wildcardsEnabled ? this.settings.searchPrefix : '';
     }
 
     private getSearchSuffix(): string {
-        return this.settings.searchSuffix ? this.settings.searchSuffix : '';
+        return this.settings.searchSuffix && this.context.wildcardsEnabled ? this.settings.searchSuffix : '';
     }
 }

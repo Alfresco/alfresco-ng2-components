@@ -44,7 +44,7 @@ describe('SearchCheckListComponent', () => {
             queryFragments: {},
             filterRawParams: {},
             populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy()
+            execute: jasmine.createSpy('execute')
         } as any;
     });
 
@@ -134,7 +134,7 @@ describe('SearchCheckListComponent', () => {
 
         component.reset();
 
-        expect(component.context.update).toHaveBeenCalled();
+        expect(component.context.execute).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe('');
         expect(component.context.filterRawParams[component.id]).toBeUndefined();
     });
@@ -226,7 +226,7 @@ describe('SearchCheckListComponent', () => {
         fixture.detectChanges();
 
         expect(component.context.queryFragments[component.id]).toBe('');
-        expect(component.context.update).not.toHaveBeenCalled();
+        expect(component.context.execute).not.toHaveBeenCalled();
     });
 
     it('should populate filter state when populate filters event has been observed', () => {

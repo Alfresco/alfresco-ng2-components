@@ -309,6 +309,13 @@ describe('SearchChipAutocompleteInputComponent', () => {
         expect(inputChangedSpy).toHaveBeenCalledOnceWith('test-value');
     });
 
+    it('should not emit input value when input is empty', async () => {
+        const inputChangedSpy = spyOn(component.inputChanged, 'emit');
+        enterNewInputValue('');
+        await fixture.whenStable();
+        expect(inputChangedSpy).not.toHaveBeenCalled();
+    });
+
     describe('isOptionSelected', () => {
         beforeEach(() => {
             component.autocompleteOptions = [{ value: 'option1' }, { value: 'option2' }];

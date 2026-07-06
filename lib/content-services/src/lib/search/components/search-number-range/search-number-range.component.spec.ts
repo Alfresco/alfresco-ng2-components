@@ -37,7 +37,7 @@ describe('SearchNumberRangeComponent', () => {
             },
             filterRawParams: {},
             populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy('update')
+            execute: jasmine.createSpy('execute')
         } as any;
     });
 
@@ -64,7 +64,7 @@ describe('SearchNumberRangeComponent', () => {
         component.reset();
 
         expect(component.context.queryFragments.contentSize).toEqual('');
-        expect(component.context.update).toHaveBeenCalled();
+        expect(component.context.execute).toHaveBeenCalled();
         expect(component.context.filterRawParams[component.id]).toBeUndefined();
     });
 
@@ -82,7 +82,7 @@ describe('SearchNumberRangeComponent', () => {
 
         const expectedQuery = 'cm:content.size:[10 TO 20]';
         expect(component.context.queryFragments[component.id]).toEqual(expectedQuery);
-        expect(component.context.update).toHaveBeenCalled();
+        expect(component.context.execute).toHaveBeenCalled();
         expect(component.context.filterRawParams[component.id].from).toEqual('10');
         expect(component.context.filterRawParams[component.id].to).toEqual('20');
     });

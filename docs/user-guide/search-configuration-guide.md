@@ -16,6 +16,7 @@ This page describes how you can configure the search configuration.
     - [Steps Involved In Search Configuration](#steps-involved-in-search-configuration)
 -   [Configuration](#configuration)
 -   [Extra fields and filter queries](#extra-fields-and-filter-queries)
+-   [Search modes and wildcards](#search-modes-and-wildcards)
 -   [Sorting](#sorting)
 -   [Categories and widgets](#categories-and-widgets)
 -   [Facet Fields](#facet-fields)
@@ -266,6 +267,44 @@ settings:
 ```
 
 Note that the entries of the `filterQueries` array are joined using the `AND` operator.
+
+### Search modes and wildcards
+
+When a user types free text into a search input, the [Search Query Builder Service](../../content-services/services/search-query-builder.service.md) turns that text (its `userQuery`) into the final query according to the configured *search mode*:
+
+-   **regular** (default) - the user input is parsed into a field query. Each term is matched
+    against the fields listed in the `app:fields` array (falling back to `cm:name` when it is not
+    set), and a `*` wildcard is appended to each term when wildcards are enabled. Words that are
+    exactly `AND` or `OR` are preserved as logical operators.
+-   **formula** - the user input is passed through verbatim as an
+    [AFTS](https://docs.alfresco.com/content-services/latest/develop/search-api/) expression. Use
+    this mode when the caller already builds valid query syntax.
+
+The `app:fields` entry lists the fields used to expand a `regular` user query:
+
+```json
+{
+    "search": {
+        ...
+        "app:fields": ["cm:name", "cm:title", "cm:description"]
+        ...
+    }
+}
+```
+
+For example, with the configuration above and wildcards enabled, the user query `report` is
+expanded to `(cm:name:"report*" OR cm:title:"report*" OR cm:description:"report*")`.
+
+Wildcard matching is controlled by the top-level `search-wildcards-enabled` flag in
+`app.config.json` (default `true`). When set to `false`, terms are matched exactly and the
+trailing `*` is not added (this also disables the `searchPrefix`/`searchSuffix` of the
+[Search text component](../content-services/components/search-text.component.md)):
+
+```json
+{
+    "search-wildcards-enabled": false
+}
+```
 
 ### Sorting
 

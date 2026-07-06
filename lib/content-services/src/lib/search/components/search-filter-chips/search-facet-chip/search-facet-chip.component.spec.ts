@@ -41,7 +41,7 @@ describe('SearchFacetChipComponent', () => {
         fixture = TestBed.createComponent(SearchFacetChipComponent);
         component = fixture.componentInstance;
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
-        spyOn(queryBuilder, 'update').and.stub();
+        spyOn(queryBuilder, 'execute').and.stub();
 
         component.field = { type: 'field', label: 'f2', field: 'f2', buckets: new SearchFilterList() };
         fixture.detectChanges();
@@ -55,7 +55,7 @@ describe('SearchFacetChipComponent', () => {
         const applyButton = await menu.getHarness(MatButtonHarness.with({ selector: '#apply-filter-button' }));
         await applyButton.click();
 
-        expect(queryBuilder.update).toHaveBeenCalled();
+        expect(queryBuilder.execute).toHaveBeenCalled();
     });
 
     it('should update search query on cancel click', async () => {
@@ -65,7 +65,7 @@ describe('SearchFacetChipComponent', () => {
         const cancelButton = await menu.getHarness(MatButtonHarness.with({ selector: '#cancel-filter-button' }));
         await cancelButton.click();
 
-        expect(queryBuilder.update).toHaveBeenCalled();
+        expect(queryBuilder.execute).toHaveBeenCalled();
     });
 
     it('should display arrow down icon and not disable the chip when items are loaded', async () => {

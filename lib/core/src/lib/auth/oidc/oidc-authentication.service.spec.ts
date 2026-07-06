@@ -80,6 +80,7 @@ describe('OidcAuthenticationService', () => {
         });
         service = TestBed.inject(OidcAuthenticationService);
         oauthService = TestBed.inject(OAuthService);
+        mockOAuthService.logOut.calls.reset();
     });
 
     it('should be created', () => {
@@ -162,6 +163,14 @@ describe('OidcAuthenticationService', () => {
             expect(oauthService.logOut).toHaveBeenCalledWith({
                 client_id: 'testClientId'
             });
+        });
+    });
+
+    describe('reset', () => {
+        it('should clear local OAuth state without redirecting to the IdP', () => {
+            service.reset();
+
+            expect(oauthService.logOut as jasmine.Spy).toHaveBeenCalledOnceWith(true);
         });
     });
 

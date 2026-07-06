@@ -270,7 +270,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             it('should not show the breadcrumb if search was performed as last action', async () => {
                 searchQueryBuilderService.userQuery = 'mock-search-term';
-                searchQueryBuilderService.update();
                 triggerSearchResults(fakeResultSetPaging);
 
                 fixture.detectChanges();
@@ -291,7 +290,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             it('should show the breadcrumb in search results for a valid node selection', async () => {
                 searchQueryBuilderService.userQuery = 'mock-search-term';
-                searchQueryBuilderService.update();
                 triggerSearchResults(fakeResultSetPaging);
 
                 const chosenNode = new Node({ path: { elements: [{ name: 'one' }] } });
@@ -306,7 +304,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
             it('should show the breadcrumb in search results even for an invalid node selection', async () => {
                 component.isSelectionValid = (node: Node) => node.isFile;
                 searchQueryBuilderService.userQuery = 'mock-search-term';
-                searchQueryBuilderService.update();
                 triggerSearchResults(fakeResultSetPaging);
 
                 const chosenNode = new Node({ path: { elements: [{ name: 'fake-path' }] }, isFile: false, isFolder: true });

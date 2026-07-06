@@ -240,7 +240,7 @@ describe('SearchFilterComponent', () => {
         });
 
         it('should update query builder upon resetting selected queries', () => {
-            spyOn(queryBuilder, 'update').and.stub();
+            spyOn(queryBuilder, 'execute').and.stub();
             spyOn(queryBuilder, 'removeUserFacetBucket').and.callThrough();
 
             const queryResponse = {
@@ -258,7 +258,7 @@ describe('SearchFilterComponent', () => {
             facetField.resetSelectedBuckets(queryResponse);
 
             expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledTimes(3);
-            expect(queryBuilder.update).toHaveBeenCalled();
+            expect(queryBuilder.execute).toHaveBeenCalled();
 
             for (const entry of searchFacetFiltersService.responseFacets[0].buckets.items) {
                 expect(entry.checked).toEqual(false);
@@ -320,7 +320,7 @@ describe('SearchFilterComponent', () => {
         });
 
         it('should be update the search query when name changed', async () => {
-            spyOn(queryBuilder, 'update').and.stub();
+            spyOn(queryBuilder, 'execute').and.stub();
             appConfigService.config.search = searchFilter;
             queryBuilder.resetToDefaults();
 
@@ -333,7 +333,7 @@ describe('SearchFilterComponent', () => {
             const inputElement = fixture.debugElement.query(By.css('[data-automation-id="expansion-panel-Name"] input'));
             inputElement.triggerEventHandler('change', { target: { value: '*' } });
 
-            expect(queryBuilder.update).toHaveBeenCalled();
+            expect(queryBuilder.execute).toHaveBeenCalled();
 
             queryBuilder.executed.next(mockSearchResult);
             fixture.detectChanges();
@@ -441,7 +441,7 @@ describe('SearchFilterComponent', () => {
             queryBuilder.executed.next(mockSearchResult);
             fixture.detectChanges();
 
-            spyOn(queryBuilder, 'update').and.stub();
+            spyOn(queryBuilder, 'execute').and.stub();
 
             const panel = await loader.getHarness(
                 MatExpansionPanelHarness.with({
@@ -470,7 +470,7 @@ describe('SearchFilterComponent', () => {
             expect(labels).toEqual(stepOne);
 
             await checkboxes[0].check();
-            expect(queryBuilder.update).toHaveBeenCalledTimes(1);
+            expect(queryBuilder.execute).toHaveBeenCalledTimes(1);
         });
 
         it('should preserve the filter state if other fields edited', async () => {
@@ -481,7 +481,7 @@ describe('SearchFilterComponent', () => {
             fixture.detectChanges();
             queryBuilder.executed.next(mockSearchResult);
             fixture.detectChanges();
-            spyOn(queryBuilder, 'update').and.stub();
+            spyOn(queryBuilder, 'execute').and.stub();
 
             const inputElement = fixture.debugElement.query(By.css(`${panel1Selector} input`));
             inputElement.nativeElement.value = 'my';
@@ -511,7 +511,7 @@ describe('SearchFilterComponent', () => {
             const checkedOption = await panel1.getHarness(MatCheckboxHarness.with({ checked: true }));
             expect(await checkedOption.getLabelText()).toBe('my1 (806)');
 
-            expect(queryBuilder.update).toHaveBeenCalledTimes(2);
+            expect(queryBuilder.execute).toHaveBeenCalledTimes(2);
         });
 
         it('should reset the query fragments when reset All is clicked', () => {

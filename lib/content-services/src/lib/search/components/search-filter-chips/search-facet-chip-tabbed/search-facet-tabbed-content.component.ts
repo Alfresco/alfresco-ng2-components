@@ -111,14 +111,14 @@ export class SearchFacetTabbedContentComponent implements OnInit, OnChanges, Fac
         this.resetSubject$.next();
         this.updateUserFacetBuckets();
         this.updateDisplayValue();
-        this.queryBuilder.update();
+        this.queryBuilder.execute();
     }
 
     submitValues() {
         this.updateUserFacetBuckets();
         this.searchFacetFiltersService.updateSelectedBuckets();
         this.updateDisplayValue();
-        this.queryBuilder.update();
+        this.queryBuilder.execute();
     }
 
     optionComparator(option1: AutocompleteOption, option2: AutocompleteOption): boolean {

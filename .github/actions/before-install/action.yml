@@ -12,9 +12,14 @@ runs:
     - name: base vars
       shell: bash
       run: |
+        if [ -n "${GITHUB_BASE_REF:-}" ]; then
+          BASE_HASH=$(git merge-base "origin/${GITHUB_BASE_REF}" HEAD 2>/dev/null || git rev-parse HEAD)
+        else
+          BASE_HASH=$(git rev-parse HEAD)
+        fi
         {
           echo "GIT_HASH=$(git rev-parse HEAD)";
-          echo "BASE_HASH=$(git merge-base origin/${GITHUB_BASE_REF} HEAD)";
+          echo "BASE_HASH=${BASE_HASH}";
           echo "HEAD_HASH=HEAD";
           echo "HEAD_COMMIT_HASH=${GH_COMMIT}";
           echo "NX_CALCULATION_FLAGS=--all";
@@ -55,7 +60,7 @@ runs:
         } >> $GITHUB_ENV
 
     - name: RELEASE on master/develop patch branch
-      if: ${{ env.BREAK_ACTION == false && github.event.pull_request.merged }}
+      if: ${{ env.BREAK_ACTION == false && (github.event.pull_request.merged || github.event_name == 'push') }}
       shell: bash
       env:
         REF_NAME: ${{ github.ref_name }}

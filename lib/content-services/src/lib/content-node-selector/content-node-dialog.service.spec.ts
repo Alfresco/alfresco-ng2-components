@@ -206,5 +206,9 @@ describe('ContentNodeDialogService', () => {
                 expect(testContentNodeSelectorComponentData.isSelectionValid(testData.node)).toBe(testData.expected);
             });
         });
+
+        it('should scope the search to folders by disabling files in the result', () => {
+            expect(testContentNodeSelectorComponentData.showFilesInResult).toBe(false);
+        });
     });
 });

@@ -126,16 +126,16 @@ describe('SearchQueryBuilder', () => {
         expect(builder.userQuery).toBe('');
     });
 
-    it('should wrap user query with brackets', () => {
+    it('should store the user query as the raw value', () => {
         const builder = createQueryBuilder();
         builder.userQuery = 'my query';
-        expect(builder.userQuery).toEqual('(my query)');
+        expect(builder.userQuery).toEqual('my query');
     });
 
-    it('should trim user query value', () => {
+    it('should expose the user query through filterRawParams', () => {
         const builder = createQueryBuilder();
-        builder.userQuery = ' something   ';
-        expect(builder.userQuery).toEqual('(something)');
+        builder.userQuery = 'something';
+        expect(builder.filterRawParams['userQuery']).toEqual('something');
     });
 
     it('should use only enabled categories', () => {
@@ -579,12 +579,28 @@ describe('SearchQueryBuilder', () => {
             categories: [{ id: 'cat1', enabled: true } as any]
         };
         const builder = createQueryBuilder(config);
-        builder.userQuery = 'my query';
+        builder.searchMode = 'formula';
+        builder.userQuery = '(my query)';
 
         builder.queryFragments['cat1'] = 'cm:name:test';
 
         const compiled = builder.buildQuery();
         expect(compiled.query.query).toBe('(my query) AND (cm:name:test)');
+    });
+
+    it('should build final request from the parsed query in regular mode', () => {
+        const config: SearchConfiguration = {
+            id: 'test-config',
+            categories: [{ id: 'cat1', enabled: true } as any]
+        };
+        const builder = createQueryBuilder(config);
+        builder.searchMode = 'regular';
+        builder.userQuery = 'my query';
+
+        builder.queryFragments['cat1'] = 'cm:name:test';
+
+        const compiled = builder.buildQuery();
+        expect(compiled.query.query).toBe(`${builder.parsedQuery} AND (cm:name:test)`);
     });
 
     it('should group facet buckets by field', () => {
@@ -729,12 +745,13 @@ describe('SearchQueryBuilder', () => {
         });
     });
 
-    it('should add user query to filter raw params when query is built', () => {
+    it('should add user query and parsed query to filter raw params when user query is set', () => {
         const builder = createQueryBuilder();
         builder.userQuery = 'nuka cola quantum';
         builder.buildQuery();
 
-        expect(builder.filterRawParams).toEqual({ userQuery: '(nuka cola quantum)' });
+        expect(builder.filterRawParams['userQuery']).toBe('nuka cola quantum');
+        expect(builder.filterRawParams['parsedQuery']).toBe(builder.parsedQuery);
     });
 
     it('should encode query from filter raw params and update query params on executing query', (done) => {
@@ -754,13 +771,14 @@ describe('SearchQueryBuilder', () => {
 
     it('should encode query from filter raw params and update query params on navigating to search', async () => {
         spyOn(router, 'navigate');
-        service.filterRawParams = { userQuery: '(test query)' };
+        service.searchMode = 'formula';
         await service.navigateToSearch('test query', '/search');
 
-        expect(router.navigate).toHaveBeenCalledWith(['/search'], {
-            queryParams: { q: 'eyJ1c2VyUXVlcnkiOiIodGVzdCBxdWVyeSkifQ==' },
-            queryParamsHandling: 'merge'
-        });
+        const navigateArgs = (router.navigate as jasmine.Spy).calls.mostRecent().args;
+        expect(navigateArgs[0]).toEqual(['/search']);
+        expect(navigateArgs[1].queryParamsHandling).toBe('merge');
+        const decoded = JSON.parse(decodeURIComponent(escape(atob(navigateArgs[1].queryParams.q))));
+        expect(decoded.userQuery).toBe('test query');
     });
 
     describe('Multiple search configuration', () => {
@@ -859,17 +877,17 @@ describe('SearchQueryBuilder', () => {
             spyOn(router, 'navigate');
             spyOn(console, 'error');
             const searchUrl = 'search';
-            service.filterRawParams = { userQuery: '((cm:name:"wąż*" OR cm:title:"wąż*" OR cm:description:"wąż*" OR TEXT:"wąż*" OR TAG:"wąż*"))' };
-            service.encodeQuery();
+            const nonLatinQuery = '((cm:name:"wąż*" OR cm:title:"wąż*" OR cm:description:"wąż*" OR TEXT:"wąż*" OR TAG:"wąż*"))';
+            service.searchMode = 'formula';
 
-            await service.navigateToSearch('', searchUrl);
+            await service.navigateToSearch(nonLatinQuery, searchUrl);
+
             expect(console.error).not.toHaveBeenCalled();
-            expect(router.navigate).toHaveBeenCalledWith([searchUrl], {
-                queryParams: {
-                    q: 'eyJ1c2VyUXVlcnkiOiIoKGNtOm5hbWU6XCJ3xIXFvCpcIiBPUiBjbTp0aXRsZTpcInfEhcW8KlwiIE9SIGNtOmRlc2NyaXB0aW9uOlwid8SFxbwqXCIgT1IgVEVYVDpcInfEhcW8KlwiIE9SIFRBRzpcInfEhcW8KlwiKSkifQ=='
-                },
-                queryParamsHandling: 'merge'
-            });
+            const navigateArgs = (router.navigate as jasmine.Spy).calls.mostRecent().args;
+            expect(navigateArgs[0]).toEqual([searchUrl]);
+            expect(navigateArgs[1].queryParamsHandling).toBe('merge');
+            const decoded = JSON.parse(decodeURIComponent(escape(atob(navigateArgs[1].queryParams.q))));
+            expect(decoded.userQuery).toBe(nonLatinQuery);
         });
     });
 

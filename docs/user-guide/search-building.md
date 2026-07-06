@@ -90,7 +90,6 @@ export class YourSearchComponent implements OnInit {
 
   ngOnInit() {
     this.queryBuilder.resetToDefaults();
-    this.queryBuilder.updated.subscribe(() => void this.queryBuilder.execute());
     this.queryBuilder.executed.subscribe((data) => {
       this.queryBuilder.paging.skipCount = 0;
       this.onSearchResultLoaded(data);
@@ -103,7 +102,7 @@ export class YourSearchComponent implements OnInit {
 
   onSearchQueryChanged(string: string) {
     this.queryBuilder.userQuery = decodeURIComponent(string);
-    this.queryBuilder.update();
+    void this.queryBuilder.execute();
   }
 
   async onPaginationChanged(pagination: Pagination) {
@@ -111,7 +110,7 @@ export class YourSearchComponent implements OnInit {
       maxItems: pagination.maxItems,
       skipCount: pagination.skipCount
     };
-    this.queryBuilder.update();
+    void this.queryBuilder.execute();
   }
 }
 ```
