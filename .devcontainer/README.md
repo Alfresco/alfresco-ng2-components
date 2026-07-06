@@ -62,63 +62,57 @@ gh --version && gh auth status && gh api user --jq .login
 
 ## Signed Commits With Host Credentials
 
-The VS Code Dev Containers extension handles this automatically — your private
-keys never enter the container, only the agent socket is forwarded:
+The VS Code Dev Containers extension handles part of this automatically — your
+private keys never enter the container, only the agent socket is forwarded:
 
 - Your host **`.gitconfig`** (including `user.signingkey` and `commit.gpgsign`)
   is copied into the container.
-- Your host **`gpg-agent`** is forwarded (this is why `gnupg2` is installed), and
-  your GPG **public** keys are imported into the container.
+- Your host **`gpg-agent` socket** is forwarded (this is why `gnupg2` is
+  installed). This enables the actual signing operation via the host agent.
 - Your host **SSH agent** is forwarded, so `git push` over SSH uses your host keys.
+
+**Important**: VS Code forwards the host agent socket but does **not** automatically
+copy your host GPG public keyring into the container. GPG requires both a public key
+entry in the container's local keyring (to select the key) and the forwarded agent
+(to perform the signing). Without the public key, `gpg --clearsign` fails with
+`No secret key` even though the host agent connection is active.
 
 ### One-time host setup
 
-Make sure signing is configured on the **host** (this is what gets copied in):
+1. Configure signing on the host:
 
-```bash
-git config --global user.signingkey <YOUR_KEY_ID>
-git config --global commit.gpgsign true
-```
+   ```bash
+   git config --global user.signingkey <YOUR_KEY_ID>
+   git config --global commit.gpgsign true
+   ```
 
-Then, inside the container, verify the key is visible before committing:
+2. Export your public key so the container can import it:
 
-```bash
-gpg --list-secret-keys
-git commit -S -m "your message"   # -S optional if commit.gpgsign is true
-git push
-```
+   ```bash
+   # on the HOST, from repo root (auto-uses git user.signingkey)
+   ./.devcontainer/export-signing-key.sh
 
-### Easiest rebuild-safe import flow
+   # or pass a key explicitly
+   ./.devcontainer/export-signing-key.sh <YOUR_KEY_ID>
+   ```
 
-This devcontainer auto-imports a public key from `.git/signing.pub` on start.
-If present, it runs `gpg --import .git/signing.pub` and removes the file after a
-successful import.
+   On Windows PowerShell, use:
 
-So the easiest setup is:
+   ```powershell
+   # on the HOST, from repo root (auto-uses git user.signingkey)
+   .\.devcontainer\export-signing-key.ps1
 
-```bash
-# on the HOST, from repo root (auto-uses git user.signingkey)
-./.devcontainer/export-signing-key.sh
+   # or pass a key explicitly
+   .\.devcontainer\export-signing-key.ps1 <YOUR_KEY_ID>
+   ```
 
-# or pass a key explicitly
-./.devcontainer/export-signing-key.sh <YOUR_KEY_ID>
-```
-
-On Windows PowerShell, use:
-
-```powershell
-# on the HOST, from repo root (auto-uses git user.signingkey)
-.\.devcontainer\export-signing-key.ps1
-
-# or pass a key explicitly
-.\.devcontainer\export-signing-key.ps1 <YOUR_KEY_ID>
-```
+3. Rebuild the container. The `postStartCommand` auto-imports `.git/signing.pub`
+   and removes it.
 
 The helper auto-selects `gpg2`/`gpg` based on where your key is visible, which
 avoids host setups where the two binaries use different keyrings.
 
-If you rotate keys, run the helper again on the host before the next rebuild so
-the container can import the new public key.
+If you rotate keys, run the export helper again on the host before the next rebuild.
 
 Expected behavior after rebuild:
 

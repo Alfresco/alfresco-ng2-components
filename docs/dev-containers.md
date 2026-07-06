@@ -56,47 +56,59 @@ never enter the container: only the agent socket is forwarded.
 
 ### Option A: Commit and Sign in Container (Recommended)
 
-The VS Code Dev Containers extension wires this up automatically:
+The VS Code Dev Containers extension automatically handles part of this:
 
 - Your host `.gitconfig` (including `user.signingkey` and `commit.gpgsign`) is
   copied into the container.
-- Your host `gpg-agent` is forwarded (this is why `gnupg2` is installed in the
-  image), and your GPG public keys are imported into the container.
+- Your host `gpg-agent` **socket** is forwarded into the container (this is why
+  `gnupg2` is installed in the image). This covers the private key operation
+  (the actual signing).
 - Your host SSH agent is forwarded, so `git push` over SSH uses your host keys.
 
-One-time host setup (this is what gets copied in):
+**Important**: VS Code forwards the host agent socket but does **not** automatically
+copy the host GPG public keyring into the container. GPG needs both a public key
+entry in the local keyring (to select which key to use) and the forwarded agent
+socket (to perform the signing). If the public key is missing from the container
+keyring, `gpg --clearsign` will fail with `No secret key` even though the host
+agent is reachable and the forwarding is active.
+
+This is the one-time host-side setup:
+
+1. Configure signing on the host:
+
+	```bash
+	git config --global user.signingkey <YOUR_KEY_ID>
+	git config --global commit.gpgsign true
+	```
+
+2. Export your public key so the container can import it on startup:
+
+	```bash
+	./.devcontainer/export-signing-key.sh
+	```
+
+	On Windows PowerShell:
+
+	```powershell
+	.\.devcontainer\export-signing-key.ps1
+	```
+
+3. Rebuild the container. The `postStartCommand` auto-imports `.git/signing.pub`
+   and removes it.
+
+Then verify inside the container:
 
 ```bash
-git config --global user.signingkey <YOUR_KEY_ID>
-git config --global commit.gpgsign true
-```
-
-Then work entirely inside the container:
-
-```bash
-gpg --list-secret-keys            # verify the forwarded key is visible
-git commit -S -m "your message"   # -S optional when commit.gpgsign is true
+gpg --list-secret-keys --keyid-format=long   # should list your key
+git commit -S -m "your message"              # -S optional when commit.gpgsign is true
 git push
 ```
 
-For rebuild-safe signing, export your public key into `.git/signing.pub` on the
-host so the devcontainer can auto-import it on startup:
-
-```bash
-./.devcontainer/export-signing-key.sh
-```
-
-On Windows PowerShell:
-
-```powershell
-.\.devcontainer\export-signing-key.ps1
-```
-
-If you rotate keys, run the helper again before the next rebuild.
+If you rotate keys, run the export helper again on the host before the next rebuild.
 
 Expected behavior after rebuild:
 
-- Signing keeps working when host forwarding/import and `.git/signing.pub` are in sync.
+- Signing keeps working when the host agent forwarding and `.git/signing.pub` import are in sync.
 - If signing breaks after rebuild (especially after key rotation), regenerate `.git/signing.pub` with the helper and rebuild again.
 
 If signing still fails, follow [Signing (GPG/PGP) Troubleshooting](#signing-gpgpgp-troubleshooting).
