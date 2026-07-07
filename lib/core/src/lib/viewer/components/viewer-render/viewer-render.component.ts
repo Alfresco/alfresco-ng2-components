@@ -250,15 +250,12 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
             this.isLoading = false;
         }
 
-        this.extensionChange.emit(blobMimeType || this.mimeType);
+        this.extensionChange.emit(blobMimeType || this.extractMimeTypeEssence(this.mimeType));
         this.scrollTop();
     }
 
     private extractMimeTypeEssence(mimeType: string): string {
-        if (!mimeType) {
-            return mimeType;
-        }
-        return mimeType.split(';')[0].trim();
+        return (mimeType || '').split(';')[0].trim();
     }
 
     private setUpUrlFile() {
