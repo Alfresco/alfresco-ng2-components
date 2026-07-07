@@ -17,8 +17,9 @@
 
 import { TestBed } from '@angular/core/testing';
 import { AppConfigService, TranslationService, NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
-import { firstValueFrom } from 'rxjs';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { TaskCloudService } from './task-cloud.service';
+import { ADF_TASK_RUNTIME_BUNDLE_FALLBACK_ENABLED } from '../../services/task-runtime-bundle-fallback.token';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
 import {
     assignedTaskDetailsCloudMock,
@@ -77,6 +78,7 @@ describe('Task Cloud Service', () => {
     let translateService: TranslationService;
     let appConfigService: AppConfigService;
     let requestSpy: jasmine.Spy;
+    let runtimeBundleFallback$: BehaviorSubject<boolean>;
 
     const returnFakeTaskCompleteResults = () => Promise.resolve(taskCompleteCloudMock);
 
@@ -89,8 +91,10 @@ describe('Task Cloud Service', () => {
     const returnFakeCandidateGroupResults = () => Promise.resolve(['mockgroup1', 'mockgroup2', 'mockgroup3']);
 
     beforeEach(() => {
+        runtimeBundleFallback$ = new BehaviorSubject<boolean>(false);
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAuthModule]
+            imports: [NoopTranslateModule, NoopAuthModule],
+            providers: [{ provide: ADF_TASK_RUNTIME_BUNDLE_FALLBACK_ENABLED, useValue: runtimeBundleFallback$ }]
         });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         identityUserService = TestBed.inject(IdentityUserService);
@@ -764,7 +768,19 @@ describe('Task Cloud Service', () => {
         const appName = 'task-app';
         const taskId = '12345678';
 
-        it('should call the Runtime Bundle first', async () => {
+        it('should use the Query Service only when the Runtime Bundle fallback is disabled', async () => {
+            runtimeBundleFallback$.next(false);
+            requestSpy.and.callFake(returnFakeTaskDetailsResults);
+
+            await firstValueFrom(service.getTaskById(appName, taskId));
+
+            const requestedUrls = requestSpy.calls.all().map((call) => call.args[0]);
+            expect(requestedUrls[0]).toContain(`/query/v1/tasks/${taskId}`);
+            expect(requestedUrls.some((url) => url.includes('/rb/'))).toBe(false);
+        });
+
+        it('should call the Runtime Bundle first when the fallback is enabled', async () => {
+            runtimeBundleFallback$.next(true);
             requestSpy.and.callFake(returnFakeTaskDetailsResults);
 
             await firstValueFrom(service.getTaskById(appName, taskId));
@@ -774,6 +790,7 @@ describe('Task Cloud Service', () => {
         });
 
         it('should use the Query Service when the Runtime Bundle returns 404', async () => {
+            runtimeBundleFallback$.next(true);
             const notFoundError = Object.assign(new Error('Not Found'), { status: 404 });
             requestSpy.and.callFake((url: string) => (url.includes('/rb/') ? Promise.reject(notFoundError) : Promise.resolve(fakeTaskDetailsCloud)));
 
@@ -786,6 +803,7 @@ describe('Task Cloud Service', () => {
         });
 
         it('should not use the Query Service for errors other than 404', async () => {
+            runtimeBundleFallback$.next(true);
             const error = Object.assign(new Error('Server Error'), { status: 500 });
             requestSpy.and.callFake((url: string) => (url.includes('/rb/') ? Promise.reject(error) : Promise.resolve(fakeTaskDetailsCloud)));
 

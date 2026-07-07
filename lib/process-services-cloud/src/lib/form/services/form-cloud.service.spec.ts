@@ -17,10 +17,11 @@
 
 import { TestBed } from '@angular/core/testing';
 import { FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, FormCloudService } from './form-cloud.service';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { FORM_FIELD_VALIDATORS, FormFieldValidator, NoopAuthModule } from '@alfresco/adf-core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ADF_TASK_RUNTIME_BUNDLE_FALLBACK_ENABLED } from '../../services/task-runtime-bundle-fallback.token';
 
 const mockTaskResponseBody = {
     entry: { id: 'id', name: 'name', formKey: 'form-key' }
@@ -38,14 +39,19 @@ describe('Form Cloud service', () => {
     let service: FormCloudService;
     let adfHttpClient: AdfHttpClient;
     let requestSpy: jasmine.Spy;
+    let runtimeBundleFallback$: BehaviorSubject<boolean>;
     const appName = 'app-name';
     const taskId = 'task-id';
     const processInstanceId = 'process-instance-id';
 
     beforeEach(() => {
+        runtimeBundleFallback$ = new BehaviorSubject<boolean>(true);
         TestBed.configureTestingModule({
             imports: [NoopAuthModule],
-            providers: [{ provide: FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, useValue: [fakeValidator] }]
+            providers: [
+                { provide: FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, useValue: [fakeValidator] },
+                { provide: ADF_TASK_RUNTIME_BUNDLE_FALLBACK_ENABLED, useValue: runtimeBundleFallback$ }
+            ]
         });
         service = TestBed.inject(FormCloudService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
@@ -113,6 +119,19 @@ describe('Form Cloud service', () => {
                 expect(result).toBeDefined();
                 expect(result.id).toBe('id');
                 expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/query/v1/tasks/${taskId}`);
+                done();
+            });
+        });
+
+        it('should use the query service only when the runtime bundle fallback is disabled', (done) => {
+            runtimeBundleFallback$.next(false);
+            requestSpy.and.returnValue(Promise.resolve(mockTaskResponseBody));
+
+            service.getTask(appName, taskId).subscribe((result) => {
+                expect(result).toBeDefined();
+                expect(result.id).toBe('id');
+                expect(requestSpy.calls.first().args[0]).toContain(`${appName}/query/v1/tasks/${taskId}`);
+                expect(requestSpy.calls.all().some((call) => call.args[0].includes('/rb/'))).toBe(false);
                 done();
             });
         });

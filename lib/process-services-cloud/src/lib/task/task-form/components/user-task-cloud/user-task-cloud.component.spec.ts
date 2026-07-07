@@ -153,102 +153,18 @@ describe('UserTaskCloudComponent', () => {
         });
     });
 
-    describe('taskDetailsSource', () => {
+    describe('loadTask', () => {
         beforeEach(() => {
             fixture.componentRef.setInput('appName', 'app1');
         });
 
-        it('should fetch the task from the Query Service by default', () => {
-            fixture.componentRef.setInput('taskId', 'task1');
-            fixture.detectChanges();
-
-            expect(getTaskSpy).toHaveBeenCalledWith('app1', 'task1');
-        });
-
-        it('should fetch the task from the Runtime Bundle when taskDetailsSource is rb', () => {
-            fixture.componentRef.setInput('taskDetailsSource', 'rb');
-            fixture.componentRef.setInput('taskId', 'task1');
-            fixture.detectChanges();
-
-            expect(getTaskSpy).toHaveBeenCalledWith('app1', 'task1', 'rb');
-        });
-
-        it('should fall back to the Query Service when the Runtime Bundle returns 404 for a terminal task', () => {
-            getTaskSpy.withArgs('app1', 'task1', 'rb').and.returnValue(throwError(() => ({ status: 404 })));
-            getTaskSpy.withArgs('app1', 'task1', 'query').and.returnValue(of(taskDetails));
-            fixture.componentRef.setInput('taskDetailsSource', 'rb');
-            fixture.componentRef.setInput('taskId', 'task1');
-            fixture.detectChanges();
-
-            expect(getTaskSpy).toHaveBeenCalledWith('app1', 'task1', 'rb');
-            expect(getTaskSpy).toHaveBeenCalledWith('app1', 'task1', 'query');
-            expect(component.taskDetails).toEqual(taskDetails);
-            expect(errorEmitSpy).not.toHaveBeenCalled();
-        });
-
-        it('should fall back to the Query Service when taskDetailsSource is an unsupported value', () => {
-            fixture.componentRef.setInput('taskDetailsSource', 'unsupported');
+        it('should fetch the task details by id', () => {
             fixture.componentRef.setInput('taskId', 'task1');
             fixture.detectChanges();
 
             expect(getTaskSpy).toHaveBeenCalledWith('app1', 'task1');
             expect(component.taskDetails).toEqual(taskDetails);
             expect(errorEmitSpy).not.toHaveBeenCalled();
-        });
-
-        it('should reload the task from the new source when taskDetailsSource changes after init', () => {
-            fixture.componentRef.setInput('taskId', 'task1');
-            fixture.detectChanges();
-            expect(getTaskSpy).toHaveBeenCalledWith('app1', 'task1');
-
-            getTaskSpy.calls.reset();
-            fixture.componentRef.setInput('taskDetailsSource', 'rb');
-            fixture.detectChanges();
-
-            expect(getTaskSpy).toHaveBeenCalledWith('app1', 'task1', 'rb');
-        });
-
-        it('should emit error when the Runtime Bundle fails with a non-404 error', () => {
-            const error = { status: 500 };
-            getTaskSpy.withArgs('app1', 'task1', 'rb').and.returnValue(throwError(() => error));
-            fixture.componentRef.setInput('taskDetailsSource', 'rb');
-            fixture.componentRef.setInput('taskId', 'task1');
-            fixture.detectChanges();
-
-            expect(errorEmitSpy).toHaveBeenCalledWith(error);
-        });
-
-        describe('claim/unclaim checks in runtime bundle mode (no permissions)', () => {
-            beforeEach(() => {
-                fixture.componentRef.setInput('taskDetailsSource', 'rb');
-                spyOn(component, 'hasCandidateUsersOrGroups').and.returnValue(true);
-            });
-
-            it('should allow claiming a created, non-standalone task even without permissions', () => {
-                component.taskDetails = { status: TASK_CREATED_STATE, standalone: false } as TaskDetailsCloudModel;
-
-                expect(component.canClaimTask()).toBe(true);
-            });
-
-            it('should not allow claiming a task that is not in the created state', () => {
-                component.taskDetails = { status: TASK_ASSIGNED_STATE, standalone: false } as TaskDetailsCloudModel;
-
-                expect(component.canClaimTask()).toBe(false);
-            });
-
-            it('should allow releasing a task assigned to the current user even without permissions', () => {
-                getCurrentUserSpy.and.returnValue({ username: 'admin.adf' });
-                component.taskDetails = { status: TASK_ASSIGNED_STATE, assignee: 'admin.adf', standalone: false } as TaskDetailsCloudModel;
-
-                expect(component.canUnclaimTask()).toBe(true);
-            });
-
-            it('should not allow releasing a task assigned to a different user', () => {
-                getCurrentUserSpy.and.returnValue({ username: 'admin.adf' });
-                component.taskDetails = { status: TASK_ASSIGNED_STATE, assignee: 'another.user', standalone: false } as TaskDetailsCloudModel;
-
-                expect(component.canUnclaimTask()).toBe(false);
-            });
         });
     });
 

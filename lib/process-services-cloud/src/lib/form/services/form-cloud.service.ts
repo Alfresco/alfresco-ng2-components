@@ -18,13 +18,14 @@
 import { inject, Injectable, InjectionToken } from '@angular/core';
 import { FormValues, FormModel, FormFieldOption, FormFieldValidator, FormService } from '@alfresco/adf-core';
 import { Observable, from, EMPTY, throwError } from 'rxjs';
-import { catchError, expand, map, reduce, switchMap } from 'rxjs/operators';
+import { catchError, expand, map, reduce, switchMap, take } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/models/task-details-cloud.model';
 import { CompleteFormRepresentation, LazyApi, UploadApi } from '@alfresco/js-api';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { FormContent } from '../../services/form-fields.interfaces';
 import { FormCloudServiceInterface } from './form-cloud.service.interface';
+import { ADF_TASK_RUNTIME_BUNDLE_FALLBACK_ENABLED, resolveTaskRuntimeBundleFallback$ } from '../../services/task-runtime-bundle-fallback.token';
 
 export const FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldValidator[]>('FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN');
 
@@ -34,6 +35,9 @@ export const FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN = new InjectionToken<Form
 export class FormCloudService extends BaseCloudService implements FormCloudServiceInterface {
     private readonly fieldValidators: FormFieldValidator[] = inject(FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, { optional: true }) ?? [];
     private readonly formService = inject(FormService);
+    private readonly runtimeBundleFallbackEnabled$ = resolveTaskRuntimeBundleFallback$(
+        inject(ADF_TASK_RUNTIME_BUNDLE_FALLBACK_ENABLED, { optional: true })
+    );
 
     @LazyApi((self: FormCloudService) => new UploadApi(self.apiService.getInstance()))
     declare readonly uploadApi: UploadApi;
@@ -144,8 +148,13 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
         const rbUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}`;
         const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
 
-        return this.get(rbUrl).pipe(
-            catchError((error) => (error?.status === 404 ? this.get(queryUrl) : throwError(() => error))),
+        return this.runtimeBundleFallbackEnabled$.pipe(
+            take(1),
+            switchMap((runtimeBundleFirst) =>
+                runtimeBundleFirst
+                    ? this.get(rbUrl).pipe(catchError((error) => (error?.status === 404 ? this.get(queryUrl) : throwError(() => error))))
+                    : this.get(queryUrl)
+            ),
             map((res: any) => res.entry)
         );
     }

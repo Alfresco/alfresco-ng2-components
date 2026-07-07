@@ -18,7 +18,7 @@
 import { inject, Injectable } from '@angular/core';
 import { CardViewArrayItem, TranslationService } from '@alfresco/adf-core';
 import { Observable, of, Subject, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
 import {
     StartTaskCloudResponseModel,
     TASK_ASSIGNED_STATE,
@@ -33,6 +33,7 @@ import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.m
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
 import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption } from '../models/task.model';
 import { IdentityUserService } from '../../people/services/identity-user.service';
+import { ADF_TASK_RUNTIME_BUNDLE_FALLBACK_ENABLED, resolveTaskRuntimeBundleFallback$ } from '../../services/task-runtime-bundle-fallback.token';
 
 @Injectable({
     providedIn: 'root'
@@ -40,6 +41,9 @@ import { IdentityUserService } from '../../people/services/identity-user.service
 export class TaskCloudService extends BaseCloudService {
     private readonly translateService = inject(TranslationService);
     private readonly identityUserService = inject(IdentityUserService);
+    private readonly runtimeBundleFallbackEnabled$ = resolveTaskRuntimeBundleFallback$(
+        inject(ADF_TASK_RUNTIME_BUNDLE_FALLBACK_ENABLED, { optional: true })
+    );
 
     dataChangesDetected$ = new Subject();
 
@@ -239,8 +243,13 @@ export class TaskCloudService extends BaseCloudService {
             const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
             const rbUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}`;
 
-            return this.get(rbUrl).pipe(
-                catchError((error) => (error?.status === 404 ? this.get(queryUrl) : throwError(() => error))),
+            return this.runtimeBundleFallbackEnabled$.pipe(
+                take(1),
+                switchMap((runtimeBundleFirst) =>
+                    runtimeBundleFirst
+                        ? this.get(rbUrl).pipe(catchError((error) => (error?.status === 404 ? this.get(queryUrl) : throwError(() => error))))
+                        : this.get(queryUrl)
+                ),
                 map((res: any) => res.entry)
             );
         } else {
