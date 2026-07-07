@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   workflow_call:
     secrets:
-      BOT_GITHUB_TOKEN:
+      GH_APP_ENGINEERING_CONTRIB_PRIVATE_KEY:
         required: true
       CROWDIN_TRANSLATIONS_TOKEN:
         required: true
@@ -15,11 +15,19 @@ jobs:
   pull-from-crowdin:
     runs-on: ubuntu-latest
     steps:
+      - name: Generate app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ vars.GH_APP_ENGINEERING_CONTRIB_CLIENT_ID }}
+          private-key: ${{ secrets.GH_APP_ENGINEERING_CONTRIB_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
       - name: Checkout
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: develop
-          token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
       - name: Pull translations from Crowdin
         uses: crowdin/github-action@52aa776766211d83d975df51f3b9c53c2f8ba35f # v2.16.3
         with:
@@ -34,5 +42,5 @@ jobs:
           github_user_email: ${{ vars.HXPS_GIT_EMAIL }}
           gpg_private_key: ${{ secrets.HXPS_GIT_COMMIT_SIGNING_PRIVATE_KEY }}
         env:
-          GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           CROWDIN_TOKEN: ${{ secrets.CROWDIN_TRANSLATIONS_TOKEN }}
