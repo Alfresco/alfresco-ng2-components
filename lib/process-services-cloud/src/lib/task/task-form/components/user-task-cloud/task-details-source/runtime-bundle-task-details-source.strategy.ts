@@ -37,10 +37,8 @@ export class RuntimeBundleTaskDetailsSourceStrategy implements TaskDetailsSource
 
     getTaskDetails$(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         return this.taskCloudService
-            .getTaskById(appName, taskId, 'rb')
-            .pipe(
-                catchError((error) => (error?.status === 404 ? this.taskCloudService.getTaskById(appName, taskId, 'query') : throwError(() => error)))
-            );
+            .getTaskById(appName, taskId)
+            .pipe(catchError((error) => (error?.status === 404 ? this.taskCloudService.getTaskById(appName, taskId) : throwError(() => error))));
     }
 
     canClaim(taskDetails: TaskDetailsCloudModel): boolean {

@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
+import { firstValueFrom, of, throwError } from 'rxjs';
 import { TaskCloudService } from '../../../../services/task-cloud.service';
 import { TaskDetailsCloudModel } from '../../../../models/task-details-cloud.model';
 import { RuntimeBundleTaskDetailsSourceStrategy } from './runtime-bundle-task-details-source.strategy';
@@ -43,34 +43,33 @@ describe('RuntimeBundleTaskDetailsSourceStrategy', () => {
         strategy = TestBed.inject(RuntimeBundleTaskDetailsSourceStrategy);
     });
 
-    it('should fetch the task details from the Runtime Bundle', () => {
+    it('should get the task from the task cloud service', async () => {
         taskCloudService.getTaskById.and.returnValue(of(taskDetails));
 
-        strategy.getTaskDetails$('app', 'task-1').subscribe();
+        const result = await firstValueFrom(strategy.getTaskDetails$('app', 'task-1'));
 
-        expect(taskCloudService.getTaskById).toHaveBeenCalledWith('app', 'task-1', 'rb');
-    });
-
-    it('should fall back to the Query Service when the Runtime Bundle returns 404 for a terminal task', () => {
-        taskCloudService.getTaskById.withArgs('app', 'task-1', 'rb').and.returnValue(throwError(() => ({ status: 404 })));
-        taskCloudService.getTaskById.withArgs('app', 'task-1', 'query').and.returnValue(of(taskDetails));
-
-        let result: TaskDetailsCloudModel;
-        strategy.getTaskDetails$('app', 'task-1').subscribe((task) => (result = task));
-
-        expect(taskCloudService.getTaskById).toHaveBeenCalledWith('app', 'task-1', 'query');
+        expect(taskCloudService.getTaskById).toHaveBeenCalledWith('app', 'task-1');
         expect(result).toEqual(taskDetails);
     });
 
-    it('should propagate non-404 errors from the Runtime Bundle without falling back', () => {
+    it('should retry once when the first attempt returns 404', async () => {
+        taskCloudService.getTaskById.and.returnValues(
+            throwError(() => ({ status: 404 })),
+            of(taskDetails)
+        );
+
+        const result = await firstValueFrom(strategy.getTaskDetails$('app', 'task-1'));
+
+        expect(taskCloudService.getTaskById).toHaveBeenCalledTimes(2);
+        expect(result).toEqual(taskDetails);
+    });
+
+    it('should rethrow errors that are not 404', async () => {
         const error = { status: 500 };
-        taskCloudService.getTaskById.withArgs('app', 'task-1', 'rb').and.returnValue(throwError(() => error));
+        taskCloudService.getTaskById.and.returnValue(throwError(() => error));
 
-        let caught: unknown;
-        strategy.getTaskDetails$('app', 'task-1').subscribe({ error: (err) => (caught = err) });
-
-        expect(caught).toBe(error);
-        expect(taskCloudService.getTaskById).not.toHaveBeenCalledWith('app', 'task-1', 'query');
+        await expectAsync(firstValueFrom(strategy.getTaskDetails$('app', 'task-1'))).toBeRejectedWith(error);
+        expect(taskCloudService.getTaskById).toHaveBeenCalledTimes(1);
     });
 
     it('should delegate claim eligibility to the state-based check when permissions are absent', () => {
