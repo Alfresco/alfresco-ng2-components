@@ -241,13 +241,21 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     private setUpBlobData() {
         this.internalFileName = this.fileName;
-        this.viewerType = this.viewUtilService.getViewerTypeByMimeType(this.blobFile.type);
+        const blobMimeType = this.extractMimeTypeEssence(this.blobFile.type);
+        this.viewerType = this.viewUtilService.getViewerTypeByMimeType(blobMimeType);
+        if (this.viewerType === 'unknown' && this.mimeType) {
+            this.viewerType = this.viewUtilService.getViewerTypeByMimeType(this.extractMimeTypeEssence(this.mimeType));
+        }
         if (this.viewerType === 'unknown') {
             this.isLoading = false;
         }
 
-        this.extensionChange.emit(this.blobFile.type);
+        this.extensionChange.emit(blobMimeType || this.extractMimeTypeEssence(this.mimeType));
         this.scrollTop();
+    }
+
+    private extractMimeTypeEssence(mimeType: string): string {
+        return (mimeType || '').split(';')[0].trim();
     }
 
     private setUpUrlFile() {

@@ -27,6 +27,7 @@ import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumb
 import { PDFJS_MODULE, PDFJS_VIEWER_MODULE, PdfViewerComponent } from './pdf-viewer.component';
 import pdfjsLibraryMock, { annotations } from '../mock/pdfjs-lib.mock';
 import { TranslateService } from '@ngx-translate/core';
+import { PDFDocumentLoadingTask } from 'pdfjs-dist/types/src/display/api';
 
 declare const pdfjsLib: {
     PasswordResponses: {
@@ -352,6 +353,54 @@ describe('Test PdfViewer component', () => {
             });
         });
     });
+});
+
+describe('Test PdfViewer - executePdf error handling', () => {
+    let fixture: ComponentFixture<PdfViewerComponent>;
+    let component: PdfViewerComponent;
+
+    beforeEach(() => {
+        const failingLoadingTask = {
+            promise: Promise.reject(new Error('PDF load failed')),
+            onPassword: null,
+            onProgress: null,
+            destroy: () => Promise.resolve()
+        } as PDFDocumentLoadingTask;
+
+        const pdfjsLibMock = {
+            GlobalWorkerOptions: {},
+            getDocument: () => failingLoadingTask
+        };
+
+        TestBed.configureTestingModule({
+            imports: [PdfViewerComponent],
+            providers: [
+                provideCoreAuthTesting(),
+                {
+                    provide: MatDialog,
+                    useValue: {
+                        open: () => {}
+                    }
+                },
+                RenderingQueueServices,
+                { provide: PDFJS_MODULE, useValue: pdfjsLibMock }
+            ]
+        });
+
+        fixture = TestBed.createComponent(PdfViewerComponent);
+        component = fixture.componentInstance;
+    });
+
+    it('should emit error event when PDF loading fails', fakeAsync(() => {
+        spyOn(component.error, 'emit');
+        // Pre-set the worker URL so the real setupPdfJsWorker logic runs without performing a network fetch
+        component.pdfJsWorkerUrl = URL.createObjectURL(new Blob([''], { type: 'application/javascript' }));
+
+        component.executePdf({ data: new ArrayBuffer(0) });
+        flush();
+
+        expect(component.error.emit).toHaveBeenCalled();
+    }));
 });
 
 describe('Test PdfViewer - Zoom customization', () => {

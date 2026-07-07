@@ -32,7 +32,8 @@ import {
     ViewerMoreActionsComponent,
     ViewerToolbarActionsComponent,
     NoopAuthModule,
-    NoopTranslateModule
+    NoopTranslateModule,
+    UnitTestingUtils
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
@@ -177,6 +178,7 @@ describe('AlfrescoViewerComponent', () => {
     let renditionService: RenditionService;
     let viewUtilService: ViewUtilService;
     let nodeActionsService: NodeActionsService;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -197,6 +199,7 @@ describe('AlfrescoViewerComponent', () => {
         fixture = TestBed.createComponent(AlfrescoViewerComponent);
         element = fixture.nativeElement;
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         uploadService = TestBed.inject(UploadService);
         nodesApiService = TestBed.inject(NodesApiService);
         dialog = TestBed.inject(MatDialog);
@@ -398,12 +401,16 @@ describe('AlfrescoViewerComponent', () => {
         component.nodeId = 'id1';
         component.showViewer = true;
         component.versionId = null;
-        component.ngOnChanges(getSimpleChanges('id1'));
 
-        await fixture.whenStable();
+        await fixture.ngZone.run(async () => {
+            component.ngOnChanges(getSimpleChanges('id1'));
+            await fixture.whenStable();
+        });
+        fixture.detectChanges();
 
-        expect(component.fileName).toBe('file1.pdf');
-        expect(component.blobFileContent).toBe(mockBlob);
+        const viewer = testingUtils.getByDirective(ViewerComponent).componentInstance as ViewerComponent<unknown>;
+        expect(viewer.fileName).toBe('file1.pdf');
+        expect(viewer.blobFile).toBe(mockBlob);
     });
 
     it('should change display name every time node`s version changes', fakeAsync(() => {
@@ -1061,6 +1068,129 @@ describe('AlfrescoViewerComponent', () => {
 
                 expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
             });
+        });
+    });
+
+    describe('PDF blob fetch and atomic state assignment', () => {
+        it('should assign blobFileContent and null urlFileContent when PDF blob fetch succeeds', async () => {
+            const mockBlob = new Blob(['pdf content'], { type: 'application/pdf' });
+            const mockResponse = { ok: true, blob: () => Promise.resolve(mockBlob) } as Response;
+            spyOn(window, 'fetch').and.returnValue(Promise.resolve(mockResponse));
+
+            spyOn(component.nodesApi, 'getNode').and.returnValue(
+                Promise.resolve(
+                    new NodeEntry({
+                        entry: new Node({ name: 'test.pdf', id: 'node-1', content: new ContentInfo({ mimeType: 'application/pdf' }) })
+                    })
+                )
+            );
+
+            component.nodeId = 'node-1';
+            component.showViewer = true;
+
+            await fixture.ngZone.run(async () => {
+                component.ngOnChanges(getSimpleChanges('node-1'));
+                await fixture.whenStable();
+            });
+            fixture.detectChanges();
+
+            const viewer = testingUtils.getByDirective(ViewerComponent).componentInstance as ViewerComponent<unknown>;
+            expect(viewer.blobFile).toBe(mockBlob);
+            expect(viewer.urlFile).toBeFalsy();
+            expect(viewer.mimeType).toBe('application/pdf');
+        });
+
+        it('should fall back to URL-based viewing when PDF blob fetch fails', async () => {
+            spyOn(window, 'fetch').and.returnValue(Promise.reject(new Error('Network error')));
+            spyOn(component.contentApi, 'getContentUrl').and.returnValue('/content/url');
+
+            spyOn(component.nodesApi, 'getNode').and.returnValue(
+                Promise.resolve(
+                    new NodeEntry({
+                        entry: new Node({
+                            name: 'test.pdf',
+                            id: 'node-1',
+                            content: new ContentInfo({ mimeType: 'application/pdf' }),
+                            properties: { 'cm:versionLabel': '1.0' }
+                        })
+                    })
+                )
+            );
+
+            component.nodeId = 'node-1';
+            component.showViewer = true;
+
+            await fixture.ngZone.run(async () => {
+                component.ngOnChanges(getSimpleChanges('node-1'));
+                await fixture.whenStable();
+            });
+            fixture.detectChanges();
+
+            const viewer = testingUtils.getByDirective(ViewerComponent).componentInstance as ViewerComponent<unknown>;
+            expect(viewer.blobFile).toBeFalsy();
+            expect(viewer.urlFile).toBeTruthy();
+            expect(viewer.mimeType).toBe('application/pdf');
+        });
+
+        it('should fall back to URL-based viewing when PDF fetch returns non-ok response', async () => {
+            const mockResponse = { ok: false, status: 403 } as Response;
+            spyOn(window, 'fetch').and.returnValue(Promise.resolve(mockResponse));
+            spyOn(component.contentApi, 'getContentUrl').and.returnValue('/content/url');
+
+            spyOn(component.nodesApi, 'getNode').and.returnValue(
+                Promise.resolve(
+                    new NodeEntry({
+                        entry: new Node({
+                            name: 'test.pdf',
+                            id: 'node-1',
+                            content: new ContentInfo({ mimeType: 'application/pdf' }),
+                            properties: { 'cm:versionLabel': '1.0' }
+                        })
+                    })
+                )
+            );
+
+            component.nodeId = 'node-1';
+            component.showViewer = true;
+
+            await fixture.ngZone.run(async () => {
+                component.ngOnChanges(getSimpleChanges('node-1'));
+                await fixture.whenStable();
+            });
+            fixture.detectChanges();
+
+            const viewer = testingUtils.getByDirective(ViewerComponent).componentInstance as ViewerComponent<unknown>;
+            expect(viewer.blobFile).toBeFalsy();
+            expect(viewer.urlFile).toBeTruthy();
+            expect(viewer.mimeType).toBe('application/pdf');
+        });
+
+        it('should not expose intermediate null state during node setup', async () => {
+            const mockBlob = new Blob(['pdf content'], { type: 'application/pdf' });
+            const mockResponse = { ok: true, blob: () => Promise.resolve(mockBlob) } as Response;
+            spyOn(window, 'fetch').and.returnValue(Promise.resolve(mockResponse));
+
+            spyOn(component.nodesApi, 'getNode').and.returnValue(
+                Promise.resolve(
+                    new NodeEntry({
+                        entry: new Node({ name: 'test.pdf', id: 'node-1', content: new ContentInfo({ mimeType: 'application/pdf' }) })
+                    })
+                )
+            );
+
+            component.nodeId = 'node-1';
+            component.showViewer = true;
+
+            await fixture.ngZone.run(async () => {
+                component.ngOnChanges(getSimpleChanges('node-1'));
+                await fixture.whenStable();
+            });
+            fixture.detectChanges();
+
+            const viewer = testingUtils.getByDirective(ViewerComponent).componentInstance as ViewerComponent<unknown>;
+            expect(viewer.blobFile).toBe(mockBlob);
+            expect(viewer.urlFile).toBeFalsy();
+            expect(viewer.fileName).toBe('test.pdf');
         });
     });
 });

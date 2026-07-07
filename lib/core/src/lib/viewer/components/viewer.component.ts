@@ -347,8 +347,9 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         const { blobFile, urlFile, mimeType, nodeMimeType } = changes;
 
         if (blobFile?.currentValue) {
-            this.mimeType = blobFile.currentValue.type;
-            this.mimeTypeIconUrl = this.thumbnailService.getMimeTypeIcon(blobFile.currentValue.type);
+            const blobMimeType = this.extractMimeTypeEssence(blobFile.currentValue.type);
+            this.mimeType = blobMimeType;
+            this.mimeTypeIconUrl = this.thumbnailService.getMimeTypeIcon(blobMimeType);
         }
 
         if (urlFile?.currentValue) {
@@ -356,12 +357,16 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         }
 
         if (mimeType?.currentValue && !nodeMimeType?.currentValue) {
-            this.mimeTypeIconUrl = this.thumbnailService.getMimeTypeIcon(mimeType.currentValue);
+            this.mimeTypeIconUrl = this.thumbnailService.getMimeTypeIcon(this.extractMimeTypeEssence(mimeType.currentValue));
         }
 
         if (nodeMimeType?.currentValue) {
-            this.mimeTypeIconUrl = this.thumbnailService.getMimeTypeIcon(nodeMimeType.currentValue);
+            this.mimeTypeIconUrl = this.thumbnailService.getMimeTypeIcon(this.extractMimeTypeEssence(nodeMimeType.currentValue));
         }
+    }
+
+    private extractMimeTypeEssence(mimeType: string): string {
+        return (mimeType || '').split(';')[0].trim();
     }
 
     ngOnInit(): void {

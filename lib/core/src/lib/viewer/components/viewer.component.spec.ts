@@ -34,6 +34,7 @@ import { ViewerWithCustomToolbarComponent } from './mock/adf-viewer-container-to
 import { ViewerComponent } from './viewer.component';
 import { ThumbnailService } from '../../common/services/thumbnail.service';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
+import { ViewerRenderComponent } from './viewer-render/viewer-render.component';
 
 @Component({
     selector: 'adf-dialog-dummy',
@@ -113,8 +114,57 @@ describe('ViewerComponent', () => {
             };
 
             component.ngOnChanges(mockSimpleChanges);
+            fixture.detectChanges();
 
-            expect(component.mimeType).toBe('image/png');
+            const viewerRender = testingUtils.getByDirective(ViewerRenderComponent).componentInstance as ViewerRenderComponent;
+            expect(viewerRender.mimeType).toBe('image/png');
+        });
+
+        it('should strip MIME type parameters from blob type', () => {
+            const mockSimpleChanges: SimpleChanges = {
+                blobFile: new SimpleChange(null, { type: 'application/pdf;charset=utf-8' }, true)
+            };
+
+            component.ngOnChanges(mockSimpleChanges);
+            fixture.detectChanges();
+
+            const viewerRender = testingUtils.getByDirective(ViewerRenderComponent).componentInstance as ViewerRenderComponent;
+            expect(viewerRender.mimeType).toBe('application/pdf');
+        });
+
+        it('should strip MIME type parameters with spaces from blob type', () => {
+            const mockSimpleChanges: SimpleChanges = {
+                blobFile: new SimpleChange(null, { type: 'image/png; charset=binary' }, true)
+            };
+
+            component.ngOnChanges(mockSimpleChanges);
+            fixture.detectChanges();
+
+            const viewerRender = testingUtils.getByDirective(ViewerRenderComponent).componentInstance as ViewerRenderComponent;
+            expect(viewerRender.mimeType).toBe('image/png');
+        });
+
+        it('should handle empty blob type gracefully', () => {
+            const mockSimpleChanges: SimpleChanges = {
+                blobFile: new SimpleChange(null, { type: '' }, true)
+            };
+
+            component.ngOnChanges(mockSimpleChanges);
+            fixture.detectChanges();
+
+            const viewerRender = testingUtils.getByDirective(ViewerRenderComponent).componentInstance as ViewerRenderComponent;
+            expect(viewerRender.mimeType).toBe('');
+        });
+
+        it('should set mimeTypeIconUrl with stripped MIME type from blob', () => {
+            spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('icon-url');
+            const mockSimpleChanges: SimpleChanges = {
+                blobFile: new SimpleChange(null, { type: 'application/pdf;charset=utf-8' }, true)
+            };
+
+            component.ngOnChanges(mockSimpleChanges);
+
+            expect(thumbnailService.getMimeTypeIcon).toHaveBeenCalledWith('application/pdf');
         });
 
         it('should set mimeTypeIconUrl when mimeType changes and no nodeMimeType is provided', () => {
