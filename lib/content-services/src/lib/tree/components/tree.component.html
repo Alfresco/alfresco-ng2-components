@@ -58,7 +58,9 @@
                         *ngIf="node.hasChildren"
                         class="adf-tree-expand-collapse-button"
                         mat-icon-button
-                        matTreeNodeToggle
+                        tabindex="-1"
+                        aria-hidden="true"
+                        (click)="expandCollapseNode(node); $event.stopPropagation()"
                     >
                         <mat-progress-spinner
                                 mode="indeterminate"
