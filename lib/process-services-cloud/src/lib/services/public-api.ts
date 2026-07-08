@@ -22,6 +22,7 @@ export * from './local-preference-cloud.service';
 export * from './notification-cloud.service';
 export * from './preference-cloud.interface';
 export * from './task-list-cloud.service.interface';
+export * from './task-runtime-bundle-fallback.token';
 export * from './user-preference-cloud.service';
 export * from './variable-mapper.sevice';
 export * from './web-socket.service';
