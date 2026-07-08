@@ -734,15 +734,19 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     private createAnnotationPopupHeader(annotation: PdfAnnotationWithTitle): HTMLSpanElement {
         const headerElement = document.createElement('span');
-        const titleElement = document.createElement('span');
+        const titleElement = document.createElement('h1');
         let dateElement: HTMLTimeElement;
         titleElement.innerText = annotation.titleObj.str;
         titleElement.classList.add('title');
         headerElement.classList.add('header');
         if (annotation.modificationDate) {
             dateElement = document.createElement('time');
-            dateElement.innerText = PDFDateString.toDateObject(annotation.modificationDate).toLocaleString();
+            const dateObj = PDFDateString.toDateObject(annotation.modificationDate);
             dateElement.classList.add('popupDate');
+            dateElement.dataset.l10nId = 'pdfjs-annotation-date-time-string';
+            dateElement.dataset.l10nArgs = JSON.stringify({
+                dateObj: dateObj.getTime()
+            });
             headerElement.append(titleElement, dateElement);
         } else {
             headerElement.append(titleElement);

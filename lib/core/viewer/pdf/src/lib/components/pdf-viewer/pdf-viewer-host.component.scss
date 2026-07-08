@@ -208,6 +208,8 @@
                 .adf-pdf-viewer-annotation-tooltip.popup {
                     opacity: 1;
                     pointer-events: auto;
+                    outline-color: rgb(0, 0, 0);
+                    background-color: color-mix(in srgb, rgb(0, 0, 0) 30%, white);
                 }
             }
         }
