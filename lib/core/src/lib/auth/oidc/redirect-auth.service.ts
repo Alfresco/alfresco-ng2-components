@@ -149,7 +149,7 @@ export class RedirectAuthService extends AuthService {
 
         this.oauthService.clearHashAfterLogin = true;
 
-        this.oauthService.events.pipe(filter(() => oauthService.showDebugInformation === true)).subscribe((event) => {
+        this.oauthService.events.pipe(filter(() => oauthService.showDebugInformation)).subscribe((event) => {
             if (event instanceof OAuthErrorEvent) {
                 this._oauthLogger.error('OAuthErrorEvent Object:', event);
             } else {
@@ -176,7 +176,7 @@ export class RedirectAuthService extends AuthService {
         );
 
         this.oauthErrorEventOccurDueToClockOutOfSync$ = this.oauthErrorEvent$.pipe(
-            switchMap(() => this._timeSyncService.checkTimeSync(this.oauthService.clockSkewInSec ?? 0)),
+            switchMap(() => this._timeSyncService.checkTimeSync(this.oauthService.clockSkewInSec)),
             filter((timeSync) => timeSync?.outOfSync),
             map(
                 (timeSync) =>
@@ -196,7 +196,7 @@ export class RedirectAuthService extends AuthService {
         this.tokenHasExpiredDueToClockOutOfSync$ = this.oauthService.events.pipe(
             map(() => !!this.oauthService.getIdentityClaims() && this.tokenHasExpired()),
             filter((hasExpired) => hasExpired),
-            switchMap(() => this._timeSyncService.checkTimeSync(this.oauthService.clockSkewInSec ?? 0)),
+            switchMap(() => this._timeSyncService.checkTimeSync(this.oauthService.clockSkewInSec)),
             filter((timeSync) => timeSync?.outOfSync),
             map(
                 (timeSync) =>
@@ -267,7 +267,6 @@ export class RedirectAuthService extends AuthService {
     }
 
     logout() {
-        this._timeSyncService.stopPeriodicSync();
         this.oauthService.logOut();
     }
 
@@ -359,13 +358,10 @@ export class RedirectAuthService extends AuthService {
                 this._isDiscoveryDocumentLoadedSubject$.next(true);
                 this.oauthService.setupAutomaticSilentRefresh();
                 this._timeSyncService.syncClockOffset().subscribe();
-                this._timeSyncService.startPeriodicSync();
-                this.allowRefreshTokenAndSilentRefreshOnMultipleTabs();
-                return true;
+                return void this.allowRefreshTokenAndSilentRefreshOnMultipleTabs();
             })
             .catch(() => {
                 // catch error to prevent the app from crashing when trying to access unprotected routes
-                return false;
             });
     }
 
@@ -390,13 +386,10 @@ export class RedirectAuthService extends AuthService {
                     (this.oauthService as any).eventsSubject.next(new OAuthSuccessEvent('token_received'));
                     (this.oauthService as any).eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
                     lastUpdatedAccessToken = this.oauthService.getAccessToken();
-                    return undefined as unknown as TokenResponse;
+                    return;
                 }
 
-                return originalRefreshToken().then((resp) => {
-                    lastUpdatedAccessToken = resp.access_token;
-                    return resp;
-                });
+                return originalRefreshToken().then((resp) => (lastUpdatedAccessToken = resp.access_token));
             });
 
         const originalSilentRefresh = this.oauthService.silentRefresh.bind(this.oauthService);
@@ -437,11 +430,10 @@ export class RedirectAuthService extends AuthService {
         const now = this._timeSyncService.getCorrectedNow();
         const issuedAtMSec = claims.iat * 1000;
         const expiresAtMSec = claims.exp * 1000;
-        const clockSkewInMSec = (this.oauthService.clockSkewInSec ?? 0) * 1000;
-        const decreaseExpirationBySec = this.oauthService.decreaseExpirationBySec ?? 0;
+        const clockSkewInMSec = this.oauthService.clockSkewInSec * 1000;
 
         this.showTokenExpiredDebugInformations(now, issuedAtMSec, expiresAtMSec, clockSkewInMSec);
-        return issuedAtMSec - clockSkewInMSec >= now || expiresAtMSec + clockSkewInMSec - decreaseExpirationBySec <= now;
+        return issuedAtMSec - clockSkewInMSec >= now || expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now;
     }
 
     private showTokenExpiredDebugInformations(now: number, issuedAtMSec: number, expiresAtMSec: number, clockSkewInMSec: number) {
@@ -454,7 +446,7 @@ export class RedirectAuthService extends AuthService {
             this._oauthLogger.warn('issuedAtMSec - clockSkewInMSec >= now: ', issuedAtMSec - clockSkewInMSec >= now);
             this._oauthLogger.warn(
                 'expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now: ',
-                expiresAtMSec + clockSkewInMSec - (this.oauthService.decreaseExpirationBySec ?? 0) <= now
+                expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now
             );
         }
     }
