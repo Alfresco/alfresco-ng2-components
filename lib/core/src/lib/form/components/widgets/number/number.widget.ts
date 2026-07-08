@@ -80,7 +80,7 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
     private initErrorStateMatcher(): void {
         this.errorStateMatcher = {
             isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
-                !this.field.isValid && this.isTouched()
+                !!this.field.validationSummary?.message || (this.isInvalidFieldRequired() && this.isTouched())
         };
     }
 

@@ -19,7 +19,7 @@
 
 import { InitialUsernamePipe, WidgetComponent } from '@alfresco/adf-core';
 import { Component, ElementRef, EventEmitter, inject, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ReactiveFormsModule, UntypedFormControl, FormGroupDirective, NgForm } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
@@ -42,6 +42,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         MatInputModule,
         MatChipsModule,
         MatIconModule,
+        FormsModule,
         ReactiveFormsModule,
         MatAutocompleteModule,
         InitialUsernamePipe

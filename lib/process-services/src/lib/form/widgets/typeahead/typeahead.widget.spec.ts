@@ -300,16 +300,14 @@ describe('TypeaheadWidgetComponent', () => {
                 typeaheadWidgetComponent.value = 'Fake Name';
                 typeaheadWidgetComponent.field.value = 'Fake Name';
                 typeaheadWidgetComponent.field.options = fakeOptionList;
-                const formField = await loader.getHarness(MatFormFieldHarness);
-                let errors = await formField.getTextErrors();
-                expect(errors.length).toBe(0);
                 const keyboardEvent = new KeyboardEvent('keypress');
                 typeaheadWidgetComponent.onKeyUp(keyboardEvent);
 
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                errors = await formField.getTextErrors();
+                const formField = await loader.getHarness(MatFormFieldHarness);
+                const errors = await formField.getTextErrors();
                 expect(errors.length).toBeGreaterThan(0);
                 expect(errors[0]).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
             });

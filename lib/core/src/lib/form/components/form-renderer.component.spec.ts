@@ -392,9 +392,8 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             expectElementToBeHidden(testingUtils, 'Number2');
-            const formField = await testingUtils.getMatFormFieldByCSS('#field-Number1-container');
-            const errors = await formField.getTextErrors();
-            expect(errors[0]).toContain(`FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`);
+            const errorText = testingUtils.getByCSS('#field-Number1-container .adf-error-text').nativeElement;
+            expect(errorText.textContent).toContain(`FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`);
             expect(formRendererComponent.formDefinition.isValid).toBe(false, 'Form should not be valid without mandatory field');
         });
 
@@ -570,18 +569,16 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             expectElementToBeInvalid(testingUtils, 'Number0x8cbv');
-            let formField = await testingUtils.getMatFormFieldByCSS('#field-Number0x8cbv-container');
-            let errors = await formField.getTextErrors();
-            expect(errors[0]).toContain(`FORM.FIELD.VALIDATOR.INVALID_NUMBER`);
+            let errorText = testingUtils.getByCSS('#field-Number0x8cbv-container .adf-error-text').nativeElement;
+            expect(errorText.textContent).toContain(`FORM.FIELD.VALIDATOR.INVALID_NUMBER`);
             expect(formRendererComponent.formDefinition.isValid).toBe(false, 'Form should not be valid without mandatory field');
 
             typeIntoInput(testingUtils, '#Number0x8cbv', '?');
             fixture.detectChanges();
             await fixture.whenStable();
             expectElementToBeInvalid(testingUtils, 'Number0x8cbv');
-            formField = await testingUtils.getMatFormFieldByCSS('#field-Number0x8cbv-container');
-            errors = await formField.getTextErrors();
-            expect(errors[0]).toContain(`FORM.FIELD.VALIDATOR.INVALID_NUMBER`);
+            errorText = testingUtils.getByCSS('#field-Number0x8cbv-container .adf-error-text').nativeElement;
+            expect(errorText.textContent).toContain(`FORM.FIELD.VALIDATOR.INVALID_NUMBER`);
             expect(formRendererComponent.formDefinition.isValid).toBe(false, 'Form should not be valid without mandatory field');
 
             typeIntoInput(testingUtils, '#Number0x8cbv', '-5');
@@ -603,9 +600,8 @@ describe('Form Renderer Component', () => {
             await fixture.whenStable();
 
             expectElementToBeInvalid(testingUtils, 'Number0him2z');
-            let formField = await testingUtils.getMatFormFieldByCSS('#field-Number0him2z-container');
-            let errors = await formField.getTextErrors();
-            expect(errors[0]).toContain(`FORM.FIELD.VALIDATOR.NOT_LESS_THAN`);
+            let errorText = testingUtils.getByCSS('#field-Number0him2z-container .adf-error-text').nativeElement;
+            expect(errorText.textContent).toContain(`FORM.FIELD.VALIDATOR.NOT_LESS_THAN`);
             expect(formRendererComponent.formDefinition.isValid).toBe(false, 'Form should not be valid without valid field');
 
             typeIntoInput(testingUtils, '#Number0him2z', '10');
@@ -625,9 +621,8 @@ describe('Form Renderer Component', () => {
             await fixture.whenStable();
 
             expectElementToBeInvalid(testingUtils, 'Number0him2z');
-            formField = await testingUtils.getMatFormFieldByCSS('#field-Number0him2z-container');
-            errors = await formField.getTextErrors();
-            expect(errors[0]).toContain(`FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`);
+            errorText = testingUtils.getByCSS('#field-Number0him2z-container .adf-error-text').nativeElement;
+            expect(errorText.textContent).toContain(`FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`);
             expect(formRendererComponent.formDefinition.isValid).toBe(false, 'Form should not be valid without valid field');
         });
 

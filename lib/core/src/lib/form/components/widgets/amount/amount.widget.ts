@@ -205,12 +205,12 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     private initErrorStateMatcher(): void {
         this.errorStateMatcher = {
             isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
-                !this.field.isValid && this.isTouched()
+                !!this.field.validationSummary?.message || (this.isInvalidFieldRequired() && this.isTouched())
         };
     }
 
     private updateTranslateParameters(): void {
-        if (this.field.validationSummary?.isActive()) {
+        if (this.field?.validationSummary?.isActive()) {
             this.translateParameters = this.field.validationSummary.getAttributesAsJsonObj();
         } else {
             this.translateParameters = {};
