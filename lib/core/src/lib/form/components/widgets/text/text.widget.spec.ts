@@ -241,7 +241,7 @@ describe('TextWidgetComponent', () => {
 
                 widget.onPaste(pasteEvent);
 
-                widget.onInput(new InputEvent('input', { inputType: 'insertFromPaste' }));
+                widget.onInput({ inputType: 'insertFromPaste' } as Event);
 
                 expect(widget.maxLengthPasteError.isActive()).toBe(true);
             });
@@ -266,7 +266,7 @@ describe('TextWidgetComponent', () => {
                 } as unknown as ClipboardEvent;
 
                 widget.onPaste(pasteEvent);
-                widget.onInput(new InputEvent('input', { inputType: 'insertText' }));
+                widget.onInput({ inputType: 'insertText' } as Event);
 
                 expect(widget.maxLengthPasteError.isActive()).toBe(false);
             });
