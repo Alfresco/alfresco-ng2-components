@@ -74,7 +74,10 @@ describe('TimeSyncService', () => {
         { id: 'TC-26', description: 'relogin after logout while 3m58s ahead', skewSeconds: 238, direction: 'ahead' }
     ];
 
-    const configureApp = ({ timeSync = true, serverTimeUrl = SERVER_TIME_URL }: AppConfigOptions = {}): void => {
+    const configureApp = (options: AppConfigOptions = {}): void => {
+        const timeSync = Object.prototype.hasOwnProperty.call(options, 'timeSync') ? options.timeSync : true;
+        const serverTimeUrl = Object.prototype.hasOwnProperty.call(options, 'serverTimeUrl') ? options.serverTimeUrl : SERVER_TIME_URL;
+
         appConfigGetSpy.and.callFake(<T>(key: string, defaultValue?: T): T => {
             if (key === AppConfigValues.OAUTHCONFIG) {
                 return timeSync === undefined ? ({} as T) : ({ timeSync } as T);
