@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { HttpClient } from '@angular/common/http';
-import { Injectable, Injector, NgZone, inject } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable, NgZone, inject } from '@angular/core';
 import { interval, Observable, of, Subject, Subscription } from 'rxjs';
-import { catchError, map, switchMap, timeout } from 'rxjs/operators';
+import { catchError, finalize, map, shareReplay, switchMap, timeout } from 'rxjs/operators';
 import { LogService } from '../../common/services/log.service';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 
@@ -32,11 +32,28 @@ export interface TimeSync {
 /**
  * Emitted when a measured clock offset is rejected for exceeding `maxAllowedOffsetMs`.
  * Consumers can subscribe to `implausibleOffsetDetected$` and forward this to central
- * telemetry to detect misconfigured proxies or `Date`-header tampering across the fleet.
+ * telemetry to detect misconfigured time sources or server-time tampering across the fleet.
  */
 export interface ImplausibleClockOffsetEvent {
     measuredOffsetMs: number;
     maxAllowedOffsetMs: number;
+}
+
+export type ClockSyncStatus = 'disabled' | 'synced' | 'failed' | 'missing-server-time' | 'invalid-server-time' | 'implausible-offset';
+
+export interface ClockSyncResult {
+    status: ClockSyncStatus;
+    appliedOffsetMs: number;
+    previousOffsetMs: number;
+    hasSuccessfulSync: boolean;
+    lastSuccessfulSyncAtMs?: number;
+}
+
+/** Timestamps captured during a single server-time request and used to calculate clock offset. */
+interface ClockSyncMeasurement {
+    serverTimeInMs: number;
+    startMonotonicTimeInMs: number;
+    endTimeInMs: number;
 }
 
 /** Default interval for periodic clock re-sync (5 minutes). */
@@ -44,27 +61,25 @@ const DEFAULT_PERIODIC_SYNC_INTERVAL_MS = 5 * 60 * 1000;
 
 /**
  * Default upper bound, in milliseconds, for a clock offset that will be trusted (10 minutes).
- * Offsets larger than this are treated as implausible and ignored so that a single unsigned
- * `Date` header cannot arbitrarily extend client-side token validity. See `maxAllowedOffsetMs`.
+ * Offsets larger than this are treated as implausible and ignored so that one time response
+ * cannot arbitrarily extend client-side token validity. See `maxAllowedOffsetMs`.
  */
 const DEFAULT_MAX_ALLOWED_OFFSET_MS = 10 * 60 * 1000;
 
 /** Minimum delay between visibility-triggered re-syncs (30 seconds) to avoid request storms. */
 const VISIBILITY_SYNC_DEBOUNCE_MS = 30 * 1000;
 
-/** Timeout applied to the time-sync HEAD request (5 seconds). */
+/** Timeout applied to the time-sync request (5 seconds). */
 const SYNC_REQUEST_TIMEOUT_MS = 5000;
 
 @Injectable({
     providedIn: 'root'
 })
 export class TimeSyncService {
-    private readonly _injector = inject(Injector);
+    private readonly _http = inject(HttpClient);
     private readonly _ngZone = inject(NgZone);
     private readonly _logService = inject(LogService);
     private readonly _appConfig = inject(AppConfigService);
-
-    private readonly _http: HttpClient;
 
     /**
      * The signed offset in milliseconds between the adjusted server time and the local clock.
@@ -76,7 +91,7 @@ export class TimeSyncService {
     /**
      * Maximum magnitude, in milliseconds, of a measured clock offset that will be trusted and
      * applied. Any measured offset whose absolute value exceeds this bound is treated as
-     * implausible (a hostile / misconfigured `Date` header or an unreliable measurement) and is
+     * implausible (a hostile / misconfigured server-time response or an unreliable measurement) and is
      * ignored, so a single response can never arbitrarily extend client-side token validity.
      * Defaults to 10 minutes.
      */
@@ -86,7 +101,7 @@ export class TimeSyncService {
 
     /**
      * Emits whenever a measured offset is rejected for exceeding `maxAllowedOffsetMs`.
-     * Surface this to monitoring/telemetry to detect potential `Date`-header tampering or a
+     * Surface this to monitoring/telemetry to detect potential server-time tampering or a
      * misconfigured time source; the client console alone is not a reliable security signal.
      */
     readonly implausibleOffsetDetected$ = this._implausibleOffsetDetected.asObservable();
@@ -94,10 +109,8 @@ export class TimeSyncService {
     private _periodicSyncSubscription: Subscription | null = null;
     private _visibilityChangeHandler: (() => void) | null = null;
     private _lastSyncAtMs = 0;
-
-    constructor() {
-        this._http = this._injector.get(HttpClient);
-    }
+    private _lastSuccessfulSyncAtMs: number | null = null;
+    private _inFlightSync$: Observable<ClockSyncResult> | null = null;
 
     /**
      * Returns the current local time corrected by the last measured clock offset.
@@ -113,91 +126,48 @@ export class TimeSyncService {
         if (!this.isEnabled()) {
             return Date.now();
         }
+
         return Date.now() + this.clockOffsetMs;
     }
 
     /**
-     * Syncs the clock offset by making a HEAD request to the application root URL
-     * (served by nginx) and reading the `Date` response header. This avoids any
-     * dependency on a dedicated time endpoint or on IAM being reachable.
+     * Synchronizes the local correction offset from `serverTimeUrl`.
      *
-     * The HEAD request is lightweight (no response body) and targets the same origin,
-     * so there are no CORS issues. Nginx always includes a `Date` header in its responses.
+     * When `oauth2.timeSync` is false or missing, no request is made and callers keep using the raw
+     * local clock. When it is true, `serverTimeUrl` must return a server-generated time string in
+     * the response body. Any missing URL, failed request, missing/invalid body, or rejected offset
+     * leaves the current offset unchanged; with no previous successful sync this is `0`, which is
+     * the old raw-clock behavior.
      *
-     * Trust model: the `Date` header is unsigned metadata, so it is treated as a best-effort
-     * hint only. The measured offset is bounded by `maxAllowedOffsetMs` (see the security guard
-     * below) and client-side expiry is only ever a convenience check — the server remains the
-     * sole authority on token validity and enforces `exp` against its own clock on every call.
-     *
-     * @returns Observable that completes after the offset has been stored (or silently on error)
+     * @returns Observable that completes after the offset decision has been made
      */
     syncClockOffset(): Observable<void> {
-        if (!this.isEnabled()) {
-            return of(void 0);
-        }
+        return this.syncClockOffsetResult().pipe(map(() => void 0));
+    }
 
-        const appRootUrl = this.getAppRootUrl();
+    /**
+     * Syncs the clock offset and reports whether the current offset came from a fresh successful
+     * measurement, a previous trusted sync, or the old raw-clock path.
+     *
+     * @returns Observable that emits the sync outcome after the offset decision has been made
+     */
+    syncClockOffsetResult(): Observable<ClockSyncResult> {
+        return new Observable<ClockSyncResult>((subscriber) => {
+            const previousOffsetMs = this.clockOffsetMs;
 
-        try {
-            const startTime = Date.now();
-            this._lastSyncAtMs = startTime;
-            return this._http.head(appRootUrl, { observe: 'response', responseType: 'text' }).pipe(
-                timeout(SYNC_REQUEST_TIMEOUT_MS),
-                map((response) => {
-                    const endTime = Date.now();
-                    const dateHeader = response.headers.get('date');
+            if (!this.isEnabled()) {
+                subscriber.next(this.createClockSyncResult('disabled', 0, previousOffsetMs));
+                subscriber.complete();
+                return undefined;
+            }
 
-                    if (!dateHeader) {
-                        this._logService.debug('TimeSyncService: response has no Date header; keeping the current clock offset.');
-                        return;
-                    }
+            if (!this._inFlightSync$) {
+                this._inFlightSync$ = this.createClockSyncRequest(previousOffsetMs);
+            }
 
-                    // The HTTP `Date` header is always expressed in GMT (RFC 7231), and both
-                    // `new Date(...).getTime()` and `Date.now()` return absolute epoch
-                    // milliseconds in UTC. The offset math below is therefore independent of the
-                    // browser's local time zone or daylight-saving settings.
-                    const serverTimeInMs = new Date(dateHeader).getTime();
-                    if (isNaN(serverTimeInMs)) {
-                        this._logService.debug(
-                            `TimeSyncService: unable to parse Date header "${this.sanitizeForLog(dateHeader)}"; keeping the current clock offset.`
-                        );
-                        return;
-                    }
-
-                    const roundTripTimeInMs = endTime - startTime;
-                    const adjustedServerTimeInMs = serverTimeInMs + roundTripTimeInMs / 2;
-                    const newOffset = adjustedServerTimeInMs - endTime;
-
-                    // Security guard: never trust an implausibly large correction. The `Date`
-                    // header is unsigned, so a hostile / misconfigured proxy could try to push the
-                    // corrected clock backwards to keep expired tokens looking valid on the client
-                    // (a negative offset extends client-side token lifetime). Bounding the
-                    // magnitude caps the worst-case client-side exposure window to
-                    // `maxAllowedOffsetMs`; beyond that we ignore the measurement and fall back to
-                    // the raw local clock.
-                    if (Math.abs(newOffset) > this.maxAllowedOffsetMs) {
-                        this._logService.warn(
-                            `TimeSyncService: ignoring implausible clock offset of ${Math.round(newOffset)} ms ` +
-                                `(exceeds the maximum allowed ${this.maxAllowedOffsetMs} ms). Falling back to the local clock.`
-                        );
-                        this._implausibleOffsetDetected.next({
-                            measuredOffsetMs: Math.round(newOffset),
-                            maxAllowedOffsetMs: this.maxAllowedOffsetMs
-                        });
-                        return;
-                    }
-
-                    this.clockOffsetMs = newOffset;
-                }),
-                catchError((error) => {
-                    this._logService.debug('TimeSyncService: failed to synchronise the clock offset; falling back to the local clock.', error);
-                    return of(void 0);
-                })
-            );
-        } catch (error) {
-            this._logService.debug('TimeSyncService: unexpected error while synchronising the clock offset; falling back to the local clock.', error);
-            return of(void 0);
-        }
+            const subscription = this._inFlightSync$.subscribe(subscriber);
+            return () => subscription.unsubscribe();
+        });
     }
 
     /**
@@ -208,8 +178,9 @@ export class TimeSyncService {
      */
     checkTimeSync(maxAllowedClockSkewInSec: number): Observable<TimeSync> {
         const localCurrentTimeInMs = Date.now();
-        const adjustedServerTimeInMs = localCurrentTimeInMs + this.clockOffsetMs;
-        const timeOffsetInMs = Math.abs(this.clockOffsetMs);
+        const clockOffsetMs = this.isEnabled() ? this.clockOffsetMs : 0;
+        const adjustedServerTimeInMs = localCurrentTimeInMs + clockOffsetMs;
+        const timeOffsetInMs = Math.abs(clockOffsetMs);
         const maxAllowedClockSkewInMs = maxAllowedClockSkewInSec * 1000;
 
         return of({
@@ -255,7 +226,7 @@ export class TimeSyncService {
             this._visibilityChangeHandler = () => {
                 if (typeof document !== 'undefined' && document.visibilityState === 'visible') {
                     // Debounce rapid visibility toggles (and multiple resumes across tabs) so we
-                    // do not issue a burst of redundant HEAD requests when a session resumes.
+                    // do not issue a burst of redundant time-sync requests when a session resumes.
                     if (Date.now() - this._lastSyncAtMs < VISIBILITY_SYNC_DEBOUNCE_MS) {
                         return;
                     }
@@ -283,23 +254,7 @@ export class TimeSyncService {
     }
 
     /**
-     * Returns the application root URL to use for time sync HEAD requests.
-     * Uses the current page's base path (everything up to and including the last `/`
-     * in the pathname) so that nginx handles the request regardless of app deployment path.
-     *
-     * Example: for `https://host/aae-xxx/ui/workspace-lprbu/`, returns that same URL.
-     *
-     * @returns the application root URL used for time-sync HEAD requests
-     */
-    private getAppRootUrl(): string {
-        if (typeof window !== 'undefined') {
-            return window.location.href.split('?')[0].split('#')[0];
-        }
-        return '/';
-    }
-
-    /**
-     * Whether clock-skew correction is enabled. Controlled by the `auth.timeSync.enabled`
+     * Whether clock-skew correction is enabled. Controlled by the optional `oauth2.timeSync`
      * AppConfig flag so a consuming application can turn the feature on without code changes.
      * The feature is opt-in: it defaults to `false` when the flag is absent, so an application
      * behaves exactly as it did before clock-skew correction existed until it explicitly enables it.
@@ -307,11 +262,295 @@ export class TimeSyncService {
      * @returns true when the feature is enabled
      */
     private isEnabled(): boolean {
-        return this._appConfig.get<boolean>(AppConfigValues.AUTH_TIME_SYNC_ENABLED, false);
+        return this._appConfig.oauth2.timeSync === true;
     }
 
     /**
-     * Sanitizes an untrusted, in-path-controllable value (e.g. the server `Date` header) before
+     * Builds the one HTTP request used by all overlapping sync callers.
+     * The request is shared until it completes, so multiple consumers waiting on the same sync do
+     * not issue duplicate calls to `serverTimeUrl`.
+     *
+     * @param previousOffsetMs offset that was active before this sync attempt started
+     * @returns shared sync result observable
+     */
+    private createClockSyncRequest(previousOffsetMs: number): Observable<ClockSyncResult> {
+        const serverTimeUrl = this.getServerTimeUrl();
+
+        if (!serverTimeUrl) {
+            return this.createSharedResult(this.createClockSyncResult('failed', this.clockOffsetMs, previousOffsetMs));
+        }
+
+        const startTimeInMs = Date.now();
+        const startMonotonicTimeInMs = this.getMonotonicNow();
+        this._lastSyncAtMs = startTimeInMs;
+
+        return this.requestServerTime(serverTimeUrl).pipe(
+            timeout(SYNC_REQUEST_TIMEOUT_MS),
+            map((response) => this.handleServerTimeResponse(response, startMonotonicTimeInMs, previousOffsetMs)),
+            catchError((error) => this.handleClockSyncRequestError(error, previousOffsetMs)),
+            finalize(() => (this._inFlightSync$ = null)),
+            shareReplay({ bufferSize: 1, refCount: false })
+        );
+    }
+
+    /**
+     * Reads and validates `serverTimeUrl` from app.config.json.
+     * Relative same-origin URLs and absolute HTTP(S) URLs are supported. Unsupported schemes are
+     * ignored so configuration mistakes cannot trigger unexpected browser protocols.
+     *
+     * @returns configured server time URL, or null when time sync should fall back to raw clock
+     */
+    private getServerTimeUrl(): string | null {
+        const serverTimeUrlValue = this._appConfig.get<unknown>(AppConfigValues.SERVER_TIME_URL);
+        const serverTimeUrl = typeof serverTimeUrlValue === 'string' ? serverTimeUrlValue.trim() : '';
+
+        if (!serverTimeUrl) {
+            this._logService.debug('TimeSyncService: serverTimeUrl is not configured; keeping the current clock offset.');
+            return null;
+        }
+
+        if (this.isSupportedServerTimeUrl(serverTimeUrl)) {
+            return serverTimeUrl;
+        }
+
+        this._logService.warn(`TimeSyncService: ignoring unsupported serverTimeUrl "${this.sanitizeForLog(serverTimeUrl)}".`);
+        return null;
+    }
+
+    /**
+     * Allows relative same-origin URLs and absolute HTTP(S) URLs for `serverTimeUrl`.
+     * Protocol-relative URLs and unsupported schemes are rejected to avoid surprising browser
+     * behavior from configuration values.
+     *
+     * @param url configured server time URL
+     * @returns true when the URL can be requested by the time-sync service
+     */
+    private isSupportedServerTimeUrl(url: string): boolean {
+        return /^https?:\/\//i.test(url) || (!/^[a-z][a-z\d+.-]*:/i.test(url) && !url.startsWith('//'));
+    }
+
+    /**
+     * Requests server time as plain text.
+     * The endpoint is expected to return the server instant in the response body; no response
+     * headers are required for the configured time-sync path.
+     *
+     * @param serverTimeUrl configured time source URL
+     * @returns HTTP response containing a server time body
+     */
+    private requestServerTime(serverTimeUrl: string): Observable<HttpResponse<string>> {
+        return this._http.get(serverTimeUrl, { observe: 'response', responseType: 'text' });
+    }
+
+    /**
+     * Turns the server response into a sync result.
+     * This method intentionally reads as a small pipeline: extract text, parse it, measure the
+     * offset, then apply or reject the correction.
+     *
+     * @param response HTTP response from `serverTimeUrl`
+     * @param startMonotonicTimeInMs monotonic timestamp captured before the request
+     * @param previousOffsetMs offset active before this sync attempt
+     * @returns sync result for the response
+     */
+    private handleServerTimeResponse(response: HttpResponse<string>, startMonotonicTimeInMs: number, previousOffsetMs: number): ClockSyncResult {
+        const serverTime = this.extractServerTime(response);
+
+        if (serverTime === null) {
+            return this.createClockSyncResult('missing-server-time', this.clockOffsetMs, previousOffsetMs);
+        }
+
+        const serverTimeInMs = this.parseServerTime(serverTime);
+        if (isNaN(serverTimeInMs)) {
+            return this.createClockSyncResult('invalid-server-time', this.clockOffsetMs, previousOffsetMs);
+        }
+
+        return this.applyMeasuredOffset(
+            {
+                serverTimeInMs,
+                startMonotonicTimeInMs,
+                endTimeInMs: Date.now()
+            },
+            previousOffsetMs
+        );
+    }
+
+    /**
+     * Extracts the configured server-time value from the response body.
+     * Empty bodies are treated as a failed sync and leave the current offset unchanged.
+     *
+     * @param response HTTP response from `serverTimeUrl`
+     * @returns trimmed server time value, or null when the body is empty
+     */
+    private extractServerTime(response: HttpResponse<string>): string | null {
+        const serverTime = response.body?.trim();
+
+        if (!serverTime) {
+            this._logService.debug('TimeSyncService: response has no server time value; keeping the current clock offset.');
+            return null;
+        }
+
+        return serverTime;
+    }
+
+    /**
+     * Applies a measured offset when it is within the configured trust bound.
+     * The round-trip duration is measured with a monotonic clock so wall-clock jumps during the
+     * request cannot distort the latency adjustment.
+     *
+     * @param measurement timestamps needed to calculate the offset
+     * @param previousOffsetMs offset active before this sync attempt
+     * @returns sync result after applying or rejecting the measured offset
+     */
+    private applyMeasuredOffset(measurement: ClockSyncMeasurement, previousOffsetMs: number): ClockSyncResult {
+        const measuredOffsetMs = this.calculateOffsetMs(measurement);
+
+        if (this.isImplausibleOffset(measuredOffsetMs)) {
+            this.reportImplausibleOffset(measuredOffsetMs);
+            return this.createClockSyncResult('implausible-offset', this.clockOffsetMs, previousOffsetMs);
+        }
+
+        this.clockOffsetMs = measuredOffsetMs;
+        this._lastSuccessfulSyncAtMs = measurement.endTimeInMs;
+
+        return this.createClockSyncResult('synced', measuredOffsetMs, previousOffsetMs);
+    }
+
+    /**
+     * Calculates the signed difference between the local clock and adjusted server time.
+     * Positive means the client is behind the server; negative means it is ahead.
+     *
+     * @param measurement timestamps from the sync attempt
+     * @returns signed clock offset in milliseconds
+     */
+    private calculateOffsetMs(measurement: ClockSyncMeasurement): number {
+        const roundTripTimeInMs = Math.max(0, this.getMonotonicNow() - measurement.startMonotonicTimeInMs);
+        const adjustedServerTimeInMs = measurement.serverTimeInMs + roundTripTimeInMs / 2;
+
+        return adjustedServerTimeInMs - measurement.endTimeInMs;
+    }
+
+    /**
+     * Checks whether the measured offset is too large to trust.
+     * Bounding the offset keeps a bad time source from extending client-side token validity by an
+     * arbitrary amount. The server remains the final authority for token validity.
+     *
+     * @param offsetMs measured signed offset in milliseconds
+     * @returns true when the offset must be rejected
+     */
+    private isImplausibleOffset(offsetMs: number): boolean {
+        return Math.abs(offsetMs) > this.maxAllowedOffsetMs;
+    }
+
+    /**
+     * Emits and logs a rejected offset measurement.
+     * Consumers can subscribe to `implausibleOffsetDetected$` and forward the event to telemetry.
+     *
+     * @param offsetMs measured signed offset in milliseconds
+     */
+    private reportImplausibleOffset(offsetMs: number): void {
+        const roundedOffsetMs = Math.round(offsetMs);
+
+        this._logService.warn(
+            `TimeSyncService: ignoring implausible clock offset of ${roundedOffsetMs} ms ` +
+                `(exceeds the maximum allowed ${this.maxAllowedOffsetMs} ms). Keeping the current clock offset.`
+        );
+        this._implausibleOffsetDetected.next({
+            measuredOffsetMs: roundedOffsetMs,
+            maxAllowedOffsetMs: this.maxAllowedOffsetMs
+        });
+    }
+
+    /**
+     * Parses supported server time response formats.
+     * Numeric values below `1_000_000_000_000` are treated as epoch seconds; larger numeric values
+     * are treated as epoch milliseconds. Non-numeric values are parsed as date strings.
+     *
+     * @param serverTime raw server time response body
+     * @returns parsed epoch milliseconds, or NaN when the value cannot be parsed
+     */
+    private parseServerTime(serverTime: string): number {
+        const trimmedServerTime = serverTime.trim();
+        const numericServerTime = Number(trimmedServerTime);
+
+        if (trimmedServerTime && Number.isFinite(numericServerTime)) {
+            return Math.abs(numericServerTime) < 1_000_000_000_000 ? numericServerTime * 1000 : numericServerTime;
+        }
+
+        const parsedServerTime = new Date(trimmedServerTime).getTime();
+
+        if (isNaN(parsedServerTime)) {
+            this._logService.debug(
+                `TimeSyncService: unable to parse server time "${this.sanitizeForLog(serverTime)}"; keeping the current clock offset.`
+            );
+        }
+
+        return parsedServerTime;
+    }
+
+    /**
+     * Wraps an immediate result in the same shared/finalized shape as HTTP-backed sync requests.
+     * This keeps `_inFlightSync$` lifecycle handling identical for missing configuration and real
+     * network requests.
+     *
+     * @param result immediate sync result
+     * @returns shared result observable
+     */
+    private createSharedResult(result: ClockSyncResult): Observable<ClockSyncResult> {
+        return of(result).pipe(
+            finalize(() => (this._inFlightSync$ = null)),
+            shareReplay({ bufferSize: 1, refCount: false })
+        );
+    }
+
+    /**
+     * Converts network, timeout, and unexpected HTTP errors into a non-throwing sync result.
+     * Failed syncs keep the current offset so the caller falls back to the internal clock when no
+     * earlier successful sync exists.
+     *
+     * @param error request error to log
+     * @param previousOffsetMs offset active before this sync attempt
+     * @returns failed sync result observable
+     */
+    private handleClockSyncRequestError(error: unknown, previousOffsetMs: number): Observable<ClockSyncResult> {
+        this._logService.debug('TimeSyncService: failed to synchronise the clock offset; keeping the current clock offset.', error);
+        return of(this.createClockSyncResult('failed', this.clockOffsetMs, previousOffsetMs));
+    }
+
+    /**
+     * Creates the normalized result object returned by sync callers.
+     * `hasSuccessfulSync` and `lastSuccessfulSyncAtMs` describe whether the current offset has ever
+     * come from a trusted server-time response.
+     *
+     * @param status outcome of this sync attempt
+     * @param appliedOffsetMs offset kept or applied after this attempt
+     * @param previousOffsetMs offset that was active before this attempt
+     * @returns normalized sync result
+     */
+    private createClockSyncResult(status: ClockSyncStatus, appliedOffsetMs: number, previousOffsetMs: number): ClockSyncResult {
+        return {
+            status,
+            appliedOffsetMs,
+            previousOffsetMs,
+            hasSuccessfulSync: this._lastSuccessfulSyncAtMs !== null,
+            ...(this._lastSuccessfulSyncAtMs === null ? {} : { lastSuccessfulSyncAtMs: this._lastSuccessfulSyncAtMs })
+        };
+    }
+
+    /**
+     * Reads a monotonic timestamp for request round-trip measurement.
+     * Falls back to `Date.now()` only in non-browser environments where `performance.now` is not
+     * available.
+     *
+     * @returns monotonic timestamp in milliseconds
+     */
+    private getMonotonicNow(): number {
+        if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+            return performance.now();
+        }
+        return Date.now();
+    }
+
+    /**
+     * Sanitizes an untrusted, configuration-controlled or server-controlled value before
      * it is written to a log. Strips control characters (including CR/LF) to prevent log forging
      * if the log bus is ever forwarded to a backend store, and caps the length to bound noise.
      *

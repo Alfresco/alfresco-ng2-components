@@ -16,23 +16,100 @@
  */
 
 import { provideHttpClient } from '@angular/common/http';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting, TestRequest } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { TimeSyncService } from './time-sync.service';
-import { LogService } from '../../common/services/log.service';
-import { AppConfigService } from '../../app-config/app-config.service';
 import { firstValueFrom } from 'rxjs';
+import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
+import { LogService } from '../../common/services/log.service';
+import { ClockSyncResult, TimeSyncService } from './time-sync.service';
 
-// A fixed reference instant (Wed, 15 Jan 2025 12:00:00 GMT), aligned to a whole second.
-const BASE = Date.UTC(2025, 0, 15, 12, 0, 0);
+const SERVER_NOW = Date.UTC(2025, 0, 15, 12, 0, 0);
+const SERVER_TIME_URL = '/api/server-time';
 
-// Formats an epoch (ms) as an RFC 7231 GMT date string, exactly as an HTTP `Date` header.
-const toHttpDate = (epochMs: number): string => new Date(epochMs).toUTCString();
+type ClockDirection = 'behind' | 'ahead';
+
+interface ClockSkewScenario {
+    id: string;
+    description: string;
+    skewSeconds: number;
+    direction: ClockDirection;
+}
+
+interface AppConfigOptions {
+    timeSync?: boolean | string;
+    serverTimeUrl?: unknown;
+}
 
 describe('TimeSyncService', () => {
     let service: TimeSyncService;
     let httpMock: HttpTestingController;
     let appConfigGetSpy: jasmine.Spy;
+
+    const clockSkewScenarios: ClockSkewScenario[] = [
+        { id: 'TC-01', description: 'baseline login with an accurate clock', skewSeconds: 0, direction: 'behind' },
+        { id: 'TC-02', description: 'login with a slow clock 119s behind', skewSeconds: 119, direction: 'behind' },
+        { id: 'TC-03', description: 'login with a slow clock 120s behind', skewSeconds: 120, direction: 'behind' },
+        { id: 'TC-04', description: 'login with a slow clock 121s behind', skewSeconds: 121, direction: 'behind' },
+        { id: 'TC-05', description: 'login with a slow clock 3m58s behind', skewSeconds: 238, direction: 'behind' },
+        { id: 'TC-06', description: 'login with a fast clock 119s ahead', skewSeconds: 119, direction: 'ahead' },
+        { id: 'TC-07', description: 'login with a fast clock 120s ahead', skewSeconds: 120, direction: 'ahead' },
+        { id: 'TC-08', description: 'login with a fast clock 121s ahead', skewSeconds: 121, direction: 'ahead' },
+        { id: 'TC-09', description: 'login with a fast clock 3m58s ahead', skewSeconds: 238, direction: 'ahead' },
+        { id: 'TC-10', description: 'runtime drift 119s behind after login', skewSeconds: 119, direction: 'behind' },
+        { id: 'TC-11', description: 'runtime drift 120s behind after login', skewSeconds: 120, direction: 'behind' },
+        { id: 'TC-12', description: 'runtime drift 121s behind after login', skewSeconds: 121, direction: 'behind' },
+        { id: 'TC-13', description: 'runtime drift 3m58s behind after login', skewSeconds: 238, direction: 'behind' },
+        { id: 'TC-14', description: 'runtime drift 119s ahead after login', skewSeconds: 119, direction: 'ahead' },
+        { id: 'TC-15', description: 'runtime drift 120s ahead after login', skewSeconds: 120, direction: 'ahead' },
+        { id: 'TC-16', description: 'runtime drift 121s ahead after login', skewSeconds: 121, direction: 'ahead' },
+        { id: 'TC-17', description: 'runtime drift 3m58s ahead after login', skewSeconds: 238, direction: 'ahead' },
+        { id: 'TC-18', description: 'browser refresh while 3m58s behind', skewSeconds: 238, direction: 'behind' },
+        { id: 'TC-19', description: 'browser refresh while 3m58s ahead', skewSeconds: 238, direction: 'ahead' },
+        { id: 'TC-20', description: 'multiple tabs while 3m58s behind', skewSeconds: 238, direction: 'behind' },
+        { id: 'TC-21', description: 'idle session while 3m58s behind', skewSeconds: 238, direction: 'behind' },
+        { id: 'TC-22', description: 'idle session while 3m58s ahead', skewSeconds: 238, direction: 'ahead' },
+        { id: 'TC-23', description: 'time API failure while up to 120s behind', skewSeconds: 120, direction: 'behind' },
+        { id: 'TC-24', description: 'time API failure while up to 120s ahead', skewSeconds: 120, direction: 'ahead' },
+        { id: 'TC-25', description: 'relogin after logout while 3m58s behind', skewSeconds: 238, direction: 'behind' },
+        { id: 'TC-26', description: 'relogin after logout while 3m58s ahead', skewSeconds: 238, direction: 'ahead' }
+    ];
+
+    const configureApp = ({ timeSync = true, serverTimeUrl = SERVER_TIME_URL }: AppConfigOptions = {}): void => {
+        appConfigGetSpy.and.callFake(<T>(key: string, defaultValue?: T): T => {
+            if (key === AppConfigValues.OAUTHCONFIG) {
+                return timeSync === undefined ? ({} as T) : ({ timeSync } as T);
+            }
+
+            if (key === AppConfigValues.SERVER_TIME_URL) {
+                return serverTimeUrl as T;
+            }
+
+            return defaultValue as T;
+        });
+    };
+
+    const rawLocalInstantFor = (skewSeconds: number, direction: ClockDirection): number =>
+        direction === 'behind' ? SERVER_NOW - skewSeconds * 1000 : SERVER_NOW + skewSeconds * 1000;
+
+    const expectedOffsetFor = (localNow: number, serverNow: number = SERVER_NOW): number => serverNow - localNow;
+
+    const expectServerTimeRequest = (url = SERVER_TIME_URL): TestRequest => {
+        const request = httpMock.expectOne(url);
+
+        expect(request.request.method).toBe('GET');
+        expect(request.request.responseType).toBe('text');
+
+        return request;
+    };
+
+    const syncWithServerTime = async (localNow: number, serverNow: number = SERVER_NOW): Promise<ClockSyncResult> => {
+        spyOn(Date, 'now').and.returnValues(localNow, localNow, localNow);
+
+        const sync = firstValueFrom(service.syncClockOffsetResult());
+        expectServerTimeRequest().flush(`${serverNow}`);
+
+        return sync;
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -41,12 +118,9 @@ describe('TimeSyncService', () => {
 
         service = TestBed.inject(TimeSyncService);
         httpMock = TestBed.inject(HttpTestingController);
-
-        // Enable clock-skew correction for the behavioural suites so they exercise the new
-        // functionality (the behaviour that ships with this feature). The production default is
-        // opt-in (disabled); the 'auth.timeSync.enabled configuration' block below overrides this
-        // spy to assert both the disabled-by-default path and the old raw-clock behaviour.
-        appConfigGetSpy = spyOn(TestBed.inject(AppConfigService), 'get').and.returnValue(true);
+        appConfigGetSpy = spyOn(TestBed.inject(AppConfigService), 'get');
+        configureApp();
+        spyOn(performance, 'now').and.returnValue(0);
     });
 
     afterEach(() => {
@@ -54,394 +128,314 @@ describe('TimeSyncService', () => {
         httpMock.verify();
     });
 
-    // Simulates a single clock sync with zero network round-trip time so that the resulting
-    // offset is simply `serverEpochMs - localNowMs`. Both timestamps are absolute UTC epochs,
-    // mirroring how `Date.now()` and a parsed `Date` header behave in production.
-    const syncWithDrift = async (localNowMs: number, serverEpochMs: number): Promise<void> => {
-        spyOn(Date, 'now').and.returnValues(localNowMs, localNowMs); // startTime, endTime (round-trip 0)
-
-        const promise = firstValueFrom(service.syncClockOffset());
-
-        const req = httpMock.expectOne(() => true);
-        req.flush(null, { headers: { date: toHttpDate(serverEpochMs) } });
-
-        await promise;
-    };
-
-    // Converts a skew magnitude + direction into the server instant relative to a local clock at
-    // BASE. "behind" means the local clock reads earlier than the server (client slow); "ahead"
-    // means it reads later (client fast).
-    const serverInstantFor = (skewSeconds: number, direction: 'behind' | 'ahead'): number =>
-        direction === 'behind' ? BASE + skewSeconds * 1000 : BASE - skewSeconds * 1000;
-
-    // Runs one sync at BASE against the given skew and returns both the stored offset and the
-    // resulting corrected "now". Uses three Date.now() values: startTime, endTime, getCorrectedNow.
-    const syncAndReadCorrectedNow = async (serverEpochMs: number): Promise<{ offset: number; correctedNow: number }> => {
-        spyOn(Date, 'now').and.returnValues(BASE, BASE, BASE); // startTime, endTime, getCorrectedNow
-
-        const promise = firstValueFrom(service.syncClockOffset());
-        httpMock.expectOne(() => true).flush(null, { headers: { date: toHttpDate(serverEpochMs) } });
-        await promise;
-
-        return { offset: service.clockOffsetMs, correctedNow: service.getCorrectedNow() };
-    };
-
-    // Asserts the correction realigns the corrected clock exactly onto the server instant, which is
-    // what keeps login / token refresh / the session working in the new UI for a tolerated skew.
-    const expectCorrectionAlignsToServer = async (skewSeconds: number, direction: 'behind' | 'ahead'): Promise<void> => {
-        const serverEpochMs = serverInstantFor(skewSeconds, direction);
-        const expectedOffset = direction === 'behind' ? skewSeconds * 1000 : -skewSeconds * 1000;
-
-        const { offset, correctedNow } = await syncAndReadCorrectedNow(serverEpochMs);
-
-        expect(offset).toBe(expectedOffset);
-        expect(correctedNow).toBe(serverEpochMs);
-    };
-
-    // Asserts the correction is rejected (implausible skew beyond the clamp): the offset is left at
-    // 0 and the corrected clock falls back to the raw local clock.
-    const expectCorrectionRejected = async (skewSeconds: number, direction: 'behind' | 'ahead'): Promise<void> => {
-        const serverEpochMs = serverInstantFor(skewSeconds, direction);
-
-        const { offset, correctedNow } = await syncAndReadCorrectedNow(serverEpochMs);
-
-        expect(offset).toBe(0);
-        expect(correctedNow).toBe(BASE);
-    };
-
     describe('syncClockOffset', () => {
-        it('should store a positive offset when the local clock is behind the server', async () => {
-            const timeBeforeRequest = 1728911579000;
-            const timeResponseReceived = 1728911580000;
+        it('should complete as disabled and not request server time when time sync is absent', async () => {
+            configureApp({ timeSync: undefined });
+            service.clockOffsetMs = 60_000;
 
-            spyOn(Date, 'now').and.returnValues(timeBeforeRequest, timeResponseReceived);
-
-            const promise = firstValueFrom(service.syncClockOffset());
-
-            const req = httpMock.expectOne(() => true);
-            expect(req.request.method).toBe('HEAD');
-            // Server Date header is 60 seconds ahead: Mon, 14 Oct 2024 13:14:00 GMT = 1728911640000
-            // roundTrip = 1000ms, adjustedServerTime = 1728911640000 + 500 = 1728911640500
-            // offset = 1728911640500 - 1728911580000 = 60500
-            req.flush(null, { headers: { date: 'Mon, 14 Oct 2024 13:14:00 GMT' } });
-
-            await promise;
-            expect(service.clockOffsetMs).toBe(60500);
-        });
-
-        it('should store 0 offset when local clock matches the server', async () => {
-            const requestTime = 1728911580000;
-            const responseTime = 1728911580000;
-
-            spyOn(Date, 'now').and.returnValues(requestTime, responseTime);
-
-            const promise = firstValueFrom(service.syncClockOffset());
-
-            const req = httpMock.expectOne(() => true);
-            // Server time matches local: Mon, 14 Oct 2024 13:13:00 GMT = 1728911580000
-            // roundTrip = 0ms, adjustedServerTime = 1728911580000
-            // offset = 0
-            req.flush(null, { headers: { date: 'Mon, 14 Oct 2024 13:13:00 GMT' } });
-
-            await promise;
-            expect(service.clockOffsetMs).toBe(0);
-        });
-
-        it('should leave clockOffsetMs unchanged when the HEAD request fails', async () => {
-            service.clockOffsetMs = 5000;
-
-            const promise = firstValueFrom(service.syncClockOffset());
-
-            const req = httpMock.expectOne(() => true);
-            req.error(new ProgressEvent(''));
-
-            await promise;
-            expect(service.clockOffsetMs).toBe(5000);
-        });
-
-        it('should leave clockOffsetMs unchanged when the Date header is missing', async () => {
-            service.clockOffsetMs = 5000;
-
-            spyOn(Date, 'now').and.returnValues(1728911579000, 1728911580000);
-
-            const promise = firstValueFrom(service.syncClockOffset());
-
-            const req = httpMock.expectOne(() => true);
-            req.flush(null, { headers: {} });
-
-            await promise;
-            expect(service.clockOffsetMs).toBe(5000);
-        });
-    });
-
-    describe('checkTimeSync', () => {
-        it('should return outOfSync as false when offset is within allowed skew', async () => {
-            service.clockOffsetMs = 30000; // 30 seconds offset
-
-            const localNow = 1728911580000;
-            spyOn(Date, 'now').and.returnValue(localNow);
-
-            const sync = await firstValueFrom(service.checkTimeSync(60));
-
-            expect(sync.outOfSync).toBeFalse();
-            expect(sync.timeOutOfSyncInSec).toBe(30);
-        });
-
-        it('should return outOfSync as true when offset exceeds allowed skew', async () => {
-            service.clockOffsetMs = 70000; // 70 seconds offset
-
-            const localNow = 1728911580000;
-            spyOn(Date, 'now').and.returnValue(localNow);
-
-            const sync = await firstValueFrom(service.checkTimeSync(60));
-
-            expect(sync.outOfSync).toBeTrue();
-            expect(sync.timeOutOfSyncInSec).toBe(70);
-            expect(sync.localDateTimeISO).toEqual('2024-10-14T13:13:00.000Z');
-            expect(sync.serverDateTimeISO).toEqual('2024-10-14T13:14:10.000Z');
-        });
-    });
-
-    describe('isLocalTimeOutOfSync', () => {
-        it('should return true when offset exceeds allowed skew', async () => {
-            service.clockOffsetMs = 70000;
-            spyOn(Date, 'now').and.returnValue(1728911580000);
-
-            const isOutOfSync = await firstValueFrom(service.isLocalTimeOutOfSync(60));
-
-            expect(isOutOfSync).toBeTrue();
-        });
-
-        it('should return false when offset is within allowed skew', async () => {
-            service.clockOffsetMs = 30000;
-            spyOn(Date, 'now').and.returnValue(1728911580000);
-
-            const isOutOfSync = await firstValueFrom(service.isLocalTimeOutOfSync(60));
-
-            expect(isOutOfSync).toBeFalse();
-        });
-    });
-
-    describe('getCorrectedNow', () => {
-        it('should return Date.now() when clockOffsetMs is 0', () => {
-            const fixedNow = 1728911580000;
-            spyOn(Date, 'now').and.returnValue(fixedNow);
-
-            expect(service.getCorrectedNow()).toBe(fixedNow);
-        });
-
-        it('should return Date.now() plus the stored offset', () => {
-            const fixedNow = 1728911580000;
-            spyOn(Date, 'now').and.returnValue(fixedNow);
-
-            service.clockOffsetMs = 60000;
-
-            expect(service.getCorrectedNow()).toBe(fixedNow + 60000);
-        });
-
-        it('should return Date.now() minus the stored offset when local clock is ahead', () => {
-            const fixedNow = 1728911640000;
-            spyOn(Date, 'now').and.returnValue(fixedNow);
-
-            service.clockOffsetMs = -60000;
-
-            expect(service.getCorrectedNow()).toBe(fixedNow - 60000);
-        });
-    });
-
-    describe('startPeriodicSync', () => {
-        it('should re-sync on visibility change', () => {
-            const debounceCheckTime = 1728911579000;
-            const timeBeforeRequest = 1728911579000;
-            const timeResponseReceived = 1728911580000;
-
-            spyOn(Date, 'now').and.returnValues(debounceCheckTime, timeBeforeRequest, timeResponseReceived);
-
-            service.startPeriodicSync(60000);
-
-            Object.defineProperty(document, 'visibilityState', { value: 'visible', writable: true, configurable: true });
-            document.dispatchEvent(new Event('visibilitychange'));
-
-            const req = httpMock.expectOne(() => true);
-            expect(req.request.method).toBe('HEAD');
-            req.flush(null, { headers: { date: 'Mon, 14 Oct 2024 13:13:30 GMT' } });
-
-            expect(service.clockOffsetMs).toBe(30500);
-        });
-    });
-
-    describe('stopPeriodicSync', () => {
-        it('should remove visibility change listener', () => {
-            service.startPeriodicSync(60000);
-            service.stopPeriodicSync();
-
-            Object.defineProperty(document, 'visibilityState', { value: 'visible', writable: true, configurable: true });
-            document.dispatchEvent(new Event('visibilitychange'));
+            const result = await firstValueFrom(service.syncClockOffsetResult());
 
             httpMock.expectNone(() => true);
+            expect(result).toEqual({
+                status: 'disabled',
+                appliedOffsetMs: 0,
+                previousOffsetMs: 60_000,
+                hasSuccessfulSync: false
+            });
+            expect(service.clockOffsetMs).toBe(60_000);
         });
-    });
 
-    describe('clock drift combinations', () => {
-        const driftScenarios: { description: string; driftMs: number; expectedOffsetMs: number }[] = [
-            { description: 'client and server are perfectly in sync', driftMs: 0, expectedOffsetMs: 0 },
-            { description: 'client is 1s behind the server (client slightly slow)', driftMs: 1_000, expectedOffsetMs: 1_000 },
-            { description: 'client is 1s ahead of the server (client slightly fast)', driftMs: -1_000, expectedOffsetMs: -1_000 },
-            { description: 'client is 45s behind the server (client slow)', driftMs: 45_000, expectedOffsetMs: 45_000 },
-            { description: 'client is 45s ahead of the server (client fast)', driftMs: -45_000, expectedOffsetMs: -45_000 },
-            { description: 'client is 5m behind the server', driftMs: 300_000, expectedOffsetMs: 300_000 },
-            { description: 'client is 5m ahead of the server', driftMs: -300_000, expectedOffsetMs: -300_000 },
-            { description: 'client is 9m behind the server (near the upper bound)', driftMs: 540_000, expectedOffsetMs: 540_000 },
-            { description: 'client is 9m ahead of the server (near the upper bound)', driftMs: -540_000, expectedOffsetMs: -540_000 },
-            { description: 'client is exactly 10m behind the server (at the bound)', driftMs: 600_000, expectedOffsetMs: 600_000 },
-            { description: 'client is exactly 10m ahead of the server (at the bound)', driftMs: -600_000, expectedOffsetMs: -600_000 }
-        ];
+        it('should accept string true from oauth2.timeSync because AppConfigService normalizes it', async () => {
+            configureApp({ timeSync: 'true' });
+            spyOn(Date, 'now').and.returnValues(SERVER_NOW, SERVER_NOW);
 
-        driftScenarios.forEach(({ description, driftMs, expectedOffsetMs }) => {
-            it(`should compute the correct offset when ${description}`, async () => {
-                await syncWithDrift(BASE, BASE + driftMs);
+            const result = firstValueFrom(service.syncClockOffsetResult());
+            expectServerTimeRequest().flush(`${SERVER_NOW + 60_000}`);
 
-                expect(service.clockOffsetMs).toBe(expectedOffsetMs);
+            expect(await result).toEqual({
+                status: 'synced',
+                appliedOffsetMs: 60_000,
+                previousOffsetMs: 0,
+                hasSuccessfulSync: true,
+                lastSuccessfulSyncAtMs: SERVER_NOW
             });
         });
 
-        it('should make getCorrectedNow report the server instant after correcting a fast client clock', async () => {
-            const localNow = BASE + 300_000; // client wall clock is 5 minutes ahead of the server
+        it('should fail without requesting when serverTimeUrl is not configured', async () => {
+            configureApp({ serverTimeUrl: undefined });
 
-            spyOn(Date, 'now').and.returnValues(localNow, localNow, localNow); // start, end, getCorrectedNow
+            const result = await firstValueFrom(service.syncClockOffsetResult());
 
-            const promise = firstValueFrom(service.syncClockOffset());
-            httpMock.expectOne(() => true).flush(null, { headers: { date: toHttpDate(BASE) } });
-            await promise;
-
-            expect(service.clockOffsetMs).toBe(-300_000);
-            expect(service.getCorrectedNow()).toBe(BASE);
-        });
-
-        it('should make getCorrectedNow report the server instant after correcting a slow client clock', async () => {
-            const localNow = BASE - 300_000; // client wall clock is 5 minutes behind the server
-
-            spyOn(Date, 'now').and.returnValues(localNow, localNow, localNow); // start, end, getCorrectedNow
-
-            const promise = firstValueFrom(service.syncClockOffset());
-            httpMock.expectOne(() => true).flush(null, { headers: { date: toHttpDate(BASE) } });
-            await promise;
-
-            expect(service.clockOffsetMs).toBe(300_000);
-            expect(service.getCorrectedNow()).toBe(BASE);
-        });
-    });
-
-    describe('offset bounds (security guard)', () => {
-        const rejectedScenarios: { description: string; driftMs: number }[] = [
-            { description: 'client is 11m behind the server', driftMs: 660_000 },
-            { description: 'client is 11m ahead of the server', driftMs: -660_000 },
-            { description: 'client is 5h behind the server', driftMs: 5 * 60 * 60 * 1000 },
-            { description: 'client is 5h ahead of the server', driftMs: -5 * 60 * 60 * 1000 }
-        ];
-
-        rejectedScenarios.forEach(({ description, driftMs }) => {
-            it(`should ignore an implausible offset and keep the previous value when ${description}`, async () => {
-                service.clockOffsetMs = 1234; // a previously trusted, plausible offset
-
-                await syncWithDrift(BASE, BASE + driftMs);
-
-                expect(service.clockOffsetMs).toBe(1234);
+            httpMock.expectNone(() => true);
+            expect(result).toEqual({
+                status: 'failed',
+                appliedOffsetMs: 0,
+                previousOffsetMs: 0,
+                hasSuccessfulSync: false
             });
         });
 
-        it('should reject an offset just beyond a custom maxAllowedOffsetMs bound', async () => {
-            service.maxAllowedOffsetMs = 1000;
-            service.clockOffsetMs = 0;
+        it('should fail without requesting when serverTimeUrl has an unsupported scheme', async () => {
+            configureApp({ serverTimeUrl: 'ftp://example.com/server-time' });
 
-            await syncWithDrift(BASE, BASE + 2000);
+            const result = await firstValueFrom(service.syncClockOffsetResult());
 
-            expect(service.clockOffsetMs).toBe(0);
+            httpMock.expectNone(() => true);
+            expect(result).toEqual({
+                status: 'failed',
+                appliedOffsetMs: 0,
+                previousOffsetMs: 0,
+                hasSuccessfulSync: false
+            });
         });
 
-        it('should apply an offset within a custom maxAllowedOffsetMs bound', async () => {
-            service.maxAllowedOffsetMs = 5000;
+        it('should request a configured relative serverTimeUrl using GET text', async () => {
+            spyOn(Date, 'now').and.returnValues(SERVER_NOW, SERVER_NOW);
 
-            await syncWithDrift(BASE, BASE + 4000);
+            const result = firstValueFrom(service.syncClockOffsetResult());
+            expectServerTimeRequest('/api/server-time').flush(`${SERVER_NOW - 480_000}`);
 
-            expect(service.clockOffsetMs).toBe(4000);
+            expect(await result).toEqual({
+                status: 'synced',
+                appliedOffsetMs: -480_000,
+                previousOffsetMs: 0,
+                hasSuccessfulSync: true,
+                lastSuccessfulSyncAtMs: SERVER_NOW
+            });
         });
 
-        it('should emit implausibleOffsetDetected$ with the measured offset and bound when rejected', async () => {
+        it('should request a configured absolute serverTimeUrl using GET text', async () => {
+            const serverTimeUrl = 'https://time.example.com/server-time';
+            configureApp({ serverTimeUrl });
+            spyOn(Date, 'now').and.returnValues(SERVER_NOW, SERVER_NOW);
+
+            const result = firstValueFrom(service.syncClockOffsetResult());
+            expectServerTimeRequest(serverTimeUrl).flush(`${SERVER_NOW + 60_000}`);
+
+            expect(await result).toEqual({
+                status: 'synced',
+                appliedOffsetMs: 60_000,
+                previousOffsetMs: 0,
+                hasSuccessfulSync: true,
+                lastSuccessfulSyncAtMs: SERVER_NOW
+            });
+        });
+
+        it('should calculate the offset with half the measured round-trip time', async () => {
+            spyOn(Date, 'now').and.returnValues(SERVER_NOW, SERVER_NOW + 1000);
+            (performance.now as jasmine.Spy).and.returnValues(0, 1000);
+
+            const result = firstValueFrom(service.syncClockOffsetResult());
+            expectServerTimeRequest().flush(`${SERVER_NOW + 60_000}`);
+
+            expect(await result).toEqual({
+                status: 'synced',
+                appliedOffsetMs: 59_500,
+                previousOffsetMs: 0,
+                hasSuccessfulSync: true,
+                lastSuccessfulSyncAtMs: SERVER_NOW + 1000
+            });
+            expect(service.clockOffsetMs).toBe(59_500);
+        });
+
+        [
+            { format: 'date string', responseBody: new Date(SERVER_NOW + 30_000).toUTCString() },
+            { format: 'epoch millisecond', responseBody: `${SERVER_NOW + 30_000}` },
+            { format: 'epoch second', responseBody: `${(SERVER_NOW + 30_000) / 1000}` }
+        ].forEach(({ format, responseBody }) => {
+            it(`should parse ${format} response bodies`, async () => {
+                spyOn(Date, 'now').and.returnValues(SERVER_NOW, SERVER_NOW);
+
+                const result = firstValueFrom(service.syncClockOffsetResult());
+                expectServerTimeRequest().flush(responseBody);
+
+                expect(await result).toEqual({
+                    status: 'synced',
+                    appliedOffsetMs: 30_000,
+                    previousOffsetMs: 0,
+                    hasSuccessfulSync: true,
+                    lastSuccessfulSyncAtMs: SERVER_NOW
+                });
+            });
+        });
+
+        it('should keep the current offset when the request fails', async () => {
+            service.clockOffsetMs = 5000;
+
+            const result = firstValueFrom(service.syncClockOffsetResult());
+            expectServerTimeRequest().error(new ProgressEvent('error'));
+
+            expect(await result).toEqual({
+                status: 'failed',
+                appliedOffsetMs: 5000,
+                previousOffsetMs: 5000,
+                hasSuccessfulSync: false
+            });
+            expect(service.clockOffsetMs).toBe(5000);
+        });
+
+        it('should report failed with a trusted previous sync when a later request fails', async () => {
+            spyOn(Date, 'now').and.returnValues(SERVER_NOW, SERVER_NOW, SERVER_NOW + 30_000);
+
+            const synced = firstValueFrom(service.syncClockOffsetResult());
+            expectServerTimeRequest().flush(`${SERVER_NOW + 60_000}`);
+            await synced;
+
+            const failed = firstValueFrom(service.syncClockOffsetResult());
+            expectServerTimeRequest().error(new ProgressEvent('error'));
+
+            expect(await failed).toEqual({
+                status: 'failed',
+                appliedOffsetMs: 60_000,
+                previousOffsetMs: 60_000,
+                hasSuccessfulSync: true,
+                lastSuccessfulSyncAtMs: SERVER_NOW
+            });
+        });
+
+        it('should report missing-server-time and keep the current offset for an empty body', async () => {
+            service.clockOffsetMs = 5000;
+            spyOn(Date, 'now').and.returnValues(SERVER_NOW, SERVER_NOW);
+
+            const result = firstValueFrom(service.syncClockOffsetResult());
+            expectServerTimeRequest().flush('  ');
+
+            expect(await result).toEqual({
+                status: 'missing-server-time',
+                appliedOffsetMs: 5000,
+                previousOffsetMs: 5000,
+                hasSuccessfulSync: false
+            });
+            expect(service.clockOffsetMs).toBe(5000);
+        });
+
+        it('should report invalid-server-time and keep the current offset for an invalid body', async () => {
+            service.clockOffsetMs = 5000;
+            spyOn(Date, 'now').and.returnValues(SERVER_NOW, SERVER_NOW);
+
+            const result = firstValueFrom(service.syncClockOffsetResult());
+            expectServerTimeRequest().flush('not-a-date');
+
+            expect(await result).toEqual({
+                status: 'invalid-server-time',
+                appliedOffsetMs: 5000,
+                previousOffsetMs: 5000,
+                hasSuccessfulSync: false
+            });
+            expect(service.clockOffsetMs).toBe(5000);
+        });
+
+        it('should share an in-flight sync request between overlapping callers', async () => {
+            spyOn(Date, 'now').and.returnValues(SERVER_NOW, SERVER_NOW);
+
+            const firstSync = firstValueFrom(service.syncClockOffsetResult());
+            const secondSync = firstValueFrom(service.syncClockOffsetResult());
+
+            const requests = httpMock.match(SERVER_TIME_URL);
+            expect(requests.length).toBe(1);
+            requests[0].flush(`${SERVER_NOW + 60_000}`);
+
+            const expectedResult = {
+                status: 'synced' as const,
+                appliedOffsetMs: 60_000,
+                previousOffsetMs: 0,
+                hasSuccessfulSync: true,
+                lastSuccessfulSyncAtMs: SERVER_NOW
+            };
+            expect(await firstSync).toEqual(expectedResult);
+            expect(await secondSync).toEqual(expectedResult);
+        });
+
+        it('should not treat an un-subscribed sync observable as in flight', async () => {
+            service.syncClockOffsetResult();
+            spyOn(Date, 'now').and.returnValues(SERVER_NOW, SERVER_NOW);
+
+            const result = firstValueFrom(service.syncClockOffsetResult());
+            expectServerTimeRequest().flush(`${SERVER_NOW + 60_000}`);
+
+            expect((await result).status).toBe('synced');
+        });
+
+        it('should reject an implausible offset and keep the previous value', async () => {
             const events: { measuredOffsetMs: number; maxAllowedOffsetMs: number }[] = [];
+            service.clockOffsetMs = 1234;
             service.implausibleOffsetDetected$.subscribe((event) => events.push(event));
+            spyOn(Date, 'now').and.returnValues(SERVER_NOW, SERVER_NOW);
 
-            await syncWithDrift(BASE, BASE + 660_000);
+            const result = firstValueFrom(service.syncClockOffsetResult());
+            expectServerTimeRequest().flush(`${SERVER_NOW + 660_000}`);
 
+            expect(await result).toEqual({
+                status: 'implausible-offset',
+                appliedOffsetMs: 1234,
+                previousOffsetMs: 1234,
+                hasSuccessfulSync: false
+            });
+            expect(service.clockOffsetMs).toBe(1234);
             expect(events).toEqual([{ measuredOffsetMs: 660_000, maxAllowedOffsetMs: 600_000 }]);
         });
+    });
 
-        it('should not emit implausibleOffsetDetected$ when the offset is within the bound', async () => {
-            const events: { measuredOffsetMs: number; maxAllowedOffsetMs: number }[] = [];
-            service.implausibleOffsetDetected$.subscribe((event) => events.push(event));
+    describe('clock reads and status checks', () => {
+        it('should return corrected now when enabled and an offset is stored', () => {
+            service.clockOffsetMs = -60_000;
+            spyOn(Date, 'now').and.returnValue(SERVER_NOW + 60_000);
 
-            await syncWithDrift(BASE, BASE + 60_000);
+            expect(service.getCorrectedNow()).toBe(SERVER_NOW);
+        });
 
-            expect(events).toEqual([]);
+        it('should return raw now when disabled even if an offset is stored', () => {
+            configureApp({ timeSync: false });
+            service.clockOffsetMs = -60_000;
+            spyOn(Date, 'now').and.returnValue(SERVER_NOW + 60_000);
+
+            expect(service.getCorrectedNow()).toBe(SERVER_NOW + 60_000);
+        });
+
+        it('should report out-of-sync from the stored offset when enabled', async () => {
+            service.clockOffsetMs = 180_000;
+            spyOn(Date, 'now').and.returnValue(SERVER_NOW);
+
+            const result = await firstValueFrom(service.checkTimeSync(120));
+
+            expect(result).toEqual({
+                outOfSync: true,
+                timeOutOfSyncInSec: 180,
+                localDateTimeISO: new Date(SERVER_NOW).toISOString(),
+                serverDateTimeISO: new Date(SERVER_NOW + 180_000).toISOString()
+            });
+        });
+
+        it('should report in-sync from raw time when disabled even if an offset is stored', async () => {
+            configureApp({ timeSync: false });
+            service.clockOffsetMs = 180_000;
+            spyOn(Date, 'now').and.returnValue(SERVER_NOW);
+
+            const result = await firstValueFrom(service.checkTimeSync(120));
+
+            expect(result).toEqual({
+                outOfSync: false,
+                timeOutOfSyncInSec: 0,
+                localDateTimeISO: new Date(SERVER_NOW).toISOString(),
+                serverDateTimeISO: new Date(SERVER_NOW).toISOString()
+            });
+        });
+
+        it('should map checkTimeSync to a boolean in isLocalTimeOutOfSync', async () => {
+            service.clockOffsetMs = 121_000;
+            spyOn(Date, 'now').and.returnValue(SERVER_NOW);
+
+            expect(await firstValueFrom(service.isLocalTimeOutOfSync(120))).toBeTrue();
         });
     });
 
-    describe('time zone independence', () => {
-        it('should treat an instant expressed in GMT as in sync with an equal UTC epoch', async () => {
-            spyOn(Date, 'now').and.returnValues(BASE, BASE);
-
-            const promise = firstValueFrom(service.syncClockOffset());
-            httpMock.expectOne(() => true).flush(null, { headers: { date: 'Wed, 15 Jan 2025 12:00:00 GMT' } });
-            await promise;
-
-            expect(service.clockOffsetMs).toBe(0);
+    describe('periodic sync', () => {
+        beforeEach(() => {
+            Object.defineProperty(document, 'visibilityState', { value: 'visible', writable: true, configurable: true });
         });
 
-        it('should compare absolute instants regardless of the client machine time zone', async () => {
-            // `Date.now()` and a parsed `Date` header are both absolute UTC epochs, so a client
-            // whose wall clock is expressed in a different time zone still yields the same offset.
-            const localNow = BASE + 120_000; // 2 minutes of genuine drift, whatever the local zone
-
-            await syncWithDrift(localNow, BASE);
-
-            expect(service.clockOffsetMs).toBe(-120_000);
-        });
-    });
-
-    describe('legacy raw-clock behaviour when disabled (auth.timeSync.enabled = false)', () => {
-        it('should be disabled by default (opt-in) and behave like the raw local clock', async () => {
-            // Fall back to the real AppConfigService: the flag is absent, so it returns the
-            // opt-in default (false) — i.e. the old behaviour from before clock-skew correction.
-            appConfigGetSpy.and.callThrough();
-            service.clockOffsetMs = 60_000; // a stored offset that must be ignored while disabled
-
-            spyOn(Date, 'now').and.returnValue(BASE);
-            expect(service.getCorrectedNow()).toBe(BASE);
-
-            await firstValueFrom(service.syncClockOffset());
-            httpMock.expectNone(() => true);
-        });
-
-        it('should return the raw local time from getCorrectedNow when disabled', () => {
-            appConfigGetSpy.and.returnValue(false);
-            service.clockOffsetMs = 60_000; // a stored offset that must be ignored while disabled
-
-            spyOn(Date, 'now').and.returnValue(BASE);
-
-            expect(service.getCorrectedNow()).toBe(BASE);
-        });
-
-        it('should not issue any HTTP request from syncClockOffset when disabled', async () => {
-            appConfigGetSpy.and.returnValue(false);
-
-            await firstValueFrom(service.syncClockOffset());
-
-            httpMock.expectNone(() => true);
-            expect(service.clockOffsetMs).toBe(0);
-        });
-
-        it('should not register a periodic sync or visibility listener when disabled', () => {
-            appConfigGetSpy.and.returnValue(false);
+        it('should not register periodic sync when disabled', () => {
+            configureApp({ timeSync: false });
             const addEventListenerSpy = spyOn(document, 'addEventListener');
 
             service.startPeriodicSync(1000);
@@ -450,12 +444,46 @@ describe('TimeSyncService', () => {
             httpMock.expectNone(() => true);
         });
 
-        it('should restore the new clock-skew correction when explicitly enabled', async () => {
-            appConfigGetSpy.and.returnValue(true); // explicit opt-in
+        it('should re-sync when the document becomes visible', () => {
+            spyOn(Date, 'now').and.returnValues(SERVER_NOW, SERVER_NOW, SERVER_NOW);
 
-            await syncWithDrift(BASE, BASE + 60_000);
+            service.startPeriodicSync(60_000);
+            document.dispatchEvent(new Event('visibilitychange'));
 
-            expect(service.clockOffsetMs).toBe(60_000);
+            expectServerTimeRequest().flush(`${SERVER_NOW + 30_000}`);
+            expect(service.clockOffsetMs).toBe(30_000);
+        });
+
+        it('should debounce repeated visibility-triggered syncs', () => {
+            spyOn(Date, 'now').and.returnValues(
+                SERVER_NOW,
+                SERVER_NOW,
+                SERVER_NOW,
+                SERVER_NOW + 5000,
+                SERVER_NOW + 31_000,
+                SERVER_NOW + 31_000,
+                SERVER_NOW + 31_000
+            );
+
+            service.startPeriodicSync(60_000);
+
+            document.dispatchEvent(new Event('visibilitychange'));
+            expectServerTimeRequest().flush(`${SERVER_NOW}`);
+
+            document.dispatchEvent(new Event('visibilitychange'));
+            httpMock.expectNone(() => true);
+
+            document.dispatchEvent(new Event('visibilitychange'));
+            expectServerTimeRequest().flush(`${SERVER_NOW + 31_000}`);
+        });
+
+        it('should remove the visibility listener when stopped', () => {
+            service.startPeriodicSync(60_000);
+            service.stopPeriodicSync();
+
+            document.dispatchEvent(new Event('visibilitychange'));
+
+            httpMock.expectNone(() => true);
         });
     });
 
@@ -469,274 +497,152 @@ describe('TimeSyncService', () => {
             debugSpy = spyOn(logService, 'debug');
         });
 
-        it('should log at debug level when the Date header is missing', async () => {
-            spyOn(Date, 'now').and.returnValues(BASE, BASE);
+        it('should debug-log missing server time, invalid server time, and request failures', async () => {
+            spyOn(Date, 'now').and.returnValues(SERVER_NOW, SERVER_NOW, SERVER_NOW, SERVER_NOW);
 
-            const promise = firstValueFrom(service.syncClockOffset());
-            httpMock.expectOne(() => true).flush(null, { headers: {} });
-            await promise;
+            const missing = firstValueFrom(service.syncClockOffset());
+            expectServerTimeRequest().flush('');
+            await missing;
 
-            expect(debugSpy).toHaveBeenCalled();
+            const invalid = firstValueFrom(service.syncClockOffset());
+            expectServerTimeRequest().flush('not-a-valid-date\r\ninjected-line');
+            await invalid;
+
+            const failed = firstValueFrom(service.syncClockOffset());
+            expectServerTimeRequest().error(new ProgressEvent('error'));
+            await failed;
+
+            expect(debugSpy).toHaveBeenCalledTimes(3);
+            expect(debugSpy.calls.allArgs().some(([message]) => `${message}`.includes('\r') || `${message}`.includes('\n'))).toBeFalse();
             expect(warnSpy).not.toHaveBeenCalled();
         });
 
-        it('should log at debug level when the Date header cannot be parsed', async () => {
-            spyOn(Date, 'now').and.returnValues(BASE, BASE);
+        it('should warn-log unsupported URLs and implausible offsets', async () => {
+            configureApp({ serverTimeUrl: 'javascript:alert(1)' });
+            await firstValueFrom(service.syncClockOffset());
 
-            const promise = firstValueFrom(service.syncClockOffset());
-            httpMock.expectOne(() => true).flush(null, { headers: { date: 'not-a-valid-date' } });
-            await promise;
+            configureApp();
+            spyOn(Date, 'now').and.returnValues(SERVER_NOW, SERVER_NOW);
+            const result = firstValueFrom(service.syncClockOffset());
+            expectServerTimeRequest().flush(`${SERVER_NOW + 60 * 60 * 1000}`);
+            await result;
 
-            expect(debugSpy).toHaveBeenCalled();
-            expect(warnSpy).not.toHaveBeenCalled();
-        });
-
-        it('should strip control characters from the Date header before logging it', async () => {
-            spyOn(Date, 'now').and.returnValues(BASE, BASE);
-
-            const promise = firstValueFrom(service.syncClockOffset());
-            httpMock.expectOne(() => true).flush(null, { headers: { date: 'bogus\r\ninjected-line' } });
-            await promise;
-
-            expect(debugSpy).toHaveBeenCalled();
-            const loggedMessage = debugSpy.calls.mostRecent().args[0] as string;
-            expect(loggedMessage).not.toContain('\r');
-            expect(loggedMessage).not.toContain('\n');
-        });
-
-        it('should log at warn level when an implausible offset is ignored', async () => {
-            await syncWithDrift(BASE, BASE + 60 * 60 * 1000);
-
-            expect(warnSpy).toHaveBeenCalled();
-        });
-
-        it('should log at debug level when the request fails', async () => {
-            const promise = firstValueFrom(service.syncClockOffset());
-            httpMock.expectOne(() => true).error(new ProgressEvent('error'));
-            await promise;
-
-            expect(debugSpy).toHaveBeenCalled();
-            expect(warnSpy).not.toHaveBeenCalled();
+            expect(warnSpy).toHaveBeenCalledTimes(2);
         });
     });
 
-    describe('visibility re-sync debounce', () => {
-        beforeEach(() => {
-            Object.defineProperty(document, 'visibilityState', { value: 'visible', writable: true, configurable: true });
-        });
+    describe('clock skew scenario matrix', () => {
+        describe('time sync off', () => {
+            clockSkewScenarios.forEach(({ id, description, skewSeconds, direction }) => {
+                it(`${id}: should keep raw local time for ${description}`, async () => {
+                    configureApp({ timeSync: false });
+                    const rawLocalNow = rawLocalInstantFor(skewSeconds, direction);
+                    spyOn(Date, 'now').and.returnValue(rawLocalNow);
 
-        it('should skip a re-sync triggered again within the debounce window', () => {
-            spyOn(Date, 'now').and.returnValues(
-                BASE, // 1st visibility debounce check
-                BASE, // syncClockOffset startTime
-                BASE, // syncClockOffset endTime
-                BASE + 5_000 // 2nd visibility debounce check (still within the 30s window)
-            );
+                    expect(service.getCorrectedNow()).toBe(rawLocalNow);
 
-            service.startPeriodicSync(60000);
+                    const result = await firstValueFrom(service.syncClockOffsetResult());
 
-            document.dispatchEvent(new Event('visibilitychange'));
-            httpMock.expectOne(() => true).flush(null, { headers: { date: toHttpDate(BASE) } });
-
-            document.dispatchEvent(new Event('visibilitychange'));
-            httpMock.expectNone(() => true);
-        });
-
-        it('should allow a re-sync once the debounce window has elapsed', () => {
-            spyOn(Date, 'now').and.returnValues(
-                BASE, // 1st debounce check
-                BASE, // start
-                BASE, // end
-                BASE + 31_000, // 2nd debounce check (after the 30s window)
-                BASE + 31_000, // start
-                BASE + 31_000 // end
-            );
-
-            service.startPeriodicSync(60000);
-
-            document.dispatchEvent(new Event('visibilitychange'));
-            httpMock.expectOne(() => true).flush(null, { headers: { date: toHttpDate(BASE) } });
-
-            document.dispatchEvent(new Event('visibilitychange'));
-            httpMock.expectOne(() => true).flush(null, { headers: { date: toHttpDate(BASE + 31_000) } });
-        });
-    });
-
-    describe('clock skew scenario matrix (TC)', () => {
-        describe('login-time skew', () => {
-            it('TC-01: baseline login with an accurate clock keeps the corrected clock aligned to the server', async () => {
-                await expectCorrectionAlignsToServer(0, 'behind');
-            });
-
-            it('TC-02: login with a slow clock 119s behind stays aligned to the server', async () => {
-                await expectCorrectionAlignsToServer(119, 'behind');
-            });
-
-            it('TC-03: login with a slow clock 120s behind stays aligned to the server', async () => {
-                await expectCorrectionAlignsToServer(120, 'behind');
-            });
-
-            it('TC-04: login with a slow clock 121s behind stays aligned to the server', async () => {
-                await expectCorrectionAlignsToServer(121, 'behind');
-            });
-
-            it('TC-05: login with a slow clock 3m58s behind stays aligned to the server', async () => {
-                await expectCorrectionAlignsToServer(238, 'behind');
-            });
-
-            it('TC-06: login with a fast clock 119s ahead stays aligned to the server', async () => {
-                await expectCorrectionAlignsToServer(119, 'ahead');
-            });
-
-            it('TC-07: login with a fast clock 120s ahead stays aligned to the server', async () => {
-                await expectCorrectionAlignsToServer(120, 'ahead');
-            });
-
-            it('TC-08: login with a fast clock 121s ahead stays aligned to the server', async () => {
-                await expectCorrectionAlignsToServer(121, 'ahead');
-            });
-
-            it('TC-09: login with a fast clock 3m58s ahead stays aligned to the server', async () => {
-                await expectCorrectionAlignsToServer(238, 'ahead');
+                    httpMock.expectNone(() => true);
+                    expect(result.status).toBe('disabled');
+                    expect(service.clockOffsetMs).toBe(0);
+                    expect(service.getCorrectedNow()).toBe(rawLocalNow);
+                });
             });
         });
 
-        describe('runtime drift after login', () => {
-            it('TC-10: runtime drift 119s behind keeps the corrected clock aligned so refresh succeeds', async () => {
-                await expectCorrectionAlignsToServer(119, 'behind');
+        describe('time sync malfunction', () => {
+            clockSkewScenarios.forEach(({ id, description, skewSeconds, direction }) => {
+                it(`${id}: should keep raw local time for ${description} when server time cannot be fetched`, async () => {
+                    const rawLocalNow = rawLocalInstantFor(skewSeconds, direction);
+                    spyOn(Date, 'now').and.returnValue(rawLocalNow);
+
+                    const result = firstValueFrom(service.syncClockOffsetResult());
+                    expectServerTimeRequest().error(new ProgressEvent('error'));
+
+                    expect(await result).toEqual({
+                        status: 'failed',
+                        appliedOffsetMs: 0,
+                        previousOffsetMs: 0,
+                        hasSuccessfulSync: false
+                    });
+                    expect(service.getCorrectedNow()).toBe(rawLocalNow);
+                });
             });
 
-            it('TC-11: runtime drift 120s behind keeps the corrected clock aligned so refresh succeeds', async () => {
-                await expectCorrectionAlignsToServer(120, 'behind');
-            });
+            it('should keep a previous trusted offset when a later sync malfunctions', async () => {
+                spyOn(Date, 'now').and.returnValues(SERVER_NOW, SERVER_NOW, SERVER_NOW + 120_000, SERVER_NOW + 120_000);
 
-            it('TC-12: runtime drift 121s behind keeps the corrected clock aligned so refresh succeeds', async () => {
-                await expectCorrectionAlignsToServer(121, 'behind');
-            });
+                const synced = firstValueFrom(service.syncClockOffsetResult());
+                expectServerTimeRequest().flush(`${SERVER_NOW + 60_000}`);
+                await synced;
 
-            it('TC-13: runtime drift 3m58s behind keeps the session aligned (no false logout)', async () => {
-                await expectCorrectionAlignsToServer(238, 'behind');
-            });
+                const failed = firstValueFrom(service.syncClockOffsetResult());
+                expectServerTimeRequest().error(new ProgressEvent('error'));
 
-            it('TC-14: runtime drift 119s ahead keeps the corrected clock aligned so refresh succeeds', async () => {
-                await expectCorrectionAlignsToServer(119, 'ahead');
-            });
-
-            it('TC-15: runtime drift 120s ahead keeps the corrected clock aligned so refresh succeeds', async () => {
-                await expectCorrectionAlignsToServer(120, 'ahead');
-            });
-
-            it('TC-16: runtime drift 121s ahead keeps the corrected clock aligned so refresh succeeds', async () => {
-                await expectCorrectionAlignsToServer(121, 'ahead');
-            });
-
-            it('TC-17: runtime drift 3m58s ahead keeps the session aligned (no false logout)', async () => {
-                await expectCorrectionAlignsToServer(238, 'ahead');
-            });
-        });
-
-        describe('reload, multi-tab, idle, API failure and relogin', () => {
-            it('TC-18: browser refresh while 3m58s behind realigns the fresh instance to the server', async () => {
-                expect(service.clockOffsetMs).toBe(0); // fresh instance, as after a page reload
-                await expectCorrectionAlignsToServer(238, 'behind');
-            });
-
-            it('TC-19: browser refresh while 3m58s ahead realigns the fresh instance to the server', async () => {
-                expect(service.clockOffsetMs).toBe(0); // fresh instance, as after a page reload
-                await expectCorrectionAlignsToServer(238, 'ahead');
-            });
-
-            it('TC-20: multiple tabs 3m58s behind each read a stable, server-aligned corrected time', async () => {
-                const serverEpochMs = serverInstantFor(238, 'behind');
-                spyOn(Date, 'now').and.returnValues(BASE, BASE, BASE, BASE); // start, end, read #1, read #2
-
-                const promise = firstValueFrom(service.syncClockOffset());
-                httpMock.expectOne(() => true).flush(null, { headers: { date: toHttpDate(serverEpochMs) } });
-                await promise;
-
-                expect(service.clockOffsetMs).toBe(238_000);
-                expect(service.getCorrectedNow()).toBe(serverEpochMs);
-                expect(service.getCorrectedNow()).toBe(serverEpochMs);
-            });
-
-            it('TC-21: idle session 3m58s behind re-syncs and corrects when the tab becomes visible', () => {
-                const serverEpochMs = serverInstantFor(238, 'behind');
-                spyOn(Date, 'now').and.returnValues(BASE, BASE, BASE); // debounce check, start, end
-
-                service.startPeriodicSync(60000);
-                Object.defineProperty(document, 'visibilityState', { value: 'visible', writable: true, configurable: true });
-                document.dispatchEvent(new Event('visibilitychange'));
-                httpMock.expectOne(() => true).flush(null, { headers: { date: toHttpDate(serverEpochMs) } });
-
-                expect(service.clockOffsetMs).toBe(238_000);
-            });
-
-            it('TC-22: idle session 3m58s ahead re-syncs and corrects when the tab becomes visible', () => {
-                const serverEpochMs = serverInstantFor(238, 'ahead');
-                spyOn(Date, 'now').and.returnValues(BASE, BASE, BASE); // debounce check, start, end
-
-                service.startPeriodicSync(60000);
-                Object.defineProperty(document, 'visibilityState', { value: 'visible', writable: true, configurable: true });
-                document.dispatchEvent(new Event('visibilitychange'));
-                httpMock.expectOne(() => true).flush(null, { headers: { date: toHttpDate(serverEpochMs) } });
-
-                expect(service.clockOffsetMs).toBe(-238_000);
-            });
-
-            it('TC-23: time API failure while behind keeps the previous offset (session continues on skew tolerance)', async () => {
-                service.clockOffsetMs = 60_000; // an existing, within-tolerance correction
-
-                const promise = firstValueFrom(service.syncClockOffset());
-                httpMock.expectOne(() => true).error(new ProgressEvent('error'));
-                await promise;
-
-                expect(service.clockOffsetMs).toBe(60_000);
-            });
-
-            it('TC-24: time API failure while ahead keeps the previous offset (session continues on skew tolerance)', async () => {
-                service.clockOffsetMs = -60_000; // an existing, within-tolerance correction
-
-                const promise = firstValueFrom(service.syncClockOffset());
-                httpMock.expectOne(() => true).error(new ProgressEvent('error'));
-                await promise;
-
-                expect(service.clockOffsetMs).toBe(-60_000);
-            });
-
-            it('TC-25: relogin after logout while 3m58s behind corrects immediately on the next sync', async () => {
-                service.stopPeriodicSync(); // simulate logout tearing down periodic sync
-                await expectCorrectionAlignsToServer(238, 'behind');
-            });
-
-            it('TC-26: relogin after logout while 3m58s ahead corrects immediately on the next sync', async () => {
-                service.stopPeriodicSync(); // simulate logout tearing down periodic sync
-                await expectCorrectionAlignsToServer(238, 'ahead');
+                expect(await failed).toEqual({
+                    status: 'failed',
+                    appliedOffsetMs: 60_000,
+                    previousOffsetMs: 60_000,
+                    hasSuccessfulSync: true,
+                    lastSuccessfulSyncAtMs: SERVER_NOW
+                });
+                expect(service.getCorrectedNow()).toBe(SERVER_NOW + 180_000);
             });
         });
 
-        describe('clamp boundary (security guard)', () => {
-            it('TC-27: skew 9m59s behind (within the clamp) is corrected', async () => {
-                await expectCorrectionAlignsToServer(599, 'behind');
+        describe('time sync on', () => {
+            clockSkewScenarios.forEach(({ id, description, skewSeconds, direction }) => {
+                it(`${id}: should correct ${description} to server time`, async () => {
+                    const rawLocalNow = rawLocalInstantFor(skewSeconds, direction);
+                    const expectedOffset = expectedOffsetFor(rawLocalNow);
+
+                    const result = await syncWithServerTime(rawLocalNow);
+
+                    expect(result).toEqual({
+                        status: 'synced',
+                        appliedOffsetMs: expectedOffset,
+                        previousOffsetMs: 0,
+                        hasSuccessfulSync: true,
+                        lastSuccessfulSyncAtMs: rawLocalNow
+                    });
+                    expect(service.clockOffsetMs).toBe(expectedOffset);
+                    expect(service.getCorrectedNow()).toBe(SERVER_NOW);
+                });
+            });
+        });
+
+        describe('offset clamp', () => {
+            [
+                { id: 'TC-27', skewSeconds: 599, direction: 'behind' as const },
+                { id: 'TC-28', skewSeconds: 599, direction: 'ahead' as const },
+                { id: 'TC-29', skewSeconds: 600, direction: 'behind' as const },
+                { id: 'TC-30', skewSeconds: 600, direction: 'ahead' as const }
+            ].forEach(({ id, skewSeconds, direction }) => {
+                it(`${id}: should apply an offset at or within the trust bound`, async () => {
+                    const rawLocalNow = rawLocalInstantFor(skewSeconds, direction);
+                    await syncWithServerTime(rawLocalNow);
+
+                    expect(service.clockOffsetMs).toBe(expectedOffsetFor(rawLocalNow));
+                    expect(service.getCorrectedNow()).toBe(SERVER_NOW);
+                });
             });
 
-            it('TC-28: skew 9m59s ahead (within the clamp) is corrected', async () => {
-                await expectCorrectionAlignsToServer(599, 'ahead');
-            });
+            [
+                { id: 'TC-31', skewSeconds: 601, direction: 'behind' as const },
+                { id: 'TC-32', skewSeconds: 601, direction: 'ahead' as const }
+            ].forEach(({ id, skewSeconds, direction }) => {
+                it(`${id}: should reject an offset beyond the trust bound`, async () => {
+                    const rawLocalNow = rawLocalInstantFor(skewSeconds, direction);
+                    spyOn(Date, 'now').and.returnValues(rawLocalNow, rawLocalNow, rawLocalNow);
 
-            it('TC-29: skew exactly 10m behind (at the clamp) is corrected', async () => {
-                await expectCorrectionAlignsToServer(600, 'behind');
-            });
+                    const result = firstValueFrom(service.syncClockOffsetResult());
+                    expectServerTimeRequest().flush(`${SERVER_NOW}`);
 
-            it('TC-30: skew exactly 10m ahead (at the clamp) is corrected', async () => {
-                await expectCorrectionAlignsToServer(600, 'ahead');
-            });
-
-            it('TC-31: skew 10m01s behind (beyond the clamp) is rejected and falls back to the local clock', async () => {
-                await expectCorrectionRejected(601, 'behind');
-            });
-
-            it('TC-32: skew 10m01s ahead (beyond the clamp) is rejected and falls back to the local clock', async () => {
-                await expectCorrectionRejected(601, 'ahead');
+                    expect((await result).status).toBe('implausible-offset');
+                    expect(service.clockOffsetMs).toBe(0);
+                    expect(service.getCorrectedNow()).toBe(rawLocalNow);
+                });
             });
         });
     });

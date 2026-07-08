@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import {
     OAuthService,
@@ -32,7 +34,8 @@ import { firstValueFrom, of, Subject, timeout } from 'rxjs';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AUTH_MODULE_CONFIG } from './auth-config';
 import { RetryLoginService } from './retry-login.service';
-import { TimeSync, TimeSyncService } from '../services/time-sync.service';
+import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
+import { ClockSyncResult, TimeSync, TimeSyncService } from '../services/time-sync.service';
 
 describe('RedirectAuthService', () => {
     let service: RedirectAuthService;
@@ -49,6 +52,27 @@ describe('RedirectAuthService', () => {
         setItem: jasmine.createSpy('setItem')
     };
     const oauthEvents$ = new Subject<OAuthEvent>();
+    const clockOutOfSync: TimeSync = {
+        outOfSync: true,
+        localDateTimeISO: '2024-10-10T22:00:18.621Z',
+        serverDateTimeISO: '2024-10-10T22:10:53.000Z'
+    };
+    const syncedClockResult: ClockSyncResult = { status: 'synced', appliedOffsetMs: 0, previousOffsetMs: 0, hasSuccessfulSync: true };
+    const disabledClockResult: ClockSyncResult = { status: 'disabled', appliedOffsetMs: 0, previousOffsetMs: 0, hasSuccessfulSync: false };
+
+    const setupExpiredTokenAfterTrustedClockSync = (): Error => {
+        timeSyncServiceSpy.syncClockOffsetResult.and.returnValue(of(syncedClockResult));
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of(clockOutOfSync));
+        timeSyncServiceSpy.getCorrectedNow.and.returnValue(1728597618621);
+        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: 1728597000, iat: 1728596000 });
+        oauthServiceSpy.clockSkewInSec = 0;
+        (oauthServiceSpy as any).decreaseExpirationBySec = 0;
+        oauthServiceSpy.refreshToken.and.rejectWith('refresh failed');
+
+        return new Error(
+            `OAuth error occurred due to local machine clock ${clockOutOfSync.localDateTimeISO} being out of sync with server time ${clockOutOfSync.serverDateTimeISO}`
+        );
+    };
 
     beforeEach(() => {
         retryLoginServiceSpy = jasmine.createSpyObj('RetryLoginService', ['tryToLoginTimes']);
@@ -56,6 +80,7 @@ describe('RedirectAuthService', () => {
             'checkTimeSync',
             'getCorrectedNow',
             'syncClockOffset',
+            'syncClockOffsetResult',
             'startPeriodicSync',
             'stopPeriodicSync'
         ]);
@@ -95,6 +120,7 @@ describe('RedirectAuthService', () => {
         timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: false } as TimeSync));
         timeSyncServiceSpy.getCorrectedNow.and.callFake(() => Date.now());
         timeSyncServiceSpy.syncClockOffset.and.returnValue(of(void 0));
+        timeSyncServiceSpy.syncClockOffsetResult.and.returnValue(of(disabledClockResult));
         ensureDiscoveryDocumentSpy = spyOn(service, 'ensureDiscoveryDocument');
     });
 
@@ -226,6 +252,25 @@ describe('RedirectAuthService', () => {
         expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
     });
 
+    it('should sync the clock before validating the login callback', async () => {
+        const syncClockOffset$ = new Subject<void>();
+        ensureDiscoveryDocumentSpy.and.resolveTo(true);
+        timeSyncServiceSpy.syncClockOffset.and.returnValue(syncClockOffset$);
+        retryLoginServiceSpy.tryToLoginTimes.and.resolveTo(true);
+
+        const loginCallbackPromise = service.loginCallback();
+        await Promise.resolve();
+
+        expect(timeSyncServiceSpy.syncClockOffset).toHaveBeenCalledTimes(1);
+        expect(retryLoginServiceSpy.tryToLoginTimes).not.toHaveBeenCalled();
+
+        syncClockOffset$.next();
+        syncClockOffset$.complete();
+
+        expect(await loginCallbackPromise).toBe('/');
+        expect(retryLoginServiceSpy.tryToLoginTimes).toHaveBeenCalledTimes(1);
+    });
+
     it('should logout user if login fails', async () => {
         ensureDiscoveryDocumentSpy.and.resolveTo(true);
 
@@ -244,38 +289,23 @@ describe('RedirectAuthService', () => {
         }
     });
 
-    it('should logout user if token has expired due to local machine clock being out of sync', () => {
-        const mockTimeSync: TimeSync = {
-            outOfSync: true,
-            localDateTimeISO: '2024-10-10T22:00:18.621Z',
-            serverDateTimeISO: '2024-10-10T22:10:53.000Z'
-        };
-        const expectedError = new Error(
-            `Token has expired due to local machine clock ${mockTimeSync.localDateTimeISO} being out of sync with server time ${mockTimeSync.serverDateTimeISO}`
-        );
+    it('should logout user if an OAuth error still leaves the token expired after clock resync and refresh fails', fakeAsync(() => {
+        const syncClockOffset$ = new Subject<ClockSyncResult>();
+        const expectedError = setupExpiredTokenAfterTrustedClockSync();
 
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(of(mockTimeSync));
+        timeSyncServiceSpy.syncClockOffsetResult.and.returnValue(syncClockOffset$);
 
-        const mockDateNowInMilliseconds = 1728597618621; // GMT: Thursday, October 10, 2024 10:00:18.621 PM
+        oauthEvents$.next(new OAuthErrorEvent('token_error', { reason: 'error' }, {}));
 
-        const tokenExpiresAtInSeconds = 1728598353; // GMT: Thursday, October 10, 2024 10:15:00 PM
-        const tokenIssuedAtInSeconds = 1728598253; // GMT: Thursday, October 10, 2024 10:10:53 PM
-
-        oauthServiceSpy.clockSkewInSec = 120;
-
-        timeSyncServiceSpy.getCorrectedNow.and.returnValue(mockDateNowInMilliseconds);
-        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
-
-        // First event is skipped to allow at least one token refresh attempt
-        oauthEvents$.next({ type: 'discovery_document_loaded' } as OAuthEvent);
         expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
 
-        // Token still expired after the refresh attempt — clock drift is confirmed
-        oauthEvents$.next({ type: 'discovery_document_loaded' } as OAuthEvent);
+        syncClockOffset$.next(syncedClockResult);
+        syncClockOffset$.complete();
+        tick();
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledOnceWith(expectedError);
-    });
+    }));
 
     it('should logout user if an OAuthErroEvent occurs', () => {
         const fakeErrorEvent = new OAuthErrorEvent('discovery_document_load_error', { reason: 'error' }, {});
@@ -289,6 +319,101 @@ describe('RedirectAuthService', () => {
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledOnceWith(expectedLoggedError);
+    });
+
+    it('should only process the first logout-causing OAuth error', () => {
+        const firstErrorEvent = new OAuthErrorEvent('discovery_document_load_error', { reason: 'first error' }, {});
+        const secondErrorEvent = new OAuthErrorEvent('jwks_load_error', { reason: 'second error' }, {});
+
+        oauthEvents$.next(firstErrorEvent);
+        oauthEvents$.next(secondErrorEvent);
+
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+        expect(oauthLoggerSpy.error).toHaveBeenCalledOnceWith(firstErrorEvent);
+    });
+
+    it('should wait for clock resync before logging out for an OAuth error when clock recovery does not apply', () => {
+        const syncClockOffset$ = new Subject<ClockSyncResult>();
+        const fakeErrorEvent = new OAuthErrorEvent('discovery_document_load_error', { reason: 'error' }, {});
+
+        timeSyncServiceSpy.syncClockOffsetResult.and.returnValue(syncClockOffset$);
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: false } as TimeSync));
+
+        oauthEvents$.next(fakeErrorEvent);
+
+        expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+        expect(oauthLoggerSpy.error).not.toHaveBeenCalled();
+        expect(timeSyncServiceSpy.checkTimeSync).not.toHaveBeenCalled();
+
+        syncClockOffset$.next({ status: 'synced', appliedOffsetMs: 0, previousOffsetMs: 0, hasSuccessfulSync: true });
+        syncClockOffset$.complete();
+
+        expect(timeSyncServiceSpy.checkTimeSync).toHaveBeenCalledOnceWith(oauthServiceSpy.clockSkewInSec ?? 0);
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+        expect(oauthLoggerSpy.error).toHaveBeenCalledOnceWith(fakeErrorEvent);
+    });
+
+    it('should not logout for an OAuth error when corrected time shows the token is still valid', () => {
+        const syncClockOffset$ = new Subject<ClockSyncResult>();
+        const fakeErrorEvent = new OAuthErrorEvent('token_error', { reason: 'error' }, {});
+
+        timeSyncServiceSpy.syncClockOffsetResult.and.returnValue(syncClockOffset$);
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(
+            of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync)
+        );
+        timeSyncServiceSpy.getCorrectedNow.and.returnValue(1728597618621);
+        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: 1728598353, iat: 1728597253 });
+        oauthServiceSpy.clockSkewInSec = 120;
+        (oauthServiceSpy as any).decreaseExpirationBySec = 0;
+
+        oauthEvents$.next(fakeErrorEvent);
+
+        expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+        expect(oauthLoggerSpy.error).not.toHaveBeenCalled();
+        expect(timeSyncServiceSpy.checkTimeSync).not.toHaveBeenCalled();
+
+        syncClockOffset$.next({ status: 'synced', appliedOffsetMs: 0, previousOffsetMs: 0, hasSuccessfulSync: true });
+        syncClockOffset$.complete();
+
+        expect(timeSyncServiceSpy.checkTimeSync).toHaveBeenCalledOnceWith(oauthServiceSpy.clockSkewInSec ?? 0);
+        expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+        expect(oauthLoggerSpy.error).not.toHaveBeenCalled();
+        expect(oauthServiceSpy.refreshToken).not.toHaveBeenCalled();
+    });
+
+    it('should ignore stale clock status and use the freshly synced offset before deciding whether to logout', () => {
+        const syncClockOffset$ = new Subject<ClockSyncResult>();
+        const fakeErrorEvent = new OAuthErrorEvent('token_error', { reason: 'error' }, {});
+        let syncCompleted = false;
+
+        timeSyncServiceSpy.syncClockOffsetResult.and.returnValue(syncClockOffset$);
+        timeSyncServiceSpy.checkTimeSync.and.callFake(() =>
+            of(
+                syncCompleted
+                    ? ({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync)
+                    : ({ outOfSync: false } as TimeSync)
+            )
+        );
+        timeSyncServiceSpy.getCorrectedNow.and.returnValue(1728597618621);
+        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: 1728598353, iat: 1728597253 });
+        oauthServiceSpy.clockSkewInSec = 120;
+        (oauthServiceSpy as any).decreaseExpirationBySec = 0;
+
+        oauthEvents$.next(fakeErrorEvent);
+
+        expect(timeSyncServiceSpy.checkTimeSync).not.toHaveBeenCalled();
+        expect(oauthServiceSpy.getIdentityClaims).not.toHaveBeenCalled();
+        expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+
+        syncCompleted = true;
+        syncClockOffset$.next({ status: 'synced', appliedOffsetMs: 0, previousOffsetMs: 0, hasSuccessfulSync: true });
+        syncClockOffset$.complete();
+
+        expect(timeSyncServiceSpy.checkTimeSync).toHaveBeenCalledOnceWith(oauthServiceSpy.clockSkewInSec ?? 0);
+        expect(oauthServiceSpy.getIdentityClaims).toHaveBeenCalled();
+        expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+        expect(oauthLoggerSpy.error).not.toHaveBeenCalled();
+        expect(oauthServiceSpy.refreshToken).not.toHaveBeenCalled();
     });
 
     it('should logout user if sessionChecksEnabled is true and event type session_terminated is emitted', async () => {
@@ -487,13 +612,90 @@ describe('RedirectAuthService', () => {
         expect(oauthLoggerSpy.error).not.toHaveBeenCalled();
     });
 
-    it('should logout user if token_refresh_error is emitted a second time because of clock out of sync', () => {
-        const expectedErrorMessage = new Error(
-            'OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z'
+    it('should wait for clock resync before handling the second token_refresh_error', () => {
+        const syncClockOffset$ = new Subject<ClockSyncResult>();
+
+        timeSyncServiceSpy.syncClockOffsetResult.and.returnValue(syncClockOffset$);
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(
+            of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync)
+        );
+        timeSyncServiceSpy.getCorrectedNow.and.returnValue(1728597618621);
+        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: 1728598353, iat: 1728597253 });
+        oauthServiceSpy.clockSkewInSec = 120;
+        (oauthServiceSpy as any).decreaseExpirationBySec = 0;
+
+        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'first error' }, {}));
+        expect(timeSyncServiceSpy.syncClockOffsetResult).not.toHaveBeenCalled();
+
+        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'second error' }, {}));
+
+        expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+        expect(oauthLoggerSpy.error).not.toHaveBeenCalled();
+        expect(timeSyncServiceSpy.checkTimeSync).not.toHaveBeenCalled();
+
+        syncClockOffset$.next({ status: 'synced', appliedOffsetMs: 0, previousOffsetMs: 0, hasSuccessfulSync: true });
+        syncClockOffset$.complete();
+
+        expect(timeSyncServiceSpy.checkTimeSync).toHaveBeenCalledOnceWith(oauthServiceSpy.clockSkewInSec ?? 0);
+        expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+        expect(oauthLoggerSpy.error).not.toHaveBeenCalled();
+        expect(oauthServiceSpy.refreshToken).not.toHaveBeenCalled();
+    });
+
+    it('should keep old logout behaviour when clock sync fails before any successful sync', () => {
+        const errorEvent = new OAuthErrorEvent('token_error', { reason: 'sync unavailable' }, {});
+        timeSyncServiceSpy.syncClockOffsetResult.and.returnValue(
+            of({ status: 'failed', appliedOffsetMs: 0, previousOffsetMs: 0, hasSuccessfulSync: false })
         );
         timeSyncServiceSpy.checkTimeSync.and.returnValue(
             of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync)
         );
+
+        oauthEvents$.next(errorEvent);
+
+        expect(timeSyncServiceSpy.checkTimeSync).not.toHaveBeenCalled();
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+        expect(oauthLoggerSpy.error).toHaveBeenCalledOnceWith(errorEvent);
+    });
+
+    it('should use a previous trusted clock offset when a fresh sync fails', () => {
+        timeSyncServiceSpy.syncClockOffsetResult.and.returnValue(
+            of({ status: 'failed', appliedOffsetMs: 238_000, previousOffsetMs: 238_000, hasSuccessfulSync: true })
+        );
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(
+            of({ outOfSync: true, localDateTimeISO: '2025-01-15T11:56:02.000Z', serverDateTimeISO: '2025-01-15T12:00:00.000Z' } as TimeSync)
+        );
+        timeSyncServiceSpy.getCorrectedNow.and.returnValue(Date.UTC(2025, 0, 15, 12, 0, 0));
+        oauthServiceSpy.getIdentityClaims.and.returnValue({
+            iat: Date.UTC(2025, 0, 15, 12, 0, 0) / 1000,
+            exp: Date.UTC(2025, 0, 15, 12, 15, 0) / 1000
+        });
+        oauthServiceSpy.clockSkewInSec = 120;
+        (oauthServiceSpy as any).decreaseExpirationBySec = 0;
+
+        oauthEvents$.next(new OAuthErrorEvent('token_error', { reason: 'sync unavailable after prior correction' }, {}));
+
+        expect(timeSyncServiceSpy.checkTimeSync).toHaveBeenCalledOnceWith(oauthServiceSpy.clockSkewInSec ?? 0);
+        expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+        expect(oauthLoggerSpy.error).not.toHaveBeenCalled();
+        expect(oauthServiceSpy.refreshToken).not.toHaveBeenCalled();
+    });
+
+    it('should keep old logout behaviour when clock sync is disabled', () => {
+        const errorEvent = new OAuthErrorEvent('token_error', { reason: 'time sync disabled' }, {});
+        timeSyncServiceSpy.syncClockOffsetResult.and.returnValue(
+            of({ status: 'disabled', appliedOffsetMs: 0, previousOffsetMs: 238_000, hasSuccessfulSync: false })
+        );
+
+        oauthEvents$.next(errorEvent);
+
+        expect(timeSyncServiceSpy.checkTimeSync).not.toHaveBeenCalled();
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+        expect(oauthLoggerSpy.error).toHaveBeenCalledOnceWith(errorEvent);
+    });
+
+    it('should logout user if token_refresh_error is emitted a second time because of clock out of sync', fakeAsync(() => {
+        const expectedErrorMessage = setupExpiredTokenAfterTrustedClockSync();
 
         // First occurrence is skipped (retry allowed)
         oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'first error' }, {}));
@@ -501,10 +703,11 @@ describe('RedirectAuthService', () => {
 
         // Second occurrence triggers the clock-out-of-sync logout
         oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'second error' }, {}));
+        tick();
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
-    });
+    }));
 
     it('should reset token_refresh_error counter when a successful token event occurs', () => {
         timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: false } as TimeSync));
@@ -529,22 +732,7 @@ describe('RedirectAuthService', () => {
     });
 
     it('should logout on second consecutive token_refresh_error after counter reset and another error', fakeAsync(() => {
-        const mockDateNowInMilliseconds = 1728597618621;
-        const tokenExpiresAtInSeconds = 1728597000; // already expired
-        const tokenIssuedAtInSeconds = 1728596000;
-
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(
-            of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync)
-        );
-        timeSyncServiceSpy.getCorrectedNow.and.returnValue(mockDateNowInMilliseconds);
-        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
-        oauthServiceSpy.refreshToken.and.rejectWith('refresh failed');
-        oauthServiceSpy.clockSkewInSec = 0;
-        (oauthServiceSpy as any).decreaseExpirationBySec = 0;
-
-        const expectedErrorMessage = new Error(
-            'OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z'
-        );
+        const expectedErrorMessage = setupExpiredTokenAfterTrustedClockSync();
 
         let clockOutOfSyncError: Error | null = null;
         service.oauthErrorEventOccurDueToClockOutOfSync$.subscribe((error) => {
@@ -570,103 +758,75 @@ describe('RedirectAuthService', () => {
         expect(clockOutOfSyncError).toEqual(expectedErrorMessage);
     }));
 
-    it('should logout user if discovery_document_load_error is emitted because of clock out of sync', () => {
-        const expectedErrorMessage = new Error(
-            'OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z'
-        );
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(
-            of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync)
-        );
+    it('should logout user if discovery_document_load_error is emitted because of clock out of sync', fakeAsync(() => {
+        const expectedErrorMessage = setupExpiredTokenAfterTrustedClockSync();
 
         oauthEvents$.next(new OAuthErrorEvent('discovery_document_load_error', { reason: 'error' }, {}));
+        tick();
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
-    });
+    }));
 
-    it('should logout user if code_error is emitted because of clock out of sync', () => {
-        const expectedErrorMessage = new Error(
-            'OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z'
-        );
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(
-            of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync)
-        );
+    it('should logout user if code_error is emitted because of clock out of sync', fakeAsync(() => {
+        const expectedErrorMessage = setupExpiredTokenAfterTrustedClockSync();
 
         oauthEvents$.next(new OAuthErrorEvent('code_error', { reason: 'error' }, {}));
+        tick();
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
-    });
+    }));
 
-    it('should logout user if discovery_document_validation_error is emitted because of clock out of sync', () => {
-        const expectedErrorMessage = new Error(
-            'OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z'
-        );
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(
-            of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync)
-        );
+    it('should logout user if discovery_document_validation_error is emitted because of clock out of sync', fakeAsync(() => {
+        const expectedErrorMessage = setupExpiredTokenAfterTrustedClockSync();
 
         oauthEvents$.next(new OAuthErrorEvent('discovery_document_validation_error', { reason: 'error' }, {}));
+        tick();
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
-    });
+    }));
 
-    it('should logout user if jwks_load_error is emitted because of clock out of sync', () => {
-        const expectedErrorMessage = new Error(
-            'OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z'
-        );
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(
-            of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync)
-        );
+    it('should logout user if jwks_load_error is emitted because of clock out of sync', fakeAsync(() => {
+        const expectedErrorMessage = setupExpiredTokenAfterTrustedClockSync();
 
         oauthEvents$.next(new OAuthErrorEvent('jwks_load_error', { reason: 'error' }, {}));
+        tick();
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
-    });
+    }));
 
-    it('should logout user if silent_refresh_error is emitted because of clock out of sync', () => {
-        const expectedErrorMessage = new Error(
-            'OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z'
-        );
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(
-            of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync)
-        );
+    it('should logout user if silent_refresh_error is emitted because of clock out of sync', fakeAsync(() => {
+        const expectedErrorMessage = setupExpiredTokenAfterTrustedClockSync();
 
         oauthEvents$.next(new OAuthErrorEvent('silent_refresh_error', { reason: 'error' }, {}));
+        tick();
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
-    });
+    }));
 
-    it('should logout user if user_profile_load_error is emitted because of clock out of sync', () => {
-        const expectedErrorMessage = new Error(
-            'OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z'
-        );
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(
-            of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync)
-        );
+    it('should logout user if user_profile_load_error is emitted because of clock out of sync', fakeAsync(() => {
+        const expectedErrorMessage = setupExpiredTokenAfterTrustedClockSync();
 
         oauthEvents$.next(new OAuthErrorEvent('user_profile_load_error', { reason: 'error' }, {}));
+        tick();
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
-    });
+    }));
 
-    it('should logout user if token_error is emitted because of clock out of sync', () => {
-        const expectedErrorMessage = new Error(
-            'OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z'
-        );
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(
-            of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync)
-        );
+    it('should logout user if token_error is emitted because of clock out of sync', fakeAsync(() => {
+        const expectedErrorMessage = setupExpiredTokenAfterTrustedClockSync();
 
         oauthEvents$.next(new OAuthErrorEvent('token_error', { reason: 'error' }, {}));
+        tick();
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
-    });
+    }));
 
     it('should onLogout$ be emitted when logout event occur', () => {
         let expectedLogoutIsEmitted = false;
@@ -675,5 +835,189 @@ describe('RedirectAuthService', () => {
         oauthEvents$.next(new OAuthInfoEvent('logout'));
 
         expect(expectedLogoutIsEmitted).toBeTrue();
+    });
+});
+
+describe('RedirectAuthService clock-skew environment scenarios', () => {
+    const SERVER_NOW = Date.UTC(2025, 0, 15, 12, 0, 0);
+    const SERVER_TIME_URL = '/api/server-time';
+    const SLOW_CLOCK_CLAIMS = {
+        iat: SERVER_NOW / 1000,
+        exp: (SERVER_NOW + 15 * 60 * 1000) / 1000
+    };
+    const FAST_CLOCK_CLAIMS = {
+        iat: (SERVER_NOW - 60 * 1000) / 1000,
+        exp: (SERVER_NOW + 1000) / 1000
+    };
+
+    type ClockDirection = 'behind' | 'ahead';
+
+    interface EnvironmentTestContext {
+        service: RedirectAuthService;
+        timeSyncService: TimeSyncService;
+        httpMock: HttpTestingController;
+        oauthEvents$: Subject<OAuthEvent>;
+        oauthLoggerSpy: jasmine.SpyObj<OAuthLogger>;
+        oauthServiceSpy: jasmine.SpyObj<OAuthService>;
+    }
+
+    const getLocalNow = (skewSeconds: number, direction: ClockDirection): number =>
+        direction === 'behind' ? SERVER_NOW - skewSeconds * 1000 : SERVER_NOW + skewSeconds * 1000;
+
+    const getClaims = (direction: ClockDirection) => (direction === 'behind' ? SLOW_CLOCK_CLAIMS : FAST_CLOCK_CLAIMS);
+
+    const setupEnvironment = (timeSyncEnabled: boolean, claims: { iat: number; exp: number }): EnvironmentTestContext => {
+        if (!jasmine.isSpy(performance.now)) {
+            spyOn(performance, 'now').and.returnValue(0);
+        }
+
+        const oauthEvents$ = new Subject<OAuthEvent>();
+        const oauthStorage: Partial<OAuthStorage> = {
+            getItem: jasmine.createSpy('getItem'),
+            removeItem: jasmine.createSpy('removeItem'),
+            setItem: jasmine.createSpy('setItem')
+        };
+        const retryLoginServiceSpy = jasmine.createSpyObj('RetryLoginService', ['tryToLoginTimes']);
+        const oauthLoggerSpy = jasmine.createSpyObj('OAuthLogger', ['error', 'info', 'warn']);
+        const oauthServiceSpy = jasmine.createSpyObj(
+            'OAuthService',
+            [
+                'clearHashAfterLogin',
+                'configure',
+                'logOut',
+                'hasValidAccessToken',
+                'hasValidIdToken',
+                'setupAutomaticSilentRefresh',
+                'silentRefresh',
+                'refreshToken',
+                'getIdentityClaims',
+                'getAccessToken'
+            ],
+            { clockSkewInSec: 120, decreaseExpirationBySec: 0, events: oauthEvents$, tokenValidationHandler: {} }
+        );
+        const authConfigSpy = jasmine.createSpyObj('AuthConfig', ['sessionChecksEnabled']);
+
+        oauthServiceSpy.getIdentityClaims.and.returnValue(claims);
+
+        TestBed.configureTestingModule({
+            providers: [
+                RedirectAuthService,
+                TimeSyncService,
+                provideHttpClient(),
+                provideHttpClientTesting(),
+                { provide: OAuthService, useValue: oauthServiceSpy },
+                { provide: OAuthLogger, useValue: oauthLoggerSpy },
+                { provide: OAuthStorage, useValue: oauthStorage },
+                { provide: RetryLoginService, useValue: retryLoginServiceSpy },
+                { provide: AUTH_CONFIG, useValue: authConfigSpy },
+                { provide: AUTH_MODULE_CONFIG, useValue: {} }
+            ]
+        });
+
+        spyOn(TestBed.inject(AppConfigService), 'get').and.callFake(<T>(key: string, defaultValue?: T): T => {
+            if (key === AppConfigValues.OAUTHCONFIG) {
+                return { timeSync: timeSyncEnabled } as T;
+            }
+
+            if (key === AppConfigValues.SERVER_TIME_URL) {
+                return SERVER_TIME_URL as T;
+            }
+
+            return defaultValue as T;
+        });
+
+        return {
+            service: TestBed.inject(RedirectAuthService),
+            timeSyncService: TestBed.inject(TimeSyncService),
+            httpMock: TestBed.inject(HttpTestingController),
+            oauthEvents$,
+            oauthLoggerSpy,
+            oauthServiceSpy
+        };
+    };
+
+    const syncClockWithServerTime = async (context: EnvironmentTestContext): Promise<void> => {
+        const syncPromise = firstValueFrom(context.timeSyncService.syncClockOffset());
+        const request = context.httpMock.expectOne(SERVER_TIME_URL);
+
+        expect(request.request.method).toBe('GET');
+        expect(request.request.responseType).toBe('text');
+        request.flush(`${SERVER_NOW}`);
+
+        await syncPromise;
+    };
+
+    const tokenExpiryScenarios: { id: string; direction: ClockDirection; skewSeconds: number; oldUiExpiresToken: boolean }[] = [
+        { id: 'TC-02', direction: 'behind', skewSeconds: 119, oldUiExpiresToken: false },
+        { id: 'TC-04', direction: 'behind', skewSeconds: 121, oldUiExpiresToken: true },
+        { id: 'TC-05', direction: 'behind', skewSeconds: 238, oldUiExpiresToken: true },
+        { id: 'TC-06', direction: 'ahead', skewSeconds: 119, oldUiExpiresToken: false },
+        { id: 'TC-08', direction: 'ahead', skewSeconds: 121, oldUiExpiresToken: true },
+        { id: 'TC-09', direction: 'ahead', skewSeconds: 238, oldUiExpiresToken: true }
+    ];
+
+    tokenExpiryScenarios.forEach(({ id, direction, skewSeconds }) => {
+        it(`should keep the token valid in the new UI for ${id} (${skewSeconds}s ${direction})`, async () => {
+            const localNow = getLocalNow(skewSeconds, direction);
+            const context = setupEnvironment(true, getClaims(direction));
+            spyOn(Date, 'now').and.returnValues(localNow, localNow, localNow);
+
+            await syncClockWithServerTime(context);
+
+            expect(context.service.tokenHasExpired()).toBeFalse();
+            expect(context.timeSyncService.clockOffsetMs).toBe(direction === 'behind' ? skewSeconds * 1000 : -skewSeconds * 1000);
+
+            context.httpMock.verify();
+        });
+    });
+
+    tokenExpiryScenarios.forEach(({ id, direction, skewSeconds, oldUiExpiresToken }) => {
+        it(`should show old UI raw-clock token evaluation for ${id} (${skewSeconds}s ${direction})`, () => {
+            const localNow = getLocalNow(skewSeconds, direction);
+            const context = setupEnvironment(false, getClaims(direction));
+            spyOn(Date, 'now').and.returnValue(localNow);
+
+            expect(context.service.tokenHasExpired()).toBe(oldUiExpiresToken);
+            context.httpMock.expectNone(() => true);
+
+            context.httpMock.verify();
+        });
+    });
+
+    it('should prevent the observed slow-clock false logout in the new UI with a real server time sync', () => {
+        const context = setupEnvironment(true, SLOW_CLOCK_CLAIMS);
+        const localNow = getLocalNow(238, 'behind');
+        spyOn(Date, 'now').and.returnValues(localNow, localNow, localNow, localNow);
+
+        context.oauthEvents$.next(new OAuthErrorEvent('token_error', { reason: 'slow VM clock' }, {}));
+
+        expect(context.oauthServiceSpy.logOut).not.toHaveBeenCalled();
+
+        const request = context.httpMock.expectOne(SERVER_TIME_URL);
+        expect(request.request.method).toBe('GET');
+        expect(request.request.responseType).toBe('text');
+        request.flush(`${SERVER_NOW}`);
+
+        expect(context.timeSyncService.clockOffsetMs).toBe(238_000);
+        expect(context.oauthServiceSpy.logOut).not.toHaveBeenCalled();
+        expect(context.oauthLoggerSpy.error).not.toHaveBeenCalled();
+        expect(context.oauthServiceSpy.refreshToken).not.toHaveBeenCalled();
+
+        context.httpMock.verify();
+    });
+
+    it('should show the old UI logging out for the same observed slow-clock token error', () => {
+        const context = setupEnvironment(false, SLOW_CLOCK_CLAIMS);
+        const localNow = getLocalNow(238, 'behind');
+        const errorEvent = new OAuthErrorEvent('token_error', { reason: 'slow VM clock' }, {});
+        spyOn(Date, 'now').and.returnValue(localNow);
+
+        context.oauthEvents$.next(errorEvent);
+
+        expect(context.oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+        expect(context.oauthLoggerSpy.error).toHaveBeenCalledOnceWith(errorEvent);
+        context.httpMock.expectNone(() => true);
+
+        context.httpMock.verify();
     });
 });
