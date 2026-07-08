@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, FormCloudService } from './form-cloud.service';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, of } from 'rxjs';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { FORM_FIELD_VALIDATORS, FormFieldValidator, NoopAuthModule } from '@alfresco/adf-core';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -93,20 +93,19 @@ describe('Form Cloud service', () => {
     });
 
     describe('Task tests', () => {
-        it('should fetch task from runtime bundle', (done) => {
+        it('should fetch task from runtime bundle', async () => {
             requestSpy.and.returnValue(Promise.resolve(mockTaskResponseBody));
 
-            service.getTask(appName, taskId).subscribe((result) => {
-                expect(result).toBeDefined();
-                expect(result.id).toBe('id');
-                expect(result.name).toBe('name');
-                expect(requestSpy.calls.first().args[0]).toContain(`${appName}/rb/v1/tasks/${taskId}`);
-                expect(requestSpy.calls.first().args[1].httpMethod).toBe('GET');
-                done();
-            });
+            const result = await firstValueFrom(service.getTask(appName, taskId));
+
+            expect(result).toBeDefined();
+            expect(result.id).toBe('id');
+            expect(result.name).toBe('name');
+            expect(requestSpy.calls.first().args[0]).toContain(`${appName}/rb/v1/tasks/${taskId}`);
+            expect(requestSpy.calls.first().args[1].httpMethod).toBe('GET');
         });
 
-        it('should fall back to query service when runtime bundle returns 404', (done) => {
+        it('should fall back to query service when runtime bundle returns 404', async () => {
             const notFoundError = new HttpErrorResponse({ status: 404 });
             requestSpy.and.callFake((url: string) => {
                 if (url.includes('/rb/')) {
@@ -115,25 +114,24 @@ describe('Form Cloud service', () => {
                 return Promise.resolve(mockTaskResponseBody);
             });
 
-            service.getTask(appName, taskId).subscribe((result) => {
-                expect(result).toBeDefined();
-                expect(result.id).toBe('id');
-                expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/query/v1/tasks/${taskId}`);
-                done();
-            });
+            const result = await firstValueFrom(service.getTask(appName, taskId));
+
+            expect(result).toBeDefined();
+            expect(result.id).toBe('id');
+            expect(requestSpy.calls.first().args[0]).toContain(`${appName}/rb/v1/tasks/${taskId}`);
+            expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/query/v1/tasks/${taskId}`);
         });
 
-        it('should use the query service only when the runtime bundle fallback is disabled', (done) => {
+        it('should use the query service only when the runtime bundle fallback is disabled', async () => {
             runtimeBundleFallback$.next(false);
             requestSpy.and.returnValue(Promise.resolve(mockTaskResponseBody));
 
-            service.getTask(appName, taskId).subscribe((result) => {
-                expect(result).toBeDefined();
-                expect(result.id).toBe('id');
-                expect(requestSpy.calls.first().args[0]).toContain(`${appName}/query/v1/tasks/${taskId}`);
-                expect(requestSpy.calls.all().some((call) => call.args[0].includes('/rb/'))).toBe(false);
-                done();
-            });
+            const result = await firstValueFrom(service.getTask(appName, taskId));
+
+            expect(result).toBeDefined();
+            expect(result.id).toBe('id');
+            expect(requestSpy.calls.first().args[0]).toContain(`${appName}/query/v1/tasks/${taskId}`);
+            expect(requestSpy.calls.all().some((call) => call.args[0].includes('/rb/'))).toBe(false);
         });
 
         it('should fetch task variables', (done) => {
