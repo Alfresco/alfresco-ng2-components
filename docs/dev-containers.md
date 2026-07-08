@@ -9,6 +9,8 @@ This repository includes a Dev Container configuration to provide a consistent l
 - pnpm provisioned by Corepack from `package.json#packageManager` (single source of truth)
 - Non-root development user configuration (node)
 - Persistent pnpm store volume for faster reinstall times
+- Persistent bash history volume
+- Script-based lifecycle hooks (`.devcontainer/post-create.sh`, `.devcontainer/post-start.sh`)
 
 ## Daily Workflow
 
@@ -65,12 +67,12 @@ The VS Code Dev Containers extension automatically handles part of this:
   (the actual signing).
 - Your host SSH agent is forwarded, so `git push` over SSH uses your host keys.
 
-**Important**: VS Code forwards the host agent socket but does **not** automatically
-copy the host GPG public keyring into the container. GPG needs both a public key
-entry in the local keyring (to select which key to use) and the forwarded agent
-socket (to perform the signing). If the public key is missing from the container
-keyring, `gpg --clearsign` will fail with `No secret key` even though the host
-agent is reachable and the forwarding is active.
+By default this devcontainer bind-mounts the host public keyring file
+(`${localEnv:HOME}/.gnupg/pubring.kbx`) into the container at
+`/home/node/.gnupg/pubring.kbx` (read-only), so you usually do not need
+export/import for rebuilds.
+
+The host `gpg-agent` forwarding is still required for the actual signing step.
 
 This is the one-time host-side setup:
 
@@ -81,7 +83,8 @@ This is the one-time host-side setup:
 	git config --global commit.gpgsign true
 	```
 
-2. Export your public key so the container can import it on startup:
+2. Optional fallback: export your public key so the container can import it on
+	startup when the host pubring mount is unavailable:
 
 	```bash
 	./.devcontainer/export-signing-key.sh
@@ -93,24 +96,19 @@ This is the one-time host-side setup:
 	.\.devcontainer\export-signing-key.ps1
 	```
 
-3. Rebuild the container. The `postStartCommand` auto-imports `.git/signing.pub`
-   on every container start, so signing survives restarts and rebuilds without
-   re-running the export script.
+3. Rebuild the container. If the host pubring is mounted, signing should work
+	without export/import. If it is not mounted, `postStartCommand` imports
+	`.git/signing.pub` when available.
 
 Then verify inside the container:
 
 ```bash
 gpg --list-secret-keys --keyid-format=long   # should list your key
-git commit -S -m "your message"              # -S optional when commit.gpgsign is true
-git push
+git commit -S -m "test signed commit"        # -S optional when commit.gpgsign is true
 ```
 
-If you rotate keys, run the export helper again on the host before the next rebuild.
-
-Expected behavior after rebuild:
-
-- Signing keeps working when the host agent forwarding and `.git/signing.pub` import are in sync.
-- If signing breaks after rebuild (especially after key rotation), regenerate `.git/signing.pub` with the helper and rebuild again.
+If you rotate keys, rebuild so the mounted pubring reflects host changes. If you
+use the fallback export/import path, run the export helper again before rebuild.
 
 If signing still fails, follow [Signing (GPG/PGP) Troubleshooting](#signing-gpgpgp-troubleshooting).
 
@@ -119,19 +117,12 @@ If signing still fails, follow [Signing (GPG/PGP) Troubleshooting](#signing-gpgp
 > `@devcontainers/cli`, mount `~/.gnupg`, `~/.gitconfig`, and the agent sockets
 > yourself.
 
-### Option B: Sign Commits on Host
+### Alternatives
 
-Policy alternative for strongest key isolation:
+If your team prefers a different signing model, use one of these:
 
-- Keep private signing keys only on the host.
-- Do development in the container, then commit from a host terminal.
-
-### Option C: Unsigned Commits in Container, Signed Merge in CI/Host
-
-Policy alternative for simpler contributor setup:
-
-- Commit in container without local signing.
-- Enforce signing at merge/release time in host/CI controls.
+- **Host-only signing**: do development in the container, then commit/sign from a host terminal.
+- **CI/host merge signing**: allow unsigned local commits, enforce signing at merge/release time.
 
 ### Practical Daily Pattern
 
@@ -172,14 +163,21 @@ Useful files to inspect:
 
 If `git commit -S` fails in the container:
 
-1. Confirm host signing config:
+1. Check host signing config:
 
 	```bash
 	git config --global user.signingkey
 	git config --global commit.gpgsign
 	```
 
-2. Refresh the rebuild-safe public key file on the host:
+2. Rebuild the container, then test in-container:
+
+	```bash
+	gpg --list-secret-keys --keyid-format=long
+	git commit -S -m "test signed commit"
+	```
+
+3. If key lookup still fails, use fallback public-key export on the host, then rebuild:
 
 	```bash
 	./.devcontainer/export-signing-key.sh
@@ -191,16 +189,7 @@ If `git commit -S` fails in the container:
 	.\.devcontainer\export-signing-key.ps1
 	```
 
-3. Rebuild the container.
-
-4. Verify inside container:
-
-	```bash
-	gpg --list-secret-keys --keyid-format=long
-	git commit -S -m "test signed commit"
-	```
-
-5. If it still fails, restart host agent forwarding and rebuild:
+4. If signing still fails, restart host agent forwarding and rebuild:
 
 	```bash
 	gpgconf --launch gpg-agent

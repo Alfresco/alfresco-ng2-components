@@ -25,7 +25,9 @@ Rebuild (**Dev Containers: Rebuild Container**) after changing
 - **Chromium** for Karma / `ChromeHeadless` tests (`CHROME_BIN` is preset)
 - **GitHub CLI** (`gh`) via the `github-cli` dev container feature
 - **gnupg2** so the host `gpg-agent` can be forwarded for signed commits
-- Persistent pnpm store volume and warm Nx daemon (`NX_DAEMON=true`)
+- Persistent pnpm store and bash history volumes
+- Script-based lifecycle hooks: `.devcontainer/post-create.sh` and `.devcontainer/post-start.sh`
+- Warm Nx daemon (`NX_DAEMON=true`)
 
 ## GitHub CLI
 
@@ -110,7 +112,7 @@ The host `gpg-agent` forwarding is still required for actual signing operations.
    ```
 
 3. Rebuild the container. If the host pubring is mounted, signing should work
-  without export/import. If it is not mounted, the `postStartCommand` imports
+  without export/import. If it is not mounted, `postStartCommand` imports
   `.git/signing.pub` when available.
 
 The helper auto-selects `gpg2`/`gpg` based on where your key is visible, which
@@ -118,11 +120,6 @@ avoids host setups where the two binaries use different keyrings.
 
 If you rotate keys, rebuild so the mounted pubring reflects host changes. If you
 use the fallback export/import path, run the export helper again before rebuild.
-
-Expected behavior after rebuild:
-
-- Signing keeps working when host forwarding/import and `.git/signing.pub` are in sync.
-- If signing breaks after rebuild (especially after key rotation), regenerate `.git/signing.pub` with the helper and rebuild again.
 
 After **Rebuild Container** (or next container start), verify in the container:
 
