@@ -61,7 +61,7 @@ backend services have been tested with each released version of ADF.
 
 <!--7.0.0-alpha.3 start-->
 
--   [AgentService](content-services/services/agent.service.md)
+-   AgentService — removed, see [Notes](README.md#knowledge-discovery-removal-v900)
 -   [SearchAiService](content-services/services/search-ai.service.md)
 
 <!--7.0.0-alpha.3 end-->
