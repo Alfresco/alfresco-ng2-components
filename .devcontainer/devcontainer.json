@@ -54,7 +54,8 @@
 
   "mounts": [
     "source=workspace-pnpm-store,target=/home/node/.pnpm-store,type=volume",
-    "source=workspace-bashhistory,target=/commandhistory,type=volume"
+    "source=workspace-bashhistory,target=/commandhistory,type=volume",
+    "source=${localEnv:HOME}/.gnupg/pubring.kbx,target=/home/node/.gnupg/pubring.kbx,type=bind,consistency=cached,readonly"
   ],
 
   "postCreateCommand": ".devcontainer/post-create.sh",

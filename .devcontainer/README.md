@@ -71,11 +71,12 @@ private keys never enter the container, only the agent socket is forwarded:
   installed). This enables the actual signing operation via the host agent.
 - Your host **SSH agent** is forwarded, so `git push` over SSH uses your host keys.
 
-**Important**: VS Code forwards the host agent socket but does **not** automatically
-copy your host GPG public keyring into the container. GPG requires both a public key
-entry in the container's local keyring (to select the key) and the forwarded agent
-(to perform the signing). Without the public key, `gpg --clearsign` fails with
-`No secret key` even though the host agent connection is active.
+By default this devcontainer bind-mounts the host public keyring file
+(`${localEnv:HOME}/.gnupg/pubring.kbx`) into the container at
+`/home/node/.gnupg/pubring.kbx` (read-only), so you do not need to export/import
+the public key on each rebuild.
+
+The host `gpg-agent` forwarding is still required for actual signing operations.
 
 ### One-time host setup
 
@@ -86,7 +87,9 @@ entry in the container's local keyring (to select the key) and the forwarded age
    git config --global commit.gpgsign true
    ```
 
-2. Export your public key so the container can import it:
+2. Optional fallback: export your public key so the container can import it
+  when the host pubring mount is unavailable (for example host setups without
+  `~/.gnupg/pubring.kbx`):
 
    ```bash
    # on the HOST, from repo root (auto-uses git user.signingkey)
@@ -106,14 +109,15 @@ entry in the container's local keyring (to select the key) and the forwarded age
    .\.devcontainer\export-signing-key.ps1 <YOUR_KEY_ID>
    ```
 
-3. Rebuild the container. The `postStartCommand` auto-imports `.git/signing.pub`
-   on every container start, so signing survives restarts and rebuilds without
-   re-running the export script.
+3. Rebuild the container. If the host pubring is mounted, signing should work
+  without export/import. If it is not mounted, the `postStartCommand` imports
+  `.git/signing.pub` when available.
 
 The helper auto-selects `gpg2`/`gpg` based on where your key is visible, which
 avoids host setups where the two binaries use different keyrings.
 
-If you rotate keys, run the export helper again on the host before the next rebuild.
+If you rotate keys, rebuild so the mounted pubring reflects host changes. If you
+use the fallback export/import path, run the export helper again before rebuild.
 
 Expected behavior after rebuild:
 

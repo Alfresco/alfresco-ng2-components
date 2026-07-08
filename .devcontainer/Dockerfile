@@ -19,7 +19,9 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && corepack enable \
     && mkdir -p ${PNPM_HOME} /home/node/.pnpm-store /commandhistory \
+    && mkdir -p /home/node/.gnupg \
     && touch /commandhistory/.bash_history \
-    && chown -R node:node /home/node/.local /home/node/.pnpm-store /commandhistory \
+    && chmod 700 /home/node/.gnupg \
+    && chown -R node:node /home/node/.local /home/node/.pnpm-store /commandhistory /home/node/.gnupg \
     && echo "export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" >> /home/node/.bashrc
 USER node
