@@ -1,3 +1,5 @@
+@use '../../../styles/mixins' as mixins;
+
 .adf {
     &-group-widget {
         width: 100%;
@@ -13,4 +15,8 @@
             }
         }
     }
+}
+
+.adf-group-widget-field .adf-error-icon {
+    @include mixins.adf-error-icon;
 }

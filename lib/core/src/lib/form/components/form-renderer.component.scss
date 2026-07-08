@@ -39,6 +39,10 @@
 }
 
 .adf-container-widget {
+    .adf-form-field-input:not(.adf-inplace-input-mat-form-field, .adf-people-cloud, .adf-cloud-group) {
+        margin-bottom: 35px;
+    }
+
     .adf-grid-list {
         display: grid;
 

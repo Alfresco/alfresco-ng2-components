@@ -16,6 +16,8 @@
  */
 
 import { IconModule, TranslationService } from '@alfresco/adf-core';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { TagService } from '../services/tag.service';
 import { TagPaging } from '@alfresco/js-api';
@@ -35,7 +37,17 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-tag-node-actions-list',
-    imports: [CommonModule, MatListModule, IconModule, MatFormFieldModule, MatInputModule, TranslatePipe, FormsModule, MatButtonModule],
+    imports: [
+        CommonModule,
+        MatListModule,
+        IconModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        TranslatePipe,
+        FormsModule,
+        MatButtonModule
+    ],
     templateUrl: './tag-actions.component.html',
     styleUrls: ['./tag-actions.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -65,6 +77,10 @@ export class TagActionsComponent implements OnChanges, OnInit {
     tagsEntries: any;
     errorMsg: string;
     disableAddTag: boolean = true;
+
+    tagErrorStateMatcher: ErrorStateMatcher = {
+        isErrorState: () => !!this.errorMsg
+    };
 
     private readonly destroyRef = inject(DestroyRef);
 

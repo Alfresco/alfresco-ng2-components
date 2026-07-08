@@ -18,7 +18,6 @@
 import {
     AppConfigService,
     ErrorMessageModel,
-    ErrorWidgetComponent,
     FormFieldEvent,
     FormFieldModel,
     FormFieldOption,
@@ -31,11 +30,13 @@ import {
     SelectFilterInputComponent,
     WidgetComponent
 } from '@alfresco/adf-core';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BehaviorSubject, isObservable, Subject } from 'rxjs';
@@ -62,16 +63,7 @@ export const DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE = 100;
         '(click)': 'event($event)'
     },
     encapsulation: ViewEncapsulation.None,
-    imports: [
-        NgClass,
-        AsyncPipe,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        ErrorWidgetComponent,
-        TranslatePipe,
-        SelectFilterInputComponent
-    ]
+    imports: [AsyncPipe, ReactiveFormsModule, MatFormFieldModule, MatSelectModule, TranslatePipe, SelectFilterInputComponent, MatIconModule]
 })
 export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit, ReactiveFormWidget {
     public formService = inject(FormService);
@@ -92,6 +84,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     restApiHostName: string;
     dropdownControl = new FormControl<FormFieldOption | FormFieldOption[]>(undefined);
 
+    dropdownErrorStateMatcher: ErrorStateMatcher = {
+        isErrorState: (control) =>
+            (control?.touched && control?.invalid) || (!this.previewState && (this.isRestApiFailed || this.variableOptionsFailed))
+    };
+
     list$ = new BehaviorSubject<FormFieldOption[]>([]);
     filter$ = new BehaviorSubject<string>('');
 
@@ -100,10 +97,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     private readonly defaultVariableOptionPath = 'data';
 
     private readonly debounceSetValue = new Subject<void>();
-
-    get showRequiredMessage(): boolean {
-        return this.dropdownControl.touched && this.dropdownControl.errors?.required && !this.isRestApiFailed && !this.variableOptionsFailed;
-    }
 
     get isReadOnlyType(): boolean {
         return this.field.type === 'readonly';

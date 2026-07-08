@@ -368,17 +368,13 @@ describe('PeopleWidgetComponent', () => {
         });
 
         it('should show an error message if the user is invalid', fakeAsync(() => {
-            const peopleHTMLElement = element.querySelector<HTMLInputElement>('input');
-            peopleHTMLElement.focus();
-            peopleHTMLElement.value = 'K';
-            peopleHTMLElement.dispatchEvent(new Event('keyup'));
-            peopleHTMLElement.dispatchEvent(new Event('input'));
-
+            widget.searchTerm.setValue('K');
             tick(300);
             fixture.detectChanges();
 
-            expect(element.querySelector('.adf-error-text')).not.toBeNull();
-            expect(element.querySelector('.adf-error-text').textContent).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
+            const errorText = element.querySelector('.adf-error-text');
+            expect(errorText).not.toBeNull();
+            expect(errorText.textContent).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
         }));
 
         it('should show the people if the typed result match', fakeAsync(() => {

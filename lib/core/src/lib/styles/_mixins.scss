@@ -44,3 +44,11 @@
     height: 100%;
     overflow: hidden;
 }
+
+@mixin adf-error-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    vertical-align: text-bottom;
+}

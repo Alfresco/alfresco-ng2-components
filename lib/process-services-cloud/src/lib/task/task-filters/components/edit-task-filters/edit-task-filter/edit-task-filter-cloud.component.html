@@ -61,6 +61,7 @@
                                    [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key" />
                         </mat-form-field>
                         <mat-form-field [floatLabel]="'auto'"
+                                        class="adf-form-field-input"
                                         *ngIf="taskFilterProperty.type === 'date'"
                                         [attr.data-automation-id]="taskFilterProperty.key">
                             <mat-label>{{taskFilterProperty.label | translate}}</mat-label>
@@ -75,12 +76,12 @@
                                                    [attr.data-automation-id]="'adf-cloud-edit-task-property-date-toggle-' + taskFilterProperty.key" />
                             <mat-datepicker #dateController
                                             [attr.data-automation-id]="'adf-cloud-edit-task-property-date-picker-' + taskFilterProperty.key" />
-                            <div class="adf-edit-task-filter-date-error-container">
-                                <mat-error *ngIf="hasError(taskFilterProperty)">
-                                    <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</div>
-                                    <mat-icon class="adf-error-icon" adf-icon="warning" />
+                            @if (hasError(taskFilterProperty)) {
+                                <mat-error>
+                                    <mat-icon class="adf-error-icon">error_outline</mat-icon>
+                                    <span class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</span>
                                 </mat-error>
-                            </div>
+                            }
                         </mat-form-field>
                         <div class="adf-edit-task-filter-checkbox"
                              *ngIf="taskFilterProperty.type === 'checkbox'">

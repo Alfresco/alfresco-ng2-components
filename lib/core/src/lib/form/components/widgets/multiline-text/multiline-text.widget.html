@@ -7,6 +7,7 @@
     <mat-form-field
         floatPlaceholder="never"
         class="adf-form-field-input"
+        [class.adf-has-counter]="field.maxLength > 0"
         [floatLabel]="field.placeholder ? 'always' : null"
     >
         @if(field.name || field.required) {
@@ -20,24 +21,24 @@
             rows="3"
             [id]="field.id"
             [required]="field.required"
-            [ngModel]="displayValue"
-            (ngModelChange)="onValueChange($event)"
+            [(ngModel)]="field.value"
+            (ngModelChange)="onMultilineTextFieldChanged()"
             [disabled]="field.readOnly || readOnly"
             [placeholder]="field.placeholder"
             [title]="field.tooltip"
-            (blur)="markAsTouched()"
+            [errorStateMatcher]="errorStateMatcher"
+            (blur)="onBlur()"
         >
         </textarea>
+        @if (field.validationSummary?.message || (isInvalidFieldRequired() && isTouched())) {
+            <mat-error>
+                @if (field.maxLength > 0) {<span class="adf-multiline-counter-block">{{ field?.value?.length || 0 }}/{{ field.maxLength }}</span>}
+                <mat-icon class="adf-error-icon">error_outline</mat-icon>
+                <span class="adf-error-text"
+                    >@if (field.validationSummary?.message) {{{ field.validationSummary.message | translate:translateParameters }}} @else {{{ 'FORM.FIELD.REQUIRED' | translate }}}</span>
+            </mat-error>
+        } @else if (field.maxLength > 0) {
+            <mat-hint class="adf-multiline-hint">{{ field?.value?.length || 0 }}/{{ field.maxLength }}</mat-hint>
+        }
     </mat-form-field>
-    <div *ngIf="field.maxLength > 0" class="adf-multiline-word-counter">
-        <span class="adf-multiline-word-counter-value">{{ displayValue?.length || 0 }}/{{ field.maxLength }}</span>
-    </div>
-    <div class="adf-error-messages-container">
-        <error-widget [error]="field.validationSummary" />
-        <error-widget
-            *ngIf="isInvalidFieldRequired() && isTouched()"
-            class="adf-multiline-required-message"
-            required="{{ 'FORM.FIELD.REQUIRED' | translate }}"
-        />
-    </div>
 </div>
