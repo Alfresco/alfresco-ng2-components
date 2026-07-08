@@ -52,11 +52,14 @@
     "CHROME_BIN": "/usr/bin/chromium"
   },
 
-  "mounts": ["source=alfresco-ng2-pnpm-store,target=/home/node/.pnpm-store,type=volume"],
+  "mounts": [
+    "source=workspace-pnpm-store,target=/home/node/.pnpm-store,type=volume",
+    "source=workspace-bashhistory,target=/commandhistory,type=volume"
+  ],
 
-  "postCreateCommand": "pnpm install --frozen-lockfile",
+  "postCreateCommand": ".devcontainer/post-create.sh",
 
-  "postStartCommand": "if [ -f .git/signing.pub ]; then gpg --import .git/signing.pub; fi",
+  "postStartCommand": ".devcontainer/post-start.sh",
 
   "runArgs": ["--cap-drop=ALL", "--security-opt=no-new-privileges:true", "--pids-limit=512"]
 }

@@ -18,6 +18,8 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends chromium gnupg2 \
     && rm -rf /var/lib/apt/lists/* \
     && corepack enable \
-    && mkdir -p ${PNPM_HOME} /home/node/.pnpm-store \
-    && chown -R node:node /home/node/.local /home/node/.pnpm-store
+    && mkdir -p ${PNPM_HOME} /home/node/.pnpm-store /commandhistory \
+    && touch /commandhistory/.bash_history \
+    && chown -R node:node /home/node/.local /home/node/.pnpm-store /commandhistory \
+    && echo "export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" >> /home/node/.bashrc
 USER node
