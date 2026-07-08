@@ -45,6 +45,7 @@ export const AppConfigValues = {
     DISABLECSRF: 'disableCSRF',
     AUTH_WITH_CREDENTIALS: 'auth.withCredentials',
     AUTH_TIME_SYNC_ENABLED: 'auth.timeSync.enabled',
+    SERVER_TIME_URL: 'serverTimeUrl',
     APPLICATION: 'application',
     STORAGE_PREFIX: 'application.storagePrefix',
     NOTIFY_DURATION: 'notificationDefaultDuration',
@@ -257,12 +258,14 @@ export class AppConfigService {
         const implicitFlow = config['implicitFlow'] === true || config['implicitFlow'] === 'true';
         const silentLogin = config['silentLogin'] === true || config['silentLogin'] === 'true';
         const codeFlow = config['codeFlow'] === true || config['codeFlow'] === 'true';
+        const timeSync = config['timeSync'] === true || config['timeSync'] === 'true';
 
         return {
             ...(config as OauthConfigModel),
             implicitFlow,
             silentLogin,
-            codeFlow
+            codeFlow,
+            timeSync
         };
     }
 
