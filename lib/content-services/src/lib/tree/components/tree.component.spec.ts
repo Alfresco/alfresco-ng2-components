@@ -213,6 +213,26 @@ describe('TreeComponent', () => {
         expect(expandSpy).toHaveBeenCalledWith(component.treeService.treeNodes[0], treeNodesMockExpanded);
     });
 
+    it('should call expandCollapseNode once when chevron is clicked', () => {
+        component.refreshTree();
+        fixture.detectChanges();
+        component.treeService.treeNodes = Array.from(treeNodesMock);
+        component.treeService.treeNodes[0].isLoading = false;
+        fixture.detectChanges();
+        const expandCollapseNodeSpy = spyOn(component, 'expandCollapseNode').and.callThrough();
+        clickExpandCollapseBtn(component.treeService.treeNodes[0].id);
+        expect(expandCollapseNodeSpy).toHaveBeenCalledOnceWith(component.treeService.treeNodes[0]);
+    });
+
+    it('should not trigger node selection when chevron is clicked and selectableNodes is true', () => {
+        component.selectableNodes = true;
+        component.refreshTree();
+        fixture.detectChanges();
+        const onNodeSelectedSpy = spyOn(component, 'onNodeSelected');
+        clickExpandCollapseBtn(component.treeService.treeNodes[0].id);
+        expect(onNodeSelectedSpy).not.toHaveBeenCalled();
+    });
+
     it('should call collapseNode on TreeService when collapsing node by clicking at node label and node has children', () => {
         component.refreshTree();
         fixture.detectChanges();
