@@ -28,6 +28,7 @@
                    [formControl]="searchTerm"
                    [placeholder]="selectedUsers.length > 0 ? '' : field.placeholder"
                    [matAutocomplete]="auto"
+                   [errorStateMatcher]="errorStateMatcher"
                    (blur)="markAsTouched()"
                    [title]="field.tooltip">
         </mat-chip-grid>

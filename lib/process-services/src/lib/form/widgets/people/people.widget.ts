@@ -19,7 +19,8 @@
 
 import { InitialUsernamePipe, WidgetComponent } from '@alfresco/adf-core';
 import { Component, ElementRef, EventEmitter, inject, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl, FormGroupDirective, NgForm } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable, of } from 'rxjs';
@@ -92,8 +93,10 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         })
     );
     public peopleProcessService = inject(PeopleProcessService);
+    errorStateMatcher: ErrorStateMatcher;
 
     ngOnInit() {
+        this.initErrorStateMatcher();
         if (this.field) {
             if (this.field.value) {
                 Array.isArray(this.field.value) ? this.selectedUsers.push(...this.field.value) : this.selectedUsers.push(this.field.value);
@@ -160,6 +163,13 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         this.peopleSelected.emit(user?.id || undefined);
         this.input.nativeElement.value = '';
         this.searchTerm.setValue('');
+    }
+
+    private initErrorStateMatcher(): void {
+        this.errorStateMatcher = {
+            isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
+                !!this.field.validationSummary?.message || (this.isInvalidFieldRequired() && this.isTouched())
+        };
     }
 
     isUserAlreadySelected(user: LightUserRepresentation): boolean {

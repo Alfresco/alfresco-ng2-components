@@ -15,6 +15,7 @@
                    [disabled]="field.readOnly"
                    data-automation-id="adf-typeahed-search-input"
                    placeholder="{{field.placeholder}}"
+                   [errorStateMatcher]="errorStateMatcher"
                    [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
                 <mat-option *ngFor="let item of options; let i = index" id="adf-typeahed-widget-user-{{i}}" [value]="item">
