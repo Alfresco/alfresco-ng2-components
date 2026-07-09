@@ -34,7 +34,8 @@ import {
     AuthModule,
     FormFieldEvent,
     NoopTranslateModule,
-    NoopAuthModule
+    NoopAuthModule,
+    FORM_FIELD_VALIDATORS
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
@@ -1394,7 +1395,7 @@ describe('FormCloudComponent', () => {
         formComponent.formCloudRepresentationJSON = new FormCloudRepresentation(JSON.parse(JSON.stringify(cloudFormMock)));
         const form = formComponent.parseForm(formComponent.formCloudRepresentationJSON);
         expect(formComponent.fieldValidators.length).toBe(1);
-        expect(form.fieldValidators.length).toBe(11);
+        expect(form.fieldValidators.length).toBe(FORM_FIELD_VALIDATORS.length + formComponent.fieldValidators.length);
     });
 
     describe('form validations', () => {
