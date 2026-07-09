@@ -57,7 +57,7 @@ export class FormFieldTypes {
 
     static READONLY_TYPES: string[] = [FormFieldTypes.HYPERLINK, FormFieldTypes.DISPLAY_VALUE, FormFieldTypes.READONLY_TEXT, FormFieldTypes.GROUP];
 
-    static DISPLAY_TEXT_TYPES: string[] = [
+    static readonly DISPLAY_TEXT_TYPES: string[] = [
         FormFieldTypes.TEXT,
         FormFieldTypes.MULTILINE_TEXT,
         FormFieldTypes.READONLY_TEXT,
