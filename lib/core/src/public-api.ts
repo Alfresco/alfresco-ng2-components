@@ -56,3 +56,4 @@ export * from './lib/common';
 
 export * from './lib/core.module';
 export * from './lib/material.module';
+export * from './lib/services/uuid-service';
