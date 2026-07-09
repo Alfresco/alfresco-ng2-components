@@ -57,6 +57,13 @@ export class FormFieldTypes {
 
     static READONLY_TYPES: string[] = [FormFieldTypes.HYPERLINK, FormFieldTypes.DISPLAY_VALUE, FormFieldTypes.READONLY_TEXT, FormFieldTypes.GROUP];
 
+    static DISPLAY_TEXT_TYPES: string[] = [
+        FormFieldTypes.TEXT,
+        FormFieldTypes.MULTILINE_TEXT,
+        FormFieldTypes.READONLY_TEXT,
+        FormFieldTypes.DISPLAY_VALUE
+    ];
+
     static VALIDATABLE_TYPES: string[] = [FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY];
 
     static REACTIVE_TYPES: string[] = [FormFieldTypes.DATE, FormFieldTypes.DATETIME, FormFieldTypes.DROPDOWN];
@@ -65,6 +72,10 @@ export class FormFieldTypes {
 
     static isReadOnlyType(type: string): boolean {
         return FormFieldTypes.READONLY_TYPES.includes(type);
+    }
+
+    static isDisplayTextType(type: string): boolean {
+        return FormFieldTypes.DISPLAY_TEXT_TYPES.includes(type);
     }
 
     static isValidatableType(type: string): boolean {

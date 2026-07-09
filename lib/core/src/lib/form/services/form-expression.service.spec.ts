@@ -330,6 +330,53 @@ describe('FormExpressionService', () => {
                 expect(result).toBe(String(date));
                 expect(result).not.toContain('"');
             });
+
+            it('should format a dropdown id string to its option label', () => {
+                const mockField = {
+                    id: 'dropdownField',
+                    type: FormFieldTypes.DROPDOWN,
+                    value: 'opt1',
+                    options: [
+                        { id: 'opt1', name: 'Apple' },
+                        { id: 'opt2', name: 'Banana' }
+                    ]
+                };
+                spyOn(formModel, 'getFieldById').and.returnValue(mockField as any);
+
+                const result = formattingService.resolveExpressions(formModel, '${field.dropdownField}');
+
+                expect(result).toBe('Apple');
+            });
+
+            it('should format a radio id string to its option label', () => {
+                const mockField = {
+                    id: 'radioField',
+                    type: FormFieldTypes.RADIO_BUTTONS,
+                    value: 'r2',
+                    options: [
+                        { id: 'r1', name: 'Yes' },
+                        { id: 'r2', name: 'No' }
+                    ]
+                };
+                spyOn(formModel, 'getFieldById').and.returnValue(mockField as any);
+
+                const result = formattingService.resolveExpressions(formModel, '${field.radioField}');
+
+                expect(result).toBe('No');
+            });
+
+            it('should leave a plain string value unchanged when the source field has no formatter', () => {
+                const mockField = {
+                    id: 'textField',
+                    type: FormFieldTypes.TEXT,
+                    value: 'plain value'
+                };
+                spyOn(formModel, 'getFieldById').and.returnValue(mockField as any);
+
+                const result = formattingService.resolveExpressions(formModel, '${field.textField}');
+
+                expect(result).toBe('plain value');
+            });
         });
 
         describe('when ADF_TYPED_VALUE_FORMATTING_ENABLED token is not provided', () => {
@@ -347,6 +394,20 @@ describe('FormExpressionService', () => {
 
                 expect(hasFormatterSpy).not.toHaveBeenCalled();
                 expect(result).toBe('{"firstName":"Test","lastName":"User"}');
+            });
+
+            it('should leave a dropdown id string unchanged when formatting is disabled', () => {
+                const mockField = {
+                    id: 'dropdownField',
+                    type: FormFieldTypes.DROPDOWN,
+                    value: 'opt1',
+                    options: [{ id: 'opt1', name: 'Apple' }]
+                };
+                spyOn(formModel, 'getFieldById').and.returnValue(mockField as any);
+
+                const result = service.resolveExpressions(formModel, '${field.dropdownField}');
+
+                expect(result).toBe('opt1');
             });
         });
 

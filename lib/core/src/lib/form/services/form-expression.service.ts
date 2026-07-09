@@ -71,11 +71,22 @@ export class FormExpressionService {
             return '';
         }
 
-        if (typeof expressionResult === 'string') {
+        if (typeof expressionResult === 'string' && !this.hasTypedFormatter(form, match)) {
             return expressionResult;
         }
 
         return this.formatTypedExpressionResult(form, match, expressionResult);
+    }
+
+    private hasTypedFormatter(form: FormModel, match: string): boolean {
+        if (!this.formattingEnabled) {
+            return false;
+        }
+
+        const fieldId = this.extractFieldIdFromMatch(match);
+        const sourceField = fieldId ? form.getFieldById(fieldId) : undefined;
+
+        return !!sourceField && this.formFieldValueFormatter.hasFormatter(sourceField.type);
     }
 
     private formatTypedExpressionResult(form: FormModel, match: string, expressionResult: any): string {
