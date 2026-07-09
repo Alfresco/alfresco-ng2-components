@@ -99,16 +99,6 @@ export class TextWidgetComponent extends FormattableTextWidgetComponent {
         this.initErrorStateMatcher();
     }
 
-    onBlur(): void {
-        this.markAsTouched();
-        this.updateTranslateParameters();
-    }
-
-    onTextFieldChanged(): void {
-        this.onFieldChanged(this.field);
-        this.updateTranslateParameters();
-    }
-
     onPaste(event: ClipboardEvent): void {
         const input = event.target instanceof HTMLInputElement ? event.target : null;
         const pastedValue = event.clipboardData?.getData('text') ?? '';
@@ -131,6 +121,16 @@ export class TextWidgetComponent extends FormattableTextWidgetComponent {
         }
 
         this.clearMaxLengthPasteError();
+    }
+
+    onBlur(): void {
+        this.markAsTouched();
+        this.updateTranslateParameters();
+    }
+
+    onTextFieldChanged(): void {
+        this.onFieldChanged(this.field);
+        this.updateTranslateParameters();
     }
 
     private initErrorStateMatcher(): void {
