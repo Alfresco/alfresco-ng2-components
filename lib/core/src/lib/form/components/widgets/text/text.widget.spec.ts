@@ -188,7 +188,7 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
 
                 const errorWidget = testingUtils.getByCSS('.adf-error-text').nativeElement;
-                expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+                expect(errorWidget.textContent.trim()).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
                 expect(widget.maxLengthPasteError.isActive()).toBe(true);
             });
 
@@ -217,7 +217,7 @@ describe('TextWidgetComponent', () => {
 
                 expect(widget.maxLengthPasteError.isActive()).toBe(true);
                 const errorWidget = testingUtils.getByCSS('.adf-error-text').nativeElement;
-                expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+                expect(errorWidget.textContent.trim()).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
             });
 
             it('should keep paste max length error when paste input event emits after blocked paste', () => {
