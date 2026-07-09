@@ -24,3 +24,4 @@ nxcache
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
 lib/eslint-angular/dist/
+.pnpm-store
