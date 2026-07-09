@@ -353,11 +353,11 @@ export class RedirectAuthService extends AuthService {
             });
         }
 
-        return this.ensureDiscoveryDocument()
+        return firstValueFrom(this._timeSyncService.syncClockOffset())
+            .then(() => this.ensureDiscoveryDocument())
             .then(() => {
                 this._isDiscoveryDocumentLoadedSubject$.next(true);
                 this.oauthService.setupAutomaticSilentRefresh();
-                this._timeSyncService.syncClockOffset().subscribe();
                 return void this.allowRefreshTokenAndSilentRefreshOnMultipleTabs();
             })
             .catch(() => {

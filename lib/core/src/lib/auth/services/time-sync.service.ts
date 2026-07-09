@@ -81,13 +81,20 @@ export class TimeSyncService {
             map((serverTimeResponse: number) => {
                 const localCurrentTimeInMs = Date.now();
                 const adjustedServerTimeInMs = this.getAdjustedServerTimeInMs(serverTimeResponse, startTime);
-                const timeOffsetInMs = Math.abs(localCurrentTimeInMs - adjustedServerTimeInMs);
+                let localTimeInMs = localCurrentTimeInMs;
+
+                if (this.isEnabled()) {
+                    this.clockOffsetMs = adjustedServerTimeInMs - localCurrentTimeInMs;
+                    localTimeInMs = localCurrentTimeInMs + this.clockOffsetMs;
+                }
+
+                const timeOffsetInMs = Math.abs(localTimeInMs - adjustedServerTimeInMs);
                 const maxAllowedClockSkewInMs = maxAllowedClockSkewInSec * 1000;
 
                 return {
                     outOfSync: timeOffsetInMs > maxAllowedClockSkewInMs,
                     timeOffsetInSec: timeOffsetInMs / 1000,
-                    localDateTimeISO: new Date(localCurrentTimeInMs).toISOString(),
+                    localDateTimeISO: new Date(localTimeInMs).toISOString(),
                     serverDateTimeISO: new Date(adjustedServerTimeInMs).toISOString()
                 };
             }),
