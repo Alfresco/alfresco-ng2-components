@@ -187,7 +187,7 @@ describe('TextWidgetComponent', () => {
                 widget.field.validate();
                 fixture.detectChanges();
 
-                errorWidget = testingUtils.getByCSS('.adf-error-text').nativeElement;
+                const errorWidget = testingUtils.getByCSS('.adf-error-text').nativeElement;
                 expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
                 expect(widget.maxLengthPasteError.isActive()).toBe(true);
             });
@@ -216,7 +216,7 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
 
                 expect(widget.maxLengthPasteError.isActive()).toBe(true);
-                errorWidget = testingUtils.getByCSS('.adf-error-text').nativeElement;
+                const errorWidget = testingUtils.getByCSS('.adf-error-text').nativeElement;
                 expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
             });
 
@@ -241,7 +241,7 @@ describe('TextWidgetComponent', () => {
 
                 widget.onPaste(pasteEvent);
 
-                widget.onInput({ inputType: 'insertFromPaste' } as Event);
+                widget.onInput({ inputType: 'insertFromPaste' } as unknown as Event);
 
                 expect(widget.maxLengthPasteError.isActive()).toBe(true);
             });
@@ -266,7 +266,7 @@ describe('TextWidgetComponent', () => {
                 } as unknown as ClipboardEvent;
 
                 widget.onPaste(pasteEvent);
-                widget.onInput({ inputType: 'insertText' } as Event);
+                widget.onInput({ inputType: 'insertText' } as unknown as Event);
 
                 expect(widget.maxLengthPasteError.isActive()).toBe(false);
             });
