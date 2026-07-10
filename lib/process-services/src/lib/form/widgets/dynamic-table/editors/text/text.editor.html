@@ -1,6 +1,6 @@
 <div class="adf-text-editor">
     <mat-form-field>
-    <label [attr.for]="column.id">{{displayName}}</label>
+    <mat-label>{{ displayName }}</mat-label>
     <input matInput
         type="text"
         [value]="table.getCellValue(row, column)"

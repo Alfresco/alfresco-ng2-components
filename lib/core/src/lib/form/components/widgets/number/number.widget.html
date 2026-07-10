@@ -11,7 +11,7 @@
     <div class="adf-number-widget-container">
         <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic" [floatLabel]="field.placeholder ? 'always' : null">
             @if( (field.name || this.field?.required) && !field.leftLabels) {
-            <mat-label class="adf-label" [attr.for]="field.id">
+            <mat-label class="adf-label">
                 {{ field.name | translate }}
             </mat-label>
             }

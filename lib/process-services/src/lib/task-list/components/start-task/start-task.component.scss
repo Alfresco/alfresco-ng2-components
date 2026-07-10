@@ -77,7 +77,7 @@ adf-start-task {
             width: 100%;
         }
 
-        .adf-label {
+        .adf-people-widget-label {
             line-height: 0;
         }
 
@@ -126,7 +126,7 @@ adf-start-task {
                 border-color: var(--mat-sys-error);
             }
 
-            .adf-label {
+            .adf-people-widget-label {
                 color: var(--mat-sys-error);
 
                 &::after {

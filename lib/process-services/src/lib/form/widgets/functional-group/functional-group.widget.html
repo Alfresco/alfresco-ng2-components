@@ -5,11 +5,9 @@
     [class.adf-readonly]="field.readOnly"
     id="functional-group-div"
 >
-    <label class="adf-label" [attr.for]="field.id"
-        >{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
-    >
     <mat-form-field class="adf-group-widget-field">
-        <mat-chip-grid #chipGrid>
+        <mat-label data-automation-id="adf-group-widget-label">{{ field.name | translate }}</mat-label>
+        <mat-chip-grid #chipGrid [required]="isRequired()">
             <mat-chip-row
                 *ngFor="let group of selectedGroups"
                 (removed)="onRemove(group)"
@@ -49,11 +47,13 @@
             </mat-option>
         </mat-autocomplete>
         @if (field.validationSummary?.message || (isInvalidFieldRequired() && isTouched())) {
-            <mat-error>
-                <mat-icon class="adf-error-icon">error_outline</mat-icon>
-                <span class="adf-error-text"
-                    >@if (field.validationSummary?.message) {{{ field.validationSummary.message | translate }}} @else {{{ 'FORM.FIELD.REQUIRED' | translate }}}</span>
-            </mat-error>
+        <mat-error>
+            <mat-icon class="adf-error-icon">error_outline</mat-icon>
+            <span class="adf-error-text"
+                >@if (field.validationSummary?.message) {{{ field.validationSummary.message | translate }}} @else {{{ 'FORM.FIELD.REQUIRED' |
+                translate }}}</span
+            >
+        </mat-error>
         }
     </mat-form-field>
 </div>
