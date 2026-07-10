@@ -14,7 +14,7 @@
                         <span class="adf-version-list-item-line adf-version-list-item-date"
                               [id]="'adf-version-list-item-date-' + version.entry.id">{{ version.entry.modifiedAt | date }}</span>
                     </p>
-                    @if (version.entry.modifiedByUser) {
+                    @if (version.entry.modifiedByUser?.displayName) {
                         <p
                             class="adf-version-list-item-line"
                             [attr.data-automation-id]="`adf-version-list-item-modified-by-${version.entry.id}`">
