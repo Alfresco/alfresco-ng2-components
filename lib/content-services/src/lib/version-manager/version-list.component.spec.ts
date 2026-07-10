@@ -16,29 +16,48 @@
  */
 
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { VersionListComponent, VersionListDataSource } from './version-list.component';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { Node, NodeEntry, VersionEntry, Version } from '@alfresco/js-api';
+import { Node, NodeEntry, VersionEntry, Version, UserInfo } from '@alfresco/js-api';
 import { ContentVersionService } from './content-version.service';
 import { take } from 'rxjs/operators';
 import { CdkFixedSizeVirtualScroll } from '@angular/cdk/scrolling';
-import { NoopAuthModule } from '@alfresco/adf-core';
+import { NoopAuthModule, UnitTestingUtils } from '@alfresco/adf-core';
 import { provideApiTesting } from '../testing/providers';
+import { DebugElement } from '@angular/core';
 
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
     let fixture: ComponentFixture<VersionListComponent>;
     let dialog: MatDialog;
     let contentVersionService: ContentVersionService;
+    let testingUtils: UnitTestingUtils;
 
     const nodeId = 'test-id';
     const versionId = '1.0';
 
     const versionTest = [
-        new VersionEntry({ entry: new Version({ name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }) }),
-        new VersionEntry({ entry: new Version({ name: 'test-file-name-two', id: '1.0', versionComment: 'test-version-comment' }) })
+        new VersionEntry({
+            entry: new Version({
+                name: 'test-file-name',
+                id: '1.0',
+                versionComment: 'test-version-comment',
+                modifiedByUser: new UserInfo({
+                    displayName: 'TestUser1'
+                })
+            })
+        }),
+        new VersionEntry({
+            entry: new Version({
+                name: 'test-file-name-two',
+                id: '1.0',
+                versionComment: 'test-version-comment',
+                modifiedByUser: new UserInfo({
+                    displayName: 'TestUser2'
+                })
+            })
+        })
     ];
 
     afterEach(() => {
@@ -54,6 +73,7 @@ describe('VersionListComponent', () => {
         fixture = TestBed.createComponent(VersionListComponent);
         dialog = TestBed.inject(MatDialog);
         contentVersionService = TestBed.inject(ContentVersionService);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
 
         component = fixture.componentInstance;
         component.node = { id: nodeId, allowableOperations: ['update'] } as Node;
@@ -114,16 +134,18 @@ describe('VersionListComponent', () => {
     });
 
     describe('Version history fetching', () => {
+        const getLoadingProgressBar = (): DebugElement => testingUtils.getByDataAutomationId('version-history-loading-bar');
+
+        const getCommentElement = (): DebugElement => testingUtils.getByCSS('.adf-version-list-item-comment');
+
         it('should use loading bar', (done) => {
             fixture.detectChanges();
 
-            let loadingProgressBar = fixture.debugElement.query(By.css('[data-automation-id="version-history-loading-bar"]'));
-            expect(loadingProgressBar).toBeNull();
+            expect(getLoadingProgressBar()).toBeNull();
 
             component.versionsDataSource.isLoading.pipe(take(1)).subscribe(() => {
                 fixture.detectChanges();
-                loadingProgressBar = fixture.debugElement.query(By.css('[data-automation-id="version-history-loading-bar"]'));
-                expect(loadingProgressBar).not.toBeNull();
+                expect(getLoadingProgressBar()).not.toBeNull();
                 done();
             });
 
@@ -147,13 +169,14 @@ describe('VersionListComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const versionFileName = fixture.debugElement.query(By.css('.adf-version-list-item-name')).nativeElement.innerText;
-                const versionIdText = fixture.debugElement.query(By.css('.adf-version-list-item-version')).nativeElement.innerText;
-                const versionComment = fixture.debugElement.query(By.css('.adf-version-list-item-comment')).nativeElement.innerText;
+                const versionFileName = testingUtils.getInnerTextByCSS('.adf-version-list-item-name');
+                const versionIdText = testingUtils.getInnerTextByCSS('.adf-version-list-item-version');
+                const versionComment = getCommentElement().nativeElement.innerText;
 
                 expect(versionFileName).toBe('test-file-name');
                 expect(versionIdText).toBe('1.0');
                 expect(versionComment.trim()).toBe('test-version-comment');
+                expect(testingUtils.getInnerTextByDataAutomationId('adf-version-list-item-modified-by-1.0')).toBe('TestUser1');
                 done();
             });
         });
@@ -166,9 +189,8 @@ describe('VersionListComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const versionCommentEl = fixture.debugElement.query(By.css('.adf-version-list-item-comment'));
 
-                expect(versionCommentEl).toBeNull();
+                expect(getCommentElement()).toBeNull();
                 done();
             });
         });
@@ -268,15 +290,15 @@ describe('VersionListComponent', () => {
 
         const getActionMenuButton = (version = '1.0'): HTMLButtonElement => {
             fixture.detectChanges();
-            return fixture.debugElement.query(By.css(`[id="adf-version-list-action-menu-button-${version}"]`))?.nativeElement;
+            return testingUtils.getByCSS(`[id="adf-version-list-action-menu-button-${version}"]`)?.nativeElement;
         };
 
         const getRestoreButton = (version = '1.0'): HTMLButtonElement => {
             getActionMenuButton(version).click();
-            return fixture.debugElement.query(By.css(`[id="adf-version-list-action-restore-${version}"]`))?.nativeElement;
+            return testingUtils.getByCSS(`[id="adf-version-list-action-restore-${version}"]`)?.nativeElement;
         };
 
-        const getDeleteButton = (version = '1.1') => fixture.debugElement.query(By.css(`[id="adf-version-list-action-delete-${version}"]`));
+        const getDeleteButton = (version = '1.1'): DebugElement => testingUtils.getByCSS(`[id="adf-version-list-action-delete-${version}"]`);
 
         beforeEach(() => {
             fixture.detectChanges();
@@ -320,9 +342,7 @@ describe('VersionListComponent', () => {
                 fixture.whenStable().then(() => {
                     getActionMenuButton('1.1').click();
 
-                    const deleteButton: any = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
-
-                    expect(deleteButton.disabled).toBe(true);
+                    expect(getDeleteButton().nativeElement.disabled).toBe(true);
                     done();
                 });
             });
@@ -352,9 +372,7 @@ describe('VersionListComponent', () => {
                 fixture.whenStable().then(() => {
                     getActionMenuButton('1.1').click();
 
-                    const deleteButton: any = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
-
-                    expect(deleteButton.disabled).toBe(false);
+                    expect(getDeleteButton().nativeElement.disabled).toBe(false);
                     done();
                 });
             });
@@ -396,7 +414,7 @@ describe('VersionListComponent', () => {
 
         beforeEach(() => {
             fixture.detectChanges();
-            virtualListViewport = fixture.debugElement.query(By.directive(CdkFixedSizeVirtualScroll)).injector.get(CdkFixedSizeVirtualScroll);
+            virtualListViewport = testingUtils.getByDirective(CdkFixedSizeVirtualScroll).injector.get(CdkFixedSizeVirtualScroll);
         });
 
         it('should have assigned correct minBufferPx', () => {
