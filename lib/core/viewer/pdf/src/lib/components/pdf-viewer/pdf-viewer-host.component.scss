@@ -187,7 +187,7 @@
 
         .adf-pdf-viewer-annotation-tooltip.popup {
             outline-color: var(--mat-sys-primary);
-            background-color: #b3b3b3;
+            background-color: color-mix(in srgb, var(--mat-sys-surface) 70%, black 30%);
             margin-left: 40px;
             width: max-content;
             max-width: 300px;
