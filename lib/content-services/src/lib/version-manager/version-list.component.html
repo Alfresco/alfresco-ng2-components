@@ -14,11 +14,13 @@
                         <span class="adf-version-list-item-line adf-version-list-item-date"
                               [id]="'adf-version-list-item-date-' + version.entry.id">{{ version.entry.modifiedAt | date }}</span>
                     </p>
-                    <p
-                        class="adf-version-list-item-line"
-                        [attr.data-automation-id]="`adf-version-list-item-modified-by-${version.entry.id}`">
-                        {{version.entry.modifiedByUser.displayName}}
-                    </p>
+                    @if (version.entry.modifiedByUser) {
+                        <p
+                            class="adf-version-list-item-line"
+                            [attr.data-automation-id]="`adf-version-list-item-modified-by-${version.entry.id}`">
+                            {{version.entry.modifiedByUser.displayName}}
+                        </p>
+                    }
                     <p
                         [id]="'adf-version-list-item-comment-' + version.entry.id"
                         class="adf-version-list-item-comment"
