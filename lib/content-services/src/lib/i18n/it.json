@@ -729,6 +729,14 @@
       "JOIN_REQUESTED": "Richiesta di partecipazione alla libreria inviata"
     }
   },
+  "KNOWLEDGE_RETRIEVAL": {
+    "SEARCH": {
+      "WARNINGS": {
+        "TOO_MANY_FILES_SELECTED": "Selezionare più di {{ maxFiles }} file.",
+        "FOLDER_SELECTED": "Le cartelle non sono compatibili con gli agenti IA."
+      }
+    }
+  },
   "NODE_FAVORITE_DIRECTIVE": {
     "MESSAGES": {
       "NODE_ADDED": "Aggiunto {{ name }} ai preferiti",

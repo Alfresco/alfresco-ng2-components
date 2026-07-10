@@ -729,6 +729,14 @@
       "JOIN_REQUESTED": "Żądanie dołączenia do tej biblioteki zostało wysłane"
     }
   },
+  "KNOWLEDGE_RETRIEVAL": {
+    "SEARCH": {
+      "WARNINGS": {
+        "TOO_MANY_FILES_SELECTED": "Proszę wybrać nie więcej niż {{ maxFiles }} plików.",
+        "FOLDER_SELECTED": "Foldery nie są kompatybilne z agentami AI."
+      }
+    }
+  },
   "NODE_FAVORITE_DIRECTIVE": {
     "MESSAGES": {
       "NODE_ADDED": "Dodano {{ name }} do ulubionych",

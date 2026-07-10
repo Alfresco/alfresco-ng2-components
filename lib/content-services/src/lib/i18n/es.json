@@ -729,6 +729,14 @@
       "JOIN_REQUESTED": "Se ha enviado una solicitud para unirse a esta biblioteca"
     }
   },
+  "KNOWLEDGE_RETRIEVAL": {
+    "SEARCH": {
+      "WARNINGS": {
+        "TOO_MANY_FILES_SELECTED": "No seleccione más de {{ maxFiles }} ficheros.",
+        "FOLDER_SELECTED": "Las carpetas no son compatibles con los Agentes IA."
+      }
+    }
+  },
   "NODE_FAVORITE_DIRECTIVE": {
     "MESSAGES": {
       "NODE_ADDED": "Añadido {{ name }} a favoritos",
