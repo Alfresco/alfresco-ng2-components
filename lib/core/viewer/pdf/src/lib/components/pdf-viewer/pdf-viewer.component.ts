@@ -722,7 +722,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     private createAnnotationPopup(annotation: PdfAnnotationData, text: string, annotationElement: HTMLElement): void {
         const popupElement = document.createElement('div');
-        let headerElement: HTMLSpanElement;
+        let headerElement: HTMLDivElement | null = null;
         if (annotation.titleObj?.str) {
             headerElement = this.createAnnotationPopupHeader(annotation as PdfAnnotationWithTitle);
         }
@@ -732,8 +732,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         annotationElement.appendChild(popupElement);
     }
 
-    private createAnnotationPopupHeader(annotation: PdfAnnotationWithTitle): HTMLSpanElement {
-        const headerElement = document.createElement('span');
+    private createAnnotationPopupHeader(annotation: PdfAnnotationWithTitle): HTMLDivElement {
+        const headerElement = document.createElement('div');
         const titleElement = document.createElement('h1');
         let dateElement: HTMLTimeElement;
         titleElement.innerText = annotation.titleObj.str;
@@ -742,20 +742,22 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         if (annotation.modificationDate) {
             dateElement = document.createElement('time');
             const dateObj = PDFDateString.toDateObject(annotation.modificationDate);
-            dateElement.classList.add('popupDate');
-            dateElement.dataset.l10nId = 'pdfjs-annotation-date-time-string';
-            dateElement.dataset.l10nArgs = JSON.stringify({
-                dateObj: dateObj.getTime()
-            });
-            headerElement.append(titleElement, dateElement);
+            if (dateObj) {
+                dateElement.classList.add('popupDate');
+                dateElement.dateTime = dateObj.toISOString();
+                dateElement.innerText = dateObj.toLocaleString();
+                dateElement.dataset.l10nId = 'pdfjs-annotation-date-time-string';
+                dateElement.dataset.l10nArgs = JSON.stringify({ dateObj: dateObj.getTime() });
+                headerElement.append(titleElement, dateElement);
+            }
         } else {
             headerElement.append(titleElement);
         }
         return headerElement;
     }
 
-    private createAnnotationPopupContent(text: string): HTMLSpanElement {
-        const contentElement = document.createElement('span');
+    private createAnnotationPopupContent(text: string): HTMLParagraphElement {
+        const contentElement = document.createElement('p');
         contentElement.innerText = text;
         contentElement.classList.add('popupContent');
         return contentElement;
