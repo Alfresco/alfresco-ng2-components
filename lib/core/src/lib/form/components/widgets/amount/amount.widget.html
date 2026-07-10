@@ -15,7 +15,7 @@
             subscriptSizing="dynamic"
             [floatLabel]="placeholder ? 'always' : null"
         >
-            @if ( (field.name || field?.required) && !field.leftLabels) { <mat-label class="adf-label" [attr.for]="field.id">{{field.name | translate }}</mat-label> }
+            @if ( (field.name || field?.required) && !field.leftLabels) { <mat-label data-automation-id="adf-amount-widget-label">{{field.name | translate }}</mat-label> }
             @if(!enableDisplayBasedOnLocale) {
                 <span matTextPrefix class="adf-amount-widget__prefix-spacing">{{ currency }}&nbsp;</span>
             }
@@ -34,7 +34,7 @@
                 [errorStateMatcher]="errorStateMatcher"
                 (focus)="amountWidgetOnFocus()"
                 (blur)="amountWidgetOnBlur()"
-                />
+            />
             @if (field.validationSummary?.message || (isInvalidFieldRequired() && isTouched())) {
                 <mat-error class="adf-form-field-status-slot">
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>

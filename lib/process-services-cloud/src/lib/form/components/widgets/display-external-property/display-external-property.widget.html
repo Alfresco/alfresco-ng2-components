@@ -13,7 +13,7 @@
     <div>
         <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic" [floatLabel]="field.placeholder ? 'always' : null">
             @if( (field.name || field?.required) && !field.leftLabels) {
-            <mat-label class="adf-label" [attr.for]="field.id"> {{ field.name | translate }} </mat-label>
+            <mat-label class="adf-display-external-property-widget-label" data-automation-id="adf-display-external-property-widget-label"> {{ field.name | translate }} </mat-label>
             }
             <input
                 matInput

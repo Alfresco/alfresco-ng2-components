@@ -5,7 +5,7 @@
         [class.adf-readonly]="field.readOnly"
         id="typehead-div">
         <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic">
-            <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}</label>
+            <mat-label>{{ field.name | translate }}</mat-label>
             <input matInput class="adf-input"
                    type="text"
                    [id]="field.id"

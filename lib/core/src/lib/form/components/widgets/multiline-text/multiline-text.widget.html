@@ -12,7 +12,7 @@
         [floatLabel]="field.placeholder ? 'always' : null"
     >
         @if(field.name || field.required) {
-        <mat-label class="adf-label" [attr.for]="field.id"> {{ field.name | translate }} </mat-label>
+        <mat-label class="adf-multiline-text-widget-label" data-automation-id="adf-multiline-text-widget-label"> {{ field.name | translate }} </mat-label>
         }
         <textarea
             matInput

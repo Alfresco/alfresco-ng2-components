@@ -13,7 +13,7 @@
             subscriptSizing="dynamic"
             [floatLabel]="placeholder ? 'always' : null"
         >
-            @if ( (field.name || this.field?.required) && !field.leftLabels) { <mat-label class="adf-label" [attr.for]="field.id">
+            @if ( (field.name || this.field?.required) && !field.leftLabels) { <mat-label data-automation-id="adf-text-widget-label">
                 {{ field.name | translate }}
             </mat-label>
         }
