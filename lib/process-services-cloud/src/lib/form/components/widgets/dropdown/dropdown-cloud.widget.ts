@@ -99,6 +99,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     private readonly defaultVariableOptionLabel = 'name';
     private readonly defaultVariableOptionPath = 'data';
 
+    private parentValueWarningLogged = false;
+
     private readonly debounceSetValue = new Subject<void>();
 
     get showRequiredMessage(): boolean {
@@ -455,18 +457,49 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((event: FormFieldEvent) => {
-                const valueOfParentWidget = event.field.value;
+                const valueOfParentWidget = this.normalizeParentValueToId(event.field.value);
                 this.parentValueChanged(valueOfParentWidget);
             });
     }
 
-    private getParentWidgetValue(): string {
-        const parentWidgetId = this.linkedWidgetId;
-        const parentWidget = this.getFormFieldById(parentWidgetId);
-        return parentWidget?.value;
+    private normalizeParentValueToId(value: any): string | null {
+        if (value === null || value === undefined || value === '') {
+            return null;
+        }
+        if (typeof value === 'string') {
+            return value;
+        }
+        if (Array.isArray(value)) {
+            const first = value[0];
+            if (typeof first === 'string') {
+                return first;
+            }
+            if (first && typeof first === 'object' && 'id' in first) {
+                return first.id;
+            }
+            return this.warnUnexpectedParentValue(value);
+        }
+        if (typeof value === 'object' && 'id' in value) {
+            return value.id;
+        }
+        return this.warnUnexpectedParentValue(value);
     }
 
-    private parentValueChanged(value: string) {
+    private warnUnexpectedParentValue(value: any): null {
+        if (!this.parentValueWarningLogged) {
+            this.parentValueWarningLogged = true;
+            console.warn('DropdownCloudWidgetComponent: unexpected parent widget value shape for cascade lookup', value);
+        }
+        return null;
+    }
+
+    private getParentWidgetValue(): string | null {
+        const parentWidgetId = this.linkedWidgetId;
+        const parentWidget = this.getFormFieldById(parentWidgetId);
+        return this.normalizeParentValueToId(parentWidget?.value);
+    }
+
+    private parentValueChanged(value: string | null) {
         if (value && !this.isNoneValueSelected(value)) {
             this.isValidRestConfig ? this.persistFieldOptionsFromRestApi() : this.persistFieldOptionsFromManualList(value);
         } else if (this.isNoneValueSelected(value)) {
@@ -479,15 +512,15 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         }
     }
 
-    private isNoneValueSelected(value: string): boolean {
-        return value === undefined;
+    private isNoneValueSelected(value: string | null): boolean {
+        return value === undefined || value === null;
     }
 
     private getFormFieldById(fieldId): FormFieldModel {
         return this.field.form.getFormFields().filter((field: FormFieldModel) => field.id === fieldId)[0];
     }
 
-    private persistFieldOptionsFromManualList(value: string) {
+    private persistFieldOptionsFromManualList(value: string | null) {
         if (this.hasRuleEntries()) {
             const rulesEntries = this.field.rule.entries;
             rulesEntries.forEach((ruleEntry: RuleEntry) => {

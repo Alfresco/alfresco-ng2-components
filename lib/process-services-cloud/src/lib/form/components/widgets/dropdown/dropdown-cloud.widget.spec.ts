@@ -1009,6 +1009,149 @@ describe('DropdownCloudWidgetComponent', () => {
             });
         });
 
+        describe('cascade parent value normalization', () => {
+            const parentDropdown = new FormFieldModel(new FormModel(), { id: 'parentDropdown', type: 'dropdown' });
+
+            beforeEach(() => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
+                    id: 'child-dropdown-id',
+                    name: 'child-dropdown',
+                    type: 'dropdown',
+                    optionType: 'manual',
+                    rule: {
+                        ruleOn: 'parentDropdown',
+                        entries: mockConditionalEntries
+                    }
+                });
+                fixture.detectChanges();
+            });
+
+            it('should resolve child options when parent value is an object { id, name }', () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
+                    id: 'child-dropdown-id',
+                    name: 'child-dropdown',
+                    type: 'dropdown',
+                    optionType: 'manual',
+                    rule: { ruleOn: 'parentDropdown', entries: mockConditionalEntries }
+                });
+                const mockParentDropdown = { id: 'parentDropdown', value: { id: 'GR', name: 'Greece' }, validate: (): boolean => true };
+                spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
+                widget.ngOnInit();
+
+                expect(widget.field.options).toEqual(mockConditionalEntries[0].options);
+            });
+
+            it('should resolve child options when parent value is a plain string (no regression)', () => {
+                parentDropdown.value = 'GR';
+                widget.selectionChangedForField(parentDropdown);
+                fixture.detectChanges();
+
+                expect(widget.field.options).toEqual(mockConditionalEntries[0].options);
+            });
+
+            it('should clear child options and not warn when parent value is null', () => {
+                const warnSpy = spyOn(console, 'warn');
+                parentDropdown.value = null;
+                widget.selectionChangedForField(parentDropdown);
+                fixture.detectChanges();
+
+                expect(widget.field.options).toEqual([]);
+                expect(warnSpy).not.toHaveBeenCalled();
+            });
+
+            it('should clear child options and not warn when parent value is undefined', () => {
+                const warnSpy = spyOn(console, 'warn');
+                parentDropdown.value = undefined;
+                widget.selectionChangedForField(parentDropdown);
+                fixture.detectChanges();
+
+                expect(widget.field.options).toEqual([]);
+                expect(warnSpy).not.toHaveBeenCalled();
+            });
+
+            it('should resolve child options from first element when parent value is an array of objects', () => {
+                parentDropdown.value = [{ id: 'GR', name: 'Greece' }];
+                widget.selectionChangedForField(parentDropdown);
+                fixture.detectChanges();
+
+                expect(widget.field.options).toEqual(mockConditionalEntries[0].options);
+            });
+
+            it('should resolve child options from first element when parent value is an array of strings', () => {
+                parentDropdown.value = ['GR', 'IT'];
+                widget.selectionChangedForField(parentDropdown);
+                fixture.detectChanges();
+
+                expect(widget.field.options).toEqual(mockConditionalEntries[0].options);
+            });
+
+            it('should clear child options and not warn when parent value is an empty string', () => {
+                const warnSpy = spyOn(console, 'warn');
+                widget.field.options = mockConditionalEntries[1].options;
+                parentDropdown.value = '';
+                widget.selectionChangedForField(parentDropdown);
+                fixture.detectChanges();
+
+                expect(widget.field.options).toEqual([]);
+                expect(warnSpy).not.toHaveBeenCalled();
+            });
+
+            it('should clear child options and warn exactly once for unexpected value shapes', () => {
+                const warnSpy = spyOn(console, 'warn');
+
+                parentDropdown.value = 42;
+                widget.selectionChangedForField(parentDropdown);
+                fixture.detectChanges();
+
+                parentDropdown.value = { name: 'no id' };
+                widget.selectionChangedForField(parentDropdown);
+                fixture.detectChanges();
+
+                expect(widget.field.options).toEqual([]);
+                expect(warnSpy.calls.count()).toBe(1);
+            });
+
+            it('should return null for null input to normalizeParentValueToId', () => {
+                expect((widget as any).normalizeParentValueToId(null)).toBeNull();
+            });
+
+            it('should return null for undefined input to normalizeParentValueToId', () => {
+                expect((widget as any).normalizeParentValueToId(undefined)).toBeNull();
+            });
+
+            it('should return null for empty string input to normalizeParentValueToId', () => {
+                expect((widget as any).normalizeParentValueToId('')).toBeNull();
+            });
+
+            it('should return the same string for string input to normalizeParentValueToId', () => {
+                expect((widget as any).normalizeParentValueToId('GR')).toBe('GR');
+            });
+
+            it('should return id for { id, name } object input to normalizeParentValueToId', () => {
+                expect((widget as any).normalizeParentValueToId({ id: 'GR', name: 'Greece' })).toBe('GR');
+            });
+
+            it('should return first element for array of strings input to normalizeParentValueToId', () => {
+                expect((widget as any).normalizeParentValueToId(['GR', 'IT'])).toBe('GR');
+            });
+
+            it('should return id of first element for array of objects input to normalizeParentValueToId', () => {
+                expect((widget as any).normalizeParentValueToId([{ id: 'GR', name: 'Greece' }])).toBe('GR');
+            });
+
+            it('should return null and warn for unexpected shape input to normalizeParentValueToId', () => {
+                const warnSpy = spyOn(console, 'warn');
+                expect((widget as any).normalizeParentValueToId(42)).toBeNull();
+                expect(warnSpy).toHaveBeenCalled();
+            });
+
+            it('should return null and warn once for an empty array input to normalizeParentValueToId', () => {
+                const warnSpy = spyOn(console, 'warn');
+                expect((widget as any).normalizeParentValueToId([])).toBeNull();
+                expect(warnSpy.calls.count()).toBe(1);
+            });
+        });
+
         describe('when form model has left labels', () => {
             it('should have left labels classes on leftLabels true', async () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false, leftLabels: true }), {
