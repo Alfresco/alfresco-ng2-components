@@ -342,7 +342,9 @@ describe('VersionListComponent', () => {
                 fixture.whenStable().then(() => {
                     getActionMenuButton('1.1').click();
 
-                    expect(getDeleteButton().nativeElement.disabled).toBe(true);
+                    const deleteButton: any = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
+
+                    expect(deleteButton.disabled).toBe(true);
                     done();
                 });
             });
@@ -372,7 +374,9 @@ describe('VersionListComponent', () => {
                 fixture.whenStable().then(() => {
                     getActionMenuButton('1.1').click();
 
-                    expect(getDeleteButton().nativeElement.disabled).toBe(false);
+                    const deleteButton: any = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
+
+                    expect(deleteButton.disabled).toBe(false);
                     done();
                 });
             });
