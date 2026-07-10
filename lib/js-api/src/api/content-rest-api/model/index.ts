@@ -91,8 +91,6 @@ export * from './groupMemberPagingList';
 export * from './groupMembershipBodyCreate';
 export * from './groupPaging';
 export * from './groupPagingList';
-export * from './knowledgeRetrievalConfig';
-export * from './knowledgeRetrievalConfigEntry';
 export * from './modelError';
 export * from './networkQuota';
 export * from './node';
