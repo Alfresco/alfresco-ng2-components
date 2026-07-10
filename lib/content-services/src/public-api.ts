@@ -52,4 +52,3 @@ export * from './lib/agent/index';
 export * from './lib/search-ai/index';
 
 export * from './lib/content.module';
-export * from './lib/material.module';
