@@ -622,7 +622,6 @@ describe('RedirectAuthService', () => {
 
 describe('RedirectAuthService clock-skew environment scenarios', () => {
     const SERVER_NOW = Date.UTC(2025, 0, 15, 12, 0, 0);
-    const SERVER_TIME_URL = '/api/server-time';
     const SLOW_CLOCK_CLAIMS = {
         iat: SERVER_NOW / 1000,
         exp: (SERVER_NOW + 15 * 60 * 1000) / 1000
@@ -702,10 +701,6 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
                 return { timeSync: timeSyncEnabled } as T;
             }
 
-            if (key === AppConfigValues.SERVER_TIME_URL) {
-                return SERVER_TIME_URL as T;
-            }
-
             return defaultValue as T;
         });
 
@@ -728,13 +723,22 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
         return spyOn(navigator.locks, 'request').and.callFake(((...args: unknown[]) => Promise.resolve((args[1] as () => unknown)())) as any);
     };
 
-    const syncClockWithServerTime = async (context: EnvironmentTestContext): Promise<void> => {
-        const syncPromise = firstValueFrom(context.timeSyncService.syncClockOffset());
-        const request = context.httpMock.expectOne(SERVER_TIME_URL);
+    const expectAppRootTimeRequest = (context: EnvironmentTestContext) => {
+        const request = context.httpMock.expectOne(window.location.href.split('?')[0].split('#')[0]);
 
         expect(request.request.method).toBe('GET');
-        expect(request.request.responseType).toBe('json');
-        request.flush(SERVER_NOW);
+        expect(request.request.responseType).toBe('text');
+
+        return request;
+    };
+
+    const flushDateHeader = (request: ReturnType<typeof expectAppRootTimeRequest>): void => {
+        request.flush('', { headers: { date: new Date(SERVER_NOW).toUTCString() } });
+    };
+
+    const syncClockWithServerTime = async (context: EnvironmentTestContext): Promise<void> => {
+        const syncPromise = firstValueFrom(context.timeSyncService.syncClockOffset());
+        flushDateHeader(expectAppRootTimeRequest(context));
 
         await syncPromise;
     };
@@ -777,10 +781,7 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
 
             expect(context.retryLoginServiceSpy.tryToLoginTimes).not.toHaveBeenCalled();
 
-            const request = context.httpMock.expectOne(SERVER_TIME_URL);
-            expect(request.request.method).toBe('GET');
-            expect(request.request.responseType).toBe('json');
-            request.flush(SERVER_NOW);
+            flushDateHeader(expectAppRootTimeRequest(context));
 
             expect(await loginCallback).toBe('/');
             expect(context.retryLoginServiceSpy.tryToLoginTimes).toHaveBeenCalledTimes(1);
@@ -799,10 +800,7 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
             const loginCallback = context.service.loginCallback();
             await Promise.resolve();
 
-            const request = context.httpMock.expectOne(SERVER_TIME_URL);
-            expect(request.request.method).toBe('GET');
-            expect(request.request.responseType).toBe('json');
-            request.error(new ProgressEvent('error'));
+            expectAppRootTimeRequest(context).error(new ProgressEvent('error'));
 
             expect(await loginCallback).toBe('/');
             expect(context.retryLoginServiceSpy.tryToLoginTimes).toHaveBeenCalledTimes(1);
@@ -846,10 +844,7 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
 
             expect(context.oauthServiceSpy.setupAutomaticSilentRefresh).not.toHaveBeenCalled();
 
-            const request = context.httpMock.expectOne(SERVER_TIME_URL);
-            expect(request.request.method).toBe('GET');
-            expect(request.request.responseType).toBe('json');
-            request.flush(SERVER_NOW);
+            flushDateHeader(expectAppRootTimeRequest(context));
 
             await init;
             await context.oauthServiceSpy.refreshToken();
@@ -872,10 +867,7 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
             const init = context.service.init();
             await Promise.resolve();
 
-            const request = context.httpMock.expectOne(SERVER_TIME_URL);
-            expect(request.request.method).toBe('GET');
-            expect(request.request.responseType).toBe('json');
-            request.error(new ProgressEvent('error'));
+            expectAppRootTimeRequest(context).error(new ProgressEvent('error'));
 
             await init;
             await context.oauthServiceSpy.refreshToken();
@@ -924,10 +916,7 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
 
         expect(context.oauthServiceSpy.logOut).not.toHaveBeenCalled();
 
-        const request = context.httpMock.expectOne(SERVER_TIME_URL);
-        expect(request.request.method).toBe('GET');
-        expect(request.request.responseType).toBe('json');
-        request.flush(SERVER_NOW);
+        flushDateHeader(expectAppRootTimeRequest(context));
 
         expect(context.timeSyncService.getCorrectedNow()).toBe(SERVER_NOW);
         expect(context.oauthServiceSpy.logOut).not.toHaveBeenCalled();
@@ -946,10 +935,7 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
 
         expect(context.oauthServiceSpy.logOut).not.toHaveBeenCalled();
 
-        const request = context.httpMock.expectOne(SERVER_TIME_URL);
-        expect(request.request.method).toBe('GET');
-        expect(request.request.responseType).toBe('json');
-        request.flush(SERVER_NOW);
+        flushDateHeader(expectAppRootTimeRequest(context));
 
         expect(context.oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(context.oauthLoggerSpy.error).toHaveBeenCalledOnceWith(

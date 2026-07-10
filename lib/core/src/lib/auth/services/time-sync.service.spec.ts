@@ -23,7 +23,6 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { TimeSyncService } from './time-sync.service';
 
 const SERVER_NOW = Date.UTC(2025, 0, 15, 12, 0, 0);
-const SERVER_TIME_URL = '/identity-adapter-service/v1/server/time';
 const MAX_ALLOWED_CLOCK_SKEW_IN_SEC = 120;
 
 type ClockDirection = 'behind' | 'ahead';
@@ -38,8 +37,6 @@ interface ClockSkewScenario {
 interface AppConfigOptions {
     timeSync?: boolean | string;
     omitTimeSync?: boolean;
-    serverTimeUrl?: string;
-    omitServerTimeUrl?: boolean;
 }
 
 interface TimeSyncResult {
@@ -87,10 +84,6 @@ describe('TimeSyncService', () => {
         appConfigService.config = {
             oauth2: options.omitTimeSync ? {} : { timeSync: options.timeSync ?? true }
         };
-
-        if (!options.omitServerTimeUrl) {
-            appConfigService.config.serverTimeUrl = options.serverTimeUrl ?? SERVER_TIME_URL;
-        }
     };
 
     const rawLocalInstantFor = ({ skewSeconds, direction }: Pick<ClockSkewScenario, 'skewSeconds' | 'direction'>): number =>
@@ -98,13 +91,17 @@ describe('TimeSyncService', () => {
 
     const expectedOffsetInMsFor = (localNow: number, serverNow = SERVER_NOW): number => serverNow - localNow;
 
-    const expectServerTimeRequest = (url = SERVER_TIME_URL): TestRequest => {
-        const request = httpMock.expectOne(url);
+    const expectAppRootTimeRequest = (): TestRequest => {
+        const request = httpMock.expectOne(window.location.href.split('?')[0].split('#')[0]);
 
         expect(request.request.method).toBe('GET');
-        expect(request.request.responseType).toBe('json');
+        expect(request.request.responseType).toBe('text');
 
         return request;
+    };
+
+    const flushDateHeader = (request: TestRequest, serverNow = SERVER_NOW): void => {
+        request.flush('', { headers: { date: new Date(serverNow).toUTCString() } });
     };
 
     const expectTimeSyncResult = (result: TimeSyncResult, expected: TimeSyncResult): void => {
@@ -151,7 +148,7 @@ describe('TimeSyncService', () => {
             spyOn(Date, 'now').and.returnValue(SERVER_NOW - 238_000);
 
             const sync = firstValueFrom(service.syncClockOffset());
-            expectServerTimeRequest().flush(SERVER_NOW);
+            flushDateHeader(expectAppRootTimeRequest());
             await sync;
 
             expect(service.getCorrectedNow()).toBe(SERVER_NOW);
@@ -162,37 +159,37 @@ describe('TimeSyncService', () => {
             spyOn(Date, 'now').and.returnValue(SERVER_NOW + 238_000);
 
             const sync = firstValueFrom(service.syncClockOffset());
-            expectServerTimeRequest().flush(SERVER_NOW);
+            flushDateHeader(expectAppRootTimeRequest());
             await sync;
 
             expect(service.getCorrectedNow()).toBe(SERVER_NOW);
         });
 
-        it('should convert epoch seconds from the server time response', async () => {
+        it('should read server time from the app root Date header', async () => {
             spyOn(Date, 'now').and.returnValue(SERVER_NOW - 60_000);
 
             const sync = firstValueFrom(service.syncClockOffset());
-            expectServerTimeRequest().flush(SERVER_NOW / 1000);
+            flushDateHeader(expectAppRootTimeRequest());
             await sync;
 
             expect(service.getCorrectedNow()).toBe(SERVER_NOW);
         });
 
-        it('should keep raw local time when timeSync is true but serverTimeUrl is missing', async () => {
-            configureApp({ omitServerTimeUrl: true });
+        it('should correct local time without requiring serverTimeUrl configuration', async () => {
             spyOn(Date, 'now').and.returnValue(SERVER_NOW + 238_000);
 
-            await firstValueFrom(service.syncClockOffset());
+            const sync = firstValueFrom(service.syncClockOffset());
+            flushDateHeader(expectAppRootTimeRequest());
+            await sync;
 
-            httpMock.expectNone(() => true);
-            expect(service.getCorrectedNow()).toBe(SERVER_NOW + 238_000);
+            expect(service.getCorrectedNow()).toBe(SERVER_NOW);
         });
 
         it('should keep raw local time when timeSync is true but the server time request fails', async () => {
             spyOn(Date, 'now').and.returnValue(SERVER_NOW - 238_000);
 
             const sync = firstValueFrom(service.syncClockOffset());
-            expectServerTimeRequest().error(new ProgressEvent('error'));
+            expectAppRootTimeRequest().error(new ProgressEvent('error'));
             await sync;
 
             expect(service.getCorrectedNow()).toBe(SERVER_NOW - 238_000);
@@ -203,12 +200,12 @@ describe('TimeSyncService', () => {
             spyOn(Date, 'now').and.callFake(() => localNow);
 
             const successfulSync = firstValueFrom(service.syncClockOffset());
-            expectServerTimeRequest().flush(SERVER_NOW);
+            flushDateHeader(expectAppRootTimeRequest());
             await successfulSync;
 
             localNow = SERVER_NOW + 60_000;
             const failedSync = firstValueFrom(service.syncClockOffset());
-            expectServerTimeRequest().error(new ProgressEvent('error'));
+            expectAppRootTimeRequest().error(new ProgressEvent('error'));
             await failedSync;
 
             expect(service.getCorrectedNow()).toBe(SERVER_NOW + 60_000);
@@ -220,18 +217,16 @@ describe('TimeSyncService', () => {
             spyOn(Date, 'now').and.returnValue(SERVER_NOW);
 
             const check = firstValueFrom(service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC));
-            expectServerTimeRequest().error(new ProgressEvent('error'));
+            expectAppRootTimeRequest().error(new ProgressEvent('error'));
 
             await expectAsync(check).toBeRejectedWithError('Error: Failed to get server time');
         });
 
-        it('should use a custom serverTimeUrl', async () => {
-            const serverTimeUrl = 'https://example.com/server-time';
-            configureApp({ serverTimeUrl });
+        it('should use the app root Date header as the server time source', async () => {
             spyOn(Date, 'now').and.returnValue(SERVER_NOW);
 
             const check = firstValueFrom(service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC));
-            expectServerTimeRequest(serverTimeUrl).flush(SERVER_NOW);
+            flushDateHeader(expectAppRootTimeRequest());
 
             expectTimeSyncResult(await check, {
                 outOfSync: false,
@@ -266,7 +261,7 @@ describe('TimeSyncService', () => {
                     spyOn(Date, 'now').and.returnValue(rawLocalNow);
 
                     const check = firstValueFrom(service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC));
-                    expectServerTimeRequest().flush(SERVER_NOW);
+                    flushDateHeader(expectAppRootTimeRequest());
 
                     expectTimeSyncResult(await check, {
                         outOfSync: scenario.skewSeconds > MAX_ALLOWED_CLOCK_SKEW_IN_SEC,
@@ -286,7 +281,7 @@ describe('TimeSyncService', () => {
                     spyOn(Date, 'now').and.returnValue(rawLocalNow);
 
                     const sync = firstValueFrom(service.syncClockOffset());
-                    expectServerTimeRequest().error(new ProgressEvent('error'));
+                    expectAppRootTimeRequest().error(new ProgressEvent('error'));
                     await sync;
 
                     expect(service.getCorrectedNow()).toBe(rawLocalNow);
@@ -301,7 +296,7 @@ describe('TimeSyncService', () => {
                     spyOn(Date, 'now').and.returnValue(rawLocalNow);
 
                     const check = firstValueFrom(service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC));
-                    expectServerTimeRequest().flush(SERVER_NOW);
+                    flushDateHeader(expectAppRootTimeRequest());
 
                     expectTimeSyncResult(await check, {
                         outOfSync: false,

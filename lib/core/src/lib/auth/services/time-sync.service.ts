@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, timeout } from 'rxjs/operators';
@@ -122,17 +122,27 @@ export class TimeSyncService {
     }
 
     private getServerTime(): Observable<number> {
-        return this._http.get<number>(this.getServerTimeUrl()).pipe(
+        return this._http.get(this.getAppRootUrl(), { observe: 'response', responseType: 'text' }).pipe(
+            map((response: HttpResponse<string>) => this.getServerTimeFromDateHeader(response)),
             timeout(5000),
             catchError(() => throwError(() => new Error('Failed to get server time')))
         );
     }
 
-    private getServerTimeUrl(): string {
-        const serverTimeUrl = this._appConfigService.get('serverTimeUrl', '');
-        if (!serverTimeUrl) {
-            throw new Error('serverTimeUrl is not configured.');
+    private getServerTimeFromDateHeader(response: HttpResponse<string>): number {
+        const dateHeader = response.headers.get('date');
+        if (!dateHeader) {
+            throw new Error('Date header is not available.');
         }
-        return serverTimeUrl;
+
+        return new Date(dateHeader).getTime();
+    }
+
+    private getAppRootUrl(): string {
+        if (typeof window !== 'undefined') {
+            return window.location.href.split('?')[0].split('#')[0];
+        }
+
+        return '/';
     }
 }
