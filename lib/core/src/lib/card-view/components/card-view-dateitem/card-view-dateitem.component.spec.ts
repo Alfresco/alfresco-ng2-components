@@ -349,7 +349,7 @@ describe('CardViewDateItemComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const chips = await testingUtils.getMatChips();
+        const chips = await testingUtils.chip.getAll();
         expect(chips.length).toBe(3);
         expect(await chips[0].getText()).toBe('Jul 10, 2017');
         expect(await chips[1].getText()).toBe('Jul 11, 2017');
@@ -368,7 +368,7 @@ describe('CardViewDateItemComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const chips = await testingUtils.getMatChips();
+        const chips = await testingUtils.chip.getAll();
         expect(chips.length).toBe(3);
         expect(await chips[0].getText()).toBe('Jul 10, 2017, 0:01');
         expect(await chips[1].getText()).toBe('Jul 11, 2017, 0:01');
@@ -462,7 +462,7 @@ describe('CardViewDateItemComponent', () => {
         it('should render error message when manual input has invalid date format', async () => {
             fixture.detectChanges();
 
-            const manualInput = await testingUtils.getMatInputByDataAutomationId('datepicker-manual-input-dateKey');
+            const manualInput = await testingUtils.input.getByDataAutomationId('datepicker-manual-input-dateKey');
             await manualInput.setValue('not-a-date');
             await manualInput.blur();
             fixture.detectChanges();
@@ -470,7 +470,7 @@ describe('CardViewDateItemComponent', () => {
             fixture.detectChanges();
 
             expect(component.cardViewDateTimeControl.invalid).toBeTrue();
-            const formField = await testingUtils.getMatFormFieldByCSS('.adf-dateitem-editable');
+            const formField = await testingUtils.formField.getByCSS('.adf-dateitem-editable');
             expect(await formField.getTextErrors()).toContain('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT');
         });
 

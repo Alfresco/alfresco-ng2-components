@@ -100,7 +100,7 @@ describe('NumberWidgetComponent', () => {
         });
 
         it('should display the value', async () => {
-            const input = await testingUtils.getMatInput();
+            const input = await testingUtils.input.get();
 
             expect(widget.displayValue).toBe(123);
             expect(await input.getValue()).toBe('123');
@@ -108,21 +108,21 @@ describe('NumberWidgetComponent', () => {
         });
 
         it('should have value null when field is cleared', async () => {
-            const input = await testingUtils.getMatInput();
+            const input = await testingUtils.input.get();
             await input.setValue('');
 
             expect(widget.field.value).toBeNull();
         });
 
         it('should have value null when value is undefined', async () => {
-            const input = await testingUtils.getMatInput();
+            const input = await testingUtils.input.get();
             await input.setValue(undefined);
 
             expect(widget.field.value).toBeNull();
         });
 
         it('should have value null when value is null', async () => {
-            const input = await testingUtils.getMatInput();
+            const input = await testingUtils.input.get();
             await input.setValue(null);
 
             expect(widget.field.value).toBeNull();
@@ -139,7 +139,7 @@ describe('NumberWidgetComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const host = await testingUtils.getMatInputHost();
+            const host = await testingUtils.input.getHost();
             await host.hover();
 
             const tooltip = await host.getAttribute('title');
@@ -159,13 +159,13 @@ describe('NumberWidgetComponent', () => {
         it('should be marked as invalid after interaction', async () => {
             expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
 
-            await testingUtils.blurMatInput();
+            await testingUtils.input.blur();
 
             expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
         });
 
         it('should be able to display label with asterisk and input field is required', async () => {
-            const formField = await testingUtils.getMatFormField();
+            const formField = await testingUtils.formField.get();
             const formControl = await formField.getControl();
 
             expect(formControl.isRequired).toBeTruthy();

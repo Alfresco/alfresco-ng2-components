@@ -34,7 +34,7 @@ describe('IconCellComponent', () => {
         component.value$.next(value);
         fixture.detectChanges();
 
-        const icon = await testingUtils.getMatIconOrNull();
+        const icon = await testingUtils.icon.getOrNull();
 
         expectedOccurrence ? expect(icon).not.toBeNull() : expect(icon).toBeNull();
         if (expectedIconName) {

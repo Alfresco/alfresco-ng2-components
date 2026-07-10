@@ -391,7 +391,7 @@ describe('DateWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            await testingUtils.fillMatInput('25-03-2025');
+            await testingUtils.input.fill('25-03-2025');
 
             expect(field.value).toEqual(jasmine.any(Date));
             expect(field.value.getFullYear()).toBe(2025);
@@ -412,7 +412,7 @@ describe('DateWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            await testingUtils.fillMatInput('03-25-2025');
+            await testingUtils.input.fill('03-25-2025');
 
             expect(field.value).toEqual(jasmine.any(Date));
             expect(field.value.getFullYear()).toBe(2025);
@@ -433,7 +433,7 @@ describe('DateWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            await testingUtils.fillMatInput('03/25/2025');
+            await testingUtils.input.fill('03/25/2025');
 
             expect(widget.dateInputControl.invalid).toBeTrue();
             expect(field.isValid).toBeFalse();
@@ -452,7 +452,7 @@ describe('DateWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            await testingUtils.fillMatInput('invalid-text');
+            await testingUtils.input.fill('invalid-text');
 
             expect(widget.dateInputControl.invalid).toBeTrue();
             expect(field.isValid).toBeFalse();
@@ -471,12 +471,12 @@ describe('DateWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            await testingUtils.fillMatInput('invalid-text');
+            await testingUtils.input.fill('invalid-text');
 
             expect(widget.dateInputControl.invalid).toBeTrue();
             expect(field.isValid).toBeFalse();
 
-            await testingUtils.fillMatInput('');
+            await testingUtils.input.fill('');
 
             expect(widget.dateInputControl.valid).toBeTrue();
             expect(field.isValid).toBeTrue();

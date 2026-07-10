@@ -69,7 +69,7 @@ describe('CheckboxWidgetComponent', () => {
         });
 
         it('should be marked as invalid when required after interaction', async () => {
-            const checkbox = await testingUtils.getMatCheckbox();
+            const checkbox = await testingUtils.checkbox.get();
             expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
 
             await checkbox.check();
@@ -92,14 +92,14 @@ describe('CheckboxWidgetComponent', () => {
             widget.field.value = true;
             fixture.detectChanges();
 
-            expect(await testingUtils.checkIfMatCheckboxIsChecked()).toBe(true);
+            expect(await testingUtils.checkbox.isChecked()).toBe(true);
         });
 
         it('should not be checked if false is passed', async () => {
             widget.field.value = false;
             fixture.detectChanges();
 
-            expect(await testingUtils.checkIfMatCheckboxIsChecked()).toBe(false);
+            expect(await testingUtils.checkbox.isChecked()).toBe(false);
         });
 
         describe('when tooltip is set', () => {
@@ -112,8 +112,8 @@ describe('CheckboxWidgetComponent', () => {
             });
 
             it('should show tooltip', async () => {
-                await testingUtils.hoverOverMatCheckbox();
-                const host = await testingUtils.getMatCheckboxHost();
+                await testingUtils.checkbox.hover();
+                const host = await testingUtils.checkbox.getHost();
                 const tooltip = await host.getAttribute('title');
                 expect(tooltip).toBe('my custom tooltip');
             });
