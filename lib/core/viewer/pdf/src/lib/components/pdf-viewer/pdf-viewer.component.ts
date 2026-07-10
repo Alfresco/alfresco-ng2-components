@@ -739,6 +739,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         titleElement.innerText = annotation.titleObj.str;
         titleElement.classList.add('title');
         headerElement.classList.add('header');
+        headerElement.append(titleElement);
         if (annotation.modificationDate) {
             dateElement = document.createElement('time');
             const dateObj = PDFDateString.toDateObject(annotation.modificationDate);
@@ -748,10 +749,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 dateElement.innerText = dateObj.toLocaleString();
                 dateElement.dataset.l10nId = 'pdfjs-annotation-date-time-string';
                 dateElement.dataset.l10nArgs = JSON.stringify({ dateObj: dateObj.getTime() });
-                headerElement.append(titleElement, dateElement);
+                headerElement.append(dateElement);
             }
-        } else {
-            headerElement.append(titleElement);
         }
         return headerElement;
     }
