@@ -39,16 +39,15 @@ export class PdfPasswordDialogComponent implements OnInit {
     data = inject(MAT_DIALOG_DATA);
 
     passwordFormControl: UntypedFormControl;
-    passwordErrorStateMatcher: ErrorStateMatcher;
+    passwordErrorStateMatcher: ErrorStateMatcher = {
+        isErrorState: () => this.isError()
+    };
 
     ngOnInit() {
         this.passwordFormControl = new UntypedFormControl('', [Validators.required]);
-        this.passwordErrorStateMatcher = {
-            isErrorState: () => this.isError()
-        };
     }
 
-    isError(): boolean {
+    private isError(): boolean {
         return this.data.reason === pdfjsLib.PasswordResponses.INCORRECT_PASSWORD;
     }
 

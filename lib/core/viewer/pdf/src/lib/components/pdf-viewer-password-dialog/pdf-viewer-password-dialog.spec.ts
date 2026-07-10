@@ -63,13 +63,13 @@ describe('PdfPasswordDialogComponent', () => {
         it('should return false', () => {
             component.data.reason = pdfjsLib.PasswordResponses.NEED_PASSWORD;
 
-            expect(component.isError()).toBe(false);
+            expect(component['isError']()).toBe(false);
         });
 
         it('should return true', () => {
             component.data.reason = pdfjsLib.PasswordResponses.INCORRECT_PASSWORD;
 
-            expect(component.isError()).toBe(true);
+            expect(component['isError']()).toBe(true);
         });
     });
 
