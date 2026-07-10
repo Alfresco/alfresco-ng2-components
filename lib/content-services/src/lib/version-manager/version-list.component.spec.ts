@@ -51,7 +51,7 @@ describe('VersionListComponent', () => {
         new VersionEntry({
             entry: new Version({
                 name: 'test-file-name-two',
-                id: '1.0',
+                id: '1.1',
                 versionComment: 'test-version-comment',
                 modifiedByUser: new UserInfo({
                     displayName: 'TestUser2'
