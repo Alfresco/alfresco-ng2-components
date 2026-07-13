@@ -278,13 +278,17 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
 
     private async onNodeUpdated(node: Node) {
         if (node && node.id === this.nodeId) {
-            this.generateCacheBusterNumber();
-
-            const mergedNode = { ...this.nodeEntry.entry, ...node } as Node;
+            const previousNode = this.nodeEntry.entry;
+            const mergedNode = { ...previousNode, ...node };
             this.nodeEntry = new NodeEntry({ entry: mergedNode });
 
-            await this.setUpNodeFile(mergedNode);
-            this.cdr.detectChanges();
+            if (this.fileName !== mergedNode.name) {
+                this.fileName = mergedNode.name;
+            } else {
+                this.generateCacheBusterNumber();
+                await this.setUpNodeFile(mergedNode);
+                this.cdr.detectChanges();
+            }
         }
     }
 
