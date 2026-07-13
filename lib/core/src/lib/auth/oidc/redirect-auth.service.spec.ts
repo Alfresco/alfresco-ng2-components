@@ -67,7 +67,8 @@ describe('RedirectAuthService', () => {
 
     beforeEach(() => {
         retryLoginServiceSpy = jasmine.createSpyObj('RetryLoginService', ['tryToLoginTimes']);
-        timeSyncServiceSpy = jasmine.createSpyObj('TimeSyncService', ['checkTimeSync', 'getCorrectedNow', 'syncClockOffset']);
+        timeSyncServiceSpy = jasmine.createSpyObj('TimeSyncService', ['checkTimeSync', 'getCorrectedNow', 'syncClockOffset', 'isEnabled']);
+        timeSyncServiceSpy.isEnabled.and.returnValue(true);
         oauthLoggerSpy = jasmine.createSpyObj('OAuthLogger', ['error', 'info', 'warn']);
         oauthServiceSpy = jasmine.createSpyObj(
             'OAuthService',
@@ -188,6 +189,19 @@ describe('RedirectAuthService', () => {
         expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('access_token');
     });
 
+    it('should resync and remove auth items when a later event has an invalid token and time sync is enabled', () => {
+        oauthServiceSpy.getAccessToken.and.returnValue('fake-access-token');
+        oauthServiceSpy.hasValidAccessToken.and.returnValues(true, false, false);
+
+        (mockOAuthStorage.removeItem as any).calls.reset();
+
+        oauthEvents$.next(new OAuthSuccessEvent('discovery_document_loaded'));
+        oauthEvents$.next(new OAuthSuccessEvent('token_received'));
+
+        expect(timeSyncServiceSpy.syncClockOffset).toHaveBeenCalledTimes(1);
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('access_token');
+    });
+
     it('should NOT remove auth items from the storage if access token is valid', () => {
         oauthServiceSpy.getAccessToken.and.returnValue('fake-access-token');
         oauthServiceSpy.hasValidAccessToken.and.returnValue(true);
@@ -228,6 +242,18 @@ describe('RedirectAuthService', () => {
 
         await initPromise;
 
+        expect(ensureDiscoveryDocumentSpy).toHaveBeenCalledTimes(1);
+        expect(oauthServiceSpy.setupAutomaticSilentRefresh).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not sync the clock before loading the discovery document when time sync is disabled', async () => {
+        timeSyncServiceSpy.isEnabled.and.returnValue(false);
+        timeSyncServiceSpy.syncClockOffset.calls.reset();
+        ensureDiscoveryDocumentSpy.and.resolveTo(true);
+
+        await service.init();
+
+        expect(timeSyncServiceSpy.syncClockOffset).not.toHaveBeenCalled();
         expect(ensureDiscoveryDocumentSpy).toHaveBeenCalledTimes(1);
         expect(oauthServiceSpy.setupAutomaticSilentRefresh).toHaveBeenCalledTimes(1);
     });
@@ -282,6 +308,18 @@ describe('RedirectAuthService', () => {
         syncClockOffset$.complete();
 
         expect(await loginCallbackPromise).toBe('/');
+        expect(retryLoginServiceSpy.tryToLoginTimes).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not sync the clock before validating the login callback when time sync is disabled', async () => {
+        timeSyncServiceSpy.isEnabled.and.returnValue(false);
+        timeSyncServiceSpy.syncClockOffset.calls.reset();
+        ensureDiscoveryDocumentSpy.and.resolveTo(true);
+        retryLoginServiceSpy.tryToLoginTimes.and.resolveTo(true);
+
+        expect(await service.loginCallback()).toBe('/');
+
+        expect(timeSyncServiceSpy.syncClockOffset).not.toHaveBeenCalled();
         expect(retryLoginServiceSpy.tryToLoginTimes).toHaveBeenCalledTimes(1);
     });
 
@@ -637,6 +675,7 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
         service: RedirectAuthService;
         timeSyncService: TimeSyncService;
         httpMock: HttpTestingController;
+        oauthStorage: Partial<OAuthStorage>;
         oauthEvents$: Subject<OAuthEvent>;
         oauthLoggerSpy: jasmine.SpyObj<OAuthLogger>;
         oauthServiceSpy: jasmine.SpyObj<OAuthService>;
@@ -711,6 +750,7 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
             service: TestBed.inject(RedirectAuthService),
             timeSyncService: TestBed.inject(TimeSyncService),
             httpMock: TestBed.inject(HttpTestingController),
+            oauthStorage,
             oauthEvents$,
             oauthLoggerSpy,
             oauthServiceSpy,
@@ -814,6 +854,19 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
     });
 
     describe('refresh token flow', () => {
+        it('should remove invalid auth items without server time request when timeSync is off', () => {
+            const context = setupEnvironment(false, SLOW_CLOCK_CLAIMS);
+            context.oauthServiceSpy.getIdentityClaims.and.returnValue(null);
+            context.oauthServiceSpy.getAccessToken.and.returnValue('fake-access-token');
+            context.oauthServiceSpy.hasValidAccessToken.and.returnValue(false);
+
+            context.oauthEvents$.next(new OAuthSuccessEvent('discovery_document_loaded'));
+
+            context.httpMock.expectNone(() => true);
+            expect(context.oauthStorage.removeItem).toHaveBeenCalledWith('access_token');
+            context.httpMock.verify();
+        });
+
         it('should set up refresh token handling with raw local time and no server time request when timeSync is off', async () => {
             const context = setupEnvironment(false, SLOW_CLOCK_CLAIMS);
             const localNow = getLocalNow(238, 'behind');

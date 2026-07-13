@@ -227,10 +227,20 @@ export class RedirectAuthService extends AuthService {
             error: () => {}
         });
 
+        const hasInvalidAccessToken = () => !!this.oauthService.getAccessToken() && !this.oauthService.hasValidAccessToken();
+
+        this.oauthService.events.pipe(take(1)).subscribe(() => {
+            if (!this._timeSyncService.isEnabled() && hasInvalidAccessToken()) {
+                if (this.oauthService.showDebugInformation) {
+                    this._oauthLogger.warn('Access token not valid. Removing all auth items from storage');
+                }
+                this.AUTH_STORAGE_ITEMS.map((item: string) => this._oauthStorage.removeItem(item));
+            }
+        });
         this.oauthService.events
             .pipe(
+                filter(() => this._timeSyncService.isEnabled() && hasInvalidAccessToken()),
                 take(1),
-                filter(() => !!this.oauthService.getAccessToken() && !this.oauthService.hasValidAccessToken()),
                 switchMap(() => this._timeSyncService.syncClockOffset())
             )
             .subscribe(() => {
@@ -316,15 +326,17 @@ export class RedirectAuthService extends AuthService {
     }
 
     async loginCallback(loginOptions?: LoginOptions): Promise<string | undefined> {
-        return this.ensureDiscoveryDocument()
-            .then(() => firstValueFrom(this._timeSyncService.syncClockOffset()))
-            .then(() =>
-                this._retryLoginService.tryToLoginTimes({
-                    ...loginOptions,
-                    preventClearHashAfterLogin: this.authModuleConfig.preventClearHashAfterLogin
-                })
+        const tryToLogin = () =>
+            this._retryLoginService.tryToLoginTimes({
+                ...loginOptions,
+                preventClearHashAfterLogin: this.authModuleConfig.preventClearHashAfterLogin
+            });
+
+        return this.ensureDiscoveryDocument().then(() =>
+            (this._timeSyncService.isEnabled() ? firstValueFrom(this._timeSyncService.syncClockOffset()).then(tryToLogin) : tryToLogin()).then(() =>
+                this._getRedirectUrl()
             )
-            .then(() => this._getRedirectUrl());
+        );
     }
 
     private _getRedirectUrl() {
@@ -353,16 +365,18 @@ export class RedirectAuthService extends AuthService {
             });
         }
 
-        return firstValueFrom(this._timeSyncService.syncClockOffset())
-            .then(() => this.ensureDiscoveryDocument())
-            .then(() => {
+        const initializeAuth = () =>
+            this.ensureDiscoveryDocument().then(() => {
                 this._isDiscoveryDocumentLoadedSubject$.next(true);
                 this.oauthService.setupAutomaticSilentRefresh();
                 return void this.allowRefreshTokenAndSilentRefreshOnMultipleTabs();
-            })
-            .catch(() => {
-                // catch error to prevent the app from crashing when trying to access unprotected routes
             });
+
+        return (
+            this._timeSyncService.isEnabled() ? firstValueFrom(this._timeSyncService.syncClockOffset()).then(initializeAuth) : initializeAuth()
+        ).catch(() => {
+            // catch error to prevent the app from crashing when trying to access unprotected routes
+        });
     }
 
     /**

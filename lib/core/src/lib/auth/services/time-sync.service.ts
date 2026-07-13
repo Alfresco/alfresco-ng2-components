@@ -117,7 +117,7 @@ export class TimeSyncService {
         return serverTimeInMs + roundTripTimeInMs / 2;
     }
 
-    private isEnabled(): boolean {
+    isEnabled(): boolean {
         const timeSync = this._appConfigService.get<boolean | string>(AppConfigValues.AUTH_TIME_SYNC_ENABLED, false);
         return timeSync === true || timeSync === 'true';
     }
