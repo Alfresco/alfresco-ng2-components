@@ -38,7 +38,7 @@ import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/te
 import { MatMenuHarness } from '@angular/material/menu/testing';
 import { MatSidenavHarness } from '@angular/material/sidenav/testing';
 
-class HarnessBase {
+abstract class HarnessBase {
     constructor(readonly loader: HarnessLoader) {}
 }
 
@@ -416,10 +416,10 @@ export class UnitTestingUtils {
     readonly menu: MenuUtils;
     readonly sidenav: SidenavUtils;
 
-    private _debugElement?: DebugElement;
-
-    constructor(debugElement?: DebugElement, loader?: HarnessLoader) {
-        this._debugElement = debugElement;
+    constructor(
+        private debugElement?: DebugElement,
+        loader?: HarnessLoader
+    ) {
         this.button = new ButtonUtils(loader);
         this.checkbox = new CheckboxUtils(loader);
         this.icon = new IconUtils(loader);
@@ -443,15 +443,15 @@ export class UnitTestingUtils {
     }
 
     setDebugElement(debugElement: DebugElement): void {
-        this._debugElement = debugElement;
+        this.debugElement = debugElement;
     }
 
     getByCSS(selector: string): DebugElement {
-        return this._debugElement.query(By.css(selector));
+        return this.debugElement.query(By.css(selector));
     }
 
     getAllByCSS(selector: string): DebugElement[] {
-        return this._debugElement.queryAll(By.css(selector));
+        return this.debugElement.queryAll(By.css(selector));
     }
 
     getInnerTextByCSS(selector: string): string {
@@ -467,7 +467,7 @@ export class UnitTestingUtils {
     }
 
     getAllByDataAutomationId(dataAutomationId: string): DebugElement[] {
-        return this._debugElement.queryAll(By.css(`[data-automation-id="${dataAutomationId}"]`));
+        return this.debugElement.queryAll(By.css(`[data-automation-id="${dataAutomationId}"]`));
     }
 
     getInnerTextByDataAutomationId(dataAutomationId: string): string {
@@ -475,11 +475,11 @@ export class UnitTestingUtils {
     }
 
     getByDirective(directive: Type<any>): DebugElement {
-        return this._debugElement.query(By.directive(directive));
+        return this.debugElement.query(By.directive(directive));
     }
 
     getAllByDirective(directive: Type<any>): DebugElement[] {
-        return this._debugElement.queryAll(By.directive(directive));
+        return this.debugElement.queryAll(By.directive(directive));
     }
 
     /** Perform actions */
