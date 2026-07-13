@@ -19,7 +19,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, timeout } from 'rxjs/operators';
-import { AppConfigService } from '../../app-config/app-config.service';
+import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 
 export interface TimeSync {
     outOfSync: boolean;
@@ -118,7 +118,8 @@ export class TimeSyncService {
     }
 
     private isEnabled(): boolean {
-        return this._appConfigService.oauth2.timeSync === true;
+        const timeSync = this._appConfigService.get<boolean | string>(AppConfigValues.AUTH_TIME_SYNC_ENABLED, false);
+        return timeSync === true || timeSync === 'true';
     }
 
     private getServerTime(): Observable<number> {

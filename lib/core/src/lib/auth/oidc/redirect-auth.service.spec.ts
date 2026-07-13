@@ -700,6 +700,9 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
             if (key === AppConfigValues.OAUTHCONFIG) {
                 return { timeSync: timeSyncEnabled } as T;
             }
+            if (key === AppConfigValues.AUTH_TIME_SYNC_ENABLED) {
+                return timeSyncEnabled as T;
+            }
 
             return defaultValue as T;
         });
