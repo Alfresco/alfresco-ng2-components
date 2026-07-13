@@ -265,7 +265,10 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
             .pipe(
                 filter(
                     (node) =>
-                        node && node.id === this.nodeId && this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node)
+                        node &&
+                        node.id === this.nodeId &&
+                        (this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node) ||
+                            this.nodeEntry.entry.name !== node.name)
                 ),
                 takeUntilDestroyed(this.destroyRef)
             )
