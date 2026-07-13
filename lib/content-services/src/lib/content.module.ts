@@ -34,14 +34,12 @@ import { VersionCompatibilityService } from './version-compatibility/version-com
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
 import { CONTENT_UPLOAD_DIRECTIVES } from './upload';
-import { MaterialModule } from './material.module';
 import { AlfrescoApiService } from './services/alfresco-api.service';
 import { AlfrescoApiNoAuthService } from './api-factories/alfresco-api-no-auth.service';
 import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-factories/alfresco-api-v2-loader.service';
 
 @NgModule({
     imports: [
-        MaterialModule,
         MatDatetimepickerModule,
         MatNativeDatetimeModule,
         ...CONTENT_TAG_DIRECTIVES,
@@ -59,7 +57,6 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
     ],
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
-        MaterialModule,
         ...CONTENT_TAG_DIRECTIVES,
         ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_UPLOAD_DIRECTIVES,
