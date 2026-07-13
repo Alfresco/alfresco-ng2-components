@@ -265,8 +265,9 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
             .pipe(
                 filter(
                     (node) =>
-                        node &&
+                        !!node &&
                         node.id === this.nodeId &&
+                        !!this.nodeEntry?.entry &&
                         (this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node) ||
                             this.nodeEntry.entry.name !== node.name)
                 ),
@@ -278,6 +279,8 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     private async onNodeUpdated(node: Node) {
         if (node && node.id === this.nodeId) {
             this.generateCacheBusterNumber();
+
+            this.nodeEntry = new NodeEntry({ entry: node });
 
             await this.setUpNodeFile(node);
             this.cdr.detectChanges();
