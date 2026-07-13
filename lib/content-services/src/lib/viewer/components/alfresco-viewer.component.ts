@@ -280,9 +280,10 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
         if (node && node.id === this.nodeId) {
             this.generateCacheBusterNumber();
 
-            this.nodeEntry = new NodeEntry({ entry: node });
+            const mergedNode = { ...this.nodeEntry.entry, ...node } as Node;
+            this.nodeEntry = new NodeEntry({ entry: mergedNode });
 
-            await this.setUpNodeFile(node);
+            await this.setUpNodeFile(mergedNode);
             this.cdr.detectChanges();
         }
     }
