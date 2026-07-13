@@ -214,6 +214,10 @@
                     pointer-events: auto;
                 }
             }
+
+            &:focus-within:hover .adf-pdf-viewer-annotation-tooltip.popup {
+                outline-width: 3px;
+            }
         }
     }
 
