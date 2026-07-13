@@ -194,6 +194,10 @@
             opacity: 0;
             pointer-events: none;
 
+            .header .title {
+                font-weight: bold;
+            }
+
             .popupContent {
                 display: inherit;
             }

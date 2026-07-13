@@ -722,7 +722,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     private createAnnotationPopup(annotation: PdfAnnotationData, text: string, annotationElement: HTMLElement): void {
         const popupElement = document.createElement('div');
-        let headerElement: HTMLDivElement | null = null;
+        let headerElement: HTMLSpanElement;
         if (annotation.titleObj?.str) {
             headerElement = this.createAnnotationPopupHeader(annotation as PdfAnnotationWithTitle);
         }
@@ -732,9 +732,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         annotationElement.appendChild(popupElement);
     }
 
-    private createAnnotationPopupHeader(annotation: PdfAnnotationWithTitle): HTMLDivElement {
-        const headerElement = document.createElement('div');
-        const titleElement = document.createElement('h1');
+    private createAnnotationPopupHeader(annotation: PdfAnnotationWithTitle): HTMLSpanElement {
+        const headerElement = document.createElement('span');
+        const titleElement = document.createElement('span');
         let dateElement: HTMLTimeElement;
         titleElement.innerText = annotation.titleObj.str;
         titleElement.classList.add('title');
