@@ -17,7 +17,7 @@
 
 import { DateFnsUtils } from '../../../../common';
 import { FormRulesEvent } from '../../../events/form-rules.event';
-import { firstValueFrom, map, Subject, take, timeout, toArray } from 'rxjs';
+import { firstValueFrom, map, Subject, take, timeout } from 'rxjs';
 import { FormFieldTypes } from './form-field-types';
 import { RequiredFieldValidator } from './form-field-validator';
 import { FormFieldModel } from './form-field.model';
@@ -1604,15 +1604,18 @@ describe('FormFieldModel', () => {
 
             it('should NOT emit onRowCountChanged when add row is not allowed', async () => {
                 const formRulesEvent = assignFormRulesEventSubject();
-                const emissionsPromise = firstValueFrom(formRulesEvent.pipe(take(3), toArray()));
 
                 field.addRow(field.fields, form);
                 field.addRow(field.fields, form);
                 field.addRow(field.fields, form);
+                expect(field.rows.length).toBe(5);
+
+                const emissionPromise = firstValueFrom(formRulesEvent.pipe(timeout(50)));
+
                 field.addRow(field.fields, form);
 
-                const emissions = await emissionsPromise;
-                expect(emissions).toHaveSize(3);
+                await expectAsync(emissionPromise).toBeRejected();
+                expect(field.rows.length).toBe(5);
             });
         });
 
