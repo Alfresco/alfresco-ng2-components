@@ -17,6 +17,7 @@
 
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { OAuthLogger } from 'angular-oauth2-oidc';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, timeout } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
@@ -34,6 +35,7 @@ export interface TimeSync {
 export class TimeSyncService {
     private readonly _http = inject(HttpClient);
     private readonly _appConfigService = inject(AppConfigService);
+    private readonly _oauthLogger = inject(OAuthLogger, { optional: true });
 
     private clockOffsetMs = 0;
 
@@ -66,9 +68,14 @@ export class TimeSyncService {
                 const adjustedServerTimeInMs = this.getAdjustedServerTimeInMs(serverTimeResponse, startTime);
 
                 this.clockOffsetMs = adjustedServerTimeInMs - localCurrentTimeInMs;
+                this.debug(
+                    `syncClockOffset: offset set to ${this.clockOffsetMs}ms ` +
+                        `(server=${new Date(adjustedServerTimeInMs).toISOString()}, local=${new Date(localCurrentTimeInMs).toISOString()})`
+                );
             }),
             catchError(() => {
                 this.clockOffsetMs = 0;
+                this.debug('syncClockOffset: failed to reach server, offset reset to 0');
                 return of(void 0);
             })
         );
@@ -90,9 +97,15 @@ export class TimeSyncService {
 
                 const timeOffsetInMs = Math.abs(localTimeInMs - adjustedServerTimeInMs);
                 const maxAllowedClockSkewInMs = maxAllowedClockSkewInSec * 1000;
+                const outOfSync = timeOffsetInMs > maxAllowedClockSkewInMs;
+
+                this.debug(
+                    `checkTimeSync: outOfSync=${outOfSync} ` +
+                        `(local=${new Date(localTimeInMs).toISOString()}, server=${new Date(adjustedServerTimeInMs).toISOString()}, offset=${this.clockOffsetMs}ms)`
+                );
 
                 return {
-                    outOfSync: timeOffsetInMs > maxAllowedClockSkewInMs,
+                    outOfSync,
                     timeOffsetInSec: timeOffsetInMs / 1000,
                     localDateTimeISO: new Date(localTimeInMs).toISOString(),
                     serverDateTimeISO: new Date(adjustedServerTimeInMs).toISOString()
@@ -145,5 +158,16 @@ export class TimeSyncService {
         }
 
         return '/';
+    }
+
+    private get showDebugInformation(): boolean {
+        const enableDebugInformation = this._appConfigService.get<boolean | string>(AppConfigValues.AUTH_SHOW_DEBUG_INFORMATION, false);
+        return enableDebugInformation === true || enableDebugInformation === 'true';
+    }
+
+    private debug(message: string): void {
+        if (this.showDebugInformation) {
+            this._oauthLogger?.info(`[TimeSync] ${message}`);
+        }
     }
 }

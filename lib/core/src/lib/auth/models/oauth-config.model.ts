@@ -33,4 +33,5 @@ export interface OauthConfigModel {
     clockSkewInSec?: number;
     sessionChecksEnabled?: boolean;
     timeSync?: boolean;
+    showDebugInformation?: boolean;
 }

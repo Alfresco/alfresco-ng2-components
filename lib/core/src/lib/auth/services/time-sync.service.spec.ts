@@ -18,6 +18,7 @@
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting, TestRequest } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { OAuthLogger } from 'angular-oauth2-oidc';
 import { firstValueFrom } from 'rxjs';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { TimeSyncService } from './time-sync.service';
@@ -37,6 +38,7 @@ interface ClockSkewScenario {
 interface AppConfigOptions {
     timeSync?: boolean | string;
     omitTimeSync?: boolean;
+    showDebugInformation?: boolean | string;
 }
 
 interface TimeSyncResult {
@@ -50,6 +52,7 @@ describe('TimeSyncService', () => {
     let service: TimeSyncService;
     let httpMock: HttpTestingController;
     let appConfigService: AppConfigService;
+    let oauthLoggerSpy: jasmine.SpyObj<OAuthLogger>;
 
     const clockSkewScenarios: ClockSkewScenario[] = [
         { id: 'TC-01', description: 'baseline login with an accurate clock', skewSeconds: 0, direction: 'behind' },
@@ -82,7 +85,7 @@ describe('TimeSyncService', () => {
 
     const configureApp = (options: AppConfigOptions = {}): void => {
         appConfigService.config = {
-            oauth2: options.omitTimeSync ? {} : { timeSync: options.timeSync ?? true }
+            oauth2: options.omitTimeSync ? {} : { timeSync: options.timeSync ?? true, showDebugInformation: options.showDebugInformation ?? false }
         };
     };
 
@@ -109,8 +112,10 @@ describe('TimeSyncService', () => {
     };
 
     beforeEach(() => {
+        oauthLoggerSpy = jasmine.createSpyObj<OAuthLogger>('OAuthLogger', ['debug', 'info', 'log', 'warn', 'error']);
+
         TestBed.configureTestingModule({
-            providers: [TimeSyncService, provideHttpClient(), provideHttpClientTesting()]
+            providers: [TimeSyncService, { provide: OAuthLogger, useValue: oauthLoggerSpy }, provideHttpClient(), provideHttpClientTesting()]
         });
 
         service = TestBed.inject(TimeSyncService);
@@ -307,6 +312,66 @@ describe('TimeSyncService', () => {
                     expect(service.getCorrectedNow()).toBe(SERVER_NOW);
                     expect(service.getCorrectedNow()).toBe(rawLocalNow + expectedOffsetInMsFor(rawLocalNow));
                 });
+            });
+        });
+    });
+
+    describe('debug logging', () => {
+        describe('syncClockOffset', () => {
+            it('should log time sync debug information when showDebugInformation is true', async () => {
+                configureApp({ timeSync: true, showDebugInformation: true });
+                spyOn(Date, 'now').and.returnValue(SERVER_NOW - 60_000);
+
+                const sync = firstValueFrom(service.syncClockOffset());
+                flushDateHeader(expectAppRootTimeRequest());
+                await sync;
+
+                expect(oauthLoggerSpy.info).toHaveBeenCalledWith(jasmine.stringContaining('[TimeSync] syncClockOffset: offset set to'));
+            });
+
+            it('should not log time sync debug information when showDebugInformation is false', async () => {
+                configureApp({ timeSync: true, showDebugInformation: false });
+                spyOn(Date, 'now').and.returnValue(SERVER_NOW - 60_000);
+
+                const sync = firstValueFrom(service.syncClockOffset());
+                flushDateHeader(expectAppRootTimeRequest());
+                await sync;
+
+                expect(oauthLoggerSpy.info).not.toHaveBeenCalled();
+            });
+
+            it('should not log time sync debug information when timeSync is disabled even if showDebugInformation is true', async () => {
+                configureApp({ timeSync: false, showDebugInformation: true });
+                spyOn(Date, 'now').and.returnValue(SERVER_NOW - 60_000);
+
+                await firstValueFrom(service.syncClockOffset());
+
+                httpMock.expectNone(() => true);
+                expect(oauthLoggerSpy.info).not.toHaveBeenCalled();
+            });
+        });
+
+        describe('checkTimeSync', () => {
+            it('should log time sync debug information for checkTimeSync when showDebugInformation is true', async () => {
+                configureApp({ timeSync: true, showDebugInformation: true });
+                spyOn(Date, 'now').and.returnValue(SERVER_NOW);
+
+                const check = firstValueFrom(service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC));
+                flushDateHeader(expectAppRootTimeRequest());
+                await check;
+
+                expect(oauthLoggerSpy.info).toHaveBeenCalledWith(jasmine.stringContaining('[TimeSync] checkTimeSync: outOfSync='));
+            });
+
+            it('should log checkTimeSync debug information even when timeSync is disabled', async () => {
+                configureApp({ timeSync: false, showDebugInformation: true });
+                spyOn(Date, 'now').and.returnValue(SERVER_NOW);
+
+                const check = firstValueFrom(service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC));
+                flushDateHeader(expectAppRootTimeRequest());
+                await check;
+
+                expect(oauthLoggerSpy.info).toHaveBeenCalledWith(jasmine.stringContaining('[TimeSync] checkTimeSync: outOfSync='));
             });
         });
     });
