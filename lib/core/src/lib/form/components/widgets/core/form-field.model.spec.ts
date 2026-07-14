@@ -1823,3 +1823,25 @@ describe('FormFieldModel', () => {
         });
     });
 });
+
+describe('FormFieldTypes', () => {
+    describe('isDisplayTextType', () => {
+        it('should return true for text, multi-line text, readonly text and display value types', () => {
+            expect(FormFieldTypes.isDisplayTextType(FormFieldTypes.TEXT)).toBe(true);
+            expect(FormFieldTypes.isDisplayTextType(FormFieldTypes.MULTILINE_TEXT)).toBe(true);
+            expect(FormFieldTypes.isDisplayTextType(FormFieldTypes.READONLY_TEXT)).toBe(true);
+            expect(FormFieldTypes.isDisplayTextType(FormFieldTypes.DISPLAY_VALUE)).toBe(true);
+        });
+
+        it('should return false for typed source field types', () => {
+            expect(FormFieldTypes.isDisplayTextType(FormFieldTypes.PEOPLE)).toBe(false);
+            expect(FormFieldTypes.isDisplayTextType(FormFieldTypes.FUNCTIONAL_GROUP)).toBe(false);
+            expect(FormFieldTypes.isDisplayTextType(FormFieldTypes.DROPDOWN)).toBe(false);
+            expect(FormFieldTypes.isDisplayTextType(FormFieldTypes.RADIO_BUTTONS)).toBe(false);
+        });
+
+        it('should return false for an unknown type', () => {
+            expect(FormFieldTypes.isDisplayTextType('unknown-type')).toBe(false);
+        });
+    });
+});
