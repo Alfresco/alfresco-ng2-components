@@ -586,7 +586,7 @@ describe('AlfrescoViewerComponent', () => {
         });
 
         it('should update fileName when the node name changes', async () => {
-            const defaultNode: Node = {
+            const defaultNode = {
                 id: '123',
                 name: 'Mock_Node.pdf',
                 content: { mimeType: 'application/pdf' },
@@ -595,6 +595,9 @@ describe('AlfrescoViewerComponent', () => {
 
             component.nodeEntry = { entry: defaultNode };
             component.nodeId = '123';
+
+            component.sidebarRightTemplateContext = { node: defaultNode };
+            component.sidebarLeftTemplateContext = { node: defaultNode };
 
             fixture.detectChanges();
 
