@@ -333,7 +333,7 @@ export class RedirectAuthService extends AuthService {
             });
 
         return this.ensureDiscoveryDocument().then(() =>
-            (this._timeSyncService.isEnabled() ? firstValueFrom(this._timeSyncService.syncClockOffset()).then(tryToLogin) : tryToLogin()).then(() =>
+            (this._timeSyncService.isEnabled() ? this.firstValueFromSyncClockOffset().then(tryToLogin) : tryToLogin()).then(() =>
                 this._getRedirectUrl()
             )
         );
@@ -372,9 +372,7 @@ export class RedirectAuthService extends AuthService {
                 return void this.allowRefreshTokenAndSilentRefreshOnMultipleTabs();
             });
 
-        return (
-            this._timeSyncService.isEnabled() ? firstValueFrom(this._timeSyncService.syncClockOffset()).then(initializeAuth) : initializeAuth()
-        ).catch(() => {
+        return (this._timeSyncService.isEnabled() ? this.firstValueFromSyncClockOffset().then(initializeAuth) : initializeAuth()).catch(() => {
             // catch error to prevent the app from crashing when trying to access unprotected routes
         });
     }
@@ -403,7 +401,9 @@ export class RedirectAuthService extends AuthService {
                     return;
                 }
 
-                return originalRefreshToken().then((resp) => (lastUpdatedAccessToken = resp.access_token));
+                const refreshToken = () => originalRefreshToken().then((resp) => (lastUpdatedAccessToken = resp.access_token));
+
+                return this._timeSyncService.isEnabled() ? this.firstValueFromSyncClockOffset().then(refreshToken) : refreshToken();
             });
 
         const originalSilentRefresh = this.oauthService.silentRefresh.bind(this.oauthService);
@@ -417,9 +417,16 @@ export class RedirectAuthService extends AuthService {
                     lastUpdatedAccessToken = this.oauthService.getAccessToken();
                     return event;
                 } else {
+                    if (this._timeSyncService.isEnabled()) {
+                        await this.firstValueFromSyncClockOffset();
+                    }
                     return originalSilentRefresh(params, noPrompt);
                 }
             });
+    }
+
+    private firstValueFromSyncClockOffset(): Promise<void> {
+        return firstValueFrom(this._timeSyncService.syncClockOffset());
     }
 
     updateIDPConfiguration(config: AuthConfig) {

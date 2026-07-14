@@ -22,6 +22,8 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, timeout } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 
+const SERVER_TIME_CACHE_BYPASS_QUERY_PARAM_NAME = 'adf-time-sync';
+
 export interface TimeSync {
     outOfSync: boolean;
     timeOutOfSyncInSec?: number;
@@ -136,7 +138,21 @@ export class TimeSyncService {
     }
 
     private getServerTime(): Observable<number> {
-        return this._http.get(this.getAppRootUrl(), { observe: 'response', responseType: 'text' }).pipe(
+        const requestOptions = {
+            observe: 'response' as const,
+            responseType: 'text' as const,
+            ...(this.isEnabled() && {
+                headers: {
+                    'Cache-Control': 'no-cache',
+                    Pragma: 'no-cache'
+                },
+                params: {
+                    [SERVER_TIME_CACHE_BYPASS_QUERY_PARAM_NAME]: Date.now().toString()
+                }
+            })
+        };
+
+        return this._http.get(this.getAppRootUrl(), requestOptions).pipe(
             map((response: HttpResponse<string>) => this.getServerTimeFromDateHeader(response)),
             timeout(5000),
             catchError(() => throwError(() => new Error('Failed to get server time')))

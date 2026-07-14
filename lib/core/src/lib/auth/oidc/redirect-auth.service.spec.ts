@@ -766,11 +766,20 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
         return spyOn(navigator.locks, 'request').and.callFake(((...args: unknown[]) => Promise.resolve((args[1] as () => unknown)())) as any);
     };
 
-    const expectAppRootTimeRequest = (context: EnvironmentTestContext) => {
-        const request = context.httpMock.expectOne(window.location.href.split('?')[0].split('#')[0]);
+    const expectAppRootTimeRequest = (context: EnvironmentTestContext, expectCacheBusting = true) => {
+        const request = context.httpMock.expectOne((req) => req.url === window.location.href.split('?')[0].split('#')[0]);
 
         expect(request.request.method).toBe('GET');
         expect(request.request.responseType).toBe('text');
+        if (expectCacheBusting) {
+            expect(request.request.headers.get('Cache-Control')).toBe('no-cache');
+            expect(request.request.headers.get('Pragma')).toBe('no-cache');
+            expect(request.request.params.has('adf-time-sync')).toBeTrue();
+        } else {
+            expect(request.request.headers.has('Cache-Control')).toBeFalse();
+            expect(request.request.headers.has('Pragma')).toBeFalse();
+            expect(request.request.params.has('adf-time-sync')).toBeFalse();
+        }
 
         return request;
     };
@@ -877,12 +886,32 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
             originalRefreshToken.and.resolveTo({ access_token: 'new-access-token' } as TokenResponse);
 
             await context.service.init();
-            await context.oauthServiceSpy.refreshToken();
+            const refreshTokenResult: unknown = await context.oauthServiceSpy.refreshToken();
 
             context.httpMock.expectNone(() => true);
+            expect(refreshTokenResult).toBe('new-access-token');
             expect(context.oauthServiceSpy.setupAutomaticSilentRefresh).toHaveBeenCalledTimes(1);
             expect(originalRefreshToken).toHaveBeenCalledTimes(1);
             expect(context.timeSyncService.getCorrectedNow()).toBe(localNow);
+            context.httpMock.verify();
+        });
+
+        it('should keep returning undefined when another tab already refreshed the access token', async () => {
+            const context = setupEnvironment(false, SLOW_CLOCK_CLAIMS);
+            const originalRefreshToken = context.oauthServiceSpy.refreshToken;
+            spyOn(context.service, 'ensureDiscoveryDocument').and.resolveTo(true);
+            setupNavigatorLocks();
+            (context.oauthServiceSpy as any).eventsSubject = { next: jasmine.createSpy('next') };
+            context.oauthServiceSpy.hasValidAccessToken.and.returnValue(true);
+            context.oauthServiceSpy.getAccessToken.and.returnValues('old-access-token', 'new-access-token', 'new-access-token');
+
+            await context.service.init();
+
+            const tokenResponse = await context.oauthServiceSpy.refreshToken();
+
+            expect(tokenResponse).toBeUndefined();
+            expect(originalRefreshToken).not.toHaveBeenCalled();
+            context.httpMock.expectNone(() => true);
             context.httpMock.verify();
         });
 
@@ -903,8 +932,17 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
             flushDateHeader(expectAppRootTimeRequest(context));
 
             await init;
-            await context.oauthServiceSpy.refreshToken();
 
+            const refresh = context.oauthServiceSpy.refreshToken();
+            await Promise.resolve();
+
+            expect(originalRefreshToken).not.toHaveBeenCalled();
+
+            flushDateHeader(expectAppRootTimeRequest(context));
+
+            const refreshTokenResult: unknown = await refresh;
+
+            expect(refreshTokenResult).toBe('new-access-token');
             expect(context.oauthServiceSpy.setupAutomaticSilentRefresh).toHaveBeenCalledTimes(1);
             expect(originalRefreshToken).toHaveBeenCalledTimes(1);
             expect(context.timeSyncService.getCorrectedNow()).toBe(SERVER_NOW);
@@ -926,8 +964,17 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
             expectAppRootTimeRequest(context).error(new ProgressEvent('error'));
 
             await init;
-            await context.oauthServiceSpy.refreshToken();
 
+            const refresh = context.oauthServiceSpy.refreshToken();
+            await Promise.resolve();
+
+            expect(originalRefreshToken).not.toHaveBeenCalled();
+
+            expectAppRootTimeRequest(context).error(new ProgressEvent('error'));
+
+            const refreshTokenResult: unknown = await refresh;
+
+            expect(refreshTokenResult).toBe('new-access-token');
             expect(context.oauthServiceSpy.setupAutomaticSilentRefresh).toHaveBeenCalledTimes(1);
             expect(originalRefreshToken).toHaveBeenCalledTimes(1);
             expect(context.timeSyncService.getCorrectedNow()).toBe(localNow);
@@ -991,7 +1038,7 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
 
         expect(context.oauthServiceSpy.logOut).not.toHaveBeenCalled();
 
-        flushDateHeader(expectAppRootTimeRequest(context));
+        flushDateHeader(expectAppRootTimeRequest(context, false));
 
         expect(context.oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(context.oauthLoggerSpy.error).toHaveBeenCalledOnceWith(

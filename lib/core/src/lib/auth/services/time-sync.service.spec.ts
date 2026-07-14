@@ -94,11 +94,20 @@ describe('TimeSyncService', () => {
 
     const expectedOffsetInMsFor = (localNow: number, serverNow = SERVER_NOW): number => serverNow - localNow;
 
-    const expectAppRootTimeRequest = (): TestRequest => {
-        const request = httpMock.expectOne(window.location.href.split('?')[0].split('#')[0]);
+    const expectAppRootTimeRequest = (expectCacheBusting = true): TestRequest => {
+        const request = httpMock.expectOne((req) => req.url === window.location.href.split('?')[0].split('#')[0]);
 
         expect(request.request.method).toBe('GET');
         expect(request.request.responseType).toBe('text');
+        if (expectCacheBusting) {
+            expect(request.request.headers.get('Cache-Control')).toBe('no-cache');
+            expect(request.request.headers.get('Pragma')).toBe('no-cache');
+            expect(request.request.params.has('adf-time-sync')).toBeTrue();
+        } else {
+            expect(request.request.headers.has('Cache-Control')).toBeFalse();
+            expect(request.request.headers.has('Pragma')).toBeFalse();
+            expect(request.request.params.has('adf-time-sync')).toBeFalse();
+        }
 
         return request;
     };
@@ -266,7 +275,7 @@ describe('TimeSyncService', () => {
                     spyOn(Date, 'now').and.returnValue(rawLocalNow);
 
                     const check = firstValueFrom(service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC));
-                    flushDateHeader(expectAppRootTimeRequest());
+                    flushDateHeader(expectAppRootTimeRequest(false));
 
                     expectTimeSyncResult(await check, {
                         outOfSync: scenario.skewSeconds > MAX_ALLOWED_CLOCK_SKEW_IN_SEC,
@@ -368,7 +377,7 @@ describe('TimeSyncService', () => {
                 spyOn(Date, 'now').and.returnValue(SERVER_NOW);
 
                 const check = firstValueFrom(service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC));
-                flushDateHeader(expectAppRootTimeRequest());
+                flushDateHeader(expectAppRootTimeRequest(false));
                 await check;
 
                 expect(oauthLoggerSpy.info).toHaveBeenCalledWith(jasmine.stringContaining('[TimeSync] checkTimeSync: outOfSync='));
