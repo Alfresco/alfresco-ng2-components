@@ -291,8 +291,8 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
                 await this.setUpNodeFile(mergedNode);
             } else {
                 this.fileName = mergedNode.name;
-                this.sidebarRightTemplateContext.node = mergedNode;
-                this.sidebarLeftTemplateContext.node = mergedNode;
+                this.sidebarRightTemplateContext.node.name = mergedNode.name;
+                this.sidebarLeftTemplateContext.node.name = mergedNode.name;
             }
             this.cdr.detectChanges();
         }

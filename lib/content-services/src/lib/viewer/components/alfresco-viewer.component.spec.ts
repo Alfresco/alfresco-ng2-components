@@ -585,11 +585,7 @@ describe('AlfrescoViewerComponent', () => {
             expect(component.nodeMimeType).toEqual('application/msWord');
         });
 
-        it('should refresh the viewer when the node name changes', async () => {
-            const mockBlob = new Blob(['pdf content'], { type: 'application/pdf' });
-            const mockResponse = { ok: true, blob: () => Promise.resolve(mockBlob) } as Response;
-            spyOn(window, 'fetch').and.returnValue(Promise.resolve(mockResponse));
-
+        it('should update fileName when the node name changes', async () => {
             const defaultNode: Node = {
                 id: '123',
                 name: 'Mock_Node.pdf',
@@ -608,7 +604,11 @@ describe('AlfrescoViewerComponent', () => {
                 properties: { 'cm:versionLabel': 'mock-version-label' }
             } as Node);
 
+            await fixture.whenStable();
+
             expect(component.fileName).toBe('Renamed_Node.pdf');
+            expect(component.sidebarRightTemplateContext.node.name).toBe('Renamed_Node.pdf');
+            expect(component.sidebarLeftTemplateContext.node.name).toBe('Renamed_Node.pdf');
         });
 
         describe('versioned file with rendition', () => {
