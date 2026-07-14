@@ -18,11 +18,12 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { OAuthLogger } from 'angular-oauth2-oidc';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, map, timeout } from 'rxjs/operators';
+import { Observable, ReplaySubject, defer, of, throwError, timer } from 'rxjs';
+import { catchError, map, share, timeout } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 
 const SERVER_TIME_CACHE_BYPASS_QUERY_PARAM_NAME = 'adf-time-sync';
+const SERVER_TIME_CACHE_WINDOW_IN_MS = 2000;
 
 export interface TimeSync {
     outOfSync: boolean;
@@ -38,6 +39,26 @@ export class TimeSyncService {
     private readonly _http = inject(HttpClient);
     private readonly _appConfigService = inject(AppConfigService);
     private readonly _oauthLogger = inject(OAuthLogger, { optional: true });
+
+    /**
+     * Shared, self-expiring server-time request.
+     *
+     * OAuth-event-driven callers ask for the server time in quick succession, which
+     * previously fired one HTTP request per caller. `share` collapses concurrent
+     * subscribers onto a single in-flight request and replays the resolved value to
+     * any caller for the next {@link SERVER_TIME_CACHE_WINDOW_IN_MS}; after the window
+     * elapses the next subscriber triggers a fresh request. `defer` rebuilds the
+     * request options (including a new cache-busting timestamp) for every genuinely
+     * new request. Errors are never cached, so the next caller retries immediately.
+     */
+    private readonly serverTime$: Observable<number> = defer(() => this.requestServerTime()).pipe(
+        share({
+            connector: () => new ReplaySubject<number>(1),
+            resetOnError: true,
+            resetOnComplete: () => timer(SERVER_TIME_CACHE_WINDOW_IN_MS),
+            resetOnRefCountZero: false
+        })
+    );
 
     private clockOffsetMs = 0;
 
@@ -138,6 +159,10 @@ export class TimeSyncService {
     }
 
     private getServerTime(): Observable<number> {
+        return this.serverTime$;
+    }
+
+    private requestServerTime(): Observable<number> {
         const requestOptions = {
             observe: 'response' as const,
             responseType: 'text' as const,

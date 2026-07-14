@@ -933,15 +933,9 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
 
             await init;
 
-            const refresh = context.oauthServiceSpy.refreshToken();
-            await Promise.resolve();
+            const refreshTokenResult: unknown = await context.oauthServiceSpy.refreshToken();
 
-            expect(originalRefreshToken).not.toHaveBeenCalled();
-
-            flushDateHeader(expectAppRootTimeRequest(context));
-
-            const refreshTokenResult: unknown = await refresh;
-
+            context.httpMock.expectNone((req) => req.url === window.location.href.split('?')[0].split('#')[0]);
             expect(refreshTokenResult).toBe('new-access-token');
             expect(context.oauthServiceSpy.setupAutomaticSilentRefresh).toHaveBeenCalledTimes(1);
             expect(originalRefreshToken).toHaveBeenCalledTimes(1);

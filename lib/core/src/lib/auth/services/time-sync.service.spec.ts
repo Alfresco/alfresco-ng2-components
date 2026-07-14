@@ -17,7 +17,7 @@
 
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting, TestRequest } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { OAuthLogger } from 'angular-oauth2-oidc';
 import { firstValueFrom } from 'rxjs';
 import { AppConfigService } from '../../app-config/app-config.service';
@@ -25,6 +25,7 @@ import { TimeSyncService } from './time-sync.service';
 
 const SERVER_NOW = Date.UTC(2025, 0, 15, 12, 0, 0);
 const MAX_ALLOWED_CLOCK_SKEW_IN_SEC = 120;
+const SERVER_TIME_CACHE_WINDOW_IN_MS = 2000;
 
 type ClockDirection = 'behind' | 'ahead';
 
@@ -94,8 +95,10 @@ describe('TimeSyncService', () => {
 
     const expectedOffsetInMsFor = (localNow: number, serverNow = SERVER_NOW): number => serverNow - localNow;
 
+    const appRootUrl = (): string => window.location.href.split('?')[0].split('#')[0];
+
     const expectAppRootTimeRequest = (expectCacheBusting = true): TestRequest => {
-        const request = httpMock.expectOne((req) => req.url === window.location.href.split('?')[0].split('#')[0]);
+        const request = httpMock.expectOne((req) => req.url === appRootUrl());
 
         expect(request.request.method).toBe('GET');
         expect(request.request.responseType).toBe('text');
@@ -209,21 +212,21 @@ describe('TimeSyncService', () => {
             expect(service.getCorrectedNow()).toBe(SERVER_NOW - 238_000);
         });
 
-        it('should fall back to raw local time when a later sync fails after a successful sync', async () => {
+        it('should fall back to raw local time when a later sync fails after the cached server time expires', fakeAsync(() => {
             let localNow = SERVER_NOW - 238_000;
             spyOn(Date, 'now').and.callFake(() => localNow);
 
-            const successfulSync = firstValueFrom(service.syncClockOffset());
+            service.syncClockOffset().subscribe();
             flushDateHeader(expectAppRootTimeRequest());
-            await successfulSync;
+
+            tick(SERVER_TIME_CACHE_WINDOW_IN_MS);
 
             localNow = SERVER_NOW + 60_000;
-            const failedSync = firstValueFrom(service.syncClockOffset());
+            service.syncClockOffset().subscribe();
             expectAppRootTimeRequest().error(new ProgressEvent('error'));
-            await failedSync;
 
             expect(service.getCorrectedNow()).toBe(SERVER_NOW + 60_000);
-        });
+        }));
     });
 
     describe('checkTimeSync', () => {
@@ -249,6 +252,63 @@ describe('TimeSyncService', () => {
                 serverDateTimeISO: new Date(SERVER_NOW).toISOString()
             });
         });
+    });
+
+    describe('server time request sharing', () => {
+        it('should perform a single HTTP request when multiple callers subscribe concurrently', fakeAsync(() => {
+            spyOn(Date, 'now').and.returnValue(SERVER_NOW - 60_000);
+            const emitted: number[] = [];
+
+            service.syncClockOffset().subscribe(() => emitted.push(service.getCorrectedNow()));
+            service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC).subscribe((result) => emitted.push(new Date(result.serverDateTimeISO).getTime()));
+
+            flushDateHeader(expectAppRootTimeRequest());
+
+            expect(emitted).toEqual([SERVER_NOW, SERVER_NOW]);
+
+            tick(SERVER_TIME_CACHE_WINDOW_IN_MS);
+        }));
+
+        it('should reuse the cached server time for callers within the 2s window without a new request', fakeAsync(() => {
+            spyOn(Date, 'now').and.returnValue(SERVER_NOW - 60_000);
+
+            service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC).subscribe();
+            flushDateHeader(expectAppRootTimeRequest());
+
+            service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC).subscribe();
+            httpMock.expectNone((req) => req.url === appRootUrl());
+
+            tick(SERVER_TIME_CACHE_WINDOW_IN_MS);
+        }));
+
+        it('should perform a new request once the 2s cache window has expired', fakeAsync(() => {
+            spyOn(Date, 'now').and.returnValue(SERVER_NOW - 60_000);
+
+            service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC).subscribe();
+            flushDateHeader(expectAppRootTimeRequest());
+
+            tick(SERVER_TIME_CACHE_WINDOW_IN_MS);
+
+            service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC).subscribe();
+            flushDateHeader(expectAppRootTimeRequest());
+
+            tick(SERVER_TIME_CACHE_WINDOW_IN_MS);
+        }));
+
+        it('should not cache errors and let the next caller retry immediately with a new request', fakeAsync(() => {
+            spyOn(Date, 'now').and.returnValue(SERVER_NOW - 60_000);
+            const errors: string[] = [];
+
+            service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC).subscribe({ error: (error: Error) => errors.push(error.message) });
+            expectAppRootTimeRequest().error(new ProgressEvent('error'));
+
+            expect(errors.length).toBe(1);
+
+            service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC).subscribe();
+            flushDateHeader(expectAppRootTimeRequest());
+
+            tick(SERVER_TIME_CACHE_WINDOW_IN_MS);
+        }));
     });
 
     describe('clock skew scenario matrix', () => {
