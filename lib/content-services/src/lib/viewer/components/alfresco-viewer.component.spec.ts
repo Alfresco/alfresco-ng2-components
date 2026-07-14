@@ -592,7 +592,7 @@ describe('AlfrescoViewerComponent', () => {
 
             const defaultNode: Node = {
                 id: '123',
-                name: 'Mock Node',
+                name: 'Mock_Node.pdf',
                 content: { mimeType: 'application/pdf' },
                 properties: { 'cm:versionLabel': 'mock-version-label' }
             } as Node;
@@ -602,16 +602,13 @@ describe('AlfrescoViewerComponent', () => {
 
             fixture.detectChanges();
 
-            await fixture.ngZone.run(async () => {
-                nodesApiService.nodeUpdated.next({
-                    ...defaultNode,
-                    name: 'Renamed Node',
-                    properties: { 'cm:versionLabel': 'mock-version-label' }
-                } as Node);
-                await fixture.whenStable();
-            });
+            nodesApiService.nodeUpdated.next({
+                ...defaultNode,
+                name: 'Renamed_Node.pdf',
+                properties: { 'cm:versionLabel': 'mock-version-label' }
+            } as Node);
 
-            expect(component.fileName).toBe('Renamed Node');
+            expect(component.fileName).toBe('Renamed_Node.pdf');
         });
 
         describe('versioned file with rendition', () => {
