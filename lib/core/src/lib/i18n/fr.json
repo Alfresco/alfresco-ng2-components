@@ -669,7 +669,7 @@
     "NO_LABEL": "Non"
   },
   "SESSION_TIMEOUT": {
-    "TITLE": "Travaillez-vous toujours ?\n",
+    "TITLE": "Travaillez-vous toujours ?",
     "MESSAGE": "Votre session se terminera dans {{seconds}} secondes en raison d’une période d’inactivité.",
     "LOG_OUT": "Déconnexion",
     "CONTINUE_WORKING": "Continuer à travailler"
