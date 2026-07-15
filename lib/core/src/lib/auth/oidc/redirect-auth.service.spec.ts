@@ -687,7 +687,14 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
 
     const getClaims = (direction: ClockDirection) => (direction === 'behind' ? SLOW_CLOCK_CLAIMS : FAST_CLOCK_CLAIMS);
 
-    const setupEnvironment = (timeSyncEnabled: boolean, claims: { iat: number; exp: number }): EnvironmentTestContext => {
+    const CODE_FLOW = { implicitFlow: false, codeFlow: true };
+    const IMPLICIT_FLOW = { implicitFlow: true, codeFlow: false };
+
+    const setupEnvironment = (
+        timeSyncEnabled: boolean,
+        claims: { iat: number; exp: number },
+        oauthFlow: { implicitFlow: boolean; codeFlow: boolean } = CODE_FLOW
+    ): EnvironmentTestContext => {
         if (!jasmine.isSpy(performance.now)) {
             spyOn(performance, 'now').and.returnValue(0);
         }
@@ -737,7 +744,7 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
 
         spyOn(TestBed.inject(AppConfigService), 'get').and.callFake(<T>(key: string, defaultValue?: T): T => {
             if (key === AppConfigValues.OAUTHCONFIG) {
-                return { timeSync: timeSyncEnabled } as T;
+                return { timeSync: timeSyncEnabled, ...oauthFlow } as T;
             }
             if (key === AppConfigValues.AUTH_TIME_SYNC_ENABLED) {
                 return timeSyncEnabled as T;
@@ -971,6 +978,107 @@ describe('RedirectAuthService clock-skew environment scenarios', () => {
             expect(refreshTokenResult).toBe('new-access-token');
             expect(context.oauthServiceSpy.setupAutomaticSilentRefresh).toHaveBeenCalledTimes(1);
             expect(originalRefreshToken).toHaveBeenCalledTimes(1);
+            expect(context.timeSyncService.getCorrectedNow()).toBe(localNow);
+            context.httpMock.verify();
+        });
+    });
+
+    describe('silent refresh flow (implicit flow)', () => {
+        it('should set up silent refresh handling with raw local time and no server time request when timeSync is off', async () => {
+            const context = setupEnvironment(false, SLOW_CLOCK_CLAIMS, IMPLICIT_FLOW);
+            const localNow = getLocalNow(238, 'behind');
+            const originalSilentRefresh = context.oauthServiceSpy.silentRefresh;
+            spyOn(Date, 'now').and.returnValue(localNow);
+            spyOn(context.service, 'ensureDiscoveryDocument').and.resolveTo(true);
+            setupNavigatorLocks();
+            originalSilentRefresh.and.resolveTo(new OAuthSuccessEvent('silently_refreshed'));
+
+            await context.service.init();
+            const silentRefreshResult = await context.oauthServiceSpy.silentRefresh();
+
+            context.httpMock.expectNone(() => true);
+            expect((silentRefreshResult as OAuthEvent).type).toBe('silently_refreshed');
+            expect(context.oauthServiceSpy.setupAutomaticSilentRefresh).toHaveBeenCalledTimes(1);
+            expect(originalSilentRefresh).toHaveBeenCalledTimes(1);
+            expect(context.timeSyncService.getCorrectedNow()).toBe(localNow);
+            context.httpMock.verify();
+        });
+
+        it('should emit a silently refreshed event when another tab already refreshed the access token and timeSync is off', async () => {
+            const context = setupEnvironment(false, SLOW_CLOCK_CLAIMS, IMPLICIT_FLOW);
+            const originalSilentRefresh = context.oauthServiceSpy.silentRefresh;
+            spyOn(context.service, 'ensureDiscoveryDocument').and.resolveTo(true);
+            setupNavigatorLocks();
+            (context.oauthServiceSpy as any).eventsSubject = { next: jasmine.createSpy('next') };
+            context.oauthServiceSpy.hasValidAccessToken.and.returnValue(true);
+            context.oauthServiceSpy.getAccessToken.and.returnValues('old-access-token', 'new-access-token', 'new-access-token');
+
+            await context.service.init();
+
+            const silentRefreshResult = await context.oauthServiceSpy.silentRefresh();
+
+            expect((silentRefreshResult as OAuthEvent).type).toBe('silently_refreshed');
+            expect(originalSilentRefresh).not.toHaveBeenCalled();
+            context.httpMock.expectNone(() => true);
+            context.httpMock.verify();
+        });
+
+        it('should sync corrected time before setting up silent refresh handling when timeSync is on', async () => {
+            const context = setupEnvironment(true, SLOW_CLOCK_CLAIMS, IMPLICIT_FLOW);
+            const localNow = getLocalNow(238, 'behind');
+            const originalSilentRefresh = context.oauthServiceSpy.silentRefresh;
+            spyOn(Date, 'now').and.returnValue(localNow);
+            spyOn(context.service, 'ensureDiscoveryDocument').and.resolveTo(true);
+            setupNavigatorLocks();
+            originalSilentRefresh.and.resolveTo(new OAuthSuccessEvent('silently_refreshed'));
+
+            const init = context.service.init();
+            await Promise.resolve();
+
+            expect(context.oauthServiceSpy.setupAutomaticSilentRefresh).not.toHaveBeenCalled();
+
+            flushDateHeader(expectAppRootTimeRequest(context));
+
+            await init;
+
+            const silentRefreshResult = await context.oauthServiceSpy.silentRefresh();
+
+            context.httpMock.expectNone((req) => req.url === window.location.href.split('?')[0].split('#')[0]);
+            expect((silentRefreshResult as OAuthEvent).type).toBe('silently_refreshed');
+            expect(context.oauthServiceSpy.setupAutomaticSilentRefresh).toHaveBeenCalledTimes(1);
+            expect(originalSilentRefresh).toHaveBeenCalledTimes(1);
+            expect(context.timeSyncService.getCorrectedNow()).toBe(SERVER_NOW);
+            context.httpMock.verify();
+        });
+
+        it('should set up silent refresh handling with raw local time when timeSync is on but server time fails', async () => {
+            const context = setupEnvironment(true, SLOW_CLOCK_CLAIMS, IMPLICIT_FLOW);
+            const localNow = getLocalNow(238, 'behind');
+            const originalSilentRefresh = context.oauthServiceSpy.silentRefresh;
+            spyOn(Date, 'now').and.returnValue(localNow);
+            spyOn(context.service, 'ensureDiscoveryDocument').and.resolveTo(true);
+            setupNavigatorLocks();
+            originalSilentRefresh.and.resolveTo(new OAuthSuccessEvent('silently_refreshed'));
+
+            const init = context.service.init();
+            await Promise.resolve();
+
+            expectAppRootTimeRequest(context).error(new ProgressEvent('error'));
+
+            await init;
+
+            const refresh = context.oauthServiceSpy.silentRefresh();
+            await Promise.resolve();
+
+            expect(originalSilentRefresh).not.toHaveBeenCalled();
+
+            expectAppRootTimeRequest(context).error(new ProgressEvent('error'));
+
+            const silentRefreshResult = await refresh;
+
+            expect((silentRefreshResult as OAuthEvent).type).toBe('silently_refreshed');
+            expect(context.oauthServiceSpy.setupAutomaticSilentRefresh).toHaveBeenCalledTimes(1);
+            expect(originalSilentRefresh).toHaveBeenCalledTimes(1);
             expect(context.timeSyncService.getCorrectedNow()).toBe(localNow);
             context.httpMock.verify();
         });
