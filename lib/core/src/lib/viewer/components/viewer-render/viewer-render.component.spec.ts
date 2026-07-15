@@ -519,23 +519,23 @@ describe('ViewerComponent', () => {
     describe('Spinner', () => {
         const getMainLoader = (): DebugElement => testingUtils.getByCSS('.adf-viewer-render-main-loader');
 
-        it('should set isLoading to true when urlFile changes', () => {
+        it('should show spinner when urlFile changes', () => {
             component.isLoading = false;
             component.urlFile = 'new-file.pdf';
-
             component.ngOnChanges({ urlFile: new SimpleChange('old-file.pdf', 'new-file.pdf', false) });
+            fixture.detectChanges();
 
-            expect(component.isLoading).toBeTrue();
+            expect(getMainLoader()).not.toBeNull();
         });
 
-        it('should set isLoading to true when blobFile changes', () => {
+        it('should show spinner when blobFile changes', () => {
             component.isLoading = false;
             const blob = new Blob(['content'], { type: 'application/pdf' });
             component.blobFile = blob;
-
             component.ngOnChanges({ blobFile: new SimpleChange(null, blob, false) });
+            fixture.detectChanges();
 
-            expect(component.isLoading).toBeTrue();
+            expect(getMainLoader()).not.toBeNull();
         });
 
         it('should show spinner when isLoading is true', () => {
