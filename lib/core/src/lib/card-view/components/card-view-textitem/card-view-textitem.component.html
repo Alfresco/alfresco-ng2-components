@@ -6,9 +6,7 @@
                 [ngClass]="{
                     'adf-property-read-only': isReadonlyProperty
                 }"
-                (dblclick)="copyToClipboard(property.displayValue)"
                 [attr.data-automation-id]="'card-textitem-field-' + property.key"
-                [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
             >
                 <mat-label
                     [attr.data-automation-id]="'card-textitem-label-' + property.key"

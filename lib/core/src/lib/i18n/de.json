@@ -304,7 +304,6 @@
         "CANCEL": "Abbrechen",
         "CLEAR": "Löschen",
         "TOGGLE": "Umschaltwert",
-        "COPY_TO_CLIPBOARD": "Doppelklicken, um den Wert zu kopieren",
         "EDIT_ASPECTS": "Aspekt bearbeiten"
       },
       "ACCESSIBILITY": {

@@ -27,8 +27,6 @@ import {
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { UserPreferencesService } from '../../../common/services/user-preferences.service';
 import { BaseCardView } from '../base-card-view';
-import { ClipboardService } from '../../../clipboard/clipboard.service';
-import { TranslationService } from '../../../translation/translation.service';
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../common/utils/date-fns-adapter';
 import { ADF_DATETIME_FORMATS, AdfDateTimeFnsAdapter } from '../../../common/utils/datetime-fns-adapter';
 import { isValid } from 'date-fns';
@@ -76,8 +74,6 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     private readonly dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
     private readonly datetimeAdapter = inject<DatetimeAdapter<Date>>(DatetimeAdapter);
     private readonly userPreferencesService = inject(UserPreferencesService);
-    private readonly clipboardService = inject(ClipboardService);
-    private readonly translateService = inject(TranslationService);
     private readonly destroyRef = inject(DestroyRef);
 
     @Input()
@@ -201,13 +197,6 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         this.cardViewUpdateService.update({ ...this.property } as CardViewDateItemModel, null);
         this.property.value = null;
         this.property.default = null;
-    }
-
-    copyToClipboard(valueToCopy: string | string[]) {
-        if (typeof valueToCopy === 'string') {
-            const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
-            this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
-        }
     }
 
     addDateToList(event: MatDatetimepickerInputEvent<Date>) {

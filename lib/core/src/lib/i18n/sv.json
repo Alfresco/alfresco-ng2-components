@@ -221,7 +221,6 @@
         "CANCEL": "Avbryt",
         "CLEAR": "Rensa",
         "TOGGLE": "Växla värde",
-        "COPY_TO_CLIPBOARD": "Dubbelklicka för att kopiera värde",
         "EDIT_ASPECTS": "Redigera aspekt"
       },
       "ACCESSIBILITY": {

@@ -43,9 +43,6 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     displayClearAction: boolean = true;
 
     @Input()
-    copyToClipboardAction: boolean = true;
-
-    @Input()
     useChipsForMultiValueProperty: boolean = true;
 
     @Input()
@@ -99,7 +96,6 @@ export class CardViewItemDispatcherComponent implements OnChanges {
         this.componentReference.instance.displayEmpty = this.displayEmpty;
         this.componentReference.instance.displayNoneOption = this.displayNoneOption;
         this.componentReference.instance.displayClearAction = this.displayClearAction;
-        this.componentReference.instance.copyToClipboardAction = this.copyToClipboardAction;
         this.componentReference.instance.useChipsForMultiValueProperty = this.useChipsForMultiValueProperty;
         this.componentReference.instance.multiValueSeparator = this.multiValueSeparator;
     }

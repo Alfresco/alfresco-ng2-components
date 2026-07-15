@@ -221,7 +221,6 @@
         "CANCEL": "キャンセル",
         "CLEAR": "消去",
         "TOGGLE": "値の切り替え",
-        "COPY_TO_CLIPBOARD": "ダブルクリックして値をコピーします",
         "EDIT_ASPECTS": "アスペクトを編集"
       },
       "ACCESSIBILITY": {

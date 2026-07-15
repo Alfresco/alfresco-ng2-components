@@ -304,7 +304,6 @@
         "CANCEL": "Annuler",
         "CLEAR": "Supprimer",
         "TOGGLE": "Basculer la valeur",
-        "COPY_TO_CLIPBOARD": "Faites un double clic pour copier la valeur",
         "EDIT_ASPECTS": "Modifier aspect"
       },
       "ACCESSIBILITY": {

@@ -50,7 +50,6 @@
             [properties]="basicProperties$ | async"
             [editable]="!readOnly && isPanelEditing(DefaultPanels.PROPERTIES)"
             [displayEmpty]="displayEmpty"
-            [copyToClipboardAction]="copyToClipboardAction"
             [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
             [multiValueSeparator]="multiValueSeparator" />
     </mat-expansion-panel>
@@ -251,7 +250,6 @@
                     [properties]="group.properties"
                     [editable]="!readOnly && group.editable && isPanelEditing(group.title)"
                     [displayEmpty]="displayEmpty"
-                    [copyToClipboardAction]="copyToClipboardAction"
                     [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
                     [multiValueSeparator]="multiValueSeparator" />
             </mat-expansion-panel>

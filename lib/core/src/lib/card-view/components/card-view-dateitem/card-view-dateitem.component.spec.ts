@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
-import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { CardViewDatetimeItemModel } from '../../models/card-view-datetimeitem.model';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { DatetimeAdapter, MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
@@ -210,19 +209,6 @@ describe('CardViewDateItemComponent', () => {
 
         await fixture.whenStable();
         expect(component.property.value).toEqual(expectedDate);
-    });
-
-    it('should copy value to clipboard on double click', () => {
-        const clipboardService = TestBed.inject(ClipboardService);
-        spyOn(clipboardService, 'copyContentToClipboard');
-
-        component.editable = false;
-        fixture.detectChanges();
-
-        testingUtils.doubleClickByDataAutomationId('datepicker-label-toggle-' + component.property.key);
-
-        fixture.detectChanges();
-        expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Jul 10, 2017', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
     });
 
     describe('clear icon', () => {

@@ -304,7 +304,6 @@
         "CANCEL": "Cancel",
         "CLEAR": "Clear",
         "TOGGLE": "Toggle value",
-        "COPY_TO_CLIPBOARD": "Double click to copy value",
         "EDIT_ASPECTS": "Edit Aspect"
       },
       "ACCESSIBILITY": {

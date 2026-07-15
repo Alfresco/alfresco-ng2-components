@@ -221,7 +221,6 @@
         "CANCEL": "取消",
         "CLEAR": "清除",
         "TOGGLE": "切换值",
-        "COPY_TO_CLIPBOARD": "双击以复制值",
         "EDIT_ASPECTS": "编辑纵横比"
       },
       "ACCESSIBILITY": {

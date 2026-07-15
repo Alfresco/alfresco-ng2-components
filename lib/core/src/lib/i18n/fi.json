@@ -221,7 +221,6 @@
         "CANCEL": "Peruuta",
         "CLEAR": "Tyhjennä",
         "TOGGLE": "Vaihda arvoa",
-        "COPY_TO_CLIPBOARD": "Kopioi arvo kaksoisnapsauttamalla",
         "EDIT_ASPECTS": "Muokkaa ominaisuusjoukkoja"
       },
       "ACCESSIBILITY": {

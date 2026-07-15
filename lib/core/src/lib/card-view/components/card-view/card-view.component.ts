@@ -49,10 +49,6 @@ export class CardViewComponent {
     @Input()
     displayClearAction: boolean = true;
 
-    /** Toggles whether or not to enable copy to clipboard action. */
-    @Input()
-    copyToClipboardAction: boolean = true;
-
     /** Toggles whether or not to enable chips for multivalued properties. */
     @Input()
     useChipsForMultiValueProperty: boolean = true;

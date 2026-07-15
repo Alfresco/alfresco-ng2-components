@@ -127,10 +127,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     @Input()
     displayAspect: string = null;
 
-    /** Toggles whether or not to enable copy to clipboard action. */
-    @Input()
-    copyToClipboardAction: boolean = true;
-
     /** Toggles whether or not to enable chips for multivalued properties. */
     @Input()
     useChipsForMultiValueProperty: boolean = true;
@@ -185,7 +181,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     private readonly destroyRef = inject(DestroyRef);
 
     constructor() {
-        this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
         this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || DEFAULT_SEPARATOR;
         this.useChipsForMultiValueProperty = this.appConfig.get<boolean>('content-metadata.multi-value-chips');
     }

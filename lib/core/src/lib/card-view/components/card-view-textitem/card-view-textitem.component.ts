@@ -19,8 +19,6 @@ import { ChangeDetectorRef, Component, DestroyRef, inject, Input, OnChanges, Sim
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { BaseCardView } from '../base-card-view';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
-import { ClipboardService } from '../../../clipboard/clipboard.service';
-import { TranslationService } from '../../../translation/translation.service';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { debounceTime, filter } from 'rxjs/operators';
@@ -61,15 +59,10 @@ const templateTypes = {
     host: { class: 'adf-card-view-textitem' }
 })
 export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges {
-    private readonly clipboardService = inject(ClipboardService);
-    private readonly translateService = inject(TranslationService);
     private readonly cd = inject(ChangeDetectorRef);
 
     @Input()
     displayEmpty = true;
-
-    @Input()
-    copyToClipboardAction = true;
 
     @Input()
     useChipsForMultiValueProperty = true;
@@ -215,13 +208,6 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         this.editedValue = '';
         this.textInput.setValue('');
         this.update();
-    }
-
-    copyToClipboard(valueToCopy: string) {
-        if (this.copyToClipboardAction) {
-            const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
-            this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
-        }
     }
 
     undoText(event: KeyboardEvent) {
