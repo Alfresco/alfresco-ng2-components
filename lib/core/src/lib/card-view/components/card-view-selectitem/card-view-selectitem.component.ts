@@ -195,14 +195,16 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     copyToClipboard(valueToCopy: string | string[] | Observable<string>) {
-        if (isObservable(valueToCopy)) {
-            valueToCopy.pipe(take(1)).subscribe((value) => {
+        if (this.copyToClipboardAction) {
+            if (isObservable(valueToCopy)) {
+                valueToCopy.pipe(take(1)).subscribe((value) => {
+                    const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
+                    this.clipboardService.copyContentToClipboard(value, clipboardMessage);
+                });
+            } else if (typeof valueToCopy === 'string') {
                 const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
-                this.clipboardService.copyContentToClipboard(value, clipboardMessage);
-            });
-        } else if (typeof valueToCopy === 'string') {
-            const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
-            this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
+                this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
+            }
         }
     }
 

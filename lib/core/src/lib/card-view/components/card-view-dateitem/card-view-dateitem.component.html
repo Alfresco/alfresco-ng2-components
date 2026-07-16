@@ -30,7 +30,6 @@
                         class="adf-datepicker-span-button"
                         [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
                         (click)="showDatePicker()"
-                        (dblclick)="copyToClipboard(property.displayValue)"
                         tabindex="0"
                         role="button"
                         (keyup.enter)="showDatePicker()"
@@ -93,7 +92,10 @@
             }
         </mat-form-field>
     } @else {
-        <mat-form-field class="adf-property-field adf-dateitem-editable" [floatLabel]="property.default ? 'always' : null">
+        <mat-form-field 
+            class="adf-property-field adf-dateitem-editable" 
+            [floatLabel]="property.default ? 'always' : null"
+        >
             <mat-label
                 class="adf-property-label"
                 [attr.data-automation-id]="'card-dateitem-label-' + property.key"
@@ -121,6 +123,7 @@
                     [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
                     (click)="showDatePicker()"
                     (dblclick)="copyToClipboard(property.displayValue)"
+                    [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
                     tabindex="0"
                     role="button"
                     (keyup.enter)="showDatePicker()"
