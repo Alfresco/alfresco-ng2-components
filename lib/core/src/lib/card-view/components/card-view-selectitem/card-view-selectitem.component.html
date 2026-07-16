@@ -2,9 +2,13 @@
     <div [ngSwitch]="templateType">
         <div *ngSwitchDefault>
             <div class="adf-property-field">
-                <mat-form-field class="adf-property-value">
+                <mat-form-field 
+                    class="adf-property-value"
+                    (dblclick)="copyToClipboard(property.displayValue)"
+                    [attr.data-automation-id]="'card-select-label-' + property.key"
+                    [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+                >
                     <mat-label
-                        [attr.data-automation-id]="'card-select-label-' + property.key"
                         class="adf-property-label"
                         [ngClass]="{
                             'adf-property-value-editable': isEditable,

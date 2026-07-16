@@ -17,7 +17,7 @@
 
 import { Component, Input, OnChanges, OnInit, inject, ViewEncapsulation, SimpleChanges, DestroyRef } from '@angular/core';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, isObservable, Observable } from 'rxjs';
 import { CardViewSelectItemOption } from '../../interfaces/card-view.interfaces';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { BaseCardView } from '../base-card-view';
@@ -35,6 +35,8 @@ import { CardViewPropertyValidatorDirective } from '../../directives/card-view-p
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { ENTER } from '@angular/cdk/keycodes';
 import { IconModule } from '../../../icon/icon.module';
+import { ClipboardService } from '../../../clipboard/clipboard.service';
+import { TranslationService } from '../../../translation/translation.service';
 
 @Component({
     selector: 'adf-card-view-selectitem',
@@ -61,6 +63,9 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     static HIDE_FILTER_LIMIT = 5;
     readonly separatorKeysCodes = [ENTER] as const;
 
+    private readonly clipboardService = inject(ClipboardService);
+    private readonly translateService = inject(TranslationService);
+
     @Input() options$: Observable<CardViewSelectItemOption<string | number>[]>;
 
     @Input()
@@ -68,6 +73,9 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
 
     @Input()
     displayEmpty: boolean = true;
+
+    @Input()
+    copyToClipboardAction = true;
 
     filter$ = new BehaviorSubject<string>('');
     showInputFilter: boolean = false;
@@ -183,6 +191,18 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
             this.cardViewUpdateService.update(this.property, this.property.value);
             newListItem.chipInput.clear();
             this.filterOptions();
+        }
+    }
+
+    copyToClipboard(valueToCopy: string | string[] | Observable<string>) {
+        if (isObservable(valueToCopy)) {
+            valueToCopy.pipe(take(1)).subscribe((value) => {
+                const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
+                this.clipboardService.copyContentToClipboard(value, clipboardMessage);
+            });
+        } else if (typeof valueToCopy === 'string') {
+            const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
+            this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
         }
     }
 

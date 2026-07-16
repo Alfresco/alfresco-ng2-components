@@ -1,12 +1,16 @@
 <div class="adf-property-value" [ngClass]="{ 'adf-property-value-editable': editable, 'adf-property-readonly-value': isReadonlyProperty || !editable }">
     @if (!property.multivalued) {
-        <mat-form-field class="adf-property-field adf-dateitem-editable" [floatLabel]="property.default ? 'always' : null">
+        <mat-form-field 
+            class="adf-property-field adf-dateitem-editable" 
+            [floatLabel]="property.default ? 'always' : null"
+            (dblclick)="copyToClipboard(property.displayValue)"
+            [attr.data-automation-id]="'card-dateitem-label-' + property.key"
+            [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+        >
             <mat-label
                 class="adf-property-label"
-                [attr.data-automation-id]="'card-dateitem-label-' + property.key"
                 [attr.for]="'card-view-dateitem-' + property.key"
                 [ngClass]="{ 'adf-property-readonly-value': isReadonlyProperty || !editable, 'adf-property-value-editable': editable }"
-                [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
             >
                 {{ property.label | translate }}
             </mat-label>

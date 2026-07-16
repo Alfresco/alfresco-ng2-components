@@ -219,7 +219,7 @@ describe('CardViewDateItemComponent', () => {
         component.editable = false;
         fixture.detectChanges();
 
-        testingUtils.doubleClickByDataAutomationId('datepicker-label-toggle-' + component.property.key);
+        testingUtils.doubleClickByDataAutomationId('card-dateitem-label-' + component.property.key);
 
         fixture.detectChanges();
         expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Jul 10, 2017', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');

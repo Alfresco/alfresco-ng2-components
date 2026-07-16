@@ -29,6 +29,7 @@ import { DebugElement, SimpleChange, SimpleChanges } from '@angular/core';
 import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator.directive';
 import { MatError } from '@angular/material/form-field';
 import { FormControl, NgModel } from '@angular/forms';
+import { ClipboardService } from '../../../clipboard/clipboard.service';
 
 describe('CardViewSelectItemComponent', () => {
     let loader: HarnessLoader;
@@ -189,6 +190,28 @@ describe('CardViewSelectItemComponent', () => {
             const selectBox = await testingUtils.getMatSelectByDataAutomationId('select-box');
             const host = await selectBox.host();
             expect(await host.getAttribute('aria-label')).toBe('Select box label');
+        });
+    });
+
+    describe('Clickable', () => {
+        it('should copy value to clipboard on double click', async () => {
+            const clipboardService = TestBed.inject(ClipboardService);
+            spyOn(clipboardService, 'copyContentToClipboard');
+
+            component.property = new CardViewSelectItemModel({
+                ...mockDefaultProps,
+                editable: true
+            });
+
+            component.editable = true;
+            component.copyToClipboardAction = true;
+            component.ngOnChanges({});
+            fixture.detectChanges();
+
+            testingUtils.doubleClickByDataAutomationId(`card-select-label-${component.property.key}`);
+            fixture.detectChanges();
+
+            expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Two', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
         });
     });
 
