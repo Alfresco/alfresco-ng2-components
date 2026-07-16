@@ -208,7 +208,7 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            testingUtils.doubleClickByDataAutomationId(`card-select-label-${component.property.key}`);
+            testingUtils.doubleClickByDataAutomationId(`card-select-field-${component.property.key}`);
             fixture.detectChanges();
 
             expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Two', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');

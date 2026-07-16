@@ -194,7 +194,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
         }
     }
 
-    copyToClipboard(valueToCopy: string | string[] | Observable<string>) {
+    copyToClipboard(valueToCopy: string | Observable<string>) {
         if (this.copyToClipboardAction) {
             if (isObservable(valueToCopy)) {
                 valueToCopy.pipe(take(1)).subscribe((value) => {
