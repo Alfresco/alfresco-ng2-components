@@ -45,7 +45,8 @@ describe('VersionListComponent', () => {
                 versionComment: 'test-version-comment',
                 modifiedByUser: new UserInfo({
                     displayName: 'TestUser1'
-                })
+                }),
+                modifiedAt: new Date(2026, 0, 15, 9, 56, 42, 581)
             })
         }),
         new VersionEntry({
@@ -177,6 +178,10 @@ describe('VersionListComponent', () => {
                 expect(versionIdText).toBe('1.0');
                 expect(versionComment.trim()).toBe('test-version-comment');
                 expect(testingUtils.getInnerTextByDataAutomationId('adf-version-list-item-modified-by-1.0')).toBe('TestUser1');
+                const expectedModifiedAt = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeStyle: 'medium' }).format(
+                    versionTest[0].entry.modifiedAt
+                );
+                expect(testingUtils.getInnerTextByCSS('#adf-version-list-item-date-1\\.0')).toBe(expectedModifiedAt);
                 done();
             });
         });
