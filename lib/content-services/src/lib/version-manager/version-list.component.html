@@ -12,7 +12,7 @@
                         <span class="adf-version-list-item-line adf-version-list-item-version"
                           [id]="'adf-version-list-item-version-' + version.entry.id">{{ version.entry.id }}</span> -
                         <span class="adf-version-list-item-line adf-version-list-item-date"
-                              [id]="'adf-version-list-item-date-' + version.entry.id">{{ version.entry.modifiedAt | date }}</span>
+                              [id]="'adf-version-list-item-date-' + version.entry.id">{{ version.entry.modifiedAt | date: 'medium' }}</span>
                     </p>
                     @if (version.entry.modifiedByUser?.displayName) {
                         <p
