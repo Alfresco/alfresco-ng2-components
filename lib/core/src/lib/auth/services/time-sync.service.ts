@@ -17,7 +17,6 @@
 
 import { Injectable } from '@angular/core';
 import { defer, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 export interface TimeSync {
     outOfSync: boolean;
@@ -97,5 +96,39 @@ export class TimeSyncService {
 
     isEnabled(): boolean {
         return true;
+    }
+
+    /**
+     * Returns a clock-drift-corrected "now" timestamp in milliseconds.
+     * If a server time snapshot is available, applies the estimated offset
+     * to produce a value closer to the server's clock. Otherwise falls back
+     * to the raw local `Date.now()`.
+     *
+     * Used by {@link TimeSyncDateTimeProvider} to feed corrected time into
+     * the OAuth library's token validation.
+     */
+    getCorrectedNow(): number {
+        if (!this._serverTimeSnapshot) {
+            return Date.now();
+        }
+
+        const { serverTimeMs, requestStartTimeMs, responseReceivedTimeMs } = this._serverTimeSnapshot;
+        const roundTripTimeInMs = responseReceivedTimeMs - requestStartTimeMs;
+        const adjustedServerTimeAtCaptureMs = serverTimeMs + roundTripTimeInMs / 2;
+        const localNow = Date.now();
+        const timeElapsedSinceCaptureMs = localNow - responseReceivedTimeMs;
+        return adjustedServerTimeAtCaptureMs + timeElapsedSinceCaptureMs;
+    }
+
+    /**
+     * No-op in the header-based implementation. The clock offset is captured passively
+     * by {@link ServerTimeHeaderInterceptor} from existing HTTP responses — no dedicated
+     * sync call is needed. This method exists for backward compatibility with callers
+     * that previously relied on a dedicated REST-based time sync.
+     *
+     * @returns An Observable that completes immediately.
+     */
+    syncClockOffset(): Observable<void> {
+        return of(undefined);
     }
 }
