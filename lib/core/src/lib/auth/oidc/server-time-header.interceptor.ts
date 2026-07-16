@@ -70,6 +70,8 @@ const UTC_TIMEZONE_PATTERN = /(?:GMT|UTC|Z|[+-]\d{2}:\d{2})$/i;
  * Note: If the OIDC issuer is on a different origin, ensure the issuer exposes the configured
  * header via CORS (e.g. `Access-Control-Expose-Headers: Date, X-Server-Time`), otherwise
  * `response.headers.get(...)` will return `null` in the browser.
+ */
+
 @Injectable()
 export class ServerTimeHeaderInterceptor implements HttpInterceptor {
     private readonly _timeSyncService = inject(TimeSyncService);
@@ -92,22 +94,28 @@ export class ServerTimeHeaderInterceptor implements HttpInterceptor {
         );
     }
 
-    /**
-     * Returns `true` when the request URL targets the configured OIDC issuer.
-     * This covers all auth-related calls: discovery document, token endpoint,
-     * token refresh, and userinfo endpoint.
-     *
-     * Returns `false` — and skips header capture — when the issuer is not yet
-     * configured (i.e. before the OAuth service has been initialised).
-     */
     private isAuthRelatedRequest(url: string): boolean {
         const issuer = this._oauthService.issuer;
-        return !!issuer && url.startsWith(issuer);
+        const isIssuerRequest = !!issuer && url.startsWith(issuer);
+        if (isIssuerRequest) {
+            console.log(`[TimeSync DEBUG] Intercepting issuer request: ${url} (issuer: ${issuer})`);
+        }
+        return isIssuerRequest;
     }
 
     private captureServerTime(response: HttpResponse<unknown>, requestStartTimeMs: number): void {
         const headerName = this._appConfigService.get<string>('serverTimeHeader', DEFAULT_SERVER_TIME_HEADER);
         const headerValue = response.headers.get(headerName);
+
+        // DEBUG: Log all response headers from issuer
+        console.group(`[TimeSync DEBUG] Response from: ${response.url}`);
+        console.log(`Looking for header: "${headerName}"`);
+        console.log(`Header value: ${headerValue}`);
+        console.log('All response headers:');
+        response.headers.keys().forEach((key) => {
+            console.log(`  ${key}: ${response.headers.get(key)}`);
+        });
+        console.groupEnd();
 
         if (!headerValue) {
             return;
@@ -123,7 +131,7 @@ export class ServerTimeHeaderInterceptor implements HttpInterceptor {
 
         const serverTimeEpoch = new Date(headerValue).getTime();
 
-        if (isNaN(serverTimeEpoch)) {
+        if (Number.isNaN(serverTimeEpoch)) {
             return;
         }
 

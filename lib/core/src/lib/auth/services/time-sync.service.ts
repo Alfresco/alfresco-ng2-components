@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { defer, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface TimeSync {
@@ -79,47 +79,23 @@ export class TimeSyncService {
         const roundTripTimeInMs = responseReceivedTimeMs - requestStartTimeMs;
         const adjustedServerTimeAtCaptureMs = serverTimeMs + roundTripTimeInMs / 2;
 
-        return of(null).pipe(
-            map(() => {
-                const localNow = Date.now();
-                const timeElapsedSinceCaptureMs = localNow - responseReceivedTimeMs;
-                const estimatedCurrentServerTimeMs = adjustedServerTimeAtCaptureMs + timeElapsedSinceCaptureMs;
-                const timeOffsetInMs = Math.abs(localNow - estimatedCurrentServerTimeMs);
-                const maxAllowedClockSkewInMs = maxAllowedClockSkewInSec * 1000;
-                const outOfSync = timeOffsetInMs > maxAllowedClockSkewInMs;
+        return defer(() => {
+            const localNow = Date.now();
+            const timeElapsedSinceCaptureMs = localNow - responseReceivedTimeMs;
+            const estimatedCurrentServerTimeMs = adjustedServerTimeAtCaptureMs + timeElapsedSinceCaptureMs;
+            const timeOffsetInMs = Math.abs(localNow - estimatedCurrentServerTimeMs);
+            const maxAllowedClockSkewInMs = maxAllowedClockSkewInSec * 1000;
 
-                this.debug(
-                    `checkTimeSync: outOfSync=${outOfSync} ` +
-                        `(local=${new Date(localTimeInMs).toISOString()}, server=${new Date(adjustedServerTimeInMs).toISOString()}, offset=${this.clockOffsetMs}ms)`
-                );
-
-                return {
-                    outOfSync: timeOffsetInMs > maxAllowedClockSkewInMs,
-                    timeOutOfSyncInSec: timeOffsetInMs / 1000,
-                    localDateTimeISO: new Date(localNow).toISOString(),
-                    serverDateTimeISO: new Date(estimatedCurrentServerTimeMs).toISOString()
-                };
-            })
-        );
-    }
-
-    private getAdjustedServerTimeInMs(serverTimeResponse: number, startTime: number): number {
-        let serverTimeInMs: number;
-        const endTime = Date.now();
-        const roundTripTimeInMs = endTime - startTime;
-
-        const isServerTimeResponseInMs = serverTimeResponse.toString().length === 13;
-        if (!isServerTimeResponseInMs) {
-            serverTimeInMs = serverTimeResponse * 1000;
-        } else {
-            serverTimeInMs = serverTimeResponse;
-        }
-
-        return serverTimeInMs + roundTripTimeInMs / 2;
+            return of({
+                outOfSync: timeOffsetInMs > maxAllowedClockSkewInMs,
+                timeOutOfSyncInSec: timeOffsetInMs / 1000,
+                localDateTimeISO: new Date(localNow).toISOString(),
+                serverDateTimeISO: new Date(estimatedCurrentServerTimeMs).toISOString()
+            });
+        });
     }
 
     isEnabled(): boolean {
-        const timeSync = this._appConfigService.get<boolean | string>(AppConfigValues.AUTH_TIME_SYNC_ENABLED, false);
-        return timeSync === true || timeSync === 'true';
+        return true;
     }
 }

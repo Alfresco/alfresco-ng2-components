@@ -227,7 +227,27 @@ export class RedirectAuthService extends AuthService {
             error: () => {}
         });
 
-        const hasInvalidAccessToken = () => !!this.oauthService.getAccessToken() && !this.oauthService.hasValidAccessToken();
+        // DEBUG: Log token info and time sync status on every OAuth event
+        this.oauthService.events.subscribe((event) => {
+            const accessTokenExp = this.oauthService.getAccessTokenExpiration();
+            const now = Date.now();
+            console.group(`[TimeSync DEBUG] OAuth event: ${event.type}`);
+            console.log('Local time (ISO):', new Date(now).toISOString());
+            console.log('Access token valid:', this.oauthService.hasValidAccessToken());
+            console.log('Id token valid:', this.oauthService.hasValidIdToken());
+            console.log('Access token expires at:', accessTokenExp ? new Date(accessTokenExp).toISOString() : 'N/A');
+            console.log('Access token remaining (sec):', accessTokenExp ? ((accessTokenExp - now) / 1000).toFixed(1) : 'N/A');
+            console.log('clockSkewInSec:', this.oauthService.clockSkewInSec);
+
+            this._timeSyncService.checkTimeSync(this.oauthService.clockSkewInSec).subscribe((sync) => {
+                console.log('TimeSyncService snapshot:', sync);
+                console.log('  → outOfSync:', sync.outOfSync);
+                console.log('  → offset (sec):', sync.timeOutOfSyncInSec?.toFixed(2) ?? 'N/A');
+                console.log('  → local:', sync.localDateTimeISO);
+                console.log('  → server:', sync.serverDateTimeISO);
+            });
+            console.groupEnd();
+        });
 
         this.oauthService.events.pipe(take(1)).subscribe(() => {
             if (!this._timeSyncService.isEnabled() && hasInvalidAccessToken()) {
