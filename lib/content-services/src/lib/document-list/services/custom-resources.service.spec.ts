@@ -24,6 +24,8 @@ import {
     FavoritePagingList,
     NodeEntry,
     NodePaging,
+    Person,
+    PersonEntry,
     ResultSetPaging,
     Site,
     SiteEntry,
@@ -203,7 +205,9 @@ describe('CustomResourcesService', () => {
         const pagination: PaginationModel = { maxItems: 100, skipCount: 0 };
 
         beforeEach(() => {
-            spyOn(customResourcesService.peopleApi, 'getPerson').and.returnValue(Promise.resolve({ entry: { id: 'user' } } as any));
+            spyOn(customResourcesService.peopleApi, 'getPerson').and.returnValue(
+                Promise.resolve(new PersonEntry({ entry: new Person({ id: 'user' }) }))
+            );
         });
 
         it('should pass includeFields through to the search request, keeping the defaults', (done) => {
