@@ -29,7 +29,7 @@ jobs:
           ref: develop
           token: ${{ steps.app-token.outputs.token }}
       - name: Pull translations from Crowdin
-        uses: crowdin/github-action@52aa776766211d83d975df51f3b9c53c2f8ba35f # v2.16.3
+        uses: crowdin/github-action@e0c8f73cdc0fafde9396e056c5038217000a32d1 # v2.16.4
         with:
           skip_ref_checkout: true
           upload_sources: false
