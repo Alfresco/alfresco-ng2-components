@@ -78,7 +78,7 @@ export class DataColumnComponent implements OnInit {
     @Input()
     subtitle: string = '';
 
-    @ContentChild(TemplateRef)
+    @ContentChild(TemplateRef, { descendants: false })
     template: any;
 
     /** Custom tooltip formatter function. */
