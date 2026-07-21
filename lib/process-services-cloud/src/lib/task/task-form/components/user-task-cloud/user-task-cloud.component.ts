@@ -33,9 +33,6 @@ import { CompleteTaskDirective } from './complete-task/complete-task.directive';
 import { catchError, EMPTY, forkJoin } from 'rxjs';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { UserTaskContentType, TaskTypeResolverService, UserTaskType } from '../../../../services/task-type-resolver/task-type-resolver.service';
-import { TaskDetailsSource, TaskDetailsSourceStrategy } from './task-details-source/task-details-source.strategy';
-import { QueryTaskDetailsSourceStrategy } from './task-details-source/query-task-details-source.strategy';
-import { RuntimeBundleTaskDetailsSourceStrategy } from './task-details-source/runtime-bundle-task-details-source.strategy';
 
 @Component({
     selector: 'adf-cloud-user-task',
@@ -134,17 +131,6 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     @Input()
     taskId: string;
 
-    /**
-     * Backend service used to fetch the task details.
-     *
-     * Defaults to `'query'` (Query Service). Set to `'rb'` to read the task from
-     * the Runtime Bundle, which is always up to date (the Query Service is
-     * eventually consistent). In `'rb'` mode, terminal tasks that are no longer
-     * served by the Runtime Bundle are transparently fetched from the Query Service.
-     */
-    @Input()
-    taskDetailsSource: TaskDetailsSource = 'query';
-
     /** Emitted when the cancel button is clicked. */
     @Output()
     cancelClick = new EventEmitter<string>();
@@ -206,11 +192,6 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     private readonly taskTypeResolverService = inject(TaskTypeResolverService);
     private readonly destroyRef = inject(DestroyRef);
 
-    private readonly taskDetailsSourceStrategies: Record<TaskDetailsSource, TaskDetailsSourceStrategy> = {
-        query: inject(QueryTaskDetailsSourceStrategy),
-        rb: inject(RuntimeBundleTaskDetailsSourceStrategy)
-    };
-
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
         if (appName && appName.currentValue !== appName.previousValue && this.taskId) {
@@ -223,12 +204,6 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
             this.loadTask();
             return;
         }
-
-        const taskDetailsSource = changes['taskDetailsSource'];
-        if (taskDetailsSource && !taskDetailsSource.firstChange && this.appName && this.taskId) {
-            this.loadTask();
-            return;
-        }
     }
 
     ngOnInit() {
@@ -238,7 +213,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     }
 
     canClaimTask(): boolean {
-        return !this.readOnly && this.taskDetailsStrategy.canClaim(this.taskDetails) && this.hasCandidateUsersOrGroups();
+        return !this.readOnly && this.taskCloudService.canClaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
     }
 
     canCompleteTask(): boolean {
@@ -246,7 +221,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     }
 
     canUnclaimTask(): boolean {
-        return !this.readOnly && this.taskDetailsStrategy.canUnclaim(this.taskDetails) && this.hasCandidateUsersOrGroups();
+        return !this.readOnly && this.taskCloudService.canUnclaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
     }
 
     getTaskType(): void {
@@ -324,7 +299,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
 
     private loadTask(): void {
         this.loading = true;
-        const tasks$ = this.taskDetailsStrategy.getTaskDetails$(this.appName, this.taskId);
+        const tasks$ = this.taskCloudService.getTaskById(this.appName, this.taskId);
         const candidateUsers$ = this.taskCloudService.getCandidateUsers(this.appName, this.taskId);
         const candidateGroups$ = this.taskCloudService.getCandidateGroups(this.appName, this.taskId);
 
@@ -349,10 +324,6 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
                 this.loading = false;
                 this.onTaskLoaded.emit(this.taskDetails);
             });
-    }
-
-    private get taskDetailsStrategy(): TaskDetailsSourceStrategy {
-        return this.taskDetailsSourceStrategies[this.taskDetailsSource] ?? this.taskDetailsSourceStrategies.query;
     }
 
     public switchToDisplayMode(newDisplayMode?: string): void {

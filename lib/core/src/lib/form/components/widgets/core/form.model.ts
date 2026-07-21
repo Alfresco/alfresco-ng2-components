@@ -16,6 +16,7 @@
  */
 
 import { FormFieldEvent } from '../../../events/form-field.event';
+import { FormRulesEvent } from '../../../events/form-rules.event';
 import { ValidateFormFieldEvent } from '../../../events/validate-form-field.event';
 import { ValidateFormEvent } from '../../../events/validate-form.event';
 import { ContainerModel } from './container.model';
@@ -152,6 +153,11 @@ export class FormModel implements ProcessFormModel {
 
     onRepeatableSectionChanged() {
         this.fieldsCache = this.getFormFields([], true);
+    }
+
+    onRepeatableSectionRowCountChanged(sectionField: FormFieldModel): void {
+        this.onRepeatableSectionChanged();
+        this.formService?.formRulesEvent?.next(new FormRulesEvent('onRowCountChanged', new FormFieldEvent(this, sectionField)));
     }
 
     /**

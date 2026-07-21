@@ -1,3 +1,5 @@
+@use '../../../styles/mixins' as mixins;
+
 .adf {
     &-typeahead-widget-container {
         position: relative;
@@ -7,4 +9,8 @@
     &-typeahead-widget {
         width: 100%;
     }
+}
+
+.adf-form-field-input .adf-error-icon {
+    @include mixins.adf-error-icon;
 }

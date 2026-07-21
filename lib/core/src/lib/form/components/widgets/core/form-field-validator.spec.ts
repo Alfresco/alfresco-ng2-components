@@ -19,6 +19,7 @@ import { ContainerModel } from './container.model';
 import { ErrorMessageModel } from './error-message.model';
 import { FormFieldTypes } from './form-field-types';
 import {
+    DEFAULT_TEXT_MAX_LENGTH,
     FixedValueFieldValidator,
     MaxLengthFieldValidator,
     MaxValueFieldValidator,
@@ -679,6 +680,42 @@ describe('FormFieldValidator', () => {
 
             field.maxLength = 10;
             expect(validator.isSupported(field)).toBe(true);
+        });
+
+        it('should support text field when fallback maxLength is defined', () => {
+            const fallbackValidator = new MaxLengthFieldValidator([FormFieldTypes.TEXT], undefined, DEFAULT_TEXT_MAX_LENGTH);
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TEXT
+            });
+
+            expect(fallbackValidator.isSupported(field)).toBe(true);
+            expect(fallbackValidator.getMaxLength(field)).toBe(DEFAULT_TEXT_MAX_LENGTH);
+        });
+
+        it('should validate text field against fallback maxLength when maxLength is not configured', () => {
+            const fallbackValidator = new MaxLengthFieldValidator([FormFieldTypes.TEXT], undefined, DEFAULT_TEXT_MAX_LENGTH);
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TEXT,
+                value: 'a'.repeat(DEFAULT_TEXT_MAX_LENGTH + 1)
+            });
+
+            field.validationSummary = new ErrorMessageModel();
+            expect(fallbackValidator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+            expect(field.validationSummary.attributes.get('maxLength')).toBe(DEFAULT_TEXT_MAX_LENGTH.toLocaleString());
+        });
+
+        it('should use configured maxLength instead of fallback maxLength', () => {
+            const fallbackValidator = new MaxLengthFieldValidator([FormFieldTypes.TEXT], undefined, DEFAULT_TEXT_MAX_LENGTH);
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TEXT,
+                maxLength: 3,
+                value: '1234'
+            });
+
+            field.validationSummary = new ErrorMessageModel();
+            expect(fallbackValidator.validate(field)).toBe(false);
+            expect(field.validationSummary.attributes.get('maxLength')).toBe('3');
         });
 
         it('should allow empty values', () => {

@@ -43,7 +43,6 @@ import { IconComponent } from './icon';
 import { DynamicChipListComponent } from './dynamic-chip-list';
 import { IdentityUserInfoComponent } from './identity-user-info';
 import { UnsavedChangesDialogComponent } from './dialogs';
-import { MaterialModule } from './material.module';
 import { provideAppConfig } from './app-config/provide-app-config';
 
 /**
@@ -83,8 +82,7 @@ import { provideAppConfig } from './app-config/provide-app-config';
         ...NOTIFICATION_HISTORY_DIRECTIVES,
         ...SEARCH_TEXT_INPUT_DIRECTIVES,
         UnsavedChangesDialogComponent,
-        DynamicChipListComponent,
-        MaterialModule
+        DynamicChipListComponent
     ],
     providers: [...CORE_PIPES],
     exports: [
@@ -112,8 +110,7 @@ import { provideAppConfig } from './app-config/provide-app-config';
         ...NOTIFICATION_HISTORY_DIRECTIVES,
         ...SEARCH_TEXT_INPUT_DIRECTIVES,
         UnsavedChangesDialogComponent,
-        DynamicChipListComponent,
-        MaterialModule
+        DynamicChipListComponent
     ]
 })
 export class CoreModule {

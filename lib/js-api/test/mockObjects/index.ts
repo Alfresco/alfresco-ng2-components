@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-export * from './content-services/agent.mock';
 export * from './content-services/categories.mock';
 export * from './content-services/comment.mock';
 export * from './content-services/ecm-auth.mock';
@@ -27,7 +26,6 @@ export * from './content-services/groups.mock';
 export * from './content-services/find-nodes.mock';
 export * from './content-services/rendition.mock';
 export * from './content-services/search.mock';
-export * from './content-services/search-ai.mock';
 export * from './content-services/tag.mock';
 export * from './content-services/upload.mock';
 export * from './content-services/version.mock';

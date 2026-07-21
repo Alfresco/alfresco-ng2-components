@@ -18,19 +18,12 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
-import {
-    FormService,
-    FormFieldOption,
-    WidgetComponent,
-    ErrorWidgetComponent,
-    ErrorMessageModel,
-    FormFieldModel,
-    ReactiveFormWidget
-} from '@alfresco/adf-core';
+import { FormService, FormFieldOption, WidgetComponent, ErrorMessageModel, FormFieldModel, ReactiveFormWidget } from '@alfresco/adf-core';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { TaskFormService } from '../../services/task-form.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { AbstractControl, FormControl, ReactiveFormsModule, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { filter } from 'rxjs/operators';
@@ -39,7 +32,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'dropdown-widget',
-    imports: [CommonModule, TranslatePipe, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, ErrorWidgetComponent],
+    imports: [CommonModule, TranslatePipe, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, MatIconModule],
     templateUrl: './dropdown.widget.html',
     styleUrls: ['./dropdown.widget.scss'],
     host: {

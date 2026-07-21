@@ -52,7 +52,7 @@ describe('PdfViewer Integration with ViewerRenderComponent', () => {
 
     it('should render real PdfViewerComponent for PDF files', async () => {
         component.urlFile = 'fake-test-file.pdf';
-        component.ngOnChanges();
+        component.ngOnChanges({});
         fixture.detectChanges();
         await fixture.whenStable();
         fixture.detectChanges();
@@ -64,7 +64,7 @@ describe('PdfViewer Integration with ViewerRenderComponent', () => {
     it('should pass inputs to real PdfViewerComponent', async () => {
         component.urlFile = 'fake-test-file.pdf';
         component.allowThumbnails = true;
-        component.ngOnChanges();
+        component.ngOnChanges({});
         fixture.detectChanges();
         await fixture.whenStable();
         fixture.detectChanges();
@@ -87,7 +87,7 @@ describe('PdfViewer Integration with ViewerRenderComponent', () => {
         testingUtils = new UnitTestingUtils(fixture.debugElement);
 
         component.urlFile = 'fake-test-file.pdf';
-        component.ngOnChanges();
+        component.ngOnChanges({});
         fixture.detectChanges();
         await fixture.whenStable();
         fixture.detectChanges();

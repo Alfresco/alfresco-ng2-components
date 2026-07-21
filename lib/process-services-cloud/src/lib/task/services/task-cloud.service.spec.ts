@@ -17,7 +17,9 @@
 
 import { TestBed } from '@angular/core/testing';
 import { AppConfigService, TranslationService, NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { TaskCloudService } from './task-cloud.service';
+import { ADF_TASK_RUNTIME_BUNDLE_FALLBACK_ENABLED } from '../../services/task-runtime-bundle-fallback.token';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
 import {
     assignedTaskDetailsCloudMock,
@@ -26,7 +28,14 @@ import {
 } from '../task-header/mocks/task-details-cloud.mock';
 import { IdentityUserService } from '../../people/services/identity-user.service';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
-import { TASK_COMPLETED_STATE, TASK_CREATED_STATE, TASK_ASSIGNED_STATE } from '../models/task-details-cloud.model';
+import {
+    TASK_COMPLETED_STATE,
+    TASK_CREATED_STATE,
+    TASK_ASSIGNED_STATE,
+    TASK_CLAIM_PERMISSION,
+    TASK_RELEASE_PERMISSION,
+    TASK_VIEW_PERMISSION
+} from '../models/task-details-cloud.model';
 
 const fakeTaskDetailsCloud = {
     entry: {
@@ -69,6 +78,7 @@ describe('Task Cloud Service', () => {
     let translateService: TranslationService;
     let appConfigService: AppConfigService;
     let requestSpy: jasmine.Spy;
+    let runtimeBundleFallback$: BehaviorSubject<boolean>;
 
     const returnFakeTaskCompleteResults = () => Promise.resolve(taskCompleteCloudMock);
 
@@ -81,8 +91,10 @@ describe('Task Cloud Service', () => {
     const returnFakeCandidateGroupResults = () => Promise.resolve(['mockgroup1', 'mockgroup2', 'mockgroup3']);
 
     beforeEach(() => {
+        runtimeBundleFallback$ = new BehaviorSubject<boolean>(false);
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAuthModule]
+            imports: [NoopTranslateModule, NoopAuthModule],
+            providers: [{ provide: ADF_TASK_RUNTIME_BUNDLE_FALLBACK_ENABLED, useValue: runtimeBundleFallback$ }]
         });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         identityUserService = TestBed.inject(IdentityUserService);
@@ -579,6 +591,134 @@ describe('Task Cloud Service', () => {
         });
     });
 
+    describe('canClaimTask', () => {
+        describe('when the task exposes permissions', () => {
+            it('should allow claiming when the task is created and has the CLAIM permission', () => {
+                const task = {
+                    ...createdTaskDetailsCloudMock,
+                    status: TASK_CREATED_STATE,
+                    standalone: false,
+                    permissions: [TASK_CLAIM_PERMISSION]
+                };
+                expect(service.canClaimTask(task)).toBe(true);
+            });
+
+            it('should not allow claiming when the task is standalone', () => {
+                const task = {
+                    ...createdTaskDetailsCloudMock,
+                    status: TASK_CREATED_STATE,
+                    standalone: true,
+                    permissions: [TASK_CLAIM_PERMISSION]
+                };
+                expect(service.canClaimTask(task)).toBe(false);
+            });
+
+            it('should not allow claiming when the task is not created', () => {
+                const task = {
+                    ...createdTaskDetailsCloudMock,
+                    status: TASK_ASSIGNED_STATE,
+                    standalone: false,
+                    permissions: [TASK_CLAIM_PERMISSION]
+                };
+                expect(service.canClaimTask(task)).toBe(false);
+            });
+
+            it('should not allow claiming when the CLAIM permission is missing', () => {
+                const task = {
+                    ...createdTaskDetailsCloudMock,
+                    status: TASK_CREATED_STATE,
+                    standalone: false,
+                    permissions: [TASK_VIEW_PERMISSION]
+                };
+                expect(service.canClaimTask(task)).toBe(false);
+            });
+        });
+
+        describe('when the task does not expose permissions', () => {
+            it('should allow claiming a created, non-standalone task when permissions are missing', () => {
+                const task = { ...createdTaskDetailsCloudMock, status: TASK_CREATED_STATE, standalone: false, permissions: undefined };
+                expect(service.canClaimTask(task)).toBe(true);
+            });
+
+            it('should not allow claiming a standalone task when permissions are empty', () => {
+                const task = { ...createdTaskDetailsCloudMock, status: TASK_CREATED_STATE, standalone: true, permissions: [] };
+                expect(service.canClaimTask(task)).toBe(false);
+            });
+        });
+    });
+
+    describe('canUnclaimTask', () => {
+        describe('when the task exposes permissions', () => {
+            it('should allow releasing when the task is assigned to me and has the RELEASE permission', () => {
+                const task = {
+                    ...assignedTaskDetailsCloudMock,
+                    status: TASK_ASSIGNED_STATE,
+                    assignee: cloudMockUser.username,
+                    standalone: false,
+                    permissions: [TASK_RELEASE_PERMISSION]
+                };
+                expect(service.canUnclaimTask(task)).toBe(true);
+            });
+
+            it('should not allow releasing when the task is standalone', () => {
+                const task = {
+                    ...assignedTaskDetailsCloudMock,
+                    status: TASK_ASSIGNED_STATE,
+                    assignee: cloudMockUser.username,
+                    standalone: true,
+                    permissions: [TASK_RELEASE_PERMISSION]
+                };
+                expect(service.canUnclaimTask(task)).toBe(false);
+            });
+
+            it('should not allow releasing when the task is assigned to someone else', () => {
+                const task = {
+                    ...assignedTaskDetailsCloudMock,
+                    status: TASK_ASSIGNED_STATE,
+                    assignee: 'DifferentUser',
+                    standalone: false,
+                    permissions: [TASK_RELEASE_PERMISSION]
+                };
+                expect(service.canUnclaimTask(task)).toBe(false);
+            });
+
+            it('should not allow releasing when the RELEASE permission is missing', () => {
+                const task = {
+                    ...assignedTaskDetailsCloudMock,
+                    status: TASK_ASSIGNED_STATE,
+                    assignee: cloudMockUser.username,
+                    standalone: false,
+                    permissions: [TASK_VIEW_PERMISSION]
+                };
+                expect(service.canUnclaimTask(task)).toBe(false);
+            });
+        });
+
+        describe('when the task does not expose permissions', () => {
+            it('should allow releasing a task assigned to me when permissions are missing', () => {
+                const task = {
+                    ...assignedTaskDetailsCloudMock,
+                    status: TASK_ASSIGNED_STATE,
+                    assignee: cloudMockUser.username,
+                    standalone: false,
+                    permissions: undefined
+                };
+                expect(service.canUnclaimTask(task)).toBe(true);
+            });
+
+            it('should not allow releasing a task assigned to someone else when permissions are empty', () => {
+                const task = {
+                    ...assignedTaskDetailsCloudMock,
+                    status: TASK_ASSIGNED_STATE,
+                    assignee: 'DifferentUser',
+                    standalone: false,
+                    permissions: []
+                };
+                expect(service.canUnclaimTask(task)).toBe(false);
+            });
+        });
+    });
+
     describe('canClaimTaskByState', () => {
         it('should return true for a created, non-standalone task without relying on permissions', () => {
             const task = { ...createdTaskDetailsCloudMock, status: TASK_CREATED_STATE, standalone: false, permissions: undefined };
@@ -621,6 +761,56 @@ describe('Task Cloud Service', () => {
         it('should return false when the task is standalone', () => {
             const task = { ...assignedTaskDetailsCloudMock, status: TASK_ASSIGNED_STATE, assignee: 'AssignedTaskUser', standalone: true };
             expect(service.canUnclaimTaskByState(task)).toBe(false);
+        });
+    });
+
+    describe('getTaskById fallback', () => {
+        const appName = 'task-app';
+        const taskId = '12345678';
+
+        it('should use the Query Service only when the Runtime Bundle fallback is disabled', async () => {
+            runtimeBundleFallback$.next(false);
+            requestSpy.and.callFake(returnFakeTaskDetailsResults);
+
+            await firstValueFrom(service.getTaskById(appName, taskId));
+
+            const requestedUrls = requestSpy.calls.all().map((call) => call.args[0]);
+            expect(requestedUrls[0]).toContain(`/query/v1/tasks/${taskId}`);
+            expect(requestedUrls.some((url) => url.includes('/rb/'))).toBe(false);
+        });
+
+        it('should call the Runtime Bundle first when the fallback is enabled', async () => {
+            runtimeBundleFallback$.next(true);
+            requestSpy.and.callFake(returnFakeTaskDetailsResults);
+
+            await firstValueFrom(service.getTaskById(appName, taskId));
+
+            const [url] = requestSpy.calls.first().args;
+            expect(url).toContain(`/rb/v1/tasks/${taskId}`);
+        });
+
+        it('should use the Query Service when the Runtime Bundle returns 404', async () => {
+            runtimeBundleFallback$.next(true);
+            const notFoundError = Object.assign(new Error('Not Found'), { status: 404 });
+            requestSpy.and.callFake((url: string) => (url.includes('/rb/') ? Promise.reject(notFoundError) : Promise.resolve(fakeTaskDetailsCloud)));
+
+            const task: any = await firstValueFrom(service.getTaskById(appName, taskId));
+
+            const requestedUrls = requestSpy.calls.all().map((call) => call.args[0]);
+            expect(requestedUrls[0]).toContain(`/rb/v1/tasks/${taskId}`);
+            expect(requestedUrls[1]).toContain(`/query/v1/tasks/${taskId}`);
+            expect(task.id).toBe(fakeTaskDetailsCloud.entry.id);
+        });
+
+        it('should not use the Query Service for errors other than 404', async () => {
+            runtimeBundleFallback$.next(true);
+            const error = Object.assign(new Error('Server Error'), { status: 500 });
+            requestSpy.and.callFake((url: string) => (url.includes('/rb/') ? Promise.reject(error) : Promise.resolve(fakeTaskDetailsCloud)));
+
+            await expectAsync(firstValueFrom(service.getTaskById(appName, taskId))).toBeRejectedWith(error);
+
+            const requestedUrls = requestSpy.calls.all().map((call) => call.args[0]);
+            expect(requestedUrls.some((url) => url.includes('/query/'))).toBe(false);
         });
     });
 });

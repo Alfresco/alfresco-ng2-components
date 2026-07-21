@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { NgIf } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -31,7 +31,7 @@ declare const pdfjsLib: { PasswordResponses: { NEED_PASSWORD: number; INCORRECT_
     selector: 'adf-pdf-viewer-password-dialog',
     templateUrl: './pdf-viewer-password-dialog.html',
     styleUrls: ['./pdf-viewer-password-dialog.scss'],
-    imports: [MatDialogModule, IconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, TranslatePipe, NgIf, MatButtonModule],
+    imports: [MatDialogModule, IconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, TranslatePipe, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class PdfPasswordDialogComponent implements OnInit {
@@ -39,12 +39,15 @@ export class PdfPasswordDialogComponent implements OnInit {
     data = inject(MAT_DIALOG_DATA);
 
     passwordFormControl: UntypedFormControl;
+    passwordErrorStateMatcher: ErrorStateMatcher = {
+        isErrorState: () => this.isError()
+    };
 
     ngOnInit() {
         this.passwordFormControl = new UntypedFormControl('', [Validators.required]);
     }
 
-    isError(): boolean {
+    private isError(): boolean {
         return this.data.reason === pdfjsLib.PasswordResponses.INCORRECT_PASSWORD;
     }
 

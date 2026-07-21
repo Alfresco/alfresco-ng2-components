@@ -48,6 +48,24 @@ export interface TaskDetailsCloudModel {
     processDefinitionDeploymentId?: string;
 }
 
+export interface TaskDetailsCloudModelRuntimeBundle {
+    id?: string;
+    name?: string;
+    appName?: string;
+    assignee?: string;
+    appVersion?: number;
+    createdDate?: Date;
+    claimedDate?: Date;
+    formKey?: any;
+    priority?: number;
+    processDefinitionId?: string;
+    processInstanceId?: string;
+    status?: TaskStatus;
+    standalone?: boolean;
+    candidateUsers?: string[];
+    candidateGroups?: string[];
+}
+
 export interface StartTaskCloudResponseModel {
     entry: TaskDetailsCloudModel;
 }

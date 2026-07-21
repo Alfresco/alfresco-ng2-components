@@ -8,13 +8,22 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.registry_package.package_type == 'npm' && github.event.registry_package.name == 'adf-core'
     steps:
+      - name: Generate app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ vars.GH_APP_ENGINEERING_CONTRIB_CLIENT_ID }}
+          private-key: ${{ secrets.GH_APP_ENGINEERING_CONTRIB_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: alfresco-apps
+          permission-contents: write
       - name: Dispatch event to monorepo
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
           PACKAGE_NAME: ${{ github.event.registry_package.name }}
           PACKAGE_VERSION: ${{ github.event.registry_package.package_version.name }}
         with:
-          github-token: ${{ secrets.PAT_WRITE_PKG }}
+          github-token: ${{ steps.app-token.outputs.token }}
           retries: 3
           script: |
             const payload = {

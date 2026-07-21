@@ -1,5 +1,5 @@
 <div class="adf-textfield adf-text-widget {{ field.className }}"
-     [class.adf-invalid]="!field.isValid && isTouched()"
+     [class.adf-invalid]="(!field.isValid || maxLengthPasteError.isActive()) && isTouched()"
      [class.adf-readonly]="field.readOnly"
      [class.adf-left-label-input-container]="field.leftLabels">
     <div *ngIf="field.leftLabels">
@@ -18,20 +18,39 @@
                    type="text"
                    [id]="field.id"
                    [required]="field.required"
-                   [ngModel]="displayValue"
-                   (ngModelChange)="onValueChange($event)"
+                   [value]="field.value"
+                   [(ngModel)]="field.value"
+                   (ngModelChange)="onTextFieldChanged()"
                    [disabled]="field.readOnly || readOnly"
                    [textMask]="{mask: mask, isReversed: isMaskReversed}"
                    [placeholder]="placeholder"
                    [title]="field.tooltip"
-                   (blur)="markAsTouched()">
+                   [errorStateMatcher]="errorStateMatcher"
+                   (input)="onInput($event)"
+                   (paste)="onPaste($event)"
+                   (blur)="onBlur()">
+            @if (!fieldStatusTemplate && (maxLengthPasteError.isActive() || field.validationSummary?.message || (isInvalidFieldRequired() && isTouched()))) {
+                <mat-error>
+                    <mat-icon class="adf-error-icon" adf-icon="error_outline" />
+                    <span class="adf-error-text">
+                        @if (maxLengthPasteError.isActive()) {
+                            {{ maxLengthPasteError.message | translate:maxLengthPasteErrorParameters }}
+                        } @else if (field.validationSummary?.message) {
+                            {{ field.validationSummary.message | translate:translateParameters }}
+                        } @else {
+                            {{ 'FORM.FIELD.REQUIRED' | translate }}
+                        }
+                    </span>
+                </mat-error>
+            }
         </mat-form-field>
-        <ng-container *ngTemplateOutlet="fieldStatusTemplate ?? defaultErrorMessageTemplate; context: { $implicit: this }" />
-        <ng-template #defaultErrorMessageTemplate>
-            <div class="adf-error-messages-container">
-                <error-widget [error]="field.validationSummary" />
-                <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
-                              required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
+        <ng-container *ngTemplateOutlet="maxLengthPasteError.isActive() && fieldStatusTemplate ? maxLengthPasteErrorTemplate : (fieldStatusTemplate ?? null); context: { $implicit: this }" />
+        <ng-template #maxLengthPasteErrorTemplate>
+            <div class="adf-error-container adf-error-messages-container">
+                <div class="adf-error">
+                    <mat-icon class="adf-error-icon" adf-icon="error_outline" />
+                    <div class="adf-error-text">{{ maxLengthPasteError.message | translate:maxLengthPasteErrorParameters }}</div>
+                </div>
             </div>
         </ng-template>
     </div>

@@ -55,21 +55,21 @@ describe('PdfPasswordDialogComponent', () => {
         expect(component.passwordFormControl.value).toBe('');
     });
 
-    describe('isError', () => {
+    describe('passwordErrorStateMatcher', () => {
         beforeEach(() => {
             fixture.detectChanges();
         });
 
-        it('should return false', () => {
-            component.data.reason = pdfjsLib.PasswordResponses.NEED_PASSWORD;
-
-            expect(component.isError()).toBe(false);
-        });
-
-        it('should return true', () => {
+        it('should report error state when password is incorrect', () => {
             component.data.reason = pdfjsLib.PasswordResponses.INCORRECT_PASSWORD;
 
-            expect(component.isError()).toBe(true);
+            expect(component.passwordErrorStateMatcher.isErrorState(null, null)).toBe(true);
+        });
+
+        it('should not report error state when password is needed', () => {
+            component.data.reason = pdfjsLib.PasswordResponses.NEED_PASSWORD;
+
+            expect(component.passwordErrorStateMatcher.isErrorState(null, null)).toBe(false);
         });
     });
 

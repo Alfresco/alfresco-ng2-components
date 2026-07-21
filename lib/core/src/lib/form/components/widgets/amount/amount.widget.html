@@ -27,16 +27,17 @@
                 [(ngModel)]="amountWidgetValue"
                 (ngModelChange)="onFieldChangedAmountWidget()"
                 [disabled]="field.readOnly"
+                [errorStateMatcher]="errorStateMatcher"
                 (focus)="amountWidgetOnFocus()"
                 (blur)="amountWidgetOnBlur()"
                 />
+            @if (field.validationSummary?.message || (isInvalidFieldRequired() && isTouched())) {
+                <mat-error>
+                    <mat-icon class="adf-error-icon">error_outline</mat-icon>
+                    <span class="adf-error-text"
+                        >@if (field.validationSummary?.message) {{{ field.validationSummary.message | translate:translateParameters }}} @else {{{ 'FORM.FIELD.REQUIRED' | translate }}}</span>
+                </mat-error>
+            }
         </mat-form-field>
-        <div class="adf-error-messages-container">
-            <error-widget [error]="field.validationSummary" />
-            <error-widget
-                *ngIf="isInvalidFieldRequired() && isTouched()"
-                required="{{ 'FORM.FIELD.REQUIRED' | translate }}"
-            />
-        </div>
     </div>
 </div>

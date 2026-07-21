@@ -18,7 +18,7 @@
 import { inject, Injectable } from '@angular/core';
 import { CardViewArrayItem, TranslationService } from '@alfresco/adf-core';
 import { Observable, of, Subject, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
 import {
     StartTaskCloudResponseModel,
     TASK_ASSIGNED_STATE,
@@ -33,6 +33,7 @@ import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.m
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
 import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption } from '../models/task.model';
 import { IdentityUserService } from '../../people/services/identity-user.service';
+import { ADF_TASK_RUNTIME_BUNDLE_FALLBACK_ENABLED, resolveTaskRuntimeBundleFallback$ } from '../../services/task-runtime-bundle-fallback.token';
 
 @Injectable({
     providedIn: 'root'
@@ -40,6 +41,9 @@ import { IdentityUserService } from '../../people/services/identity-user.service
 export class TaskCloudService extends BaseCloudService {
     private readonly translateService = inject(TranslationService);
     private readonly identityUserService = inject(IdentityUserService);
+    private readonly runtimeBundleFallbackEnabled$ = resolveTaskRuntimeBundleFallback$(
+        inject(ADF_TASK_RUNTIME_BUNDLE_FALLBACK_ENABLED, { optional: true })
+    );
 
     dataChangesDetected$ = new Subject();
 
@@ -111,6 +115,9 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task can be completed
      */
     canClaimTask(taskDetails: TaskDetailsCloudModel): boolean {
+        if (!taskDetails?.permissions || taskDetails?.permissions?.length === 0) {
+            return this.canClaimTaskByState(taskDetails);
+        }
         return taskDetails?.status === TASK_CREATED_STATE && taskDetails?.permissions.includes(TASK_CLAIM_PERMISSION) && !taskDetails?.standalone;
     }
 
@@ -122,6 +129,9 @@ export class TaskCloudService extends BaseCloudService {
      */
     canUnclaimTask(taskDetails: TaskDetailsCloudModel): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
+        if (!taskDetails?.permissions || taskDetails?.permissions?.length === 0) {
+            return this.canUnclaimTaskByState(taskDetails);
+        }
         return (
             taskDetails?.status === TASK_ASSIGNED_STATE &&
             taskDetails?.assignee === currentUser &&
@@ -226,14 +236,22 @@ export class TaskCloudService extends BaseCloudService {
      *
      * @param appName Name of the app
      * @param taskId ID of the task whose details you want
-     * @param service The service to call. Either Query Service or Runtime Bundle Service.
      * @returns Task details
      */
-    getTaskById(appName: string, taskId: string, service: 'query' | 'rb' = 'query'): Observable<TaskDetailsCloudModel> {
+    getTaskById(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         if ((appName || appName === '') && taskId) {
-            const queryUrl = `${this.getBasePath(appName)}/${service}/v1/tasks/${taskId}`;
+            const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
+            const rbUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}`;
 
-            return this.get(queryUrl).pipe(map((res: any) => res.entry));
+            return this.runtimeBundleFallbackEnabled$.pipe(
+                take(1),
+                switchMap((runtimeBundleFirst) =>
+                    runtimeBundleFirst
+                        ? this.get(rbUrl).pipe(catchError((error) => (error?.status === 404 ? this.get(queryUrl) : throwError(() => error))))
+                        : this.get(queryUrl)
+                ),
+                map((res: any) => res.entry)
+            );
         } else {
             return throwError('AppName/TaskId not configured');
         }

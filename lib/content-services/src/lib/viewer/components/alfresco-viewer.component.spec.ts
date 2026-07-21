@@ -585,6 +585,35 @@ describe('AlfrescoViewerComponent', () => {
             expect(component.nodeMimeType).toEqual('application/msWord');
         });
 
+        it('should update fileName when the node name changes', async () => {
+            const defaultNode = {
+                id: '123',
+                name: 'Mock_Node.pdf',
+                content: { mimeType: 'application/pdf' },
+                properties: { 'cm:versionLabel': 'mock-version-label' }
+            } as Node;
+
+            component.nodeEntry = { entry: defaultNode };
+            component.nodeId = '123';
+
+            component.sidebarRightTemplateContext = { node: defaultNode };
+            component.sidebarLeftTemplateContext = { node: defaultNode };
+
+            fixture.detectChanges();
+
+            nodesApiService.nodeUpdated.next({
+                ...defaultNode,
+                name: 'Renamed_Node.pdf',
+                properties: { 'cm:versionLabel': 'mock-version-label' }
+            } as Node);
+
+            await fixture.whenStable();
+
+            expect(component.fileName).toBe('Renamed_Node.pdf');
+            expect(component.sidebarRightTemplateContext.node.name).toBe('Renamed_Node.pdf');
+            expect(component.sidebarLeftTemplateContext.node.name).toBe('Renamed_Node.pdf');
+        });
+
         describe('versioned file with rendition', () => {
             const docxMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
             const xlsxMimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';

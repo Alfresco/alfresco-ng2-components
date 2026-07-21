@@ -1,5 +1,6 @@
 /* stylelint-disable selector-class-pattern */
 @use '../../../../mat-selectors' as ms;
+@use '../../../../mixins' as mixins;
 
 .adf {
     // eslint-disable-selector-class-pattern
@@ -28,4 +29,8 @@
             width: 100%;
         }
     }
+}
+
+.adf-form-field-input .adf-error-icon {
+    @include mixins.adf-error-icon;
 }

@@ -729,14 +729,6 @@
       "JOIN_REQUESTED": "Solicitação enviada para aderir a esta biblioteca"
     }
   },
-  "KNOWLEDGE_RETRIEVAL": {
-    "SEARCH": {
-      "WARNINGS": {
-        "TOO_MANY_FILES_SELECTED": "Selecione no máximo {{ maxFiles }} ficheiros.",
-        "FOLDER_SELECTED": "As pastas não são compatíveis com os Agentes de IA."
-      }
-    }
-  },
   "NODE_FAVORITE_DIRECTIVE": {
     "MESSAGES": {
       "NODE_ADDED": "Adicionado {{ name }} aos favoritos",

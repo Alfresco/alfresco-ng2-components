@@ -45,7 +45,7 @@ import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
-import { DebugElement } from '@angular/core';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { FormUtilsService } from '../../../services/form-utils.service';
 
 describe('DropdownCloudWidgetComponent', () => {
@@ -234,8 +234,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
         describe('when failed on loading options from restUrl', () => {
             let getRestWidgetDataSpy: jasmine.Spy;
-            const getErrorMessageElement = (): DebugElement => fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
-            const errorIcon: string = 'error_outline';
+            const getFormFieldHarness = (): Promise<MatFormFieldHarness> => loader.getHarness(MatFormFieldHarness);
 
             beforeEach(() => {
                 getRestWidgetDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(throwError('Failed to fetch options'));
@@ -243,23 +242,21 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.field.optionType = 'rest';
             });
 
-            it('should show error message when widget is NOT readonly', () => {
+            it('should show error message when widget is NOT readonly', async () => {
                 widget.field.readOnly = false;
 
                 widget.ngOnInit();
                 fixture.detectChanges();
 
-                const errorMessageElement = getErrorMessageElement();
+                const formField = await getFormFieldHarness();
+                const errors = await formField.getTextErrors();
                 expect(getRestWidgetDataSpy).toHaveBeenCalled();
                 expect(widget.isRestApiFailed).toBe(true);
                 expect(widget.field.options.length).toEqual(0);
-                expect(errorMessageElement.nativeElement.textContent.trim()).toBe(errorIcon + 'FORM.FIELD.REST_API_FAILED');
-
-                const errorsMessagesElement = fixture.debugElement.query(By.css('.adf-error-messages-container'));
-                expect(errorsMessagesElement.nativeElement.classList.contains('adf-error-messages-container-visible')).toBe(true);
+                expect(errors[0]).toContain('FORM.FIELD.REST_API_FAILED');
             });
 
-            it('should NOT show required message when REST API failed', () => {
+            it('should NOT show required message when REST API failed', async () => {
                 widget.field.readOnly = false;
                 widget.field.required = true;
 
@@ -268,10 +265,10 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
 
                 expect(widget.isRestApiFailed).toBe(true);
-                const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
-                expect(requiredErrorElement).toBeFalsy();
-                const restApiFailedElement = getErrorMessageElement();
-                expect(restApiFailedElement).toBeTruthy();
+                const formField = await getFormFieldHarness();
+                const errors = await formField.getTextErrors();
+                expect(errors[0]).not.toContain('FORM.FIELD.REQUIRED');
+                expect(errors.length).toBeGreaterThan(0);
             });
 
             it('should NOT show error message when widget is readonly', async () => {
@@ -284,11 +281,12 @@ describe('DropdownCloudWidgetComponent', () => {
                 expect(widget.isRestApiFailed).toBe(true);
                 expect(widget.field.options.length).toEqual(0);
 
-                const errorsMessagesElement = fixture.debugElement.query(By.css('.adf-error-messages-container'));
-                expect(errorsMessagesElement.nativeElement.classList.contains('adf-error-messages-container-hidden')).toBe(true);
+                const formField = await getFormFieldHarness();
+                const errors = await formField.getTextErrors();
+                expect(errors.length).toBe(0);
             });
 
-            it('should NOT show REST API failed error message when form is in preview state', () => {
+            it('should NOT show REST API failed error message when form is in preview state', async () => {
                 widget.field.readOnly = false;
                 spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
 
@@ -299,8 +297,9 @@ describe('DropdownCloudWidgetComponent', () => {
                 expect(widget.isRestApiFailed).toBe(true);
                 expect(widget.field.options.length).toEqual(0);
 
-                const failedErrorMsgElement = getErrorMessageElement();
-                expect(failedErrorMsgElement).toBeNull();
+                const formField = await getFormFieldHarness();
+                const errors = await formField.getTextErrors();
+                expect(errors.length).toBe(0);
             });
         });
 
@@ -314,10 +313,10 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.field.isVisible = true;
             });
 
-            it('should show required message for rest type when required and value is empty after touch', fakeAsync(() => {
+            it('should show required message for rest type when required and value is empty after touch', async () => {
                 widget.ngOnInit();
                 fixture.detectChanges();
-                tick(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE);
+                await fixture.whenStable();
                 fixture.detectChanges();
 
                 expect(widget.isRestApiFailed).toBe(false);
@@ -326,10 +325,11 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.dropdownControl.markAsTouched();
                 fixture.detectChanges();
 
-                const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
-                expect(requiredErrorElement).toBeTruthy();
-                expect(requiredErrorElement.nativeElement.innerText).toEqual('FORM.FIELD.REQUIRED');
-            }));
+                const formField = await loader.getHarness(MatFormFieldHarness);
+                const errors = await formField.getTextErrors();
+                expect(errors.length).toBeGreaterThan(0);
+                expect(errors[0]).toContain('FORM.FIELD.REQUIRED');
+            });
         });
 
         it('should preselect dropdown widget value when Json (rest call) passed', async () => {
@@ -398,25 +398,27 @@ describe('DropdownCloudWidgetComponent', () => {
             widget.touched = true;
             fixture.detectChanges();
 
-            const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
-            expect(requiredErrorElement).toBeFalsy();
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            const errors = await formField.getTextErrors();
+            expect(errors.length).toBe(0);
         });
 
-        it('should not display required error when selecting a valid option for a required dropdown', fakeAsync(async () => {
+        it('should not display required error when selecting a valid option for a required dropdown', async () => {
             widget.field.required = true;
             widget.field.options = [{ id: 'empty', name: 'Choose empty' }, ...fakeOptionList];
 
             widget.ngOnInit();
-            tick(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE);
+            await fixture.whenStable();
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
             await dropdown.open();
 
             widget.touched = true;
             await dropdown.clickOptions({ selector: '[id="opt_1"]' });
 
-            const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
-            expect(requiredErrorElement).toBeFalsy();
-        }));
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            const errors = await formField.getTextErrors();
+            expect(errors.length).toBe(0);
+        });
 
         it('should not have a value when switching from an available option to the None option', async () => {
             widget.field.options = [{ id: 'empty', name: 'This is a mock none option' }, ...fakeOptionList];
@@ -455,7 +457,7 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(asterisk.textContent).toEqual('*');
         });
 
-        it('should display a required error when dropdown is required and has no value after an interaction', () => {
+        it('should display a required error when dropdown is required and has no value after an interaction', async () => {
             fixture.detectChanges();
 
             expect(element.querySelector('.adf-invalid')).toBeFalsy();
@@ -467,11 +469,10 @@ describe('DropdownCloudWidgetComponent', () => {
 
             expect(element.querySelector('.adf-invalid')).toBeTruthy();
 
-            const errorsMessagesElement = fixture.debugElement.query(By.css('.adf-error-messages-container'));
-            expect(errorsMessagesElement.nativeElement.classList.contains('adf-error-messages-container-visible')).toBe(true);
-
-            const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
-            expect(requiredErrorElement.nativeElement.innerText).toEqual('FORM.FIELD.REQUIRED');
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            const errors = await formField.getTextErrors();
+            expect(errors.length).toBeGreaterThan(0);
+            expect(errors[0]).toContain('FORM.FIELD.REQUIRED');
         });
 
         it('should NOT display a required error when dropdown is readonly', () => {
@@ -815,7 +816,6 @@ describe('DropdownCloudWidgetComponent', () => {
 
             it('should reset previous child options if the rest url failed for a linked dropdown', async () => {
                 const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
-                const errorIcon: string = 'error_outline';
                 const mockParentDropdown = { id: 'parentDropdown', value: 'mock-value', validate: () => true };
                 spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
 
@@ -828,27 +828,28 @@ describe('DropdownCloudWidgetComponent', () => {
                 selectParentOption('UK');
                 const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
                 await dropdown.open();
-                const failedErrorMsgElement1 = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
+                const formField = await loader.getHarness(MatFormFieldHarness);
+                const errors1 = await formField.getTextErrors();
 
                 expect(widget.isRestApiFailed).toBe(false);
                 expect(widget.field.options.length).toBe(2);
-                expect(failedErrorMsgElement1).toBeNull();
+                expect(errors1.length).toBe(0);
 
                 jsonDataSpy.and.returnValue(throwError('Failed to fetch options'));
                 selectParentOption('GR');
-                const failedErrorMsgElement2 = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
+                const errors2 = await formField.getTextErrors();
 
                 expect(widget.isRestApiFailed).toBe(true);
                 expect(widget.field.options.length).toBe(0);
-                expect(failedErrorMsgElement2.nativeElement.textContent.trim()).toBe(errorIcon + 'FORM.FIELD.REST_API_FAILED');
+                expect(errors2[0]).toContain('FORM.FIELD.REST_API_FAILED');
 
                 jsonDataSpy.and.returnValue(of(mockSecondRestDropdownOptions));
                 selectParentOption('IT');
-                const failedErrorMsgElement3 = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
+                const errors3 = await formField.getTextErrors();
 
                 expect(widget.isRestApiFailed).toBe(false);
                 expect(widget.field.options.length).toBe(2);
-                expect(failedErrorMsgElement3).toBeNull();
+                expect(errors3.length).toBe(0);
             });
 
             describe('Rest - On parent value changes (chain)', () => {
@@ -1067,8 +1068,6 @@ describe('DropdownCloudWidgetComponent', () => {
     });
 
     describe('variable options', () => {
-        const errorIcon: string = 'error_outline';
-
         const getVariableDropdownWidget = (
             variableName: string,
             optionsPath: string,
@@ -1090,9 +1089,10 @@ describe('DropdownCloudWidgetComponent', () => {
                 }
             });
 
-        const checkDropdownVariableOptionsFailed = () => {
-            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
-            expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe(errorIcon.concat('FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED'));
+        const checkDropdownVariableOptionsFailed = async () => {
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            const errors = await formField.getTextErrors();
+            expect(errors[0]).toContain('FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED');
 
             expect(widget.field.options.length).toEqual(0);
         };
@@ -1258,7 +1258,7 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(await allOptions[2].getText()).toEqual('Parrot');
         });
 
-        it('should return empty array and display error when path is incorrect', () => {
+        it('should return empty array and display error when path is incorrect', async () => {
             widget.field = getVariableDropdownWidget(
                 'variables.json-variable',
                 'response.wrongPath.players',
@@ -1268,10 +1268,10 @@ describe('DropdownCloudWidgetComponent', () => {
             );
             fixture.detectChanges();
 
-            checkDropdownVariableOptionsFailed();
+            await checkDropdownVariableOptionsFailed();
         });
 
-        it('should NOT show required message when variable options failed', () => {
+        it('should NOT show required message when variable options failed', async () => {
             widget.field = getVariableDropdownWidget(
                 'variables.json-variable',
                 'response.wrongPath.players',
@@ -1283,13 +1283,13 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             expect(widget.variableOptionsFailed).toBe(true);
-            const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
-            expect(requiredErrorElement).toBeFalsy();
-            const variableFailedElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
-            expect(variableFailedElement).toBeTruthy();
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            const errors = await formField.getTextErrors();
+            expect(errors[0]).not.toContain('FORM.FIELD.REQUIRED');
+            expect(errors.length).toBeGreaterThan(0);
         });
 
-        it('should show required message for variable type when options load successfully and required and value is empty after touch', fakeAsync(() => {
+        it('should show required message for variable type when options load successfully and required and value is empty after touch', async () => {
             widget.field = getVariableDropdownWidget(
                 'variables.json-variable',
                 'response.people.players',
@@ -1302,7 +1302,7 @@ describe('DropdownCloudWidgetComponent', () => {
             widget.field.isVisible = true;
             widget.ngOnInit();
             fixture.detectChanges();
-            tick(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE);
+            await fixture.whenStable();
             fixture.detectChanges();
 
             expect(widget.variableOptionsFailed).toBe(false);
@@ -1311,12 +1311,13 @@ describe('DropdownCloudWidgetComponent', () => {
             widget.dropdownControl.markAsTouched();
             fixture.detectChanges();
 
-            const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
-            expect(requiredErrorElement).toBeTruthy();
-            expect(requiredErrorElement.nativeElement.innerText).toEqual('FORM.FIELD.REQUIRED');
-        }));
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            const errors = await formField.getTextErrors();
+            expect(errors.length).toBeGreaterThan(0);
+            expect(errors[0]).toContain('FORM.FIELD.REQUIRED');
+        });
 
-        it('should return empty array and display error when id is incorrect', () => {
+        it('should return empty array and display error when id is incorrect', async () => {
             widget.field = getVariableDropdownWidget(
                 'variables.json-variable',
                 'response.people.players',
@@ -1326,10 +1327,10 @@ describe('DropdownCloudWidgetComponent', () => {
             );
             fixture.detectChanges();
 
-            checkDropdownVariableOptionsFailed();
+            await checkDropdownVariableOptionsFailed();
         });
 
-        it('should return empty array and display error when label is incorrect', () => {
+        it('should return empty array and display error when label is incorrect', async () => {
             widget.field = getVariableDropdownWidget(
                 'variables.json-variable',
                 'response.people.players',
@@ -1339,10 +1340,10 @@ describe('DropdownCloudWidgetComponent', () => {
             );
             fixture.detectChanges();
 
-            checkDropdownVariableOptionsFailed();
+            await checkDropdownVariableOptionsFailed();
         });
 
-        it('should return empty array and display error when variable is NOT found', () => {
+        it('should return empty array and display error when variable is NOT found', async () => {
             widget.field = getVariableDropdownWidget(
                 'variables.wrong-variable-id',
                 'response.people.players',
@@ -1352,17 +1353,17 @@ describe('DropdownCloudWidgetComponent', () => {
             );
             fixture.detectChanges();
 
-            checkDropdownVariableOptionsFailed();
+            await checkDropdownVariableOptionsFailed();
         });
 
-        it('should return empty array and display error if there are NO process and form variables', () => {
+        it('should return empty array and display error if there are NO process and form variables', async () => {
             widget.field = getVariableDropdownWidget('variables.json-variable', 'response.people.players', 'playerId', 'playerFullName', [], []);
             fixture.detectChanges();
 
-            checkDropdownVariableOptionsFailed();
+            await checkDropdownVariableOptionsFailed();
         });
 
-        it('should NOT display variable options failed error when form is in the preview state', () => {
+        it('should NOT display variable options failed error when form is in the preview state', async () => {
             widget.field = getVariableDropdownWidget(
                 'variables.json-variable',
                 'response.wrongPath.players',
@@ -1373,11 +1374,12 @@ describe('DropdownCloudWidgetComponent', () => {
             spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
             fixture.detectChanges();
 
-            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
-            expect(failedErrorMsgElement).toBeNull();
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            const errors = await formField.getTextErrors();
+            expect(errors.length).toBe(0);
         });
 
-        it('should NOT display errors if field is readonly', () => {
+        it('should NOT display errors if field is readonly', async () => {
             widget.field = getVariableDropdownWidget(
                 'variables.wrong-variable-id',
                 'response.wrongPath.players',
@@ -1388,8 +1390,9 @@ describe('DropdownCloudWidgetComponent', () => {
             widget.field.readOnly = true;
             fixture.detectChanges();
 
-            const errorsMessagesElement = fixture.debugElement.query(By.css('.adf-error-messages-container'));
-            expect(errorsMessagesElement.nativeElement.classList.contains('adf-error-messages-container-hidden')).toBe(true);
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            const errors = await formField.getTextErrors();
+            expect(errors.length).toBe(0);
         });
 
         it('should update options when form variable changes', async () => {

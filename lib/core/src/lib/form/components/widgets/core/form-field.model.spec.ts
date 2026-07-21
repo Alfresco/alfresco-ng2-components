@@ -16,6 +16,8 @@
  */
 
 import { DateFnsUtils } from '../../../../common';
+import { FormRulesEvent } from '../../../events/form-rules.event';
+import { firstValueFrom, map, Subject, take, timeout } from 'rxjs';
 import { FormFieldTypes } from './form-field-types';
 import { RequiredFieldValidator } from './form-field-validator';
 import { FormFieldModel } from './form-field.model';
@@ -1541,6 +1543,17 @@ describe('FormFieldModel', () => {
         });
 
         describe('add row', () => {
+            const assignFormRulesEventSubject = (): Subject<FormRulesEvent> => {
+                const formRulesEvent = new Subject<FormRulesEvent>();
+                (field.form as any).formService = {
+                    formRulesEvent,
+                    validateForm: new Subject(),
+                    validateFormField: new Subject(),
+                    formFieldValueChanged: new Subject()
+                };
+                return formRulesEvent;
+            };
+
             it('should add row if allowed by limit param', () => {
                 expect(field.rows.length).toBe(2);
 
@@ -1568,18 +1581,56 @@ describe('FormFieldModel', () => {
                 expect(field.rows.length).toBe(5);
             });
 
-            it('should call onRepeatableSectionChanged', () => {
-                spyOn(field.form, 'onRepeatableSectionChanged').and.callThrough();
+            it('should call onRepeatableSectionRowCountChanged', () => {
+                spyOn(field.form, 'onRepeatableSectionRowCountChanged').and.callThrough();
 
-                expect(field.form.onRepeatableSectionChanged).not.toHaveBeenCalled();
+                expect(field.form.onRepeatableSectionRowCountChanged).not.toHaveBeenCalled();
 
                 field.addRow(field.fields, form);
 
-                expect(field.form.onRepeatableSectionChanged).toHaveBeenCalled();
+                expect(field.form.onRepeatableSectionRowCountChanged).toHaveBeenCalledWith(field);
+            });
+
+            it('should emit onRowCountChanged via formService.formRulesEvent', async () => {
+                const formRulesEvent = assignFormRulesEventSubject();
+                const emissionPromise = firstValueFrom(formRulesEvent);
+
+                field.addRow(field.fields, form);
+
+                const emittedEvent = await emissionPromise;
+                expect(emittedEvent.type).toBe('onRowCountChanged');
+                expect(emittedEvent.field).toBe(field);
+            });
+
+            it('should NOT emit onRowCountChanged when add row is not allowed', async () => {
+                const formRulesEvent = assignFormRulesEventSubject();
+
+                field.addRow(field.fields, form);
+                field.addRow(field.fields, form);
+                field.addRow(field.fields, form);
+                expect(field.rows.length).toBe(5);
+
+                const emissionPromise = firstValueFrom(formRulesEvent.pipe(timeout(50)));
+
+                field.addRow(field.fields, form);
+
+                await expectAsync(emissionPromise).toBeRejected();
+                expect(field.rows.length).toBe(5);
             });
         });
 
         describe('remove row', () => {
+            const assignFormRulesEventSubject = (): Subject<FormRulesEvent> => {
+                const formRulesEvent = new Subject<FormRulesEvent>();
+                (field.form as any).formService = {
+                    formRulesEvent,
+                    validateForm: new Subject(),
+                    validateFormField: new Subject(),
+                    formFieldValueChanged: new Subject()
+                };
+                return formRulesEvent;
+            };
+
             it('should remove row if target index exists', () => {
                 expect(field.rows.length).toBe(2);
 
@@ -1646,14 +1697,77 @@ describe('FormFieldModel', () => {
                 expect(field.form.onFormFieldChanged).not.toHaveBeenCalled();
             });
 
-            it('should call onRepeatableSectionChanged', () => {
-                spyOn(field.form, 'onRepeatableSectionChanged').and.callThrough();
+            it('should call onRepeatableSectionRowCountChanged', () => {
+                spyOn(field.form, 'onRepeatableSectionRowCountChanged').and.callThrough();
 
-                expect(field.form.onRepeatableSectionChanged).not.toHaveBeenCalled();
+                expect(field.form.onRepeatableSectionRowCountChanged).not.toHaveBeenCalled();
 
                 field.removeRow(1);
 
-                expect(field.form.onRepeatableSectionChanged).toHaveBeenCalled();
+                expect(field.form.onRepeatableSectionRowCountChanged).toHaveBeenCalledWith(field);
+            });
+
+            it('should emit onRowCountChanged via formService.formRulesEvent', async () => {
+                const formRulesEvent = assignFormRulesEventSubject();
+                const emissionPromise = firstValueFrom(formRulesEvent);
+
+                field.removeRow(1);
+
+                const emittedEvent = await emissionPromise;
+                expect(emittedEvent.type).toBe('onRowCountChanged');
+                expect(emittedEvent.field).toBe(field);
+            });
+
+            it('should update form values before emitting onRowCountChanged', async () => {
+                const formRulesEvent = assignFormRulesEventSubject();
+                form.values[field.id] = [
+                    {
+                        Text0wwp7n: 'mock-1',
+                        Integer0rzkwq: 1
+                    },
+                    {
+                        Text0wwp7n: 'mock-2',
+                        Integer0rzkwq: 2
+                    }
+                ];
+
+                const valuesLengthAtEmissionPromise = firstValueFrom(
+                    formRulesEvent.pipe(
+                        take(1),
+                        map(() => form.values[field.id].length)
+                    )
+                );
+
+                field.removeRow(1);
+
+                const valuesLengthAtEmission = await valuesLengthAtEmissionPromise;
+                expect(valuesLengthAtEmission).toBe(1);
+                expect(form.values[field.id]).toEqual([
+                    {
+                        Text0wwp7n: 'mock-1',
+                        Integer0rzkwq: 1
+                    }
+                ]);
+            });
+
+            it('should emit onRowCountChanged even when form values do not contain section id', async () => {
+                const formRulesEvent = assignFormRulesEventSubject();
+                form.values = {};
+                const emissionPromise = firstValueFrom(formRulesEvent);
+
+                field.removeRow(1);
+
+                const emittedEvent = await emissionPromise;
+                expect(emittedEvent.type).toBe('onRowCountChanged');
+            });
+
+            it('should NOT emit onRowCountChanged when remove row target index does not exist', async () => {
+                const formRulesEvent = assignFormRulesEventSubject();
+                const emissionPromise = firstValueFrom(formRulesEvent.pipe(timeout(50)));
+
+                field.removeRow(2);
+
+                await expectAsync(emissionPromise).toBeRejected();
             });
         });
 
@@ -1820,6 +1934,28 @@ describe('FormFieldModel', () => {
             field.restoreRuntimeValue(undefined);
 
             expect(form.values['text1']).toBe('existing');
+        });
+    });
+});
+
+describe('FormFieldTypes', () => {
+    describe('isDisplayTextType', () => {
+        it('should return true for text, multi-line text, readonly text and display value types', () => {
+            expect(FormFieldTypes.isDisplayTextType(FormFieldTypes.TEXT)).toBe(true);
+            expect(FormFieldTypes.isDisplayTextType(FormFieldTypes.MULTILINE_TEXT)).toBe(true);
+            expect(FormFieldTypes.isDisplayTextType(FormFieldTypes.READONLY_TEXT)).toBe(true);
+            expect(FormFieldTypes.isDisplayTextType(FormFieldTypes.DISPLAY_VALUE)).toBe(true);
+        });
+
+        it('should return false for typed source field types', () => {
+            expect(FormFieldTypes.isDisplayTextType(FormFieldTypes.PEOPLE)).toBe(false);
+            expect(FormFieldTypes.isDisplayTextType(FormFieldTypes.FUNCTIONAL_GROUP)).toBe(false);
+            expect(FormFieldTypes.isDisplayTextType(FormFieldTypes.DROPDOWN)).toBe(false);
+            expect(FormFieldTypes.isDisplayTextType(FormFieldTypes.RADIO_BUTTONS)).toBe(false);
+        });
+
+        it('should return false for an unknown type', () => {
+            expect(FormFieldTypes.isDisplayTextType('unknown-type')).toBe(false);
         });
     });
 });

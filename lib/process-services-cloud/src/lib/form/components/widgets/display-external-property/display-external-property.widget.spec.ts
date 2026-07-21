@@ -20,6 +20,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { DisplayExternalPropertyWidgetComponent } from './display-external-property.widget';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { By } from '@angular/platform-browser';
@@ -104,9 +105,10 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should display the error message', () => {
-            const errorElement = element.querySelector('error-widget');
-            expect(errorElement.textContent.trim()).toContain('FORM.FIELD.EXTERNAL_PROPERTY_LOAD_FAILED');
+        it('should display the error message', async () => {
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            const errors = await formField.getTextErrors();
+            expect(errors[0].trim()).toContain('FORM.FIELD.EXTERNAL_PROPERTY_LOAD_FAILED');
         });
     });
 
@@ -123,9 +125,10 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should NOT display the error message', () => {
-            const errorElement = element.querySelector('error-widget');
-            expect(errorElement).toBeFalsy();
+        it('should NOT display the error message', async () => {
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            const errors = await formField.getTextErrors();
+            expect(errors.length).toBe(0);
         });
 
         it('should display external property name', () => {

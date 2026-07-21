@@ -34,7 +34,6 @@ export interface AlfrescoApiType {
     gsClient: LegacyHttpClient;
     authClient: LegacyHttpClient;
     processAuth: LegacyHttpClient;
-    hxiConnectorClient: LegacyHttpClient;
 
     setConfig(config: AlfrescoApiConfig): void;
     changeWithCredentialsConfig(withCredentials: boolean): void;

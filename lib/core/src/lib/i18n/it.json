@@ -669,9 +669,9 @@
     "NO_LABEL": "No"
   },
   "SESSION_TIMEOUT": {
-    "TITLE": "Are you still working?",
-    "MESSAGE": "Your session will end in {{seconds}} seconds because there has been no activity.",
-    "LOG_OUT": "Log out",
-    "CONTINUE_WORKING": "Continue working"
+    "TITLE": "Stai ancora lavorando?",
+    "MESSAGE": "La sessione terminerà tra {{seconds}} secondi a causa dell'inattività.",
+    "LOG_OUT": "Disconnetti",
+    "CONTINUE_WORKING": "Continua a lavorare"
   }
 }

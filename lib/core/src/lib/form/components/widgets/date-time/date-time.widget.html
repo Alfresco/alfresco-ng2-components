@@ -37,9 +37,12 @@
                 [touchUi]="true"
                 [timeInterval]="5"
                 [disabled]="field.readOnly" />
+            @if (datetimeInputControl.invalid && datetimeInputControl.touched && field.validationSummary?.message) {
+                <mat-error>
+                    <mat-icon class="adf-error-icon">error_outline</mat-icon>
+                    <span class="adf-error-text">{{ field.validationSummary.message | translate:translateParameters }}</span>
+                </mat-error>
+            }
         </mat-form-field>
-        <div class="adf-error-messages-container">
-            <error-widget *ngIf="datetimeInputControl.invalid && datetimeInputControl.touched" [error]="field.validationSummary" />
-        </div>
     </div>
 </div>

@@ -1,4 +1,5 @@
 @use '../../../../flex' as flex;
+@use '../../../../mixins' as mixins;
 
 .adf-edit-process-filter-date-error-container {
     position: absolute;
@@ -61,4 +62,8 @@
             }
         }
     }
+}
+
+.adf-form-field-input .adf-error-icon {
+    @include mixins.adf-error-icon;
 }

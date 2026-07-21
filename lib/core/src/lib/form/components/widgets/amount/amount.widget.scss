@@ -1,5 +1,6 @@
 /* stylelint-disable selector-class-pattern */
 @use '../../../../styles/mat-selectors' as ms;
+@use '../../../../styles/mixins' as mixins;
 
 .adf {
     &-amount-widget {
@@ -24,4 +25,8 @@
             margin-top: 3px;
         }
     }
+}
+
+.adf-form-field-input .adf-error-icon {
+    @include mixins.adf-error-icon;
 }

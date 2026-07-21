@@ -17,21 +17,23 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { FormFieldOption, WidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
+import { FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'typeahead-widget',
-    imports: [CommonModule, TranslatePipe, MatFormFieldModule, FormsModule, MatAutocompleteModule, ErrorWidgetComponent, MatInputModule],
+    imports: [CommonModule, TranslatePipe, MatFormFieldModule, FormsModule, MatAutocompleteModule, MatInputModule, MatIconModule],
     templateUrl: './typeahead.widget.html',
     styleUrls: ['./typeahead.widget.scss'],
     host: {
@@ -52,11 +54,13 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     value: string;
     oldValue: string;
     options: FormFieldOption[] = [];
+    errorStateMatcher: ErrorStateMatcher;
 
     private readonly taskFormService = inject(TaskFormService);
     private readonly processDefinitionService = inject(ProcessDefinitionService);
 
     ngOnInit() {
+        this.initErrorStateMatcher();
         if (this.field.form.taskId && this.field.restUrl) {
             this.getValuesByTaskId();
         } else if (this.field.form.processDefinitionId && this.field.restUrl) {
@@ -152,5 +156,12 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
 
     isReadOnlyType(): boolean {
         return this.field.type === 'readonly';
+    }
+
+    private initErrorStateMatcher(): void {
+        this.errorStateMatcher = {
+            isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
+                !!this.field.validationSummary?.message || this.isInvalidFieldRequired()
+        };
     }
 }

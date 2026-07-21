@@ -84,7 +84,7 @@
             />
             @if (cardViewDateTimeControl.hasError('matDatepickerParse')) {
                 <mat-error>
-                    {{ 'FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT' | translate }}
+                    <span class="adf-error-text">{{ 'FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT' | translate }}</span>
                 </mat-error>
             }
         </mat-form-field>

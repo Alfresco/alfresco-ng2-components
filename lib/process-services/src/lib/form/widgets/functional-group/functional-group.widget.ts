@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ElementRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ErrorWidgetComponent, GroupModel, WidgetComponent } from '@alfresco/adf-core';
+import { GroupModel, WidgetComponent } from '@alfresco/adf-core';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { merge, of } from 'rxjs';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
@@ -40,7 +40,6 @@ import { MatIconModule } from '@angular/material/icon';
         MatInputModule,
         ReactiveFormsModule,
         MatAutocompleteModule,
-        ErrorWidgetComponent,
         MatChipsModule,
         MatIconModule
     ],

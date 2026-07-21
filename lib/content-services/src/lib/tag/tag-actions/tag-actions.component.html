@@ -24,8 +24,14 @@
                     type="text"
                     (keypress)="cleanErrorMsg()"
                     [(ngModel)]="newTagName"
+                    [errorStateMatcher]="tagErrorStateMatcher"
                 />
-                <mat-hint data-automation-id="errorMessage" *ngIf="error" [ngStyle]="{ color: 'red' }" align="start">{{ errorMsg }} </mat-hint>
+                @if (errorMsg) {
+                    <mat-error data-automation-id="errorMessage">
+                        <mat-icon class="adf-error-icon">error_outline</mat-icon>
+                        <span class="adf-error-text">{{ errorMsg }}</span>
+                    </mat-error>
+                }
             </mat-form-field>
         </td>
         <td>

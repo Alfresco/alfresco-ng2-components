@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-insights",
   "description": "Alfresco ADF insights",
-  "version": "9.0.0",
+  "version": "9.1.0",
   "author": "Hyland Software, Inc. and its affiliates",
   "repository": {
     "type": "git",
@@ -21,8 +21,8 @@
     "@angular/core": ">=20.3.25",
     "@angular/forms": ">=20.3.25",
     "@angular/material": ">=20.2.14",
-    "@alfresco/adf-core": ">=8.5.0",
-    "@alfresco/adf-content-services": ">=8.5.0",
+    "@alfresco/adf-core": ">=9.0.0",
+    "@alfresco/adf-content-services": ">=9.0.0",
     "@ngx-translate/core": ">=17.0.0"
   },
   "keywords": [

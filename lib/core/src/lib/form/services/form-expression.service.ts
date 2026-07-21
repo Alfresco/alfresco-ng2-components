@@ -71,7 +71,7 @@ export class FormExpressionService {
             return '';
         }
 
-        if (typeof expressionResult === 'string') {
+        if (typeof expressionResult === 'string' && !this.formattingEnabled) {
             return expressionResult;
         }
 
@@ -88,6 +88,10 @@ export class FormExpressionService {
 
         if (sourceField && this.formFieldValueFormatter.hasFormatter(sourceField.type)) {
             return this.formFieldValueFormatter.formatValue(expressionResult, sourceField);
+        }
+
+        if (typeof expressionResult === 'string') {
+            return expressionResult;
         }
 
         return this.formFieldValueFormatter.stringifyValue(expressionResult);

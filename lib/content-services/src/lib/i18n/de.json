@@ -729,14 +729,6 @@
       "JOIN_REQUESTED": "Anfrage zum Bibliotheksbeitritt abgeschickt"
     }
   },
-  "KNOWLEDGE_RETRIEVAL": {
-    "SEARCH": {
-      "WARNINGS": {
-        "TOO_MANY_FILES_SELECTED": "Bitte wählen Sie nicht mehr als {{ maxFiles }} Dateien.",
-        "FOLDER_SELECTED": "Ordner sind nicht kompatibel mit KI Agents."
-      }
-    }
-  },
   "NODE_FAVORITE_DIRECTIVE": {
     "MESSAGES": {
       "NODE_ADDED": "{{ name }} zu Favoriten hinzugefügt",
