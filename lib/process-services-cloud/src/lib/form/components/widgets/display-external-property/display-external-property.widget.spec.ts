@@ -148,7 +148,7 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
         });
 
         it('should be able to display label with asterisk', async () => {
-            const formField = await testingUtils.getMatFormField();
+            const formField = await testingUtils.formField.get();
             const formControl = await formField.getControl();
 
             expect(formControl.isRequired).toBeTruthy();

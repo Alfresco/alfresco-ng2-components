@@ -172,7 +172,7 @@ describe('LayoutContainerComponent', () => {
         let sidenav: MatSidenavHarness;
 
         beforeEach(async () => {
-            sidenav = await unitTestingUtils.getMatSidenav();
+            sidenav = await unitTestingUtils.sidenav.get();
         });
 
         it('should switch to sidenav to compact state', async () => {
@@ -221,7 +221,7 @@ describe('LayoutContainerComponent', () => {
         };
 
         beforeEach(async () => {
-            sidenav = await unitTestingUtils.getMatSidenav();
+            sidenav = await unitTestingUtils.sidenav.get();
         });
 
         it('should close sidenav on mobile and open on desktop', async () => {

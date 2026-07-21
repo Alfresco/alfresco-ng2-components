@@ -90,7 +90,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = true;
             fixture.detectChanges();
 
-            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
+            const checkbox = await testingUtils.checkbox.getByDataAutomationId('card-boolean-boolKey');
             expect(checkbox).toBeDefined();
             expect(await checkbox.isChecked()).toBeTrue();
         });
@@ -102,7 +102,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.default = true;
             fixture.detectChanges();
 
-            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
+            const checkbox = await testingUtils.checkbox.getByDataAutomationId('card-boolean-boolKey');
             expect(checkbox).toBeDefined();
             expect(await checkbox.isChecked()).toBeTrue();
         });
@@ -111,7 +111,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = false;
             fixture.detectChanges();
 
-            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
+            const checkbox = await testingUtils.checkbox.getByDataAutomationId('card-boolean-boolKey');
             expect(checkbox).toBeDefined();
             expect(await checkbox.isChecked()).toBeFalse();
         });
@@ -123,7 +123,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.default = false;
             fixture.detectChanges();
 
-            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
+            const checkbox = await testingUtils.checkbox.getByDataAutomationId('card-boolean-boolKey');
             expect(checkbox).toBeDefined();
             expect(await checkbox.isChecked()).toBeFalse();
         });
@@ -134,7 +134,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = true;
             fixture.detectChanges();
 
-            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
+            const checkbox = await testingUtils.checkbox.getByDataAutomationId('card-boolean-boolKey');
             expect(checkbox).toBeDefined();
             expect(await checkbox.isDisabled()).toBeFalse();
         });
@@ -145,7 +145,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = true;
             fixture.detectChanges();
 
-            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
+            const checkbox = await testingUtils.checkbox.getByDataAutomationId('card-boolean-boolKey');
             expect(checkbox).toBeDefined();
             expect(await checkbox.isDisabled()).toBeTrue();
         });
@@ -156,7 +156,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = true;
             fixture.detectChanges();
 
-            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
+            const checkbox = await testingUtils.checkbox.getByDataAutomationId('card-boolean-boolKey');
             expect(checkbox).toBeDefined();
             expect(await checkbox.isDisabled()).toBeTrue();
         });

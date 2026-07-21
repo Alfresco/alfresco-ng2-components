@@ -72,7 +72,7 @@ describe('InfiniteSelectScrollDirective', () => {
     }));
 
     it('should call an action on scrollEnd event', async () => {
-        const panel = await testingUtils.getMatSelectHost();
+        const panel = await testingUtils.select.getHost();
         await panel.dispatchEvent('scrollEnd');
 
         expect(component.options.length).toBe(60);

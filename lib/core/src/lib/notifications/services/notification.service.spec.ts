@@ -125,14 +125,14 @@ describe('NotificationService', () => {
         fixture.componentInstance.sendMessage();
         fixture.detectChanges();
 
-        const isLoaded = await testingUtils.checkIfMatSnackbarExists();
+        const isLoaded = await testingUtils.snackbar.exists();
         expect(isLoaded).toBe(true);
     });
 
     it('should open a message notification bar without custom configuration', async () => {
         fixture.componentInstance.sendMessageWithoutConfig();
         fixture.detectChanges();
-        const isLoaded = await testingUtils.checkIfMatSnackbarExists();
+        const isLoaded = await testingUtils.snackbar.exists();
         expect(isLoaded).toBe(true);
     });
 
@@ -140,35 +140,35 @@ describe('NotificationService', () => {
         fixture.componentInstance.sendCustomMessage();
         fixture.detectChanges();
 
-        expect(await testingUtils.checkIfMatSnackbarExists()).toBe(true);
+        expect(await testingUtils.snackbar.exists()).toBe(true);
     });
 
     it('should open a message notification bar with action', async () => {
         fixture.componentInstance.sendMessageAction();
-        expect(await testingUtils.checkIfMatSnackbarExists()).toBe(true);
+        expect(await testingUtils.snackbar.exists()).toBe(true);
     });
 
     it('should open a message notification bar with action and custom configuration', async () => {
         fixture.componentInstance.sendCustomMessageAction();
         fixture.detectChanges();
 
-        expect(await testingUtils.checkIfMatSnackbarExists()).toBe(true);
+        expect(await testingUtils.snackbar.exists()).toBe(true);
     });
 
     it('should open a message notification bar with action and no custom configuration', async () => {
         fixture.componentInstance.sendMessageActionWithoutConfig();
         fixture.detectChanges();
 
-        expect(await testingUtils.checkIfMatSnackbarExists()).toBe(true);
+        expect(await testingUtils.snackbar.exists()).toBe(true);
     });
 
     it('should open a message notification bar with a decorative icon', async () => {
         fixture.componentInstance.sendMessageWithDecorativeIcon();
-        expect(await testingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId('adf-snackbar-message-content')).toBe(true);
+        expect(await testingUtils.icon.existsWithAncestorByDataAutomationId('adf-snackbar-message-content')).toBe(true);
     });
 
     it('should open a message notification bar with action and a decorative icon', async () => {
         fixture.componentInstance.sendMessageWithDecorativeIconAndAction();
-        expect(await testingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId('adf-snackbar-message-content')).toBe(true);
+        expect(await testingUtils.icon.existsWithAncestorByDataAutomationId('adf-snackbar-message-content')).toBe(true);
     });
 });

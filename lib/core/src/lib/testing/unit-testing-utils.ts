@@ -38,21 +38,412 @@ import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/te
 import { MatMenuHarness } from '@angular/material/menu/testing';
 import { MatSidenavHarness } from '@angular/material/sidenav/testing';
 
+abstract class HarnessBase {
+    constructor(readonly loader: HarnessLoader) {}
+}
+
+class ButtonUtils extends HarnessBase {
+    async get(): Promise<MatButtonHarness> {
+        return this.loader.getHarness(MatButtonHarness);
+    }
+
+    async getByCSS(selector: string): Promise<MatButtonHarness> {
+        return this.loader.getHarness(MatButtonHarness.with({ selector }));
+    }
+
+    async getByDataAutomationId(dataAutomationId: string): Promise<MatButtonHarness> {
+        return this.loader.getHarness(MatButtonHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
+    async exists(): Promise<boolean> {
+        return this.loader.hasHarness(MatButtonHarness);
+    }
+
+    async existsByDataAutomationId(dataAutomationId: string): Promise<boolean> {
+        return this.loader.hasHarness(MatButtonHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
+    async click(): Promise<void> {
+        const button = await this.get();
+        await button.click();
+    }
+
+    async clickByCSS(selector: string): Promise<void> {
+        const button = await this.getByCSS(selector);
+        await button.click();
+    }
+
+    async clickByDataAutomationId(dataAutomationId: string): Promise<void> {
+        const button = await this.getByDataAutomationId(dataAutomationId);
+        await button.click();
+    }
+
+    async sendKeys(keys: (string | TestKey)[]): Promise<void> {
+        const button = await this.get();
+        const host = await button.host();
+        await host.sendKeys(...keys);
+    }
+}
+
+class CheckboxUtils extends HarnessBase {
+    async get(): Promise<MatCheckboxHarness> {
+        return this.loader.getHarness(MatCheckboxHarness);
+    }
+
+    async getByDataAutomationId(dataAutomationId: string): Promise<MatCheckboxHarness> {
+        return this.loader.getHarness(MatCheckboxHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
+    async getHost(): Promise<TestElement> {
+        const checkbox = await this.get();
+        return checkbox.host();
+    }
+
+    async getAll(): Promise<MatCheckboxHarness[]> {
+        return this.loader.getAllHarnesses(MatCheckboxHarness);
+    }
+
+    async isChecked(): Promise<boolean> {
+        const checkbox = await this.get();
+        return checkbox.isChecked();
+    }
+
+    async allHaveClass(className: string): Promise<boolean> {
+        const checkboxes = await this.getAll();
+        return checkboxes.every(async (checkbox) => (await checkbox.host()).hasClass(className));
+    }
+
+    async hover(): Promise<void> {
+        const host = await this.getHost();
+        await host.hover();
+    }
+}
+
+class IconUtils extends HarnessBase {
+    async getOrNull(): Promise<MatIconHarness> {
+        return this.loader.getHarnessOrNull(MatIconHarness);
+    }
+
+    async getWithAncestorByDataAutomationId(dataAutomationId: string): Promise<MatIconHarness> {
+        return this.loader.getHarness(MatIconHarness.with({ ancestor: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
+    async getWithAncestorByCSS(selector: string): Promise<MatIconHarness> {
+        return this.loader.getHarness(MatIconHarness.with({ ancestor: selector }));
+    }
+
+    async existsWithAncestorByDataAutomationId(dataAutomationId: string): Promise<boolean> {
+        return this.loader.hasHarness(MatIconHarness.with({ ancestor: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
+    async existsWithAncestorByCSSAndName(selector: string, name: string): Promise<boolean> {
+        return this.loader.hasHarness(MatIconHarness.with({ ancestor: selector, name }));
+    }
+
+    async clickWithAncestorByDataAutomationId(dataAutomationId: string): Promise<void> {
+        const icon = await this.getWithAncestorByDataAutomationId(dataAutomationId);
+        const host = await icon.host();
+        await host.click();
+    }
+}
+
+class SelectUtils extends HarnessBase {
+    async get(): Promise<MatSelectHarness> {
+        return this.loader.getHarness(MatSelectHarness);
+    }
+
+    async getByDataAutomationId(dataAutomationId: string): Promise<MatSelectHarness> {
+        return this.loader.getHarness(MatSelectHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
+    async getHost(): Promise<TestElement> {
+        const select = await this.get();
+        return select.host();
+    }
+
+    async getOptions(isOpened = false): Promise<MatOptionHarness[]> {
+        const select = await this.get();
+        if (!isOpened) {
+            await select.open();
+        }
+        return select.getOptions();
+    }
+
+    async exists(): Promise<boolean> {
+        return this.loader.hasHarness(MatSelectHarness);
+    }
+
+    async open(): Promise<void> {
+        const select = await this.get();
+        await select.open();
+    }
+}
+
+class ChipUtils extends HarnessBase {
+    async getByDataAutomationId(dataAutomationId: string): Promise<MatChipHarness> {
+        return this.loader.getHarness(MatChipHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
+    async existsByDataAutomationId(dataAutomationId: string): Promise<boolean> {
+        return this.loader.hasHarness(MatChipHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
+    async click(dataAutomationId: string): Promise<void> {
+        const chip = await this.getByDataAutomationId(dataAutomationId);
+        const host = await chip.host();
+        await host.click();
+    }
+
+    async getAll(): Promise<MatChipHarness[]> {
+        return this.loader.getAllHarnesses(MatChipHarness);
+    }
+}
+
+class ChipListboxUtils extends HarnessBase {
+    async getByDataAutomationId(dataAutomationId: string): Promise<MatChipListboxHarness> {
+        return this.loader.getHarness(MatChipListboxHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
+    async click(dataAutomationId: string): Promise<void> {
+        const chipList = await this.getByDataAutomationId(dataAutomationId);
+        const host = await chipList.host();
+        await host.click();
+    }
+}
+
+class ChipGridUtils extends HarnessBase {
+    async exists(): Promise<boolean> {
+        return this.loader.hasHarness(MatChipGridHarness);
+    }
+}
+
+class ChipInputUtils extends HarnessBase {
+    async get(): Promise<MatChipInputHarness> {
+        return this.loader.getHarness(MatChipInputHarness);
+    }
+
+    async getByDataAutomationId(dataAutomationId: string): Promise<MatChipInputHarness> {
+        return this.loader.getHarness(MatChipInputHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
+    async getByCSS(selector: string): Promise<MatChipInputHarness> {
+        return this.loader.getHarness(MatChipInputHarness.with({ selector }));
+    }
+}
+
+class FormFieldUtils extends HarnessBase {
+    async get(): Promise<MatFormFieldHarness> {
+        return this.loader.getHarness(MatFormFieldHarness);
+    }
+
+    async getByCSS(selector: string): Promise<MatFormFieldHarness> {
+        return this.loader.getHarness(MatFormFieldHarness.with({ selector }));
+    }
+}
+
+class InputUtils extends HarnessBase {
+    async get(): Promise<MatInputHarness> {
+        return this.loader.getHarness(MatInputHarness);
+    }
+
+    async getByDataAutomationId(dataAutomationId: string): Promise<MatInputHarness> {
+        return this.loader.getHarness(MatInputHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
+    async getByPlaceholder(placeholder: string): Promise<MatInputHarness> {
+        return this.loader.getHarness(MatInputHarness.with({ placeholder }));
+    }
+
+    async getHost(): Promise<TestElement> {
+        const input = await this.get();
+        return input.host();
+    }
+
+    async exists(): Promise<boolean> {
+        return this.loader.hasHarness(MatInputHarness);
+    }
+
+    async existsByPlaceholder(placeholder: string): Promise<boolean> {
+        return this.loader.hasHarness(MatInputHarness.with({ placeholder }));
+    }
+
+    async click(): Promise<void> {
+        const input = await this.get();
+        const host = await input.host();
+        await host.click();
+    }
+
+    async fill(value: string): Promise<void> {
+        const input = await this.get();
+        await input.setValue(value);
+    }
+
+    async fillByDataAutomationId(dataAutomationId: string, value: string): Promise<void> {
+        const input = await this.getByDataAutomationId(dataAutomationId);
+        await input.setValue(value);
+        await (await input.host()).dispatchEvent('input');
+    }
+
+    async focus(): Promise<void> {
+        const input = await this.get();
+        await input.focus();
+    }
+
+    async blur(): Promise<void> {
+        const input = await this.get();
+        await input.blur();
+    }
+
+    async getValue(): Promise<string> {
+        const input = await this.get();
+        return input.getValue();
+    }
+
+    async getValueByDataAutomationId(dataAutomationId: string): Promise<string> {
+        const input = await this.getByDataAutomationId(dataAutomationId);
+        return input.getValue();
+    }
+
+    async sendKeys(keys: (string | TestKey)[]): Promise<void> {
+        const input = await this.get();
+        const host = await input.host();
+        await host.sendKeys(...keys);
+    }
+}
+
+class AutocompleteUtils extends HarnessBase {
+    async typeAndGetOptions(fixture: ComponentFixture<any>, value: string): Promise<MatOptionHarness[]> {
+        const autocomplete = await this.loader.getHarness(MatAutocompleteHarness);
+        await autocomplete.enterText(value);
+        fixture.detectChanges();
+        return autocomplete.getOptions();
+    }
+}
+
+class TabGroupUtils extends HarnessBase {
+    async getSelectedTab(): Promise<MatTabHarness> {
+        const tabs = await this.loader.getHarness(MatTabGroupHarness);
+        return tabs.getSelectedTab();
+    }
+
+    async getSelectedTabLabel(): Promise<string> {
+        const tab = await this.getSelectedTab();
+        return tab.getLabel();
+    }
+}
+
+class ToolbarUtils extends HarnessBase {
+    async getHost(): Promise<TestElement> {
+        const toolbar = await this.loader.getHarness(MatToolbarHarness);
+        return toolbar.host();
+    }
+}
+
+class SnackbarUtils extends HarnessBase {
+    async exists(): Promise<boolean> {
+        return this.loader.hasHarness(MatSnackBarHarness);
+    }
+}
+
+class ProgressBarUtils extends HarnessBase {
+    async getHost(): Promise<TestElement> {
+        const progress = await this.loader.getHarness(MatProgressBarHarness);
+        return progress.host();
+    }
+}
+
+class ListOptionUtils extends HarnessBase {
+    async get(): Promise<MatListOptionHarness> {
+        return this.loader.getHarness(MatListOptionHarness);
+    }
+
+    async getAll(): Promise<MatListOptionHarness[]> {
+        return this.loader.getAllHarnesses(MatListOptionHarness);
+    }
+}
+
+class CellUtils extends HarnessBase {
+    async getByColumnName(columnName: string): Promise<MatCellHarness> {
+        return this.loader.getHarness(MatCellHarness.with({ columnName }));
+    }
+}
+
+class ProgressSpinnerUtils extends HarnessBase {
+    async getWithAncestorByCSS(selector: string): Promise<MatProgressSpinnerHarness> {
+        return this.loader.getHarness(MatProgressSpinnerHarness.with({ ancestor: selector }));
+    }
+
+    async getWithAncestorByDataAutomationId(dataAutomationId: string): Promise<MatProgressSpinnerHarness> {
+        return this.loader.getHarness(MatProgressSpinnerHarness.with({ ancestor: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+}
+
+class MenuUtils extends HarnessBase {
+    async get(): Promise<MatMenuHarness> {
+        return this.loader.getHarness(MatMenuHarness);
+    }
+
+    async getByCSS(selector: string): Promise<MatMenuHarness> {
+        return this.loader.getHarness(MatMenuHarness.with({ selector }));
+    }
+}
+
+class SidenavUtils extends HarnessBase {
+    async get(): Promise<MatSidenavHarness> {
+        return this.loader.getHarness(MatSidenavHarness);
+    }
+}
+
 export class UnitTestingUtils {
+    readonly button: ButtonUtils;
+    readonly checkbox: CheckboxUtils;
+    readonly icon: IconUtils;
+    readonly select: SelectUtils;
+    readonly chip: ChipUtils;
+    readonly chipListbox: ChipListboxUtils;
+    readonly chipGrid: ChipGridUtils;
+    readonly chipInput: ChipInputUtils;
+    readonly formField: FormFieldUtils;
+    readonly input: InputUtils;
+    readonly autocomplete: AutocompleteUtils;
+    readonly tabGroup: TabGroupUtils;
+    readonly toolbar: ToolbarUtils;
+    readonly snackbar: SnackbarUtils;
+    readonly progressBar: ProgressBarUtils;
+    readonly listOption: ListOptionUtils;
+    readonly cell: CellUtils;
+    readonly progressSpinner: ProgressSpinnerUtils;
+    readonly menu: MenuUtils;
+    readonly sidenav: SidenavUtils;
+
     constructor(
         private debugElement?: DebugElement,
-        private loader?: HarnessLoader
+        loader?: HarnessLoader
     ) {
-        this.debugElement = debugElement;
-        this.loader = loader;
+        this.button = new ButtonUtils(loader);
+        this.checkbox = new CheckboxUtils(loader);
+        this.icon = new IconUtils(loader);
+        this.select = new SelectUtils(loader);
+        this.chip = new ChipUtils(loader);
+        this.chipListbox = new ChipListboxUtils(loader);
+        this.chipGrid = new ChipGridUtils(loader);
+        this.chipInput = new ChipInputUtils(loader);
+        this.formField = new FormFieldUtils(loader);
+        this.input = new InputUtils(loader);
+        this.autocomplete = new AutocompleteUtils(loader);
+        this.tabGroup = new TabGroupUtils(loader);
+        this.toolbar = new ToolbarUtils(loader);
+        this.snackbar = new SnackbarUtils(loader);
+        this.progressBar = new ProgressBarUtils(loader);
+        this.listOption = new ListOptionUtils(loader);
+        this.cell = new CellUtils(loader);
+        this.progressSpinner = new ProgressSpinnerUtils(loader);
+        this.menu = new MenuUtils(loader);
+        this.sidenav = new SidenavUtils(loader);
     }
 
     setDebugElement(debugElement: DebugElement): void {
         this.debugElement = debugElement;
-    }
-
-    setLoader(loader: HarnessLoader): void {
-        this.loader = loader;
     }
 
     getByCSS(selector: string): DebugElement {
@@ -167,354 +558,5 @@ export class UnitTestingUtils {
         const input = this.getInputByDataAutomationId(dataAutomationId);
         input.value = value;
         input.dispatchEvent(new Event('input'));
-    }
-
-    /** MatButton related methods */
-
-    async getMatButton(): Promise<MatButtonHarness> {
-        return this.loader.getHarness(MatButtonHarness);
-    }
-
-    async getMatButtonByCSS(selector: string): Promise<MatButtonHarness> {
-        return this.loader.getHarness(MatButtonHarness.with({ selector }));
-    }
-
-    async getMatButtonByDataAutomationId(dataAutomationId: string): Promise<MatButtonHarness> {
-        return this.loader.getHarness(MatButtonHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
-    }
-
-    async checkIfMatButtonExists(): Promise<boolean> {
-        return this.loader.hasHarness(MatButtonHarness);
-    }
-
-    async checkIfMatButtonExistsWithDataAutomationId(dataAutomationId: string): Promise<boolean> {
-        return this.loader.hasHarness(MatButtonHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
-    }
-
-    async clickMatButton(): Promise<void> {
-        const button = await this.getMatButton();
-        await button.click();
-    }
-
-    async clickMatButtonByCSS(selector: string): Promise<void> {
-        const button = await this.getMatButtonByCSS(selector);
-        await button.click();
-    }
-
-    async clickMatButtonByDataAutomationId(dataAutomationId: string): Promise<void> {
-        const button = await this.getMatButtonByDataAutomationId(dataAutomationId);
-        await button.click();
-    }
-
-    async sendKeysToMatButton(keys: (string | TestKey)[]): Promise<void> {
-        const button = await this.getMatButton();
-        const host = await button.host();
-        await host.sendKeys(...keys);
-    }
-
-    /** MatCheckbox related methods */
-
-    async getMatCheckbox(): Promise<MatCheckboxHarness> {
-        return this.loader.getHarness(MatCheckboxHarness);
-    }
-
-    async getMatCheckboxByDataAutomationId(dataAutomationId: string): Promise<MatCheckboxHarness> {
-        return this.loader.getHarness(MatCheckboxHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
-    }
-
-    async getMatCheckboxHost(): Promise<TestElement> {
-        const checkbox = await this.getMatCheckbox();
-        return checkbox.host();
-    }
-
-    async getAllMatCheckboxes(): Promise<MatCheckboxHarness[]> {
-        return this.loader.getAllHarnesses(MatCheckboxHarness);
-    }
-
-    async checkIfMatCheckboxIsChecked(): Promise<boolean> {
-        const checkbox = await this.getMatCheckbox();
-        return checkbox.isChecked();
-    }
-
-    async checkIfMatCheckboxesHaveClass(className: string): Promise<boolean> {
-        const checkboxes = await this.getAllMatCheckboxes();
-        return checkboxes.every(async (checkbox) => (await checkbox.host()).hasClass(className));
-    }
-
-    async hoverOverMatCheckbox(): Promise<void> {
-        const host = await this.getMatCheckboxHost();
-        await host.hover();
-    }
-
-    /** MatIcon related methods */
-
-    async getMatIconOrNull(): Promise<MatIconHarness> {
-        return this.loader.getHarnessOrNull(MatIconHarness);
-    }
-
-    async getMatIconWithAncestorByDataAutomationId(dataAutomationId: string): Promise<MatIconHarness> {
-        return this.loader.getHarness(MatIconHarness.with({ ancestor: `[data-automation-id="${dataAutomationId}"]` }));
-    }
-
-    async getMatIconWithAncestorByCSS(selector: string): Promise<MatIconHarness> {
-        return this.loader.getHarness(MatIconHarness.with({ ancestor: selector }));
-    }
-
-    async checkIfMatIconExistsWithAncestorByDataAutomationId(dataAutomationId: string): Promise<boolean> {
-        return this.loader.hasHarness(MatIconHarness.with({ ancestor: `[data-automation-id="${dataAutomationId}"]` }));
-    }
-
-    async checkIfMatIconExistsWithAncestorByCSSAndName(selector: string, name: string): Promise<boolean> {
-        return this.loader.hasHarness(MatIconHarness.with({ ancestor: selector, name }));
-    }
-
-    async clickMatIconWithAncestorByDataAutomationId(dataAutomationId: string): Promise<void> {
-        const icon = await this.getMatIconWithAncestorByDataAutomationId(dataAutomationId);
-        const host = await icon.host();
-        await host.click();
-    }
-
-    /** MatSelect related methods */
-
-    async getMatSelectOptions(isOpened = false): Promise<MatOptionHarness[]> {
-        const select = await this.loader.getHarness(MatSelectHarness);
-        if (!isOpened) {
-            await select.open();
-        }
-        return select.getOptions();
-    }
-
-    async getMatSelect(): Promise<MatSelectHarness> {
-        return this.loader.getHarness(MatSelectHarness);
-    }
-
-    async getMatSelectByDataAutomationId(dataAutomationId: string): Promise<MatSelectHarness> {
-        return this.loader.getHarness(MatSelectHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
-    }
-
-    async getMatSelectHost(): Promise<TestElement> {
-        const select = await this.loader.getHarness(MatSelectHarness);
-        return select.host();
-    }
-
-    async checkIfMatSelectExists(): Promise<boolean> {
-        return this.loader.hasHarness(MatSelectHarness);
-    }
-
-    async openMatSelect(): Promise<void> {
-        const select = await this.loader.getHarness(MatSelectHarness);
-        await select.open();
-    }
-
-    /** MatChips related methods */
-
-    async getMatChipByDataAutomationId(dataAutomationId: string): Promise<MatChipHarness> {
-        return this.loader.getHarness(MatChipHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
-    }
-
-    async checkIfMatChipExistsWithDataAutomationId(dataAutomationId: string): Promise<boolean> {
-        return this.loader.hasHarness(MatChipHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
-    }
-
-    async clickMatChip(dataAutomationId: string): Promise<void> {
-        const chip = await this.getMatChipByDataAutomationId(dataAutomationId);
-        const host = await chip.host();
-        await host.click();
-    }
-
-    async getMatChips(): Promise<MatChipHarness[]> {
-        return this.loader.getAllHarnesses(MatChipHarness);
-    }
-
-    /** MatChipListbox related methods */
-
-    async getMatChipListboxByDataAutomationId(dataAutomationId: string): Promise<MatChipListboxHarness> {
-        return this.loader.getHarness(MatChipListboxHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
-    }
-
-    async clickMatChipListbox(dataAutomationId: string): Promise<void> {
-        const chipList = await this.getMatChipListboxByDataAutomationId(dataAutomationId);
-        const host = await chipList.host();
-        await host.click();
-    }
-
-    /** MatChipGrid related methods */
-
-    async checkIfMatChipGridExists(): Promise<boolean> {
-        return this.loader.hasHarness(MatChipGridHarness);
-    }
-
-    /** MatChipInput related methods */
-
-    async getMatChipInput(): Promise<MatChipInputHarness> {
-        return this.loader.getHarness(MatChipInputHarness);
-    }
-
-    async getMatChipInputByDataAutomationId(dataAutomationId: string): Promise<MatChipInputHarness> {
-        return this.loader.getHarness(MatChipInputHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
-    }
-
-    async getMatChipInputByCSS(selector: string): Promise<MatChipInputHarness> {
-        return this.loader.getHarness(MatChipInputHarness.with({ selector }));
-    }
-
-    /** MatFromField related methods */
-
-    async getMatFormField(): Promise<MatFormFieldHarness> {
-        return this.loader.getHarness(MatFormFieldHarness);
-    }
-
-    async getMatFormFieldByCSS(selector: string): Promise<MatFormFieldHarness> {
-        return this.loader.getHarness(MatFormFieldHarness.with({ selector }));
-    }
-
-    /** MatInput related methods */
-
-    async getMatInput(): Promise<MatInputHarness> {
-        return this.loader.getHarness(MatInputHarness);
-    }
-
-    async getMatInputByDataAutomationId(dataAutomationId: string): Promise<MatInputHarness> {
-        return this.loader.getHarness(MatInputHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
-    }
-
-    async getMatInputByPlaceholder(placeholder: string): Promise<MatInputHarness> {
-        return this.loader.getHarness(MatInputHarness.with({ placeholder }));
-    }
-
-    async getMatInputHost(): Promise<TestElement> {
-        const input = await this.getMatInput();
-        return input.host();
-    }
-
-    async checkIfMatInputExists(): Promise<boolean> {
-        return this.loader.hasHarness(MatInputHarness);
-    }
-
-    async checkIfMatInputExistsWithPlaceholder(placeholder: string): Promise<boolean> {
-        return this.loader.hasHarness(MatInputHarness.with({ placeholder }));
-    }
-
-    async clickMatInput(): Promise<void> {
-        const input = await this.getMatInput();
-        const host = await input.host();
-        await host.click();
-    }
-
-    async fillMatInput(value: string): Promise<void> {
-        const input = await this.getMatInput();
-        await input.setValue(value);
-    }
-
-    async fillMatInputByDataAutomationId(dataAutomationId: string, value: string): Promise<void> {
-        const input = await this.getMatInputByDataAutomationId(dataAutomationId);
-        await input.setValue(value);
-        await (await input.host()).dispatchEvent('input');
-    }
-
-    async focusMatInput(): Promise<void> {
-        const input = await this.getMatInput();
-        await input.focus();
-    }
-
-    async blurMatInput(): Promise<void> {
-        const input = await this.getMatInput();
-        await input.blur();
-    }
-
-    async getMatInputValue(): Promise<string> {
-        const input = await this.getMatInput();
-        return input.getValue();
-    }
-
-    async getMatInputValueByDataAutomationId(dataAutomationId: string): Promise<string> {
-        const input = await this.getMatInputByDataAutomationId(dataAutomationId);
-        return input.getValue();
-    }
-
-    async sendKeysToMatInput(keys: (string | TestKey)[]): Promise<void> {
-        const input = await this.getMatInput();
-        const host = await input.host();
-        await host.sendKeys(...keys);
-    }
-
-    /** MatAutoComplete related methods */
-
-    async typeAndGetOptionsForMatAutoComplete(fixture: ComponentFixture<any>, value: string): Promise<MatOptionHarness[]> {
-        const autocomplete = await this.loader.getHarness(MatAutocompleteHarness);
-        await autocomplete.enterText(value);
-        fixture.detectChanges();
-
-        return autocomplete.getOptions();
-    }
-
-    /** MatTabGroup related methods */
-
-    async getSelectedTabFromMatTabGroup(): Promise<MatTabHarness> {
-        const tabs = await this.loader.getHarness(MatTabGroupHarness);
-        return tabs.getSelectedTab();
-    }
-
-    async getSelectedTabLabelFromMatTabGroup(): Promise<string> {
-        const tab = await this.getSelectedTabFromMatTabGroup();
-        return tab.getLabel();
-    }
-
-    /** MatToolbar related methods */
-
-    async getMatToolbarHost(): Promise<TestElement> {
-        const toolbar = await this.loader.getHarness(MatToolbarHarness);
-        return toolbar.host();
-    }
-
-    /** MatSnackbar related methods */
-
-    async checkIfMatSnackbarExists(): Promise<boolean> {
-        return this.loader.hasHarness(MatSnackBarHarness);
-    }
-
-    /** MatProgressBar related methods */
-
-    async getMatProgressBarHost(): Promise<TestElement> {
-        const progress = await this.loader.getHarness(MatProgressBarHarness);
-        return progress.host();
-    }
-
-    /** MatListOption related methods */
-
-    async getMatListOption(): Promise<MatListOptionHarness> {
-        return this.loader.getHarness(MatListOptionHarness);
-    }
-
-    async getAllMatListOptions(): Promise<MatListOptionHarness[]> {
-        return this.loader.getAllHarnesses(MatListOptionHarness);
-    }
-
-    /** MatCell related methods */
-
-    async getMatCellByColumnName(columnName: string): Promise<MatCellHarness> {
-        return this.loader.getHarness(MatCellHarness.with({ columnName }));
-    }
-
-    /** MatProgressSpinner related methods */
-
-    async getMatProgressSpinnerWithAncestorByCSS(selector: string): Promise<MatProgressSpinnerHarness> {
-        return this.loader.getHarness(MatProgressSpinnerHarness.with({ ancestor: selector }));
-    }
-
-    async getMatProgressSpinnerWithAncestorByDataAutomationId(dataAutomationId: string): Promise<MatProgressSpinnerHarness> {
-        return this.loader.getHarness(MatProgressSpinnerHarness.with({ ancestor: `[data-automation-id="${dataAutomationId}"]` }));
-    }
-
-    /** MatMenu related methods */
-
-    async getMatMenuByCSS(selector: string): Promise<MatMenuHarness> {
-        return this.loader.getHarness(MatMenuHarness.with({ selector }));
-    }
-
-    /** MatSidenav related methods */
-
-    async getMatSidenav(): Promise<MatSidenavHarness> {
-        return this.loader.getHarness(MatSidenavHarness);
     }
 }

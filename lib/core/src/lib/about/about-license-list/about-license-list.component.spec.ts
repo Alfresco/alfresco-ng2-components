@@ -48,7 +48,7 @@ describe('AboutLicenseListComponent', () => {
 
         it('should display correct value when contains green check mark icon', async () => {
             fixture.detectChanges();
-            expect(await (await (await unitTestingUtils.getMatCellByColumnName(columnName)).host()).getProperty(innerTextPropertyName)).toEqual(
+            expect(await (await (await unitTestingUtils.cell.getByColumnName(columnName)).host()).getProperty(innerTextPropertyName)).toEqual(
                 '✅ ABOUT.LICENSE.ENABLED Value 1'
             );
         });
@@ -57,7 +57,7 @@ describe('AboutLicenseListComponent', () => {
             component.data[0].value = '&#10060 Value 1';
 
             fixture.detectChanges();
-            expect(await (await (await unitTestingUtils.getMatCellByColumnName(columnName)).host()).getProperty(innerTextPropertyName)).toEqual(
+            expect(await (await (await unitTestingUtils.cell.getByColumnName(columnName)).host()).getProperty(innerTextPropertyName)).toEqual(
                 '❌ ABOUT.LICENSE.DISABLED Value 1'
             );
         });
@@ -66,7 +66,7 @@ describe('AboutLicenseListComponent', () => {
             component.data[0].value = 'Value 1';
 
             fixture.detectChanges();
-            expect(await (await (await unitTestingUtils.getMatCellByColumnName(columnName)).host()).getProperty(innerTextPropertyName)).toEqual(
+            expect(await (await (await unitTestingUtils.cell.getByColumnName(columnName)).host()).getProperty(innerTextPropertyName)).toEqual(
                 'Value 1'
             );
         });
@@ -75,7 +75,7 @@ describe('AboutLicenseListComponent', () => {
             component.data[0].value = 3;
 
             fixture.detectChanges();
-            expect(await (await (await unitTestingUtils.getMatCellByColumnName(columnName)).host()).getProperty(innerTextPropertyName)).toEqual('3');
+            expect(await (await (await unitTestingUtils.cell.getByColumnName(columnName)).host()).getProperty(innerTextPropertyName)).toEqual('3');
         });
     });
 });

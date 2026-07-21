@@ -351,7 +351,7 @@ describe('LibraryDialogComponent', () => {
     it('should not show required error on opening dialog', async () => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
         fixture.detectChanges();
-        const titleFormField = await unitTestingUtils.getMatFormField();
+        const titleFormField = await unitTestingUtils.formField.get();
         const errors = await titleFormField.getTextErrors();
         expect(errors.length).toBe(0);
     });
@@ -371,7 +371,7 @@ describe('LibraryDialogComponent', () => {
         component.form.controls.title.setValue('');
         fixture.detectChanges();
 
-        const titleFormField = await unitTestingUtils.getMatFormField();
+        const titleFormField = await unitTestingUtils.formField.get();
         const errors = await titleFormField.getTextErrors();
 
         expect(component.form.controls.title.errors).toEqual({ required: true });
@@ -385,7 +385,7 @@ describe('LibraryDialogComponent', () => {
         component.form.controls.id.markAsTouched();
         fixture.detectChanges();
 
-        const idFormField = await unitTestingUtils.getMatFormFieldByCSS('.adf-library-dialog-form-field:nth-of-type(2)');
+        const idFormField = await unitTestingUtils.formField.getByCSS('.adf-library-dialog-form-field:nth-of-type(2)');
         const errors = await idFormField.getTextErrors();
 
         expect(component.form.controls.id.errors).toEqual({ required: true });

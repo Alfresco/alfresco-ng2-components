@@ -60,7 +60,7 @@ describe('ClipboardDirective', () => {
     it('should notify copy target value on button click event', async () => {
         spyOn(clipboardService, 'copyToClipboard');
         testingUtils.fillInputByCSS('input', 'some value');
-        await testingUtils.clickMatButton();
+        await testingUtils.button.click();
 
         expect(clipboardService.copyToClipboard).toHaveBeenCalled();
     });
@@ -68,7 +68,7 @@ describe('ClipboardDirective', () => {
     it('should notify copy target value on keydown event', async () => {
         spyOn(clipboardService, 'copyToClipboard');
         testingUtils.fillInputByCSS('input', 'some value');
-        await testingUtils.sendKeysToMatButton([TestKey.ENTER]);
+        await testingUtils.button.sendKeys([TestKey.ENTER]);
 
         expect(clipboardService.copyToClipboard).toHaveBeenCalled();
     });

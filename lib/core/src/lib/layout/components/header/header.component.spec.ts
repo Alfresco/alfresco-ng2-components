@@ -60,7 +60,7 @@ describe('HeaderLayoutComponent', () => {
             component.backgroundColor = '#42f57e';
             fixture.detectChanges();
 
-            const host = await testingUtils.getMatToolbarHost();
+            const host = await testingUtils.toolbar.getHost();
 
             expect(await host.getCssValue('background-color')).toBe('rgb(66, 245, 126)');
         });
@@ -68,7 +68,7 @@ describe('HeaderLayoutComponent', () => {
         it('should background image be set to none if is not provided', async () => {
             fixture.detectChanges();
 
-            const host = await testingUtils.getMatToolbarHost();
+            const host = await testingUtils.toolbar.getHost();
 
             expect(await host.getCssValue('background-image')).toEqual('none');
         });
@@ -78,7 +78,7 @@ describe('HeaderLayoutComponent', () => {
 
             fixture.detectChanges();
 
-            const host = await testingUtils.getMatToolbarHost();
+            const host = await testingUtils.toolbar.getHost();
 
             expect(await host.getCssValue('background-image')).toEqual('none');
         });
@@ -87,7 +87,7 @@ describe('HeaderLayoutComponent', () => {
             component.backgroundImage = '/assets/someImage.png';
             fixture.detectChanges();
 
-            const host = await testingUtils.getMatToolbarHost();
+            const host = await testingUtils.toolbar.getHost();
 
             expect(await host.getCssValue('background-image')).toContain('/assets/someImage.png');
         });
