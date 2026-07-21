@@ -49,4 +49,3 @@ export * from './lib/api-factories';
 export * from './lib/mock/alfresco-api.service.mock';
 
 export * from './lib/content.module';
-export * from './lib/material.module';

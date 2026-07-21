@@ -470,7 +470,7 @@ export class FormFieldModel extends FormWidgetModel {
         }
 
         this.rows.push(this.createRow(fields, form, this.rows.length));
-        this.form.onRepeatableSectionChanged();
+        this.form.onRepeatableSectionRowCountChanged(this);
     }
 
     private shouldAddRow(): boolean {
@@ -484,14 +484,17 @@ export class FormFieldModel extends FormWidgetModel {
 
         this.rows.splice(index, 1);
         this.updateChildrenFieldsRowIndex();
-        this.form.onRepeatableSectionChanged();
 
-        if (!this.form.values[this.id]) {
-            return;
+        const hasSectionValues = !!this.form.values[this.id];
+        if (hasSectionValues) {
+            this.form.values[this.id].splice(index, 1);
         }
 
-        this.form.values[this.id].splice(index, 1);
-        this.form.onFormFieldChanged(this);
+        this.form.onRepeatableSectionRowCountChanged(this);
+
+        if (hasSectionValues) {
+            this.form.onFormFieldChanged(this);
+        }
     }
 
     private shouldRemoveRow(index: number): boolean {
