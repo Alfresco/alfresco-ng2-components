@@ -739,19 +739,24 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         titleElement.innerText = annotation.titleObj.str;
         titleElement.classList.add('title');
         headerElement.classList.add('header');
+        headerElement.append(titleElement);
         if (annotation.modificationDate) {
             dateElement = document.createElement('time');
-            dateElement.innerText = PDFDateString.toDateObject(annotation.modificationDate).toLocaleString();
-            dateElement.classList.add('popupDate');
-            headerElement.append(titleElement, dateElement);
-        } else {
-            headerElement.append(titleElement);
+            const dateObj = PDFDateString.toDateObject(annotation.modificationDate);
+            if (dateObj) {
+                dateElement.classList.add('popupDate');
+                dateElement.dateTime = dateObj.toISOString();
+                dateElement.innerText = dateObj.toLocaleString();
+                dateElement.dataset.l10nId = 'pdfjs-annotation-date-time-string';
+                dateElement.dataset.l10nArgs = JSON.stringify({ dateObj: dateObj.getTime() });
+                headerElement.append(dateElement);
+            }
         }
         return headerElement;
     }
 
-    private createAnnotationPopupContent(text: string): HTMLSpanElement {
-        const contentElement = document.createElement('span');
+    private createAnnotationPopupContent(text: string): HTMLParagraphElement {
+        const contentElement = document.createElement('p');
         contentElement.innerText = text;
         contentElement.classList.add('popupContent');
         return contentElement;
