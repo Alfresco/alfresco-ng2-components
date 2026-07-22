@@ -144,10 +144,6 @@
         }
     }
 
-    #{mat-input-placeholder} {
-        top: 1.8em;
-    }
-
     #{ms.$mat-grid-tile} {
         overflow: visible;
         width: 80%;
@@ -176,13 +172,6 @@
         & #{ms.$mat-tab-body-content} {
             overflow: hidden;
             padding-top: 0;
-        }
-
-        & #{mat-tab-label-text} {
-            letter-spacing: -0.4px;
-            text-align: left;
-            color: rgba(0, 0, 0, 0.54);
-            text-transform: uppercase;
         }
 
         & #{ms.$mat-tab-ink-bar} {
