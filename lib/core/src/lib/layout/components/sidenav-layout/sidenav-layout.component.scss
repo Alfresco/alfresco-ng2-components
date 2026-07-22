@@ -32,6 +32,8 @@
     }
 
     .adf-layout-container-sidenav {
+        // Icons here are projected by the consuming app via <ng-content>,
+        // so ADF cannot attach its own class to them.
         #{ms.$mat-icon} {
             vertical-align: sub;
         }

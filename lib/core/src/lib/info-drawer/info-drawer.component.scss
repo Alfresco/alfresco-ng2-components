@@ -43,7 +43,7 @@
                     #{ms.$mat-tab-label-text} {
                         flex-grow: 1;
 
-                        #{ms.$mat-icon} + span {
+                        .adf-info-drawer-tab-icon + span {
                             padding-left: 5px;
                         }
                     }
