@@ -31,6 +31,18 @@ adf-version-manager {
         height: 0;
         float: left;
         position: relative;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+            height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+            opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+            visibility 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+        &.adf-upload-open {
+            height: 175px;
+            opacity: 1;
+            visibility: visible;
+        }
     }
 
     .adf-version-list.adf-version-list-element {
