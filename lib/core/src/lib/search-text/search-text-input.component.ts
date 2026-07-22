@@ -38,7 +38,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 import { UserPreferencesService } from '../common';
-import { searchAnimation } from './animations';
 import { SearchAnimationDirection, SearchAnimationState, SearchTextStateEnum } from './models/search-text-input.model';
 import { SearchTriggerDirective } from './search-trigger.directive';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -48,7 +47,6 @@ import { IconModule } from '../icon/icon.module';
     selector: 'adf-search-text-input',
     templateUrl: './search-text-input.component.html',
     styleUrls: ['./search-text-input.component.scss'],
-    animations: [searchAnimation],
     encapsulation: ViewEncapsulation.None,
     imports: [MatButtonModule, IconModule, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, SearchTriggerDirective, NgIf, NgClass],
     host: {
@@ -182,9 +180,11 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
                 if (this.subscriptAnimationState.value === 'inactive') {
                     this.searchTerm = '';
                     this.reset.emit(true);
-                    if (document.activeElement.id === this.searchInput.nativeElement.id) {
+                    if (document.activeElement?.id === this.searchInput.nativeElement.id) {
                         this.searchInput.nativeElement.blur();
                     }
+                } else if (this.subscriptAnimationState.value === 'active' && this.isDefaultStateCollapsed()) {
+                    setTimeout(() => this.searchInput.nativeElement.focus(), 0);
                 }
                 this.emitVisibilitySearch();
             }
@@ -203,12 +203,6 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         this.subscriptAnimationState = this.getDefaultState(this.dir);
         this.setValueChangeHandler();
         this.setupFocusEventHandlers();
-    }
-
-    applySearchFocus(animationDoneEvent) {
-        if (animationDoneEvent.toState === 'active' && this.isDefaultStateCollapsed()) {
-            this.searchInput.nativeElement.focus();
-        }
     }
 
     getAutoComplete(): string {
