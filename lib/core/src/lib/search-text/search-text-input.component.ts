@@ -17,7 +17,19 @@
 
 import { Direction } from '@angular/cdk/bidi';
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, DestroyRef, ElementRef, EventEmitter, inject, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    ElementRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnInit,
+    OnDestroy,
+    Output,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -41,7 +53,7 @@ import { IconModule } from '../icon/icon.module';
         class: 'adf-search-text-input'
     }
 })
-export class SearchTextInputComponent implements OnInit {
+export class SearchTextInputComponent implements OnInit, OnDestroy {
     private readonly userPreferencesService = inject(UserPreferencesService);
 
     /** Toggles auto-completion of the search input field. */
@@ -189,6 +201,11 @@ export class SearchTextInputComponent implements OnInit {
         this.subscriptAnimationState = this.getDefaultState(this.dir);
         this.setValueChangeHandler();
         this.setupFocusEventHandlers();
+    }
+
+    ngOnDestroy() {
+        this.toggleSearch.complete();
+        this.valueChange.complete();
     }
 
     getAutoComplete(): string {
