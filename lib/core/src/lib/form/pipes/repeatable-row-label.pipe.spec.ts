@@ -37,7 +37,11 @@ describe('RepeatableRowLabelPipe', () => {
     });
 
     it('should return null when the params are undefined', () => {
-        expect(pipe.transform(undefined as any, 0)).toBeNull();
+        expect(pipe.transform(undefined, 0)).toBeNull();
+    });
+
+    it('should return null when the label text is not a string', () => {
+        expect(pipe.transform({ rowLabelText: 5 as unknown as string, appendRowNumber: true }, 0)).toBeNull();
     });
 
     it('should append the 1-based row number when appendRowNumber is true', () => {

@@ -26,8 +26,8 @@ export interface RepeatableRowLabelParams {
     name: 'adfRepeatableRowLabel'
 })
 export class RepeatableRowLabelPipe implements PipeTransform {
-    transform(params: RepeatableRowLabelParams, rowIndex: number): string | null {
-        const rowLabelText = params?.rowLabelText?.trim();
+    transform(params: RepeatableRowLabelParams | undefined, rowIndex: number): string | null {
+        const rowLabelText = typeof params?.rowLabelText === 'string' ? params.rowLabelText.trim() : '';
 
         if (!rowLabelText) {
             return null;
