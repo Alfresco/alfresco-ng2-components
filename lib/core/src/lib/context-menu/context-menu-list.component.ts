@@ -38,11 +38,11 @@ import { ContextMenuItem } from './interfaces';
 })
 export class ContextMenuListComponent implements AfterViewInit {
     private readonly contextMenuOverlayRef = inject<ContextMenuOverlayRef>(ContextMenuOverlayRef);
-    private readonly data = inject(CONTEXT_MENU_DATA, { optional: true });
+    private keyManager?: FocusKeyManager<MatMenuItem>;
 
-    private keyManager: FocusKeyManager<MatMenuItem>;
-    @ViewChildren(MatMenuItem) items: QueryList<MatMenuItem>;
-    links: ContextMenuItem[];
+    @ViewChildren(MatMenuItem) items = new QueryList<MatMenuItem>();
+
+    public readonly links: ContextMenuItem[] = inject(CONTEXT_MENU_DATA, { optional: true }) || [];
 
     @HostListener('document:keydown.Escape', ['$event'])
     handleKeydownEscape(event: Event) {
@@ -56,13 +56,9 @@ export class ContextMenuListComponent implements AfterViewInit {
         if (event) {
             const keyCode = event.keyCode;
             if (keyCode === UP_ARROW || keyCode === DOWN_ARROW) {
-                this.keyManager.onKeydown(event);
+                this.keyManager?.onKeydown(event);
             }
         }
-    }
-
-    constructor() {
-        this.links = this.data;
     }
 
     onMenuItemClick(event: Event, menuItem: ContextMenuItem) {
