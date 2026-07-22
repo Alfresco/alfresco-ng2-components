@@ -160,7 +160,7 @@ export class SearchTextInputComponent implements OnInit {
     private readonly destroyRef = inject(DestroyRef);
 
     constructor() {
-        this.toggle$.pipe(debounceTime(200), takeUntilDestroyed()).subscribe(() => {
+        this.toggle$.pipe(debounceTime(200), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             if (this.expandable) {
                 this.subscriptAnimationState = this.toggleAnimation();
                 if (this.subscriptAnimationState.value === 'inactive') {
