@@ -4,21 +4,17 @@
     }
     <div class="adf-new-version-uploader-container" id="adf-new-version-uploader-container" [class.adf-upload-open]="uploadState === 'open'">
         @if (uploadState !== 'close' && !versionList.isLoading) {
-            <table class="adf-version-upload">
-                <tr>
-                    <td>
-                        <adf-version-upload
-                            id="adf-version-upload-button"
-                            [node]="node"
-                            [newFileVersion]="newFileVersion"
-                            [currentVersion]="versionList?.latestVersion?.entry"
-                            (success)="onUploadSuccess($event)"
-                            (cancel)="onUploadCancel()"
-                            (error)="onUploadError($event)"
-                        />
-                    </td>
-                </tr>
-            </table>
+            <div class="adf-version-upload">
+                <adf-version-upload
+                    id="adf-version-upload-button"
+                    [node]="node"
+                    [newFileVersion]="newFileVersion"
+                    [currentVersion]="versionList?.latestVersion?.entry"
+                    (success)="onUploadSuccess($event)"
+                    (cancel)="onUploadCancel()"
+                    (error)="onUploadError($event)"
+                />
+            </div>
         }
     </div>
     <div class="adf-version-list-container">
