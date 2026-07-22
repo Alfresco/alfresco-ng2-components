@@ -1,6 +1,6 @@
 <div mat-menu class="mat-mdc-menu-panel mdc-menu-surface mdc-menu-surface--open adf-context-menu-animate">
     <div id="adf-context-menu-content" class="mat-mdc-menu-content">
-        @for (link of links; track link.title) {
+        @for (link of links; track link) {
             @if (link.model?.visible) {
                 <button
                     [attr.data-automation-id]="'context-' + (link.title || link.model?.title | translate)"
