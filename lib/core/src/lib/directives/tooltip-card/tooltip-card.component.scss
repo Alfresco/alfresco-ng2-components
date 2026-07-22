@@ -1,7 +1,28 @@
 @use '@angular/material' as mat;
 
+@keyframes tooltip-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes tooltip-fade-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
 :host {
     display: block;
+    animation: tooltip-fade-in 200ms ease-out;
 }
 
 div.adf-tooltip-card {

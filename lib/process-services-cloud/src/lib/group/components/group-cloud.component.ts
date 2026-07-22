@@ -30,7 +30,6 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { ComponentSelectionMode } from '../../types';
@@ -65,12 +64,6 @@ import { IconModule } from '@alfresco/adf-core';
     ],
     templateUrl: './group-cloud.component.html',
     styleUrls: ['./group-cloud.component.scss'],
-    animations: [
-        trigger('transitionMessages', [
-            state('enter', style({ opacity: 1, transform: 'translateY(0%)' })),
-            transition('void => enter', [style({ opacity: 0, transform: 'translateY(-100%)' }), animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')])
-        ])
-    ],
     encapsulation: ViewEncapsulation.None
 })
 export class GroupCloudComponent implements OnInit, OnChanges {
@@ -153,7 +146,6 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     invalidGroups: IdentityGroupModel[] = [];
 
     searchGroups$ = new BehaviorSubject<IdentityGroupModel[]>(this.searchGroups);
-    subscriptAnimationState: string = 'enter';
     isFocused: boolean;
     touched: boolean = false;
 
