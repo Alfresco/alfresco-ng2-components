@@ -307,7 +307,7 @@ describe('AdfHttpClient', () => {
                 expect(res).toEqual('');
                 done();
             })
-            .catch((error) => fail(error));
+.catch((error) => done.fail(error));
 
         const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000%2B02%3A00');
 
