@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { NoopTranslateModule } from '@alfresco/adf-core';
 import { NgModule } from '@angular/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserTestingModule } from '@angular/platform-browser/testing';
 
 @NgModule({
-    imports: [BrowserDynamicTestingModule, NoopTranslateModule, NoopAnimationsModule]
+    imports: [BrowserTestingModule, NoopTranslateModule]
 })
 export class GlobalTestingModule {}
