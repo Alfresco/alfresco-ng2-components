@@ -1,4 +1,4 @@
-@keyframes slide-in-down {
+@keyframes adf-error-slide-in-down {
     from {
         opacity: 0;
         transform: translateY(-100%);
@@ -19,7 +19,7 @@
     }
 
     &-animate {
-        animation: slide-in-down 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
+        animation: adf-error-slide-in-down 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
     }
 
     &-container {

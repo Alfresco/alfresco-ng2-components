@@ -1,6 +1,6 @@
 @use '../../mixins' as mixins;
 
-@keyframes slide-in-down {
+@keyframes adf-people-cloud-slide-in-down {
     from {
         opacity: 0;
         transform: translateY(-100%);
@@ -67,6 +67,6 @@
     }
 
     .adf-error-animate {
-        animation: slide-in-down 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
+        animation: adf-people-cloud-slide-in-down 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
     }
 }
