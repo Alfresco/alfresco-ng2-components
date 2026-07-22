@@ -10,16 +10,6 @@
     }
 }
 
-@keyframes tooltip-fade-out {
-    from {
-        opacity: 1;
-    }
-
-    to {
-        opacity: 0;
-    }
-}
-
 :host {
     display: block;
     animation: tooltip-fade-in 200ms ease-out;
