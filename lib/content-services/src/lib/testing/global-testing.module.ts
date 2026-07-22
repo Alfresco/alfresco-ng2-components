@@ -18,8 +18,10 @@
 import { NoopTranslateModule } from '@alfresco/adf-core';
 import { NgModule } from '@angular/core';
 import { BrowserTestingModule } from '@angular/platform-browser/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 @NgModule({
-    imports: [BrowserTestingModule, NoopTranslateModule]
+    imports: [BrowserTestingModule, NoopTranslateModule],
+    providers: [provideNoopAnimations()]
 })
 export class GlobalTestingModule {}
