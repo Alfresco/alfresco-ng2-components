@@ -18,7 +18,7 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SessionTimeoutDialogComponent } from './session-timeout-dialog.component';
-import { NoopTranslateModule } from 'dist/libs/core';
+import { NoopTranslateModule } from '../../testing';
 
 describe('SessionTimeoutDialogComponent', () => {
     const dialogRef = { close: jasmine.createSpy('close') };
