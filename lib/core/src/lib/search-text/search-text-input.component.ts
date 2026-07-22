@@ -142,11 +142,11 @@ export class SearchTextInputComponent implements OnInit {
 
     animationStates: SearchAnimationDirection = {
         ltr: {
-            active: { value: 'active', params: { 'margin-left': 13 } },
+            active: { value: 'active', params: { 'margin-left': '13px' } },
             inactive: { value: 'inactive', params: { transform: 'translateX(100%)' } }
         },
         rtl: {
-            active: { value: 'active', params: { 'margin-right': 13 } },
+            active: { value: 'active', params: { 'margin-right': '13px' } },
             inactive: { value: 'inactive', params: { transform: 'translateX(-100%)' } }
         }
     };
@@ -198,11 +198,11 @@ export class SearchTextInputComponent implements OnInit {
     private toggleAnimation() {
         if (this.dir === 'ltr') {
             return this.subscriptAnimationState.value === 'inactive'
-                ? { value: 'active', params: { 'margin-left': 0 } }
+                ? { value: 'active', params: { 'margin-left': '0px' } }
                 : { value: 'inactive', params: { transform: 'translateX(100%)' } };
         } else {
             return this.subscriptAnimationState.value === 'inactive'
-                ? { value: 'active', params: { 'margin-right': 0 } }
+                ? { value: 'active', params: { 'margin-right': '0px' } }
                 : { value: 'inactive', params: { transform: 'translateX(-100%)' } };
         }
     }
