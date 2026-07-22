@@ -16,26 +16,14 @@
  */
 
 import { Direction } from '@angular/cdk/bidi';
-import { NgClass, NgIf, NgStyle } from '@angular/common';
-import {
-    Component,
-    DestroyRef,
-    ElementRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { NgClass, NgStyle } from '@angular/common';
+import { Component, DestroyRef, ElementRef, EventEmitter, inject, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 import { UserPreferencesService } from '../common';
 import { SearchAnimationDirection, SearchAnimationState, SearchTextStateEnum } from './models/search-text-input.model';
@@ -48,23 +36,12 @@ import { IconModule } from '../icon/icon.module';
     templateUrl: './search-text-input.component.html',
     styleUrls: ['./search-text-input.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    imports: [
-        MatButtonModule,
-        IconModule,
-        TranslatePipe,
-        MatFormFieldModule,
-        MatInputModule,
-        FormsModule,
-        SearchTriggerDirective,
-        NgIf,
-        NgClass,
-        NgStyle
-    ],
+    imports: [MatButtonModule, IconModule, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, SearchTriggerDirective, NgClass, NgStyle],
     host: {
         class: 'adf-search-text-input'
     }
 })
-export class SearchTextInputComponent implements OnInit, OnDestroy {
+export class SearchTextInputComponent implements OnInit {
     private readonly userPreferencesService = inject(UserPreferencesService);
 
     /** Toggles auto-completion of the search input field. */
@@ -100,7 +77,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     /** Listener for results-list events (focus, blur and focusout). */
     @Input()
-    focusListener: Observable<FocusEvent>;
+    focusListener: Observable<FocusEvent> | null = null;
 
     /** Collapse search bar on submit. */
     @Input()
@@ -156,10 +133,10 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     /** Emitted when the search visibility changes. True when the search is active, false when it is inactive */
     @Output()
-    searchVisibility: EventEmitter<boolean> = new EventEmitter<boolean>();
+    searchVisibility = new EventEmitter<boolean>();
 
     @ViewChild('searchInput', { static: true })
-    searchInput: ElementRef;
+    searchInput!: ElementRef;
 
     subscriptAnimationState: any;
 
@@ -174,18 +151,16 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         }
     };
 
-    private dir = 'ltr';
-    private toggleSearch = new Subject<any>();
-    private focusSubscription: Subscription;
+    private dir: keyof SearchAnimationDirection = 'ltr';
+    private readonly toggleSearch = new Subject<any>();
     private readonly valueChange = new Subject<string>();
-    private readonly toggleSubscription: Subscription;
 
     toggle$ = this.toggleSearch.asObservable();
 
     private readonly destroyRef = inject(DestroyRef);
 
     constructor() {
-        this.toggleSubscription = this.toggle$.pipe(debounceTime(200), takeUntilDestroyed()).subscribe(() => {
+        this.toggle$.pipe(debounceTime(200), takeUntilDestroyed()).subscribe(() => {
             if (this.expandable) {
                 this.subscriptAnimationState = this.toggleAnimation();
                 if (this.subscriptAnimationState.value === 'inactive') {
@@ -232,14 +207,14 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         }
     }
 
-    private getDefaultState(dir: string): SearchAnimationState {
+    private getDefaultState(dir: keyof SearchAnimationDirection): SearchAnimationState {
         if (this.dir) {
             return this.getAnimationState(dir);
         }
         return this.animationStates.ltr.inactive;
     }
 
-    private getAnimationState(dir: string): SearchAnimationState {
+    private getAnimationState(dir: keyof SearchAnimationDirection): SearchAnimationState {
         if (this.expandable && this.isDefaultStateExpanded()) {
             return this.animationStates[dir].active;
         } else if (this.expandable) {
@@ -251,21 +226,21 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     private setupFocusEventHandlers() {
         if (this.focusListener) {
-            const focusEvents: Observable<FocusEvent> = this.focusListener.pipe(
-                debounceTime(50),
-                filter(
-                    ($event: any) => this.isSearchBarActive() && ($event.type === 'blur' || $event.type === 'focusout' || $event.type === 'focus')
-                ),
-                takeUntilDestroyed(this.destroyRef)
-            );
-
-            this.focusSubscription = focusEvents.subscribe((event: FocusEvent) => {
-                if (event.type === 'focus') {
-                    this.searchInput.nativeElement.focus();
-                } else {
-                    this.toggleSearchBar();
-                }
-            });
+            this.focusListener
+                .pipe(
+                    debounceTime(50),
+                    filter(
+                        ($event: any) => this.isSearchBarActive() && ($event.type === 'blur' || $event.type === 'focusout' || $event.type === 'focus')
+                    ),
+                    takeUntilDestroyed(this.destroyRef)
+                )
+                .subscribe((event: FocusEvent) => {
+                    if (event.type === 'focus') {
+                        this.searchInput.nativeElement.focus();
+                    } else {
+                        this.toggleSearchBar();
+                    }
+                });
         }
     }
 
@@ -275,11 +250,11 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         });
     }
 
-    selectFirstResult($event) {
+    selectFirstResult($event: any) {
         this.selectResult.emit($event);
     }
 
-    onBlur($event) {
+    onBlur($event: any) {
         if (this.collapseOnBlur && !$event.relatedTarget) {
             this.resetSearch();
         }
@@ -311,20 +286,6 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     isSearchBarActive(): boolean {
         return this.subscriptAnimationState.value === 'active';
-    }
-
-    ngOnDestroy() {
-        if (this.toggleSearch) {
-            this.toggleSubscription.unsubscribe();
-            this.toggleSearch.complete();
-            this.toggleSearch = null;
-        }
-
-        if (this.focusSubscription) {
-            this.focusSubscription.unsubscribe();
-            this.focusSubscription = null;
-            this.focusListener = null;
-        }
     }
 
     canShowClearSearch(): boolean {
