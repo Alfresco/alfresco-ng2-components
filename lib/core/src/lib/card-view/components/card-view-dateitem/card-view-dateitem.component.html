@@ -85,21 +85,22 @@
                     <span class="adf-error-text">{{ 'FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT' | translate }}</span>
                 </mat-error>
             }
-            <button
-                matSuffix
-                type="button"
-                class="adf-dateitem-action adf-copy-to-clipboard-icon"
-                *ngIf="copyToClipboardAction && !isEditable"
-                (click)="copyToClipboard(property.displayValue)"
-                [attr.aria-label]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
-                [attr.data-automation-id]="'card-dateitem-copy-to-clipboard-' + property.key"
-            >
-                <img
-                    alt=""
-                    class="adf-copy-to-clipboard-image"
-                    [src]="copyToClipboardIconUrl"
-                />
-            </button>
+            @if (copyToClipboardAction && !isEditable) {
+                <button
+                    matSuffix
+                    type="button"
+                    class="adf-dateitem-action adf-copy-to-clipboard-icon"
+                    (click)="copyToClipboard(property.displayValue)"
+                    [attr.aria-label]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+                    [attr.data-automation-id]="'card-dateitem-copy-to-clipboard-' + property.key"
+                >
+                    <img
+                        alt=""
+                        class="adf-copy-to-clipboard-image"
+                        [src]="copyToClipboardIconUrl"
+                    />
+                </button>
+            }
         </mat-form-field>
     } @else {
         <mat-form-field class="adf-property-field adf-dateitem-editable" [floatLabel]="property.default ? 'always' : null">

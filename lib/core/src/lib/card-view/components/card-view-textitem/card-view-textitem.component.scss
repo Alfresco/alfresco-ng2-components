@@ -87,7 +87,14 @@
         }
     }
 
-    &:hover {
+    &:hover,
+    &:focus-within {
+        .adf-copy-to-clipboard-icon {
+            opacity: 1;
+        }
+    }
+
+    @media (hover: none) {
         .adf-copy-to-clipboard-icon {
             opacity: 1;
         }

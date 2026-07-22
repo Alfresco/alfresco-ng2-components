@@ -50,6 +50,7 @@
                     [ngClass]="{
                         'adf-property-value-editable': editable,
                         'adf-property-readonly-value': isReadonlyProperty || !editable,
+                        'adf-property-value-has-icon-suffix': copyToClipboardAction && !isEditable
                     }"
                     [placeholder]="property.default"
                     [attr.aria-label]="property.label | translate"
@@ -57,21 +58,22 @@
                     [attr.data-automation-id]="'card-textitem-value-' + property.key"
                 >
                 </textarea>
-                <button
-                    matSuffix
-                    type="button"
-                    class="adf-textitem-action adf-copy-to-clipboard-icon"
-                    *ngIf="copyToClipboardAction && !isEditable"
-                    (click)="copyToClipboard(property.displayValue)"
-                    [attr.aria-label]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
-                    [attr.data-automation-id]="'card-textitem-copy-to-clipboard-' + property.key"
-                >
-                    <img
-                        alt=""
-                        class="adf-copy-to-clipboard-image"
-                        [src]="copyToClipboardIconUrl"
-                    />
-                </button>
+                @if (copyToClipboardAction && !isEditable) {
+                    <button
+                        matSuffix
+                        type="button"
+                        class="adf-textitem-action adf-copy-to-clipboard-icon"
+                        (click)="copyToClipboard(property.displayValue)"
+                        [attr.aria-label]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+                        [attr.data-automation-id]="'card-textitem-copy-to-clipboard-' + property.key"
+                    >
+                        <img
+                            alt=""
+                            class="adf-copy-to-clipboard-image"
+                            [src]="copyToClipboardIconUrl"
+                        />
+                    </button>
+                }
             </mat-form-field>
         </div>
 
