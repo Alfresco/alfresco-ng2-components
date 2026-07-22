@@ -1182,5 +1182,46 @@ describe('Form Renderer Component', () => {
                 expect(removeRowButton).toBeFalsy();
             });
         });
+
+        describe('row labels', () => {
+            const labelSelector = '#field-RepeatableSection0tbw2y-container .adf-grid-list-row-label';
+
+            const buildFormWithLabelParams = (labelParams: Record<string, unknown>): FormModel => {
+                const mock = JSON.parse(JSON.stringify(mockRepeatableSectionForm01));
+                Object.assign(mock.formRepresentation.formDefinition.fields[0].params, labelParams);
+                return new FormModel(mock.formRepresentation);
+            };
+
+            const getRenderedLabels = (): string[] =>
+                testingUtils.getAllByCSS(labelSelector).map((element) => element.nativeElement.textContent.trim());
+
+            it('should render the default translated row label when no label params are set', () => {
+                const labels = getRenderedLabels();
+
+                expect(labels.length).toBe(2);
+                labels.forEach((label) => expect(label).toBe('FORM.FORM_RENDERER.ROW_LABEL'));
+            });
+
+            it('should NOT render any row label when displayRowLabels is false', () => {
+                fixture.componentInstance.formDefinition = buildFormWithLabelParams({ displayRowLabels: false });
+                fixture.detectChanges();
+
+                expect(testingUtils.getAllByCSS(labelSelector).length).toBe(0);
+            });
+
+            it('should render the custom label with the row number appended', () => {
+                fixture.componentInstance.formDefinition = buildFormWithLabelParams({ rowLabelText: 'Approver', appendRowNumber: true });
+                fixture.detectChanges();
+
+                expect(getRenderedLabels()).toEqual(['Approver 1', 'Approver 2']);
+            });
+
+            it('should render the custom label without the row number when appendRowNumber is false', () => {
+                fixture.componentInstance.formDefinition = buildFormWithLabelParams({ rowLabelText: 'Approver', appendRowNumber: false });
+                fixture.detectChanges();
+
+                expect(getRenderedLabels()).toEqual(['Approver', 'Approver']);
+            });
+        });
     });
 });

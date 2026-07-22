@@ -106,7 +106,10 @@
                             [class.adf-grid-list-container-disabled]="currentRootElement.field.readOnly"
                         >
                             <div class="adf-grid-list-row">
-                                <span  class="adf-grid-list-row-label">{{ 'FORM.FORM_RENDERER.ROW_LABEL' | translate: {number: rowIndex + 1} }}</span>
+                                @if (currentRootElement.field.params.displayRowLabels !== false) {
+                                    @let customRowLabel = currentRootElement.field.params | adfRepeatableRowLabel: rowIndex;
+                                    <span class="adf-grid-list-row-label">{{ customRowLabel ?? ('FORM.FORM_RENDERER.ROW_LABEL' | translate: {number: rowIndex + 1}) }}</span>
+                                }
 
                                 @let shouldDisplayRemoveRowButton = !currentRootElement.field.rows[rowIndex].isInitial || (currentRootElement.field.rows[rowIndex].isInitial && currentRootElement.field.params.allowInitialRowsDelete);
                                 @if (shouldDisplayRemoveRowButton) {

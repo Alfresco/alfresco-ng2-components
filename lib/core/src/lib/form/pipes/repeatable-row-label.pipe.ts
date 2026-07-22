@@ -15,5 +15,24 @@
  * limitations under the License.
  */
 
-export * from './field-style.pipe';
-export * from './repeatable-row-label.pipe';
+import { Pipe, PipeTransform } from '@angular/core';
+
+export interface RepeatableRowLabelParams {
+    rowLabelText?: string;
+    appendRowNumber?: boolean;
+}
+
+@Pipe({
+    name: 'adfRepeatableRowLabel'
+})
+export class RepeatableRowLabelPipe implements PipeTransform {
+    transform(params: RepeatableRowLabelParams | undefined, rowIndex: number): string | null {
+        const rowLabelText = typeof params?.rowLabelText === 'string' ? params.rowLabelText.trim() : '';
+
+        if (!rowLabelText) {
+            return null;
+        }
+
+        return params?.appendRowNumber === false ? rowLabelText : `${rowLabelText} ${rowIndex + 1}`;
+    }
+}
