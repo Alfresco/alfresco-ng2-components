@@ -17,7 +17,6 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { NgIf } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -29,18 +28,6 @@ import { IconModule } from '../../../../icon/icon.module';
     selector: 'error-widget',
     templateUrl: './error.component.html',
     styleUrls: ['./error.component.scss'],
-    animations: [
-        trigger('transitionMessages', [
-            state('enter', style({ opacity: 1, transform: 'translateY(0%)' })),
-            transition('void => enter', [
-                style({
-                    opacity: 0,
-                    transform: 'translateY(-100%)'
-                }),
-                animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')
-            ])
-        ])
-    ],
     host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
@@ -63,18 +50,15 @@ export class ErrorWidgetComponent extends WidgetComponent implements OnChanges {
     required: string;
 
     translateParameters: any = null;
-    subscriptAnimationState: string = '';
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['required']) {
             this.required = changes.required.currentValue;
-            this.subscriptAnimationState = 'enter';
         }
         if (changes['error']?.currentValue) {
             if (changes.error.currentValue.isActive()) {
                 this.error = changes.error.currentValue;
                 this.translateParameters = this.error.getAttributesAsJsonObj();
-                this.subscriptAnimationState = 'enter';
             }
         }
     }
