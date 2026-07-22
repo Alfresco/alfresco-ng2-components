@@ -91,10 +91,6 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
         return !!this.mediaQueryList?.matches;
     }
 
-    getContentAnimationState(): any {
-        return this.contentAnimationState;
-    }
-
     private get toggledSidenavAnimation(): any {
         return this.sidenavAnimationState === this.SIDENAV_STATES.EXPANDED ? this.SIDENAV_STATES.COMPACT : this.SIDENAV_STATES.EXPANDED;
     }

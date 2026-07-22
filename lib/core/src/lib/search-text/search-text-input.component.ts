@@ -138,7 +138,7 @@ export class SearchTextInputComponent implements OnInit {
     @ViewChild('searchInput', { static: true })
     searchInput!: ElementRef;
 
-    subscriptAnimationState: any;
+    subscriptAnimationState!: SearchAnimationState;
 
     animationStates: SearchAnimationDirection = {
         ltr: {

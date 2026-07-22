@@ -11,7 +11,7 @@
     </mat-sidenav>
 
     <div>
-        <div class="adf-container-full-width" [ngClass]="getContentAnimationState()?.value" [style.margin-left.px]="getContentAnimationState()?.params?.['margin-left']" [style.margin-right.px]="getContentAnimationState()?.params?.['margin-right']">
+        <div class="adf-container-full-width" [ngClass]="contentAnimationState?.value" [style.margin-left.px]="contentAnimationState?.params?.['margin-left']" [style.margin-right.px]="contentAnimationState?.params?.['margin-right']">
             <ng-content select="[app-layout-content]" />
         </div>
     </div>
