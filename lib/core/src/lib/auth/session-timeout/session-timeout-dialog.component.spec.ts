@@ -17,9 +17,8 @@
 
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateModule } from '@ngx-translate/core';
 import { SessionTimeoutDialogComponent } from './session-timeout-dialog.component';
+import { NoopTranslateModule } from 'dist/libs/core';
 
 describe('SessionTimeoutDialogComponent', () => {
     const dialogRef = { close: jasmine.createSpy('close') };
@@ -27,7 +26,7 @@ describe('SessionTimeoutDialogComponent', () => {
     beforeEach(() => {
         dialogRef.close.calls.reset();
         TestBed.configureTestingModule({
-            imports: [SessionTimeoutDialogComponent, NoopAnimationsModule, TranslateModule.forRoot()],
+            imports: [SessionTimeoutDialogComponent, NoopTranslateModule],
             providers: [
                 { provide: MatDialogRef, useValue: dialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: { dialogTimeoutMs: 3000 } }
