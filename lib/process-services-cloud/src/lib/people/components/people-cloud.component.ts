@@ -208,7 +208,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
     invalidUsers: IdentityUserModel[] = [];
 
     searchUsers$ = new BehaviorSubject<IdentityUserModel[]>(this.searchUsers);
-    subscriptAnimationState: string = 'enter';
     isFocused: boolean;
     touched: boolean = false;
 

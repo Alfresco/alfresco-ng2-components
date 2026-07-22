@@ -1,6 +1,7 @@
 <div class="adf-search-container" [attr.state]="subscriptAnimationState.value">
     <div class="adf-search-container-transition"
-        [class.adf-search-active]="isSearchBarActive()">
+        [class.adf-search-active]="isSearchBarActive()"
+        [ngStyle]="subscriptAnimationState.params">
         <button mat-icon-button
                 *ngIf="expandable && !isSearchBarActive()"
                 id="adf-search-button"
