@@ -16,6 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
+import { lastValueFrom } from 'rxjs';
 import { DummyFeaturesService } from './dummy-features.service';
 
 describe('DummyFeaturesService', () => {
@@ -28,33 +29,29 @@ describe('DummyFeaturesService', () => {
         service = TestBed.inject(DummyFeaturesService);
     });
 
-    it('should initialize the service', () => {
-        service.init().subscribe((changeset) => {
-            expect(changeset).toBeUndefined();
-        });
+    it('should initialize the service', async () => {
+        const changeset = await lastValueFrom(service.init(), { defaultValue: undefined });
+        expect(changeset).toBeUndefined();
     });
 
-    it('should return false when isOn$ is called', () => {
-        service.isOn$().subscribe((isOn) => {
-            expect(isOn).toBeFalse();
-        });
+    it('should return false when isOn$ is called', async () => {
+        const isOn = await lastValueFrom(service.isOn$(), { defaultValue: false });
+        expect(isOn).toBeFalse();
     });
 
-    it('should return true when isOff$ is called with any key', () => {
-        service.isOff$('').subscribe((isOff) => {
-            expect(isOff).toBeTrue();
-        });
-        service.isOff$('key').subscribe((isOff) => {
-            expect(isOff).toBeTrue();
-        });
-        service.isOff$('salkjdaskd').subscribe((isOff) => {
-            expect(isOff).toBeTrue();
-        });
+    it('should return true when isOff$ is called with any key', async () => {
+        const isOff1 = await lastValueFrom(service.isOff$(''), { defaultValue: true });
+        expect(isOff1).toBeTrue();
+
+        const isOff2 = await lastValueFrom(service.isOff$('key'), { defaultValue: true });
+        expect(isOff2).toBeTrue();
+
+        const isOff3 = await lastValueFrom(service.isOff$('salkjdaskd'), { defaultValue: true });
+        expect(isOff3).toBeTrue();
     });
 
-    it('should return an empty object when getFlags$ is called', () => {
-        service.getFlags$().subscribe((flags) => {
-            expect(flags).toEqual({});
-        });
+    it('should return an empty object when getFlags$ is called', async () => {
+        const flags = await lastValueFrom(service.getFlags$(), { defaultValue: {} });
+        expect(flags).toEqual({});
     });
 });
