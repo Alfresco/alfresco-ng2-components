@@ -6,9 +6,7 @@
                 [ngClass]="{
                     'adf-property-read-only': isReadonlyProperty
                 }"
-                (dblclick)="copyToClipboard(property.displayValue)"
                 [attr.data-automation-id]="'card-textitem-field-' + property.key"
-                [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
             >
                 <mat-label
                     [attr.data-automation-id]="'card-textitem-label-' + property.key"
@@ -29,7 +27,8 @@
                         'adf-property-value-editable': editable,
                         'adf-property-readonly-value': isReadonlyProperty || !editable,
                         'adf-property-value-has-error': isEditable && hasErrors,
-                        'adf-property-value-not-editable': !editable
+                        'adf-property-value-not-editable': !editable,
+                        'adf-property-value-has-icon-suffix': copyToClipboardAction && !isEditable
                     }"
                     title="{{ property.label | translate }}"
                     [placeholder]="property.default"
@@ -58,6 +57,21 @@
                     [attr.data-automation-id]="'card-textitem-value-' + property.key"
                 >
                 </textarea>
+                <button
+                    matSuffix
+                    type="button"
+                    class="adf-textitem-action adf-copy-to-clipboard-icon"
+                    *ngIf="copyToClipboardAction && !isEditable"
+                    (click)="copyToClipboard(property.displayValue)"
+                    [attr.aria-label]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+                    [attr.data-automation-id]="'card-textitem-copy-to-clipboard-' + property.key"
+                >
+                    <img
+                        alt=""
+                        class="adf-copy-to-clipboard-image"
+                        [src]="copyToClipboardIconUrl"
+                    />
+                </button>
             </mat-form-field>
         </div>
 

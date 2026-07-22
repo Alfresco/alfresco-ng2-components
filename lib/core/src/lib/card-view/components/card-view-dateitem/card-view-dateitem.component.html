@@ -6,7 +6,6 @@
                 [attr.data-automation-id]="'card-dateitem-label-' + property.key"
                 [attr.for]="'card-view-dateitem-' + property.key"
                 [ngClass]="{ 'adf-property-readonly-value': isReadonlyProperty || !editable, 'adf-property-value-editable': editable }"
-                [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
             >
                 {{ property.label | translate }}
             </mat-label>
@@ -26,7 +25,6 @@
                         class="adf-datepicker-span-button"
                         [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
                         (click)="showDatePicker()"
-                        (dblclick)="copyToClipboard(property.displayValue)"
                         tabindex="0"
                         role="button"
                         (keyup.enter)="showDatePicker()"
@@ -87,6 +85,21 @@
                     <span class="adf-error-text">{{ 'FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT' | translate }}</span>
                 </mat-error>
             }
+            <button
+                matSuffix
+                type="button"
+                class="adf-dateitem-action adf-copy-to-clipboard-icon"
+                *ngIf="copyToClipboardAction && !isEditable"
+                (click)="copyToClipboard(property.displayValue)"
+                [attr.aria-label]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+                [attr.data-automation-id]="'card-dateitem-copy-to-clipboard-' + property.key"
+            >
+                <img
+                    alt=""
+                    class="adf-copy-to-clipboard-image"
+                    [src]="copyToClipboardIconUrl"
+                />
+            </button>
         </mat-form-field>
     } @else {
         <mat-form-field class="adf-property-field adf-dateitem-editable" [floatLabel]="property.default ? 'always' : null">
@@ -95,7 +108,6 @@
                 [attr.data-automation-id]="'card-dateitem-label-' + property.key"
                 [attr.for]="'card-view-dateitem-' + property.key"
                 [ngClass]="{ 'adf-property-readonly-value': isReadonlyProperty || !editable, 'adf-property-value-editable': editable }"
-                [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
             >
                 {{ property.label | translate }}
             </mat-label>
@@ -116,7 +128,6 @@
                     class="adf-datepicker-span-button"
                     [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
                     (click)="showDatePicker()"
-                    (dblclick)="copyToClipboard(property.displayValue)"
                     tabindex="0"
                     role="button"
                     (keyup.enter)="showDatePicker()"

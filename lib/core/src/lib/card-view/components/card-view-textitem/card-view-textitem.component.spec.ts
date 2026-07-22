@@ -562,25 +562,40 @@ describe('CardViewTextItemComponent', () => {
             expect(await getTextFieldValue(component.property.key)).toEqual(expectedText);
         });
 
-        it('should copy value to clipboard on double click', async () => {
+        it('should copy value to clipboard when clicking the copy icon', () => {
             const clipboardService = TestBed.inject(ClipboardService);
             spyOn(clipboardService, 'copyContentToClipboard');
 
             component.property.value = 'myValueToCopy';
-            component.property.icon = 'FAKE_ICON';
             component.editable = false;
             component.copyToClipboardAction = true;
             fixture.detectChanges();
-            await fixture.whenStable();
-            fixture.detectChanges();
 
-            testingUtils.doubleClickByDataAutomationId(`card-textitem-field-${component.property.key}`);
-            fixture.detectChanges();
+            testingUtils.clickByDataAutomationId('card-textitem-copy-to-clipboard-' + component.property.key);
 
+            fixture.detectChanges();
             expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith(
                 'myValueToCopy',
                 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE'
             );
+        });
+
+        it('should NOT render the copy icon when copyToClipboardAction is false', () => {
+            component.editable = false;
+            component.copyToClipboardAction = false;
+            fixture.detectChanges();
+
+            const copyIcon = testingUtils.getByDataAutomationId('card-textitem-copy-to-clipboard-' + component.property.key);
+            expect(copyIcon).toBeNull();
+        });
+
+        it('should NOT render the copy icon when the item is editable', () => {
+            component.editable = true;
+            component.property.editable = true;
+            fixture.detectChanges();
+
+            const copyIcon = testingUtils.getByDataAutomationId('card-textitem-copy-to-clipboard-' + component.property.key);
+            expect(copyIcon).toBeNull();
         });
 
         it('should input be disabled if item it NOT editable', async () => {

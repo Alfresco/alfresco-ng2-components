@@ -65,3 +65,22 @@
         cursor: pointer;
     }
 }
+
+.adf-property-field {
+    .adf-copy-to-clipboard-icon {
+        border: none;
+        background: none;
+        cursor: pointer;
+        opacity: 0;
+
+        .adf-copy-to-clipboard-image {
+            width: 25px;
+        }
+    }
+
+    &:hover {
+        .adf-copy-to-clipboard-icon {
+            opacity: 1;
+        }
+    }
+}

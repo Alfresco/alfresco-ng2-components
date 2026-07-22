@@ -212,17 +212,36 @@ describe('CardViewDateItemComponent', () => {
         expect(component.property.value).toEqual(expectedDate);
     });
 
-    it('should copy value to clipboard on double click', () => {
+    it('should copy value to clipboard when clicking the copy icon', () => {
         const clipboardService = TestBed.inject(ClipboardService);
         spyOn(clipboardService, 'copyContentToClipboard');
 
         component.editable = false;
+        component.copyToClipboardAction = true;
         fixture.detectChanges();
 
-        testingUtils.doubleClickByDataAutomationId('datepicker-label-toggle-' + component.property.key);
+        testingUtils.clickByDataAutomationId('card-dateitem-copy-to-clipboard-' + component.property.key);
 
         fixture.detectChanges();
         expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Jul 10, 2017', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
+    });
+
+    it('should NOT render the copy icon when copyToClipboardAction is false', () => {
+        component.editable = false;
+        component.copyToClipboardAction = false;
+        fixture.detectChanges();
+
+        const copyIcon = testingUtils.getByDataAutomationId('card-dateitem-copy-to-clipboard-' + component.property.key);
+        expect(copyIcon).toBeNull();
+    });
+
+    it('should NOT render the copy icon when the item is editable', () => {
+        component.editable = true;
+        component.property.editable = true;
+        fixture.detectChanges();
+
+        const copyIcon = testingUtils.getByDataAutomationId('card-dateitem-copy-to-clipboard-' + component.property.key);
+        expect(copyIcon).toBeNull();
     });
 
     describe('clear icon', () => {

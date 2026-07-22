@@ -36,6 +36,12 @@
         bottom: 7px;
     }
 
+    #{ms.$mat-form-field-icon-suffix}:has(.adf-copy-to-clipboard-icon) {
+        top: 50%;
+        bottom: auto;
+        transform: translateY(-50%);
+    }
+
     .adf-textitem-chip-list-container {
         .adf-property-value {
             margin-left: 0;
@@ -59,6 +65,7 @@
     }
 
     .adf-property-value-has-icon-suffix {
+        box-sizing: border-box;
         padding-right: 34px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -68,4 +75,21 @@
 
 .adf-card-textitem-field-container {
     padding-top: 5px;
+
+    .adf-copy-to-clipboard-icon {
+        border: none;
+        background: none;
+        cursor: pointer;
+        opacity: 0;
+
+        .adf-copy-to-clipboard-image {
+            width: 25px;
+        }
+    }
+
+    &:hover {
+        .adf-copy-to-clipboard-icon {
+            opacity: 1;
+        }
+    }
 }

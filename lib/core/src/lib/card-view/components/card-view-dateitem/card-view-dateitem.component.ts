@@ -86,6 +86,12 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     @Input()
     displayClearAction = true;
 
+    @Input()
+    copyToClipboardAction = true;
+
+    @Input()
+    copyToClipboardIconUrl: string = './assets/images/copy.svg';
+
     @ViewChild('datetimePicker')
     public datepicker: MatDatetimepickerComponent<any>;
 
@@ -204,7 +210,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     }
 
     copyToClipboard(valueToCopy: string | string[]) {
-        if (typeof valueToCopy === 'string') {
+        if (typeof valueToCopy === 'string' && this.copyToClipboardAction) {
             const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
             this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
         }

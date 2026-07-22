@@ -77,6 +77,9 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     @Input()
     multiValueSeparator: string = DEFAULT_SEPARATOR;
 
+    @Input()
+    copyToClipboardIconUrl: string = './assets/images/copy.svg';
+
     editedValue: string | string[];
     errors: CardViewItemValidator[];
     templateType: string;
