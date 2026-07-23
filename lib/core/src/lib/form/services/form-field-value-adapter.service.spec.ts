@@ -196,6 +196,12 @@ describe('FormFieldValueAdapterService', () => {
             const field = makeField(FormFieldTypes.PEOPLE, null);
             expect(service.adapt({ firstName: 'Keith', lastName: 'Richards' }, field)).toBeNull();
         });
+
+        it('should drop non-string and blank fields from a process-response user object', () => {
+            const field = makeField(FormFieldTypes.PEOPLE, null);
+            const processUser = { id: null, username: 'krichards', firstName: 42, lastName: '  ', email: 'k@x.io' };
+            expect(service.adapt(processUser, field)).toEqual([{ username: 'krichards', email: 'k@x.io' }]);
+        });
     });
 
     describe('Group adapter', () => {

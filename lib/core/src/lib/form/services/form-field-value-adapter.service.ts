@@ -119,17 +119,19 @@ export class FormFieldValueAdapterService {
                 return null;
             }
             const source = entry as Record<string, unknown>;
-            const username = (source['username'] ?? source['userName']) as string | undefined;
-            const id = source['id'] as string | undefined;
-            const email = source['email'] as string | undefined;
+            const username = this.toStringField(source['username'] ?? source['userName']);
+            const id = this.toStringField(source['id']);
+            const email = this.toStringField(source['email']);
+            const firstName = this.toStringField(source['firstName']);
+            const lastName = this.toStringField(source['lastName']);
             if (!id && !username && !email) {
                 return null;
             }
             const user: CanonicalUser = {
                 ...(id !== undefined ? { id } : {}),
                 username: username ?? '',
-                ...(source['firstName'] !== undefined ? { firstName: source['firstName'] as string } : {}),
-                ...(source['lastName'] !== undefined ? { lastName: source['lastName'] as string } : {}),
+                ...(firstName !== undefined ? { firstName } : {}),
+                ...(lastName !== undefined ? { lastName } : {}),
                 ...(email !== undefined ? { email } : {})
             };
             return user;
@@ -156,8 +158,8 @@ export class FormFieldValueAdapterService {
                 return null;
             }
             const source = entry as Record<string, unknown>;
-            const name = source['name'] as string | undefined;
-            const id = source['id'] as string | undefined;
+            const name = this.toStringField(source['name']);
+            const id = this.toStringField(source['id']);
             if (!name && !id) {
                 return null;
             }
@@ -177,6 +179,10 @@ export class FormFieldValueAdapterService {
 
     private isBlankToken(value: string): boolean {
         return value === '' || value === '[]' || value === '{}';
+    }
+
+    private toStringField(value: unknown): string | undefined {
+        return typeof value === 'string' && value.trim() !== '' ? value : undefined;
     }
 
     private toOptionId(entry: unknown): unknown {
