@@ -6,6 +6,7 @@
                 [attr.data-automation-id]="'card-dateitem-label-' + property.key"
                 [attr.for]="'card-view-dateitem-' + property.key"
                 [ngClass]="{ 'adf-property-readonly-value': isReadonlyProperty || !editable, 'adf-property-value-editable': editable }"
+                [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
             >
                 {{ property.label | translate }}
             </mat-label>
@@ -25,6 +26,7 @@
                         class="adf-datepicker-span-button"
                         [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
                         (click)="showDatePicker()"
+                        (dblclick)="copyToClipboard(property.displayValue)"
                         tabindex="0"
                         role="button"
                         (keyup.enter)="showDatePicker()"
@@ -109,6 +111,7 @@
                 [attr.data-automation-id]="'card-dateitem-label-' + property.key"
                 [attr.for]="'card-view-dateitem-' + property.key"
                 [ngClass]="{ 'adf-property-readonly-value': isReadonlyProperty || !editable, 'adf-property-value-editable': editable }"
+                [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
             >
                 {{ property.label | translate }}
             </mat-label>
@@ -129,6 +132,7 @@
                     class="adf-datepicker-span-button"
                     [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
                     (click)="showDatePicker()"
+                    (dblclick)="copyToClipboard(property.displayValue)"
                     tabindex="0"
                     role="button"
                     (keyup.enter)="showDatePicker()"

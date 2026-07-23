@@ -562,6 +562,27 @@ describe('CardViewTextItemComponent', () => {
             expect(await getTextFieldValue(component.property.key)).toEqual(expectedText);
         });
 
+        it('should copy value to clipboard on double click', async () => {
+            const clipboardService = TestBed.inject(ClipboardService);
+            spyOn(clipboardService, 'copyContentToClipboard');
+
+            component.property.value = 'myValueToCopy';
+            component.property.icon = 'FAKE_ICON';
+            component.editable = false;
+            component.copyToClipboardAction = true;
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            testingUtils.doubleClickByDataAutomationId(`card-textitem-field-${component.property.key}`);
+            fixture.detectChanges();
+
+            expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith(
+                'myValueToCopy',
+                'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE'
+            );
+        });
+
         it('should copy value to clipboard when clicking the copy icon', () => {
             const clipboardService = TestBed.inject(ClipboardService);
             spyOn(clipboardService, 'copyContentToClipboard');

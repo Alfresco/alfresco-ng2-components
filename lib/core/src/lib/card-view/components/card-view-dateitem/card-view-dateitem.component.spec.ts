@@ -212,6 +212,19 @@ describe('CardViewDateItemComponent', () => {
         expect(component.property.value).toEqual(expectedDate);
     });
 
+    it('should copy value to clipboard on double click', () => {
+        const clipboardService = TestBed.inject(ClipboardService);
+        spyOn(clipboardService, 'copyContentToClipboard');
+
+        component.editable = false;
+        fixture.detectChanges();
+
+        testingUtils.doubleClickByDataAutomationId('datepicker-label-toggle-' + component.property.key);
+
+        fixture.detectChanges();
+        expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Jul 10, 2017', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
+    });
+
     it('should copy value to clipboard when clicking the copy icon', () => {
         const clipboardService = TestBed.inject(ClipboardService);
         spyOn(clipboardService, 'copyContentToClipboard');
