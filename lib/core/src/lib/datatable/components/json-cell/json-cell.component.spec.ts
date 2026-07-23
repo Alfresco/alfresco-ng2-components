@@ -90,13 +90,13 @@ describe('JsonCellComponent', () => {
 describe('JsonCellComponent — dialog component selection', () => {
     let component: JsonCellComponent;
     let fixture: ComponentFixture<JsonCellComponent>;
-    let openSpy: jest.SpyInstance;
+    let openSpy: jasmine.Spy;
 
     const setupComponent = () => {
         fixture = TestBed.createComponent(JsonCellComponent);
         component = fixture.componentInstance;
 
-        openSpy = jest.spyOn((component as any).dialog, 'open').mockReturnValue({ afterClosed: () => ({ subscribe: () => {} }) } as any);
+        openSpy = spyOn((component as any).dialog, 'open').and.returnValue({ afterClosed: () => ({ subscribe: () => {} }) } as any);
 
         const rowData = { name: '1', entity: { name: 'test' } };
         const columnData = { format: '/somewhere', type: 'json', key: 'entity' };
