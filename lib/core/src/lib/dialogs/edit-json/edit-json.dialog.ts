@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation, inject, model } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject, model, linkedSignal } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
@@ -48,8 +48,10 @@ export class EditJsonDialogComponent implements OnInit {
 
     editable: boolean = false;
     title: string = 'JSON';
+
     readonly value = model('');
-    protected editorInputs!: JsonEditorInputs;
+
+    protected readonly editorInputs = linkedSignal((): JsonEditorInputs => ({ value: this.value, readOnly: !this.editable }));
 
     ngOnInit() {
         if (this.settings) {
@@ -57,7 +59,6 @@ export class EditJsonDialogComponent implements OnInit {
             this.value.set(this.settings.value ?? '');
             this.title = this.settings.title ?? 'JSON';
         }
-        this.editorInputs = { value: this.value, readOnly: !this.editable };
     }
 
     protected copyToClipboard(): void {

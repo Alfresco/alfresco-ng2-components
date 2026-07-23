@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>{{ title | translate }}</h1>
 <mat-dialog-content class="adf-edit-json-dialog-content">
     @if (customEditor) {
-    <ng-container *ngComponentOutlet="customEditor; inputs: editorInputs" />
+    <ng-container *ngComponentOutlet="customEditor; inputs: editorInputs()" />
     } @else {
     <textarea [ngModel]="value" [attr.readonly]="!editable ? true : null"></textarea>
     }
