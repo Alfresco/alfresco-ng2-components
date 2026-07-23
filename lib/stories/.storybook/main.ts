@@ -1,5 +1,5 @@
 import type { StorybookConfig } from '@storybook/angular';
-import rootMain from '../../../.storybook/main';
+import rootMain from '../../../.storybook/main.ts';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
