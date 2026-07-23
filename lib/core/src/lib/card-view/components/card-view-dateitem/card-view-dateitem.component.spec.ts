@@ -31,6 +31,8 @@ import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { MatFormField } from '@angular/material/form-field';
 import { AdfDateFnsAdapter } from '../../../common/utils/date-fns-adapter';
 import { AdfDateTimeFnsAdapter } from '../../../common/utils/datetime-fns-adapter';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 describe('CardViewDateItemComponent', () => {
     let loader: HarnessLoader;
@@ -38,6 +40,8 @@ describe('CardViewDateItemComponent', () => {
     let component: CardViewDateItemComponent;
     let appConfigService: AppConfigService;
     let testingUtils: UnitTestingUtils;
+    let iconRegistry: MatIconRegistry;
+    let sanitizer: DomSanitizer;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -49,6 +53,9 @@ describe('CardViewDateItemComponent', () => {
             defaultDateTimeFormat: 'M/d/yy, h:mm a',
             defaultLocale: 'uk'
         };
+
+        iconRegistry = TestBed.inject(MatIconRegistry);
+        sanitizer = TestBed.inject(DomSanitizer);
 
         fixture = TestBed.createComponent(CardViewDateItemComponent);
         component = fixture.componentInstance;
@@ -239,7 +246,28 @@ describe('CardViewDateItemComponent', () => {
         expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Jul 10, 2017', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
     });
 
-    it('should NOT render the copy icon when copyToClipboardAction is false', () => {
+    it('should register the copy icon in the adf namespace', () => {
+        const safeUrl = sanitizer.bypassSecurityTrustResourceUrl('./assets/images/copy.svg');
+        const bypassSpy = spyOn(sanitizer, 'bypassSecurityTrustResourceUrl').and.returnValue(safeUrl);
+        const registerSpy = spyOn(iconRegistry, 'addSvgIconInNamespace');
+
+        const testFixture = TestBed.createComponent(CardViewDateItemComponent);
+        testFixture.componentInstance.property = component.property;
+        testFixture.detectChanges();
+
+        expect(bypassSpy).toHaveBeenCalledWith('./assets/images/copy.svg');
+        expect(registerSpy).toHaveBeenCalledWith('adf', 'copy', safeUrl);
+    });
+
+    it('should NOT render the copy icon by default', () => {
+        component.editable = false;
+        fixture.detectChanges();
+
+        const copyIcon = testingUtils.getByDataAutomationId('card-dateitem-copy-to-clipboard-' + component.property.key);
+        expect(copyIcon).toBeNull();
+    });
+
+    it('should NOT render the copy icon when displayCopyToClipboardIcon is false', () => {
         component.editable = false;
         component.displayCopyToClipboardIcon = false;
         fixture.detectChanges();
@@ -251,6 +279,7 @@ describe('CardViewDateItemComponent', () => {
     it('should NOT render the copy icon when the item is editable', () => {
         component.editable = true;
         component.property.editable = true;
+        component.displayCopyToClipboardIcon = true;
         fixture.detectChanges();
 
         const copyIcon = testingUtils.getByDataAutomationId('card-dateitem-copy-to-clipboard-' + component.property.key);

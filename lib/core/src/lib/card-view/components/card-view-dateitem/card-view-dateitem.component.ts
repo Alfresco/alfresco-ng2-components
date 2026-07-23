@@ -49,6 +49,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { IconComponent } from '../../../icon/icon.component';
 
 const DEFAULT_DATE_FORMAT = 'MMM DD';
+const COPY_ICON_URL = './assets/images/copy.svg';
 
 @Component({
     providers: [
@@ -98,9 +99,6 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     @Input()
     displayCopyToClipboardIcon: boolean = false;
 
-    @Input()
-    copyToClipboardIconUrl: string = './assets/images/copy.svg';
-
     @ViewChild('datetimePicker')
     public datepicker: MatDatetimepickerComponent<any>;
 
@@ -112,7 +110,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     constructor() {
         super();
-        this.matIconRegistry.addSvgIconInNamespace('adf', 'copy', this.domSanitizer.bypassSecurityTrustResourceUrl(this.copyToClipboardIconUrl));
+        this.matIconRegistry.addSvgIconInNamespace('adf', 'copy', this.domSanitizer.bypassSecurityTrustResourceUrl(COPY_ICON_URL));
         // Use effect to react to locale signal changes (must be in injection context)
         effect(() => {
             this.property.locale = this.userPreferencesService.localeSignal();

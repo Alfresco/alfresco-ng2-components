@@ -30,6 +30,8 @@ import { CardViewItemValidator } from '../../interfaces/card-view-item-validator
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputHarness } from '@angular/material/input/testing';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('CardViewTextItemComponent', () => {
@@ -37,6 +39,8 @@ describe('CardViewTextItemComponent', () => {
     let fixture: ComponentFixture<CardViewTextItemComponent>;
     let component: CardViewTextItemComponent;
     let testingUtils: UnitTestingUtils;
+    let iconRegistry: MatIconRegistry;
+    let sanitizer: DomSanitizer;
 
     const expectedErrorMessages = [{ message: 'Something went wrong' } as CardViewItemValidator];
 
@@ -119,6 +123,8 @@ describe('CardViewTextItemComponent', () => {
         component = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
         testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
+        iconRegistry = TestBed.inject(MatIconRegistry);
+        sanitizer = TestBed.inject(DomSanitizer);
     });
 
     afterEach(() => {
@@ -583,6 +589,19 @@ describe('CardViewTextItemComponent', () => {
             );
         });
 
+        it('should register the copy icon in the adf namespace', () => {
+            const safeUrl = sanitizer.bypassSecurityTrustResourceUrl('./assets/images/copy.svg');
+            const bypassSpy = spyOn(sanitizer, 'bypassSecurityTrustResourceUrl').and.returnValue(safeUrl);
+            const registerSpy = spyOn(iconRegistry, 'addSvgIconInNamespace');
+
+            const testFixture = TestBed.createComponent(CardViewTextItemComponent);
+            testFixture.componentInstance.property = component.property;
+            testFixture.detectChanges();
+
+            expect(bypassSpy).toHaveBeenCalledWith('./assets/images/copy.svg');
+            expect(registerSpy).toHaveBeenCalledWith('adf', 'copy', safeUrl);
+        });
+
         it('should copy value to clipboard when clicking the copy icon', () => {
             const clipboardService = TestBed.inject(ClipboardService);
             spyOn(clipboardService, 'copyContentToClipboard');
@@ -602,7 +621,15 @@ describe('CardViewTextItemComponent', () => {
             );
         });
 
-        it('should NOT render the copy icon when copyToClipboardAction is false', () => {
+        it('should NOT render the copy icon by default', () => {
+            component.editable = false;
+            fixture.detectChanges();
+
+            const copyIcon = testingUtils.getByDataAutomationId('card-textitem-copy-to-clipboard-' + component.property.key);
+            expect(copyIcon).toBeNull();
+        });
+
+        it('should NOT render the copy icon when displayCopyToClipboardIcon is false', () => {
             component.editable = false;
             component.displayCopyToClipboardIcon = false;
             fixture.detectChanges();
@@ -614,6 +641,7 @@ describe('CardViewTextItemComponent', () => {
         it('should NOT render the copy icon when the item is editable', () => {
             component.editable = true;
             component.property.editable = true;
+            component.displayCopyToClipboardIcon = true;
             fixture.detectChanges();
 
             const copyIcon = testingUtils.getByDataAutomationId('card-textitem-copy-to-clipboard-' + component.property.key);

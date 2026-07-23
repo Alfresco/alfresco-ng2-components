@@ -37,6 +37,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { IconComponent } from '../../../icon/icon.component';
 
 export const DEFAULT_SEPARATOR = ', ';
+const COPY_ICON_URL = './assets/images/copy.svg';
 const templateTypes = {
     clickableTemplate: 'clickableTemplate',
     multilineTemplate: 'multilineTemplate',
@@ -86,9 +87,6 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     @Input()
     multiValueSeparator: string = DEFAULT_SEPARATOR;
 
-    @Input()
-    copyToClipboardIconUrl: string = './assets/images/copy.svg';
-
     editedValue: string | string[];
     errors: CardViewItemValidator[];
     templateType: string;
@@ -99,7 +97,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     constructor() {
         super();
-        this.matIconRegistry.addSvgIconInNamespace('adf', 'copy', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/copy.svg'));
+        this.matIconRegistry.addSvgIconInNamespace('adf', 'copy', this.sanitizer.bypassSecurityTrustResourceUrl(COPY_ICON_URL));
     }
 
     ngOnChanges(changes: SimpleChanges): void {
