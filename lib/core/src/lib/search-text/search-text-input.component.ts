@@ -150,8 +150,6 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     @ViewChild('searchInput', { static: true })
     searchInput!: ElementRef;
 
-    subscriptAnimationState!: SearchAnimationState;
-
     animationStates: SearchAnimationDirection = {
         ltr: {
             active: { value: 'active', params: { 'margin-left': '13px' } },
@@ -162,6 +160,8 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
             inactive: { value: 'inactive', params: { transform: 'translateX(-100%)' } }
         }
     };
+
+    subscriptAnimationState: SearchAnimationState = this.animationStates.ltr.inactive;
 
     private dir: keyof SearchAnimationDirection = 'ltr';
     private readonly toggleSearch = new Subject<any>();
