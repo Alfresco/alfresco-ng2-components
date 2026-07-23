@@ -30,6 +30,7 @@ export interface EditJsonDialogSettings {
 }
 
 @Component({
+    selector: 'adf-edit-json-dialog',
     standalone: true,
     imports: [MatDialogModule, FormsModule, MatButtonModule, MatIconModule, TranslatePipe],
     templateUrl: './edit-json.dialog.html',
