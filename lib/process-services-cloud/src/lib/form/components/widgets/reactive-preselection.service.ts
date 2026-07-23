@@ -25,7 +25,7 @@ export interface ReactivePreselectionHost<T> {
     getFieldId(): string;
     getFormId(): string;
     getFieldValue(): unknown;
-    getPreselection(): T[];
+    getSelection(): T[];
     setPreselection(value: T[]): void;
     identityOf(item: T): string;
 }
@@ -63,17 +63,13 @@ export class ReactivePreselectionService<T = unknown> {
         this.subscribed = true;
         this.formService.formRulesEvent
             .pipe(
-                filter((event) => event?.type === 'fieldValueChanged' && this.isExternalChange(event)),
+                filter((event) => event?.type === 'fieldValueChanged' && this.isSameForm(event)),
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(() => this.sync());
     }
 
-    private isExternalChange(event: FormRulesEvent): boolean {
-        const eventFieldId = event?.field?.id;
-        if (eventFieldId && eventFieldId === this.host.getFieldId()) {
-            return false;
-        }
+    private isSameForm(event: FormRulesEvent): boolean {
         const eventFormId = event?.form?.id;
         return !eventFormId || eventFormId === this.host.getFormId();
     }
@@ -83,7 +79,7 @@ export class ReactivePreselectionService<T = unknown> {
             return;
         }
         const next = this.toPreselection(this.host.getFieldValue());
-        if (this.isSamePreselection(this.host.getPreselection(), next)) {
+        if (this.isSamePreselection(this.host.getSelection(), next)) {
             return;
         }
         this.host.setPreselection(next);

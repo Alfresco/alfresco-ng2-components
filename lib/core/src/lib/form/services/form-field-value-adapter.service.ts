@@ -27,7 +27,20 @@ interface AdaptedUser {
     lastName?: string;
 }
 
+interface CanonicalUser {
+    id?: string;
+    username: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+}
+
 interface AdaptedGroup {
+    name: string;
+}
+
+interface CanonicalGroup {
+    id?: string;
     name: string;
 }
 
@@ -102,7 +115,24 @@ export class FormFieldValueAdapterService {
 
     private toUser(entry: unknown): unknown {
         if (typeof entry !== 'string') {
-            return entry;
+            if (!entry || typeof entry !== 'object') {
+                return null;
+            }
+            const source = entry as Record<string, unknown>;
+            const username = (source['username'] ?? source['userName']) as string | undefined;
+            const id = source['id'] as string | undefined;
+            const email = source['email'] as string | undefined;
+            if (!id && !username && !email) {
+                return null;
+            }
+            const user: CanonicalUser = {
+                ...(id !== undefined ? { id } : {}),
+                username: username ?? '',
+                ...(source['firstName'] !== undefined ? { firstName: source['firstName'] as string } : {}),
+                ...(source['lastName'] !== undefined ? { lastName: source['lastName'] as string } : {}),
+                ...(email !== undefined ? { email } : {})
+            };
+            return user;
         }
         const trimmed = entry.trim();
         if (this.isBlankToken(trimmed)) {
@@ -122,7 +152,20 @@ export class FormFieldValueAdapterService {
 
     private toGroup(entry: unknown): unknown {
         if (typeof entry !== 'string') {
-            return entry;
+            if (!entry || typeof entry !== 'object') {
+                return null;
+            }
+            const source = entry as Record<string, unknown>;
+            const name = source['name'] as string | undefined;
+            const id = source['id'] as string | undefined;
+            if (!name && !id) {
+                return null;
+            }
+            const group: CanonicalGroup = {
+                ...(id !== undefined ? { id } : {}),
+                name: name ?? ''
+            };
+            return group;
         }
         const trimmed = entry.trim();
         if (this.isBlankToken(trimmed)) {

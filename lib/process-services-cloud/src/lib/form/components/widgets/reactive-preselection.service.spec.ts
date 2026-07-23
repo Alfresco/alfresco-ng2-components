@@ -56,7 +56,7 @@ describe('ReactivePreselectionService', () => {
             getFieldId: () => HOST_FIELD_ID,
             getFormId: () => HOST_FORM_ID,
             getFieldValue: () => fieldValue,
-            getPreselection: () => preselection,
+            getSelection: () => preselection,
             setPreselection: (value) => (preselection = value),
             identityOf: (item) => item?.id ?? item?.name
         };
@@ -111,11 +111,20 @@ describe('ReactivePreselectionService', () => {
             expect(preselection).toBe(initial);
         });
 
-        it('should ignore changes originating from the host field itself', () => {
+        it('should react to changes originating from the host field itself', () => {
+            fieldValue = [{ id: 'a' }];
+
+            formRulesEvent.next({ type: 'fieldValueChanged', field: { id: HOST_FIELD_ID }, form: { id: HOST_FORM_ID } });
+
+            expect(preselection).toEqual([{ id: 'a' }]);
+        });
+
+        it('should not reassign when the value already matches the current selection', () => {
+            preselection = [{ id: 'a' }];
             const initial = preselection;
             fieldValue = [{ id: 'a' }];
 
-            formRulesEvent.next({ type: 'fieldValueChanged', field: { id: HOST_FIELD_ID } });
+            formRulesEvent.next({ type: 'fieldValueChanged', field: { id: HOST_FIELD_ID }, form: { id: HOST_FORM_ID } });
 
             expect(preselection).toBe(initial);
         });

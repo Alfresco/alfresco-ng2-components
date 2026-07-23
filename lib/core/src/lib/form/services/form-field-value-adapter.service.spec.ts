@@ -91,7 +91,7 @@ describe('FormFieldValueAdapterService', () => {
 
         it('single-select: should wrap a user object into a single-element array', () => {
             const field = makeField(FormFieldTypes.PEOPLE, null);
-            const user = { firstName: 'Test', lastName: 'User' };
+            const user = { username: 'testuser', firstName: 'Test', lastName: 'User' };
             expect(service.adapt(user, field)).toEqual([user]);
         });
 
@@ -107,7 +107,7 @@ describe('FormFieldValueAdapterService', () => {
 
         it('single-select: should keep a single-element array', () => {
             const field = makeField(FormFieldTypes.PEOPLE, null);
-            expect(service.adapt([{ firstName: 'Test' }], field)).toEqual([{ firstName: 'Test' }]);
+            expect(service.adapt([{ username: 'test', firstName: 'Test' }], field)).toEqual([{ username: 'test', firstName: 'Test' }]);
         });
 
         it('single-select: should return null when given an empty array', () => {
@@ -134,18 +134,67 @@ describe('FormFieldValueAdapterService', () => {
 
         it('multi-select: should wrap a single object into an array', () => {
             const field = makeField(FormFieldTypes.PEOPLE, null, { multiple: true });
-            expect(service.adapt({ firstName: 'Test' }, field)).toEqual([{ firstName: 'Test' }]);
+            expect(service.adapt({ username: 'testuser', firstName: 'Test' }, field)).toEqual([{ username: 'testuser', firstName: 'Test' }]);
         });
 
         it('multi-select: should keep an array of users (idempotent)', () => {
             const field = makeField(FormFieldTypes.PEOPLE, null, { multiple: true });
-            const users = [{ firstName: 'Alice' }, { firstName: 'Bob' }];
+            const users = [
+                { username: 'alice', firstName: 'Alice' },
+                { username: 'bob', firstName: 'Bob' }
+            ];
             expect(service.adapt(users, field)).toEqual(users);
         });
 
         it('multi-select: should parse an array of strings', () => {
             const field = makeField(FormFieldTypes.PEOPLE, null, { multiple: true });
             expect(service.adapt(['Test User'], field)).toEqual([{ firstName: 'Test', lastName: 'User' }]);
+        });
+
+        it('should canonicalize a process-response user object (userName → username, drop displayName)', () => {
+            const field = makeField(FormFieldTypes.PEOPLE, null);
+            const processUser = {
+                id: 'u1',
+                email: 'k@x.io',
+                lastName: 'Richards',
+                userName: 'krichards',
+                firstName: 'Keith',
+                displayName: 'Keith Richards'
+            };
+            expect(service.adapt(processUser, field)).toEqual([
+                { id: 'u1', username: 'krichards', firstName: 'Keith', lastName: 'Richards', email: 'k@x.io' }
+            ]);
+        });
+
+        it('should canonicalize an array-wrapped process-response user object', () => {
+            const field = makeField(FormFieldTypes.PEOPLE, null);
+            const processUser = {
+                id: 'u1',
+                email: 'k@x.io',
+                lastName: 'Richards',
+                userName: 'krichards',
+                firstName: 'Keith',
+                displayName: 'Keith Richards'
+            };
+            expect(service.adapt([processUser], field)).toEqual([
+                { id: 'u1', username: 'krichards', firstName: 'Keith', lastName: 'Richards', email: 'k@x.io' }
+            ]);
+        });
+
+        it('should preserve an already-canonical user object (idempotent)', () => {
+            const field = makeField(FormFieldTypes.PEOPLE, null);
+            const canonical = { id: 'u1', username: 'krichards', firstName: 'Keith', lastName: 'Richards' };
+            expect(service.adapt(canonical, field)).toEqual([canonical]);
+        });
+
+        it('should keep a user with only id', () => {
+            const field = makeField(FormFieldTypes.PEOPLE, null);
+            expect(service.adapt({ id: 'u1' }, field)).toEqual([{ id: 'u1', username: '' }]);
+        });
+
+        it('should filter out an object with none of id, username, or email', () => {
+            const field = makeField(FormFieldTypes.PEOPLE, null);
+            expect(service.adapt({ firstName: 'Keith', lastName: 'Richards' }, field)).toBeNull();
         });
     });
 
@@ -180,6 +229,16 @@ describe('FormFieldValueAdapterService', () => {
         it('multi-select: should parse an array of strings', () => {
             const field = makeField(FormFieldTypes.FUNCTIONAL_GROUP, null, { multiple: true });
             expect(service.adapt(['Eng', 'QA'], field)).toEqual([{ name: 'Eng' }, { name: 'QA' }]);
+        });
+
+        it('should canonicalize a process-response group object', () => {
+            const field = makeField(FormFieldTypes.FUNCTIONAL_GROUP, null);
+            expect(service.adapt({ id: 'grp1', name: 'Finance' }, field)).toEqual([{ id: 'grp1', name: 'Finance' }]);
+        });
+
+        it('should filter out a group object with neither id nor name', () => {
+            const field = makeField(FormFieldTypes.FUNCTIONAL_GROUP, null);
+            expect(service.adapt({}, field)).toBeNull();
         });
     });
 

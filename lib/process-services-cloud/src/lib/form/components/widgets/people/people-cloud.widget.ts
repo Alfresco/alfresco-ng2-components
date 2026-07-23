@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ErrorWidgetComponent, WidgetComponent } from '@alfresco/adf-core';
 import { UntypedFormControl } from '@angular/forms';
 import { filter } from 'rxjs/operators';
@@ -53,6 +53,9 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
     private readonly identityUserService = inject(IdentityUserService);
     private readonly reactivePreselection: ReactivePreselectionService<IdentityUserModel> = inject(ReactivePreselectionService);
 
+    @ViewChild(PeopleCloudComponent)
+    private readonly peopleCloud: PeopleCloudComponent;
+
     typeId = 'PeopleCloudWidgetComponent';
     appName: string;
     roles: string[];
@@ -70,7 +73,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
             getFieldId: () => this.field?.id,
             getFormId: () => this.field?.form?.id,
             getFieldValue: () => this.field?.value,
-            getPreselection: () => this.preSelectUsers,
+            getSelection: () => this.peopleCloud?.getSelectedUsers() ?? [],
             setPreselection: (value) => (this.preSelectUsers = value),
             identityOf: (user) => user?.id ?? user?.username ?? user?.email
         });
