@@ -14,25 +14,24 @@
                     [cdkDropListSortPredicate]="filterDisabledColumns"
                     data-automation-id="datatable-row-header"
                     class="adf-datatable-row"
-                    role="row">
-
-
+                    role="row"
+                >
                     <!-- Drag -->
-                     @if (enableDragRows) {
+                    @if (enableDragRows) {
                         <div class="adf-datatable-cell-header adf-drag-column">
                             <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.DRAG' | translate }}</span>
                         </div>
-                     }
+                    }
 
                     <!-- Actions (left) -->
-                     @if (actions && actionsPosition === 'left') {
+                    @if (actions && actionsPosition === 'left') {
                         <div class="adf-actions-column adf-datatable-cell-header">
                             <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
                         </div>
-                     }
+                    }
 
                     <!-- Columns -->
-                     @if (multiselect) {
+                    @if (multiselect) {
                         <div class="adf-datatable-cell-header adf-datatable-checkbox">
                             <mat-checkbox
                                 [indeterminate]="isSelectAllIndeterminate"
@@ -48,21 +47,28 @@
                                 {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}
                             </mat-checkbox>
                         </div>
-                     }
+                    }
 
-                     @for (col of getVisibleColumns(); track col.key; let lastColumn = $last; let columnIndex = $index) {
+                    @for (col of getVisibleColumns(); track col.key; let lastColumn = $last; let columnIndex = $index) {
                         @if (col.title || !showProvidedActions) {
                             <div
-                                class="adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-header adf-datatable-cell-data"
+                                class="adf-datatable-cell--{{ col.type || 'text' }} {{
+                                    col.cssClass
+                                }} adf-datatable-cell-header adf-datatable-cell-data"
                                 [attr.data-automation-id]="'auto_id_' + col.key"
                                 [ngClass]="{
                                     'adf-sortable': col.sortable,
                                     'adf-datatable__cursor--pointer': !isResizing,
                                     'adf-datatable__header--sorted-asc': isColumnSorted(col, 'asc'),
-                                    'adf-datatable__header--sorted-desc': isColumnSorted(col, 'desc')}"
-                                [ngStyle]="(col.width) && !lastColumn && {'flex': getFlexValue(col)}"
+                                    'adf-datatable__header--sorted-desc': isColumnSorted(col, 'desc')
+                                }"
+                                [ngStyle]="col.width && !lastColumn && { flex: getFlexValue(col) }"
                                 role="columnheader"
-                                [attr.aria-label]="col.srTitle ? (col.srTitle | translate) : (col.title | translate) + (col.subtitle ? ' ' + (col.subtitle | translate) : '')"
+                                [attr.aria-label]="
+                                    col.srTitle
+                                        ? (col.srTitle | translate)
+                                        : (col.title | translate) + (col.subtitle ? ' ' + (col.subtitle | translate) : '')
+                                "
                                 [attr.aria-sort]="col.sortable ? (getAriaSort(col) | translate) : null"
                                 cdkDrag
                                 cdkDragLockAxis="x"
@@ -71,9 +77,10 @@
                                 [cdkDragDisabled]="!col.draggable"
                                 (mouseenter)="hoveredHeaderColumnIndex = columnIndex"
                                 (mouseleave)="hoveredHeaderColumnIndex = -1"
-                                adf-drop-zone dropTarget="header"
-                                [dropColumn]="col">
-
+                                adf-drop-zone
+                                dropTarget="header"
+                                [dropColumn]="col"
+                            >
                                 <div
                                     adf-resizable
                                     #resizableElement="adf-resizable"
@@ -86,9 +93,9 @@
                                         col.srTitle
                                             ? (col.srTitle | translate)
                                             : ('ADF-DATATABLE.ACCESSIBILITY.SORT_DEFAULT' | translate) +
-                                                ' ' +
-                                                (col.title | translate) +
-                                                (col.subtitle ? ' ' + (col.subtitle | translate) : '')
+                                              ' ' +
+                                              (col.title | translate) +
+                                              (col.subtitle ? ' ' + (col.subtitle | translate) : '')
                                     "
                                     (click)="onColumnHeaderClick(col, $event)"
                                     (keyup.enter)="onColumnHeaderClick(col, $event)"
@@ -99,27 +106,24 @@
                                     (resizeEnd)="onResizingEnd()"
                                     [attr.data-automation-id]="'auto_header_content_id_' + col.key"
                                     class="adf-datatable-cell-header-content"
-                                    [ngClass]="{ 'adf-datatable-cell-header-content--hovered':
-                                        hoveredHeaderColumnIndex === columnIndex &&
-                                        !isDraggingHeaderColumn &&
-                                        !isResizing && col.sortable}"
+                                    [ngClass]="{
+                                        'adf-datatable-cell-header-content--hovered':
+                                            hoveredHeaderColumnIndex === columnIndex && !isDraggingHeaderColumn && !isResizing && col.sortable
+                                    }"
                                 >
                                     @if (!col.header) {
                                         @if (col.title) {
-                                            <span
-                                                title="{{col.title | translate}}"
-                                                class="adf-datatable-cell-value"
-                                            >
-                                                {{col.title | translate}}
+                                            <span title="{{ col.title | translate }}" class="adf-datatable-cell-value">
+                                                {{ col.title | translate }}
                                             </span>
                                         }
 
                                         @if (col.subtitle) {
                                             <span
-                                                title="{{col.subtitle | translate}}"
+                                                title="{{ col.subtitle | translate }}"
                                                 class="adf-datatable-cell-value adf-datatable-cell-header_subtitle"
                                             >
-                                                ({{col.subtitle | translate}})
+                                                ({{ col.subtitle | translate }})
                                             </span>
                                         }
 
@@ -136,29 +140,27 @@
 
                                     @if (col.header) {
                                         <div class="adf-datatable-cell-value">
-                                            <ng-template [ngTemplateOutlet]="col.header" [ngTemplateOutletContext]="{$implicit: col}" />
+                                            <ng-template [ngTemplateOutlet]="col.header" [ngTemplateOutletContext]="{ $implicit: col }" />
                                         </div>
                                     }
 
                                     <span
                                         [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
-                                        [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')">
+                                        [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')"
+                                    >
                                     </span>
 
                                     @if (allowFiltering) {
-                                        <ng-template [ngTemplateOutlet]="headerFilterTemplate" [ngTemplateOutletContext]="{$implicit: col}" />
+                                        <ng-template [ngTemplateOutlet]="headerFilterTemplate" [ngTemplateOutletContext]="{ $implicit: col }" />
                                     }
 
                                     @if (col.draggable) {
-                                        <span
-                                            cdkDragHandle
-                                            [ngClass]="{ 'adf-datatable-cell-header-drag-icon': !isResizing }"
-                                        >
+                                        <span cdkDragHandle [ngClass]="{ 'adf-datatable-cell-header-drag-icon': !isResizing }">
                                             @if (hoveredHeaderColumnIndex === columnIndex && !isResizing) {
                                                 <mat-icon
                                                     svgIcon="adf:drag_indicator"
                                                     class="adf-datatable-cell-header-drag-icon-visible"
-                                                    [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-'+col.key"
+                                                    [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-' + col.key"
                                                     aria-hidden="true"
                                                 />
                                             }
@@ -167,7 +169,11 @@
                                 </div>
                                 @if (isResizingEnabled && col.resizable && !lastColumn) {
                                     <div
-                                        [ngClass]="hoveredHeaderColumnIndex === columnIndex && !isResizing || resizingColumnIndex === columnIndex ? 'adf-datatable__resize-handle-visible' : 'adf-datatable__resize-handle-hidden'"
+                                        [ngClass]="
+                                            (hoveredHeaderColumnIndex === columnIndex && !isResizing) || resizingColumnIndex === columnIndex
+                                                ? 'adf-datatable__resize-handle-visible'
+                                                : 'adf-datatable__resize-handle-hidden'
+                                        "
                                         adf-resize-handle
                                         tabindex="0"
                                         role="slider"
@@ -178,17 +184,18 @@
                                         (click)="$event.stopPropagation()"
                                         (keydown)="$event.stopPropagation()"
                                         class="adf-datatable__resize-handle"
-                                        [resizableContainer]="resizableElement">
+                                        [resizableContainer]="resizableElement"
+                                    >
                                         <div class="adf-datatable__resize-handle--divider"></div>
                                     </div>
                                 }
                                 <div class="adf-drop-header-cell-placeholder" *cdkDragPlaceholder></div>
                             </div>
                         }
-                     }
+                    }
 
                     <!-- Header actions (right) -->
-                     @if ((actions && actionsPosition === 'right') || (mainActionTemplate && showMainDatatableActions)) {
+                    @if ((actions && actionsPosition === 'right') || (mainActionTemplate && showMainDatatableActions)) {
                         <div
                             class="adf-actions-column adf-datatable-actions-menu adf-datatable-cell-header adf-datatable__actions-cell"
                             [class.adf-datatable-actions-menu-provided]="showProvidedActions"
@@ -200,7 +207,8 @@
                                     mat-icon-button
                                     #mainMenuTrigger="matMenuTrigger"
                                     (click)="onMainMenuOpen()"
-                                    [matMenuTriggerFor]="mainMenu">
+                                    [matMenuTriggerFor]="mainMenu"
+                                >
                                     <mat-icon adf-icon="view_week_outline" />
                                 </button>
                                 <mat-menu #mainMenu (closed)="onMainMenuClosed()">
@@ -209,13 +217,14 @@
                                             [ngTemplateOutlet]="mainActionTemplate"
                                             [ngTemplateOutletContext]="{
                                                 $implicit: mainMenuTrigger
-                                            }" />
+                                            }"
+                                        />
                                     </div>
                                 </mat-menu>
                                 <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
                             }
                         </div>
-                     }
+                    }
                 </adf-datatable-row>
             </div>
         }
@@ -223,12 +232,18 @@
         @if (!loading) {
             <div
                 class="adf-datatable-body"
-                [ngClass]="{ 'adf-blur-datatable-body': blurOnResize && (isDraggingHeaderColumn || isResizing), 'adf-datatable-body__draggable': enableDragRows && !isDraggingRow, 'adf-datatable-body__dragging': isDraggingRow }"
+                [ngClass]="{
+                    'adf-blur-datatable-body': blurOnResize && (isDraggingHeaderColumn || isResizing),
+                    'adf-datatable-body__draggable': enableDragRows && !isDraggingRow,
+                    'adf-datatable-body__dragging': isDraggingRow
+                }"
                 cdkDropList
                 [cdkDropListDisabled]="!enableDragRows"
-                role="rowgroup">
+                role="rowgroup"
+            >
                 @if (!noPermission) {
-                    <adf-datatable-row *ngFor="let row of data.getRows(); let idx = index"
+                    <adf-datatable-row
+                        *ngFor="let row of data.getRows(); let idx = index"
                         cdkDrag
                         [cdkDragDisabled]="!enableDragRows"
                         (cdkDragDropped)="onDragDrop($event)"
@@ -255,29 +270,33 @@
                     >
                         <!-- Drag button -->
                         @if (enableDragRows) {
-                            <div
-                                role="gridcell"
-                                class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-hover-only">
+                            <div role="gridcell" class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-hover-only">
                                 <mat-icon adf-icon="drag_indicator" aria-hidden="true" />
                             </div>
                         }
 
                         <!-- Actions (left) -->
-                            @if (actions && actionsPosition === 'left') {
+                        @if (actions && actionsPosition === 'left') {
                             <div role="gridcell" class="adf-datatable-cell">
-                                <button mat-icon-button [matMenuTriggerFor]="menu" #actionsMenuTrigger="matMenuTrigger"
-                                        [ngClass]="getHideActionsWithoutHoverClass(actionsMenuTrigger)"
-                                        [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
-                                        [attr.id]="'action_menu_left_' + idx"
-                                        [attr.data-automation-id]="'action_menu_' + idx">
+                                <button
+                                    mat-icon-button
+                                    [matMenuTriggerFor]="menu"
+                                    #actionsMenuTrigger="matMenuTrigger"
+                                    [ngClass]="getHideActionsWithoutHoverClass(actionsMenuTrigger)"
+                                    [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
+                                    [attr.id]="'action_menu_left_' + idx"
+                                    [attr.data-automation-id]="'action_menu_' + idx"
+                                >
                                     <mat-icon adf-icon="more_vert" />
                                 </button>
                                 <mat-menu #menu="matMenu">
                                     @for (action of getRowActions(row); track action.title) {
-                                        <button mat-menu-item
-                                                [attr.data-automation-id]="action.title"
-                                                [disabled]="action.disabled"
-                                                (click)="onExecuteRowAction(row, action)">
+                                        <button
+                                            mat-menu-item
+                                            [attr.data-automation-id]="action.title"
+                                            [disabled]="action.disabled"
+                                            (click)="onExecuteRowAction(row, action)"
+                                        >
                                             @if (action.icon) {
                                                 <mat-icon [adf-icon]="action.icon" />
                                             }
@@ -286,9 +305,9 @@
                                     }
                                 </mat-menu>
                             </div>
-                            }
+                        }
 
-                            @if (multiselect) {
+                        @if (multiselect) {
                             <label
                                 (keydown.enter)="onEnterKeyPressed(row, $any($event))"
                                 (click)="onCheckboxLabelClick(row, $event)"
@@ -316,24 +335,28 @@
                             <span class="adf-sr-only" aria-live="off">
                                 {{ row.isSelected ? ('ADF-DATATABLE.ACCESSIBILITY.SELECTED' | translate) : '' }}
                             </span>
-                            
-                            }
+                        }
 
-                        @for (col of getVisibleColumns(); track col.key; let lastColumn = $last;) {
+                        @for (col of getVisibleColumns(); track col.key; let lastColumn = $last) {
                             <div
                                 role="gridcell"
-                                class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-data adf-datatable-cell--{{getAutomationValue(row)}}"
+                                class="adf-datatable-cell adf-datatable-cell--{{ col.type || 'text' }} {{
+                                    col.cssClass
+                                }} adf-datatable-cell-data adf-datatable-cell--{{ getAutomationValue(row) }}"
                                 [attr.title]="col.title | translate"
                                 [attr.data-automation-id]="getAutomationValue(row)"
                                 [attr.aria-label]="col.title ? (col.title | translate) : null"
-                                [attr.aria-hidden]='isRepresentationContent(col) ? "true" : null'
+                                [attr.aria-hidden]="isRepresentationContent(col) ? 'true' : null"
                                 (click)="onRowClick(row, $event)"
                                 [attr.tabindex]="null"
                                 (keydown.enter)="onEnterKeyPressed(row, $any($event))"
                                 [adf-context-menu]="getContextMenuActions(row, col)"
                                 [adf-context-menu-enabled]="contextMenu"
-                                adf-drop-zone dropTarget="cell" [dropColumn]="col" [dropRow]="row"
-                                [ngStyle]="(col.width) && !lastColumn && {'flex': getFlexValue(col)}"
+                                adf-drop-zone
+                                dropTarget="cell"
+                                [dropColumn]="col"
+                                [dropRow]="row"
+                                [ngStyle]="col.width && !lastColumn && { flex: getFlexValue(col) }"
                             >
                                 @if (!col.template) {
                                     <div class="adf-datatable-cell-container">
@@ -342,7 +365,7 @@
                                                 <div class="adf-cell-value">
                                                     @if (isIconValue(row, col)) {
                                                         <mat-icon
-                                                            [attr.aria-label]="col.srTitle? (col.srTitle | translate) : null"
+                                                            [attr.aria-label]="col.srTitle ? (col.srTitle | translate) : null"
                                                             [attr.aria-hidden]="!asIconValue(row, col)"
                                                             [adf-icon]="asIconValue(row, col)"
                                                         />
@@ -350,19 +373,35 @@
                                                         @if (row.isSelected && !multiselect) {
                                                             <mat-icon class="adf-datatable-selected" svgIcon="selected" />
                                                         } @else {
-                                                            <img class="adf-datatable-center-img-ie"
-                                                                [attr.aria-label]="(data.getValue(row, col) | fileType) === 'disable' ?
-                                                                    ('ADF-DATATABLE.ACCESSIBILITY.ICON_DISABLED' | translate) :
-                                                                    'ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT' | translate:{
-                                                                        type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate
-                                                                    }"
-                                                                [attr.alt]="(data.getValue(row, col) | fileType) === 'disable' ?
-                                                                    ('ADF-DATATABLE.ACCESSIBILITY.ICON_DISABLED' | translate) :
-                                                                    'ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT' | translate:{
-                                                                            type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate
-                                                                    }"
+                                                            <img
+                                                                class="adf-datatable-center-img-ie"
+                                                                [attr.aria-label]="
+                                                                    (data.getValue(row, col) | fileType) === 'disable'
+                                                                        ? ('ADF-DATATABLE.ACCESSIBILITY.ICON_DISABLED' | translate)
+                                                                        : ('ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT'
+                                                                          | translate
+                                                                              : {
+                                                                                    type:
+                                                                                        'ADF-DATATABLE.FILE_TYPE.' +
+                                                                                            (data.getValue(row, col) | fileType | uppercase)
+                                                                                        | translate
+                                                                                })
+                                                                "
+                                                                [attr.alt]="
+                                                                    (data.getValue(row, col) | fileType) === 'disable'
+                                                                        ? ('ADF-DATATABLE.ACCESSIBILITY.ICON_DISABLED' | translate)
+                                                                        : ('ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT'
+                                                                          | translate
+                                                                              : {
+                                                                                    type:
+                                                                                        'ADF-DATATABLE.FILE_TYPE.' +
+                                                                                            (data.getValue(row, col) | fileType | uppercase)
+                                                                                        | translate
+                                                                                })
+                                                                "
                                                                 src="{{ data.getValue(row, col) }}"
-                                                                (error)="onImageLoadingError($event, row)">
+                                                                (error)="onImageLoadingError($event, row)"
+                                                            />
                                                         }
                                                     }
                                                 </div>
@@ -381,59 +420,74 @@
                                             @case ('date') {
                                                 <div
                                                     class="adf-cell-value adf-cell-date"
-                                                    [attr.data-automation-id]="'date_' + (data.getValue(row, col, resolverFn) | adfLocalizedDate: 'medium') ">
-                                                    <adf-date-cell class="adf-datatable-center-date-column-ie"
+                                                    [attr.data-automation-id]="
+                                                        'date_' + (data.getValue(row, col, resolverFn) | adfLocalizedDate: 'medium')
+                                                    "
+                                                >
+                                                    <adf-date-cell
+                                                        class="adf-datatable-center-date-column-ie"
                                                         [data]="data"
                                                         [column]="col"
                                                         [row]="row"
                                                         [resolverFn]="resolverFn"
                                                         [tooltip]="getCellTooltip(row, col)"
-                                                        [dateConfig]="col.dateConfig" />
+                                                        [dateConfig]="col.dateConfig"
+                                                    />
                                                 </div>
                                             }
                                             @case ('location') {
-                                                <div class="adf-cell-value"
-                                                    [attr.data-automation-id]="'location' + data.getValue(row, col, resolverFn)">
+                                                <div
+                                                    class="adf-cell-value"
+                                                    [attr.data-automation-id]="'location' + data.getValue(row, col, resolverFn)"
+                                                >
                                                     <adf-location-cell
                                                         [data]="data"
                                                         [column]="col"
                                                         [row]="row"
                                                         [resolverFn]="resolverFn"
-                                                        [tooltip]="getCellTooltip(row, col)" />
+                                                        [tooltip]="getCellTooltip(row, col)"
+                                                    />
                                                 </div>
                                             }
                                             @case ('fileSize') {
-                                                <div class="adf-cell-value"
-                                                    [attr.data-automation-id]="'fileSize_' + data.getValue(row, col, resolverFn)">
-                                                    <adf-filesize-cell class="adf-datatable-center-size-column-ie"
+                                                <div
+                                                    class="adf-cell-value"
+                                                    [attr.data-automation-id]="'fileSize_' + data.getValue(row, col, resolverFn)"
+                                                >
+                                                    <adf-filesize-cell
+                                                        class="adf-datatable-center-size-column-ie"
                                                         [data]="data"
                                                         [column]="col"
                                                         [row]="row"
                                                         [resolverFn]="resolverFn"
-                                                        [tooltip]="getCellTooltip(row, col)" />
+                                                        [tooltip]="getCellTooltip(row, col)"
+                                                    />
                                                 </div>
                                             }
                                             @case ('text') {
-                                                <div class="adf-cell-value"
-                                                    [attr.data-automation-id]="'text_' + data.getValue(row, col, resolverFn)">
+                                                <div class="adf-cell-value" [attr.data-automation-id]="'text_' + data.getValue(row, col, resolverFn)">
                                                     <adf-datatable-cell
                                                         [copyContent]="col.copyContent"
                                                         [data]="data"
                                                         [column]="col"
                                                         [row]="row"
                                                         [resolverFn]="resolverFn"
-                                                        [tooltip]="getCellTooltip(row, col)" />
+                                                        [tooltip]="getCellTooltip(row, col)"
+                                                    />
                                                 </div>
                                             }
                                             @case ('boolean') {
-                                                <div class="adf-cell-value"
-                                                    [attr.data-automation-id]="'boolean_' + data.getValue(row, col, resolverFn)">
+                                                <div
+                                                    class="adf-cell-value"
+                                                    [attr.data-automation-id]="'boolean_' + data.getValue(row, col, resolverFn)"
+                                                >
                                                     <adf-boolean-cell
                                                         [data]="data"
                                                         [column]="col"
                                                         [row]="row"
                                                         [resolverFn]="resolverFn"
-                                                        [tooltip]="getCellTooltip(row, col)" />
+                                                        [tooltip]="getCellTooltip(row, col)"
+                                                    />
                                                 </div>
                                             }
                                             @case ('json') {
@@ -443,31 +497,36 @@
                                                         [data]="data"
                                                         [column]="col"
                                                         [resolverFn]="resolverFn"
-                                                        [row]="row" />
+                                                        [row]="row"
+                                                    />
                                                 </div>
                                             }
                                             @case ('amount') {
                                                 <div
                                                     class="adf-cell-value"
-                                                    [attr.data-automation-id]="'amount_' + data.getValue(row, col, resolverFn)">
+                                                    [attr.data-automation-id]="'amount_' + data.getValue(row, col, resolverFn)"
+                                                >
                                                     <adf-amount-cell
                                                         [data]="data"
                                                         [column]="col"
                                                         [resolverFn]="resolverFn"
                                                         [row]="row"
-                                                        [currencyConfig]="col.currencyConfig" />
+                                                        [currencyConfig]="col.currencyConfig"
+                                                    />
                                                 </div>
                                             }
                                             @case ('number') {
                                                 <div
                                                     class="adf-cell-value"
-                                                    [attr.data-automation-id]="'number_' + data.getValue(row, col, resolverFn)">
+                                                    [attr.data-automation-id]="'number_' + data.getValue(row, col, resolverFn)"
+                                                >
                                                     <adf-number-cell
                                                         [data]="data"
                                                         [column]="col"
                                                         [resolverFn]="resolverFn"
                                                         [row]="row"
-                                                        [decimalConfig]="col.decimalConfig" />
+                                                        [decimalConfig]="col.decimalConfig"
+                                                    />
                                                 </div>
                                             }
                                             @default {
@@ -482,7 +541,11 @@
                                         <div class="adf-cell-value">
                                             <ng-container
                                                 [ngTemplateOutlet]="col.template"
-                                                [ngTemplateOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col, resolverFn) }" />
+                                                [ngTemplateOutletContext]="{
+                                                    $implicit: { data: data, row: row, col: col },
+                                                    value: data.getValue(row, col, resolverFn)
+                                                }"
+                                            />
                                         </div>
                                     </div>
                                 }
@@ -490,28 +553,34 @@
                         }
 
                         <!-- Row actions (right) -->
-                            @if (!showProvidedActions && ((actions && actionsPosition === 'right') || (mainActionTemplate && showMainDatatableActions))) {
+                        @if (!showProvidedActions && ((actions && actionsPosition === 'right') || (mainActionTemplate && showMainDatatableActions))) {
                             <div
                                 role="gridcell"
-                                class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-center-actions-column-ie adf-datatable-actions-menu">
-
+                                class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-center-actions-column-ie adf-datatable-actions-menu"
+                            >
                                 @if (actions && actionsPosition === 'right') {
-                                    <button mat-icon-button [matMenuTriggerFor]="menu" #actionsMenuTrigger="matMenuTrigger"
-                                            [ngClass]="getHideActionsWithoutHoverClass(actionsMenuTrigger)"
-                                            [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.ROW_OPTION_BUTTON' | translate"
-                                            [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
-                                            [attr.id]="'action_menu_right_' + idx"
-                                            [attr.data-automation-id]="'action_menu_' + idx"
-                                            (keydown.enter)="actionsMenuTrigger.openMenu()">
+                                    <button
+                                        mat-icon-button
+                                        [matMenuTriggerFor]="menu"
+                                        #actionsMenuTrigger="matMenuTrigger"
+                                        [ngClass]="getHideActionsWithoutHoverClass(actionsMenuTrigger)"
+                                        [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.ROW_OPTION_BUTTON' | translate"
+                                        [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
+                                        [attr.id]="'action_menu_right_' + idx"
+                                        [attr.data-automation-id]="'action_menu_' + idx"
+                                        (keydown.enter)="actionsMenuTrigger.openMenu()"
+                                    >
                                         <mat-icon adf-icon="more_vert" />
                                     </button>
                                     <mat-menu #menu="matMenu">
                                         @for (action of getRowActions(row); track action.title) {
-                                            <button mat-menu-item
-                                                    [attr.data-automation-id]="action.title"
-                                                    [attr.aria-label]="action.title | translate"
-                                                    [disabled]="action.disabled"
-                                                    (click)="onExecuteRowAction(row, action)">
+                                            <button
+                                                mat-menu-item
+                                                [attr.data-automation-id]="action.title"
+                                                [attr.aria-label]="action.title | translate"
+                                                [disabled]="action.disabled"
+                                                (click)="onExecuteRowAction(row, action)"
+                                            >
                                                 @if (action.icon) {
                                                     <mat-icon [adf-icon]="action.icon" />
                                                 }
@@ -521,29 +590,23 @@
                                     </mat-menu>
                                 }
                             </div>
-                            }
+                        }
                     </adf-datatable-row>
                     @if (isEmpty()) {
                         <div role="row" class="adf-datatable-row">
                             <div class="adf-no-content-container adf-datatable-cell" role="gridcell">
                                 @if (noContentTemplate) {
-                                    <ng-template
-                                        ngFor [ngForOf]="[data]"
-                                        [ngForTemplate]="noContentTemplate" />
+                                    <ng-template ngFor [ngForOf]="[data]" [ngForTemplate]="noContentTemplate" />
                                 }
                                 <ng-content select="adf-empty-list" />
                             </div>
                         </div>
                     }
                 } @else {
-                    <div
-                        role="row"
-                        class="adf-datatable-row adf-no-permission__row">
+                    <div role="row" class="adf-datatable-row adf-no-permission__row">
                         <div class="adf-no-permission__cell adf-no-content-container adf-datatable-cell">
                             @if (noPermissionTemplate) {
-                                <ng-template
-                                    ngFor [ngForOf]="[data]"
-                                    [ngForTemplate]="noPermissionTemplate" />
+                                <ng-template ngFor [ngForOf]="[data]" [ngForTemplate]="noPermissionTemplate" />
                             }
                         </div>
                     </div>
@@ -553,9 +616,7 @@
             <div class="adf-datatable-row adf-datatable-data-loading">
                 <div class="adf-no-content-container adf-datatable-cell">
                     @if (loadingTemplate) {
-                        <ng-template
-                            ngFor [ngForOf]="[data]"
-                            [ngForTemplate]="loadingTemplate" />
+                        <ng-template ngFor [ngForOf]="[data]" [ngForTemplate]="loadingTemplate" />
                     }
                 </div>
             </div>

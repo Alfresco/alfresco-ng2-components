@@ -18,11 +18,11 @@
 import 'zone.js';
 import 'zone.js/testing';
 import { TestBed } from '@angular/core/testing';
-import { platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+import { platformBrowserTesting } from '@angular/platform-browser/testing';
 import pdfjsLibraryMock from './src/lib/viewer/components/mock/pdfjs-lib.mock';
 import { GlobalTestingModule } from './src/lib/testing/global-testing.module';
 
-TestBed.initTestEnvironment(GlobalTestingModule, platformBrowserDynamicTesting(), {
+TestBed.initTestEnvironment(GlobalTestingModule, platformBrowserTesting(), {
     teardown: { destroyAfterEach: true }
 });
 

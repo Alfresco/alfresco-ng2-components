@@ -19,6 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchPropertiesComponent } from './search-properties.component';
 import { By } from '@angular/platform-browser';
 import { MatOption } from '@angular/material/core';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { FileSizeUnit } from './file-size-unit.enum';
 import { FileSizeOperator } from './file-size-operator.enum';
 import { SearchProperties } from './search-properties';
@@ -60,7 +61,8 @@ describe('SearchPropertiesComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [SearchPropertiesComponent]
+            imports: [SearchPropertiesComponent],
+            providers: [provideNoopAnimations()]
         });
 
         fixture = TestBed.createComponent(SearchPropertiesComponent);
@@ -249,14 +251,16 @@ describe('SearchPropertiesComponent', () => {
             expect(component.context.execute).toHaveBeenCalled();
         });
 
-        it('should search by at most MB after selecting proper options', () => {
+        it('should search by at most MB after selecting proper options', async () => {
             typeInFileSizeInput();
             clickFileSizeOperatorsSelect();
             getSelectOptions()[1].nativeElement.click();
             fixture.detectChanges();
+            await fixture.whenStable();
             clickFileSizeUnitsSelect();
             getSelectOptions()[1].nativeElement.click();
             fixture.detectChanges();
+            await fixture.whenStable();
 
             component.submitValues();
             expect(component.displayValue$.next).toHaveBeenCalledWith(
@@ -274,14 +278,16 @@ describe('SearchPropertiesComponent', () => {
             expect(component.context.execute).toHaveBeenCalled();
         });
 
-        it('should search by exactly GB after selecting proper options', () => {
+        it('should search by exactly GB after selecting proper options', async () => {
             typeInFileSizeInput();
             clickFileSizeOperatorsSelect();
             getSelectOptions()[2].nativeElement.click();
             fixture.detectChanges();
+            await fixture.whenStable();
             clickFileSizeUnitsSelect();
             getSelectOptions()[2].nativeElement.click();
             fixture.detectChanges();
+            await fixture.whenStable();
 
             component.submitValues();
             expect(component.displayValue$.next).toHaveBeenCalledWith(
@@ -373,15 +379,17 @@ describe('SearchPropertiesComponent', () => {
             });
         });
 
-        it('should return correct value when inputs changed', () => {
+        it('should return correct value when inputs changed', async () => {
             fixture.detectChanges();
             typeInFileSizeInput();
             clickFileSizeOperatorsSelect();
             getSelectOptions()[1].nativeElement.click();
             fixture.detectChanges();
+            await fixture.whenStable();
             clickFileSizeUnitsSelect();
             getSelectOptions()[1].nativeElement.click();
             fixture.detectChanges();
+            await fixture.whenStable();
             const extensions = [{ value: 'pdf' }, { value: 'txt' }];
             getSearchChipAutocompleteInputComponent().optionsChanged.emit(extensions);
 

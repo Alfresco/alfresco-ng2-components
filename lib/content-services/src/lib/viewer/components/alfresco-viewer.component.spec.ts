@@ -33,7 +33,8 @@ import {
     ViewerToolbarActionsComponent,
     NoopAuthModule,
     NoopTranslateModule,
-    UnitTestingUtils
+    UnitTestingUtils,
+    IconModule
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
@@ -66,7 +67,7 @@ class ViewerWithCustomToolbarComponent {}
 
 @Component({
     selector: 'adf-viewer-container-toolbar-actions',
-    imports: [MatIconModule, MatButtonModule, ViewerToolbarActionsComponent, AlfrescoViewerComponent],
+    imports: [MatIconModule, MatButtonModule, ViewerToolbarActionsComponent, AlfrescoViewerComponent, IconModule],
     // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
     template: `<adf-alfresco-viewer>
         <adf-viewer-toolbar-actions>
@@ -100,7 +101,7 @@ class DummyDialogComponent {}
 
 @Component({
     selector: 'adf-viewer-container-open-with',
-    imports: [MatIconModule, MatMenuModule, ViewerOpenWithComponent, AlfrescoViewerComponent],
+    imports: [MatIconModule, MatMenuModule, ViewerOpenWithComponent, AlfrescoViewerComponent, IconModule],
     // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
     template: `
         <adf-alfresco-viewer>
@@ -125,7 +126,7 @@ class ViewerWithCustomOpenWithComponent {}
 
 @Component({
     selector: 'adf-viewer-container-more-actions',
-    imports: [MatIconModule, MatMenuModule, ViewerMoreActionsComponent, AlfrescoViewerComponent],
+    imports: [MatIconModule, MatMenuModule, ViewerMoreActionsComponent, AlfrescoViewerComponent, IconModule],
     // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
     template: ` <adf-alfresco-viewer>
         <adf-viewer-more-actions>

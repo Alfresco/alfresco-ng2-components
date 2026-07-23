@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, FormCloudService } from './form-cloud.service';
-import { BehaviorSubject, firstValueFrom, of } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, lastValueFrom, of } from 'rxjs';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { FORM_FIELD_VALIDATORS, FormFieldValidator, NoopAuthModule } from '@alfresco/adf-core';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -59,18 +59,16 @@ describe('Form Cloud service', () => {
     });
 
     describe('Form tests', () => {
-        it('should fetch and parse form', (done) => {
+        it('should fetch and parse form', async () => {
             const formId = 'form-id';
             requestSpy.and.returnValue(Promise.resolve(mockFormResponseBody));
 
-            service.getForm(appName, formId).subscribe((result) => {
-                expect(result).toBeDefined();
-                expect(result.formRepresentation.id).toBe(formId);
-                expect(result.formRepresentation.name).toBe('task-form');
-                expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/form/v1/forms/${formId}`);
-                expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
-                done();
-            });
+            const result = await lastValueFrom(service.getForm(appName, formId));
+            expect(result).toBeDefined();
+            expect(result.formRepresentation.id).toBe(formId);
+            expect(result.formRepresentation.name).toBe('task-form');
+            expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/form/v1/forms/${formId}`);
+            expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
         });
 
         it('should parse valid form json ', () => {
@@ -134,7 +132,7 @@ describe('Form Cloud service', () => {
             expect(requestSpy.calls.all().some((call) => call.args[0].includes('/rb/'))).toBe(false);
         });
 
-        it('should fetch task variables', (done) => {
+        it('should fetch task variables', async () => {
             requestSpy.and.returnValue(
                 Promise.resolve({
                     list: {
@@ -172,18 +170,16 @@ describe('Form Cloud service', () => {
                 })
             );
 
-            service.getTaskVariables(appName, taskId).subscribe((result) => {
-                expect(result).toBeDefined();
-                expect(result.length).toBe(1);
-                expect(result[0].name).toBe('fakeProperty');
-                expect(result[0].value).toBe('fakeValue');
-                expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/query/v1/tasks/${taskId}/variables`);
-                expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
-                done();
-            });
+            const result = await lastValueFrom(service.getTaskVariables(appName, taskId), { defaultValue: [] });
+            expect(result).toBeDefined();
+            expect(result.length).toBe(1);
+            expect(result[0].name).toBe('fakeProperty');
+            expect(result[0].value).toBe('fakeValue');
+            expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/query/v1/tasks/${taskId}/variables`);
+            expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
         });
 
-        it('should fetch result if the variable value is 0', (done) => {
+        it('should fetch result if the variable value is 0', async () => {
             requestSpy.and.returnValue(
                 Promise.resolve({
                     list: {
@@ -221,16 +217,14 @@ describe('Form Cloud service', () => {
                 })
             );
 
-            service.getTaskVariables(appName, taskId).subscribe((result) => {
-                expect(result).toBeDefined();
-                expect(result.length).toBe(1);
-                expect(result[0].name).toBe('fakeProperty');
-                expect(result[0].value).toBe(0);
-                done();
-            });
+            const result = await lastValueFrom(service.getTaskVariables(appName, taskId));
+            expect(result).toBeDefined();
+            expect(result.length).toBe(1);
+            expect(result[0].name).toBe('fakeProperty');
+            expect(result[0].value).toBe(0);
         });
 
-        it('should fetch task form flattened', (done) => {
+        it('should fetch task form flattened', async () => {
             spyOn(service, 'getTask').and.returnValue(of(mockTaskResponseBody.entry));
             spyOn(service, 'getForm').and.returnValue(
                 of({
@@ -241,41 +235,35 @@ describe('Form Cloud service', () => {
                 } as any)
             );
 
-            service.getTaskForm(appName, taskId).subscribe((result) => {
-                expect(result).toBeDefined();
-                expect(result.name).toBe('task-form');
-                expect(result.taskId).toBe('id');
-                expect(result.taskName).toBe('name');
-                done();
-            });
+            const result = await lastValueFrom(service.getTaskForm(appName, taskId));
+            expect(result).toBeDefined();
+            expect(result.name).toBe('task-form');
+            expect(result.taskId).toBe('id');
+            expect(result.taskName).toBe('name');
         });
 
-        it('should save task form', (done) => {
+        it('should save task form', async () => {
             requestSpy.and.returnValue(Promise.resolve(mockTaskResponseBody));
             const formId = 'form-id';
 
-            service.saveTaskForm(appName, taskId, processInstanceId, formId, {}).subscribe((result: any) => {
-                expect(result).toBeDefined();
-                expect(result.id).toBe('id');
-                expect(result.name).toBe('name');
-                expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/form/v1/forms/${formId}/save`);
-                expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('POST');
-                done();
-            });
+            const result = await lastValueFrom(service.saveTaskForm(appName, taskId, processInstanceId, formId, {}));
+            expect(result).toBeDefined();
+            expect(result.id).toBe('id');
+            expect(result.name).toBe('name');
+            expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/form/v1/forms/${formId}/save`);
+            expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('POST');
         });
 
-        it('should complete task form', (done) => {
+        it('should complete task form', async () => {
             requestSpy.and.returnValue(Promise.resolve(mockTaskResponseBody));
             const formId = 'form-id';
 
-            service.completeTaskForm(appName, taskId, processInstanceId, formId, {}, '', 1).subscribe((result: any) => {
-                expect(result).toBeDefined();
-                expect(result.id).toBe('id');
-                expect(result.name).toBe('name');
-                expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/form/v1/forms/${formId}/submit/versions/1`);
-                expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('POST');
-                done();
-            });
+            const result = await lastValueFrom(service.completeTaskForm(appName, taskId, processInstanceId, formId, {}, '', 1));
+            expect(result).toBeDefined();
+            expect(result.id).toBe('id');
+            expect(result.name).toBe('name');
+            expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/form/v1/forms/${formId}/submit/versions/1`);
+            expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('POST');
         });
     });
 });

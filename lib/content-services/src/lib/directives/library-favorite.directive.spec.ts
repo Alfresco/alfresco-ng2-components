@@ -83,7 +83,7 @@ describe('LibraryFavoriteDirective', () => {
 
     it('should call addFavorite() and display snackbar message on click event when selection is not a favorite', async () => {
         spyOn(component.directive.favoritesApi, 'getFavoriteSite').and.returnValue(Promise.reject(new Error('error')));
-        spyOn(component.directive.favoritesApi, 'createFavorite').and.returnValue(Promise.resolve(null));
+        spyOn(component.directive.favoritesApi, 'createFavorite').and.returnValue(Promise.resolve({ entry: {} } as any));
         spyOn(notificationService, 'showInfo');
 
         fixture.detectChanges();
