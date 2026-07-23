@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @use '../mat-selectors.scss' as ms;
 
 .adf-version-upload {
@@ -6,13 +7,16 @@
         width: 100%;
         float: right;
 
+        // Infix padding via the public token API (was overriding .mat-mdc-form-field-infix).
+        @include mat.form-field-overrides(
+            (
+                filled-with-label-container-padding-top: 12px,
+                filled-with-label-container-padding-bottom: 0
+            )
+        );
+
         #{ms.$mat-floating-label} {
             padding-bottom: 10px;
-        }
-
-        #{ms.$mat-form-field-infix} {
-            padding-top: 12px;
-            padding-bottom: 0;
         }
 
         .adf-new-version-text-area {

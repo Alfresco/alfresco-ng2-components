@@ -144,11 +144,6 @@
         }
     }
 
-    #{ms.$mat-grid-tile} {
-        overflow: visible;
-        width: 80%;
-    }
-
     adf-form-field,
     mat-form-field {
         width: 100%;
@@ -165,13 +160,8 @@
             overflow: hidden;
         }
 
-        & #{ms.$mat-card-header-text} {
-            margin: 0;
-        }
-
         & #{ms.$mat-tab-body-content} {
             overflow: hidden;
-            padding-top: 0;
         }
 
         // Tab active-indicator thickness via the public token API.
