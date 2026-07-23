@@ -29,7 +29,7 @@
                    [title]="field.tooltip"
                    [min]="minDate"
                    [max]="maxDate">
-            <mat-datetimepicker-toggle matSuffix [for]="datetimePicker"
+            <mat-datetimepicker-toggle class="adf-date-time-widget-toggle" matSuffix [for]="datetimePicker"
                                        [disabled]="field.readOnly" />
             <mat-datetimepicker #datetimePicker
                 data-automation-id="adf-date-time-widget-picker"

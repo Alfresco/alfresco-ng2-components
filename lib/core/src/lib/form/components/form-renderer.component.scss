@@ -174,11 +174,12 @@
             padding-top: 0;
         }
 
-        & #{ms.$mat-tab-ink-bar} {
-            #{ms.$mat-tab-indicator-underline} {
-                border-top-width: 4px;
-            }
-        }
+        // Tab active-indicator thickness via the public token API.
+        @include mat.tabs-overrides(
+            (
+                active-indicator-height: 4px
+            )
+        );
 
         & #{ms.$mat-form-field-wrapper} {
             margin: 0 12px 0 0;

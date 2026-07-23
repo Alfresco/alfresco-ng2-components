@@ -77,31 +77,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     box-sizing: border-box;
     overflow-x: auto;
 
-    @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-        .adf-datatable-center-size-column-ie {
-            padding-top: 17px;
-        }
-
-        .adf-datatable__actions-cell.adf-datatable-center-actions-column-ie {
-            padding-top: 7px;
-        }
-
-        .adf-cell-date.adf-datatable-center-date-column-ie {
-            position: relative;
-
-            .adf-datatable-cell-value {
-                width: 100%;
-            }
-        }
-
-        .adf-datatable-center-img-ie {
-            padding: 0;
-            min-width: 0;
-            width: 24px;
-            height: 56px;
-        }
-    }
-
     .adf-datatable-header {
         display: flex;
         flex-direction: column;
@@ -245,13 +220,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
             max-width: $data-table-thumbnail-width;
             width: $data-table-thumbnail-width;
         }
-
-        /* query for Microsoft IE 11 */
-        @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-            .adf-datatable-checkbox {
-                padding-top: 15px;
-            }
-        }
     }
 
     .adf-datatable-cell,
@@ -358,10 +326,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         .adf-datatable-cell-value {
             word-break: break-word;
             display: block;
-
-            @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-                padding: 17px 10px 10px;
-            }
         }
     }
 
@@ -462,13 +426,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
         .adf-datatable-content-cell {
             overflow: unset;
-        }
-
-        /* query for Microsoft IE 11 */
-        @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-            .adf-cell-value {
-                top: 100%;
-            }
         }
 
         /* cell stretching content */

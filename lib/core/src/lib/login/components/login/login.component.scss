@@ -13,29 +13,11 @@
     justify-content: center;
     flex-direction: column;
 
-    // IE11 vertical centering
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-        & {
-            display: table;
-            width: 100%;
-            height: 100%;
-        }
-    }
-
     .adf-ie11FixerParent {
         margin: 16px 0;
         min-width: 320px;
-
-        // IE11 vertical centering
-        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-            display: table-cell;
-            vertical-align: middle;
-            width: 100%;
-            padding-top: 16px;
-        }
     }
 
-    // IE11 vertical centering
     .adf-ie11FixerChild {
         width: 100%;
         display: flex;
