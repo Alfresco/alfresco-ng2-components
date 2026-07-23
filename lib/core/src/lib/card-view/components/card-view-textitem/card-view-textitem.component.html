@@ -30,7 +30,7 @@
                         'adf-property-readonly-value': isReadonlyProperty || !editable,
                         'adf-property-value-has-error': isEditable && hasErrors,
                         'adf-property-value-not-editable': !editable,
-                        'adf-property-value-has-icon-suffix': copyToClipboardAction && !isEditable
+                        'adf-property-value-has-icon-suffix': displayCopyToClipboardIcon && !isEditable
                     }"
                     title="{{ property.label | translate }}"
                     [placeholder]="property.default"
@@ -59,21 +59,18 @@
                     [attr.data-automation-id]="'card-textitem-value-' + property.key"
                 >
                 </textarea>
-                <button
-                    matSuffix
-                    type="button"
-                    class="adf-textitem-action adf-copy-to-clipboard-icon"
-                    *ngIf="copyToClipboardAction && !isEditable"
-                    (click)="copyToClipboard(property.displayValue)"
-                    [attr.aria-label]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
-                    [attr.data-automation-id]="'card-textitem-copy-to-clipboard-' + property.key"
-                >
-                    <img
-                        alt=""
-                        class="adf-copy-to-clipboard-image"
-                        [src]="copyToClipboardIconUrl"
-                    />
-                </button>
+                @if (displayCopyToClipboardIcon && !isEditable) {
+                    <button
+                        matSuffix
+                        type="button"
+                        class="adf-textitem-action adf-copy-to-clipboard-icon"
+                        (click)="copyToClipboardUsingIcon(property.displayValue)"
+                        [attr.aria-label]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+                        [attr.data-automation-id]="'card-textitem-copy-to-clipboard-' + property.key"
+                    >
+                        <adf-icon value="adf:copy" class="adf-copy-to-clipboard-image" />
+                    </button>
+                }
             </mat-form-field>
         </div>
 

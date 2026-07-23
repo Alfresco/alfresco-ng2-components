@@ -32,6 +32,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IconModule } from '../../../icon/icon.module';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { IconComponent } from '../../../icon/icon.component';
 
 export const DEFAULT_SEPARATOR = ', ';
 const templateTypes = {
@@ -47,6 +50,7 @@ const templateTypes = {
         CommonModule,
         MatFormFieldModule,
         TranslatePipe,
+        IconComponent,
         MatInputModule,
         ReactiveFormsModule,
         MatChipsModule,
@@ -64,12 +68,17 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     private readonly clipboardService = inject(ClipboardService);
     private readonly translateService = inject(TranslationService);
     private readonly cd = inject(ChangeDetectorRef);
+    private readonly matIconRegistry = inject(MatIconRegistry);
+    private readonly sanitizer = inject(DomSanitizer);
 
     @Input()
     displayEmpty = true;
 
     @Input()
     copyToClipboardAction = true;
+
+    @Input()
+    displayCopyToClipboardIcon: boolean = false;
 
     @Input()
     useChipsForMultiValueProperty = true;
@@ -87,6 +96,11 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     private initialValue: string | string[];
 
     private readonly destroyRef = inject(DestroyRef);
+
+    constructor() {
+        super();
+        this.matIconRegistry.addSvgIconInNamespace('adf', 'copy', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/copy.svg'));
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.property?.firstChange) {
@@ -222,6 +236,13 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     copyToClipboard(valueToCopy: string) {
         if (this.copyToClipboardAction) {
+            const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
+            this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
+        }
+    }
+
+    copyToClipboardUsingIcon(valueToCopy: string | string[]) {
+        if (typeof valueToCopy === 'string' && this.displayCopyToClipboardIcon && this.copyToClipboardAction) {
             const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
             this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
         }

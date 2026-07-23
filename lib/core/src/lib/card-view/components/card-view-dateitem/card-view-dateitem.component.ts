@@ -44,6 +44,9 @@ import { MatInputModule } from '@angular/material/input';
 import { IconModule } from '../../../icon/icon.module';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, EMPTY, filter, switchMap } from 'rxjs';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { IconComponent } from '../../../icon/icon.component';
 
 const DEFAULT_DATE_FORMAT = 'MMM DD';
 
@@ -59,6 +62,7 @@ const DEFAULT_DATE_FORMAT = 'MMM DD';
         CommonModule,
         TranslatePipe,
         IconModule,
+        IconComponent,
         MatDatetimepickerModule,
         MatChipsModule,
         MatInputModule,
@@ -79,6 +83,8 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     private readonly clipboardService = inject(ClipboardService);
     private readonly translateService = inject(TranslationService);
     private readonly destroyRef = inject(DestroyRef);
+    private readonly matIconRegistry = inject(MatIconRegistry);
+    private readonly domSanitizer = inject(DomSanitizer);
 
     @Input()
     displayEmpty = true;
@@ -88,6 +94,9 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     @Input()
     copyToClipboardAction = true;
+
+    @Input()
+    displayCopyToClipboardIcon: boolean = false;
 
     @Input()
     copyToClipboardIconUrl: string = './assets/images/copy.svg';
@@ -103,6 +112,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     constructor() {
         super();
+        this.matIconRegistry.addSvgIconInNamespace('adf', 'copy', this.domSanitizer.bypassSecurityTrustResourceUrl(this.copyToClipboardIconUrl));
         // Use effect to react to locale signal changes (must be in injection context)
         effect(() => {
             this.property.locale = this.userPreferencesService.localeSignal();
@@ -211,6 +221,13 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     copyToClipboard(valueToCopy: string | string[]) {
         if (typeof valueToCopy === 'string' && this.copyToClipboardAction) {
+            const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
+            this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
+        }
+    }
+
+    copytoClipboardUsingIcon(valueToCopy: string | string[]) {
+        if (typeof valueToCopy === 'string' && this.displayCopyToClipboardIcon && this.copyToClipboardAction) {
             const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
             this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
         }
