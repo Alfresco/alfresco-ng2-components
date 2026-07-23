@@ -1,19 +1,17 @@
 @use '../../../styles/mat-selectors' as ms;
 
 .adf-attach-file-widget-dialog {
-    #{ms.$mat-dialog-actions} {
+    // Targets the <mat-dialog-actions class="adf-login-dialog-actions"> element directly.
+    .adf-login-dialog-actions {
         display: flex;
         justify-content: flex-end;
+        margin-left: -25px;
+        margin-right: -25px;
+        padding-right: 25px;
 
         button {
             text-transform: uppercase;
         }
-    }
-
-    .adf-login-dialog-actions {
-        margin-left: -25px;
-        margin-right: -25px;
-        padding-right: 25px;
     }
 }
 

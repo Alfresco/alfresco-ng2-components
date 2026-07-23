@@ -71,6 +71,7 @@
                                 "
                                 [attr.aria-sort]="col.sortable ? (getAriaSort(col) | translate) : null"
                                 cdkDrag
+                                cdkDragPreviewClass="adf-datatable-drag-preview"
                                 cdkDragLockAxis="x"
                                 (cdkDragStarted)="isDraggingHeaderColumn = true"
                                 (cdkDragDropped)="onDropHeaderColumn($event)"
@@ -245,6 +246,7 @@
                     <adf-datatable-row
                         *ngFor="let row of data.getRows(); let idx = index"
                         cdkDrag
+                        cdkDragPreviewClass="adf-datatable-drag-preview"
                         [cdkDragDisabled]="!enableDragRows"
                         (cdkDragDropped)="onDragDrop($event)"
                         (cdkDragStarted)="onDragStart()"

@@ -140,10 +140,12 @@ $notification-item-height: 72px;
     }
 }
 
-#{ms.$mat-menu-panel}.adf-notification-history-menu.adf-notification-history-menu-panel {
+.adf-notification-history-menu.adf-notification-history-menu-panel {
     min-width: 320px;
     max-height: 500px;
 
+    // .mat-mdc-menu-content is a Material-generated child of the panel;
+    // there is no ADF-owned element/token to target it, so it stays.
     #{ms.$mat-menu-content} {
         padding: 0;
     }
