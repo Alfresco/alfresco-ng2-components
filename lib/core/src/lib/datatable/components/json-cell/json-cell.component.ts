@@ -18,7 +18,8 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input, computed, inject } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialogs/edit-json/edit-json.dialog';
+import { EDIT_JSON_DIALOG_COMPONENT } from '../../../dialogs/edit-json/edit-json-dialog.token';
+import { EditJsonDialogSettings } from '../../../dialogs/edit-json/edit-json.dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -37,6 +38,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 })
 export class JsonCellComponent extends DataTableCellComponent {
     private readonly dialog = inject(MatDialog);
+    private readonly editJsonDialogComponent = inject(EDIT_JSON_DIALOG_COMPONENT);
 
     /** Editable JSON. */
     @Input()
@@ -60,7 +62,7 @@ export class JsonCellComponent extends DataTableCellComponent {
         };
 
         this.dialog
-            .open(EditJsonDialogComponent, {
+            .open(this.editJsonDialogComponent, {
                 data: settings,
                 minWidth: '50%',
                 minHeight: '50%'

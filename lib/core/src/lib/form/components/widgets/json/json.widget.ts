@@ -18,7 +18,8 @@
 import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dialogs/edit-json/edit-json.dialog';
+import { EDIT_JSON_DIALOG_COMPONENT } from '../../../../dialogs/edit-json/edit-json-dialog.token';
+import { EditJsonDialogSettings } from '../../../../dialogs/edit-json/edit-json.dialog';
 import { WidgetComponent } from '../widget.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -42,6 +43,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class JsonWidgetComponent extends WidgetComponent {
     private readonly dialog = inject(MatDialog);
+    private readonly editJsonDialogComponent = inject(EDIT_JSON_DIALOG_COMPONENT);
 
     view() {
         const rawValue = this.field.value;
@@ -53,7 +55,7 @@ export class JsonWidgetComponent extends WidgetComponent {
             value
         };
 
-        this.dialog.open(EditJsonDialogComponent, {
+        this.dialog.open(this.editJsonDialogComponent, {
             data: settings,
             minWidth: '50%',
             minHeight: '50%'

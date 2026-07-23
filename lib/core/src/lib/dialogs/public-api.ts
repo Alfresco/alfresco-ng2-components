@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './edit-json/edit-json-dialog.token';
 export * from './edit-json/edit-json.dialog';
 
 export * from './unsaved-changes-dialog/unsaved-changes-dialog.component';
