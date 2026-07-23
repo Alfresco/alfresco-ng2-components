@@ -79,7 +79,7 @@ describe('EditJsonDialogComponent', () => {
         it('should copy the updated value when the dialog value changes', () => {
             const updatedValue = '{"updated": true}';
             spyOn(clipboardService, 'copyContentToClipboard');
-            fixture.componentRef.setInput('value', updatedValue);
+            fixture.componentInstance.value.set(updatedValue);
             fixture.detectChanges();
 
             testingUtils.clickByDataAutomationId('adf-edit-json-dialog-copy');
@@ -90,7 +90,7 @@ describe('EditJsonDialogComponent', () => {
 
         it('should copy an empty value when the dialog has no content', () => {
             spyOn(clipboardService, 'copyContentToClipboard');
-            fixture.componentRef.setInput('value', '');
+            fixture.componentInstance.value.set('');
             fixture.detectChanges();
 
             testingUtils.clickByDataAutomationId('adf-edit-json-dialog-copy');

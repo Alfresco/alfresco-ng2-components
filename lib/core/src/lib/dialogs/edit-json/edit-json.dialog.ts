@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, ViewEncapsulation, inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject, model } from '@angular/core';
+import { NgComponentOutlet } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ClipboardService } from '../../clipboard';
+import { EDIT_JSON_EDITOR, JsonEditorInputs } from './edit-json-editor.token';
 
 export interface EditJsonDialogSettings {
     title?: string;
@@ -32,7 +34,7 @@ export interface EditJsonDialogSettings {
 @Component({
     selector: 'adf-edit-json-dialog',
     standalone: true,
-    imports: [MatDialogModule, FormsModule, MatButtonModule, MatIconModule, TranslatePipe],
+    imports: [MatDialogModule, FormsModule, MatButtonModule, MatIconModule, TranslatePipe, NgComponentOutlet],
     templateUrl: './edit-json.dialog.html',
     styleUrls: ['./edit-json.dialog.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -42,24 +44,25 @@ export class EditJsonDialogComponent implements OnInit {
     private readonly settings = inject<EditJsonDialogSettings>(MAT_DIALOG_DATA);
     private readonly clipboardService = inject(ClipboardService);
     private readonly translateService = inject(TranslateService);
+    protected readonly customEditor = inject(EDIT_JSON_EDITOR);
 
     editable: boolean = false;
     title: string = 'JSON';
-
-    @Input()
-    value: string = '';
+    readonly value = model('');
+    protected editorInputs!: JsonEditorInputs;
 
     ngOnInit() {
         if (this.settings) {
-            this.editable = this.settings.editable;
-            this.value = this.settings.value || '';
-            this.title = this.settings.title || 'JSON';
+            this.editable = this.settings.editable ?? false;
+            this.value.set(this.settings.value ?? '');
+            this.title = this.settings.title ?? 'JSON';
         }
+        this.editorInputs = { value: this.value, readOnly: !this.editable };
     }
 
     protected copyToClipboard(): void {
         const key = 'CORE.DIALOG.EDIT_JSON.COPIED';
         const message = this.translateService.instant(key);
-        this.clipboardService.copyContentToClipboard(this.value, message);
+        this.clipboardService.copyContentToClipboard(this.value(), message);
     }
 }

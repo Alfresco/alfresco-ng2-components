@@ -22,7 +22,6 @@ import { JsonCellComponent } from './json-cell.component';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
-import { EDIT_JSON_DIALOG_COMPONENT } from '../../../dialogs/edit-json/edit-json-dialog.token';
 import { EditJsonDialogComponent } from '../../../dialogs/edit-json/edit-json.dialog';
 import { firstValueFrom } from 'rxjs';
 
@@ -116,18 +115,6 @@ describe('JsonCellComponent — dialog component selection', () => {
         setupComponent();
 
         expect(openSpy).toHaveBeenCalledWith(EditJsonDialogComponent, jasmine.anything());
-        expect(openSpy).toHaveBeenCalledTimes(1);
-    });
-
-    it('should open the component supplied through the EDIT_JSON_DIALOG_COMPONENT token', () => {
-        class CustomEditJsonDialogComponent {}
-        TestBed.configureTestingModule({
-            imports: [JsonCellComponent],
-            providers: [{ provide: EDIT_JSON_DIALOG_COMPONENT, useValue: CustomEditJsonDialogComponent }]
-        });
-        setupComponent();
-
-        expect(openSpy).toHaveBeenCalledWith(CustomEditJsonDialogComponent as any, jasmine.anything());
         expect(openSpy).toHaveBeenCalledTimes(1);
     });
 });
