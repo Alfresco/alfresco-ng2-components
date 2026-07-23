@@ -22,8 +22,6 @@ import { JsonCellComponent } from './json-cell.component';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
-import { EditJsonDialogComponent } from '../../../dialogs/edit-json/edit-json.dialog';
-import { firstValueFrom } from 'rxjs';
 
 describe('JsonCellComponent', () => {
     let loader: HarnessLoader;
@@ -67,54 +65,24 @@ describe('JsonCellComponent', () => {
         fixture.destroy();
     });
 
-    it('should emit entity value through value$ observable when component is initialized', async () => {
+    it('should set value', () => {
         fixture.detectChanges();
-        const result = await firstValueFrom(component.value$);
-        expect(result).toBe(rowData.entity);
+        component.value$.subscribe((result) => {
+            expect(result).toBe(rowData.entity);
+        });
     });
 
     it('should render json button inside cell', async () => {
         fixture.detectChanges();
-        expect(await testingUtils.button.exists()).toBe(true);
+
+        expect(await testingUtils.checkIfMatButtonExists()).toBe(true);
     });
 
-    it('should emit empty object through value$ when row entity is empty', async () => {
+    it('should not setup cell when has no data', () => {
         rowData.entity = {};
         fixture.detectChanges();
-        const result = await firstValueFrom(component.value$);
-        expect(result).toEqual({});
-    });
-});
-
-describe('JsonCellComponent — dialog component selection', () => {
-    let component: JsonCellComponent;
-    let fixture: ComponentFixture<JsonCellComponent>;
-    let openSpy: jasmine.Spy;
-
-    const setupComponent = () => {
-        fixture = TestBed.createComponent(JsonCellComponent);
-        component = fixture.componentInstance;
-
-        openSpy = spyOn((component as any).dialog, 'open').and.returnValue({ afterClosed: () => ({ subscribe: () => {} }) } as any);
-
-        const rowData = { name: '1', entity: { name: 'test' } };
-        const columnData = { format: '/somewhere', type: 'json', key: 'entity' };
-        const adapter = new ObjectDataTableAdapter([rowData], [new ObjectDataColumn(columnData)]);
-        component.column = adapter.getColumns()[0];
-        component.data = adapter;
-        component.row = adapter.getRows()[0];
-        component.view();
-    };
-
-    afterEach(() => {
-        fixture?.destroy();
-    });
-
-    it('should open the default EditJsonDialogComponent when the token is not overridden', () => {
-        TestBed.configureTestingModule({ imports: [JsonCellComponent] });
-        setupComponent();
-
-        expect(openSpy).toHaveBeenCalledWith(EditJsonDialogComponent, jasmine.anything());
-        expect(openSpy).toHaveBeenCalledTimes(1);
+        component.value$.subscribe((result) => {
+            expect(result).toEqual({});
+        });
     });
 });

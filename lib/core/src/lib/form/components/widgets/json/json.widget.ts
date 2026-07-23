@@ -18,7 +18,7 @@
 import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../../dialogs/edit-json/edit-json.dialog';
+import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dialogs/edit-json/edit-json.dialog';
 import { WidgetComponent } from '../widget.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe } from '@ngx-translate/core';
