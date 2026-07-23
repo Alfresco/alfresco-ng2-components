@@ -589,7 +589,8 @@ describe('CardViewTextItemComponent', () => {
 
             component.property.value = 'myValueToCopy';
             component.editable = false;
-            component.copyToClipboardAction = true;
+            component.displayCopyToClipboardIcon = true;
+
             fixture.detectChanges();
 
             testingUtils.clickByDataAutomationId('card-textitem-copy-to-clipboard-' + component.property.key);
@@ -603,7 +604,7 @@ describe('CardViewTextItemComponent', () => {
 
         it('should NOT render the copy icon when copyToClipboardAction is false', () => {
             component.editable = false;
-            component.copyToClipboardAction = false;
+            component.displayCopyToClipboardIcon = false;
             fixture.detectChanges();
 
             const copyIcon = testingUtils.getByDataAutomationId('card-textitem-copy-to-clipboard-' + component.property.key);

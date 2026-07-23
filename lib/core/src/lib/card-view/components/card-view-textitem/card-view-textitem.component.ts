@@ -242,7 +242,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     }
 
     copyToClipboardUsingIcon(valueToCopy: string | string[]) {
-        if (typeof valueToCopy === 'string' && this.displayCopyToClipboardIcon && this.copyToClipboardAction) {
+        if (typeof valueToCopy === 'string' && this.displayCopyToClipboardIcon) {
             const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
             this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
         }

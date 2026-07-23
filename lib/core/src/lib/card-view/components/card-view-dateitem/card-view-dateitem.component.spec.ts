@@ -230,7 +230,7 @@ describe('CardViewDateItemComponent', () => {
         spyOn(clipboardService, 'copyContentToClipboard');
 
         component.editable = false;
-        component.copyToClipboardAction = true;
+        component.displayCopyToClipboardIcon = true;
         fixture.detectChanges();
 
         testingUtils.clickByDataAutomationId('card-dateitem-copy-to-clipboard-' + component.property.key);
@@ -241,7 +241,7 @@ describe('CardViewDateItemComponent', () => {
 
     it('should NOT render the copy icon when copyToClipboardAction is false', () => {
         component.editable = false;
-        component.copyToClipboardAction = false;
+        component.displayCopyToClipboardIcon = false;
         fixture.detectChanges();
 
         const copyIcon = testingUtils.getByDataAutomationId('card-dateitem-copy-to-clipboard-' + component.property.key);
