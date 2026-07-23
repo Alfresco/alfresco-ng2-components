@@ -1,4 +1,4 @@
-<div mat-menu class="mat-mdc-menu-panel mdc-menu-surface mdc-menu-surface--open adf-context-menu-animate">
+<div mat-menu class="mat-mdc-menu-panel mdc-menu-surface mdc-menu-surface--open">
     <div id="adf-context-menu-content" class="mat-mdc-menu-content">
         @for (link of links; track link) {
             @if (link.model?.visible) {
@@ -10,7 +10,7 @@
                     (click)="onMenuItemClick($event, link)"
                 >
                     @if (link.model?.icon) {
-                        <mat-icon [adf-icon]="link.model.icon" />
+                        <mat-icon matMenuItemIcon [adf-icon]="link.model.icon" />
                     }
                     <span>{{ link.title || link.model?.title | translate }}</span>
                 </button>
@@ -18,3 +18,10 @@
         }
     </div>
 </div>
+
+<!--
+    Style-loader menu: this hidden real mat-menu instance ensures Angular Material
+    menu component styles are registered for this custom overlay-rendered menu.
+    Remove it once this component is migrated to a true mat-menu + matMenuTriggerFor flow.
+-->
+<mat-menu aria-hidden="true" class="adf-context-menu-style-loader" />
