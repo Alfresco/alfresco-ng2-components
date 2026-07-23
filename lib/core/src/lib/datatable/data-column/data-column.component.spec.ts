@@ -28,7 +28,8 @@ import { DataColumnComponent } from './data-column.component';
     `
 })
 class DirectTemplateHostComponent {
-    @ViewChild(DataColumnComponent) dataColumn: DataColumnComponent;
+    @ViewChild(DataColumnComponent)
+    dataColumn: DataColumnComponent;
 }
 
 @Component({
@@ -42,7 +43,8 @@ class DirectTemplateHostComponent {
     `
 })
 class NestedTemplateHostComponent {
-    @ViewChild(DataColumnComponent) dataColumn: DataColumnComponent;
+    @ViewChild(DataColumnComponent)
+    dataColumn: DataColumnComponent;
 }
 
 describe('DataColumnComponent', () => {
@@ -57,11 +59,6 @@ describe('DataColumnComponent', () => {
     describe('template ContentChild selection', () => {
         let directFixture: ComponentFixture<DirectTemplateHostComponent>;
         let nestedFixture: ComponentFixture<NestedTemplateHostComponent>;
-
-        afterEach(() => {
-            directFixture?.destroy();
-            nestedFixture?.destroy();
-        });
 
         it('should capture a direct ng-template child', () => {
             directFixture = TestBed.createComponent(DirectTemplateHostComponent);
