@@ -25,6 +25,6 @@
     @include mixins.adf-error-icon;
 }
 
-#{ms.$mat-datetimepicker-toggle} {
+.adf-date-time-widget-toggle {
     color: var(--mat-sys-on-surface);
 }
