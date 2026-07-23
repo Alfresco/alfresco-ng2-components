@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { DataColumnComponent } from './data-column.component';
 
 @Component({
@@ -57,18 +57,15 @@ describe('DataColumnComponent', () => {
     });
 
     describe('template ContentChild selection', () => {
-        let directFixture: ComponentFixture<DirectTemplateHostComponent>;
-        let nestedFixture: ComponentFixture<NestedTemplateHostComponent>;
-
         it('should capture a direct ng-template child', () => {
-            directFixture = TestBed.createComponent(DirectTemplateHostComponent);
+            const directFixture = TestBed.createComponent(DirectTemplateHostComponent);
             directFixture.detectChanges();
 
             expect(directFixture.componentInstance.dataColumn.template).toBeTruthy();
         });
 
         it('should not capture a nested descendant ng-template', () => {
-            nestedFixture = TestBed.createComponent(NestedTemplateHostComponent);
+            const nestedFixture = TestBed.createComponent(NestedTemplateHostComponent);
             nestedFixture.detectChanges();
 
             expect(nestedFixture.componentInstance.dataColumn.template).toBeFalsy();
