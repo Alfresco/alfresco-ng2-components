@@ -103,6 +103,10 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     @Input()
     collapseOnBlur: boolean = true;
 
+    /** Disables expand/collapse transitions while keeping state changes functional. */
+    @Input()
+    disableAnimations: boolean = false;
+
     /** Toggles whether to show a clear button that closes the search */
     @Input()
     showClearButton: boolean = false;
