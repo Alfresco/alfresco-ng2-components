@@ -203,12 +203,13 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }
     }
 
-    clicked(): void {
+    clicked(event: MouseEvent): void {
         if (typeof this.property.clickCallBack === 'function') {
             this.property.clickCallBack();
         } else {
             this.cardViewUpdateService.clicked(this.property);
         }
+        event.preventDefault();
     }
 
     clearValue() {

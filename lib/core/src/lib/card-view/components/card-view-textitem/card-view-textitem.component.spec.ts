@@ -510,6 +510,30 @@ describe('CardViewTextItemComponent', () => {
             expect(callBackSpy).toHaveBeenCalled();
         });
 
+        it('should call preventDefault on event when label of clickable input is clicked', () => {
+            component.property.clickable = true;
+            component.ngOnChanges({});
+            fixture.detectChanges();
+
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            spyOn(clickEvent, 'preventDefault');
+            testingUtils.getByDataAutomationId(`card-textitem-label-${component.property.key}`).nativeElement.dispatchEvent(clickEvent);
+            fixture.detectChanges();
+            expect(clickEvent.preventDefault).toHaveBeenCalled();
+        });
+
+        it('should call preventDefault on event when button wrapper of clickable input is clicked', () => {
+            component.property.clickable = true;
+            component.ngOnChanges({});
+            fixture.detectChanges();
+
+            const clickEvent = new MouseEvent('click');
+            spyOn(clickEvent, 'preventDefault');
+            testingUtils.getByDataAutomationId(`card-textitem-toggle-${component.property.key}`).nativeElement.dispatchEvent(clickEvent);
+            fixture.detectChanges();
+            expect(clickEvent.preventDefault).toHaveBeenCalled();
+        });
+
         it('should click event to the event stream when clickable property enabled', async () => {
             const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             spyOn(cardViewUpdateService, 'clicked').and.stub();
