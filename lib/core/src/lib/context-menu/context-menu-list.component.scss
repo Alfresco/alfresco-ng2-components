@@ -1,57 +1,8 @@
-@use '@angular/material' as mat;
-
-@keyframes delayed-elevation {
-    0% {
-        box-shadow: none;
-    }
-
-    100% {
-        @include mat.elevation(8);
-    }
-}
-
-@keyframes menu-scale-in {
-    0% {
-        opacity: 0;
-        transform: scale(0.01, 0.01);
-    }
-
-    25% {
-        opacity: 1;
-        transform: scale(1, 0.5);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1, 1);
-    }
-}
-
-@keyframes menu-scale-out {
-    0% {
-        opacity: 1;
-        transform: scale(1, 1);
-    }
-
-    75% {
-        opacity: 0;
-        transform: scale(1, 0.5);
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(0.01, 0.01);
-    }
-}
-
 adf-context-menu {
-    animation: delayed-elevation 0.5s ease-in-out 0.1s forwards;
-
-    .adf-context-menu-animate {
-        animation: menu-scale-in 500ms cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-
-        &.adf-closing {
-            animation: menu-scale-out 500ms cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-        }
+    > [mat-menu] {
+        border-radius: var(--mdc-menu-container-shape, var(--mat-sys-corner-extra-small));
+        background: var(--mdc-menu-container-color, var(--mat-sys-surface-container));
+        color: var(--mdc-menu-item-label-text-color, var(--mat-sys-on-surface));
+        box-shadow: var(--mat-sys-level2);
     }
 }
