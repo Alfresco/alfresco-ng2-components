@@ -83,6 +83,22 @@ describe('IdleActivityTracker', () => {
         expect(spy).toHaveBeenCalledTimes(1);
     });
 
+    it('should allow a later listener to prevent default when an activity event fires', () => {
+        const preventDefault = jasmine.createSpy('preventDefault').and.callFake((event: Event) => event.preventDefault());
+        tracker.start();
+        doc.addEventListener('mousemove', preventDefault);
+
+        try {
+            const event = new MouseEvent('mousemove', { cancelable: true });
+            doc.dispatchEvent(event);
+
+            expect(preventDefault).toHaveBeenCalledTimes(1);
+            expect(event.defaultPrevented).toBeTrue();
+        } finally {
+            doc.removeEventListener('mousemove', preventDefault);
+        }
+    });
+
     it('is a no-op when stop() is called without a prior start()', () => {
         const spy = jasmine.createSpy('activity');
         tracker.activity$.subscribe(spy);
