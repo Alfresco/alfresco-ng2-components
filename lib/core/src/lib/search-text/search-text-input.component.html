@@ -1,5 +1,5 @@
 <div class="adf-search-container" [attr.state]="subscriptAnimationState.value">
-    <div class="adf-search-container-transition" [class.adf-search-active]="isSearchBarActive()" [ngStyle]="subscriptAnimationState.params">
+    <div class="adf-search-container-transition" [class.adf-search-active]="isSearchBarActive()" [class.adf-search-no-animation]="disableAnimations">
         @if (expandable && !isSearchBarActive()) {
             <button
                 mat-icon-button
@@ -13,7 +13,7 @@
                 <mat-icon [attr.aria-label]="'CORE.SEARCH.BUTTON.ARIA-LABEL' | translate" adf-icon="search" />
             </button>
         }
-        <mat-form-field class="adf-input-form-field-divider" [hintLabel]="hintLabel">
+        <mat-form-field class="adf-input-form-field-divider" [hintLabel]="hintLabel" [ngStyle]="subscriptAnimationState.params">
             @if (label) {
                 <mat-label>{{ label }}</mat-label>
             }

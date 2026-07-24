@@ -145,6 +145,13 @@ describe('SearchTextInputComponent', () => {
             fixture.detectChanges();
         });
 
+        it('should disable transitions when disableAnimations is true', () => {
+            component.disableAnimations = true;
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('.adf-search-container-transition.adf-search-no-animation')).toBeTruthy();
+        });
+
         /**
          * function which finds Search Button and clicks it
          */
