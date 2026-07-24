@@ -36,7 +36,7 @@
         bottom: 7px;
     }
 
-    #{ms.$mat-form-field-icon-suffix}:has(.adf-copy-to-clipboard-icon) {
+    #{ms.$mat-form-field-icon-suffix}:has(.adf-copy-to-clipboard-button) {
         top: 50%;
         bottom: auto;
         transform: translateY(-50%);
@@ -76,26 +76,26 @@
 .adf-card-textitem-field-container {
     padding-top: 5px;
 
-    .adf-copy-to-clipboard-icon {
+    .adf-copy-to-clipboard-button {
         border: none;
         background: none;
         cursor: pointer;
         opacity: 0;
 
-        .adf-copy-to-clipboard-image {
+        .adf-copy-to-clipboard-icon {
             width: 25px;
         }
     }
 
     &:hover,
     &:focus-within {
-        .adf-copy-to-clipboard-icon {
+        .adf-copy-to-clipboard-button {
             opacity: 1;
         }
     }
 
     @media (hover: none) {
-        .adf-copy-to-clipboard-icon {
+        .adf-copy-to-clipboard-button {
             opacity: 1;
         }
     }

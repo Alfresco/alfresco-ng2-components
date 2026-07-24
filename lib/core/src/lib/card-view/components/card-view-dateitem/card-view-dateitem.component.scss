@@ -67,26 +67,26 @@
 }
 
 .adf-property-field {
-    .adf-copy-to-clipboard-icon {
+    .adf-copy-to-clipboard-button {
         border: none;
         background: none;
         cursor: pointer;
         opacity: 0;
 
-        .adf-copy-to-clipboard-image {
+        .adf-copy-to-clipboard-icon {
             width: 25px;
         }
     }
 
     &:hover,
     &:focus-within {
-        .adf-copy-to-clipboard-icon {
+        .adf-copy-to-clipboard-button {
             opacity: 1;
         }
     }
 
     @media (hover: none) {
-        .adf-copy-to-clipboard-icon {
+        .adf-copy-to-clipboard-button {
             opacity: 1;
         }
     }

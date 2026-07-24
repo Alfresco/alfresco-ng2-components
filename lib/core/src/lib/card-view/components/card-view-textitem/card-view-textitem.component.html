@@ -63,12 +63,16 @@
                     <button
                         matSuffix
                         type="button"
-                        class="adf-textitem-action adf-copy-to-clipboard-icon"
-                        (click)="copyToClipboardUsingIcon(property.displayValue)"
+                        class="adf-textitem-action adf-copy-to-clipboard-button"
+                        (click)="copyToClipboard(property.displayValue)"
                         [attr.aria-label]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
                         [attr.data-automation-id]="'card-textitem-copy-to-clipboard-' + property.key"
                     >
-                        <adf-icon value="adf:copy" class="adf-copy-to-clipboard-image" />
+                        <mat-icon 
+                            svgIcon="adf:copy"
+                            class="adf-copy-to-clipboard-icon"
+                            aria-hidden="true"
+                        />
                     </button>
                 }
             </mat-form-field>

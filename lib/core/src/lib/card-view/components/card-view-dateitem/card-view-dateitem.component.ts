@@ -85,7 +85,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     private readonly translateService = inject(TranslationService);
     private readonly destroyRef = inject(DestroyRef);
     private readonly matIconRegistry = inject(MatIconRegistry);
-    private readonly domSanitizer = inject(DomSanitizer);
+    private readonly sanitizer = inject(DomSanitizer);
 
     @Input()
     displayEmpty = true;
@@ -110,7 +110,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     constructor() {
         super();
-        this.matIconRegistry.addSvgIconInNamespace('adf', 'copy', this.domSanitizer.bypassSecurityTrustResourceUrl(COPY_ICON_URL));
+        this.registerCopyIcon();
         // Use effect to react to locale signal changes (must be in injection context)
         effect(() => {
             this.property.locale = this.userPreferencesService.localeSignal();
@@ -218,14 +218,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     }
 
     copyToClipboard(valueToCopy: string | string[]) {
-        if (typeof valueToCopy === 'string' && this.copyToClipboardAction) {
-            const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
-            this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
-        }
-    }
-
-    copytoClipboardUsingIcon(valueToCopy: string | string[]) {
-        if (typeof valueToCopy === 'string' && this.displayCopyToClipboardIcon) {
+        if (typeof valueToCopy === 'string' && (this.copyToClipboardAction || this.displayCopyToClipboardIcon)) {
             const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
             this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
         }
@@ -295,5 +288,10 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
             this.property.value = this.property.value.map((date: Date | string) => new Date(date));
             this.valueDate = this.property.type === 'date' ? DateFnsUtils.forceLocal(this.property.value[0]) : this.property.value[0];
         }
+    }
+
+    private registerCopyIcon() {
+        const copyIcon = this.sanitizer.bypassSecurityTrustResourceUrl(COPY_ICON_URL);
+        this.matIconRegistry.addSvgIconInNamespace('adf', 'copy', copyIcon);
     }
 }

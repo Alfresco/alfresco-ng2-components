@@ -97,7 +97,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     constructor() {
         super();
-        this.matIconRegistry.addSvgIconInNamespace('adf', 'copy', this.sanitizer.bypassSecurityTrustResourceUrl(COPY_ICON_URL));
+        this.registerCopyIcon();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -233,14 +233,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     }
 
     copyToClipboard(valueToCopy: string) {
-        if (this.copyToClipboardAction) {
-            const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
-            this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
-        }
-    }
-
-    copyToClipboardUsingIcon(valueToCopy: string | string[]) {
-        if (typeof valueToCopy === 'string' && this.displayCopyToClipboardIcon) {
+        if (this.copyToClipboardAction || this.displayCopyToClipboardIcon) {
             const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
             this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
         }
@@ -278,5 +271,10 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }
 
         return String(Math.trunc(Number(value)));
+    }
+
+    private registerCopyIcon() {
+        const copyIcon = this.sanitizer.bypassSecurityTrustResourceUrl(COPY_ICON_URL);
+        this.matIconRegistry.addSvgIconInNamespace('adf', 'copy', copyIcon);
     }
 }
