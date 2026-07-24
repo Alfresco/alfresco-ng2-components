@@ -46,7 +46,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, EMPTY, filter, switchMap } from 'rxjs';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { IconComponent } from '../../../icon/icon.component';
 
 const DEFAULT_DATE_FORMAT = 'MMM DD';
 const COPY_ICON_URL = './assets/images/copy.svg';
@@ -63,7 +62,6 @@ const COPY_ICON_URL = './assets/images/copy.svg';
         CommonModule,
         TranslatePipe,
         IconModule,
-        IconComponent,
         MatDatetimepickerModule,
         MatChipsModule,
         MatInputModule,

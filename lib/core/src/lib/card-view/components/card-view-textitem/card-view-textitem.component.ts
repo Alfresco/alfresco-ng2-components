@@ -34,7 +34,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IconModule } from '../../../icon/icon.module';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { IconComponent } from '../../../icon/icon.component';
 
 export const DEFAULT_SEPARATOR = ', ';
 const COPY_ICON_URL = './assets/images/copy.svg';
@@ -51,7 +50,6 @@ const templateTypes = {
         CommonModule,
         MatFormFieldModule,
         TranslatePipe,
-        IconComponent,
         MatInputModule,
         ReactiveFormsModule,
         MatChipsModule,
