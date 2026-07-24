@@ -3,7 +3,7 @@
     @if (customEditor) {
     <ng-container *ngComponentOutlet="customEditor; inputs: editorInputs()" />
     } @else {
-    <textarea [ngModel]="value" [attr.readonly]="!editable ? true : null"></textarea>
+    <textarea [(ngModel)]="value" [attr.readonly]="!editable ? true : null"></textarea>
     }
 </mat-dialog-content>
 
