@@ -25,6 +25,8 @@ export const ACTIVITY_EVENTS = ['click', 'keydown', 'mousedown', 'mousemove', 'p
 /** High-frequency activity events (e.g. mousemove, scroll) are throttled to avoid rescheduling the idle timer on every DOM event. */
 export const ACTIVITY_THROTTLE_MS = 1000;
 
+const ACTIVITY_LISTENER_OPTIONS: AddEventListenerOptions = { capture: true, passive: true };
+
 @Injectable()
 export class IdleActivityTracker implements OnDestroy {
     private readonly document = inject(DOCUMENT);
@@ -44,7 +46,7 @@ export class IdleActivityTracker implements OnDestroy {
         }
 
         this.ngZone.runOutsideAngular(() => {
-            ACTIVITY_EVENTS.forEach((eventName) => this.document.addEventListener(eventName, this.handleActivity, { passive: true }));
+            ACTIVITY_EVENTS.forEach((eventName) => this.document.addEventListener(eventName, this.handleActivity, ACTIVITY_LISTENER_OPTIONS));
             this.document.addEventListener('visibilitychange', this.handleVisibilityChange);
         });
         this.isRegistered = true;
@@ -55,7 +57,7 @@ export class IdleActivityTracker implements OnDestroy {
             return;
         }
 
-        ACTIVITY_EVENTS.forEach((eventName) => this.document.removeEventListener(eventName, this.handleActivity));
+        ACTIVITY_EVENTS.forEach((eventName) => this.document.removeEventListener(eventName, this.handleActivity, ACTIVITY_LISTENER_OPTIONS));
         this.document.removeEventListener('visibilitychange', this.handleVisibilityChange);
         this.isRegistered = false;
     }
