@@ -64,7 +64,7 @@
                         matSuffix
                         type="button"
                         class="adf-textitem-action adf-copy-to-clipboard-button"
-                        (click)="copyToClipboard(property.displayValue)"
+                        (click)="copyToClipboard(property.displayValue, $event)"
                         [attr.aria-label]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
                         [attr.data-automation-id]="'card-textitem-copy-to-clipboard-' + property.key"
                     >
