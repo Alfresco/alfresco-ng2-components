@@ -194,6 +194,10 @@
             opacity: 0;
             pointer-events: none;
 
+            .header .title {
+                font-weight: bold;
+            }
+
             .popupContent {
                 display: inherit;
             }
@@ -209,6 +213,10 @@
                     opacity: 1;
                     pointer-events: auto;
                 }
+            }
+
+            &:focus-within:hover .adf-pdf-viewer-annotation-tooltip.popup {
+                outline-width: 3px;
             }
         }
     }

@@ -11,12 +11,16 @@ adf-layout-container {
         border-right: 1px solid var(--mat-sys-outline-variant);
         background: var(--mat-sys-surface);
         color: var(--mat-sys-on-surface);
+        transition: width 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 }
 
 .adf-container-full-width {
     width: inherit;
     overflow: hidden;
+    transition:
+        margin-left 400ms cubic-bezier(0.25, 0.8, 0.25, 1),
+        margin-right 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* query for Microsoft IE 11 */

@@ -1546,14 +1546,14 @@ describe('DataTable', () => {
             dataTable.displayCheckboxesOnHover = false;
             fixture.detectChanges();
 
-            expect(await testingUtils.checkIfMatCheckboxesHaveClass('adf-datatable-hover-only')).toBeTrue();
+            expect(await testingUtils.checkbox.allHaveClass('adf-datatable-hover-only')).toBeTrue();
         });
 
         it('should display checkboxes on hover when displayCheckboxesOnHover is set to true', async () => {
             dataTable.displayCheckboxesOnHover = true;
             fixture.detectChanges();
 
-            expect(await testingUtils.checkIfMatCheckboxesHaveClass('adf-datatable-hover-only')).toBeTrue();
+            expect(await testingUtils.checkbox.allHaveClass('adf-datatable-hover-only')).toBeTrue();
         });
     });
 

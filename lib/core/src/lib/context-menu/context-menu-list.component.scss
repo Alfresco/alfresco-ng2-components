@@ -1,15 +1,8 @@
-@use '@angular/material' as mat;
-
-@keyframes delayed-elevation {
-    0% {
-        box-shadow: none;
-    }
-
-    100% {
-        @include mat.elevation(8);
-    }
-}
-
 adf-context-menu {
-    animation: delayed-elevation 0.5s ease-in-out 0.1s forwards;
+    > [mat-menu] {
+        border-radius: var(--mdc-menu-container-shape, var(--mat-sys-corner-extra-small));
+        background: var(--mdc-menu-container-color, var(--mat-sys-surface-container));
+        color: var(--mdc-menu-item-label-text-color, var(--mat-sys-on-surface));
+        box-shadow: var(--mat-sys-level2);
+    }
 }

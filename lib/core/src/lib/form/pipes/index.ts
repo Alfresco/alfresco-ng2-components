@@ -16,3 +16,4 @@
  */
 
 export * from './field-style.pipe';
+export * from './repeatable-row-label.pipe';

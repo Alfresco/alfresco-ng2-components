@@ -1,16 +1,17 @@
 <mat-sidenav-container class="adf-layout-container" autosize>
     <mat-sidenav
         class="adf-layout-container-sidenav"
+        [ngClass]="sidenavAnimationState?.value"
         [position]="position"
         [disableClose]="!isMobileScreenSize"
-        [@sidenavAnimation]="sidenavAnimationState"
         [opened]="!isMobileScreenSize && !hideSidenav"
-        [mode]="isMobileScreenSize ? 'over' : 'side'">
+        [mode]="isMobileScreenSize ? 'over' : 'side'"
+        [style.width.px]="sidenavAnimationState?.params?.width">
         <ng-content sidenav select="[app-layout-navigation]" />
     </mat-sidenav>
 
     <div>
-        <div class="adf-container-full-width" [@contentAnimationLeft]="getContentAnimationState()">
+        <div class="adf-container-full-width" [ngClass]="contentAnimationState?.value" [style.margin-left.px]="contentAnimationState?.params?.['margin-left']" [style.margin-right.px]="contentAnimationState?.params?.['margin-right']">
             <ng-content select="[app-layout-content]" />
         </div>
     </div>

@@ -15,12 +15,24 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { UnsavedChangesDialogComponent } from './unsaved-changes-dialog.component';
+import { Pipe, PipeTransform } from '@angular/core';
 
-/** @deprecated import `UnsavedChangesDialogComponent` instead */
-@NgModule({
-    imports: [UnsavedChangesDialogComponent],
-    exports: [UnsavedChangesDialogComponent]
+export interface RepeatableRowLabelParams {
+    rowLabelText?: string;
+    appendRowNumber?: boolean;
+}
+
+@Pipe({
+    name: 'adfRepeatableRowLabel'
 })
-export class UnsavedChangesDialogModule {}
+export class RepeatableRowLabelPipe implements PipeTransform {
+    transform(params: RepeatableRowLabelParams | undefined, rowIndex: number): string | null {
+        const rowLabelText = typeof params?.rowLabelText === 'string' ? params.rowLabelText.trim() : '';
+
+        if (!rowLabelText) {
+            return null;
+        }
+
+        return params?.appendRowNumber === false ? rowLabelText : `${rowLabelText} ${rowIndex + 1}`;
+    }
+}

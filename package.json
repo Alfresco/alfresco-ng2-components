@@ -1,7 +1,7 @@
 {
   "name": "alfresco-ng2-components",
   "description": "Alfresco Angular components",
-  "version": "9.0.0",
+  "version": "9.1.0",
   "author": "Hyland Software, Inc. and its affiliates",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
@@ -150,7 +150,7 @@
     "ts-node": "10.9.2",
     "typescript": "5.9.3",
     "undici": "8.5.0",
-    "webpack": "5.107.2"
+    "webpack": "5.105.0"
   },
   "license": "Apache-2.0",
   "engines": {

@@ -26,6 +26,7 @@ import {
     OnChanges,
     OnInit,
     Output,
+    SimpleChanges,
     TemplateRef,
     Type,
     ViewChild,
@@ -219,8 +220,10 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
         this.isLoading = true;
     }
 
-    ngOnChanges() {
-        this.isLoading = true;
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['urlFile'] || changes['blobFile']) {
+            this.isLoading = true;
+        }
         if (this.blobFile) {
             this.setUpBlobData();
         } else if (this.urlFile) {

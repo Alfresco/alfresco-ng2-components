@@ -693,6 +693,8 @@ describe('Test PdfViewer - User interaction', () => {
 
         const getAnnotationTitle = (): string => annotationElement.querySelector('.title').textContent;
 
+        const getAnnotationDateElement = (): HTMLTimeElement | null => annotationElement.querySelector('.popupDate') as HTMLTimeElement | null;
+
         const getAnnotationDate = (): string => annotationElement.querySelector('.popupDate')?.textContent;
 
         const getAnnotationContent = (): string => annotationElement.querySelector('.popupContent').textContent;
@@ -726,6 +728,16 @@ describe('Test PdfViewer - User interaction', () => {
             expect(dateText).toMatch(/10:41:06|10:41:6/);
             expect(getAnnotationContent()).toBe('Annotation contents');
             expect(getAnnotationPopupElement()).toBeDefined();
+        }));
+
+        it('should set localization and accessibility attributes on the annotation date element', fakeAsync(() => {
+            dispatchAnnotationLayerRenderedEvent();
+            const dateElement = getAnnotationDateElement();
+            expect(dateElement).not.toBeNull();
+            const expectedDate = new Date(Date.UTC(2026, 1, 2, 10, 41, 6));
+            expect(dateElement.dateTime).toBe(expectedDate.toISOString());
+            expect(dateElement.dataset.l10nId).toBe('pdfjs-annotation-date-time-string');
+            expect(dateElement.dataset.l10nArgs).toBe(JSON.stringify({ dateObj: expectedDate.getTime() }));
         }));
 
         it('should have corrected content in annotation popup if there is no modification date', fakeAsync(() => {

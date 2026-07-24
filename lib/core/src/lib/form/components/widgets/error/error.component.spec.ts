@@ -50,12 +50,6 @@ describe('ErrorWidgetComponent', () => {
         expect(errorIcon).toEqual('error_outline');
     });
 
-    it('should set subscriptAnimationState value', () => {
-        widget.ngOnChanges(errorChanges);
-
-        expect(widget.subscriptAnimationState).toEqual('enter');
-    });
-
     it('should check proper error message', async () => {
         widget.ngOnChanges(errorChanges);
 

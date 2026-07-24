@@ -1,15 +1,27 @@
-<div mat-menu class="mat-mdc-menu-panel mdc-menu-surface mdc-menu-surface--open" @panelAnimation>
+<div mat-menu class="mat-mdc-menu-panel mdc-menu-surface mdc-menu-surface--open">
     <div id="adf-context-menu-content" class="mat-mdc-menu-content">
-        <ng-container *ngFor="let link of links">
-            <button *ngIf="link.model?.visible"
+        @for (link of links; track link) {
+            @if (link.model?.visible) {
+                <button
                     [attr.data-automation-id]="'context-' + (link.title || link.model?.title | translate)"
                     mat-menu-item
                     [disabled]="link.model?.disabled"
                     [title]="link.model?.tooltip | translate"
-                    (click)="onMenuItemClick($event, link)">
-                <mat-icon *ngIf="link.model?.icon" [adf-icon]="link.model.icon" />
-                <span>{{ link.title || link.model?.title | translate }}</span>
-            </button>
-        </ng-container>
+                    (click)="onMenuItemClick($event, link)"
+                >
+                    @if (link.model?.icon) {
+                        <mat-icon matMenuItemIcon [adf-icon]="link.model.icon" />
+                    }
+                    <span>{{ link.title || link.model?.title | translate }}</span>
+                </button>
+            }
+        }
     </div>
 </div>
+
+<!--
+    Style-loader menu: this hidden real mat-menu instance ensures Angular Material
+    menu component styles are registered for this custom overlay-rendered menu.
+    Remove it once this component is migrated to a true mat-menu + matMenuTriggerFor flow.
+-->
+<mat-menu aria-hidden="true" class="adf-context-menu-style-loader" />

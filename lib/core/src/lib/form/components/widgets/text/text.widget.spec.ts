@@ -78,7 +78,7 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 expect(widget.field.value).toBe('');
 
-                await testingUtils.fillMatInput('TEXT');
+                await testingUtils.input.fill('TEXT');
 
                 expect(widget.field.value).toBe('TEXT');
             });
@@ -108,7 +108,7 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(await testingUtils.getMatInputByPlaceholder('Your name here')).toBeTruthy();
+                expect(await testingUtils.input.getByPlaceholder('Your name here')).toBeTruthy();
             });
 
             it('should be able to set min/max length properties for Text widget', async () => {
@@ -123,19 +123,19 @@ describe('TextWidgetComponent', () => {
                 });
                 fixture.detectChanges();
 
-                await testingUtils.fillMatInput('TEXT');
+                await testingUtils.input.fill('TEXT');
 
-                const formField = await testingUtils.getMatFormField();
+                const formField = await testingUtils.formField.get();
                 let errors = await formField.getTextErrors();
                 expect(errors[0]).toContain('FORM.FIELD.VALIDATOR.AT_LEAST_LONG');
                 expect(widget.field.isValid).toBe(false);
 
-                await testingUtils.fillMatInput('TEXT VALUE');
+                await testingUtils.input.fill('TEXT VALUE');
 
                 errors = await formField.getTextErrors();
                 expect(widget.field.isValid).toBe(true);
 
-                await testingUtils.fillMatInput('TEXT VALUE TOO LONG');
+                await testingUtils.input.fill('TEXT VALUE TOO LONG');
                 expect(widget.field.isValid).toBe(false);
 
                 errors = await formField.getTextErrors();
@@ -152,7 +152,7 @@ describe('TextWidgetComponent', () => {
                 });
                 fixture.detectChanges();
 
-                await testingUtils.fillMatInput('a'.repeat(1025));
+                await testingUtils.input.fill('a'.repeat(1025));
 
                 expect(widget.field.isValid).toBe(false);
                 expect(widget.field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
@@ -333,13 +333,13 @@ describe('TextWidgetComponent', () => {
                 });
                 fixture.detectChanges();
 
-                await testingUtils.fillMatInput('TEXT');
+                await testingUtils.input.fill('TEXT');
                 expect(widget.field.isValid).toBe(false);
 
-                await testingUtils.fillMatInput('8');
+                await testingUtils.input.fill('8');
                 expect(widget.field.isValid).toBe(true);
 
-                await testingUtils.fillMatInput('8XYZ');
+                await testingUtils.input.fill('8XYZ');
                 expect(widget.field.isValid).toBe(false);
             });
         });
@@ -354,7 +354,7 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should show tooltip', async () => {
-                const host = await testingUtils.getMatInputHost();
+                const host = await testingUtils.input.getHost();
                 await host.hover();
 
                 const tooltip = await host.getAttribute('title');
@@ -377,13 +377,13 @@ describe('TextWidgetComponent', () => {
             it('should be marked as invalid after interaction', async () => {
                 expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
 
-                await testingUtils.blurMatInput();
+                await testingUtils.input.blur();
 
                 expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
             });
 
             it('should be able to display label with asterisk and input field is required', async () => {
-                const formField = await testingUtils.getMatFormField();
+                const formField = await testingUtils.formField.get();
                 const formControl = await formField.getControl();
 
                 expect(formControl.isRequired).toBeTruthy();
@@ -407,7 +407,7 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should be disabled on readonly forms', async () => {
-                const input = await testingUtils.getMatInput();
+                const input = await testingUtils.input.get();
                 expect(await input.isDisabled()).toBe(true);
             });
         });
@@ -431,17 +431,17 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should show text widget', async () => {
-                expect(await testingUtils.checkIfMatInputExists()).toBe(true);
+                expect(await testingUtils.input.exists()).toBe(true);
             });
 
             it('should show the field placeholder', async () => {
-                expect(await testingUtils.checkIfMatInputExistsWithPlaceholder('simple placeholder')).toBeTrue();
+                expect(await testingUtils.input.existsByPlaceholder('simple placeholder')).toBeTrue();
             });
 
             it('should show the field placeholder when clicked', async () => {
-                await testingUtils.clickMatInput();
+                await testingUtils.input.click();
 
-                expect(await testingUtils.checkIfMatInputExistsWithPlaceholder('simple placeholder')).toBeTruthy();
+                expect(await testingUtils.input.existsByPlaceholder('simple placeholder')).toBeTruthy();
             });
 
             it('should prevent text to be written if is not allowed by the mask on keyUp event', async () => {
@@ -566,13 +566,13 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should show the input mask placeholder', async () => {
-                expect(await testingUtils.checkIfMatInputExistsWithPlaceholder('Phone : (__) ___-___')).toBeTrue();
+                expect(await testingUtils.input.existsByPlaceholder('Phone : (__) ___-___')).toBeTrue();
             });
 
             it('should show the input mask placeholder when clicked', async () => {
-                await testingUtils.clickMatInput();
+                await testingUtils.input.click();
 
-                expect(await testingUtils.checkIfMatInputExistsWithPlaceholder('Phone : (__) ___-___')).toBeTrue();
+                expect(await testingUtils.input.existsByPlaceholder('Phone : (__) ___-___')).toBeTrue();
             });
         });
 
@@ -782,7 +782,7 @@ describe('TextWidgetComponent - ADF_CUSTOM_MESSAGE', () => {
                 });
                 fixture.detectChanges();
 
-                await testingUtils.fillMatInput('invalid text');
+                await testingUtils.input.fill('invalid text');
                 expect(widget.field.isValid).toBeFalse();
                 expect(widget.field.validationSummary.message).toBe('Only numbers are allowed');
             });
@@ -822,7 +822,7 @@ describe('TextWidgetComponent - ADF_CUSTOM_MESSAGE', () => {
                 });
                 fixture.detectChanges();
 
-                await testingUtils.fillMatInput('invalid text');
+                await testingUtils.input.fill('invalid text');
                 expect(widget.field.isValid).toBeFalse();
                 expect(widget.field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_VALUE');
             });
@@ -927,7 +927,7 @@ describe('TextWidgetComponent - ADF_CUSTOM_MESSAGE', () => {
             });
             fixture.detectChanges();
 
-            await testingUtils.fillMatInput('invalid text');
+            await testingUtils.input.fill('invalid text');
             expect(widget.field.isValid).toBeFalse();
             expect(widget.field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_VALUE');
         });

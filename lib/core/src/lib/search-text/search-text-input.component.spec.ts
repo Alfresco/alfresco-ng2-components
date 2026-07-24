@@ -164,7 +164,7 @@ describe('SearchTextInputComponent', () => {
         function testMarginValue(isLtr: boolean): void {
             userPreferencesService.setWithoutStore('textOrientation', isLtr ? 'ltr' : 'rtl');
             clickSearchButton();
-            const expectedResult = isLtr ? { 'margin-left': 0 } : { 'margin-right': 0 };
+            const expectedResult = isLtr ? { 'margin-left': '0px' } : { 'margin-right': '0px' };
             expect(component.subscriptAnimationState.params).toEqual(expectedResult);
             discardPeriodicTasks();
         }

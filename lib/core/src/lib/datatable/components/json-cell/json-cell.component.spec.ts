@@ -75,7 +75,7 @@ describe('JsonCellComponent', () => {
     it('should render json button inside cell', async () => {
         fixture.detectChanges();
 
-        expect(await testingUtils.checkIfMatButtonExists()).toBe(true);
+        expect(await testingUtils.button.exists()).toBe(true);
     });
 
     it('should not setup cell when has no data', () => {

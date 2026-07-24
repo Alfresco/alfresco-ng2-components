@@ -33,7 +33,8 @@ import {
     ViewerToolbarActionsComponent,
     NoopAuthModule,
     NoopTranslateModule,
-    UnitTestingUtils
+    UnitTestingUtils,
+    IconModule
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
@@ -66,7 +67,7 @@ class ViewerWithCustomToolbarComponent {}
 
 @Component({
     selector: 'adf-viewer-container-toolbar-actions',
-    imports: [MatIconModule, MatButtonModule, ViewerToolbarActionsComponent, AlfrescoViewerComponent],
+    imports: [MatIconModule, MatButtonModule, ViewerToolbarActionsComponent, AlfrescoViewerComponent, IconModule],
     // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
     template: `<adf-alfresco-viewer>
         <adf-viewer-toolbar-actions>
@@ -100,7 +101,7 @@ class DummyDialogComponent {}
 
 @Component({
     selector: 'adf-viewer-container-open-with',
-    imports: [MatIconModule, MatMenuModule, ViewerOpenWithComponent, AlfrescoViewerComponent],
+    imports: [MatIconModule, MatMenuModule, ViewerOpenWithComponent, AlfrescoViewerComponent, IconModule],
     // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
     template: `
         <adf-alfresco-viewer>
@@ -125,7 +126,7 @@ class ViewerWithCustomOpenWithComponent {}
 
 @Component({
     selector: 'adf-viewer-container-more-actions',
-    imports: [MatIconModule, MatMenuModule, ViewerMoreActionsComponent, AlfrescoViewerComponent],
+    imports: [MatIconModule, MatMenuModule, ViewerMoreActionsComponent, AlfrescoViewerComponent, IconModule],
     // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
     template: ` <adf-alfresco-viewer>
         <adf-viewer-more-actions>
@@ -583,6 +584,35 @@ describe('AlfrescoViewerComponent', () => {
             await fixture.whenStable();
             expect(component.mimeType).toEqual('application/pdf');
             expect(component.nodeMimeType).toEqual('application/msWord');
+        });
+
+        it('should update fileName when the node name changes', async () => {
+            const defaultNode = {
+                id: '123',
+                name: 'Mock_Node.pdf',
+                content: { mimeType: 'application/pdf' },
+                properties: { 'cm:versionLabel': 'mock-version-label' }
+            } as Node;
+
+            component.nodeEntry = { entry: defaultNode };
+            component.nodeId = '123';
+
+            component.sidebarRightTemplateContext = { node: defaultNode };
+            component.sidebarLeftTemplateContext = { node: defaultNode };
+
+            fixture.detectChanges();
+
+            nodesApiService.nodeUpdated.next({
+                ...defaultNode,
+                name: 'Renamed_Node.pdf',
+                properties: { 'cm:versionLabel': 'mock-version-label' }
+            } as Node);
+
+            await fixture.whenStable();
+
+            expect(component.fileName).toBe('Renamed_Node.pdf');
+            expect(component.sidebarRightTemplateContext.node.name).toBe('Renamed_Node.pdf');
+            expect(component.sidebarLeftTemplateContext.node.name).toBe('Renamed_Node.pdf');
         });
 
         describe('versioned file with rendition', () => {

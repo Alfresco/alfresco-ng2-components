@@ -20,7 +20,20 @@ import { PdfThumbListComponent } from './pdf-viewer-thumbnails.component';
 import { UnitTestingUtils } from '@alfresco/adf-core';
 import { DOWN_ARROW, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 
-declare const pdfjsViewer: any;
+class EventBusMock {
+    private readonly listeners = new Map<string, Array<(payload: any) => void>>();
+
+    on(eventName: string, callback: (payload: any) => void): void {
+        const handlers = this.listeners.get(eventName) ?? [];
+        handlers.push(callback);
+        this.listeners.set(eventName, handlers);
+    }
+
+    dispatch(eventName: string, payload: any): void {
+        const handlers = this.listeners.get(eventName) ?? [];
+        handlers.forEach((handler) => handler(payload));
+    }
+}
 
 describe('PdfThumbListComponent', () => {
     let fixture: ComponentFixture<PdfThumbListComponent>;
@@ -67,7 +80,7 @@ describe('PdfThumbListComponent', () => {
             page(15),
             page(16)
         ],
-        eventBus: new pdfjsViewer.EventBus()
+        eventBus: new EventBusMock()
     };
 
     beforeEach(() => {

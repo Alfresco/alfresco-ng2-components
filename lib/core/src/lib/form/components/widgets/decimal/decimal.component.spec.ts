@@ -69,7 +69,7 @@ describe('DecimalComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const host = await testingUtils.getMatInputHost();
+            const host = await testingUtils.input.getHost();
             await host.hover();
 
             const tooltip = await host.getAttribute('title');
@@ -90,14 +90,14 @@ describe('DecimalComponent', () => {
         it('should be marked as invalid after interaction', async () => {
             expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
 
-            await testingUtils.blurMatInput();
+            await testingUtils.input.blur();
             fixture.detectChanges();
 
             expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
         });
 
         it('should be able to display label with asterisk and input field is required', async () => {
-            const formField = await testingUtils.getMatFormField();
+            const formField = await testingUtils.formField.get();
             const formControl = await formField.getControl();
 
             expect(formControl.isRequired).toBeTruthy();

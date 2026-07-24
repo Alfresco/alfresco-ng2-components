@@ -18,7 +18,9 @@
 import {
     AppConfigService,
     AuthenticationService,
+    CustomEmptyContentTemplateDirective,
     CustomLoadingContentTemplateDirective,
+    CustomNoPermissionTemplateDirective,
     DataColumn,
     DataColumnComponent,
     DataColumnListComponent,
@@ -2009,7 +2011,7 @@ describe('DocumentList', () => {
 });
 
 @Component({
-    imports: [DocumentListComponent, CustomLoadingContentTemplateDirective],
+    imports: [DocumentListComponent, CustomLoadingContentTemplateDirective, CustomNoPermissionTemplateDirective, CustomEmptyContentTemplateDirective],
     template: `
         <adf-document-list #customDocumentList>
             <adf-custom-loading-content-template>

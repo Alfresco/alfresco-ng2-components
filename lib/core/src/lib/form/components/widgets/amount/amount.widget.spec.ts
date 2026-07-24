@@ -218,7 +218,7 @@ describe('AmountWidgetComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const host = await testingUtils.getMatInputHost();
+            const host = await testingUtils.input.getHost();
             await host.hover();
 
             const tooltip = await host.getAttribute('title');
@@ -235,7 +235,7 @@ describe('AmountWidgetComponent', () => {
         });
 
         it('should be marked as invalid after interaction', async () => {
-            const host = await testingUtils.getMatInputHost();
+            const host = await testingUtils.input.getHost();
 
             expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
             await host.blur();
@@ -243,7 +243,7 @@ describe('AmountWidgetComponent', () => {
         });
 
         it('should be able to display label with asterisk and input field is required', async () => {
-            const formField = await testingUtils.getMatFormField();
+            const formField = await testingUtils.formField.get();
             const formControl = await formField.getControl();
 
             expect(formControl.isRequired).toBeTruthy();
@@ -282,7 +282,7 @@ describe('AmountWidgetComponent - rendering', () => {
         });
         fixture.detectChanges();
 
-        const field = await testingUtils.getMatFormField();
+        const field = await testingUtils.formField.get();
         expect(await field.getPrefixText()).toBe('$');
 
         widget.field.currency = '£';
@@ -319,8 +319,8 @@ describe('AmountWidgetComponent - rendering', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const field = await testingUtils.getMatFormField();
-        const inputField = await testingUtils.getMatInputByPlaceholder('Check Placeholder Text');
+        const field = await testingUtils.formField.get();
+        const inputField = await testingUtils.input.getByPlaceholder('Check Placeholder Text');
         expect(inputField).toBeTruthy();
         expect(await field.getPrefixText()).toBe('$');
 
@@ -328,14 +328,14 @@ describe('AmountWidgetComponent - rendering', () => {
         expect(widgetLabel.textContent.trim()).toBe('Test Amount');
         expect(widget.field.isValid).toBe(false);
 
-        const input = await testingUtils.getMatInput();
+        const input = await testingUtils.input.get();
         await input.setValue('90');
         expect(widget.field.isValid).toBe(true);
 
         await input.setValue('gdfgdf');
         expect(widget.field.isValid).toBe(false);
 
-        const formField = await testingUtils.getMatFormField();
+        const formField = await testingUtils.formField.get();
         const errors = await formField.getTextErrors();
         expect(errors[0]).toContain('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
     });
@@ -364,16 +364,16 @@ describe('AmountWidgetComponent - rendering', () => {
         const widgetLabel = testingUtils.getByCSS('.adf-label').nativeElement;
         expect(widgetLabel.textContent.trim()).toBe('Test Amount');
 
-        const field = await testingUtils.getMatFormField();
+        const field = await testingUtils.formField.get();
         expect(await field.getPrefixText()).toBe('£');
 
         expect(widget.field.isValid).toBe(false);
 
-        const input = await testingUtils.getMatInput();
+        const input = await testingUtils.input.get();
         await input.setValue('8');
         expect(widget.field.isValid).toBe(false);
 
-        const formField = await testingUtils.getMatFormField();
+        const formField = await testingUtils.formField.get();
         let errors = await formField.getTextErrors();
         expect(errors[0].trim()).toContain('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
 
@@ -505,7 +505,7 @@ describe('AmountWidgetComponent - rendering', () => {
             });
 
             it('should not display prefix with currency when enableDisplayBasedOnLocale = true', async () => {
-                const field = await testingUtils.getMatFormField();
+                const field = await testingUtils.formField.get();
                 expect(await field.getPrefixText()).toBe('');
             });
         });
@@ -666,7 +666,7 @@ describe('AmountWidgetComponent - rendering', () => {
             });
 
             it('should not display prefix with currency when enableDisplayBasedOnLocale = true', async () => {
-                const field = await testingUtils.getMatFormField();
+                const field = await testingUtils.formField.get();
                 expect(await field.getPrefixText()).toBe('');
             });
 
@@ -674,7 +674,7 @@ describe('AmountWidgetComponent - rendering', () => {
                 const focusSpy = spyOn(widget, 'amountWidgetOnFocus').and.callThrough();
                 fixture.detectChanges();
 
-                const field = await testingUtils.getMatInput();
+                const field = await testingUtils.input.get();
                 const fieldValueBeforeFocus = await field.getValue();
                 await field.focus();
                 const fieldValue = await field.getValue();
@@ -691,7 +691,7 @@ describe('AmountWidgetComponent - rendering', () => {
                 const blurSpy = spyOn(widget, 'amountWidgetOnBlur').and.callThrough();
                 fixture.detectChanges();
 
-                const field = await testingUtils.getMatInput();
+                const field = await testingUtils.input.get();
                 const fieldValueBeforeBlur = await field.getValue();
                 await field.setValue(newValue);
                 await field.blur();
@@ -737,7 +737,7 @@ describe('AmountWidgetComponent - rendering', () => {
                 const focusSpy = spyOn(widget, 'amountWidgetOnFocus').and.callThrough();
                 fixture.detectChanges();
 
-                const field = await testingUtils.getMatInput();
+                const field = await testingUtils.input.get();
                 const fieldValueBeforeFocus = await field.getValue();
                 await field.focus();
                 const fieldValue = await field.getValue();
@@ -754,7 +754,7 @@ describe('AmountWidgetComponent - rendering', () => {
                 const blurSpy = spyOn(widget, 'amountWidgetOnBlur').and.callThrough();
                 fixture.detectChanges();
 
-                const field = await testingUtils.getMatInput();
+                const field = await testingUtils.input.get();
                 const fieldValueBeforeBlur = await field.getValue();
                 await field.setValue(newValue);
                 await field.blur();
@@ -795,7 +795,7 @@ describe('AmountWidgetComponent - rendering', () => {
             });
 
             it('should display prefix with currency when enableDisplayBasedOnLocale = true', async () => {
-                const field = await testingUtils.getMatFormField();
+                const field = await testingUtils.formField.get();
                 expect(await field.getPrefixText()).toBe('USD');
             });
 
@@ -803,7 +803,7 @@ describe('AmountWidgetComponent - rendering', () => {
                 const focusSpy = spyOn(widget, 'amountWidgetOnFocus').and.callThrough();
                 fixture.detectChanges();
 
-                const field = await testingUtils.getMatInput();
+                const field = await testingUtils.input.get();
                 const fieldValueBeforeFocus = await field.getValue();
                 await field.focus();
                 const fieldValue = await field.getValue();
@@ -821,7 +821,7 @@ describe('AmountWidgetComponent - rendering', () => {
                 const blurSpy = spyOn(widget, 'amountWidgetOnBlur').and.callThrough();
                 fixture.detectChanges();
 
-                const field = await testingUtils.getMatInput();
+                const field = await testingUtils.input.get();
                 const fieldValueBeforeBlur = await field.getValue();
                 await field.setValue(newValue);
                 await field.blur();
