@@ -32,11 +32,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IconModule } from '../../../icon/icon.module';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
 
 export const DEFAULT_SEPARATOR = ', ';
-const COPY_ICON_URL = './assets/images/copy.svg';
 const templateTypes = {
     clickableTemplate: 'clickableTemplate',
     multilineTemplate: 'multilineTemplate',
@@ -67,8 +64,6 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     private readonly clipboardService = inject(ClipboardService);
     private readonly translateService = inject(TranslationService);
     private readonly cd = inject(ChangeDetectorRef);
-    private readonly matIconRegistry = inject(MatIconRegistry);
-    private readonly sanitizer = inject(DomSanitizer);
 
     @Input()
     displayEmpty = true;
@@ -92,11 +87,6 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     private initialValue: string | string[];
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor() {
-        super();
-        this.registerCopyIcon();
-    }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.property?.firstChange) {
@@ -270,10 +260,5 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }
 
         return String(Math.trunc(Number(value)));
-    }
-
-    private registerCopyIcon() {
-        const copyIcon = this.sanitizer.bypassSecurityTrustResourceUrl(COPY_ICON_URL);
-        this.matIconRegistry.addSvgIconInNamespace('adf', 'copy', copyIcon);
     }
 }

@@ -44,11 +44,8 @@ import { MatInputModule } from '@angular/material/input';
 import { IconModule } from '../../../icon/icon.module';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, EMPTY, filter, switchMap } from 'rxjs';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
 
 const DEFAULT_DATE_FORMAT = 'MMM DD';
-const COPY_ICON_URL = './assets/images/copy.svg';
 
 @Component({
     providers: [
@@ -82,8 +79,6 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     private readonly clipboardService = inject(ClipboardService);
     private readonly translateService = inject(TranslationService);
     private readonly destroyRef = inject(DestroyRef);
-    private readonly matIconRegistry = inject(MatIconRegistry);
-    private readonly sanitizer = inject(DomSanitizer);
 
     @Input()
     displayEmpty = true;
@@ -108,7 +103,6 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     constructor() {
         super();
-        this.registerCopyIcon();
         // Use effect to react to locale signal changes (must be in injection context)
         effect(() => {
             this.property.locale = this.userPreferencesService.localeSignal();
@@ -287,10 +281,5 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
             this.property.value = this.property.value.map((date: Date | string) => new Date(date));
             this.valueDate = this.property.type === 'date' ? DateFnsUtils.forceLocal(this.property.value[0]) : this.property.value[0];
         }
-    }
-
-    private registerCopyIcon() {
-        const copyIcon = this.sanitizer.bypassSecurityTrustResourceUrl(COPY_ICON_URL);
-        this.matIconRegistry.addSvgIconInNamespace('adf', 'copy', copyIcon);
     }
 }
