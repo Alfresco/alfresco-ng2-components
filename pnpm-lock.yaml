@@ -145,8 +145,8 @@ importers:
         specifier: 20.3.32
         version: 20.3.32(621fa48d3e0c13d18309c4be2a8697f3)
       '@angular-devkit/core':
-        specifier: 20.3.16
-        version: 20.3.16(chokidar@4.0.3)
+        specifier: 20.3.32
+        version: 20.3.32(chokidar@4.0.3)
       '@angular-devkit/schematics':
         specifier: 20.3.32
         version: 20.3.32(chokidar@4.0.3)
@@ -167,7 +167,7 @@ importers:
         version: 4.1.3(storybook@10.4.0(@testing-library/dom@10.4.1)(prettier@3.8.3)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))
       '@nx/angular':
         specifier: 22.7.4
-        version: 22.7.4(2a657786950c8885848868fbd080250b)
+        version: 22.7.4(0e3d5ffd622b6a55a3e7e04b5938ac5b)
       '@nx/eslint-plugin':
         specifier: 22.7.4
         version: 22.7.4(@babel/traverse@7.29.7)(@typescript-eslint/parser@8.59.4(eslint@8.57.1)(typescript@5.9.3))(eslint-config-prettier@10.1.8(eslint@8.57.1))(eslint@8.57.1)(nx@22.7.4)(typescript@5.9.3)
@@ -184,14 +184,14 @@ importers:
         specifier: 22.7.4
         version: 22.7.4
       '@schematics/angular':
-        specifier: 20.3.16
-        version: 20.3.16(chokidar@4.0.3)
+        specifier: 20.3.32
+        version: 20.3.32(chokidar@4.0.3)
       '@storybook/addon-themes':
         specifier: 10.4.0
         version: 10.4.0(storybook@10.4.0(@testing-library/dom@10.4.1)(prettier@3.8.3)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))
       '@storybook/angular':
         specifier: 10.4.0
-        version: 10.4.0(db9c7e0832b57d407be13cfed1753bbb)
+        version: 10.4.0(76b7900a68e9595278e57f4a62121e3e)
       '@types/ejs':
         specifier: 3.1.5
         version: 3.1.5
@@ -451,10 +451,6 @@ packages:
     peerDependenciesMeta:
       chokidar:
         optional: true
-
-  '@angular-devkit/schematics@20.3.16':
-    resolution: {integrity: sha512-3K8QwTpKjnLo3hIvNzB9sTjrlkeRyMK0TxdwgTbwJseewGhXLl98oBoTCWM2ygtpskiWNpYqXJNIhoslNN65WQ==}
-    engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
 
   '@angular-devkit/schematics@20.3.32':
     resolution: {integrity: sha512-UxWncmJTcYMDEaAKRi3QHU3qXivIcIOulFOKozW8svfs/A43Oq1GG4kvDZ+WVf/w2UWTmMaSlfFa4KIQciSIDA==}
@@ -3963,8 +3959,8 @@ packages:
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
 
-  '@schematics/angular@20.3.16':
-    resolution: {integrity: sha512-KeOcsM5piwv/6tUKBmLD1zXTwtJlZBnR2WM/4T9ImaQbmFGe1MMHUABT5SQ3Bifv1YKCw58ImxiaQUY9sdNqEQ==}
+  '@schematics/angular@20.3.32':
+    resolution: {integrity: sha512-asporFGNP/U4p/A6jHqRmC8zGBxsSbjA/17I0p1tIW4HLbDTwJ0Z1gTSGpkHGRGTeowPZZSCj7s0IWVoaBCjnA==}
     engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
 
   '@sinclair/typebox@0.27.10':
@@ -10494,16 +10490,6 @@ snapshots:
     optionalDependencies:
       chokidar: 4.0.3
 
-  '@angular-devkit/schematics@20.3.16(chokidar@4.0.3)':
-    dependencies:
-      '@angular-devkit/core': 20.3.16(chokidar@4.0.3)
-      jsonc-parser: 3.3.1
-      magic-string: 0.30.17
-      ora: 8.2.0
-      rxjs: 7.8.2
-    transitivePeerDependencies:
-      - chokidar
-
   '@angular-devkit/schematics@20.3.32(chokidar@4.0.3)':
     dependencies:
       '@angular-devkit/core': 20.3.32(chokidar@4.0.3)
@@ -13530,9 +13516,9 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.20.1
 
-  '@nx/angular@22.7.4(2a657786950c8885848868fbd080250b)':
+  '@nx/angular@22.7.4(0e3d5ffd622b6a55a3e7e04b5938ac5b)':
     dependencies:
-      '@angular-devkit/core': 20.3.16(chokidar@4.0.3)
+      '@angular-devkit/core': 20.3.32(chokidar@4.0.3)
       '@angular-devkit/schematics': 20.3.32(chokidar@4.0.3)
       '@nx/devkit': 22.7.4(nx@22.7.4)
       '@nx/eslint': 22.7.4(@babel/traverse@7.29.7)(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@zkochan/js-yaml@0.0.7)(eslint@8.57.1)(nx@22.7.4)
@@ -13543,7 +13529,7 @@ snapshots:
       '@nx/webpack': 22.7.4(@babel/traverse@7.29.7)(@rspack/core@1.6.8)(html-webpack-plugin@5.6.7(@rspack/core@1.6.8)(webpack@5.105.0(esbuild@0.28.1)(postcss@8.5.16)))(nx@22.7.4)(typescript@5.9.3)
       '@nx/workspace': 22.7.4
       '@phenomnomnominal/tsquery': 6.2.0(typescript@5.9.3)
-      '@schematics/angular': 20.3.16(chokidar@4.0.3)
+      '@schematics/angular': 20.3.32(chokidar@4.0.3)
       '@typescript-eslint/type-utils': 8.61.1(eslint@8.57.1)(typescript@5.9.3)
       enquirer: 2.3.6
       magic-string: 0.30.21
@@ -14595,10 +14581,10 @@ snapshots:
 
   '@rtsao/scc@1.1.0': {}
 
-  '@schematics/angular@20.3.16(chokidar@4.0.3)':
+  '@schematics/angular@20.3.32(chokidar@4.0.3)':
     dependencies:
-      '@angular-devkit/core': 20.3.16(chokidar@4.0.3)
-      '@angular-devkit/schematics': 20.3.16(chokidar@4.0.3)
+      '@angular-devkit/core': 20.3.32(chokidar@4.0.3)
+      '@angular-devkit/schematics': 20.3.32(chokidar@4.0.3)
       jsonc-parser: 3.3.1
     transitivePeerDependencies:
       - chokidar
@@ -14628,11 +14614,11 @@ snapshots:
       storybook: 10.4.0(@testing-library/dom@10.4.1)(prettier@3.8.3)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       ts-dedent: 2.3.0
 
-  '@storybook/angular@10.4.0(db9c7e0832b57d407be13cfed1753bbb)':
+  '@storybook/angular@10.4.0(76b7900a68e9595278e57f4a62121e3e)':
     dependencies:
       '@angular-devkit/architect': 0.2003.16(chokidar@4.0.3)
       '@angular-devkit/build-angular': 20.3.32(621fa48d3e0c13d18309c4be2a8697f3)
-      '@angular-devkit/core': 20.3.16(chokidar@4.0.3)
+      '@angular-devkit/core': 20.3.32(chokidar@4.0.3)
       '@angular/common': 20.3.25(@angular/core@20.3.25(@angular/compiler@20.3.25)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2)
       '@angular/compiler': 20.3.25
       '@angular/compiler-cli': 20.3.25(@angular/compiler@20.3.25)(typescript@5.9.3)
