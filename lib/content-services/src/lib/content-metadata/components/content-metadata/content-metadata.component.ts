@@ -473,7 +473,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     }
 
     private getProperties(node: Node) {
-        const properties$ = this.contentMetadataService.getBasicProperties(node);
+        const properties$ = this.contentMetadataService.getBasicProperties(node, this.preset);
         const contentTypeProperty$ = this.contentMetadataService.getContentTypeProperty(node);
         return zip(properties$, contentTypeProperty$).pipe(
             map(([properties, contentTypeProperty]) => {
