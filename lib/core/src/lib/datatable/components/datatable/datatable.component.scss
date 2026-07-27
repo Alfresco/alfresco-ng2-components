@@ -562,17 +562,21 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         align-items: center;
     }
 
+    &.adf-sortable .adf-datatable-cell-header-sort-indicator {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        flex: 0 0 24px;
+        min-width: 0;
+    }
+
     .adf-datatable__header--sorted-asc,
     .adf-datatable__header--sorted-desc {
-        padding-right: 0.25rem;
-
         &::after {
             @include mixins.typo-icon;
 
             content: '\e5d8';
-            left: 5px;
-            right: 5px;
-            position: relative;
             vertical-align: middle;
         }
     }
@@ -605,6 +609,11 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     }
 
     .adf-datatable-cell-header-drag-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 24px;
+        min-width: 0;
         margin-left: auto;
         cursor: move;
         margin-right: -0.5rem;
