@@ -693,7 +693,7 @@ async function getFileFromRemote(url: string, name: string): Promise<void> {
                         resolve();
                     });
                     outputFile.on('error', (error) => {
-                        logger.error(`Not possible to download the project form remote`);
+                        logger.error(`Not possible to download the project from remote: ${error.message}`);
                         reject(error);
                     });
                 })
