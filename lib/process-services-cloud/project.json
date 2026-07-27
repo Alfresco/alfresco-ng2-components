@@ -6,7 +6,7 @@
   "prefix": "adf-cloud",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "executor": "@angular/build:ng-packagr",
       "options": {
         "tsConfig": "lib/process-services-cloud/tsconfig.lib.json",
         "project": "lib/process-services-cloud/ng-package.json"
@@ -20,7 +20,7 @@
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@angular-devkit/build-angular:karma",
+      "executor": "@angular/build:karma",
       "options": {
         "main": "lib/process-services-cloud/src/test.ts",
         "tsConfig": "lib/process-services-cloud/tsconfig.spec.json",

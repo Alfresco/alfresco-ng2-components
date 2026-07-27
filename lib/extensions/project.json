@@ -6,7 +6,7 @@
   "prefix": "adf",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "executor": "@angular/build:ng-packagr",
       "options": {
         "tsConfig": "lib/extensions/tsconfig.lib.json",
         "project": "lib/extensions/ng-package.json"
@@ -19,7 +19,7 @@
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@angular-devkit/build-angular:karma",
+      "executor": "@angular/build:karma",
       "options": {
         "main": "lib/extensions/src/test.ts",
         "tsConfig": "lib/extensions/tsconfig.spec.json",
