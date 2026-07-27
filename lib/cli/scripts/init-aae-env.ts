@@ -682,8 +682,12 @@ async function getFileFromRemote(url: string, name: string): Promise<void> {
         .then(
             (response) =>
                 new Promise<void>((resolve, reject) => {
+                    if (!response.body) {
+                        reject(new Error('Response body is empty'));
+                        return;
+                    }
                     const outputFile = fs.createWriteStream(`${name}.zip`);
-                    Readable.fromWeb(response.body as any).pipe(outputFile);
+                    Readable.fromWeb(response.body).pipe(outputFile);
                     outputFile.on('finish', () => {
                         logger.info(`The file is finished downloading.`);
                         resolve();
