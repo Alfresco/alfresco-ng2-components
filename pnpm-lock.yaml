@@ -234,8 +234,8 @@ importers:
         specifier: 10.1.8
         version: 10.1.8(eslint@8.57.1)
       eslint-plugin-ban:
-        specifier: 1.6.0
-        version: 1.6.0
+        specifier: 2.0.0
+        version: 2.0.0
       eslint-plugin-import:
         specifier: 2.32.0
         version: 2.32.0(@typescript-eslint/parser@8.59.4(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)
@@ -6093,8 +6093,8 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
 
-  eslint-plugin-ban@1.6.0:
-    resolution: {integrity: sha512-gZptoV+SFHOHO57/5lmPvizMvSXrjFatP9qlVQf3meL/WHo9TxSoERygrMlESl19CPh95U86asTxohT8OprwDw==}
+  eslint-plugin-ban@2.0.0:
+    resolution: {integrity: sha512-eAIwnbYN+oOc8REHqCd3OWg6Of5uovwyVWNmI0mCkgpfceFkqzzGfKwjqSP9OZOt12wT148wVvRu78H1b6zdOQ==}
     engines: {node: '>=0.10.0'}
 
   eslint-plugin-import@2.32.0:
@@ -17109,7 +17109,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-ban@1.6.0:
+  eslint-plugin-ban@2.0.0:
     dependencies:
       requireindex: 1.2.0
 
