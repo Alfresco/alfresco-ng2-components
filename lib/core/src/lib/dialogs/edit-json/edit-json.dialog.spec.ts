@@ -37,8 +37,6 @@ class StubJsonEditorComponent implements JsonEditorComponent {
 
 describe('EditJsonDialogComponent', () => {
     let fixture: ComponentFixture<EditJsonDialogComponent>;
-    let clipboardService: ClipboardService;
-    let translateService: TranslateService;
     let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
@@ -50,9 +48,6 @@ describe('EditJsonDialogComponent', () => {
             ]
         });
 
-        clipboardService = TestBed.inject(ClipboardService);
-        translateService = TestBed.inject(TranslateService);
-
         fixture = TestBed.createComponent(EditJsonDialogComponent);
         testingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
@@ -63,52 +58,9 @@ describe('EditJsonDialogComponent', () => {
     });
 
     describe('copy button', () => {
-        it('should be visible', () => {
+        it('should not be visible when no custom editor is provided', () => {
             const copyButton = testingUtils.getByDataAutomationId('adf-edit-json-dialog-copy');
-            expect(copyButton).toBeTruthy();
-        });
-
-        it('should copy the dialog value to clipboard when clicked', () => {
-            spyOn(clipboardService, 'copyContentToClipboard');
-
-            testingUtils.clickByDataAutomationId('adf-edit-json-dialog-copy');
-
-            expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('{"key": "value"}', jasmine.any(String));
-            expect(clipboardService.copyContentToClipboard).toHaveBeenCalledTimes(1);
-        });
-
-        it('should show a confirmation notification when clicked', () => {
-            const translatedMessage = 'Copied to clipboard';
-            spyOn(translateService, 'instant').and.returnValue(translatedMessage);
-            spyOn(clipboardService, 'copyContentToClipboard');
-
-            testingUtils.clickByDataAutomationId('adf-edit-json-dialog-copy');
-
-            expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('{"key": "value"}', translatedMessage);
-            expect(clipboardService.copyContentToClipboard).toHaveBeenCalledTimes(1);
-        });
-
-        it('should copy the updated value when the dialog value changes', () => {
-            const updatedValue = '{"updated": true}';
-            spyOn(clipboardService, 'copyContentToClipboard');
-            fixture.componentInstance.value.set(updatedValue);
-            fixture.detectChanges();
-
-            testingUtils.clickByDataAutomationId('adf-edit-json-dialog-copy');
-
-            expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith(updatedValue, jasmine.any(String));
-            expect(clipboardService.copyContentToClipboard).toHaveBeenCalledTimes(1);
-        });
-
-        it('should copy an empty value when the dialog has no content', () => {
-            spyOn(clipboardService, 'copyContentToClipboard');
-            fixture.componentInstance.value.set('');
-            fixture.detectChanges();
-
-            testingUtils.clickByDataAutomationId('adf-edit-json-dialog-copy');
-
-            expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('', jasmine.any(String));
-            expect(clipboardService.copyContentToClipboard).toHaveBeenCalledTimes(1);
+            expect(copyButton).toBeFalsy();
         });
     });
 
@@ -197,5 +149,86 @@ describe('EditJsonDialogComponent — custom editor', () => {
         fixture.detectChanges();
 
         expect(fixture.componentInstance.value()).toBe('{"updated": true}');
+    });
+});
+
+describe('EditJsonDialogComponent — copy button with custom editor', () => {
+    let fixture: ComponentFixture<EditJsonDialogComponent>;
+    let clipboardService: ClipboardService;
+    let translateService: TranslateService;
+    let testingUtils: UnitTestingUtils;
+
+    const setup = (data: { value?: string; editable?: boolean }) => {
+        TestBed.configureTestingModule({
+            imports: [NoopTranslateModule, EditJsonDialogComponent],
+            providers: [
+                { provide: MAT_DIALOG_DATA, useValue: data },
+                { provide: MatDialogRef, useValue: {} },
+                { provide: EDIT_JSON_EDITOR, useValue: StubJsonEditorComponent }
+            ]
+        });
+
+        clipboardService = TestBed.inject(ClipboardService);
+        translateService = TestBed.inject(TranslateService);
+
+        fixture = TestBed.createComponent(EditJsonDialogComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
+        fixture.detectChanges();
+    };
+
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    it('should be visible', () => {
+        setup({ value: '{"key": "value"}', editable: false });
+
+        const copyButton = testingUtils.getByDataAutomationId('adf-edit-json-dialog-copy');
+        expect(copyButton).toBeTruthy();
+    });
+
+    it('should copy the dialog value to clipboard when clicked', () => {
+        setup({ value: '{"key": "value"}', editable: false });
+        spyOn(clipboardService, 'copyContentToClipboard');
+
+        testingUtils.clickByDataAutomationId('adf-edit-json-dialog-copy');
+
+        expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('{"key": "value"}', jasmine.any(String));
+        expect(clipboardService.copyContentToClipboard).toHaveBeenCalledTimes(1);
+    });
+
+    it('should show a confirmation notification when clicked', () => {
+        setup({ value: '{"key": "value"}', editable: false });
+        const translatedMessage = 'Copied to clipboard';
+        spyOn(translateService, 'instant').and.returnValue(translatedMessage);
+        spyOn(clipboardService, 'copyContentToClipboard');
+
+        testingUtils.clickByDataAutomationId('adf-edit-json-dialog-copy');
+
+        expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('{"key": "value"}', translatedMessage);
+        expect(clipboardService.copyContentToClipboard).toHaveBeenCalledTimes(1);
+    });
+
+    it('should copy the updated value when the dialog value changes', () => {
+        setup({ value: '{"key": "value"}', editable: false });
+        const updatedValue = '{"updated": true}';
+        spyOn(clipboardService, 'copyContentToClipboard');
+        fixture.componentInstance.value.set(updatedValue);
+        fixture.detectChanges();
+
+        testingUtils.clickByDataAutomationId('adf-edit-json-dialog-copy');
+
+        expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith(updatedValue, jasmine.any(String));
+        expect(clipboardService.copyContentToClipboard).toHaveBeenCalledTimes(1);
+    });
+
+    it('should copy an empty value when the dialog has no content', () => {
+        setup({ value: '', editable: false });
+        spyOn(clipboardService, 'copyContentToClipboard');
+
+        testingUtils.clickByDataAutomationId('adf-edit-json-dialog-copy');
+
+        expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('', jasmine.any(String));
+        expect(clipboardService.copyContentToClipboard).toHaveBeenCalledTimes(1);
     });
 });

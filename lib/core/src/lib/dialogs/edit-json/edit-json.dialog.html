@@ -8,10 +8,12 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
+    @if (customEditor) {
     <button mat-button data-automation-id="adf-edit-json-dialog-copy" (click)="copyToClipboard()">
         <mat-icon>content_copy</mat-icon>
         {{ 'CORE.DIALOG.EDIT_JSON.COPY' | translate }}
     </button>
+    }
     <button mat-button mat-dialog-close cdkFocusInitial>{{ 'CORE.DIALOG.EDIT_JSON.CLOSE' | translate }}</button>
     @if (editable) {
     <button mat-button [mat-dialog-close]="value()">{{ 'CORE.DIALOG.EDIT_JSON.UPDATE' | translate }}</button>
