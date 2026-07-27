@@ -18,8 +18,8 @@
  */
 
 import { parseArgs } from 'node:util';
-import fetch from 'node-fetch';
 import * as fs from 'fs';
+import { Readable } from 'node:stream';
 import { logger } from './logger';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
@@ -683,7 +683,7 @@ async function getFileFromRemote(url: string, name: string): Promise<void> {
             (response) =>
                 new Promise<void>((resolve, reject) => {
                     const outputFile = fs.createWriteStream(`${name}.zip`);
-                    response.body.pipe(outputFile);
+                    Readable.fromWeb(response.body as any).pipe(outputFile);
                     outputFile.on('finish', () => {
                         logger.info(`The file is finished downloading.`);
                         resolve();

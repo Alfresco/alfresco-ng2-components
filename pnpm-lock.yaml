@@ -113,9 +113,6 @@ importers:
       ng2-charts:
         specifier: 4.1.1
         version: 4.1.1(@angular/cdk@20.2.14(@angular/common@20.3.25(@angular/core@20.3.25(@angular/compiler@20.3.25)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@20.3.25(@angular/compiler@20.3.25)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/common@20.3.25(@angular/core@20.3.25(@angular/compiler@20.3.25)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@20.3.25(@angular/compiler@20.3.25)(rxjs@7.8.2)(zone.js@0.15.0))(chart.js@4.4.4)(rxjs@7.8.2)
-      node-fetch:
-        specifier: 3.3.2
-        version: 3.3.2
       pdfjs-dist:
         specifier: 5.1.91
         version: 5.1.91
@@ -167,7 +164,7 @@ importers:
         version: 4.1.3(storybook@10.4.0(@testing-library/dom@10.4.1)(prettier@3.8.3)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))
       '@nx/angular':
         specifier: 22.7.4
-        version: 22.7.4(aa989affe0268ebe623733e21c68f932)
+        version: 22.7.4(87f825caea690ea6e4f330fb29f37219)
       '@nx/eslint-plugin':
         specifier: 22.7.4
         version: 22.7.4(@babel/traverse@7.29.7)(@typescript-eslint/parser@8.59.4(eslint@8.57.1)(typescript@5.9.3))(eslint-config-prettier@10.1.8(eslint@8.57.1))(eslint@8.57.1)(nx@22.7.4)(typescript@5.9.3)
@@ -5557,10 +5554,6 @@ packages:
   custom-event@1.0.1:
     resolution: {integrity: sha512-GAj5FOq0Hd+RsCGVJxZuKaIDXDf3h6GQoNEjFgbLLI/trgtavwUbSnZ5pVfg27DVCaWjIohryS0JFwIJyT2cMg==}
 
-  data-uri-to-buffer@4.0.1:
-    resolution: {integrity: sha512-0R9ikRb668HB7QDxT1vkpuUBtqc53YyAwMwGeUFKRojY/NWKvdZ+9UYtRfGmhqNbRkTSVpMbmyhXipFFv2cb/A==}
-    engines: {node: '>= 12'}
-
   data-urls@5.0.0:
     resolution: {integrity: sha512-ZYP5VBHshaDAiVZxjbRVcFJpc+4xGgT0bK3vzy1HLN8jTO975HEbuYzZJcHoQEY5K1a0z8YayJkyVETa08eNTg==}
     engines: {node: '>=18'}
@@ -6236,10 +6229,6 @@ packages:
       picomatch:
         optional: true
 
-  fetch-blob@3.2.0:
-    resolution: {integrity: sha512-7yAQpD2UMJzLi1Dqv7qFYnPbaPx7ZfFK6PiIxQ4PfkGPyNyl2Ugx+a/umUonmKqjhM4DnfbMvdX6otXq83soQQ==}
-    engines: {node: ^12.20 || >= 14.13}
-
   figures@3.2.0:
     resolution: {integrity: sha512-yaduQFRKLXYOGgEn6AZau90j3ggSOyiqXU0F9JZfeXYhNa+Jk4X+s45A2zg5jns87GAFa34BBm2kXw4XpNcbdg==}
     engines: {node: '>=8'}
@@ -6343,10 +6332,6 @@ packages:
   form-data@4.0.5:
     resolution: {integrity: sha512-8RipRLol37bNs2bhoV67fiTEvdTrbMUYcFTiy3+wuuOnUog2QBHCZWXDRijWQfAkhBj2Uf5UnVaiWwA5vdd82w==}
     engines: {node: '>= 6'}
-
-  formdata-polyfill@4.0.10:
-    resolution: {integrity: sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g==}
-    engines: {node: '>=12.20.0'}
 
   forwarded@0.2.0:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
@@ -7926,11 +7911,6 @@ packages:
   node-addon-api@7.1.1:
     resolution: {integrity: sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==}
 
-  node-domexception@1.0.0:
-    resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
-    engines: {node: '>=10.5.0'}
-    deprecated: Use your platform's native DOMException instead
-
   node-exports-info@1.6.0:
     resolution: {integrity: sha512-pyFS63ptit/P5WqUkt+UUfe+4oevH+bFeIiPPdfb0pFeYEu/1ELnJu5l+5EcTKYL5M7zaAa7S8ddywgXypqKCw==}
     engines: {node: '>= 0.4'}
@@ -7943,10 +7923,6 @@ packages:
     peerDependenciesMeta:
       encoding:
         optional: true
-
-  node-fetch@3.3.2:
-    resolution: {integrity: sha512-dRB78srN/l6gqWulah9SrxeYnxeddIG30+GOqK/9OlLVyLg3HPnr6SqOWTWOXKRwC2eGYCkZ59NNuSgvSrpgOA==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   node-forge@1.4.0:
     resolution: {integrity: sha512-LarFH0+6VfriEhqMMcLX2F7SwSXeWwnEAJEsYm5QKWchiVYVvJyV9v7UDvUv+w5HO23ZpQTXDv/GxdDdMyOuoQ==}
@@ -10045,10 +10021,6 @@ packages:
 
   weak-lru-cache@1.2.2:
     resolution: {integrity: sha512-DEAoo25RfSYMuTGc9vPJzZcZullwIqRDSI9LOy+fkCJPi6hykCnfKaXTuPBDuXAUcqHXyOgFtHNp/kB2FjYHbw==}
-
-  web-streams-polyfill@3.3.3:
-    resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
-    engines: {node: '>= 8'}
 
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
@@ -13001,31 +12973,10 @@ snapshots:
     transitivePeerDependencies:
       - node-fetch
 
-  '@module-federation/bridge-react-webpack-plugin@2.5.1(node-fetch@3.3.2)':
-    dependencies:
-      '@module-federation/sdk': 2.5.1(node-fetch@3.3.2)
-      '@types/semver': 7.5.8
-      semver: 7.6.3
-    transitivePeerDependencies:
-      - node-fetch
-
   '@module-federation/cli@2.5.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)':
     dependencies:
       '@module-federation/dts-plugin': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)
       '@module-federation/sdk': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))
-      commander: 11.1.0
-      jiti: 2.4.2
-    transitivePeerDependencies:
-      - bufferutil
-      - node-fetch
-      - typescript
-      - utf-8-validate
-      - vue-tsc
-
-  '@module-federation/cli@2.5.1(node-fetch@3.3.2)(typescript@5.9.3)':
-    dependencies:
-      '@module-federation/dts-plugin': 2.5.1(node-fetch@3.3.2)(typescript@5.9.3)
-      '@module-federation/sdk': 2.5.1(node-fetch@3.3.2)
       commander: 11.1.0
       jiti: 2.4.2
     transitivePeerDependencies:
@@ -13053,31 +13004,13 @@ snapshots:
       - node-fetch
       - utf-8-validate
 
-  '@module-federation/dts-plugin@2.5.1(node-fetch@3.3.2)(typescript@5.9.3)':
-    dependencies:
-      '@module-federation/error-codes': 2.5.1
-      '@module-federation/managers': 2.5.1(node-fetch@3.3.2)
-      '@module-federation/sdk': 2.5.1(node-fetch@3.3.2)
-      '@module-federation/third-party-dts-extractor': 2.5.1
-      adm-zip: 0.6.0
-      ansi-colors: 4.1.3
-      isomorphic-ws: 5.0.0(ws@8.21.0)
-      node-schedule: 2.1.1
-      typescript: 5.9.3
-      undici: 7.24.7
-      ws: 8.21.0
-    transitivePeerDependencies:
-      - bufferutil
-      - node-fetch
-      - utf-8-validate
-
   '@module-federation/enhanced@2.5.1(@rspack/core@1.6.8)(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)(webpack@5.105.0(esbuild@0.28.1)(postcss@8.5.16))':
     dependencies:
       '@module-federation/bridge-react-webpack-plugin': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))
       '@module-federation/cli': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)
       '@module-federation/dts-plugin': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)
       '@module-federation/error-codes': 2.5.1
-      '@module-federation/inject-external-runtime-core-plugin': 2.5.1(@module-federation/runtime-tools@2.5.1(node-fetch@3.3.2))
+      '@module-federation/inject-external-runtime-core-plugin': 2.5.1(@module-federation/runtime-tools@2.5.1(node-fetch@2.7.0(encoding@0.1.13)))
       '@module-federation/managers': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))
       '@module-federation/manifest': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)
       '@module-federation/rspack': 2.5.1(@rspack/core@1.6.8)(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)
@@ -13096,49 +13029,17 @@ snapshots:
       - node-fetch
       - utf-8-validate
 
-  '@module-federation/enhanced@2.5.1(@rspack/core@1.6.8)(node-fetch@3.3.2)(typescript@5.9.3)(webpack@5.105.0(esbuild@0.28.1)(postcss@8.5.16))':
-    dependencies:
-      '@module-federation/bridge-react-webpack-plugin': 2.5.1(node-fetch@3.3.2)
-      '@module-federation/cli': 2.5.1(node-fetch@3.3.2)(typescript@5.9.3)
-      '@module-federation/dts-plugin': 2.5.1(node-fetch@3.3.2)(typescript@5.9.3)
-      '@module-federation/error-codes': 2.5.1
-      '@module-federation/inject-external-runtime-core-plugin': 2.5.1(@module-federation/runtime-tools@2.5.1(node-fetch@3.3.2))
-      '@module-federation/managers': 2.5.1(node-fetch@3.3.2)
-      '@module-federation/manifest': 2.5.1(node-fetch@3.3.2)(typescript@5.9.3)
-      '@module-federation/rspack': 2.5.1(@rspack/core@1.6.8)(node-fetch@3.3.2)(typescript@5.9.3)
-      '@module-federation/runtime-tools': 2.5.1(node-fetch@3.3.2)
-      '@module-federation/sdk': 2.5.1(node-fetch@3.3.2)
-      '@module-federation/webpack-bundler-runtime': 2.5.1(node-fetch@3.3.2)
-      schema-utils: 4.3.0
-      tapable: 2.3.0
-      upath: 2.0.1
-    optionalDependencies:
-      typescript: 5.9.3
-      webpack: 5.105.0(esbuild@0.28.1)(postcss@8.5.16)
-    transitivePeerDependencies:
-      - '@rspack/core'
-      - bufferutil
-      - node-fetch
-      - utf-8-validate
-
   '@module-federation/error-codes@0.21.6': {}
 
   '@module-federation/error-codes@2.5.1': {}
 
-  '@module-federation/inject-external-runtime-core-plugin@2.5.1(@module-federation/runtime-tools@2.5.1(node-fetch@3.3.2))':
+  '@module-federation/inject-external-runtime-core-plugin@2.5.1(@module-federation/runtime-tools@2.5.1(node-fetch@2.7.0(encoding@0.1.13)))':
     dependencies:
-      '@module-federation/runtime-tools': 2.5.1(node-fetch@3.3.2)
+      '@module-federation/runtime-tools': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))
 
   '@module-federation/managers@2.5.1(node-fetch@2.7.0(encoding@0.1.13))':
     dependencies:
       '@module-federation/sdk': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))
-      find-pkg: 2.0.0
-    transitivePeerDependencies:
-      - node-fetch
-
-  '@module-federation/managers@2.5.1(node-fetch@3.3.2)':
-    dependencies:
-      '@module-federation/sdk': 2.5.1(node-fetch@3.3.2)
       find-pkg: 2.0.0
     transitivePeerDependencies:
       - node-fetch
@@ -13148,19 +13049,6 @@ snapshots:
       '@module-federation/dts-plugin': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)
       '@module-federation/managers': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))
       '@module-federation/sdk': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))
-      find-pkg: 2.0.0
-    transitivePeerDependencies:
-      - bufferutil
-      - node-fetch
-      - typescript
-      - utf-8-validate
-      - vue-tsc
-
-  '@module-federation/manifest@2.5.1(node-fetch@3.3.2)(typescript@5.9.3)':
-    dependencies:
-      '@module-federation/dts-plugin': 2.5.1(node-fetch@3.3.2)(typescript@5.9.3)
-      '@module-federation/managers': 2.5.1(node-fetch@3.3.2)
-      '@module-federation/sdk': 2.5.1(node-fetch@3.3.2)
       find-pkg: 2.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -13190,28 +13078,11 @@ snapshots:
     dependencies:
       '@module-federation/bridge-react-webpack-plugin': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))
       '@module-federation/dts-plugin': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)
-      '@module-federation/inject-external-runtime-core-plugin': 2.5.1(@module-federation/runtime-tools@2.5.1(node-fetch@3.3.2))
+      '@module-federation/inject-external-runtime-core-plugin': 2.5.1(@module-federation/runtime-tools@2.5.1(node-fetch@2.7.0(encoding@0.1.13)))
       '@module-federation/managers': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))
       '@module-federation/manifest': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)
       '@module-federation/runtime-tools': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))
       '@module-federation/sdk': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))
-      '@rspack/core': 1.6.8
-    optionalDependencies:
-      typescript: 5.9.3
-    transitivePeerDependencies:
-      - bufferutil
-      - node-fetch
-      - utf-8-validate
-
-  '@module-federation/rspack@2.5.1(@rspack/core@1.6.8)(node-fetch@3.3.2)(typescript@5.9.3)':
-    dependencies:
-      '@module-federation/bridge-react-webpack-plugin': 2.5.1(node-fetch@3.3.2)
-      '@module-federation/dts-plugin': 2.5.1(node-fetch@3.3.2)(typescript@5.9.3)
-      '@module-federation/inject-external-runtime-core-plugin': 2.5.1(@module-federation/runtime-tools@2.5.1(node-fetch@3.3.2))
-      '@module-federation/managers': 2.5.1(node-fetch@3.3.2)
-      '@module-federation/manifest': 2.5.1(node-fetch@3.3.2)(typescript@5.9.3)
-      '@module-federation/runtime-tools': 2.5.1(node-fetch@3.3.2)
-      '@module-federation/sdk': 2.5.1(node-fetch@3.3.2)
       '@rspack/core': 1.6.8
     optionalDependencies:
       typescript: 5.9.3
@@ -13232,13 +13103,6 @@ snapshots:
     transitivePeerDependencies:
       - node-fetch
 
-  '@module-federation/runtime-core@2.5.1(node-fetch@3.3.2)':
-    dependencies:
-      '@module-federation/error-codes': 2.5.1
-      '@module-federation/sdk': 2.5.1(node-fetch@3.3.2)
-    transitivePeerDependencies:
-      - node-fetch
-
   '@module-federation/runtime-tools@0.21.6':
     dependencies:
       '@module-federation/runtime': 0.21.6
@@ -13248,13 +13112,6 @@ snapshots:
     dependencies:
       '@module-federation/runtime': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))
       '@module-federation/webpack-bundler-runtime': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))
-    transitivePeerDependencies:
-      - node-fetch
-
-  '@module-federation/runtime-tools@2.5.1(node-fetch@3.3.2)':
-    dependencies:
-      '@module-federation/runtime': 2.5.1(node-fetch@3.3.2)
-      '@module-federation/webpack-bundler-runtime': 2.5.1(node-fetch@3.3.2)
     transitivePeerDependencies:
       - node-fetch
 
@@ -13272,23 +13129,11 @@ snapshots:
     transitivePeerDependencies:
       - node-fetch
 
-  '@module-federation/runtime@2.5.1(node-fetch@3.3.2)':
-    dependencies:
-      '@module-federation/error-codes': 2.5.1
-      '@module-federation/runtime-core': 2.5.1(node-fetch@3.3.2)
-      '@module-federation/sdk': 2.5.1(node-fetch@3.3.2)
-    transitivePeerDependencies:
-      - node-fetch
-
   '@module-federation/sdk@0.21.6': {}
 
   '@module-federation/sdk@2.5.1(node-fetch@2.7.0(encoding@0.1.13))':
     optionalDependencies:
       node-fetch: 2.7.0(encoding@0.1.13)
-
-  '@module-federation/sdk@2.5.1(node-fetch@3.3.2)':
-    optionalDependencies:
-      node-fetch: 3.3.2
 
   '@module-federation/third-party-dts-extractor@2.5.1':
     dependencies:
@@ -13305,14 +13150,6 @@ snapshots:
       '@module-federation/error-codes': 2.5.1
       '@module-federation/runtime': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))
       '@module-federation/sdk': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))
-    transitivePeerDependencies:
-      - node-fetch
-
-  '@module-federation/webpack-bundler-runtime@2.5.1(node-fetch@3.3.2)':
-    dependencies:
-      '@module-federation/error-codes': 2.5.1
-      '@module-federation/runtime': 2.5.1(node-fetch@3.3.2)
-      '@module-federation/sdk': 2.5.1(node-fetch@3.3.2)
     transitivePeerDependencies:
       - node-fetch
 
@@ -13516,15 +13353,15 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.20.1
 
-  '@nx/angular@22.7.4(aa989affe0268ebe623733e21c68f932)':
+  '@nx/angular@22.7.4(87f825caea690ea6e4f330fb29f37219)':
     dependencies:
       '@angular-devkit/core': 20.3.32(chokidar@4.0.3)
       '@angular-devkit/schematics': 20.3.32(chokidar@4.0.3)
       '@nx/devkit': 22.7.4(nx@22.7.4)
       '@nx/eslint': 22.7.4(@babel/traverse@7.29.7)(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@zkochan/js-yaml@0.0.7)(eslint@8.57.1)(nx@22.7.4)
       '@nx/js': 22.7.4(@babel/traverse@7.29.7)(nx@22.7.4)
-      '@nx/module-federation': 22.7.4(@babel/traverse@7.29.7)(@nx/cypress@22.7.4(@babel/traverse@7.29.7)(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@zkochan/js-yaml@0.0.7)(eslint@8.57.1)(nx@22.7.4)(typescript@5.9.3))(@nx/eslint@22.7.4(@babel/traverse@7.29.7)(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@zkochan/js-yaml@0.0.7)(eslint@8.57.1)(nx@22.7.4))(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@nx/webpack@22.7.4(@babel/traverse@7.29.7)(@rspack/core@1.6.8)(html-webpack-plugin@5.6.7(@rspack/core@1.6.8)(webpack@5.105.0(esbuild@0.28.1)(postcss@8.5.16)))(nx@22.7.4)(typescript@5.9.3))(node-fetch@3.3.2)(nx@22.7.4)(postcss@8.5.16)(typescript@5.9.3)
-      '@nx/rspack': 22.7.4(792cd57f41af37827bf24a8ab637c452)
+      '@nx/module-federation': 22.7.4(52c09ed2f9be45eb81db09fc779e9f6a)
+      '@nx/rspack': 22.7.4(589b6dee01bf94dbf6b46696a6708130)
       '@nx/web': 22.7.4(@babel/traverse@7.29.7)(@nx/cypress@22.7.4(@babel/traverse@7.29.7)(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@zkochan/js-yaml@0.0.7)(eslint@8.57.1)(nx@22.7.4)(typescript@5.9.3))(@nx/eslint@22.7.4(@babel/traverse@7.29.7)(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@zkochan/js-yaml@0.0.7)(eslint@8.57.1)(nx@22.7.4))(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@nx/webpack@22.7.4(@babel/traverse@7.29.7)(@rspack/core@1.6.8)(html-webpack-plugin@5.6.7(@rspack/core@1.6.8)(webpack@5.105.0(esbuild@0.28.1)(postcss@8.5.16)))(nx@22.7.4)(typescript@5.9.3))(nx@22.7.4)
       '@nx/webpack': 22.7.4(@babel/traverse@7.29.7)(@rspack/core@1.6.8)(html-webpack-plugin@5.6.7(@rspack/core@1.6.8)(webpack@5.105.0(esbuild@0.28.1)(postcss@8.5.16)))(nx@22.7.4)(typescript@5.9.3)
       '@nx/workspace': 22.7.4
@@ -13735,11 +13572,11 @@ snapshots:
       - nx
       - supports-color
 
-  '@nx/module-federation@22.7.4(@babel/traverse@7.29.7)(@nx/cypress@22.7.4(@babel/traverse@7.29.7)(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@zkochan/js-yaml@0.0.7)(eslint@8.57.1)(nx@22.7.4)(typescript@5.9.3))(@nx/eslint@22.7.4(@babel/traverse@7.29.7)(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@zkochan/js-yaml@0.0.7)(eslint@8.57.1)(nx@22.7.4))(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@nx/webpack@22.7.4(@babel/traverse@7.29.7)(@rspack/core@1.6.8)(html-webpack-plugin@5.6.7(@rspack/core@1.6.8)(webpack@5.105.0(esbuild@0.28.1)(postcss@8.5.16)))(nx@22.7.4)(typescript@5.9.3))(node-fetch@3.3.2)(nx@22.7.4)(postcss@8.5.16)(typescript@5.9.3)':
+  '@nx/module-federation@22.7.4(52c09ed2f9be45eb81db09fc779e9f6a)':
     dependencies:
-      '@module-federation/enhanced': 2.5.1(@rspack/core@1.6.8)(node-fetch@3.3.2)(typescript@5.9.3)(webpack@5.105.0(esbuild@0.28.1)(postcss@8.5.16))
+      '@module-federation/enhanced': 2.5.1(@rspack/core@1.6.8)(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)(webpack@5.105.0(esbuild@0.28.1)(postcss@8.5.16))
       '@module-federation/node': 2.7.44(@rspack/core@1.6.8)(typescript@5.9.3)(webpack@5.105.0(esbuild@0.28.1)(postcss@8.5.16))
-      '@module-federation/sdk': 2.5.1(node-fetch@3.3.2)
+      '@module-federation/sdk': 2.5.1(node-fetch@2.7.0(encoding@0.1.13))
       '@nx/devkit': 22.7.4(nx@22.7.4)
       '@nx/js': 22.7.4(@babel/traverse@7.29.7)(nx@22.7.4)
       '@nx/web': 22.7.4(@babel/traverse@7.29.7)(@nx/cypress@22.7.4(@babel/traverse@7.29.7)(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@zkochan/js-yaml@0.0.7)(eslint@8.57.1)(nx@22.7.4)(typescript@5.9.3))(@nx/eslint@22.7.4(@babel/traverse@7.29.7)(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@zkochan/js-yaml@0.0.7)(eslint@8.57.1)(nx@22.7.4))(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@nx/webpack@22.7.4(@babel/traverse@7.29.7)(@rspack/core@1.6.8)(html-webpack-plugin@5.6.7(@rspack/core@1.6.8)(webpack@5.105.0(esbuild@0.28.1)(postcss@8.5.16)))(nx@22.7.4)(typescript@5.9.3))(nx@22.7.4)
@@ -13812,13 +13649,13 @@ snapshots:
   '@nx/nx-win32-x64-msvc@22.7.4':
     optional: true
 
-  '@nx/rspack@22.7.4(792cd57f41af37827bf24a8ab637c452)':
+  '@nx/rspack@22.7.4(589b6dee01bf94dbf6b46696a6708130)':
     dependencies:
-      '@module-federation/enhanced': 2.5.1(@rspack/core@1.6.8)(node-fetch@3.3.2)(typescript@5.9.3)(webpack@5.105.0(esbuild@0.28.1)(postcss@8.5.16))
+      '@module-federation/enhanced': 2.5.1(@rspack/core@1.6.8)(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)(webpack@5.105.0(esbuild@0.28.1)(postcss@8.5.16))
       '@module-federation/node': 2.7.44(@rspack/core@1.6.8)(typescript@5.9.3)(webpack@5.105.0(esbuild@0.28.1)(postcss@8.5.16))
       '@nx/devkit': 22.7.4(nx@22.7.4)
       '@nx/js': 22.7.4(@babel/traverse@7.29.7)(nx@22.7.4)
-      '@nx/module-federation': 22.7.4(@babel/traverse@7.29.7)(@nx/cypress@22.7.4(@babel/traverse@7.29.7)(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@zkochan/js-yaml@0.0.7)(eslint@8.57.1)(nx@22.7.4)(typescript@5.9.3))(@nx/eslint@22.7.4(@babel/traverse@7.29.7)(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@zkochan/js-yaml@0.0.7)(eslint@8.57.1)(nx@22.7.4))(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@nx/webpack@22.7.4(@babel/traverse@7.29.7)(@rspack/core@1.6.8)(html-webpack-plugin@5.6.7(@rspack/core@1.6.8)(webpack@5.105.0(esbuild@0.28.1)(postcss@8.5.16)))(nx@22.7.4)(typescript@5.9.3))(node-fetch@3.3.2)(nx@22.7.4)(postcss@8.5.16)(typescript@5.9.3)
+      '@nx/module-federation': 22.7.4(52c09ed2f9be45eb81db09fc779e9f6a)
       '@nx/web': 22.7.4(@babel/traverse@7.29.7)(@nx/cypress@22.7.4(@babel/traverse@7.29.7)(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@zkochan/js-yaml@0.0.7)(eslint@8.57.1)(nx@22.7.4)(typescript@5.9.3))(@nx/eslint@22.7.4(@babel/traverse@7.29.7)(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@zkochan/js-yaml@0.0.7)(eslint@8.57.1)(nx@22.7.4))(@nx/jest@22.7.4(@babel/traverse@7.29.7)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(nx@22.7.4)(ts-node@10.9.2(@types/node@25.9.1)(typescript@5.9.3))(typescript@5.9.3))(@nx/webpack@22.7.4(@babel/traverse@7.29.7)(@rspack/core@1.6.8)(html-webpack-plugin@5.6.7(@rspack/core@1.6.8)(webpack@5.105.0(esbuild@0.28.1)(postcss@8.5.16)))(nx@22.7.4)(typescript@5.9.3))(nx@22.7.4)
       '@phenomnomnominal/tsquery': 6.2.0(typescript@5.9.3)
       '@rspack/core': 1.6.8
@@ -16440,8 +16277,6 @@ snapshots:
 
   custom-event@1.0.1: {}
 
-  data-uri-to-buffer@4.0.1: {}
-
   data-urls@5.0.0:
     dependencies:
       whatwg-mimetype: 4.0.0
@@ -17311,11 +17146,6 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.5
 
-  fetch-blob@3.2.0:
-    dependencies:
-      node-domexception: 1.0.0
-      web-streams-polyfill: 3.3.3
-
   figures@3.2.0:
     dependencies:
       escape-string-regexp: 1.0.5
@@ -17450,10 +17280,6 @@ snapshots:
       es-set-tostringtag: 2.1.0
       hasown: 2.0.2
       mime-types: 2.1.35
-
-  formdata-polyfill@4.0.10:
-    dependencies:
-      fetch-blob: 3.2.0
 
   forwarded@0.2.0: {}
 
@@ -19513,8 +19339,6 @@ snapshots:
   node-addon-api@7.1.1:
     optional: true
 
-  node-domexception@1.0.0: {}
-
   node-exports-info@1.6.0:
     dependencies:
       array.prototype.flatmap: 1.3.3
@@ -19527,12 +19351,6 @@ snapshots:
       whatwg-url: 5.0.0
     optionalDependencies:
       encoding: 0.1.13
-
-  node-fetch@3.3.2:
-    dependencies:
-      data-uri-to-buffer: 4.0.1
-      fetch-blob: 3.2.0
-      formdata-polyfill: 4.0.10
 
   node-forge@1.4.0: {}
 
@@ -21946,8 +21764,6 @@ snapshots:
 
   weak-lru-cache@1.2.2:
     optional: true
-
-  web-streams-polyfill@3.3.3: {}
 
   webidl-conversions@3.0.1: {}
 
