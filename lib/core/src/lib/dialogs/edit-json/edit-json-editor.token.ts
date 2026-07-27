@@ -15,22 +15,27 @@
  * limitations under the License.
  */
 
-import { InjectionToken, Type, WritableSignal } from '@angular/core';
+import { InjectionToken, InputSignal, ModelSignal, Type } from '@angular/core';
 
 /**
  * Contract for a pluggable JSON editor component.
- * The component receives these inputs and updates the value signal directly.
+ *
+ * The component participates in a two-way binding for its content: the dialog binds
+ * its own value to the `value` model, so user edits made inside the editor flow back
+ * out automatically (no manual signal mutation across the component boundary).
  */
-export interface JsonEditorInputs extends Record<string, unknown> {
-    value: WritableSignal<string>;
-    readOnly: boolean;
+export interface JsonEditorComponent {
+    /** Two-way bound JSON content. */
+    value: ModelSignal<string>;
+    /** Whether the editor is read-only. */
+    readOnly: InputSignal<boolean>;
 }
 
 /**
  * InjectionToken for swapping ONLY the editor control inside the JSON dialog.
  *
  * Default: `null` — the dialog uses the built-in textarea (backward-compatible).
- * Override: provide a component type that implements JsonEditorInputs.
+ * Override: provide a component type that implements JsonEditorComponent.
  *
  * Example (Monaco editor):
  * ```typescript
@@ -41,11 +46,10 @@ export interface JsonEditorInputs extends Record<string, unknown> {
  * ```
  *
  * The custom editor component must:
- * - Accept `value: WritableSignal<string>` and `readOnly: boolean` as inputs
- * - Update the signal when the user makes changes: `value.set(newContent)`
- * - Respect the readOnly flag to disable editing
+ * - Expose a two-way `value = model<string>()` for the JSON content
+ * - Expose a `readOnly = input<boolean>()` and disable editing when it is `true`
  */
-export const EDIT_JSON_EDITOR = new InjectionToken<Type<unknown> | null>('EDIT_JSON_EDITOR', {
+export const EDIT_JSON_EDITOR = new InjectionToken<Type<JsonEditorComponent> | null>('EDIT_JSON_EDITOR', {
     providedIn: 'root',
     factory: () => null
 });

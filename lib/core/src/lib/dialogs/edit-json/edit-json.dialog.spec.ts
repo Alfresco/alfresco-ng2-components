@@ -16,12 +16,24 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, input, model } from '@angular/core';
+import { By } from '@angular/platform-browser';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ClipboardService } from '../../clipboard';
 import { NoopTranslateModule } from '../../testing';
 import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 import { EditJsonDialogComponent } from './edit-json.dialog';
+import { EDIT_JSON_EDITOR, JsonEditorComponent } from './edit-json-editor.token';
+
+@Component({
+    standalone: true,
+    template: '<span data-automation-id="stub-json-editor">{{ value() }}</span>'
+})
+class StubJsonEditorComponent implements JsonEditorComponent {
+    readonly value = model('');
+    readonly readOnly = input(false);
+}
 
 describe('EditJsonDialogComponent', () => {
     let fixture: ComponentFixture<EditJsonDialogComponent>;
@@ -131,5 +143,59 @@ describe('EditJsonDialogComponent — editable', () => {
     it('should render the textarea as editable when editable is true', () => {
         const textarea = fixture.nativeElement.querySelector('textarea');
         expect(textarea.getAttribute('readonly')).toBeNull();
+    });
+});
+
+describe('EditJsonDialogComponent — custom editor', () => {
+    let fixture: ComponentFixture<EditJsonDialogComponent>;
+
+    const getEditor = (): StubJsonEditorComponent => fixture.debugElement.query(By.directive(StubJsonEditorComponent)).componentInstance;
+
+    const setup = async (data: { value?: string; editable?: boolean }) => {
+        TestBed.configureTestingModule({
+            imports: [NoopTranslateModule, EditJsonDialogComponent],
+            providers: [
+                { provide: MAT_DIALOG_DATA, useValue: data },
+                { provide: MatDialogRef, useValue: {} },
+                { provide: EDIT_JSON_EDITOR, useValue: StubJsonEditorComponent }
+            ]
+        });
+
+        fixture = TestBed.createComponent(EditJsonDialogComponent);
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+    };
+
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    it('should render the provided custom editor instead of the textarea', async () => {
+        await setup({ value: '{"key": "value"}', editable: true });
+
+        expect(fixture.nativeElement.querySelector('textarea')).toBeNull();
+        expect(fixture.nativeElement.querySelector('[data-automation-id="stub-json-editor"]')).toBeTruthy();
+    });
+
+    it('should pass the initial value into the custom editor', async () => {
+        await setup({ value: '{"key": "value"}', editable: true });
+
+        expect(getEditor().value()).toBe('{"key": "value"}');
+    });
+
+    it('should bind readOnly to the negation of the editable flag', async () => {
+        await setup({ value: '{}', editable: false });
+
+        expect(getEditor().readOnly()).toBe(true);
+    });
+
+    it('should reflect edits from the custom editor back into the dialog value (two-way binding)', async () => {
+        await setup({ value: '{"key": "value"}', editable: true });
+
+        getEditor().value.set('{"updated": true}');
+        fixture.detectChanges();
+
+        expect(fixture.componentInstance.value()).toBe('{"updated": true}');
     });
 });
