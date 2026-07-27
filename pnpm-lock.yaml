@@ -61,9 +61,6 @@ importers:
       '@apollo/client':
         specifier: 3.13.1
         version: 3.13.1(graphql-ws@6.0.8(graphql@16.14.0)(ws@8.21.0))(graphql@16.14.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      '@babel/runtime':
-        specifier: 7.26.10
-        version: 7.26.10
       '@cspell/eslint-plugin':
         specifier: 10.0.0
         version: 10.0.0(eslint@8.57.1)
@@ -14856,7 +14853,7 @@ snapshots:
   '@testing-library/dom@10.4.1':
     dependencies:
       '@babel/code-frame': 7.29.7
-      '@babel/runtime': 7.26.10
+      '@babel/runtime': 7.28.3
       '@types/aria-query': 5.0.4
       aria-query: 5.3.0
       dom-accessibility-api: 0.5.16
@@ -15833,7 +15830,7 @@ snapshots:
 
   babel-plugin-macros@3.1.0:
     dependencies:
-      '@babel/runtime': 7.26.10
+      '@babel/runtime': 7.28.3
       cosmiconfig: 7.1.0
       resolve: 1.22.12
 

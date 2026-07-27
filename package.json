@@ -52,7 +52,6 @@
     "@angular/platform-browser-dynamic": "20.3.26",
     "@angular/router": "20.3.26",
     "@apollo/client": "3.13.1",
-    "@babel/runtime": "7.26.10",
     "@cspell/eslint-plugin": "10.0.0",
     "@mat-datetimepicker/core": "16.0.1",
     "@ngx-translate/core": "17.0.0",
