@@ -20,6 +20,7 @@
 import { parseArgs } from 'node:util';
 import * as fs from 'fs';
 import { Readable } from 'node:stream';
+import type { ReadableStream } from 'node:stream/web';
 import { logger } from './logger';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
@@ -687,7 +688,7 @@ async function getFileFromRemote(url: string, name: string): Promise<void> {
                         return;
                     }
                     const outputFile = fs.createWriteStream(`${name}.zip`);
-                    Readable.fromWeb(response.body).pipe(outputFile);
+                    Readable.fromWeb(response.body as ReadableStream<Uint8Array>).pipe(outputFile);
                     outputFile.on('finish', () => {
                         logger.info(`The file is finished downloading.`);
                         resolve();
