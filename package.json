@@ -48,7 +48,7 @@
     "@angular/forms": "20.3.25",
     "@angular/material": "20.2.14",
     "@angular/material-date-fns-adapter": "20.2.14",
-    "@angular/platform-browser": "20.3.25",
+    "@angular/platform-browser": "20.3.26",
     "@angular/platform-browser-dynamic": "20.3.25",
     "@angular/router": "20.3.25",
     "@apollo/client": "3.13.1",
