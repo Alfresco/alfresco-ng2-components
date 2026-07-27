@@ -17,6 +17,7 @@ overrides:
   postcss: '>=8.5.10'
   webpack-dev-server: '>=5.2.4'
   uuid: '>=11.1.1'
+  undici: 8.9.0
 
 importers:
 
@@ -341,9 +342,6 @@ importers:
       typescript:
         specifier: 5.9.3
         version: 5.9.3
-      undici:
-        specifier: 8.5.0
-        version: 8.5.0
       webpack:
         specifier: 5.109.0
         version: 5.109.0(postcss@8.5.16)
@@ -9989,12 +9987,8 @@ packages:
   undici-types@8.3.0:
     resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
 
-  undici@7.24.7:
-    resolution: {integrity: sha512-H/nlJ/h0ggGC+uRL3ovD+G0i4bqhvsDOpbDv7At5eFLlj2b41L8QliGbnl2H7SnDiYhENphh1tQFJZf+MyfLsQ==}
-    engines: {node: '>=20.18.1'}
-
-  undici@8.5.0:
-    resolution: {integrity: sha512-xamtWoB1EshgjpmlXd7GGm2VfdDtw1+rD8uhry8pSNW3If6S8E0m2T2+orSKeZXEn/aPJMviCpDBA65WJt8zhg==}
+  undici@8.9.0:
+    resolution: {integrity: sha512-aWZpUj7XoGonMClx4gdDRfgBjqeA+F473aDmROQQbM9n6PRfK/u1q/a0X4wMTgcHfT8H6fpbt98PFuDUwFg2YA==}
     engines: {node: '>=22.19.0'}
 
   unicode-canonical-property-names-ecmascript@2.0.1:
@@ -13115,7 +13109,7 @@ snapshots:
       isomorphic-ws: 5.0.0(ws@8.21.0)
       node-schedule: 2.1.1
       typescript: 5.9.3
-      undici: 7.24.7
+      undici: 8.9.0
       ws: 8.21.0
     transitivePeerDependencies:
       - bufferutil
@@ -22077,9 +22071,7 @@ snapshots:
 
   undici-types@8.3.0: {}
 
-  undici@7.24.7: {}
-
-  undici@8.5.0: {}
+  undici@8.9.0: {}
 
   unicode-canonical-property-names-ecmascript@2.0.1: {}
 
