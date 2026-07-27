@@ -7,6 +7,7 @@ minimumReleaseAgeStrict: true
 
 overrides:
   # Security fixes
+  fast-uri: 3.1.4
   serialize-javascript: '>=7.0.5'
   picomatch: '>=4.0.4'
   tmp: '>=0.2.6'
