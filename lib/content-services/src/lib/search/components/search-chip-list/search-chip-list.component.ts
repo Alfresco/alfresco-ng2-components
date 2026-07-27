@@ -35,11 +35,11 @@ export class SearchChipListComponent {
     facetFiltersService = inject(SearchFacetFiltersService);
 
     /**
-     * Search filter to supply the data for the chips.
-     * Not required from 4.5.0 and later versions @deprecated
+     * @deprecated Search filter to supply the data for the chips.
+     * Not required from 4.5.0 and later versions
      */
     @Input()
-    searchFilter: SearchFilterComponent;
+    searchFilter: SearchFilterComponent | undefined;
 
     /** Flag used to enable the display of a clear-all-filters button. */
     @Input()

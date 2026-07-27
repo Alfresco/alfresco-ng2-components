@@ -20,7 +20,7 @@
  */
 export interface RequestLocalization {
     /**
-     * A valid timezone id supported by @see java.time.ZoneId
+     * A valid timezone id supported by {@link java.time.ZoneId}
      */
     timezone?: string;
     /**
