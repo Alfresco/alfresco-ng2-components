@@ -80,7 +80,7 @@
   "devDependencies": {
     "@alfresco/eslint-plugin-eslint-angular": "workspace:*",
     "@angular-devkit/architect": "0.2003.16",
-    "@angular-devkit/build-angular": "20.3.16",
+    "@angular-devkit/build-angular": "20.3.32",
     "@angular-devkit/core": "20.3.16",
     "@angular-devkit/schematics": "20.3.16",
     "@angular-eslint/eslint-plugin": "20.7.0",
