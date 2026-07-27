@@ -113,7 +113,7 @@
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-ban": "2.0.0",
     "eslint-plugin-import": "2.32.0",
-    "eslint-plugin-jsdoc": "50.3.1",
+    "eslint-plugin-jsdoc": "63.2.2",
     "eslint-plugin-license-header": "0.8.0",
     "eslint-plugin-prettier": "5.5.6",
     "eslint-plugin-rxjs": "5.0.3",
