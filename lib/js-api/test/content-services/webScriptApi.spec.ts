@@ -40,7 +40,7 @@ describe('WebScript', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {});
+        await alfrescoJsApi.login('admin', 'admin');
 
         webscriptApi = new WebscriptApi(alfrescoJsApi);
     });
@@ -52,9 +52,10 @@ describe('WebScript', () => {
     it('execute webScript return 400 error if is not present on the server should be handled by reject promise', async () => {
         webScriptMock.get404Response();
 
-        webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath).catch((error: any) => {
-            assert.equal(error.status, 404);
-        });
+        await assert.rejects(
+            () => webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath),
+            (error: any) => error.status === 404
+        );
     });
 
     it('execute webScript GET return 200 if all is ok  should be handled by resolve promise', async () => {
@@ -66,41 +67,58 @@ describe('WebScript', () => {
     it('execute webScript that return HTML should not return it as Object', async () => {
         webScriptMock.get200ResponseHTMLFormat();
 
-        webscriptApi.executeWebScript('GET', 'sample/folder/Company%20Home').then((data) => {
-            try {
-                JSON.parse(data);
-            } catch {
-                // Expected - HTML cannot be parsed as JSON
-            }
-        });
+        const data = await webscriptApi.executeWebScript('GET', 'sample/folder/Company%20Home');
+        try {
+            JSON.parse(data);
+        } catch {
+            // Expected - HTML cannot be parsed as JSON
+        }
     });
 
     describe('Events', () => {
         it('WebScript should fire success event at the end', async () => {
             webScriptMock.get200Response();
 
+            let successEventFired = false;
             const webscriptPromise: any = webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath);
 
             webscriptPromise.catch(() => {});
-            webscriptPromise.on('success', () => {});
+            webscriptPromise.on('success', () => {
+                successEventFired = true;
+            });
+
+            await webscriptPromise;
+            assert.equal(successEventFired, true, 'Success event should have fired');
         });
 
         it('WebScript should fire error event if something go wrong', async () => {
             webScriptMock.get404Response();
 
+            let errorEventFired = false;
             const webscriptPromise: any = webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath);
 
             webscriptPromise.catch(() => {});
-            webscriptPromise.on('error', () => {});
+            webscriptPromise.on('error', () => {
+                errorEventFired = true;
+            });
+
+            await webscriptPromise.catch(() => {});
+            assert.equal(errorEventFired, true, 'Error event should have fired');
         });
 
         it('WebScript should fire unauthorized event if get 401', async () => {
             webScriptMock.get401Response();
 
+            let unauthorizedEventFired = false;
             const webscriptPromise: any = webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath);
 
             webscriptPromise.catch(() => {});
-            webscriptPromise.on('unauthorized', () => {});
+            webscriptPromise.on('unauthorized', () => {
+                unauthorizedEventFired = true;
+            });
+
+            await webscriptPromise.catch(() => {});
+            assert.equal(unauthorizedEventFired, true, 'Unauthorized event should have fired');
         });
     });
 });

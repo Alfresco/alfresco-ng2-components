@@ -20,25 +20,32 @@ import * as sinon from 'sinon';
 import { resetGlobalMockAgent, flushMicrotasks } from './mockObjects/base.mock';
 import { EcmAuthMock, BpmAuthMock, NodeMock, ProfileMock } from './mockObjects';
 import { NodesApi, UserProfileApi, AlfrescoApi } from '../src';
-import { describe, it, beforeEach, afterEach } from 'node:test';
-
-// Handler to suppress unhandledRejection for error responses that escape the test context
-// This is needed for auth.spec.ts tests that use the AlfrescoApi.login() wrapper which
-// can have promise chaining issues. Direct testing in content-auth.spec.ts and
-// process-auth-error.spec.ts avoids this pattern.
-const unhandledRejectionHandler = (reason: any) => {
-    // Suppress rejections from error-path tests (401, 403, 404 responses)
-    if (reason?.status && (reason.status === 401 || reason.status === 403 || reason.status === 404)) {
-        return; // Suppress
-    }
-    // Let other rejections propagate normally
-};
-process.on('unhandledRejection', unhandledRejectionHandler);
+import { describe, it, beforeEach, afterEach, before, after } from 'node:test';
 
 const ECM_HOST = 'https://127.0.0.1:8080';
 const BPM_HOST = 'https://127.0.0.1:9999';
 
 describe('Auth', () => {
+    // Handler to suppress unhandledRejection for error responses that escape the test context
+    // This is needed for auth.spec.ts tests that use the AlfrescoApi.login() wrapper which
+    // can have promise chaining issues. Direct testing in content-auth.spec.ts and
+    // process-auth-error.spec.ts avoids this pattern.
+    const unhandledRejectionHandler = (reason: any) => {
+        // Suppress rejections from error-path tests (401, 403, 404 responses)
+        if (reason?.status && (reason.status === 401 || reason.status === 403 || reason.status === 404)) {
+            return; // Suppress
+        }
+        // Let other rejections propagate normally
+    };
+
+    before(() => {
+        process.on('unhandledRejection', unhandledRejectionHandler);
+    });
+
+    after(() => {
+        process.off('unhandledRejection', unhandledRejectionHandler);
+    });
+
     describe('ECM Provider config', () => {
         let authResponseEcmMock: EcmAuthMock;
         let nodeMock: NodeMock;
@@ -49,6 +56,7 @@ describe('Auth', () => {
             sandbox = sinon.createSandbox();
             authResponseEcmMock = new EcmAuthMock(ECM_HOST);
             nodeMock = new NodeMock(ECM_HOST);
+            authResponseEcmMock.get201Response();
         });
 
         afterEach(async () => {

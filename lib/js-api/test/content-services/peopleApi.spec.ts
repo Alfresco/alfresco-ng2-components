@@ -16,6 +16,7 @@
  */
 
 import { AlfrescoApi, PersonBodyCreate, PeopleApi } from '../../src';
+import assert from 'assert';
 import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { EcmAuthMock, PeopleMock } from '../mockObjects';
 import { describe, it, beforeEach, afterEach } from 'node:test';
@@ -36,7 +37,7 @@ describe('PeopleApi', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {});
+        await alfrescoJsApi.login('admin', 'admin');
 
         peopleApi = new PeopleApi(alfrescoJsApi);
     });
@@ -62,11 +63,7 @@ describe('PeopleApi', () => {
     it('should get list of people', async () => {
         peopleMock.get200ResponsePersons();
 
-        peopleApi.listPeople().then(
-            () => {},
-            (err) => {
-                done(new Error('listPeople rejected: ' + JSON.stringify(err)));
-            }
-        );
+        const data = await peopleApi.listPeople();
+        assert.ok(data, 'listPeople should return data');
     });
 });

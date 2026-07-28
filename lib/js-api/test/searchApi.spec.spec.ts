@@ -38,9 +38,7 @@ describe('Search', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {
-            
-        });
+        await alfrescoJsApi.login('admin', 'admin');
 
         searchApi = new SearchApi(alfrescoJsApi);
     });
@@ -52,16 +50,12 @@ describe('Search', () => {
     it('should search works', async () => {
         searchMock.get200Response();
 
-        searchApi
-            .search({
-                query: {
-                    query: 'select * from cmis:folder',
-                    language: SEARCH_LANGUAGE.CMIS
-                }
-            })
-            .then((data) => {
-                assert.equal(data.list.entries[0].entry.name, 'user');
-                
-            });
+        const data = await searchApi.search({
+            query: {
+                query: 'select * from cmis:folder',
+                language: SEARCH_LANGUAGE.CMIS
+            }
+        });
+        assert.equal(data.list.entries[0].entry.name, 'user');
     });
 });

@@ -69,6 +69,7 @@ describe('Upload', () => {
 
             try {
                 await uploadApi.uploadFile(file);
+                assert.fail('Expected uploadFile to reject with 409 error');
             } catch (error: any) {
                 assert.equal(error.status, 409);
             }
@@ -119,9 +120,18 @@ describe('Upload', () => {
 
             const file = createTestFileStream('testFile.txt');
 
+            let errorEventFired = false;
             const uploadPromise: any = uploadApi.uploadFile(file);
             uploadPromise.catch(() => {});
-            uploadPromise.on('error', () => {});
+            uploadPromise.on('error', () => {
+                errorEventFired = true;
+            });
+
+            await new Promise<void>((resolve) => {
+                uploadPromise.catch(() => resolve());
+            });
+
+            assert.equal(errorEventFired, true, 'Error event should have fired');
         });
 
         it('Upload should fire unauthorized event if get 401', async () => {
@@ -129,10 +139,19 @@ describe('Upload', () => {
 
             const file = createTestFileStream('testFile.txt');
 
+            let unauthorizedEventFired = false;
             const uploadPromise: any = uploadApi.uploadFile(file);
 
             uploadPromise.catch(() => {});
-            uploadPromise.on('unauthorized', () => {});
+            uploadPromise.on('unauthorized', () => {
+                unauthorizedEventFired = true;
+            });
+
+            await new Promise<void>((resolve) => {
+                uploadPromise.catch(() => resolve());
+            });
+
+            assert.equal(unauthorizedEventFired, true, 'Unauthorized event should have fired');
         });
 
         // Upload progress events are emitted via the XHR path in FetchHttpClient.
