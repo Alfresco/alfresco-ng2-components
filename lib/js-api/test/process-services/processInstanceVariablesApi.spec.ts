@@ -27,10 +27,6 @@ describe('Activiti Process Instance Variables Api', () => {
     let alfrescoJsApi: AlfrescoApi;
     let processInstanceVariablesApi: ProcessInstanceVariablesApi;
 
-    const NOOP = () => {
-        /* empty */
-    };
-
     beforeEach(async () => {
         const BPM_HOST = 'https://127.0.0.1:9999';
 
@@ -58,19 +54,21 @@ describe('Activiti Process Instance Variables Api', () => {
             const processInstanceId = '111';
             variablesMock.addListProcessInstanceVariables200Response(processInstanceId);
 
-            processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId).then((data) => {
-                assert.equal(data.length, 2);
-            });
+            const data = await processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId);
+            assert.equal(data.length, 2);
         });
 
         it('should emit an error when API returns an error response', async () => {
             const processInstanceId = '111';
             variablesMock.addListProcessInstanceVariables500Response(processInstanceId);
 
-            processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId).then(NOOP, (error) => {
+            try {
+                await processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId);
+                assert.fail('Expected getProcessInstanceVariables to throw error on 500 response');
+            } catch (error: any) {
                 assert.equal(error.status, 500);
                 assert.equal(error.message, '{"messageKey":"UNKNOWN","message":"Unknown error"}');
-            });
+            }
         });
     });
 
@@ -79,19 +77,21 @@ describe('Activiti Process Instance Variables Api', () => {
             const processInstanceId = '111';
             variablesMock.addPutProcessInstanceVariables200Response(processInstanceId);
 
-            processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processInstanceId, []).then((data) => {
-                assert.equal(data.length, 2);
-            });
+            const data = await processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processInstanceId, []);
+            assert.equal(data.length, 2);
         });
 
         it('should emit an error when API returns an error response', async () => {
             const processInstanceId = '111';
             variablesMock.addPutProcessInstanceVariables500Response(processInstanceId);
 
-            processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processInstanceId, []).then(NOOP, (error) => {
+            try {
+                await processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processInstanceId, []);
+                assert.fail('Expected createOrUpdateProcessInstanceVariables to throw error on 500 response');
+            } catch (error: any) {
                 assert.equal(error.status, 500);
                 assert.equal(error.message, '{"messageKey":"UNKNOWN","message":"Unknown error"}');
-            });
+            }
         });
     });
 
@@ -101,13 +101,9 @@ describe('Activiti Process Instance Variables Api', () => {
             const variableName = 'var1';
             variablesMock.addGetProcessInstanceVariable200Response(processInstanceId, variableName);
 
-            processInstanceVariablesApi.getProcessInstanceVariable(processInstanceId, variableName).then(
-                (data) => {
-                    assert.equal(data.name, 'variable1');
-                    assert.equal(data.value, 'Value 123');
-                },
-                () => {}
-            );
+            const data = await processInstanceVariablesApi.getProcessInstanceVariable(processInstanceId, variableName);
+            assert.equal(data.name, 'variable1');
+            assert.equal(data.value, 'Value 123');
         });
 
         it('should emit an error when API returns an error response', async () => {
@@ -115,10 +111,13 @@ describe('Activiti Process Instance Variables Api', () => {
             const variableName = 'var1';
             variablesMock.addGetProcessInstanceVariable500Response(processInstanceId, variableName);
 
-            processInstanceVariablesApi.getProcessInstanceVariable(processInstanceId, variableName).then(NOOP, (error) => {
+            try {
+                await processInstanceVariablesApi.getProcessInstanceVariable(processInstanceId, variableName);
+                assert.fail('Expected getProcessInstanceVariable to throw error on 500 response');
+            } catch (error: any) {
                 assert.equal(error.status, 500);
                 assert.equal(error.message, '{"messageKey":"UNKNOWN","message":"Unknown error"}');
-            });
+            }
         });
     });
 
@@ -136,10 +135,13 @@ describe('Activiti Process Instance Variables Api', () => {
             const variableName = 'var1';
             variablesMock.addUpdateProcessInstanceVariable500Response(processInstanceId, variableName);
 
-            processInstanceVariablesApi.updateProcessInstanceVariable(processInstanceId, variableName, {}).then(NOOP, (error) => {
+            try {
+                await processInstanceVariablesApi.updateProcessInstanceVariable(processInstanceId, variableName, {});
+                assert.fail('Expected updateProcessInstanceVariable to throw error on 500 response');
+            } catch (error: any) {
                 assert.equal(error.status, 500);
                 assert.equal(error.message, '{"messageKey":"UNKNOWN","message":"Unknown error"}');
-            });
+            }
         });
     });
 
@@ -157,10 +159,13 @@ describe('Activiti Process Instance Variables Api', () => {
             const variableName = 'var1';
             variablesMock.addDeleteProcessInstanceVariable500Response(processInstanceId, variableName);
 
-            processInstanceVariablesApi.deleteProcessInstanceVariable(processInstanceId, variableName).then(NOOP, (error) => {
+            try {
+                await processInstanceVariablesApi.deleteProcessInstanceVariable(processInstanceId, variableName);
+                assert.fail('Expected deleteProcessInstanceVariable to throw error on 500 response');
+            } catch (error: any) {
                 assert.equal(error.status, 500);
                 assert.equal(error.message, '{"messageKey":"UNKNOWN","message":"Unknown error"}');
-            });
+            }
         });
     });
 });

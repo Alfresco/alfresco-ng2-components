@@ -50,20 +50,16 @@ describe('Comments', () => {
     it('should add a comment', async () => {
         commentMock.post201Response();
 
-        commentsApi
-            .createComment('74cd8a96-8a21-47e5-9b3b-a1b3e296787d', {
-                content: 'This is a comment'
-            })
-            .then((data) => {
-                assert.equal(data.entry.content, 'This is a comment');
-            });
+        const data = await commentsApi.createComment('74cd8a96-8a21-47e5-9b3b-a1b3e296787d', {
+            content: 'This is a comment'
+        });
+        assert.equal(data.entry.content, 'This is a comment');
     });
 
     it('should get a comment', async () => {
         commentMock.get200Response();
 
-        commentsApi.listComments('74cd8a96-8a21-47e5-9b3b-a1b3e296787d').then((data) => {
-            assert.equal(data.list.entries[0].entry.content, 'This is another comment');
-        });
+        const data = await commentsApi.listComments('74cd8a96-8a21-47e5-9b3b-a1b3e296787d');
+        assert.equal(data.list.entries[0].entry.content, 'This is another comment');
     });
 });

@@ -16,6 +16,7 @@
  */
 
 import { AlfrescoApi, CustomModelApi } from '../../src';
+import assert from 'assert';
 import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { EcmAuthMock, CustomModelMock } from '../mockObjects';
 
@@ -51,11 +52,8 @@ describe('Custom Model Api', () => {
         it('All Custom Model', async () => {
             customModelMock.get200AllCustomModel();
 
-            try {
-                await customModelApi.getAllCustomModel();
-            } catch (error) {
-                console.error(error);
-            }
+            const result = await customModelApi.getAllCustomModel();
+            assert.ok(result, 'getAllCustomModel should return a result');
         });
     });
 
@@ -69,11 +67,9 @@ describe('Custom Model Api', () => {
             const namespaceUri = 'https://www.alfresco.org/model/testNamespace/1.0';
             const namespacePrefix = 'test';
 
-            try {
-                await customModelApi.createCustomModel(status, description, name, namespaceUri, namespacePrefix);
-            } catch (error) {
-                console.error(error);
-            }
+            const result = await customModelApi.createCustomModel(status, description, name, namespaceUri, namespacePrefix);
+            assert.ok(result, 'createCustomModel should return a result');
+            assert.equal(result.entry.name, name, 'Created model should have correct name');
         });
     });
 
@@ -81,11 +77,8 @@ describe('Custom Model Api', () => {
         it('activateCustomModel', async () => {
             customModelMock.activateCustomModel200();
 
-            try {
-                await customModelApi.activateCustomModel('testModel');
-            } catch (error) {
-                console.error(error);
-            }
+            const result = await customModelApi.activateCustomModel('testModel');
+            assert.ok(result, 'activateCustomModel should return a result');
         });
     });
 });

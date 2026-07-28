@@ -56,9 +56,21 @@ describe('Basic configuration test', () => {
 
             const alfrescoApi = new AlfrescoApi(config);
 
+            let ticketInvalidatedFired = false;
             alfrescoApi.on('ticket_invalidated', () => {
+                ticketInvalidatedFired = true;
                 assert.equal(alfrescoApi.config.ticketEcm, null);
             });
+
+            await new Promise<void>((resolve) => {
+                const timeout = setTimeout(resolve, 100);
+                alfrescoApi.once('ticket_invalidated', () => {
+                    clearTimeout(timeout);
+                    resolve();
+                });
+            });
+
+            assert.equal(ticketInvalidatedFired, true, 'ticket_invalidated event should have fired');
         });
     });
 
@@ -84,13 +96,25 @@ describe('Basic configuration test', () => {
             assert.equal(alfrescoApi.config.ticketEcm, mockConfigTicket);
             assert.equal(alfrescoApi.contentClient.config.ticketEcm, mockConfigTicket);
 
+            let ticketMismatchFired = false;
             alfrescoApi.on('ticket_mismatch', () => {
+                ticketMismatchFired = true;
                 // As the ticket mismatch event is triggered, the ticketEcm should now be the one from storage
                 assert.equal(alfrescoApi.config.ticketEcm, mockStorageTicket);
                 assert.equal(alfrescoApi.contentClient.config.ticketEcm, mockStorageTicket);
             });
 
             alfrescoApi.contentClient.getAlfTicket(undefined);
+
+            await new Promise<void>((resolve) => {
+                const timeout = setTimeout(resolve, 100);
+                alfrescoApi.once('ticket_mismatch', () => {
+                    clearTimeout(timeout);
+                    resolve();
+                });
+            });
+
+            assert.equal(ticketMismatchFired, true, 'ticket_mismatch event should have fired');
         });
     });
 
@@ -289,9 +313,13 @@ describe('Basic configuration test', () => {
 
             authEcmMock.get201Response();
 
-            alfrescoJsApi.on('logged-in', () => {});
+            let loggedInFired = false;
+            alfrescoJsApi.on('logged-in', () => {
+                loggedInFired = true;
+            });
 
-            alfrescoJsApi.login('admin', 'admin');
+            await alfrescoJsApi.login('admin', 'admin');
+            assert.equal(loggedInFired, true, 'logged-in event should have fired');
         });
 
         it('Should logged-in be emitted when log in BPM', async () => {
@@ -306,9 +334,13 @@ describe('Basic configuration test', () => {
                 provider: 'BPM'
             });
 
-            alfrescoJsApi.on('logged-in', () => {});
+            let loggedInFired = false;
+            alfrescoJsApi.on('logged-in', () => {
+                loggedInFired = true;
+            });
 
-            alfrescoJsApi.login('admin', 'admin');
+            await alfrescoJsApi.login('admin', 'admin');
+            assert.equal(loggedInFired, true, 'logged-in event should have fired');
         });
 
         it('Should logged-in be emitted when log in OAUTH', async () => {
@@ -327,9 +359,13 @@ describe('Basic configuration test', () => {
                 authType: 'OAUTH'
             });
 
-            alfrescoJsApi.on('logged-in', () => {});
+            let loggedInFired = false;
+            alfrescoJsApi.on('logged-in', () => {
+                loggedInFired = true;
+            });
 
-            alfrescoJsApi.login('admin', 'admin');
+            await alfrescoJsApi.login('admin', 'admin');
+            assert.equal(loggedInFired, true, 'logged-in event should have fired');
         });
 
         it('Should logged-in be emitted when the ticket is in the store', async () => {
@@ -344,9 +380,13 @@ describe('Basic configuration test', () => {
                 provider: 'BPM'
             });
 
-            alfrescoJsApi.login('admin', 'admin').then(() => {
-                alfrescoJsApi.reply('logged-in', () => {});
+            let loggedInFired = false;
+            alfrescoJsApi.on('logged-in', () => {
+                loggedInFired = true;
             });
+
+            await alfrescoJsApi.login('admin', 'admin');
+            assert.equal(loggedInFired, true, 'logged-in event should have fired');
         });
     });
 });

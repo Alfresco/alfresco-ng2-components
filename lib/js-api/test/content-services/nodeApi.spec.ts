@@ -89,7 +89,8 @@ describe('Node', () => {
         it('delete the node with identifier nodeId', async () => {
             nodeMock.get204SuccessfullyDeleted();
 
-            await nodesApi.deleteNode('80a94ac8-3ece-47ad-864e-5d939424c47c');
+            const result = await nodesApi.deleteNode('80a94ac8-3ece-47ad-864e-5d939424c47c');
+            assert.ok(result !== undefined, 'deleteNode should complete successfully');
         });
 
         it('delete the node with identifier nodeId should return 404 if the id is does not exist', async () => {

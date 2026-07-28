@@ -60,28 +60,25 @@ describe('Activiti Process Api', () => {
             state: 'completed'
         };
 
-        processInstancesApi.getProcessInstances(requestNode).then((data) => {
-            assert.equal(data.data[0].name, 'Process Test Api - July 26th 2016');
-            assert.equal(data.data[1].name, 'Process Test Api - July 26th 2016');
-            assert.equal(data.size, 2);
-        });
+        const data = await processInstancesApi.getProcessInstances(requestNode);
+        assert.equal(data.data[0].name, 'Process Test Api - July 26th 2016');
+        assert.equal(data.data[1].name, 'Process Test Api - July 26th 2016');
+        assert.equal(data.size, 2);
     });
 
     it('get activiti Process list', async () => {
         processMock.get200Response();
 
-        processInstancesApi.getProcessInstances({}).then((data) => {
-            assert.equal(data.data[0].name, 'Process Test Api - July 26th 2016');
-            assert.equal(data.data[1].name, 'Process Test Api - July 26th 2016');
-        });
+        const data = await processInstancesApi.getProcessInstances({});
+        assert.equal(data.data[0].name, 'Process Test Api - July 26th 2016');
+        assert.equal(data.data[1].name, 'Process Test Api - July 26th 2016');
     });
 
     it('get process definition startForm', async () => {
         processMock.get200getProcessDefinitionStartForm();
         const processDefinitionId = 'testProcess:1:7504';
 
-        processDefinitionsApi.getProcessDefinitionStartForm(processDefinitionId).then((data) => {
-            assert.equal(data.processDefinitionId, 'testProcess:1:7504');
-        });
+        const data = await processDefinitionsApi.getProcessDefinitionStartForm(processDefinitionId);
+        assert.equal(data.processDefinitionId, 'testProcess:1:7504');
     });
 });

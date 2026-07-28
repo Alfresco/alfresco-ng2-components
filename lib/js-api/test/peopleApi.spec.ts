@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import assert from 'assert';
 import { AlfrescoApi, PeopleApi, PersonBodyCreate } from '../src';
 import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { PeopleMock } from './mockObjects';
@@ -51,6 +52,8 @@ describe('PeopleApi', () => {
             password: 'Rrrrrrrghghghghgh'
         };
 
-        await peopleApi.createPerson(personBodyCreate);
+        const result = await peopleApi.createPerson(personBodyCreate);
+        assert.ok(result, 'createPerson should return a result');
+        assert.equal(result.entry.id, 'chewbe', 'Created person should have correct id');
     });
 });

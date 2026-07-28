@@ -49,11 +49,10 @@ describe('Groups', () => {
     it('get groups', async () => {
         groupsMock.get200GetGroups();
 
-        groupsApi.listGroups().then((data) => {
-            assert.equal(data.list.pagination.count, 2);
-            assert.equal(data.list.entries[0].entry.id, 'GROUP_alfalfa');
-            assert.equal(data.list.entries[1].entry.id, 'GROUP_CallCenterAA');
-        });
+        const data = await groupsApi.listGroups();
+        assert.equal(data.list.pagination.count, 2);
+        assert.equal(data.list.entries[0].entry.id, 'GROUP_alfalfa');
+        assert.equal(data.list.entries[1].entry.id, 'GROUP_CallCenterAA');
     });
 
     it('create group', async () => {
@@ -64,23 +63,22 @@ describe('Groups', () => {
             displayName: 'SAMPLE'
         };
 
-        groupsApi.createGroup(groupBody).then((data) => {
-            assert.equal(data.entry.id, 'GROUP_TEST');
-        });
+        const data = await groupsApi.createGroup(groupBody);
+        assert.equal(data.entry.id, 'GROUP_TEST');
     });
 
     it('delete group', async () => {
         groupsMock.getDeleteGroupSuccessfulResponse('group_test');
-        await groupsApi.deleteGroup('group_test');
+        const result = await groupsApi.deleteGroup('group_test');
+        assert.ok(result !== undefined, 'deleteGroup should complete successfully');
     });
 
     it('get single group', async () => {
         groupsMock.get200GetSingleGroup();
 
-        groupsApi.getGroup('GROUP_TEST').then((data) => {
-            assert.equal(data.entry.id, 'GROUP_TEST');
-            assert.equal(data.entry.displayName, 'SAMPLE');
-        });
+        const data = await groupsApi.getGroup('GROUP_TEST');
+        assert.equal(data.entry.id, 'GROUP_TEST');
+        assert.equal(data.entry.displayName, 'SAMPLE');
     });
 
     it('update group', async () => {
@@ -90,20 +88,18 @@ describe('Groups', () => {
             displayName: 'CHANGED'
         };
 
-        groupsApi.updateGroup('GROUP_TEST', groupBody).then((data) => {
-            assert.equal(data.entry.id, 'GROUP_TEST');
-            assert.equal(data.entry.displayName, 'CHANGED');
-        });
+        const data = await groupsApi.updateGroup('GROUP_TEST', groupBody);
+        assert.equal(data.entry.id, 'GROUP_TEST');
+        assert.equal(data.entry.displayName, 'CHANGED');
     });
 
     it('get group members', async () => {
         groupsMock.get200GetGroupMemberships();
 
-        groupsApi.listGroupMemberships('GROUP_TEST').then((data) => {
-            assert.equal(data.list.pagination.count, 1);
-            assert.equal(data.list.entries[0].entry.id, 'GROUP_SUB_TEST');
-            assert.equal(data.list.entries[0].entry.displayName, 'SAMPLE');
-        });
+        const data = await groupsApi.listGroupMemberships('GROUP_TEST');
+        assert.equal(data.list.pagination.count, 1);
+        assert.equal(data.list.entries[0].entry.id, 'GROUP_SUB_TEST');
+        assert.equal(data.list.entries[0].entry.displayName, 'SAMPLE');
     });
 
     it('add group member', async () => {
@@ -114,14 +110,14 @@ describe('Groups', () => {
             memberType: 'GROUP'
         };
 
-        groupsApi.createGroupMembership('GROUP_TEST', groupBody).then((data) => {
-            assert.equal(data.entry.id, 'GROUP_SUB_TEST');
-            assert.equal(data.entry.displayName, 'SAMPLE');
-        });
+        const data = await groupsApi.createGroupMembership('GROUP_TEST', groupBody);
+        assert.equal(data.entry.id, 'GROUP_SUB_TEST');
+        assert.equal(data.entry.displayName, 'SAMPLE');
     });
 
     it('delete group member', async () => {
         groupsMock.getDeleteMemberForGroupSuccessfulResponse('GROUP_TEST', 'GROUP_SUB_TEST');
-        await groupsApi.deleteGroupMembership('GROUP_TEST', 'GROUP_SUB_TEST');
+        const result = await groupsApi.deleteGroupMembership('GROUP_TEST', 'GROUP_SUB_TEST');
+        assert.ok(result !== undefined, 'deleteGroupMembership should complete successfully');
     });
 });

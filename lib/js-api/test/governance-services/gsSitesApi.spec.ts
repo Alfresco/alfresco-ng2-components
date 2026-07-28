@@ -26,7 +26,7 @@ describe('Governance API test', () => {
     let gsSitesApiMock: GsSitesApiMock;
     let gsSitesApi: GsSitesApi;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
@@ -39,6 +39,8 @@ describe('Governance API test', () => {
         });
 
         gsSitesApi = new GsSitesApi(alfrescoJsApi);
+
+        await alfrescoJsApi.login('admin', 'admin');
     });
 
     afterEach(() => {
@@ -48,8 +50,7 @@ describe('Governance API test', () => {
     it('should getRMSite return the RM site', async () => {
         gsSitesApiMock.get200Response();
 
-        gsSitesApi.getRMSite().then((data) => {
-            assert.equal(data.entry.description, 'Records Management Description Test');
-        });
+        const data = await gsSitesApi.getRMSite();
+        assert.equal(data.entry.description, 'Records Management Description Test');
     });
 });

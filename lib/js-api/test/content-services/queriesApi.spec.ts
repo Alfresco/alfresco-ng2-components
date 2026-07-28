@@ -59,20 +59,21 @@ describe('Queries', () => {
         it('should invoke error handler on a server error', async () => {
             nodesMock.get401Response();
 
-            queriesApi.findNodes(searchTerm).then(
-                () => {},
-                () => {}
-            );
+            try {
+                await queriesApi.findNodes(searchTerm);
+                assert.fail('Expected findNodes to throw error on 401 response');
+            } catch (error: any) {
+                assert.equal(error.status, 401, 'Error should have 401 status');
+            }
         });
 
         it('should return query results', async () => {
             nodesMock.get200Response();
 
-            queriesApi.findNodes(searchTerm).then((data) => {
-                assert.equal(data.list.pagination.count, 2);
-                assert.equal(data.list.entries[0].entry.name, 'coins1.JPG');
-                assert.equal(data.list.entries[1].entry.name, 'coins2.JPG');
-            });
+            const data = await queriesApi.findNodes(searchTerm);
+            assert.equal(data.list.pagination.count, 2);
+            assert.equal(data.list.entries[0].entry.name, 'coins1.JPG');
+            assert.equal(data.list.entries[1].entry.name, 'coins2.JPG');
         });
     });
 });

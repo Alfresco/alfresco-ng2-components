@@ -57,20 +57,18 @@ describe('Node Security Mark API test', () => {
     it('add or remove security marks on a node', async () => {
         const nodeId = 'h3bdk2knw2kn';
         nodeSecurityMarksMock.post200manageSecurityMarkOnNode(nodeId);
-        await nodeSecurityMarksApi.manageSecurityMarksOnNode(nodeId, nodeSecurityMarkBody).then((data) => {
-            assert.equal(data.list.entries[0].entry.groupId, 'securityGroupId1');
-            assert.equal(data.list.entries[0].entry.id, 'Sh1G8vTQ');
-            assert.equal(data.list.entries[0].entry.name, 'SecurityMarkTest1');
-        });
+        const data = await nodeSecurityMarksApi.manageSecurityMarksOnNode(nodeId, nodeSecurityMarkBody);
+        assert.equal(data.list.entries[0].entry.groupId, 'securityGroupId1');
+        assert.equal(data.list.entries[0].entry.id, 'Sh1G8vTQ');
+        assert.equal(data.list.entries[0].entry.name, 'SecurityMarkTest1');
     });
 
     it('get security marks on a node', async () => {
         const nodeId = 'h3bdk2knw2kn';
         nodeSecurityMarksMock.get200SecurityMarkOnNode(nodeId);
-        await nodeSecurityMarksApi.getSecurityMarksOnNode(nodeId).then((data) => {
-            assert.equal(data.list.entries[1].entry.groupId, 'securityGroupId2');
-            assert.equal(data.list.entries[1].entry.id, 'Sh1G8vTR');
-            assert.equal(data.list.entries[1].entry.name, 'SecurityMarkTest2');
-        });
+        const data = await nodeSecurityMarksApi.getSecurityMarksOnNode(nodeId);
+        assert.equal(data.list.entries[1].entry.groupId, 'securityGroupId2');
+        assert.equal(data.list.entries[1].entry.id, 'Sh1G8vTR');
+        assert.equal(data.list.entries[1].entry.name, 'SecurityMarkTest2');
     });
 });

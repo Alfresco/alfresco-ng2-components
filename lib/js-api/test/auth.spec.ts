@@ -159,11 +159,13 @@ describe('Auth', () => {
 
                     authResponseEcmMock.get400Response();
 
+                    let errorWasCaught = false;
                     try {
                         await alfrescoJsApi.loginTicket(ticket, null);
                     } catch {
-                        // Expected error
+                        errorWasCaught = true;
                     }
+                    assert.equal(errorWasCaught, true, 'Expected loginTicket to throw an error');
                 });
             });
 
@@ -219,7 +221,10 @@ describe('Auth', () => {
                 });
 
                 it('should emit an error event if a failing call is executed', async () => {
-                    alfrescoJsApi.on('error', () => {});
+                    let errorEventFired = false;
+                    alfrescoJsApi.on('error', () => {
+                        errorEventFired = true;
+                    });
 
                     nodeMock.get401CreationFolder();
 
@@ -228,6 +233,7 @@ describe('Auth', () => {
                     } catch {
                         // Expected error
                     }
+                    assert.equal(errorEventFired, true, 'Error event should have fired');
                 });
             });
 

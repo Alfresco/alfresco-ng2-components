@@ -38,7 +38,7 @@ describe('Rendition', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {});
+        await alfrescoJsApi.login('admin', 'admin');
 
         renditionsApi = new RenditionsApi(alfrescoJsApi);
     });
@@ -50,9 +50,8 @@ describe('Rendition', () => {
     it('Get Rendition', async () => {
         renditionMock.get200RenditionResponse();
 
-        renditionsApi.getRendition('97a29e9c-1e4f-4d9d-bb02-1ec920dda045', 'pdf').then((data) => {
-            assert.equal(data.entry.id, 'pdf');
-        });
+        const data = await renditionsApi.getRendition('97a29e9c-1e4f-4d9d-bb02-1ec920dda045', 'pdf');
+        assert.equal(data.entry.id, 'pdf');
     });
 
     it('Create Rendition', async () => {
@@ -64,9 +63,8 @@ describe('Rendition', () => {
     it('Get Renditions list for node id', async () => {
         renditionMock.get200RenditionList();
 
-        renditionsApi.listRenditions('97a29e9c-1e4f-4d9d-bb02-1ec920dda045').then((data) => {
-            assert.equal(data.list.pagination.count, 6);
-            assert.equal(data.list.entries[0].entry.id, 'avatar');
-        });
+        const data = await renditionsApi.listRenditions('97a29e9c-1e4f-4d9d-bb02-1ec920dda045');
+        assert.equal(data.list.pagination.count, 6);
+        assert.equal(data.list.entries[0].entry.id, 'avatar');
     });
 });
