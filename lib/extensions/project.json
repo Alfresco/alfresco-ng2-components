@@ -24,6 +24,7 @@
         "main": "lib/extensions/src/test.ts",
         "tsConfig": "lib/extensions/tsconfig.spec.json",
         "karmaConfig": "lib/extensions/karma.conf.js",
+        "watch": false,
         "sourceMap": true,
         "codeCoverage": true,
         "stylePreprocessorOptions": {

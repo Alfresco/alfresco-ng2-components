@@ -25,6 +25,7 @@
         "main": "lib/process-services/src/test.ts",
         "tsConfig": "lib/process-services/tsconfig.spec.json",
         "karmaConfig": "lib/process-services/karma.conf.js",
+        "watch": false,
         "sourceMap": true,
         "codeCoverage": true,
         "stylePreprocessorOptions": {

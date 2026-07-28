@@ -39,6 +39,7 @@
         "main": "lib/core/test.ts",
         "tsConfig": "lib/core/tsconfig.spec.json",
         "karmaConfig": "lib/core/karma.conf.js",
+        "watch": false,
         "sourceMap": true,
         "codeCoverage": true,
         "stylePreprocessorOptions": {
