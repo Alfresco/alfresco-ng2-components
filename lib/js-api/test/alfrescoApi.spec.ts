@@ -16,10 +16,9 @@
  */
 
 import assert from 'assert';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { AlfrescoApi } from '../src';
 import { BpmAuthMock, EcmAuthMock, OAuthMock } from './mockObjects';
-import { describe, it, beforeEach, afterEach } from 'node:test';
+import { describe, it } from 'node:test';
 
 describe('Basic configuration test', () => {
     describe('config parameter ', () => {
@@ -59,7 +58,6 @@ describe('Basic configuration test', () => {
 
             alfrescoApi.on('ticket_invalidated', () => {
                 assert.equal(alfrescoApi.config.ticketEcm, null);
-                
             });
         });
     });
@@ -90,7 +88,6 @@ describe('Basic configuration test', () => {
                 // As the ticket mismatch event is triggered, the ticketEcm should now be the one from storage
                 assert.equal(alfrescoApi.config.ticketEcm, mockStorageTicket);
                 assert.equal(alfrescoApi.contentClient.config.ticketEcm, mockStorageTicket);
-                
             });
 
             alfrescoApi.contentClient.getAlfTicket(undefined);
@@ -292,9 +289,7 @@ describe('Basic configuration test', () => {
 
             authEcmMock.get201Response();
 
-            alfrescoJsApi.on('logged-in', () => {
-                
-            });
+            alfrescoJsApi.on('logged-in', () => {});
 
             alfrescoJsApi.login('admin', 'admin');
         });
@@ -311,9 +306,7 @@ describe('Basic configuration test', () => {
                 provider: 'BPM'
             });
 
-            alfrescoJsApi.on('logged-in', () => {
-                
-            });
+            alfrescoJsApi.on('logged-in', () => {});
 
             alfrescoJsApi.login('admin', 'admin');
         });
@@ -334,9 +327,7 @@ describe('Basic configuration test', () => {
                 authType: 'OAUTH'
             });
 
-            alfrescoJsApi.on('logged-in', () => {
-                
-            });
+            alfrescoJsApi.on('logged-in', () => {});
 
             alfrescoJsApi.login('admin', 'admin');
         });
@@ -354,9 +345,7 @@ describe('Basic configuration test', () => {
             });
 
             alfrescoJsApi.login('admin', 'admin').then(() => {
-                alfrescoJsApi.reply('logged-in', () => {
-                    
-                });
+                alfrescoJsApi.reply('logged-in', () => {});
             });
         });
     });

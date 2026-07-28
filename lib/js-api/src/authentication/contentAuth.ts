@@ -82,16 +82,15 @@ export class ContentAuth extends AlfrescoApiClient {
         });
 
         const promise: any = new Promise<string>((resolve, reject) => {
-            this.authApi
-                .createTicket(loginRequest)
-                .then((data) => {
+            this.authApi.createTicket(loginRequest).then(
+                (data) => {
                     this.saveUsername(username);
                     this.setTicket(data.entry.id);
                     promise.emit('success');
                     this.emit('logged-in');
                     resolve(data.entry.id);
-                })
-                .catch((error) => {
+                },
+                (error) => {
                     this.saveUsername('');
                     if (error.status === 401) {
                         promise.emit('unauthorized');
@@ -101,7 +100,8 @@ export class ContentAuth extends AlfrescoApiClient {
                         promise.emit('error');
                     }
                     reject(error);
-                });
+                }
+            );
         });
 
         return this.addPromiseListeners(promise, new EventEmitter());

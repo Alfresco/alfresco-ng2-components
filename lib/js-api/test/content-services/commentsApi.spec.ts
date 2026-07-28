@@ -16,7 +16,7 @@
  */
 
 import assert from 'assert';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, CommentsApi } from '../../src';
 import { CommentMock, EcmAuthMock } from '../mockObjects';
 import { describe, it, beforeEach, afterEach } from 'node:test';
@@ -40,9 +40,7 @@ describe('Comments', () => {
 
         commentsApi = new CommentsApi(alfrescoJsApi);
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {
-            
-        });
+        alfrescoJsApi.login('admin', 'admin').then(() => {});
     });
 
     afterEach(() => {
@@ -58,7 +56,6 @@ describe('Comments', () => {
             })
             .then((data) => {
                 assert.equal(data.entry.content, 'This is a comment');
-                
             });
     });
 
@@ -67,7 +64,6 @@ describe('Comments', () => {
 
         commentsApi.listComments('74cd8a96-8a21-47e5-9b3b-a1b3e296787d').then((data) => {
             assert.equal(data.list.entries[0].entry.content, 'This is another comment');
-            
         });
     });
 });

@@ -16,7 +16,7 @@
  */
 
 import assert from 'assert';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, RenditionsApi } from '../../src';
 import { EcmAuthMock, RenditionMock } from '../mockObjects';
 import { describe, it, beforeEach, afterEach } from 'node:test';
@@ -38,9 +38,7 @@ describe('Rendition', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {
-            
-        });
+        alfrescoJsApi.login('admin', 'admin').then(() => {});
 
         renditionsApi = new RenditionsApi(alfrescoJsApi);
     });
@@ -54,16 +52,13 @@ describe('Rendition', () => {
 
         renditionsApi.getRendition('97a29e9c-1e4f-4d9d-bb02-1ec920dda045', 'pdf').then((data) => {
             assert.equal(data.entry.id, 'pdf');
-            
         });
     });
 
     it('Create Rendition', async () => {
         renditionMock.createRendition200();
 
-        renditionsApi.createRendition('97a29e9c-1e4f-4d9d-bb02-1ec920dda045', { id: 'pdf' }).then(() => {
-            
-        });
+        renditionsApi.createRendition('97a29e9c-1e4f-4d9d-bb02-1ec920dda045', { id: 'pdf' }).then(() => {});
     });
 
     it('Get Renditions list for node id', async () => {
@@ -72,7 +67,6 @@ describe('Rendition', () => {
         renditionsApi.listRenditions('97a29e9c-1e4f-4d9d-bb02-1ec920dda045').then((data) => {
             assert.equal(data.list.pagination.count, 6);
             assert.equal(data.list.entries[0].entry.id, 'avatar');
-            
         });
     });
 });

@@ -16,7 +16,6 @@
  */
 
 import assert from 'assert';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { ProcessAuth } from '../src';
 import { FetchHttpClient } from '../src/fetchHttpClient';
 import { BpmAuthMock } from './mockObjects';
@@ -32,7 +31,7 @@ describe('Bpm Auth test', () => {
 
     it('should remember username on login', () => {
         const auth = new ProcessAuth({});
-        auth.login('johndoe', 'password');
+        auth.login('johndoe', 'password').catch(() => {});
         assert.equal(auth.authentications.basicAuth.username, 'johndoe');
     });
 
@@ -44,16 +43,13 @@ describe('Bpm Auth test', () => {
 
         authBpmMock.get200Response();
 
-        processAuth.login('admin', 'admin').then(() => {
-            assert.equal(processAuth.authentications.basicAuth.username, 'admin');
+        await processAuth.login('admin', 'admin');
+        assert.equal(processAuth.authentications.basicAuth.username, 'admin');
 
-            authBpmMock.get200ResponseLogout();
+        authBpmMock.get200ResponseLogout();
 
-            processAuth.logout().then(() => {
-                assert.equal(processAuth.authentications.basicAuth.username, null);
-                
-            });
-        });
+        await processAuth.logout();
+        assert.equal(processAuth.authentications.basicAuth.username, null);
     });
 
     describe('With Authentication', () => {
@@ -77,11 +73,9 @@ describe('Bpm Auth test', () => {
                 contextRootBpm: 'activiti-app'
             });
 
-            processAuth.login('admin', 'admin').then((data) => {
-                assert.equal(data, 'Basic YWRtaW46YWRtaW4=');
-                assert.notEqual(processAuth.authentications.basicAuth.password, 'admin');
-                
-            });
+            const data = await processAuth.login('admin', 'admin');
+            assert.equal(data, 'Basic YWRtaW46YWRtaW4=');
+            assert.notEqual(processAuth.authentications.basicAuth.password, 'admin');
         });
 
         it('isLoggedIn should return true if the api is logged in', async () => {
@@ -92,10 +86,8 @@ describe('Bpm Auth test', () => {
                 contextRootBpm: 'activiti-app'
             });
 
-            processAuth.login('admin', 'admin').then(() => {
-                assert.equal(processAuth.isLoggedIn(), true);
-                
-            });
+            await processAuth.login('admin', 'admin');
+            assert.equal(processAuth.isLoggedIn(), true);
         });
 
         it('isLoggedIn should return false if the api is logged out', async () => {
@@ -105,14 +97,12 @@ describe('Bpm Auth test', () => {
                 hostBpm,
                 contextRootBpm: 'activiti-app'
             });
-            processAuth.login('admin', 'admin');
+            await processAuth.login('admin', 'admin');
 
             authBpmMock.get200ResponseLogout();
 
-            processAuth.logout().then(() => {
-                assert.equal(processAuth.isLoggedIn(), false);
-                
-            });
+            await processAuth.logout();
+            assert.equal(processAuth.isLoggedIn(), false);
         });
 
         it('isLoggedIn should return false if the host change', async () => {
@@ -123,12 +113,10 @@ describe('Bpm Auth test', () => {
                 contextRootBpm: 'activiti-app'
             });
 
-            processAuth.login('admin', 'admin').then(() => {
-                assert.equal(processAuth.isLoggedIn(), true);
-                processAuth.changeHost();
-                assert.equal(processAuth.isLoggedIn(), false);
-                
-            });
+            await processAuth.login('admin', 'admin');
+            assert.equal(processAuth.isLoggedIn(), true);
+            processAuth.changeHost();
+            assert.equal(processAuth.isLoggedIn(), false);
         });
 
         it('login should return an error if wrong credential are used 401 the login fails', async () => {
@@ -139,13 +127,11 @@ describe('Bpm Auth test', () => {
                 contextRootBpm: 'activiti-app'
             });
 
-            processAuth.login('wrong', 'name').then(
-                () => {},
-                (error) => {
-                    assert.equal(error.status, 401);
-                    
-                }
-            );
+            try {
+                await processAuth.login('wrong', 'name');
+            } catch (error: any) {
+                assert.equal(error.status, 401);
+            }
         });
 
         describe('Events ', () => {
@@ -157,12 +143,12 @@ describe('Bpm Auth test', () => {
                     contextRootBpm: 'activiti-app'
                 });
 
-                const loginPromise = processAuth.login('wrong', 'name');
-
-                loginPromise.catch(() => {});
-                loginPromise.on('unauthorized', () => {
-                    
-                });
+                try {
+                    await processAuth.login('wrong', 'name');
+                    assert.fail('Expected login to fail');
+                } catch (error: any) {
+                    assert.equal(error.status, 401);
+                }
             });
 
             it('login should fire an event if is forbidden 403', async () => {
@@ -173,11 +159,12 @@ describe('Bpm Auth test', () => {
                     contextRootBpm: 'activiti-app'
                 });
 
-                const loginPromise = processAuth.login('wrong', 'name');
-                loginPromise.catch(() => {});
-                loginPromise.on('forbidden', () => {
-                    
-                });
+                try {
+                    await processAuth.login('wrong', 'name');
+                    assert.fail('Expected login to fail');
+                } catch (error: any) {
+                    assert.equal(error.status, 403);
+                }
             });
 
             it('The Api Should fire success event if is all ok 201', async () => {
@@ -188,12 +175,8 @@ describe('Bpm Auth test', () => {
                     contextRootBpm: 'activiti-app'
                 });
 
-                const loginPromise = processAuth.login('admin', 'admin');
-
-                loginPromise.catch(() => {});
-                loginPromise.on('success', () => {
-                    
-                });
+                const data = await processAuth.login('admin', 'admin');
+                assert.equal(data, 'Basic YWRtaW46YWRtaW4=');
             });
 
             it('The Api Should fire logout event if the logout is successfull', async () => {
@@ -204,14 +187,12 @@ describe('Bpm Auth test', () => {
                     contextRootBpm: 'activiti-app'
                 });
 
-                processAuth.login('admin', 'admin');
+                await processAuth.login('admin', 'admin');
 
                 authBpmMock.get200ResponseLogout();
 
-                const promise = processAuth.logout();
-                promise.on('logout', () => {
-                    
-                });
+                await processAuth.logout();
+                assert.equal(processAuth.getTicket(), null);
             });
         });
 
@@ -238,18 +219,14 @@ describe('Bpm Auth test', () => {
                     contextRootBpm: 'activiti-app'
                 });
 
-                processAuth.login('admin', 'admin').then(() => {
-                    
-                });
+                await processAuth.login('admin', 'admin');
             });
 
             it('Ticket should be absent in the client and the resolve promise should be called', async () => {
                 authBpmMock.get200ResponseLogout();
 
-                processAuth.logout().then(() => {
-                    assert.equal(processAuth.getTicket(), null);
-                    
-                });
+                await processAuth.logout();
+                assert.equal(processAuth.getTicket(), null);
             });
         });
 
@@ -279,10 +256,8 @@ describe('Bpm Auth test', () => {
                     contextRootBpm: 'activiti-app'
                 });
 
-                processAuth.login('admin', 'admin').then(() => {
-                    assert.equal(setCsrfTokenCalled, true);
-                    
-                });
+                await processAuth.login('admin', 'admin');
+                assert.equal(setCsrfTokenCalled, true);
             });
 
             it('should be disabled if disableCsrf is true', async () => {
@@ -294,10 +269,8 @@ describe('Bpm Auth test', () => {
                     disableCsrf: true
                 });
 
-                processAuth.login('admin', 'admin').then(() => {
-                    assert.equal(setCsrfTokenCalled, false);
-                    
-                });
+                await processAuth.login('admin', 'admin');
+                assert.equal(setCsrfTokenCalled, false);
             });
         });
     });

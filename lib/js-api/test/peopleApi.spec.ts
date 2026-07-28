@@ -18,7 +18,7 @@
 import { AlfrescoApi, PeopleApi, PersonBodyCreate } from '../src';
 import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { PeopleMock } from './mockObjects';
-import assert from 'assert';
+
 import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('PeopleApi', () => {
@@ -51,8 +51,6 @@ describe('PeopleApi', () => {
             password: 'Rrrrrrrghghghghgh'
         };
 
-        peopleApi.createPerson(personBodyCreate).then(() => {
-            
-        });
+        peopleApi.createPerson(personBodyCreate).then(() => {});
     });
 });

@@ -67,10 +67,11 @@ describe('Upload', () => {
 
             const file = createTestFileStream('testFile.txt');
 
-            uploadApi.uploadFile(file).catch((error: any) => {
+            try {
+                await uploadApi.uploadFile(file);
+            } catch (error: any) {
                 assert.equal(error.status, 409);
-                
-            });
+            }
         });
 
         it('upload file should get 200 and rename if the new name clashes with an existing file in the current parent folder and autorename is true', async () => {
@@ -88,8 +89,13 @@ describe('Upload', () => {
             const file = createTestFileStream('testFile.txt');
 
             const promise: any = uploadApi.uploadFile(file, null, null, null, { autoRename: true });
-            promise.once('abort', () => {
-                
+            await new Promise<void>((resolve) => {
+                promise.once('abort', () => {
+                    resolve();
+                });
+                promise.catch(() => {
+                    resolve();
+                });
             });
 
             promise.abort();
@@ -105,9 +111,7 @@ describe('Upload', () => {
             const uploadPromise: any = uploadApi.uploadFile(file);
 
             uploadPromise.catch(() => {});
-            uploadPromise.on('success', () => {
-                
-            });
+            uploadPromise.on('success', () => {});
         });
 
         it('Upload should fire error event if something go wrong', async () => {
@@ -117,9 +121,7 @@ describe('Upload', () => {
 
             const uploadPromise: any = uploadApi.uploadFile(file);
             uploadPromise.catch(() => {});
-            uploadPromise.on('error', () => {
-                
-            });
+            uploadPromise.on('error', () => {});
         });
 
         it('Upload should fire unauthorized event if get 401', async () => {
@@ -130,9 +132,7 @@ describe('Upload', () => {
             const uploadPromise: any = uploadApi.uploadFile(file);
 
             uploadPromise.catch(() => {});
-            uploadPromise.on('unauthorized', () => {
-                
-            });
+            uploadPromise.on('unauthorized', () => {});
         });
 
         // Upload progress events are emitted via the XHR path in FetchHttpClient.
@@ -177,11 +177,9 @@ describe('Upload', () => {
                 });
             });
 
-            Promise.all([promiseProgressOne, promiseProgressTwo]).then(() => {
-                assert.equal(progressOneOk, true);
-                assert.equal(progressTwoOk, true);
-                
-            });
+            await Promise.all([promiseProgressOne, promiseProgressTwo]);
+            assert.equal(progressOneOk, true);
+            assert.equal(progressTwoOk, true);
         });
 
         it('Multiple Upload should fire error events on the right promise during the upload', async () => {
@@ -213,11 +211,9 @@ describe('Upload', () => {
                 });
             });
 
-            Promise.all([promiseErrorOne, promiseErrorTwo]).then(() => {
-                assert.equal(errorOneOk, true);
-                assert.equal(errorTwoOk, true);
-                
-            });
+            await Promise.all([promiseErrorOne, promiseErrorTwo]);
+            assert.equal(errorOneOk, true);
+            assert.equal(errorTwoOk, true);
         });
 
         it('Multiple Upload should fire success events on the right promise during the upload', async () => {
@@ -249,11 +245,9 @@ describe('Upload', () => {
                 });
             });
 
-            Promise.all([promiseSuccessOne, promiseSuccessTwo]).then(() => {
-                assert.equal(successOneOk, true);
-                assert.equal(successTwoOk, true);
-                
-            });
+            await Promise.all([promiseSuccessOne, promiseSuccessTwo]);
+            assert.equal(successOneOk, true);
+            assert.equal(successTwoOk, true);
         });
 
         it('Multiple Upload should resolve the correct promise', async () => {
@@ -275,11 +269,9 @@ describe('Upload', () => {
                 resolveTwoOk = true;
             });
 
-            Promise.all([p1, p2]).then(() => {
-                assert.equal(resolveOneOk, true);
-                assert.equal(resolveTwoOk, true);
-                
-            });
+            await Promise.all([p1, p2]);
+            assert.equal(resolveOneOk, true);
+            assert.equal(resolveTwoOk, true);
         });
 
         it('Multiple Upload should reject the correct promise', async () => {
@@ -301,11 +293,9 @@ describe('Upload', () => {
                 rejectTwoOk = true;
             });
 
-            Promise.all([p1, p2]).then(() => {
-                assert.equal(rejectOneOk, true);
-                assert.equal(rejectTwoOk, true);
-                
-            });
+            await Promise.all([p1, p2]);
+            assert.equal(rejectOneOk, true);
+            assert.equal(rejectTwoOk, true);
         });
 
         it('Is possible use chain events', async () => {
@@ -326,9 +316,7 @@ describe('Upload', () => {
                     promises.push(Promise.resolve('Resolving'));
                 });
 
-            Promise.all(promises).then(() => {
-                
-            });
+            await Promise.all(promises);
         });
     });
 });

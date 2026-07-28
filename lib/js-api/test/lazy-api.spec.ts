@@ -16,9 +16,8 @@
  */
 
 import assert from 'assert';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { LazyApi } from '../src/utils/lazy-api';
-import { describe, it, beforeEach, afterEach } from 'node:test';
+import { describe, it } from 'node:test';
 
 describe('LazyApi', () => {
     it('should create a lazy-loaded property on the target prototype', () => {

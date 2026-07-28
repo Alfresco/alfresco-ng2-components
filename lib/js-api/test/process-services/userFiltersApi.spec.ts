@@ -16,7 +16,7 @@
  */
 
 import assert from 'assert';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, UserFiltersApi } from '../../src';
 import { BpmAuthMock, UserFiltersMock } from '../mockObjects';
 import { describe, it, beforeEach, afterEach } from 'node:test';

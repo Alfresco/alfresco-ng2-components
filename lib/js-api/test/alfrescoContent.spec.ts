@@ -39,10 +39,8 @@ describe('AlfrescoContent', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {
-            contentApi = new ContentApi(alfrescoJsApi);
-            
-        });
+        await alfrescoJsApi.login('admin', 'admin');
+        contentApi = new ContentApi(alfrescoJsApi);
     });
 
     afterEach(() => {

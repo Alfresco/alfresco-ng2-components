@@ -16,7 +16,7 @@
  */
 
 import assert from 'assert';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, GsSitesApi } from '../../src';
 import { EcmAuthMock, GsSitesApiMock } from '../mockObjects';
 import { describe, it, beforeEach, afterEach } from 'node:test';
@@ -50,7 +50,6 @@ describe('Governance API test', () => {
 
         gsSitesApi.getRMSite().then((data) => {
             assert.equal(data.entry.description, 'Records Management Description Test');
-            
         });
     });
 });

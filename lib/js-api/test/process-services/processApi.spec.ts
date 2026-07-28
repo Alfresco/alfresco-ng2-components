@@ -16,7 +16,7 @@
  */
 
 import assert from 'assert';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { BpmAuthMock, ProcessMock } from '../mockObjects';
 import { AlfrescoApi, ProcessDefinitionsApi, ProcessInstanceQueryRepresentation, ProcessInstancesApi } from '../../src';
 import { describe, it, beforeEach, afterEach } from 'node:test';
@@ -64,7 +64,6 @@ describe('Activiti Process Api', () => {
             assert.equal(data.data[0].name, 'Process Test Api - July 26th 2016');
             assert.equal(data.data[1].name, 'Process Test Api - July 26th 2016');
             assert.equal(data.size, 2);
-            
         });
     });
 
@@ -74,7 +73,6 @@ describe('Activiti Process Api', () => {
         processInstancesApi.getProcessInstances({}).then((data) => {
             assert.equal(data.data[0].name, 'Process Test Api - July 26th 2016');
             assert.equal(data.data[1].name, 'Process Test Api - July 26th 2016');
-            
         });
     });
 
@@ -84,7 +82,6 @@ describe('Activiti Process Api', () => {
 
         processDefinitionsApi.getProcessDefinitionStartForm(processDefinitionId).then((data) => {
             assert.equal(data.processDefinitionId, 'testProcess:1:7504');
-            
         });
     });
 });

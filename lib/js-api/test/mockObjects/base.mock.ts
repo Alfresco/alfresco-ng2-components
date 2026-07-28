@@ -47,6 +47,13 @@ export function resetGlobalMockAgent(): void {
     }
 }
 
+export function flushMicrotasks(): Promise<void> {
+    return new Promise((resolve) => {
+        // Queue a task at the end of the microtask queue
+        resolve();
+    });
+}
+
 interface MockReplyChain {
     reply(statusCode: number, body?: any, headers?: Record<string, string>): void;
 }

@@ -55,7 +55,7 @@ describe('FetchHttpClient', () => {
             const headers: Record<string, string> = {};
             client.setCsrfToken(headers);
             assert.ok(headers['X-CSRF-TOKEN']);
-            expect(headers['X-CSRF-TOKEN'].length).toBeGreaterThan(0);
+            assert.ok(headers['X-CSRF-TOKEN'].length > 0);
         });
     });
 
@@ -282,24 +282,30 @@ describe('FetchHttpClient', () => {
             const errorSpy = sinon.stub();
             eventEmitter.on('error', errorSpy);
 
-            await expect(
-                client.get(
-                    host + '/api/fail',
-                    {
-                        httpMethod: 'GET',
-                        queryParams: {},
-                        headerParams: {},
-                        formParams: {},
-                        bodyParam: null,
-                        contentType: 'application/json',
-                        accept: 'application/json',
-                        responseType: null,
-                        returnType: null
-                    },
-                    defaultSecurityOptions,
-                    emitters
-                )
-            ).rejects.toEqual(expect.objectContaining({ status: 500 }));
+            await assert.rejects(
+                async () => {
+                    await client.get(
+                        host + '/api/fail',
+                        {
+                            httpMethod: 'GET',
+                            queryParams: {},
+                            headerParams: {},
+                            formParams: {},
+                            bodyParam: null,
+                            contentType: 'application/json',
+                            accept: 'application/json',
+                            responseType: null,
+                            returnType: null
+                        },
+                        defaultSecurityOptions,
+                        emitters
+                    );
+                },
+                (err) => {
+                    assert.strictEqual(err.status, 500);
+                    return true;
+                }
+            );
 
             assert.ok(errorSpy.called);
         });
@@ -309,24 +315,30 @@ describe('FetchHttpClient', () => {
             const unauthorizedSpy = sinon.stub();
             eventEmitter.on('unauthorized', unauthorizedSpy);
 
-            await expect(
-                client.get(
-                    host + '/api/secure',
-                    {
-                        httpMethod: 'GET',
-                        queryParams: {},
-                        headerParams: {},
-                        formParams: {},
-                        bodyParam: null,
-                        contentType: 'application/json',
-                        accept: 'application/json',
-                        responseType: null,
-                        returnType: null
-                    },
-                    defaultSecurityOptions,
-                    emitters
-                )
-            ).rejects.toEqual(expect.objectContaining({ status: 401 }));
+            await assert.rejects(
+                async () => {
+                    await client.get(
+                        host + '/api/secure',
+                        {
+                            httpMethod: 'GET',
+                            queryParams: {},
+                            headerParams: {},
+                            formParams: {},
+                            bodyParam: null,
+                            contentType: 'application/json',
+                            accept: 'application/json',
+                            responseType: null,
+                            returnType: null
+                        },
+                        defaultSecurityOptions,
+                        emitters
+                    );
+                },
+                (err) => {
+                    assert.strictEqual(err.status, 401);
+                    return true;
+                }
+            );
 
             assert.ok(unauthorizedSpy.called);
         });
@@ -336,24 +348,30 @@ describe('FetchHttpClient', () => {
             const forbiddenSpy = sinon.stub();
             eventEmitter.on('forbidden', forbiddenSpy);
 
-            await expect(
-                client.get(
-                    host + '/api/forbidden',
-                    {
-                        httpMethod: 'GET',
-                        queryParams: {},
-                        headerParams: {},
-                        formParams: {},
-                        bodyParam: null,
-                        contentType: 'application/json',
-                        accept: 'application/json',
-                        responseType: null,
-                        returnType: null
-                    },
-                    defaultSecurityOptions,
-                    emitters
-                )
-            ).rejects.toEqual(expect.objectContaining({ status: 403 }));
+            await assert.rejects(
+                async () => {
+                    await client.get(
+                        host + '/api/forbidden',
+                        {
+                            httpMethod: 'GET',
+                            queryParams: {},
+                            headerParams: {},
+                            formParams: {},
+                            bodyParam: null,
+                            contentType: 'application/json',
+                            accept: 'application/json',
+                            responseType: null,
+                            returnType: null
+                        },
+                        defaultSecurityOptions,
+                        emitters
+                    );
+                },
+                (err) => {
+                    assert.strictEqual(err.status, 403);
+                    return true;
+                }
+            );
 
             assert.ok(forbiddenSpy.called);
         });
@@ -453,7 +471,7 @@ describe('FetchHttpClient', () => {
                 authentications: { type: 'unknown' }
             };
 
-            expect(() =>
+            assert.throws(() => {
                 client.get(
                     host + '/api/test',
                     {
@@ -469,8 +487,8 @@ describe('FetchHttpClient', () => {
                     },
                     securityOptions,
                     emitters
-                )
-            ).toThrow('Unknown authentication type: unknown');
+                );
+            }, /Unknown authentication type: unknown/);
         });
     });
 
@@ -513,7 +531,7 @@ describe('FetchHttpClient', () => {
 
         it('should accept an object timeout', () => {
             client.timeout = { deadline: 10000, response: 5000 };
-            expect((client.timeout as any).deadline).toBe(10000);
+            assert.strictEqual((client.timeout as any).deadline, 10000);
         });
     });
 
@@ -638,7 +656,7 @@ describe('FetchHttpClient', () => {
         beforeEach(() => {
             xhrClient = new FetchHttpClient();
             mockXhr = createMockXhr();
-            (globalThis as any).XMLHttpRequest = jest.fn(() => mockXhr);
+            (globalThis as any).XMLHttpRequest = sinon.stub().callsFake(() => mockXhr);
             delete (process as any).__test_fetch__;
         });
 
@@ -719,24 +737,30 @@ describe('FetchHttpClient', () => {
             const errorSpy = sinon.stub();
             eventEmitter.on('error', errorSpy);
 
-            await expect(
-                xhrClient.post(
-                    host + '/api/fail',
-                    {
-                        httpMethod: 'POST',
-                        queryParams: {},
-                        headerParams: {},
-                        formParams: {},
-                        bodyParam: { data: 'test' },
-                        contentType: 'application/json',
-                        accept: 'application/json',
-                        responseType: null,
-                        returnType: null
-                    },
-                    defaultSecurityOptions,
-                    emitters
-                )
-            ).rejects.toEqual(expect.objectContaining({ status: 500 }));
+            await assert.rejects(
+                async () => {
+                    await xhrClient.post(
+                        host + '/api/fail',
+                        {
+                            httpMethod: 'POST',
+                            queryParams: {},
+                            headerParams: {},
+                            formParams: {},
+                            bodyParam: { data: 'test' },
+                            contentType: 'application/json',
+                            accept: 'application/json',
+                            responseType: null,
+                            returnType: null
+                        },
+                        defaultSecurityOptions,
+                        emitters
+                    );
+                },
+                (err) => {
+                    assert.strictEqual(err.status, 500);
+                    return true;
+                }
+            );
 
             assert.ok(errorSpy.called);
         });
@@ -748,24 +772,30 @@ describe('FetchHttpClient', () => {
             const unauthorizedSpy = sinon.stub();
             eventEmitter.on('unauthorized', unauthorizedSpy);
 
-            await expect(
-                xhrClient.post(
-                    host + '/api/secure',
-                    {
-                        httpMethod: 'POST',
-                        queryParams: {},
-                        headerParams: {},
-                        formParams: {},
-                        bodyParam: { data: 'test' },
-                        contentType: 'application/json',
-                        accept: 'application/json',
-                        responseType: null,
-                        returnType: null
-                    },
-                    defaultSecurityOptions,
-                    emitters
-                )
-            ).rejects.toEqual(expect.objectContaining({ status: 401 }));
+            await assert.rejects(
+                async () => {
+                    await xhrClient.post(
+                        host + '/api/secure',
+                        {
+                            httpMethod: 'POST',
+                            queryParams: {},
+                            headerParams: {},
+                            formParams: {},
+                            bodyParam: { data: 'test' },
+                            contentType: 'application/json',
+                            accept: 'application/json',
+                            responseType: null,
+                            returnType: null
+                        },
+                        defaultSecurityOptions,
+                        emitters
+                    );
+                },
+                (err) => {
+                    assert.strictEqual(err.status, 401);
+                    return true;
+                }
+            );
 
             assert.ok(unauthorizedSpy.called);
         });
@@ -777,24 +807,30 @@ describe('FetchHttpClient', () => {
             const forbiddenSpy = sinon.stub();
             eventEmitter.on('forbidden', forbiddenSpy);
 
-            await expect(
-                xhrClient.post(
-                    host + '/api/forbidden',
-                    {
-                        httpMethod: 'POST',
-                        queryParams: {},
-                        headerParams: {},
-                        formParams: {},
-                        bodyParam: { data: 'test' },
-                        contentType: 'application/json',
-                        accept: 'application/json',
-                        responseType: null,
-                        returnType: null
-                    },
-                    defaultSecurityOptions,
-                    emitters
-                )
-            ).rejects.toEqual(expect.objectContaining({ status: 403 }));
+            await assert.rejects(
+                async () => {
+                    await xhrClient.post(
+                        host + '/api/forbidden',
+                        {
+                            httpMethod: 'POST',
+                            queryParams: {},
+                            headerParams: {},
+                            formParams: {},
+                            bodyParam: { data: 'test' },
+                            contentType: 'application/json',
+                            accept: 'application/json',
+                            responseType: null,
+                            returnType: null
+                        },
+                        defaultSecurityOptions,
+                        emitters
+                    );
+                },
+                (err) => {
+                    assert.strictEqual(err.status, 403);
+                    return true;
+                }
+            );
 
             assert.ok(forbiddenSpy.called);
         });
@@ -807,8 +843,8 @@ describe('FetchHttpClient', () => {
             const errorSpy = sinon.stub();
             eventEmitter.on('error', errorSpy);
 
-            await expect(
-                xhrClient.post(
+            await assert.rejects(async () => {
+                await xhrClient.post(
                     host + '/api/network-fail',
                     {
                         httpMethod: 'POST',
@@ -823,8 +859,8 @@ describe('FetchHttpClient', () => {
                     },
                     defaultSecurityOptions,
                     emitters
-                )
-            ).rejects.toBeTruthy();
+                );
+            });
 
             assert.ok(errorSpy.called);
         });
@@ -837,8 +873,8 @@ describe('FetchHttpClient', () => {
             const abortSpy = sinon.stub();
             eventEmitter.on('abort', abortSpy);
 
-            await expect(
-                xhrClient.post(
+            await assert.rejects(async () => {
+                await xhrClient.post(
                     host + '/api/abort',
                     {
                         httpMethod: 'POST',
@@ -853,8 +889,8 @@ describe('FetchHttpClient', () => {
                     },
                     defaultSecurityOptions,
                     emitters
-                )
-            ).rejects.toBeTruthy();
+                );
+            });
 
             assert.ok(abortSpy.called);
         });
@@ -867,8 +903,8 @@ describe('FetchHttpClient', () => {
             const errorSpy = sinon.stub();
             eventEmitter.on('error', errorSpy);
 
-            await expect(
-                xhrClient.post(
+            await assert.rejects(async () => {
+                await xhrClient.post(
                     host + '/api/slow',
                     {
                         httpMethod: 'POST',
@@ -883,8 +919,8 @@ describe('FetchHttpClient', () => {
                     },
                     defaultSecurityOptions,
                     emitters
-                )
-            ).rejects.toBeTruthy();
+                );
+            });
 
             assert.ok(errorSpy.called);
         });

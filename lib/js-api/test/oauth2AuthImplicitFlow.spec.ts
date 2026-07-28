@@ -16,7 +16,6 @@
  */
 
 import assert from 'assert';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { AlfrescoApi, Oauth2Auth } from '../src';
 import { describe, it, beforeEach, afterEach } from 'node:test';
 
@@ -72,7 +71,6 @@ describe('Oauth2 Implicit flow test', () => {
             );
         } catch (error) {
             assert.equal(error.message, 'Missing redirectUri required parameter');
-            
         }
     });
 
@@ -94,7 +92,6 @@ describe('Oauth2 Implicit flow test', () => {
 
         oauth2Auth.on('implicit_redirect', (href: string) => {
             assert.equal(href.includes('https://myOauthUrl:30081/auth/realms/springboot/protocol/openid-connect/auth?'), true);
-            
         });
 
         oauth2Auth.implicitLogin();
@@ -121,7 +118,6 @@ describe('Oauth2 Implicit flow test', () => {
         oauth2Auth.on('implicit_redirect', (href: string) => {
             assert.equal(href.includes('https://myOauthUrl:30081/auth/realms/springboot/protocol/openid-connect/auth?'), true);
             assert.equal(setItemCalled, true);
-            
         });
 
         oauth2Auth.implicitLogin();
@@ -147,7 +143,6 @@ describe('Oauth2 Implicit flow test', () => {
 
         oauth2Auth.on('token_issued', () => {
             assert.equal(window.location.href, 'http://localhost/');
-            
         });
 
         oauth2Auth.setToken('new_token', 'new_refresh_token');
@@ -179,7 +174,6 @@ describe('Oauth2 Implicit flow test', () => {
         oauth2Auth.on('implicit_redirect', (href: string) => {
             assert.equal(href.includes('https://myOauthUrl:30081/auth/realms/springboot/protocol/openid-connect/auth?'), true);
             assert.deepEqual(lastValues, ['loginFragment', '/redirect-path&session_state=eqfqwfqwf']);
-            
         });
 
         oauth2Auth.implicitLogin();

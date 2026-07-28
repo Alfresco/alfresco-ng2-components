@@ -16,7 +16,7 @@
  */
 
 import assert from 'assert';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, TagBody, TagEntry, TagPaging, TagsApi } from '../../src';
 import { EcmAuthMock, TagMock } from '../mockObjects';
 import { describe, it, beforeEach, afterEach } from 'node:test';
@@ -38,9 +38,7 @@ describe('Tags', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {
-            
-        });
+        alfrescoJsApi.login('admin', 'admin').then(() => {});
 
         tagsApi = new TagsApi(alfrescoJsApi);
     });
@@ -57,7 +55,6 @@ describe('Tags', () => {
                 assert.equal(data.list.pagination.count, 2);
                 assert.equal(data.list.entries[0].entry.tag, 'tag-test-1');
                 assert.equal(data.list.entries[1].entry.tag, 'tag-test-2');
-                
             });
         });
 
@@ -66,9 +63,7 @@ describe('Tags', () => {
 
             tagsApi.listTags().then(
                 () => {},
-                () => {
-                    
-                }
+                () => {}
             );
         });
 
@@ -82,7 +77,6 @@ describe('Tags', () => {
                 .then((data) => {
                     assert.equal(data.list.entries[0].entry.tag, 'tag-test-1');
                     assert.equal(data.list.entries[0].entry.id, '0d89aa82-f2b8-4a37-9a54-f4c5148174d6');
-                    
                 });
         });
 
@@ -102,7 +96,6 @@ describe('Tags', () => {
 
                     assert.equal(data.list.entries[1].entry.tag, 'tag-test-2');
                     assert.equal(data.list.entries[1].entry.id, 'd79bdbd0-9f55-45bb-9521-811e15bf48f6');
-
                 });
         });
     });
@@ -114,7 +107,6 @@ describe('Tags', () => {
                 assert.equal(tags.list.entries.length, 2);
                 assert.equal(tags.list.entries[0].entry.tag, 'tag-test-1');
                 assert.equal(tags.list.entries[1].entry.tag, 'tag-test-2');
-                
             });
         });
 
@@ -136,7 +128,6 @@ describe('Tags', () => {
                 assert.equal(tagPaging.list.pagination.count, 2);
                 assert.equal(tagPaging.list.entries[0].entry.tag, tag1.tag);
                 assert.equal(tagPaging.list.entries[1].entry.tag, tag2.tag);
-                
             });
         });
 
@@ -149,7 +140,6 @@ describe('Tags', () => {
             tagsApi.assignTagsToNode('someNodeId', tags).then((data) => {
                 const tagEntry = data as TagEntry;
                 assert.equal(tagEntry.entry.tag, tag.tag);
-                
             });
         });
     });

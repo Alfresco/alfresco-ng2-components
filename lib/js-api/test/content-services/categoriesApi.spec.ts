@@ -16,7 +16,7 @@
  */
 
 import assert from 'assert';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, CategoriesApi, CategoryPaging, CategoryEntry } from '../../src';
 import { EcmAuthMock, CategoriesMock } from '../mockObjects';
 import { describe, it, beforeEach, afterEach } from 'node:test';
@@ -51,7 +51,6 @@ describe('Categories', () => {
             assert.equal(response.list.pagination.count, 2);
             assert.equal(response.list.entries[0].entry.parentId, '-root-');
             assert.equal(response.list.entries[0].entry.id, 'testId1');
-            
         });
     });
 
@@ -61,7 +60,6 @@ describe('Categories', () => {
             () => {},
             (error: { status: number }) => {
                 assert.equal(error.status, 404);
-                
             }
         );
     });
@@ -71,7 +69,6 @@ describe('Categories', () => {
         categoriesApi.getCategory('testId1').then((response: CategoryEntry) => {
             assert.equal(response.entry.parentId, '-root-');
             assert.equal(response.entry.id, 'testId1');
-            
         });
     });
 
@@ -81,7 +78,6 @@ describe('Categories', () => {
             () => {},
             (error: { status: number }) => {
                 assert.equal(error.status, 404);
-                
             }
         );
     });
@@ -91,7 +87,6 @@ describe('Categories', () => {
         categoriesApi.getCategoryLinksForNode('testNode').then((response: CategoryPaging) => {
             assert.equal(response.list.entries[0].entry.parentId, 'testNode');
             assert.equal(response.list.entries[0].entry.id, 'testId1');
-            
         });
     });
 
@@ -101,7 +96,6 @@ describe('Categories', () => {
             () => {},
             (error: { status: number }) => {
                 assert.equal(error.status, 403);
-                
             }
         );
     });
@@ -112,16 +106,13 @@ describe('Categories', () => {
             () => {},
             (error: { status: number }) => {
                 assert.equal(error.status, 404);
-                
             }
         );
     });
 
     it('should return 204 after unlinking category', async () => {
         categoriesMock.get204CategoryUnlinked('testNode', 'testId1');
-        categoriesApi.unlinkNodeFromCategory('testNode', 'testId1').then(() => {
-            
-        });
+        categoriesApi.unlinkNodeFromCategory('testNode', 'testId1').then(() => {});
     });
 
     it('should return 404 while unlinking category if category with categoryId or node with nodeId does not exist', async () => {
@@ -130,7 +121,6 @@ describe('Categories', () => {
             () => {},
             (error: { status: number }) => {
                 assert.equal(error.status, 404);
-                
             }
         );
     });
@@ -141,7 +131,6 @@ describe('Categories', () => {
             () => {},
             (error: { status: number }) => {
                 assert.equal(error.status, 403);
-                
             }
         );
     });
@@ -151,7 +140,6 @@ describe('Categories', () => {
         categoriesApi.updateCategory('testId1', { name: 'testName1' }).then((response) => {
             assert.equal(response.entry.id, 'testId1');
             assert.equal(response.entry.name, 'testName1');
-            
         });
     });
 
@@ -161,7 +149,6 @@ describe('Categories', () => {
             () => {},
             (error: { status: number }) => {
                 assert.equal(error.status, 404);
-                
             }
         );
     });
@@ -172,7 +159,6 @@ describe('Categories', () => {
             () => {},
             (error: { status: number }) => {
                 assert.equal(error.status, 403);
-                
             }
         );
     });
@@ -182,7 +168,6 @@ describe('Categories', () => {
         categoriesApi.createSubcategories('testId1', [{ name: 'testName10' }]).then((response: CategoryPaging | CategoryEntry) => {
             assert.equal((response as CategoryEntry).entry.parentId, 'testId1');
             assert.equal((response as CategoryEntry).entry.name, 'testName10');
-            
         });
     });
 
@@ -192,7 +177,6 @@ describe('Categories', () => {
             () => {},
             (error: { status: number }) => {
                 assert.equal(error.status, 409);
-                
             }
         );
     });
@@ -203,7 +187,6 @@ describe('Categories', () => {
             () => {},
             (error: { status: number }) => {
                 assert.equal(error.status, 403);
-                
             }
         );
     });
@@ -214,7 +197,6 @@ describe('Categories', () => {
             if (response instanceof CategoryEntry) {
                 assert.equal(response.entry.id, 'testId1');
                 assert.equal(response.entry.name, 'testName1');
-                
             } else {
                 assert.fail();
             }
@@ -230,7 +212,6 @@ describe('Categories', () => {
             assert.equal(categoriesPaging.list.entries[0].entry.name, 'testName1');
             assert.equal(categoriesPaging.list.entries[1].entry.id, 'testId2');
             assert.equal(categoriesPaging.list.entries[1].entry.name, 'testName2');
-            
         });
     });
 
@@ -240,7 +221,6 @@ describe('Categories', () => {
             () => {},
             (error: { status: number }) => {
                 assert.equal(error.status, 404);
-                
             }
         );
     });
@@ -251,7 +231,6 @@ describe('Categories', () => {
             () => {},
             (error: { status: number }) => {
                 assert.equal(error.status, 403);
-                
             }
         );
     });
@@ -262,7 +241,6 @@ describe('Categories', () => {
             () => {},
             (error: { status: number }) => {
                 assert.equal(error.status, 405);
-                
             }
         );
     });

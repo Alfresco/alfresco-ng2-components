@@ -16,7 +16,7 @@
  */
 
 import assert from 'assert';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, QueriesApi } from '../../src';
 import { EcmAuthMock, FindNodesMock } from '../mockObjects';
 import { describe, it, beforeEach, afterEach } from 'node:test';
@@ -38,9 +38,7 @@ describe('Queries', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {
-            
-        });
+        alfrescoJsApi.login('admin', 'admin').then(() => {});
 
         queriesApi = new QueriesApi(alfrescoJsApi);
     });
@@ -63,9 +61,7 @@ describe('Queries', () => {
 
             queriesApi.findNodes(searchTerm).then(
                 () => {},
-                () => {
-                    
-                }
+                () => {}
             );
         });
 
@@ -76,7 +72,6 @@ describe('Queries', () => {
                 assert.equal(data.list.pagination.count, 2);
                 assert.equal(data.list.entries[0].entry.name, 'coins1.JPG');
                 assert.equal(data.list.entries[1].entry.name, 'coins2.JPG');
-                
             });
         });
     });

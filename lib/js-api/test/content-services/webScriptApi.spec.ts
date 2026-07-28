@@ -16,7 +16,7 @@
  */
 
 import assert from 'assert';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, WebscriptApi } from '../../src';
 import { EcmAuthMock, WebScriptMock } from '../mockObjects';
 import { describe, it, beforeEach, afterEach } from 'node:test';
@@ -40,9 +40,7 @@ describe('WebScript', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {
-            
-        });
+        alfrescoJsApi.login('admin', 'admin').then(() => {});
 
         webscriptApi = new WebscriptApi(alfrescoJsApi);
     });
@@ -56,16 +54,13 @@ describe('WebScript', () => {
 
         webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath).catch((error: any) => {
             assert.equal(error.status, 404);
-            
         });
     });
 
     it('execute webScript GET return 200 if all is ok  should be handled by resolve promise', async () => {
         webScriptMock.get200Response();
 
-        webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath).then(() => {
-            
-        });
+        webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath).then(() => {});
     });
 
     it('execute webScript that return HTML should not return it as Object', async () => {
@@ -75,7 +70,7 @@ describe('WebScript', () => {
             try {
                 JSON.parse(data);
             } catch {
-                
+                // Expected - HTML cannot be parsed as JSON
             }
         });
     });
@@ -87,9 +82,7 @@ describe('WebScript', () => {
             const webscriptPromise: any = webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath);
 
             webscriptPromise.catch(() => {});
-            webscriptPromise.on('success', () => {
-                
-            });
+            webscriptPromise.on('success', () => {});
         });
 
         it('WebScript should fire error event if something go wrong', async () => {
@@ -98,9 +91,7 @@ describe('WebScript', () => {
             const webscriptPromise: any = webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath);
 
             webscriptPromise.catch(() => {});
-            webscriptPromise.on('error', () => {
-                
-            });
+            webscriptPromise.on('error', () => {});
         });
 
         it('WebScript should fire unauthorized event if get 401', async () => {
@@ -109,9 +100,7 @@ describe('WebScript', () => {
             const webscriptPromise: any = webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath);
 
             webscriptPromise.catch(() => {});
-            webscriptPromise.on('unauthorized', () => {
-                
-            });
+            webscriptPromise.on('unauthorized', () => {});
         });
     });
 });

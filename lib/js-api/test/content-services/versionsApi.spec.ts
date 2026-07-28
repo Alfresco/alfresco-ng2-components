@@ -16,7 +16,7 @@
  */
 
 import assert from 'assert';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, VersionsApi } from '../../src';
 import { EcmAuthMock, VersionMock } from '../mockObjects';
 import { describe, it, beforeEach, afterEach } from 'node:test';
@@ -54,16 +54,13 @@ describe('Versions', () => {
             const entries = data.list.entries;
             assert.equal(entries.length, 6);
             assert.equal(data.list.entries[0].entry.id, 'avatar');
-            
         });
     });
 
     it('should create rendition for a node versionId', async () => {
         versionMock.create200VersionRendition(nodeId, versionId);
 
-        versionsApi.createVersionRendition(nodeId, versionId, { id: 'pdf' }).then(() => {
-            
-        });
+        versionsApi.createVersionRendition(nodeId, versionId, { id: 'pdf' }).then(() => {});
     });
 
     it('should get a node version rendition', async () => {
@@ -71,7 +68,6 @@ describe('Versions', () => {
 
         versionsApi.getVersionRendition(nodeId, versionId, renditionId).then((data) => {
             assert.equal(data.entry.id, 'pdf');
-            
         });
     });
 
@@ -83,7 +79,6 @@ describe('Versions', () => {
             assert.equal(entries.length, 2);
             assert.equal(entries[0].entry.id, '2.0');
             assert.equal(entries[1].entry.id, '1.0');
-            
         });
     });
 
@@ -92,7 +87,6 @@ describe('Versions', () => {
 
         versionsApi.revertVersion(nodeId, versionId, { majorVersion: true, comment: '' }).then((data) => {
             assert.equal(data.entry.id, '3.0');
-            
         });
     });
 });

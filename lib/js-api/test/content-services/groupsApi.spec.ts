@@ -16,7 +16,7 @@
  */
 
 import assert from 'assert';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, GroupsApi } from '../../src';
 import { EcmAuthMock, GroupsMock } from '../mockObjects';
 import { describe, it, beforeEach, afterEach } from 'node:test';
@@ -37,9 +37,7 @@ describe('Groups', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {
-            
-        });
+        alfrescoJsApi.login('admin', 'admin').then(() => {});
 
         groupsApi = new GroupsApi(alfrescoJsApi);
     });
@@ -55,7 +53,6 @@ describe('Groups', () => {
             assert.equal(data.list.pagination.count, 2);
             assert.equal(data.list.entries[0].entry.id, 'GROUP_alfalfa');
             assert.equal(data.list.entries[1].entry.id, 'GROUP_CallCenterAA');
-            
         });
     });
 
@@ -69,15 +66,12 @@ describe('Groups', () => {
 
         groupsApi.createGroup(groupBody).then((data) => {
             assert.equal(data.entry.id, 'GROUP_TEST');
-            
         });
     });
 
     it('delete group', async () => {
         groupsMock.getDeleteGroupSuccessfulResponse('group_test');
-        groupsApi.deleteGroup('group_test').then(() => {
-            
-        });
+        groupsApi.deleteGroup('group_test').then(() => {});
     });
 
     it('get single group', async () => {
@@ -86,7 +80,6 @@ describe('Groups', () => {
         groupsApi.getGroup('GROUP_TEST').then((data) => {
             assert.equal(data.entry.id, 'GROUP_TEST');
             assert.equal(data.entry.displayName, 'SAMPLE');
-            
         });
     });
 
@@ -100,7 +93,6 @@ describe('Groups', () => {
         groupsApi.updateGroup('GROUP_TEST', groupBody).then((data) => {
             assert.equal(data.entry.id, 'GROUP_TEST');
             assert.equal(data.entry.displayName, 'CHANGED');
-            
         });
     });
 
@@ -111,7 +103,6 @@ describe('Groups', () => {
             assert.equal(data.list.pagination.count, 1);
             assert.equal(data.list.entries[0].entry.id, 'GROUP_SUB_TEST');
             assert.equal(data.list.entries[0].entry.displayName, 'SAMPLE');
-            
         });
     });
 
@@ -126,14 +117,11 @@ describe('Groups', () => {
         groupsApi.createGroupMembership('GROUP_TEST', groupBody).then((data) => {
             assert.equal(data.entry.id, 'GROUP_SUB_TEST');
             assert.equal(data.entry.displayName, 'SAMPLE');
-            
         });
     });
 
     it('delete group member', async () => {
         groupsMock.getDeleteMemberForGroupSuccessfulResponse('GROUP_TEST', 'GROUP_SUB_TEST');
-        groupsApi.deleteGroupMembership('GROUP_TEST', 'GROUP_SUB_TEST').then(() => {
-            
-        });
+        groupsApi.deleteGroupMembership('GROUP_TEST', 'GROUP_SUB_TEST').then(() => {});
     });
 });

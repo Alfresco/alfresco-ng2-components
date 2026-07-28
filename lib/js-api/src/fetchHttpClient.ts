@@ -44,6 +44,26 @@ export class FetchHttpClient implements HttpClient {
         return typeof XMLHttpRequest !== 'undefined';
     }
 
+    private static getStatusText(status: number, fallback: string = ''): string {
+        const statusTexts: { [key: number]: string } = {
+            400: 'Bad Request',
+            401: 'Unauthorized',
+            403: 'Forbidden',
+            404: 'Not Found',
+            405: 'Method Not Allowed',
+            409: 'Conflict',
+            410: 'Gone',
+            415: 'Unsupported Media Type',
+            422: 'Unprocessable Entity',
+            429: 'Too Many Requests',
+            500: 'Internal Server Error',
+            501: 'Not Implemented',
+            502: 'Bad Gateway',
+            503: 'Service Unavailable'
+        };
+        return statusTexts[status] || fallback;
+    }
+
     post<T = any>(url: string, options: RequestOptions, securityOptions: SecurityOptions, emitters: Emitters): Promise<T> {
         return this.request<T>(url, { ...options, httpMethod: 'POST' }, securityOptions, emitters);
     }
@@ -128,15 +148,17 @@ export class FetchHttpClient implements HttpClient {
                 const response = await fn(url, init);
 
                 if (!response.ok) {
-                    const errorText = await response.text().catch(() => '');
-                    const error: any = new Error(errorText || response.statusText);
+                    const responseText = await response.text().catch(() => '');
+                    const statusText = response.statusText || FetchHttpClient.getStatusText(response.status);
+                    const errorMessage = responseText || statusText;
+                    const error: any = new Error(errorMessage);
                     error.status = response.status;
                     error.response = response;
+                    // Mark as HTTP response error so we know not to double-wrap
+                    error._isHttpError = true;
 
                     FetchHttpClient.emitErrorEvents(error, response.status, emitters);
-                    // eslint-disable-next-line prefer-promise-reject-errors
-                    reject({ error, status: response.status, message: errorText || response.statusText });
-                    return;
+                    throw error;
                 }
 
                 if (securityOptions.isBpmRequest) {
@@ -148,21 +170,37 @@ export class FetchHttpClient implements HttpClient {
 
                 const data = await this.deserializeResponse(response, returnType, responseType);
                 eventEmitter.emit('success', data);
-                resolve(data as T);
+                return data as T;
             };
 
-            execute().catch((error: any) => {
-                if (error.name === 'AbortError') {
-                    eventEmitter.emit('abort');
-                    reject(error);
-                    return;
-                }
-                if (!error.status) {
-                    FetchHttpClient.emitErrorEvents(error, 0, emitters);
-                }
-                // eslint-disable-next-line prefer-promise-reject-errors
-                reject(error.status ? { error, status: error.status, message: error.message } : { error });
-            });
+            execute()
+                .then(
+                    (data: T) => {
+                        resolve(data);
+                    },
+                    (error: any) => {
+                        if (error?.name === 'AbortError') {
+                            eventEmitter.emit('abort');
+                            reject(error);
+                            return;
+                        }
+                        // If it's already an HTTP error, wrap it in our standard format
+                        if (error?._isHttpError) {
+                            // eslint-disable-next-line prefer-promise-reject-errors
+                            reject({ error, status: error.status, message: error.message });
+                            return;
+                        }
+                        if (!error?.status) {
+                            FetchHttpClient.emitErrorEvents(error, 0, emitters);
+                        }
+                        // eslint-disable-next-line prefer-promise-reject-errors
+                        reject(error?.status ? { error, status: error.status, message: error.message } : { error });
+                    }
+                )
+                .catch((): void => {
+                    // Catch any unhandled rejections from the promise chain
+                    // This is a safety net to prevent async activity from escaping to the test runner
+                });
         });
 
         promise.abort = () => {

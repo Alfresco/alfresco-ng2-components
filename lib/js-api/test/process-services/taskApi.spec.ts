@@ -17,7 +17,7 @@
 
 import assert from 'assert';
 import { describe, it, beforeEach, afterEach } from 'node:test';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import {
     AlfrescoApi,
     TaskFilterRequestRepresentation,
@@ -88,9 +88,7 @@ describe('Activiti Task Api', () => {
 
         const requestNode = new TaskFilterRequestRepresentation();
 
-        tasksApi.filterTasks(requestNode).then(NOOP, () => {
-            
-        });
+        tasksApi.filterTasks(requestNode).then(NOOP, () => {});
     });
 
     it('filter Tasks', async () => {
@@ -108,9 +106,7 @@ describe('Activiti Task Api', () => {
         const taskId = '200';
         tasksMock.get404CompleteTask(taskId);
 
-        taskActionsApi.completeTask(taskId).then(NOOP, () => {
-            
-        });
+        taskActionsApi.completeTask(taskId).then(NOOP, () => {});
     });
 
     it('complete Task ', async () => {

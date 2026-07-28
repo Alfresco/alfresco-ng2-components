@@ -16,7 +16,7 @@
  */
 
 import { EcmAuthMock, FilePlansMock } from '../mockObjects';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, FilePlanRolePaging, FilePlansApi } from '../../src';
 import assert from 'assert';
 import { describe, it, beforeEach, afterEach } from 'node:test';
@@ -114,7 +114,6 @@ describe('FilePlansApi', () => {
 
             filePlansApi.getFilePlanRoles(filePlanId).then((rolePaging) => {
                 assert.deepStrictEqual(rolePaging, expectedRolePaging);
-                
             });
         });
 
@@ -129,7 +128,6 @@ describe('FilePlansApi', () => {
                 })
                 .then((rolePaging) => {
                     assert.deepStrictEqual(rolePaging, expectedRolePaging);
-                    
                 });
         });
 
@@ -144,7 +142,6 @@ describe('FilePlansApi', () => {
                 })
                 .then((rolePaging) => {
                     assert.deepStrictEqual(rolePaging, expectedRolePaging);
-                    
                 });
         });
 
@@ -160,7 +157,6 @@ describe('FilePlansApi', () => {
                 })
                 .then((rolePaging) => {
                     assert.deepStrictEqual(rolePaging, expectedRolePaging);
-                    
                 });
         });
     });
