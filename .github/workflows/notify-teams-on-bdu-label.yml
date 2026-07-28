@@ -3,25 +3,16 @@ name: "Notify Teams on A/N BDU label"
 on:
   pull_request:
     types: [opened, reopened, labeled]
-    branches:
-      - develop
-      - master
-      - develop-patch*
-      - master-patch*
-
-concurrency:
-  # De-duplicate: only one notification run per PR at a time.
-  group: notify-bdu-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
+    branches: [develop]
 
 permissions:
-  contents: read
   pull-requests: read
 
 jobs:
   notify-bdu:
     name: Notify Teams when A/N BDU label is present
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     if: >-
       (github.event.action == 'labeled' && github.event.label.name == 'A/N BDU') ||
       ((github.event.action == 'opened' || github.event.action == 'reopened') &&
@@ -32,9 +23,12 @@ jobs:
         with:
           webhook-url: ${{ secrets.TEAMS_NOTIFICATION_ADF_BDU_WEBHOOK }}
           skip_checkout: true
+          # Explicit status so the action does not try to auto-compute it from
+          # the workflow run (which would require `actions: read` permission).
+          status: success
           title: "A/N BDU PR: ${{ github.event.pull_request.title }}"
           message: |
-            A pull request labelled **A/N BDU** needs attention.
+            A pull request labelled **A/N BDU** is pushed.
 
             - **Repository:** ${{ github.repository }}
             - **PR:** [#${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }})
