@@ -304,7 +304,7 @@ importers:
         specifier: 7.6.3
         version: 7.6.3
       sinon:
-        specifier: ^22.1.0
+        specifier: 22.1.0
         version: 22.1.0
       spdx-license-list:
         specifier: 6.11.0
