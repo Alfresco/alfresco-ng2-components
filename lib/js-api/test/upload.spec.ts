@@ -335,20 +335,23 @@ describe('Upload', () => {
 
             uploadMock.get401Response();
 
-            const promises: Promise<string>[] = [];
+            let errorEventFired = false;
+            let unauthorizedEventFired = false;
 
             const uploadPromise: any = uploadApi.uploadFile(file);
             uploadPromise.catch(() => {});
 
             uploadPromise
                 .once('error', () => {
-                    promises.push(Promise.resolve('Resolving'));
+                    errorEventFired = true;
                 })
                 .once('unauthorized', () => {
-                    promises.push(Promise.resolve('Resolving'));
+                    unauthorizedEventFired = true;
                 });
 
-            await Promise.all(promises);
+            await uploadPromise.catch(() => {});
+            assert.equal(errorEventFired, true, 'Error event should have fired');
+            assert.equal(unauthorizedEventFired, true, 'Unauthorized event should have fired');
         });
     });
 });
