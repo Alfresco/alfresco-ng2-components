@@ -16,14 +16,14 @@
  */
 
 /* eslint-disable jsdoc/require-jsdoc, no-underscore-dangle */
-import { FetchHttpClient } from '../src/fetchHttpClient';
-import { resetGlobalMockAgent } from './mockObjects/base.mock';
-import { EventEmitter } from 'eventemitter3';
-import { getGlobalMockAgent, mockHost } from './mockObjects/base.mock';
-import * as fs from 'fs';
-import * as path from 'path';
 import assert from 'assert';
 import { describe, it, beforeEach, afterEach } from 'node:test';
+import * as sinon from 'sinon';
+import { FetchHttpClient } from '../src/fetchHttpClient';
+import { getGlobalMockAgent, mockHost } from './mockObjects/base.mock';
+import { EventEmitter } from 'eventemitter3';
+import * as fs from 'fs';
+import * as path from 'path';
 
 describe('FetchHttpClient', () => {
     const host = 'https://127.0.0.1:8080';
@@ -85,7 +85,7 @@ describe('FetchHttpClient', () => {
 
         it('should emit success event', async () => {
             mockHost(host).get('/api/test').reply(200, { ok: true });
-            const successSpy = jest.fn();
+            const successSpy = sinon.stub();
             eventEmitter.on('success', successSpy);
 
             await client.get(
@@ -105,7 +105,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(successSpy).toHaveBeenCalledWith({ ok: true });
+            assert.ok(successSpy.calledWith({ ok: true }));
         });
 
         it('should append query parameters', async () => {
@@ -279,7 +279,7 @@ describe('FetchHttpClient', () => {
     describe('error handling', () => {
         it('should emit error and reject on 500', async () => {
             mockHost(host).get('/api/fail').reply(500, 'Internal Server Error', { 'content-type': 'text/plain' });
-            const errorSpy = jest.fn();
+            const errorSpy = sinon.stub();
             eventEmitter.on('error', errorSpy);
 
             await expect(
@@ -306,7 +306,7 @@ describe('FetchHttpClient', () => {
 
         it('should emit unauthorized on 401', async () => {
             mockHost(host).get('/api/secure').reply(401, 'Unauthorized', { 'content-type': 'text/plain' });
-            const unauthorizedSpy = jest.fn();
+            const unauthorizedSpy = sinon.stub();
             eventEmitter.on('unauthorized', unauthorizedSpy);
 
             await expect(
@@ -333,7 +333,7 @@ describe('FetchHttpClient', () => {
 
         it('should emit forbidden on 403', async () => {
             mockHost(host).get('/api/forbidden').reply(403, 'Forbidden', { 'content-type': 'text/plain' });
-            const forbiddenSpy = jest.fn();
+            const forbiddenSpy = sinon.stub();
             eventEmitter.on('forbidden', forbiddenSpy);
 
             await expect(
@@ -477,7 +477,7 @@ describe('FetchHttpClient', () => {
     describe('abort', () => {
         it('should support aborting a request', async () => {
             mockHost(host).get('/api/slow').reply(200, { ok: true });
-            const abortSpy = jest.fn();
+            const abortSpy = sinon.stub();
             eventEmitter.on('abort', abortSpy);
 
             const promise = client.get(
@@ -499,7 +499,9 @@ describe('FetchHttpClient', () => {
 
             (promise as any).abort();
 
-            await expect(promise).rejects.toBeTruthy();
+            await assert.rejects(async () => {
+                await promise;
+            });
         });
     });
 
@@ -609,11 +611,11 @@ describe('FetchHttpClient', () => {
 
         function createMockXhr() {
             const xhr: any = {
-                open: jest.fn(),
-                send: jest.fn(),
-                setRequestHeader: jest.fn(),
-                getResponseHeader: jest.fn(),
-                abort: jest.fn(),
+                open: sinon.stub(),
+                send: sinon.stub(),
+                setRequestHeader: sinon.stub(),
+                getResponseHeader: sinon.stub(),
+                abort: sinon.stub(),
                 upload: {},
                 readyState: 0,
                 status: 0,
@@ -623,7 +625,7 @@ describe('FetchHttpClient', () => {
                 timeout: 0,
                 responseType: ''
             };
-            xhr.send.mockImplementation(() => {
+            xhr.send.callsFake(() => {
                 setTimeout(() => {
                     if (xhr.onload) {
                         xhr.onload();
@@ -648,7 +650,7 @@ describe('FetchHttpClient', () => {
         it('should use XHR for POST requests when XMLHttpRequest is available', async () => {
             mockXhr.status = 200;
             mockXhr.responseText = JSON.stringify({ created: true });
-            mockXhr.getResponseHeader.mockReturnValue('application/json');
+            mockXhr.getResponseHeader.returns('application/json');
 
             const result = await xhrClient.post(
                 host + '/api/items',
@@ -668,15 +670,15 @@ describe('FetchHttpClient', () => {
             );
 
             assert.deepStrictEqual(result, { created: true });
-            expect(mockXhr.open).toHaveBeenCalledWith('POST', host + '/api/items', true);
+            assert.ok(mockXhr.open.calledWith('POST', host + '/api/items', true));
             assert.ok(mockXhr.send.called);
         });
 
         it('should emit progress events from XHR upload', async () => {
             mockXhr.status = 200;
             mockXhr.responseText = JSON.stringify({ ok: true });
-            mockXhr.getResponseHeader.mockReturnValue('application/json');
-            mockXhr.send.mockImplementation(() => {
+            mockXhr.getResponseHeader.returns('application/json');
+            mockXhr.send.callsFake(() => {
                 if (mockXhr.upload.onprogress) {
                     mockXhr.upload.onprogress({ lengthComputable: true, loaded: 50, total: 100 });
                     mockXhr.upload.onprogress({ lengthComputable: true, loaded: 100, total: 100 });
@@ -684,7 +686,7 @@ describe('FetchHttpClient', () => {
                 setTimeout(() => mockXhr.onload(), 0);
             });
 
-            const progressSpy = jest.fn();
+            const progressSpy = sinon.stub();
             eventEmitter.on('progress', progressSpy);
 
             await xhrClient.post(
@@ -704,9 +706,9 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(progressSpy).toHaveBeenCalledTimes(2);
-            expect(progressSpy).toHaveBeenCalledWith({ total: 100, loaded: 50, percent: 50 });
-            expect(progressSpy).toHaveBeenCalledWith({ total: 100, loaded: 100, percent: 100 });
+            assert.strictEqual(progressSpy.callCount, 2);
+            assert.ok(progressSpy.calledWith({ total: 100, loaded: 50, percent: 50 }));
+            assert.ok(progressSpy.calledWith({ total: 100, loaded: 100, percent: 100 }));
         });
 
         it('should emit error and reject on XHR error status', async () => {
@@ -714,7 +716,7 @@ describe('FetchHttpClient', () => {
             mockXhr.responseText = 'Server Error';
             mockXhr.statusText = 'Internal Server Error';
 
-            const errorSpy = jest.fn();
+            const errorSpy = sinon.stub();
             eventEmitter.on('error', errorSpy);
 
             await expect(
@@ -743,7 +745,7 @@ describe('FetchHttpClient', () => {
             mockXhr.status = 401;
             mockXhr.responseText = 'Unauthorized';
 
-            const unauthorizedSpy = jest.fn();
+            const unauthorizedSpy = sinon.stub();
             eventEmitter.on('unauthorized', unauthorizedSpy);
 
             await expect(
@@ -772,7 +774,7 @@ describe('FetchHttpClient', () => {
             mockXhr.status = 403;
             mockXhr.responseText = 'Forbidden';
 
-            const forbiddenSpy = jest.fn();
+            const forbiddenSpy = sinon.stub();
             eventEmitter.on('forbidden', forbiddenSpy);
 
             await expect(
@@ -798,11 +800,11 @@ describe('FetchHttpClient', () => {
         });
 
         it('should handle XHR network error', async () => {
-            mockXhr.send.mockImplementation(() => {
+            mockXhr.send.callsFake(() => {
                 setTimeout(() => mockXhr.onerror(), 0);
             });
 
-            const errorSpy = jest.fn();
+            const errorSpy = sinon.stub();
             eventEmitter.on('error', errorSpy);
 
             await expect(
@@ -828,11 +830,11 @@ describe('FetchHttpClient', () => {
         });
 
         it('should handle XHR abort', async () => {
-            mockXhr.send.mockImplementation(() => {
+            mockXhr.send.callsFake(() => {
                 setTimeout(() => mockXhr.onabort(), 0);
             });
 
-            const abortSpy = jest.fn();
+            const abortSpy = sinon.stub();
             eventEmitter.on('abort', abortSpy);
 
             await expect(
@@ -858,11 +860,11 @@ describe('FetchHttpClient', () => {
         });
 
         it('should handle XHR timeout', async () => {
-            mockXhr.send.mockImplementation(() => {
+            mockXhr.send.callsFake(() => {
                 setTimeout(() => mockXhr.ontimeout(), 0);
             });
 
-            const errorSpy = jest.fn();
+            const errorSpy = sinon.stub();
             eventEmitter.on('error', errorSpy);
 
             await expect(
@@ -888,7 +890,7 @@ describe('FetchHttpClient', () => {
         });
 
         it('should support aborting an XHR request via promise.abort()', async () => {
-            mockXhr.send.mockImplementation(() => {
+            mockXhr.send.callsFake(() => {
                 // don't auto-resolve
             });
 
@@ -916,7 +918,7 @@ describe('FetchHttpClient', () => {
         it('should set withCredentials on XHR for BPM requests', async () => {
             mockXhr.status = 200;
             mockXhr.responseText = JSON.stringify({ ok: true });
-            mockXhr.getResponseHeader.mockReturnValue('application/json');
+            mockXhr.getResponseHeader.returns('application/json');
 
             await xhrClient.post(
                 host + '/api/bpm',
@@ -941,7 +943,7 @@ describe('FetchHttpClient', () => {
         it('should set blob responseType for blob returnType', async () => {
             mockXhr.status = 200;
             mockXhr.response = new Blob(['test']);
-            mockXhr.getResponseHeader.mockReturnValue('application/octet-stream');
+            mockXhr.getResponseHeader.returns('application/octet-stream');
 
             await xhrClient.post(
                 host + '/api/download',
@@ -966,7 +968,7 @@ describe('FetchHttpClient', () => {
         it('should deserialize String returnType from XHR', async () => {
             mockXhr.status = 200;
             mockXhr.responseText = 'plain text response';
-            mockXhr.getResponseHeader.mockReturnValue('text/plain');
+            mockXhr.getResponseHeader.returns('text/plain');
 
             const result = await xhrClient.post(
                 host + '/api/text',
@@ -991,7 +993,7 @@ describe('FetchHttpClient', () => {
         it('should deserialize HTML content from XHR', async () => {
             mockXhr.status = 200;
             mockXhr.responseText = '<html>content</html>';
-            mockXhr.getResponseHeader.mockReturnValue('text/html');
+            mockXhr.getResponseHeader.returns('text/html');
 
             const result = await xhrClient.post(
                 host + '/api/html',
@@ -1016,7 +1018,7 @@ describe('FetchHttpClient', () => {
         it('should return empty object for empty XHR response', async () => {
             mockXhr.status = 200;
             mockXhr.responseText = '';
-            mockXhr.getResponseHeader.mockReturnValue('application/json');
+            mockXhr.getResponseHeader.returns('application/json');
 
             const result = await xhrClient.post(
                 host + '/api/empty',
@@ -1042,7 +1044,7 @@ describe('FetchHttpClient', () => {
             xhrClient.timeout = 5000;
             mockXhr.status = 200;
             mockXhr.responseText = JSON.stringify({ ok: true });
-            mockXhr.getResponseHeader.mockReturnValue('application/json');
+            mockXhr.getResponseHeader.returns('application/json');
 
             await xhrClient.post(
                 host + '/api/test',
@@ -1067,8 +1069,8 @@ describe('FetchHttpClient', () => {
         it('should propagate progress events to promise.on() listeners', async () => {
             mockXhr.status = 200;
             mockXhr.responseText = JSON.stringify({ uploaded: true });
-            mockXhr.getResponseHeader.mockReturnValue('application/json');
-            mockXhr.send.mockImplementation(() => {
+            mockXhr.getResponseHeader.returns('application/json');
+            mockXhr.send.callsFake(() => {
                 if (mockXhr.upload.onprogress) {
                     mockXhr.upload.onprogress({ lengthComputable: true, loaded: 30, total: 100 });
                     mockXhr.upload.onprogress({ lengthComputable: true, loaded: 100, total: 100 });
