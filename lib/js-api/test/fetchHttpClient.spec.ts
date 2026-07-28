@@ -17,10 +17,13 @@
 
 /* eslint-disable jsdoc/require-jsdoc, no-underscore-dangle */
 import { FetchHttpClient } from '../src/fetchHttpClient';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { EventEmitter } from 'eventemitter3';
 import { getGlobalMockAgent, mockHost } from './mockObjects/base.mock';
 import * as fs from 'fs';
 import * as path from 'path';
+import assert from 'assert';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('FetchHttpClient', () => {
     const host = 'https://127.0.0.1:8080';
@@ -51,7 +54,7 @@ describe('FetchHttpClient', () => {
         it('should set X-CSRF-TOKEN header', () => {
             const headers: Record<string, string> = {};
             client.setCsrfToken(headers);
-            expect(headers['X-CSRF-TOKEN']).toBeTruthy();
+            assert.ok(headers['X-CSRF-TOKEN']);
             expect(headers['X-CSRF-TOKEN'].length).toBeGreaterThan(0);
         });
     });
@@ -77,7 +80,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ id: 1, name: 'test' });
+            assert.deepStrictEqual(result, { id: 1, name: 'test' });
         });
 
         it('should emit success event', async () => {
@@ -125,7 +128,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ ok: true });
+            assert.deepStrictEqual(result, { ok: true });
         });
 
         it('should append query parameters with & when URL already contains ?', async () => {
@@ -148,7 +151,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ ok: true });
+            assert.deepStrictEqual(result, { ok: true });
         });
 
         it('should return text for String returnType', async () => {
@@ -171,7 +174,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toBe('plain text');
+            assert.strictEqual(result, 'plain text');
         });
     });
 
@@ -196,7 +199,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ id: 2, name: 'new' });
+            assert.deepStrictEqual(result, { id: 2, name: 'new' });
         });
 
         it('should send form-urlencoded body', async () => {
@@ -219,7 +222,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ ticket: 'abc' });
+            assert.deepStrictEqual(result, { ticket: 'abc' });
         });
     });
 
@@ -244,7 +247,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ id: 1, name: 'updated' });
+            assert.deepStrictEqual(result, { id: 1, name: 'updated' });
         });
     });
 
@@ -269,7 +272,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({});
+            assert.deepStrictEqual(result, {});
         });
     });
 
@@ -298,7 +301,7 @@ describe('FetchHttpClient', () => {
                 )
             ).rejects.toEqual(expect.objectContaining({ status: 500 }));
 
-            expect(errorSpy).toHaveBeenCalled();
+            assert.ok(errorSpy.called);
         });
 
         it('should emit unauthorized on 401', async () => {
@@ -325,7 +328,7 @@ describe('FetchHttpClient', () => {
                 )
             ).rejects.toEqual(expect.objectContaining({ status: 401 }));
 
-            expect(unauthorizedSpy).toHaveBeenCalled();
+            assert.ok(unauthorizedSpy.called);
         });
 
         it('should emit forbidden on 403', async () => {
@@ -352,7 +355,7 @@ describe('FetchHttpClient', () => {
                 )
             ).rejects.toEqual(expect.objectContaining({ status: 403 }));
 
-            expect(forbiddenSpy).toHaveBeenCalled();
+            assert.ok(forbiddenSpy.called);
         });
     });
 
@@ -503,7 +506,7 @@ describe('FetchHttpClient', () => {
     describe('timeout', () => {
         it('should accept a numeric timeout', () => {
             client.timeout = 5000;
-            expect(client.timeout).toBe(5000);
+            assert.strictEqual(client.timeout, 5000);
         });
 
         it('should accept an object timeout', () => {
@@ -538,7 +541,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(securityOptions.authentications.cookie).toBe('JSESSIONID=abc123');
+            assert.strictEqual(securityOptions.authentications.cookie, 'JSESSIONID=abc123');
         });
 
         it('should not overwrite existing Cookie header when session cookie is appended', () => {
@@ -547,8 +550,8 @@ describe('FetchHttpClient', () => {
 
             headers['Cookie'] = headers['Cookie'] ? headers['Cookie'] + '; ' + sessionCookie : sessionCookie;
 
-            expect(headers['Cookie']).toContain('CSRF-TOKEN=abc');
-            expect(headers['Cookie']).toContain('JSESSIONID=xyz');
+            assert.ok(headers['Cookie'].includes('CSRF-TOKEN=abc'));
+            assert.ok(headers['Cookie'].includes('JSESSIONID=xyz'));
         });
     });
 
@@ -573,7 +576,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({});
+            assert.deepStrictEqual(result, {});
         });
 
         it('should return text for HTML content-type', async () => {
@@ -596,7 +599,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toBe('<html>test</html>');
+            assert.strictEqual(result, '<html>test</html>');
         });
     });
 
@@ -664,9 +667,9 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ created: true });
+            assert.deepStrictEqual(result, { created: true });
             expect(mockXhr.open).toHaveBeenCalledWith('POST', host + '/api/items', true);
-            expect(mockXhr.send).toHaveBeenCalled();
+            assert.ok(mockXhr.send.called);
         });
 
         it('should emit progress events from XHR upload', async () => {
@@ -733,7 +736,7 @@ describe('FetchHttpClient', () => {
                 )
             ).rejects.toEqual(expect.objectContaining({ status: 500 }));
 
-            expect(errorSpy).toHaveBeenCalled();
+            assert.ok(errorSpy.called);
         });
 
         it('should emit unauthorized on XHR 401', async () => {
@@ -762,7 +765,7 @@ describe('FetchHttpClient', () => {
                 )
             ).rejects.toEqual(expect.objectContaining({ status: 401 }));
 
-            expect(unauthorizedSpy).toHaveBeenCalled();
+            assert.ok(unauthorizedSpy.called);
         });
 
         it('should emit forbidden on XHR 403', async () => {
@@ -791,7 +794,7 @@ describe('FetchHttpClient', () => {
                 )
             ).rejects.toEqual(expect.objectContaining({ status: 403 }));
 
-            expect(forbiddenSpy).toHaveBeenCalled();
+            assert.ok(forbiddenSpy.called);
         });
 
         it('should handle XHR network error', async () => {
@@ -821,7 +824,7 @@ describe('FetchHttpClient', () => {
                 )
             ).rejects.toBeTruthy();
 
-            expect(errorSpy).toHaveBeenCalled();
+            assert.ok(errorSpy.called);
         });
 
         it('should handle XHR abort', async () => {
@@ -851,7 +854,7 @@ describe('FetchHttpClient', () => {
                 )
             ).rejects.toBeTruthy();
 
-            expect(abortSpy).toHaveBeenCalled();
+            assert.ok(abortSpy.called);
         });
 
         it('should handle XHR timeout', async () => {
@@ -881,7 +884,7 @@ describe('FetchHttpClient', () => {
                 )
             ).rejects.toBeTruthy();
 
-            expect(errorSpy).toHaveBeenCalled();
+            assert.ok(errorSpy.called);
         });
 
         it('should support aborting an XHR request via promise.abort()', async () => {
@@ -907,7 +910,7 @@ describe('FetchHttpClient', () => {
             );
 
             (promise as any).abort();
-            expect(mockXhr.abort).toHaveBeenCalled();
+            assert.ok(mockXhr.abort.called);
         });
 
         it('should set withCredentials on XHR for BPM requests', async () => {
@@ -932,7 +935,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(mockXhr.withCredentials).toBe(true);
+            assert.strictEqual(mockXhr.withCredentials, true);
         });
 
         it('should set blob responseType for blob returnType', async () => {
@@ -957,7 +960,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(mockXhr.responseType).toBe('blob');
+            assert.strictEqual(mockXhr.responseType, 'blob');
         });
 
         it('should deserialize String returnType from XHR', async () => {
@@ -982,7 +985,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toBe('plain text response');
+            assert.strictEqual(result, 'plain text response');
         });
 
         it('should deserialize HTML content from XHR', async () => {
@@ -1007,7 +1010,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toBe('<html>content</html>');
+            assert.strictEqual(result, '<html>content</html>');
         });
 
         it('should return empty object for empty XHR response', async () => {
@@ -1032,7 +1035,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({});
+            assert.deepStrictEqual(result, {});
         });
 
         it('should set XHR timeout when configured', async () => {
@@ -1058,7 +1061,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(mockXhr.timeout).toBe(5000);
+            assert.strictEqual(mockXhr.timeout, 5000);
         });
 
         it('should propagate progress events to promise.on() listeners', async () => {
@@ -1093,7 +1096,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(progressEvents).toEqual([
+            assert.deepStrictEqual(progressEvents, [
                 { total: 100, loaded: 30, percent: 30 },
                 { total: 100, loaded: 100, percent: 100 }
             ]);
@@ -1138,7 +1141,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ success: true });
+            assert.deepStrictEqual(result, { success: true });
         });
 
         it('should convert Buffer to Blob when form param is a Buffer', async () => {
@@ -1162,7 +1165,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ success: true });
+            assert.deepStrictEqual(result, { success: true });
         });
 
         it('should read file and send as Blob when form param has .path property', async () => {
@@ -1189,7 +1192,7 @@ describe('FetchHttpClient', () => {
                     emitters
                 );
 
-                expect(result).toEqual({ success: true });
+                assert.deepStrictEqual(result, { success: true });
             } finally {
                 fs.unlinkSync(tmpFile);
             }
@@ -1215,7 +1218,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ success: true });
+            assert.deepStrictEqual(result, { success: true });
         });
     });
 });

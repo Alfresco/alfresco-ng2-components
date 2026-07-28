@@ -16,8 +16,10 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { BpmAuthMock, ProcessInstanceVariablesMock } from '../mockObjects';
 import { ProcessInstanceVariablesApi, AlfrescoApi } from '../../src';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Activiti Process Instance Variables Api', () => {
     let authResponseBpmMock: BpmAuthMock;
@@ -47,54 +49,58 @@ describe('Activiti Process Instance Variables Api', () => {
         await alfrescoJsApi.login('admin', 'admin');
     });
 
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
     describe('get variables', () => {
-        it('should return all variables for a process instance', (done) => {
+        it('should return all variables for a process instance', async () => {
             const processInstanceId = '111';
             variablesMock.addListProcessInstanceVariables200Response(processInstanceId);
 
             processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId).then((data) => {
                 assert.equal(data.length, 2);
-                done();
+                
             });
         });
 
-        it('should emit an error when API returns an error response', (done) => {
+        it('should emit an error when API returns an error response', async () => {
             const processInstanceId = '111';
             variablesMock.addListProcessInstanceVariables500Response(processInstanceId);
 
             processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId).then(NOOP, (error) => {
                 assert.equal(error.status, 500);
                 assert.equal(error.message, '{"messageKey":"UNKNOWN","message":"Unknown error"}');
-                done();
+                
             });
         });
     });
 
     describe('create or update variables', () => {
-        it('should return all variables for a process instance', (done) => {
+        it('should return all variables for a process instance', async () => {
             const processInstanceId = '111';
             variablesMock.addPutProcessInstanceVariables200Response(processInstanceId);
 
             processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processInstanceId, []).then((data) => {
                 assert.equal(data.length, 2);
-                done();
+                
             });
         });
 
-        it('should emit an error when API returns an error response', (done) => {
+        it('should emit an error when API returns an error response', async () => {
             const processInstanceId = '111';
             variablesMock.addPutProcessInstanceVariables500Response(processInstanceId);
 
             processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processInstanceId, []).then(NOOP, (error) => {
                 assert.equal(error.status, 500);
                 assert.equal(error.message, '{"messageKey":"UNKNOWN","message":"Unknown error"}');
-                done();
+                
             });
         });
     });
 
     describe('get variable', () => {
-        it('should call API to get variable', (done) => {
+        it('should call API to get variable', async () => {
             const processInstanceId = '111';
             const variableName = 'var1';
             variablesMock.addGetProcessInstanceVariable200Response(processInstanceId, variableName);
@@ -103,15 +109,15 @@ describe('Activiti Process Instance Variables Api', () => {
                 (data) => {
                     assert.equal(data.name, 'variable1');
                     assert.equal(data.value, 'Value 123');
-                    done();
+                    
                 },
                 () => {
-                    done();
+                    
                 }
             );
         });
 
-        it('should emit an error when API returns an error response', (done) => {
+        it('should emit an error when API returns an error response', async () => {
             const processInstanceId = '111';
             const variableName = 'var1';
             variablesMock.addGetProcessInstanceVariable500Response(processInstanceId, variableName);
@@ -119,23 +125,23 @@ describe('Activiti Process Instance Variables Api', () => {
             processInstanceVariablesApi.getProcessInstanceVariable(processInstanceId, variableName).then(NOOP, (error) => {
                 assert.equal(error.status, 500);
                 assert.equal(error.message, '{"messageKey":"UNKNOWN","message":"Unknown error"}');
-                done();
+                
             });
         });
     });
 
     describe('update variable', () => {
-        it('should call API to update variable', (done) => {
+        it('should call API to update variable', async () => {
             const processInstanceId = '111';
             const variableName = 'var1';
             variablesMock.addUpdateProcessInstanceVariable200Response(processInstanceId, variableName);
 
             processInstanceVariablesApi.updateProcessInstanceVariable(processInstanceId, variableName, {}).then(() => {
-                done();
+                
             });
         });
 
-        it('should emit an error when API returns an error response', (done) => {
+        it('should emit an error when API returns an error response', async () => {
             const processInstanceId = '111';
             const variableName = 'var1';
             variablesMock.addUpdateProcessInstanceVariable500Response(processInstanceId, variableName);
@@ -143,23 +149,23 @@ describe('Activiti Process Instance Variables Api', () => {
             processInstanceVariablesApi.updateProcessInstanceVariable(processInstanceId, variableName, {}).then(NOOP, (error) => {
                 assert.equal(error.status, 500);
                 assert.equal(error.message, '{"messageKey":"UNKNOWN","message":"Unknown error"}');
-                done();
+                
             });
         });
     });
 
     describe('delete variable', () => {
-        it('should call API to delete variables', (done) => {
+        it('should call API to delete variables', async () => {
             const processInstanceId = '111';
             const variableName = 'var1';
             variablesMock.addDeleteProcessInstanceVariable200Response(processInstanceId, variableName);
 
             processInstanceVariablesApi.deleteProcessInstanceVariable(processInstanceId, variableName).then(() => {
-                done();
+                
             });
         });
 
-        it('should emit an error when API returns an error response', (done) => {
+        it('should emit an error when API returns an error response', async () => {
             const processInstanceId = '111';
             const variableName = 'var1';
             variablesMock.addDeleteProcessInstanceVariable500Response(processInstanceId, variableName);
@@ -167,7 +173,7 @@ describe('Activiti Process Instance Variables Api', () => {
             processInstanceVariablesApi.deleteProcessInstanceVariable(processInstanceId, variableName).then(NOOP, (error) => {
                 assert.equal(error.status, 500);
                 assert.equal(error.message, '{"messageKey":"UNKNOWN","message":"Unknown error"}');
-                done();
+                
             });
         });
     });

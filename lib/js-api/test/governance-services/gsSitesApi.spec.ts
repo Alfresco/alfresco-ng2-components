@@ -16,8 +16,10 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { AlfrescoApi, GsSitesApi } from '../../src';
 import { EcmAuthMock, GsSitesApiMock } from '../mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Governance API test', () => {
     let authResponseMock: EcmAuthMock;
@@ -39,12 +41,16 @@ describe('Governance API test', () => {
         gsSitesApi = new GsSitesApi(alfrescoJsApi);
     });
 
-    it('should getRMSite return the RM site', (done) => {
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
+    it('should getRMSite return the RM site', async () => {
         gsSitesApiMock.get200Response();
 
         gsSitesApi.getRMSite().then((data) => {
             assert.equal(data.entry.description, 'Records Management Description Test');
-            done();
+            
         });
     });
 });

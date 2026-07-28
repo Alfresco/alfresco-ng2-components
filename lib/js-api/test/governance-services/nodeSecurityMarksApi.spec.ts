@@ -16,8 +16,10 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { AlfrescoApi, NodeSecurityMarksApi, NodeSecurityMarkBody } from '../../src';
 import { EcmAuthMock, NodeSecurityMarksApiMock } from '../mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Node Security Mark API test', () => {
     let authResponseMock: EcmAuthMock;
@@ -46,6 +48,10 @@ describe('Node Security Mark API test', () => {
         });
         nodeSecurityMarksApi = new NodeSecurityMarksApi(alfrescoApi);
         await alfrescoApi.login('admin', 'admin');
+    });
+
+    afterEach(() => {
+        resetGlobalMockAgent();
     });
 
     it('add or remove security marks on a node', async () => {

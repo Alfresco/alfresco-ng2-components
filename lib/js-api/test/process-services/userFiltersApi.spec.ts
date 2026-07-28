@@ -16,8 +16,10 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { AlfrescoApi, UserFiltersApi } from '../../src';
 import { BpmAuthMock, UserFiltersMock } from '../mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Activiti User Filter Api', () => {
     const hostBpm = 'https://127.0.0.1:9999';
@@ -39,6 +41,10 @@ describe('Activiti User Filter Api', () => {
         userFiltersApi = new UserFiltersApi(alfrescoJsApi);
 
         await alfrescoJsApi.login('admin', 'admin');
+    });
+
+    afterEach(() => {
+        resetGlobalMockAgent();
     });
 
     it('get filter user', async () => {

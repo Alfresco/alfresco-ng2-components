@@ -345,6 +345,9 @@ importers:
       typescript:
         specifier: 5.9.3
         version: 5.9.3
+      undici:
+        specifier: 8.7.0
+        version: 8.7.0
       webpack:
         specifier: 5.109.0
         version: 5.109.0(postcss@8.5.16)

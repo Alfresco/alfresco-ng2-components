@@ -16,10 +16,15 @@
  */
 
 import assert from 'assert';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 import { AlfrescoApi } from '../src';
 import { EcmAuthMock, BpmAuthMock } from './mockObjects';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 
 describe('Change config', () => {
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
     let authResponseBpmMock: BpmAuthMock;
     let authResponseMock: EcmAuthMock;
     let alfrescoJsApi: AlfrescoApi;

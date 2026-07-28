@@ -23,7 +23,6 @@ import { isBrowser, paramToString } from './utils';
 
 declare const Blob: any;
 declare const Buffer: any;
-declare const process: any;
 declare const XMLHttpRequest: any;
 
 export class FetchHttpClient implements HttpClient {
@@ -35,13 +34,11 @@ export class FetchHttpClient implements HttpClient {
     }
 
     private getFetch(): typeof fetch {
-        // eslint-disable-next-line no-underscore-dangle
-        return this.customFetch || (typeof process !== 'undefined' && (process as any).__test_fetch__) || globalThis.fetch;
+        return this.customFetch || globalThis.fetch;
     }
 
     private hasNativeXhr(): boolean {
-        // eslint-disable-next-line no-underscore-dangle
-        if (this.customFetch || (typeof process !== 'undefined' && (process as any).__test_fetch__)) {
+        if (this.customFetch) {
             return false;
         }
         return typeof XMLHttpRequest !== 'undefined';

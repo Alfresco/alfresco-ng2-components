@@ -16,6 +16,8 @@
  */
 
 import assert from 'assert';
+import { describe, it, beforeEach, afterEach } from 'node:test';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import {
     AlfrescoApi,
     TaskFilterRequestRepresentation,
@@ -59,6 +61,10 @@ describe('Activiti Task Api', () => {
         await alfrescoJsApi.login('admin', 'admin');
     });
 
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
     it('get Task list', async () => {
         tasksMock.get200Response();
 
@@ -77,13 +83,13 @@ describe('Activiti Task Api', () => {
         assert.equal(data.name, 'Upload Document');
     });
 
-    it('bad filter Tasks', (done) => {
+    it('bad filter Tasks', async () => {
         tasksMock.get400TaskFilter();
 
         const requestNode = new TaskFilterRequestRepresentation();
 
         tasksApi.filterTasks(requestNode).then(NOOP, () => {
-            done();
+            
         });
     });
 
@@ -98,12 +104,12 @@ describe('Activiti Task Api', () => {
         assert.equal(data.data[0].id, '7506');
     });
 
-    it('complete Task not found', (done) => {
+    it('complete Task not found', async () => {
         const taskId = '200';
         tasksMock.get404CompleteTask(taskId);
 
         taskActionsApi.completeTask(taskId).then(NOOP, () => {
-            done();
+            
         });
     });
 

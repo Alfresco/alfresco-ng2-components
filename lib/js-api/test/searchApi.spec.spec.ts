@@ -16,15 +16,17 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { AlfrescoApi, SEARCH_LANGUAGE, SearchApi } from '../src';
 import { EcmAuthMock, SearchMock } from './mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Search', () => {
     let authResponseMock: EcmAuthMock;
     let searchMock: SearchMock;
     let searchApi: SearchApi;
 
-    beforeEach((done) => {
+    beforeEach(async () => {
         const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
@@ -37,13 +39,17 @@ describe('Search', () => {
         });
 
         alfrescoJsApi.login('admin', 'admin').then(() => {
-            done();
+            
         });
 
         searchApi = new SearchApi(alfrescoJsApi);
     });
 
-    it('should search works', (done) => {
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
+    it('should search works', async () => {
         searchMock.get200Response();
 
         searchApi
@@ -55,7 +61,7 @@ describe('Search', () => {
             })
             .then((data) => {
                 assert.equal(data.list.entries[0].entry.name, 'user');
-                done();
+                
             });
     });
 });

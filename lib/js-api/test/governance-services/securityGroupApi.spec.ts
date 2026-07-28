@@ -16,8 +16,10 @@
  */
 
 import { AlfrescoApi, SecurityGroupsApi, SecurityGroupBody } from '../../src';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import assert from 'assert';
 import { EcmAuthMock, SecurityGroupApiMock } from '../mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Security Group API test', () => {
     let authResponseMock: EcmAuthMock;
@@ -39,6 +41,10 @@ describe('Security Group API test', () => {
         });
         securityGroupApi = new SecurityGroupsApi(alfrescoApi);
         await alfrescoApi.login('admin', 'admin');
+    });
+
+    afterEach(() => {
+        resetGlobalMockAgent();
     });
 
     it('create Security Group', async () => {

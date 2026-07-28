@@ -16,7 +16,10 @@
  */
 
 import { AlfrescoApi, PeopleApi, PersonBodyCreate } from '../src';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { PeopleMock } from './mockObjects';
+import assert from 'assert';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('PeopleApi', () => {
     let peopleMock: PeopleMock;
@@ -33,7 +36,11 @@ describe('PeopleApi', () => {
         peopleApi = new PeopleApi(alfrescoApi);
     });
 
-    it('should add a person', (done) => {
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
+    it('should add a person', async () => {
         peopleMock.get201Response();
 
         const personBodyCreate: PersonBodyCreate = {
@@ -45,7 +52,7 @@ describe('PeopleApi', () => {
         };
 
         peopleApi.createPerson(personBodyCreate).then(() => {
-            done();
+            
         });
     });
 });

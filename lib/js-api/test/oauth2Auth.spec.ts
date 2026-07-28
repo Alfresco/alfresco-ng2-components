@@ -16,10 +16,12 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { AlfrescoApi, ContentApi, Oauth2Auth } from '../src';
 import { EcmAuthMock, OAuthMock } from './mockObjects';
 import { jest } from '@jest/globals';
 import * as browserUtils from '../src/utils/is-browser';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Oauth2  test', () => {
     let alfrescoJsApi: AlfrescoApi;
@@ -163,7 +165,7 @@ describe('Oauth2  test', () => {
             oauth2AuthInstanceTwo.logOut();
         });
 
-        it('login should return the Token if is ok', (done) => {
+        it('login should return the Token if is ok', async () => {
             oauth2Mock.get200Response();
 
             const oauth2Auth = new Oauth2Auth(
@@ -183,11 +185,11 @@ describe('Oauth2  test', () => {
             oauth2Auth.login('admin', 'admin').then((data) => {
                 assert.equal(data.access_token, 'test-token');
                 oauth2Auth.logOut();
-                done();
+                
             });
         });
 
-        it('should refresh token when the login not use the implicitFlow ', (done) => {
+        it('should refresh token when the login not use the implicitFlow ', async () => {
             jest.spyOn(browserUtils, 'isBrowser').mockReturnValue(false);
             oauth2Mock.get200Response();
 
@@ -220,13 +222,13 @@ describe('Oauth2  test', () => {
             setTimeout(() => {
                 assert.equal(calls > 2, true);
                 oauth2Auth.logOut();
-                done();
+                
             }, 600);
 
             oauth2Auth.login('admin', 'admin');
         });
 
-        it('should not hang the app also if the logout is missing', (done) => {
+        it('should not hang the app also if the logout is missing', async () => {
             jest.spyOn(browserUtils, 'isBrowser').mockReturnValue(false);
             oauth2Mock.get200Response();
 
@@ -259,13 +261,13 @@ describe('Oauth2  test', () => {
 
             setTimeout(() => {
                 assert.equal(calls > 2, true);
-                done();
+                
             }, 600);
 
             oauth2Auth.login('admin', 'admin');
         });
 
-        it('should emit a token_issued event if login is ok ', (done) => {
+        it('should emit a token_issued event if login is ok ', async () => {
             oauth2Mock.get200Response();
 
             const oauth2Auth = new Oauth2Auth(
@@ -284,13 +286,13 @@ describe('Oauth2  test', () => {
 
             oauth2Auth.once('token_issued', () => {
                 oauth2Auth.logOut();
-                done();
+                
             });
 
             oauth2Auth.login('admin', 'admin');
         });
 
-        it('should not emit a token_issued event if setToken is null ', (done) => {
+        it('should not emit a token_issued event if setToken is null ', async () => {
             oauth2Mock.get200Response();
 
             const oauth2Auth = new Oauth2Auth(
@@ -318,10 +320,9 @@ describe('Oauth2  test', () => {
 
             assert.equal(counterCallEvent, 1);
 
-            done();
         });
 
-        it('should emit a token_issued if provider is ECM', (done) => {
+        it('should emit a token_issued if provider is ECM', async () => {
             oauth2Mock.get200Response();
             authResponseMock.get200ValidTicket();
 
@@ -342,13 +343,13 @@ describe('Oauth2  test', () => {
 
             oauth2Auth.once('token_issued', () => {
                 oauth2Auth.logOut();
-                done();
+                
             });
 
             oauth2Auth.login('admin', 'admin');
         });
 
-        it('should emit a token_issued if provider is ALL', (done) => {
+        it('should emit a token_issued if provider is ALL', async () => {
             oauth2Mock.get200Response();
             authResponseMock.get200ValidTicket();
             const oauth2Auth = new Oauth2Auth(
@@ -368,13 +369,13 @@ describe('Oauth2  test', () => {
 
             oauth2Auth.once('token_issued', () => {
                 oauth2Auth.logOut();
-                done();
+                
             });
 
             oauth2Auth.login('admin', 'admin');
         });
 
-        it('should after token_issued event exchange the access_token for the alf_ticket', (done) => {
+        it('should after token_issued event exchange the access_token for the alf_ticket', async () => {
             oauth2Mock.get200Response();
             authResponseMock.get200ValidTicket();
 
@@ -402,13 +403,13 @@ describe('Oauth2  test', () => {
                 );
 
                 alfrescoApi.oauth2Auth.logOut();
-                done();
+                
             });
 
             alfrescoApi.login('admin', 'admin');
         });
 
-        it('should after token_issued event exchange the access_token for the alf_ticket with the compatibility layer', (done) => {
+        it('should after token_issued event exchange the access_token for the alf_ticket with the compatibility layer', async () => {
             oauth2Mock.get200Response();
             authResponseMock.get200ValidTicket();
 
@@ -437,7 +438,6 @@ describe('Oauth2  test', () => {
                 );
                 alfrescoApi.oauth2Auth.logOut();
 
-                done();
             });
 
             alfrescoApi.login('admin', 'admin');
@@ -478,7 +478,7 @@ describe('Oauth2  test', () => {
                 counterCallEvent++;
 
                 if (counterCallEvent === 2) {
-                    done();
+                    
                 }
             });
 
@@ -487,7 +487,7 @@ describe('Oauth2  test', () => {
             alfrescoApi.refreshToken();
         });
 
-        it('isLoggedIn should return true if the api is logged in', (done) => {
+        it('isLoggedIn should return true if the api is logged in', async () => {
             oauth2Mock.get200Response();
 
             const oauth2Auth = new Oauth2Auth(
@@ -507,11 +507,11 @@ describe('Oauth2  test', () => {
             oauth2Auth.login('admin', 'admin').then(() => {
                 assert.equal(oauth2Auth.isLoggedIn(), true);
                 oauth2Auth.logOut();
-                done();
+                
             });
         });
 
-        it('login password should be removed after login', (done) => {
+        it('login password should be removed after login', async () => {
             oauth2Mock.get200Response();
 
             const oauth2Auth = new Oauth2Auth(
@@ -531,12 +531,12 @@ describe('Oauth2  test', () => {
             oauth2Auth.login('admin', 'admin').then(() => {
                 assert.notEqual(oauth2Auth.authentications.basicAuth.password, 'admin');
                 oauth2Auth.logOut();
-                done();
+                
             });
         });
 
         describe('With mocked DOM', () => {
-            it('a failed hash check calls the logout', (done) => {
+            it('a failed hash check calls the logout', async () => {
                 const oauth2Auth = new Oauth2Auth(
                     {
                         oauth2: {
@@ -565,7 +565,7 @@ describe('Oauth2  test', () => {
                 // invalid hash location leads to a reject which leads to a logout
                 oauth2Auth.iFrameHashListener();
                 assert.equal(logoutCalled, true);
-                done();
+                
             });
         });
 

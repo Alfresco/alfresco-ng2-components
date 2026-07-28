@@ -16,14 +16,17 @@
  */
 
 import { AlfrescoApi, CustomModelApi } from '../../src';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { EcmAuthMock, CustomModelMock } from '../mockObjects';
+import assert from 'assert';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Custom Model Api', () => {
     let authResponseMock: EcmAuthMock;
     let customModelMock: CustomModelMock;
     let customModelApi: CustomModelApi;
 
-    beforeEach((done) => {
+    beforeEach(async () => {
         const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
@@ -36,24 +39,28 @@ describe('Custom Model Api', () => {
         });
 
         alfrescoJsApi.login('admin', 'admin').then(() => {
-            done();
+            
         });
 
         customModelApi = new CustomModelApi(alfrescoJsApi);
     });
 
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
     describe('Get', () => {
-        it('All Custom Model', (done) => {
+        it('All Custom Model', async () => {
             customModelMock.get200AllCustomModel();
 
             customModelApi.getAllCustomModel().then(() => {
-                done();
+                
             }, console.error);
         });
     });
 
     describe('Create', () => {
-        it('createCustomModel', (done) => {
+        it('createCustomModel', async () => {
             customModelMock.create201CustomModel();
 
             const status = 'DRAFT';
@@ -63,17 +70,17 @@ describe('Custom Model Api', () => {
             const namespacePrefix = 'test';
 
             customModelApi.createCustomModel(status, description, name, namespaceUri, namespacePrefix).then(() => {
-                done();
+                
             }, console.error);
         });
     });
 
     describe('PUT', () => {
-        it('activateCustomModel', (done) => {
+        it('activateCustomModel', async () => {
             customModelMock.activateCustomModel200();
 
             customModelApi.activateCustomModel('testModel').then(() => {
-                done();
+                
             }, console.error);
         });
     });

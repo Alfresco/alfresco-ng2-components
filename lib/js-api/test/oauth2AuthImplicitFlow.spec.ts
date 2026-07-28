@@ -16,7 +16,9 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { AlfrescoApi, Oauth2Auth } from '../src';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Oauth2 Implicit flow test', () => {
     let oauth2Auth: Oauth2Auth;
@@ -54,7 +56,7 @@ describe('Oauth2 Implicit flow test', () => {
         delete (globalThis as any).document;
     });
 
-    it('should throw an error if redirectUri is not present', (done) => {
+    it('should throw an error if redirectUri is not present', async () => {
         try {
             oauth2Auth = new Oauth2Auth(
                 {
@@ -70,11 +72,11 @@ describe('Oauth2 Implicit flow test', () => {
             );
         } catch (error) {
             assert.equal(error.message, 'Missing redirectUri required parameter');
-            done();
+            
         }
     });
 
-    it('should redirect to login if access token is not valid', (done) => {
+    it('should redirect to login if access token is not valid', async () => {
         document.getElementById = () => null;
 
         oauth2Auth = new Oauth2Auth(
@@ -92,13 +94,13 @@ describe('Oauth2 Implicit flow test', () => {
 
         oauth2Auth.on('implicit_redirect', (href: string) => {
             assert.equal(href.includes('https://myOauthUrl:30081/auth/realms/springboot/protocol/openid-connect/auth?'), true);
-            done();
+            
         });
 
         oauth2Auth.implicitLogin();
     });
 
-    it('should not loop over redirection when redirectUri contains hash and token is not valid ', (done) => {
+    it('should not loop over redirection when redirectUri contains hash and token is not valid ', async () => {
         document.getElementById = () => null;
         oauth2Auth = new Oauth2Auth(
             {
@@ -119,13 +121,13 @@ describe('Oauth2 Implicit flow test', () => {
         oauth2Auth.on('implicit_redirect', (href: string) => {
             assert.equal(href.includes('https://myOauthUrl:30081/auth/realms/springboot/protocol/openid-connect/auth?'), true);
             assert.equal(setItemCalled, true);
-            done();
+            
         });
 
         oauth2Auth.implicitLogin();
     });
 
-    it('should not redirect to login if access token is valid', (done) => {
+    it('should not redirect to login if access token is valid', async () => {
         document.getElementById = () => null;
         oauth2Auth = new Oauth2Auth(
             {
@@ -145,7 +147,7 @@ describe('Oauth2 Implicit flow test', () => {
 
         oauth2Auth.on('token_issued', () => {
             assert.equal(window.location.href, 'http://localhost/');
-            done();
+            
         });
 
         oauth2Auth.setToken('new_token', 'new_refresh_token');
@@ -153,7 +155,7 @@ describe('Oauth2 Implicit flow test', () => {
         oauth2Auth.implicitLogin();
     });
 
-    it('should set the loginFragment to redirect after the login if it is present', (done) => {
+    it('should set the loginFragment to redirect after the login if it is present', async () => {
         document.getElementById = () => null;
         window.location.hash = '#/redirect-path&session_state=eqfqwfqwf';
         window.location.href = 'https://stoca/#/redirect-path&session_state=eqfqwfqwf';
@@ -177,7 +179,7 @@ describe('Oauth2 Implicit flow test', () => {
         oauth2Auth.on('implicit_redirect', (href: string) => {
             assert.equal(href.includes('https://myOauthUrl:30081/auth/realms/springboot/protocol/openid-connect/auth?'), true);
             assert.deepEqual(lastValues, ['loginFragment', '/redirect-path&session_state=eqfqwfqwf']);
-            done();
+            
         });
 
         oauth2Auth.implicitLogin();

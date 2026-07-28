@@ -16,8 +16,10 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { AlfrescoApi, NodeSecurityMarkBody, SecurityMarkEntry, SecurityMarkPaging, AuthorityClearanceApi } from '../../src';
 import { AuthorityClearanceMock, EcmAuthMock } from '../mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 const DEFAULT_OPTS = {
     skipCount: 0,
@@ -58,6 +60,10 @@ describe('Authority Clearance API test', () => {
         });
         authorityClearanceApi = new AuthorityClearanceApi(alfrescoApi);
         await alfrescoApi.login('admin', 'admin');
+    });
+
+    afterEach(() => {
+        resetGlobalMockAgent();
     });
 
     it('get authority clearances for an authority', async () => {

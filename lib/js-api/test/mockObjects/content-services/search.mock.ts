@@ -16,7 +16,7 @@
  */
 
 import { BaseMock } from '../base.mock';
-import { SEARCH_LANGUAGE } from '@alfresco/js-api';
+import { SEARCH_LANGUAGE } from '../../../src/index';
 
 export class SearchMock extends BaseMock {
     get200Response(): void {

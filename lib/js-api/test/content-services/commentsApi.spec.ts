@@ -16,15 +16,17 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { AlfrescoApi, CommentsApi } from '../../src';
 import { CommentMock, EcmAuthMock } from '../mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Comments', () => {
     let authResponseMock: EcmAuthMock;
     let commentMock: CommentMock;
     let commentsApi: CommentsApi;
 
-    beforeEach((done) => {
+    beforeEach(async () => {
         const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
@@ -39,11 +41,15 @@ describe('Comments', () => {
         commentsApi = new CommentsApi(alfrescoJsApi);
 
         alfrescoJsApi.login('admin', 'admin').then(() => {
-            done();
+            
         });
     });
 
-    it('should add a comment', (done) => {
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
+    it('should add a comment', async () => {
         commentMock.post201Response();
 
         commentsApi
@@ -52,16 +58,16 @@ describe('Comments', () => {
             })
             .then((data) => {
                 assert.equal(data.entry.content, 'This is a comment');
-                done();
+                
             });
     });
 
-    it('should get a comment', (done) => {
+    it('should get a comment', async () => {
         commentMock.get200Response();
 
         commentsApi.listComments('74cd8a96-8a21-47e5-9b3b-a1b3e296787d').then((data) => {
             assert.equal(data.list.entries[0].entry.content, 'This is another comment');
-            done();
+            
         });
     });
 });

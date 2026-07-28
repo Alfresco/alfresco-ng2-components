@@ -16,15 +16,17 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { AlfrescoApi, QueriesApi } from '../../src';
 import { EcmAuthMock, FindNodesMock } from '../mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Queries', () => {
     let authResponseMock: EcmAuthMock;
     let nodesMock: FindNodesMock;
     let queriesApi: QueriesApi;
 
-    beforeEach((done) => {
+    beforeEach(async () => {
         const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
@@ -37,10 +39,14 @@ describe('Queries', () => {
         });
 
         alfrescoJsApi.login('admin', 'admin').then(() => {
-            done();
+            
         });
 
         queriesApi = new QueriesApi(alfrescoJsApi);
+    });
+
+    afterEach(() => {
+        resetGlobalMockAgent();
     });
 
     describe('nodes', () => {
@@ -52,25 +58,25 @@ describe('Queries', () => {
             }, `Error: Missing param 'term'`);
         });
 
-        it('should invoke error handler on a server error', (done) => {
+        it('should invoke error handler on a server error', async () => {
             nodesMock.get401Response();
 
             queriesApi.findNodes(searchTerm).then(
                 () => {},
                 () => {
-                    done();
+                    
                 }
             );
         });
 
-        it('should return query results', (done) => {
+        it('should return query results', async () => {
             nodesMock.get200Response();
 
             queriesApi.findNodes(searchTerm).then((data) => {
                 assert.equal(data.list.pagination.count, 2);
                 assert.equal(data.list.entries[0].entry.name, 'coins1.JPG');
                 assert.equal(data.list.entries[1].entry.name, 'coins2.JPG');
-                done();
+                
             });
         });
     });

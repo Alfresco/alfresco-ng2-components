@@ -16,9 +16,11 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { ProcessAuth } from '../src';
 import { FetchHttpClient } from '../src/fetchHttpClient';
 import { BpmAuthMock } from './mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Bpm Auth test', () => {
     const hostBpm = 'https://127.0.0.1:9999';
@@ -34,7 +36,7 @@ describe('Bpm Auth test', () => {
         assert.equal(auth.authentications.basicAuth.username, 'johndoe');
     });
 
-    it('should forget username on logout', (done) => {
+    it('should forget username on logout', async () => {
         const processAuth = new ProcessAuth({
             hostBpm,
             contextRootBpm: 'activiti-app'
@@ -49,7 +51,7 @@ describe('Bpm Auth test', () => {
 
             processAuth.logout().then(() => {
                 assert.equal(processAuth.authentications.basicAuth.username, null);
-                done();
+                
             });
         });
     });
@@ -67,7 +69,7 @@ describe('Bpm Auth test', () => {
             assert.equal(data, 'Basic YWRtaW46YWRtaW4=');
         });
 
-        it('login password should be removed after login', (done) => {
+        it('login password should be removed after login', async () => {
             authBpmMock.get200Response();
 
             const processAuth = new ProcessAuth({
@@ -78,11 +80,11 @@ describe('Bpm Auth test', () => {
             processAuth.login('admin', 'admin').then((data) => {
                 assert.equal(data, 'Basic YWRtaW46YWRtaW4=');
                 assert.notEqual(processAuth.authentications.basicAuth.password, 'admin');
-                done();
+                
             });
         });
 
-        it('isLoggedIn should return true if the api is logged in', (done) => {
+        it('isLoggedIn should return true if the api is logged in', async () => {
             authBpmMock.get200Response();
 
             const processAuth = new ProcessAuth({
@@ -92,11 +94,11 @@ describe('Bpm Auth test', () => {
 
             processAuth.login('admin', 'admin').then(() => {
                 assert.equal(processAuth.isLoggedIn(), true);
-                done();
+                
             });
         });
 
-        it('isLoggedIn should return false if the api is logged out', (done) => {
+        it('isLoggedIn should return false if the api is logged out', async () => {
             authBpmMock.get200Response();
 
             const processAuth = new ProcessAuth({
@@ -109,11 +111,11 @@ describe('Bpm Auth test', () => {
 
             processAuth.logout().then(() => {
                 assert.equal(processAuth.isLoggedIn(), false);
-                done();
+                
             });
         });
 
-        it('isLoggedIn should return false if the host change', (done) => {
+        it('isLoggedIn should return false if the host change', async () => {
             authBpmMock.get200Response();
 
             const processAuth = new ProcessAuth({
@@ -125,11 +127,11 @@ describe('Bpm Auth test', () => {
                 assert.equal(processAuth.isLoggedIn(), true);
                 processAuth.changeHost();
                 assert.equal(processAuth.isLoggedIn(), false);
-                done();
+                
             });
         });
 
-        it('login should return an error if wrong credential are used 401 the login fails', (done) => {
+        it('login should return an error if wrong credential are used 401 the login fails', async () => {
             authBpmMock.get401Response();
 
             const processAuth = new ProcessAuth({
@@ -141,13 +143,13 @@ describe('Bpm Auth test', () => {
                 () => {},
                 (error) => {
                     assert.equal(error.status, 401);
-                    done();
+                    
                 }
             );
         });
 
         describe('Events ', () => {
-            it('login should fire an event if is unauthorized  401', (done) => {
+            it('login should fire an event if is unauthorized  401', async () => {
                 authBpmMock.get401Response();
 
                 const processAuth = new ProcessAuth({
@@ -159,11 +161,11 @@ describe('Bpm Auth test', () => {
 
                 loginPromise.catch(() => {});
                 loginPromise.on('unauthorized', () => {
-                    done();
+                    
                 });
             });
 
-            it('login should fire an event if is forbidden 403', (done) => {
+            it('login should fire an event if is forbidden 403', async () => {
                 authBpmMock.get403Response();
 
                 const processAuth = new ProcessAuth({
@@ -174,11 +176,11 @@ describe('Bpm Auth test', () => {
                 const loginPromise = processAuth.login('wrong', 'name');
                 loginPromise.catch(() => {});
                 loginPromise.on('forbidden', () => {
-                    done();
+                    
                 });
             });
 
-            it('The Api Should fire success event if is all ok 201', (done) => {
+            it('The Api Should fire success event if is all ok 201', async () => {
                 authBpmMock.get200Response();
 
                 const processAuth = new ProcessAuth({
@@ -190,11 +192,11 @@ describe('Bpm Auth test', () => {
 
                 loginPromise.catch(() => {});
                 loginPromise.on('success', () => {
-                    done();
+                    
                 });
             });
 
-            it('The Api Should fire logout event if the logout is successfull', (done) => {
+            it('The Api Should fire logout event if the logout is successfull', async () => {
                 authBpmMock.get200Response();
 
                 const processAuth = new ProcessAuth({
@@ -208,7 +210,7 @@ describe('Bpm Auth test', () => {
 
                 const promise = processAuth.logout();
                 promise.on('logout', () => {
-                    done();
+                    
                 });
             });
         });
@@ -228,7 +230,7 @@ describe('Bpm Auth test', () => {
         describe('Logout Api', () => {
             let processAuth: ProcessAuth;
 
-            beforeEach((done) => {
+            beforeEach(async () => {
                 authBpmMock.get200Response();
 
                 processAuth = new ProcessAuth({
@@ -237,16 +239,16 @@ describe('Bpm Auth test', () => {
                 });
 
                 processAuth.login('admin', 'admin').then(() => {
-                    done();
+                    
                 });
             });
 
-            it('Ticket should be absent in the client and the resolve promise should be called', (done) => {
+            it('Ticket should be absent in the client and the resolve promise should be called', async () => {
                 authBpmMock.get200ResponseLogout();
 
                 processAuth.logout().then(() => {
                     assert.equal(processAuth.getTicket(), null);
-                    done();
+                    
                 });
             });
         });
@@ -269,7 +271,7 @@ describe('Bpm Auth test', () => {
                 setCsrfTokenCalled = false;
             });
 
-            it('should be enabled by default', (done) => {
+            it('should be enabled by default', async () => {
                 authBpmMock.get200Response();
 
                 const processAuth = new ProcessAuth({
@@ -279,11 +281,11 @@ describe('Bpm Auth test', () => {
 
                 processAuth.login('admin', 'admin').then(() => {
                     assert.equal(setCsrfTokenCalled, true);
-                    done();
+                    
                 });
             });
 
-            it('should be disabled if disableCsrf is true', (done) => {
+            it('should be disabled if disableCsrf is true', async () => {
                 authBpmMock.get200Response();
 
                 const processAuth = new ProcessAuth({
@@ -294,7 +296,7 @@ describe('Bpm Auth test', () => {
 
                 processAuth.login('admin', 'admin').then(() => {
                     assert.equal(setCsrfTokenCalled, false);
-                    done();
+                    
                 });
             });
         });
