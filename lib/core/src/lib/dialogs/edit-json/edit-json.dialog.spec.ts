@@ -26,10 +26,7 @@ import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 import { EditJsonDialogComponent } from './edit-json.dialog';
 import { EDIT_JSON_EDITOR, JsonEditorComponent } from './edit-json-editor.token';
 
-@Component({
-    standalone: true,
-    template: '<span data-automation-id="stub-json-editor">{{ value() }}</span>'
-})
+@Component({ template: '<span data-automation-id="stub-json-editor">{{ value() }}</span>' })
 class StubJsonEditorComponent implements JsonEditorComponent {
     readonly value = model('');
     readonly readOnly = input(false);
