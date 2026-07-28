@@ -21,8 +21,13 @@ import 'zone.js';
 import 'zone.js/testing';
 import { getTestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+import * as ChartJs from 'chart.js/auto';
+import Raphael from 'raphael';
 
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting(), {
     teardown: { destroyAfterEach: false }
 });
+
+(window as any).Chart = (window as any).Chart || ChartJs.Chart;
+(window as any).Raphael = (window as any).Raphael || Raphael;
