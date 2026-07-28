@@ -1,0 +1,43 @@
+name: "Notify Teams on A/N BDU label"
+
+on:
+  pull_request:
+    types: [opened, reopened, labeled]
+    branches:
+      - develop
+      - master
+      - develop-patch*
+      - master-patch*
+
+concurrency:
+  # De-duplicate: only one notification run per PR at a time.
+  group: notify-bdu-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  notify-bdu:
+    name: Notify Teams when A/N BDU label is present
+    runs-on: ubuntu-latest
+    if: >-
+      (github.event.action == 'labeled' && github.event.label.name == 'A/N BDU') ||
+      ((github.event.action == 'opened' || github.event.action == 'reopened') &&
+        contains(github.event.pull_request.labels.*.name, 'A/N BDU'))
+    steps:
+      - name: Send Teams notification
+        uses: Alfresco/alfresco-build-tools/.github/actions/send-teams-notification@1d671f8f10336861c89c67be57c6648d98876103 # v18.19.0
+        with:
+          webhook-url: ${{ secrets.TEAMS_NOTIFICATION_ADF_BDU_WEBHOOK }}
+          skip_checkout: true
+          title: "A/N BDU PR: ${{ github.event.pull_request.title }}"
+          message: |
+            A pull request labelled **A/N BDU** needs attention.
+
+            - **Repository:** ${{ github.repository }}
+            - **PR:** [#${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }})
+            - **Author:** ${{ github.event.pull_request.user.login }}
+            - **Target branch:** ${{ github.event.pull_request.base.ref }}
+            - **Trigger:** ${{ github.event.action == 'labeled' && 'label added after opening' || github.event.action }}
