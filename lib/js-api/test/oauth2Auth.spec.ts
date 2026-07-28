@@ -188,10 +188,9 @@ describe('Oauth2  test', () => {
                 alfrescoJsApi
             );
 
-            oauth2Auth.login('admin', 'admin').then((data) => {
-                assert.equal(data.access_token, 'test-token');
-                oauth2Auth.logOut();
-            });
+            const data = await oauth2Auth.login('admin', 'admin');
+            assert.equal(data.access_token, 'test-token');
+            oauth2Auth.logOut();
         });
 
         it('should refresh token when the login not use the implicitFlow ', async () => {
@@ -224,12 +223,14 @@ describe('Oauth2  test', () => {
                 return Promise.resolve();
             };
 
-            setTimeout(() => {
-                assert.equal(calls > 2, true);
-                oauth2Auth.logOut();
-            }, 600);
-
             oauth2Auth.login('admin', 'admin');
+            await new Promise<void>((resolve) => {
+                setTimeout(() => {
+                    assert.equal(calls > 2, true);
+                    oauth2Auth.logOut();
+                    resolve();
+                }, 600);
+            });
         });
 
         it('should not hang the app also if the logout is missing', async () => {
@@ -263,11 +264,13 @@ describe('Oauth2  test', () => {
                 return Promise.resolve();
             };
 
-            setTimeout(() => {
-                assert.equal(calls > 2, true);
-            }, 600);
-
             oauth2Auth.login('admin', 'admin');
+            await new Promise<void>((resolve) => {
+                setTimeout(() => {
+                    assert.equal(calls > 2, true);
+                    resolve();
+                }, 600);
+            });
         });
 
         it('should emit a token_issued event if login is ok ', async () => {
@@ -348,11 +351,19 @@ describe('Oauth2  test', () => {
                 alfrescoJsApi
             );
 
+            let tokenIssuedEventFired = false;
             oauth2Auth.once('token_issued', () => {
+                tokenIssuedEventFired = true;
                 oauth2Auth.logOut();
             });
 
             oauth2Auth.login('admin', 'admin');
+            await new Promise<void>((resolve) => {
+                setTimeout(() => {
+                    assert.equal(tokenIssuedEventFired, true, 'token_issued event should have fired');
+                    resolve();
+                }, 100);
+            });
         });
 
         it('should emit a token_issued if provider is ALL', async () => {
@@ -373,11 +384,19 @@ describe('Oauth2  test', () => {
                 alfrescoJsApi
             );
 
+            let tokenIssuedEventFired = false;
             oauth2Auth.once('token_issued', () => {
+                tokenIssuedEventFired = true;
                 oauth2Auth.logOut();
             });
 
             oauth2Auth.login('admin', 'admin');
+            await new Promise<void>((resolve) => {
+                setTimeout(() => {
+                    assert.equal(tokenIssuedEventFired, true, 'token_issued event should have fired');
+                    resolve();
+                }, 100);
+            });
         });
 
         it('should after token_issued event exchange the access_token for the alf_ticket', async () => {
@@ -396,7 +415,9 @@ describe('Oauth2  test', () => {
                 authType: 'OAUTH'
             });
 
+            let ticketExchangedEventFired = false;
             alfrescoApi.oauth2Auth.on('ticket_exchanged', () => {
+                ticketExchangedEventFired = true;
                 assert.equal(alfrescoApi.config.ticketEcm, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
                 assert.equal(alfrescoApi.contentClient.config.ticketEcm, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
 
@@ -411,6 +432,12 @@ describe('Oauth2  test', () => {
             });
 
             alfrescoApi.login('admin', 'admin');
+            await new Promise<void>((resolve) => {
+                setTimeout(() => {
+                    assert.equal(ticketExchangedEventFired, true, 'ticket_exchanged event should have fired');
+                    resolve();
+                }, 100);
+            });
         });
 
         it('should after token_issued event exchange the access_token for the alf_ticket with the compatibility layer', async () => {
@@ -431,7 +458,9 @@ describe('Oauth2  test', () => {
 
             const contentApi = new ContentApi(alfrescoApi);
 
+            let ticketExchangedEventFired = false;
             alfrescoApi.oauth2Auth.on('ticket_exchanged', () => {
+                ticketExchangedEventFired = true;
                 assert.equal(alfrescoApi.config.ticketEcm, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
                 assert.equal(alfrescoApi.contentClient.config.ticketEcm, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
 
@@ -444,6 +473,12 @@ describe('Oauth2  test', () => {
             });
 
             alfrescoApi.login('admin', 'admin');
+            await new Promise<void>((resolve) => {
+                setTimeout(() => {
+                    assert.equal(ticketExchangedEventFired, true, 'ticket_exchanged event should have fired');
+                    resolve();
+                }, 100);
+            });
         });
 
         // TODO: very flaky test, fails on different machines if running slow, might relate to `this.timeout`
