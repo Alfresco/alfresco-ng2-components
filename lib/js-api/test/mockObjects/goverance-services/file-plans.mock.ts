@@ -16,7 +16,7 @@
  */
 
 import { BaseMock } from '../base.mock';
-import { FilePlanRolePaging } from '@alfresco/js-api';
+import { FilePlanRolePaging } from '../../../src/index';
 
 export class FilePlansMock extends BaseMock {
     get200FilePlanRoles(filePlanId: string): void {

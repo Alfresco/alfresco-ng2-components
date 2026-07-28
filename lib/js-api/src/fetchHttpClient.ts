@@ -23,7 +23,6 @@ import { isBrowser, paramToString } from './utils';
 
 declare const Blob: any;
 declare const Buffer: any;
-declare const process: any;
 declare const XMLHttpRequest: any;
 
 export class FetchHttpClient implements HttpClient {
@@ -35,16 +34,34 @@ export class FetchHttpClient implements HttpClient {
     }
 
     private getFetch(): typeof fetch {
-        // eslint-disable-next-line no-underscore-dangle
-        return this.customFetch || (typeof process !== 'undefined' && (process as any).__test_fetch__) || globalThis.fetch;
+        return this.customFetch || globalThis.fetch;
     }
 
     private hasNativeXhr(): boolean {
-        // eslint-disable-next-line no-underscore-dangle
-        if (this.customFetch || (typeof process !== 'undefined' && (process as any).__test_fetch__)) {
+        if (this.customFetch) {
             return false;
         }
         return typeof XMLHttpRequest !== 'undefined';
+    }
+
+    private static getStatusText(status: number, fallback: string = ''): string {
+        const statusTexts: { [key: number]: string } = {
+            400: 'Bad Request',
+            401: 'Unauthorized',
+            403: 'Forbidden',
+            404: 'Not Found',
+            405: 'Method Not Allowed',
+            409: 'Conflict',
+            410: 'Gone',
+            415: 'Unsupported Media Type',
+            422: 'Unprocessable Entity',
+            429: 'Too Many Requests',
+            500: 'Internal Server Error',
+            501: 'Not Implemented',
+            502: 'Bad Gateway',
+            503: 'Service Unavailable'
+        };
+        return statusTexts[status] || fallback;
     }
 
     post<T = any>(url: string, options: RequestOptions, securityOptions: SecurityOptions, emitters: Emitters): Promise<T> {
@@ -131,15 +148,15 @@ export class FetchHttpClient implements HttpClient {
                 const response = await fn(url, init);
 
                 if (!response.ok) {
-                    const errorText = await response.text().catch(() => '');
-                    const error: any = new Error(errorText || response.statusText);
+                    const responseText = await response.text().catch(() => '');
+                    const statusText = response.statusText || FetchHttpClient.getStatusText(response.status);
+                    const errorMessage = responseText || statusText;
+                    const error: any = new Error(errorMessage);
                     error.status = response.status;
                     error.response = response;
 
                     FetchHttpClient.emitErrorEvents(error, response.status, emitters);
-                    // eslint-disable-next-line prefer-promise-reject-errors
-                    reject({ error, status: response.status, message: errorText || response.statusText });
-                    return;
+                    throw error;
                 }
 
                 if (securityOptions.isBpmRequest) {
@@ -151,21 +168,31 @@ export class FetchHttpClient implements HttpClient {
 
                 const data = await this.deserializeResponse(response, returnType, responseType);
                 eventEmitter.emit('success', data);
-                resolve(data as T);
+                return data as T;
             };
 
-            execute().catch((error: any) => {
-                if (error.name === 'AbortError') {
-                    eventEmitter.emit('abort');
-                    reject(error);
-                    return;
-                }
-                if (!error.status) {
+            execute().then(
+                (data: T) => {
+                    resolve(data);
+                },
+                (error: any) => {
+                    if (error?.name === 'AbortError') {
+                        eventEmitter.emit('abort');
+                        reject(error);
+                        return;
+                    }
+                    // HTTP errors from execute() have a status code
+                    if (error?.status) {
+                        // eslint-disable-next-line prefer-promise-reject-errors
+                        reject({ error, status: error.status, message: error.message });
+                        return;
+                    }
+                    // Non-HTTP errors
                     FetchHttpClient.emitErrorEvents(error, 0, emitters);
+                    // eslint-disable-next-line prefer-promise-reject-errors
+                    reject({ error });
                 }
-                // eslint-disable-next-line prefer-promise-reject-errors
-                reject(error.status ? { error, status: error.status, message: error.message } : { error });
-            });
+            );
         });
 
         promise.abort = () => {

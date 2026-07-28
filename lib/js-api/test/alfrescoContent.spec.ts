@@ -16,8 +16,10 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { AlfrescoApi, ContentApi } from '../src';
 import { EcmAuthMock } from './mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('AlfrescoContent', () => {
     const hostEcm = 'https://127.0.0.1:8080';
@@ -29,7 +31,7 @@ describe('AlfrescoContent', () => {
     let authResponseMock: EcmAuthMock;
     let contentApi: ContentApi;
 
-    beforeEach((done) => {
+    beforeEach(async () => {
         authResponseMock = new EcmAuthMock(hostEcm);
         authResponseMock.get201Response();
 
@@ -37,10 +39,12 @@ describe('AlfrescoContent', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {
-            contentApi = new ContentApi(alfrescoJsApi);
-            done();
-        });
+        await alfrescoJsApi.login('admin', 'admin');
+        contentApi = new ContentApi(alfrescoJsApi);
+    });
+
+    afterEach(() => {
+        resetGlobalMockAgent();
     });
 
     it('outputs thumbnail url', () => {

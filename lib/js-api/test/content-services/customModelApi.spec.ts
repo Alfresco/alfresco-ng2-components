@@ -16,14 +16,18 @@
  */
 
 import { AlfrescoApi, CustomModelApi } from '../../src';
+import assert from 'assert';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { EcmAuthMock, CustomModelMock } from '../mockObjects';
+
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Custom Model Api', () => {
     let authResponseMock: EcmAuthMock;
     let customModelMock: CustomModelMock;
     let customModelApi: CustomModelApi;
 
-    beforeEach((done) => {
+    beforeEach(async () => {
         const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
@@ -35,25 +39,26 @@ describe('Custom Model Api', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {
-            done();
-        });
+        await alfrescoJsApi.login('admin', 'admin');
 
         customModelApi = new CustomModelApi(alfrescoJsApi);
     });
 
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
     describe('Get', () => {
-        it('All Custom Model', (done) => {
+        it('All Custom Model', async () => {
             customModelMock.get200AllCustomModel();
 
-            customModelApi.getAllCustomModel().then(() => {
-                done();
-            }, console.error);
+            const result = await customModelApi.getAllCustomModel();
+            assert.ok(result, 'getAllCustomModel should return a result');
         });
     });
 
     describe('Create', () => {
-        it('createCustomModel', (done) => {
+        it('createCustomModel', async () => {
             customModelMock.create201CustomModel();
 
             const status = 'DRAFT';
@@ -62,19 +67,18 @@ describe('Custom Model Api', () => {
             const namespaceUri = 'https://www.alfresco.org/model/testNamespace/1.0';
             const namespacePrefix = 'test';
 
-            customModelApi.createCustomModel(status, description, name, namespaceUri, namespacePrefix).then(() => {
-                done();
-            }, console.error);
+            const result = await customModelApi.createCustomModel(status, description, name, namespaceUri, namespacePrefix);
+            assert.ok(result, 'createCustomModel should return a result');
+            assert.equal(result.entry.name, name, 'Created model should have correct name');
         });
     });
 
     describe('PUT', () => {
-        it('activateCustomModel', (done) => {
+        it('activateCustomModel', async () => {
             customModelMock.activateCustomModel200();
 
-            customModelApi.activateCustomModel('testModel').then(() => {
-                done();
-            }, console.error);
+            const result = await customModelApi.activateCustomModel('testModel');
+            assert.ok(result, 'activateCustomModel should return a result');
         });
     });
 });

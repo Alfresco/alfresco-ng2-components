@@ -16,7 +16,10 @@
  */
 
 import { EcmAuthMock, FilePlansMock } from '../mockObjects';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, FilePlanRolePaging, FilePlansApi } from '../../src';
+import assert from 'assert';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('FilePlansApi', () => {
     let filePlansApiMock: FilePlansMock;
@@ -32,6 +35,10 @@ describe('FilePlansApi', () => {
         });
         filePlansApi = new FilePlansApi(alfrescoApi);
         await alfrescoApi.login('admin', 'admin');
+    });
+
+    afterEach(() => {
+        resetGlobalMockAgent();
     });
 
     describe('getFilePlanRoles', () => {
@@ -102,59 +109,45 @@ describe('FilePlansApi', () => {
             };
         });
 
-        it('should get file plan roles', (done) => {
+        it('should get file plan roles', async () => {
             filePlansApiMock.get200FilePlanRoles(filePlanId);
 
-            filePlansApi.getFilePlanRoles(filePlanId).then((rolePaging) => {
-                expect(rolePaging).toEqual(expectedRolePaging);
-                done();
-            });
+            const rolePaging = await filePlansApi.getFilePlanRoles(filePlanId);
+            assert.deepStrictEqual(rolePaging, expectedRolePaging);
         });
 
-        it('should get file plan roles with filtering by capability names', (done) => {
+        it('should get file plan roles with filtering by capability names', async () => {
             filePlansApiMock.get200FilePlanRolesWithFilteringByCapabilityNames(filePlanId);
 
-            filePlansApi
-                .getFilePlanRoles(filePlanId, {
-                    where: {
-                        capabilityNames: ['capability1', 'capability2']
-                    }
-                })
-                .then((rolePaging) => {
-                    expect(rolePaging).toEqual(expectedRolePaging);
-                    done();
-                });
+            const rolePaging = await filePlansApi.getFilePlanRoles(filePlanId, {
+                where: {
+                    capabilityNames: ['capability1', 'capability2']
+                }
+            });
+            assert.deepStrictEqual(rolePaging, expectedRolePaging);
         });
 
-        it('should get file plan roles with filtering by person id', (done) => {
+        it('should get file plan roles with filtering by person id', async () => {
             filePlansApiMock.get200FilePlanRolesWithFilteringByPersonId(filePlanId);
 
-            filePlansApi
-                .getFilePlanRoles(filePlanId, {
-                    where: {
-                        personId: 'someUser'
-                    }
-                })
-                .then((rolePaging) => {
-                    expect(rolePaging).toEqual(expectedRolePaging);
-                    done();
-                });
+            const rolePaging = await filePlansApi.getFilePlanRoles(filePlanId, {
+                where: {
+                    personId: 'someUser'
+                }
+            });
+            assert.deepStrictEqual(rolePaging, expectedRolePaging);
         });
 
-        it('should get file plan roles with filtering by capability names', (done) => {
+        it('should get file plan roles with filtering by capability names', async () => {
             filePlansApiMock.get200FilePlanRolesWithFilteringByPersonIdAndCapabilityNames(filePlanId);
 
-            filePlansApi
-                .getFilePlanRoles(filePlanId, {
-                    where: {
-                        personId: 'someUser',
-                        capabilityNames: ['capability1', 'capability2']
-                    }
-                })
-                .then((rolePaging) => {
-                    expect(rolePaging).toEqual(expectedRolePaging);
-                    done();
-                });
+            const rolePaging = await filePlansApi.getFilePlanRoles(filePlanId, {
+                where: {
+                    personId: 'someUser',
+                    capabilityNames: ['capability1', 'capability2']
+                }
+            });
+            assert.deepStrictEqual(rolePaging, expectedRolePaging);
         });
     });
 });

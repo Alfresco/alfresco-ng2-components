@@ -16,8 +16,10 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, NodeSecurityMarkBody, SecurityMarkEntry, SecurityMarkPaging, AuthorityClearanceApi } from '../../src';
 import { AuthorityClearanceMock, EcmAuthMock } from '../mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 const DEFAULT_OPTS = {
     skipCount: 0,
@@ -60,36 +62,37 @@ describe('Authority Clearance API test', () => {
         await alfrescoApi.login('admin', 'admin');
     });
 
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
     it('get authority clearances for an authority', async () => {
         const nodeId = 'testAuthorityId';
         authorityClearanceMock.get200AuthorityClearanceForAuthority(nodeId);
-        await authorityClearanceApi.getAuthorityClearanceForAuthority(nodeId, DEFAULT_OPTS).then((response) => {
-            assert.equal(response.list.entries[0].entry.id, 'securityGroupFruits');
-            assert.equal(response.list.entries[0].entry.displayLabel, 'Security Group FRUITS');
-            assert.equal(response.list.entries[0].entry.type, 'USER_REQUIRES_ALL');
-            assert.equal(response.list.entries[0].entry.marks.length, 3);
-        });
+        const response = await authorityClearanceApi.getAuthorityClearanceForAuthority(nodeId, DEFAULT_OPTS);
+        assert.equal(response.list.entries[0].entry.id, 'securityGroupFruits');
+        assert.equal(response.list.entries[0].entry.displayLabel, 'Security Group FRUITS');
+        assert.equal(response.list.entries[0].entry.type, 'USER_REQUIRES_ALL');
+        assert.equal(response.list.entries[0].entry.marks.length, 3);
     });
 
     it('add single security marks to an authority', async () => {
         const nodeId = 'testAuthorityId';
         authorityClearanceMock.post200AuthorityClearanceWithSingleItem(nodeId);
-        await authorityClearanceApi.updateAuthorityClearance(nodeId, nodeSecurityMarkBodySingle).then((data) => {
-            const response = data as SecurityMarkEntry;
-            assert.equal(response.entry.id, 'fruitMarkId1');
-            assert.equal(response.entry.name, 'APPLES');
-            assert.equal(response.entry.groupId, 'securityGroupFruits');
-        });
+        const data = await authorityClearanceApi.updateAuthorityClearance(nodeId, nodeSecurityMarkBodySingle);
+        const response = data as SecurityMarkEntry;
+        assert.equal(response.entry.id, 'fruitMarkId1');
+        assert.equal(response.entry.name, 'APPLES');
+        assert.equal(response.entry.groupId, 'securityGroupFruits');
     });
 
     it('add multiple security marks on an authority', async () => {
         const nodeId = 'testAuthorityId';
         authorityClearanceMock.post200AuthorityClearanceWithList(nodeId);
-        await authorityClearanceApi.updateAuthorityClearance(nodeId, nodeSecurityMarkBodyList).then((data) => {
-            const response = data as SecurityMarkPaging;
-            assert.equal(response.list.entries[0].entry.id, 'fruitMarkId1');
-            assert.equal(response.list.entries[0].entry.name, 'APPLES');
-            assert.equal(response.list.entries[0].entry.groupId, 'securityGroupFruits');
-        });
+        const data = await authorityClearanceApi.updateAuthorityClearance(nodeId, nodeSecurityMarkBodyList);
+        const response = data as SecurityMarkPaging;
+        assert.equal(response.list.entries[0].entry.id, 'fruitMarkId1');
+        assert.equal(response.list.entries[0].entry.name, 'APPLES');
+        assert.equal(response.list.entries[0].entry.groupId, 'securityGroupFruits');
     });
 });

@@ -16,8 +16,10 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, ModelJsonBpmnApi } from '../../src';
 import { BpmAuthMock, ModelJsonBpmMock } from '../mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Activiti Model JsonBpmn Api', () => {
     let authResponseBpmMock: BpmAuthMock;
@@ -40,6 +42,10 @@ describe('Activiti Model JsonBpmn Api', () => {
         modelJsonBpmnApi = new ModelJsonBpmnApi(alfrescoJsApi);
 
         await alfrescoJsApi.login('admin', 'admin');
+    });
+
+    afterEach(() => {
+        resetGlobalMockAgent();
     });
 
     it('get Model JsonBpmn', async () => {

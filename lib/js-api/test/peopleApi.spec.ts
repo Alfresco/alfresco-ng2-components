@@ -15,15 +15,23 @@
  * limitations under the License.
  */
 
+import assert from 'assert';
 import { AlfrescoApi, PeopleApi, PersonBodyCreate } from '../src';
-import { PeopleMock } from './mockObjects';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
+import { EcmAuthMock, PeopleMock } from './mockObjects';
+
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('PeopleApi', () => {
+    let authResponseMock: EcmAuthMock;
     let peopleMock: PeopleMock;
     let peopleApi: PeopleApi;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         const hostEcm = 'https://127.0.0.1:8080';
+
+        authResponseMock = new EcmAuthMock(hostEcm);
+        authResponseMock.get201Response();
 
         const alfrescoApi = new AlfrescoApi({
             hostEcm
@@ -31,9 +39,15 @@ describe('PeopleApi', () => {
 
         peopleMock = new PeopleMock(hostEcm);
         peopleApi = new PeopleApi(alfrescoApi);
+
+        await alfrescoApi.login('admin', 'admin');
     });
 
-    it('should add a person', (done) => {
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
+    it('should add a person', async () => {
         peopleMock.get201Response();
 
         const personBodyCreate: PersonBodyCreate = {
@@ -44,8 +58,8 @@ describe('PeopleApi', () => {
             password: 'Rrrrrrrghghghghgh'
         };
 
-        peopleApi.createPerson(personBodyCreate).then(() => {
-            done();
-        });
+        const result = await peopleApi.createPerson(personBodyCreate);
+        assert.ok(result, 'createPerson should return a result');
+        assert.equal(result.entry.id, 'chewbe', 'Created person should have correct id');
     });
 });

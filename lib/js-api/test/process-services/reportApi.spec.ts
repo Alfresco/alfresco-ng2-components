@@ -16,8 +16,10 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { BpmAuthMock, ReportsMock } from '../mockObjects';
 import { ReportApi, AlfrescoApi } from '../../src';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Activiti Report Api', () => {
     let authResponseBpmMock: BpmAuthMock;
@@ -41,6 +43,10 @@ describe('Activiti Report Api', () => {
         reportApi = new ReportApi(alfrescoJsApi);
 
         await alfrescoJsApi.login('admin', 'admin');
+    });
+
+    afterEach(() => {
+        resetGlobalMockAgent();
     });
 
     it('should create the default reports', async () => {

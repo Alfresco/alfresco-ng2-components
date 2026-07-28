@@ -16,9 +16,12 @@
  */
 
 /* eslint-disable jsdoc/require-jsdoc, no-underscore-dangle */
+import assert from 'assert';
+import { describe, it, beforeEach, afterEach } from 'node:test';
+import * as sinon from 'sinon';
 import { FetchHttpClient } from '../src/fetchHttpClient';
-import { EventEmitter } from 'eventemitter3';
 import { getGlobalMockAgent, mockHost } from './mockObjects/base.mock';
+import { EventEmitter } from 'eventemitter3';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -51,8 +54,8 @@ describe('FetchHttpClient', () => {
         it('should set X-CSRF-TOKEN header', () => {
             const headers: Record<string, string> = {};
             client.setCsrfToken(headers);
-            expect(headers['X-CSRF-TOKEN']).toBeTruthy();
-            expect(headers['X-CSRF-TOKEN'].length).toBeGreaterThan(0);
+            assert.ok(headers['X-CSRF-TOKEN']);
+            assert.ok(headers['X-CSRF-TOKEN'].length > 0);
         });
     });
 
@@ -77,12 +80,12 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ id: 1, name: 'test' });
+            assert.deepStrictEqual(result, { id: 1, name: 'test' });
         });
 
         it('should emit success event', async () => {
             mockHost(host).get('/api/test').reply(200, { ok: true });
-            const successSpy = jest.fn();
+            const successSpy = sinon.stub();
             eventEmitter.on('success', successSpy);
 
             await client.get(
@@ -102,7 +105,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(successSpy).toHaveBeenCalledWith({ ok: true });
+            assert.ok(successSpy.calledWith({ ok: true }));
         });
 
         it('should append query parameters', async () => {
@@ -125,7 +128,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ ok: true });
+            assert.deepStrictEqual(result, { ok: true });
         });
 
         it('should append query parameters with & when URL already contains ?', async () => {
@@ -148,7 +151,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ ok: true });
+            assert.deepStrictEqual(result, { ok: true });
         });
 
         it('should return text for String returnType', async () => {
@@ -171,7 +174,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toBe('plain text');
+            assert.strictEqual(result, 'plain text');
         });
     });
 
@@ -196,7 +199,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ id: 2, name: 'new' });
+            assert.deepStrictEqual(result, { id: 2, name: 'new' });
         });
 
         it('should send form-urlencoded body', async () => {
@@ -219,7 +222,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ ticket: 'abc' });
+            assert.deepStrictEqual(result, { ticket: 'abc' });
         });
     });
 
@@ -244,7 +247,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ id: 1, name: 'updated' });
+            assert.deepStrictEqual(result, { id: 1, name: 'updated' });
         });
     });
 
@@ -269,90 +272,108 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({});
+            assert.deepStrictEqual(result, {});
         });
     });
 
     describe('error handling', () => {
         it('should emit error and reject on 500', async () => {
             mockHost(host).get('/api/fail').reply(500, 'Internal Server Error', { 'content-type': 'text/plain' });
-            const errorSpy = jest.fn();
+            const errorSpy = sinon.stub();
             eventEmitter.on('error', errorSpy);
 
-            await expect(
-                client.get(
-                    host + '/api/fail',
-                    {
-                        httpMethod: 'GET',
-                        queryParams: {},
-                        headerParams: {},
-                        formParams: {},
-                        bodyParam: null,
-                        contentType: 'application/json',
-                        accept: 'application/json',
-                        responseType: null,
-                        returnType: null
-                    },
-                    defaultSecurityOptions,
-                    emitters
-                )
-            ).rejects.toEqual(expect.objectContaining({ status: 500 }));
+            await assert.rejects(
+                async () => {
+                    await client.get(
+                        host + '/api/fail',
+                        {
+                            httpMethod: 'GET',
+                            queryParams: {},
+                            headerParams: {},
+                            formParams: {},
+                            bodyParam: null,
+                            contentType: 'application/json',
+                            accept: 'application/json',
+                            responseType: null,
+                            returnType: null
+                        },
+                        defaultSecurityOptions,
+                        emitters
+                    );
+                },
+                (err) => {
+                    assert.strictEqual(err.status, 500);
+                    return true;
+                }
+            );
 
-            expect(errorSpy).toHaveBeenCalled();
+            assert.ok(errorSpy.called);
         });
 
         it('should emit unauthorized on 401', async () => {
             mockHost(host).get('/api/secure').reply(401, 'Unauthorized', { 'content-type': 'text/plain' });
-            const unauthorizedSpy = jest.fn();
+            const unauthorizedSpy = sinon.stub();
             eventEmitter.on('unauthorized', unauthorizedSpy);
 
-            await expect(
-                client.get(
-                    host + '/api/secure',
-                    {
-                        httpMethod: 'GET',
-                        queryParams: {},
-                        headerParams: {},
-                        formParams: {},
-                        bodyParam: null,
-                        contentType: 'application/json',
-                        accept: 'application/json',
-                        responseType: null,
-                        returnType: null
-                    },
-                    defaultSecurityOptions,
-                    emitters
-                )
-            ).rejects.toEqual(expect.objectContaining({ status: 401 }));
+            await assert.rejects(
+                async () => {
+                    await client.get(
+                        host + '/api/secure',
+                        {
+                            httpMethod: 'GET',
+                            queryParams: {},
+                            headerParams: {},
+                            formParams: {},
+                            bodyParam: null,
+                            contentType: 'application/json',
+                            accept: 'application/json',
+                            responseType: null,
+                            returnType: null
+                        },
+                        defaultSecurityOptions,
+                        emitters
+                    );
+                },
+                (err) => {
+                    assert.strictEqual(err.status, 401);
+                    return true;
+                }
+            );
 
-            expect(unauthorizedSpy).toHaveBeenCalled();
+            assert.ok(unauthorizedSpy.called);
         });
 
         it('should emit forbidden on 403', async () => {
             mockHost(host).get('/api/forbidden').reply(403, 'Forbidden', { 'content-type': 'text/plain' });
-            const forbiddenSpy = jest.fn();
+            const forbiddenSpy = sinon.stub();
             eventEmitter.on('forbidden', forbiddenSpy);
 
-            await expect(
-                client.get(
-                    host + '/api/forbidden',
-                    {
-                        httpMethod: 'GET',
-                        queryParams: {},
-                        headerParams: {},
-                        formParams: {},
-                        bodyParam: null,
-                        contentType: 'application/json',
-                        accept: 'application/json',
-                        responseType: null,
-                        returnType: null
-                    },
-                    defaultSecurityOptions,
-                    emitters
-                )
-            ).rejects.toEqual(expect.objectContaining({ status: 403 }));
+            await assert.rejects(
+                async () => {
+                    await client.get(
+                        host + '/api/forbidden',
+                        {
+                            httpMethod: 'GET',
+                            queryParams: {},
+                            headerParams: {},
+                            formParams: {},
+                            bodyParam: null,
+                            contentType: 'application/json',
+                            accept: 'application/json',
+                            responseType: null,
+                            returnType: null
+                        },
+                        defaultSecurityOptions,
+                        emitters
+                    );
+                },
+                (err) => {
+                    assert.strictEqual(err.status, 403);
+                    return true;
+                }
+            );
 
-            expect(forbiddenSpy).toHaveBeenCalled();
+            assert.ok(forbiddenSpy.called);
         });
     });
 
@@ -450,7 +471,7 @@ describe('FetchHttpClient', () => {
                 authentications: { type: 'unknown' }
             };
 
-            expect(() =>
+            assert.throws(() => {
                 client.get(
                     host + '/api/test',
                     {
@@ -466,15 +487,15 @@ describe('FetchHttpClient', () => {
                     },
                     securityOptions,
                     emitters
-                )
-            ).toThrow('Unknown authentication type: unknown');
+                );
+            }, /Unknown authentication type: unknown/);
         });
     });
 
     describe('abort', () => {
         it('should support aborting a request', async () => {
             mockHost(host).get('/api/slow').reply(200, { ok: true });
-            const abortSpy = jest.fn();
+            const abortSpy = sinon.stub();
             eventEmitter.on('abort', abortSpy);
 
             const promise = client.get(
@@ -496,19 +517,21 @@ describe('FetchHttpClient', () => {
 
             (promise as any).abort();
 
-            await expect(promise).rejects.toBeTruthy();
+            await assert.rejects(async () => {
+                await promise;
+            });
         });
     });
 
     describe('timeout', () => {
         it('should accept a numeric timeout', () => {
             client.timeout = 5000;
-            expect(client.timeout).toBe(5000);
+            assert.strictEqual(client.timeout, 5000);
         });
 
         it('should accept an object timeout', () => {
             client.timeout = { deadline: 10000, response: 5000 };
-            expect((client.timeout as any).deadline).toBe(10000);
+            assert.strictEqual((client.timeout as any).deadline, 10000);
         });
     });
 
@@ -538,7 +561,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(securityOptions.authentications.cookie).toBe('JSESSIONID=abc123');
+            assert.strictEqual(securityOptions.authentications.cookie, 'JSESSIONID=abc123');
         });
 
         it('should not overwrite existing Cookie header when session cookie is appended', () => {
@@ -547,8 +570,8 @@ describe('FetchHttpClient', () => {
 
             headers['Cookie'] = headers['Cookie'] ? headers['Cookie'] + '; ' + sessionCookie : sessionCookie;
 
-            expect(headers['Cookie']).toContain('CSRF-TOKEN=abc');
-            expect(headers['Cookie']).toContain('JSESSIONID=xyz');
+            assert.ok(headers['Cookie'].includes('CSRF-TOKEN=abc'));
+            assert.ok(headers['Cookie'].includes('JSESSIONID=xyz'));
         });
     });
 
@@ -573,7 +596,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({});
+            assert.deepStrictEqual(result, {});
         });
 
         it('should return text for HTML content-type', async () => {
@@ -596,7 +619,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toBe('<html>test</html>');
+            assert.strictEqual(result, '<html>test</html>');
         });
     });
 
@@ -606,11 +629,11 @@ describe('FetchHttpClient', () => {
 
         function createMockXhr() {
             const xhr: any = {
-                open: jest.fn(),
-                send: jest.fn(),
-                setRequestHeader: jest.fn(),
-                getResponseHeader: jest.fn(),
-                abort: jest.fn(),
+                open: sinon.stub(),
+                send: sinon.stub(),
+                setRequestHeader: sinon.stub(),
+                getResponseHeader: sinon.stub(),
+                abort: sinon.stub(),
                 upload: {},
                 readyState: 0,
                 status: 0,
@@ -620,7 +643,7 @@ describe('FetchHttpClient', () => {
                 timeout: 0,
                 responseType: ''
             };
-            xhr.send.mockImplementation(() => {
+            xhr.send.callsFake(() => {
                 setTimeout(() => {
                     if (xhr.onload) {
                         xhr.onload();
@@ -633,7 +656,7 @@ describe('FetchHttpClient', () => {
         beforeEach(() => {
             xhrClient = new FetchHttpClient();
             mockXhr = createMockXhr();
-            (globalThis as any).XMLHttpRequest = jest.fn(() => mockXhr);
+            (globalThis as any).XMLHttpRequest = sinon.stub().callsFake(() => mockXhr);
             delete (process as any).__test_fetch__;
         });
 
@@ -645,7 +668,7 @@ describe('FetchHttpClient', () => {
         it('should use XHR for POST requests when XMLHttpRequest is available', async () => {
             mockXhr.status = 200;
             mockXhr.responseText = JSON.stringify({ created: true });
-            mockXhr.getResponseHeader.mockReturnValue('application/json');
+            mockXhr.getResponseHeader.returns('application/json');
 
             const result = await xhrClient.post(
                 host + '/api/items',
@@ -664,16 +687,16 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ created: true });
-            expect(mockXhr.open).toHaveBeenCalledWith('POST', host + '/api/items', true);
-            expect(mockXhr.send).toHaveBeenCalled();
+            assert.deepStrictEqual(result, { created: true });
+            assert.ok(mockXhr.open.calledWith('POST', host + '/api/items', true));
+            assert.ok(mockXhr.send.called);
         });
 
         it('should emit progress events from XHR upload', async () => {
             mockXhr.status = 200;
             mockXhr.responseText = JSON.stringify({ ok: true });
-            mockXhr.getResponseHeader.mockReturnValue('application/json');
-            mockXhr.send.mockImplementation(() => {
+            mockXhr.getResponseHeader.returns('application/json');
+            mockXhr.send.callsFake(() => {
                 if (mockXhr.upload.onprogress) {
                     mockXhr.upload.onprogress({ lengthComputable: true, loaded: 50, total: 100 });
                     mockXhr.upload.onprogress({ lengthComputable: true, loaded: 100, total: 100 });
@@ -681,7 +704,7 @@ describe('FetchHttpClient', () => {
                 setTimeout(() => mockXhr.onload(), 0);
             });
 
-            const progressSpy = jest.fn();
+            const progressSpy = sinon.stub();
             eventEmitter.on('progress', progressSpy);
 
             await xhrClient.post(
@@ -701,9 +724,9 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(progressSpy).toHaveBeenCalledTimes(2);
-            expect(progressSpy).toHaveBeenCalledWith({ total: 100, loaded: 50, percent: 50 });
-            expect(progressSpy).toHaveBeenCalledWith({ total: 100, loaded: 100, percent: 100 });
+            assert.strictEqual(progressSpy.callCount, 2);
+            assert.ok(progressSpy.calledWith({ total: 100, loaded: 50, percent: 50 }));
+            assert.ok(progressSpy.calledWith({ total: 100, loaded: 100, percent: 100 }));
         });
 
         it('should emit error and reject on XHR error status', async () => {
@@ -711,99 +734,117 @@ describe('FetchHttpClient', () => {
             mockXhr.responseText = 'Server Error';
             mockXhr.statusText = 'Internal Server Error';
 
-            const errorSpy = jest.fn();
+            const errorSpy = sinon.stub();
             eventEmitter.on('error', errorSpy);
 
-            await expect(
-                xhrClient.post(
-                    host + '/api/fail',
-                    {
-                        httpMethod: 'POST',
-                        queryParams: {},
-                        headerParams: {},
-                        formParams: {},
-                        bodyParam: { data: 'test' },
-                        contentType: 'application/json',
-                        accept: 'application/json',
-                        responseType: null,
-                        returnType: null
-                    },
-                    defaultSecurityOptions,
-                    emitters
-                )
-            ).rejects.toEqual(expect.objectContaining({ status: 500 }));
+            await assert.rejects(
+                async () => {
+                    await xhrClient.post(
+                        host + '/api/fail',
+                        {
+                            httpMethod: 'POST',
+                            queryParams: {},
+                            headerParams: {},
+                            formParams: {},
+                            bodyParam: { data: 'test' },
+                            contentType: 'application/json',
+                            accept: 'application/json',
+                            responseType: null,
+                            returnType: null
+                        },
+                        defaultSecurityOptions,
+                        emitters
+                    );
+                },
+                (err) => {
+                    assert.strictEqual(err.status, 500);
+                    return true;
+                }
+            );
 
-            expect(errorSpy).toHaveBeenCalled();
+            assert.ok(errorSpy.called);
         });
 
         it('should emit unauthorized on XHR 401', async () => {
             mockXhr.status = 401;
             mockXhr.responseText = 'Unauthorized';
 
-            const unauthorizedSpy = jest.fn();
+            const unauthorizedSpy = sinon.stub();
             eventEmitter.on('unauthorized', unauthorizedSpy);
 
-            await expect(
-                xhrClient.post(
-                    host + '/api/secure',
-                    {
-                        httpMethod: 'POST',
-                        queryParams: {},
-                        headerParams: {},
-                        formParams: {},
-                        bodyParam: { data: 'test' },
-                        contentType: 'application/json',
-                        accept: 'application/json',
-                        responseType: null,
-                        returnType: null
-                    },
-                    defaultSecurityOptions,
-                    emitters
-                )
-            ).rejects.toEqual(expect.objectContaining({ status: 401 }));
+            await assert.rejects(
+                async () => {
+                    await xhrClient.post(
+                        host + '/api/secure',
+                        {
+                            httpMethod: 'POST',
+                            queryParams: {},
+                            headerParams: {},
+                            formParams: {},
+                            bodyParam: { data: 'test' },
+                            contentType: 'application/json',
+                            accept: 'application/json',
+                            responseType: null,
+                            returnType: null
+                        },
+                        defaultSecurityOptions,
+                        emitters
+                    );
+                },
+                (err) => {
+                    assert.strictEqual(err.status, 401);
+                    return true;
+                }
+            );
 
-            expect(unauthorizedSpy).toHaveBeenCalled();
+            assert.ok(unauthorizedSpy.called);
         });
 
         it('should emit forbidden on XHR 403', async () => {
             mockXhr.status = 403;
             mockXhr.responseText = 'Forbidden';
 
-            const forbiddenSpy = jest.fn();
+            const forbiddenSpy = sinon.stub();
             eventEmitter.on('forbidden', forbiddenSpy);
 
-            await expect(
-                xhrClient.post(
-                    host + '/api/forbidden',
-                    {
-                        httpMethod: 'POST',
-                        queryParams: {},
-                        headerParams: {},
-                        formParams: {},
-                        bodyParam: { data: 'test' },
-                        contentType: 'application/json',
-                        accept: 'application/json',
-                        responseType: null,
-                        returnType: null
-                    },
-                    defaultSecurityOptions,
-                    emitters
-                )
-            ).rejects.toEqual(expect.objectContaining({ status: 403 }));
+            await assert.rejects(
+                async () => {
+                    await xhrClient.post(
+                        host + '/api/forbidden',
+                        {
+                            httpMethod: 'POST',
+                            queryParams: {},
+                            headerParams: {},
+                            formParams: {},
+                            bodyParam: { data: 'test' },
+                            contentType: 'application/json',
+                            accept: 'application/json',
+                            responseType: null,
+                            returnType: null
+                        },
+                        defaultSecurityOptions,
+                        emitters
+                    );
+                },
+                (err) => {
+                    assert.strictEqual(err.status, 403);
+                    return true;
+                }
+            );
 
-            expect(forbiddenSpy).toHaveBeenCalled();
+            assert.ok(forbiddenSpy.called);
         });
 
         it('should handle XHR network error', async () => {
-            mockXhr.send.mockImplementation(() => {
+            mockXhr.send.callsFake(() => {
                 setTimeout(() => mockXhr.onerror(), 0);
             });
 
-            const errorSpy = jest.fn();
+            const errorSpy = sinon.stub();
             eventEmitter.on('error', errorSpy);
 
-            await expect(
-                xhrClient.post(
+            await assert.rejects(async () => {
+                await xhrClient.post(
                     host + '/api/network-fail',
                     {
                         httpMethod: 'POST',
@@ -818,22 +859,22 @@ describe('FetchHttpClient', () => {
                     },
                     defaultSecurityOptions,
                     emitters
-                )
-            ).rejects.toBeTruthy();
+                );
+            });
 
-            expect(errorSpy).toHaveBeenCalled();
+            assert.ok(errorSpy.called);
         });
 
         it('should handle XHR abort', async () => {
-            mockXhr.send.mockImplementation(() => {
+            mockXhr.send.callsFake(() => {
                 setTimeout(() => mockXhr.onabort(), 0);
             });
 
-            const abortSpy = jest.fn();
+            const abortSpy = sinon.stub();
             eventEmitter.on('abort', abortSpy);
 
-            await expect(
-                xhrClient.post(
+            await assert.rejects(async () => {
+                await xhrClient.post(
                     host + '/api/abort',
                     {
                         httpMethod: 'POST',
@@ -848,22 +889,22 @@ describe('FetchHttpClient', () => {
                     },
                     defaultSecurityOptions,
                     emitters
-                )
-            ).rejects.toBeTruthy();
+                );
+            });
 
-            expect(abortSpy).toHaveBeenCalled();
+            assert.ok(abortSpy.called);
         });
 
         it('should handle XHR timeout', async () => {
-            mockXhr.send.mockImplementation(() => {
+            mockXhr.send.callsFake(() => {
                 setTimeout(() => mockXhr.ontimeout(), 0);
             });
 
-            const errorSpy = jest.fn();
+            const errorSpy = sinon.stub();
             eventEmitter.on('error', errorSpy);
 
-            await expect(
-                xhrClient.post(
+            await assert.rejects(async () => {
+                await xhrClient.post(
                     host + '/api/slow',
                     {
                         httpMethod: 'POST',
@@ -878,14 +919,14 @@ describe('FetchHttpClient', () => {
                     },
                     defaultSecurityOptions,
                     emitters
-                )
-            ).rejects.toBeTruthy();
+                );
+            });
 
-            expect(errorSpy).toHaveBeenCalled();
+            assert.ok(errorSpy.called);
         });
 
         it('should support aborting an XHR request via promise.abort()', async () => {
-            mockXhr.send.mockImplementation(() => {
+            mockXhr.send.callsFake(() => {
                 // don't auto-resolve
             });
 
@@ -907,13 +948,13 @@ describe('FetchHttpClient', () => {
             );
 
             (promise as any).abort();
-            expect(mockXhr.abort).toHaveBeenCalled();
+            assert.ok(mockXhr.abort.called);
         });
 
         it('should set withCredentials on XHR for BPM requests', async () => {
             mockXhr.status = 200;
             mockXhr.responseText = JSON.stringify({ ok: true });
-            mockXhr.getResponseHeader.mockReturnValue('application/json');
+            mockXhr.getResponseHeader.returns('application/json');
 
             await xhrClient.post(
                 host + '/api/bpm',
@@ -932,13 +973,13 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(mockXhr.withCredentials).toBe(true);
+            assert.strictEqual(mockXhr.withCredentials, true);
         });
 
         it('should set blob responseType for blob returnType', async () => {
             mockXhr.status = 200;
             mockXhr.response = new Blob(['test']);
-            mockXhr.getResponseHeader.mockReturnValue('application/octet-stream');
+            mockXhr.getResponseHeader.returns('application/octet-stream');
 
             await xhrClient.post(
                 host + '/api/download',
@@ -957,13 +998,13 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(mockXhr.responseType).toBe('blob');
+            assert.strictEqual(mockXhr.responseType, 'blob');
         });
 
         it('should deserialize String returnType from XHR', async () => {
             mockXhr.status = 200;
             mockXhr.responseText = 'plain text response';
-            mockXhr.getResponseHeader.mockReturnValue('text/plain');
+            mockXhr.getResponseHeader.returns('text/plain');
 
             const result = await xhrClient.post(
                 host + '/api/text',
@@ -982,13 +1023,13 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toBe('plain text response');
+            assert.strictEqual(result, 'plain text response');
         });
 
         it('should deserialize HTML content from XHR', async () => {
             mockXhr.status = 200;
             mockXhr.responseText = '<html>content</html>';
-            mockXhr.getResponseHeader.mockReturnValue('text/html');
+            mockXhr.getResponseHeader.returns('text/html');
 
             const result = await xhrClient.post(
                 host + '/api/html',
@@ -1007,13 +1048,13 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toBe('<html>content</html>');
+            assert.strictEqual(result, '<html>content</html>');
         });
 
         it('should return empty object for empty XHR response', async () => {
             mockXhr.status = 200;
             mockXhr.responseText = '';
-            mockXhr.getResponseHeader.mockReturnValue('application/json');
+            mockXhr.getResponseHeader.returns('application/json');
 
             const result = await xhrClient.post(
                 host + '/api/empty',
@@ -1032,14 +1073,14 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({});
+            assert.deepStrictEqual(result, {});
         });
 
         it('should set XHR timeout when configured', async () => {
             xhrClient.timeout = 5000;
             mockXhr.status = 200;
             mockXhr.responseText = JSON.stringify({ ok: true });
-            mockXhr.getResponseHeader.mockReturnValue('application/json');
+            mockXhr.getResponseHeader.returns('application/json');
 
             await xhrClient.post(
                 host + '/api/test',
@@ -1058,14 +1099,14 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(mockXhr.timeout).toBe(5000);
+            assert.strictEqual(mockXhr.timeout, 5000);
         });
 
         it('should propagate progress events to promise.on() listeners', async () => {
             mockXhr.status = 200;
             mockXhr.responseText = JSON.stringify({ uploaded: true });
-            mockXhr.getResponseHeader.mockReturnValue('application/json');
-            mockXhr.send.mockImplementation(() => {
+            mockXhr.getResponseHeader.returns('application/json');
+            mockXhr.send.callsFake(() => {
                 if (mockXhr.upload.onprogress) {
                     mockXhr.upload.onprogress({ lengthComputable: true, loaded: 30, total: 100 });
                     mockXhr.upload.onprogress({ lengthComputable: true, loaded: 100, total: 100 });
@@ -1093,7 +1134,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(progressEvents).toEqual([
+            assert.deepStrictEqual(progressEvents, [
                 { total: 100, loaded: 30, percent: 30 },
                 { total: 100, loaded: 100, percent: 100 }
             ]);
@@ -1138,7 +1179,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ success: true });
+            assert.deepStrictEqual(result, { success: true });
         });
 
         it('should convert Buffer to Blob when form param is a Buffer', async () => {
@@ -1162,7 +1203,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ success: true });
+            assert.deepStrictEqual(result, { success: true });
         });
 
         it('should read file and send as Blob when form param has .path property', async () => {
@@ -1189,7 +1230,7 @@ describe('FetchHttpClient', () => {
                     emitters
                 );
 
-                expect(result).toEqual({ success: true });
+                assert.deepStrictEqual(result, { success: true });
             } finally {
                 fs.unlinkSync(tmpFile);
             }
@@ -1215,7 +1256,7 @@ describe('FetchHttpClient', () => {
                 emitters
             );
 
-            expect(result).toEqual({ success: true });
+            assert.deepStrictEqual(result, { success: true });
         });
     });
 });

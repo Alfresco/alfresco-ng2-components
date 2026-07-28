@@ -16,15 +16,17 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi, TagBody, TagEntry, TagPaging, TagsApi } from '../../src';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
+import { AlfrescoApi, TagBody, TagEntry, TagsApi } from '../../src';
 import { EcmAuthMock, TagMock } from '../mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Tags', () => {
     let authResponseMock: EcmAuthMock;
     let tagMock: TagMock;
     let tagsApi: TagsApi;
 
-    beforeEach((done) => {
+    beforeEach(async () => {
         const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
@@ -36,81 +38,70 @@ describe('Tags', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {
-            done();
-        });
+        await alfrescoJsApi.login('admin', 'admin');
 
         tagsApi = new TagsApi(alfrescoJsApi);
     });
 
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
     describe('listTags', () => {
-        it('should load list of tags', (done) => {
+        it('should load list of tags', async () => {
             tagMock.get200Response();
 
-            tagsApi.listTags().then((data) => {
-                assert.equal(data.list.pagination.count, 2);
-                assert.equal(data.list.entries[0].entry.tag, 'tag-test-1');
-                assert.equal(data.list.entries[1].entry.tag, 'tag-test-2');
-                done();
-            });
+            const data = await tagsApi.listTags();
+            assert.equal(data.list.pagination.count, 2);
+            assert.equal(data.list.entries[0].entry.tag, 'tag-test-1');
+            assert.equal(data.list.entries[1].entry.tag, 'tag-test-2');
         });
 
-        it('should handle 401 error', (done) => {
+        it('should handle 401 error', async () => {
             tagMock.get401Response();
 
-            tagsApi.listTags().then(
-                () => {},
-                () => {
-                    done();
-                }
-            );
+            try {
+                await tagsApi.listTags();
+                assert.fail('Expected listTags to throw error on 401 response');
+            } catch (error: any) {
+                assert.equal(error.status, 401, 'Error should have 401 status');
+            }
         });
 
-        it('should return specified tag', (done) => {
+        it('should return specified tag', async () => {
             tagMock.getTagsByNamesFilterByExactTag200Response();
 
-            tagsApi
-                .listTags({
-                    tag: 'tag-test-1'
-                })
-                .then((data) => {
-                    assert.equal(data.list.entries[0].entry.tag, 'tag-test-1');
-                    assert.equal(data.list.entries[0].entry.id, '0d89aa82-f2b8-4a37-9a54-f4c5148174d6');
-                    done();
-                });
+            const data = await tagsApi.listTags({
+                tag: 'tag-test-1'
+            });
+            assert.equal(data.list.entries[0].entry.tag, 'tag-test-1');
+            assert.equal(data.list.entries[0].entry.id, '0d89aa82-f2b8-4a37-9a54-f4c5148174d6');
         });
 
-        it('should return tags contained specified value', (done) => {
+        it('should return tags contained specified value', async () => {
             tagMock.getTagsByNameFilteredByMatching200Response();
 
-            tagsApi
-                .listTags({
-                    tag: '*tag-test*',
-                    matching: true
-                })
-                .then((data) => {
-                    assert.equal(data?.list.entries.length, 2);
+            const data = await tagsApi.listTags({
+                tag: '*tag-test*',
+                matching: true
+            });
+            assert.equal(data?.list.entries.length, 2);
 
-                    assert.equal(data.list.entries[0].entry.tag, 'tag-test-1');
-                    assert.equal(data.list.entries[0].entry.id, '0d89aa82-f2b8-4a37-9a54-f4c5148174d6');
+            assert.equal(data.list.entries[0].entry.tag, 'tag-test-1');
+            assert.equal(data.list.entries[0].entry.id, '0d89aa82-f2b8-4a37-9a54-f4c5148174d6');
 
-                    assert.equal(data.list.entries[1].entry.tag, 'tag-test-2');
-                    assert.equal(data.list.entries[1].entry.id, 'd79bdbd0-9f55-45bb-9521-811e15bf48f6');
-
-                    done();
-                });
+            assert.equal(data.list.entries[1].entry.tag, 'tag-test-2');
+            assert.equal(data.list.entries[1].entry.id, 'd79bdbd0-9f55-45bb-9521-811e15bf48f6');
         });
     });
 
     describe('createTags', () => {
-        it('should return created tags', (done) => {
+        it('should return created tags', async () => {
             tagMock.createTags201Response();
-            tagsApi.createTags([new TagBody(), new TagBody()]).then((tags: TagPaging) => {
-                assert.equal(tags.list.entries.length, 2);
-                assert.equal(tags.list.entries[0].entry.tag, 'tag-test-1');
-                assert.equal(tags.list.entries[1].entry.tag, 'tag-test-2');
-                done();
-            });
+            const tags = await tagsApi.createTags([new TagBody(), new TagBody()]);
+            assert.equal(tags.list.entries.length, 2);
+            assert.equal(tags.list.entries[0].entry.tag, 'tag-test-1');
+            assert.equal(tags.list.entries[1].entry.tag, 'tag-test-2');
         });
 
         it('should throw error if tags are not passed', () => {
@@ -119,7 +110,7 @@ describe('Tags', () => {
     });
 
     describe('assignTagsToNode', () => {
-        it('should return tags after assigning them to node', (done) => {
+        it('should return tags after assigning them to node', async () => {
             const tag1 = new TagBody();
             tag1.tag = 'tag-test-1';
             const tag2 = new TagBody();
@@ -127,25 +118,21 @@ describe('Tags', () => {
             const tags = [tag1, tag2];
             tagMock.get201ResponseForAssigningTagsToNode(tags);
 
-            tagsApi.assignTagsToNode('someNodeId', tags).then((tagPaging) => {
-                assert.equal(tagPaging.list.pagination.count, 2);
-                assert.equal(tagPaging.list.entries[0].entry.tag, tag1.tag);
-                assert.equal(tagPaging.list.entries[1].entry.tag, tag2.tag);
-                done();
-            });
+            const tagPaging = await tagsApi.assignTagsToNode('someNodeId', tags);
+            assert.equal(tagPaging.list.pagination.count, 2);
+            assert.equal(tagPaging.list.entries[0].entry.tag, tag1.tag);
+            assert.equal(tagPaging.list.entries[1].entry.tag, tag2.tag);
         });
 
-        it('should return tag after assigning it to node', (done) => {
+        it('should return tag after assigning it to node', async () => {
             const tag = new TagBody();
             tag.tag = 'tag-test-1';
             const tags = [tag];
             tagMock.get201ResponseForAssigningTagsToNode(tags);
 
-            tagsApi.assignTagsToNode('someNodeId', tags).then((data) => {
-                const tagEntry = data as TagEntry;
-                assert.equal(tagEntry.entry.tag, tag.tag);
-                done();
-            });
+            const data = await tagsApi.assignTagsToNode('someNodeId', tags);
+            const tagEntry = data as TagEntry;
+            assert.equal(tagEntry.entry.tag, tag.tag);
         });
     });
 });

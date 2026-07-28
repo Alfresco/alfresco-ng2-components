@@ -16,15 +16,17 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { AlfrescoApi, SEARCH_LANGUAGE, SearchApi } from '../src';
 import { EcmAuthMock, SearchMock } from './mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Search', () => {
     let authResponseMock: EcmAuthMock;
     let searchMock: SearchMock;
     let searchApi: SearchApi;
 
-    beforeEach((done) => {
+    beforeEach(async () => {
         const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
@@ -36,26 +38,24 @@ describe('Search', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {
-            done();
-        });
+        await alfrescoJsApi.login('admin', 'admin');
 
         searchApi = new SearchApi(alfrescoJsApi);
     });
 
-    it('should search works', (done) => {
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
+    it('should search works', async () => {
         searchMock.get200Response();
 
-        searchApi
-            .search({
-                query: {
-                    query: 'select * from cmis:folder',
-                    language: SEARCH_LANGUAGE.CMIS
-                }
-            })
-            .then((data) => {
-                assert.equal(data.list.entries[0].entry.name, 'user');
-                done();
-            });
+        const data = await searchApi.search({
+            query: {
+                query: 'select * from cmis:folder',
+                language: SEARCH_LANGUAGE.CMIS
+            }
+        });
+        assert.equal(data.list.entries[0].entry.name, 'user');
     });
 });

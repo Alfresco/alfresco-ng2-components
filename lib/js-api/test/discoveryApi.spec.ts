@@ -16,15 +16,17 @@
  */
 
 import assert from 'assert';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 import { AlfrescoApi, DiscoveryApi } from '../src';
 import { DiscoveryMock, EcmAuthMock } from './mockObjects';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 
 describe('Discovery', () => {
     let authResponseMock: EcmAuthMock;
     let discoveryMock: DiscoveryMock;
     let discoveryApi: DiscoveryApi;
 
-    beforeEach((done) => {
+    beforeEach(async () => {
         const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
@@ -36,19 +38,18 @@ describe('Discovery', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {
-            done();
-        });
-
+        await alfrescoJsApi.login('admin', 'admin');
         discoveryApi = new DiscoveryApi(alfrescoJsApi);
     });
 
-    it('should getRepositoryInformation works', (done) => {
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
+    it('should getRepositoryInformation works', async () => {
         discoveryMock.get200Response();
 
-        discoveryApi.getRepositoryInformation().then((data) => {
-            assert.equal(data.entry.repository.edition, 'Enterprise');
-            done();
-        });
+        const data = await discoveryApi.getRepositoryInformation();
+        assert.equal(data.entry.repository.edition, 'Enterprise');
     });
 });

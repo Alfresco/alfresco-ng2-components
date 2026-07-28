@@ -16,6 +16,7 @@
  */
 
 import assert from 'assert';
+import { describe, it } from 'node:test';
 import { PathMatcher } from '../src/utils/path-matcher';
 
 describe('PathMatcher', () => {
