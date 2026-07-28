@@ -154,8 +154,6 @@ export class FetchHttpClient implements HttpClient {
                     const error: any = new Error(errorMessage);
                     error.status = response.status;
                     error.response = response;
-                    // Mark as HTTP response error so we know not to double-wrap
-                    error._isHttpError = true;
 
                     FetchHttpClient.emitErrorEvents(error, response.status, emitters);
                     throw error;
@@ -173,34 +171,28 @@ export class FetchHttpClient implements HttpClient {
                 return data as T;
             };
 
-            execute()
-                .then(
-                    (data: T) => {
-                        resolve(data);
-                    },
-                    (error: any) => {
-                        if (error?.name === 'AbortError') {
-                            eventEmitter.emit('abort');
-                            reject(error);
-                            return;
-                        }
-                        // If it's already an HTTP error, wrap it in our standard format
-                        if (error?._isHttpError) {
-                            // eslint-disable-next-line prefer-promise-reject-errors
-                            reject({ error, status: error.status, message: error.message });
-                            return;
-                        }
-                        if (!error?.status) {
-                            FetchHttpClient.emitErrorEvents(error, 0, emitters);
-                        }
-                        // eslint-disable-next-line prefer-promise-reject-errors
-                        reject(error?.status ? { error, status: error.status, message: error.message } : { error });
+            execute().then(
+                (data: T) => {
+                    resolve(data);
+                },
+                (error: any) => {
+                    if (error?.name === 'AbortError') {
+                        eventEmitter.emit('abort');
+                        reject(error);
+                        return;
                     }
-                )
-                .catch((): void => {
-                    // Catch any unhandled rejections from the promise chain
-                    // This is a safety net to prevent async activity from escaping to the test runner
-                });
+                    // HTTP errors from execute() have a status code
+                    if (error?.status) {
+                        // eslint-disable-next-line prefer-promise-reject-errors
+                        reject({ error, status: error.status, message: error.message });
+                        return;
+                    }
+                    // Non-HTTP errors
+                    FetchHttpClient.emitErrorEvents(error, 0, emitters);
+                    // eslint-disable-next-line prefer-promise-reject-errors
+                    reject({ error });
+                }
+            );
         });
 
         promise.abort = () => {

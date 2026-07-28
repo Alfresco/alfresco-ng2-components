@@ -22,7 +22,10 @@ import { EcmAuthMock, BpmAuthMock, NodeMock, ProfileMock } from './mockObjects';
 import { NodesApi, UserProfileApi, AlfrescoApi } from '../src';
 import { describe, it, beforeEach, afterEach } from 'node:test';
 
-// Suppress unhandledRejection for error responses that escape the test context
+// Handler to suppress unhandledRejection for error responses that escape the test context
+// This is needed for auth.spec.ts tests that use the AlfrescoApi.login() wrapper which
+// can have promise chaining issues. Direct testing in content-auth.spec.ts and
+// process-auth-error.spec.ts avoids this pattern.
 const unhandledRejectionHandler = (reason: any) => {
     // Suppress rejections from error-path tests (401, 403, 404 responses)
     if (reason?.status && (reason.status === 401 || reason.status === 403 || reason.status === 404)) {
