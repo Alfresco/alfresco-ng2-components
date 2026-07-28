@@ -57,7 +57,8 @@ describe('PeopleApi', () => {
             password: 'Rrrrrrrghghghghgh'
         };
 
-        await peopleApi.createPerson(payload);
+        const result = await peopleApi.createPerson(payload);
+        assert.ok(result, 'createPerson should return a result');
     });
 
     it('should get list of people', async () => {

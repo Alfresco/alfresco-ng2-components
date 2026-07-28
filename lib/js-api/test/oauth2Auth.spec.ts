@@ -287,11 +287,17 @@ describe('Oauth2  test', () => {
                 alfrescoJsApi
             );
 
+            let tokenIssuedEventFired = false;
             oauth2Auth.once('token_issued', () => {
+                tokenIssuedEventFired = true;
                 oauth2Auth.logOut();
             });
 
             oauth2Auth.login('admin', 'admin');
+            await new Promise<void>((resolve) => {
+                setTimeout(() => resolve(), 100);
+            });
+            assert.equal(tokenIssuedEventFired, true, 'token_issued event should have fired');
         });
 
         it('should not emit a token_issued event if setToken is null ', async () => {

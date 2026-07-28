@@ -135,30 +135,48 @@ describe('Ecm Auth test', () => {
             it('login should fire an event if is unauthorized  401', async () => {
                 authEcmMock.get401Response();
 
+                let unauthorizedEventFired = false;
                 const loginPromise: any = contentAuth.login('wrong', 'name');
                 loginPromise.catch(() => {});
 
-                loginPromise.on('unauthorized', () => {});
+                loginPromise.on('unauthorized', () => {
+                    unauthorizedEventFired = true;
+                });
+
+                await loginPromise.catch(() => {});
+                assert.equal(unauthorizedEventFired, true, 'Unauthorized event should have fired');
             });
 
             it('login should fire an event if is forbidden 403', async () => {
                 authEcmMock.get403Response();
 
+                let forbiddenEventFired = false;
                 const loginPromise: any = contentAuth.login('wrong', 'name');
 
                 loginPromise.catch(() => {});
 
-                loginPromise.on('forbidden', () => {});
+                loginPromise.on('forbidden', () => {
+                    forbiddenEventFired = true;
+                });
+
+                await loginPromise.catch(() => {});
+                assert.equal(forbiddenEventFired, true, 'Forbidden event should have fired');
             });
 
             it('The Api Should fire success event if is all ok 201', async () => {
                 authEcmMock.get201Response();
 
+                let successEventFired = false;
                 const loginPromise: any = contentAuth.login('admin', 'admin');
 
                 loginPromise.catch(() => {});
 
-                loginPromise.on('success', () => {});
+                loginPromise.on('success', () => {
+                    successEventFired = true;
+                });
+
+                await loginPromise.catch(() => {});
+                assert.equal(successEventFired, true, 'Success event should have fired');
             });
 
             it('The Api Should fire logout event if the logout is successfull', async () => {
@@ -166,8 +184,16 @@ describe('Ecm Auth test', () => {
                 contentAuth.login('admin', 'admin').catch(() => {});
                 authEcmMock.get204ResponseLogout();
 
-                (contentAuth.logout() as any).on('logout', () => {});
+                let logoutEventFired = false;
+                (contentAuth.logout() as any).on('logout', () => {
+                    logoutEventFired = true;
+                });
                 (contentAuth.logout() as any).catch(() => {});
+
+                await new Promise<void>((resolve) => {
+                    setTimeout(() => resolve(), 100);
+                });
+                assert.equal(logoutEventFired, true, 'Logout event should have fired');
             });
         });
 
