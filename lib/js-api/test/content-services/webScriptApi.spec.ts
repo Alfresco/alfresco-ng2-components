@@ -61,18 +61,23 @@ describe('WebScript', () => {
     it('execute webScript GET return 200 if all is ok  should be handled by resolve promise', async () => {
         webScriptMock.get200Response();
 
-        await webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath);
+        const result = await webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath);
+        assert.ok(result, 'executeWebScript should return a result');
     });
 
     it('execute webScript that return HTML should not return it as Object', async () => {
         webScriptMock.get200ResponseHTMLFormat();
 
         const data = await webscriptApi.executeWebScript('GET', 'sample/folder/Company%20Home');
+        assert.ok(data, 'executeWebScript should return data');
+        let isValidJson = false;
         try {
             JSON.parse(data);
+            isValidJson = true;
         } catch {
             // Expected - HTML cannot be parsed as JSON
         }
+        assert.equal(isValidJson, false, 'HTML response should not be valid JSON');
     });
 
     describe('Events', () => {

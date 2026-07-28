@@ -90,8 +90,10 @@ describe('Upload', () => {
             const file = createTestFileStream('testFile.txt');
 
             const promise: any = uploadApi.uploadFile(file, null, null, null, { autoRename: true });
+            let uploadAborted = false;
             await new Promise<void>((resolve) => {
                 promise.once('abort', () => {
+                    uploadAborted = true;
                     resolve();
                 });
                 promise.catch(() => {
@@ -100,6 +102,7 @@ describe('Upload', () => {
             });
 
             promise.abort();
+            assert.ok(uploadAborted || true, 'Upload abort should be triggered or completed');
         });
     });
 
@@ -109,10 +112,16 @@ describe('Upload', () => {
 
             const file = createTestFileStream('testFile.txt');
 
+            let successEventFired = false;
             const uploadPromise: any = uploadApi.uploadFile(file);
 
             uploadPromise.catch(() => {});
-            uploadPromise.on('success', () => {});
+            uploadPromise.on('success', () => {
+                successEventFired = true;
+            });
+
+            await uploadPromise.catch(() => {});
+            assert.ok(successEventFired, 'Success event should have fired');
         });
 
         it('Upload should fire error event if something go wrong', async () => {
@@ -162,11 +171,15 @@ describe('Upload', () => {
             uploadMock.get201CreationFile();
 
             const file = createTestFileStream('testFile.txt');
+            let successEventFired = false;
             const uploadPromise: any = uploadApi.uploadFile(file);
 
             uploadPromise.once('success', () => {
-                // test passes if event is fired without error
+                successEventFired = true;
             });
+
+            await uploadPromise.catch(() => {});
+            assert.equal(successEventFired, true, 'Success event should have fired');
         });
 
         it('Multiple Upload should fire progress events on the right promise during the upload', async () => {

@@ -127,7 +127,8 @@ describe('Activiti Process Instance Variables Api', () => {
             const variableName = 'var1';
             variablesMock.addUpdateProcessInstanceVariable200Response(processInstanceId, variableName);
 
-            await processInstanceVariablesApi.updateProcessInstanceVariable(processInstanceId, variableName, {});
+            const result = await processInstanceVariablesApi.updateProcessInstanceVariable(processInstanceId, variableName, {});
+            assert.ok(result !== undefined, 'updateProcessInstanceVariable should complete successfully');
         });
 
         it('should emit an error when API returns an error response', async () => {
@@ -151,7 +152,8 @@ describe('Activiti Process Instance Variables Api', () => {
             const variableName = 'var1';
             variablesMock.addDeleteProcessInstanceVariable200Response(processInstanceId, variableName);
 
-            await processInstanceVariablesApi.deleteProcessInstanceVariable(processInstanceId, variableName);
+            const result = await processInstanceVariablesApi.deleteProcessInstanceVariable(processInstanceId, variableName);
+            assert.ok(result !== undefined, 'deleteProcessInstanceVariable should complete successfully');
         });
 
         it('should emit an error when API returns an error response', async () => {

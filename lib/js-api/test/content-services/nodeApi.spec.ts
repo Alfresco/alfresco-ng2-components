@@ -108,8 +108,9 @@ describe('Node', () => {
 
             try {
                 await nodesApi.deleteNode('80a94ac8-3ece-47ad-864e-5d939424c47c');
-            } catch {
-                // Expected error
+                assert.fail('Expected deleteNode to throw error on 403 response');
+            } catch (error: any) {
+                assert.equal(error.status, 403, 'Error should have 403 status');
             }
         });
     });
@@ -133,8 +134,9 @@ describe('Node', () => {
 
             try {
                 await nodesApi.deleteNodes(['80a94ac8-3ece-47ad-864e-5d939424c47c', '80a94ac8-test-47ad-864e-5d939424c47c']);
+                assert.fail('Expected deleteNodes to throw error when one deletion fails');
             } catch (error: any) {
-                assert.equal(error.status, 404);
+                assert.equal(error.status, 404, 'Error should have 404 status from failed deletion');
             }
         });
     });

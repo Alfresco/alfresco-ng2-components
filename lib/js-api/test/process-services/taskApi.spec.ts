@@ -37,10 +37,6 @@ describe('Activiti Task Api', () => {
     let taskFormsApi: TaskFormsApi;
     let taskActionsApi: TaskActionsApi;
 
-    const NOOP = () => {
-        /* empty */
-    };
-
     beforeEach(async () => {
         const BPM_HOST = 'https://127.0.0.1:9999';
 
@@ -88,7 +84,12 @@ describe('Activiti Task Api', () => {
 
         const requestNode = new TaskFilterRequestRepresentation();
 
-        tasksApi.filterTasks(requestNode).then(NOOP, () => {});
+        try {
+            await tasksApi.filterTasks(requestNode);
+            assert.fail('Expected filterTasks to throw error on 400 response');
+        } catch (error: any) {
+            assert.equal(error.status, 400);
+        }
     });
 
     it('filter Tasks', async () => {
@@ -106,7 +107,12 @@ describe('Activiti Task Api', () => {
         const taskId = '200';
         tasksMock.get404CompleteTask(taskId);
 
-        taskActionsApi.completeTask(taskId).then(NOOP, () => {});
+        try {
+            await taskActionsApi.completeTask(taskId);
+            assert.fail('Expected completeTask to throw error on 404 response');
+        } catch (error: any) {
+            assert.equal(error.status, 404);
+        }
     });
 
     it('complete Task ', async () => {
@@ -114,7 +120,8 @@ describe('Activiti Task Api', () => {
 
         tasksMock.put200GenericResponse('/activiti-app/api/enterprise/tasks/5006/action/complete');
 
-        await taskActionsApi.completeTask(taskId);
+        const result = await taskActionsApi.completeTask(taskId);
+        assert.ok(result !== undefined, 'completeTask should complete successfully');
     });
 
     it('Create a Task', async () => {
@@ -125,7 +132,8 @@ describe('Activiti Task Api', () => {
         const taskRepresentation = new TaskRepresentation();
         taskRepresentation.name = taskName;
 
-        await tasksApi.createNewTask(taskRepresentation);
+        const result = await tasksApi.createNewTask(taskRepresentation);
+        assert.ok(result, 'createNewTask should return a result');
     });
 
     it('Get task form', async () => {
@@ -157,7 +165,8 @@ describe('Activiti Task Api', () => {
         const field = 'label';
         const column = 'user';
 
-        await taskFormsApi.getRestFieldColumnValues(taskId, field, column);
+        const result = await taskFormsApi.getRestFieldColumnValues(taskId, field, column);
+        assert.ok(result !== undefined, 'getRestFieldColumnValues should return a result');
     });
 
     it('get form field values that are populated through a REST backend Specific case to retrieve information on a specific column', async () => {
@@ -166,6 +175,7 @@ describe('Activiti Task Api', () => {
         const taskId = '2';
         const field = 'label';
 
-        await taskFormsApi.getRestFieldValues(taskId, field);
+        const result = await taskFormsApi.getRestFieldValues(taskId, field);
+        assert.ok(result !== undefined, 'getRestFieldValues should return a result');
     });
 });

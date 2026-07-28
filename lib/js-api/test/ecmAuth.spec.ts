@@ -50,6 +50,7 @@ describe('Ecm Auth test', () => {
 
     it('should remember username on login', () => {
         const auth = new ContentAuth({}, alfrescoJsApi);
+        authEcmMock.get201Response();
         auth.login('johndoe', 'password').catch(() => {});
         assert.equal(auth.authentications.basicAuth.username, 'johndoe');
     });

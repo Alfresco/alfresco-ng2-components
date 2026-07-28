@@ -18,16 +18,20 @@
 import assert from 'assert';
 import { AlfrescoApi, PeopleApi, PersonBodyCreate } from '../src';
 import { resetGlobalMockAgent } from './mockObjects/base.mock';
-import { PeopleMock } from './mockObjects';
+import { EcmAuthMock, PeopleMock } from './mockObjects';
 
 import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('PeopleApi', () => {
+    let authResponseMock: EcmAuthMock;
     let peopleMock: PeopleMock;
     let peopleApi: PeopleApi;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         const hostEcm = 'https://127.0.0.1:8080';
+
+        authResponseMock = new EcmAuthMock(hostEcm);
+        authResponseMock.get201Response();
 
         const alfrescoApi = new AlfrescoApi({
             hostEcm
@@ -35,6 +39,8 @@ describe('PeopleApi', () => {
 
         peopleMock = new PeopleMock(hostEcm);
         peopleApi = new PeopleApi(alfrescoApi);
+
+        await alfrescoApi.login('admin', 'admin');
     });
 
     afterEach(() => {
