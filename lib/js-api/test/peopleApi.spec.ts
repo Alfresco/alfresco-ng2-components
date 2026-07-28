@@ -51,6 +51,6 @@ describe('PeopleApi', () => {
             password: 'Rrrrrrrghghghghgh'
         };
 
-        peopleApi.createPerson(personBodyCreate).then(() => {});
+        await peopleApi.createPerson(personBodyCreate);
     });
 });

@@ -38,7 +38,7 @@ describe('Queries', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {});
+        await alfrescoJsApi.login('admin', 'admin');
 
         queriesApi = new QueriesApi(alfrescoJsApi);
     });

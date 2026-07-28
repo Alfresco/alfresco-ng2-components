@@ -58,7 +58,7 @@ describe('Rendition', () => {
     it('Create Rendition', async () => {
         renditionMock.createRendition200();
 
-        renditionsApi.createRendition('97a29e9c-1e4f-4d9d-bb02-1ec920dda045', { id: 'pdf' }).then(() => {});
+        await renditionsApi.createRendition('97a29e9c-1e4f-4d9d-bb02-1ec920dda045', { id: 'pdf' });
     });
 
     it('Get Renditions list for node id', async () => {

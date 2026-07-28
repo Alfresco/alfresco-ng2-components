@@ -60,7 +60,7 @@ describe('WebScript', () => {
     it('execute webScript GET return 200 if all is ok  should be handled by resolve promise', async () => {
         webScriptMock.get200Response();
 
-        webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath).then(() => {});
+        await webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath);
     });
 
     it('execute webScript that return HTML should not return it as Object', async () => {

@@ -38,7 +38,7 @@ describe('Custom Model Api', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {});
+        await alfrescoJsApi.login('admin', 'admin');
 
         customModelApi = new CustomModelApi(alfrescoJsApi);
     });
@@ -51,7 +51,11 @@ describe('Custom Model Api', () => {
         it('All Custom Model', async () => {
             customModelMock.get200AllCustomModel();
 
-            customModelApi.getAllCustomModel().then(() => {}, console.error);
+            try {
+                await customModelApi.getAllCustomModel();
+            } catch (error) {
+                console.error(error);
+            }
         });
     });
 
@@ -65,7 +69,11 @@ describe('Custom Model Api', () => {
             const namespaceUri = 'https://www.alfresco.org/model/testNamespace/1.0';
             const namespacePrefix = 'test';
 
-            customModelApi.createCustomModel(status, description, name, namespaceUri, namespacePrefix).then(() => {}, console.error);
+            try {
+                await customModelApi.createCustomModel(status, description, name, namespaceUri, namespacePrefix);
+            } catch (error) {
+                console.error(error);
+            }
         });
     });
 
@@ -73,7 +81,11 @@ describe('Custom Model Api', () => {
         it('activateCustomModel', async () => {
             customModelMock.activateCustomModel200();
 
-            customModelApi.activateCustomModel('testModel').then(() => {}, console.error);
+            try {
+                await customModelApi.activateCustomModel('testModel');
+            } catch (error) {
+                console.error(error);
+            }
         });
     });
 });

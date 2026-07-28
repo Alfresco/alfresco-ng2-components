@@ -112,7 +112,7 @@ describe('Categories', () => {
 
     it('should return 204 after unlinking category', async () => {
         categoriesMock.get204CategoryUnlinked('testNode', 'testId1');
-        categoriesApi.unlinkNodeFromCategory('testNode', 'testId1').then(() => {});
+        await categoriesApi.unlinkNodeFromCategory('testNode', 'testId1');
     });
 
     it('should return 404 while unlinking category if category with categoryId or node with nodeId does not exist', async () => {

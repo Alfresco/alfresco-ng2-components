@@ -38,7 +38,7 @@ describe('Tags', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {});
+        await alfrescoJsApi.login('admin', 'admin');
 
         tagsApi = new TagsApi(alfrescoJsApi);
     });

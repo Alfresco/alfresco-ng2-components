@@ -60,7 +60,7 @@ describe('Versions', () => {
     it('should create rendition for a node versionId', async () => {
         versionMock.create200VersionRendition(nodeId, versionId);
 
-        versionsApi.createVersionRendition(nodeId, versionId, { id: 'pdf' }).then(() => {});
+        await versionsApi.createVersionRendition(nodeId, versionId, { id: 'pdf' });
     });
 
     it('should get a node version rendition', async () => {

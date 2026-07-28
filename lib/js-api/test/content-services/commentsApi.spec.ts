@@ -40,7 +40,7 @@ describe('Comments', () => {
 
         commentsApi = new CommentsApi(alfrescoJsApi);
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {});
+        await alfrescoJsApi.login('admin', 'admin');
     });
 
     afterEach(() => {

@@ -37,7 +37,7 @@ describe('Groups', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {});
+        await alfrescoJsApi.login('admin', 'admin');
 
         groupsApi = new GroupsApi(alfrescoJsApi);
     });
@@ -71,7 +71,7 @@ describe('Groups', () => {
 
     it('delete group', async () => {
         groupsMock.getDeleteGroupSuccessfulResponse('group_test');
-        groupsApi.deleteGroup('group_test').then(() => {});
+        await groupsApi.deleteGroup('group_test');
     });
 
     it('get single group', async () => {
@@ -122,6 +122,6 @@ describe('Groups', () => {
 
     it('delete group member', async () => {
         groupsMock.getDeleteMemberForGroupSuccessfulResponse('GROUP_TEST', 'GROUP_SUB_TEST');
-        groupsApi.deleteGroupMembership('GROUP_TEST', 'GROUP_SUB_TEST').then(() => {});
+        await groupsApi.deleteGroupMembership('GROUP_TEST', 'GROUP_SUB_TEST');
     });
 });

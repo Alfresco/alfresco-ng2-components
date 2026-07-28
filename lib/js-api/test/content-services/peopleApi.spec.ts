@@ -56,7 +56,7 @@ describe('PeopleApi', () => {
             password: 'Rrrrrrrghghghghgh'
         };
 
-        peopleApi.createPerson(payload).then(() => {});
+        await peopleApi.createPerson(payload);
     });
 
     it('should get list of people', async () => {

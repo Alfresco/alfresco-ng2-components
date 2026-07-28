@@ -283,13 +283,13 @@ describe('Upload', () => {
 
             uploadMock.get409CreationFileNewNameClashes();
 
-            const p1 = uploadApi.uploadFile(file).then(null, () => {
+            const p1 = uploadApi.uploadFile(file).catch(() => {
                 rejectOneOk = true;
             });
 
             uploadMock.get409CreationFileNewNameClashes();
 
-            const p2 = uploadApi.uploadFile(fileTwo).then(null, () => {
+            const p2 = uploadApi.uploadFile(fileTwo).catch(() => {
                 rejectTwoOk = true;
             });
 
