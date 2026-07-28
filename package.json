@@ -78,7 +78,7 @@
   "devDependencies": {
     "@alfresco/eslint-plugin-eslint-angular": "workspace:*",
     "@angular-devkit/architect": "0.2003.16",
-    "@angular-devkit/build-angular": "20.3.32",
+    "@angular/build": "20.3.32",
     "@angular-devkit/core": "20.3.32",
     "@angular-devkit/schematics": "20.3.32",
     "@angular-eslint/eslint-plugin": "20.7.0",
@@ -145,6 +145,7 @@
     "storybook": "10.4.0",
     "stylelint": "16.20.0",
     "stylelint-config-standard-scss": "13.1.0",
+    "ts-jest": "29.4.11",
     "ts-node": "10.9.2",
     "typescript": "5.9.3",
     "webpack": "5.109.0"
