@@ -18,7 +18,7 @@
 import { DOCUMENT } from '@angular/common';
 import { NgZone } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { ACTIVITY_THROTTLE_MS, IdleActivityTracker } from './idle-activity-tracker';
+import { ACTIVITY_EVENTS, ACTIVITY_THROTTLE_MS, IdleActivityTracker } from './idle-activity-tracker';
 
 describe('IdleActivityTracker', () => {
     let tracker: IdleActivityTracker;
@@ -84,7 +84,7 @@ describe('IdleActivityTracker', () => {
     });
 
     [
-        { phase: 'bubbling', listenerOptions: undefined },
+        { phase: 'bubbling', listenerOptions: { capture: false, passive: false } },
         { phase: 'capturing', listenerOptions: { capture: true, passive: false } }
     ].forEach(({ phase, listenerOptions }) => {
         it(`should allow a later active ${phase} listener to prevent default when an activity event fires`, () => {
@@ -102,6 +102,17 @@ describe('IdleActivityTracker', () => {
                 doc.removeEventListener('mousemove', preventDefault, listenerOptions);
             }
         });
+    });
+
+    it('should keep scroll-sensitive activity listeners passive when tracking starts', () => {
+        const addEventListener = spyOn(doc, 'addEventListener').and.callThrough();
+
+        tracker.start();
+
+        expect(addEventListener).toHaveBeenCalledTimes(ACTIVITY_EVENTS.length + 1);
+        expect(addEventListener).toHaveBeenCalledWith('mousemove', jasmine.any(Function), { capture: true, passive: false });
+        expect(addEventListener).toHaveBeenCalledWith('touchstart', jasmine.any(Function), { capture: true, passive: true });
+        expect(addEventListener).toHaveBeenCalledWith('wheel', jasmine.any(Function), { capture: true, passive: true });
     });
 
     it('is a no-op when stop() is called without a prior start()', () => {
