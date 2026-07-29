@@ -30,10 +30,4 @@
   ],
   "editor.guides.indentation": true,
   "typescript.tsdk": "node_modules/typescript/lib",
-  "eslint.workingDirectories": [
-    {
-      "directory": ".",
-      "changeProcessCWD": true
-    }
-  ]
 }

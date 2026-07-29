@@ -19,6 +19,7 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@a
 import { ExtensionRef } from '@alfresco/adf-extensions';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
+import { MatCell } from '@angular/material/table';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
