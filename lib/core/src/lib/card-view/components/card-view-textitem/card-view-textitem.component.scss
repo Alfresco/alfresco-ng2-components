@@ -36,13 +36,6 @@
         bottom: 7px;
     }
 
-    #{ms.$mat-form-field-icon-suffix}:has(.adf-copy-to-clipboard-button) {
-        top: 50%;
-        right: 8px;
-        bottom: auto;
-        transform: translateY(-50%);
-    }
-
     .adf-textitem-chip-list-container {
         .adf-property-value {
             margin-left: 0;
@@ -77,7 +70,7 @@
 .adf-card-textitem-field-container {
     padding-top: 5px;
 
-    .adf-copy-to-clipboard-button {
+    .adf-card-textitem-field .adf-copy-to-clipboard-button {
         border: none;
         background: none;
         cursor: pointer;
@@ -87,8 +80,11 @@
         justify-content: center;
 
         .adf-copy-to-clipboard-icon {
-            width: 20px;
+            width: 30px;
             height: 20px;
+            position: relative;
+            right: 5px;
+            bottom: 6px;
             font-size: 20px;
             line-height: 20px;
             display: flex;
@@ -99,13 +95,13 @@
 
     &:hover,
     &:focus-within {
-        .adf-copy-to-clipboard-button {
+        .adf-card-textitem-field .adf-copy-to-clipboard-button {
             opacity: 1;
         }
     }
 
     @media (hover: none) {
-        .adf-copy-to-clipboard-button {
+        .adf-card-textitem-field .adf-copy-to-clipboard-button {
             opacity: 1;
         }
     }

@@ -48,10 +48,6 @@
         }
     }
 
-    #{ms.$mat-form-field-icon-suffix}:has(.adf-copy-to-clipboard-button) {
-        right: 5px;
-    }
-
     .adf-invisible-date-input {
         height: 2px;
         width: 0;
@@ -78,7 +74,7 @@
         opacity: 0;
 
         .adf-copy-to-clipboard-icon {
-            width: 20px;
+            width: 30px;
             height: 20px;
             font-size: 20px;
             line-height: 20px;
