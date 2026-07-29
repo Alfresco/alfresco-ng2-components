@@ -77,7 +77,7 @@ export class AspectListComponent implements OnInit {
               )
             : allAspects$;
         this.aspects$ = displayAspects$.pipe(
-            map((aspects) => aspects.filter((aspect) => !this.excludedAspects.includes(aspect.entry.id))),
+            map((aspects) => aspects.filter((aspect) => !(this.excludedAspects ?? []).includes(aspect.entry.id))),
             takeUntilDestroyed(this.destroyRef)
         );
     }
@@ -139,30 +139,29 @@ export class AspectListComponent implements OnInit {
 
     private loadAllAspectsOfType(where: string): Observable<AspectEntry[]> {
         const visibleAspects = this.aspectListService.getVisibleAspects();
-        let skipCount = 0;
-        let hasMoreItems = true;
-        const fetchPage = (): Observable<AspectEntry[]> => {
+        const fetchPage = (skipCount: number): Observable<{ entries: AspectEntry[]; skipCount: number; hasMoreItems: boolean }> => {
             const opts: ListAspectsOpts = { where, include: ['properties'], skipCount, maxItems: 100 };
             return this.aspectListService.getAspects(visibleAspects, opts).pipe(
-                map((aspectPaging) => {
-                    skipCount += aspectPaging?.list?.pagination?.count ?? 0;
-                    hasMoreItems = aspectPaging?.list?.pagination?.hasMoreItems ?? false;
-                    return aspectPaging?.list?.entries ?? [];
-                })
+                map((aspectPaging) => ({
+                    entries: aspectPaging?.list?.entries ?? [],
+                    skipCount: skipCount + (aspectPaging?.list?.pagination?.count ?? 0),
+                    hasMoreItems: aspectPaging?.list?.pagination?.hasMoreItems ?? false
+                }))
             );
         };
-        return fetchPage().pipe(
-            expand(() => (hasMoreItems ? fetchPage() : EMPTY)),
-            reduce((allEntries, entries) => [...allEntries, ...entries])
+        return fetchPage(0).pipe(
+            expand((page) => (page.hasMoreItems ? fetchPage(page.skipCount) : EMPTY)),
+            reduce((allEntries, page) => [...allEntries, ...page.entries], [] as AspectEntry[])
         );
     }
 
     private categoriseNodeAspects(node: Node, allAspects: AspectEntry[]): void {
         const allAspectIds = allAspects.map((aspect) => aspect.entry.id);
         const visibleAspects = this.aspectListService.getVisibleAspects();
-        this.nodeAspects = node.aspectNames.filter((aspect) => visibleAspects.includes(aspect) || allAspectIds.includes(aspect));
+        const aspectNames = node.aspectNames ?? [];
+        this.nodeAspects = aspectNames.filter((aspect) => visibleAspects.includes(aspect) || allAspectIds.includes(aspect));
         this.nodeAspectStatus = [...this.nodeAspects];
-        this.notDisplayedAspects = node.aspectNames.filter((aspect) => !visibleAspects.includes(aspect) && !allAspectIds.includes(aspect));
+        this.notDisplayedAspects = aspectNames.filter((aspect) => !visibleAspects.includes(aspect) && !allAspectIds.includes(aspect));
         this.valueChanged.emit([...this.nodeAspects, ...this.notDisplayedAspects]);
         this.updateCounter.emit(this.nodeAspects.length);
     }
