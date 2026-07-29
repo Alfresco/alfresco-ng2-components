@@ -20,14 +20,13 @@ import { NodesApiService } from '../common/services/nodes-api.service';
 import { AspectListComponent } from './aspect-list.component';
 import { AspectListService, CustomAspectsWhere, StandardAspectsWhere } from './services/aspect-list.service';
 import { EMPTY, of } from 'rxjs';
-import { AspectEntry, Pagination } from '@alfresco/js-api';
+import { AspectEntry } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
 import { MatTableHarness } from '@angular/material/table/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
-import { CustomAspectPaging } from './interfaces/custom-aspect-paging.interface';
 import { provideApiTesting } from '../testing/providers';
 
 const aspectListMock: AspectEntry[] = [
@@ -111,11 +110,6 @@ const customAspectListMock: AspectEntry[] = [
     }
 ];
 
-const allAspectsMock: CustomAspectPaging = {
-    standardAspectPaging: { list: { entries: aspectListMock } },
-    customAspectPaging: { list: { entries: customAspectListMock } }
-};
-
 describe('AspectListComponent', () => {
     let loader: HarnessLoader;
     let component: AspectListComponent;
@@ -148,8 +142,9 @@ describe('AspectListComponent', () => {
 
     describe('When passing a node id', () => {
         beforeEach(() => {
-            spyOn(aspectListService, 'getAllAspects').and.returnValue(of(allAspectsMock));
-            spyOn(aspectListService, 'getAspects').and.returnValue(of({ list: { entries: customAspectListMock } }));
+            spyOn(aspectListService, 'getAspects').and.callFake((_visibleAspects, opts) =>
+                of({ list: { entries: opts.where === StandardAspectsWhere ? aspectListMock : customAspectListMock } })
+            );
             spyOn(aspectListService, 'getVisibleAspects').and.returnValue(['frs:AspectOne']);
             spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne', 'stored:aspect'] } as any));
             component.nodeId = 'fake-node-id';
@@ -252,10 +247,18 @@ describe('AspectListComponent', () => {
             });
 
             it('should load aspects with 0 skip count as pagination by default', () => {
-                expect(aspectListService.getAllAspects).toHaveBeenCalledWith(
-                    { where: StandardAspectsWhere, include: ['properties'], skipCount: 0, maxItems: 100 },
-                    { where: CustomAspectsWhere, include: ['properties'], skipCount: 0, maxItems: 100 }
-                );
+                expect(aspectListService.getAspects).toHaveBeenCalledWith(jasmine.anything(), {
+                    where: StandardAspectsWhere,
+                    include: ['properties'],
+                    skipCount: 0,
+                    maxItems: 100
+                });
+                expect(aspectListService.getAspects).toHaveBeenCalledWith(jasmine.anything(), {
+                    where: CustomAspectsWhere,
+                    include: ['properties'],
+                    skipCount: 0,
+                    maxItems: 100
+                });
             });
         });
 
@@ -271,7 +274,9 @@ describe('AspectListComponent', () => {
 
     describe('When no node id is passed', () => {
         beforeEach(() => {
-            spyOn(aspectListService, 'getAllAspects').and.returnValue(of(allAspectsMock));
+            spyOn(aspectListService, 'getAspects').and.callFake((_visibleAspects, opts) =>
+                of({ list: { entries: opts.where === StandardAspectsWhere ? aspectListMock : customAspectListMock } })
+            );
         });
 
         afterEach(() => {
@@ -294,35 +299,73 @@ describe('AspectListComponent', () => {
 
         it('should load aspects with 0 skip count as pagination by default', () => {
             fixture.detectChanges();
-            expect(aspectListService.getAllAspects).toHaveBeenCalledWith(
-                { where: StandardAspectsWhere, include: ['properties'], skipCount: 0, maxItems: 100 },
-                { where: CustomAspectsWhere, include: ['properties'], skipCount: 0, maxItems: 100 }
-            );
+            expect(aspectListService.getAspects).toHaveBeenCalledWith(jasmine.anything(), {
+                where: StandardAspectsWhere,
+                include: ['properties'],
+                skipCount: 0,
+                maxItems: 100
+            });
+            expect(aspectListService.getAspects).toHaveBeenCalledWith(jasmine.anything(), {
+                where: CustomAspectsWhere,
+                include: ['properties'],
+                skipCount: 0,
+                maxItems: 100
+            });
         });
     });
 
-    it('should load next batch of aspects if not all items were returned by first call', (done) => {
-        fixture.detectChanges();
-        const moreItemsPagination: Pagination = { count: 2, hasMoreItems: true };
-        const allAspectsWithMoreItems: CustomAspectPaging = {
-            standardAspectPaging: { list: { entries: aspectListMock, pagination: moreItemsPagination } },
-            customAspectPaging: { list: { entries: customAspectListMock, pagination: moreItemsPagination } }
-        };
-        const getAspectsSpy = spyOn(aspectListService, 'getAllAspects').and.returnValues(of(allAspectsWithMoreItems), of(allAspectsMock));
-        spyOn(aspectListService, 'getAspects').and.returnValues(
-            of({ list: { entries: aspectListMock } }),
-            of({ list: { entries: customAspectListMock } })
-        );
+    it('should keep requesting a type until its hasMoreItems is false, without re-querying an exhausted type', (done) => {
+        const getAspectsSpy = spyOn(aspectListService, 'getAspects').and.callFake((_visibleAspects, opts) => {
+            if (opts.where === StandardAspectsWhere) {
+                return opts.skipCount === 0
+                    ? of({ list: { entries: aspectListMock, pagination: { count: 2, hasMoreItems: true } } })
+                    : of({ list: { entries: aspectListMock, pagination: { count: 2, hasMoreItems: false } } });
+            }
+            return of({ list: { entries: customAspectListMock, pagination: { count: 2, hasMoreItems: false } } });
+        });
+        component.ngOnInit();
 
         component.aspects$.subscribe(() => {
-            expect(getAspectsSpy.calls.argsFor(0)[0]).toEqual({ where: StandardAspectsWhere, include: ['properties'], skipCount: 0, maxItems: 100 });
-            expect(getAspectsSpy.calls.argsFor(0)[1]).toEqual({ where: CustomAspectsWhere, include: ['properties'], skipCount: 0, maxItems: 100 });
-            expect(getAspectsSpy.calls.argsFor(1)[0]).toEqual({ where: StandardAspectsWhere, include: ['properties'], skipCount: 2, maxItems: 100 });
-            expect(getAspectsSpy.calls.argsFor(1)[1]).toEqual({ where: CustomAspectsWhere, include: ['properties'], skipCount: 2, maxItems: 100 });
+            const standardCalls = getAspectsSpy.calls.allArgs().filter(([, opts]) => opts.where === StandardAspectsWhere);
+            const customCalls = getAspectsSpy.calls.allArgs().filter(([, opts]) => opts.where === CustomAspectsWhere);
+            expect(standardCalls.map(([, opts]) => opts.skipCount)).toEqual([0, 2]);
+            expect(customCalls.map(([, opts]) => opts.skipCount)).toEqual([0]);
             done();
         });
+    });
 
+    it('should page through all aspects (standard and custom) when categorising node aspects', (done) => {
+        const standardPage1: AspectEntry[] = [{ entry: { id: 'std:first', title: 'First', properties: [] } }];
+        const standardPage2: AspectEntry[] = [{ entry: { id: 'std:second', title: 'Second', properties: [] } }];
+        spyOn(aspectListService, 'getVisibleAspects').and.returnValue([]);
+        spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'node-id', aspectNames: ['std:second'] } as any));
+        const getAspectsSpy = spyOn(aspectListService, 'getAspects').and.callFake((_visibleAspects, opts) => {
+            if (opts.where === StandardAspectsWhere) {
+                return opts.skipCount === 0
+                    ? of({ list: { entries: standardPage1, pagination: { count: 1, hasMoreItems: true } } })
+                    : of({ list: { entries: standardPage2, pagination: { count: 1, hasMoreItems: false } } });
+            }
+            return of({ list: { entries: [], pagination: { count: 0, hasMoreItems: false } } });
+        });
+        component.nodeId = 'node-id';
         component.ngOnInit();
-        fixture.detectChanges();
+
+        component.aspects$.subscribe(() => {
+            expect(getAspectsSpy).toHaveBeenCalledWith(jasmine.anything(), {
+                where: StandardAspectsWhere,
+                include: ['properties'],
+                skipCount: 0,
+                maxItems: 100
+            });
+            expect(getAspectsSpy).toHaveBeenCalledWith(jasmine.anything(), {
+                where: StandardAspectsWhere,
+                include: ['properties'],
+                skipCount: 1,
+                maxItems: 100
+            });
+            expect(component.nodeAspects).toContain('std:second');
+            expect(component.notDisplayedAspects).not.toContain('std:second');
+            done();
+        });
     });
 });

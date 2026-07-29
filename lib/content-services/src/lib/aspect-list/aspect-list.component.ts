@@ -17,11 +17,11 @@
 
 import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { NodesApiService } from '../common/services/nodes-api.service';
-import { EMPTY, Observable, zip } from 'rxjs';
-import { concatMap, expand, map, reduce, take, tap } from 'rxjs/operators';
+import { EMPTY, forkJoin, Observable } from 'rxjs';
+import { expand, map, reduce } from 'rxjs/operators';
 import { AspectListService, CustomAspectsWhere, StandardAspectsWhere } from './services/aspect-list.service';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
-import { AspectEntry, ContentPagingQuery, ListAspectsOpts } from '@alfresco/js-api';
+import { AspectEntry, ListAspectsOpts, Node } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
@@ -66,46 +66,19 @@ export class AspectListComponent implements OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    private customAspectsLoaded = 0;
-    private standardAspectsLoaded = 0;
-    private hasMoreAspects = false;
-
     ngOnInit(): void {
-        let aspects$: Observable<AspectEntry[]>;
-        if (this.nodeId) {
-            const node$ = this.nodeApiService.getNode(this.nodeId);
-            const customAspect$ = this.aspectListService
-                .getAspects(this.aspectListService.getVisibleAspects(), {
-                    where: CustomAspectsWhere,
-                    include: ['properties'],
-                    skipCount: 0,
-                    maxItems: 100
-                })
-                .pipe(map((customAspects) => customAspects?.list?.entries.flatMap((customAspect) => customAspect.entry.id)));
-            aspects$ = zip(node$, customAspect$).pipe(
-                tap(([node, customAspects]) => {
-                    this.nodeAspects = node.aspectNames.filter(
-                        (aspect) => this.aspectListService.getVisibleAspects().includes(aspect) || customAspects.includes(aspect)
-                    );
-                    this.nodeAspectStatus = [...this.nodeAspects];
-                    this.notDisplayedAspects = node.aspectNames.filter(
-                        (aspect) => !this.aspectListService.getVisibleAspects().includes(aspect) && !customAspects.includes(aspect)
-                    );
-                    this.valueChanged.emit([...this.nodeAspects, ...this.notDisplayedAspects]);
-                    this.updateCounter.emit(this.nodeAspects.length);
-                }),
-                concatMap(() => this.loadAspects({ skipCount: this.standardAspectsLoaded }, { skipCount: this.customAspectsLoaded })),
-                takeUntilDestroyed(this.destroyRef)
-            );
-        } else {
-            aspects$ = this.loadAspects({ skipCount: this.standardAspectsLoaded }, { skipCount: this.customAspectsLoaded });
-        }
-        this.aspects$ = aspects$.pipe(
-            expand(() =>
-                this.hasMoreAspects ? this.loadAspects({ skipCount: this.standardAspectsLoaded }, { skipCount: this.customAspectsLoaded }) : EMPTY
-            ),
+        const allAspects$ = this.loadAllAspects();
+        const displayAspects$ = this.nodeId
+            ? forkJoin([this.nodeApiService.getNode(this.nodeId), allAspects$]).pipe(
+                  map(([node, allAspects]) => {
+                      this.categoriseNodeAspects(node, allAspects);
+                      return allAspects;
+                  })
+              )
+            : allAspects$;
+        this.aspects$ = displayAspects$.pipe(
             map((aspects) => aspects.filter((aspect) => !this.excludedAspects.includes(aspect.entry.id))),
-            reduce((acc, aspects) => [...acc, ...aspects])
+            takeUntilDestroyed(this.destroyRef)
         );
     }
 
@@ -158,32 +131,39 @@ export class AspectListComponent implements OnInit {
         }
     }
 
-    private loadAspects(standardAspectsPagination?: ContentPagingQuery, customAspectsPagination?: ContentPagingQuery): Observable<AspectEntry[]> {
-        const standardAspectOpts: ListAspectsOpts = {
-            where: StandardAspectsWhere,
-            include: ['properties'],
-            skipCount: standardAspectsPagination?.skipCount ?? 0,
-            maxItems: 100
-        };
-        const customAspectOpts: ListAspectsOpts = {
-            where: CustomAspectsWhere,
-            include: ['properties'],
-            skipCount: customAspectsPagination?.skipCount ?? 0,
-            maxItems: 100
-        };
-        return this.aspectListService.getAllAspects(standardAspectOpts, customAspectOpts).pipe(
-            take(1),
-            tap((aspectsPaging) => {
-                this.customAspectsLoaded += aspectsPaging.customAspectPaging?.list?.pagination?.count ?? 0;
-                this.standardAspectsLoaded += aspectsPaging.standardAspectPaging?.list?.pagination?.count ?? 0;
-                this.hasMoreAspects =
-                    aspectsPaging.customAspectPaging?.list?.pagination?.hasMoreItems ||
-                    aspectsPaging.standardAspectPaging?.list?.pagination?.hasMoreItems;
-            }),
-            map((aspectsPaging) => [
-                ...(aspectsPaging.standardAspectPaging?.list?.entries ?? []),
-                ...(aspectsPaging.customAspectPaging?.list?.entries ?? [])
-            ])
+    private loadAllAspects(): Observable<AspectEntry[]> {
+        return forkJoin([this.loadAllAspectsOfType(StandardAspectsWhere), this.loadAllAspectsOfType(CustomAspectsWhere)]).pipe(
+            map(([standardAspects, customAspects]) => [...standardAspects, ...customAspects])
         );
+    }
+
+    private loadAllAspectsOfType(where: string): Observable<AspectEntry[]> {
+        const visibleAspects = this.aspectListService.getVisibleAspects();
+        let skipCount = 0;
+        let hasMoreItems = true;
+        const fetchPage = (): Observable<AspectEntry[]> => {
+            const opts: ListAspectsOpts = { where, include: ['properties'], skipCount, maxItems: 100 };
+            return this.aspectListService.getAspects(visibleAspects, opts).pipe(
+                map((aspectPaging) => {
+                    skipCount += aspectPaging?.list?.pagination?.count ?? 0;
+                    hasMoreItems = aspectPaging?.list?.pagination?.hasMoreItems ?? false;
+                    return aspectPaging?.list?.entries ?? [];
+                })
+            );
+        };
+        return fetchPage().pipe(
+            expand(() => (hasMoreItems ? fetchPage() : EMPTY)),
+            reduce((allEntries, entries) => [...allEntries, ...entries])
+        );
+    }
+
+    private categoriseNodeAspects(node: Node, allAspects: AspectEntry[]): void {
+        const allAspectIds = allAspects.map((aspect) => aspect.entry.id);
+        const visibleAspects = this.aspectListService.getVisibleAspects();
+        this.nodeAspects = node.aspectNames.filter((aspect) => visibleAspects.includes(aspect) || allAspectIds.includes(aspect));
+        this.nodeAspectStatus = [...this.nodeAspects];
+        this.notDisplayedAspects = node.aspectNames.filter((aspect) => !visibleAspects.includes(aspect) && !allAspectIds.includes(aspect));
+        this.valueChanged.emit([...this.nodeAspects, ...this.notDisplayedAspects]);
+        this.updateCounter.emit(this.nodeAspects.length);
     }
 }
