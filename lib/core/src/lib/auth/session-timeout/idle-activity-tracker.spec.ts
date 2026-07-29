@@ -83,20 +83,25 @@ describe('IdleActivityTracker', () => {
         expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    it('should allow a later listener to prevent default when an activity event fires', () => {
-        const preventDefault = jasmine.createSpy('preventDefault').and.callFake((event: Event) => event.preventDefault());
-        tracker.start();
-        doc.addEventListener('mousemove', preventDefault);
+    [
+        { phase: 'bubbling', listenerOptions: undefined },
+        { phase: 'capturing', listenerOptions: { capture: true, passive: false } }
+    ].forEach(({ phase, listenerOptions }) => {
+        it(`should allow a later active ${phase} listener to prevent default when an activity event fires`, () => {
+            const preventDefault = jasmine.createSpy('preventDefault').and.callFake((event: Event) => event.preventDefault());
+            tracker.start();
+            doc.addEventListener('mousemove', preventDefault, listenerOptions);
 
-        try {
-            const event = new MouseEvent('mousemove', { cancelable: true });
-            doc.dispatchEvent(event);
+            try {
+                const event = new MouseEvent('mousemove', { cancelable: true });
+                doc.dispatchEvent(event);
 
-            expect(preventDefault).toHaveBeenCalledTimes(1);
-            expect(event.defaultPrevented).toBeTrue();
-        } finally {
-            doc.removeEventListener('mousemove', preventDefault);
-        }
+                expect(preventDefault).toHaveBeenCalledTimes(1);
+                expect(event.defaultPrevented).toBeTrue();
+            } finally {
+                doc.removeEventListener('mousemove', preventDefault, listenerOptions);
+            }
+        });
     });
 
     it('is a no-op when stop() is called without a prior start()', () => {

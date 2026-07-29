@@ -25,7 +25,7 @@ export const ACTIVITY_EVENTS = ['click', 'keydown', 'mousedown', 'mousemove', 'p
 /** High-frequency activity events (e.g. mousemove, scroll) are throttled to avoid rescheduling the idle timer on every DOM event. */
 export const ACTIVITY_THROTTLE_MS = 1000;
 
-const ACTIVITY_LISTENER_OPTIONS: AddEventListenerOptions = { capture: true, passive: true };
+const ACTIVITY_LISTENER_OPTIONS: AddEventListenerOptions = { capture: true, passive: false };
 
 @Injectable()
 export class IdleActivityTracker implements OnDestroy {
