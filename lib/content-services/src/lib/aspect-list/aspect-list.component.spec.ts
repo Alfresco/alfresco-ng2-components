@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { AspectListComponent } from './aspect-list.component';
 import { AspectListService, CustomAspectsWhere, StandardAspectsWhere } from './services/aspect-list.service';
-import { EMPTY, of } from 'rxjs';
+import { NEVER, of } from 'rxjs';
 import { AspectEntry } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -132,8 +132,8 @@ describe('AspectListComponent', () => {
 
     describe('Loading', () => {
         it('should show the loading spinner when result is loading', async () => {
-            spyOn(nodeService, 'getNode').and.returnValue(EMPTY);
-            spyOn(aspectListService, 'getAspects').and.returnValue(EMPTY);
+            spyOn(nodeService, 'getNode').and.returnValue(NEVER);
+            spyOn(aspectListService, 'getAspects').and.returnValue(NEVER);
             fixture.detectChanges();
 
             expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
