@@ -61,6 +61,12 @@ describe('EditJsonDialogComponent', () => {
         });
     });
 
+    describe('editor fallback', () => {
+        it('should render the textarea when no custom editor is provided', () => {
+            expect(fixture.nativeElement.querySelector('textarea')).not.toBeNull();
+        });
+    });
+
     describe('editable state', () => {
         it('should render the textarea as read-only when editable is false', () => {
             const textarea = fixture.nativeElement.querySelector('textarea');
