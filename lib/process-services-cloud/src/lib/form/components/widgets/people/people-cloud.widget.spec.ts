@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,9 @@ import {
     NoopAuthModule
 } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { PeopleCloudWidgetComponent } from './people-cloud.widget';
+import { PeopleCloudComponent } from '../../../../people/components/people-cloud.component';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { mockShepherdsPie, mockYorkshirePudding } from '../../../../people/mock/people-cloud.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -356,6 +358,38 @@ describe('PeopleCloudWidgetComponent', () => {
                 formService.formRulesEvent.next({ type: 'fieldValueChanged' } as any);
 
                 expect(widget.preSelectUsers).toBe(initial);
+            });
+        });
+
+        describe('single-event population (two-click repro)', () => {
+            let formService: FormService;
+
+            beforeEach(() => {
+                TestBed.resetTestingModule();
+                TestBed.configureTestingModule({
+                    imports: [NoopAuthModule, PeopleCloudWidgetComponent],
+                    providers: [{ provide: ADF_TYPED_VALUE_FORMATTING_ENABLED, useValue: true }]
+                });
+                formService = TestBed.inject(FormService);
+                fixture = TestBed.createComponent(PeopleCloudWidgetComponent);
+                widget = fixture.componentInstance;
+                element = fixture.nativeElement;
+            });
+
+            it('should populate the rendered people component after a SINGLE rule event', async () => {
+                const users = [{ id: 'a', username: 'alpha' }];
+                widget.field = new FormFieldModel(new FormModel(), { id: 'target', type: FormFieldTypes.PEOPLE, value: null });
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                widget.field.value = users;
+                formService.formRulesEvent.next({ type: 'fieldValueChanged', field: { id: 'target' } } as any);
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const peopleComponent = fixture.debugElement.query(By.directive(PeopleCloudComponent)).componentInstance as PeopleCloudComponent;
+                expect(peopleComponent.getSelectedUsers()).toEqual(users);
             });
         });
     });

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,17 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, RenditionsApi } from '../../src';
 import { EcmAuthMock, RenditionMock } from '../mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Rendition', () => {
     let authResponseMock: EcmAuthMock;
     let renditionMock: RenditionMock;
     let renditionsApi: RenditionsApi;
 
-    beforeEach((done) => {
+    beforeEach(async () => {
         const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
@@ -36,37 +38,34 @@ describe('Rendition', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {
-            done();
-        });
+        await alfrescoJsApi.login('admin', 'admin');
 
         renditionsApi = new RenditionsApi(alfrescoJsApi);
     });
 
-    it('Get Rendition', (done) => {
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
+    it('Get Rendition', async () => {
         renditionMock.get200RenditionResponse();
 
-        renditionsApi.getRendition('97a29e9c-1e4f-4d9d-bb02-1ec920dda045', 'pdf').then((data) => {
-            assert.equal(data.entry.id, 'pdf');
-            done();
-        });
+        const data = await renditionsApi.getRendition('97a29e9c-1e4f-4d9d-bb02-1ec920dda045', 'pdf');
+        assert.equal(data.entry.id, 'pdf');
     });
 
-    it('Create Rendition', (done) => {
+    it('Create Rendition', async () => {
         renditionMock.createRendition200();
 
-        renditionsApi.createRendition('97a29e9c-1e4f-4d9d-bb02-1ec920dda045', { id: 'pdf' }).then(() => {
-            done();
-        });
+        const result = await renditionsApi.createRendition('97a29e9c-1e4f-4d9d-bb02-1ec920dda045', { id: 'pdf' });
+        assert.ok(result, 'createRendition should return a result');
     });
 
-    it('Get Renditions list for node id', (done) => {
+    it('Get Renditions list for node id', async () => {
         renditionMock.get200RenditionList();
 
-        renditionsApi.listRenditions('97a29e9c-1e4f-4d9d-bb02-1ec920dda045').then((data) => {
-            assert.equal(data.list.pagination.count, 6);
-            assert.equal(data.list.entries[0].entry.id, 'avatar');
-            done();
-        });
+        const data = await renditionsApi.listRenditions('97a29e9c-1e4f-4d9d-bb02-1ec920dda045');
+        assert.equal(data.list.pagination.count, 6);
+        assert.equal(data.list.entries[0].entry.id, 'avatar');
     });
 });

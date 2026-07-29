@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ErrorWidgetComponent, WidgetComponent } from '@alfresco/adf-core';
 import { UntypedFormControl } from '@angular/forms';
 import { filter } from 'rxjs/operators';
@@ -50,6 +50,9 @@ import { GroupCloudComponent } from '../../../../group/components/group-cloud.co
 export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit {
     private readonly reactivePreselection: ReactivePreselectionService<IdentityGroupModel> = inject(ReactivePreselectionService);
 
+    @ViewChild(GroupCloudComponent)
+    private readonly groupCloud: GroupCloudComponent;
+
     typeId = 'GroupCloudWidgetComponent';
     roles: string[];
     mode: ComponentSelectionMode;
@@ -65,7 +68,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
             getFieldId: () => this.field?.id,
             getFormId: () => this.field?.form?.id,
             getFieldValue: () => this.field?.value,
-            getPreselection: () => this.preSelectGroup,
+            getSelection: () => this.groupCloud?.selectedGroups ?? [],
             setPreselection: (value) => (this.preSelectGroup = value),
             identityOf: (group) => group?.id ?? group?.name
         });

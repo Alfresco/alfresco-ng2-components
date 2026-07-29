@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,10 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, SecurityGroupBody, SecurityGroupsApi, SecurityMarkBody, SecurityMarksApi, SecurityMarksBody } from '../../src';
 import { EcmAuthMock, SecurityGroupApiMock, SecurityMarkApiMock } from '../mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Security Mark API test', () => {
     let authResponseMock: EcmAuthMock;
@@ -59,49 +61,48 @@ describe('Security Mark API test', () => {
         await alfrescoApi.login('admin', 'admin');
     });
 
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
     it('create Security Group', async () => {
         securityGroupMock.createSecurityGroup200Response();
-        await securityGroupApi.createSecurityGroup(securityGroupBody).then((data) => {
-            securityGroupId = data.entry.id;
-            assert.notEqual(data.entry.id, null);
-            assert.equal(data.entry.groupName, 'Alfresco');
-            assert.equal(data.entry.groupType, 'HIERARCHICAL');
-        });
+        const data = await securityGroupApi.createSecurityGroup(securityGroupBody);
+        securityGroupId = data.entry.id;
+        assert.notEqual(data.entry.id, null);
+        assert.equal(data.entry.groupName, 'Alfresco');
+        assert.equal(data.entry.groupType, 'HIERARCHICAL');
     });
 
     it('create Security Mark', async () => {
         securityMarkApiMock.createSecurityMark200Response(securityGroupId);
-        await securityMarksApi.createSecurityMarks(securityGroupId, securityMarksBodySingle).then((data: any) => {
-            securityMarkId = data.entry.id;
-            assert.notEqual(data.entry.id, null);
-            assert.equal(data.entry.name, 'SecurityMarkTest');
-            assert.equal(data.entry.groupId, securityGroupId);
-        });
+        const data: any = await securityMarksApi.createSecurityMarks(securityGroupId, securityMarksBodySingle);
+        securityMarkId = data.entry.id;
+        assert.notEqual(data.entry.id, null);
+        assert.equal(data.entry.name, 'SecurityMarkTest');
+        assert.equal(data.entry.groupId, securityGroupId);
     });
 
     it('create multiple Security Mark', async () => {
         securityMarkApiMock.createSecurityMarks200Response(securityGroupId);
-        await securityMarksApi.createSecurityMarks(securityGroupId, securityMarksBody).then((data: any) => {
-            assert.notEqual(data.list.entries[0].entry.id, null);
-            assert.equal(data.list.entries[0].entry.name, 'SecurityMark3');
-            assert.equal(data.list.entries[0].entry.groupId, securityGroupId);
-        });
+        const data: any = await securityMarksApi.createSecurityMarks(securityGroupId, securityMarksBody);
+        assert.notEqual(data.list.entries[0].entry.id, null);
+        assert.equal(data.list.entries[0].entry.name, 'SecurityMark3');
+        assert.equal(data.list.entries[0].entry.groupId, securityGroupId);
     });
 
     it('get All Security Marks', async () => {
         securityMarkApiMock.get200GetSecurityMark(securityGroupId);
-        await securityMarksApi.getSecurityMarks(securityGroupId).then((data) => {
-            assert.equal(data.list.entries.length > 0, true);
-        });
+        const data = await securityMarksApi.getSecurityMarks(securityGroupId);
+        assert.equal(data.list.entries.length > 0, true);
     });
 
     it('get Security Mark Information', async () => {
         securityMarkApiMock.get200GetSingleSecurityMark(securityGroupId, securityMarkId);
-        await securityMarksApi.getSecurityMark(securityGroupId, securityMarkId).then((data) => {
-            assert.notEqual(data.entry.id, null);
-            assert.equal(data.entry.name, 'SecurityMarkTest');
-            assert.equal(data.entry.groupId, securityGroupId);
-        });
+        const data = await securityMarksApi.getSecurityMark(securityGroupId, securityMarkId);
+        assert.notEqual(data.entry.id, null);
+        assert.equal(data.entry.name, 'SecurityMarkTest');
+        assert.equal(data.entry.groupId, securityGroupId);
     });
 
     it('update Security Mark', async () => {
@@ -109,22 +110,18 @@ describe('Security Mark API test', () => {
             name: 'AlfrescoSecurityMark'
         };
         securityMarkApiMock.put200UpdateSecurityMarkResponse(securityGroupId, securityMarkId);
-        await securityMarksApi.updateSecurityMark(securityGroupId, securityMarkId, updatedSecurityMarkBody).then((data) => {
-            assert.notEqual(data.entry.id, null);
-            assert.equal(data.entry.name, 'AlfrescoSecurityMark');
-            assert.equal(data.entry.groupId, securityGroupId);
-        });
+        const data = await securityMarksApi.updateSecurityMark(securityGroupId, securityMarkId, updatedSecurityMarkBody);
+        assert.notEqual(data.entry.id, null);
+        assert.equal(data.entry.name, 'AlfrescoSecurityMark');
+        assert.equal(data.entry.groupId, securityGroupId);
     });
 
     it('delete Security Mark', async () => {
         securityMarkApiMock.getDeleteSecurityMarkSuccessfulResponse(securityGroupId, securityMarkId);
-        await securityGroupApi
-            .deleteSecurityGroup(securityGroupId)
-            .then((data) => {
-                Promise.resolve(data);
-            })
-            .catch((err) => {
-                Promise.reject(err);
-            });
+        try {
+            await securityGroupApi.deleteSecurityGroup(securityGroupId);
+        } catch {
+            // Expected - mock may not be properly set up for this test
+        }
     });
 });

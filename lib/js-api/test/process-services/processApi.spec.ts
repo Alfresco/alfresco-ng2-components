@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,10 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { BpmAuthMock, ProcessMock } from '../mockObjects';
 import { AlfrescoApi, ProcessDefinitionsApi, ProcessInstanceQueryRepresentation, ProcessInstancesApi } from '../../src';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Activiti Process Api', () => {
     let authResponseBpmMock: BpmAuthMock;
@@ -45,7 +47,11 @@ describe('Activiti Process Api', () => {
         await alfrescoJsApi.login('admin', 'admin');
     });
 
-    it('get activiti Process list filtered', (done) => {
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
+    it('get activiti Process list filtered', async () => {
         processMock.get200Response();
 
         const requestNode: ProcessInstanceQueryRepresentation = {
@@ -54,31 +60,25 @@ describe('Activiti Process Api', () => {
             state: 'completed'
         };
 
-        processInstancesApi.getProcessInstances(requestNode).then((data) => {
-            assert.equal(data.data[0].name, 'Process Test Api - July 26th 2016');
-            assert.equal(data.data[1].name, 'Process Test Api - July 26th 2016');
-            assert.equal(data.size, 2);
-            done();
-        });
+        const data = await processInstancesApi.getProcessInstances(requestNode);
+        assert.equal(data.data[0].name, 'Process Test Api - July 26th 2016');
+        assert.equal(data.data[1].name, 'Process Test Api - July 26th 2016');
+        assert.equal(data.size, 2);
     });
 
-    it('get activiti Process list', (done) => {
+    it('get activiti Process list', async () => {
         processMock.get200Response();
 
-        processInstancesApi.getProcessInstances({}).then((data) => {
-            assert.equal(data.data[0].name, 'Process Test Api - July 26th 2016');
-            assert.equal(data.data[1].name, 'Process Test Api - July 26th 2016');
-            done();
-        });
+        const data = await processInstancesApi.getProcessInstances({});
+        assert.equal(data.data[0].name, 'Process Test Api - July 26th 2016');
+        assert.equal(data.data[1].name, 'Process Test Api - July 26th 2016');
     });
 
-    it('get process definition startForm', (done) => {
+    it('get process definition startForm', async () => {
         processMock.get200getProcessDefinitionStartForm();
         const processDefinitionId = 'testProcess:1:7504';
 
-        processDefinitionsApi.getProcessDefinitionStartForm(processDefinitionId).then((data) => {
-            assert.equal(data.processDefinitionId, 'testProcess:1:7504');
-            done();
-        });
+        const data = await processDefinitionsApi.getProcessDefinitionStartForm(processDefinitionId);
+        assert.equal(data.processDefinitionId, 'testProcess:1:7504');
     });
 });

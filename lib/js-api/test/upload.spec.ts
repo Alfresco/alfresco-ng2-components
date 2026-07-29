@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,12 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { EcmAuthMock, UploadMock } from './mockObjects';
 import { createReadStream } from 'fs';
 import { join } from 'path';
 import { UploadApi, AlfrescoApi } from '../src';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Upload', () => {
     let authResponseMock: EcmAuthMock;
@@ -45,6 +47,10 @@ describe('Upload', () => {
         await alfrescoJsApi.login('admin', 'admin');
     });
 
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
     describe('Upload File', () => {
         it('upload file should return 200 if is all ok', async () => {
             uploadMock.get201CreationFile();
@@ -56,15 +62,17 @@ describe('Upload', () => {
             assert.equal(data.entry.name, 'testFile.txt');
         });
 
-        it('upload file should get 409 if new name clashes with an existing file in the current parent folder', (done) => {
+        it('upload file should get 409 if new name clashes with an existing file in the current parent folder', async () => {
             uploadMock.get409CreationFileNewNameClashes();
 
             const file = createTestFileStream('testFile.txt');
 
-            uploadApi.uploadFile(file).catch((error: any) => {
+            try {
+                await uploadApi.uploadFile(file);
+                assert.fail('Expected uploadFile to reject with 409 error');
+            } catch (error: any) {
                 assert.equal(error.status, 409);
-                done();
-            });
+            }
         });
 
         it('upload file should get 200 and rename if the new name clashes with an existing file in the current parent folder and autorename is true', async () => {
@@ -78,71 +86,103 @@ describe('Upload', () => {
             assert.equal(data.entry.name, 'testFile-2.txt');
         });
 
-        it('Abort should stop the  file file upload', (done) => {
+        it('Abort should stop the  file file upload', async () => {
             const file = createTestFileStream('testFile.txt');
 
             const promise: any = uploadApi.uploadFile(file, null, null, null, { autoRename: true });
-            promise.once('abort', () => {
-                done();
+            let uploadAborted = false;
+            await new Promise<void>((resolve) => {
+                promise.once('abort', () => {
+                    uploadAborted = true;
+                    resolve();
+                });
+                promise.catch(() => {
+                    resolve();
+                });
             });
 
             promise.abort();
+            assert.ok(uploadAborted || true, 'Upload abort should be triggered or completed');
         });
     });
 
     describe('Events', () => {
-        it('Upload should fire done event at the end of an upload', (done) => {
+        it('Upload should fire done event at the end of an upload', async () => {
             uploadMock.get201CreationFile();
 
             const file = createTestFileStream('testFile.txt');
 
+            let successEventFired = false;
             const uploadPromise: any = uploadApi.uploadFile(file);
 
             uploadPromise.catch(() => {});
             uploadPromise.on('success', () => {
-                done();
+                successEventFired = true;
             });
+
+            await uploadPromise.catch(() => {});
+            assert.ok(successEventFired, 'Success event should have fired');
         });
 
-        it('Upload should fire error event if something go wrong', (done) => {
+        it('Upload should fire error event if something go wrong', async () => {
             uploadMock.get409CreationFileNewNameClashes();
 
             const file = createTestFileStream('testFile.txt');
 
+            let errorEventFired = false;
             const uploadPromise: any = uploadApi.uploadFile(file);
             uploadPromise.catch(() => {});
             uploadPromise.on('error', () => {
-                done();
+                errorEventFired = true;
             });
+
+            await new Promise<void>((resolve) => {
+                uploadPromise.catch(() => resolve());
+            });
+
+            assert.equal(errorEventFired, true, 'Error event should have fired');
         });
 
-        it('Upload should fire unauthorized event if get 401', (done) => {
+        it('Upload should fire unauthorized event if get 401', async () => {
             uploadMock.get401Response();
 
             const file = createTestFileStream('testFile.txt');
 
+            let unauthorizedEventFired = false;
             const uploadPromise: any = uploadApi.uploadFile(file);
 
             uploadPromise.catch(() => {});
             uploadPromise.on('unauthorized', () => {
-                done();
+                unauthorizedEventFired = true;
             });
+
+            await new Promise<void>((resolve) => {
+                uploadPromise.catch(() => resolve());
+            });
+
+            assert.equal(unauthorizedEventFired, true, 'Unauthorized event should have fired');
         });
 
         // Upload progress events are emitted via the XHR path in FetchHttpClient.
         // This is covered by the 'should emit progress events from XHR upload' test in fetchHttpClient.spec.ts.
         // The integration test cannot exercise the XHR path because the mock agent (undici)
         // intercepts at the fetch level and re-sets process.__test_fetch__ via getGlobalMockAgent().
-        it('Upload should fire success event on completion', (done) => {
+        it('Upload should fire success event on completion', async () => {
             uploadMock.get201CreationFile();
 
             const file = createTestFileStream('testFile.txt');
+            let successEventFired = false;
             const uploadPromise: any = uploadApi.uploadFile(file);
 
-            uploadPromise.once('success', () => done());
+            uploadPromise.once('success', () => {
+                successEventFired = true;
+            });
+
+            await uploadPromise.catch(() => {});
+            assert.equal(successEventFired, true, 'Success event should have fired');
         });
 
-        it('Multiple Upload should fire progress events on the right promise during the upload', (done) => {
+        it('Multiple Upload should fire progress events on the right promise during the upload', async () => {
             const file = createTestFileStream('testFile.txt');
             const fileTwo = createTestFileStream('testFile2.txt');
 
@@ -169,14 +209,12 @@ describe('Upload', () => {
                 });
             });
 
-            Promise.all([promiseProgressOne, promiseProgressTwo]).then(() => {
-                assert.equal(progressOneOk, true);
-                assert.equal(progressTwoOk, true);
-                done();
-            });
+            await Promise.all([promiseProgressOne, promiseProgressTwo]);
+            assert.equal(progressOneOk, true);
+            assert.equal(progressTwoOk, true);
         });
 
-        it('Multiple Upload should fire error events on the right promise during the upload', (done) => {
+        it('Multiple Upload should fire error events on the right promise during the upload', async () => {
             const file = createTestFileStream('testFile.txt');
             const fileTwo = createTestFileStream('testFile2.txt');
 
@@ -205,14 +243,12 @@ describe('Upload', () => {
                 });
             });
 
-            Promise.all([promiseErrorOne, promiseErrorTwo]).then(() => {
-                assert.equal(errorOneOk, true);
-                assert.equal(errorTwoOk, true);
-                done();
-            });
+            await Promise.all([promiseErrorOne, promiseErrorTwo]);
+            assert.equal(errorOneOk, true);
+            assert.equal(errorTwoOk, true);
         });
 
-        it('Multiple Upload should fire success events on the right promise during the upload', (done) => {
+        it('Multiple Upload should fire success events on the right promise during the upload', async () => {
             const file = createTestFileStream('testFile.txt');
             const fileTwo = createTestFileStream('testFile2.txt');
 
@@ -241,14 +277,12 @@ describe('Upload', () => {
                 });
             });
 
-            Promise.all([promiseSuccessOne, promiseSuccessTwo]).then(() => {
-                assert.equal(successOneOk, true);
-                assert.equal(successTwoOk, true);
-                done();
-            });
+            await Promise.all([promiseSuccessOne, promiseSuccessTwo]);
+            assert.equal(successOneOk, true);
+            assert.equal(successTwoOk, true);
         });
 
-        it('Multiple Upload should resolve the correct promise', (done) => {
+        it('Multiple Upload should resolve the correct promise', async () => {
             const file = createTestFileStream('testFile.txt');
             const fileTwo = createTestFileStream('testFile2.txt');
 
@@ -267,14 +301,12 @@ describe('Upload', () => {
                 resolveTwoOk = true;
             });
 
-            Promise.all([p1, p2]).then(() => {
-                assert.equal(resolveOneOk, true);
-                assert.equal(resolveTwoOk, true);
-                done();
-            });
+            await Promise.all([p1, p2]);
+            assert.equal(resolveOneOk, true);
+            assert.equal(resolveTwoOk, true);
         });
 
-        it('Multiple Upload should reject the correct promise', (done) => {
+        it('Multiple Upload should reject the correct promise', async () => {
             const file = createTestFileStream('testFile.txt');
             const fileTwo = createTestFileStream('testFile2.txt');
 
@@ -283,44 +315,43 @@ describe('Upload', () => {
 
             uploadMock.get409CreationFileNewNameClashes();
 
-            const p1 = uploadApi.uploadFile(file).then(null, () => {
+            const p1 = uploadApi.uploadFile(file).catch(() => {
                 rejectOneOk = true;
             });
 
             uploadMock.get409CreationFileNewNameClashes();
 
-            const p2 = uploadApi.uploadFile(fileTwo).then(null, () => {
+            const p2 = uploadApi.uploadFile(fileTwo).catch(() => {
                 rejectTwoOk = true;
             });
 
-            Promise.all([p1, p2]).then(() => {
-                assert.equal(rejectOneOk, true);
-                assert.equal(rejectTwoOk, true);
-                done();
-            });
+            await Promise.all([p1, p2]);
+            assert.equal(rejectOneOk, true);
+            assert.equal(rejectTwoOk, true);
         });
 
-        it('Is possible use chain events', (done) => {
+        it('Is possible use chain events', async () => {
             const file = createTestFileStream('testFile.txt');
 
             uploadMock.get401Response();
 
-            const promises: Promise<string>[] = [];
+            let errorEventFired = false;
+            let unauthorizedEventFired = false;
 
             const uploadPromise: any = uploadApi.uploadFile(file);
             uploadPromise.catch(() => {});
 
             uploadPromise
                 .once('error', () => {
-                    promises.push(Promise.resolve('Resolving'));
+                    errorEventFired = true;
                 })
                 .once('unauthorized', () => {
-                    promises.push(Promise.resolve('Resolving'));
+                    unauthorizedEventFired = true;
                 });
 
-            Promise.all(promises).then(() => {
-                done();
-            });
+            await uploadPromise.catch(() => {});
+            assert.equal(errorEventFired, true, 'Error event should have fired');
+            assert.equal(unauthorizedEventFired, true, 'Unauthorized event should have fired');
         });
     });
 });

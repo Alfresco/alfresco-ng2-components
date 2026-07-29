@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,27 +15,43 @@
  * limitations under the License.
  */
 
-/* eslint-disable no-underscore-dangle, jsdoc/require-jsdoc */
-import { MockAgent, Interceptable, fetch as undiciFetch } from 'undici';
+/* eslint-disable no-underscore-dangle, jsdoc/require-jsdoc, @typescript-eslint/no-var-requires */
 
-export function getGlobalMockAgent(): MockAgent {
+const originalFetch = globalThis.fetch;
+
+export function initGlobalMockAgent(): any {
     if (!(global as any).__mockAgent__) {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const { MockAgent, fetch: undiciFetch } = require('undici');
         const agent = new MockAgent();
         agent.disableNetConnect();
         (global as any).__mockAgent__ = agent;
+        globalThis.fetch = (input: any, init?: any) => undiciFetch(input, { ...init, dispatcher: agent });
     }
-    const agent: MockAgent = (global as any).__mockAgent__;
-    (process as any).__test_fetch__ = (input: any, init?: any) => undiciFetch(input, { ...init, dispatcher: agent });
-    return agent;
+    return (global as any).__mockAgent__;
+}
+
+export function getGlobalMockAgent(): any {
+    if (!(global as any).__mockAgent__) {
+        initGlobalMockAgent();
+    }
+    return (global as any).__mockAgent__;
 }
 
 export function resetGlobalMockAgent(): void {
     const agent = (global as any).__mockAgent__;
     if (agent) {
-        agent.close();
+        agent.close?.();
         (global as any).__mockAgent__ = undefined;
+        globalThis.fetch = originalFetch;
     }
-    delete (process as any).__test_fetch__;
+}
+
+export function flushMicrotasks(): Promise<void> {
+    return new Promise((resolve) => {
+        // Queue a task at the end of the microtask queue
+        resolve();
+    });
 }
 
 interface MockReplyChain {
@@ -62,8 +78,7 @@ function buildQueryString(params: Record<string, string>): string {
     return sp.toString();
 }
 
-// cspell:ignore Interceptable
-function createInterceptor(pool: Interceptable): MockInterceptor {
+function createInterceptor(pool: any): MockInterceptor {
     const doIntercept = (method: string, path: string, body?: any): MockReplyChain => ({
         reply(statusCode: number, responseBody?: any, headers?: Record<string, string>) {
             const interceptOpts: any = { path, method };
@@ -123,7 +138,7 @@ export class BaseMock {
 
     cleanAll(): void {
         const agent = getGlobalMockAgent();
-        const pool = agent.get(this.host) as Interceptable;
+        const pool = agent.get(this.host) as any;
         pool.cleanMocks();
     }
 }

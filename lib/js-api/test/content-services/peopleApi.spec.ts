@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,17 @@
  */
 
 import { AlfrescoApi, PersonBodyCreate, PeopleApi } from '../../src';
+import assert from 'assert';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { EcmAuthMock, PeopleMock } from '../mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('PeopleApi', () => {
     let authResponseMock: EcmAuthMock;
     let peopleMock: PeopleMock;
     let peopleApi: PeopleApi;
 
-    beforeEach((done) => {
+    beforeEach(async () => {
         const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
@@ -34,14 +37,16 @@ describe('PeopleApi', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {
-            done();
-        });
+        await alfrescoJsApi.login('admin', 'admin');
 
         peopleApi = new PeopleApi(alfrescoJsApi);
     });
 
-    it('should add a person', (done) => {
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
+    it('should add a person', async () => {
         peopleMock.get201Response();
 
         const payload: PersonBodyCreate = {
@@ -52,21 +57,14 @@ describe('PeopleApi', () => {
             password: 'Rrrrrrrghghghghgh'
         };
 
-        peopleApi.createPerson(payload).then(() => {
-            done();
-        });
+        const result = await peopleApi.createPerson(payload);
+        assert.ok(result, 'createPerson should return a result');
     });
 
-    it('should get list of people', (done) => {
+    it('should get list of people', async () => {
         peopleMock.get200ResponsePersons();
 
-        peopleApi.listPeople().then(
-            () => {
-                done();
-            },
-            (err) => {
-                done(new Error('listPeople rejected: ' + JSON.stringify(err)));
-            }
-        );
+        const data = await peopleApi.listPeople();
+        assert.ok(data, 'listPeople should return data');
     });
 });

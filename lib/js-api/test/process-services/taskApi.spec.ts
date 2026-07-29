@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
  */
 
 import assert from 'assert';
+import { describe, it, beforeEach, afterEach } from 'node:test';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import {
     AlfrescoApi,
     TaskFilterRequestRepresentation,
@@ -34,10 +36,6 @@ describe('Activiti Task Api', () => {
     let tasksApi: TasksApi;
     let taskFormsApi: TaskFormsApi;
     let taskActionsApi: TaskActionsApi;
-
-    const NOOP = () => {
-        /* empty */
-    };
 
     beforeEach(async () => {
         const BPM_HOST = 'https://127.0.0.1:9999';
@@ -59,6 +57,10 @@ describe('Activiti Task Api', () => {
         await alfrescoJsApi.login('admin', 'admin');
     });
 
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
     it('get Task list', async () => {
         tasksMock.get200Response();
 
@@ -77,14 +79,17 @@ describe('Activiti Task Api', () => {
         assert.equal(data.name, 'Upload Document');
     });
 
-    it('bad filter Tasks', (done) => {
+    it('bad filter Tasks', async () => {
         tasksMock.get400TaskFilter();
 
         const requestNode = new TaskFilterRequestRepresentation();
 
-        tasksApi.filterTasks(requestNode).then(NOOP, () => {
-            done();
-        });
+        try {
+            await tasksApi.filterTasks(requestNode);
+            assert.fail('Expected filterTasks to throw error on 400 response');
+        } catch (error: any) {
+            assert.equal(error.status, 400);
+        }
     });
 
     it('filter Tasks', async () => {
@@ -98,13 +103,16 @@ describe('Activiti Task Api', () => {
         assert.equal(data.data[0].id, '7506');
     });
 
-    it('complete Task not found', (done) => {
+    it('complete Task not found', async () => {
         const taskId = '200';
         tasksMock.get404CompleteTask(taskId);
 
-        taskActionsApi.completeTask(taskId).then(NOOP, () => {
-            done();
-        });
+        try {
+            await taskActionsApi.completeTask(taskId);
+            assert.fail('Expected completeTask to throw error on 404 response');
+        } catch (error: any) {
+            assert.equal(error.status, 404);
+        }
     });
 
     it('complete Task ', async () => {
@@ -112,7 +120,8 @@ describe('Activiti Task Api', () => {
 
         tasksMock.put200GenericResponse('/activiti-app/api/enterprise/tasks/5006/action/complete');
 
-        await taskActionsApi.completeTask(taskId);
+        const result = await taskActionsApi.completeTask(taskId);
+        assert.ok(result !== undefined, 'completeTask should complete successfully');
     });
 
     it('Create a Task', async () => {
@@ -123,7 +132,8 @@ describe('Activiti Task Api', () => {
         const taskRepresentation = new TaskRepresentation();
         taskRepresentation.name = taskName;
 
-        await tasksApi.createNewTask(taskRepresentation);
+        const result = await tasksApi.createNewTask(taskRepresentation);
+        assert.ok(result, 'createNewTask should return a result');
     });
 
     it('Get task form', async () => {
@@ -155,7 +165,8 @@ describe('Activiti Task Api', () => {
         const field = 'label';
         const column = 'user';
 
-        await taskFormsApi.getRestFieldColumnValues(taskId, field, column);
+        const result = await taskFormsApi.getRestFieldColumnValues(taskId, field, column);
+        assert.ok(result !== undefined, 'getRestFieldColumnValues should return a result');
     });
 
     it('get form field values that are populated through a REST backend Specific case to retrieve information on a specific column', async () => {
@@ -164,6 +175,7 @@ describe('Activiti Task Api', () => {
         const taskId = '2';
         const field = 'label';
 
-        await taskFormsApi.getRestFieldValues(taskId, field);
+        const result = await taskFormsApi.getRestFieldValues(taskId, field);
+        assert.ok(result !== undefined, 'getRestFieldValues should return a result');
     });
 });

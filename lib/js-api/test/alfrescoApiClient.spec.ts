@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,14 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from './mockObjects/base.mock';
 import { AlfrescoApi, AlfrescoApiClient, DateAlfresco } from '../src';
 import { EcmAuthMock } from './mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Alfresco Core API Client', () => {
     describe('type conversion', () => {
-        it('should return the username after login', (done) => {
+        it('should return the username after login', async () => {
             const authResponseEcmMock = new EcmAuthMock('https://127.0.0.1:8080');
 
             authResponseEcmMock.get201Response();
@@ -32,7 +34,7 @@ describe('Alfresco Core API Client', () => {
 
             alfrescoJsApi.login('admin', 'admin').then(() => {
                 assert.equal(alfrescoJsApi.getEcmUsername(), 'admin');
-                done();
+                
             });
         });
     });
@@ -96,6 +98,10 @@ describe('Alfresco Core API Client', () => {
             alfrescoApiClient.storage = mockStorage as any;
             alfrescoApiClient.config = { ticketEcm: mockConfigTicket };
         });
+
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
 
         it('should return the supplied ticket', () => {
             const ticket = alfrescoApiClient.getAlfTicket(mockArgTicket);

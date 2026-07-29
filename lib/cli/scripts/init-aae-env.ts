@@ -2,7 +2,7 @@
 
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,9 @@
  */
 
 import { parseArgs } from 'node:util';
-import fetch from 'node-fetch';
 import * as fs from 'fs';
+import { Readable } from 'node:stream';
+import type { ReadableStream } from 'node:stream/web';
 import { logger } from './logger';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
@@ -682,14 +683,18 @@ async function getFileFromRemote(url: string, name: string): Promise<void> {
         .then(
             (response) =>
                 new Promise<void>((resolve, reject) => {
+                    if (!response.body) {
+                        reject(new Error('Response body is empty'));
+                        return;
+                    }
                     const outputFile = fs.createWriteStream(`${name}.zip`);
-                    response.body.pipe(outputFile);
+                    Readable.fromWeb(response.body as ReadableStream<Uint8Array>).pipe(outputFile);
                     outputFile.on('finish', () => {
                         logger.info(`The file is finished downloading.`);
                         resolve();
                     });
                     outputFile.on('error', (error) => {
-                        logger.error(`Not possible to download the project form remote`);
+                        logger.error(`Not possible to download the project from remote: ${error.message}`);
                         reject(error);
                     });
                 })
