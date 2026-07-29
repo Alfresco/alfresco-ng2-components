@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import {
     OnChanges,
     OnInit,
     Output,
+    SimpleChanges,
     TemplateRef,
     Type,
     ViewChild,
@@ -219,8 +220,10 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
         this.isLoading = true;
     }
 
-    ngOnChanges() {
-        this.isLoading = true;
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['urlFile'] || changes['blobFile']) {
+            this.isLoading = true;
+        }
         if (this.blobFile) {
             this.setUpBlobData();
         } else if (this.urlFile) {

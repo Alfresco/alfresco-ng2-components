@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,7 +78,7 @@ export class DataColumnComponent implements OnInit {
     @Input()
     subtitle: string = '';
 
-    @ContentChild(TemplateRef)
+    @ContentChild(TemplateRef, { descendants: false })
     template: any;
 
     /** Custom tooltip formatter function. */

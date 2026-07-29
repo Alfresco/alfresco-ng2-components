@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-process-services-cloud",
   "description": "Alfresco ADF process services cloud",
-  "version": "9.0.0",
+  "version": "9.1.0",
   "author": "Hyland Software, Inc. and its affiliates",
   "repository": {
     "type": "git",
@@ -11,7 +11,6 @@
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "peerDependencies": {
-    "@angular/animations": ">=20.3.25",
     "@angular/cdk": ">=20.2.14",
     "@angular/common": ">=20.3.25",
     "@angular/compiler": ">=20.3.25",
@@ -21,9 +20,9 @@
     "@angular/platform-browser": ">=20.3.25",
     "@angular/platform-browser-dynamic": ">=20.3.25",
     "@angular/router": ">=20.3.25",
-    "@alfresco/js-api": ">=9.5.0",
-    "@alfresco/adf-core": ">=8.5.0",
-    "@alfresco/adf-content-services": ">=8.5.0",
+    "@alfresco/js-api": ">=10.0.0",
+    "@alfresco/adf-core": ">=9.0.0",
+    "@alfresco/adf-content-services": ">=9.0.0",
     "@apollo/client": ">=3.7.2",
     "@ngx-translate/core": ">=17.0.0",
     "apollo-angular": ">=4.0.1",

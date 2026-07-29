@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 
 import { Component } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
 import { ContextMenuDirective } from '@alfresco/adf-core';
@@ -170,7 +169,6 @@ testCases.forEach((testCase) => {
 
         describe('Contextmenu list', () => {
             let contextMenu: HTMLElement | null;
-            let loader: HarnessLoader;
 
             beforeEach(() => {
                 fixture.componentInstance.isEnabled = true;
@@ -179,8 +177,7 @@ testCases.forEach((testCase) => {
                 testingUtils.dispatchCustomEventByCSS('#target', 'contextmenu');
                 fixture.detectChanges();
                 contextMenu = document.querySelector('.adf-context-menu');
-                loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
-                testingUtils.setLoader(loader);
+                testingUtils = new UnitTestingUtils(fixture.debugElement, TestbedHarnessEnvironment.documentRootLoader(fixture));
             });
 
             it('should not render item with visibility property set to false', () => {
@@ -192,7 +189,7 @@ testCases.forEach((testCase) => {
             });
 
             it('should set first not disabled item as active', async () => {
-                const icon = await testingUtils.getMatIconWithAncestorByCSS('adf-context-menu');
+                const icon = await testingUtils.icon.getWithAncestorByCSS('adf-context-menu');
 
                 expect(await icon.getName()).toEqual('action-icon-3');
             });
@@ -212,7 +209,7 @@ testCases.forEach((testCase) => {
             });
 
             it('should not render item icon if not set', async () => {
-                expect(await testingUtils.checkIfMatIconExistsWithAncestorByCSSAndName('adf-context-menu', 'Action 1')).toBeFalse();
+                expect(await testingUtils.icon.existsWithAncestorByCSSAndName('adf-context-menu', 'Action 1')).toBeFalse();
             });
         });
     });

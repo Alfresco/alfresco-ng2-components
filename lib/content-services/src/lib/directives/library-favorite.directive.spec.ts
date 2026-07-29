@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,7 +83,7 @@ describe('LibraryFavoriteDirective', () => {
 
     it('should call addFavorite() and display snackbar message on click event when selection is not a favorite', async () => {
         spyOn(component.directive.favoritesApi, 'getFavoriteSite').and.returnValue(Promise.reject(new Error('error')));
-        spyOn(component.directive.favoritesApi, 'createFavorite').and.returnValue(Promise.resolve(null));
+        spyOn(component.directive.favoritesApi, 'createFavorite').and.returnValue(Promise.resolve({ entry: {} } as any));
         spyOn(notificationService, 'showInfo');
 
         fixture.detectChanges();

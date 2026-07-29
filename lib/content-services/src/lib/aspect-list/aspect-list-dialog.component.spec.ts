@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AspectListDialogComponent } from './aspect-list-dialog.component';
 import { of, Subject } from 'rxjs';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
-import { AspectListService } from './services/aspect-list.service';
+import { AspectListService, StandardAspectsWhere } from './services/aspect-list.service';
 import { delay } from 'rxjs/operators';
 import { AspectEntry, Node } from '@alfresco/js-api';
 import { NodesApiService } from '../common/services/nodes-api.service';
@@ -144,8 +144,8 @@ describe('AspectListDialogComponent', () => {
     describe('Without passing node id', () => {
         beforeEach(() => {
             aspectListService = TestBed.inject(AspectListService);
-            spyOn(aspectListService, 'getAllAspects').and.returnValue(
-                of({ standardAspectPaging: { list: { entries: aspectListMock } }, customAspectPaging: { list: { entries: customAspectListMock } } })
+            spyOn(aspectListService, 'getAspects').and.callFake((_visibleAspects, opts) =>
+                of({ list: { entries: opts.where === StandardAspectsWhere ? aspectListMock : customAspectListMock } })
             );
             fixture.detectChanges();
         });
@@ -251,11 +251,10 @@ describe('AspectListDialogComponent', () => {
             data.nodeId = 'fake-node-id';
             aspectListService = TestBed.inject(AspectListService);
             nodeService = TestBed.inject(NodesApiService);
-            spyOn(aspectListService, 'getAllAspects').and.returnValue(
-                of({ standardAspectPaging: { list: { entries: aspectListMock } }, customAspectPaging: { list: { entries: customAspectListMock } } })
-            );
             spyOn(aspectListService, 'getVisibleAspects').and.returnValue(['frs:AspectOne']);
-            spyOn(aspectListService, 'getAspects').and.returnValue(of({ list: { entries: customAspectListMock } }));
+            spyOn(aspectListService, 'getAspects').and.callFake((_visibleAspects, opts) =>
+                of({ list: { entries: opts.where === StandardAspectsWhere ? aspectListMock : customAspectListMock } })
+            );
             spyOn(nodeService, 'getNode').and.returnValue(
                 of(new Node({ id: 'fake-node-id', aspectNames: ['frs:AspectOne', 'cst:customAspect'] })).pipe(delay(0))
             );

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -265,7 +265,11 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
             .pipe(
                 filter(
                     (node) =>
-                        node && node.id === this.nodeId && this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node)
+                        !!node &&
+                        node.id === this.nodeId &&
+                        !!this.nodeEntry?.entry &&
+                        (this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node) ||
+                            this.nodeEntry.entry.name !== node.name)
                 ),
                 takeUntilDestroyed(this.destroyRef)
             )
@@ -274,9 +278,22 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
 
     private async onNodeUpdated(node: Node) {
         if (node && node.id === this.nodeId) {
-            this.generateCacheBusterNumber();
+            const previousNode = this.nodeEntry.entry;
+            const mergedNode = { ...previousNode, ...node };
+            this.nodeEntry = new NodeEntry({ entry: mergedNode });
 
-            await this.setUpNodeFile(node);
+            const versionChanged = this.getNodeVersionProperty(previousNode) !== this.getNodeVersionProperty(mergedNode);
+            const extensionChanged =
+                this.viewUtilService.getFileExtension(previousNode.name) !== this.viewUtilService.getFileExtension(mergedNode.name);
+
+            if (versionChanged || extensionChanged) {
+                this.generateCacheBusterNumber();
+                await this.setUpNodeFile(mergedNode);
+            } else {
+                this.fileName = mergedNode.name;
+                this.sidebarRightTemplateContext.node.name = mergedNode.name;
+                this.sidebarLeftTemplateContext.node.name = mergedNode.name;
+            }
             this.cdr.detectChanges();
         }
     }

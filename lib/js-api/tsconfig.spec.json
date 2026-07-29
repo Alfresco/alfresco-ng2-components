@@ -3,12 +3,22 @@
   "compilerOptions": {
     "module": "CommonJS",
     "moduleResolution": "node",
-    "target": "ES2015",
+    "target": "ES2020",
     "esModuleInterop": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["ESNext", "dom"],
-    "types": ["jest", "node"]
+    "lib": ["ESNext"],
+    "types": ["node"],
+    "baseUrl": "../../",
+    "paths": {
+      "@alfresco/js-api": ["lib/js-api/src/index.ts"]
+    }
+  },
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
   },
   "exclude": [],
   "include": ["**/*"]

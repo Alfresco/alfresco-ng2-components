@@ -2,7 +2,7 @@
 
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -98,8 +98,8 @@ Options:
         const packageDir = path.dirname(packagePath);
 
         // Use spawnSync with array arguments for safer command execution (prevents shell injection)
-        // Cross-platform: npm is available on PATH on all platforms (Windows, macOS, Linux)
-        const result = spawnSync('npm', ['audit', '--json', '--prod'], {
+        // Cross-platform: pnpm is available on PATH on all platforms (Windows, macOS, Linux)
+        const result = spawnSync('pnpm', ['audit', '--json', '--prod'], {
             cwd: packageDir,
             encoding: 'utf-8',
             // shell: false is the default and more secure (no shell interpretation)

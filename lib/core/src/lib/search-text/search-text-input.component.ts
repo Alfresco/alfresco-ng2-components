@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  */
 
 import { Direction } from '@angular/cdk/bidi';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import {
     Component,
     DestroyRef,
@@ -24,8 +24,8 @@ import {
     EventEmitter,
     inject,
     Input,
-    OnDestroy,
     OnInit,
+    OnDestroy,
     Output,
     ViewChild,
     ViewEncapsulation
@@ -35,10 +35,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 import { UserPreferencesService } from '../common';
-import { searchAnimation } from './animations';
 import { SearchAnimationDirection, SearchAnimationState, SearchTextStateEnum } from './models/search-text-input.model';
 import { SearchTriggerDirective } from './search-trigger.directive';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -48,9 +47,8 @@ import { IconModule } from '../icon/icon.module';
     selector: 'adf-search-text-input',
     templateUrl: './search-text-input.component.html',
     styleUrls: ['./search-text-input.component.scss'],
-    animations: [searchAnimation],
     encapsulation: ViewEncapsulation.None,
-    imports: [MatButtonModule, IconModule, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, SearchTriggerDirective, NgIf, NgClass],
+    imports: [MatButtonModule, IconModule, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, SearchTriggerDirective, NgClass, NgStyle],
     host: {
         class: 'adf-search-text-input'
     }
@@ -91,7 +89,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     /** Listener for results-list events (focus, blur and focusout). */
     @Input()
-    focusListener: Observable<FocusEvent>;
+    focusListener: Observable<FocusEvent> | null = null;
 
     /** Collapse search bar on submit. */
     @Input()
@@ -104,6 +102,10 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     /** Toggles whether to collapse the search on blur. */
     @Input()
     collapseOnBlur: boolean = true;
+
+    /** Disables expand/collapse transitions while keeping state changes functional. */
+    @Input()
+    disableAnimations: boolean = false;
 
     /** Toggles whether to show a clear button that closes the search */
     @Input()
@@ -147,44 +149,44 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     /** Emitted when the search visibility changes. True when the search is active, false when it is inactive */
     @Output()
-    searchVisibility: EventEmitter<boolean> = new EventEmitter<boolean>();
+    searchVisibility = new EventEmitter<boolean>();
 
     @ViewChild('searchInput', { static: true })
-    searchInput: ElementRef;
-
-    subscriptAnimationState: any;
+    searchInput!: ElementRef;
 
     animationStates: SearchAnimationDirection = {
         ltr: {
-            active: { value: 'active', params: { 'margin-left': 13 } },
+            active: { value: 'active', params: { 'margin-left': '13px' } },
             inactive: { value: 'inactive', params: { transform: 'translateX(100%)' } }
         },
         rtl: {
-            active: { value: 'active', params: { 'margin-right': 13 } },
+            active: { value: 'active', params: { 'margin-right': '13px' } },
             inactive: { value: 'inactive', params: { transform: 'translateX(-100%)' } }
         }
     };
 
-    private dir = 'ltr';
-    private toggleSearch = new Subject<any>();
-    private focusSubscription: Subscription;
+    subscriptAnimationState: SearchAnimationState = this.animationStates.ltr.inactive;
+
+    private dir: keyof SearchAnimationDirection = 'ltr';
+    private readonly toggleSearch = new Subject<any>();
     private readonly valueChange = new Subject<string>();
-    private readonly toggleSubscription: Subscription;
 
     toggle$ = this.toggleSearch.asObservable();
 
     private readonly destroyRef = inject(DestroyRef);
 
     constructor() {
-        this.toggleSubscription = this.toggle$.pipe(debounceTime(200), takeUntilDestroyed()).subscribe(() => {
+        this.toggle$.pipe(debounceTime(200), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             if (this.expandable) {
                 this.subscriptAnimationState = this.toggleAnimation();
                 if (this.subscriptAnimationState.value === 'inactive') {
                     this.searchTerm = '';
                     this.reset.emit(true);
-                    if (document.activeElement.id === this.searchInput.nativeElement.id) {
+                    if (document.activeElement?.id === this.searchInput.nativeElement.id) {
                         this.searchInput.nativeElement.blur();
                     }
+                } else if (this.subscriptAnimationState.value === 'active' && this.isDefaultStateCollapsed()) {
+                    setTimeout(() => this.searchInput.nativeElement.focus(), 0);
                 }
                 this.emitVisibilitySearch();
             }
@@ -205,10 +207,9 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         this.setupFocusEventHandlers();
     }
 
-    applySearchFocus(animationDoneEvent) {
-        if (animationDoneEvent.toState === 'active' && this.isDefaultStateCollapsed()) {
-            this.searchInput.nativeElement.focus();
-        }
+    ngOnDestroy() {
+        this.toggleSearch.complete();
+        this.valueChange.complete();
     }
 
     getAutoComplete(): string {
@@ -218,23 +219,23 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     private toggleAnimation() {
         if (this.dir === 'ltr') {
             return this.subscriptAnimationState.value === 'inactive'
-                ? { value: 'active', params: { 'margin-left': 0 } }
+                ? { value: 'active', params: { 'margin-left': '0px' } }
                 : { value: 'inactive', params: { transform: 'translateX(100%)' } };
         } else {
             return this.subscriptAnimationState.value === 'inactive'
-                ? { value: 'active', params: { 'margin-right': 0 } }
+                ? { value: 'active', params: { 'margin-right': '0px' } }
                 : { value: 'inactive', params: { transform: 'translateX(-100%)' } };
         }
     }
 
-    private getDefaultState(dir: string): SearchAnimationState {
+    private getDefaultState(dir: keyof SearchAnimationDirection): SearchAnimationState {
         if (this.dir) {
             return this.getAnimationState(dir);
         }
         return this.animationStates.ltr.inactive;
     }
 
-    private getAnimationState(dir: string): SearchAnimationState {
+    private getAnimationState(dir: keyof SearchAnimationDirection): SearchAnimationState {
         if (this.expandable && this.isDefaultStateExpanded()) {
             return this.animationStates[dir].active;
         } else if (this.expandable) {
@@ -246,21 +247,21 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     private setupFocusEventHandlers() {
         if (this.focusListener) {
-            const focusEvents: Observable<FocusEvent> = this.focusListener.pipe(
-                debounceTime(50),
-                filter(
-                    ($event: any) => this.isSearchBarActive() && ($event.type === 'blur' || $event.type === 'focusout' || $event.type === 'focus')
-                ),
-                takeUntilDestroyed(this.destroyRef)
-            );
-
-            this.focusSubscription = focusEvents.subscribe((event: FocusEvent) => {
-                if (event.type === 'focus') {
-                    this.searchInput.nativeElement.focus();
-                } else {
-                    this.toggleSearchBar();
-                }
-            });
+            this.focusListener
+                .pipe(
+                    debounceTime(50),
+                    filter(
+                        ($event: any) => this.isSearchBarActive() && ($event.type === 'blur' || $event.type === 'focusout' || $event.type === 'focus')
+                    ),
+                    takeUntilDestroyed(this.destroyRef)
+                )
+                .subscribe((event: FocusEvent) => {
+                    if (event.type === 'focus') {
+                        this.searchInput.nativeElement.focus();
+                    } else {
+                        this.toggleSearchBar();
+                    }
+                });
         }
     }
 
@@ -270,11 +271,11 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         });
     }
 
-    selectFirstResult($event) {
+    selectFirstResult($event: any) {
         this.selectResult.emit($event);
     }
 
-    onBlur($event) {
+    onBlur($event: any) {
         if (this.collapseOnBlur && !$event.relatedTarget) {
             this.resetSearch();
         }
@@ -306,20 +307,6 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     isSearchBarActive(): boolean {
         return this.subscriptAnimationState.value === 'active';
-    }
-
-    ngOnDestroy() {
-        if (this.toggleSearch) {
-            this.toggleSubscription.unsubscribe();
-            this.toggleSearch.complete();
-            this.toggleSearch = null;
-        }
-
-        if (this.focusSubscription) {
-            this.focusSubscription.unsubscribe();
-            this.focusSubscription = null;
-            this.focusListener = null;
-        }
     }
 
     canShowClearSearch(): boolean {

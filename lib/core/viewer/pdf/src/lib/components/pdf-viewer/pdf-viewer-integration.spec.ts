@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ describe('PdfViewer Integration with ViewerRenderComponent', () => {
 
     it('should render real PdfViewerComponent for PDF files', async () => {
         component.urlFile = 'fake-test-file.pdf';
-        component.ngOnChanges();
+        component.ngOnChanges({});
         fixture.detectChanges();
         await fixture.whenStable();
         fixture.detectChanges();
@@ -64,7 +64,7 @@ describe('PdfViewer Integration with ViewerRenderComponent', () => {
     it('should pass inputs to real PdfViewerComponent', async () => {
         component.urlFile = 'fake-test-file.pdf';
         component.allowThumbnails = true;
-        component.ngOnChanges();
+        component.ngOnChanges({});
         fixture.detectChanges();
         await fixture.whenStable();
         fixture.detectChanges();
@@ -87,7 +87,7 @@ describe('PdfViewer Integration with ViewerRenderComponent', () => {
         testingUtils = new UnitTestingUtils(fixture.debugElement);
 
         component.urlFile = 'fake-test-file.pdf';
-        component.ngOnChanges();
+        component.ngOnChanges({});
         fixture.detectChanges();
         await fixture.whenStable();
         fixture.detectChanges();

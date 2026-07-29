@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -114,7 +114,7 @@ describe('DocumentListService', () => {
     }));
 
     it('should use rootFolderId provided in options', () => {
-        const spyGetNodeInfo = spyOn(service.nodes, 'listNodeChildren').and.callThrough();
+        const spyGetNodeInfo = spyOn(service.nodes, 'listNodeChildren').and.returnValue(Promise.resolve(fakeFolder as any));
 
         service.getFolder('/fake-root/fake-name', { rootFolderId: 'testRoot' }, ['isLocked']);
 
@@ -126,7 +126,7 @@ describe('DocumentListService', () => {
     });
 
     it('should use provided other values passed in options', () => {
-        const spyGetNodeInfo = spyOn(service.nodes, 'listNodeChildren').and.callThrough();
+        const spyGetNodeInfo = spyOn(service.nodes, 'listNodeChildren').and.returnValue(Promise.resolve(fakeFolder as any));
 
         service.getFolder('/fake-root/fake-name', { rootFolderId: 'testRoot', maxItems: 10, skipCount: 5, where: 'where', orderBy: ['order'] }, [
             'isLocked'
@@ -144,7 +144,7 @@ describe('DocumentListService', () => {
     });
 
     it('should add the includeTypes in the request Node Children if required', () => {
-        const spyGetNodeInfo = spyOn(service.nodes, 'listNodeChildren').and.callThrough();
+        const spyGetNodeInfo = spyOn(service.nodes, 'listNodeChildren').and.returnValue(Promise.resolve(fakeFolder as any));
 
         service.getFolder('/fake-root/fake-name', {}, ['isLocked']);
 
@@ -156,7 +156,7 @@ describe('DocumentListService', () => {
     });
 
     it('should not add the includeTypes in the request Node Children if is duplicated', () => {
-        const spyGetNodeInfo = spyOn(service.nodes, 'listNodeChildren').and.callThrough();
+        const spyGetNodeInfo = spyOn(service.nodes, 'listNodeChildren').and.returnValue(Promise.resolve(fakeFolder as any));
 
         service.getFolder('/fake-root/fake-name', {}, ['allowableOperations']);
 
@@ -168,7 +168,7 @@ describe('DocumentListService', () => {
     });
 
     it('should add the includeTypes in the request getFolderNode if required', () => {
-        const spyGetNodeInfo = spyOn(service.nodes, 'getNode').and.callThrough();
+        const spyGetNodeInfo = spyOn(service.nodes, 'getNode').and.returnValue(Promise.resolve({} as any));
 
         service.getFolderNode('test-id', ['isLocked']);
 
@@ -179,7 +179,7 @@ describe('DocumentListService', () => {
     });
 
     it('should not add the includeTypes in the request getFolderNode if is duplicated', () => {
-        const spyGetNodeInfo = spyOn(service.nodes, 'getNode').and.callThrough();
+        const spyGetNodeInfo = spyOn(service.nodes, 'getNode').and.returnValue(Promise.resolve({} as any));
 
         service.getFolderNode('test-id', ['allowableOperations']);
 
@@ -190,7 +190,7 @@ describe('DocumentListService', () => {
     });
 
     it('should add default includeTypes in the request getFolderNode if none is provided', () => {
-        const spyGetNodeInfo = spyOn(service.nodes, 'getNode').and.callThrough();
+        const spyGetNodeInfo = spyOn(service.nodes, 'getNode').and.returnValue(Promise.resolve({} as any));
 
         service.getFolderNode('test-id');
 

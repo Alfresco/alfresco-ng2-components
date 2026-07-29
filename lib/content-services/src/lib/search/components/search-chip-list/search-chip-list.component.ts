@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,11 +35,11 @@ export class SearchChipListComponent {
     facetFiltersService = inject(SearchFacetFiltersService);
 
     /**
-     * Search filter to supply the data for the chips.
-     * Not required from 4.5.0 and later versions @deprecated
+     * @deprecated Search filter to supply the data for the chips.
+     * Not required from 4.5.0 and later versions
      */
     @Input()
-    searchFilter: SearchFilterComponent;
+    searchFilter: SearchFilterComponent | undefined;
 
     /** Flag used to enable the display of a clear-all-filters button. */
     @Input()

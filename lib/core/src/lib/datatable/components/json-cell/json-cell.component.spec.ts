@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,7 +75,7 @@ describe('JsonCellComponent', () => {
     it('should render json button inside cell', async () => {
         fixture.detectChanges();
 
-        expect(await testingUtils.checkIfMatButtonExists()).toBe(true);
+        expect(await testingUtils.button.exists()).toBe(true);
     });
 
     it('should not setup cell when has no data', () => {

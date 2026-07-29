@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,9 +34,8 @@ describe('ColumnsSelectorComponent', () => {
 
     const menuOpenedTrigger = new Subject<void>();
     const menuClosedTrigger = new Subject<void>();
-    const getSelectorInputValue = (): Promise<string> => testingUtils.getMatInputValueByDataAutomationId('adf-columns-selector-search-input');
-    const fillSelectorInput = (value: string): Promise<void> =>
-        testingUtils.fillMatInputByDataAutomationId('adf-columns-selector-search-input', value);
+    const getSelectorInputValue = (): Promise<string> => testingUtils.input.getValueByDataAutomationId('adf-columns-selector-search-input');
+    const fillSelectorInput = (value: string): Promise<void> => testingUtils.input.fillByDataAutomationId('adf-columns-selector-search-input', value);
 
     let mainMenuTrigger: { menuOpened: Observable<void>; menuClosed: Observable<void> };
 
@@ -115,7 +114,7 @@ describe('ColumnsSelectorComponent', () => {
         menuOpenedTrigger.next();
         fixture.detectChanges();
 
-        const options = await testingUtils.getAllMatListOptions();
+        const options = await testingUtils.listOption.getAll();
         const inputColumnsWithTitle = inputColumns.filter((column) => !!column.title);
         expect(options.length).toBe(inputColumnsWithTitle.length);
 
@@ -136,7 +135,7 @@ describe('ColumnsSelectorComponent', () => {
         tick(400);
         fixture.detectChanges();
 
-        const columnOptions = await testingUtils.getAllMatListOptions();
+        const columnOptions = await testingUtils.listOption.getAll();
 
         expect(columnOptions.length).toBe(1);
         expect(await columnOptions[0].getFullText()).toBe(inputColumns[0].title);
@@ -146,7 +145,7 @@ describe('ColumnsSelectorComponent', () => {
         menuOpenedTrigger.next();
         fixture.detectChanges();
 
-        const firstColumnOption = await testingUtils.getMatListOption();
+        const firstColumnOption = await testingUtils.listOption.get();
         const optionName = await firstColumnOption.getFullText();
 
         const toggledColumnItem = component.columnItems.find((item) => item.title === optionName);
@@ -161,7 +160,7 @@ describe('ColumnsSelectorComponent', () => {
             menuOpenedTrigger.next();
             fixture.detectChanges();
 
-            const options = await testingUtils.getAllMatListOptions();
+            const options = await testingUtils.listOption.getAll();
 
             expect(await options[0].isSelected()).toBeTrue();
             expect(await options[1].isSelected()).toBeTrue();
@@ -174,7 +173,7 @@ describe('ColumnsSelectorComponent', () => {
             menuOpenedTrigger.next();
             fixture.detectChanges();
 
-            const options = await testingUtils.getAllMatListOptions();
+            const options = await testingUtils.listOption.getAll();
 
             expect(await options[0].isDisabled()).toBeFalse();
             expect(await options[1].isDisabled()).toBeFalse();
@@ -203,7 +202,7 @@ describe('ColumnsSelectorComponent', () => {
             menuOpenedTrigger.next();
             fixture.detectChanges();
 
-            const options = await testingUtils.getAllMatListOptions();
+            const options = await testingUtils.listOption.getAll();
             expect(await options[0].getFullText()).toBe(shownDataColumn.title);
             expect(await options[1].getFullText()).toBe(hiddenDataColumn.title);
         });
@@ -214,7 +213,7 @@ describe('ColumnsSelectorComponent', () => {
             menuOpenedTrigger.next();
             fixture.detectChanges();
 
-            const options = await testingUtils.getAllMatListOptions();
+            const options = await testingUtils.listOption.getAll();
             expect(await options[0].getFullText()).toBe(hiddenDataColumn.title);
             expect(await options[1].getFullText()).toBe(shownDataColumn.title);
         });
@@ -233,7 +232,7 @@ describe('ColumnsSelectorComponent', () => {
             component.columnsSorting = false;
             menuOpenedTrigger.next();
             fixture.detectChanges();
-            expect(await (await testingUtils.getMatListOption()).getFullText()).toBe(`${column.title}  ${column.subtitle}`);
+            expect(await (await testingUtils.listOption.get()).getFullText()).toBe(`${column.title}  ${column.subtitle}`);
         });
     });
 });

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -81,6 +81,22 @@ describe('IdleActivityTracker', () => {
         doc.dispatchEvent(new Event('click'));
 
         expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should allow a later listener to prevent default when an activity event fires', () => {
+        const preventDefault = jasmine.createSpy('preventDefault').and.callFake((event: Event) => event.preventDefault());
+        tracker.start();
+        doc.addEventListener('mousemove', preventDefault);
+
+        try {
+            const event = new MouseEvent('mousemove', { cancelable: true });
+            doc.dispatchEvent(event);
+
+            expect(preventDefault).toHaveBeenCalledTimes(1);
+            expect(event.defaultPrevented).toBeTrue();
+        } finally {
+            doc.removeEventListener('mousemove', preventDefault);
+        }
     });
 
     it('is a no-op when stop() is called without a prior start()', () => {

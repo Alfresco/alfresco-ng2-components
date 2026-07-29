@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -211,7 +211,7 @@ describe('DateTimeWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        await testingUtils.fillMatInput('12-09-9999 10:30 AM');
+        await testingUtils.input.fill('12-09-9999 10:30 AM');
 
         expect(field.value).toEqual(jasmine.any(Date));
         expect(field.value.getFullYear()).toBe(9999);
@@ -232,7 +232,7 @@ describe('DateTimeWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        await testingUtils.fillMatInput('123abc');
+        await testingUtils.input.fill('123abc');
 
         expect(widget.datetimeInputControl.invalid).toBeTrue();
         expect(field.value).toBe(null);
@@ -254,7 +254,7 @@ describe('DateTimeWidgetComponent', () => {
         fixture.whenStable();
         await fixture.whenStable();
 
-        await testingUtils.fillMatInput(null);
+        await testingUtils.input.fill(null);
 
         expect(widget.datetimeInputControl.value).toBe(null);
         expect(widget.datetimeInputControl.valid).toBeTrue();
@@ -275,7 +275,7 @@ describe('DateTimeWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        await testingUtils.fillMatInput('03-25-2025 02:30 PM');
+        await testingUtils.input.fill('03-25-2025 02:30 PM');
 
         expect(field.value).toEqual(jasmine.any(Date));
         expect(field.value.getFullYear()).toBe(2025);
@@ -297,7 +297,7 @@ describe('DateTimeWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        await testingUtils.fillMatInput('03/25/2025 02:30 PM');
+        await testingUtils.input.fill('03/25/2025 02:30 PM');
 
         expect(widget.datetimeInputControl.invalid).toBeTrue();
         expect(field.isValid).toBeFalse();
@@ -316,12 +316,12 @@ describe('DateTimeWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        await testingUtils.fillMatInput('invalid-text');
+        await testingUtils.input.fill('invalid-text');
 
         expect(widget.datetimeInputControl.invalid).toBeTrue();
         expect(field.isValid).toBeFalse();
 
-        await testingUtils.fillMatInput('');
+        await testingUtils.input.fill('');
 
         expect(widget.datetimeInputControl.valid).toBeTrue();
         expect(field.isValid).toBeTrue();
@@ -360,7 +360,7 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const host = await testingUtils.getMatInputHost();
+            const host = await testingUtils.input.getHost();
             await host.hover();
 
             const tooltip = await host.getAttribute('title');
@@ -405,7 +405,7 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         it('should be able to display label with asterisk and input field is required', async () => {
-            const formField = await testingUtils.getMatFormField();
+            const formField = await testingUtils.formField.get();
             const formControl = await formField.getControl();
 
             expect(formControl.isRequired).toBeTruthy();
@@ -427,7 +427,7 @@ describe('DateTimeWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(await testingUtils.getMatInputValue()).toBe('30-11-9999 10:30 AM');
+            expect(await testingUtils.input.getValue()).toBe('30-11-9999 10:30 AM');
         });
 
         it('should show the correct format type', async () => {
@@ -442,7 +442,7 @@ describe('DateTimeWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(await testingUtils.getMatInputValue()).toBe('12-30-9999 10:30 AM');
+            expect(await testingUtils.input.getValue()).toBe('12-30-9999 10:30 AM');
         });
 
         it('should disable date button when is readonly', () => {
@@ -483,7 +483,7 @@ describe('DateTimeWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const input = await testingUtils.getMatInput();
+        const input = await testingUtils.input.get();
         expect(await input.getValue()).toBe('12-30-9999 10:30 AM');
 
         widget.field.value = '2020-03-02T00:00:00.000Z';
@@ -508,7 +508,7 @@ describe('DateTimeWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const input = await testingUtils.getMatInput();
+        const input = await testingUtils.input.get();
         expect(await input.getValue()).toBe('12/30/9999 10;30 AM');
 
         widget.field.value = '2020-03-02T00:00:00.000Z';
@@ -597,8 +597,8 @@ describe('DateTimeWidgetComponent', () => {
                 required: true
             });
 
-            await testingUtils.focusMatInput();
-            await testingUtils.sendKeysToMatInput([TestKey.ENTER]);
+            await testingUtils.input.focus();
+            await testingUtils.input.sendKeys([TestKey.ENTER]);
 
             expect(testingUtils.getByDataAutomationId('adf-date-time-widget-picker')).toBeTruthy();
         });

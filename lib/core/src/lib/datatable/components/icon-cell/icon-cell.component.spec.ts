@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ describe('IconCellComponent', () => {
         component.value$.next(value);
         fixture.detectChanges();
 
-        const icon = await testingUtils.getMatIconOrNull();
+        const icon = await testingUtils.icon.getOrNull();
 
         expectedOccurrence ? expect(icon).not.toBeNull() : expect(icon).toBeNull();
         if (expectedIconName) {

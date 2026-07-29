@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,10 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, VersionsApi } from '../../src';
 import { EcmAuthMock, VersionMock } from '../mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Versions', () => {
     const nodeId = '74cd8a96-8a21-47e5-9b3b-a1b3e296787d';
@@ -41,52 +43,47 @@ describe('Versions', () => {
         versionsApi = new VersionsApi(alfrescoJsApi);
     });
 
-    it('should list all node version renditions', (done) => {
+    afterEach(() => {
+        resetGlobalMockAgent();
+    });
+
+    it('should list all node version renditions', async () => {
         versionMock.get200ResponseVersionRenditions(nodeId, versionId);
 
-        versionsApi.listVersionRenditions(nodeId, versionId).then((data) => {
-            const entries = data.list.entries;
-            assert.equal(entries.length, 6);
-            assert.equal(data.list.entries[0].entry.id, 'avatar');
-            done();
-        });
+        const data = await versionsApi.listVersionRenditions(nodeId, versionId);
+        const entries = data.list.entries;
+        assert.equal(entries.length, 6);
+        assert.equal(data.list.entries[0].entry.id, 'avatar');
     });
 
-    it('should create rendition for a node versionId', (done) => {
+    it('should create rendition for a node versionId', async () => {
         versionMock.create200VersionRendition(nodeId, versionId);
 
-        versionsApi.createVersionRendition(nodeId, versionId, { id: 'pdf' }).then(() => {
-            done();
-        });
+        const result = await versionsApi.createVersionRendition(nodeId, versionId, { id: 'pdf' });
+        assert.ok(result !== undefined, 'createVersionRendition should complete successfully');
     });
 
-    it('should get a node version rendition', (done) => {
+    it('should get a node version rendition', async () => {
         versionMock.get200VersionRendition(nodeId, versionId, renditionId);
 
-        versionsApi.getVersionRendition(nodeId, versionId, renditionId).then((data) => {
-            assert.equal(data.entry.id, 'pdf');
-            done();
-        });
+        const data = await versionsApi.getVersionRendition(nodeId, versionId, renditionId);
+        assert.equal(data.entry.id, 'pdf');
     });
 
-    it('should get version history', (done) => {
+    it('should get version history', async () => {
         versionMock.get200Response(nodeId);
 
-        versionsApi.listVersionHistory(nodeId).then((data) => {
-            const entries = data.list.entries;
-            assert.equal(entries.length, 2);
-            assert.equal(entries[0].entry.id, '2.0');
-            assert.equal(entries[1].entry.id, '1.0');
-            done();
-        });
+        const data = await versionsApi.listVersionHistory(nodeId);
+        const entries = data.list.entries;
+        assert.equal(entries.length, 2);
+        assert.equal(entries[0].entry.id, '2.0');
+        assert.equal(entries[1].entry.id, '1.0');
     });
 
-    it('should revert a version', (done) => {
+    it('should revert a version', async () => {
         versionMock.post201Response(nodeId, versionId);
 
-        versionsApi.revertVersion(nodeId, versionId, { majorVersion: true, comment: '' }).then((data) => {
-            assert.equal(data.entry.id, '3.0');
-            done();
-        });
+        const data = await versionsApi.revertVersion(nodeId, versionId, { majorVersion: true, comment: '' });
+        assert.equal(data.entry.id, '3.0');
     });
 });

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
  */
 export interface RequestLocalization {
     /**
-     * A valid timezone id supported by @see java.time.ZoneId
+     * A valid timezone id supported by {@link java.time.ZoneId}
      */
     timezone?: string;
     /**

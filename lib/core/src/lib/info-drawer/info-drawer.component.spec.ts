@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -127,22 +127,22 @@ describe('Custom InfoDrawer', () => {
     it('should select the tab 1 (index 0) as default', async () => {
         fixture.detectChanges();
 
-        expect(await testingUtils.getSelectedTabLabelFromMatTabGroup()).toEqual('Tab1');
+        expect(await testingUtils.tabGroup.getSelectedTabLabel()).toEqual('Tab1');
     });
 
     it('should select the tab 2 (index 1)', async () => {
         component.tabIndex = 1;
         fixture.detectChanges();
 
-        expect(await testingUtils.getSelectedTabLabelFromMatTabGroup()).toEqual('Tab2');
+        expect(await testingUtils.tabGroup.getSelectedTabLabel()).toEqual('Tab2');
     });
 
     it('should render a tab with icon', async () => {
         component.tabIndex = 2;
         fixture.detectChanges();
 
-        expect(await testingUtils.getSelectedTabLabelFromMatTabGroup()).toContain('Tab3');
-        expect(await testingUtils.getSelectedTabLabelFromMatTabGroup()).toContain('tab-icon');
+        expect(await testingUtils.tabGroup.getSelectedTabLabel()).toContain('Tab3');
+        expect(await testingUtils.tabGroup.getSelectedTabLabel()).toContain('tab-icon');
     });
 
     it('should render a icon with title', () => {

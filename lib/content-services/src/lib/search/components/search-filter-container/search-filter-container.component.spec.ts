@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import { SearchFilterContainerComponent } from './search-filter-container.compon
 import { SearchCategory } from '../../models/search-category.interface';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatMenuHarness } from '@angular/material/menu/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { provideRouter } from '@angular/router';
@@ -93,7 +92,7 @@ describe('SearchFilterContainerComponent', () => {
     });
 
     it('should set/update the active filter after the Apply button is clicked', async () => {
-        const menu = await loader.getHarness(MatMenuHarness);
+        const menu = await unitTestingUtils.menu.get();
         await menu.open();
 
         component.widgetContainer.componentRef.instance.value = 'searchText';
@@ -118,7 +117,7 @@ describe('SearchFilterContainerComponent', () => {
     it('should remove active filter after the Clear button is clicked', async () => {
         queryBuilder.setActiveFilter('queryName', 'searchText');
 
-        const menu = await loader.getHarness(MatMenuHarness);
+        const menu = await unitTestingUtils.menu.get();
         await menu.open();
 
         component.widgetContainer.componentRef.instance.value = 'searchText';
@@ -137,7 +136,7 @@ describe('SearchFilterContainerComponent', () => {
             eventRaised = true;
         });
 
-        const menu = await loader.getHarness(MatMenuHarness);
+        const menu = await unitTestingUtils.menu.get();
         await menu.open();
 
         component.widgetContainer.componentRef.instance.value = 'searchText';
@@ -182,7 +181,7 @@ describe('SearchFilterContainerComponent', () => {
         it('should set up a focus trap on the filter when the menu is opened', async () => {
             expect(component.focusTrap).toBeUndefined();
 
-            const menu = await loader.getHarness(MatMenuHarness);
+            const menu = await unitTestingUtils.menu.get();
             await menu.open();
 
             expect(component.focusTrap).toBeDefined();
@@ -193,7 +192,7 @@ describe('SearchFilterContainerComponent', () => {
         // TODO: very flaky test, need to be refactored
         // eslint-disable-next-line ban/ban
         xit('should focus the input element when the menu is opened', async () => {
-            const menu = await loader.getHarness(MatMenuHarness);
+            const menu = await unitTestingUtils.menu.get();
             await menu.open();
 
             const input = await menu.getHarness(MatInputHarness);
@@ -201,7 +200,7 @@ describe('SearchFilterContainerComponent', () => {
         });
 
         it('should focus the menu trigger when the menu is closed', async () => {
-            const menu = await loader.getHarness(MatMenuHarness);
+            const menu = await unitTestingUtils.menu.get();
             await menu.open();
 
             await menu.close();
@@ -209,7 +208,7 @@ describe('SearchFilterContainerComponent', () => {
         });
 
         it('should use a fieldset with aria-labelledby pointing to the legend', async () => {
-            const menu = await loader.getHarness(MatMenuHarness);
+            const menu = await unitTestingUtils.menu.get();
             await menu.open();
             fixture.detectChanges();
 
@@ -225,7 +224,7 @@ describe('SearchFilterContainerComponent', () => {
         });
 
         it('should have the legend text matching the category name', async () => {
-            const menu = await loader.getHarness(MatMenuHarness);
+            const menu = await unitTestingUtils.menu.get();
             await menu.open();
             fixture.detectChanges();
 

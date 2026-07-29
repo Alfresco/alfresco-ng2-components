@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,6 @@ import {
 import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { FullNamePipe, IconModule, InitialUsernamePipe } from '@alfresco/adf-core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ComponentSelectionMode } from '../../types';
 import { IdentityUserModel } from '../models/identity-user.model';
 import { MatFormFieldAppearance, MatFormFieldModule, SubscriptSizing } from '@angular/material/form-field';
@@ -69,12 +68,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     providers: [FullNamePipe],
     templateUrl: './people-cloud.component.html',
     styleUrls: ['./people-cloud.component.scss'],
-    animations: [
-        trigger('transitionMessages', [
-            state('enter', style({ opacity: 1, transform: 'translateY(0%)' })),
-            transition('void => enter', [style({ opacity: 0, transform: 'translateY(-100%)' }), animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')])
-        ])
-    ],
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
@@ -215,7 +208,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
     invalidUsers: IdentityUserModel[] = [];
 
     searchUsers$ = new BehaviorSubject<IdentityUserModel[]>(this.searchUsers);
-    subscriptAnimationState: string = 'enter';
     isFocused: boolean;
     touched: boolean = false;
 

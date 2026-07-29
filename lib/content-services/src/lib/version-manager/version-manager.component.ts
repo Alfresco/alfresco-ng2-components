@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { VersionListComponent } from './version-list.component';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ContentService } from '../common/services/content.service';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { FileUploadErrorEvent } from '../common/events/file.event';
@@ -33,14 +32,6 @@ import { TranslatePipe } from '@ngx-translate/core';
     imports: [CommonModule, VersionComparisonComponent, VersionUploadComponent, MatButtonModule, TranslatePipe, VersionListComponent],
     templateUrl: './version-manager.component.html',
     styleUrls: ['./version-manager.component.scss'],
-    animations: [
-        trigger('uploadToggle', [
-            state('open', style({ height: '175px', opacity: 1, visibility: 'visible' })),
-            state('close', style({ height: '0%', opacity: 0, visibility: 'hidden' })),
-            transition('open => close', [style({ visibility: 'hidden' }), animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)')]),
-            transition('close => open', [style({ visibility: 'visible' }), animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)')])
-        ])
-    ],
     encapsulation: ViewEncapsulation.None
 })
 export class VersionManagerComponent implements OnInit {

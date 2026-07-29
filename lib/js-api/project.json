@@ -89,11 +89,14 @@
       "dependsOn": ["build"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
+      "executor": "nx:run-commands",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "lib/js-api/jest.config.ts",
-        "passWithNoTests": true
+        "commands": [
+          {
+            "command": "TS_NODE_PROJECT=lib/js-api/tsconfig.spec.json TS_NODE_TRANSPILE_ONLY=true node --require ts-node/register --test 'lib/js-api/test/**/*.spec.ts'"
+          }
+        ]
       }
     }
   }

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -145,6 +145,13 @@ describe('SearchTextInputComponent', () => {
             fixture.detectChanges();
         });
 
+        it('should disable transitions when disableAnimations is true', () => {
+            component.disableAnimations = true;
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('.adf-search-container-transition.adf-search-no-animation')).toBeTruthy();
+        });
+
         /**
          * function which finds Search Button and clicks it
          */
@@ -164,7 +171,7 @@ describe('SearchTextInputComponent', () => {
         function testMarginValue(isLtr: boolean): void {
             userPreferencesService.setWithoutStore('textOrientation', isLtr ? 'ltr' : 'rtl');
             clickSearchButton();
-            const expectedResult = isLtr ? { 'margin-left': 0 } : { 'margin-right': 0 };
+            const expectedResult = isLtr ? { 'margin-left': '0px' } : { 'margin-right': '0px' };
             expect(component.subscriptAnimationState.params).toEqual(expectedResult);
             discardPeriodicTasks();
         }

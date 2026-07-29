@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,10 @@
  */
 
 export * from './edit-json/edit-json.dialog';
-export * from './edit-json/edit-json.dialog.module';
 
 export * from './unsaved-changes-dialog/unsaved-changes-dialog.component';
-export * from './unsaved-changes-dialog/unsaved-changes-dialog.module';
 export * from './unsaved-changes-dialog/unsaved-changes.guard';
 
 export * from './confirm-dialog/confirm.dialog';
-export * from './confirm-dialog/confirm.dialog.module';
 
 export * from './dialog';

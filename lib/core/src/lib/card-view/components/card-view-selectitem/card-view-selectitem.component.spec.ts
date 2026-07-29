@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,7 +99,7 @@ describe('CardViewSelectItemComponent', () => {
 
             component.ngOnChanges({});
             fixture.detectChanges();
-            const selectBox = await testingUtils.getMatSelectByDataAutomationId('select-box');
+            const selectBox = await testingUtils.select.getByDataAutomationId('select-box');
 
             expect(await selectBox.isDisabled()).toBe(true);
         });
@@ -117,7 +117,7 @@ describe('CardViewSelectItemComponent', () => {
             expect(component.property.value).toEqual('two');
             expect(component.isEditable).toBe(true);
 
-            const options = await testingUtils.getMatSelectOptions();
+            const options = await testingUtils.select.getOptions();
             expect(options.length).toEqual(4);
             await options[1].click();
 
@@ -137,7 +137,7 @@ describe('CardViewSelectItemComponent', () => {
             expect(component.property.value).toEqual(2);
             expect(component.isEditable).toBe(true);
 
-            const options = await testingUtils.getMatSelectOptions();
+            const options = await testingUtils.select.getOptions();
 
             expect(options.length).toEqual(4);
             await options[1].click();
@@ -157,7 +157,7 @@ describe('CardViewSelectItemComponent', () => {
 
             expect(component.isEditable).toBe(true);
 
-            const options = await testingUtils.getMatSelectOptions();
+            const options = await testingUtils.select.getOptions();
 
             expect(await options[0].getText()).toBe('CORE.CARDVIEW.NONE');
         });
@@ -167,7 +167,7 @@ describe('CardViewSelectItemComponent', () => {
             component.editable = true;
             fixture.detectChanges();
 
-            expect(await testingUtils.checkIfMatSelectExists()).toBe(true);
+            expect(await testingUtils.select.exists()).toBe(true);
         });
 
         it('should not have label twice', async () => {
@@ -175,7 +175,7 @@ describe('CardViewSelectItemComponent', () => {
             component.editable = true;
             fixture.detectChanges();
             const not_editable_label = testingUtils.getByCSS('.adf-property-label-not-editable');
-            const field = await testingUtils.getMatFormFieldByCSS('.adf-property-value');
+            const field = await testingUtils.formField.getByCSS('.adf-property-value');
 
             expect(await field.hasLabel()).toBeTrue();
             expect(not_editable_label).toBeFalsy();
@@ -186,7 +186,7 @@ describe('CardViewSelectItemComponent', () => {
             component.editable = true;
             fixture.detectChanges();
 
-            const selectBox = await testingUtils.getMatSelectByDataAutomationId('select-box');
+            const selectBox = await testingUtils.select.getByDataAutomationId('select-box');
             const host = await selectBox.host();
             expect(await host.getAttribute('aria-label')).toBe('Select box label');
         });
@@ -206,11 +206,11 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            let options = await testingUtils.getMatSelectOptions();
+            let options = await testingUtils.select.getOptions();
             expect(options.length).toBe(3);
 
             testingUtils.fillInputByCSS('.adf-select-filter-input input', mockData[0].label);
-            options = await testingUtils.getMatSelectOptions(true);
+            options = await testingUtils.select.getOptions(true);
             expect(options.length).toBe(1);
             expect(await options[0].getText()).toEqual(mockData[0].label);
         });
@@ -228,7 +228,7 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            await testingUtils.openMatSelect();
+            await testingUtils.select.open();
             const filterInput = testingUtils.getInputByCSS('.adf-select-filter-input input');
             expect(filterInput).toBeUndefined();
         });
@@ -246,7 +246,7 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            await testingUtils.openMatSelect();
+            await testingUtils.select.open();
 
             const filterInput = testingUtils.getInputByCSS('.adf-select-filter-input input');
             expect(filterInput).not.toBe(null);
@@ -341,7 +341,7 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            const options = await testingUtils.typeAndGetOptionsForMatAutoComplete(fixture, 'Op');
+            const options = await testingUtils.autocomplete.typeAndGetOptions(fixture, 'Op');
             expect(options.length).toBe(2);
             expect(await options[0].getText()).toContain('Option 1');
             expect(await options[1].getText()).toContain('Option 2');
@@ -378,7 +378,7 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            const options = await testingUtils.typeAndGetOptionsForMatAutoComplete(fixture, 'Option');
+            const options = await testingUtils.autocomplete.typeAndGetOptions(fixture, 'Option');
 
             expect(options.length).toBe(2);
             expect(await options[0].getText()).toContain('Option 1');
@@ -490,7 +490,7 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            const selectBox = await testingUtils.getMatSelectByDataAutomationId('select-box');
+            const selectBox = await testingUtils.select.getByDataAutomationId('select-box');
             expect(await selectBox.isMultiple()).toBe(true);
         });
 
@@ -500,7 +500,7 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            const options = await testingUtils.getMatSelectOptions();
+            const options = await testingUtils.select.getOptions();
             const optionTexts = await Promise.all(options.map((opt) => opt.getText()));
             const hasNoneOption = optionTexts.some((text) => text.includes('CORE.CARDVIEW.NONE'));
 
@@ -515,7 +515,7 @@ describe('CardViewSelectItemComponent', () => {
 
             expect(component.property.value).toEqual(['one']);
 
-            const options = await testingUtils.getMatSelectOptions();
+            const options = await testingUtils.select.getOptions();
             await options[1].click();
 
             expect(component.property.value).toContain('two');
@@ -548,7 +548,7 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({ property: new SimpleChange(null, component.property, true) } as SimpleChanges);
             fixture.detectChanges();
 
-            const options = await testingUtils.typeAndGetOptionsForMatAutoComplete(fixture, 'Option');
+            const options = await testingUtils.autocomplete.typeAndGetOptions(fixture, 'Option');
 
             expect(options.length).toBe(3);
 
@@ -584,7 +584,7 @@ describe('CardViewSelectItemComponent', () => {
             expect(component.property.value).toEqual(['option2']);
             expect(updateSpy).toHaveBeenCalledWith(jasmine.objectContaining(component.property), ['option2']);
 
-            const remainingChips = await testingUtils.getMatChips();
+            const remainingChips = await testingUtils.chip.getAll();
             expect(remainingChips.length).toBe(1);
         });
 

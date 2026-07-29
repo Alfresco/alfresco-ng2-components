@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,20 @@ interface AdaptedUser {
     lastName?: string;
 }
 
+interface CanonicalUser {
+    id?: string;
+    username: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+}
+
 interface AdaptedGroup {
+    name: string;
+}
+
+interface CanonicalGroup {
+    id?: string;
     name: string;
 }
 
@@ -102,7 +115,26 @@ export class FormFieldValueAdapterService {
 
     private toUser(entry: unknown): unknown {
         if (typeof entry !== 'string') {
-            return entry;
+            if (!entry || typeof entry !== 'object') {
+                return null;
+            }
+            const source = entry as Record<string, unknown>;
+            const username = this.toStringField(source['username'] ?? source['userName']);
+            const id = this.toStringField(source['id']);
+            const email = this.toStringField(source['email']);
+            const firstName = this.toStringField(source['firstName']);
+            const lastName = this.toStringField(source['lastName']);
+            if (!id && !username && !email) {
+                return null;
+            }
+            const user: CanonicalUser = {
+                ...(id !== undefined ? { id } : {}),
+                username: username ?? '',
+                ...(firstName !== undefined ? { firstName } : {}),
+                ...(lastName !== undefined ? { lastName } : {}),
+                ...(email !== undefined ? { email } : {})
+            };
+            return user;
         }
         const trimmed = entry.trim();
         if (this.isBlankToken(trimmed)) {
@@ -122,7 +154,20 @@ export class FormFieldValueAdapterService {
 
     private toGroup(entry: unknown): unknown {
         if (typeof entry !== 'string') {
-            return entry;
+            if (!entry || typeof entry !== 'object') {
+                return null;
+            }
+            const source = entry as Record<string, unknown>;
+            const name = this.toStringField(source['name']);
+            const id = this.toStringField(source['id']);
+            if (!name && !id) {
+                return null;
+            }
+            const group: CanonicalGroup = {
+                ...(id !== undefined ? { id } : {}),
+                name: name ?? ''
+            };
+            return group;
         }
         const trimmed = entry.trim();
         if (this.isBlankToken(trimmed)) {
@@ -134,6 +179,10 @@ export class FormFieldValueAdapterService {
 
     private isBlankToken(value: string): boolean {
         return value === '' || value === '[]' || value === '{}';
+    }
+
+    private toStringField(value: unknown): string | undefined {
+        return typeof value === 'string' && value.trim() !== '' ? value : undefined;
     }
 
     private toOptionId(entry: unknown): unknown {

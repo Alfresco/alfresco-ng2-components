@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
  */
 
 import { Component, Input, SecurityContext, inject } from '@angular/core';
-import { animate, style, transition, trigger } from '@angular/animations';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
@@ -24,13 +23,7 @@ import { CommonModule } from '@angular/common';
     selector: 'adf-tooltip-card-component',
     imports: [CommonModule],
     templateUrl: './tooltip-card.component.html',
-    styleUrls: ['./tooltip-card.component.scss'],
-    animations: [
-        trigger('tooltip', [
-            transition(':enter', [style({ opacity: 0 }), animate(200, style({ opacity: 1 }))]),
-            transition(':leave', [animate(200, style({ opacity: 0 }))])
-        ])
-    ]
+    styleUrls: ['./tooltip-card.component.scss']
 })
 export class TooltipCardComponent {
     private readonly sanitizer = inject(DomSanitizer);

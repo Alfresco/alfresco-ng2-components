@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ describe('CardViewTextItemComponent', () => {
 
     const expectedErrorMessages = [{ message: 'Something went wrong' } as CardViewItemValidator];
 
-    const getTextField = (key: string): Promise<MatInputHarness> => testingUtils.getMatInputByDataAutomationId(`card-textitem-value-${key}`);
+    const getTextField = (key: string): Promise<MatInputHarness> => testingUtils.input.getByDataAutomationId(`card-textitem-value-${key}`);
 
     const getTextFieldValue = async (key: string): Promise<string> => {
         const textField = await getTextField(key);
@@ -48,7 +48,7 @@ describe('CardViewTextItemComponent', () => {
     };
 
     const updateTextField = async (key: string, value: string) => {
-        await testingUtils.fillMatInputByDataAutomationId(`card-textitem-value-${key}`, value);
+        await testingUtils.input.fillByDataAutomationId(`card-textitem-value-${key}`, value);
         component.update();
         fixture.detectChanges();
     };
@@ -104,7 +104,7 @@ describe('CardViewTextItemComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const valueChips = await testingUtils.getMatChips();
+        const valueChips = await testingUtils.chip.getAll();
         expect(valueChips.length).toBe(length);
         expect(await valueChips[0].getText()).toBe(param1);
         expect(await valueChips[1].getText()).toBe(param2);
@@ -275,9 +275,7 @@ describe('CardViewTextItemComponent', () => {
 
             fixture.detectChanges();
             await fixture.whenStable();
-            const editIcon = await testingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId(
-                `card-textitem-clickable-icon-${component.property.key}`
-            );
+            const editIcon = await testingUtils.icon.existsWithAncestorByDataAutomationId(`card-textitem-clickable-icon-${component.property.key}`);
             expect(editIcon).toBeFalse();
         });
 
@@ -333,14 +331,14 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             expect(getTextFieldError('textkey')).toBe('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
-            let valueChips = await testingUtils.getMatChips();
+            let valueChips = await testingUtils.chip.getAll();
             expect(valueChips.length).toBe(3);
 
             component.addValueToList({ value: '22.1', chipInput: inputElement } as MatChipInputEvent);
             fixture.detectChanges();
 
             verifyNoErrors('textkey');
-            valueChips = await testingUtils.getMatChips();
+            valueChips = await testingUtils.chip.getAll();
             expect(valueChips.length).toBe(4);
         });
 
@@ -361,7 +359,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             expect(await getTextFieldValue(component.property.key)).toBe('item1,item2,item3');
-            expect(await testingUtils.checkIfMatChipGridExists()).toBe(false);
+            expect(await testingUtils.chipGrid.exists()).toBe(false);
         });
 
         it('should display the label for multi-valued chips', async () => {
@@ -437,9 +435,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editIcon = await testingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId(
-                `card-textitem-clickable-icon-${component.property.key}`
-            );
+            const editIcon = await testingUtils.icon.existsWithAncestorByDataAutomationId(`card-textitem-clickable-icon-${component.property.key}`);
             expect(editIcon).toBeFalse();
         });
 
@@ -452,9 +448,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editIcon = await testingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId(
-                `card-textitem-clickable-icon-${component.property.key}`
-            );
+            const editIcon = await testingUtils.icon.existsWithAncestorByDataAutomationId(`card-textitem-clickable-icon-${component.property.key}`);
             expect(editIcon).toBeFalse();
         });
 
@@ -468,7 +462,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editIcon = await testingUtils.getMatIconWithAncestorByDataAutomationId(`card-textitem-clickable-icon-${component.property.key}`);
+            const editIcon = await testingUtils.icon.getWithAncestorByDataAutomationId(`card-textitem-clickable-icon-${component.property.key}`);
             expect(editIcon).not.toBeNull();
             expect(await editIcon.getName()).toBe('FAKE_ICON');
         });
@@ -481,9 +475,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editIcon = await testingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId(
-                `card-textitem-clickable-icon-${component.property.key}`
-            );
+            const editIcon = await testingUtils.icon.existsWithAncestorByDataAutomationId(`card-textitem-clickable-icon-${component.property.key}`);
             expect(editIcon).toBeFalse();
         });
 
@@ -495,9 +487,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editIcon = await testingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId(
-                `card-textitem-clickable-icon-${component.property.key}`
-            );
+            const editIcon = await testingUtils.icon.existsWithAncestorByDataAutomationId(`card-textitem-clickable-icon-${component.property.key}`);
             expect(editIcon).toBeFalse();
         });
 
@@ -513,11 +503,35 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editIcon = await testingUtils.getMatIconWithAncestorByDataAutomationId(`card-textitem-clickable-icon-${component.property.key}`);
+            const editIcon = await testingUtils.icon.getWithAncestorByDataAutomationId(`card-textitem-clickable-icon-${component.property.key}`);
             expect(await editIcon.getName()).toBe('FAKE_ICON');
-            await testingUtils.clickMatIconWithAncestorByDataAutomationId(`card-textitem-clickable-icon-${component.property.key}`);
+            await testingUtils.icon.clickWithAncestorByDataAutomationId(`card-textitem-clickable-icon-${component.property.key}`);
             fixture.detectChanges();
             expect(callBackSpy).toHaveBeenCalled();
+        });
+
+        it('should call preventDefault on event when label of clickable input is clicked', () => {
+            component.property.clickable = true;
+            component.ngOnChanges({});
+            fixture.detectChanges();
+
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            spyOn(clickEvent, 'preventDefault');
+            testingUtils.getByDataAutomationId(`card-textitem-label-${component.property.key}`).nativeElement.dispatchEvent(clickEvent);
+            fixture.detectChanges();
+            expect(clickEvent.preventDefault).toHaveBeenCalled();
+        });
+
+        it('should call preventDefault on event when button wrapper of clickable input is clicked', () => {
+            component.property.clickable = true;
+            component.ngOnChanges({});
+            fixture.detectChanges();
+
+            const clickEvent = new MouseEvent('click');
+            spyOn(clickEvent, 'preventDefault');
+            testingUtils.getByDataAutomationId(`card-textitem-toggle-${component.property.key}`).nativeElement.dispatchEvent(clickEvent);
+            fixture.detectChanges();
+            expect(clickEvent.preventDefault).toHaveBeenCalled();
         });
 
         it('should click event to the event stream when clickable property enabled', async () => {
@@ -634,9 +648,7 @@ describe('CardViewTextItemComponent', () => {
             component.property.clickable = true;
             component.ngOnChanges({});
 
-            loader = TestbedHarnessEnvironment.loader(fixture);
-            testingUtils.setLoader(loader);
-            const inputHarness = await testingUtils.getMatInputByDataAutomationId(`card-textitem-value-${component.property.key}`);
+            const inputHarness = await testingUtils.input.getByDataAutomationId(`card-textitem-value-${component.property.key}`);
 
             expect(component.isEditable).toBe(false);
             expect(await inputHarness.isDisabled()).toBe(true);

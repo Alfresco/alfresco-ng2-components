@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,6 +49,7 @@ import { ConfirmDialogComponent } from '../../../lib/dialogs/confirm-dialog/conf
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { IconModule } from '../../icon/icon.module';
 import { FormLayoutColumn, getFormLayoutColumnWidth } from './helpers/column-width';
+import { RepeatableRowLabelPipe } from '../pipes/repeatable-row-label.pipe';
 
 @Component({
     selector: 'adf-form-renderer',
@@ -79,7 +80,8 @@ import { FormLayoutColumn, getFormLayoutColumnWidth } from './helpers/column-wid
         HeaderWidgetComponent,
         FormSectionComponent,
         RepeatWidgetComponent,
-        MatTooltipModule
+        MatTooltipModule,
+        RepeatableRowLabelPipe
     ],
     encapsulation: ViewEncapsulation.None
 })

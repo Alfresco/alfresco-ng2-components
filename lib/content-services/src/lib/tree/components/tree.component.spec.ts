@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,6 @@ import { SelectionChange } from '@angular/cdk/collections';
 import { DebugElement } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { TranslateService } from '@ngx-translate/core';
 
 describe('TreeComponent', () => {
@@ -49,7 +48,7 @@ describe('TreeComponent', () => {
 
     const getNodePadding = (nodeId: string) => parseInt(getComputedStyle(getNode(nodeId).nativeElement).paddingLeft, 10);
 
-    const getNodeSpinner = async (nodeId: string) => testingUtils.getMatProgressSpinnerWithAncestorByDataAutomationId(`node_${nodeId}`);
+    const getNodeSpinner = async (nodeId: string) => testingUtils.progressSpinner.getWithAncestorByDataAutomationId(`node_${nodeId}`);
 
     const clickExpandCollapseBtn = (nodeId: string) => testingUtils.clickByCSS(`${composeNodeSelector(nodeId)} .adf-tree-expand-collapse-button`);
 
@@ -138,7 +137,7 @@ describe('TreeComponent', () => {
         component.loadingRoot$ = of(true);
         fixture.detectChanges();
 
-        const matSpinnerElement = await testingUtils.getMatProgressSpinnerWithAncestorByCSS('.adf-tree-loading-spinner-container');
+        const matSpinnerElement = await testingUtils.progressSpinner.getWithAncestorByCSS('.adf-tree-loading-spinner-container');
         expect(await matSpinnerElement.getMode()).toBe('indeterminate');
     });
 
@@ -148,7 +147,7 @@ describe('TreeComponent', () => {
         component.collapseIcon = 'chevron_left';
         component.treeService.collapseNode(component.treeService.treeNodes[0]);
         fixture.detectChanges();
-        const icon = await testingUtils.getMatIconWithAncestorByCSS('.adf-tree-expand-collapse-button');
+        const icon = await testingUtils.icon.getWithAncestorByCSS('.adf-tree-expand-collapse-button');
         expect(await icon.getName()).toContain('folder');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(true);
         fixture.detectChanges();
@@ -324,7 +323,7 @@ describe('TreeComponent', () => {
     it('selection should be disabled by default, no checkboxes should be displayed', async () => {
         component.refreshTree();
         fixture.detectChanges();
-        const nodeCheckboxes = await loader.getAllHarnesses(MatCheckboxHarness);
+        const nodeCheckboxes = await testingUtils.checkbox.getAll();
 
         expect(nodeCheckboxes.length).toEqual(0);
         expect(component.selectableNodes).toEqual(false);
@@ -338,7 +337,7 @@ describe('TreeComponent', () => {
         it('should display checkboxes when selection is enabled', async () => {
             component.refreshTree();
             fixture.detectChanges();
-            const nodeCheckboxes = await loader.getAllHarnesses(MatCheckboxHarness);
+            const nodeCheckboxes = await testingUtils.checkbox.getAll();
             const selectableNodes = component.treeService.treeNodes.filter((node: TreeNode) => node.nodeType !== TreeNodeType.LoadMoreNode);
             expect(nodeCheckboxes.length).toEqual(selectableNodes.length);
         });
@@ -577,7 +576,7 @@ describe('TreeComponent', () => {
             component.contextMenuOptions = [contextMenuOption1, contextMenuOption2];
             fixture.detectChanges();
 
-            const menu = await testingUtils.getMatMenuByCSS('#action_menu_right_testId1');
+            const menu = await testingUtils.menu.getByCSS('#action_menu_right_testId1');
             await menu.open();
             expect(await menu.isOpen()).toBeTrue();
             expect(component.contextMenuOptions.length).toEqual(2);

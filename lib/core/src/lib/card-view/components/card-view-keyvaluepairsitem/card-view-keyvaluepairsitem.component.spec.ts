@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,7 +84,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            await testingUtils.clickMatButtonByDataAutomationId('card-key-value-pairs-button-key-value-pairs');
+            await testingUtils.button.clickByDataAutomationId('card-key-value-pairs-button-key-value-pairs');
             fixture.detectChanges();
 
             expect(JSON.stringify(component.values)).toBe(JSON.stringify(mockEmptyData));
@@ -103,10 +103,10 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            await testingUtils.clickMatButtonByDataAutomationId('card-key-value-pairs-button-key-value-pairs');
+            await testingUtils.button.clickByDataAutomationId('card-key-value-pairs-button-key-value-pairs');
             fixture.detectChanges();
 
-            await testingUtils.clickMatButtonByCSS('.adf-property-col-delete');
+            await testingUtils.button.clickByCSS('.adf-property-col-delete');
             fixture.detectChanges();
 
             expect(component.values.length).toBe(0);

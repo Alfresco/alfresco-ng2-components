@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,9 +73,10 @@ export class CustomResourcesService {
      * @param personId ID of the user
      * @param pagination Specifies how to paginate the results
      * @param filters Specifies additional filters to apply (joined with **AND**)
+     * @param includeFields List of data field names to include in the results
      * @returns List of nodes for the recently used files
      */
-    getRecentFiles(personId: string, pagination: PaginationModel, filters?: string[]): Observable<ResultSetPaging> {
+    getRecentFiles(personId: string, pagination: PaginationModel, filters?: string[], includeFields: string[] = []): Observable<ResultSetPaging> {
         const defaultFilter = [
             'TYPE:"content"',
             '-PATH:"//cm:wiki/*"',
@@ -121,7 +122,7 @@ export class CustomResourcesService {
                             language: SEARCH_LANGUAGE.AFTS
                         },
                         filterQueries,
-                        include: ['path', 'properties', 'allowableOperations', 'aspectNames'],
+                        include: [...new Set(['path', 'properties', 'allowableOperations', 'aspectNames', ...includeFields])],
                         sort: [
                             {
                                 type: 'FIELD',
@@ -380,7 +381,7 @@ export class CustomResourcesService {
         } else if (nodeId === '-favorites-') {
             return this.loadFavorites(pagination, includeFields, where);
         } else if (nodeId === '-recent-') {
-            return this.getRecentFiles('-me-', pagination, filters);
+            return this.getRecentFiles('-me-', pagination, filters, includeFields);
         } else {
             return of(null);
         }

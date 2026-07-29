@@ -8,6 +8,17 @@
         align-items: center;
     }
 
+    .adf-input-form-field-divider {
+        transition:
+            transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1),
+            margin-left 400ms cubic-bezier(0.25, 0.8, 0.25, 1),
+            margin-right 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .adf-search-no-animation .adf-input-form-field-divider {
+        transition: none;
+    }
+
     .adf {
         &-search-fixed-text {
             line-height: normal;

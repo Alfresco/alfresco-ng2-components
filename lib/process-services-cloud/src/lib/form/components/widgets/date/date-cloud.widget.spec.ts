@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -470,7 +470,7 @@ describe('DateCloudWidgetComponent', () => {
 
         it('should be able to display label with asterisk', async () => {
             fixture.detectChanges();
-            const formField = await testingUtils.getMatFormField();
+            const formField = await testingUtils.formField.get();
             const formControl = await formField.getControl();
 
             expect(formControl.isRequired).toBeTruthy();
@@ -557,7 +557,7 @@ describe('DateCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            await testingUtils.fillMatInput('25-03-2025');
+            await testingUtils.input.fill('25-03-2025');
 
             expect(field.value).toEqual(jasmine.any(Date));
             expect(field.value.getFullYear()).toBe(2025);
@@ -578,7 +578,7 @@ describe('DateCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            await testingUtils.fillMatInput('03-25-2025');
+            await testingUtils.input.fill('03-25-2025');
 
             expect(field.value).toEqual(jasmine.any(Date));
             expect(field.value.getFullYear()).toBe(2025);
@@ -599,7 +599,7 @@ describe('DateCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            await testingUtils.fillMatInput('03/25/2025');
+            await testingUtils.input.fill('03/25/2025');
 
             expect(widget.dateInputControl.invalid).toBeTrue();
             expect(field.isValid).toBeFalse();
@@ -620,12 +620,12 @@ describe('DateCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            await testingUtils.fillMatInput('invalid-text');
+            await testingUtils.input.fill('invalid-text');
 
             expect(widget.dateInputControl.invalid).toBeTrue();
             expect(field.isValid).toBeFalse();
 
-            await testingUtils.fillMatInput('');
+            await testingUtils.input.fill('');
 
             expect(widget.dateInputControl.valid).toBeTrue();
             expect(field.isValid).toBeTrue();

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,7 +70,7 @@ describe('MultilineTextWidgetComponentComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const host = await testingUtils.getMatInputHost();
+            const host = await testingUtils.input.getHost();
             await host.hover();
 
             const tooltip = await host.getAttribute('title');
@@ -122,12 +122,12 @@ describe('MultilineTextWidgetComponentComponent', () => {
         it('should be marked as invalid after interaction', async () => {
             expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
 
-            await testingUtils.blurMatInput();
+            await testingUtils.input.blur();
             expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
         });
 
         it('should be able to display label with asterisk and input field is required', async () => {
-            const formField = await testingUtils.getMatFormField();
+            const formField = await testingUtils.formField.get();
             const formControl = await formField.getControl();
 
             expect(formControl.isRequired).toBeTruthy();
@@ -179,7 +179,7 @@ describe('MultilineTextWidgetComponentComponent - ADF_CUSTOM_MESSAGE', () => {
                 });
                 fixture.detectChanges();
 
-                await testingUtils.fillMatInput('invalid text');
+                await testingUtils.input.fill('invalid text');
                 expect(widget.field.isValid).toBeFalse();
                 expect(widget.field.validationSummary.message).toBe('Only numbers are allowed');
             });
@@ -219,7 +219,7 @@ describe('MultilineTextWidgetComponentComponent - ADF_CUSTOM_MESSAGE', () => {
                 });
                 fixture.detectChanges();
 
-                await testingUtils.fillMatInput('invalid text');
+                await testingUtils.input.fill('invalid text');
                 expect(widget.field.isValid).toBeFalse();
                 expect(widget.field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_VALUE');
             });
@@ -324,7 +324,7 @@ describe('MultilineTextWidgetComponentComponent - ADF_CUSTOM_MESSAGE', () => {
             });
             fixture.detectChanges();
 
-            await testingUtils.fillMatInput('invalid text');
+            await testingUtils.input.fill('invalid text');
             expect(widget.field.isValid).toBeFalse();
             expect(widget.field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_VALUE');
         });

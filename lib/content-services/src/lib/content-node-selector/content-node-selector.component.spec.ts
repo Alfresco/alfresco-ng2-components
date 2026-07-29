@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatTabGroupHarness } from '@angular/material/tabs/testing';
 import { NoopAuthModule } from '@alfresco/adf-core';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
@@ -61,6 +62,7 @@ describe('ContentNodeSelectorComponent', () => {
         TestBed.configureTestingModule({
             imports: [NoopAuthModule, ContentNodeSelectorComponent],
             providers: [
+                provideNoopAnimations(),
                 { provide: MAT_DIALOG_DATA, useValue: data },
                 {
                     provide: MatDialogRef,
@@ -127,7 +129,9 @@ describe('ContentNodeSelectorComponent', () => {
         const tabGroup = await loader.getHarness(MatTabGroupHarness.with({ selector: '.adf-content-node-selector-dialog-content' }));
         const tabToSelect = (await tabGroup.getTabs())[tabIndex];
 
-        return tabToSelect.select();
+        await tabToSelect.select();
+        fixture.detectChanges();
+        await fixture.whenStable();
     };
 
     describe('Data injecting with the "Material dialog way"', () => {

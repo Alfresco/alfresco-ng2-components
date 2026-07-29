@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,12 +48,6 @@ describe('ErrorWidgetComponent', () => {
 
         const errorIcon = testingUtils.getByCSS('.adf-error-icon').nativeElement.textContent;
         expect(errorIcon).toEqual('error_outline');
-    });
-
-    it('should set subscriptAnimationState value', () => {
-        widget.ngOnChanges(errorChanges);
-
-        expect(widget.subscriptAnimationState).toEqual('enter');
     });
 
     it('should check proper error message', async () => {

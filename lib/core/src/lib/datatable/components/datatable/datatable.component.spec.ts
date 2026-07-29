@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1546,14 +1546,14 @@ describe('DataTable', () => {
             dataTable.displayCheckboxesOnHover = false;
             fixture.detectChanges();
 
-            expect(await testingUtils.checkIfMatCheckboxesHaveClass('adf-datatable-hover-only')).toBeTrue();
+            expect(await testingUtils.checkbox.allHaveClass('adf-datatable-hover-only')).toBeTrue();
         });
 
         it('should display checkboxes on hover when displayCheckboxesOnHover is set to true', async () => {
             dataTable.displayCheckboxesOnHover = true;
             fixture.detectChanges();
 
-            expect(await testingUtils.checkIfMatCheckboxesHaveClass('adf-datatable-hover-only')).toBeTrue();
+            expect(await testingUtils.checkbox.allHaveClass('adf-datatable-hover-only')).toBeTrue();
         });
     });
 

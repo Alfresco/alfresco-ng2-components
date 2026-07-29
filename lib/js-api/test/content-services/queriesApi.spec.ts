@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,17 @@
  */
 
 import assert from 'assert';
+import { resetGlobalMockAgent } from '../mockObjects/base.mock';
 import { AlfrescoApi, QueriesApi } from '../../src';
 import { EcmAuthMock, FindNodesMock } from '../mockObjects';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 
 describe('Queries', () => {
     let authResponseMock: EcmAuthMock;
     let nodesMock: FindNodesMock;
     let queriesApi: QueriesApi;
 
-    beforeEach((done) => {
+    beforeEach(async () => {
         const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
@@ -36,11 +38,13 @@ describe('Queries', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(() => {
-            done();
-        });
+        await alfrescoJsApi.login('admin', 'admin');
 
         queriesApi = new QueriesApi(alfrescoJsApi);
+    });
+
+    afterEach(() => {
+        resetGlobalMockAgent();
     });
 
     describe('nodes', () => {
@@ -52,26 +56,24 @@ describe('Queries', () => {
             }, `Error: Missing param 'term'`);
         });
 
-        it('should invoke error handler on a server error', (done) => {
+        it('should invoke error handler on a server error', async () => {
             nodesMock.get401Response();
 
-            queriesApi.findNodes(searchTerm).then(
-                () => {},
-                () => {
-                    done();
-                }
-            );
+            try {
+                await queriesApi.findNodes(searchTerm);
+                assert.fail('Expected findNodes to throw error on 401 response');
+            } catch (error: any) {
+                assert.equal(error.status, 401, 'Error should have 401 status');
+            }
         });
 
-        it('should return query results', (done) => {
+        it('should return query results', async () => {
             nodesMock.get200Response();
 
-            queriesApi.findNodes(searchTerm).then((data) => {
-                assert.equal(data.list.pagination.count, 2);
-                assert.equal(data.list.entries[0].entry.name, 'coins1.JPG');
-                assert.equal(data.list.entries[1].entry.name, 'coins2.JPG');
-                done();
-            });
+            const data = await queriesApi.findNodes(searchTerm);
+            assert.equal(data.list.pagination.count, 2);
+            assert.equal(data.list.entries[0].entry.name, 'coins1.JPG');
+            assert.equal(data.list.entries[1].entry.name, 'coins2.JPG');
         });
     });
 });

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,9 @@ import {
     FavoritePagingList,
     NodeEntry,
     NodePaging,
+    Person,
+    PersonEntry,
+    ResultSetPaging,
     Site,
     SiteEntry,
     SiteMember,
@@ -194,7 +197,57 @@ describe('CustomResourcesService', () => {
             spyOn(customResourcesService, 'getRecentFiles').and.stub();
 
             customResourcesService.loadFolderByNodeId('-recent-', pagination, ['include'], 'where', ['filters']);
-            expect(customResourcesService.getRecentFiles).toHaveBeenCalledWith('-me-', pagination, ['filters']);
+            expect(customResourcesService.getRecentFiles).toHaveBeenCalledWith('-me-', pagination, ['filters'], ['include']);
+        });
+    });
+
+    describe('getRecentFiles', () => {
+        const pagination: PaginationModel = { maxItems: 100, skipCount: 0 };
+
+        beforeEach(() => {
+            spyOn(customResourcesService.peopleApi, 'getPerson').and.returnValue(
+                Promise.resolve(new PersonEntry({ entry: new Person({ id: 'user' }) }))
+            );
+        });
+
+        it('should pass includeFields through to the search request, keeping the defaults', (done) => {
+            const searchSpy = spyOn(customResourcesService.searchApi, 'search').and.returnValue(Promise.resolve(new ResultSetPaging()));
+
+            customResourcesService.getRecentFiles('-me-', pagination, undefined, ['isFavorite']).subscribe(() => {
+                expect(searchSpy).toHaveBeenCalledTimes(1);
+                expect(searchSpy.calls.mostRecent().args[0].include).toEqual([
+                    'path',
+                    'properties',
+                    'allowableOperations',
+                    'aspectNames',
+                    'isFavorite'
+                ]);
+                done();
+            });
+        });
+
+        it('should keep the default include fields when no includeFields are provided', (done) => {
+            const searchSpy = spyOn(customResourcesService.searchApi, 'search').and.returnValue(Promise.resolve(new ResultSetPaging()));
+
+            customResourcesService.getRecentFiles('-me-', pagination).subscribe(() => {
+                expect(searchSpy.calls.mostRecent().args[0].include).toEqual(['path', 'properties', 'allowableOperations', 'aspectNames']);
+                done();
+            });
+        });
+
+        it('should not duplicate an includeField that is already a default', (done) => {
+            const searchSpy = spyOn(customResourcesService.searchApi, 'search').and.returnValue(Promise.resolve(new ResultSetPaging()));
+
+            customResourcesService.getRecentFiles('-me-', pagination, undefined, ['properties', 'isFavorite']).subscribe(() => {
+                expect(searchSpy.calls.mostRecent().args[0].include).toEqual([
+                    'path',
+                    'properties',
+                    'allowableOperations',
+                    'aspectNames',
+                    'isFavorite'
+                ]);
+                done();
+            });
         });
     });
 

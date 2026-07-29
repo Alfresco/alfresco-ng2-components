@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -158,7 +158,7 @@ describe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const currentOptions = await testingUtils.getMatSelectOptions();
+        const currentOptions = await testingUtils.select.getOptions();
         expect(currentOptions.length).toBe(3);
         expect(await currentOptions[0].getText()).toContain('CORE.CARDVIEW.NONE');
         expect(await currentOptions[1].getText()).toContain(options[0].label);
@@ -187,7 +187,7 @@ describe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const currentOptions = await testingUtils.getMatSelectOptions();
+        const currentOptions = await testingUtils.select.getOptions();
         expect(currentOptions.length).toBe(3);
         expect(await currentOptions[0].getText()).toContain('CORE.CARDVIEW.NONE');
         expect(await currentOptions[1].getText()).toContain(options[0].label);
@@ -216,7 +216,7 @@ describe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const currentOptions = await testingUtils.getMatSelectOptions();
+        const currentOptions = await testingUtils.select.getOptions();
         expect(currentOptions.length).toBe(2);
         expect(await currentOptions[0].getText()).toContain(options[0].label);
         expect(await currentOptions[1].getText()).toContain(options[1].label);

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -292,7 +292,7 @@ describe('AdfHttpClient', () => {
         req.flush(null, { status: 200, statusText: 'Ok' });
     });
 
-    it('should correctly decode types to string', () => {
+    it('should correctly decode types to string', (done) => {
         const options: RequestOptions = {
             path: '',
             httpMethod: 'POST',
@@ -301,7 +301,13 @@ describe('AdfHttpClient', () => {
             }
         };
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch((error) => fail(error));
+        angularHttpClient
+            .request('http://example.com', options, securityOptions, emitters)
+            .then((res) => {
+                expect(res).toEqual('');
+                done();
+            })
+            .catch((error) => done.fail(error));
 
         const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000%2B02%3A00');
 
