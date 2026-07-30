@@ -26,7 +26,7 @@ import { ContentMetadataConfigFactory } from './config/content-metadata-config.f
 import { PropertyDescriptorsService } from './property-descriptors.service';
 import { map, switchMap } from 'rxjs/operators';
 import { ContentTypePropertiesService } from './content-type-property.service';
-import { LayoutOrientedConfigLayoutBlock } from '../interfaces/layout-oriented-config.interface';
+import { LayoutOrientedConfig, LayoutOrientedConfigLayoutBlock } from '../interfaces/layout-oriented-config.interface';
 import { Property } from '../interfaces/property.interface';
 
 interface LayoutBlockWithReadOnly extends LayoutOrientedConfigLayoutBlock {
@@ -72,7 +72,7 @@ export class ContentMetadataService {
     private getReadOnlyPropertyNames(preset: string | PresetConfig): string[] {
         const presetConfig = typeof preset === 'string' ? this.appConfig.config[CONTENT_METADATA_CONFIG_KEY]?.presets?.[preset] : preset;
 
-        if (Array.isArray(presetConfig)) {
+        if (this.isLayoutConfig(presetConfig)) {
             return presetConfig.reduce((readOnly, block) => readOnly.concat(this.getLayoutBlockReadOnlyNames(block)), [] as string[]);
         }
 
@@ -81,6 +81,10 @@ export class ContentMetadataService {
         }
 
         return [];
+    }
+
+    private isLayoutConfig(config: unknown): config is LayoutOrientedConfig {
+        return Array.isArray(config);
     }
 
     private getLayoutBlockReadOnlyNames(block: LayoutBlockWithReadOnly): string[] {
