@@ -126,7 +126,7 @@ export default [
     {
         files: ['**/*.ts', '**/*.js', '**/*.mjs'],
         ignores: ['!**/*.d.ts', '!**/*.spec.ts'],
-        ...jsdoc.configs['flat/recommended-typescript-error'],  // sets plugins.jsdoc + rules
+        ...jsdoc.configs['flat/recommended-typescript-error'],
     },
     {
         files: ['**/*.ts', '!**/*.d.ts'],
@@ -326,13 +326,6 @@ export default [
             '@alfresco/eslint-angular/no-angular-material-selectors': 'error',
             '@angular-eslint/component-class-suffix': 'off'
         }
-    },
-    {
-        files: ['*.ts'],
-        ignores: ['**/*.spec.ts'],
-        ...compat.extends(
-            'plugin:@angular-eslint/template/process-inline-templates'
-        )[0],
     },
     {
         files: ['*.json'],
