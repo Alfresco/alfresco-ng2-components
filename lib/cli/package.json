@@ -23,7 +23,6 @@
   },
   "dependencies": {
     "@alfresco/js-api": ">=10.0.0",
-    "node-fetch": "^2.7.0",
     "spdx-license-list": "^5.0.0"
   },
   "keywords": [
