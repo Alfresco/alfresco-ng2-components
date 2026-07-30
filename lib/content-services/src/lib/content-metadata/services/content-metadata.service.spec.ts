@@ -222,9 +222,9 @@ describe('ContentMetaDataService', () => {
         const titleProperty = res.find((property) => property.key === 'properties.cm:title');
         const authorProperty = res.find((property) => property.key === 'properties.cm:author');
 
-        expect(nameProperty.editable).toBe(false);
-        expect(titleProperty.editable).toBe(false);
-        expect(authorProperty.editable).toBe(true);
+        expect(nameProperty.editable).toBeFalse();
+        expect(titleProperty.editable).toBeFalse();
+        expect(authorProperty.editable).toBeTrue();
     });
 
     it('should mark basic properties as read-only when layout items are not editable', async () => {
@@ -243,10 +243,10 @@ describe('ContentMetaDataService', () => {
         const descriptionProperty = res.find((property) => property.key === 'properties.cm:description');
         const authorProperty = res.find((property) => property.key === 'properties.cm:author');
 
-        expect(nameProperty.editable).toBe(false);
-        expect(titleProperty.editable).toBe(false);
-        expect(descriptionProperty.editable).toBe(false);
-        expect(authorProperty.editable).toBe(true);
+        expect(nameProperty.editable).toBeFalse();
+        expect(titleProperty.editable).toBeFalse();
+        expect(descriptionProperty.editable).toBeFalse();
+        expect(authorProperty.editable).toBeTrue();
     });
 
     it('should return the content type property', () => {

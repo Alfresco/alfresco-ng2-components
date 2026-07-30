@@ -299,6 +299,18 @@ describe('ContentMetadataComponent', () => {
             expect(contentMetadataService.getGroupedProperties).toHaveBeenCalled();
         }));
 
+        it('should pass preset to getBasicProperties when calling getProperties', fakeAsync(() => {
+            component.preset = 'custom-preset';
+            component.node = node;
+            const getBasicPropertiesSpy = spyOn(contentMetadataService, 'getBasicProperties').and.returnValue(of([]));
+            getGroupedPropertiesSpy.and.returnValue(of([]));
+
+            component.ngOnChanges({ node: new SimpleChange(null, node, true) });
+            tick(600);
+
+            expect(getBasicPropertiesSpy).toHaveBeenCalledWith(node, 'custom-preset');
+        }));
+
         describe('Save button - Grouped Properties', () => {
             beforeEach(() => {
                 getGroupedPropertiesSpy.and.returnValue(

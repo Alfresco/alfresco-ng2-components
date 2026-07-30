@@ -26,6 +26,12 @@ import { ContentMetadataConfigFactory } from './config/content-metadata-config.f
 import { PropertyDescriptorsService } from './property-descriptors.service';
 import { map, switchMap } from 'rxjs/operators';
 import { ContentTypePropertiesService } from './content-type-property.service';
+import { LayoutOrientedConfigLayoutBlock } from '../interfaces/layout-oriented-config.interface';
+import { Property } from '../interfaces/property.interface';
+
+interface LayoutBlockWithReadOnly extends LayoutOrientedConfigLayoutBlock {
+    readOnlyProperties?: string | string[];
+}
 
 const CONTENT_METADATA_CONFIG_KEY = 'content-metadata';
 const BASIC_PROPERTY_KEY_PREFIX = 'properties.';
@@ -77,7 +83,7 @@ export class ContentMetadataService {
         return [];
     }
 
-    private getLayoutBlockReadOnlyNames(block: any): string[] {
+    private getLayoutBlockReadOnlyNames(block: LayoutBlockWithReadOnly): string[] {
         const blockReadOnly = this.normaliseToArray(block?.readOnlyProperties);
         const nonEditableItems = (block?.items || [])
             .filter((item) => item?.editable === false)
@@ -86,9 +92,9 @@ export class ContentMetadataService {
         return blockReadOnly.concat(nonEditableItems);
     }
 
-    private normaliseToArray(value: string | string[] | undefined): string[] {
+    private normaliseToArray(value: string | string[] | Property[] | undefined): string[] {
         if (Array.isArray(value)) {
-            return value.filter((item) => typeof item === 'string');
+            return value.map((item) => (typeof item === 'string' ? item : item?.name)).filter((name): name is string => typeof name === 'string');
         }
         return typeof value === 'string' ? [value] : [];
     }
