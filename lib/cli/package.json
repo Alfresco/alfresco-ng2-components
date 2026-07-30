@@ -17,14 +17,12 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "develop": "tsc -p tsconfig.json --watch",
-    "dist": "rm -rf ../../dist/libs/cli && npm run build && cp -R ./bin ../../dist/libs/cli && cp -R ./resources ../../dist/libs/cli && cp -R ./templates ../../dist/libs/cli && cp ./package.json ../../dist/libs/cli",
+    "dist": "rm -rf ../../dist/libs/cli && npm run build && cp -R ./bin ../../dist/libs/cli && cp -R ./resources ../../dist/libs/cli && cp ./package.json ../../dist/libs/cli",
     "link": "npm run dist && cd ../../dist/libs/cli && npm link",
     "unlink": "cd ../../dist/libs/cli && npm unlink"
   },
   "dependencies": {
     "@alfresco/js-api": ">=10.0.0",
-    "ejs": "^3.1.10",
-    "node-fetch": "^2.7.0",
     "spdx-license-list": "^5.0.0"
   },
   "keywords": [
@@ -32,7 +30,6 @@
   ],
   "license": "Apache-2.0",
   "devDependencies": {
-    "@types/ejs": "^3.1.2",
     "@types/node": "^20.1.7",
     "typescript": "^4.9.5"
   }
