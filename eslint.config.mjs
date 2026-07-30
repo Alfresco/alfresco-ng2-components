@@ -28,7 +28,7 @@ import prettier from 'eslint-plugin-prettier';
 import ban from 'eslint-plugin-ban';
 import licenseHeader from 'eslint-plugin-license-header';
 import cspell from '@cspell/eslint-plugin';
-import importPlugin from 'eslint-plugin-import'
+import importPlugin from 'eslint-plugin-import';
 import storybook from 'eslint-plugin-storybook';
 import nxPlugin from '@nx/eslint-plugin';
 import angularEslintEslintPlugin from '@angular-eslint/eslint-plugin';
@@ -51,44 +51,25 @@ export default [
         ignores: [
             '.angular',
             '.DS_Store',
-            '.env',
-            '.env.*',
             '.github',
             '.history',
             '.husky',
-            '.idea/',
-            '.ng_pkg_build/',
             '.nx',
             '.storybook',
             '.vscode',
-            '*.iml',
-            '*.log',
-            '/angular.json',
-            '/reports/',
-            'bundles',
             'coverage',
-            'desktop.ini',
             'dist',
             '**/docs',
-            'e2e-result-*',
-            'lib/core/src/lib/icon',
-            'lib/eslint-angular/dist/',
-            'lib/js-api/docs/**/*.md',
-            'licenses.txt',
-            'node_modules',
             'nxcache',
             '.nx',
-            'out-tsc',
+            'tmp',
             'projects/**/*',
             '**/node_modules/**/*',
             'lib/cli/node_modules/**/*',
+            '**/node_modules',
             '**/assets',
             '/scripts',
-            'temp',
-            'tmp',
-            'webpack.config.js',
-            '.cursor/rules/nx-rules.mdc',
-            '.github/instructions/nx.instructions.md'
+            '**/docs'
         ]
     },
     unicorn.configs['recommended'],
@@ -126,7 +107,7 @@ export default [
     {
         files: ['**/*.ts', '**/*.js', '**/*.mjs'],
         ignores: ['**/*.d.ts', '**/*.spec.ts'],
-        ...jsdoc.configs['flat/recommended-typescript-error'],
+        ...jsdoc.configs['flat/recommended-typescript-error']
     },
     {
         files: ['**/*.ts'],
@@ -136,17 +117,17 @@ export default [
             'plugin:@nx/angular',
             'plugin:@cspell/recommended',
             'plugin:@angular-eslint/recommended',
-            'plugin:@angular-eslint/template/process-inline-templates',
+            'plugin:@angular-eslint/template/process-inline-templates'
         )[0],
         plugins: {
             '@nx': nxPlugin,
-            'rxjs': fixupPluginRules(rxjs),
-            'prettier': prettier,
-            'ban': ban,
+            rxjs: fixupPluginRules(rxjs),
+            prettier: prettier,
+            ban: ban,
             '@cspell': cspell,
-            'import': importPlugin,
+            import: importPlugin,
             '@angular-eslint': angularEslintEslintPlugin,
-            '@typescript-eslint': typescriptEslint,
+            '@typescript-eslint': typescriptEslint
         },
         languageOptions: {
             parser: tsParser,
@@ -154,8 +135,8 @@ export default [
                 projectService: true,
                 allowDefaultProject: true,
                 tsconfigRootDir: __dirname,
-                sourceType: 'module',
-            },
+                sourceType: 'module'
+            }
         },
         rules: {
             'prettier/prettier': 'error',
@@ -309,7 +290,9 @@ export default [
     {
         files: ['**/*.html'],
         ...compat.extends(
-            'plugin:@angular-eslint/template/recommended', 'plugin:@angular-eslint/template/accessibility', 'plugin:@nx/angular-template'
+            'plugin:@angular-eslint/template/recommended',
+            'plugin:@angular-eslint/template/accessibility',
+            'plugin:@nx/angular-template'
         )[0],
         languageOptions: {
             parser: angularTemplateParser
@@ -351,5 +334,5 @@ export default [
                 sourceType: 'module'
             }
         }
-    },
+    }
 ];
