@@ -34,6 +34,7 @@ import nxPlugin from '@nx/eslint-plugin';
 import angularEslintEslintPlugin from '@angular-eslint/eslint-plugin';
 import angularTemplateParser from '@angular-eslint/template-parser';
 import tsParser from '@typescript-eslint/parser';
+import jsonParser from 'jsonc-eslint-parser';
 import alfrescoEslintAngular from './lib/eslint-angular/main.js';
 import jsdoc from 'eslint-plugin-jsdoc';
 
@@ -313,7 +314,9 @@ export default [
     },
     {
         files: ['**/*.json'],
-        parser: 'jsonc-eslint-parser',
+        languageOptions: {
+            parser: jsonParser
+        },
         rules: {
             'comma-dangle': ['error', 'never']
         }
