@@ -197,7 +197,7 @@ export default [
                         'accessor',
                         'enumMember'
                     ],
-                    format: null,
+                    format: undefined,
                     modifiers: ['requiresQuotes']
                 }
             ],
