@@ -125,12 +125,12 @@ export default [
     },
     {
         files: ['**/*.ts', '**/*.js', '**/*.mjs'],
-        ignores: ['!**/*.d.ts', '!**/*.spec.ts'],
+        ignores: ['**/*.d.ts', '**/*.spec.ts'],
         ...jsdoc.configs['flat/recommended-typescript-error'],
     },
     {
-        files: ['**/*.ts', '!**/*.d.ts'],
-        ignores: ['**/*.mjs'],
+        files: ['**/*.ts'],
+        ignores: ['**/*.d.ts', '**/*.mjs'],
         ...compat.extends(
             'plugin:@nx/typescript',
             'plugin:@nx/angular',
@@ -306,7 +306,7 @@ export default [
         }
     },
     {
-        files: ['*.html'],
+        files: ['**/*.html'],
         ...compat.extends(
             'plugin:@angular-eslint/template/recommended', 'plugin:@angular-eslint/template/accessibility', 'plugin:@nx/angular-template'
         )[0],
@@ -318,7 +318,7 @@ export default [
         }
     },
     {
-        files: ['*.spec.ts'],
+        files: ['**/*.spec.ts'],
         plugins: {
             '@alfresco/eslint-angular': alfrescoEslintAngular
         },
@@ -328,7 +328,7 @@ export default [
         }
     },
     {
-        files: ['*.json'],
+        files: ['**/*.json'],
         parser: 'jsonc-eslint-parser',
         rules: {
             'comma-dangle': ['error', 'never']
@@ -350,6 +350,5 @@ export default [
                 sourceType: 'module'
             }
         }
-
     },
 ];
