@@ -1,5 +1,5 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import { defineConfig, globalIgnores } from '@eslint/config-helpers';
 import { FlatCompat } from '@eslint/eslintrc';
@@ -12,260 +12,12 @@ import ban from 'eslint-plugin-ban';
 import licenseHeader from 'eslint-plugin-license-header';
 import cspell from '@cspell/eslint-plugin';
 import importPlugin from 'eslint-plugin-import'
+import storybook from 'eslint-plugin-storybook';
 import angularEslintEslintPlugin from '@angular-eslint/eslint-plugin';
 import angularTemplateParser from '@angular-eslint/template-parser';
 import tsParser from '@typescript-eslint/parser';
 import alfrescoEslintAngular from './lib/eslint-angular/main.js';
-// import jsDock from 'jsdoc/recommended-typescript-error';
-
-// const legacyConfig = {
-//     root: true,
-
-//     ignorePatterns: ['projects/**/*', '**/node_modules/**/*', 'lib/cli/node_modules/**/*', '**/node_modules', '**/assets', '**/scripts', '**/docs'],
-
-//     plugins: ['@nx'],
-
-//     overrides: [
-//         {
-//             files: ['*.ts'],
-//             parserOptions: {
-//                 project: ['tsconfig.json'],
-//                 createDefaultProgram: true
-//             },
-//             extends: [
-//                 'plugin:@nx/typescript',
-//                 'plugin:@nx/angular',
-//                 'plugin:@cspell/recommended',
-//                 'plugin:@angular-eslint/recommended',
-//                 'plugin:@angular-eslint/template/process-inline-templates',
-//                 'plugin:jsdoc/recommended-typescript-error'
-//                 // Uncomment this once all linting issues are fixed
-//                 // Note to developers:
-//                 //  you can uncomment the full ruleset locally when fixing issues, and then comment
-//                 //  that will allow splitting the work into smaller chunks
-//                 // 'plugin:unicorn/recommended'
-//             ],
-//             plugins: [
-//                 'eslint-plugin-unicorn',
-//                 'eslint-plugin-rxjs',
-//                 'prettier',
-//                 'ban',
-//                 'license-header',
-//                 '@cspell',
-//                 'eslint-plugin-import',
-//                 '@angular-eslint/eslint-plugin',
-//                 '@typescript-eslint',
-//                 'jsdoc'
-//             ],
-//             rules: {
-//                 // Uncomment this to enable prettier checks as part of the ESLint
-//                 // 'prettier/prettier': 'error',
-//                 'ban/ban': [
-//                     'error',
-//                     { name: 'eval', message: 'Calls to eval is not allowed.' },
-//                     { name: 'fdescribe', message: 'Calls to fdescribe is not allowed' },
-//                     { name: 'fit', message: 'Calls to fit is not allowed' },
-//                     { name: 'xit', message: 'Calls to xit is not allowed' },
-//                     { name: 'xdescribe', message: 'Calls to xdescribe is not allowed' },
-//                     { name: ['test', 'only'], message: 'Calls to test.only is not allowed' },
-//                     { name: ['describe', 'only'], message: 'Calls to describe.only is not allowed' }
-//                 ],
-//                 '@angular-eslint/component-selector': [
-//                     'error',
-//                     {
-//                         type: 'element',
-//                         prefix: ['adf', 'app'],
-//                         style: 'kebab-case'
-//                     }
-//                 ],
-//                 '@angular-eslint/directive-selector': [
-//                     'error',
-//                     {
-//                         type: ['element', 'attribute'],
-//                         prefix: ['adf', 'app'],
-//                         style: 'kebab-case'
-//                     }
-//                 ],
-//                 '@angular-eslint/no-host-metadata-property': 'off',
-//                 '@angular-eslint/no-input-prefix': 'error',
-//                 '@angular-eslint/prefer-inject': 'error',
-//                 '@typescript-eslint/consistent-type-definitions': 'error',
-//                 '@typescript-eslint/dot-notation': 'off',
-//                 '@typescript-eslint/explicit-member-accessibility': [
-//                     'off',
-//                     {
-//                         accessibility: 'explicit'
-//                     }
-//                 ],
-//                 '@typescript-eslint/await-thenable': 'error',
-//                 '@typescript-eslint/prefer-optional-chain': 'warn',
-//                 '@typescript-eslint/prefer-readonly': 'error',
-//                 '@typescript-eslint/no-inferrable-types': 'off',
-//                 '@typescript-eslint/no-require-imports': 'off',
-//                 '@typescript-eslint/no-var-requires': 'error',
-//                 '@typescript-eslint/naming-convention': [
-//                     'error',
-//                     {
-//                         selector: [
-//                             'classProperty',
-//                             'objectLiteralProperty',
-//                             'typeProperty',
-//                             'classMethod',
-//                             'objectLiteralMethod',
-//                             'typeMethod',
-//                             'accessor',
-//                             'enumMember'
-//                         ],
-//                         format: null,
-//                         modifiers: ['requiresQuotes']
-//                     }
-//                 ],
-//                 '@typescript-eslint/member-ordering': 'off',
-//                 '@typescript-eslint/no-empty-function': 'off',
-//                 '@typescript-eslint/no-explicit-any': 'off',
-//                 'prefer-promise-reject-errors': 'error',
-//                 'brace-style': 'off',
-//                 'comma-dangle': 'error',
-//                 'default-case': 'error',
-//                 'import/order': 'off',
-//                 'max-len': [
-//                     'error',
-//                     {
-//                         code: 240
-//                     }
-//                 ],
-//                 'no-bitwise': 'off',
-//                 'no-console': [
-//                     'error',
-//                     {
-//                         allow: [
-//                             'warn',
-//                             'dir',
-//                             'timeLog',
-//                             'assert',
-//                             'clear',
-//                             'count',
-//                             'countReset',
-//                             'group',
-//                             'groupEnd',
-//                             'table',
-//                             'dirxml',
-//                             'error',
-//                             'groupCollapsed',
-//                             'Console',
-//                             'profile',
-//                             'profileEnd',
-//                             'timeStamp',
-//                             'context'
-//                         ]
-//                     }
-//                 ],
-//                 'no-duplicate-imports': 'error',
-//                 'no-multiple-empty-lines': 'error',
-//                 'no-redeclare': 'off',
-//                 '@typescript-eslint/no-redeclare': ['off', { ignoreDeclarationMerge: true }],
-//                 '@typescript-eslint/no-unused-vars': [
-//                     'error',
-//                     {
-//                         argsIgnorePattern: '^_',
-//                         varsIgnorePattern: '^_',
-//                         caughtErrorsIgnorePattern: '^_'
-//                     }
-//                 ],
-//                 'no-return-await': 'error',
-//                 'rxjs/no-create': 'error',
-//                 'rxjs/no-subject-unsubscribe': 'error',
-//                 'rxjs/no-subject-value': 'error',
-//                 'rxjs/no-unsafe-takeuntil': 'error',
-//                 'unicorn/filename-case': 'error',
-//                 'unicorn/prefer-optional-catch-binding': 'error',
-//                 '@typescript-eslint/no-unused-expressions': [
-//                     'error',
-//                     {
-//                         allowShortCircuit: true,
-//                         allowTernary: true
-//                     }
-//                 ],
-//                 'license-header/header': [
-//                     'error',
-//                     [
-//                         '/*!',
-//                         ' * @license',
-//                         ' * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.',
-//                         ' *',
-//                         ' * Licensed under the Apache License, Version 2.0 (the "License");',
-//                         ' * you may not use this file except in compliance with the License.',
-//                         ' * You may obtain a copy of the License at',
-//                         ' *',
-//                         ' *     http://www.apache.org/licenses/LICENSE-2.0',
-//                         ' *',
-//                         ' * Unless required by applicable law or agreed to in writing, software',
-//                         ' * distributed under the License is distributed on an "AS IS" BASIS,',
-//                         ' * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.',
-//                         ' * See the License for the specific language governing permissions and',
-//                         ' * limitations under the License.',
-//                         ' */'
-//                     ]
-//                 ],
-//                 'no-restricted-syntax': [
-//                     'error',
-//                     {
-//                         selector: "Identifier[name='CUSTOM_ELEMENTS_SCHEMA']",
-//                         message: 'The use of CUSTOM_ELEMENTS_SCHEMA is not allowed. Consider alternatives for proper schema handling.'
-//                     },
-//                     {
-//                         selector: "Identifier[name='NO_ERRORS_SCHEMA']",
-//                         message: 'The use of NO_ERRORS_SCHEMA is not allowed. Consider alternatives for proper schema handling.'
-//                     },
-//                     {
-//                         selector: 'TSEnumDeclaration',
-//                         message: 'Enums are not allowed. Use string literal types (e.g., type Foo = "a" | "b") or const objects instead.'
-//                     },
-//                     {
-//                         selector: ':matches(Literal[value=/ng-reflect-/], TemplateElement[value.cooked=/ng-reflect-/])',
-//                         message: '*ng-reflect-* attributes should not be used. Consider alternatives for proper selectors.'
-//                     }
-//                 ]
-//             }
-//         },
-//         {
-//             files: ['*.html'],
-//             extends: ['plugin:@angular-eslint/template/recommended', 'plugin:@angular-eslint/template/accessibility'],
-//             parser: '@angular-eslint/template-parser',
-//             rules: {
-//                 '@angular-eslint/template/prefer-self-closing-tags': 'error'
-//             }
-//         },
-//         {
-//             files: ['*.spec.ts'],
-//             plugins: ['@alfresco/eslint-angular'],
-//             rules: {
-//                 '@alfresco/eslint-angular/no-angular-material-selectors': 'error',
-//                 '@angular-eslint/component-class-suffix': 'off'
-//             }
-//         },
-//         {
-//             files: ['*.ts'],
-//             extends: ['plugin:@angular-eslint/template/process-inline-templates'],
-//             excludedFiles: ['*.spec.ts']
-//         },
-//         {
-//             files: ['*.json'],
-//             parser: 'jsonc-eslint-parser',
-//             rules: {
-//                 'comma-dangle': ['error', 'never']
-//             }
-//         },
-//         {
-//             files: ['**/*.stories.ts'],
-//             rules: {
-//                 '@cspell/spellchecker': 'off'
-//             }
-//         }
-//     ],
-
-//     extends: ['plugin:storybook/recommended']
-// };
+import jsdoc from 'eslint-plugin-jsdoc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -299,7 +51,7 @@ export default [
             'coverage',
             'desktop.ini',
             'dist',
-            'docs/**/*.md',
+            '**/docs',
             'e2e-result-*',
             'lib/core/src/lib/icon',
             'lib/eslint-angular/dist/',
@@ -307,6 +59,7 @@ export default [
             'licenses.txt',
             'node_modules',
             'nxcache',
+            '.nx',
             'out-tsc',
             'projects/**/*',
             '**/node_modules/**/*',
@@ -322,27 +75,60 @@ export default [
         ]
     },
     unicorn.configs['recommended'],
+    ...storybook.configs['flat/recommended'],
+    {
+        files: ['**/*.{js,mjs,cjs,ts}'],
+        ignores: ['**/*.d.ts'],
+        plugins: {
+            'license-header': licenseHeader
+        },
+        rules: {
+            'license-header/header': [
+                'error',
+                [
+                    '/*!',
+                    ' * @license',
+                    ' * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.',
+                    ' *',
+                    ' * Licensed under the Apache License, Version 2.0 (the "License");',
+                    ' * you may not use this file except in compliance with the License.',
+                    ' * You may obtain a copy of the License at',
+                    ' *',
+                    ' *     http://www.apache.org/licenses/LICENSE-2.0',
+                    ' *',
+                    ' * Unless required by applicable law or agreed to in writing, software',
+                    ' * distributed under the License is distributed on an "AS IS" BASIS,',
+                    ' * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.',
+                    ' * See the License for the specific language governing permissions and',
+                    ' * limitations under the License.',
+                    ' */'
+                ]
+            ]
+        }
+    },
+    {
+        files: ['**/*.ts', '**/*.js', '**/*.mjs'],
+        ignores: ['!**/*.d.ts', '!**/*.spec.ts'],
+        ...jsdoc.configs['flat/recommended-typescript-error'],  // sets plugins.jsdoc + rules
+    },
     {
         files: ['**/*.ts', '!**/*.d.ts'],
-
+        ignores: ['**/*.mjs'],
         ...compat.extends(
             'plugin:@nx/typescript',
             'plugin:@nx/angular',
             'plugin:@cspell/recommended',
             'plugin:@angular-eslint/recommended',
             'plugin:@angular-eslint/template/process-inline-templates',
-            // 'plugin:jsdoc/recommended-typescript-error'
         )[0],
         plugins: {
-             'rxjs': fixupPluginRules(rxjs),
+            'rxjs': fixupPluginRules(rxjs),
             'prettier': prettier,
             'ban': ban,
-            'license-header': licenseHeader,
             '@cspell': cspell,
             'import': importPlugin,
             '@angular-eslint': angularEslintEslintPlugin,
             '@typescript-eslint': typescriptEslint,
-            // 'jsdoc'
         },
         languageOptions: {
             parser: tsParser,
@@ -354,8 +140,7 @@ export default [
             },
         },
         rules: {
-            // Uncomment this to enable prettier checks as part of the ESLint
-            // 'prettier/prettier': 'error',
+            'prettier/prettier': 'error',
             'ban/ban': [
                 'error',
                 { name: 'eval', message: 'Calls to eval is not allowed.' },
@@ -482,27 +267,6 @@ export default [
                     allowTernary: true
                 }
             ],
-            'license-header/header': [
-                'error',
-                [
-                    '/*!',
-                    ' * @license',
-                    ' * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.',
-                    ' *',
-                    ' * Licensed under the Apache License, Version 2.0 (the "License");',
-                    ' * you may not use this file except in compliance with the License.',
-                    ' * You may obtain a copy of the License at',
-                    ' *',
-                    ' *     http://www.apache.org/licenses/LICENSE-2.0',
-                    ' *',
-                    ' * Unless required by applicable law or agreed to in writing, software',
-                    ' * distributed under the License is distributed on an "AS IS" BASIS,',
-                    ' * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.',
-                    ' * See the License for the specific language governing permissions and',
-                    ' * limitations under the License.',
-                    ' */'
-                ]
-            ],
             'no-restricted-syntax': [
                 'error',
                 {
@@ -548,10 +312,10 @@ export default [
     },
     {
         files: ['*.ts'],
+        ignores: ['**/*.spec.ts'],
         ...compat.extends(
             'plugin:@angular-eslint/template/process-inline-templates'
         )[0],
-        ignores: ['**/*.spec.ts']
     },
     {
         files: ['*.json'],
@@ -565,5 +329,20 @@ export default [
         rules: {
             '@cspell/spellchecker': 'off'
         }
-    }
+    },
+    {
+        files: ['**/*.mjs'],
+        languageOptions: {
+            parser: tsParser,
+            parserOptions: {
+                projectService: {
+                    allowDefaultProject: ['*.mjs']
+                },
+                tsconfigRootDir: __dirname,
+                ecmaVersion: 'latest',
+                sourceType: 'module'
+            }
+        }
+
+    },
 ];
