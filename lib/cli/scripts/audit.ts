@@ -18,7 +18,6 @@
  */
 
 import { spawnSync } from 'node:child_process';
-import * as ejs from 'ejs';
 import * as path from 'path';
 import * as fs from 'fs';
 import { argv, exit } from 'node:process';
@@ -27,6 +26,45 @@ import { parseArgs } from 'node:util';
 interface AuditCommandArgs {
     package?: string;
     outDir?: string;
+}
+
+function renderAuditPage(jsonAudit: any, projName: string, projVersion: string): string {
+    const rows: string[] = [];
+    if (jsonAudit.auditReportVersion >= 2) {
+        for (const key in jsonAudit.vulnerabilities) {
+            const v = jsonAudit.vulnerabilities[key];
+            rows.push(`|${v.severity} | ${v.name} | ${JSON.stringify(v.range)} |`);
+        }
+    } else {
+        for (const key in jsonAudit.advisories) {
+            const a = jsonAudit.advisories[key];
+            rows.push(`|${a.severity} | ${a.module_name} | ${JSON.stringify(a.vulnerable_versions)} |`);
+        }
+    }
+
+    return `---
+Title: Audit info, ${projName} ${projVersion}
+---
+
+# Audit information for ${projName} ${projVersion}
+
+This page lists the security audit of the dependencies this project depends on.
+
+## Risks
+
+- Critical risk: ${jsonAudit.metadata.vulnerabilities.critical}
+- High risk: ${jsonAudit.metadata.vulnerabilities.high}
+- Moderate risk: ${jsonAudit.metadata.vulnerabilities.moderate}
+- Low risk: ${jsonAudit.metadata.vulnerabilities.low}
+
+Dependencies analyzed: ${jsonAudit.metadata.totalDependencies}
+
+## Libraries
+
+| Severity | Module | Vulnerable versions |
+| --- | --- | --- |
+${rows.join('\n')}
+`;
 }
 
 /**
@@ -82,12 +120,6 @@ Options:
         exit(1);
     }
 
-    const templatePath = path.resolve(__dirname, '../templates/auditPage.ejs');
-    if (!fs.existsSync(templatePath)) {
-        console.error(`Cannot find the report template: ${templatePath}`);
-        exit(1);
-    }
-
     return new Promise((resolve, reject) => {
         // eslint-disable-next-line no-console
         console.log(`Running audit on ${packagePath}`);
@@ -133,29 +165,14 @@ Options:
             return;
         }
 
-        ejs.renderFile(
-            templatePath,
-            {
-                jsonAudit,
-                projVersion: packageJson.version,
-                projName: packageJson.name
-            },
-            {},
-            (err: any, mdText: string) => {
-                if (err) {
-                    console.error(err);
-                    reject(err);
-                } else {
-                    const outputPath = path.resolve(options.outDir || workingDir);
-                    const outputFile = path.join(outputPath, `audit-info-${packageJson.version}.md`);
+        const mdText = renderAuditPage(jsonAudit, packageJson.name, packageJson.version);
+        const outputPath = path.resolve(options.outDir || workingDir);
+        const outputFile = path.join(outputPath, `audit-info-${packageJson.version}.md`);
 
-                    fs.writeFileSync(outputFile, mdText);
+        fs.writeFileSync(outputFile, mdText);
 
-                    // eslint-disable-next-line no-console
-                    console.log(`Report saved as ${outputFile}`);
-                    resolve(0);
-                }
-            }
-        );
+        // eslint-disable-next-line no-console
+        console.log(`Report saved as ${outputFile}`);
+        resolve(0);
     });
 }

@@ -25,7 +25,6 @@ import { spawnSync } from 'node:child_process';
 import * as path from 'path';
 import { logger } from './logger';
 import * as fs from 'fs';
-import * as ejs from 'ejs';
 
 interface Commit {
     hash: string;
@@ -167,6 +166,39 @@ function commitAuthorAllowed(commit: Commit, authorFilter: string): boolean {
     return !(filterRegex.test(commit.author) || filterRegex.test(commit.author_email));
 }
 
+function renderChangelogMd(commits: Commit[], projName: string, projVersion: string, repoUrl: string): string {
+    const lines = commits.map((c) => `- [${c.hash}](${repoUrl}/commit/${c.hash}) ${c.subject}`);
+    return `---
+Title: Changelog for ${projName} v${projVersion}
+---
+
+# Changelog
+
+${lines.join('\n')}
+`;
+}
+
+function renderChangelogHtml(commits: Commit[], projName: string, projVersion: string, repoUrl: string): string {
+    const items = commits
+        .map((c) => `        <li>\n            <a href="${repoUrl}/commit/${c.hash}">[${c.hash}]</a> ${c.subject}\n        </li>`)
+        .join('\n');
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changelog for ${projName} v${projVersion}</title>
+</head>
+<body>
+    <h1>Changelog</h1>
+    <ul>
+${items}
+    </ul>
+</body>
+</html>`;
+}
+
 /**
  * Changelog command
  *
@@ -265,42 +297,23 @@ Options:
         exit(1);
     }
 
-    const templatePath = path.resolve(__dirname, `../templates/changelog-${format}.ejs`);
-    if (!fs.existsSync(templatePath)) {
-        console.error(`Cannot find the report template: ${templatePath}`);
-        exit(1);
-    }
-
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         const packageJson = JSON.parse(fs.readFileSync(packagePath).toString());
 
-        ejs.renderFile(
-            templatePath,
-            {
-                remote,
-                repo_url,
-                commits,
-                projVersion: packageJson.version,
-                projName: packageJson.name
-            },
-            {},
-            (err: any, text: string) => {
-                if (err) {
-                    console.error(err);
-                    reject(err);
-                } else {
-                    if (output) {
-                        const outputDir = path.resolve(output);
-                        const outputFile = path.join(outputDir, `changelog-${packageJson.version}.${format}`);
-                        console.log('Writing changelog to', outputFile);
+        const text =
+            format === 'html'
+                ? renderChangelogHtml(commits, packageJson.name, packageJson.version, repo_url)
+                : renderChangelogMd(commits, packageJson.name, packageJson.version, repo_url);
 
-                        fs.writeFileSync(outputFile, text);
-                    } else {
-                        console.log(text);
-                    }
-                    resolve(0);
-                }
-            }
-        );
+        if (output) {
+            const outputDir = path.resolve(output);
+            const outputFile = path.join(outputDir, `changelog-${packageJson.version}.${format}`);
+            console.log('Writing changelog to', outputFile);
+
+            fs.writeFileSync(outputFile, text);
+        } else {
+            console.log(text);
+        }
+        resolve(0);
     });
 }

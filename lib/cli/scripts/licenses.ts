@@ -22,7 +22,6 @@ import { parseArgs } from 'node:util';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as licenseList from 'spdx-license-list';
-import * as ejs from 'ejs';
 
 const { collectProductionLicenses } = require('../resources/license-collector.cjs');
 
@@ -112,6 +111,32 @@ function toLinkedLicenseExpression(rawExpression: string): string {
     });
 }
 
+function renderLicensePage(filteredPackages: Record<string, PackageInfoWithMetadata>, projName: string, projVersion: string): string {
+    const rows = Object.entries(filteredPackages).map(([packageName, pack]) => {
+        const lastAtSignPos = packageName.lastIndexOf('@');
+        const name = packageName.substring(0, lastAtSignPos);
+        const version = packageName.substring(lastAtSignPos + 1);
+        const licenses = pack.licenseExp || 'N/A';
+        const linkedName = pack.repository ? `[${name}](${pack.repository})` : name;
+        return `| ${linkedName} | ${version} | ${licenses} |`;
+    });
+
+    return `---
+Title: License info, ${projName} ${projVersion}
+---
+
+# License information for ${projName} ${projVersion}
+
+This page lists all third party libraries the project depends on.
+
+## Libraries
+
+| Name | Version | License |
+| --- | --- | --- |
+${rows.join('\n')}
+`;
+}
+
 /**
  * Licenses command
  *
@@ -165,12 +190,6 @@ Options:
         exit(1);
     }
 
-    const templatePath = path.resolve(__dirname, '../templates/licensePage.ejs');
-    if (!fs.existsSync(templatePath)) {
-        console.error(`Cannot find the report template: ${templatePath}`);
-        exit(1);
-    }
-
     return new Promise((resolve, reject) => {
         // eslint-disable-next-line no-console
         console.info(`Checking ${packagePath}`);
@@ -198,28 +217,13 @@ Options:
 
         const packageJson: PackageInfo = getPackageFile(packagePath);
 
-        ejs.renderFile(
-            templatePath,
-            {
-                filteredPackages,
-                projVersion: packageJson.version,
-                projName: packageJson.name
-            },
-            {},
-            (ejsError: unknown, mdText: string) => {
-                if (ejsError) {
-                    console.error(ejsError);
-                    reject(ejsError);
-                } else {
-                    const outputPath = path.resolve(options.outDir || workingDir);
-                    const outputFile = path.join(outputPath, `license-info-${packageJson.version}.md`);
+        const mdText = renderLicensePage(filteredPackages, packageJson.name, packageJson.version);
+        const outputPath = path.resolve(options.outDir || workingDir);
+        const outputFile = path.join(outputPath, `license-info-${packageJson.version}.md`);
 
-                    fs.writeFileSync(outputFile, mdText);
-                    // eslint-disable-next-line no-console
-                    console.log(`Report saved as ${outputFile}`);
-                    resolve(0);
-                }
-            }
-        );
+        fs.writeFileSync(outputFile, mdText);
+        // eslint-disable-next-line no-console
+        console.log(`Report saved as ${outputFile}`);
+        resolve(0);
     });
 }
