@@ -51,6 +51,7 @@
             [editable]="!readOnly && isPanelEditing(DefaultPanels.PROPERTIES)"
             [displayEmpty]="displayEmpty"
             [copyToClipboardAction]="copyToClipboardAction"
+            [displayCopyToClipboardIcon]="displayCopyToClipboardIcon"
             [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
             [multiValueSeparator]="multiValueSeparator" />
     </mat-expansion-panel>
@@ -252,6 +253,7 @@
                     [editable]="!readOnly && group.editable && isPanelEditing(group.title)"
                     [displayEmpty]="displayEmpty"
                     [copyToClipboardAction]="copyToClipboardAction"
+                    [displayCopyToClipboardIcon]="displayCopyToClipboardIcon"
                     [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
                     [multiValueSeparator]="multiValueSeparator" />
             </mat-expansion-panel>

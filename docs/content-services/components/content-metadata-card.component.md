@@ -417,7 +417,8 @@ Once you have enabled this feature you will be able to double click on your meta
            "exif:exif": [ "exif:pixelXDimension", "exif:pixelYDimension"]
        }
    },
-   "copy-to-clipboard-action": true
+   "copy-to-clipboard-action": true,
+   "display-copy-to-clipboard-icon": true
 }
 ```
 

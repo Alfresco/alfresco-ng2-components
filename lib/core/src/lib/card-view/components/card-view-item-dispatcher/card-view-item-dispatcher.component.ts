@@ -46,7 +46,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     copyToClipboardAction: boolean = true;
 
     @Input()
-    displayCopyToClipboardIcon: boolean = false;
+    displayCopyToClipboardIcon: boolean = true;
 
     @Input()
     useChipsForMultiValueProperty: boolean = true;

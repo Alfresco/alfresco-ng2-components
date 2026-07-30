@@ -239,12 +239,12 @@ describe('CardViewDateItemComponent', () => {
         expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Jul 10, 2017', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
     });
 
-    it('should NOT render the copy icon by default', () => {
+    it('should render the copy icon by default', () => {
         component.editable = false;
         fixture.detectChanges();
 
         const copyIcon = testingUtils.getByDataAutomationId('card-dateitem-copy-to-clipboard-' + component.property.key);
-        expect(copyIcon).toBeNull();
+        expect(copyIcon).not.toBeNull();
     });
 
     it('should NOT render the copy icon when displayCopyToClipboardIcon is false', () => {

@@ -616,12 +616,12 @@ describe('CardViewTextItemComponent', () => {
             );
         });
 
-        it('should NOT render the copy icon by default', () => {
+        it('should render the copy icon by default', () => {
             component.editable = false;
             fixture.detectChanges();
 
             const copyIcon = testingUtils.getByDataAutomationId('card-textitem-copy-to-clipboard-' + component.property.key);
-            expect(copyIcon).toBeNull();
+            expect(copyIcon).not.toBeNull();
         });
 
         it('should NOT render the copy icon when displayCopyToClipboardIcon is false', () => {
