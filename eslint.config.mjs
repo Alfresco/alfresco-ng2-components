@@ -30,6 +30,7 @@ import licenseHeader from 'eslint-plugin-license-header';
 import cspell from '@cspell/eslint-plugin';
 import importPlugin from 'eslint-plugin-import'
 import storybook from 'eslint-plugin-storybook';
+import nxPlugin from '@nx/eslint-plugin';
 import angularEslintEslintPlugin from '@angular-eslint/eslint-plugin';
 import angularTemplateParser from '@angular-eslint/template-parser';
 import tsParser from '@typescript-eslint/parser';
@@ -139,6 +140,7 @@ export default [
             'plugin:@angular-eslint/template/process-inline-templates',
         )[0],
         plugins: {
+            '@nx': nxPlugin,
             'rxjs': fixupPluginRules(rxjs),
             'prettier': prettier,
             'ban': ban,
