@@ -352,9 +352,6 @@ export default [
         languageOptions: {
             parser: tsParser,
             parserOptions: {
-                projectService: {
-                    allowDefaultProject: ['*.mjs']
-                },
                 tsconfigRootDir: __dirname,
                 ecmaVersion: 'latest',
                 sourceType: 'module'
