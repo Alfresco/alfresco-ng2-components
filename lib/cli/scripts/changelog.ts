@@ -25,6 +25,7 @@ import { spawnSync } from 'node:child_process';
 import * as path from 'path';
 import { logger } from './logger';
 import * as fs from 'fs';
+import { escapeHtml } from './utils';
 
 interface Commit {
     hash: string;
@@ -167,9 +168,9 @@ function commitAuthorAllowed(commit: Commit, authorFilter: string): boolean {
 }
 
 function renderChangelogMd(commits: Commit[], projName: string, projVersion: string, repoUrl: string): string {
-    const lines = commits.map((c) => `- [${c.hash}](${repoUrl}/commit/${c.hash}) ${c.subject}`);
+    const lines = commits.map((c) => `- [${c.hash}](${repoUrl}/commit/${c.hash}) ${escapeHtml(c.subject)}`);
     return `---
-Title: Changelog for ${projName} v${projVersion}
+Title: Changelog for ${escapeHtml(projName)} v${escapeHtml(projVersion)}
 ---
 
 # Changelog
@@ -180,7 +181,7 @@ ${lines.join('\n')}
 
 function renderChangelogHtml(commits: Commit[], projName: string, projVersion: string, repoUrl: string): string {
     const items = commits
-        .map((c) => `        <li>\n            <a href="${repoUrl}/commit/${c.hash}">[${c.hash}]</a> ${c.subject}\n        </li>`)
+        .map((c) => `        <li>\n            <a href="${repoUrl}/commit/${c.hash}">[${c.hash}]</a> ${escapeHtml(c.subject)}\n        </li>`)
         .join('\n');
     return `<!DOCTYPE html>
 <html lang="en">
@@ -188,7 +189,7 @@ function renderChangelogHtml(commits: Commit[], projName: string, projVersion: s
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Changelog for ${projName} v${projVersion}</title>
+    <title>Changelog for ${escapeHtml(projName)} v${escapeHtml(projVersion)}</title>
 </head>
 <body>
     <h1>Changelog</h1>

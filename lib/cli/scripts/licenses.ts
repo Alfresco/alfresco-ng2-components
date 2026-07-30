@@ -22,6 +22,7 @@ import { parseArgs } from 'node:util';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as licenseList from 'spdx-license-list';
+import { escapeHtml } from './utils';
 
 const { collectProductionLicenses } = require('../resources/license-collector.cjs');
 
@@ -116,16 +117,16 @@ function renderLicensePage(filteredPackages: Record<string, PackageInfoWithMetad
         const lastAtSignPos = packageName.lastIndexOf('@');
         const name = packageName.substring(0, lastAtSignPos);
         const version = packageName.substring(lastAtSignPos + 1);
-        const licenses = pack.licenseExp || 'N/A';
-        const linkedName = pack.repository ? `[${name}](${pack.repository})` : name;
-        return `| ${linkedName} | ${version} | ${licenses} |`;
+        const licenses = escapeHtml(pack.licenseExp || 'N/A');
+        const linkedName = pack.repository ? `[${escapeHtml(name)}](${pack.repository})` : escapeHtml(name);
+        return `| ${linkedName} | ${escapeHtml(version)} | ${licenses} |`;
     });
 
     return `---
-Title: License info, ${projName} ${projVersion}
+Title: License info, ${escapeHtml(projName)} ${escapeHtml(projVersion)}
 ---
 
-# License information for ${projName} ${projVersion}
+# License information for ${escapeHtml(projName)} ${escapeHtml(projVersion)}
 
 This page lists all third party libraries the project depends on.
 

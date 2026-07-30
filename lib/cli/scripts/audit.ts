@@ -22,6 +22,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { argv, exit } from 'node:process';
 import { parseArgs } from 'node:util';
+import { escapeHtml } from './utils';
 
 interface AuditCommandArgs {
     package?: string;
@@ -33,20 +34,20 @@ function renderAuditPage(jsonAudit: any, projName: string, projVersion: string):
     if (jsonAudit.auditReportVersion >= 2) {
         for (const key in jsonAudit.vulnerabilities) {
             const v = jsonAudit.vulnerabilities[key];
-            rows.push(`|${v.severity} | ${v.name} | ${JSON.stringify(v.range)} |`);
+            rows.push(`|${escapeHtml(v.severity)} | ${escapeHtml(v.name)} | ${JSON.stringify(v.range)} |`);
         }
     } else {
         for (const key in jsonAudit.advisories) {
             const a = jsonAudit.advisories[key];
-            rows.push(`|${a.severity} | ${a.module_name} | ${JSON.stringify(a.vulnerable_versions)} |`);
+            rows.push(`|${escapeHtml(a.severity)} | ${escapeHtml(a.module_name)} | ${JSON.stringify(a.vulnerable_versions)} |`);
         }
     }
 
     return `---
-Title: Audit info, ${projName} ${projVersion}
+Title: Audit info, ${escapeHtml(projName)} ${escapeHtml(projVersion)}
 ---
 
-# Audit information for ${projName} ${projVersion}
+# Audit information for ${escapeHtml(projName)} ${escapeHtml(projVersion)}
 
 This page lists the security audit of the dependencies this project depends on.
 
