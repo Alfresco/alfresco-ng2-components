@@ -1543,32 +1543,93 @@ describe('FormFieldModel', () => {
         });
 
         describe('zero initial rows', () => {
-            it('should create column template without rows when initialNumberOfRows is 0', () => {
-                const zeroInitialRowsJson = {
-                    ...json,
-                    params: {
-                        ...json.params,
-                        initialNumberOfRows: 0
-                    }
-                };
+            const zeroInitialRowsJson = {
+                ...json,
+                params: {
+                    ...json.params,
+                    initialNumberOfRows: 0
+                }
+            };
 
-                const zeroInitialRowsField = new FormFieldModel(form, zeroInitialRowsJson);
+            it('should create column template without rows when initialNumberOfRows is 0', () => {
+                const freshForm = new FormModel();
+                const zeroInitialRowsField = new FormFieldModel(freshForm, zeroInitialRowsJson);
 
                 expect(zeroInitialRowsField.rows.length).toBe(0);
                 expect(zeroInitialRowsField.columns.length).toBe(2);
-                expect(zeroInitialRowsField.columns[0].fields[0].id).toBe('Text0wwp7n-Row0');
-                expect(zeroInitialRowsField.columns[1].fields[0].id).toBe('Integer0rzkwq-Row0');
+
+                const templateFieldIds = zeroInitialRowsField.columns.flatMap((column) => column.fields.map((templateField) => templateField.id));
+                expect(templateFieldIds.some((id) => id.startsWith('Text0wwp7n-Row'))).toBe(true);
+                expect(templateFieldIds.some((id) => id.startsWith('Integer0rzkwq-Row'))).toBe(true);
+                zeroInitialRowsField.columns
+                    .flatMap((column) => column.fields)
+                    .forEach((templateField) => {
+                        expect(templateField.form).toBe(freshForm);
+                        expect(templateField.parent?.isTemplate).toBe(true);
+                    });
+
+                expect(freshForm.values[json.id]).toBeUndefined();
+            });
+
+            it('should not create rows after reload when initialNumberOfRows is 0 and no values were saved', () => {
+                const freshForm = new FormModel();
+                new FormFieldModel(freshForm, zeroInitialRowsJson);
+
+                expect(freshForm.values[json.id]).toBeUndefined();
+
+                const reloadedField = new FormFieldModel(freshForm, {
+                    ...zeroInitialRowsJson,
+                    value: freshForm.values[json.id]
+                });
+
+                expect(reloadedField.rows.length).toBe(0);
+                expect(freshForm.values[json.id]).toBeUndefined();
+            });
+
+            it('should create rows from saved values when initialNumberOfRows is 0', () => {
+                const savedValuesJson = {
+                    ...zeroInitialRowsJson,
+                    value: [
+                        {
+                            Text0wwp7n: 'saved text',
+                            Dropdown0e7tn4: null,
+                            Integer0rzkwq: 42,
+                            Dropdown0wgm63: null
+                        }
+                    ]
+                };
+
+                const freshForm = new FormModel();
+                const fieldWithSavedValues = new FormFieldModel(freshForm, savedValuesJson);
+
+                expect(fieldWithSavedValues.rows.length).toBe(1);
+                expect(fieldWithSavedValues.rows[0].columns[0].fields[0].value).toBe('saved text');
+            });
+
+            it('should reuse column template on subsequent updateForm calls when initialNumberOfRows is 0', () => {
+                const freshForm = new FormModel();
+                const zeroInitialRowsField = new FormFieldModel(freshForm, zeroInitialRowsJson);
+                const templateColumns = zeroInitialRowsField.columns;
+
+                zeroInitialRowsField.updateForm();
+
+                expect(zeroInitialRowsField.columns).toBe(templateColumns);
+            });
+
+            it('should apply read-only state to column template when initialNumberOfRows is 0', () => {
+                const freshForm = new FormModel();
+                const zeroInitialRowsField = new FormFieldModel(freshForm, zeroInitialRowsJson);
+
+                zeroInitialRowsField.readOnly = true;
+
+                zeroInitialRowsField.columns
+                    .flatMap((column) => column.fields)
+                    .forEach((templateField) => {
+                        expect(templateField.readOnly).toBe(true);
+                    });
             });
 
             it('should add first row when initialNumberOfRows is 0', () => {
-                const zeroInitialRowsJson = {
-                    ...json,
-                    params: {
-                        ...json.params,
-                        initialNumberOfRows: 0
-                    }
-                };
-
                 const zeroInitialRowsField = new FormFieldModel(form, zeroInitialRowsJson);
 
                 zeroInitialRowsField.addRow(zeroInitialRowsField.fields, form);

@@ -50,6 +50,7 @@ Contains the value and metadata for a field of a [`Form`](../../../lib/process-s
 | numberOfColumns | number | 1 | Number of columns defined by a container field |
 | fields | [`FormFieldModel`](../../core/models/form-field.model.md)\[] | \[] | Fields contained within a container field |
 | columns | [`ContainerColumnModel`](../../../lib/core/src/lib/form/components/widgets/core/container-column.model.ts)\[] | \[] | Column definitions for a container field |
+| rows | [`ContainerRowModel`](../../../lib/core/src/lib/form/components/widgets/core/container-row.model.ts)\[] | \[] | Row definitions for a repeatable section field |
 | emptyOption | [`FormFieldOption`](../../../lib/core/src/lib/form/components/widgets/core/form-field-option.ts) |  | Dropdown menu item to use when no option is chosen |
 | validationSummary | string |  | Error/information message added during field validation (see [`FormFieldValidator`](../../../lib/core/src/lib/form/components/widgets/core/form-field-validator.ts) interface) |
 
@@ -94,6 +95,17 @@ properties used by the call are:
 The [REST Call Task 101](https://community.alfresco.com/community/bpm/blog/2016/08/31/rest-integration-101)
 tutorial on the [APS community site](https://community.alfresco.com/community/bpm)
 contains full details about how the REST calls work, along with a worked example.
+
+### Repeatable sections
+
+Repeatable section fields (`type: 'repeatable-section'`) support an `initialNumberOfRows` parameter in `params`.
+Setting `initialNumberOfRows` to `0` is valid: the section starts with no runtime rows and users add rows via the **Add row** action.
+
+When no rows exist, `columns` holds a design-time column template (used by form editors and form-rules).
+Template fields are bound to the form for rendering but are marked as templates and do not write to `form.values`.
+No row data is written to `form.values` until the user adds a row or saved values are loaded from the server.
+
+If saved values are present on the field (`value` array), row count is derived from `value.length` (subject to `maxNumberOfRows`), regardless of `initialNumberOfRows`.
 
 ## See also
 

@@ -17,10 +17,15 @@
 
 export const ROW_ID_PREFIX = '-Row';
 
+/** Placeholder row id for design-time column templates when no rows exist (not used for runtime rows). */
+export const TEMPLATE_ROW_ID = '0';
+
 export interface RepeatableSectionModel {
     id: string;
     uid: string;
     fields: any;
     rowIndex: number;
     value?: any;
+    /** When true, field is a design-time column template and must not write to form.values. */
+    isTemplate?: boolean;
 }
