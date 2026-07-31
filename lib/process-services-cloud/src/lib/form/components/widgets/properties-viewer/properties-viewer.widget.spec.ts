@@ -16,18 +16,19 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldModel, FormModel, NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, NoopTranslateModule, NoopAuthModule, UnitTestingUtils } from '@alfresco/adf-core';
 import { PropertiesViewerWidgetComponent } from './properties-viewer.widget';
+import { PropertiesViewerWrapperComponent } from './properties-viewer-wrapper/properties-viewer-wrapper.component';
 import { fakeNodeWithProperties } from '../../../mocks/attach-file-cloud-widget.mock';
 import { NodesApiService, BasicPropertiesService } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
-import { By } from '@angular/platform-browser';
 
 describe('PropertiesViewerWidgetComponent', () => {
     let widget: PropertiesViewerWidgetComponent;
     let fixture: ComponentFixture<PropertiesViewerWidgetComponent>;
     let element: HTMLElement;
     let nodesApiService: NodesApiService;
+    let testingUtils: UnitTestingUtils;
 
     const fakePngAnswer: any = {
         id: '1933',
@@ -53,6 +54,7 @@ describe('PropertiesViewerWidgetComponent', () => {
         nodesApiService = TestBed.inject(NodesApiService);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
 
         widget.field = new FormFieldModel(new FormModel());
         spyOn(nodesApiService, 'getNode').and.returnValue(of(fakeNodeWithProperties));
@@ -104,7 +106,7 @@ describe('PropertiesViewerWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const wrapper = fixture.debugElement.query(By.css('adf-properties-viewer-wrapper')).componentInstance;
+        const wrapper = testingUtils.getByDirective(PropertiesViewerWrapperComponent).componentInstance;
 
         expect(wrapper.displayCopyToClipboardIcon).toBeTrue();
     });
@@ -118,7 +120,7 @@ describe('PropertiesViewerWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const wrapper = fixture.debugElement.query(By.css('adf-properties-viewer-wrapper')).componentInstance;
+        const wrapper = testingUtils.getByDirective(PropertiesViewerWrapperComponent).componentInstance;
 
         expect(wrapper.displayCopyToClipboardIcon).toBeFalse();
     });

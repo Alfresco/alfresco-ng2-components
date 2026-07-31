@@ -19,6 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewComponent } from './card-view.component';
+import { CardViewItemDispatcherComponent } from '../card-view-item-dispatcher/card-view-item-dispatcher.component';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { of } from 'rxjs';
 import { CardViewSelectItemOption } from '../../interfaces/card-view-selectitem-properties.interface';
@@ -86,7 +87,7 @@ describe('CardViewComponent', () => {
         component.properties = [new CardViewTextItemModel({ label: 'My label', value: 'My value', key: 'some key' })];
         fixture.detectChanges();
 
-        const dispatcher = testingUtils.getByCSS('adf-card-view-item-dispatcher').componentInstance;
+        const dispatcher = testingUtils.getByDirective(CardViewItemDispatcherComponent).componentInstance;
         expect(dispatcher.displayCopyToClipboardIcon).toBeFalse();
 
         component.displayCopyToClipboardIcon = true;
