@@ -3,7 +3,7 @@
 <div class="adf-property-field">
 
     <div *ngIf="!isEditable" class="adf-card-view__key-value-pairs__read-only adf-property-value">
-        <mat-table #table [dataSource]="matTableValues" class="mat-elevation-z8">
+        <mat-table #table [dataSource]="matTableValues">
             <ng-container matColumnDef="name">
                 <mat-header-cell *matHeaderCellDef>{{ 'CORE.CARDVIEW.KEYVALUEPAIRS.NAME' | translate }}
                 </mat-header-cell>
