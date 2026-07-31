@@ -18,10 +18,9 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
-import { defineConfig, globalIgnores } from '@eslint/config-helpers';
 import { FlatCompat } from '@eslint/eslintrc';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
-import { fixupConfigRules, fixupPluginRules } from '@eslint/compat';
+import { fixupPluginRules } from '@eslint/compat';
 import unicorn from 'eslint-plugin-unicorn';
 import rxjs from 'eslint-plugin-rxjs';
 import prettier from 'eslint-plugin-prettier';
@@ -62,7 +61,6 @@ export default [
             'dist',
             '**/docs',
             'nxcache',
-            '.nx',
             'tmp',
             'projects/**/*',
             '**/node_modules/**/*',
@@ -70,8 +68,7 @@ export default [
             'lib/core/src/lib/icon',
             '**/node_modules',
             '**/assets',
-            '/scripts',
-            '**/docs'
+            '/scripts'
         ]
     },
     unicorn.configs['recommended'],
