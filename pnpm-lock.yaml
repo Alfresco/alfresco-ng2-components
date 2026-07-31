@@ -169,7 +169,7 @@ importers:
         specifier: ^3.3.6
         version: 3.3.6(supports-color@7.2.0)
       '@eslint/js':
-        specifier: 10.0.1
+        specifier: ~10.0.1
         version: 10.0.1(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))
       '@nx/angular':
         specifier: 22.7.4
