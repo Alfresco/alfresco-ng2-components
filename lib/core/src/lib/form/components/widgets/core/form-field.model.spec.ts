@@ -1542,6 +1542,42 @@ describe('FormFieldModel', () => {
             field = new FormFieldModel(form, json);
         });
 
+        describe('zero initial rows', () => {
+            it('should create column template without rows when initialNumberOfRows is 0', () => {
+                const zeroInitialRowsJson = {
+                    ...json,
+                    params: {
+                        ...json.params,
+                        initialNumberOfRows: 0
+                    }
+                };
+
+                const zeroInitialRowsField = new FormFieldModel(form, zeroInitialRowsJson);
+
+                expect(zeroInitialRowsField.rows.length).toBe(0);
+                expect(zeroInitialRowsField.columns.length).toBe(2);
+                expect(zeroInitialRowsField.columns[0].fields[0].id).toBe('Text0wwp7n-Row0');
+                expect(zeroInitialRowsField.columns[1].fields[0].id).toBe('Integer0rzkwq-Row0');
+            });
+
+            it('should add first row when initialNumberOfRows is 0', () => {
+                const zeroInitialRowsJson = {
+                    ...json,
+                    params: {
+                        ...json.params,
+                        initialNumberOfRows: 0
+                    }
+                };
+
+                const zeroInitialRowsField = new FormFieldModel(form, zeroInitialRowsJson);
+
+                zeroInitialRowsField.addRow(zeroInitialRowsField.fields, form);
+
+                expect(zeroInitialRowsField.rows.length).toBe(1);
+                expect(zeroInitialRowsField.rows[0].columns[0].fields[0].id).toContain('Text0wwp7n-Row');
+            });
+        });
+
         describe('add row', () => {
             const assignFormRulesEventSubject = (): Subject<FormRulesEvent> => {
                 const formRulesEvent = new Subject<FormRulesEvent>();

@@ -351,7 +351,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.rows.push(this.createRow(fields, form, i, value?.[i], i < params?.initialNumberOfRows));
         }
 
-        this.columns = this.rows[0].columns;
+        this.columns = this.rows.length > 0 ? this.rows[0].columns : this.createColumns(fields, form, '0', 0);
     }
 
     private getNumberOfRows(initialNrRows: number = 1, maxNrRows: number | null = null, value?: any) {
