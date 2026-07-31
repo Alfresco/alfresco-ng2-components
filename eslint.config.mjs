@@ -197,7 +197,7 @@ export default [
                         'accessor',
                         'enumMember'
                     ],
-                    format: undefined,
+                    format: null,
                     modifiers: ['requiresQuotes']
                 }
             ],
@@ -329,6 +329,9 @@ export default [
     },
     {
         files: ['**/*.mjs'],
+        rules: {
+            'unicorn/no-null': 'off'
+        },
         languageOptions: {
             parser: tsParser,
             parserOptions: {
