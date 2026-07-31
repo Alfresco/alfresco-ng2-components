@@ -29,7 +29,7 @@ import {
     OAuthLogger
 } from 'angular-oauth2-oidc';
 import { WebCryptoJwksValidationHandler } from './web-crypto-jwks-validation-handler';
-import { firstValueFrom, from, Observable, race, ReplaySubject } from 'rxjs';
+import { from, Observable, race, ReplaySubject } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay, switchMap, take } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { AUTH_MODULE_CONFIG, AuthModuleConfig } from './auth-config';
@@ -227,30 +227,14 @@ export class RedirectAuthService extends AuthService {
             error: () => {}
         });
 
-        const hasInvalidAccessToken = () => !!this.oauthService.getAccessToken() && !this.oauthService.hasValidAccessToken();
-
         this.oauthService.events.pipe(take(1)).subscribe(() => {
-            if (!this._timeSyncService.isEnabled() && hasInvalidAccessToken()) {
+            if (this.oauthService.getAccessToken() && !this.oauthService.hasValidAccessToken()) {
                 if (this.oauthService.showDebugInformation) {
                     this._oauthLogger.warn('Access token not valid. Removing all auth items from storage');
                 }
                 this.AUTH_STORAGE_ITEMS.map((item: string) => this._oauthStorage.removeItem(item));
             }
         });
-        this.oauthService.events
-            .pipe(
-                filter(() => this._timeSyncService.isEnabled() && hasInvalidAccessToken()),
-                take(1),
-                switchMap(() => this._timeSyncService.syncClockOffset())
-            )
-            .subscribe(() => {
-                if (!this.oauthService.hasValidAccessToken()) {
-                    if (this.oauthService.showDebugInformation) {
-                        this._oauthLogger.warn('Access token not valid after clock resync. Removing all auth items from storage');
-                    }
-                    this.AUTH_STORAGE_ITEMS.map((item: string) => this._oauthStorage.removeItem(item));
-                }
-            });
 
         this.onLogin = this.authenticated$.pipe(
             filter((authenticated) => authenticated),
@@ -326,17 +310,14 @@ export class RedirectAuthService extends AuthService {
     }
 
     async loginCallback(loginOptions?: LoginOptions): Promise<string | undefined> {
-        const tryToLogin = () =>
-            this._retryLoginService.tryToLoginTimes({
-                ...loginOptions,
-                preventClearHashAfterLogin: this.authModuleConfig.preventClearHashAfterLogin
-            });
-
-        return this.ensureDiscoveryDocument().then(() =>
-            (this._timeSyncService.isEnabled() ? this.firstValueFromSyncClockOffset().then(tryToLogin) : tryToLogin()).then(() =>
-                this._getRedirectUrl()
+        return this.ensureDiscoveryDocument()
+            .then(() =>
+                this._retryLoginService.tryToLoginTimes({
+                    ...loginOptions,
+                    preventClearHashAfterLogin: this.authModuleConfig.preventClearHashAfterLogin
+                })
             )
-        );
+            .then(() => this._getRedirectUrl());
     }
 
     private _getRedirectUrl() {
@@ -365,16 +346,15 @@ export class RedirectAuthService extends AuthService {
             });
         }
 
-        const initializeAuth = () =>
-            this.ensureDiscoveryDocument().then(() => {
+        return this.ensureDiscoveryDocument()
+            .then(() => {
                 this._isDiscoveryDocumentLoadedSubject$.next(true);
                 this.oauthService.setupAutomaticSilentRefresh();
                 return void this.allowRefreshTokenAndSilentRefreshOnMultipleTabs();
+            })
+            .catch(() => {
+                // catch error to prevent the app from crashing when trying to access unprotected routes
             });
-
-        return (this._timeSyncService.isEnabled() ? this.firstValueFromSyncClockOffset().then(initializeAuth) : initializeAuth()).catch(() => {
-            // catch error to prevent the app from crashing when trying to access unprotected routes
-        });
     }
 
     /**
@@ -401,9 +381,7 @@ export class RedirectAuthService extends AuthService {
                     return;
                 }
 
-                const refreshToken = () => originalRefreshToken().then((resp) => (lastUpdatedAccessToken = resp.access_token));
-
-                return this._timeSyncService.isEnabled() ? this.firstValueFromSyncClockOffset().then(refreshToken) : refreshToken();
+                return originalRefreshToken().then((resp) => (lastUpdatedAccessToken = resp.access_token));
             });
 
         const originalSilentRefresh = this.oauthService.silentRefresh.bind(this.oauthService);
@@ -417,16 +395,9 @@ export class RedirectAuthService extends AuthService {
                     lastUpdatedAccessToken = this.oauthService.getAccessToken();
                     return event;
                 } else {
-                    if (this._timeSyncService.isEnabled()) {
-                        await this.firstValueFromSyncClockOffset();
-                    }
                     return originalSilentRefresh(params, noPrompt);
                 }
             });
-    }
-
-    private firstValueFromSyncClockOffset(): Promise<void> {
-        return firstValueFrom(this._timeSyncService.syncClockOffset());
     }
 
     updateIDPConfiguration(config: AuthConfig) {
@@ -448,7 +419,7 @@ export class RedirectAuthService extends AuthService {
             this._oauthLogger.warn('No claims found in the token');
             return false;
         }
-        const now = this._timeSyncService.getCorrectedNow();
+        const now = Date.now();
         const issuedAtMSec = claims.iat * 1000;
         const expiresAtMSec = claims.exp * 1000;
         const clockSkewInMSec = this.oauthService.clockSkewInSec * 1000;

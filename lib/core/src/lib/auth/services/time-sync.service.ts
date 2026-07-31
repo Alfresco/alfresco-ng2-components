@@ -15,15 +15,11 @@
  * limitations under the License.
  */
 
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { OAuthLogger } from 'angular-oauth2-oidc';
-import { Observable, ReplaySubject, defer, of, throwError, timer } from 'rxjs';
-import { catchError, map, share, timeout } from 'rxjs/operators';
-import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
-
-const SERVER_TIME_CACHE_BYPASS_QUERY_PARAM_NAME = 'adf-time-sync';
-const SERVER_TIME_CACHE_WINDOW_IN_MS = 2000;
+import { HttpClient } from '@angular/common/http';
+import { Injectable, Injector, inject } from '@angular/core';
+import { AppConfigService } from '../../app-config/app-config.service';
+import { from, Observable, throwError } from 'rxjs';
+import { catchError, map, timeout } from 'rxjs/operators';
 
 export interface TimeSync {
     outOfSync: boolean;
@@ -36,72 +32,13 @@ export interface TimeSync {
     providedIn: 'root'
 })
 export class TimeSyncService {
-    private readonly _http = inject(HttpClient);
+    private readonly _injector = inject(Injector);
     private readonly _appConfigService = inject(AppConfigService);
-    private readonly _oauthLogger = inject(OAuthLogger, { optional: true });
 
-    /**
-     * Shared, self-expiring server-time request.
-     *
-     * OAuth-event-driven callers ask for the server time in quick succession, which
-     * previously fired one HTTP request per caller. `share` collapses concurrent
-     * subscribers onto a single in-flight request and replays the resolved value to
-     * any caller for the next {@link SERVER_TIME_CACHE_WINDOW_IN_MS}; after the window
-     * elapses the next subscriber triggers a fresh request. `defer` rebuilds the
-     * request options (including a new cache-busting timestamp) for every genuinely
-     * new request. Errors are never cached, so the next caller retries immediately.
-     */
-    private readonly serverTime$: Observable<number> = defer(() => this.requestServerTime()).pipe(
-        share({
-            connector: () => new ReplaySubject<number>(1),
-            resetOnError: true,
-            resetOnComplete: () => timer(SERVER_TIME_CACHE_WINDOW_IN_MS),
-            resetOnRefCountZero: false
-        })
-    );
+    private readonly _http: HttpClient;
 
-    private clockOffsetMs = 0;
-
-    getCorrectedNow(): number {
-        if (!this.isEnabled()) {
-            return Date.now();
-        }
-
-        return Date.now() + this.clockOffsetMs;
-    }
-
-    syncClockOffset(): Observable<void> {
-        if (!this.isEnabled()) {
-            return of(void 0);
-        }
-
-        const startTime = Date.now();
-        let serverTime$: Observable<number>;
-
-        try {
-            serverTime$ = this.getServerTime();
-        } catch {
-            this.clockOffsetMs = 0;
-            return of(void 0);
-        }
-
-        return serverTime$.pipe(
-            map((serverTimeResponse: number) => {
-                const localCurrentTimeInMs = Date.now();
-                const adjustedServerTimeInMs = this.getAdjustedServerTimeInMs(serverTimeResponse, startTime);
-
-                this.clockOffsetMs = adjustedServerTimeInMs - localCurrentTimeInMs;
-                this.debug(
-                    `syncClockOffset: offset set to ${this.clockOffsetMs}ms ` +
-                        `(server=${new Date(adjustedServerTimeInMs).toISOString()}, local=${new Date(localCurrentTimeInMs).toISOString()})`
-                );
-            }),
-            catchError(() => {
-                this.clockOffsetMs = 0;
-                this.debug('syncClockOffset: failed to reach server, offset reset to 0');
-                return of(void 0);
-            })
-        );
+    constructor() {
+        this._http = this._injector.get(HttpClient);
     }
 
     checkTimeSync(maxAllowedClockSkewInSec: number): Observable<TimeSync> {
@@ -109,28 +46,27 @@ export class TimeSyncService {
 
         return this.getServerTime().pipe(
             map((serverTimeResponse: number) => {
-                const localCurrentTimeInMs = Date.now();
-                const adjustedServerTimeInMs = this.getAdjustedServerTimeInMs(serverTimeResponse, startTime);
-                let localTimeInMs = localCurrentTimeInMs;
+                let serverTimeInMs: number;
 
-                if (this.isEnabled()) {
-                    this.clockOffsetMs = adjustedServerTimeInMs - localCurrentTimeInMs;
-                    localTimeInMs = localCurrentTimeInMs + this.clockOffsetMs;
+                const endTime = Date.now();
+                const roundTripTimeInMs = endTime - startTime;
+
+                const isServerTimeResponseInMs = serverTimeResponse.toString().length === 13;
+                if (!isServerTimeResponseInMs) {
+                    serverTimeInMs = serverTimeResponse * 1000;
+                } else {
+                    serverTimeInMs = serverTimeResponse;
                 }
 
-                const timeOffsetInMs = Math.abs(localTimeInMs - adjustedServerTimeInMs);
+                const adjustedServerTimeInMs = serverTimeInMs + roundTripTimeInMs / 2;
+                const localCurrentTimeInMs = Date.now();
+                const timeOffsetInMs = Math.abs(localCurrentTimeInMs - adjustedServerTimeInMs);
                 const maxAllowedClockSkewInMs = maxAllowedClockSkewInSec * 1000;
-                const outOfSync = timeOffsetInMs > maxAllowedClockSkewInMs;
-
-                this.debug(
-                    `checkTimeSync: outOfSync=${outOfSync} ` +
-                        `(local=${new Date(localTimeInMs).toISOString()}, server=${new Date(adjustedServerTimeInMs).toISOString()}, offset=${this.clockOffsetMs}ms)`
-                );
 
                 return {
-                    outOfSync,
+                    outOfSync: timeOffsetInMs > maxAllowedClockSkewInMs,
                     timeOffsetInSec: timeOffsetInMs / 1000,
-                    localDateTimeISO: new Date(localTimeInMs).toISOString(),
+                    localDateTimeISO: new Date(localCurrentTimeInMs).toISOString(),
                     serverDateTimeISO: new Date(adjustedServerTimeInMs).toISOString()
                 };
             }),
@@ -138,77 +74,28 @@ export class TimeSyncService {
         );
     }
 
-    private getAdjustedServerTimeInMs(serverTimeResponse: number, startTime: number): number {
-        let serverTimeInMs: number;
-        const endTime = Date.now();
-        const roundTripTimeInMs = endTime - startTime;
-
-        const isServerTimeResponseInMs = serverTimeResponse.toString().length === 13;
-        if (!isServerTimeResponseInMs) {
-            serverTimeInMs = serverTimeResponse * 1000;
-        } else {
-            serverTimeInMs = serverTimeResponse;
-        }
-
-        return serverTimeInMs + roundTripTimeInMs / 2;
-    }
-
-    isEnabled(): boolean {
-        const timeSync = this._appConfigService.get<boolean | string>(AppConfigValues.AUTH_TIME_SYNC_ENABLED, false);
-        return timeSync === true || timeSync === 'true';
+    /**
+     * Checks if the local time is out of sync with the server time.
+     *
+     * @param maxAllowedClockSkewInSec - The maximum allowed clock skew in seconds.
+     * @returns An Observable that emits a boolean indicating whether the local time is out of sync.
+     */
+    isLocalTimeOutOfSync(maxAllowedClockSkewInSec: number): Observable<boolean> {
+        return this.checkTimeSync(maxAllowedClockSkewInSec).pipe(map((sync) => sync.outOfSync));
     }
 
     private getServerTime(): Observable<number> {
-        return this.serverTime$;
-    }
-
-    private requestServerTime(): Observable<number> {
-        const requestOptions = {
-            observe: 'response' as const,
-            responseType: 'text' as const,
-            ...(this.isEnabled() && {
-                headers: {
-                    'Cache-Control': 'no-cache',
-                    Pragma: 'no-cache'
-                },
-                params: {
-                    [SERVER_TIME_CACHE_BYPASS_QUERY_PARAM_NAME]: Date.now().toString()
-                }
-            })
-        };
-
-        return this._http.get(this.getAppRootUrl(), requestOptions).pipe(
-            map((response: HttpResponse<string>) => this.getServerTimeFromDateHeader(response)),
+        return from(this._http.get<number>(this.getServerTimeUrl())).pipe(
             timeout(5000),
             catchError(() => throwError(() => new Error('Failed to get server time')))
         );
     }
 
-    private getServerTimeFromDateHeader(response: HttpResponse<string>): number {
-        const dateHeader = response.headers.get('date');
-        if (!dateHeader) {
-            throw new Error('Date header is not available.');
+    private getServerTimeUrl(): string {
+        const serverTimeUrl = this._appConfigService.get('serverTimeUrl', '');
+        if (!serverTimeUrl) {
+            throw new Error('serverTimeUrl is not configured.');
         }
-
-        return new Date(dateHeader).getTime();
-    }
-
-    private getAppRootUrl(): string {
-        if (typeof window !== 'undefined') {
-            return window.location.href.split('?')[0].split('#')[0];
-        }
-
-        return '/';
-    }
-
-    private get showDebugInformation(): boolean {
-        const enableDebugInformation = this._appConfigService.get<boolean | string>(AppConfigValues.AUTH_SHOW_DEBUG_INFORMATION, false);
-        return enableDebugInformation === true || enableDebugInformation === 'true';
-    }
-
-    private debug(message: string): void {
-        if (this.showDebugInformation) {
-            this._oauthLogger?.info(`[TimeSync] ${message}`);
-        }
+        return serverTimeUrl;
     }
 }
