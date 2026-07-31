@@ -259,18 +259,16 @@ describe('ContentMetadataComponent', () => {
 
     describe('Copy to clipboard configuration', () => {
         it('should set displayCopyToClipboardIcon to true when config value is true', () => {
-            spyOn(appConfigService, 'get').and.callFake((key: string, defaultValue?: any) =>
-                key === 'content-metadata.display-copy-to-clipboard-icon' ? true : defaultValue
-            );
+            const getSpy = spyOn(appConfigService, 'get').and.callThrough() as jasmine.Spy;
+            getSpy.withArgs('content-metadata.display-copy-to-clipboard-icon').and.returnValue(true);
             const newFixture = TestBed.createComponent(ContentMetadataComponent);
 
             expect(newFixture.componentInstance.displayCopyToClipboardIcon).toBeTrue();
         });
 
         it('should set displayCopyToClipboardIcon to false when config value is false', () => {
-            spyOn(appConfigService, 'get').and.callFake((key: string, defaultValue?: any) =>
-                key === 'content-metadata.display-copy-to-clipboard-icon' ? false : defaultValue
-            );
+            const getSpy = spyOn(appConfigService, 'get').and.callThrough() as jasmine.Spy;
+            getSpy.withArgs('content-metadata.display-copy-to-clipboard-icon').and.returnValue(false);
             const newFixture = TestBed.createComponent(ContentMetadataComponent);
 
             expect(newFixture.componentInstance.displayCopyToClipboardIcon).toBeFalse();
