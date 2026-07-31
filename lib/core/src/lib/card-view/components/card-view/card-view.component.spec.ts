@@ -81,6 +81,20 @@ describe('CardViewComponent', () => {
         expect(testingUtils.getByDataAutomationId('datepicker-some-key')).not.toBeNull('Datepicker should be in DOM');
     });
 
+    it('should pass through displayCopyToClipboardIcon property to the item dispatcher', () => {
+        component.displayCopyToClipboardIcon = false;
+        component.properties = [new CardViewTextItemModel({ label: 'My label', value: 'My value', key: 'some key' })];
+        fixture.detectChanges();
+
+        const dispatcher = testingUtils.getByCSS('adf-card-view-item-dispatcher').componentInstance;
+        expect(dispatcher.displayCopyToClipboardIcon).toBeFalse();
+
+        component.displayCopyToClipboardIcon = true;
+        fixture.detectChanges();
+
+        expect(dispatcher.displayCopyToClipboardIcon).toBeTrue();
+    });
+
     it('should render the date in the correct format', async () => {
         component.properties = [
             new CardViewDateItemModel({

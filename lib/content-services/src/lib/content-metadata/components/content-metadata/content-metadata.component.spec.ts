@@ -50,6 +50,7 @@ describe('ContentMetadataComponent', () => {
     let contentMetadataService: ContentMetadataService;
     let updateService: CardViewContentUpdateService;
     let nodesApiService: NodesApiService;
+    let appConfigService: AppConfigService;
     let node: Node;
     let folderNode: Node;
     let tagService: TagService;
@@ -212,6 +213,7 @@ describe('ContentMetadataComponent', () => {
         tagService = TestBed.inject(TagService);
         categoryService = TestBed.inject(CategoryService);
         notificationService = TestBed.inject(NotificationService);
+        appConfigService = TestBed.inject(AppConfigService);
         const propertyDescriptorsService = TestBed.inject(PropertyDescriptorsService);
         const classesApi = propertyDescriptorsService['classesApi'];
 
@@ -252,6 +254,22 @@ describe('ContentMetadataComponent', () => {
 
         it('should have expanded input param as false by default', () => {
             expect(component.expanded).toBeFalse();
+        });
+    });
+
+    describe('Copy to clipboard configuration', () => {
+        it('should set displayCopyToClipboardIcon to true when config value is true', () => {
+            appConfigService.config['content-metadata'] = { 'display-copy-to-clipboard-icon': true };
+            const newFixture = TestBed.createComponent(ContentMetadataComponent);
+
+            expect(newFixture.componentInstance.displayCopyToClipboardIcon).toBeTrue();
+        });
+
+        it('should set displayCopyToClipboardIcon to false when config value is false', () => {
+            appConfigService.config['content-metadata'] = { 'display-copy-to-clipboard-icon': false };
+            const newFixture = TestBed.createComponent(ContentMetadataComponent);
+
+            expect(newFixture.componentInstance.displayCopyToClipboardIcon).toBeFalse();
         });
     });
 

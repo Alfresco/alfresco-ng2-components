@@ -21,6 +21,7 @@ import { PropertiesViewerWidgetComponent } from './properties-viewer.widget';
 import { fakeNodeWithProperties } from '../../../mocks/attach-file-cloud-widget.mock';
 import { NodesApiService, BasicPropertiesService } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
 describe('PropertiesViewerWidgetComponent', () => {
     let widget: PropertiesViewerWidgetComponent;
@@ -95,6 +96,31 @@ describe('PropertiesViewerWidgetComponent', () => {
         const propertiesViewer = element.querySelector('adf-properties-viewer-wrapper');
 
         expect(propertiesViewer).not.toBeNull();
+    });
+
+    it('should default displayCopyToClipboardIcon to true when not set in options', async () => {
+        widget.field.value = '1234';
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const wrapper = fixture.debugElement.query(By.css('adf-properties-viewer-wrapper')).componentInstance;
+
+        expect(wrapper.displayCopyToClipboardIcon).toBeTrue();
+    });
+
+    it('should pass displayCopyToClipboardIcon from options to the properties viewer wrapper', async () => {
+        widget.field = new FormFieldModel(new FormModel(), {
+            value: '1234',
+            params: { propertiesViewerOptions: { displayCopyToClipboardIcon: false } }
+        });
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const wrapper = fixture.debugElement.query(By.css('adf-properties-viewer-wrapper')).componentInstance;
+
+        expect(wrapper.displayCopyToClipboardIcon).toBeFalse();
     });
 
     it('should emit the node when node content is loaded', async () => {

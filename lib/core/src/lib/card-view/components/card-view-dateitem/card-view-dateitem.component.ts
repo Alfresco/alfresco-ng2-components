@@ -90,7 +90,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     copyToClipboardAction = true;
 
     @Input()
-    displayCopyToClipboardIcon: boolean = true;
+    displayCopyToClipboardIcon = true;
 
     @ViewChild('datetimePicker')
     public datepicker: MatDatetimepickerComponent<any>;

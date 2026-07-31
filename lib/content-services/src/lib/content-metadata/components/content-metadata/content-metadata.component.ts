@@ -133,7 +133,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
 
     /** Toggles whether or not to display the copy to clipboard icon. */
     @Input()
-    displayCopyToClipboardIcon: boolean = true;
+    displayCopyToClipboardIcon = true;
 
     /** Toggles whether or not to enable chips for multivalued properties. */
     @Input()

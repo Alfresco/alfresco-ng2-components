@@ -72,7 +72,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     copyToClipboardAction = true;
 
     @Input()
-    displayCopyToClipboardIcon: boolean = true;
+    displayCopyToClipboardIcon = true;
 
     @Input()
     useChipsForMultiValueProperty = true;
