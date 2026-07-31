@@ -305,7 +305,7 @@ describe('ContentMetadataComponent', () => {
             const getBasicPropertiesSpy = spyOn(contentMetadataService, 'getBasicProperties').and.returnValue(of([]));
             getGroupedPropertiesSpy.and.returnValue(of([]));
 
-            component.ngOnChanges({ node: new SimpleChange(null, testNode, true) });
+            component.ngOnChanges({ node: new SimpleChange(null, testNode, false) });
             tick(600);
 
             expect(getBasicPropertiesSpy).toHaveBeenCalledWith(testNode, 'custom-preset');
