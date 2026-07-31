@@ -67,6 +67,7 @@ export default [
             'projects/**/*',
             '**/node_modules/**/*',
             'lib/cli/node_modules/**/*',
+            'lib/core/src/lib/icon',
             '**/node_modules',
             '**/assets',
             '/scripts',
