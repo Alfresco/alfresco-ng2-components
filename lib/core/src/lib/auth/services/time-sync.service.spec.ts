@@ -97,20 +97,14 @@ describe('TimeSyncService', () => {
 
     const appRootUrl = (): string => window.location.href.split('?')[0].split('#')[0];
 
-    const expectAppRootTimeRequest = (expectCacheBusting = true): TestRequest => {
+    const expectAppRootTimeRequest = (): TestRequest => {
         const request = httpMock.expectOne((req) => req.url === appRootUrl());
 
         expect(request.request.method).toBe('GET');
         expect(request.request.responseType).toBe('text');
-        if (expectCacheBusting) {
-            expect(request.request.headers.get('Cache-Control')).toBe('no-cache');
-            expect(request.request.headers.get('Pragma')).toBe('no-cache');
-            expect(request.request.params.has('adf-time-sync')).toBeTrue();
-        } else {
-            expect(request.request.headers.has('Cache-Control')).toBeFalse();
-            expect(request.request.headers.has('Pragma')).toBeFalse();
-            expect(request.request.params.has('adf-time-sync')).toBeFalse();
-        }
+        expect(request.request.headers.get('Cache-Control')).toBe('no-cache');
+        expect(request.request.headers.get('Pragma')).toBe('no-cache');
+        expect(request.request.params.has('adf-time-sync')).toBeTrue();
 
         return request;
     };
@@ -311,6 +305,30 @@ describe('TimeSyncService', () => {
         }));
     });
 
+    describe('cache-busting query parameter', () => {
+        const timeSyncStates = [
+            { label: 'enabled', timeSync: true },
+            { label: 'disabled', timeSync: false }
+        ];
+
+        timeSyncStates.forEach(({ label, timeSync }) => {
+            it(`should carry the adf-time-sync parameter set to the current timestamp when timeSync is ${label}`, fakeAsync(() => {
+                configureApp({ timeSync });
+                const mockTimestamp = 1_700_000_000_000;
+                spyOn(Date, 'now').and.returnValue(mockTimestamp);
+
+                service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC).subscribe();
+
+                const request = httpMock.expectOne((req) => req.url === appRootUrl());
+                expect(request.request.params.get('adf-time-sync')).toBe(mockTimestamp.toString());
+                expect(request.request.urlWithParams).toBe(`${appRootUrl()}?adf-time-sync=${mockTimestamp}`);
+
+                flushDateHeader(request);
+                tick(SERVER_TIME_CACHE_WINDOW_IN_MS);
+            }));
+        });
+    });
+
     describe('clock skew scenario matrix', () => {
         describe('timeSync not configured', () => {
             clockSkewScenarios.forEach((scenario) => {
@@ -335,7 +353,7 @@ describe('TimeSyncService', () => {
                     spyOn(Date, 'now').and.returnValue(rawLocalNow);
 
                     const check = firstValueFrom(service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC));
-                    flushDateHeader(expectAppRootTimeRequest(false));
+                    flushDateHeader(expectAppRootTimeRequest());
 
                     expectTimeSyncResult(await check, {
                         outOfSync: scenario.skewSeconds > MAX_ALLOWED_CLOCK_SKEW_IN_SEC,
@@ -437,7 +455,7 @@ describe('TimeSyncService', () => {
                 spyOn(Date, 'now').and.returnValue(SERVER_NOW);
 
                 const check = firstValueFrom(service.checkTimeSync(MAX_ALLOWED_CLOCK_SKEW_IN_SEC));
-                flushDateHeader(expectAppRootTimeRequest(false));
+                flushDateHeader(expectAppRootTimeRequest());
                 await check;
 
                 expect(oauthLoggerSpy.info).toHaveBeenCalledWith(jasmine.stringContaining('[TimeSync] checkTimeSync: outOfSync='));

@@ -166,15 +166,13 @@ export class TimeSyncService {
         const requestOptions = {
             observe: 'response' as const,
             responseType: 'text' as const,
-            ...(this.isEnabled() && {
-                headers: {
-                    'Cache-Control': 'no-cache',
-                    Pragma: 'no-cache'
-                },
-                params: {
-                    [SERVER_TIME_CACHE_BYPASS_QUERY_PARAM_NAME]: Date.now().toString()
-                }
-            })
+            headers: {
+                'Cache-Control': 'no-cache',
+                Pragma: 'no-cache'
+            },
+            params: {
+                [SERVER_TIME_CACHE_BYPASS_QUERY_PARAM_NAME]: Date.now().toString()
+            }
         };
 
         return this._http.get(this.getAppRootUrl(), requestOptions).pipe(
