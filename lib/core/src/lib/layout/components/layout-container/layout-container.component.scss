@@ -31,6 +31,10 @@ adf-layout-container {
 }
 
 /* stylelint-disable selector-class-pattern, declaration-no-important */
+// Neutralize Material's built-in sidenav content push (margin/transform + 400ms transition) so
+// ADF's own width/margin animation (sidenavAnimationState/contentAnimationState in the template)
+// is the sole driver. No ADF-owned hook exists on Material's generated .mat-drawer-content, and
+// there is no sidenav token/@Input to disable this behavior — keep the internal selectors.
 #{ms.$mat-sidenav-content},
 #{ms.$mat-drawer-transition} #{ms.$mat-drawer-content} {
     margin-left: 0 !important;
