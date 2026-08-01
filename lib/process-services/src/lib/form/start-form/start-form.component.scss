@@ -91,12 +91,6 @@
                     text-container-shape: 5px
                 )
             );
-
-            & #{ms.$mat-button-label} {
-                width: 58px;
-                height: 20px;
-                font: var(--mat-sys-body-large);
-            }
         }
     }
 }

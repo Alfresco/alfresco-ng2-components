@@ -1,4 +1,3 @@
-@use '../../mat-selectors' as ms;
 @use '../../flex' as flex;
 
 /* cspell: disable-next-line */
@@ -108,11 +107,6 @@
                 display: flex;
                 flex-direction: column;
                 height: 100%;
-
-                #{ms.$mat-card-content} {
-                    height: 100%;
-                    overflow: hidden auto;
-                }
             }
         }
 

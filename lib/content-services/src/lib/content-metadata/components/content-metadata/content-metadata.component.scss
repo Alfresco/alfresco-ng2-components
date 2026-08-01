@@ -1,5 +1,3 @@
-@use '../../../mat-selectors.scss' as ms;
-
 $panel-properties-height: 56px !default;
 
 .adf {
@@ -25,20 +23,6 @@ $panel-properties-height: 56px !default;
 
         .adf-edit-icon-buttons {
             color: var(--mat-sys-on-secondary-container);
-        }
-
-        #{ms.$mat-chip} {
-            &.metadata-properties-tag-chip {
-                // TODO: bug open https://github.com/angular/components/issues/26584
-                /* stylelint-disable selector-class-pattern */
-                .mdc-evolution-chip__cell--primary,
-                .mdc-evolution-chip__action--primary,
-                .mat-mdc-chip-action-label {
-                    overflow: hidden;
-                }
-
-                /* stylelint-enable selector-class-pattern */
-            }
         }
 
         .adf-metadata-no-item-added {

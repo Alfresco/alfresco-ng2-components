@@ -1,5 +1,4 @@
 /* stylelint-disable selector-class-pattern */
-@use '../../../../styles/mat-selectors' as ms;
 @use '../../../../styles/mixins' as mixins;
 
 .adf {
@@ -7,16 +6,6 @@
         &-container {
             display: grid;
             align-items: flex-start;
-        }
-
-        #{ms.$mat-form-field-suffix} {
-            top: 26px;
-        }
-    }
-
-    &-left-label-input-datepicker {
-        #{ms.$mat-form-field-suffix} {
-            top: 0;
         }
     }
 }
