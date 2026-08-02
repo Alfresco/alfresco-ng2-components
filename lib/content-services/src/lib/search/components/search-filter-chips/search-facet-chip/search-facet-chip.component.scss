@@ -1,10 +1,4 @@
-@use '../../../../mat-selectors.scss' as ms;
-
 .adf-search-filter-chip {
-    #{ms.$mat-evolution-chip-graphic} {
-        display: none;
-    }
-
     &[disabled] {
         pointer-events: none;
     }

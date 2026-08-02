@@ -23,7 +23,7 @@
     </ng-template>
 </mat-chip>
 
-<mat-menu #menu="matMenu" class="adf-search-widget-extra-width" backdropClass="adf-search-filter-chip-menu" (closed)="onClosed()">
+<mat-menu #menu="matMenu" class="adf-search-widget-extra-width adf-search-facet-chip-tabbed-menu-panel" backdropClass="adf-search-filter-chip-menu" (closed)="onClosed()">
     <div #menuContainer [attr.data-automation-id]="'search-field-' + tabbedFacet.label">
         <adf-search-filter-menu-card (click)="$event.stopPropagation()"
                                      (keydown.tab)="$event.stopPropagation();"
