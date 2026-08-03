@@ -205,6 +205,27 @@ export class ProcessContentService {
     }
 
     /**
+     * Batch variant of getProcessesAndTasksOnContent. Accepts multiple source document ids
+     * in one request (up to 500) and returns the related processes and tasks for all of them.
+     *
+     * @param sourceIds - ids of the documents to query process participation for (up to 500)
+     * @param source - source of the documents that workflows or tasks have been started with
+     * @param size - size of the entries to get
+     * @param page - page number
+     * @returns Observable<ResultListDataRepresentationRelatedProcessTask>
+     */
+    getProcessesAndTasksOnContentBatch(
+        sourceIds: string[],
+        source: string,
+        size?: number,
+        page?: number
+    ): Observable<ResultListDataRepresentationRelatedProcessTask> {
+        return from(this.contentApi.getProcessesAndTasksOnContentBatch(sourceIds, source, size, page)).pipe(
+            catchError((err) => this.handleError(err))
+        );
+    }
+
+    /**
      * Creates a JSON representation of data.
      *
      * @param res Object representing data

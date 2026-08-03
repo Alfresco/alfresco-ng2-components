@@ -318,4 +318,33 @@ export class ContentApi extends BaseApi {
             }
         });
     }
+
+    /**
+     * Maximum number of source document ids accepted by the batch document-runtime endpoint in a single request.
+     */
+    static readonly DOCUMENT_RUNTIME_BATCH_SIZE_LIMIT = 500;
+
+    /**
+     * Batch variant of getProcessesAndTasksOnContent. Accepts multiple source document ids
+     * in one request (up to 500) and returns the related processes and tasks for all of them.
+     * @param sourceIds - ids of the documents to query process participation for (up to 500)
+     * @param source - source of the documents that workflows or tasks have been started with
+     * @param size - size of the entries to get
+     * @param page - page number
+     * @return Promise<ResultListDataRepresentationRelatedProcessTask>
+     */
+    getProcessesAndTasksOnContentBatch(
+        sourceIds: string[],
+        source: string,
+        size?: number,
+        page?: number
+    ): Promise<ResultListDataRepresentationRelatedProcessTask> {
+        throwIfNotDefined(sourceIds, 'sourceIds');
+        throwIfNotDefined(source, 'source');
+
+        return this.post({
+            path: '/api/enterprise/document-runtime',
+            bodyParam: { sourceIds, source, size, page }
+        });
+    }
 }
