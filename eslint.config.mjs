@@ -70,10 +70,9 @@ export default [
             '/scripts'
         ]
     },
-    // Uncomment this once all linting issues related to unicorn are fixed
-    // Note to developers:
-    // you can uncomment the full ruleset locally when fixing issues, and then comment
-    // that will allow splitting the work into smaller chunks
+    // You can uncomment unicorn.configs['recommended'], fix a few issues, and comment it out again until all issues are resolved.
+    // Expect significant effort to fix all reported issues.
+    // Note to developers: when enabling unicorn.configs['recommended'], remove unicorn from plugins to avoid plugin redefinition errors.
     // unicorn.configs['recommended'],
     ...storybook.configs['flat/recommended'],
     {
