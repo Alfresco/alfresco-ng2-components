@@ -59,9 +59,9 @@
         border-bottom: unset;
         opacity: 1;
 
-        &#{ms.$mat-tab-label} {
-            flex-grow: 1;
-        }
+        // No Material rule sets flex-grow on the individual tab, so the ADF class alone
+        // is enough — the .mat-mdc-tab compound was redundant specificity.
+        flex-grow: 1;
 
         &:has(span) {
             height: 32px;

@@ -1,7 +1,6 @@
-@use '../../../styles/mat-selectors' as ms;
-
 .adf-attach-form {
-    #{ms.$mat-form-field} {
+    // Material form-field is display:inline-flex; force full width via the element selector.
+    mat-form-field {
         width: 100%;
     }
 
