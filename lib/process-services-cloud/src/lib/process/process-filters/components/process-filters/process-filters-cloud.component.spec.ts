@@ -32,6 +32,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatIconHarness } from '@angular/material/icon/testing';
 import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
+import { TaskCloudEngineEvent } from '../../../../models/engine-event-cloud.model';
 
 @Component({ selector: 'adf-cloud-dummy', template: '' })
 class DummyComponent {}
@@ -538,7 +539,7 @@ describe('ProcessFiltersCloudComponent', () => {
             });
 
             it('should use notificationDebounceTime from app config', () => {
-                const appConfigService = TestBed.inject(AppConfigService);
+                const appConfigService: AppConfigService = TestBed.inject(AppConfigService);
                 spyOn(appConfigService, 'get').and.callFake((key: string, defaultValue: any) => {
                     if (key === 'notificationDebounceTime') {
                         return 5000;
@@ -552,7 +553,7 @@ describe('ProcessFiltersCloudComponent', () => {
             });
 
             it('should debounce notification subscription using the configured debounce time', fakeAsync(() => {
-                const notifications$ = new Subject<any>();
+                const notifications$ = new Subject<TaskCloudEngineEvent[]>();
                 getProcessNotificationSubscriptionSpy.and.returnValue(notifications$.asObservable());
                 component.appName = 'mock-app-name';
 
