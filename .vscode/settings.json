@@ -28,6 +28,17 @@
     "postcss",
     "scss"
   ],
+  "eslint.workingDirectories": [
+    ".",
+    "lib/cli",
+    "lib/content-services",
+    "lib/core",
+    "lib/extensions",
+    "lib/insights",
+    "lib/js-api",
+    "lib/process-services",
+    "lib/process-services-cloud"
+  ],
   "editor.guides.indentation": true,
   "typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
-
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { LocalizedDatePipe, ThumbnailService, UploadDirective, DisplayableCMProperties, IconModule } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';

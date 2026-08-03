@@ -16,7 +16,9 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigValues, UnsavedChangesDialogComponent, UserPreferencesService } from '@alfresco/adf-core';
+import { AppConfigValues } from '../../app-config/app-config.service';
+import { UnsavedChangesDialogComponent } from './unsaved-changes-dialog.component';
+import { UserPreferencesService } from '../../common/services/user-preferences.service';
 import { DebugElement } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
 import { UnsavedChangesDialogData } from './unsaved-changes-dialog.model';

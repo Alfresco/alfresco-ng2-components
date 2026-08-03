@@ -29,6 +29,14 @@ interface AuditCommandArgs {
     outDir?: string;
 }
 
+/**
+ * Render the audit report as a Markdown page.
+ *
+ * @param jsonAudit parsed npm audit JSON output
+ * @param projName project name
+ * @param projVersion project version
+ * @returns rendered Markdown string
+ */
 function renderAuditPage(jsonAudit: any, projName: string, projVersion: string): string {
     const rows: string[] = [];
     if (jsonAudit.auditReportVersion >= 2) {
@@ -122,7 +130,6 @@ Options:
     }
 
     return new Promise((resolve, reject) => {
-        // eslint-disable-next-line no-console
         console.log(`Running audit on ${packagePath}`);
 
         const packageJson = JSON.parse(fs.readFileSync(packagePath).toString());
@@ -172,7 +179,6 @@ Options:
 
         fs.writeFileSync(outputFile, mdText);
 
-        // eslint-disable-next-line no-console
         console.log(`Report saved as ${outputFile}`);
         resolve(0);
     });

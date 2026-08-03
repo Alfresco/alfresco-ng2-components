@@ -21,7 +21,7 @@ import * as diagramsGatewaysMock from '../../mock/diagram/diagram-gateways.mock'
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { UnitTestingUtils } from '@alfresco/adf-core';
-import { RaphaelRhombusDirective } from '@alfresco/adf-insights';
+import { RaphaelRhombusDirective } from './raphael/raphael-rhombus.component';
 import { DiagramsService } from '../services/diagrams.service';
 import { of } from 'rxjs';
 

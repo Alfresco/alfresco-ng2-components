@@ -85,6 +85,7 @@ export class ExtensionLoaderService {
      * Filters element by **enabled** and **order** attributes.
      * Example:
      * `getElements<ViewerExtensionRef>(config, 'features.viewer.extensions')`
+     *
      * @param config configuration settings
      * @param key element key
      * @param fallback fallback array of values

@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import { VersionCompatibilityService, AlfrescoApiService } from '@alfresco/adf-content-services';
 import {
     ContentLinkModel,
@@ -95,7 +93,6 @@ describe('FormCloudComponent', () => {
         template: '<div></div>',
         standalone: false
     })
-    // eslint-disable-next-line @angular-eslint/component-class-suffix
     class CustomWidget {
         typeId = 'CustomWidget';
     }

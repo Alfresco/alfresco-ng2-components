@@ -31,6 +31,7 @@ import { throwIfNotDefined } from '../../../assert';
 export class TaskFormsApi extends BaseApi {
     /**
      * Complete a task form
+     *
      * @param taskId taskId
      * @param completeTaskFormRepresentation completeTaskFormRepresentation
      * @return Promise<{}>
@@ -52,6 +53,7 @@ export class TaskFormsApi extends BaseApi {
 
     /**
      * Get task variables
+     *
      * @param taskId taskId
      * @return Promise<ProcessInstanceVariableRepresentation>
      */
@@ -71,6 +73,7 @@ export class TaskFormsApi extends BaseApi {
     /**
      * Retrieve Column Field Values
      * Specific case to retrieve information on a specific column
+     *
      * @param taskId taskId
      * @param field field
      * @param column column
@@ -107,6 +110,7 @@ export class TaskFormsApi extends BaseApi {
      * Retrieve populated field values
      *
      * Form field values that are populated through a REST backend, can be retrieved via this service
+     *
      * @param taskId taskId
      * @param field field
      * @return Promise<FormValueRepresentation []>
@@ -128,6 +132,7 @@ export class TaskFormsApi extends BaseApi {
 
     /**
      * Get a task form
+     *
      * @param taskId taskId
      * @returns Promise<FormDefinitionRepresentation>
      */
@@ -146,6 +151,7 @@ export class TaskFormsApi extends BaseApi {
 
     /**
      * Save a task form
+     *
      * @param taskId taskId
      * @param saveTaskFormRepresentation saveTaskFormRepresentation
      * @return Promise<{}>
@@ -167,6 +173,7 @@ export class TaskFormsApi extends BaseApi {
 
     /**
      * Retrieve Task Form Variables
+     *
      * @param taskId taskId
      */
     getTaskFormVariables(taskId: string) {

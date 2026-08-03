@@ -29,6 +29,7 @@ export class ClassificationReasonsApi extends BaseApi {
      * Creates a new classification reason.
      *
      * **Note:** You can create more than one reason by specifying a list of reasons in the JSON body.
+     *
      * @param classificationReason Classification reason
      * @returns Promise<ClassificationReasonEntry>
      */
@@ -46,6 +47,7 @@ export class ClassificationReasonsApi extends BaseApi {
      *
      * You can't delete a classification reason that is being used to classify content.
      * There must be at least one classification reason.
+     *
      * @param classificationReasonId The identifier for the classification reason
      * @returns Promise<{}>
      */
@@ -64,6 +66,7 @@ export class ClassificationReasonsApi extends BaseApi {
 
     /**
      * List all classification reasons
+     *
      * @param opts Optional parameters
      * @returns Promise<ClassificationReasonsPaging>
      */
@@ -82,6 +85,7 @@ export class ClassificationReasonsApi extends BaseApi {
 
     /**
      * Get classification reason information
+     *
      * @param classificationReasonId The identifier for the classification reason
      * @returns Promise<ClassificationReasonEntry>
      */
@@ -100,6 +104,7 @@ export class ClassificationReasonsApi extends BaseApi {
 
     /**
      * Updates the classification reason with id **classificationReasonId**. For example, you can change a classification reason code or description.
+     *
      * @param classificationReasonId The identifier for the classification reason
      * @param classificationReason Classification reason
      * @returns Promise<ClassificationReasonEntry>

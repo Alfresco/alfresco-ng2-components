@@ -75,7 +75,6 @@ export class NodeTooltipUtils {
             return '';
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const { properties, description, title } = node.entry as any;
 
         // Check both direct properties and cm: properties for compatibility
@@ -93,7 +92,7 @@ export class NodeTooltipUtils {
      * @param allEntries - Array of all entries to check for duplicates
      * @returns The display title, with ID/name appended if duplicate exists
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
     static getLibraryTitle(library: any, allEntries: any[]): string {
         if (!library) {
             return '';

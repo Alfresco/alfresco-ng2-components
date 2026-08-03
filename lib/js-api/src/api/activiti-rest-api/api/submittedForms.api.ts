@@ -26,6 +26,7 @@ import { throwIfNotDefined } from '../../../assert';
 export class SubmittedFormsApi extends BaseApi {
     /**
      * List submissions for a form
+     *
      * @param formId formId
      * @param opts Optional parameters
      * @return Promise<ResultListDataRepresentationSubmittedFormRepresentation>
@@ -50,6 +51,7 @@ export class SubmittedFormsApi extends BaseApi {
 
     /**
      * List submissions for a process instance
+     *
      * @param processId processId
      * @return Promise<ResultListDataRepresentationSubmittedFormRepresentation>
      */
@@ -69,6 +71,7 @@ export class SubmittedFormsApi extends BaseApi {
 
     /**
      * Get a form submission
+     *
      * @param submittedFormId submittedFormId
      * @return Promise<SubmittedFormRepresentation>
      */
@@ -88,6 +91,7 @@ export class SubmittedFormsApi extends BaseApi {
 
     /**
      * Get the submitted form for a task
+     *
      * @param taskId taskId
      * @return Promise<SubmittedFormRepresentation>
      */

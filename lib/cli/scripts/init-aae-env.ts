@@ -90,8 +90,9 @@ async function healthCheck(nameService: string) {
 }
 
 /**
- * Get deployed application
+ * Get deployed application.
  *
+ * @returns list of deployed applications
  */
 async function getApplications(): Promise<{ list: { entries: any[] } }> {
     const url = `${args.host}/deployment-service/v1/applications`;
@@ -236,9 +237,10 @@ function getProjectRelease(projectId: string) {
 }
 
 /**
- * Release project
+ * Release project.
  *
  * @param projectId project id
+ * @returns release response
  */
 async function releaseProject(projectId: string) {
     const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
@@ -307,9 +309,10 @@ function deleteProject(projectId: string) {
 }
 
 /**
- * Import and release project
+ * Import and release project.
  *
  * @param absoluteFilePath path to project file
+ * @returns released project
  */
 async function importAndReleaseProject(absoluteFilePath: string) {
     const fileContent = fs.createReadStream(absoluteFilePath);
@@ -585,9 +588,10 @@ async function deployWithPayload(currentAbsentApp: any, projectRelease: any, env
 }
 
 /**
- * Check if descriptor exists
+ * Check if descriptor exists.
  *
  * @param name descriptor name
+ * @returns `true` if descriptor exists
  */
 async function checkDescriptorExist(name: string): Promise<boolean> {
     logger.info(`Check descriptor ${name} exist in the list `);
@@ -606,10 +610,11 @@ async function checkDescriptorExist(name: string): Promise<boolean> {
 }
 
 /**
- * Import and release project
+ * Import and release project.
  *
  * @param app application
  * @param tag tag
+ * @returns released project
  */
 async function importProjectAndRelease(app: any, tag?: string) {
     const appLocationReplaced = app.file_location(tag);
@@ -667,10 +672,11 @@ function findFailingApps(deployedApps: any[]): any[] {
 }
 
 /**
- * Get file from the remote
+ * Get file from the remote.
  *
  * @param url url to file
  * @param name name
+ * @returns resolves when the file is downloaded
  */
 async function getFileFromRemote(url: string, name: string): Promise<void> {
     return fetch(url)

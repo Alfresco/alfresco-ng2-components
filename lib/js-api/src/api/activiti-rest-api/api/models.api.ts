@@ -32,6 +32,7 @@ export interface GetModelsQuery {
 export class ModelsApi extends BaseApi {
     /**
      * Create a new model
+     *
      * @param modelRepresentation modelRepresentation
      * @return Promise<ModelRepresentation>
      */
@@ -47,6 +48,7 @@ export class ModelsApi extends BaseApi {
 
     /**
      * Delete a model
+     *
      * @param modelId modelId
      * @param opts Optional parameters
      * @param opts.cascade cascade
@@ -74,6 +76,7 @@ export class ModelsApi extends BaseApi {
 
     /**
      * Duplicate an existing model
+     *
      * @param modelId modelId
      * @param modelRepresentation modelRepresentation
      * @return Promise<ModelRepresentation>
@@ -96,6 +99,7 @@ export class ModelsApi extends BaseApi {
 
     /**
      * Get model content
+     *
      * @param modelId modelId
      * @return Promise<ObjectNode>
      */
@@ -114,6 +118,7 @@ export class ModelsApi extends BaseApi {
 
     /**
      * Get a model's thumbnail image
+     *
      * @param modelId modelId
      * @return Promise<string>
      */
@@ -135,6 +140,7 @@ export class ModelsApi extends BaseApi {
      * Get a model
      *
      * Models act as containers for process, form, decision table and app definitions
+     *
      * @param modelId modelId
      * @param opts Optional parameters
      * @return Promise<ModelRepresentation>
@@ -160,6 +166,7 @@ export class ModelsApi extends BaseApi {
 
     /**
      * List process definition models shared with the current user
+     *
      * @return Promise<ResultListDataRepresentationModelRepresentation>
      */
     getModelsToIncludeInAppDefinition(): Promise<ResultListDataRepresentationModelRepresentation> {
@@ -171,6 +178,7 @@ export class ModelsApi extends BaseApi {
 
     /**
      * List models (process, form, decision rule or app)
+     *
      * @param opts Optional parameters
      * @return Promise<ResultListDataRepresentationModelRepresentation>
      */
@@ -184,6 +192,7 @@ export class ModelsApi extends BaseApi {
 
     /**
      * Create a new version of a model
+     *
      * @param modelId modelId
      * @param file file
      * @return Promise<ModelRepresentation>
@@ -211,6 +220,7 @@ export class ModelsApi extends BaseApi {
 
     /**
      * Import a BPMN 2.0 XML file
+     *
      * @param file file
      * @return Promise<ModelRepresentation>
      */
@@ -231,6 +241,7 @@ export class ModelsApi extends BaseApi {
 
     /**
      * Update model content
+     *
      * @param modelId modelId
      * @param values values
      * @return Promise<ModelRepresentation>
@@ -255,6 +266,7 @@ export class ModelsApi extends BaseApi {
      * Update a model
      *
      * This method allows you to update the metadata of a model. In order to update the content of the model you will need to call the specific endpoint for that model type.
+     *
      * @param modelId modelId
      * @param updatedModel updatedModel
      * @return Promise<ModelRepresentation>
@@ -277,6 +289,7 @@ export class ModelsApi extends BaseApi {
 
     /**
      * Validate model content
+     *
      * @param modelId modelId
      * @param opts Optional parameters
      * @param opts.values values

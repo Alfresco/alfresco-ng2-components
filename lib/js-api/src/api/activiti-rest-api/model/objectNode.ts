@@ -20,7 +20,6 @@ export interface ObjectNode {
     bigDecimal?: boolean;
     bigInteger?: boolean;
     binary?: boolean;
-    // eslint-disable-next-line id-blacklist
     boolean?: boolean;
     containerNode?: boolean;
     double?: boolean;
@@ -32,7 +31,7 @@ export interface ObjectNode {
     missingNode?: boolean;
     nodeType?: 'ARRAY' | 'BINARY' | 'BOOLEAN' | 'MISSING' | 'NULL' | 'NUMBER' | 'OBJECT' | 'POJO' | 'STRING';
     null?: boolean;
-    // eslint-disable-next-line id-blacklist
+
     number?: boolean;
     object?: boolean;
     pojo?: boolean;

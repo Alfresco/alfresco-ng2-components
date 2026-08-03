@@ -33,7 +33,7 @@ export class ClipboardDirective {
     private readonly translate = inject(TranslateService, { optional: true });
 
     /** Translation key or message for the tooltip. */
-    // eslint-disable-next-line @angular-eslint/no-input-rename
+
     @Input('adf-clipboard')
     placeholder: string;
 
@@ -42,7 +42,7 @@ export class ClipboardDirective {
     target: HTMLInputElement | HTMLTextAreaElement;
 
     /** Translation key or message for snackbar notification. */
-    // eslint-disable-next-line @angular-eslint/no-input-rename
+
     @Input('clipboard-notification') message: string;
 
     @HostListener('mouseenter')

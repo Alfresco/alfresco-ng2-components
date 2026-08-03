@@ -101,6 +101,12 @@ function getPackageFile(packagePath: string): PackageInfo {
     }
 }
 
+/**
+ * Convert a license expression to linked Markdown.
+ *
+ * @param rawExpression raw SPDX license expression
+ * @returns expression with Markdown links
+ */
 function toLinkedLicenseExpression(rawExpression: string): string {
     return rawExpression.replace(/\*/g, '').replace(/[a-zA-Z0-9\-.]+/g, (match: string) => {
         const lowerMatch = match.toLowerCase();
@@ -112,6 +118,14 @@ function toLinkedLicenseExpression(rawExpression: string): string {
     });
 }
 
+/**
+ * Render the license page as Markdown.
+ *
+ * @param filteredPackages packages with license metadata
+ * @param projName project name
+ * @param projVersion project version
+ * @returns rendered Markdown string
+ */
 function renderLicensePage(filteredPackages: Record<string, PackageInfoWithMetadata>, projName: string, projVersion: string): string {
     const rows = Object.entries(filteredPackages).map(([packageName, pack]) => {
         const lastAtSignPos = packageName.lastIndexOf('@');
@@ -192,7 +206,6 @@ Options:
     }
 
     return new Promise((resolve, reject) => {
-        // eslint-disable-next-line no-console
         console.info(`Checking ${packagePath}`);
         const licenseScan = collectProductionLicenses(packagePath, {
             denyList: ['GPL'],
@@ -223,7 +236,7 @@ Options:
         const outputFile = path.join(outputPath, `license-info-${packageJson.version}.md`);
 
         fs.writeFileSync(outputFile, mdText);
-        // eslint-disable-next-line no-console
+
         console.log(`Report saved as ${outputFile}`);
         resolve(0);
     });

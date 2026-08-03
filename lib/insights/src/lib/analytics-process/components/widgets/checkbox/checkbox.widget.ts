@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';

@@ -25,11 +25,13 @@ import { RecordsIncludeQuery } from './types';
 
 /**
  * Records service.
+ *
  * @module RecordsApi
  */
 export class RecordsApi extends BaseApi {
     /**
      * Complete a record
+     *
      * @param recordId The identifier of a record.
      * @param opts Optional parameters
      * @returns Promise<RecordEntry>
@@ -56,6 +58,7 @@ export class RecordsApi extends BaseApi {
 
     /**
      * Delete a record. Deleted file plan components cannot be recovered, they are deleted permanently.
+     *
      * @param recordId The identifier of a record.
      * @returns Promise<{}>
      */
@@ -78,6 +81,7 @@ export class RecordsApi extends BaseApi {
      * You need to specify the target record folder by providing its id **targetParentId**
      * If the record is already filed, a link to the target record folder is created.
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
+     *
      * @param recordId The identifier of a record.
      * @param nodeBodyFile The target record folder id
      * @param opts Optional parameters
@@ -110,6 +114,7 @@ export class RecordsApi extends BaseApi {
      *
      * Mandatory fields and the record's aspects and properties are returned by default.
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
+     *
      * @param recordId The identifier of a record.
      * @param opts Optional parameters
      * @returns Promise<RecordEntry>
@@ -136,6 +141,7 @@ export class RecordsApi extends BaseApi {
 
     /**
      * Get record content
+     *
      * @param recordId The identifier of a record.
      * @param opts Optional parameters
      * @param opts.attachment **true** enables a web browser to download the file as an attachment.
@@ -200,6 +206,7 @@ export class RecordsApi extends BaseApi {
      *
      * **Note:** if you want to add or remove aspects, then you must use **GET /records/{recordId}** first to get the complete set of *aspectNames*.
      * **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
+     *
      * @param recordId The identifier of a record.
      * @param recordBodyUpdate The record information to update.
      * @param opts Optional parameters

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { ContainerColumnModel } from './container-column.model';
 import { ErrorMessageModel } from './error-message.model';

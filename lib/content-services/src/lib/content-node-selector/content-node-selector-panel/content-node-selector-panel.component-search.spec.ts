@@ -28,9 +28,8 @@ import { NodeEntryEvent, ShareDataRow } from '../../document-list';
 import { SearchQueryBuilderService } from '../../search';
 import { SitesService } from '../../common/services/sites.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
-import { UnitTestingUtils } from '../../../../../core/src/lib/testing/unit-testing-utils';
 import { provideRouter } from '@angular/router';
-import { NoopAuthModule } from '@alfresco/adf-core';
+import { NoopAuthModule, UnitTestingUtils } from '@alfresco/adf-core';
 
 const fakeResultSetPaging: ResultSetPaging = {
     list: {

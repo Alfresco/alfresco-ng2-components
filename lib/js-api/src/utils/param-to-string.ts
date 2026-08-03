@@ -17,6 +17,7 @@
 
 /**
  * Returns a string representation for an actual parameter.
+ *
  * @param param The actual parameter.
  * @returns The string representation of <code>param</code>.
  */

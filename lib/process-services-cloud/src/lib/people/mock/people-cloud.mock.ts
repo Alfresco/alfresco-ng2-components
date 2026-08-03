@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, EMPTY, of } from 'rxjs';
 import { IdentityUserModel } from '../models/identity-user.model';
-import { IdentityUserService } from '@alfresco/adf-process-services-cloud';
+import { IdentityUserService } from '../services/identity-user.service';
 
 export const mockYorkshirePudding: IdentityUserModel = {
     id: 'yorkshire',

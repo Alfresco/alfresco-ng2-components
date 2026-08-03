@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable id-blacklist */
-
 import { TemplateRef } from '@angular/core';
 import { DataColumnType } from '@alfresco/adf-extensions';
 

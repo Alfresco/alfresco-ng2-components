@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable no-shadow */
-/* eslint-disable @typescript-eslint/naming-convention */
 export class FormCloudRepresentation {
     id?: string;
     name?: string;

@@ -40,6 +40,7 @@ export interface CombinedInstructionsOpts {
 export class ClassificationGuidesApi extends BaseApi {
     /**
      * Combines instructions from the given topics and the user defined instruction, if any.
+     *
      * @param opts Optional parameters
      * @param opts.instructions Instructions
      * @returns Promise<InstructionEntry>
@@ -53,6 +54,7 @@ export class ClassificationGuidesApi extends BaseApi {
 
     /**
      * Create a classification guide
+     *
      * @param classificationGuide Classification guide
      * @returns Promise<ClassificationGuideEntry>
      */
@@ -67,6 +69,7 @@ export class ClassificationGuidesApi extends BaseApi {
 
     /**
      * Create a subtopic
+     *
      * @param topicId The identifier for the topic
      * @param topic Subtopic
      * @param opts Optional parameters
@@ -95,6 +98,7 @@ export class ClassificationGuidesApi extends BaseApi {
 
     /**
      * Create a topic
+     *
      * @param classificationGuideId The identifier for the classification guide
      * @param topic Topic
      * @param opts Optional parameters
@@ -123,6 +127,7 @@ export class ClassificationGuidesApi extends BaseApi {
 
     /**
      * Delete a classification guide
+     *
      * @param classificationGuideId The identifier for the classification guide
      * @returns Promise<{}>
      */
@@ -141,6 +146,7 @@ export class ClassificationGuidesApi extends BaseApi {
 
     /**
      * Delete a topic
+     *
      * @param topicId The identifier for the topic
      * @returns Promise<{}>
      */
@@ -159,6 +165,7 @@ export class ClassificationGuidesApi extends BaseApi {
 
     /**
      * List all classification guides
+     *
      * @param opts Optional parameters
      * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.
      * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
@@ -187,6 +194,7 @@ export class ClassificationGuidesApi extends BaseApi {
 
     /**
      * List all subtopics
+     *
      * @param topicId The identifier for the topic
      * @param opts Optional parameters
      * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
@@ -235,6 +243,7 @@ export class ClassificationGuidesApi extends BaseApi {
 
     /**
      * List all topics
+     *
      * @param classificationGuideId The identifier for the classification guide
      * @param opts Optional parameters
      * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
@@ -283,6 +292,7 @@ export class ClassificationGuidesApi extends BaseApi {
 
     /**
      * Get classification guide information
+     *
      * @param classificationGuideId The identifier for the classification guide
      * @returns Promise<ClassificationGuideEntry>
      */
@@ -301,6 +311,7 @@ export class ClassificationGuidesApi extends BaseApi {
 
     /**
      * Get topic information
+     *
      * @param topicId The identifier for the topic
      * @param opts Optional parameters
      * @returns Promise<TopicEntry>
@@ -328,6 +339,7 @@ export class ClassificationGuidesApi extends BaseApi {
      * Update a classification guide
      *
      * Updates the classification guide with id **classificationGuideId**. For example, you can rename a classification guide.
+     *
      * @param classificationGuideId The identifier for the classification guide
      * @param classificationGuide Classification guide
      * @returns Promise<ClassificationGuideEntry>
@@ -352,6 +364,7 @@ export class ClassificationGuidesApi extends BaseApi {
      *
      * Updates the topic with id **topicId**.
      * Use this to rename a topic or to add, edit, or remove the instruction associated with it.
+     *
      * @param topicId The identifier for the topic
      * @param topic Topic
      * @param opts Optional parameters

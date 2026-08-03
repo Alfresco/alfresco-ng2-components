@@ -56,7 +56,6 @@ export class NameColumnComponent implements OnInit {
     private readonly nodesApiService = inject(NodesApiService);
 
     @Input({ required: true })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     context: any;
 
     @Input()

@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, EMPTY, of } from 'rxjs';
 import { IdentityGroupModel } from '../models/identity-group.model';
-import { IdentityGroupService } from '@alfresco/adf-process-services-cloud';
+import { IdentityGroupService } from '../services/identity-group.service';
 
 export const mockVegetableAubergine: IdentityGroupModel = { id: 'aubergine', name: 'Vegetable Aubergine' };
 export const mockMeatChicken: IdentityGroupModel = { id: 'chicken', name: 'Meat Chicken' };

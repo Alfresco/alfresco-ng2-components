@@ -17,8 +17,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import { argv, exit } from 'node:process';
 import { parseArgs } from 'node:util';
 import { spawnSync } from 'node:child_process';
@@ -146,7 +144,7 @@ function getCommits(options: DiffOptions): Array<Commit> {
         .map((str: string) => {
             try {
                 return JSON.parse(str) as Commit;
-            } catch (error) {
+            } catch {
                 logger.error(`Unparsable commit message: ${str}, dropping it... Please apply manual fix.`);
                 return null;
             }
@@ -167,6 +165,15 @@ function commitAuthorAllowed(commit: Commit, authorFilter: string): boolean {
     return !(filterRegex.test(commit.author) || filterRegex.test(commit.author_email));
 }
 
+/**
+ * Render changelog as Markdown.
+ *
+ * @param commits list of commits
+ * @param projName project name
+ * @param projVersion project version
+ * @param repoUrl repository URL
+ * @returns rendered Markdown string
+ */
 function renderChangelogMd(commits: Commit[], projName: string, projVersion: string, repoUrl: string): string {
     const lines = commits.map((c) => `- [${c.hash}](${repoUrl}/commit/${c.hash}) ${escapeHtml(c.subject)}`);
     return `---
@@ -179,6 +186,15 @@ ${lines.join('\n')}
 `;
 }
 
+/**
+ * Render changelog as HTML.
+ *
+ * @param commits list of commits
+ * @param projName project name
+ * @param projVersion project version
+ * @param repoUrl repository URL
+ * @returns rendered HTML string
+ */
 function renderChangelogHtml(commits: Commit[], projName: string, projVersion: string, repoUrl: string): string {
     const items = commits
         .map((c) => `        <li>\n            <a href="${repoUrl}/commit/${c.hash}">[${c.hash}]</a> ${escapeHtml(c.subject)}\n        </li>`)

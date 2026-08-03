@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
-import { ContextMenuDirective } from '@alfresco/adf-core';
+import { ContextMenuDirective } from './context-menu.directive';
 
 @Component({
     selector: 'adf-test-component',

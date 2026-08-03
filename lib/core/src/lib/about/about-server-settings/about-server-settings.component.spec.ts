@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AboutServerSettingsComponent } from './about-server-settings.component';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { provideAppConfigTesting } from '@alfresco/adf-core';
+import { provideAppConfigTesting } from '../../testing/app-config-testing';
 
 const aboutGithubDetails = {
     url: 'https://github.com/componany/repository/commits/',

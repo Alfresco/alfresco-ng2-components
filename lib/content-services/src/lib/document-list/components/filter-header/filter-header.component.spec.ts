@@ -23,8 +23,8 @@ import { SimpleChange } from '@angular/core';
 import { SearchHeaderQueryBuilderService } from './../../../search/services/search-header-query-builder.service';
 import { FilterHeaderComponent } from './filter-header.component';
 import { provideRouter } from '@angular/router';
-import { SearchCategory } from '@alfresco/adf-content-services';
 import { NodePaging } from '@alfresco/js-api';
+import { SearchCategory } from '../../../search/models/search-category.interface';
 
 describe('FilterHeaderComponent', () => {
     let fixture: ComponentFixture<FilterHeaderComponent>;

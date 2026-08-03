@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
 import { NotificationService, UnitTestingUtils } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -26,6 +25,8 @@ import { MatError } from '@angular/material/form-field';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { EMPTY, of, throwError } from 'rxjs';
 import { TagsCreatorComponent } from './tags-creator.component';
+import { TagService } from '../services/tag.service';
+import { TagsCreatorMode } from './tags-creator-mode';
 
 describe('TagsCreatorComponent', () => {
     let fixture: ComponentFixture<TagsCreatorComponent>;

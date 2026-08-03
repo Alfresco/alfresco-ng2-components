@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import { logger } from '../logger';
 import { PluginInterface } from './plugin-model';
 import { AlfrescoApi, GsSitesApi } from '@alfresco/js-api';
 
 export class GovernanceHealth {
-    constructor(private pluginInfo: PluginInterface, private alfrescoJsApi: AlfrescoApi) {}
+    constructor(
+        private readonly pluginInfo: PluginInterface,
+        private readonly alfrescoJsApi: AlfrescoApi
+    ) {}
 
     async isRecordManagementAvailable(): Promise<boolean> {
         try {

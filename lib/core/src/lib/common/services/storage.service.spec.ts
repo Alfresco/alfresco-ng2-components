@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { StorageService } from '../../common/services/storage.service';
-import { provideCoreAuthTesting } from '@alfresco/adf-core';
+import { provideCoreAuthTesting } from '../../testing/noop-auth.module';
 
 describe('StorageService', () => {
     let storage: StorageService;

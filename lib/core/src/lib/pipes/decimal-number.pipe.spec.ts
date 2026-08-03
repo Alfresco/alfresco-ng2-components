@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { of } from 'rxjs';
 import { DecimalNumberPipe } from './decimal-number.pipe';
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService } from '../app-config/app-config.service';
 
 describe('DecimalNumberPipe', () => {
     let pipe: DecimalNumberPipe;

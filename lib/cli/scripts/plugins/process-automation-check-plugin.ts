@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import { PluginInterface } from './plugin-model';
 import { logger } from '../logger';
 import { ProcessAutomationHealth } from './process-automation-health';
@@ -26,7 +24,10 @@ import { exit } from 'node:process';
 export class ProcessAutomationCheckPlugin {
     processAutomationHealth: ProcessAutomationHealth;
 
-    constructor(private plugInInfo: PluginInterface, private alfrescoJsApi: AlfrescoApi) {
+    constructor(
+        private readonly plugInInfo: PluginInterface,
+        private readonly alfrescoJsApi: AlfrescoApi
+    ) {
         this.processAutomationHealth = new ProcessAutomationHealth(this.plugInInfo, this.alfrescoJsApi);
     }
 

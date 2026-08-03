@@ -17,8 +17,6 @@
 
 import { MaybeReactiveFormWidget, ReactiveFormWidget } from '../reactive-widget.interface';
 
-/* eslint-disable @angular-eslint/component-selector */
-
 export class FormFieldTypes {
     static CONTAINER: string = 'container';
     static GROUP: string = 'group';

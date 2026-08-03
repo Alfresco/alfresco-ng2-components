@@ -25,6 +25,7 @@ import { throwIfNotDefined } from '../../../assert';
 export class IDMSyncApi extends BaseApi {
     /**
      * Get log file for a sync log entry
+     *
      * @param syncLogEntryId syncLogEntryId
      * @return Promise<{}>
      */
@@ -43,6 +44,7 @@ export class IDMSyncApi extends BaseApi {
 
     /**
      * List sync log entries
+     *
      * @param opts Optional parameters
      * @param opts.tenantId {number} tenantId
      * @param opts.page {number} page

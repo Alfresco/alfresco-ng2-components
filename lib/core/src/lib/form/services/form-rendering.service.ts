@@ -24,7 +24,6 @@ import { Injectable, Type } from '@angular/core';
 import * as widgets from '../components/widgets';
 import { FormFieldTypes } from '../components/widgets';
 
-/* eslint-disable id-blacklist */
 @Injectable({
     providedIn: 'root'
 })

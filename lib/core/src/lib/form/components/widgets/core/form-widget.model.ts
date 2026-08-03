@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
-
 export abstract class FormWidgetModel {
     readonly fieldType: string;
     readonly id: string;

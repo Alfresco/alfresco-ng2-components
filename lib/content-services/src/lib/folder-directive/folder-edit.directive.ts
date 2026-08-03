@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/no-input-rename */
-
 import { Directive, ElementRef, HostListener, Input, Output, EventEmitter, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Node } from '@alfresco/js-api';

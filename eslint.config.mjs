@@ -55,7 +55,6 @@ export default [
             '.history',
             '.husky',
             '.nx',
-            '.storybook',
             '.vscode',
             'coverage',
             'dist',
@@ -71,7 +70,11 @@ export default [
             '/scripts'
         ]
     },
-    unicorn.configs['recommended'],
+    // Uncomment this once all linting issues related to unicorn are fixed
+    // Note to developers:
+    // you can uncomment the full ruleset locally when fixing issues, and then comment
+    // that will allow splitting the work into smaller chunks
+    // unicorn.configs['recommended'],
     ...storybook.configs['flat/recommended'],
     {
         files: ['**/*.{js,mjs,cjs,ts}'],
@@ -120,6 +123,8 @@ export default [
         )[0],
         plugins: {
             '@nx': nxPlugin,
+            jsdoc,
+            unicorn,
             rxjs: fixupPluginRules(rxjs),
             prettier: prettier,
             ban: ban,
@@ -138,7 +143,11 @@ export default [
             }
         },
         rules: {
-            'prettier/prettier': 'error',
+            // Uncomment this to enable prettier checks as part of the ESLint
+            // Note to developers:
+            // you can uncomment the full ruleset locally when fixing issues, and then comment
+            // that will allow splitting the work into smaller chunks
+            // 'prettier/prettier': 'error',
             'ban/ban': [
                 'error',
                 { name: 'eval', message: 'Calls to eval is not allowed.' },
@@ -182,6 +191,13 @@ export default [
             '@typescript-eslint/no-inferrable-types': 'off',
             '@typescript-eslint/no-require-imports': 'off',
             '@typescript-eslint/no-var-requires': 'error',
+            'jsdoc/tag-lines': [
+                'error',
+                'any',
+                {
+                    startLines: 1
+                }
+            ],
             '@typescript-eslint/naming-convention': [
                 'error',
                 {

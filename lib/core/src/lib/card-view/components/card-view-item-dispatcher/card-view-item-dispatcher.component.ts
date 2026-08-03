@@ -106,7 +106,6 @@ export class CardViewItemDispatcherComponent implements OnChanges {
 
     private proxy(methodName, ...args) {
         if (this.componentReference.instance[methodName]) {
-            // eslint-disable-next-line prefer-spread
             this.componentReference.instance[methodName].apply(this.componentReference.instance, args);
         }
     }

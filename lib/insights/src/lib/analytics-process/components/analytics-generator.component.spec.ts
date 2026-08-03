@@ -21,7 +21,7 @@ import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import * as analyticMock from '../../mock';
 import { AnalyticsGeneratorComponent } from '../components/analytics-generator.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
-import { AnalyticsService } from '@alfresco/adf-insights';
+import { AnalyticsService } from '../services/analytics.service';
 
 describe('AnalyticsGeneratorComponent', () => {
     let component: AnalyticsGeneratorComponent;

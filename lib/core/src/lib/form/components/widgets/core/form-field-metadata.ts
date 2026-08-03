@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
-
 import { DisplayableCMProperties } from './displayable-cm-properties.model';
 import { FormFieldFileSource } from './form-field-file-source';
 

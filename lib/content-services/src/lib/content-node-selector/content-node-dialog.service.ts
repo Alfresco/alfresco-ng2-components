@@ -34,7 +34,6 @@ import { SitesService } from '../common/services/sites.service';
 @Injectable({
     providedIn: 'root'
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class ContentNodeDialogService {
     private readonly dialog = inject(MatDialog);
     private readonly contentService = inject(ContentService);

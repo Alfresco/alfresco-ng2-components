@@ -26,7 +26,6 @@ import { OauthConfigModel } from '../auth/models/oauth-config.model';
 
 /* spellchecker: disable */
 
-// eslint-disable-next-line no-shadow
 export const AppConfigValues = {
     APP_CONFIG_LANGUAGES_KEY: 'languages',
     PROVIDERS: 'providers',
@@ -210,7 +209,6 @@ export class AppConfigService {
                         this.onDataLoaded();
                     },
                     () => {
-                        // eslint-disable-next-line no-console
                         console.error('app.config.json contains validation errors');
                         resolve(this.config);
                     }
@@ -238,7 +236,6 @@ export class AppConfigService {
                     resolve(res);
                 },
                 error: (err: any) => {
-                    // eslint-disable-next-line no-console
                     console.error('hostIdp not correctly configured or unreachable');
                     reject(err);
                 }

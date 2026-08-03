@@ -68,6 +68,7 @@ export class ContentAuth extends AlfrescoApiClient {
 
     /**
      * login Alfresco API
+     *
      * @param  username Username to login
      * @param  password Password to login
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
@@ -109,6 +110,7 @@ export class ContentAuth extends AlfrescoApiClient {
 
     /**
      * validate the ticket present in this.config.ticket against the server
+     *
      * @returns A promise that returns  if resolved and {error} if rejected.
      */
     validateTicket(): Promise<string> {
@@ -137,6 +139,7 @@ export class ContentAuth extends AlfrescoApiClient {
 
     /**
      * logout Alfresco API
+     *
      * @returns A promise that returns { authentication ticket} if resolved and {error} if rejected.
      */
     logout(): Promise<void> {
@@ -174,6 +177,7 @@ export class ContentAuth extends AlfrescoApiClient {
 
     /**
      * Get the current Ticket
+     *
      * @returns ticket value
      */
     getTicket(): string {
@@ -190,6 +194,7 @@ export class ContentAuth extends AlfrescoApiClient {
 
     /**
      * If the client is logged in return true
+     *
      * @returns `true` if client is logged in, otherwise `false`
      */
     isLoggedIn(): boolean {
@@ -198,6 +203,7 @@ export class ContentAuth extends AlfrescoApiClient {
 
     /**
      * return the Authentication
+     *
      * @returns authentication object
      */
     getAuthentication(): Authentication {

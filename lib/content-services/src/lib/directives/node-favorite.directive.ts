@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/no-input-rename */
-
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
 import { FavoriteBodyCreate, NodeEntry, SharedLinkEntry, Node, SharedLink, FavoritesApi, LazyApi } from '@alfresco/js-api';
 import { Observable, from, forkJoin, of } from 'rxjs';

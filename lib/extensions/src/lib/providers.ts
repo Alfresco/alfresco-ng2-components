@@ -23,6 +23,7 @@ import { CanActivateFn } from '@angular/router';
 
 /**
  * Provides all necessary entries for the app extensibility
+ *
  * @returns list of providers
  */
 export function provideAppExtensions(): (Provider | EnvironmentProviders)[] {
@@ -55,6 +56,7 @@ export function provideAppExtensions(): (Provider | EnvironmentProviders)[] {
  *  });
  * ]
  * ```
+ *
  * @param params Parameters for the api
  * @param params.authGuards Auth guards to register
  * @param params.evaluators Rule evaluators to register

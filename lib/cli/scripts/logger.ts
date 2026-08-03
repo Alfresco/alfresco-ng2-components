@@ -17,7 +17,6 @@
 
 import { exit } from 'node:process';
 
-/* eslint-disable */
 let log = null;
 
 log = {
@@ -33,4 +32,3 @@ log = {
 };
 
 export let logger = log;
-/* eslint-enable */
