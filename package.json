@@ -99,7 +99,6 @@
     "@storybook/angular": "10.4.0",
     "@types/jasmine": "4.0.3",
     "@types/jasminewd2": "2.0.13",
-    "@types/minimatch": "5.1.2",
     "@types/node": "26.1.1",
     "@types/sinon": "22.0.0",
     "@typescript-eslint/eslint-plugin": "8.65.0",

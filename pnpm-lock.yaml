@@ -202,9 +202,6 @@ importers:
       '@types/jasminewd2':
         specifier: 2.0.13
         version: 2.0.13
-      '@types/minimatch':
-        specifier: 5.1.2
-        version: 5.1.2
       '@types/node':
         specifier: 26.1.1
         version: 26.1.1
@@ -4273,9 +4270,6 @@ packages:
 
   '@types/mime@1.3.5':
     resolution: {integrity: sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==}
-
-  '@types/minimatch@5.1.2':
-    resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
 
   '@types/node-forge@1.3.14':
     resolution: {integrity: sha512-mhVF2BnD4BO+jtOp7z1CdzaK4mbuK0LLQYAvdOLqHTavxFNq4zA1EmYkpnFjP8HOUzedfQkRnp0E2ulSAYSzAw==}
@@ -14356,8 +14350,6 @@ snapshots:
   '@types/json5@0.0.29': {}
 
   '@types/mime@1.3.5': {}
-
-  '@types/minimatch@5.1.2': {}
 
   '@types/node-forge@1.3.14':
     dependencies:
