@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @use '../../../styles/mat-selectors' as ms;
 
 .adf-card-view-textitem {
@@ -24,10 +25,12 @@
         padding: 0;
         line-height: 20px;
 
-        #{ms.$mat-button-touch-target} {
-            width: 30px;
-            height: 30px;
-        }
+        // Shrink the icon-button touch-target (default 48px) to match via the public token API.
+        @include mat.icon-button-overrides(
+            (
+                touch-target-size: 30px
+            )
+        );
     }
 
     #{ms.$mat-form-field-icon-suffix} {
