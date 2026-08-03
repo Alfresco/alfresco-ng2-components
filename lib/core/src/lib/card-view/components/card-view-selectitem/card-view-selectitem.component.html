@@ -17,7 +17,7 @@
                         [(ngModel)]="property.value"
                         [disabled]="isReadonlyProperty || !editable"
                         [ngClass]="{ 'adf-property-readonly-value': isReadonlyProperty || !editable }"
-                        panelClass="adf-select-filter"
+                        panelClass="adf-select-filter adf-select-filter-panel"
                         (selectionChange)="onChange($event)"
                         data-automation-id="select-box"
                         [aria-label]="property.label | translate"

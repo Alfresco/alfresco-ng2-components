@@ -18,7 +18,9 @@
     }
 }
 
-#{ms.$mat-select-panel}.adf-select-filter {
+// Two ADF panelClass tokens compounded (matches Material's .mat-mdc-select-panel
+// specificity 0,2,0) so these win without targeting the Material internal.
+.adf-select-filter.adf-select-filter-panel {
     transform: none;
     overflow-x: hidden;
 }
