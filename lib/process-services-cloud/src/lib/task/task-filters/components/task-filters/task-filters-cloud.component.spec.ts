@@ -17,9 +17,9 @@
 
 import { AppConfigService, NoopAuthModule } from '@alfresco/adf-core';
 import { Component, SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { first, of, throwError } from 'rxjs';
+import { first, of, Subject, throwError } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
 import { defaultTaskFiltersMock, fakeGlobalFilter, taskNotifications } from '../../mock/task-filters-cloud.mock';
@@ -50,6 +50,7 @@ describe('TaskFiltersCloudComponent', () => {
     let getTaskFilterCounterSpy: jasmine.Spy;
     let getTaskListFiltersSpy: jasmine.Spy;
     let getTaskListCountSpy: jasmine.Spy;
+    let getTaskNotificationSubscriptionSpy: jasmine.Spy;
     let router: Router;
 
     const configureTestingModule = async (searchApiMethod: 'GET' | 'POST') => {
@@ -77,7 +78,7 @@ describe('TaskFiltersCloudComponent', () => {
         taskListService = TestBed.inject(TaskListCloudService);
         getTaskFilterCounterSpy = spyOn(taskFilterService, 'getTaskFilterCounter').and.returnValue(of(11));
         getTaskListCountSpy = spyOn(taskListService, 'getTaskListCount').and.returnValue(of(11));
-        spyOn(taskFilterService, 'getTaskNotificationSubscription').and.returnValue(of(taskNotifications));
+        getTaskNotificationSubscriptionSpy = spyOn(taskFilterService, 'getTaskNotificationSubscription').and.returnValue(of(taskNotifications));
         getTaskListFiltersSpy = spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeGlobalFilter));
 
         appConfigService = TestBed.inject(AppConfigService);
@@ -267,6 +268,68 @@ describe('TaskFiltersCloudComponent', () => {
 
             fixture.detectChanges();
             expect(getTaskFilterCounterSpy).toHaveBeenCalledWith(fakeGlobalFilter[0]);
+        });
+
+        describe('Notifications config', () => {
+            it('should read enableNotifications and notificationDebounceTime from app config on init', () => {
+                const getSpy = spyOn(appConfigService, 'get').and.callThrough();
+                component.appName = 'my-app-1';
+
+                fixture.detectChanges();
+
+                expect(getSpy).toHaveBeenCalledWith('notifications', true);
+                expect(getSpy).toHaveBeenCalledWith('notificationDebounceTime', 3000);
+            });
+
+            it('should default notificationDebounceTime to 3000 when not set in app config', () => {
+                component.appName = 'my-app-1';
+
+                fixture.detectChanges();
+
+                expect(component.notificationDebounceTime).toBe(3000);
+            });
+
+            it('should use notificationDebounceTime from app config', () => {
+                spyOn(appConfigService, 'get').and.callFake((key: string, defaultValue: any) => {
+                    if (key === 'notificationDebounceTime') {
+                        return 5000;
+                    }
+                    return defaultValue;
+                });
+                component.appName = 'my-app-1';
+
+                fixture.detectChanges();
+
+                expect(component.notificationDebounceTime).toBe(5000);
+            });
+
+            it('should not subscribe to notifications when appName is missing', () => {
+                getTaskNotificationSubscriptionSpy.calls.reset();
+                component.appName = '';
+
+                fixture.detectChanges();
+
+                expect(getTaskNotificationSubscriptionSpy).not.toHaveBeenCalled();
+            });
+
+            it('should debounce notification subscription using the configured debounce time', fakeAsync(() => {
+                const notifications$ = new Subject<typeof taskNotifications>();
+                getTaskNotificationSubscriptionSpy.and.returnValue(notifications$.asObservable());
+                component.appName = 'my-app-1';
+
+                fixture.detectChanges();
+
+                const updateFilterCountersSpy = spyOn(component, 'updateFilterCounters');
+
+                notifications$.next(taskNotifications);
+                tick(1000);
+                expect(updateFilterCountersSpy).not.toHaveBeenCalled();
+
+                tick(2000);
+                expect(updateFilterCountersSpy).toHaveBeenCalledTimes(1);
+
+                flush();
+            }));
         });
     });
 

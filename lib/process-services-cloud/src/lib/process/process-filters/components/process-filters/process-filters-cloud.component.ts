@@ -79,7 +79,8 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     currentFilter?: ProcessFilterCloudModel;
     filters: ProcessFilterCloudModel[] = [];
     counters: { [key: string]: number } = {};
-    enableNotifications: boolean;
+    enableNotifications = true;
+    notificationDebounceTime = 3000;
     currentFiltersValues: { [key: string]: number } = {};
     updatedFiltersSet = new Set<string>();
 
@@ -93,6 +94,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
+        this.notificationDebounceTime = this.appConfigService.get('notificationDebounceTime', 3000);
         if (this.appName === '') {
             this.getFilters(this.appName);
         }
@@ -258,7 +260,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         if (this.appName && this.enableNotifications) {
             this.processFilterCloudService
                 .getProcessNotificationSubscription(this.appName)
-                .pipe(debounceTime(1000), takeUntilDestroyed(this.destroyRef))
+                .pipe(debounceTime(this.notificationDebounceTime), takeUntilDestroyed(this.destroyRef))
                 .subscribe(() => {
                     this.updateFilterCounters();
                 });

@@ -16,8 +16,8 @@
  */
 
 import { Component, SimpleChange } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
-import { first, of, throwError } from 'rxjs';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { first, of, Subject, throwError } from 'rxjs';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFiltersCloudComponent } from './process-filters-cloud.component';
 import { By } from '@angular/platform-browser';
@@ -520,6 +520,57 @@ describe('ProcessFiltersCloudComponent', () => {
             expect(fetchSpy).not.toHaveBeenCalledWith(filterWithoutCounter);
         });
 
+        describe('Notifications config', () => {
+            it('should read enableNotifications and notificationDebounceTime from app config on init', () => {
+                const appConfigService = TestBed.inject(AppConfigService);
+                const getSpy = spyOn(appConfigService, 'get').and.callThrough();
+
+                fixture.detectChanges();
+
+                expect(getSpy).toHaveBeenCalledWith('notifications', true);
+                expect(getSpy).toHaveBeenCalledWith('notificationDebounceTime', 3000);
+            });
+
+            it('should default notificationDebounceTime to 3000 when not set in app config', () => {
+                fixture.detectChanges();
+
+                expect(component.notificationDebounceTime).toBe(3000);
+            });
+
+            it('should use notificationDebounceTime from app config', () => {
+                const appConfigService = TestBed.inject(AppConfigService);
+                spyOn(appConfigService, 'get').and.callFake((key: string, defaultValue: any) => {
+                    if (key === 'notificationDebounceTime') {
+                        return 5000;
+                    }
+                    return defaultValue;
+                });
+
+                fixture.detectChanges();
+
+                expect(component.notificationDebounceTime).toBe(5000);
+            });
+
+            it('should debounce notification subscription using the configured debounce time', fakeAsync(() => {
+                const notifications$ = new Subject<any>();
+                getProcessNotificationSubscriptionSpy.and.returnValue(notifications$.asObservable());
+                component.appName = 'mock-app-name';
+
+                fixture.detectChanges();
+
+                const updateFilterCountersSpy = spyOn(component, 'updateFilterCounters');
+
+                notifications$.next([]);
+                tick(1000);
+                expect(updateFilterCountersSpy).not.toHaveBeenCalled();
+
+                tick(2000);
+                expect(updateFilterCountersSpy).toHaveBeenCalledTimes(1);
+
+                flush();
+            }));
+        });
+
         describe('Highlight Selected Filter', () => {
             it('should make subscription', () => {
                 component.enableNotifications = true;
@@ -528,6 +579,16 @@ describe('ProcessFiltersCloudComponent', () => {
                 component.ngOnChanges({ appName: appNameChange });
                 fixture.detectChanges();
                 expect(getProcessNotificationSubscriptionSpy).toHaveBeenCalled();
+            });
+
+            it('should not make subscription when notifications are disabled', () => {
+                const appConfigService = TestBed.inject(AppConfigService);
+                spyOn(appConfigService, 'get').and.callFake((key: string, defaultValue: any) => (key === 'notifications' ? false : defaultValue));
+                component.appName = 'mock-app-name';
+
+                fixture.detectChanges();
+
+                expect(getProcessNotificationSubscriptionSpy).not.toHaveBeenCalled();
             });
 
             it('should emit filter key when filter counter is set for first time', () => {
