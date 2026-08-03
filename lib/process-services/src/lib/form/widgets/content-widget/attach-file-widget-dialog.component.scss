@@ -1,7 +1,6 @@
 @use '../../../styles/mat-selectors' as ms;
 
 .adf-attach-file-widget-dialog {
-    // Targets the <mat-dialog-actions class="adf-login-dialog-actions"> element directly.
     .adf-login-dialog-actions {
         display: flex;
         justify-content: flex-end;
@@ -15,8 +14,6 @@
     }
 }
 
-// Scoped to this dialog's panelClass (was global — ViewEncapsulation.None leaked
-// overflow-x:hidden onto every dialog surface in the app).
 .adf-attach-file-widget-dialog #{ms.$mat-dialog-surface} {
     overflow-x: hidden;
 }

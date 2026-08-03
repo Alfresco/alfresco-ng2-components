@@ -12,8 +12,6 @@
                 padding-bottom: 25px;
                 padding-right: 25px;
 
-                // Size all action buttons (incl. projected cloud outcome buttons)
-                // via the public token API; layout below still needs the element selector.
                 @include mat.button-overrides(
                     (
                         text-container-height: 36px,

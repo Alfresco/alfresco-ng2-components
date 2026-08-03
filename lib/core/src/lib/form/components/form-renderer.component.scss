@@ -164,7 +164,6 @@
             overflow: hidden;
         }
 
-        // Tab active-indicator thickness via the public token API.
         @include mat.tabs-overrides(
             (
                 active-indicator-height: 4px

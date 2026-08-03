@@ -8,7 +8,6 @@ $notification-item-height: 72px;
         -webkit-font-smoothing: subpixel-antialiased;
     }
 
-    // <button mat-icon-button> already provides the 40px circular shape + zero padding.
     &-notification-history-menu_button {
         margin-top: 1px;
 
@@ -141,8 +140,6 @@ $notification-item-height: 72px;
     min-width: 320px;
     max-height: 500px;
 
-    // .mat-mdc-menu-content is a Material-generated child of the panel;
-    // there is no ADF-owned element/token to target it, so it stays.
     #{ms.$mat-menu-content} {
         padding: 0;
     }

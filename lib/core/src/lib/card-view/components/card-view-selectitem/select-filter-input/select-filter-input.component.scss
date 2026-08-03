@@ -13,15 +13,11 @@
         }
     }
 
-    // Material form-field is display:inline-flex; force full width. Element selector
-    // targets ADF's own <mat-form-field> without the Material internal class.
     mat-form-field {
         width: 100%;
     }
 }
 
-// Two ADF panelClass tokens compounded (matches Material's .mat-mdc-select-panel
-// specificity 0,2,0) so these win without targeting the Material internal.
 .adf-select-filter.adf-select-filter-panel {
     transform: none;
     overflow-x: hidden;

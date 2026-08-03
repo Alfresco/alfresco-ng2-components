@@ -23,8 +23,6 @@
     }
 }
 
-// <mat-card> is already display:flex with no margin/padding; only the row-wrap
-// layout + top border are ADF additions (Material default is flex-direction:column).
 .adf-assignment-top-container {
     border-top: 1px solid var(--mat-sys-outline-variant);
     flex-flow: row wrap;

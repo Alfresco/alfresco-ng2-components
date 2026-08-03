@@ -17,8 +17,6 @@ adf-search-chip-autocomplete-input {
         padding: 4px 0;
     }
 
-    // ADF-owned chip; overrides Material's default `.mat-mdc-chip-set .mdc-evolution-chip`
-    // margin (4px 0 4px 8px). Element-scoped to match that rule's specificity.
     .adf-option-chips.adf-autocomplete-added-option-chips {
         margin-left: 0;
         margin-right: 4px;

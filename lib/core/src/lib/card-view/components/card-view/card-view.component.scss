@@ -17,8 +17,6 @@
         .adf-property-field {
             width: 100%;
 
-            // All card-view inputs/textareas are matInput (verified) — target them directly
-            // instead of Material's .mat-mdc-input-element internal.
             input,
             textarea {
                 text-overflow: ellipsis;

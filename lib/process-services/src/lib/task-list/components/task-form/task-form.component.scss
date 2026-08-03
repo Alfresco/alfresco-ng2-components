@@ -11,8 +11,6 @@
         padding-right: 25px;
         padding-bottom: 25px;
 
-        // Buttons here (incl. any projected/templated ones) are text buttons;
-        // size them via Material's public token API instead of the internal class.
         @include mat.button-overrides(
             (
                 text-container-height: 36px,

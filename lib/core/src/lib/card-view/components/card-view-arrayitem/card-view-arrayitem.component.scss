@@ -10,8 +10,6 @@
         display: block;
     }
 
-    // <mat-card appearance="outlined"> already renders with no shadow (level0),
-    // so only the custom scroll/height layout remains on the ADF class.
     &-array-item-more-chip-container {
         max-height: 300px;
         overflow-y: auto;

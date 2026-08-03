@@ -19,7 +19,6 @@
         text-transform: uppercase;
     }
 
-    // Tab active-indicator thickness via the public token API.
     @include mat.tabs-overrides(
         (
             active-indicator-height: 4px
@@ -84,7 +83,6 @@
             padding-bottom: 25px;
             padding-right: 25px;
 
-            // Text buttons (incl. projected custom buttons) sized via public token API.
             @include mat.button-overrides(
                 (
                     text-container-height: 36px,

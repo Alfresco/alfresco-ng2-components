@@ -10,8 +10,6 @@ adf-search-facet-chip-tabbed {
     }
 }
 
-// Compound of two ADF panel classes (matches Material's .mat-mdc-menu-panel specificity 0,2,0)
-// so the width override wins without targeting the Material internal.
 .adf-search-widget-extra-width.adf-search-facet-chip-tabbed-menu-panel {
     max-width: 500px;
 }

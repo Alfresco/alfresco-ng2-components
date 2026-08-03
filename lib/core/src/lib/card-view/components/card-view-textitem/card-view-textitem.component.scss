@@ -25,7 +25,6 @@
         padding: 0;
         line-height: 20px;
 
-        // Shrink the icon-button touch-target (default 48px) to match via the public token API.
         @include mat.icon-button-overrides(
             (
                 touch-target-size: 30px
