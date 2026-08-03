@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
-
 import { Directive, EventEmitter, HostListener, Input, Output, inject } from '@angular/core';
 import { TrashcanApi, DeletedNodeEntry, DeletedNodesPaging, LazyApi } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
@@ -184,7 +182,6 @@ export class NodeRestoreDirective {
 
         if (status.someFailed && !status.oneFailed) {
             return this.translation.instant('CORE.RESTORE_NODE.PARTIAL_PLURAL', {
-                // eslint-disable-next-line id-blacklist
                 number: status.fail.length
             });
         }

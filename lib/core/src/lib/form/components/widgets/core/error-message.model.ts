@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
-
 export class ErrorMessageModel {
     message: string = '';
     attributes: Map<string, string> = null;

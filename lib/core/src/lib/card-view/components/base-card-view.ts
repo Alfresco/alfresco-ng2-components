@@ -21,7 +21,6 @@ import { CardViewItem } from '../interfaces/card-view.interfaces';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive()
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseCardView<T extends CardViewItem> {
     protected cardViewUpdateService = inject(CardViewUpdateService);
 

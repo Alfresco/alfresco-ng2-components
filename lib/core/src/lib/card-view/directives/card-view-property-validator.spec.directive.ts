@@ -18,7 +18,9 @@
 import { Component, Input } from '@angular/core';
 import { CardViewPropertyValidatorDirective } from './card-view-property-validator.directive';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CardViewBaseItemModel, CardViewTextItemModel, UnitTestingUtils } from '@alfresco/adf-core';
+import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
+import { CardViewTextItemModel } from '../models/card-view-textitem.model';
+import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 

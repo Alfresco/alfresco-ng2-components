@@ -18,7 +18,7 @@
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { LoginComponent } from './login.component';
 import { provideStoryCore } from '../../../stories/core-story.providers';
-import { NoopAuthModule } from '@alfresco/adf-core';
+import { NoopAuthModule } from '../../../testing/noop-auth.module';
 
 type LoginStoryArgs = LoginComponent & {
     correct?: any;

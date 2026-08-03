@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/no-input-rename */
-
 import { Directive, HostListener, Input, inject } from '@angular/core';
 import { ContextMenuOverlayService } from './context-menu-overlay.service';
 

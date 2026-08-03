@@ -15,6 +15,12 @@
  * limitations under the License.
  */
 
+/**
+ * Escape HTML special characters.
+ *
+ * @param text input string
+ * @returns escaped string
+ */
 export function escapeHtml(text: string): string {
     return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }

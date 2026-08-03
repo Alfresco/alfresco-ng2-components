@@ -30,6 +30,7 @@ import { CanActivateFn } from '@angular/router';
 
 /**
  * The default extensions factory
+ *
  * @returns the list of extension json files
  */
 export function extensionJsonsFactory() {
@@ -48,6 +49,7 @@ export const EXTENSION_JSON_VALUES = new InjectionToken<string[][]>('extension-j
 
 /**
  * Provides the extension json values for the angular modules
+ *
  * @param jsons files to provide
  * @returns a provider section
  */
@@ -61,6 +63,7 @@ export function provideExtensionConfig(jsons: string[]) {
 
 /**
  * Provides the extension json raw values for the angular modules
+ *
  * @param extensionConfigValue config value
  * @returns a provider section
  */
@@ -101,6 +104,7 @@ export class ExtensionService {
 
     /**
      * Loads and registers an extension config file and plugins (specified by path properties).
+     *
      * @returns The loaded config data
      */
     async load(): Promise<ExtensionConfig> {
@@ -112,6 +116,7 @@ export class ExtensionService {
 
     /**
      * Registers extensions from a config object.
+     *
      * @param config Object with config data
      */
     setup(config: ExtensionConfig) {
@@ -138,6 +143,7 @@ export class ExtensionService {
 
     /**
      * Gets features by key.
+     *
      * @param key Key string using dot notation or array of strings
      * @param defaultValue Default value returned if feature is not found, default is empty array
      * @returns Feature found by key
@@ -153,6 +159,7 @@ export class ExtensionService {
 
     /**
      * Adds one or more new rule evaluators to the existing set.
+     *
      * @param values The new evaluators to add
      */
     setEvaluators(values: Record<string, RuleEvaluator>) {
@@ -161,6 +168,7 @@ export class ExtensionService {
 
     /**
      * Adds one or more new auth guards to the existing set.
+     *
      * @param values The new auth guards to add
      */
     setAuthGuards(values: Record<string, CanActivateFn>) {
@@ -171,6 +179,7 @@ export class ExtensionService {
 
     /**
      * Adds one or more new components to the existing set.
+     *
      * @param values The new components to add
      */
     setComponents(values: Record<string, Type<any>>) {
@@ -179,6 +188,7 @@ export class ExtensionService {
 
     /**
      * Retrieves a route using its ID value.
+     *
      * @param id The ID value to look for
      * @returns The route or null if not found
      */
@@ -188,6 +198,7 @@ export class ExtensionService {
 
     /**
      * Retrieves one or more auth guards using an array of ID values.
+     *
      * @param ids Array of ID value to look for
      * @returns Array of auth guards or empty array if none were found
      */
@@ -197,6 +208,7 @@ export class ExtensionService {
 
     /**
      * Retrieves an action using its ID value.
+     *
      * @param id The ID value to look for
      * @returns Action or null if not found
      */
@@ -206,6 +218,7 @@ export class ExtensionService {
 
     /**
      * Retrieves a RuleEvaluator function using its key name.
+     *
      * @param key Key name to look for
      * @returns RuleEvaluator or null if not found
      */
@@ -215,6 +228,7 @@ export class ExtensionService {
 
     /**
      * Evaluates a rule.
+     *
      * @param ruleId ID of the rule to evaluate
      * @param context Custom rule execution context.
      * @returns True if the rule passed, false otherwise
@@ -225,6 +239,7 @@ export class ExtensionService {
 
     /**
      * Retrieves a registered extension component using its ID value.
+     *
      * @param id The ID value to look for
      * @returns The component or null if not found
      */
@@ -234,6 +249,7 @@ export class ExtensionService {
 
     /**
      * Retrieves a rule using its ID value.
+     *
      * @param id The ID value to look for
      * @returns The rule or null if not found
      */
@@ -243,6 +259,7 @@ export class ExtensionService {
 
     /**
      * Runs a lightweight expression stored in a string.
+     *
      * @param value String containing the expression or literal value
      * @param context Parameter object for the expression with details of app state
      * @returns Result of evaluated expression, if found, or the literal value otherwise

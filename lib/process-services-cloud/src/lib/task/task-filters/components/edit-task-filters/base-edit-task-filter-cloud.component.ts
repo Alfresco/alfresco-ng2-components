@@ -34,8 +34,6 @@ import { Environment } from '../../../../common/interface/environment.interface'
 import { isValid } from 'date-fns';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-/* eslint-disable @typescript-eslint/naming-convention */
-
 export interface DropdownOption {
     value: string;
     label: string;
@@ -54,7 +52,6 @@ const SORT_PROPERTY = 'sort';
 const ORDER_PROPERTY = 'order';
 
 @Directive()
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseEditTaskFilterCloudComponent<T> implements OnChanges {
     public static ACTIONS_DISABLED_BY_DEFAULT = [ACTION_SAVE, ACTION_DELETE];
 

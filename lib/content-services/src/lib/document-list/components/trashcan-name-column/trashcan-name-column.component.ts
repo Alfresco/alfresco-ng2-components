@@ -29,7 +29,6 @@ import { NodeTooltipUtils } from '../../utils/node-tooltip.utils';
 })
 export class TrashcanNameColumnComponent implements OnInit {
     @Input({ required: true })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     context: any;
 
     isLibrary = false;

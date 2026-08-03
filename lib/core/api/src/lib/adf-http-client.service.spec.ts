@@ -78,7 +78,7 @@ describe('AdfHttpClient', () => {
                 .request('http://example.com', options, securityOptions, emitters)
                 .then((res: ResultListDataRepresentationTaskRepresentation) => {
                     expect(res instanceof ResultListDataRepresentationTaskRepresentation).toBeTruthy();
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
                     expect(res.data![0].created instanceof Date).toBeTruthy();
                     done();
                 })

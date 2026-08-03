@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable id-blacklist */
-
 import { ExtensionElement } from './extension-element';
 
 export interface DataColumnTypes {

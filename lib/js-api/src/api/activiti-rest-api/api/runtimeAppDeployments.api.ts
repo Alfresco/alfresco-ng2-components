@@ -26,6 +26,7 @@ import { throwIfNotDefined } from '../../../assert';
 export class RuntimeAppDeploymentsApi extends BaseApi {
     /**
      * Remove an app deployment
+     *
      * @param appDeploymentId appDeploymentId
      * @return Promise<{}>
      */
@@ -44,6 +45,7 @@ export class RuntimeAppDeploymentsApi extends BaseApi {
 
     /**
      * Export the app archive for a deployment
+     *
      * @param deploymentId deploymentId
      * @return Promise<{}>
      */
@@ -65,6 +67,7 @@ export class RuntimeAppDeploymentsApi extends BaseApi {
 
     /**
      * Query app deployments
+     *
      * @param opts Optional parameters
      * @return Promise<ResultListDataRepresentationAppDeploymentRepresentation>
      */
@@ -86,6 +89,7 @@ export class RuntimeAppDeploymentsApi extends BaseApi {
 
     /**
      * Get an app deployment
+     *
      * @param appDeploymentId appDeploymentId
      * @return Promise<AppDeploymentRepresentation>
      */
@@ -106,6 +110,7 @@ export class RuntimeAppDeploymentsApi extends BaseApi {
     /**
      * Get an app by deployment ID or DMN deployment ID
      * Either a deploymentId or a dmnDeploymentId must be provided
+     *
      * @param opts Optional parameters
      * @return Promise<AppDeploymentRepresentation>
      */

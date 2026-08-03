@@ -38,7 +38,6 @@ import { LoginSuccessEvent } from '../../models/login-success.event';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IconModule } from '../../../icon/icon.module';
 
-// eslint-disable-next-line no-shadow
 enum LoginSteps {
     Landing = 0,
     Checking = 1,

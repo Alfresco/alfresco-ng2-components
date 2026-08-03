@@ -25,6 +25,7 @@ export class IntegrationDriveApi extends BaseApi {
     /**
      * Drive Authorization
      * Returns Drive OAuth HTML Page
+     *
      * @return Promise<{}>
      */
     confirmAuthorisation(): Promise<any> {
@@ -36,6 +37,7 @@ export class IntegrationDriveApi extends BaseApi {
 
     /**
      * List files and folders
+     *
      * @param opts Optional parameters
      * @param opts.filter {string} filter
      * @param opts.parent {string} parent

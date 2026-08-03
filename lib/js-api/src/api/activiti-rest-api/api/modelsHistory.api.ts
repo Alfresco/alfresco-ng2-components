@@ -26,6 +26,7 @@ import { throwIfNotDefined } from '../../../assert';
 export class ModelsHistoryApi extends BaseApi {
     /**
      * List a model's historic versions
+     *
      * @param modelId modelId
      * @param opts Optional parameters
      * @param opts.includeLatestVersion includeLatestVersion
@@ -52,6 +53,7 @@ export class ModelsHistoryApi extends BaseApi {
 
     /**
      * Get a historic version of a model
+     *
      * @param modelId modelId
      * @param modelHistoryId modelHistoryId
      * @return Promise<ModelRepresentation>

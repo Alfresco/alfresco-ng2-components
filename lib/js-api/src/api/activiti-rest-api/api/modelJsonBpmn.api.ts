@@ -21,6 +21,7 @@ import { throwIfNotDefined } from '../../../assert';
 export class ModelJsonBpmnApi extends BaseApi {
     /**
      * Export a previous process definition model to a JSON
+     *
      * @param processModelId processModelId
      * @param processModelHistoryId processModelHistoryId
      */
@@ -41,6 +42,7 @@ export class ModelJsonBpmnApi extends BaseApi {
 
     /**
      * Export a process definition model to a JSON
+     *
      * @param processModelId processModelId
      */
     getEditorDisplayJsonClient(processModelId: number) {
@@ -58,6 +60,7 @@ export class ModelJsonBpmnApi extends BaseApi {
 
     /**
      * Function to receive the result of the getModelJSONForProcessDefinition operation.
+     *
      * @param processDefinitionId processDefinitionId
      */
     getModelJSON(processDefinitionId: string) {
@@ -75,6 +78,7 @@ export class ModelJsonBpmnApi extends BaseApi {
 
     /**
      * Function to receive the result of the getModelHistoryJSON operation.
+     *
      * @param processInstanceId processInstanceId
      */
     getModelJSONForProcessDefinition(processInstanceId: string) {

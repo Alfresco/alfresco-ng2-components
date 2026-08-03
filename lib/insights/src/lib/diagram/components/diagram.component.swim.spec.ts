@@ -20,7 +20,7 @@ import * as swimLanesMock from '../../mock/diagram/diagram-swimlanes.mock';
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { UnitTestingUtils } from '@alfresco/adf-core';
-import { RaphaelTextDirective } from '@alfresco/adf-insights';
+import { RaphaelTextDirective } from './raphael/raphael-text.component';
 import { DiagramsService } from '../services/diagrams.service';
 import { of } from 'rxjs';
 

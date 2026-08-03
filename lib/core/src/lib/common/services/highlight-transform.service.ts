@@ -39,7 +39,6 @@ export class HighlightTransformService {
         let result = text;
 
         if (search && text) {
-            // eslint-disable-next-line no-useless-escape
             let pattern = search.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
             pattern = pattern
                 .split(' ')

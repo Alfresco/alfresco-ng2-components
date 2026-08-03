@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import { TestBed } from '@angular/core/testing';
 import { PropertyGroupTranslatorService, RECOGNISED_ECM_TYPES } from './property-groups-translator.service';
 import { Property, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';

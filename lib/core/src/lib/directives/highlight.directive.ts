@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/no-input-rename */
-
 import { Directive, ElementRef, Input, Renderer2, AfterViewChecked, inject } from '@angular/core';
 import { HighlightTransformService, HighlightTransformResult } from '../common/services/highlight-transform.service';
 

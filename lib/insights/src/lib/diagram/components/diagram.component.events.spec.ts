@@ -21,7 +21,7 @@ import * as diagramsEventsMock from '../../mock/diagram/diagram-events.mock';
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { UnitTestingUtils } from '@alfresco/adf-core';
-import { RaphaelCircleDirective } from '@alfresco/adf-insights';
+import { RaphaelCircleDirective } from './raphael/raphael-circle.component';
 import { DiagramsService } from '../services/diagrams.service';
 import { of } from 'rxjs';
 

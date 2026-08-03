@@ -38,10 +38,7 @@ export class SearchPermissionConfigurationService implements SearchConfiguration
                 maxItems: maxResults,
                 skipCount
             },
-            filterQueries: [
-                /* eslint-disable-next-line */
-                { query: "TYPE:'cm:authority'" }
-            ]
+            filterQueries: [{ query: "TYPE:'cm:authority'" }]
         };
     }
 

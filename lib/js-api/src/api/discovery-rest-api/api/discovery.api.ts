@@ -26,6 +26,7 @@ export class DiscoveryApi extends BaseApi {
      * Get repository information
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
      * @returns Promise<DiscoveryEntry>
      */
     getRepositoryInformation(): Promise<DiscoveryEntry> {

@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import { exit } from 'node:process';
 import { PluginInterface } from './plugin-model';
 import { logger } from '../logger';
@@ -26,7 +24,10 @@ import { AlfrescoApi } from '@alfresco/js-api';
 export class ProcessServiceCheckPlugin {
     processServiceHealth: ProcessServiceHealth;
 
-    constructor(private plugInInfo: PluginInterface, private alfrescoJsApi: AlfrescoApi) {
+    constructor(
+        private readonly plugInInfo: PluginInterface,
+        private readonly alfrescoJsApi: AlfrescoApi
+    ) {
         this.processServiceHealth = new ProcessServiceHealth(this.plugInInfo, this.alfrescoJsApi);
     }
 

@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable @angular-eslint/no-output-native */
 
 import { NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import {

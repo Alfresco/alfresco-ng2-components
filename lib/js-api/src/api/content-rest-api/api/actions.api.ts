@@ -29,6 +29,7 @@ export class ActionsApi extends BaseApi {
      * Retrieve the details of an action definition
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
      * @param actionDefinitionId The identifier of an action definition.
      * @returns Promise<ActionDefinitionEntry>
      */
@@ -49,6 +50,7 @@ export class ActionsApi extends BaseApi {
      * Execute an action
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
      * @param actionBodyExec Action execution details
      * @returns Promise<ActionExecResultEntry>
      */
@@ -74,6 +76,7 @@ export class ActionsApi extends BaseApi {
      * You can use any of the following fields to order the results:
      * - name
      * - title
+     *
      * @param opts Optional parameters
      * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
      * sort the list by one or more fields.
@@ -110,6 +113,7 @@ export class ActionsApi extends BaseApi {
      * You can use any of the following fields to order the results:
      * - name
      * - title
+     *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
      * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to

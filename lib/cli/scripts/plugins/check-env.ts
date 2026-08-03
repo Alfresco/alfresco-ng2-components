@@ -25,7 +25,12 @@ export class CheckEnv {
     _alfrescoJsApi: AlfrescoApi;
     counter = 0;
 
-    constructor(private host: string, private username: string, private password: string, private clientId: string = 'alfresco') {}
+    constructor(
+        private readonly host: string,
+        private readonly username: string,
+        private readonly password: string,
+        private readonly clientId: string = 'alfresco'
+    ) {}
 
     async checkEnv() {
         try {

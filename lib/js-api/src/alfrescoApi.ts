@@ -285,6 +285,7 @@ export class AlfrescoApi extends AlfrescoApiClient implements AlfrescoApiType {
 
     /**
      * login Alfresco API
+     *
      * @param  username Username to login
      * @param  password Password to login
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
@@ -362,6 +363,7 @@ export class AlfrescoApi extends AlfrescoApiClient implements AlfrescoApiType {
 
     /**
      * login Tickets
+     *
      * @param ticketEcm alfresco ticket
      * @param ticketBpm alfresco ticket
      */
@@ -536,6 +538,7 @@ export class AlfrescoApi extends AlfrescoApiClient implements AlfrescoApiType {
 
     /**
      * Set the current Ticket
+     *
      * @param ticketEcm ecm ticket
      * @param ticketBpm bpm ticket
      */
@@ -611,7 +614,6 @@ export class AlfrescoApi extends AlfrescoApiClient implements AlfrescoApiType {
 
     reply(event: string, callback?: any): void {
         if (this.bufferEvents.indexOf(event) >= 0) {
-            // eslint-disable-next-line prefer-rest-params
             Function.prototype.apply.call(callback, this, arguments);
         } else {
             this.on(event, callback);

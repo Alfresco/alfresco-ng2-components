@@ -93,6 +93,7 @@ export class NodesApi extends BaseApi {
      * If the source **nodeId** is a folder, then all of its children are also copied.
      *
      * If the source **nodeId** is a file, it's properties, aspects and tags are copied, it's ratings, comments and locks are not.
+     *
      * @param nodeId The identifier of a node.
      * @param nodeBodyCopy The targetParentId and, optionally, a new name which should include the file extension.
      * @param opts Optional parameters
@@ -124,6 +125,7 @@ export class NodesApi extends BaseApi {
      * Create node association
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
      * @param nodeId The identifier of a source node.
      * @param associationBodyCreate The target node id and assoc type.
      * @param opts Optional parameters
@@ -159,6 +161,7 @@ export class NodesApi extends BaseApi {
      * Create a node
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
      * @param nodeId The identifier of a node. You can also use one of these well-known aliases:
      * -my-
      * -shared-
@@ -222,6 +225,7 @@ export class NodesApi extends BaseApi {
 
     /**
      * Create a folder
+     *
      * @param name - folder name
      * @param relativePath - The relativePath specifies the folder structure to create relative to the node identified by nodeId.
      * @param nodeId default value root.The identifier of a node where add the folder. You can also use one of these well-known aliases: -my- | -shared- | -root-
@@ -244,6 +248,7 @@ export class NodesApi extends BaseApi {
      * Create secondary child
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
      * @param nodeId The identifier of a parent node.
      * @param secondaryChildAssociationBodyCreate The child node id and assoc type.
      * @param opts Optional parameters
@@ -289,6 +294,7 @@ export class NodesApi extends BaseApi {
      * If the association type is **not** specified, then all peer associations, of any type, in the direction
      * from source to target, are deleted.
      * **Note:** After removal of the peer association, or associations, from source to target, the two nodes may still have peer associations in the other direction.
+     *
      * @param nodeId The identifier of a source node.
      * @param targetId The identifier of a target node.
      * @param opts Optional parameters
@@ -329,6 +335,7 @@ export class NodesApi extends BaseApi {
      * child association is restored. This applies recursively for any primary children. No other secondary child associations or
      * peer associations are restored for any of the nodes in the primary parent-child hierarchy of restored nodes, regardless of whether the original
      * associations were to nodes inside or outside the restored hierarchy.
+     *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
      * @param opts.permanent If **true** then the node is deleted permanently, without moving to the trashcan.
@@ -354,6 +361,7 @@ export class NodesApi extends BaseApi {
     }
     /**
      * Delete multiple nodes
+     *
      * @param nodeIds The list of node IDs to delete.
      * @param opts Optional parameters
      * @param opts.permanent If **true** then nodes are deleted permanently, without moving to the trashcan.
@@ -369,6 +377,7 @@ export class NodesApi extends BaseApi {
             promises.push(await this.deleteNode(id, opts));
         }
 
+        // eslint-disable-next-line @typescript-eslint/await-thenable
         return Promise.all(promises);
     }
 
@@ -382,6 +391,7 @@ export class NodesApi extends BaseApi {
      * If the association type is **not** specified, then all secondary child associations, of any type in the direction
      * from parent to secondary child, will be deleted. The child will still have a primary parent and may still be
      * associated as a secondary child with other secondary parents.
+     *
      * @param nodeId The identifier of a parent node.
      * @param childId The identifier of a child node.
      * @param opts Optional parameters
@@ -410,6 +420,7 @@ export class NodesApi extends BaseApi {
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
      *
      * You can use the **include** parameter to return additional information.
+     *
      * @param nodeId The identifier of a node. You can also use one of these well-known aliases:
      * - -my-
      * - -shared-
@@ -443,6 +454,7 @@ export class NodesApi extends BaseApi {
      * Get node content
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
      * @param opts.attachment **true** enables a web browser to download the file as an attachment.
@@ -527,6 +539,7 @@ export class NodesApi extends BaseApi {
      * - createdAt
      * - modifiedByUser
      * - createdByUser
+     *
      * @param nodeId The identifier of a node. You can also use one of these well-known aliases:
      * - -my-
      * - -shared-
@@ -590,6 +603,7 @@ export class NodesApi extends BaseApi {
      *
      * Gets a list of parent nodes that are associated with the current child **nodeId**.
      * The list includes both the primary parent and any secondary parents.
+     *
      * @param nodeId The identifier of a child node. You can also use one of these well-known aliases:
      * - -my-
      * - -shared-
@@ -640,6 +654,7 @@ export class NodesApi extends BaseApi {
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
      *
      * Gets a list of secondary child nodes that are associated with the current parent **nodeId**, via a secondary child association.
+     *
      * @param nodeId The identifier of a parent node. You can also use one of these well-known aliases:
      * -my-
      * -shared-
@@ -686,6 +701,7 @@ export class NodesApi extends BaseApi {
      * List source associations
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
      * @param nodeId The identifier of a target node.
      * @param opts Optional parameters
      * @param opts.where Optionally filter the list by **assocType**. Here's an example:
@@ -725,6 +741,7 @@ export class NodesApi extends BaseApi {
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
      *
      * Gets a list of target nodes that are associated with the current source **nodeId**.
+     *
      * @param nodeId The identifier of a source node.
      * @param opts Optional parameters
      * @param opts.where Optionally filter the list by **assocType**. Here's an example:
@@ -767,6 +784,7 @@ export class NodesApi extends BaseApi {
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
      *
      * If a lock on the node cannot be taken, then an error is returned.
+     *
      * @param nodeId The identifier of a node.
      * @param nodeBodyLock Lock details.
      * @param opts Optional parameters
@@ -803,6 +821,7 @@ export class NodesApi extends BaseApi {
      * The moved node retains its name unless you specify a new **name** in the request body.
      * If the source **nodeId** is a folder, then its children are also moved.
      * The move will effectively change the primary parent.
+     *
      * @param nodeId The identifier of a node.
      * @param nodeBodyMove The targetParentId and, optionally, a new name which should include the file extension.
      * @param opts Optional parameters
@@ -837,6 +856,7 @@ export class NodesApi extends BaseApi {
      *
      * The current user must be the owner of the locks or have admin rights, otherwise an error is returned.
      * If a lock on the node cannot be released, then an error is returned.
+     *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
      * @returns Promise<NodeEntry>
@@ -865,6 +885,7 @@ export class NodesApi extends BaseApi {
      * Update a node
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
      * @param nodeId The identifier of a node.
      * @param nodeBodyUpdate The node information to update.
      * @param opts Optional parameters
@@ -895,6 +916,7 @@ export class NodesApi extends BaseApi {
      * Update node content
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
      * @param nodeId The identifier of a node.
      * @param contentBodyUpdate The binary content
      * @param opts Optional parameters
@@ -946,6 +968,7 @@ export class NodesApi extends BaseApi {
      * Generate a direct access content url for a given node
      *
      * **Note:** this endpoint is available in Alfresco 7.1 and newer versions.
+     *
      * @param nodeId The identifier of a node.
      * @returns Promise<DirectAccessUrlEntry>
      */
@@ -967,6 +990,7 @@ export class NodesApi extends BaseApi {
      * Initiate a new request to calculate folder size.
      *
      * **Note:** this endpoint is available in Alfresco 25.1.0 and newer versions.
+     *
      * @param nodeId Node Id
      * @returns The job id which can be used to track request status
      */
@@ -988,6 +1012,7 @@ export class NodesApi extends BaseApi {
      * Gets the size of a folder.
      *
      * **Note:** this endpoint is available in Alfresco 25.1.0 and newer versions.
+     *
      * @param nodeId Node Id
      * @param jobId Job Id
      * @returns Folder details

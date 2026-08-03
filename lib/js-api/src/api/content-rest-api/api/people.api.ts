@@ -30,6 +30,7 @@ export class PeopleApi extends BaseApi {
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
      * **Note:** setting properties of type d:content and d:category are not supported.
+     *
      * @param personBodyCreate The person details.
      * @param opts Optional parameters
      * @returns Promise<PersonEntry>
@@ -57,6 +58,7 @@ export class PeopleApi extends BaseApi {
      * Deletes the avatar image related to person **personId**.
      * You must be the person or have admin rights to update a person's avatar.
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
+     *
      * @param personId The identifier of a person.
      * @returns Promise<{}>
      */
@@ -82,6 +84,7 @@ export class PeopleApi extends BaseApi {
      * the **placeholder** query parameter can be optionally used to request a placeholder image to be returned.
      *
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
+     *
      * @param personId The identifier of a person.
      * @param opts Optional parameters
      * @param opts.attachment **true** enables a web browser to download the file as an attachment.
@@ -128,6 +131,7 @@ export class PeopleApi extends BaseApi {
      * Get a person
      *
      * You can use the `-me-` string in place of <personId> to specify the currently authenticated user.
+     *
      * @param personId The identifier of a person.
      * @param opts Optional parameters
      * @returns Promise<PersonEntry>
@@ -167,6 +171,7 @@ export class PeopleApi extends BaseApi {
      * - id
      * - firstName
      * - lastName
+     *
      * @param opts Optional parameters
      * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
      * sort the list by one or more fields.
@@ -204,6 +209,7 @@ export class PeopleApi extends BaseApi {
      *
      * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
      * **Note:** No authentication is required to call this endpoint.
+     *
      * @param personId The identifier of a person.
      * @param clientBody The client name to send email with app-specific url.
      * @returns Promise<{}>
@@ -228,6 +234,7 @@ export class PeopleApi extends BaseApi {
      *
      * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
      * **Note:** No authentication is required to call this endpoint.
+     *
      * @param personId The identifier of a person.
      * @param passwordResetBody The reset password details
      * @returns Promise<{}>
@@ -260,6 +267,7 @@ export class PeopleApi extends BaseApi {
      * You must be the person or have admin rights to update a person's avatar.
      *
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
+     *
      * @param personId The identifier of a person.
      * @param contentBodyUpdate The binary content
      * @returns Promise<{}>
@@ -289,6 +297,7 @@ export class PeopleApi extends BaseApi {
      * This includes the current authentication ticket in the URL to allow secure access.
      *
      * You can use the `-me-` string in place of <personId> to specify the currently authenticated user.
+     *
      * @param personId The identifier of a person.
      * @returns A string URL to the user's avatar image.
      */
@@ -311,6 +320,7 @@ export class PeopleApi extends BaseApi {
      * Admin users cannot be disabled by setting enabled to false.
      * Non-admin users may not disable themselves.
      * **Note:** setting properties of type d:content and d:category are not supported.
+     *
      * @param personId The identifier of a person.
      * @param personBodyUpdate The person details.
      * @param opts Optional parameters

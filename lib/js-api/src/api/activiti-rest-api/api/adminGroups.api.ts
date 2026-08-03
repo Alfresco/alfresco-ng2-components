@@ -31,6 +31,7 @@ import { throwIfNotDefined } from '../../../assert';
 export class AdminGroupsApi extends BaseApi {
     /**
      * Activate a group
+     *
      * @param groupId groupId
      * @return Promise<{}>
      */
@@ -49,6 +50,7 @@ export class AdminGroupsApi extends BaseApi {
 
     /**
      * Add users to a group
+     *
      * @param groupId groupId
      * @return Promise<{}>
      */
@@ -67,6 +69,7 @@ export class AdminGroupsApi extends BaseApi {
 
     /**
      * Add capabilities to a group
+     *
      * @param groupId groupId
      * @param addGroupCapabilitiesRepresentation addGroupCapabilitiesRepresentation
      * @return Promise<{}>
@@ -88,6 +91,7 @@ export class AdminGroupsApi extends BaseApi {
 
     /**
      * Add a user to a group
+     *
      * @param groupId groupId
      * @param userId userId
      * @return Promise<{}>
@@ -109,6 +113,7 @@ export class AdminGroupsApi extends BaseApi {
 
     /**
      * Get a related group
+     *
      * @param groupId groupId
      * @param relatedGroupId relatedGroupId
      * @param type type
@@ -137,6 +142,7 @@ export class AdminGroupsApi extends BaseApi {
 
     /**
      * Create a group
+     *
      * @param groupRepresentation groupRepresentation
      * @return Promise<GroupRepresentation>
      */
@@ -152,6 +158,7 @@ export class AdminGroupsApi extends BaseApi {
 
     /**
      * Remove a capability from a group
+     *
      * @param groupId groupId
      * @param groupCapabilityId groupCapabilityId
      * @return Promise<{}>
@@ -173,6 +180,7 @@ export class AdminGroupsApi extends BaseApi {
 
     /**
      * Delete a member from a group
+     *
      * @param groupId groupId
      * @param userId userId
      * @return Promise<{}>
@@ -194,6 +202,7 @@ export class AdminGroupsApi extends BaseApi {
 
     /**
      * Delete a group
+     *
      * @param groupId groupId
      * @return Promise<{}>
      */
@@ -212,6 +221,7 @@ export class AdminGroupsApi extends BaseApi {
 
     /**
      * Delete a related group
+     *
      * @param groupId groupId
      * @param relatedGroupId relatedGroupId
      * @return Promise<{}>
@@ -233,6 +243,7 @@ export class AdminGroupsApi extends BaseApi {
 
     /**
      * List group capabilities
+     *
      * @param groupId groupId
      * @return Promise<string>
      */
@@ -251,6 +262,7 @@ export class AdminGroupsApi extends BaseApi {
 
     /**
      * Get group members
+     *
      * @param groupId groupId
      * @param opts Optional parameters
      * @return Promise<ResultListDataRepresentationLightUserRepresentation>
@@ -274,6 +286,7 @@ export class AdminGroupsApi extends BaseApi {
 
     /**
      * Get a group
+     *
      * @param groupId groupId
      * @param opts Optional parameters
      * @return Promise<AbstractGroupRepresentation>
@@ -294,6 +307,7 @@ export class AdminGroupsApi extends BaseApi {
 
     /**
      * Query groups
+     *
      * @param opts Optional parameters
      * @return Promise<LightGroupRepresentation>
      */
@@ -306,6 +320,7 @@ export class AdminGroupsApi extends BaseApi {
 
     /**
      * Get related groups
+     *
      * @param groupId groupId
      * @return Promise<LightGroupRepresentation>
      */
@@ -324,6 +339,7 @@ export class AdminGroupsApi extends BaseApi {
 
     /**
      * Update a group
+     *
      * @param groupId groupId
      * @param groupRepresentation groupRepresentation
      * @return Promise<GroupRepresentation>

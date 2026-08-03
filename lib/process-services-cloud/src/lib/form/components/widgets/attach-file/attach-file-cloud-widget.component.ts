@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
-
 import { Component, EventEmitter, inject, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import {
     FormValues,

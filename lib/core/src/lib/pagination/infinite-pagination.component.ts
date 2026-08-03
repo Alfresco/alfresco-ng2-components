@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/no-input-rename */
-/* eslint-disable rxjs/no-subject-value */
-
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,

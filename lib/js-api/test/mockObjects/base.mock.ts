@@ -21,7 +21,6 @@ const originalFetch = globalThis.fetch;
 
 export function initGlobalMockAgent(): any {
     if (!(global as any).__mockAgent__) {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const { MockAgent, fetch: undiciFetch } = require('undici');
         const agent = new MockAgent();
         agent.disableNetConnect();

@@ -21,7 +21,10 @@ import { AlfrescoApi } from '@alfresco/js-api';
 
 export class GovernanceCheckPlugin {
     governanceHealth: GovernanceHealth;
-    constructor(private pluginInfo: PluginInterface, private alfrescoJsApi: AlfrescoApi) {
+    constructor(
+        private readonly pluginInfo: PluginInterface,
+        private readonly alfrescoJsApi: AlfrescoApi
+    ) {
         this.governanceHealth = new GovernanceHealth(this.pluginInfo, this.alfrescoJsApi);
     }
 

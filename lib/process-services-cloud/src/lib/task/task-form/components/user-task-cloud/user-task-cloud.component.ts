@@ -166,7 +166,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
      * Emitted when a task is loaded`.
      */
     @Output()
-    onTaskLoaded = new EventEmitter<TaskDetailsCloudModel>(); /* eslint-disable-line */
+    onTaskLoaded = new EventEmitter<TaskDetailsCloudModel>();
 
     /** Emitted when the task is claimed. */
     @Output()

@@ -26,6 +26,7 @@ import { GsPagingQuery } from './types';
 export class DeclassificationExemptionsApi extends BaseApi {
     /**
      * Create a declassification exemption
+     *
      * @param declassificationExemption Declassification exemption
      * @returns Promise<DeclassificationExemptionEntry>
      */
@@ -41,6 +42,7 @@ export class DeclassificationExemptionsApi extends BaseApi {
     /**
      * Deletes the declassification exemption with id **declassificationExemptionId**.
      * You can't delete a classification exemption that is being used to classify content.
+     *
      * @param declassificationExemptionId The identifier for the declassification exemption
      * @returns Promise<{}>
      */
@@ -59,6 +61,7 @@ export class DeclassificationExemptionsApi extends BaseApi {
 
     /**
      * List all declassification exemptions
+     *
      * @param opts Optional parameters
      * @returns Promise<DeclassificationExemptionsPaging>
      */
@@ -71,6 +74,7 @@ export class DeclassificationExemptionsApi extends BaseApi {
 
     /**
      * Get declassification exemption information
+     *
      * @param declassificationExemptionId The identifier for the declassification exemption
      * @returns Promise<DeclassificationExemptionEntry>
      */
@@ -89,6 +93,7 @@ export class DeclassificationExemptionsApi extends BaseApi {
 
     /**
      * Update a declassification exemption
+     *
      * @param declassificationExemptionId The identifier for the declassification exemption
      * @param declassificationExemption Declassification exemption
      * @returns Promise<DeclassificationExemptionEntry>
