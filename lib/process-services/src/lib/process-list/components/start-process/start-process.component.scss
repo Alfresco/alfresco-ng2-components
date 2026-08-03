@@ -18,7 +18,8 @@
             text-align: right;
         }
 
-        #{ms.$mat-button} {
+        // All action buttons carry this ADF class (no projected buttons here).
+        .adf-start-process-button {
             width: auto;
             padding: 0 16px;
             margin: 0 8px;

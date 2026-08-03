@@ -1,5 +1,3 @@
-@use '../styles/mat-selectors' as ms;
-
 :host {
     display: flex;
     align-items: center;
@@ -23,7 +21,8 @@
         display: flex;
         flex-direction: row;
 
-        #{ms.$mat-button} {
+        // Both action buttons are mat-button with ADF classes (no projected buttons here).
+        button {
             min-width: 0;
             margin: -8px;
             height: unset;
