@@ -28,6 +28,11 @@ import { throwIfNotDefined } from '../../../assert';
  */
 export class ContentApi extends BaseApi {
     /**
+     * Maximum number of source document ids accepted by the batch document-runtime endpoint in a single request.
+     */
+    static readonly DOCUMENT_RUNTIME_BATCH_SIZE_LIMIT = 500;
+
+    /**
      * Attach existing content to a process instance
      *
      * @param processInstanceId processInstanceId
@@ -318,11 +323,6 @@ export class ContentApi extends BaseApi {
             }
         });
     }
-
-    /**
-     * Maximum number of source document ids accepted by the batch document-runtime endpoint in a single request.
-     */
-    static readonly DOCUMENT_RUNTIME_BATCH_SIZE_LIMIT = 500;
 
     /**
      * Batch variant of getProcessesAndTasksOnContent. Accepts multiple source document ids

@@ -559,12 +559,12 @@ contentApi.getProcessesAndTasksOnContentBatch(['id1', 'id2'], 'source').then((da
 
 ### Parameters
 
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **sourceIds** | **string[]** | List of source document ids (up to 500) | |
-| **source** | **string** | Source repository identifier | |
-| **size** | **number** | Page size | optional |
-| **page** | **number** | Page number (zero-based) | optional |
+| Name          | Type         | Description                             | Notes    |
+|---------------|--------------|-----------------------------------------|----------|
+| **sourceIds** | **string[]** | List of source document ids (up to 500) |          |
+| **source**    | **string**   | Source repository identifier            |          |
+| **size**      | **number**   | Page size                               | optional |
+| **page**      | **number**   | Page number (zero-based)                | optional |
 
 ### Return type
 
