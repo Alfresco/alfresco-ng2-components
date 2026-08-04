@@ -39,6 +39,7 @@ export * from './goverance-services/security-groups.mock';
 export * from './goverance-services/security-marks.mock';
 
 export * from './process-services/bpm-auth.mock';
+export * from './process-services/content.mock';
 export * from './process-services/process.mock';
 export * from './process-services/process-instance-variables.mock';
 export * from './process-services/models.mock';
