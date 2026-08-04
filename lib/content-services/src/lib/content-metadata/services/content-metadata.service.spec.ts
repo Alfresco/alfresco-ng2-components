@@ -249,12 +249,64 @@ describe('ContentMetaDataService', () => {
         expect(authorProperty.editable).toBeTrue();
     });
 
+    it('should hide basic properties from general info when they are excluded', async () => {
+        setConfig('custom', [{ includeAll: true, exclude: ['cm:title'] }]);
+
+        const res = await firstValueFrom(service.getBasicProperties(fakeNode, 'custom'));
+
+        expect(res.find((property) => property.key === 'properties.cm:title')).toBeUndefined();
+        expect(res.find((property) => property.key === 'properties.cm:name')).toBeDefined();
+    });
+
     it('should return the content type property', () => {
         spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of([{ label: 'hello i am a weird content type' } as CardViewItem]));
 
         service.getContentTypeProperty(fakeNode).subscribe((res) => {
             expect(res[0].label).toBe('hello i am a weird content type');
         });
+    });
+
+    it('should hide a single content type property in general info when that property is excluded', async () => {
+        setConfig('custom', [{ includeAll: true, exclude: ['fn:thema'] }]);
+        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(
+            of([
+                { label: 'Content Type', key: 'nodeType' } as CardViewItem,
+                { label: 'System', key: 'properties.fn:system' } as CardViewItem,
+                { label: 'Thema', key: 'properties.fn:thema' } as CardViewItem
+            ])
+        );
+
+        const res = await firstValueFrom(service.getContentTypeProperty(fakeNode, 'custom'));
+
+        expect(res.map((item) => item.key)).toEqual(['nodeType', 'properties.fn:system']);
+    });
+
+    it('should hide content type specific properties in general info when the node type is excluded', async () => {
+        setConfig('custom', [{ includeAll: true, exclude: ['fn:fakenode'] }]);
+        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(
+            of([
+                { label: 'Content Type', key: 'nodeType' } as CardViewItem,
+                { label: 'System', key: 'properties.fn:system' } as CardViewItem,
+                { label: 'Thema', key: 'properties.fn:thema' } as CardViewItem
+            ])
+        );
+
+        const res = await firstValueFrom(service.getContentTypeProperty(fakeNode, 'custom'));
+
+        expect(res.length).toBe(1);
+        expect(res[0].key).toBe('nodeType');
+    });
+
+    it('should keep content type specific properties in general info when the node type is not excluded', async () => {
+        setConfig('custom', [{ includeAll: true, exclude: ['cm:versionable'] }]);
+        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(
+            of([{ label: 'Content Type', key: 'nodeType' } as CardViewItem, { label: 'System', key: 'properties.fn:system' } as CardViewItem])
+        );
+
+        const res = await firstValueFrom(service.getContentTypeProperty(fakeNode, 'custom'));
+
+        expect(res.length).toBe(2);
+        expect(res.map((item) => item.key)).toEqual(['nodeType', 'properties.fn:system']);
     });
 
     it('should trigger the opening of the content type dialog', () => {
