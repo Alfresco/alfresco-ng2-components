@@ -30,7 +30,7 @@ import { DataColumn } from '../../../../datatable/data/data-column.model';
 import { DateFnsUtils } from '../../../../common';
 import { isValid as isValidDate } from 'date-fns';
 import { ContainerRowModel } from './container-row.model';
-import { RepeatableSectionModel, ROW_ID_PREFIX } from './repeatable-section.model';
+import { RepeatableSectionModel, ROW_ID_PREFIX, TEMPLATE_ROW_ID } from './repeatable-section.model';
 import { formFieldRuleHandler } from './handlers/form-field-rule.handler';
 import { formFieldVisibilityConditionHandler } from './handlers/form-field-visibility-condition.handler';
 
@@ -351,7 +351,12 @@ export class FormFieldModel extends FormWidgetModel {
             this.rows.push(this.createRow(fields, form, i, value?.[i], i < params?.initialNumberOfRows));
         }
 
-        this.columns = this.rows[0].columns;
+        if (this.rows.length > 0) {
+            this.columns = this.rows[0].columns;
+        } else if (this.columns.length === 0) {
+            // Design-time column template for Studio and form-rules; isTemplate suppresses form.values writes.
+            this.columns = this.createColumns(fields, form, TEMPLATE_ROW_ID, 0, undefined, true);
+        }
     }
 
     private getNumberOfRows(initialNrRows: number = 1, maxNrRows: number | null = null, value?: any) {
@@ -366,7 +371,7 @@ export class FormFieldModel extends FormWidgetModel {
         return row;
     }
 
-    private createColumns(fields: any, form: any, rowId: string, index?: number, value?: any) {
+    private createColumns(fields: any, form: any, rowId: string, index?: number, value?: any, isTemplate: boolean = false) {
         const columns: ContainerColumnModel[] = [];
 
         Object.keys(fields).forEach((currentField) => {
@@ -382,7 +387,8 @@ export class FormFieldModel extends FormWidgetModel {
                         uid: this.getUniqueId(field, rowId),
                         fields: this.fields,
                         rowIndex: index ?? 0,
-                        value: field.type === FormFieldTypes.SECTION ? value : value?.[field.id]
+                        value: field.type === FormFieldTypes.SECTION ? value : value?.[field.id],
+                        isTemplate
                     })
             );
             col.rowspan = fields[currentField].length;
@@ -399,15 +405,24 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private updateRepeatableSectionReadOnlyState(state: boolean) {
-        for (const row of this.rows) {
-            for (const column of row.columns) {
-                for (const field of column.fields) {
-                    if (field.type === FormFieldTypes.SECTION) {
-                        this.updateInnerSectionReadOnlyState(field, state);
-                    }
+        if (this.rows.length > 0) {
+            for (const row of this.rows) {
+                this.updateRepeatableSectionColumnsReadOnlyState(row.columns, state);
+            }
+            return;
+        }
 
-                    field.readOnly = this.getRepeatableSectionFieldReadOnlyState(field, state);
+        this.updateRepeatableSectionColumnsReadOnlyState(this.columns, state);
+    }
+
+    private updateRepeatableSectionColumnsReadOnlyState(columns: ContainerColumnModel[], state: boolean) {
+        for (const column of columns) {
+            for (const field of column.fields) {
+                if (field.type === FormFieldTypes.SECTION) {
+                    this.updateInnerSectionReadOnlyState(field, state);
                 }
+
+                field.readOnly = this.getRepeatableSectionFieldReadOnlyState(field, state);
             }
         }
     }
@@ -594,7 +609,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     updateForm() {
-        if (!this.form) {
+        if (!this.form || this.parent?.isTemplate) {
             return;
         }
 
