@@ -95,7 +95,6 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
 
     private proxy(lifecycleMethod: string, ...args: any[]) {
         if (this.componentCreated() && this.lifecycleHookIsImplemented(lifecycleMethod)) {
-            // eslint-disable-next-line prefer-spread
             this.componentRef.instance[lifecycleMethod].apply(this.componentRef.instance, args);
         }
     }

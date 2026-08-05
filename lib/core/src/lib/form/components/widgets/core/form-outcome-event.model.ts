@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
-
 import { FormOutcomeModel } from './form-outcome.model';
 
 export class FormOutcomeEvent {

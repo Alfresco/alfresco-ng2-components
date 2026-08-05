@@ -4,6 +4,7 @@
   "sourceRoot": "lib/content-services/src",
   "projectType": "library",
   "prefix": "adf",
+  "tags": ["scope:content-services", "type:library"],
   "targets": {
     "build": {
       "executor": "@angular/build:ng-packagr",

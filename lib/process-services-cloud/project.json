@@ -4,6 +4,7 @@
   "sourceRoot": "lib/process-services-cloud/src",
   "projectType": "library",
   "prefix": "adf-cloud",
+  "tags": ["scope:process-services-cloud", "type:library"],
   "targets": {
     "build": {
       "executor": "@angular/build:ng-packagr",

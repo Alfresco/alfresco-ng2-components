@@ -26,7 +26,6 @@ import { OauthConfigModel } from '../auth/models/oauth-config.model';
 
 /* spellchecker: disable */
 
-// eslint-disable-next-line no-shadow
 export const AppConfigValues = {
     APP_CONFIG_LANGUAGES_KEY: 'languages',
     PROVIDERS: 'providers',
@@ -44,9 +43,6 @@ export const AppConfigValues = {
     LOGIN_ROUTE: 'loginRoute',
     DISABLECSRF: 'disableCSRF',
     AUTH_WITH_CREDENTIALS: 'auth.withCredentials',
-    AUTH_TIME_SYNC_ENABLED: 'oauth2.timeSync',
-    AUTH_SHOW_DEBUG_INFORMATION: 'oauth2.showDebugInformation',
-    SERVER_TIME_URL: 'serverTimeUrl',
     APPLICATION: 'application',
     STORAGE_PREFIX: 'application.storagePrefix',
     NOTIFY_DURATION: 'notificationDefaultDuration',
@@ -213,7 +209,6 @@ export class AppConfigService {
                         this.onDataLoaded();
                     },
                     () => {
-                        // eslint-disable-next-line no-console
                         console.error('app.config.json contains validation errors');
                         resolve(this.config);
                     }
@@ -241,7 +236,6 @@ export class AppConfigService {
                     resolve(res);
                 },
                 error: (err: any) => {
-                    // eslint-disable-next-line no-console
                     console.error('hostIdp not correctly configured or unreachable');
                     reject(err);
                 }
@@ -259,16 +253,12 @@ export class AppConfigService {
         const implicitFlow = config['implicitFlow'] === true || config['implicitFlow'] === 'true';
         const silentLogin = config['silentLogin'] === true || config['silentLogin'] === 'true';
         const codeFlow = config['codeFlow'] === true || config['codeFlow'] === 'true';
-        const timeSync = config['timeSync'] === true || config['timeSync'] === 'true';
-        const showDebugInformation = config['showDebugInformation'] === true || config['showDebugInformation'] === 'true';
 
         return {
             ...(config as OauthConfigModel),
             implicitFlow,
             silentLogin,
-            codeFlow,
-            timeSync,
-            showDebugInformation
+            codeFlow
         };
     }
 

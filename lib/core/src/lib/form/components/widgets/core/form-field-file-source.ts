@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
-
 import { FormFieldSelectedFolder } from './form-field-selected-folder';
 
 export interface DestinationFolderPath {

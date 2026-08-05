@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const expand = require('dotenv-expand');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+
 const nodeDotEnv = require('dotenv');
 
 export const dotenv = () => expand(nodeDotEnv);

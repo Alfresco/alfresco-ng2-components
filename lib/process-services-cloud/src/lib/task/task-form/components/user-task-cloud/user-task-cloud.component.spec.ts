@@ -28,7 +28,7 @@ import { UserTaskCloudComponent } from './user-task-cloud.component';
 import { By } from '@angular/platform-browser';
 import { TaskScreenCloudComponent } from '../../../../screen/components/screen-cloud/user-task-screen/screen-cloud.component';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopAuthModule, NoopTranslateModule, FormModel } from '@alfresco/adf-core';
 import {
     TASK_ASSIGNED_STATE,
     TASK_CLAIM_PERMISSION,
@@ -39,7 +39,6 @@ import {
 } from '../../../models/task-details-cloud.model';
 import { TaskFormCloudComponent } from '../task-form-cloud/task-form-cloud.component';
 import { TaskCloudService } from '../../../services/task-cloud.service';
-import { FormModel } from '../../../../../../../core';
 import { UserTaskCloudButtonsComponent } from '../user-task-cloud-buttons/user-task-cloud-buttons.component';
 
 const createTaskDetailsCloudModel = (): TaskDetailsCloudModel => ({

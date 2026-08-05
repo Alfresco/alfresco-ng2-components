@@ -174,12 +174,12 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     rowClick = new EventEmitter<string>();
 
     /** Emitted when the list of process instances has been loaded successfully from the server. */
-    // eslint-disable-next-line @angular-eslint/no-output-native
+
     @Output()
     success = new EventEmitter<ResultListDataRepresentationProcessInstanceRepresentation>();
 
     /** Emitted when an error occurs while loading the list of process instances from the server. */
-    // eslint-disable-next-line @angular-eslint/no-output-native
+
     @Output()
     error = new EventEmitter<any>();
 

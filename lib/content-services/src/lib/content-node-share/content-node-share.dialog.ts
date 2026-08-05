@@ -196,7 +196,6 @@ export class ShareDialogComponent implements OnInit {
                     this.isDisabled = false;
                     this.isFileShared = true;
 
-                    // eslint-disable-next-line
                     this.renditionService.getNodeRendition(this.data.node.entry.id);
 
                     this.updateForm();

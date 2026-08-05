@@ -4,6 +4,7 @@
   "sourceRoot": "lib/insights/src",
   "projectType": "library",
   "prefix": "adf",
+  "tags": ["scope:insights", "type:library"],
   "targets": {
     "build": {
       "executor": "@angular/build:ng-packagr",

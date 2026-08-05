@@ -52,6 +52,7 @@ export class AppExtensionService {
     /**
      * Provides a collection of document list columns for the particular preset.
      * The result is filtered by the **disabled** state.
+     *
      * @param key Preset key.
      * @returns list of document list presets
      */
@@ -62,6 +63,7 @@ export class AppExtensionService {
     /**
      * Provides a list of the Viewer content extensions,
      * filtered by **disabled** state and **rules**.
+     *
      * @returns list of viewer extension references
      */
     getViewerExtensions(): ViewerExtensionRef[] {

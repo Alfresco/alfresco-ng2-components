@@ -214,6 +214,41 @@ describe('ContentMetaDataService', () => {
         });
     });
 
+    it('should mark basic properties as read-only when preset defines readOnlyProperties (includeAll)', async () => {
+        setConfig('custom', [{ includeAll: true, readOnlyProperties: ['cm:name', 'cm:title'] }]);
+
+        const res = await firstValueFrom(service.getBasicProperties(fakeNode, 'custom'));
+        const nameProperty = res.find((property) => property.key === 'properties.cm:name');
+        const titleProperty = res.find((property) => property.key === 'properties.cm:title');
+        const authorProperty = res.find((property) => property.key === 'properties.cm:author');
+
+        expect(nameProperty.editable).toBeFalse();
+        expect(titleProperty.editable).toBeFalse();
+        expect(authorProperty.editable).toBeTrue();
+    });
+
+    it('should mark basic properties as read-only when layout items are not editable', async () => {
+        setConfig('custom', [
+            {
+                items: [
+                    { type: 'cm:content', properties: ['cm:name'], editable: false },
+                    { aspect: 'cm:titled', properties: ['cm:title', 'cm:description'], editable: false }
+                ]
+            }
+        ]);
+
+        const res = await firstValueFrom(service.getBasicProperties(fakeNode, 'custom'));
+        const nameProperty = res.find((property) => property.key === 'properties.cm:name');
+        const titleProperty = res.find((property) => property.key === 'properties.cm:title');
+        const descriptionProperty = res.find((property) => property.key === 'properties.cm:description');
+        const authorProperty = res.find((property) => property.key === 'properties.cm:author');
+
+        expect(nameProperty.editable).toBeFalse();
+        expect(titleProperty.editable).toBeFalse();
+        expect(descriptionProperty.editable).toBeFalse();
+        expect(authorProperty.editable).toBeTrue();
+    });
+
     it('should return the content type property', () => {
         spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of([{ label: 'hello i am a weird content type' } as CardViewItem]));
 

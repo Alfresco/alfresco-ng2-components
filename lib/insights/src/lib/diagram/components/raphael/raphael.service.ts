@@ -17,7 +17,6 @@
 
 import { Injectable, OnDestroy } from '@angular/core';
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 declare let Raphael: any;
 
 @Injectable({ providedIn: 'root' })

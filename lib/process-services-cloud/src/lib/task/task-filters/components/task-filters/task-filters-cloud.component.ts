@@ -65,7 +65,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     filters$: Observable<TaskFilterCloudModel[]>;
     filters: TaskFilterCloudModel[] = [];
     currentFilter: TaskFilterCloudModel;
-    enableNotifications: boolean;
+    enableNotifications = true;
+    notificationDebounceTime = 3000;
     currentFiltersValues: { [key: string]: number } = {};
 
     private readonly taskFilterCloudService = inject(TaskFilterCloudService);
@@ -77,6 +78,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
+        this.notificationDebounceTime = this.appConfigService.get('notificationDebounceTime', 3000);
         this.getFilters(this.appName);
         this.initFilterCounterNotifications();
         this.getFilterKeysAfterExternalRefreshing();
@@ -165,7 +167,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         if (this.enableNotifications) {
             this.taskFilterCloudService
                 .getTaskNotificationSubscription(this.appName)
-                .pipe(debounceTime(1000))
+                .pipe(debounceTime(this.notificationDebounceTime), takeUntilDestroyed(this.destroyRef))
                 .subscribe((result) => {
                     result.forEach((taskEvent) => {
                         this.checkFilterCounter(taskEvent.entity);

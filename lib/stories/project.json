@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "lib/stories",
   "projectType": "library",
+  "tags": ["scope:stories", "type:tooling"],
   "targets": {
     "storybook": {
       "executor": "@storybook/angular:start-storybook",

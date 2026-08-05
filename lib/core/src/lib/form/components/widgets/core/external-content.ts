@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
-
 export interface ExternalContent {
     folder: boolean;
     id: string;

@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import { Node } from '@alfresco/js-api';
 import { FormFieldMetadata } from '@alfresco/adf-core';
 import { FileSourceTypes, DestinationFolderPathType } from '../models/form-cloud-representation.model';

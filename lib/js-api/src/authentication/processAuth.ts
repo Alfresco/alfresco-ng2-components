@@ -77,6 +77,7 @@ export class ProcessAuth extends AlfrescoApiClient {
 
     /**
      * login Activiti API
+     *
      * @param username Username to login
      * @param password Password to login
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
@@ -128,6 +129,7 @@ export class ProcessAuth extends AlfrescoApiClient {
 
     /**
      * logout Alfresco API
+     *
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
      */
     logout(): AlfrescoApiClientPromise<void> {
@@ -158,6 +160,7 @@ export class ProcessAuth extends AlfrescoApiClient {
 
     /**
      * Set the current Ticket
+     *
      * @param ticket Ticket value
      */
     setTicket(ticket: string) {
@@ -179,6 +182,7 @@ export class ProcessAuth extends AlfrescoApiClient {
 
     /**
      * Get the current Ticket
+     *
      * @returns ticket
      */
     getTicket(): string {
@@ -187,6 +191,7 @@ export class ProcessAuth extends AlfrescoApiClient {
 
     /**
      * If the client is logged in return true
+     *
      * @returns `true` if logged in, otherwise `false`
      */
     isLoggedIn(): boolean {
@@ -195,6 +200,7 @@ export class ProcessAuth extends AlfrescoApiClient {
 
     /**
      * return the Authentication
+     *
      * @returns authentication object
      */
     getAuthentication(): Authentication {

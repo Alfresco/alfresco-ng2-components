@@ -99,7 +99,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     private readonly sitesService = inject(SitesService);
     private readonly contentNodeSelectorPanelService = inject(ContentNodeSelectorPanelService);
 
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     DEFAULT_PAGINATION: Pagination = new Pagination({
         maxItems: 25,
         skipCount: 0

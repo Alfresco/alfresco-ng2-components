@@ -25,6 +25,7 @@ import { throwIfNotDefined } from '../../../assert';
 export class TaskActionsApi extends BaseApi {
     /**
      * Assign a task to a user
+     *
      * @param taskId taskId
      * @param userIdentifier userIdentifier
      * @return Promise<TaskRepresentation>
@@ -47,6 +48,7 @@ export class TaskActionsApi extends BaseApi {
 
     /**
      * Attach a form to a task
+     *
      * @param taskId taskId
      * @param formIdentifier formIdentifier
      * @return Promise<{}>
@@ -70,6 +72,7 @@ export class TaskActionsApi extends BaseApi {
      * Claim a task
      *
      * To claim a task (in case the task is assigned to a group)
+     *
      * @param taskId taskId
      * @return Promise<{}>
      */
@@ -90,6 +93,7 @@ export class TaskActionsApi extends BaseApi {
      * Complete a task
      *
      * Use this endpoint to complete a standalone task or task without a form
+     *
      * @param taskId taskId
      * @return Promise<{}>
      */
@@ -108,6 +112,7 @@ export class TaskActionsApi extends BaseApi {
 
     /**
      * Delegate a task
+     *
      * @param taskId taskId
      * @param userIdentifier userIdentifier
      * @return Promise<{}>
@@ -129,6 +134,7 @@ export class TaskActionsApi extends BaseApi {
 
     /**
      * Involve a group with a task
+     *
      * @param taskId taskId
      * @param groupId groupId
      * @return Promise<{}>
@@ -150,6 +156,7 @@ export class TaskActionsApi extends BaseApi {
 
     /**
      * Involve a user with a task
+     *
      * @param taskId taskId
      * @param userIdentifier userIdentifier
      * @return Promise<{}>
@@ -171,6 +178,7 @@ export class TaskActionsApi extends BaseApi {
 
     /**
      * Remove a form from a task
+     *
      * @param taskId taskId
      * @return Promise<{}>
      */
@@ -189,6 +197,7 @@ export class TaskActionsApi extends BaseApi {
 
     /**
      * Remove an involved group from a task
+     *
      * @param taskId taskId
      * @param identifier identifier
      * @return Promise<{}>
@@ -218,6 +227,7 @@ export class TaskActionsApi extends BaseApi {
 
     /**
      * Resolve a task
+     *
      * @param taskId taskId
      * @return Promise<{}>
      */
@@ -238,6 +248,7 @@ export class TaskActionsApi extends BaseApi {
      * Unclaim a task
      *
      * To unclaim a task (in case the task was assigned to a group)
+     *
      * @param taskId taskId
      * @return Promise<{}>
      */

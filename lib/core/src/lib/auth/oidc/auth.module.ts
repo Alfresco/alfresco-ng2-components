@@ -16,7 +16,7 @@
  */
 
 import { inject, ModuleWithProviders, NgModule, InjectionToken, provideAppInitializer, EnvironmentProviders, Provider } from '@angular/core';
-import { AUTH_CONFIG, DateTimeProvider, OAuthStorage, provideOAuthClient } from 'angular-oauth2-oidc';
+import { AUTH_CONFIG, OAuthStorage, provideOAuthClient } from 'angular-oauth2-oidc';
 import { AuthenticationService } from '../services/authentication.service';
 import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth-config';
 import { authConfigFactory, AuthConfigService } from './auth-config.service';
@@ -28,7 +28,6 @@ import { StorageService } from '../../common/services/storage.service';
 import { provideRouter } from '@angular/router';
 import { AUTH_ROUTES } from './auth.routes';
 import { Authentication, AuthenticationInterceptor } from '@alfresco/adf-core/auth';
-import { TimeSyncDateTimeProvider } from './time-sync-date-time-provider';
 
 export const JWT_STORAGE_SERVICE = new InjectionToken<OAuthStorage>('JWT_STORAGE_SERVICE', {
     providedIn: 'root',
@@ -55,7 +54,6 @@ export function provideCoreAuth(config: AuthModuleConfig = { useHash: false }): 
         provideOAuthClient(),
         provideRouter(AUTH_ROUTES),
         { provide: OAuthStorage, useFactory: oauthStorageFactory },
-        { provide: DateTimeProvider, useClass: TimeSyncDateTimeProvider },
         AuthenticationService,
         {
             provide: AUTH_CONFIG,

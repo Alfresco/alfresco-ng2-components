@@ -30,6 +30,7 @@ export class IntegrationAlfrescoOnPremiseApi extends BaseApi {
     /**
      * List Alfresco sites
      * Returns ALL Sites
+     *
      * @param repositoryId repositoryId
      * @return Promise<ResultListDataRepresentationAlfrescoSiteRepresenation>
      */
@@ -48,6 +49,7 @@ export class IntegrationAlfrescoOnPremiseApi extends BaseApi {
 
     /**
      * List files and folders inside a specific folder identified by folder path
+     *
      * @param repositoryId repositoryId
      * @param siteId siteId
      * @param folderPath folderPath
@@ -76,6 +78,7 @@ export class IntegrationAlfrescoOnPremiseApi extends BaseApi {
 
     /**
      * List files and folders inside a specific folder
+     *
      * @param repositoryId repositoryId
      * @param folderId folderId
      * @return Promise<ResultListDataRepresentationAlfrescoContentRepresentation>
@@ -97,6 +100,7 @@ export class IntegrationAlfrescoOnPremiseApi extends BaseApi {
 
     /**
      * List files and folders inside a specific site
+     *
      * @param repositoryId repositoryId
      * @param siteId siteId
      * @return Promise<ResultListDataRepresentationAlfrescoContentRepresentation>
@@ -120,6 +124,7 @@ export class IntegrationAlfrescoOnPremiseApi extends BaseApi {
      * List Alfresco repositories
      *
      * A tenant administrator can configure one or more Alfresco repositories to use when working with content.
+     *
      * @param opts Optional parameters
      * @param opts.tenantId {string} tenantId
      * @param opts.includeAccounts {boolean} includeAccounts (default to true)

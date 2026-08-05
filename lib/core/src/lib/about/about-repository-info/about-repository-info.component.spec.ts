@@ -16,7 +16,9 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AboutRepositoryInfoComponent, RepositoryInfo, UnitTestingUtils } from '@alfresco/adf-core';
+import { AboutRepositoryInfoComponent } from './about-repository-info.component';
+import { RepositoryInfo } from './repository-info.interface';
+import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 
 describe('AboutRepositoryInfoComponent', () => {
     let component: AboutRepositoryInfoComponent;

@@ -23,7 +23,6 @@ import { DataColumn } from './data-column.model';
 import { ObjectDataColumn } from './object-datacolumn.model';
 
 @Directive()
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class DataTableSchema<T = unknown> {
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;

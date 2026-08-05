@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/no-input-rename, @typescript-eslint/no-use-before-define, @angular-eslint/no-input-rename */
-
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { ChangeDetectorRef, DestroyRef, Directive, ElementRef, forwardRef, inject, Input, NgZone, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';

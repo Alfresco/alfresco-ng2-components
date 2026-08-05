@@ -43,6 +43,7 @@ export interface GetFormsOpts {
 export class FormModelsApi extends BaseApi {
     /**
      * Get form content
+     *
      * @param formId formId
      * @return Promise<FormDefinitionRepresentation>
      */
@@ -61,6 +62,7 @@ export class FormModelsApi extends BaseApi {
 
     /**
      * Get form history
+     *
      * @param formId formId
      * @param formHistoryId formHistoryId
      * @return Promise<FormRepresentation>
@@ -83,6 +85,7 @@ export class FormModelsApi extends BaseApi {
 
     /**
      * Get a form model
+     *
      * @param formId {number} formId
      * @return Promise<FormRepresentation>
      */
@@ -102,6 +105,7 @@ export class FormModelsApi extends BaseApi {
 
     /**
      * Get forms
+     *
      * @param input input
      * @return Promise<FormRepresentation>
      */
@@ -133,6 +137,7 @@ export class FormModelsApi extends BaseApi {
 
     /**
      * Update form model content
+     *
      * @param formId ID of the form to update
      * @param saveRepresentation saveRepresentation
      * @return Promise<FormRepresentation>
@@ -157,6 +162,7 @@ export class FormModelsApi extends BaseApi {
      * Validate form model content
      *
      * The model content to be validated must be specified in the POST body
+     *
      * @param formId formId
      * @param saveRepresentation saveRepresentation
      * @return Promise<ValidationErrorRepresentation>

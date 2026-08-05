@@ -204,48 +204,4 @@ describe('AppConfigService', () => {
         expect(appConfigService.get<any>('objectKey').secondUrl).toEqual('http://localhost:8080');
         expect(appConfigService.get<any>('objectKey').thirdUrl).toEqual('http://localhost:8080');
     });
-
-    describe('oauth2', () => {
-        it('should set showDebugInformation to true when configured as boolean true', () => {
-            appConfigService.config = { oauth2: { showDebugInformation: true } };
-
-            expect(appConfigService.oauth2.showDebugInformation).toBeTrue();
-        });
-
-        it('should set showDebugInformation to true when configured as the string "true"', () => {
-            appConfigService.config = { oauth2: { showDebugInformation: 'true' } };
-
-            expect(appConfigService.oauth2.showDebugInformation).toBeTrue();
-        });
-
-        it('should set showDebugInformation to false when configured as false', () => {
-            appConfigService.config = { oauth2: { showDebugInformation: false } };
-
-            expect(appConfigService.oauth2.showDebugInformation).toBeFalse();
-        });
-
-        it('should default showDebugInformation to false when not configured', () => {
-            appConfigService.config = { oauth2: {} };
-
-            expect(appConfigService.oauth2.showDebugInformation).toBeFalse();
-        });
-
-        it('should set timeSync to true when configured as boolean true', () => {
-            appConfigService.config = { oauth2: { timeSync: true } };
-
-            expect(appConfigService.oauth2.timeSync).toBeTrue();
-        });
-
-        it('should set timeSync to true when configured as the string "true"', () => {
-            appConfigService.config = { oauth2: { timeSync: 'true' } };
-
-            expect(appConfigService.oauth2.timeSync).toBeTrue();
-        });
-
-        it('should default timeSync to false when not configured', () => {
-            appConfigService.config = { oauth2: {} };
-
-            expect(appConfigService.oauth2.timeSync).toBeFalse();
-        });
-    });
 });

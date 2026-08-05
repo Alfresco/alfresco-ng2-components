@@ -22,7 +22,7 @@ import { fakeProcessInstance, fakeProcessWithFormInstance, getFakeProcessPayload
 import { provideAppConfigTesting } from '@alfresco/adf-core';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ProcessDefinitionCloud } from '@alfresco/adf-process-services-cloud';
+import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 
 describe('StartProcessCloudService', () => {
     let service: StartProcessCloudService;

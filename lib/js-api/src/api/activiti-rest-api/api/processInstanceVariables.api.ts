@@ -25,6 +25,7 @@ import { throwIfNotDefined } from '../../../assert';
 export class ProcessInstanceVariablesApi extends BaseApi {
     /**
      * Create or update variables
+     *
      * @param processInstanceId Process instance ID
      * @param restVariables restVariables
      * @return Promise<RestVariable>
@@ -46,6 +47,7 @@ export class ProcessInstanceVariablesApi extends BaseApi {
 
     /**
      * Delete a variable
+     *
      * @param processInstanceId processInstanceId
      * @param variableName variableName
      * @return Promise<{}>
@@ -67,6 +69,7 @@ export class ProcessInstanceVariablesApi extends BaseApi {
 
     /**
      * Get a variable
+     *
      * @param processInstanceId processInstanceId
      * @param variableName variableName
      * @return Promise<RestVariable>
@@ -88,6 +91,7 @@ export class ProcessInstanceVariablesApi extends BaseApi {
 
     /**
      * List variables
+     *
      * @param processInstanceId Process instance ID
      * @return Promise<RestVariable>
      */
@@ -106,6 +110,7 @@ export class ProcessInstanceVariablesApi extends BaseApi {
 
     /**
      * Update a variable
+     *
      * @param processInstanceId processInstanceId
      * @param variableName variableName
      * @param restVariable restVariable

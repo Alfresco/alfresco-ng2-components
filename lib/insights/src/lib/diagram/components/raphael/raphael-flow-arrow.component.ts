@@ -19,7 +19,6 @@ import { Directive, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Polyline } from './polyline';
 import { RaphaelBase } from './raphael-base';
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 declare let Raphael: any;
 
 const ARROW_WIDTH = 4;

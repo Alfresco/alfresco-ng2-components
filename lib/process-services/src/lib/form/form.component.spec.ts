@@ -60,7 +60,6 @@ describe('FormComponent', () => {
         template: '<div></div>',
         standalone: false
     })
-    // eslint-disable-next-line @angular-eslint/component-class-suffix
     class CustomWidget {
         typeId = 'CustomWidget';
     }

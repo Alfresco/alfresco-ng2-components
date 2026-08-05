@@ -19,7 +19,6 @@ import { UntypedFormControl } from '@angular/forms';
 import { SearchTermValidator } from './search-term-validator';
 
 describe('Search term validator', () => {
-
     it('should pass validation for a value with the specified required number of alphanumeric characters', () => {
         const control = new UntypedFormControl('ab', SearchTermValidator.minAlphanumericChars(2));
         expect(control.valid).toBe(true);
@@ -35,7 +34,6 @@ describe('Search term validator', () => {
         expect(control.valid).toBe(false);
     });
 
-    /* eslint-disable max-len */
     it('should fail validation for a value with less than the specified required number of alphanumeric characters but with other non-alphanumeric characters', () => {
         const control = new UntypedFormControl('a ._-?b', SearchTermValidator.minAlphanumericChars(3));
         expect(control.valid).toBe(false);

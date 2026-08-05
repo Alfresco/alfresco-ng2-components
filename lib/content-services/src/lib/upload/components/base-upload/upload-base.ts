@@ -24,7 +24,6 @@ import { UploadFilesEvent } from '../upload-files.event';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive()
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class UploadBase implements OnInit {
     protected uploadService = inject(UploadService);
     protected translationService: TranslationService = inject(TranslationService);
@@ -87,9 +86,7 @@ export abstract class UploadBase implements OnInit {
     private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit() {
-        this.uploadService.fileUploadError
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(error => this.error.emit(error));
+        this.uploadService.fileUploadError.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((error) => this.error.emit(error));
     }
 
     /**
@@ -99,7 +96,7 @@ export abstract class UploadBase implements OnInit {
      */
     uploadFiles(files: File[]): void {
         const filteredFiles: FileModel[] = files.map<FileModel>((file: File) =>
-            this.createFileModel(file, this.rootFolderId, ((file).webkitRelativePath || '').replace(/\/[^/]*$/, ''))
+            this.createFileModel(file, this.rootFolderId, (file.webkitRelativePath || '').replace(/\/[^/]*$/, ''))
         );
 
         this.uploadQueue(filteredFiles);

@@ -17,6 +17,7 @@
 
 /**
  * LazyApi is a decorator that creates a lazy-loaded API instance.
+ *
  * @param factory - A function that creates the API instance.
  * @returns A decorator function that can be used to decorate a class property.
  */

@@ -4,6 +4,7 @@
   "projectType": "library",
   "sourceRoot": "lib/core",
   "prefix": "adf",
+  "tags": ["scope:core", "type:library"],
   "targets": {
     "build": {
       "executor": "@angular/build:ng-packagr",

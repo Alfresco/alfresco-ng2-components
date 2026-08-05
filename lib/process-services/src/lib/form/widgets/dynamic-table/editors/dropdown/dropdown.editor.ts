@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
-
 import { FormService, FormFieldModel } from '@alfresco/adf-core';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { DynamicTableColumnOption } from '../models/dynamic-table-column-option.model';

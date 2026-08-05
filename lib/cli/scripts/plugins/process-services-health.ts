@@ -23,7 +23,10 @@ import { AlfrescoApi, SystemPropertiesApi } from '@alfresco/js-api';
 export class ProcessServiceHealth {
     config: PluginConfiguration;
 
-    constructor(private plugInInfo: PluginInterface, private alfrescoJsApi: AlfrescoApi) {
+    constructor(
+        private readonly plugInInfo: PluginInterface,
+        private readonly alfrescoJsApi: AlfrescoApi
+    ) {
         this.config = new PluginConfiguration(this.plugInInfo, this.alfrescoJsApi);
     }
 

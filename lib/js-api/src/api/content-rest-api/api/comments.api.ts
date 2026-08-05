@@ -29,6 +29,7 @@ import { ContentFieldsQuery, ContentPagingQuery } from './types';
 export class CommentsApi extends BaseApi {
     /**
      * Create a comment
+     *
      * @param nodeId The identifier of a node.
      * @param commentBodyCreate The comment text. Note that you can also provide a list of comments.
      * @param opts Optional parameters
@@ -57,6 +58,7 @@ export class CommentsApi extends BaseApi {
 
     /**
      * Delete a comment
+     *
      * @param nodeId The identifier of a node.
      * @param commentId The identifier of a comment.
      * @returns Promise<{}>
@@ -80,6 +82,7 @@ export class CommentsApi extends BaseApi {
      * List comments
      *
      * Gets a list of comments for the node **nodeId**, sorted chronologically with the newest comment first.
+     *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
      * @returns Promise<CommentPaging>
@@ -107,6 +110,7 @@ export class CommentsApi extends BaseApi {
 
     /**
      * Update a comment
+     *
      * @param nodeId The identifier of a node.
      * @param commentId The identifier of a comment.
      * @param commentBodyUpdate The JSON representing the comment to be updated.

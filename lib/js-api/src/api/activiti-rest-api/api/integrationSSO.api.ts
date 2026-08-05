@@ -24,6 +24,7 @@ import { SSOUserAccountCredentialsRepresentation } from '../model';
 export class IntegrationSSOApi extends BaseApi {
     /**
      * Get account information
+     *
      * @param repositoryId repositoryId
      * @return Promise<SSOUserAccountCredentialsRepresentation>
      */

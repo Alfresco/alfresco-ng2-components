@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
 import { DataColumnType } from '@alfresco/adf-extensions';

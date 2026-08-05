@@ -26,6 +26,7 @@ export class IntegrationBoxApi extends BaseApi {
     /**
      * Box Authorization
      * Returns Box OAuth HTML Page
+     *
      * @return Promise<{}>
      */
     confirmAuthorisation(): Promise<any> {
@@ -37,6 +38,7 @@ export class IntegrationBoxApi extends BaseApi {
 
     /**
      * Add Box account
+     *
      * @param userId userId
      * @param credentials credentials
      * @return Promise<{}>
@@ -58,6 +60,7 @@ export class IntegrationBoxApi extends BaseApi {
 
     /**
      * Delete account information
+     *
      * @param userId userId
      * @return Promise<{}>
      */
@@ -79,6 +82,7 @@ export class IntegrationBoxApi extends BaseApi {
 
     /**
      * Get status information
+     *
      * @return Promise<boolean>
      */
     getBoxPluginStatus(): Promise<boolean> {
@@ -90,6 +94,7 @@ export class IntegrationBoxApi extends BaseApi {
 
     /**
      * List file and folders
+     *
      * @param opts Optional parameters
      * @param opts.filter filter
      * @param opts.parent parent
@@ -107,6 +112,7 @@ export class IntegrationBoxApi extends BaseApi {
 
     /**
      * Get account information
+     *
      * @param userId userId
      * @return Promise<{}>
      */
@@ -126,6 +132,7 @@ export class IntegrationBoxApi extends BaseApi {
 
     /**
      * Update account information
+     *
      * @param userId userId
      * @param credentials credentials
      * @return Promise<{}>

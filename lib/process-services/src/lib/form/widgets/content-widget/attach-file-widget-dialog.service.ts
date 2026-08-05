@@ -28,7 +28,6 @@ import { switchMap } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class AttachFileWidgetDialogService {
     private readonly dialog = inject(MatDialog);
     private readonly translation = inject(TranslationService);

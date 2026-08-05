@@ -44,6 +44,7 @@ export class AnalyticsService {
 
     /**
      * Retrieve all the Deployed app
+     *
      * @param appId application id
      * @returns list or report parameter models
      */
@@ -64,6 +65,7 @@ export class AnalyticsService {
 
     /**
      * Retrieve Report by name
+     *
      * @param reportName - The name of report
      * @returns report model
      */

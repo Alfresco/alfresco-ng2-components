@@ -16,7 +16,8 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AboutLicenseListComponent, UnitTestingUtils } from '@alfresco/adf-core';
+import { AboutLicenseListComponent } from './about-license-list.component';
+import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 describe('AboutLicenseListComponent', () => {

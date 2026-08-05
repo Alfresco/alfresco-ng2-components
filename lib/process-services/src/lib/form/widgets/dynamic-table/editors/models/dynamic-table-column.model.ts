@@ -15,13 +15,10 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
-
 import { DynamicTableColumnOption } from './dynamic-table-column-option.model';
 
 // maps to: com.activiti.model.editor.form.ColumnDefinitionRepresentation
 export interface DynamicTableColumn {
-
     id: string;
     name: string;
     type: string;
