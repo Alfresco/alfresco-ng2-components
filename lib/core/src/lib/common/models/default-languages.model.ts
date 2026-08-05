@@ -20,7 +20,7 @@ import { LanguageItem } from '../services/language-item.interface';
 export const DEFAULT_LANGUAGE_LIST: LanguageItem[] = [
     { key: 'de', label: 'Deutsch' },
     { key: 'en', label: 'English' },
-    { key: 'en-AU', label: 'English - Australia' },
+    { key: 'en-AU', label: 'English (Australia)' },
     { key: 'es', label: 'Español' },
     { key: 'fr', label: 'Français' },
     { key: 'it', label: 'Italiano' },
