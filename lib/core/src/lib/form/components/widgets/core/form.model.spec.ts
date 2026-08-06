@@ -1105,6 +1105,67 @@ describe('FormModel', () => {
             expect(field.checkParentVisibilityForValidation).toBe(true);
         });
 
+        it('should preserve selective parent visibility checks when adding a repeatable section row', () => {
+            const testForm = new FormModel({
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'repeatableSection1',
+                        type: FormFieldTypes.REPEATABLE_SECTION,
+                        numberOfColumns: 1,
+                        params: { initialNumberOfRows: 1 },
+                        fields: {
+                            1: [
+                                { id: 'optedInField', type: FormFieldTypes.TEXT },
+                                { id: 'optedOutField', type: FormFieldTypes.TEXT }
+                            ]
+                        }
+                    },
+                    { id: 'unrelatedField', type: FormFieldTypes.TEXT }
+                ]
+            });
+            testForm.enableParentVisibilityCheck = true;
+            const repeatableSection = testForm.fields[0] as ContainerModel;
+            const sourceFields = repeatableSection.field.rows[0].columns[0].fields;
+            sourceFields[0].checkParentVisibilityForValidation = true;
+
+            repeatableSection.field.addRow(repeatableSection.json.fields, repeatableSection.form);
+
+            const addedFields = repeatableSection.field.rows[1].columns[0].fields;
+            expect(addedFields[0].checkParentVisibilityForValidation).toBe(true);
+            expect(addedFields[1].checkParentVisibilityForValidation).toBe(false);
+            expect(testForm.getFieldById('unrelatedField').checkParentVisibilityForValidation).toBe(false);
+        });
+
+        it('should copy nested field parent visibility checks to a new repeatable section row', () => {
+            const testForm = new FormModel(sectionInRepeatableSectionFormJson(false));
+            testForm.enableParentVisibilityCheck = true;
+            const repeatableSection = testForm.fields[0] as ContainerModel;
+            const sourceSection = getRepeatableSectionField(repeatableSection, 0);
+            sourceSection.columns[0].fields[0].checkParentVisibilityForValidation = true;
+
+            repeatableSection.field.addRow(repeatableSection.json.fields, repeatableSection.form);
+
+            const addedSection = getRepeatableSectionField(repeatableSection, 2);
+            expect(addedSection.checkParentVisibilityForValidation).toBe(false);
+            expect(addedSection.columns[0].fields[0].checkParentVisibilityForValidation).toBe(true);
+        });
+
+        it('should copy template parent visibility checks when adding the first repeatable section row', () => {
+            const formJson = repeatableSectionFormJson(false);
+            formJson.fields[0].params.initialNumberOfRows = 0;
+            const testForm = new FormModel(formJson);
+            testForm.enableParentVisibilityCheck = true;
+            const repeatableSection = testForm.fields[0] as ContainerModel;
+            repeatableSection.field.columns[0].fields[0].checkParentVisibilityForValidation = true;
+
+            repeatableSection.field.addRow(repeatableSection.json.fields, repeatableSection.form);
+
+            const field = getRepeatableSectionField(repeatableSection, 0);
+            expect(field.checkParentVisibilityForValidation).toBe(true);
+        });
+
         it('should exclude a required field added to a hidden repeatable section from validation after model opt-in', () => {
             const testForm = new FormModel(repeatableSectionFormJson(false));
             testForm.enableParentVisibilityCheck = true;

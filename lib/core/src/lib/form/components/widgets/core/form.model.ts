@@ -153,11 +153,6 @@ export class FormModel implements ProcessFormModel {
 
     onRepeatableSectionChanged() {
         this.fieldsCache = this.getFormFields([], true);
-        if (this.enableParentVisibilityCheck) {
-            for (const field of this.fieldsCache) {
-                field.checkParentVisibilityForValidation = true;
-            }
-        }
     }
 
     onRepeatableSectionRowCountChanged(sectionField: FormFieldModel): void {

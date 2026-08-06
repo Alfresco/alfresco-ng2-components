@@ -483,8 +483,28 @@ export class FormFieldModel extends FormWidgetModel {
             return;
         }
 
-        this.rows.push(this.createRow(fields, form, this.rows.length));
+        const row = this.createRow(fields, form, this.rows.length);
+        this.copyParentVisibilityValidationState(this.columns, row.columns);
+        this.rows.push(row);
         this.form.onRepeatableSectionRowCountChanged(this);
+    }
+
+    private copyParentVisibilityValidationState(sourceColumns: ContainerColumnModel[], targetColumns: ContainerColumnModel[]): void {
+        const sourceFields = sourceColumns.flatMap((column) => column.fields);
+
+        for (const targetColumn of targetColumns) {
+            for (const targetField of targetColumn.fields) {
+                const sourceField = sourceFields.find((field) => field.json.id === targetField.json.id);
+                if (!sourceField) {
+                    continue;
+                }
+
+                targetField.checkParentVisibilityForValidation = sourceField.checkParentVisibilityForValidation;
+                if (targetField.type === FormFieldTypes.SECTION) {
+                    this.copyParentVisibilityValidationState(sourceField.columns, targetField.columns);
+                }
+            }
+        }
     }
 
     private shouldAddRow(): boolean {
