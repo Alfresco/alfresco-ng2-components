@@ -95,9 +95,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
         this.notificationDebounceTime = this.appConfigService.get('notificationDebounceTime', 3000);
-        if (this.appName === '') {
-            this.getFilters(this.appName);
-        }
         this.initProcessNotification();
         this.getFilterKeysAfterExternalRefreshing();
     }

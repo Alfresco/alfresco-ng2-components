@@ -79,7 +79,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
         this.notificationDebounceTime = this.appConfigService.get('notificationDebounceTime', 3000);
-        this.getFilters(this.appName);
         this.initFilterCounterNotifications();
         this.getFilterKeysAfterExternalRefreshing();
     }
