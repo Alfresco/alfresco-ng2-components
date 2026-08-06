@@ -96,8 +96,7 @@ describe('ProcessFiltersCloudComponent', () => {
     };
 
     const bindAppName = async (appName = 'my-app-1') => {
-        component.appName = appName;
-        component.ngOnChanges({ appName: new SimpleChange(undefined, appName, true) });
+        fixture.componentRef.setInput('appName', appName);
         fixture.detectChanges();
         await fixture.whenStable();
     };
