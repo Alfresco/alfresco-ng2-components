@@ -153,6 +153,11 @@ export class FormModel implements ProcessFormModel {
 
     onRepeatableSectionChanged() {
         this.fieldsCache = this.getFormFields([], true);
+        if (this.enableParentVisibilityCheck) {
+            for (const field of this.fieldsCache) {
+                field.checkParentVisibilityForValidation = true;
+            }
+        }
     }
 
     onRepeatableSectionRowCountChanged(sectionField: FormFieldModel): void {
@@ -613,11 +618,28 @@ export class FormModel implements ProcessFormModel {
 
     private getColumnsFromElement(element: ContainerModel | FormFieldModel): ContainerColumnModel[] | null {
         if (element instanceof ContainerModel) {
-            return element.field?.columns || null;
+            return FormFieldTypes.isRepeatableSectionType(element.field?.type)
+                ? this.getColumnsFromAllRows(element.field)
+                : element.field?.columns || null;
         } else if (element instanceof FormFieldModel && element.type === FormFieldTypes.SECTION) {
             return element.columns || null;
         }
         return null;
+    }
+
+    private getColumnsFromAllRows(field: FormFieldModel): ContainerColumnModel[] | null {
+        if (!field.rows?.length) {
+            return field.columns || null;
+        }
+
+        const columns: ContainerColumnModel[] = [];
+        for (const row of field.rows) {
+            if (row?.columns?.length) {
+                columns.push(...row.columns);
+            }
+        }
+
+        return columns.length > 0 ? columns : null;
     }
 
     private searchFieldsInColumns(
