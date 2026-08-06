@@ -284,4 +284,16 @@ export class NodeMock extends BaseMock {
                 }
             });
     }
+
+    post200CheckoutNode(nodeId: string): void {
+        this.mock().post(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/checkout`).reply(200, {
+            entry: {}
+        });
+    }
+
+    post200CancelCheckoutNode(nodeId: string): void {
+        this.mock().post(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/cancel-checkout`).reply(200, {
+            entry: {}
+        });
+    }
 }

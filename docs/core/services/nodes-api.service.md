@@ -18,6 +18,7 @@ Accesses and manipulates ACS document nodes using their node IDs.
     -   [Getting folder node contents](#getting-folder-node-contents)
     -   [Creating and updating nodes](#creating-and-updating-nodes)
     -   [Deleting and restoring nodes](#deleting-and-restoring-nodes)
+    -   [Checking out nodes](#checking-out-nodes)
 -   [See also](#see-also)
 
 ## Class members
@@ -103,6 +104,16 @@ Accesses and manipulates ACS document nodes using their node IDs.
     -   _nodeId:_ `string` - ID of the target node
     -   _opts:_ `{ where?: string; includeSource?: boolean;} & NodesIncludeQuery & ContentPagingQuery` - additional options that API can take
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeAssociationPaging`](../../../lib/js-api/src/api/content-rest-api/docs/NodesApi.md#NodeAssociationPaging)`>` - List of node's parents.
+-   **checkoutNode**(nodeId: `string`, opts?: `NodesIncludeQuery`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/lib/js-api/src/api/content-rest-api/docs/NodeEntry.md)`>`<br/>
+    Checks out a file node for offline editing. Creates a private working copy and locks the original.
+    -   _nodeId:_ `string`  - ID of the file node to check out
+    -   _opts:_ `NodesIncludeQuery`  - (Optional) Additional query parameters (`include`, `fields`)
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/lib/js-api/src/api/content-rest-api/docs/NodeEntry.md)`>` - The working copy node
+-   **cancelCheckoutNode**(nodeId: `string`, opts?: `NodesIncludeQuery`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/lib/js-api/src/api/content-rest-api/docs/NodeEntry.md)`>`<br/>
+    Cancels a checkout. Accepts either the working copy or the original checked-out node. Deletes the working copy and unlocks the original.
+    -   _nodeId:_ `string`  - ID of the working copy or original checked-out node
+    -   _opts:_ `NodesIncludeQuery`  - (Optional) Additional query parameters (`include`, `fields`)
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/lib/js-api/src/api/content-rest-api/docs/NodeEntry.md)`>` - The original (unlocked) node
 
 ## Details
 
@@ -159,6 +170,12 @@ and
 [restoreNode](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodesApi.md#restoreNode)
 pages in the Alfresco JS API for further details and options. Note that you can also use the
 [Deleted Nodes Api service](deleted-nodes-api.service.md) get a list of all items currently in the trashcan.
+
+### Checking out nodes
+
+Use `checkoutNode` to lock a file node for offline editing. This creates a private working copy and locks the original node so other users cannot modify it. On success, the Observable emits the working copy `NodeEntry`.
+
+Use `cancelCheckoutNode` to discard the working copy and unlock the original. You can pass either the working copy node ID or the original node ID. On success, the Observable emits the original (unlocked) `NodeEntry`.
 
 ## See also
 

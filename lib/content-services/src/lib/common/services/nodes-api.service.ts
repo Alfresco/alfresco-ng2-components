@@ -293,6 +293,30 @@ export class NodesApiService {
         return from(this.nodesApi.listParents(nodeId, opts));
     }
 
+    /**
+     * Checks out a file node for offline editing.
+     * Creates a private working copy and locks the original.
+     *
+     * @param nodeId ID of the node to check out
+     * @param opts Optional query parameters (`include`, `fields`)
+     * @returns Observable emitting the working copy node
+     */
+    checkoutNode(nodeId: string, opts?: NodesIncludeQuery): Observable<NodeEntry> {
+        return from(this.nodesApi.checkoutNode(nodeId, opts));
+    }
+
+    /**
+     * Cancels a checkout. Accepts either the working copy or the original node.
+     * Deletes the working copy and unlocks the original.
+     *
+     * @param nodeId ID of the working copy or the original checked-out node
+     * @param opts Optional query parameters (`include`, `fields`)
+     * @returns Observable emitting the original (unlocked) node
+     */
+    cancelCheckoutNode(nodeId: string, opts?: NodesIncludeQuery): Observable<NodeEntry> {
+        return from(this.nodesApi.cancelCheckoutNode(nodeId, opts));
+    }
+
     private randomNodeName(): string {
         return `node_${Date.now()}`;
     }
