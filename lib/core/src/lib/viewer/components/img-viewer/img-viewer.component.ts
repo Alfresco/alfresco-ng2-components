@@ -72,11 +72,9 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Input()
     fileName: string;
 
-    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
     error = new EventEmitter<void>();
 
-    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
     submit = new EventEmitter<Blob>();
 

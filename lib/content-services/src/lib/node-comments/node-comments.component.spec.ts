@@ -17,10 +17,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NodeCommentsComponent } from './node-comments.component';
-import { CommentsComponent } from '../../../../core/src/lib/comments/comments.component';
-import { CommentModel } from '../../../../core/src/lib/models';
-import { UnitTestingUtils } from '../../../../core/src/lib/testing/unit-testing-utils';
 import { provideApiTesting } from '../testing/providers';
+import { CommentModel, CommentsComponent, UnitTestingUtils } from '@alfresco/adf-core';
 
 describe('NodeCommentsComponent', () => {
     let fixture: ComponentFixture<NodeCommentsComponent>;

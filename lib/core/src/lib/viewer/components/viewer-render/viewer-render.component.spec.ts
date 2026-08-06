@@ -25,7 +25,9 @@ import { UnitTestingUtils } from '../../../testing';
 import { ViewerRenderComponent } from './viewer-render.component';
 import { PDF_VIEWER_COMPONENT } from '../../tokens/pdf-viewer.token';
 import { PdfViewerRef } from '../../tokens/pdf-viewer-ref';
-import { ImgViewerComponent, MediaPlayerComponent, ViewerExtensionDirective } from '@alfresco/adf-core';
+import { ImgViewerComponent } from '../img-viewer/img-viewer.component';
+import { MediaPlayerComponent } from '../media-player/media-player.component';
+import { ViewerExtensionDirective } from '../../directives/viewer-extension.directive';
 
 @Component({
     selector: 'adf-pdf-viewer',

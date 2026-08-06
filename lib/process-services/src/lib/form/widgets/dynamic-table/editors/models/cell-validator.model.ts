@@ -15,15 +15,11 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
-
 import { DynamicTableColumn } from './dynamic-table-column.model';
 import { DynamicTableRow } from './dynamic-table-row.model';
 import { DynamicRowValidationSummary } from './dynamic-row-validation-summary.model';
 
 export interface CellValidator {
-
     isSupported(column: DynamicTableColumn): boolean;
     validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean;
-
 }

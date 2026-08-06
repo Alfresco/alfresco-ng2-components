@@ -25,6 +25,7 @@ export class AccountIntegrationApi extends BaseApi {
     /**
      * Retrieve external account information
      * Accounts are used to integrate with third party apps and clients
+     *
      * @return Promise<ResultListDataRepresentationAccountRepresentation>
      */
     getAccounts(): Promise<ResultListDataRepresentationAccountRepresentation> {

@@ -20,7 +20,7 @@ import * as structuralMock from '../../mock/diagram/diagram-structural.mock';
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { UnitTestingUtils } from '@alfresco/adf-core';
-import { RaphaelRectDirective } from '@alfresco/adf-insights';
+import { RaphaelRectDirective } from './raphael/raphael-rect.component';
 import { DiagramsService } from '../services/diagrams.service';
 import { of } from 'rxjs';
 

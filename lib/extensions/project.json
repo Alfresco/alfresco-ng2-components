@@ -4,6 +4,7 @@
   "sourceRoot": "lib/extensions/src",
   "projectType": "library",
   "prefix": "adf",
+  "tags": ["scope:extensions", "type:library"],
   "targets": {
     "build": {
       "executor": "@angular/build:ng-packagr",

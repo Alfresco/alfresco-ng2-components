@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/no-input-rename */
 import { Directive, Input, Output, EventEmitter, inject } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { ContentService } from '../../common/services/content.service';

@@ -30,7 +30,6 @@ import { NodeAction } from '../models/node-action.enum';
 @Injectable({
     providedIn: 'root'
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class NodeActionsService {
     private readonly contentDialogService = inject(ContentNodeDialogService);
     dialogRef = inject(MatDialog);

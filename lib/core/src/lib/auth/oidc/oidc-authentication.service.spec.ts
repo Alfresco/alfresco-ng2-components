@@ -18,7 +18,8 @@
 import { TestBed } from '@angular/core/testing';
 import { OidcAuthenticationService } from './oidc-authentication.service';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
-import { AppConfigService, AuthService } from '@alfresco/adf-core';
+import { AppConfigService } from '../../app-config/app-config.service';
+import { AuthService } from './auth.service';
 import { AUTH_MODULE_CONFIG } from './auth-config';
 import { firstValueFrom, of, take, throwError } from 'rxjs';
 

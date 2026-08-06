@@ -21,7 +21,8 @@ import * as diagramsActivitiesMock from '../../mock/diagram/diagram-activities.m
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { UnitTestingUtils } from '@alfresco/adf-core';
-import { RaphaelMultilineTextDirective, RaphaelRectDirective } from '@alfresco/adf-insights';
+import { RaphaelMultilineTextDirective } from './raphael/raphael-multiline-text.component';
+import { RaphaelRectDirective } from './raphael/raphael-rect.component';
 import { DiagramsService } from '../services/diagrams.service';
 import { of } from 'rxjs';
 

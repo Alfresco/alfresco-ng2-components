@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires, jsdoc/require-jsdoc */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { TextEncoder, TextDecoder } from 'util';
 
 const { TestEnvironment } = require('jest-environment-jsdom');

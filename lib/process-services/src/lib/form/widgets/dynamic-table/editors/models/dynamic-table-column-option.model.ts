@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
-
 // maps to: com.activiti.model.editor.form.OptionRepresentation
 export interface DynamicTableColumnOption {
     id: string;

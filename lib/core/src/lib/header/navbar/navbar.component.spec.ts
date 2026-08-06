@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar.component';
 import { UnitTestingUtils } from '../../testing/unit-testing-utils';
-import { NavbarItemComponent } from '@alfresco/adf-core';
+import { NavbarItemComponent } from './navbar-item.component';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;

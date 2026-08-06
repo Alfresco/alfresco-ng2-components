@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable no-shadow */
-/* eslint-disable @typescript-eslint/naming-convention */
-
 export const NodeAction = {
     ATTACH: 'ATTACH',
     CHOOSE: 'CHOOSE',

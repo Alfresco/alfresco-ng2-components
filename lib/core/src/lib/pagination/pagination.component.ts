@@ -102,7 +102,7 @@ export class PaginationComponent implements OnInit, PaginationComponentInterface
     }
 
     /** Emitted when pagination changes in any way. */
-    // eslint-disable-next-line @angular-eslint/no-output-native
+
     @Output()
     change = new EventEmitter<PaginationModel>();
 

@@ -20,7 +20,10 @@ import { logger } from '../logger';
 import { AlfrescoApi } from '@alfresco/js-api';
 
 export class PluginConfiguration {
-    constructor(private plugInInfo: PluginInterface, private alfrescoJsApi: AlfrescoApi) {}
+    constructor(
+        private readonly plugInInfo: PluginInterface,
+        private readonly alfrescoJsApi: AlfrescoApi
+    ) {}
 
     async getAppConfig(url: string) {
         return this.callCustomApi(url);

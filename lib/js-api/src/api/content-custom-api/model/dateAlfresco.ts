@@ -18,6 +18,7 @@
 export class DateAlfresco extends Date {
     /**
      * Parses an ISO-8601 string representation of a date value.
+     *
      * @param  dateToConvert The date value as a string.
      * @returns  The parsed date object.
      */
@@ -40,6 +41,7 @@ export class DateAlfresco extends Date {
 
     /**
      * Parses the date component of a ISO-8601 string representation of a date value.
+     *
      * @param dateToConvert The date value as a string.
      * @returns The parsed date object.
      */
@@ -66,6 +68,7 @@ export class DateAlfresco extends Date {
 
     /**
      * Parses the timezone component of a ISO-8601 string representation of a date value.
+     *
      * @param dateToConvert The timezone offset as a string, e.g. '+0000', '+2000' or '-0500'.
      * @returns The number of minutes offset from UTC.
      */

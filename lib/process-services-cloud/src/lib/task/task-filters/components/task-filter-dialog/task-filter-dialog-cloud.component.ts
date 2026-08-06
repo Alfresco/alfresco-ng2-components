@@ -36,7 +36,6 @@ export class TaskFilterDialogCloudComponent implements OnInit {
     dialogRef = inject<MatDialogRef<TaskFilterDialogCloudComponent>>(MatDialogRef);
     data = inject(MAT_DIALOG_DATA);
 
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     public static ACTION_SAVE = 'SAVE';
     defaultIcon = 'inbox';
 

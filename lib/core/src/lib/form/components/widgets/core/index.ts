@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
-
 export * from './form-field-metadata';
 export * from './form-values';
 export * from './form-field-types';

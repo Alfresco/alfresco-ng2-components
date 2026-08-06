@@ -28,9 +28,8 @@ import { NodeEntryEvent, ShareDataRow } from '../../document-list';
 import { SearchQueryBuilderService } from '../../search';
 import { SitesService } from '../../common/services/sites.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
-import { UnitTestingUtils } from '../../../../../core/src/lib/testing/unit-testing-utils';
 import { provideRouter } from '@angular/router';
-import { NoopAuthModule } from '@alfresco/adf-core';
+import { NoopAuthModule, UnitTestingUtils } from '@alfresco/adf-core';
 
 const fakeResultSetPaging: ResultSetPaging = {
     list: {
@@ -67,6 +66,12 @@ describe('ContentNodeSelectorPanelComponent', () => {
         const searchInput = testingUtils.getByCSS('[data-automation-id="content-node-selector-search-input"]');
         searchInput.nativeElement.value = searchTerm;
         component.searchInput.setValue(searchTerm);
+        fixture.detectChanges();
+    };
+
+    const searchAndTriggerDebounce = (searchTerm = 'string-to-search'): void => {
+        typeToSearchBox(searchTerm);
+        tick(debounceSearch);
         fixture.detectChanges();
     };
 
@@ -160,10 +165,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should the user query get updated when the user types in the search input', fakeAsync(() => {
-                typeToSearchBox('search-term');
-
-                tick(debounceSearch);
-                fixture.detectChanges();
+                searchAndTriggerDebounce('search-term');
 
                 expect(searchSpy).toHaveBeenCalled();
                 expect(searchQueryBuilderService.userQuery).toEqual('(search-term*)');
@@ -171,39 +173,27 @@ describe('ContentNodeSelectorPanelComponent', () => {
             }));
 
             it('should set the query builder search mode to formula when the user types in the search input', fakeAsync(() => {
-                typeToSearchBox('search-term');
-
-                tick(debounceSearch);
-                fixture.detectChanges();
+                searchAndTriggerDebounce('search-term');
 
                 expect(searchQueryBuilderService.searchMode).toEqual('formula');
             }));
 
             it('should add the wildcard suffix to the user query when wildcards are enabled', fakeAsync(() => {
                 spyOnProperty(searchQueryBuilderService, 'wildcardsEnabled', 'get').and.returnValue(true);
-                typeToSearchBox('search-term');
-
-                tick(debounceSearch);
-                fixture.detectChanges();
+                searchAndTriggerDebounce('search-term');
 
                 expect(searchQueryBuilderService.userQuery).toEqual('(search-term*)');
             }));
 
             it('should NOT add the wildcard suffix to the user query when wildcards are disabled', fakeAsync(() => {
                 spyOnProperty(searchQueryBuilderService, 'wildcardsEnabled', 'get').and.returnValue(false);
-                typeToSearchBox('search-term');
-
-                tick(debounceSearch);
-                fixture.detectChanges();
+                searchAndTriggerDebounce('search-term');
 
                 expect(searchQueryBuilderService.userQuery).toEqual('(search-term)');
             }));
 
             it('should perform a search when the search request gets updated and it is defined', fakeAsync(() => {
-                typeToSearchBox('search-term');
-
-                tick(debounceSearch);
-                fixture.detectChanges();
+                searchAndTriggerDebounce('search-term');
 
                 expect(searchSpy).toHaveBeenCalledWith(false);
             }));
@@ -211,10 +201,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             it('should NOT perform a search and clear the results when the search input is empty', fakeAsync(() => {
                 spyOn(component, 'clearSearch');
 
-                typeToSearchBox('');
-
-                tick(debounceSearch);
-                fixture.detectChanges();
+                searchAndTriggerDebounce('');
 
                 expect(searchSpy).not.toHaveBeenCalled();
                 expect(component.clearSearch).toHaveBeenCalled();
@@ -237,10 +224,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should load the results by calling the search api on search change', fakeAsync(() => {
-                typeToSearchBox('search-term');
-
-                tick(debounceSearch);
-                fixture.detectChanges();
+                searchAndTriggerDebounce('search-term');
 
                 expect(searchSpy).toHaveBeenCalledWith(false);
             }));
@@ -248,12 +232,9 @@ describe('ContentNodeSelectorPanelComponent', () => {
             it('should the query include the show files filterQuery', fakeAsync(() => {
                 spyOn(searchQueryBuilderService, 'addFilterQuery').and.callThrough();
                 component.showFilesInResult = true;
-                typeToSearchBox('search-term');
+                searchAndTriggerDebounce('search-term');
 
                 const expectedRequest = `TYPE:'cm:folder' OR TYPE:'cm:content'`;
-
-                tick(debounceSearch);
-                fixture.detectChanges();
 
                 expect(searchSpy).toHaveBeenCalledWith(false);
                 expect(searchQueryBuilderService.addFilterQuery).toHaveBeenCalledWith(expectedRequest);
@@ -261,10 +242,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             it('should reset the currently chosen node in case of starting a new search', fakeAsync(() => {
                 component.chosenNode = [entry];
-                typeToSearchBox('kakarot');
-
-                tick(debounceSearch);
-                fixture.detectChanges();
+                searchAndTriggerDebounce('kakarot');
 
                 expect(component.chosenNode).toBeNull();
             }));
@@ -279,9 +257,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             it('should perform a search when selecting a site with the correct query', fakeAsync(() => {
                 spyOn(searchQueryBuilderService, 'addFilterQuery').and.callThrough();
-                typeToSearchBox('search-term');
-
-                tick(debounceSearch);
+                searchAndTriggerDebounce('search-term');
 
                 expect(searchSpy.calls.count()).toBe(1);
 
@@ -297,8 +273,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             it('should remove the previous site filter query when changing the selected site', fakeAsync(() => {
                 spyOn(searchQueryBuilderService, 'addFilterQuery').and.callThrough();
                 spyOn(searchQueryBuilderService, 'removeFilterQuery').and.callThrough();
-                typeToSearchBox('search-term');
-                tick(debounceSearch);
+                searchAndTriggerDebounce('search-term');
 
                 component.siteChanged({ entry: { guid: 'namek' } } as SiteEntry);
                 component.siteChanged({ entry: { guid: 'vegeta' } } as SiteEntry);
@@ -326,9 +301,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.documentList.folderNode = { id: 'fakeNodeId', isFolder: true, path: {} } as Node;
                 fixture.detectChanges();
 
-                typeToSearchBox('search-term');
-
-                tick(debounceSearch);
+                searchAndTriggerDebounce('search-term');
 
                 expect(searchSpy.calls.count()).toBe(1);
 
@@ -345,9 +318,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             it('should get the corresponding node ids on search when a known alias is selected from dropdown', fakeAsync(() => {
                 component.documentList.folderNode = { id: 'fakeNodeId', isFolder: true, path: {} } as Node;
 
-                typeToSearchBox('vegeta');
-
-                tick(debounceSearch);
+                searchAndTriggerDebounce('vegeta');
 
                 component.siteChanged({ entry: { guid: '-sites-' } } as SiteEntry);
                 expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(1);
@@ -360,9 +331,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 fixture.detectChanges();
 
-                typeToSearchBox('vegeta');
-
-                tick(debounceSearch);
+                searchAndTriggerDebounce('vegeta');
 
                 component.siteChanged({ entry: { guid: '-sites-' } } as SiteEntry);
                 expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(1);
@@ -375,8 +344,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 const nodeIds$ = new Subject<string[]>();
                 getCorrespondingNodeIdsSpy.and.returnValue(nodeIds$.asObservable());
 
-                typeToSearchBox('vegeta');
-                tick(debounceSearch);
+                searchAndTriggerDebounce('vegeta');
 
                 searchSpy.calls.reset();
 
@@ -396,9 +364,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.dropdownSiteList = { list: { entries: [{ entry: { guid: '-sites-' } }, { entry: { guid: 'namek' } }] } } as SitePaging;
                 fixture.detectChanges();
 
-                typeToSearchBox('vegeta');
-
-                tick(debounceSearch);
+                searchAndTriggerDebounce('vegeta');
 
                 expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(0);
             }));

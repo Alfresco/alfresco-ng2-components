@@ -119,6 +119,7 @@ async function initializeDefaultFiles() {
 
 /**
  * Process a single file: upload if missing, then apply its action (lock/share/favorite).
+ *
  * @param fileInfo file descriptor from ACS_DEFAULT
  * @param fileInfo.name file name
  * @param fileInfo.action action to apply (LOCK, SHARE, FAVORITE)
@@ -154,6 +155,7 @@ async function processFile(fileInfo: { name: string; action: string }, parentFol
 /**
  * Ensure a folder exists under the given parent. Creates it if missing.
  * Handles 409 conflict (race condition) by fetching the existing folder.
+ *
  * @param folderName folder name
  * @param parentId parent node id
  * @returns the folder node entry
@@ -196,6 +198,7 @@ async function ensureFolder(folderName: string, parentId: string): Promise<NodeE
 
 /**
  * Find a node by relative path under a parent. Returns null if not found (404).
+ *
  * @param parentId parent node id
  * @param fileName relative path / file name
  * @returns the node entry or null if not found
@@ -214,6 +217,7 @@ async function findNodeByRelativePath(parentId: string, fileName: string): Promi
 
 /**
  * Upload a file to the given destination folder.
+ *
  * @param fileName file name
  * @param destinationId destination folder node id
  * @returns the uploaded node entry
@@ -238,6 +242,7 @@ async function uploadFile(fileName: string, destinationId: string): Promise<Node
 
 /**
  * Ensure a file is locked. Skips if already locked.
+ *
  * @param nodeId node id
  * @param fileName file name (for logging)
  * @param isAlreadyLocked whether the node is already locked
@@ -258,6 +263,7 @@ async function ensureLocked(nodeId: string, fileName: string, isAlreadyLocked = 
 
 /**
  * Ensure a file is shared. Handles 409 (already shared) gracefully.
+ *
  * @param nodeId node id
  * @param fileName file name (for logging)
  */
@@ -277,6 +283,7 @@ async function ensureShared(nodeId: string, fileName: string) {
 
 /**
  * Ensure a file is favorite. Handles 409 (already favorite) gracefully.
+ *
  * @param nodeId node id
  * @param fileName file name (for logging)
  */
@@ -302,6 +309,7 @@ async function ensureFavorite(nodeId: string, fileName: string) {
 
 /**
  * Extract entry id from a node response. Throws if missing.
+ *
  * @param nodeEntry node entry response
  * @param label label for error message
  * @returns the node id
@@ -318,6 +326,7 @@ function getEntryId(nodeEntry: NodeEntry, label: string): string {
 
 /**
  * Format an error for logging.
+ *
  * @param error error object
  * @returns formatted error string
  */
@@ -339,6 +348,7 @@ function formatError(error: any): string {
 
 /**
  * Retry wrapper for transient failures.
+ *
  * @param fn async function to execute
  * @param label label for logging
  * @param maxAttempts maximum retry attempts
@@ -364,6 +374,7 @@ async function withRetry<T>(fn: () => Promise<T>, label: string, maxAttempts = 3
 
 /**
  * Async delay.
+ *
  * @param ms milliseconds to wait
  * @returns a promise that resolves after the delay
  */
@@ -373,6 +384,7 @@ function wait(ms: number): Promise<void> {
 
 /**
  * Check environment state and authenticate. Retries on transient failures.
+ *
  * @param opts command options
  * @param attempt current attempt number
  */

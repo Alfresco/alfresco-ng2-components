@@ -15,11 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, ViewEncapsulation, inject } from '@angular/core';
+import { AfterViewInit, Component, ViewEncapsulation, inject, model, viewChild, ViewContainerRef, inputBinding, twoWayBinding } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { ClipboardService } from '../../clipboard';
+import { EDIT_JSON_EDITOR } from './edit-json-editor.token';
 
 export interface EditJsonDialogSettings {
     title?: string;
@@ -29,26 +32,40 @@ export interface EditJsonDialogSettings {
 
 @Component({
     standalone: true,
-    imports: [MatDialogModule, FormsModule, MatButtonModule, TranslatePipe],
+    imports: [MatDialogModule, FormsModule, MatButtonModule, MatIconModule, TranslatePipe],
     templateUrl: './edit-json.dialog.html',
     styleUrls: ['./edit-json.dialog.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-edit-json-dialog' }
 })
-export class EditJsonDialogComponent implements OnInit {
-    private readonly settings = inject<EditJsonDialogSettings>(MAT_DIALOG_DATA);
+export class EditJsonDialogComponent implements AfterViewInit {
+    private readonly settings = inject<EditJsonDialogSettings | null>(MAT_DIALOG_DATA);
+    private readonly clipboardService = inject(ClipboardService);
+    private readonly translateService = inject(TranslateService);
+    private readonly editorHost = viewChild('editorHost', { read: ViewContainerRef });
 
-    editable: boolean = false;
-    title: string = 'JSON';
+    protected readonly customEditor = inject(EDIT_JSON_EDITOR);
+    protected title = this.settings?.title ?? 'JSON';
 
-    @Input()
-    value: string = '';
+    editable = this.settings?.editable ?? false;
+    readonly value = model(this.settings?.value ?? '');
 
-    ngOnInit() {
-        if (this.settings) {
-            this.editable = this.settings.editable;
-            this.value = this.settings.value || '';
-            this.title = this.settings.title || 'JSON';
-        }
+    ngAfterViewInit(): void {
+        this.renderCustomEditor();
+    }
+
+    protected copyToClipboard(): void {
+        const key = 'CORE.DIALOG.EDIT_JSON.COPIED';
+        const message = this.translateService.instant(key);
+        this.clipboardService.copyContentToClipboard(this.value(), message);
+    }
+
+    private renderCustomEditor(): void {
+        const host = this.editorHost();
+
+        if (!this.customEditor || !host) return;
+
+        host.clear();
+        host.createComponent(this.customEditor, { bindings: [twoWayBinding('value', this.value), inputBinding('readOnly', () => !this.editable)] });
     }
 }

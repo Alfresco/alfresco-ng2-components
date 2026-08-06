@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* eslint-disable jsdoc/require-jsdoc, no-underscore-dangle */
+/* eslint-disable no-underscore-dangle */
 import assert from 'assert';
 import { describe, it, beforeEach, afterEach } from 'node:test';
 import * as sinon from 'sinon';

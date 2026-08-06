@@ -25,9 +25,6 @@ import { SitesService } from '../../common/services/sites.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-/* eslint-disable no-shadow */
-/* eslint-disable @typescript-eslint/naming-convention */
-
 export const Relations = {
     Members: 'members',
     Containers: 'containers'

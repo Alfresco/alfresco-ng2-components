@@ -25,6 +25,7 @@ import { throwIfNotDefined } from '../../../assert';
 export class EndpointsApi extends BaseApi {
     /**
      * Get an endpoint configuration
+     *
      * @param endpointConfigurationId endpointConfigurationId
      * @return Promise<EndpointConfigurationRepresentation>
      */
@@ -43,6 +44,7 @@ export class EndpointsApi extends BaseApi {
 
     /**
      * List endpoint configurations
+     *
      * @return Promise<EndpointConfigurationRepresentation>
      */
     getEndpointConfigurations(): Promise<EndpointConfigurationRepresentation> {

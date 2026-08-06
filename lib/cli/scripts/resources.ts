@@ -16,7 +16,6 @@
  */
 
 /* cSpell:disable */
-/* eslint-disable @typescript-eslint/naming-convention */
 
 export const ACTIVITI_CLOUD_APPS: any = {
     SIMPLE_APP: {

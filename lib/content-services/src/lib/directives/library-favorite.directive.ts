@@ -34,7 +34,7 @@ export class LibraryFavoriteDirective implements OnChanges {
     library: LibraryEntity = null;
 
     @Output() toggle = new EventEmitter<any>();
-    // eslint-disable-next-line @angular-eslint/no-output-native
+
     @Output() error = new EventEmitter<any>();
 
     private targetLibrary = null;

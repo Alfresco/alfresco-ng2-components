@@ -21,11 +21,13 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
  * SecurityControlSettingsApi service.
+ *
  * @module SecurityControlSettingsApi
  */
 export class SecurityControlSettingsApi extends BaseApi {
     /**
      * Get security control setting value
+     *
      * @param securityControlSettingKey The key for the security control setting. You can use one of the following settings:
      * -declassificationTimeFrame- for the declassification time frame value set in alfresco-global.properties file
      * @returns Promise<SecurityControlSettingEntry>
@@ -45,6 +47,7 @@ export class SecurityControlSettingsApi extends BaseApi {
 
     /**
      * Update security control setting value
+     *
      * @param securityControlSettingKey The key for the security control setting. You can use one of the following settings:
      * -declassificationTimeFrame- for the declassification time frame value set in alfresco-global.properties file
      * @param securityControlSettingValue The new value for the security control setting. This can be a string or number, depending on the setting key.

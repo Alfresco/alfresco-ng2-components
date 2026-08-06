@@ -20,7 +20,7 @@ import { LanguagePickerComponent } from './language-picker.component';
 import { MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { LanguageMenuComponent } from './language-menu.component';
 import { QueryList } from '@angular/core';
-import { UnitTestingUtils } from '@alfresco/adf-core';
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 describe('LanguagePickerComponent', () => {
     let component: LanguagePickerComponent;

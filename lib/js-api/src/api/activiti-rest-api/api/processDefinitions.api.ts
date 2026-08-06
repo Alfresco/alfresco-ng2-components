@@ -32,6 +32,7 @@ import { throwIfNotDefined } from '../../../assert';
 export class ProcessDefinitionsApi extends BaseApi {
     /**
      * Add a user or group involvement to a process definition
+     *
      * @param processDefinitionId processDefinitionId
      * @param identityLinkRepresentation identityLinkRepresentation
      * @return Promise<IdentityLinkRepresentation>
@@ -53,6 +54,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
     /**
      * Remove a user or group involvement from a process definition
+     *
      * @param processDefinitionId Process definition ID
      * @param family Identity type
      * @param identityId User or group ID
@@ -77,6 +79,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
     /**
      * Get a user or group involvement with a process definition
+     *
      * @param processDefinitionId Process definition ID
      * @param family Identity type
      * @param identityId User or group ID
@@ -101,6 +104,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
     /**
      * List either the users or groups involved with a process definition
+     *
      * @param processDefinitionId processDefinitionId
      * @param family Identity type
      * @return Promise<IdentityLinkRepresentation>
@@ -122,6 +126,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
     /**
      * List the users and groups involved with a process definition
+     *
      * @param processDefinitionId processDefinitionId
      * @return Promise<IdentityLinkRepresentation>
      */
@@ -140,6 +145,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
     /**
      * List the decision tables associated with a process definition
+     *
      * @param processDefinitionId processDefinitionId
      * @return Promise<ResultListDataRepresentationRuntimeDecisionTableRepresentation>
      */
@@ -158,6 +164,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
     /**
      * List the forms associated with a process definition
+     *
      * @param processDefinitionId processDefinitionId
      * @return Promise<ResultListDataRepresentationRuntimeFormRepresentation>
      */
@@ -176,6 +183,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
     /**
      * Retrieve the start form for a process definition
+     *
      * @param processDefinitionId processDefinitionId
      * @return Promise<FormDefinitionRepresentation>
      */
@@ -194,6 +202,7 @@ export class ProcessDefinitionsApi extends BaseApi {
      * Retrieve a list of process definitions
      *
      * Get a list of process definitions (visible within the tenant of the user)
+     *
      * @param opts Optional parameters
      * @return Promise<ResultListDataRepresentationProcessDefinitionRepresentation>
      */
@@ -210,6 +219,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
     /**
      * Retrieve field values (e.g. the typeahead field)
+     *
      * @param processDefinitionId processDefinitionId
      * @param field field
      * @return Promise<FormValueRepresentation[]>
@@ -228,6 +238,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
     /**
      * Retrieve field values (eg. the table field)
+     *
      * @param processDefinitionId processDefinitionId
      * @param field field
      * @param column column

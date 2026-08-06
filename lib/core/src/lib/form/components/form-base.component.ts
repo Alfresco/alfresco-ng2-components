@@ -22,7 +22,6 @@ import { isOutcomeButtonVisible } from './helpers/buttons-visibility';
 @Directive({
     standalone: true
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class FormBaseComponent {
     protected _form: FormModel;
 

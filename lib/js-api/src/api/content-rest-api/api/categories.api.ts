@@ -34,6 +34,7 @@ export class CategoriesApi extends BaseApi {
      * The parameter categoryId can be set to the alias -root- to obtain a list of top level categories.
      *
      * You can use the **include** parameter to return additional **values** information.
+     *
      * @param categoryId The identifier of a category.
      * @param opts Optional parameters
      * @returns Promise<CategoryPaging>
@@ -65,6 +66,7 @@ export class CategoriesApi extends BaseApi {
      *
      * Get a specific category with categoryId.
      * You can use the **include** parameter to return additional **values** information.
+     *
      * @param categoryId The identifier of a category.
      * @param opts Optional parameters
      * @returns Promise<CategoryEntry>
@@ -91,6 +93,7 @@ export class CategoriesApi extends BaseApi {
 
     /**
      * List of categories that node is assigned to
+     *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
      * @returns Promise<CategoryPaging>
@@ -122,6 +125,7 @@ export class CategoriesApi extends BaseApi {
      *
      * This will cause everything to be removed from the category.
      * You must have admin rights to delete a category.
+     *
      * @param categoryId The identifier of a category.
      * @returns Promise<{}>
      */
@@ -140,6 +144,7 @@ export class CategoriesApi extends BaseApi {
 
     /**
      * Unassign a node from category
+     *
      * @param nodeId The identifier of a node.
      * @param categoryId The identifier of a category.
      * @returns Promise<{}>
@@ -164,6 +169,7 @@ export class CategoriesApi extends BaseApi {
      *
      * Updates the category **categoryId**.
      * You must have admin rights to update a category.
+     *
      * @param categoryId The identifier of a category.
      * @param categoryBodyUpdate The updated category
      * @param opts Optional parameters
@@ -197,6 +203,7 @@ export class CategoriesApi extends BaseApi {
      * Creates new categories within the category **categoryId**.
      * The parameter categoryId can be set to the alias -root- to create a new top level category.
      * You must have admin rights to create a category.
+     *
      * @param categoryId The identifier of a category.
      * @param categoryBodyCreate List of categories to create.
      * @param opts Optional parameters.
@@ -226,6 +233,7 @@ export class CategoriesApi extends BaseApi {
 
     /**
      * Assign a node to a category
+     *
      * @param nodeId The identifier of a node.
      * @param categoryLinkBodyCreate The new category link
      * @param opts Optional parameters

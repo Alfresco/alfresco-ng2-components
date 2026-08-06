@@ -18,7 +18,7 @@
 import { DOCUMENT } from '@angular/common';
 import { NgZone } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { ACTIVITY_THROTTLE_MS, IdleActivityTracker } from './idle-activity-tracker';
+import { ACTIVITY_EVENTS, ACTIVITY_THROTTLE_MS, IdleActivityTracker } from './idle-activity-tracker';
 
 describe('IdleActivityTracker', () => {
     let tracker: IdleActivityTracker;
@@ -83,20 +83,36 @@ describe('IdleActivityTracker', () => {
         expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    it('should allow a later listener to prevent default when an activity event fires', () => {
-        const preventDefault = jasmine.createSpy('preventDefault').and.callFake((event: Event) => event.preventDefault());
+    [
+        { phase: 'bubbling', listenerOptions: { capture: false, passive: false } },
+        { phase: 'capturing', listenerOptions: { capture: true, passive: false } }
+    ].forEach(({ phase, listenerOptions }) => {
+        it(`should allow a later active ${phase} listener to prevent default when an activity event fires`, () => {
+            const preventDefault = jasmine.createSpy('preventDefault').and.callFake((event: Event) => event.preventDefault());
+            tracker.start();
+            doc.addEventListener('mousemove', preventDefault, listenerOptions);
+
+            try {
+                const event = new MouseEvent('mousemove', { cancelable: true });
+                doc.dispatchEvent(event);
+
+                expect(preventDefault).toHaveBeenCalledTimes(1);
+                expect(event.defaultPrevented).toBeTrue();
+            } finally {
+                doc.removeEventListener('mousemove', preventDefault, listenerOptions);
+            }
+        });
+    });
+
+    it('should keep scroll-sensitive activity listeners passive when tracking starts', () => {
+        const addEventListener = spyOn(doc, 'addEventListener').and.callThrough();
+
         tracker.start();
-        doc.addEventListener('mousemove', preventDefault);
 
-        try {
-            const event = new MouseEvent('mousemove', { cancelable: true });
-            doc.dispatchEvent(event);
-
-            expect(preventDefault).toHaveBeenCalledTimes(1);
-            expect(event.defaultPrevented).toBeTrue();
-        } finally {
-            doc.removeEventListener('mousemove', preventDefault);
-        }
+        expect(addEventListener).toHaveBeenCalledTimes(ACTIVITY_EVENTS.length + 1);
+        expect(addEventListener).toHaveBeenCalledWith('mousemove', jasmine.any(Function), { capture: true, passive: false });
+        expect(addEventListener).toHaveBeenCalledWith('touchstart', jasmine.any(Function), { capture: true, passive: true });
+        expect(addEventListener).toHaveBeenCalledWith('wheel', jasmine.any(Function), { capture: true, passive: true });
     });
 
     it('is a no-op when stop() is called without a prior start()', () => {

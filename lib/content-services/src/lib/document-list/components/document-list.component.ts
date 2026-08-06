@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable rxjs/no-subject-value */
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import {
     AppConfigService,
     ColumnsSelectorComponent,

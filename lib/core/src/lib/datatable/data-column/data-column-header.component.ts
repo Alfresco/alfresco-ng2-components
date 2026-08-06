@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
-
 import { AfterContentInit, Component, ContentChild, TemplateRef, inject } from '@angular/core';
 import { DataColumnComponent } from './data-column.component';
 

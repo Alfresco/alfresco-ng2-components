@@ -214,12 +214,99 @@ describe('ContentMetaDataService', () => {
         });
     });
 
+    it('should mark basic properties as read-only when preset defines readOnlyProperties (includeAll)', async () => {
+        setConfig('custom', [{ includeAll: true, readOnlyProperties: ['cm:name', 'cm:title'] }]);
+
+        const res = await firstValueFrom(service.getBasicProperties(fakeNode, 'custom'));
+        const nameProperty = res.find((property) => property.key === 'properties.cm:name');
+        const titleProperty = res.find((property) => property.key === 'properties.cm:title');
+        const authorProperty = res.find((property) => property.key === 'properties.cm:author');
+
+        expect(nameProperty.editable).toBeFalse();
+        expect(titleProperty.editable).toBeFalse();
+        expect(authorProperty.editable).toBeTrue();
+    });
+
+    it('should mark basic properties as read-only when layout items are not editable', async () => {
+        setConfig('custom', [
+            {
+                items: [
+                    { type: 'cm:content', properties: ['cm:name'], editable: false },
+                    { aspect: 'cm:titled', properties: ['cm:title', 'cm:description'], editable: false }
+                ]
+            }
+        ]);
+
+        const res = await firstValueFrom(service.getBasicProperties(fakeNode, 'custom'));
+        const nameProperty = res.find((property) => property.key === 'properties.cm:name');
+        const titleProperty = res.find((property) => property.key === 'properties.cm:title');
+        const descriptionProperty = res.find((property) => property.key === 'properties.cm:description');
+        const authorProperty = res.find((property) => property.key === 'properties.cm:author');
+
+        expect(nameProperty.editable).toBeFalse();
+        expect(titleProperty.editable).toBeFalse();
+        expect(descriptionProperty.editable).toBeFalse();
+        expect(authorProperty.editable).toBeTrue();
+    });
+
+    it('should hide basic properties from general info when they are excluded', async () => {
+        setConfig('custom', [{ includeAll: true, exclude: ['cm:title'] }]);
+
+        const res = await firstValueFrom(service.getBasicProperties(fakeNode, 'custom'));
+
+        expect(res.find((property) => property.key === 'properties.cm:title')).toBeUndefined();
+        expect(res.find((property) => property.key === 'properties.cm:name')).toBeDefined();
+    });
+
     it('should return the content type property', () => {
         spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of([{ label: 'hello i am a weird content type' } as CardViewItem]));
 
         service.getContentTypeProperty(fakeNode).subscribe((res) => {
             expect(res[0].label).toBe('hello i am a weird content type');
         });
+    });
+
+    it('should hide a single content type property in general info when that property is excluded', async () => {
+        setConfig('custom', [{ includeAll: true, exclude: ['fn:thema'] }]);
+        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(
+            of([
+                { label: 'Content Type', key: 'nodeType' } as CardViewItem,
+                { label: 'System', key: 'properties.fn:system' } as CardViewItem,
+                { label: 'Thema', key: 'properties.fn:thema' } as CardViewItem
+            ])
+        );
+
+        const res = await firstValueFrom(service.getContentTypeProperty(fakeNode, 'custom'));
+
+        expect(res.map((item) => item.key)).toEqual(['nodeType', 'properties.fn:system']);
+    });
+
+    it('should hide content type specific properties in general info when the node type is excluded', async () => {
+        setConfig('custom', [{ includeAll: true, exclude: ['fn:fakenode'] }]);
+        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(
+            of([
+                { label: 'Content Type', key: 'nodeType' } as CardViewItem,
+                { label: 'System', key: 'properties.fn:system' } as CardViewItem,
+                { label: 'Thema', key: 'properties.fn:thema' } as CardViewItem
+            ])
+        );
+
+        const res = await firstValueFrom(service.getContentTypeProperty(fakeNode, 'custom'));
+
+        expect(res.length).toBe(1);
+        expect(res[0].key).toBe('nodeType');
+    });
+
+    it('should keep content type specific properties in general info when the node type is not excluded', async () => {
+        setConfig('custom', [{ includeAll: true, exclude: ['cm:versionable'] }]);
+        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(
+            of([{ label: 'Content Type', key: 'nodeType' } as CardViewItem, { label: 'System', key: 'properties.fn:system' } as CardViewItem])
+        );
+
+        const res = await firstValueFrom(service.getContentTypeProperty(fakeNode, 'custom'));
+
+        expect(res.length).toBe(2);
+        expect(res.map((item) => item.key)).toEqual(['nodeType', 'properties.fn:system']);
     });
 
     it('should trigger the opening of the content type dialog', () => {

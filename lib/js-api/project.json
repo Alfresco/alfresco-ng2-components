@@ -4,7 +4,7 @@
   "sourceRoot": "lib/js-api",
   "projectType": "library",
   "prefix": "adf",
-  "tags": [],
+  "tags": ["scope:js-api", "type:api"],
   "targets": {
     "build": {
       "executor": "nx:noop",

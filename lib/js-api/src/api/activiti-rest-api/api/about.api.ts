@@ -35,6 +35,7 @@ export class AboutApi extends BaseApi {
     /**
      * Get server type and version
      * Provides information about the running Alfresco Process Services Suite. The response payload object has the properties type, majorVersion, minorVersion, revisionVersion and edition.
+     *
      * @return Promise<{ [key: string]: string; }>
      */
     getAppVersion(): Promise<BpmProductVersionModel> {

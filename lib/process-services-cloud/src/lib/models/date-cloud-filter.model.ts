@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/naming-convention */
-
 export const DateCloudFilterType = {
     NO_DATE: 'NO_DATE',
     TODAY: 'TODAY',

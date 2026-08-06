@@ -20,7 +20,7 @@ import { filter } from 'rxjs/operators';
 import { FormRulesEvent } from '../../events';
 import { FormFieldModel, FormModel } from './core';
 import { WidgetComponent } from './widget.component';
-import { FormService } from '@alfresco/adf-core';
+import { FormService } from '../../services/form.service';
 
 describe('WidgetComponent', () => {
     let widget: WidgetComponent;

@@ -19,7 +19,6 @@ import { DestroyRef, Directive, EventEmitter, inject, Input, Output } from '@ang
 import { FilterParamsModel } from '../models/filter-cloud.model';
 
 @Directive()
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseTaskFiltersCloudComponent {
     /** Display filters available to the current user for the application with the specified name. */
     @Input()

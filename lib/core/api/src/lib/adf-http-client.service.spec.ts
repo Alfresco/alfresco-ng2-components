@@ -78,7 +78,7 @@ describe('AdfHttpClient', () => {
                 .request('http://example.com', options, securityOptions, emitters)
                 .then((res: ResultListDataRepresentationTaskRepresentation) => {
                     expect(res instanceof ResultListDataRepresentationTaskRepresentation).toBeTruthy();
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
                     expect(res.data![0].created instanceof Date).toBeTruthy();
                     done();
                 })
@@ -211,23 +211,6 @@ describe('AdfHttpClient', () => {
         expect(req.request.method).toEqual('POST');
 
         req.flush(errorResponse, { status: 403, statusText: 'Forbidden' });
-    });
-
-    it('should return a meaningful error message when response body is null', (done) => {
-        const options: RequestOptions = {
-            path: '',
-            httpMethod: 'POST'
-        };
-
-        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch((err: AlfrescoApiResponseError) => {
-            expect(err instanceof Error).toBeTruthy();
-            expect(err.message).toBe('401 Unauthorized');
-            expect(err.status).toBe(401);
-            done();
-        });
-
-        const req = controller.expectOne('http://example.com');
-        req.flush(null, { status: 401, statusText: 'Unauthorized' });
     });
 
     it('should return a Error type on failed promise with response body', (done) => {

@@ -20,7 +20,7 @@ export interface JsonNode {
     bigDecimal?: boolean;
     bigInteger?: boolean;
     binary?: boolean;
-    // eslint-disable-next-line id-blacklist
+
     boolean?: boolean;
     containerNode?: boolean;
     double?: boolean;
@@ -32,7 +32,7 @@ export interface JsonNode {
     missingNode?: boolean;
     nodeType?: 'ARRAY' | 'BINARY' | 'BOOLEAN' | 'MISSING' | 'NULL' | 'NUMBER' | 'OBJECT' | 'POJO' | 'STRING';
     null?: boolean;
-    // eslint-disable-next-line id-blacklist
+
     number?: boolean;
     object?: boolean;
     pojo?: boolean;

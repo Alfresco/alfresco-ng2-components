@@ -65,6 +65,7 @@ export class TypesApi extends BaseApi {
      * Get a type
      *
      * **Note:** This is available in Alfresco 7.0.0 and newer versions.
+     *
      * @param typeId The `Qname` of a type(prefix:name) e.g 'cm:content'
      * @returns Promise<TypeEntry>
      */
@@ -86,6 +87,7 @@ export class TypesApi extends BaseApi {
      * List types
      *
      * **Note:** This is available in Alfresco 7.0.0 and newer versions.
+     *
      * @param opts Optional parameters
      * @returns Promise<TypePaging>
      */

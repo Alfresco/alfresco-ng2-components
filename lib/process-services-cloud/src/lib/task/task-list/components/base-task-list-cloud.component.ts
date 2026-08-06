@@ -88,7 +88,6 @@ const taskPresetsCloudDefaultModel = {
 };
 
 @Directive()
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseTaskListCloudComponent<T = unknown>
     extends DataTableSchema<T>
     implements OnChanges, AfterContentInit, PaginatedComponent, OnInit

@@ -182,6 +182,7 @@ Options:
  * If the app is already present, returns true (skip full init).
  * If hruser can log in but the app is missing, imports, publishes and deploys it.
  * Returns false only if hruser cannot log in or deployment fails.
+ *
  * @returns `true` if app is deployed, otherwise `false`
  */
 async function ensureE2eApplicationDeployed(): Promise<boolean> {
@@ -236,6 +237,7 @@ async function initializeDefaultApps() {
 
 /**
  * Check environment state and authenticate. Retries on transient failures.
+ *
  * @param opts command options
  * @param attempt current attempt number
  */
@@ -277,6 +279,7 @@ async function checkEnv(opts: InitApsEnvArgs, attempt = 1) {
 
 /**
  * Check if the default tenant is present
+ *
  * @param tenantId tenant id
  * @param tenantName tenant name
  * @returns `true` if tenant is found, otherwise `false`
@@ -304,6 +307,7 @@ async function hasDefaultTenant(tenantId: number, tenantName: string): Promise<b
 
 /**
  * Create default tenant
+ *
  * @param tenantName tenant name
  * @returns the tenant id or null
  */
@@ -327,6 +331,7 @@ async function createDefaultTenant(tenantName: string) {
 
 /**
  * Create users
+ *
  * @param tenantId tenant id
  * @param user user object
  * @returns the created user
@@ -355,6 +360,7 @@ async function createUsers(tenantId: number, user: any) {
 
 /**
  * Update Activiti license
+ *
  * @param opts command options
  * @returns `true` if license uploaded successfully, otherwise `false`
  */
@@ -383,6 +389,7 @@ async function updateLicense(opts: InitApsEnvArgs) {
 
 /**
  * Check if default application is deployed
+ *
  * @param appName application name
  * @returns `true` if application is deployed, otherwise `false`
  */
@@ -401,6 +408,7 @@ async function isDefaultAppDeployed(appName: string): Promise<boolean> {
 
 /**
  * Import and publish the application
+ *
  * @param appName application name
  * @returns the app definition result
  */
@@ -423,6 +431,7 @@ async function importPublishApp(appName: string): Promise<AppDefinitionUpdateRes
 
 /**
  * Deploy application
+ *
  * @param appDefinitionId app definition id
  */
 async function deployApp(appDefinitionId: number) {
@@ -442,6 +451,7 @@ async function deployApp(appDefinitionId: number) {
 
 /**
  * Checks if Activiti app has license
+ *
  * @param opts command options
  * @returns `true` if license is valid, otherwise `false`
  */
@@ -472,6 +482,7 @@ async function hasLicense(opts: InitApsEnvArgs): Promise<boolean> {
 
 /**
  * Get default users from the realm
+ *
  * @param opts command options
  * @returns array of default APS users or null
  */
@@ -500,6 +511,7 @@ async function getDefaultApsUsersFromRealm(opts: InitApsEnvArgs) {
 
 /**
  * Validate that ACS repo for Activiti is present
+ *
  * @param opts command options
  * @param tenantId tenant id
  * @param contentName content service name
@@ -527,6 +539,7 @@ async function isContentRepoPresent(opts: InitApsEnvArgs, tenantId: number, cont
 
 /**
  * Add content service with basic auth
+ *
  * @param opts command options
  * @param tenantId tenant id
  * @param name content name
@@ -567,6 +580,7 @@ async function addContentRepoWithBasic(opts: InitApsEnvArgs, tenantId: number, n
 
 /**
  * Authorize activiti user to ACS repo
+ *
  * @param opts command options
  * @param user user object
  */
@@ -600,6 +614,7 @@ async function authorizeUserToContentRepo(opts: InitApsEnvArgs, user: any) {
 
 /**
  * Authorize user with content using basic auth
+ *
  * @param opts command options
  * @param username username
  * @param contentId content id
@@ -629,6 +644,7 @@ async function authorizeUserToContentWithBasic(opts: InitApsEnvArgs, username: s
 
 /**
  * Download APS license file
+ *
  * @param apsLicensePath path to license file
  * @returns `true` if download succeeded, otherwise `false`
  */
@@ -649,6 +665,7 @@ async function downloadLicenseFile(apsLicensePath: string) {
 
 /**
  * Format an error for logging.
+ *
  * @param error error object
  * @returns formatted error string
  */
@@ -670,6 +687,7 @@ function formatError(error: any): string {
 
 /**
  * Async delay.
+ *
  * @param ms milliseconds to wait
  * @returns a promise that resolves after the delay
  */

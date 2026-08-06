@@ -20,12 +20,23 @@ import { Node } from '@alfresco/js-api';
 import { BasicPropertiesService } from './basic-properties.service';
 import { Observable, of, iif, Subject } from 'rxjs';
 import { PropertyGroupTranslatorService } from './property-groups-translator.service';
-import { CardViewItem } from '@alfresco/adf-core';
+import { AppConfigService, CardViewItem } from '@alfresco/adf-core';
 import { CardViewGroup, OrganisedPropertyGroup, PresetConfig } from '../interfaces/content-metadata.interfaces';
 import { ContentMetadataConfigFactory } from './config/content-metadata-config.factory';
 import { PropertyDescriptorsService } from './property-descriptors.service';
 import { map, switchMap } from 'rxjs/operators';
 import { ContentTypePropertiesService } from './content-type-property.service';
+import { LayoutOrientedConfig, LayoutOrientedConfigLayoutBlock } from '../interfaces/layout-oriented-config.interface';
+import { Property } from '../interfaces/property.interface';
+
+interface LayoutBlockWithReadOnly extends LayoutOrientedConfigLayoutBlock {
+    readOnlyProperties?: string | string[];
+    exclude?: string | string[];
+}
+
+const CONTENT_METADATA_CONFIG_KEY = 'content-metadata';
+const BASIC_PROPERTY_KEY_PREFIX = 'properties.';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -35,15 +46,105 @@ export class ContentMetadataService {
     private readonly propertyGroupTranslatorService = inject(PropertyGroupTranslatorService);
     private readonly propertyDescriptorsService = inject(PropertyDescriptorsService);
     private readonly contentTypePropertyService = inject(ContentTypePropertiesService);
+    private readonly appConfig = inject(AppConfigService);
 
     error = new Subject<{ statusCode: number; message: string }>();
 
-    getBasicProperties(node: Node): Observable<CardViewItem[]> {
-        return of(this.basicPropertiesService.getProperties(node));
+    getBasicProperties(node: Node, preset: string | PresetConfig = 'default'): Observable<CardViewItem[]> {
+        const readOnlyProperties = this.getReadOnlyPropertyNames(preset);
+        const excludedNames = this.getExcludedNames(preset);
+
+        const properties = this.basicPropertiesService.getProperties(node).filter((property) => {
+            const propertyName = this.getBasicPropertyName(property.key);
+            return !propertyName || !excludedNames.includes(propertyName);
+        });
+
+        if (readOnlyProperties.length) {
+            properties.forEach((property) => {
+                const propertyName = this.getBasicPropertyName(property.key);
+                if (propertyName && readOnlyProperties.includes(propertyName)) {
+                    property.editable = false;
+                }
+            });
+        }
+
+        return of(properties);
     }
 
-    getContentTypeProperty(node: Node): Observable<CardViewItem[]> {
-        return this.contentTypePropertyService.getContentTypeCardItem(node);
+    private getBasicPropertyName(key: string): string | undefined {
+        return key?.startsWith(BASIC_PROPERTY_KEY_PREFIX) ? key.slice(BASIC_PROPERTY_KEY_PREFIX.length) : undefined;
+    }
+
+    private getReadOnlyPropertyNames(preset: string | PresetConfig): string[] {
+        const presetConfig = this.getPresetConfig(preset);
+
+        if (this.isLayoutConfig(presetConfig)) {
+            return presetConfig.reduce((readOnly, block) => readOnly.concat(this.getLayoutBlockReadOnlyNames(block)), [] as string[]);
+        }
+
+        if (presetConfig != null && typeof presetConfig === 'object') {
+            return this.normaliseToArray(presetConfig.readOnlyProperties);
+        }
+
+        return [];
+    }
+
+    private getPresetConfig(preset: string | PresetConfig): PresetConfig {
+        return typeof preset === 'string' ? this.appConfig.config[CONTENT_METADATA_CONFIG_KEY]?.presets?.[preset] : preset;
+    }
+
+    private isLayoutConfig(config: unknown): config is LayoutOrientedConfig {
+        return Array.isArray(config);
+    }
+
+    private getLayoutBlockReadOnlyNames(block: LayoutBlockWithReadOnly): string[] {
+        const blockReadOnly = this.normaliseToArray(block?.readOnlyProperties);
+        const nonEditableItems = (block?.items || [])
+            .filter((item) => item?.editable === false)
+            .reduce((names, item) => names.concat(this.normaliseToArray(item.properties)), [] as string[]);
+
+        return blockReadOnly.concat(nonEditableItems);
+    }
+
+    private normaliseToArray(value: string | string[] | Property[] | boolean | undefined): string[] {
+        if (Array.isArray(value)) {
+            return value.map((item) => (typeof item === 'string' ? item : item?.name)).filter((name): name is string => typeof name === 'string');
+        }
+        return typeof value === 'string' ? [value] : [];
+    }
+
+    getContentTypeProperty(node: Node, preset: string | PresetConfig = 'default'): Observable<CardViewItem[]> {
+        const excludedNames = this.getExcludedNames(preset);
+        const isTypeExcluded = excludedNames.includes(node.nodeType);
+
+        return this.contentTypePropertyService.getContentTypeCardItem(node).pipe(
+            map((items) =>
+                items.filter((item) => {
+                    const propertyName = this.getBasicPropertyName(item.key);
+                    if (!propertyName) {
+                        return true;
+                    }
+                    return !isTypeExcluded && !excludedNames.includes(propertyName);
+                })
+            )
+        );
+    }
+
+    private getExcludedNames(preset: string | PresetConfig): string[] {
+        const presetConfig = this.getPresetConfig(preset);
+
+        if (this.isLayoutConfig(presetConfig)) {
+            return presetConfig.reduce(
+                (excluded, block) => excluded.concat(this.normaliseToArray((block as LayoutBlockWithReadOnly)?.exclude)),
+                [] as string[]
+            );
+        }
+
+        if (presetConfig != null && typeof presetConfig === 'object') {
+            return this.normaliseToArray(presetConfig.exclude);
+        }
+
+        return [];
     }
 
     openConfirmDialog(changedProperties): Observable<any> {

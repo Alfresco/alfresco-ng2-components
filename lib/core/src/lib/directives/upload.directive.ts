@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/no-input-rename */
-
 import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, Renderer2, inject } from '@angular/core';
 import { FileInfo, FileUtils } from '../common/utils/file-utils';
 

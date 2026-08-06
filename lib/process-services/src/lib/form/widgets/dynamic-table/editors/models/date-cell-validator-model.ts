@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
-
 import { CellValidator } from './cell-validator.model';
 import { DynamicRowValidationSummary } from './dynamic-row-validation-summary.model';
 import { DynamicTableColumn } from './dynamic-table-column.model';

@@ -319,6 +319,18 @@ describe('ContentMetadataComponent', () => {
             expect(contentMetadataService.getGroupedProperties).toHaveBeenCalled();
         }));
 
+        it('should pass preset to getBasicProperties when calling getProperties', fakeAsync(() => {
+            const testNode = { ...node, name: 'test-node' };
+            component.preset = 'custom-preset';
+            const getBasicPropertiesSpy = spyOn(contentMetadataService, 'getBasicProperties').and.returnValue(of([]));
+            getGroupedPropertiesSpy.and.returnValue(of([]));
+
+            component.ngOnChanges({ node: new SimpleChange(null, testNode, false) });
+            tick(600);
+
+            expect(getBasicPropertiesSpy).toHaveBeenCalledWith(testNode, 'custom-preset');
+        }));
+
         describe('Save button - Grouped Properties', () => {
             beforeEach(() => {
                 getGroupedPropertiesSpy.and.returnValue(
@@ -877,8 +889,8 @@ describe('ContentMetadataComponent', () => {
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
-            expect(contentMetadataService.getContentTypeProperty).toHaveBeenCalledWith(expectedNode);
-            expect(contentMetadataService.getBasicProperties).toHaveBeenCalledWith(expectedNode);
+            expect(contentMetadataService.getContentTypeProperty).toHaveBeenCalledWith(expectedNode, preset);
+            expect(contentMetadataService.getBasicProperties).toHaveBeenCalledWith(expectedNode, preset);
         });
 
         it('should pass through the loaded basic properties to the card view', async () => {

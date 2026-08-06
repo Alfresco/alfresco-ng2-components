@@ -22,7 +22,7 @@ import { parseArgs } from 'node:util';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as licenseList from 'spdx-license-list';
-import * as ejs from 'ejs';
+import { escapeHtml } from './utils';
 
 const { collectProductionLicenses } = require('../resources/license-collector.cjs');
 
@@ -101,6 +101,12 @@ function getPackageFile(packagePath: string): PackageInfo {
     }
 }
 
+/**
+ * Convert a license expression to linked Markdown.
+ *
+ * @param rawExpression raw SPDX license expression
+ * @returns expression with Markdown links
+ */
 function toLinkedLicenseExpression(rawExpression: string): string {
     return rawExpression.replace(/\*/g, '').replace(/[a-zA-Z0-9\-.]+/g, (match: string) => {
         const lowerMatch = match.toLowerCase();
@@ -110,6 +116,40 @@ function toLinkedLicenseExpression(rawExpression: string): string {
 
         return match;
     });
+}
+
+/**
+ * Render the license page as Markdown.
+ *
+ * @param filteredPackages packages with license metadata
+ * @param projName project name
+ * @param projVersion project version
+ * @returns rendered Markdown string
+ */
+function renderLicensePage(filteredPackages: Record<string, PackageInfoWithMetadata>, projName: string, projVersion: string): string {
+    const rows = Object.entries(filteredPackages).map(([packageName, pack]) => {
+        const lastAtSignPos = packageName.lastIndexOf('@');
+        const name = packageName.substring(0, lastAtSignPos);
+        const version = packageName.substring(lastAtSignPos + 1);
+        const licenses = escapeHtml(pack.licenseExp || 'N/A');
+        const linkedName = pack.repository ? `[${escapeHtml(name)}](${pack.repository})` : escapeHtml(name);
+        return `| ${linkedName} | ${escapeHtml(version)} | ${licenses} |`;
+    });
+
+    return `---
+Title: License info, ${escapeHtml(projName)} ${escapeHtml(projVersion)}
+---
+
+# License information for ${escapeHtml(projName)} ${escapeHtml(projVersion)}
+
+This page lists all third party libraries the project depends on.
+
+## Libraries
+
+| Name | Version | License |
+| --- | --- | --- |
+${rows.join('\n')}
+`;
 }
 
 /**
@@ -165,14 +205,7 @@ Options:
         exit(1);
     }
 
-    const templatePath = path.resolve(__dirname, '../templates/licensePage.ejs');
-    if (!fs.existsSync(templatePath)) {
-        console.error(`Cannot find the report template: ${templatePath}`);
-        exit(1);
-    }
-
     return new Promise((resolve, reject) => {
-        // eslint-disable-next-line no-console
         console.info(`Checking ${packagePath}`);
         const licenseScan = collectProductionLicenses(packagePath, {
             denyList: ['GPL'],
@@ -198,28 +231,13 @@ Options:
 
         const packageJson: PackageInfo = getPackageFile(packagePath);
 
-        ejs.renderFile(
-            templatePath,
-            {
-                filteredPackages,
-                projVersion: packageJson.version,
-                projName: packageJson.name
-            },
-            {},
-            (ejsError: unknown, mdText: string) => {
-                if (ejsError) {
-                    console.error(ejsError);
-                    reject(ejsError);
-                } else {
-                    const outputPath = path.resolve(options.outDir || workingDir);
-                    const outputFile = path.join(outputPath, `license-info-${packageJson.version}.md`);
+        const mdText = renderLicensePage(filteredPackages, packageJson.name, packageJson.version);
+        const outputPath = path.resolve(options.outDir || workingDir);
+        const outputFile = path.join(outputPath, `license-info-${packageJson.version}.md`);
 
-                    fs.writeFileSync(outputFile, mdText);
-                    // eslint-disable-next-line no-console
-                    console.log(`Report saved as ${outputFile}`);
-                    resolve(0);
-                }
-            }
-        );
+        fs.writeFileSync(outputFile, mdText);
+
+        console.log(`Report saved as ${outputFile}`);
+        resolve(0);
     });
 }
