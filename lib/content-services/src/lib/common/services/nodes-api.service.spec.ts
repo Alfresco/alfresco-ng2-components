@@ -87,7 +87,7 @@ describe('NodesApiService', () => {
     it('should call nodesApi.checkoutNode with the node ID and optional query params', async () => {
         const opts = { include: ['path', 'allowableOperations'], fields: ['id', 'name'] };
         spyOn(nodesApiService.nodesApi, 'checkoutNode').and.returnValue(Promise.resolve(fakeNodeEntry));
-        await firstValueFrom(nodesApiService.checkoutNode(fakeNodeEntry.entry.id));
+        await firstValueFrom(nodesApiService.checkoutNode(fakeNodeEntry.entry.id, opts));
 
         expect(nodesApiService.nodesApi.checkoutNode).toHaveBeenCalledWith(fakeNodeEntry.entry.id, opts);
     });
@@ -95,7 +95,7 @@ describe('NodesApiService', () => {
     it('should call nodesApi.cancelCheckoutNode with the node ID and optional query params', async () => {
         const opts = { include: ['path'], fields: ['id'] };
         spyOn(nodesApiService.nodesApi, 'cancelCheckoutNode').and.returnValue(Promise.resolve(fakeNodeEntry));
-        await firstValueFrom(nodesApiService.cancelCheckoutNode(fakeNodeEntry.entry.id));
+        await firstValueFrom(nodesApiService.cancelCheckoutNode(fakeNodeEntry.entry.id, opts));
 
         expect(nodesApiService.nodesApi.cancelCheckoutNode).toHaveBeenCalledWith(fakeNodeEntry.entry.id, opts);
     });

@@ -16,6 +16,7 @@
  */
 
 import { BaseMock } from '../base.mock';
+import { NodeEntry } from '../../../src';
 
 export class NodeMock extends BaseMock {
     get200ResponseChildren(): void {
@@ -286,14 +287,18 @@ export class NodeMock extends BaseMock {
     }
 
     post200CheckoutNode(nodeId: string): void {
-        this.mock().post(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/checkout`).reply(200, {
-            entry: {}
-        });
+        this.mock()
+            .post(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/checkout`)
+            .reply(200, {
+                entry: { id: 'test-node-id', name: 'Test Node' }
+            } as NodeEntry);
     }
 
     post200CancelCheckoutNode(nodeId: string): void {
-        this.mock().post(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/cancel-checkout`).reply(200, {
-            entry: {}
-        });
+        this.mock()
+            .post(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/cancel-checkout`)
+            .reply(200, {
+                entry: { id: 'test-node-id', name: 'Test Node' }
+            } as NodeEntry);
     }
 }
