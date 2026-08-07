@@ -95,6 +95,12 @@ describe('ProcessFiltersCloudComponent', () => {
         getProcessNotificationSubscriptionSpy = spyOn(processFilterService, 'getProcessNotificationSubscription').and.returnValue(of([]));
     };
 
+    const bindAppName = async (appName = 'my-app-1') => {
+        fixture.componentRef.setInput('appName', appName);
+        fixture.detectChanges();
+        await fixture.whenStable();
+    };
+
     afterEach(() => {
         fixture.destroy();
     });
@@ -191,8 +197,7 @@ describe('ProcessFiltersCloudComponent', () => {
             const change = new SimpleChange(null, appName, true);
             component.ngOnChanges({ appName: change });
 
-            fixture.detectChanges();
-            await fixture.whenStable();
+            await bindAppName();
 
             const filterButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${mockProcessFilters[0].key}_filter"]`);
             filterButton.click();
@@ -210,11 +215,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
             it('should apply active CSS class on filter click', async () => {
                 component.enableNotifications = true;
-                component.appName = 'mock-app-name';
-                const appNameChange = new SimpleChange(null, 'mock-app-name', true);
-                component.ngOnChanges({ appName: appNameChange });
-                fixture.detectChanges();
-                await fixture.whenStable();
+                await bindAppName('mock-app-name');
 
                 let link = fixture.debugElement.query(By.css(`[data-automation-id="${allProcessesFilterKey}_filter"]`)).nativeElement;
                 expect(link.getAttribute('href')).toBe(`/process-list-cloud?filterId=${allProcessesFilterId}`);
@@ -230,12 +231,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
             it('should add aria-current attribute with value "page" to the active filter', async () => {
                 component.enableNotifications = true;
-                component.appName = 'mock-app-name';
-                const appNameChange = new SimpleChange(null, 'mock-app-name', true);
-
-                component.ngOnChanges({ appName: appNameChange });
-                fixture.detectChanges();
-                await fixture.whenStable();
+                await bindAppName('mock-app-name');
 
                 const link = fixture.debugElement.query(By.css(`[data-automation-id="${allProcessesFilterKey}_filter"]`)).nativeElement;
                 expect(link.getAttribute('aria-current')).toBe('page');
@@ -243,12 +239,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
             it('should not have aria-current attribute when filter is not active', async () => {
                 component.enableNotifications = true;
-                component.appName = 'mock-app-name';
-                const appNameChange = new SimpleChange(null, 'mock-app-name', true);
-
-                component.ngOnChanges({ appName: appNameChange });
-                fixture.detectChanges();
-                await fixture.whenStable();
+                await bindAppName('mock-app-name');
 
                 const link = fixture.debugElement.query(By.css(`[data-automation-id="${mockProcessFilters[1].key}_filter"]`)).nativeElement;
                 expect(link.getAttribute('aria-current')).toBeNull();
@@ -262,11 +253,7 @@ describe('ProcessFiltersCloudComponent', () => {
         });
 
         it('should attach specific icon for each filter if hasIcon is true', async () => {
-            const change = new SimpleChange(undefined, 'my-app-1', true);
-            component.ngOnChanges({ appName: change });
-
-            fixture.detectChanges();
-            await fixture.whenStable();
+            await bindAppName();
 
             component.showIcons = true;
 
@@ -283,22 +270,14 @@ describe('ProcessFiltersCloudComponent', () => {
 
         it('should not attach icons for each filter if hasIcon is false', async () => {
             component.showIcons = false;
-            const change = new SimpleChange(undefined, 'my-app-1', true);
-            component.ngOnChanges({ appName: change });
-
-            fixture.detectChanges();
-            await fixture.whenStable();
+            await bindAppName();
 
             const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
             expect(filterIcons.length).toBe(0);
         });
 
         it('should display the filters', async () => {
-            const change = new SimpleChange(undefined, 'my-app-1', true);
-            component.ngOnChanges({ appName: change });
-
-            fixture.detectChanges();
-            await fixture.whenStable();
+            await bindAppName();
 
             component.showIcons = true;
 
@@ -316,12 +295,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
         it('should emit success with the filters when filters are loaded', async () => {
             const successSpy = spyOn(component.success, 'emit');
-            const appName = 'my-app-1';
-            const change = new SimpleChange(null, appName, true);
-
-            component.ngOnChanges({ appName: change });
-            fixture.detectChanges();
-            await fixture.whenStable();
+            await bindAppName();
 
             expect(successSpy).toHaveBeenCalledWith(mockProcessFilters);
             expect(component.filters).toBeDefined();
@@ -332,24 +306,14 @@ describe('ProcessFiltersCloudComponent', () => {
         });
 
         it('should not select any filter as default', async () => {
-            const appName = 'my-app-1';
-            const change = new SimpleChange(null, appName, true);
-
-            component.ngOnChanges({ appName: change });
-            fixture.detectChanges();
-            await fixture.whenStable();
+            await bindAppName();
 
             expect(component.currentFilter).toBeUndefined();
         });
 
         it('should filterClicked emit when a filter is clicked from the UI', async () => {
             const filterClickedSpy = spyOn(component.filterClicked, 'emit');
-            const appName = 'my-app-1';
-            const change = new SimpleChange(null, appName, true);
-            component.ngOnChanges({ appName: change });
-
-            fixture.detectChanges();
-            await fixture.whenStable();
+            await bindAppName();
 
             const filterButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${mockProcessFilters[0].key}_filter"]`);
             filterButton.click();
@@ -367,17 +331,13 @@ describe('ProcessFiltersCloudComponent', () => {
             await configureTestingModule('GET');
         });
 
-        it('should emit an error with a bad response', () => {
+        it('should emit an error with a bad response', async () => {
             getProcessFiltersSpy.and.returnValue(throwError('wrong request'));
-
-            const appName = 'my-app-1';
-            const change = new SimpleChange(null, appName, true);
-
             let lastValue: any;
             component.error.subscribe((err) => (lastValue = err));
 
-            component.ngOnChanges({ appName: change });
-            fixture.detectChanges();
+            await bindAppName();
+
             expect(lastValue).toBeDefined();
         });
 
@@ -394,8 +354,7 @@ describe('ProcessFiltersCloudComponent', () => {
             const filterSelectedSpy = spyOn(component.filterSelected, 'emit');
             const change = new SimpleChange(null, { name: 'FakeRunningProcesses' }, true);
 
-            fixture.detectChanges();
-            await fixture.whenStable();
+            await bindAppName();
             component.ngOnChanges({ filterParam: change });
 
             expect(component.currentFilter).toEqual(mockProcessFilters[1]);
@@ -406,8 +365,7 @@ describe('ProcessFiltersCloudComponent', () => {
             const filterSelectedSpy = spyOn(component.filterSelected, 'emit');
             const change = new SimpleChange(null, { key: 'completed-processes' }, true);
 
-            fixture.detectChanges();
-            await fixture.whenStable();
+            await bindAppName();
             component.ngOnChanges({ filterParam: change });
 
             expect(component.currentFilter).toEqual(mockProcessFilters[2]);
@@ -418,8 +376,7 @@ describe('ProcessFiltersCloudComponent', () => {
             const filterSelectedSpy = spyOn(component.filterSelected, 'emit');
             const change = new SimpleChange(null, { index: 2 }, true);
 
-            fixture.detectChanges();
-            await fixture.whenStable();
+            await bindAppName();
             component.ngOnChanges({ filterParam: change });
 
             expect(component.currentFilter).toEqual(mockProcessFilters[2]);
@@ -430,8 +387,7 @@ describe('ProcessFiltersCloudComponent', () => {
             const filterSelectedSpy = spyOn(component.filterSelected, 'emit');
             const change = new SimpleChange(null, { id: '12' }, true);
 
-            fixture.detectChanges();
-            await fixture.whenStable();
+            await bindAppName();
             component.ngOnChanges({ filterParam: change });
 
             expect(component.currentFilter).toEqual(mockProcessFilters[2]);
@@ -450,8 +406,7 @@ describe('ProcessFiltersCloudComponent', () => {
             const filterClickedSpy = spyOn(component.filterClicked, 'emit');
             const change = new SimpleChange(null, { id: '10' }, true);
 
-            fixture.detectChanges();
-            await fixture.whenStable();
+            await bindAppName();
             component.ngOnChanges({ filterParam: change });
 
             expect(component.currentFilter).toBe(mockProcessFilters[0]);
@@ -573,21 +528,16 @@ describe('ProcessFiltersCloudComponent', () => {
         });
 
         describe('Highlight Selected Filter', () => {
-            it('should make subscription', () => {
+            it('should make subscription', async () => {
                 component.enableNotifications = true;
-                component.appName = 'mock-app-name';
-                const appNameChange = new SimpleChange(null, 'mock-app-name', true);
-                component.ngOnChanges({ appName: appNameChange });
-                fixture.detectChanges();
+                await bindAppName('mock-app-name');
                 expect(getProcessNotificationSubscriptionSpy).toHaveBeenCalled();
             });
 
-            it('should not make subscription when notifications are disabled', () => {
+            it('should not make subscription when notifications are disabled', async () => {
                 const appConfigService = TestBed.inject(AppConfigService);
                 spyOn(appConfigService, 'get').and.callFake((key: string, defaultValue: any) => (key === 'notifications' ? false : defaultValue));
-                component.appName = 'mock-app-name';
-
-                fixture.detectChanges();
+                await bindAppName('mock-app-name');
 
                 expect(getProcessNotificationSubscriptionSpy).not.toHaveBeenCalled();
             });
