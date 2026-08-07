@@ -77,6 +77,14 @@ export const cardViewArgTypes: ArgTypes = {
             defaultValue: { summary: 'true' }
         }
     },
+    displayCopyToClipboardIcon: {
+        control: 'boolean',
+        description: 'Display copy to clipboard icon',
+        table: {
+            type: { summary: 'boolean' },
+            defaultValue: { summary: 'true' }
+        }
+    },
     useChipsForMultiValueProperty: {
         control: 'boolean',
         description: 'Split text for chips using defined separator',
@@ -104,6 +112,7 @@ export const cardViewDefaultArgs: Record<string, unknown> = {
     displayNoneOption: true,
     displayClearAction: true,
     copyToClipboardAction: true,
+    displayCopyToClipboardIcon: true,
     useChipsForMultiValueProperty: true,
     multiValueSeparator: ', '
 };

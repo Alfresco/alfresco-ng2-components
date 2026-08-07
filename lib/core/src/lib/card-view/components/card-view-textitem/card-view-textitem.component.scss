@@ -59,6 +59,7 @@
     }
 
     .adf-property-value-has-icon-suffix {
+        box-sizing: border-box;
         padding-right: 34px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -68,4 +69,40 @@
 
 .adf-card-textitem-field-container {
     padding-top: 5px;
+
+    .adf-card-textitem-field .adf-copy-to-clipboard-button {
+        border: none;
+        background: none;
+        cursor: pointer;
+        opacity: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .adf-copy-to-clipboard-icon {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            right: 5px;
+            bottom: 6px;
+            font-size: 20px;
+            line-height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    &:hover,
+    &:focus-within {
+        .adf-card-textitem-field .adf-copy-to-clipboard-button {
+            opacity: 1;
+        }
+    }
+
+    @media (hover: none) {
+        .adf-card-textitem-field .adf-copy-to-clipboard-button {
+            opacity: 1;
+        }
+    }
 }

@@ -87,6 +87,22 @@
                     <span class="adf-error-text">{{ 'FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT' | translate }}</span>
                 </mat-error>
             }
+            @if (displayCopyToClipboardIcon && !isEditable) {
+                <button
+                    matSuffix
+                    type="button"
+                    class="adf-copy-to-clipboard-button"
+                    (click)="copyToClipboard(property.displayValue, $event)"
+                    [attr.aria-label]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+                    [attr.data-automation-id]="'card-dateitem-copy-to-clipboard-' + property.key"
+                >
+                    <mat-icon
+                        adf-icon="content_copy"
+                        class="adf-copy-to-clipboard-icon"
+                        aria-hidden="true"
+                    />
+                </button>
+            }
         </mat-form-field>
     } @else {
         <mat-form-field class="adf-property-field adf-dateitem-editable" [floatLabel]="property.default ? 'always' : null">

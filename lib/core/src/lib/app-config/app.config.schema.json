@@ -1471,6 +1471,10 @@
           "description": "Copy property to the clipboard on double click",
           "type": "boolean"
         },
+        "display-copy-to-clipboard-icon": {
+          "description": "Displays the copy to clipboard icon",
+          "type": "boolean"
+        },
         "selectFilterLimit": {
           "description": "Shows a filter if list options exceed a specified number. Default value 5",
           "type": "number"

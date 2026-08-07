@@ -86,6 +86,12 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     @Input()
     displayClearAction = true;
 
+    @Input()
+    copyToClipboardAction = true;
+
+    @Input()
+    displayCopyToClipboardIcon = true;
+
     @ViewChild('datetimePicker')
     public datepicker: MatDatetimepickerComponent<any>;
 
@@ -203,11 +209,12 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         this.property.default = null;
     }
 
-    copyToClipboard(valueToCopy: string | string[]) {
-        if (typeof valueToCopy === 'string') {
+    copyToClipboard(valueToCopy: string | string[], event?: MouseEvent) {
+        if (typeof valueToCopy === 'string' && (this.copyToClipboardAction || this.displayCopyToClipboardIcon)) {
             const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
             this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
         }
+        (event?.currentTarget as HTMLElement)?.blur();
     }
 
     addDateToList(event: MatDatetimepickerInputEvent<Date>) {

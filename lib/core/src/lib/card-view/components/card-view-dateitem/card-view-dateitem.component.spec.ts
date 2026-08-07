@@ -225,6 +225,47 @@ describe('CardViewDateItemComponent', () => {
         expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Jul 10, 2017', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
     });
 
+    it('should copy value to clipboard when clicking the copy icon', () => {
+        const clipboardService = TestBed.inject(ClipboardService);
+        spyOn(clipboardService, 'copyContentToClipboard');
+
+        component.editable = false;
+        component.displayCopyToClipboardIcon = true;
+        fixture.detectChanges();
+
+        testingUtils.clickByDataAutomationId('card-dateitem-copy-to-clipboard-' + component.property.key);
+
+        fixture.detectChanges();
+        expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Jul 10, 2017', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
+    });
+
+    it('should render the copy icon by default', () => {
+        component.editable = false;
+        fixture.detectChanges();
+
+        const copyIcon = testingUtils.getByDataAutomationId('card-dateitem-copy-to-clipboard-' + component.property.key);
+        expect(copyIcon).not.toBeNull();
+    });
+
+    it('should NOT render the copy icon when displayCopyToClipboardIcon is false', () => {
+        component.editable = false;
+        component.displayCopyToClipboardIcon = false;
+        fixture.detectChanges();
+
+        const copyIcon = testingUtils.getByDataAutomationId('card-dateitem-copy-to-clipboard-' + component.property.key);
+        expect(copyIcon).toBeNull();
+    });
+
+    it('should NOT render the copy icon when the item is editable', () => {
+        component.editable = true;
+        component.property.editable = true;
+        component.displayCopyToClipboardIcon = true;
+        fixture.detectChanges();
+
+        const copyIcon = testingUtils.getByDataAutomationId('card-dateitem-copy-to-clipboard-' + component.property.key);
+        expect(copyIcon).toBeNull();
+    });
+
     describe('clear icon', () => {
         it('should render the clear icon in case of displayClearAction:true', () => {
             component.editable = true;

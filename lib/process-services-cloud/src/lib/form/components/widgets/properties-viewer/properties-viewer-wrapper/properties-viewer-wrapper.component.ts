@@ -73,6 +73,10 @@ export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
     @Input()
     copyToClipboardAction: boolean;
 
+    /** Toggles the visibility of the copy to clipboard icon */
+    @Input()
+    displayCopyToClipboardIcon: boolean;
+
     /** Toggles chips for multivalued properties. */
     @Input()
     useChipsForMultiValueProperty: boolean;

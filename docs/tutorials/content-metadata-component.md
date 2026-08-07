@@ -109,9 +109,10 @@ Now that the `my-preset` configuration is defined, let's use it in a view of the
 
 ### Properties
 
-| Name     | Type      | Default value | Description                                                                  |
-|----------|-----------|---------------|------------------------------------------------------------------------------|
-| readOnly | `boolean` | false         | (optional) This flag sets the metadata in read only mode preventing changes. |
+| Name                       | Type      | Default value | Description                                                                  |
+|----------------------------|-----------|---------------|------------------------------------------------------------------------------|
+| readOnly                   | `boolean` | false         | (optional) This flag sets the metadata in read only mode preventing changes. |
+| displayCopyToClipboardIcon | `boolean` | true          | Toggles whether or not to display the copy to clipboard icon.                |
 
 ### Viewing the result
 

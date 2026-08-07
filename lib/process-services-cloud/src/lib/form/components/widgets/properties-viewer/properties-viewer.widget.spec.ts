@@ -16,8 +16,9 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldModel, FormModel, NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, NoopTranslateModule, NoopAuthModule, UnitTestingUtils } from '@alfresco/adf-core';
 import { PropertiesViewerWidgetComponent } from './properties-viewer.widget';
+import { PropertiesViewerWrapperComponent } from './properties-viewer-wrapper/properties-viewer-wrapper.component';
 import { fakeNodeWithProperties } from '../../../mocks/attach-file-cloud-widget.mock';
 import { NodesApiService, BasicPropertiesService } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
@@ -27,6 +28,7 @@ describe('PropertiesViewerWidgetComponent', () => {
     let fixture: ComponentFixture<PropertiesViewerWidgetComponent>;
     let element: HTMLElement;
     let nodesApiService: NodesApiService;
+    let testingUtils: UnitTestingUtils;
 
     const fakePngAnswer: any = {
         id: '1933',
@@ -52,6 +54,7 @@ describe('PropertiesViewerWidgetComponent', () => {
         nodesApiService = TestBed.inject(NodesApiService);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
 
         widget.field = new FormFieldModel(new FormModel());
         spyOn(nodesApiService, 'getNode').and.returnValue(of(fakeNodeWithProperties));
@@ -95,6 +98,31 @@ describe('PropertiesViewerWidgetComponent', () => {
         const propertiesViewer = element.querySelector('adf-properties-viewer-wrapper');
 
         expect(propertiesViewer).not.toBeNull();
+    });
+
+    it('should default displayCopyToClipboardIcon to true when not set in options', async () => {
+        widget.field.value = '1234';
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const wrapper = testingUtils.getByDirective(PropertiesViewerWrapperComponent).componentInstance;
+
+        expect(wrapper.displayCopyToClipboardIcon).toBeTrue();
+    });
+
+    it('should pass displayCopyToClipboardIcon from options to the properties viewer wrapper', async () => {
+        widget.field = new FormFieldModel(new FormModel(), {
+            value: '1234',
+            params: { propertiesViewerOptions: { displayCopyToClipboardIcon: false } }
+        });
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const wrapper = testingUtils.getByDirective(PropertiesViewerWrapperComponent).componentInstance;
+
+        expect(wrapper.displayCopyToClipboardIcon).toBeFalse();
     });
 
     it('should emit the node when node content is loaded', async () => {
