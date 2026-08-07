@@ -7,7 +7,7 @@ minimumReleaseAgeStrict: true
 
 overrides:
   # Security fixes
-  fast-uri: 3.1.4
+  fast-uri: 3.1.5
   "js-yaml@4.2.0": "4.3.0"
   "brace-expansion@5.0.6": "5.0.8"
   "brace-expansion@<1.1.17": "1.1.17"
@@ -23,7 +23,7 @@ overrides:
   postcss: '>=8.5.25'
   webpack-dev-server: '>=6.0.0'
   uuid: '>=11.1.1'
-  undici: 8.7.0
+  undici: 8.9.0
 
 allowBuilds:
   '@parcel/watcher': true
