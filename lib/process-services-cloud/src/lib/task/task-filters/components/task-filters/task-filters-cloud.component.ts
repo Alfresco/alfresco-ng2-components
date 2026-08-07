@@ -177,7 +177,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             this.taskFilterCloudService
                 .getTaskNotificationSubscription(this.appName)
                 .pipe(
-                    map((events) => events.filter((event) => !event.entity.assignee || event.entity.assignee === this.currentUser)),
+                    map((events) => (events ?? []).filter((event) => !event.entity?.assignee || event.entity.assignee === this.currentUser)),
                     debounceTime(this.notificationDebounceTime),
                     takeUntilDestroyed(this.destroyRef)
                 )

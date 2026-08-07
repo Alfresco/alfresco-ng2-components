@@ -19,7 +19,7 @@ import { AppConfigService, NoopAuthModule } from '@alfresco/adf-core';
 import { Component, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, flush, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { first, of, Subject, throwError } from 'rxjs';
+import { first, of, Subject, take, throwError } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
 import { defaultTaskFiltersMock, fakeGlobalFilter, taskNotifications } from '../../mock/task-filters-cloud.mock';
@@ -369,6 +369,7 @@ describe('TaskFiltersCloudComponent', () => {
                 emittedEvents = undefined;
                 notifications$ = new Subject<TaskCloudEngineEvent[]>();
                 getTaskNotificationSubscriptionSpy.and.returnValue(notifications$.asObservable());
+                component.filterCounterUpdated.pipe(take(1)).subscribe((events) => (emittedEvents = events));
             });
 
             it('should read the current user on init before subscribing to the notifications', () => {
