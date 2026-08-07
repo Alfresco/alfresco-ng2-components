@@ -29,7 +29,13 @@ import { Observable } from 'rxjs';
 import { filter, map, withLatestFrom } from 'rxjs/operators';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Directionality } from '@angular/cdk/bidi';
-import { SHELL_APP_SERVICE, SHELL_NAVBAR_MAX_WIDTH, SHELL_NAVBAR_MIN_WIDTH, ShellAppService } from '../../services/shell-app.service';
+import {
+    SHELL_APP_SERVICE,
+    SHELL_NAVBAR_MAX_WIDTH,
+    SHELL_NAVBAR_MIN_WIDTH,
+    SHELL_NAVBAR_SMALL_SCREEN_BREAKPOINT,
+    ShellAppService
+} from '../../services/shell-app.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -56,6 +62,8 @@ export class ShellLayoutComponent implements OnInit {
     @ViewChild('layout', { static: true })
     layout: SidenavLayoutComponent;
 
+    readonly smallScreenBreakpoint = inject(SHELL_NAVBAR_SMALL_SCREEN_BREAKPOINT, { optional: true }) || 600;
+
     isSmallScreen$: Observable<boolean>;
 
     expandedSidenav: boolean;
@@ -76,7 +84,7 @@ export class ShellLayoutComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.isSmallScreen$ = this.breakpointObserver.observe(['(max-width: 600px)']).pipe(map((result) => result.matches));
+        this.isSmallScreen$ = this.breakpointObserver.observe([`(max-width: ${this.smallScreenBreakpoint}px)`]).pipe(map((result) => result.matches));
 
         this.hideSidenav = this.shellService.hideSidenavConditions.some((el) => this.router.routerState.snapshot.url.includes(el));
         this.minimizeSidenav = this.shellService.minimizeSidenavConditions.some((el) => this.router.routerState.snapshot.url.includes(el));

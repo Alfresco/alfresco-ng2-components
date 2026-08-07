@@ -36,3 +36,4 @@ export const SHELL_APP_SERVICE = new InjectionToken<ShellAppService>('SHELL_APP_
 export const SHELL_AUTH_TOKEN = new InjectionToken<CanActivateFn | CanActivateChildFn>('SHELL_AUTH_TOKEN');
 export const SHELL_NAVBAR_MIN_WIDTH = new InjectionToken<number>('SHELL_NAVBAR_MIN_WIDTH');
 export const SHELL_NAVBAR_MAX_WIDTH = new InjectionToken<number>('SHELL_NAVBAR_MAX_WIDTH');
+export const SHELL_NAVBAR_SMALL_SCREEN_BREAKPOINT = new InjectionToken<number>('SHELL_NAVBAR_SMALL_SCREEN_BREAKPOINT');

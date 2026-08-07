@@ -20,7 +20,7 @@ import { AppConfigService } from '@alfresco/adf-core';
 import { ShellLayoutComponent } from './shell.component';
 import { provideRouter, RouterModule } from '@angular/router';
 import { of } from 'rxjs';
-import { ShellAppService, SHELL_APP_SERVICE } from '../../services/shell-app.service';
+import { ShellAppService, SHELL_APP_SERVICE, SHELL_NAVBAR_SMALL_SCREEN_BREAKPOINT } from '../../services/shell-app.service';
 import { RouterTestingHarness } from '@angular/router/testing';
 
 describe('AppLayoutComponent', () => {
@@ -30,7 +30,15 @@ describe('AppLayoutComponent', () => {
     let shellAppService: ShellAppService;
     let routerHarness: RouterTestingHarness;
 
-    beforeEach(async () => {
+    const initializeShellComponent = (breakpoint?: number): void => {
+        if (breakpoint) {
+            TestBed.overrideProvider(SHELL_NAVBAR_SMALL_SCREEN_BREAKPOINT, { useValue: breakpoint });
+        }
+        fixture = TestBed.createComponent(ShellLayoutComponent);
+        component = fixture.componentInstance;
+    };
+
+    beforeEach(() => {
         const shellService: ShellAppService = {
             pageHeading$: of('Title'),
             hideSidenavConditions: [],
@@ -51,20 +59,21 @@ describe('AppLayoutComponent', () => {
                 provideRouter([{ path: 'minimize', component: ShellLayoutComponent }])
             ]
         });
-
-        fixture = TestBed.createComponent(ShellLayoutComponent);
-        component = fixture.componentInstance;
-        appConfig = TestBed.inject(AppConfigService);
-        shellAppService = TestBed.inject(SHELL_APP_SERVICE);
-        routerHarness = await RouterTestingHarness.create();
-    });
-
-    beforeEach(() => {
-        appConfig.config.languages = [];
-        appConfig.config.locale = 'en';
     });
 
     describe('sidenav state', () => {
+        beforeEach(async () => {
+            initializeShellComponent();
+            appConfig = TestBed.inject(AppConfigService);
+            shellAppService = TestBed.inject(SHELL_APP_SERVICE);
+            routerHarness = await RouterTestingHarness.create();
+        });
+
+        beforeEach(() => {
+            appConfig.config.languages = [];
+            appConfig.config.locale = 'en';
+        });
+
         it('should get state from configuration', () => {
             appConfig.config.sideNav = {
                 expandedSidenav: false,
@@ -119,75 +128,92 @@ describe('AppLayoutComponent', () => {
 
             expect(component.expandedSidenav).toBe(false);
         });
+
+        it('should close menu on mobile screen size', () => {
+            component.minimizeSidenav = false;
+            component.layout.container = {
+                isMobileScreenSize: true,
+                toggleMenu: () => {}
+            };
+
+            spyOn(component.layout.container, 'toggleMenu');
+            fixture.detectChanges();
+
+            component.hideMenu({ preventDefault: () => {} } as any);
+
+            expect(component.layout.container.toggleMenu).toHaveBeenCalled();
+        });
+
+        it('should close menu on mobile screen size also when minimizeSidenav true', () => {
+            fixture.detectChanges();
+            component.minimizeSidenav = true;
+            component.layout.container = {
+                isMobileScreenSize: true,
+                toggleMenu: () => {}
+            };
+
+            spyOn(component.layout.container, 'toggleMenu');
+            fixture.detectChanges();
+
+            component.hideMenu({ preventDefault: () => {} } as any);
+
+            expect(component.layout.container.toggleMenu).toHaveBeenCalled();
+        });
+
+        it('should minimize menu when navigates to minimize url', async () => {
+            shellAppService.minimizeSidenavConditions = ['/minimize'];
+            component.layout.container = {
+                isMobileScreenSize: false,
+                isMenuMinimized: false,
+                toggleMenu: () => {}
+            };
+
+            spyOn(component.layout.container, 'toggleMenu');
+
+            fixture.detectChanges();
+            await routerHarness.navigateByUrl('/minimize');
+            fixture.detectChanges();
+
+            expect(component.minimizeSidenav).toBeTrue();
+            expect(component.layout.isMenuMinimized).toBeTrue();
+            expect(component.layout.container.toggleMenu).toHaveBeenCalled();
+        });
+
+        it('should not minimize menu again when previous and current route contain minimize url', async () => {
+            shellAppService.minimizeSidenavConditions = ['/minimize'];
+            component.layout.container = {
+                isMobileScreenSize: false,
+                isMenuMinimized: false,
+                toggleMenu: () => {}
+            };
+
+            fixture.detectChanges();
+            await routerHarness.navigateByUrl('/minimize?query=123');
+            fixture.detectChanges();
+
+            expect(component.minimizeSidenav).toBeTrue();
+
+            await routerHarness.navigateByUrl('/minimize?query=456');
+            fixture.detectChanges();
+
+            expect(component.minimizeSidenav).toBeFalse();
+        });
     });
 
-    it('should close menu on mobile screen size', () => {
-        component.minimizeSidenav = false;
-        component.layout.container = {
-            isMobileScreenSize: true,
-            toggleMenu: () => {}
-        };
+    describe('SidenavLayout', () => {
+        it('should have assigned correct stepOver by default', () => {
+            initializeShellComponent();
 
-        spyOn(component.layout.container, 'toggleMenu');
-        fixture.detectChanges();
+            fixture.detectChanges();
+            expect(component.layout.stepOver).toBe(600);
+        });
 
-        component.hideMenu({ preventDefault: () => {} } as any);
+        it('should have assigned correct stepOver based on configured value', () => {
+            const breakpoint = 800;
+            initializeShellComponent(breakpoint);
 
-        expect(component.layout.container.toggleMenu).toHaveBeenCalled();
-    });
-
-    it('should close menu on mobile screen size also when minimizeSidenav true', () => {
-        fixture.detectChanges();
-        component.minimizeSidenav = true;
-        component.layout.container = {
-            isMobileScreenSize: true,
-            toggleMenu: () => {}
-        };
-
-        spyOn(component.layout.container, 'toggleMenu');
-        fixture.detectChanges();
-
-        component.hideMenu({ preventDefault: () => {} } as any);
-
-        expect(component.layout.container.toggleMenu).toHaveBeenCalled();
-    });
-
-    it('should minimize menu when navigates to minimize url', async () => {
-        shellAppService.minimizeSidenavConditions = ['/minimize'];
-        component.layout.container = {
-            isMobileScreenSize: false,
-            isMenuMinimized: false,
-            toggleMenu: () => {}
-        };
-
-        spyOn(component.layout.container, 'toggleMenu');
-
-        fixture.detectChanges();
-        await routerHarness.navigateByUrl('/minimize');
-        fixture.detectChanges();
-
-        expect(component.minimizeSidenav).toBeTrue();
-        expect(component.layout.isMenuMinimized).toBeTrue();
-        expect(component.layout.container.toggleMenu).toHaveBeenCalled();
-    });
-
-    it('should not minimize menu again when previous and current route contain minimize url', async () => {
-        shellAppService.minimizeSidenavConditions = ['/minimize'];
-        component.layout.container = {
-            isMobileScreenSize: false,
-            isMenuMinimized: false,
-            toggleMenu: () => {}
-        };
-
-        fixture.detectChanges();
-        await routerHarness.navigateByUrl('/minimize?query=123');
-        fixture.detectChanges();
-
-        expect(component.minimizeSidenav).toBeTrue();
-
-        await routerHarness.navigateByUrl('/minimize?query=456');
-        fixture.detectChanges();
-
-        expect(component.minimizeSidenav).toBeFalse();
+            fixture.detectChanges();
+            expect(component.layout.stepOver).toBe(breakpoint);
+        });
     });
 });
