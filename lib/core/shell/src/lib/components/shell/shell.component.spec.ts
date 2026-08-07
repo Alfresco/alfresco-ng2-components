@@ -31,7 +31,7 @@ describe('AppLayoutComponent', () => {
     let routerHarness: RouterTestingHarness;
 
     const initializeShellComponent = (breakpoint?: number): void => {
-        if (breakpoint) {
+        if (breakpoint !== undefined) {
             TestBed.overrideProvider(SHELL_NAVBAR_SMALL_SCREEN_BREAKPOINT, { useValue: breakpoint });
         }
         fixture = TestBed.createComponent(ShellLayoutComponent);

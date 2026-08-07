@@ -62,7 +62,7 @@ export class ShellLayoutComponent implements OnInit {
     @ViewChild('layout', { static: true })
     layout: SidenavLayoutComponent;
 
-    readonly smallScreenBreakpoint = inject(SHELL_NAVBAR_SMALL_SCREEN_BREAKPOINT, { optional: true }) || 600;
+    readonly smallScreenBreakpoint = inject(SHELL_NAVBAR_SMALL_SCREEN_BREAKPOINT, { optional: true }) ?? 600;
 
     isSmallScreen$: Observable<boolean>;
 
