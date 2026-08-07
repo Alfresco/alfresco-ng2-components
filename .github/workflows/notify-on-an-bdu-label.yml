@@ -44,7 +44,7 @@ jobs:
   notify-bdu:
     name: Notify Teams when A/N BDU label is added
     needs: check-label-timing
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
     timeout-minutes: 5
     if: >-
       github.event.action == 'labeled' &&
