@@ -64,18 +64,18 @@ npm install
 
 These changes accumulate across the alpha chain but affect every consumer of 7.0.0:
 
-| Area | 6.9.0 | 7.0.0 |
-| ---- | ----- | ----- |
-| Angular | 14.1.3 | **17.1.3** |
-| Angular Material / CDK | 14.1.2 | **17.1.2** (MDC) |
-| rxjs | 6.6.6 | **7.8.1** |
-| zone.js | 0.11.4 | **0.14.8** |
-| TypeScript | 4.7.4 | **5.3.3** |
-| Nx | `@nrwl/*` 14 | **`@nx/*` 20** |
-| `angular-oauth2-oidc` | 13 | **17** |
-| `@alfresco/js-api` | 7.5 | **>= 8.0.0** |
-| Test runner | Karma/Jasmine | **Jest** |
-| Node.js (`engines.node`) | >= 6.0.0 | **>= 18.0.0** |
+| Area                     | 6.9.0         | 7.0.0            |
+| ------------------------ | ------------- | ---------------- |
+| Angular                  | 14.1.3        | **17.1.3**       |
+| Angular Material / CDK   | 14.1.2        | **17.1.2** (MDC) |
+| rxjs                     | 6.6.6         | **7.8.1**        |
+| zone.js                  | 0.11.4        | **0.14.8**       |
+| TypeScript               | 4.7.4         | **5.3.3**        |
+| Nx                       | `@nrwl/*` 14  | **`@nx/*` 20**   |
+| `angular-oauth2-oidc`    | 13            | **17**           |
+| `@alfresco/js-api`       | 7.5           | **>= 8.0.0**     |
+| Test runner              | Karma/Jasmine | **Jest**         |
+| Node.js (`engines.node`) | >= 6.0.0      | **>= 18.0.0**    |
 
 Key consumer implications:
 

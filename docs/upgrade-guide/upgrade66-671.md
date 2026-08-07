@@ -34,7 +34,6 @@ After the upgrade, check the other sections below to see if there are any change
 - [New components and features](#new-components-and-features)
 - [Behavioural changes](#behavioural-changes)
 - [Theme changes](#theme-changes)
-- [Notable internal changes](#notable-internal-changes)
 
 ## Library updates
 
@@ -83,9 +82,9 @@ against the new `adf-*` host classes. Concrete removals to be aware of:
 The `app.config.json` keys that enable/disable the tags and categories features (introduced in 6.6.0) were
 **renamed**:
 
-| Before (6.6.0) | After (6.7.x) |
-| -------------- | ------------- |
-| `plugins.tags` | `plugins.tagsEnabled` |
+| Before (6.6.0)       | After (6.7.x)               |
+| -------------------- | --------------------------- |
+| `plugins.tags`       | `plugins.tagsEnabled`       |
 | `plugins.categories` | `plugins.categoriesEnabled` |
 
 Update your `app.config.json`, or the flags silently fall back to their `true` default. The methods
@@ -206,15 +205,15 @@ The `all` state is now handled by `findTasksByState` (it applies to both open an
 
 ## Behavioural changes
 
-| Area | Change |
-| ---- | ------ |
-| Card view dates | `date`-type card-view values are now displayed timezone-agnostically (stored at UTC midnight), fixing off-by-one-day display; new `DateFnsUtils.forceLocal` / `forceUtc` helpers. Custom `d:date` aspect strings no longer crash the app. |
-| Card view text item | Non-editable text items render as `readonly` (not `disabled`) with a corrected clickable area; `update()` is a no-op when not editable. |
-| Aspect list | The aspect dialog no longer overwrites node aspects it doesn't display; hidden aspects are preserved and included in `valueChanged`. |
-| Document list | Size / Modified-by columns re-render correctly after editing properties; nodes are deleted sequentially; declared records hide the "Edit Offline" / "Upload New Version" actions. |
-| Search | The search filter panel no longer shows duplicated Clear/Apply buttons for the date-time widget; tab content re-displays correctly after switching tabs. |
-| Tags | Creating a tag validates against illegal characters; a to-be-created tag can be removed without clearing the "already exists" error. |
-| Forms | Required people/groups widgets keep the submit button disabled while empty; integer "greater than" visibility conditions work. |
+| Area                | Change                                                                                                                                                                                                                                    |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Card view dates     | `date`-type card-view values are now displayed timezone-agnostically (stored at UTC midnight), fixing off-by-one-day display; new `DateFnsUtils.forceLocal` / `forceUtc` helpers. Custom `d:date` aspect strings no longer crash the app. |
+| Card view text item | Non-editable text items render as `readonly` (not `disabled`) with a corrected clickable area; `update()` is a no-op when not editable.                                                                                                   |
+| Aspect list         | The aspect dialog no longer overwrites node aspects it doesn't display; hidden aspects are preserved and included in `valueChanged`.                                                                                                      |
+| Document list       | Size / Modified-by columns re-render correctly after editing properties; nodes are deleted sequentially; declared records hide the "Edit Offline" / "Upload New Version" actions.                                                         |
+| Search              | The search filter panel no longer shows duplicated Clear/Apply buttons for the date-time widget; tab content re-displays correctly after switching tabs.                                                                                  |
+| Tags                | Creating a tag validates against illegal characters; a to-be-created tag can be removed without clearing the "already exists" error.                                                                                                      |
+| Forms               | Required people/groups widgets keep the submit button disabled while empty; integer "greater than" visibility conditions work.                                                                                                            |
 
 ## Theme changes
 

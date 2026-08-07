@@ -28,7 +28,6 @@ After the upgrade, check the other sections below to see if there are any change
   - [Other breaking changes](#other-breaking-changes)
 - [New components and features](#new-components-and-features)
 - [Behavioural changes](#behavioural-changes)
-- [Notable internal changes](#notable-internal-changes)
 
 ## Library updates
 
@@ -60,20 +59,20 @@ npm install
 
 The following long-deprecated items were **removed**. There is no drop-in replacement — remove any usage:
 
-| Removed | Kind | Selector | Package |
-| ------- | ---- | -------- | ------- |
-| `LikeComponent` | Component | `adf-like` | adf-content-services |
-| `RatingComponent` | Component | `adf-rating` | adf-content-services |
-| `RatingService`, `RatingServiceInterface`, `SocialModule` | Service / Interface / Module | — | adf-content-services |
-| `WebscriptComponent` | Component | `adf-webscript-get` | adf-content-services |
-| `WebScriptModule` | Module | — | adf-content-services |
-| `FolderCreateDirective` | Directive | `[adf-create-folder]` | adf-content-services |
-| `FolderEditDirective` | Directive | `[adf-edit-folder]` | adf-content-services |
-| `FolderDirectiveModule` | Module | — | adf-content-services |
-| `CardViewContentProxyDirective` | Directive | `[adf-card-view-content-proxy]` | adf-core |
-| `ProcessNamePipe` | Pipe | — | adf-process-services |
-| `ProcessServicesPipeModule` | Module | — | adf-process-services |
-| `SecurityControlsServiceModule` | Module (empty) | — | adf-content-services |
+| Removed                                                   | Kind                         | Selector                        | Package              |
+| --------------------------------------------------------- | ---------------------------- | ------------------------------- | -------------------- |
+| `LikeComponent`                                           | Component                    | `adf-like`                      | adf-content-services |
+| `RatingComponent`                                         | Component                    | `adf-rating`                    | adf-content-services |
+| `RatingService`, `RatingServiceInterface`, `SocialModule` | Service / Interface / Module | —                               | adf-content-services |
+| `WebscriptComponent`                                      | Component                    | `adf-webscript-get`             | adf-content-services |
+| `WebScriptModule`                                         | Module                       | —                               | adf-content-services |
+| `FolderCreateDirective`                                   | Directive                    | `[adf-create-folder]`           | adf-content-services |
+| `FolderEditDirective`                                     | Directive                    | `[adf-edit-folder]`             | adf-content-services |
+| `FolderDirectiveModule`                                   | Module                       | —                               | adf-content-services |
+| `CardViewContentProxyDirective`                           | Directive                    | `[adf-card-view-content-proxy]` | adf-core             |
+| `ProcessNamePipe`                                         | Pipe                         | —                               | adf-process-services |
+| `ProcessServicesPipeModule`                               | Module                       | —                               | adf-process-services |
+| `SecurityControlsServiceModule`                           | Module (empty)               | —                               | adf-content-services |
 
 The folder directives were moved into the demo-shell only — if you used `[adf-create-folder]` /
 `[adf-edit-folder]`, port an equivalent into your own app.
@@ -177,10 +176,10 @@ manually instantiates these classes or subclasses them and calls `super(...)`:
 
 ## Behavioural changes
 
-| Area | Change |
-| ---- | ------ |
-| DataTable | Multiselect row selection via checkbox now selects the correct row; column resizing works with multiselect enabled; small-window/mobile layouts no longer leave empty space. |
-| Forms | Cloud form variables resolve static values from the component `data` input in start-event forms; the date widget handles negative range values; the rich-text display widget no longer emits a stray comma (content is now sanitised). |
-| Folder dialog | The Create/Update button disables on first click to prevent duplicate folder-creation requests. |
-| Version list | Layout fixes ensure action buttons (restore/download) remain visible and are not clipped off-screen. |
-| Aspects dialog | The selected-aspects counter now updates correctly on select/deselect/reset/clear, and dialog buttons stay visible. |
+| Area           | Change                                                                                                                                                                                                                                 |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| DataTable      | Multiselect row selection via checkbox now selects the correct row; column resizing works with multiselect enabled; small-window/mobile layouts no longer leave empty space.                                                           |
+| Forms          | Cloud form variables resolve static values from the component `data` input in start-event forms; the date widget handles negative range values; the rich-text display widget no longer emits a stray comma (content is now sanitised). |
+| Folder dialog  | The Create/Update button disables on first click to prevent duplicate folder-creation requests.                                                                                                                                        |
+| Version list   | Layout fixes ensure action buttons (restore/download) remain visible and are not clipped off-screen.                                                                                                                                   |
+| Aspects dialog | The selected-aspects counter now updates correctly on select/deselect/reset/clear, and dialog buttons stay visible.                                                                                                                    |

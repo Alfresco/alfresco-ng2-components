@@ -85,10 +85,10 @@ npm install @angular/flex-layout@^14.0.0-beta.40
 
 `@alfresco/adf-core` bumped its `@mat-datetimepicker` peer dependencies by a major version:
 
-| Peer dependency              | Before      | After       |
-| ---------------------------- | ----------- | ----------- |
-| `@mat-datetimepicker/core`   | `^9.0.68`   | `^10.1.1`   |
-| `@mat-datetimepicker/moment` | `^9.0.68`   | `^10.1.1`   |
+| Peer dependency              | Before    | After     |
+| ---------------------------- | --------- | --------- |
+| `@mat-datetimepicker/core`   | `^9.0.68` | `^10.1.1` |
+| `@mat-datetimepicker/moment` | `^9.0.68` | `^10.1.1` |
 
 If your application pins these packages, update them to the `^10.1.1` range so your installed version matches
 the one ADF is built against.
@@ -102,11 +102,11 @@ applies to `@alfresco/js-api` and to the inter-library ADF peers (for example `@
 
 ## Third-party libraries
 
-| Name                          | Version   | Notes                                                                                                          |
-| ----------------------------- | --------- | -------------------------------------------------------------------------------------------------------------- |
-| `@angular/flex-layout`        | removed   | No longer a dependency of any ADF library (see [Angular Flex-Layout removed](#angular-flex-layout-removed)).   |
-| `@mat-datetimepicker/core`    | `^10.1.1` | Major bump from `^9.0.68` (peer of `@alfresco/adf-core`).                                                       |
-| `@mat-datetimepicker/moment`  | `^10.1.1` | Major bump from `^9.0.68` (peer of `@alfresco/adf-core`).                                                       |
+| Name                         | Version   | Notes                                                                                                        |
+| ---------------------------- | --------- | ------------------------------------------------------------------------------------------------------------ |
+| `@angular/flex-layout`       | removed   | No longer a dependency of any ADF library (see [Angular Flex-Layout removed](#angular-flex-layout-removed)). |
+| `@mat-datetimepicker/core`   | `^10.1.1` | Major bump from `^9.0.68` (peer of `@alfresco/adf-core`).                                                    |
+| `@mat-datetimepicker/moment` | `^10.1.1` | Major bump from `^9.0.68` (peer of `@alfresco/adf-core`).                                                    |
 
 ## New components and features
 
@@ -130,18 +130,18 @@ wired into the module, so it could not be used. It renders read-only rich-text c
 
 ## Behavioural changes
 
-| Area | Change |
-| ---- | ------ |
-| [Tree component](../content-services/components/tree.component.md) | Pagination is now emitted only when the top-level entries change, and an expand/collapse regression was fixed. |
-| Form save button (cloud) | On clicking the system **save** outcome the save button is now disabled, and it is re-enabled when a form field value changes. |
-| Task / process lists (cloud) | Changing only column visibility no longer triggers a reload of the task or process list. |
-| Task lists (cloud) | The loading spinner no longer disappears before the list has finished loading. |
-| Task details (cloud) | The loading spinner alignment after opening task details was corrected. |
+| Area                                                                     | Change                                                                                                                                                                            |
+| ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Tree component](../content-services/components/tree.component.md)       | Pagination is now emitted only when the top-level entries change, and an expand/collapse regression was fixed.                                                                    |
+| Form save button (cloud)                                                 | On clicking the system **save** outcome the save button is now disabled, and it is re-enabled when a form field value changes.                                                    |
+| Task / process lists (cloud)                                             | Changing only column visibility no longer triggers a reload of the task or process list.                                                                                          |
+| Task lists (cloud)                                                       | The loading spinner no longer disappears before the list has finished loading.                                                                                                    |
+| Task details (cloud)                                                     | The loading spinner alignment after opening task details was corrected.                                                                                                           |
 | [Tags creator](../content-services/components/tags-creator.component.md) | The "required field" message is no longer shown after discarding changes; the first tag position and an extra scrollbar (shown while the spinner is visible) were also corrected. |
-| [Image viewer](../core/components/viewer.component.md) | Navigation between images was fixed, and image display in full-screen mode was corrected. |
-| User roles fetch | `UserAccessService` now appends an `appkey` query parameter (read from the `application.key` app-config value) when fetching identity roles, if that value is configured. |
-| Search facets | Facet, filter and widget chips had markup/icon adjustments in the facets section. |
-| [Card view select item](../core/components/card-view.component.md) | The select input's position in the edit template was changed. |
-| Start process / task outcomes | Outcome button positioning in the start-process form and the attach-file button style were corrected. |
-| Group cloud | The identity group validation error message was replaced with a shorter version. |
-| Theme | A task-filter color was changed to use the accent-contrast color. |
+| [Image viewer](../core/components/viewer.component.md)                   | Navigation between images was fixed, and image display in full-screen mode was corrected.                                                                                         |
+| User roles fetch                                                         | `UserAccessService` now appends an `appkey` query parameter (read from the `application.key` app-config value) when fetching identity roles, if that value is configured.         |
+| Search facets                                                            | Facet, filter and widget chips had markup/icon adjustments in the facets section.                                                                                                 |
+| [Card view select item](../core/components/card-view.component.md)       | The select input's position in the edit template was changed.                                                                                                                     |
+| Start process / task outcomes                                            | Outcome button positioning in the start-process form and the attach-file button style were corrected.                                                                             |
+| Group cloud                                                              | The identity group validation error message was replaced with a shorter version.                                                                                                  |
+| Theme                                                                    | A task-filter color was changed to use the accent-contrast color.                                                                                                                 |

@@ -51,16 +51,16 @@ Angular, Material, TypeScript, zone.js and Nx are unchanged from 8.0.0 (Angular 
 
 The following public items were removed. Migrate away from them:
 
-| Removed | Kind | Package | Migration |
-| ------- | ---- | ------- | --------- |
-| `RichTextEditorComponent` | Component (+ its module and all `@editorjs/*` deps) | `@alfresco/adf-process-services-cloud` | The rich-text **editor** moved to the HxP monorepo and no longer ships in ADF. (The read-only `DisplayRichTextWidgetComponent` remains.) |
-| `AppConfigModule` | NgModule | `@alfresco/adf-core` | Use `provideAppConfig()`. |
-| `AuthRoutingModule`, `loginFactory` | Module / factory | `@alfresco/adf-core` | Use `provideCoreAuth()`; routes are exposed as the `AUTH_ROUTES` constant. |
-| `BaseAuthenticationService.isOauthConfiguration()` | Method | `@alfresco/adf-core` | Removed (dead code). |
-| `DebugAppConfigService` | Service | `@alfresco/adf-core` | Removed. |
-| `DocumentActionModel`, `FolderActionModel` | Classes | `@alfresco/adf-content-services` | Removed from `document-list` models. |
-| `EXTENSION_DIRECTIVES` (from `extensions.module`), `setupExtensions` factory | Const / factory | `@alfresco/adf-extensions` | Use `provideAppExtensions()`. |
-| `ScreenRenderingService` (old deep path `lib/services/`) | Service (relocated) | `@alfresco/adf-process-services-cloud` | Moved under `screen/services`; still exported from the package root. Use `provideScreen()` to register custom screens. |
+| Removed                                                                      | Kind                                                | Package                                | Migration                                                                                                                                |
+| ---------------------------------------------------------------------------- | --------------------------------------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `RichTextEditorComponent`                                                    | Component (+ its module and all `@editorjs/*` deps) | `@alfresco/adf-process-services-cloud` | The rich-text **editor** moved to the HxP monorepo and no longer ships in ADF. (The read-only `DisplayRichTextWidgetComponent` remains.) |
+| `AppConfigModule`                                                            | NgModule                                            | `@alfresco/adf-core`                   | Use `provideAppConfig()`.                                                                                                                |
+| `AuthRoutingModule`, `loginFactory`                                          | Module / factory                                    | `@alfresco/adf-core`                   | Use `provideCoreAuth()`; routes are exposed as the `AUTH_ROUTES` constant.                                                               |
+| `BaseAuthenticationService.isOauthConfiguration()`                           | Method                                              | `@alfresco/adf-core`                   | Removed (dead code).                                                                                                                     |
+| `DebugAppConfigService`                                                      | Service                                             | `@alfresco/adf-core`                   | Removed.                                                                                                                                 |
+| `DocumentActionModel`, `FolderActionModel`                                   | Classes                                             | `@alfresco/adf-content-services`       | Removed from `document-list` models.                                                                                                     |
+| `EXTENSION_DIRECTIVES` (from `extensions.module`), `setupExtensions` factory | Const / factory                                     | `@alfresco/adf-extensions`             | Use `provideAppExtensions()`.                                                                                                            |
+| `ScreenRenderingService` (old deep path `lib/services/`)                     | Service (relocated)                                 | `@alfresco/adf-process-services-cloud` | Moved under `screen/services`; still exported from the package root. Use `provideScreen()` to register custom screens.                   |
 
 ### Viewer title API
 
@@ -82,11 +82,11 @@ block), and its truncation helper was **renamed**:
 The search-text input's translation keys were corrected to the `CORE.` namespace. If you provide **custom
 translations** for these keys, move them under `CORE.SEARCH.*`:
 
-| Before | After |
-| ------ | ----- |
-| `SEARCH.BUTTON.TOOLTIP` | `CORE.SEARCH.BUTTON.TOOLTIP` |
-| `SEARCH.BUTTON.ARIA-LABEL` | `CORE.SEARCH.BUTTON.ARIA-LABEL` |
-| `SEARCH.INPUT.ARIA-LABEL` | `CORE.SEARCH.INPUT.ARIA-LABEL` |
+| Before                        | After                              |
+| ----------------------------- | ---------------------------------- |
+| `SEARCH.BUTTON.TOOLTIP`       | `CORE.SEARCH.BUTTON.TOOLTIP`       |
+| `SEARCH.BUTTON.ARIA-LABEL`    | `CORE.SEARCH.BUTTON.ARIA-LABEL`    |
+| `SEARCH.INPUT.ARIA-LABEL`     | `CORE.SEARCH.INPUT.ARIA-LABEL`     |
 | `SEARCH.FILTER.BUTTONS.CLOSE` | `CORE.SEARCH.FILTER.BUTTONS.CLOSE` |
 
 ## Deprecations
@@ -127,14 +127,14 @@ These still work but should be migrated to the new standalone provider APIs:
 
 ## Behavioural changes
 
-| Area | Change |
-| ---- | ------ |
-| Forms — dropdown | A form-rule-driven value change now syncs the reactive dropdown control (previously not reflected). |
-| Forms — masked text | `InputMaskDirective` now marks the control as `touched` on blur, so touched-gated validation/`ng-touched` styling fires as expected. |
+| Area                  | Change                                                                                                                                                                                                                                    |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Forms — dropdown      | A form-rule-driven value change now syncs the reactive dropdown control (previously not reflected).                                                                                                                                       |
+| Forms — masked text   | `InputMaskDirective` now marks the control as `touched` on blur, so touched-gated validation/`ng-touched` styling fires as expected.                                                                                                      |
 | Forms — start process | Malformed (non-JSON) backend error messages no longer crash `StartProcessCloudComponent`; the backend `response.body.message` is shown directly. The generic fallback i18n key changed from `...ERROR.START` to `...ERROR.START_PROCESS`. |
-| Card view | `card-view-textitem` now highlights red on validation error (sets/clears a `customError` state, `subscriptSizing="dynamic"`, always-float label); `card-view-dateitem` floats its label when the property has a default value. |
-| Search | Checkboxes in the search check-list facet render to the left of the label (Material default position). |
-| Data table | Removed a duplicated horizontal scrollbar (the datatable root no longer carries `adf-full-width`). |
-| Chips | `DynamicChipListComponent` chip visibility/"view more" overflow calculation fixed. |
-| Comments | Avatars in `adf-node-comments` now resolve via the People API avatar endpoint. |
+| Card view             | `card-view-textitem` now highlights red on validation error (sets/clears a `customError` state, `subscriptSizing="dynamic"`, always-float label); `card-view-dateitem` floats its label when the property has a default value.            |
+| Search                | Checkboxes in the search check-list facet render to the left of the label (Material default position).                                                                                                                                    |
+| Data table            | Removed a duplicated horizontal scrollbar (the datatable root no longer carries `adf-full-width`).                                                                                                                                        |
+| Chips                 | `DynamicChipListComponent` chip visibility/"view more" overflow calculation fixed.                                                                                                                                                        |
+| Comments              | Avatars in `adf-node-comments` now resolve via the People API avatar endpoint.                                                                                                                                                            |
 

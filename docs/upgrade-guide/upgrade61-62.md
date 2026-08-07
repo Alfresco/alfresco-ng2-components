@@ -224,10 +224,10 @@ CSS custom property names are unchanged — prefer overriding those instead.
 ## Third-party libraries
 
 
-| Name               | Version   | Notes                                                                                                                                                                                                                                                           |
-| ------------------ | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `material-icons`   | `^1.13.8` | The bundled Material Icons font and its `material-icons.css` were removed from the build in favour of the published `[material-icons](https://www.npmjs.com/package/material-icons)` package. If your app relied on ADF bundling the font, provide it yourself. |
-| `date-fns`         | `^2.30.0` | New dependency (replaces `moment` in the share dialog).                                                                                                                                                                                                         |
+| Name             | Version   | Notes                                                                                                                                                                                                                                                           |
+| ---------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `material-icons` | `^1.13.8` | The bundled Material Icons font and its `material-icons.css` were removed from the build in favour of the published `[material-icons](https://www.npmjs.com/package/material-icons)` package. If your app relied on ADF bundling the font, provide it yourself. |
+| `date-fns`       | `^2.30.0` | New dependency (replaces `moment` in the share dialog).                                                                                                                                                                                                         |
 
 
 

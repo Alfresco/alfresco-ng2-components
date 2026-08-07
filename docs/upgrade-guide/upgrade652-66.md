@@ -110,10 +110,10 @@ expandable and editable. Consequently:
 
 Several public authentication members were renamed as part of adding PKCE (authorization-code) flow support:
 
-| Before | After |
-| ------ | ----- |
-| `LoginComponent.implicitFlow` (property) | `LoginComponent.ssoLogin` |
-| `LoginComponent.redirectToImplicitLogin()` | `LoginComponent.redirectToSSOLogin()` |
+| Before                                         | After                                                      |
+| ---------------------------------------------- | ---------------------------------------------------------- |
+| `LoginComponent.implicitFlow` (property)       | `LoginComponent.ssoLogin`                                  |
+| `LoginComponent.redirectToImplicitLogin()`     | `LoginComponent.redirectToSSOLogin()`                      |
 | `OidcAuthenticationService.ssoImplicitLogin()` | `OidcAuthenticationService.ssoLogin(redirectUrl?: string)` |
 
 - New `app.config.json` OAuth2 key **`oauth2.codeFlow`** enables the PKCE authorization-code flow (set
@@ -206,15 +206,15 @@ internal SCSS reference variables directly are affected — override the public 
 
 ## Behavioural changes
 
-| Area | Change |
-| ---- | ------ |
-| Auth (basic) | On app load, an invalid/stale ECM ticket now triggers an automatic logout (`onLogout`) instead of a false "logged-in" state. |
-| Auth (js-api) | `invalidateSession()` on a 401 only fires when js-api owns authentication (avoids spurious invalidation under ADF-managed OAuth). |
-| Auth (upload) | The `multipart/form-data` header is preserved when the body is a real `FormData` (fixes descriptor import in HXP). |
-| Forms | Radio widgets update the form value immediately on selection. |
-| Viewer | The PDF viewer works over plain HTTP (no `crypto.randomUUID`), and `AlfrescoViewerComponent` shows the original file's mime type icon. |
-| Data table | Column headers show a tooltip with the (translated) column title. |
-| Search | The search-properties facet clear button now actually clears the underlying query. |
+| Area          | Change                                                                                                                                 |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Auth (basic)  | On app load, an invalid/stale ECM ticket now triggers an automatic logout (`onLogout`) instead of a false "logged-in" state.           |
+| Auth (js-api) | `invalidateSession()` on a 401 only fires when js-api owns authentication (avoids spurious invalidation under ADF-managed OAuth).      |
+| Auth (upload) | The `multipart/form-data` header is preserved when the body is a real `FormData` (fixes descriptor import in HXP).                     |
+| Forms         | Radio widgets update the form value immediately on selection.                                                                          |
+| Viewer        | The PDF viewer works over plain HTTP (no `crypto.randomUUID`), and `AlfrescoViewerComponent` shows the original file's mime type icon. |
+| Data table    | Column headers show a tooltip with the (translated) column title.                                                                      |
+| Search        | The search-properties facet clear button now actually clears the underlying query.                                                     |
 
 ## Theme changes
 

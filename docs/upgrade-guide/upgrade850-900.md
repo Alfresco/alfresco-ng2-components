@@ -58,18 +58,18 @@ Bump your Angular platform to **20.x** in lockstep (`@angular/core`/`@angular/ma
 ADF 9.0.0 is built against **Angular 20** and **must be consumed by an Angular 20 app** — there is no cross-version
 support with Angular 19.
 
-| Package | v8.5.0 | v9.0.0 |
-| ------- | ------ | ------ |
-| `@angular/core`, `@angular/common`, … | 19.2.x | **20.3.x** |
-| `@angular/material`, `@angular/cdk` | 19.2.x | **20.2.x** |
-| `@angular/material-date-fns-adapter` | 19.2.x | **20.2.x** |
-| `typescript` | 5.8.3 | **5.9.3** |
-| `ng-packagr` | 19.2.x | **20.3.x** |
-| `@angular-eslint/*` | 19.3.0 | **20.7.0** |
-| `@typescript-eslint/*` | 6.x | **8.x** |
-| `zone.js` | 0.15.0 | 0.15.0 (unchanged) |
-| `rxjs` | 7.8.2 | 7.8.2 (unchanged) |
-| `nx` | 22.x | 22.x (unchanged) |
+| Package                               | v8.5.0 | v9.0.0             |
+| ------------------------------------- | ------ | ------------------ |
+| `@angular/core`, `@angular/common`, … | 19.2.x | **20.3.x**         |
+| `@angular/material`, `@angular/cdk`   | 19.2.x | **20.2.x**         |
+| `@angular/material-date-fns-adapter`  | 19.2.x | **20.2.x**         |
+| `typescript`                          | 5.8.3  | **5.9.3**          |
+| `ng-packagr`                          | 19.2.x | **20.3.x**         |
+| `@angular-eslint/*`                   | 19.3.0 | **20.7.0**         |
+| `@typescript-eslint/*`                | 6.x    | **8.x**            |
+| `zone.js`                             | 0.15.0 | 0.15.0 (unchanged) |
+| `rxjs`                                | 7.8.2  | 7.8.2 (unchanged)  |
+| `nx`                                  | 22.x   | 22.x (unchanged)   |
 
 - **Run the Angular 20 update on your own app** (`ng update @angular/core@20 @angular/cdk@20 @angular/material@20`)
   and move to **TypeScript 5.9**. Follow the official
@@ -90,12 +90,12 @@ feature originally added in 7.0.0) was **removed entirely** from both `@alfresco
 
 Removed from **`@alfresco/adf-content-services`** (the `agent`, `search-ai` and `prediction` barrels were deleted):
 
-| Removed | Kind |
-| ------- | ---- |
-| `AgentService` | Service |
-| `SearchAiService` | Service |
+| Removed              | Kind      |
+| -------------------- | --------- |
+| `AgentService`       | Service   |
+| `SearchAiService`    | Service   |
 | `SearchAiInputState` | Interface |
-| `PredictionService` | Service |
+| `PredictionService`  | Service   |
 
 Removed from **`@alfresco/js-api`**:
 
@@ -171,10 +171,10 @@ compile error — register `CanActivateFn` guards.
 
 `ProcessInstanceCloud` replaced its two related-instance **arrays** with **counts**:
 
-| Before (8.5.0) | After (9.0.0) |
-| -------------- | ------------- |
+| Before (8.5.0)                               | After (9.0.0)                   |
+| -------------------------------------------- | ------------------------------- |
 | `linkedProcesses?: RelatedProcessInstance[]` | `linkedProcessesCount?: number` |
-| `subprocesses?: RelatedProcessInstance[]` | `subprocessesCount?: number` |
+| `subprocesses?: RelatedProcessInstance[]`    | `subprocessesCount?: number`    |
 
 Code reading `processInstance.linkedProcesses` / `processInstance.subprocesses` must switch to the count fields
 (the full related-instance collections are no longer carried on the model).
@@ -280,14 +280,14 @@ CSS selectors and automation ids changed — update tests/CSS that target the ol
 
 ## Behavioural changes
 
-| Area | Change |
-| ---- | ------ |
-| Auth — OIDC | `OidcAuthenticationService.reset()` now calls `oauthService.logOut(true)` (terminates the OAuth session) instead of reloading the IDP configuration — supports the session-timeout logout redirect. |
-| Search — node selector | `ContentNodeSelectorPanelComponent` no longer leaves stale `ANCESTOR:` filters when switching sites/clearing the search; filtering now correctly scopes to the chosen site. |
-| Forms — people widget | `PeopleWidgetComponent` (process-services) now debounces its user search by 300 ms instead of querying on every keystroke. |
-| Forms — spinner | The Automate-form spinner overlay is now fully disposed on host destroy, so it no longer persists outside the form. |
-| Forms — task fetch | Task claim/unclaim status is evaluated against the always-current Runtime Bundle when the RB-fallback token is enabled (fixes stale block-task claim status). |
-| Uploads | `FetchHttpClient` now converts a Node `ReadStream`/`Buffer` to a `Blob` (with filename) before appending to `FormData`, fixing broken multipart uploads under the fetch client. |
-| Uploads | The form multi-file attachment viewer now updates when a different file is selected; the "upload new version" button re-enables after use; bulk upload no longer collapses the context menu. |
-| Viewer | Firefox-headless race fixed — PDF blob/MIME state is assigned atomically and MIME types are normalised (charset params stripped). |
-| Accessibility — tags | Tag delete controls are now real keyboard-operable buttons; focus is restored sensibly after a tag is removed, and blank/whitespace tags are rejected. |
+| Area                   | Change                                                                                                                                                                                              |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Auth — OIDC            | `OidcAuthenticationService.reset()` now calls `oauthService.logOut(true)` (terminates the OAuth session) instead of reloading the IDP configuration — supports the session-timeout logout redirect. |
+| Search — node selector | `ContentNodeSelectorPanelComponent` no longer leaves stale `ANCESTOR:` filters when switching sites/clearing the search; filtering now correctly scopes to the chosen site.                         |
+| Forms — people widget  | `PeopleWidgetComponent` (process-services) now debounces its user search by 300 ms instead of querying on every keystroke.                                                                          |
+| Forms — spinner        | The Automate-form spinner overlay is now fully disposed on host destroy, so it no longer persists outside the form.                                                                                 |
+| Forms — task fetch     | Task claim/unclaim status is evaluated against the always-current Runtime Bundle when the RB-fallback token is enabled (fixes stale block-task claim status).                                       |
+| Uploads                | `FetchHttpClient` now converts a Node `ReadStream`/`Buffer` to a `Blob` (with filename) before appending to `FormData`, fixing broken multipart uploads under the fetch client.                     |
+| Uploads                | The form multi-file attachment viewer now updates when a different file is selected; the "upload new version" button re-enables after use; bulk upload no longer collapses the context menu.        |
+| Viewer                 | Firefox-headless race fixed — PDF blob/MIME state is assigned atomically and MIME types are normalised (charset params stripped).                                                                   |
+| Accessibility — tags   | Tag delete controls are now real keyboard-operable buttons; focus is restored sensibly after a tag is removed, and blank/whitespace tags are rejected.                                              |

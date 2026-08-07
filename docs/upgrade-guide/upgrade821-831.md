@@ -56,24 +56,24 @@ build/CI Node version. Clean `node_modules` and `package-lock.json`, then `npm i
 
 ### Removed components, tokens and pipes
 
-| Removed | Kind | Package | Migration |
-| ------- | ---- | ------- | --------- |
-| `NodeNameTooltipPipe` (`adfNodeNameTooltip`), `ContentPipeModule`, `CONTENT_PIPES` | Pipe / module | `@alfresco/adf-content-services` | Use the new `node-tooltip.utils.ts` helpers. |
-| `ADF_DOCUMENT_PARENT_COMPONENT` | Injection token | `@alfresco/adf-content-services` | `FilterHeaderComponent` now takes `@Input() pagination`/`sorting` and emits `searchResultsReady`/`filtersCleared` instead of injecting the parent document list. |
-| `LANDING_PAGE_TOKEN`, `provideLandingPage()` | Token / provider | `@alfresco/adf-core` | Removed (they were added in 8.1.1 and unused). |
-| `ButtonComponent` (`adf-button`), `ButtonVariant`, `ButtonColor` | Component / types | `@alfresco/adf-core` | Use Angular Material buttons directly. |
-| `ProgressComponent` (`adf-progress`) | Component | `@alfresco/adf-core` | Use Material `mat-progress-bar` / `mat-progress-spinner`. |
-| `ProcessAuditDirective` (`button[adf-process-audit]`) | Directive | `@alfresco/adf-process-services` | Removed (unused). |
-| `CheckAllowableOperationDirective` (`[adf-check-allowable-operation]`) | Directive | `@alfresco/adf-content-services` | Removed (unused). |
-| `ProcessListCloudComponent.excludeByProcessCategoryName` | `@Input` | `@alfresco/adf-process-services-cloud` | **Added in 8.2.1 and removed again in 8.3.1** — remove the binding. |
-| `SortingPickerComponent` (`adf-sorting-picker`) | Component | `@alfresco/adf-core` | Removed. |
-| `SearchSortingPickerComponent` (`adf-search-sorting-picker`) | Component | `@alfresco/adf-content-services` | Removed. |
-| `BreadcrumbModule` | Module | `@alfresco/adf-content-services` | Removed — the breadcrumb components are standalone; import them directly. |
-| `ToggleIconDirective` (`[adf-toggle-icon]`), `FileUploadErrorPipe` | Directive / pipe | `@alfresco/adf-content-services` | Removed. |
-| `MultiValuePipe` | Pipe | `@alfresco/adf-core` | Made internal (no longer exported). |
-| `BlankPageComponent`, `BlankPageModule` | Component / module | `@alfresco/adf-core` | Removed. |
-| `displayLabelForChips` `@Input` (+ `showLabelForChips` getter) | Inputs | `@alfresco/adf-core` | Removed from `CardViewComponent`, `CardViewTextItemComponent`, `CardViewItemDispatcherComponent`. |
-| `DecimalNumberModel` (class), `BpmProductVersionModel` (class) | Models | `@alfresco/adf-core` | Converted to interfaces (no longer instantiable via `new`); `BpmProductVersionModel` now lives in `@alfresco/js-api`. |
+| Removed                                                                            | Kind               | Package                                | Migration                                                                                                                                                        |
+| ---------------------------------------------------------------------------------- | ------------------ | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `NodeNameTooltipPipe` (`adfNodeNameTooltip`), `ContentPipeModule`, `CONTENT_PIPES` | Pipe / module      | `@alfresco/adf-content-services`       | Use the new `node-tooltip.utils.ts` helpers.                                                                                                                     |
+| `ADF_DOCUMENT_PARENT_COMPONENT`                                                    | Injection token    | `@alfresco/adf-content-services`       | `FilterHeaderComponent` now takes `@Input() pagination`/`sorting` and emits `searchResultsReady`/`filtersCleared` instead of injecting the parent document list. |
+| `LANDING_PAGE_TOKEN`, `provideLandingPage()`                                       | Token / provider   | `@alfresco/adf-core`                   | Removed (they were added in 8.1.1 and unused).                                                                                                                   |
+| `ButtonComponent` (`adf-button`), `ButtonVariant`, `ButtonColor`                   | Component / types  | `@alfresco/adf-core`                   | Use Angular Material buttons directly.                                                                                                                           |
+| `ProgressComponent` (`adf-progress`)                                               | Component          | `@alfresco/adf-core`                   | Use Material `mat-progress-bar` / `mat-progress-spinner`.                                                                                                        |
+| `ProcessAuditDirective` (`button[adf-process-audit]`)                              | Directive          | `@alfresco/adf-process-services`       | Removed (unused).                                                                                                                                                |
+| `CheckAllowableOperationDirective` (`[adf-check-allowable-operation]`)             | Directive          | `@alfresco/adf-content-services`       | Removed (unused).                                                                                                                                                |
+| `ProcessListCloudComponent.excludeByProcessCategoryName`                           | `@Input`           | `@alfresco/adf-process-services-cloud` | **Added in 8.2.1 and removed again in 8.3.1** — remove the binding.                                                                                              |
+| `SortingPickerComponent` (`adf-sorting-picker`)                                    | Component          | `@alfresco/adf-core`                   | Removed.                                                                                                                                                         |
+| `SearchSortingPickerComponent` (`adf-search-sorting-picker`)                       | Component          | `@alfresco/adf-content-services`       | Removed.                                                                                                                                                         |
+| `BreadcrumbModule`                                                                 | Module             | `@alfresco/adf-content-services`       | Removed — the breadcrumb components are standalone; import them directly.                                                                                        |
+| `ToggleIconDirective` (`[adf-toggle-icon]`), `FileUploadErrorPipe`                 | Directive / pipe   | `@alfresco/adf-content-services`       | Removed.                                                                                                                                                         |
+| `MultiValuePipe`                                                                   | Pipe               | `@alfresco/adf-core`                   | Made internal (no longer exported).                                                                                                                              |
+| `BlankPageComponent`, `BlankPageModule`                                            | Component / module | `@alfresco/adf-core`                   | Removed.                                                                                                                                                         |
+| `displayLabelForChips` `@Input` (+ `showLabelForChips` getter)                     | Inputs             | `@alfresco/adf-core`                   | Removed from `CardViewComponent`, `CardViewTextItemComponent`, `CardViewItemDispatcherComponent`.                                                                |
+| `DecimalNumberModel` (class), `BpmProductVersionModel` (class)                     | Models             | `@alfresco/adf-core`                   | Converted to interfaces (no longer instantiable via `new`); `BpmProductVersionModel` now lives in `@alfresco/js-api`.                                            |
 
 Note: the `IconModule` still exists but was **repurposed** — it no longer exports `IconComponent` (it now bundles
 the new `IconDirective` + `MatIconModule`), and it is no longer marked `@deprecated`. Separately, **`IconComponent`
@@ -213,15 +213,15 @@ These still work in v8.3.1 but are newly `@deprecated` and slated for removal �
 
 ## Behavioural changes
 
-| Area | Change |
-| ---- | ------ |
-| Forms — outcomes | Name-based outcomes with a `null` id now complete the task (reverses the 8.2.1 requirement that an outcome needed both `name` and `id`). |
-| Forms — dropdown | Required REST/variable-backed dropdowns with no real selection now correctly show the required error. |
-| Forms — attach file | Clicking the attach-file label no longer fires the select dialog twice. |
-| Card view | Double-click-to-copy now works on disabled/read-only text items; deleting a category in content metadata refreshes correctly. |
-| Data table | Non-array rows/columns no longer crash the table (guarded); number/amount cells render blank for invalid values; sorting by a distinct `sortingKey` now persists in localStorage. |
-| Viewer | APS-hosted file previews use the `preview` rendition; PDFs with JPEG-2000 images display (with WASM assets deployed). |
-| Process list (APS) | Process-instance pagination fixed (the conflicting `start: 0` param was removed). |
-| Saved searches | The selected configuration is tracked by stable `id`, so loading a saved search restores the intended set. |
-| Forms — visibility | Visibility/rule conditions now work for fields inside repeatable sections; async-form auto-populated date values are formatted before parsing (fixes reuse across tasks). |
-| Data table row | `DataTableRowComponent` (`adf-datatable-row`) `@Input() disabled` default changed `false` → `true` — direct consumers of the row component (outside `adf-datatable`, which always binds it) now get rows disabled by default. |
+| Area                | Change                                                                                                                                                                                                                        |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Forms — outcomes    | Name-based outcomes with a `null` id now complete the task (reverses the 8.2.1 requirement that an outcome needed both `name` and `id`).                                                                                      |
+| Forms — dropdown    | Required REST/variable-backed dropdowns with no real selection now correctly show the required error.                                                                                                                         |
+| Forms — attach file | Clicking the attach-file label no longer fires the select dialog twice.                                                                                                                                                       |
+| Card view           | Double-click-to-copy now works on disabled/read-only text items; deleting a category in content metadata refreshes correctly.                                                                                                 |
+| Data table          | Non-array rows/columns no longer crash the table (guarded); number/amount cells render blank for invalid values; sorting by a distinct `sortingKey` now persists in localStorage.                                             |
+| Viewer              | APS-hosted file previews use the `preview` rendition; PDFs with JPEG-2000 images display (with WASM assets deployed).                                                                                                         |
+| Process list (APS)  | Process-instance pagination fixed (the conflicting `start: 0` param was removed).                                                                                                                                             |
+| Saved searches      | The selected configuration is tracked by stable `id`, so loading a saved search restores the intended set.                                                                                                                    |
+| Forms — visibility  | Visibility/rule conditions now work for fields inside repeatable sections; async-form auto-populated date values are formatted before parsing (fixes reuse across tasks).                                                     |
+| Data table row      | `DataTableRowComponent` (`adf-datatable-row`) `@Input() disabled` default changed `false` → `true` — direct consumers of the row component (outside `adf-datatable`, which always binds it) now get rows disabled by default. |

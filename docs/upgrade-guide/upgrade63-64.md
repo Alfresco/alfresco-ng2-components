@@ -31,7 +31,6 @@ After the upgrade, check the other sections below to see if there are any change
 - [New components and features](#new-components-and-features)
 - [Behavioural changes](#behavioural-changes)
 - [Theme changes](#theme-changes)
-- [Notable internal changes](#notable-internal-changes)
 
 ## Library updates
 
@@ -76,13 +75,13 @@ are removed from the ADF libraries' peer dependencies. Remove any direct imports
 
 **New API (from `@alfresco/adf-core`):**
 
-| Symbol | Purpose |
-| ------ | ------- |
-| `AdfDateFnsAdapter` | `DateAdapter<Date>` implementation (replaces `MomentDateAdapter`). Auto-switches locale from `UserPreferencesService`; has a settable `displayFormat`. |
-| `AdfDateTimeFnsAdapter` | `DatetimeAdapter<Date>` implementation for date-time pickers. |
-| `ADF_DATE_FORMATS` | `MatDateFormats` value to provide via `MAT_DATE_FORMATS`. |
-| `ADF_DATETIME_FORMATS` | `MatDatetimeFormats` value to provide via `MAT_DATETIME_FORMATS`. |
-| `DateFnsUtils` | Static date helpers (`formatDate`, `parseDate`, `convertMomentToDateFnsFormat`, …). |
+| Symbol                  | Purpose                                                                                                                                                |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `AdfDateFnsAdapter`     | `DateAdapter<Date>` implementation (replaces `MomentDateAdapter`). Auto-switches locale from `UserPreferencesService`; has a settable `displayFormat`. |
+| `AdfDateTimeFnsAdapter` | `DatetimeAdapter<Date>` implementation for date-time pickers.                                                                                          |
+| `ADF_DATE_FORMATS`      | `MatDateFormats` value to provide via `MAT_DATE_FORMATS`.                                                                                              |
+| `ADF_DATETIME_FORMATS`  | `MatDatetimeFormats` value to provide via `MAT_DATETIME_FORMATS`.                                                                                      |
+| `DateFnsUtils`          | Static date helpers (`formatDate`, `parseDate`, `convertMomentToDateFnsFormat`, …).                                                                    |
 
 Replace the moment adapter wiring in your component providers:
 
@@ -225,11 +224,11 @@ responsive behaviour change.
 
 ## Deprecated items
 
-| Item | Package | Note |
-| ---- | ------- | ---- |
-| `MomentDateAdapter` | `@alfresco/adf-core` | "this class is deprecated and should not be used." Use `AdfDateFnsAdapter` / `AdfDateTimeFnsAdapter`. |
-| `MOMENT_DATE_FORMATS` | `@alfresco/adf-core` | Superseded by `ADF_DATE_FORMATS`. |
-| `MomentDatePipe` (`adfMomentDate`), `MomentDateTimePipe` (`adfMomentDateTime`) | `@alfresco/adf-core` | Not migrated; still require a globally-available `moment` at runtime. |
+| Item                                                                           | Package              | Note                                                                                                  |
+| ------------------------------------------------------------------------------ | -------------------- | ----------------------------------------------------------------------------------------------------- |
+| `MomentDateAdapter`                                                            | `@alfresco/adf-core` | "this class is deprecated and should not be used." Use `AdfDateFnsAdapter` / `AdfDateTimeFnsAdapter`. |
+| `MOMENT_DATE_FORMATS`                                                          | `@alfresco/adf-core` | Superseded by `ADF_DATE_FORMATS`.                                                                     |
+| `MomentDatePipe` (`adfMomentDate`), `MomentDateTimePipe` (`adfMomentDateTime`) | `@alfresco/adf-core` | Not migrated; still require a globally-available `moment` at runtime.                                 |
 
 ## New components and features
 
@@ -237,11 +236,11 @@ responsive behaviour change.
 
 New column types with dedicated cell renderers in `@alfresco/adf-core`:
 
-| Type | Cell component | Config |
-| ---- | -------------- | ------ |
-| `boolean` | `BooleanCellComponent` | Also adds the `BooleanPipe` (`adfBoolean`). |
-| `amount` | `AmountCellComponent` | New `DataColumn.currencyConfig?: CurrencyConfig` (`{ code?; display?; digitsInfo?; locale? }`). |
-| `number` | `NumberCellComponent` | New `DataColumn.decimalConfig?: DecimalConfig` (`{ digitsInfo?; locale? }`). `CurrencyConfig extends DecimalConfig`. |
+| Type      | Cell component         | Config                                                                                                               |
+| --------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `boolean` | `BooleanCellComponent` | Also adds the `BooleanPipe` (`adfBoolean`).                                                                          |
+| `amount`  | `AmountCellComponent`  | New `DataColumn.currencyConfig?: CurrencyConfig` (`{ code?; display?; digitsInfo?; locale? }`).                      |
+| `number`  | `NumberCellComponent`  | New `DataColumn.decimalConfig?: DecimalConfig` (`{ digitsInfo?; locale? }`). `CurrencyConfig extends DecimalConfig`. |
 
 Data columns also gained an optional `@Input() order?: number` (`DataColumnComponent`) / `order?` field
 (`DataColumn`); custom schema columns are sorted by it.
@@ -276,16 +275,16 @@ A custom panel whose `panelTitle` matches the `displayAspect` input is rendered 
 
 ## Behavioural changes
 
-| Area | Change |
-| ---- | ------ |
-| Data table | Cloud/process Data Table form widget honours declared column `type` (no longer forced to text). |
-| Permissions | `NodePermissionService.getNodeRoles` returns the node's settable permissions directly for nodes not under a Site (no search API call). |
-| Groups | The user-name column falls back to the group `id` when `displayName` is missing. |
-| Rendition | `RenditionService` rendition polling now retries correctly until the rendition is `CREATED`. |
-| Viewer | `PdfViewerComponent` handles horizontally overflowing pages (toolbar shifts, container height `100vh` → `100%`). |
-| Pagination | "Load More" no longer resets scroll to the top and suppresses the loading spinner while merging. |
-| i18n | The process/task list "Name" column header is now "Task Name". |
-| Accessibility | Date-facet number input and tag chip list gained aria labels/roles. |
+| Area          | Change                                                                                                                                 |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Data table    | Cloud/process Data Table form widget honours declared column `type` (no longer forced to text).                                        |
+| Permissions   | `NodePermissionService.getNodeRoles` returns the node's settable permissions directly for nodes not under a Site (no search API call). |
+| Groups        | The user-name column falls back to the group `id` when `displayName` is missing.                                                       |
+| Rendition     | `RenditionService` rendition polling now retries correctly until the rendition is `CREATED`.                                           |
+| Viewer        | `PdfViewerComponent` handles horizontally overflowing pages (toolbar shifts, container height `100vh` → `100%`).                       |
+| Pagination    | "Load More" no longer resets scroll to the top and suppresses the loading spinner while merging.                                       |
+| i18n          | The process/task list "Name" column header is now "Task Name".                                                                         |
+| Accessibility | Date-facet number input and tag chip list gained aria labels/roles.                                                                    |
 
 ## Theme changes
 

@@ -60,16 +60,16 @@ npm install
 
 ## Major platform changes
 
-| Area | 7.0.0 | 8.0.0 |
-| ---- | ----- | ----- |
-| Angular / Material / CDK | 17.1 | **19.2** |
-| TypeScript | 5.3 | **5.8.2** |
-| zone.js | 0.14.8 | **0.15.0** |
-| Nx | 20.0 | **20.8** |
-| `@ngx-translate/core` | 14/15 | **>= 16.0.0** |
+| Area                                | 7.0.0      | 8.0.0             |
+| ----------------------------------- | ---------- | ----------------- |
+| Angular / Material / CDK            | 17.1       | **19.2**          |
+| TypeScript                          | 5.3        | **5.8.2**         |
+| zone.js                             | 0.14.8     | **0.15.0**        |
+| Nx                                  | 20.0       | **20.8**          |
+| `@ngx-translate/core`               | 14/15      | **>= 16.0.0**     |
 | `apollo-angular` / `@apollo/client` | 6.0 / 3.11 | **10.0.3 / 3.13** |
-| `pdfjs-dist` | 3.3 | **5.1.91** |
-| `@alfresco/js-api` | >= 8.0.0 | **>= 9.0.0** |
+| `pdfjs-dist`                        | 3.3        | **5.1.91**        |
+| `@alfresco/js-api`                  | >= 8.0.0   | **>= 9.0.0**      |
 
 Angular Material remains on the **M2 (Material 2) theming APIs** in 8.0.0 — the Material Design 3 migration was
 deferred. Move your own application to Angular 19 / TypeScript 5.8 / zone.js 0.15 / Nx 20.8 in lockstep, and
@@ -233,11 +233,11 @@ These still work in 8.0.0 but are slated for removal — migrate when you upgrad
 
 ## Behavioural changes
 
-| Area | Change |
-| ---- | ------ |
-| Document list | Navigating to a new folder now resets the active `filterValue`; custom column visibility/order/width persist across refresh. |
-| Forms | Hidden required dropdowns are no longer invalid; clearing a numeric field stores `null` (not `''`); required dropdowns show a single asterisk; async form enrichment now populates date fields and hides the spinner correctly; `onProcessFinish` fires reliably from `onFormLoaded`. |
-| Content metadata | Content in non-edited panels stays visible while another panel is edited (new `isPanelEditing(panelTitle)` / `editedPanelTitle`). |
-| Aspect list | All aspects are fetched (paged) when the first call doesn't return them all. |
-| Viewer | Loading state is driven by renderer completion; PDF documents scale correctly; the image viewer is no longer cropped; the file name is truncated with a tooltip. |
-| Accessibility | Loading bars/spinners gained aria labels; nested interactive controls were removed from the datatable; form tab navigation uses a focus trap. |
+| Area             | Change                                                                                                                                                                                                                                                                                |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Document list    | Navigating to a new folder now resets the active `filterValue`; custom column visibility/order/width persist across refresh.                                                                                                                                                          |
+| Forms            | Hidden required dropdowns are no longer invalid; clearing a numeric field stores `null` (not `''`); required dropdowns show a single asterisk; async form enrichment now populates date fields and hides the spinner correctly; `onProcessFinish` fires reliably from `onFormLoaded`. |
+| Content metadata | Content in non-edited panels stays visible while another panel is edited (new `isPanelEditing(panelTitle)` / `editedPanelTitle`).                                                                                                                                                     |
+| Aspect list      | All aspects are fetched (paged) when the first call doesn't return them all.                                                                                                                                                                                                          |
+| Viewer           | Loading state is driven by renderer completion; PDF documents scale correctly; the image viewer is no longer cropped; the file name is truncated with a tooltip.                                                                                                                      |
+| Accessibility    | Loading bars/spinners gained aria labels; nested interactive controls were removed from the datatable; form tab navigation uses a focus trap.                                                                                                                                         |

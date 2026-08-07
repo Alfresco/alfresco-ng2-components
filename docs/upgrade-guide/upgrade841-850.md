@@ -156,14 +156,14 @@ custom templates relying on the old two-way binding should be re-checked. Defaul
 
 ## Behavioural changes
 
-| Area | Change |
-| ---- | ------ |
-| Forms — start button | The Start-process outcome button is now hidden on user-task forms (even read-only) and stripped when a `taskId` is present. |
-| Forms — dates | Manual date/datetime typing is allowed; an unparseable value shows a shortened "Invalid date format." error. |
-| Forms — read-only | Read-only/disabled fields (including people/group widgets) restyle consistently via `.adf-readonly`; group search control re-syncs its read-only state on every change. |
-| Card view | Clearing an int/long text item returns empty string (not `0`); select items no longer crash on a numeric initial value. |
-| Viewer | The file-type icon reflects the viewed version's content type when a rendition exists. |
-| Search | Facet labels wrapped in quotes by the backend are now unquoted/matched correctly. |
-| Layout | Collapsing the left sidenav now closes it correctly, fixing keyboard focus order. |
-| People / group widgets | The search input is now disabled while preselect validation is loading (previously only when `readOnly`). |
-| Auth config | `AppConfigService.oauth2` no longer throws when the `oauth2` config is explicitly `null` (null-coalesces to `{}`). |
+| Area                   | Change                                                                                                                                                                  |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Forms — start button   | The Start-process outcome button is now hidden on user-task forms (even read-only) and stripped when a `taskId` is present.                                             |
+| Forms — dates          | Manual date/datetime typing is allowed; an unparseable value shows a shortened "Invalid date format." error.                                                            |
+| Forms — read-only      | Read-only/disabled fields (including people/group widgets) restyle consistently via `.adf-readonly`; group search control re-syncs its read-only state on every change. |
+| Card view              | Clearing an int/long text item returns empty string (not `0`); select items no longer crash on a numeric initial value.                                                 |
+| Viewer                 | The file-type icon reflects the viewed version's content type when a rendition exists.                                                                                  |
+| Search                 | Facet labels wrapped in quotes by the backend are now unquoted/matched correctly.                                                                                       |
+| Layout                 | Collapsing the left sidenav now closes it correctly, fixing keyboard focus order.                                                                                       |
+| People / group widgets | The search input is now disabled while preselect validation is loading (previously only when `readOnly`).                                                               |
+| Auth config            | `AppConfigService.oauth2` no longer throws when the `oauth2` config is explicitly `null` (null-coalesces to `{}`).                                                      |

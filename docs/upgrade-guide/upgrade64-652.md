@@ -31,7 +31,6 @@ After the upgrade, check the other sections below to see if there are any change
 - [New components and features](#new-components-and-features)
 - [Behavioural changes](#behavioural-changes)
 - [Theme changes](#theme-changes)
-- [Notable internal changes](#notable-internal-changes)
 
 ## Library updates
 
@@ -98,11 +97,11 @@ New auth services are exported from `@alfresco/adf-core`: `BasicAlfrescoAuthServ
 
 The OIDC/OAuth2 configuration in `app.config.json` changed:
 
-| Key | Change | Consumer action |
-| --- | ------ | --------------- |
-| `oauth2.redirectSilentIframeUri` | Silent-refresh now reads this value instead of a hardcoded `/silent-refresh.html`. | **Set this explicitly** if you use silent refresh, otherwise the silent-refresh URL is undefined. |
-| `oauth2.redirectUri` | New optional post-login redirect base, appended to the location origin when not `/`. | Optional; useful for apps served from a sub-path. |
-| `oauth2.secret` | No longer a **required** schema property (only `host`, `clientId`, `scope` are required). | Public/PKCE clients no longer need to supply `secret`. |
+| Key                              | Change                                                                                    | Consumer action                                                                                   |
+| -------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `oauth2.redirectSilentIframeUri` | Silent-refresh now reads this value instead of a hardcoded `/silent-refresh.html`.        | **Set this explicitly** if you use silent refresh, otherwise the silent-refresh URL is undefined. |
+| `oauth2.redirectUri`             | New optional post-login redirect base, appended to the location origin when not `/`.      | Optional; useful for apps served from a sub-path.                                                 |
+| `oauth2.secret`                  | No longer a **required** schema property (only `host`, `clientId`, `scope` are required). | Public/PKCE clients no longer need to supply `secret`.                                            |
 
 If you ship your own copy of `silent-refresh.html`, add the message-post that returns the token to the
 opener/parent window (`(window.opener || window.parent).postMessage(location.hash || ('#' + location.search), location.origin)`),
@@ -183,14 +182,14 @@ The internal SCSS mixin signature changed from `adf-components-variables()` to
 
 ## Behavioural changes
 
-| Area | Change |
-| ---- | ------ |
-| Auth | Silent refresh now returns a fresh token to the app; `redirectUri`/`redirectSilentIframeUri` from `app.config.json` are honoured for login/silent-refresh URLs. |
+| Area          | Change                                                                                                                                                                                        |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Auth          | Silent refresh now returns a fresh token to the app; `redirectUri`/`redirectSilentIframeUri` from `app.config.json` are honoured for login/silent-refresh URLs.                               |
 | Notifications | The history menu shows only unread notifications; "mark as read" flags notifications as read and keeps them in storage rather than deleting them. New notifications default to `read: false`. |
-| Viewer | PDF/TIFF viewer thumbnails now refresh when the displayed file changes. |
-| Data table | Very long file/folder names no longer shift column alignment (body width `fit-content` → `100%`). |
-| Share dialog | The extra gray area/padding around the share-link dialog content was removed. |
-| Custom theme | Custom palette shades 100–300 are now calculated correctly, and custom themes inherit the default font family. |
+| Viewer        | PDF/TIFF viewer thumbnails now refresh when the displayed file changes.                                                                                                                       |
+| Data table    | Very long file/folder names no longer shift column alignment (body width `fit-content` → `100%`).                                                                                             |
+| Share dialog  | The extra gray area/padding around the share-link dialog content was removed.                                                                                                                 |
+| Custom theme  | Custom palette shades 100–300 are now calculated correctly, and custom themes inherit the default font family.                                                                                |
 
 ## Theme changes
 

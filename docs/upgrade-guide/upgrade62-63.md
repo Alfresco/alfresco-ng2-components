@@ -38,7 +38,6 @@ After the upgrade, check the other sections below to see if there are any change
   - [Other additions](#other-additions)
 - [Behavioural changes](#behavioural-changes)
 - [Theme changes](#theme-changes)
-- [Notable internal changes](#notable-internal-changes)
 
 
 
@@ -81,7 +80,7 @@ npm install
 ### JS-API v7 and type migrations
 
 ADF now consumes the strongly-typed models from `@alfresco/js-api` v7 directly instead of its own
-hand-written wrappers. Update your type references accordingly.
+handwritten wrappers. Update your type references accordingly.
 
 
 | Before (ADF wrapper / old type) | After (`@alfresco/js-api` type) |
@@ -210,7 +209,7 @@ removed — update any CSS/E2E selectors that relied on them.
 | `document-library.model` exports                               | `@alfresco/adf-content-services`                       | Removed; use `@alfresco/js-api` types.                                                                                                                                                                                                                          |
 | `AlfrescoApiCompatibility` usage                               | `@alfresco/adf-process-services`                       | `ExternalAlfrescoApiService` now extends `[AlfrescoApiService](../core/services/alfresco-api.service.md)` and uses `AlfrescoApi` (v7). Migrate any code typed against `AlfrescoApiCompatibility`.                                                               |
 | Several `DocumentListComponent` / `DataTableComponent` methods | `@alfresco/adf-content-services`, `@alfresco/adf-core` | Made `private` (`updateCustomSourceData`, `setupDefaultColumns`, `preserveExistingSelection`, `isSingleSelectionMode`, `isMultipleSelectionMode`, `hasPreselectedNodes`, `hasPreselectedRows`, `hasCustomLayout`). `resetNewFolderPagination()` remains public. |
-| `CallApiParams` (interface) | `@alfresco/adf-process-services-cloud` | Removed from the `BaseCloudService` public surface — it now uses `RequestOptions` from `@alfresco/js-api`. Only affects code that imported `CallApiParams` directly. |
+| `CallApiParams` (interface)                                    | `@alfresco/adf-process-services-cloud`                 | Removed from the `BaseCloudService` public surface — it now uses `RequestOptions` from `@alfresco/js-api`. Only affects code that imported `CallApiParams` directly.                                                                                            |
 
 
 

@@ -27,7 +27,6 @@ After the upgrade, check the other sections below to see if there are any change
   - [Viewer changes](#viewer-changes)
 - [New components and features](#new-components-and-features)
 - [Behavioural changes](#behavioural-changes)
-- [Notable internal changes](#notable-internal-changes)
 
 ## Library updates
 
@@ -163,11 +162,11 @@ Column widths were reworked to be responsive again (they broke with the 6.7.x "r
 
 ## Behavioural changes
 
-| Area | Change |
-| ---- | ------ |
-| Forms — dates | Date widgets display the same day regardless of timezone (`DateFnsUtils.forceLocal`/`forceUtc` reimplemented). The datetime picker now opens on Enter rather than on focus. A non-required datetime field with a `null` value no longer triggers spurious Min/Max validation. |
-| Forms — decimal | Incoming `bigdecimal` values are rounded to the field's configured `precision` at render time. |
-| Content metadata | The "no items" message shows only for editable groups when not editing; property-panel tabs no longer change background color on focus. |
-| Viewer | The viewer reliably reloads after a version restore and the toolbar no longer disappears. |
-| Version list | Long version comments are truncated with an ellipsis and shown in full via a hover tooltip. |
-| Tooltip card | The `adf-tooltip-card` directive no longer throws when its overlay reference is undefined. |
+| Area             | Change                                                                                                                                                                                                                                                                        |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Forms — dates    | Date widgets display the same day regardless of timezone (`DateFnsUtils.forceLocal`/`forceUtc` reimplemented). The datetime picker now opens on Enter rather than on focus. A non-required datetime field with a `null` value no longer triggers spurious Min/Max validation. |
+| Forms — decimal  | Incoming `bigdecimal` values are rounded to the field's configured `precision` at render time.                                                                                                                                                                                |
+| Content metadata | The "no items" message shows only for editable groups when not editing; property-panel tabs no longer change background color on focus.                                                                                                                                       |
+| Viewer           | The viewer reliably reloads after a version restore and the toolbar no longer disappears.                                                                                                                                                                                     |
+| Version list     | Long version comments are truncated with an ellipsis and shown in full via a hover tooltip.                                                                                                                                                                                   |
+| Tooltip card     | The `adf-tooltip-card` directive no longer throws when its overlay reference is undefined.                                                                                                                                                                                    |

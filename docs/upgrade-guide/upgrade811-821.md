@@ -74,14 +74,14 @@ were already removed in 8.0.0.
 
 The following long-deprecated items were removed (`ACS-10178`). Remove any imports/usages:
 
-| Removed | Selector | Package |
-| ------- | -------- | ------- |
-| `LoginDialogComponent`, `LoginDialogComponentData`, `LoginDialogService` | `adf-login-dialog` | `@alfresco/adf-core` |
-| `AppListCloudComponent` | `adf-cloud-app-list` | `@alfresco/adf-process-services-cloud` |
-| `AppDetailsCloudComponent` | `adf-cloud-app-details` | `@alfresco/adf-process-services-cloud` |
-| `APP_LIST_CLOUD_DIRECTIVES` (const) | — | `@alfresco/adf-process-services-cloud` |
-| `FormDefinitionSelectorCloudComponent` | `adf-cloud-form-definition-selector` | `@alfresco/adf-process-services-cloud` |
-| `FormDefinitionSelectorCloudService`, `FormDefinitionSelectorCloudServiceInterface` | — | `@alfresco/adf-process-services-cloud` |
+| Removed                                                                             | Selector                             | Package                                |
+| ----------------------------------------------------------------------------------- | ------------------------------------ | -------------------------------------- |
+| `LoginDialogComponent`, `LoginDialogComponentData`, `LoginDialogService`            | `adf-login-dialog`                   | `@alfresco/adf-core`                   |
+| `AppListCloudComponent`                                                             | `adf-cloud-app-list`                 | `@alfresco/adf-process-services-cloud` |
+| `AppDetailsCloudComponent`                                                          | `adf-cloud-app-details`              | `@alfresco/adf-process-services-cloud` |
+| `APP_LIST_CLOUD_DIRECTIVES` (const)                                                 | —                                    | `@alfresco/adf-process-services-cloud` |
+| `FormDefinitionSelectorCloudComponent`                                              | `adf-cloud-form-definition-selector` | `@alfresco/adf-process-services-cloud` |
+| `FormDefinitionSelectorCloudService`, `FormDefinitionSelectorCloudServiceInterface` | —                                    | `@alfresco/adf-process-services-cloud` |
 
 ### Removed deprecated auth methods
 
@@ -203,19 +203,19 @@ few change the DOM or public members that tests/styles may depend on:
 
 ## Behavioural changes
 
-| Area | Change |
-| ---- | ------ |
-| Forms — number | Integer/number fields reject input longer than 10 digits. |
-| Forms — dropdown | Multi-select dropdowns work again (value writes are debounced by 100 ms); conditional dropdowns inside repeatable sections resolve per-row. |
-| Forms — click | The form widget `event` handler fires once per click (a double-registration was removed from the base widget). |
-| Forms — start process | The process card/start button render only after the form finishes loading (no button flash); setting the process definition programmatically no longer triggers a reload. |
-| Search | Queries with non-latin characters are now UTF-8 base64-encoded correctly; resetting the tabbed date filter clears each tab. |
-| Viewer | Changing the version inside the viewer reloads the preview; task-attached files with a display-value form field preview correctly. |
-| Clipboard | Copy affordance is now a Material tooltip; copying keeps focus on the trigger (e.g. the "Copy link" button). |
-| Localisation | Portuguese dates render `dd/mm/yyyy`; `TimeAgoPipe` is now impure and reacts to runtime locale changes, as do date/filesize datatable cells. |
-| Auth | Under Basic auth, requests to the OOI service receive the content-services ticket (fixes starting a Microsoft 365 session). |
-| Notifications / WebSocket | `WebSocketService.connectionParams` is now a function, so the auth token is re-evaluated on every (re)connect — deployment/websocket updates arrive without closing the panel. |
-| Saved searches | `SavedSearchesService` now falls back to the preferences API on error (and re-throws non-404 errors during migration), fixing an empty sidebar on the first login after a cache clear. |
-| Forms — start process | The default start-process error i18n key was corrected (the previous fallback key did not exist, so no error message showed). |
-| Forms — button widget | `ButtonWidgetComponent` no longer uses `OnPush`, so its disabled state updates when the field object mutates in place. |
-| Card view | Text/date item labels now always float (`floatLabel="always"`); the editable date item gained an `adf-property-field` class. |
+| Area                      | Change                                                                                                                                                                                 |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Forms — number            | Integer/number fields reject input longer than 10 digits.                                                                                                                              |
+| Forms — dropdown          | Multi-select dropdowns work again (value writes are debounced by 100 ms); conditional dropdowns inside repeatable sections resolve per-row.                                            |
+| Forms — click             | The form widget `event` handler fires once per click (a double-registration was removed from the base widget).                                                                         |
+| Forms — start process     | The process card/start button render only after the form finishes loading (no button flash); setting the process definition programmatically no longer triggers a reload.              |
+| Search                    | Queries with non-latin characters are now UTF-8 base64-encoded correctly; resetting the tabbed date filter clears each tab.                                                            |
+| Viewer                    | Changing the version inside the viewer reloads the preview; task-attached files with a display-value form field preview correctly.                                                     |
+| Clipboard                 | Copy affordance is now a Material tooltip; copying keeps focus on the trigger (e.g. the "Copy link" button).                                                                           |
+| Localisation              | Portuguese dates render `dd/mm/yyyy`; `TimeAgoPipe` is now impure and reacts to runtime locale changes, as do date/filesize datatable cells.                                           |
+| Auth                      | Under Basic auth, requests to the OOI service receive the content-services ticket (fixes starting a Microsoft 365 session).                                                            |
+| Notifications / WebSocket | `WebSocketService.connectionParams` is now a function, so the auth token is re-evaluated on every (re)connect — deployment/websocket updates arrive without closing the panel.         |
+| Saved searches            | `SavedSearchesService` now falls back to the preferences API on error (and re-throws non-404 errors during migration), fixing an empty sidebar on the first login after a cache clear. |
+| Forms — start process     | The default start-process error i18n key was corrected (the previous fallback key did not exist, so no error message showed).                                                          |
+| Forms — button widget     | `ButtonWidgetComponent` no longer uses `OnPush`, so its disabled state updates when the field object mutates in place.                                                                 |
+| Card view                 | Text/date item labels now always float (`floatLabel="always"`); the editable date item gained an `adf-property-field` class.                                                           |
