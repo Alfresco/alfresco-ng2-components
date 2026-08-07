@@ -16,7 +16,8 @@
  */
 
 import { Component, EventEmitter, inject, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
+import { catchError, shareReplay } from 'rxjs/operators';
 import { FilterParamsModel, ServiceTaskFilterCloudModel } from '../../models/filter-cloud.model';
 import { BaseTaskFiltersCloudComponent } from '../base-task-filters-cloud.component';
 import { ServiceTaskFilterCloudService } from '../../services/service-task-filter-cloud.service';
@@ -46,12 +47,15 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
     filters$: Observable<ServiceTaskFilterCloudModel[]>;
     filters: ServiceTaskFilterCloudModel[] = [];
     currentFilter: ServiceTaskFilterCloudModel;
+    private filtersLoadedFor?: string;
 
     private readonly serviceTaskFilterCloudService = inject(ServiceTaskFilterCloudService);
     private readonly translationService = inject(TranslationService);
 
     ngOnInit() {
-        this.getFilters(this.appName);
+        if (!this.filtersLoadedFor) {
+            this.getFilters(this.appName);
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -70,9 +74,11 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
      * @param appName application name
      */
     getFilters(appName: string): void {
-        this.filters$ = this.serviceTaskFilterCloudService.getTaskListFilters(appName);
+        this.filtersLoadedFor = appName;
+        const filters$ = this.serviceTaskFilterCloudService.getTaskListFilters(appName).pipe(shareReplay({ bufferSize: 1, refCount: true }));
+        this.filters$ = filters$.pipe(catchError(() => EMPTY));
 
-        this.filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
+        filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
             (res: ServiceTaskFilterCloudModel[]) => {
                 this.resetFilter();
                 this.filters = res || [];

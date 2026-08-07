@@ -16,11 +16,11 @@
  */
 
 import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { FilterParamsModel, TaskFilterCloudModel } from '../../models/filter-cloud.model';
 import { AppConfigService, IconModule, TranslationService } from '@alfresco/adf-core';
-import { debounceTime, map, tap } from 'rxjs/operators';
+import { catchError, debounceTime, map, shareReplay, tap } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from '../base-task-filters-cloud.component';
 import { TaskDetailsCloudModel } from '../../../models/task-details-cloud.model';
 import { TaskCloudEngineEvent } from '../../../../models/engine-event-cloud.model';
@@ -68,6 +68,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     enableNotifications = true;
     notificationDebounceTime = 3000;
     currentFiltersValues: { [key: string]: number } = {};
+    private filtersLoadedFor?: string;
 
     private readonly taskFilterCloudService = inject(TaskFilterCloudService);
     private readonly taskListCloudService = inject(TaskListCloudService);
@@ -79,6 +80,9 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
         this.notificationDebounceTime = this.appConfigService.get('notificationDebounceTime', 3000);
+        if (!this.filtersLoadedFor) {
+            this.getFilters(this.appName);
+        }
         this.initFilterCounterNotifications();
         this.getFilterKeysAfterExternalRefreshing();
     }
@@ -99,9 +103,11 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
      * @param appName application name
      */
     getFilters(appName: string): void {
-        this.filters$ = this.taskFilterCloudService.getTaskListFilters(appName);
+        this.filtersLoadedFor = appName;
+        const filters$ = this.taskFilterCloudService.getTaskListFilters(appName).pipe(shareReplay({ bufferSize: 1, refCount: true }));
+        this.filters$ = filters$.pipe(catchError(() => EMPTY));
 
-        this.filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+        filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
             next: (res) => {
                 this.resetFilter();
                 this.filters = res || [];

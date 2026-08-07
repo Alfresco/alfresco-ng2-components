@@ -554,11 +554,16 @@ describe('TaskFiltersCloudComponent', () => {
             expect(component.getFilters).toHaveBeenCalledWith(appName);
         });
 
-        it('should not load filters on init so that the appName binding is the only trigger', () => {
+        it('should load filters only once when appName is bound', async () => {
+            await bindAppName();
+
+            expect(getTaskListFiltersSpy).toHaveBeenCalledTimes(1);
+        });
+
+        it('should load filters on init when appName is not bound', () => {
             fixture.detectChanges();
 
-            expect(getTaskListFiltersSpy).not.toHaveBeenCalled();
-            expect(getTaskFilterCounterSpy).not.toHaveBeenCalled();
+            expect(getTaskListFiltersSpy).toHaveBeenCalledTimes(1);
         });
 
         it('should emit filter key when filter counter is set for first time', () => {

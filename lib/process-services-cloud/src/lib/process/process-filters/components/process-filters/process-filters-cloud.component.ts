@@ -16,12 +16,12 @@
  */
 
 import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFilterCloudModel } from '../../models/process-filter-cloud.model';
 import { AppConfigService, IconModule, TranslationService } from '@alfresco/adf-core';
 import { FilterParamsModel } from '../../../../task/task-filters/models/filter-cloud.model';
-import { debounceTime, map, tap } from 'rxjs/operators';
+import { catchError, debounceTime, map, shareReplay, tap } from 'rxjs/operators';
 import { ProcessListCloudService } from '../../../process-list/services/process-list-cloud.service';
 import { ProcessFilterCloudAdapter } from '../../../process-list/models/process-cloud-query-request.model';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
@@ -83,6 +83,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     notificationDebounceTime = 3000;
     currentFiltersValues: { [key: string]: number } = {};
     updatedFiltersSet = new Set<string>();
+    private filtersLoadedFor?: string;
 
     private readonly destroyRef = inject(DestroyRef);
     private readonly processFilterCloudService = inject(ProcessFilterCloudService);
@@ -95,6 +96,9 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
         this.notificationDebounceTime = this.appConfigService.get('notificationDebounceTime', 3000);
+        if (!this.filtersLoadedFor) {
+            this.getFilters(this.appName);
+        }
         this.initProcessNotification();
         this.getFilterKeysAfterExternalRefreshing();
     }
@@ -115,9 +119,11 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
      * @param appName application name
      */
     getFilters(appName: string): void {
-        this.filters$ = this.processFilterCloudService.getProcessFilters(appName);
+        this.filtersLoadedFor = appName;
+        const filters$ = this.processFilterCloudService.getProcessFilters(appName).pipe(shareReplay({ bufferSize: 1, refCount: true }));
+        this.filters$ = filters$.pipe(catchError(() => EMPTY));
 
-        this.filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+        filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
             next: (res) => {
                 this.resetFilter();
                 this.filters = res || [];
