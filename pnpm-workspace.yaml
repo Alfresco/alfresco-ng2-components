@@ -7,7 +7,7 @@ minimumReleaseAgeStrict: true
 
 overrides:
   # Security fixes
-  fast-uri: 3.1.4
+  fast-uri: 3.1.5
   "js-yaml@4.2.0": "4.3.0"
   "brace-expansion@5.0.6": "5.0.8"
   "brace-expansion@<1.1.17": "1.1.17"
