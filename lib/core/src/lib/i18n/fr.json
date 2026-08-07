@@ -171,7 +171,9 @@
       },
       "EDIT_JSON": {
         "CLOSE": "Fermer",
-        "UPDATE": "Mettre à jour"
+        "UPDATE": "Mettre à jour",
+        "COPY": "Copier",
+        "COPIED": "Copié dans le presse-papiers"
       },
       "UNSAVED_CHANGES": {
         "TITLE": "Modifications non enregistrées",
@@ -669,7 +671,7 @@
     "NO_LABEL": "Non"
   },
   "SESSION_TIMEOUT": {
-    "TITLE": "Travaillez-vous toujours ?",
+    "TITLE": "Travaillez-vous toujours ?\n",
     "MESSAGE": "Votre session se terminera dans {{seconds}} secondes en raison d’une période d’inactivité.",
     "LOG_OUT": "Déconnexion",
     "CONTINUE_WORKING": "Continuer à travailler"
