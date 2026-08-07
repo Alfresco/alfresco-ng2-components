@@ -62,7 +62,7 @@ export default createESLintRule<unknown[], MessageIds>({
     create(context) {
         return {
             [ASTSelectors.join(',')](node: TSESTree.Literal | TSESTree.TemplateLiteral) {
-                const message = filetypeErrors.find((fileTypeError) => context.getFilename().match(fileTypeError.regexp)) || {
+                const message = filetypeErrors.find((fileTypeError) => context.filename.match(fileTypeError.regexp)) || {
                     messageId: 'noAngularMaterialSelectors'
                 };
 
