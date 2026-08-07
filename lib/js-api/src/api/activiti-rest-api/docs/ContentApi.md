@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**getRelatedContentForProcessInstance**](ContentApi.md#getRelatedContentForProcessInstance) | **GET** /enterprise/process-instances/{processInstanceId}/content | List content attached to a process instance
 [**getRelatedContentForTask**](ContentApi.md#getRelatedContentForTask) | **GET** /enterprise/tasks/{taskId}/content | List content attached to a task
 [**getProcessesAndTasksOnContent**](ContentApi.md#getProcessesAndTasksOnContent) | **GET** enterprise/content/document-runtime | Lists processes and tasks on workflow started with provided document
+[**getProcessesAndTasksOnContentBatch**](ContentApi.md#getProcessesAndTasksOnContentBatch) | **POST** /enterprise/document-runtime | Batch lookup of processes and tasks for multiple source documents
 
 <a name="createRelatedContentOnProcessInstance"></a>
 # **createRelatedContentOnProcessInstance**
@@ -530,5 +531,42 @@ contentApi.getProcessesAndTasksOnContent('sourceId', 'source').then((data) => {
 
 [**ResultListDataRepresentationRelatedProcessTask**](ResultListDataRepresentationRelatedProcessTask.md)
 
+<a name="getProcessesAndTasksOnContentBatch"></a>
+# **getProcessesAndTasksOnContentBatch**
+> ResultListDataRepresentationRelatedProcessTask getProcessesAndTasksOnContentBatch(sourceIds, source, size, page)
 
+Batch variant of getProcessesAndTasksOnContent. Accepts up to 500 source document ids in one request and returns the related processes and tasks for all of them.
+
+### Example
+```javascript
+import ContentApi from 'ContentApi';
+import { AlfrescoApi } from '@alfresco/js-api';
+
+const alfrescoApi = new AlfrescoApi();
+alfrescoApi.setConfig({
+    hostEcm: 'http://127.0.0.1:8080'
+});
+
+const contentApi = new ContentApi(alfrescoApi);
+
+contentApi.getProcessesAndTasksOnContentBatch(['id1', 'id2'], 'source').then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, function(error) {
+  console.error(error);
+});
+
+```
+
+### Parameters
+
+| Name          | Type         | Description                             | Notes    |
+|---------------|--------------|-----------------------------------------|----------|
+| **sourceIds** | **string[]** | List of source document ids (up to 500) |          |
+| **source**    | **string**   | Source repository identifier            |          |
+| **size**      | **number**   | Page size                               | optional |
+| **page**      | **number**   | Page number (zero-based)                | optional |
+
+### Return type
+
+[**ResultListDataRepresentationRelatedProcessTask**](ResultListDataRepresentationRelatedProcessTask.md)
 

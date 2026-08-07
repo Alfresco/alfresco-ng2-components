@@ -232,4 +232,16 @@ describe('ProcessContentService', () => {
             });
         });
     });
+
+    it('should call getProcessesAndTasksOnContentBatch on contentApi with correct parameters', (done) => {
+        const sourceIds = ['node1;1.0@site', 'node2;1.0@site'];
+        const source = 'alfresco-1-repoAlfresco';
+
+        spyOn(service.contentApi, 'getProcessesAndTasksOnContentBatch').and.returnValue(Promise.resolve({ data: [] }));
+
+        service.getProcessesAndTasksOnContentBatch(sourceIds, source).subscribe(() => {
+            expect(service.contentApi.getProcessesAndTasksOnContentBatch).toHaveBeenCalledWith(sourceIds, source, undefined, undefined);
+            done();
+        });
+    });
 });

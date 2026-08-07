@@ -66,12 +66,19 @@ Manipulates content related to a Process Instance or Task Instance in APS.
     -   _taskId:_ `string`  - ID of the target task
     -   _opts:_ `any`  - (Optional) Options supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Metadata for the content
--   **getProcessesAndTasksOnContent**(sourceId: `string`, source: `string`, size?: `number`, page?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)<[`ResultListDataRepresentationRelatedProcessTask`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ResultListDataRepresentation%C2%ABRelatedContentRepresentation%C2%BB.md)><br/>
+-   **getProcessesAndTasksOnContent**(sourceId: `string`, source: `string`, size?: `number`, page?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)<[`ResultListDataRepresentationRelatedProcessTask`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ResultListDataRepresentationRelatedProcessTask.md)><br/>
     Lists processes and tasks on workflow started with provided document
     -   _sourceId:_ `string` - id of the document that workflow or task has been started with
     -   _source:_ `string` - source of the document that workflow or task has been started with
     -   _size:_ `number` - size of the entries to get
     -   _page:_ `number` - page number
+-   **getProcessesAndTasksOnContentBatch**(sourceIds: `string[]`, source: `string`, size?: `number`, page?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)<[`ResultListDataRepresentationRelatedProcessTask`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ResultListDataRepresentationRelatedProcessTask.md)><br/>
+    Batch variant of getProcessesAndTasksOnContent. Accepts multiple source document ids in one request (up to 500) and returns the related processes and tasks for all of them.
+    -   _sourceIds:_ `string[]` - ids of the documents to query process participation for (up to 500)
+    -   _source:_ `string` - source of the documents that workflows or tasks have been started with
+    -   _size:_ `number` - (Optional) size of the entries to get
+    -   _page:_ `number` - (Optional) page number
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)<[`ResultListDataRepresentationRelatedProcessTask`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ResultListDataRepresentationRelatedProcessTask.md)>
 -   **handleError**(error: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Reports an error message.
     -   _error:_ `any`  - Data object with optional `message` and `status` fields for the error
@@ -415,6 +422,21 @@ Lists processes and tasks on workflow started with provided document.
 const sourceId = 'sourceId';
 const source = 'source';
 this.contentService.getProcessesAndTasksOnContent(sourceId, source).subscribe(
+   res  => {
+     console.log('Response: ', res);
+   }, error => {
+     console.log('Error: ', error);
+   });
+```
+
+#### getProcessesAndTasksOnContentBatch(sourceIds: string[], source: string, size?: number, page?: number): Observable`<ResultListDataRepresentationRelatedProcessTask>`
+
+Batch variant of `getProcessesAndTasksOnContent`. Accepts multiple source document ids in one request (up to 500) and returns the related processes and tasks for all of them.
+
+```ts
+const sourceIds = ['sourceId1', 'sourceId2'];
+const source = 'source';
+this.contentService.getProcessesAndTasksOnContentBatch(sourceIds, source).subscribe(
    res  => {
      console.log('Response: ', res);
    }, error => {

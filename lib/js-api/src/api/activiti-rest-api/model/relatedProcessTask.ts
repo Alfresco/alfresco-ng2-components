@@ -18,4 +18,5 @@
 export interface RelatedProcessTask {
     processId?: string;
     taskId?: string;
+    sourceId?: string;
 }
