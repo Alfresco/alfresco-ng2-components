@@ -171,7 +171,9 @@
       },
       "EDIT_JSON": {
         "CLOSE": "Cerrar",
-        "UPDATE": "Actualizar"
+        "UPDATE": "Actualizar",
+        "COPY": "Copiar",
+        "COPIED": "Se ha copiado al portapapeles"
       },
       "UNSAVED_CHANGES": {
         "TITLE": "Cambios no guardados",

@@ -171,7 +171,9 @@
       },
       "EDIT_JSON": {
         "CLOSE": "Close",
-        "UPDATE": "Update"
+        "UPDATE": "Update",
+        "COPY": "Copy",
+        "COPIED": "Copied to clipboard"
       },
       "UNSAVED_CHANGES": {
         "TITLE": "Unsaved changes",
