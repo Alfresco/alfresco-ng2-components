@@ -341,6 +341,15 @@ describe('ProcessFiltersCloudComponent', () => {
             expect(lastValue).toBeDefined();
         });
 
+        it('should render an empty filter list instead of the loading spinner when the request fails', async () => {
+            getProcessFiltersSpy.and.returnValue(throwError(() => new Error('wrong request')));
+
+            await bindAppName();
+
+            expect(fixture.debugElement.queryAll(By.css('.adf-process-filters__entry')).length).toBe(0);
+            expect(fixture.debugElement.query(By.css('.adf-app-list-spinner'))).toBeNull();
+        });
+
         it('should not select any process filter if filter input does not exist', async () => {
             const change = new SimpleChange(null, { name: 'nonexistentFilter' }, true);
             fixture.detectChanges();

@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { EMPTY, Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { FilterParamsModel, TaskFilterCloudModel } from '../../models/filter-cloud.model';
 import { AppConfigService, IconModule, TranslationService } from '@alfresco/adf-core';
@@ -32,6 +32,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatListModule } from '@angular/material/list';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
+import { IdentityUserService } from '../../../../people/services/identity-user.service';
 
 @Component({
     selector: 'adf-cloud-task-filters',
@@ -69,11 +70,13 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     notificationDebounceTime = 3000;
     currentFiltersValues: { [key: string]: number } = {};
     private filtersLoadedFor?: string;
+    private currentUser: string;
 
     private readonly taskFilterCloudService = inject(TaskFilterCloudService);
     private readonly taskListCloudService = inject(TaskListCloudService);
     private readonly translationService = inject(TranslationService);
     private readonly appConfigService = inject(AppConfigService);
+    private readonly identityUserService = inject(IdentityUserService);
     private readonly activatedRoute = inject(ActivatedRoute);
     readonly currentRouteFilterId = toSignal(this.activatedRoute.queryParamMap.pipe(map((params) => params.get('filterId'))));
 
@@ -83,6 +86,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         if (!this.filtersLoadedFor) {
             this.getFilters(this.appName);
         }
+        this.currentUser = this.identityUserService.getCurrentUserInfo().username;
         this.initFilterCounterNotifications();
         this.getFilterKeysAfterExternalRefreshing();
     }
@@ -105,7 +109,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     getFilters(appName: string): void {
         this.filtersLoadedFor = appName;
         const filters$ = this.taskFilterCloudService.getTaskListFilters(appName).pipe(shareReplay({ bufferSize: 1, refCount: true }));
-        this.filters$ = filters$.pipe(catchError(() => EMPTY));
+        this.filters$ = filters$.pipe(catchError(() => of([])));
 
         filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
             next: (res) => {
@@ -172,7 +176,11 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         if (this.enableNotifications) {
             this.taskFilterCloudService
                 .getTaskNotificationSubscription(this.appName)
-                .pipe(debounceTime(this.notificationDebounceTime), takeUntilDestroyed(this.destroyRef))
+                .pipe(
+                    map((events) => events.filter((event) => !event.entity.assignee || event.entity.assignee === this.currentUser)),
+                    debounceTime(this.notificationDebounceTime),
+                    takeUntilDestroyed(this.destroyRef)
+                )
                 .subscribe((result) => {
                     result.forEach((taskEvent) => {
                         this.checkFilterCounter(taskEvent.entity);

@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, inject, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { EMPTY, Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, shareReplay } from 'rxjs/operators';
 import { FilterParamsModel, ServiceTaskFilterCloudModel } from '../../models/filter-cloud.model';
 import { BaseTaskFiltersCloudComponent } from '../base-task-filters-cloud.component';
@@ -76,7 +76,7 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
     getFilters(appName: string): void {
         this.filtersLoadedFor = appName;
         const filters$ = this.serviceTaskFilterCloudService.getTaskListFilters(appName).pipe(shareReplay({ bufferSize: 1, refCount: true }));
-        this.filters$ = filters$.pipe(catchError(() => EMPTY));
+        this.filters$ = filters$.pipe(catchError(() => of([])));
 
         filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
             (res: ServiceTaskFilterCloudModel[]) => {

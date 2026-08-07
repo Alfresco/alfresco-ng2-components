@@ -123,6 +123,17 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         expect(lastValue).toBeDefined();
     });
 
+    it('should render an empty filter list instead of the loading spinner when the request fails', async () => {
+        getTaskListFiltersSpy.and.returnValue(throwError(() => new Error('wrong request')));
+
+        component.ngOnChanges({ appName: new SimpleChange(null, 'my-app-1', true) });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(fixture.debugElement.queryAll(By.css('.adf-task-filters__entry')).length).toBe(0);
+        expect(fixture.debugElement.query(By.css('.adf-app-list-spinner'))).toBeNull();
+    });
+
     it('should not select any filter as default', async () => {
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);

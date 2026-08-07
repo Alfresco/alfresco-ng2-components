@@ -35,15 +35,27 @@ import { TaskFilterCloudModel } from '../../models/filter-cloud.model';
 import { MatIconHarness } from '@angular/material/icon/testing';
 import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
+import { IdentityUserService } from '../../../../people/services/identity-user.service';
+import { TaskCloudEngineEvent } from '../../../../models/engine-event-cloud.model';
+import { TaskDetailsCloudModel } from '../../../models/task-details-cloud.model';
 
 @Component({ selector: 'adf-cloud-dummy', template: '' })
 class DummyComponent {}
+
+/** Matches both `fakeGlobalFilter[0].assignee` and `taskNotifications[0].entity.assignee`. */
+const CURRENT_USER = 'AssignedTaskUser';
+
+const taskEvent = (entity: Partial<TaskDetailsCloudModel>): TaskCloudEngineEvent => ({
+    eventType: 'TASK_ASSIGNED',
+    entity: { ...taskNotifications[0].entity, ...entity } as TaskDetailsCloudModel
+});
 
 describe('TaskFiltersCloudComponent', () => {
     let loader: HarnessLoader;
     let taskFilterService: TaskFilterCloudService;
     let taskListService: TaskListCloudService;
     let appConfigService: AppConfigService;
+    let identityUserService: IdentityUserService;
 
     let component: TaskFiltersCloudComponent;
     let fixture: ComponentFixture<TaskFiltersCloudComponent>;
@@ -51,6 +63,7 @@ describe('TaskFiltersCloudComponent', () => {
     let getTaskListFiltersSpy: jasmine.Spy;
     let getTaskListCountSpy: jasmine.Spy;
     let getTaskNotificationSubscriptionSpy: jasmine.Spy;
+    let getCurrentUserInfoSpy: jasmine.Spy;
     let router: Router;
 
     const configureTestingModule = async (searchApiMethod: 'GET' | 'POST') => {
@@ -76,6 +89,8 @@ describe('TaskFiltersCloudComponent', () => {
         });
         taskFilterService = TestBed.inject(TaskFilterCloudService);
         taskListService = TestBed.inject(TaskListCloudService);
+        identityUserService = TestBed.inject(IdentityUserService);
+        getCurrentUserInfoSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({ username: CURRENT_USER });
         getTaskFilterCounterSpy = spyOn(taskFilterService, 'getTaskFilterCounter').and.returnValue(of(11));
         getTaskListCountSpy = spyOn(taskListService, 'getTaskListCount').and.returnValue(of(11));
         getTaskNotificationSubscriptionSpy = spyOn(taskFilterService, 'getTaskNotificationSubscription').and.returnValue(of(taskNotifications));
@@ -333,6 +348,90 @@ describe('TaskFiltersCloudComponent', () => {
                 flush();
             }));
         });
+
+        describe('Notifications filtered by current user', () => {
+            let notifications$: Subject<TaskCloudEngineEvent[]>;
+            let emittedEvents: TaskCloudEngineEvent[] | undefined;
+
+            const initComponent = () => {
+                component.showIcons = true;
+                component.appName = 'my-app-1';
+                fixture.detectChanges();
+            };
+
+            const emitNotifications = (events: TaskCloudEngineEvent[]) => {
+                notifications$.next(events);
+                tick(component.notificationDebounceTime);
+                fixture.detectChanges();
+            };
+
+            beforeEach(() => {
+                emittedEvents = undefined;
+                notifications$ = new Subject<TaskCloudEngineEvent[]>();
+                getTaskNotificationSubscriptionSpy.and.returnValue(notifications$.asObservable());
+            });
+
+            it('should read the current user on init before subscribing to the notifications', () => {
+                component.appName = 'my-app-1';
+
+                fixture.detectChanges();
+
+                expect(getCurrentUserInfoSpy).toHaveBeenCalled();
+                expect(getCurrentUserInfoSpy).toHaveBeenCalledBefore(getTaskNotificationSubscriptionSpy);
+            });
+
+            it('should keep a notification assigned to the current user', fakeAsync(() => {
+                initComponent();
+                const event = taskEvent({ assignee: CURRENT_USER });
+
+                emitNotifications([event]);
+
+                expect(emittedEvents).toEqual([event]);
+                flush();
+            }));
+
+            it('should keep a notification with no assignee', fakeAsync(() => {
+                initComponent();
+                const event = taskEvent({ assignee: undefined });
+
+                emitNotifications([event]);
+
+                expect(emittedEvents).toEqual([event]);
+                flush();
+            }));
+
+            it('should filter out a notification assigned to another user', fakeAsync(() => {
+                initComponent();
+
+                emitNotifications([taskEvent({ assignee: 'another-user' })]);
+
+                expect(emittedEvents).toEqual([]);
+                flush();
+            }));
+
+            it('should only keep the events relevant to the current user when the batch is mixed', fakeAsync(() => {
+                initComponent();
+                const ownEvent = taskEvent({ assignee: CURRENT_USER });
+                const unassignedEvent = taskEvent({ assignee: undefined });
+                const foreignEvent = taskEvent({ assignee: 'another-user' });
+
+                emitNotifications([ownEvent, foreignEvent, unassignedEvent]);
+
+                expect(emittedEvents).toEqual([ownEvent, unassignedEvent]);
+                expect(emittedEvents).not.toContain(foreignEvent);
+                flush();
+            }));
+
+            it('should still refresh the filter counters when every notification is filtered out', fakeAsync(() => {
+                initComponent();
+                const updateFilterCountersSpy = spyOn(component, 'updateFilterCounters');
+
+                emitNotifications([taskEvent({ assignee: 'another-user' })]);
+
+                expect(updateFilterCountersSpy).toHaveBeenCalledTimes(1);
+                flush();
+            }));
+        });
     });
 
     describe('searchApiMethod set to POST', () => {
@@ -470,6 +569,15 @@ describe('TaskFiltersCloudComponent', () => {
             });
 
             component.ngOnChanges({ appName: change });
+        });
+
+        it('should render an empty filter list instead of the loading spinner when the request fails', async () => {
+            getTaskListFiltersSpy.and.returnValue(throwError(() => new Error('wrong request')));
+
+            await bindAppName();
+
+            expect(fixture.debugElement.queryAll(By.css('.adf-task-filters__entry')).length).toBe(0);
+            expect(fixture.debugElement.query(By.css('.adf-app-list-spinner'))).toBeNull();
         });
 
         it('should select the task filter based on the input by name param', async () => {
