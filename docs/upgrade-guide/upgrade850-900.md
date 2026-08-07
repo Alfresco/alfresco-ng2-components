@@ -20,6 +20,7 @@ rebuild, and re-test. Expect to install with `--legacy-peer-deps` (see below).
   - [Knowledge Discovery removed](#knowledge-discovery-removed)
   - [`MaterialModule` removed](#materialmodule-removed)
   - [Search query-builder refactor](#search-query-builder-refactor)
+  - [Extension auth guards are now typed](#extension-auth-guards-are-now-typed)
   - [Process instance model — subprocess/linked-process fields](#process-instance-model--subprocesslinked-process-fields)
   - [Task cloud — Runtime Bundle task fetch](#task-cloud--runtime-bundle-task-fetch)
   - [Multiline text widget base class](#multiline-text-widget-base-class)
