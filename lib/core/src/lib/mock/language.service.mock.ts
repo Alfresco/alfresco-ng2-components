@@ -25,6 +25,7 @@ export class LanguageServiceMock implements LanguageServiceInterface {
     private readonly languages = new BehaviorSubject<LanguageItem[]>([
         { key: 'de', label: 'Deutsch' },
         { key: 'en', label: 'English' },
+        { key: 'en-AU', label: 'English (Australia)' },
         { key: 'es', label: 'Español' },
         { key: 'fr', label: 'Français' },
         { key: 'it', label: 'Italiano' },
