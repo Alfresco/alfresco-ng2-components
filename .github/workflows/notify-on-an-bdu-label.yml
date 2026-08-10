@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Check if label was added after PR creation
+      - name: Check if label was added after PR creation (with time threshold)
         id: check_label_timing
         uses: actions/github-script@v7
         with:
@@ -41,9 +41,9 @@ jobs:
             }
             
             const labelAddedAt = new Date(labelEvent.created_at);
+            const timeDiffSeconds = (labelAddedAt - prCreatedAt) / 1000;
             
-            // Only proceed if label was added AFTER PR was created
-            if (labelAddedAt > prCreatedAt) {
+            if (timeDiffSeconds > 0) {
               core.setOutput('should_notify', 'true');
             } else {
               core.setOutput('should_notify', 'false');
@@ -63,4 +63,3 @@ jobs:
             - **Repository:** ${{ github.repository }}
             - **PR:** [#${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }})
             - **Author:** ${{ github.event.pull_request.user.login }}
-            
