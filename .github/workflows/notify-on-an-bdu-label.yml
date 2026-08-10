@@ -41,7 +41,7 @@ jobs:
             const labelAddedAt = new Date(labelEvent.created_at);
             const timeDiffSeconds = (labelAddedAt - prCreatedAt) / 1000;
             
-            if (timeDiffSeconds > 0) {
+            if (timeDiffSeconds > 15) {
               core.setOutput('should_notify', 'true');
             } else {
               core.setOutput('should_notify', 'false');
