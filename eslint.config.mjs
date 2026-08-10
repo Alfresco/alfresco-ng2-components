@@ -17,7 +17,6 @@
 
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import js from '@eslint/js';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import { fixupPluginRules } from '@eslint/compat';
 import unicorn from 'eslint-plugin-unicorn';
@@ -29,7 +28,7 @@ import cspell from '@cspell/eslint-plugin';
 import storybook from 'eslint-plugin-storybook';
 import nxPlugin from '@nx/eslint-plugin';
 import angularEslintEslintPlugin from '@angular-eslint/eslint-plugin';
-import angularTemplateParser from '@angular-eslint/template-parser'
+import angularTemplateParser from '@angular-eslint/template-parser';
 import angularEslintTemplatePlugin from '@angular-eslint/eslint-plugin-template';
 import tsParser from '@typescript-eslint/parser';
 import jsonParser from 'jsonc-eslint-parser';
