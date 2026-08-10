@@ -7,7 +7,7 @@ on:
 
 permissions:
   pull-requests: read
-  contents: read
+  issues: read
 
 jobs:
   notify-bdu:
@@ -22,14 +22,12 @@ jobs:
           script: |
             const prCreatedAt = new Date('${{ github.event.pull_request.created_at }}');
             
-            // Get PR timeline to find when label was added
             const timeline = await github.rest.issues.listEvents({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
             });
             
-            // Find the most recent 'labeled' event for "A/N BDU"
             const labelEvent = timeline.data.reverse().find(event => 
               event.event === 'labeled' && 
               event.label.name === 'A/N BDU'
