@@ -36,8 +36,8 @@ jobs:
               return;
             }
             const labeledAt = new Date(labeled[labeled.length - 1].created_at).getTime();
-            // labels applied within 30s of opening are treated as "added at creation"
-            core.setOutput('notify', (labeledAt - prCreatedAt) > 15000 ? 'true' : 'false');
+            // labels applied within 15s of opening are treated as "added at creation"
+            core.setOutput('notify', (labeledAt - prCreatedAt) > 15_000 ? 'true' : 'false');
 
       - name: Send Teams notification
         if: steps.check.outputs.notify == 'true'
