@@ -227,7 +227,6 @@ export default [
             'brace-style': 'off',
             'comma-dangle': 'error',
             'default-case': 'error',
-            'import/order': 'off',
             'max-len': [
                 'error',
                 {
