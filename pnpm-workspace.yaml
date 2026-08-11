@@ -9,7 +9,7 @@ overrides:
   # Security fixes
   fast-uri: 3.1.5
   "js-yaml@4.2.0": "4.3.0"
-  "brace-expansion@5.0.6": "5.0.8"
+  "brace-expansion@5.0.8": "5.0.9"
   "brace-expansion@<1.1.18": "1.1.18"
   svgo: 4.0.2
   shell-quote: 1.9.0
