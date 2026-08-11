@@ -27,6 +27,8 @@
             &-button {
                 min-width: 0;
                 height: unset;
+                padding-top: 4px;
+                padding-bottom: 4px;
                 -webkit-font-smoothing: subpixel-antialiased;
 
                 @include mat.button-overrides(
