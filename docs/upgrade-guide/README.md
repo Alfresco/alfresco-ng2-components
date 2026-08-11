@@ -6,6 +6,23 @@ Title: Upgrade guides
 
 Below are links to the upgrade guides notes for all released versions of ADF back to v2.6.0
 
+- [Upgrading from ADF v8.5 to v9.0](upgrade850-900.md)
+- [Upgrading from ADF v8.4 to v8.5](upgrade841-850.md)
+- [Upgrading from ADF v8.3.1 to v8.4.1](upgrade831-841.md)
+- [Upgrading from ADF v8.2.1 to v8.3.1](upgrade821-831.md)
+- [Upgrading from ADF v8.1.1 to v8.2.1](upgrade811-821.md)
+- [Upgrading from ADF v8.0 to v8.1.1](upgrade80-811.md)
+- [Upgrading from ADF v7.0 to v8.0](upgrade70-80.md)
+- [Upgrading from ADF v6.9 to v7.0](upgrade69-70.md)
+- [Upgrading from ADF v6.8 to v6.9](upgrade68-69.md)
+- [Upgrading from ADF v6.7.1 to v6.8.0](upgrade671-68.md)
+- [Upgrading from ADF v6.6.0 to v6.7.1](upgrade66-671.md)
+- [Upgrading from ADF v6.5.2 to v6.6.0](upgrade652-66.md)
+- [Upgrading from ADF v6.4 to v6.5.2](upgrade64-652.md)
+- [Upgrading from ADF v6.3 to v6.4](upgrade63-64.md)
+- [Upgrading from ADF v6.2 to v6.3](upgrade62-63.md)
+- [Upgrading from ADF v6.1 to v6.2](upgrade61-62.md)
+- [Upgrading from ADF v6.0 to v6.1](upgrade60-61.md)
 - [Upgrading from ADF v5.0 to v6.0](upgrade50-60.md)
 - [Upgrading from ADF v4.11 to v5.0](upgrade411-50.md)
 - [Upgrading from ADF v4.6 to v4.7](upgrade46-47.md)
