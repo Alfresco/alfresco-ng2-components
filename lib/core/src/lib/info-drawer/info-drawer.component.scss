@@ -43,19 +43,9 @@
                     #{ms.$mat-tab-label-text} {
                         flex-grow: 1;
 
-                        #{ms.$mat-icon} + span {
+                        .adf-info-drawer-tab-icon + span {
                             padding-left: 5px;
                         }
-                    }
-
-                    #{ms.$mat-tab-body} {
-                        overflow-y: hidden;
-                    }
-
-                    #{ms.$mat-tab-body-content} {
-                        /* stylelint-disable */
-                        overflow: auto;
-                        /* stylelint-enable */
                     }
                 }
             }
@@ -68,10 +58,7 @@
     div[role='tab'].adf-info-drawer-tab {
         border-bottom: unset;
         opacity: 1;
-
-        &#{ms.$mat-tab-label} {
-            flex-grow: 1;
-        }
+        flex-grow: 1;
 
         &:has(span) {
             height: 32px;

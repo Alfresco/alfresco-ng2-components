@@ -23,13 +23,6 @@ adf-layout-container {
         margin-right 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* query for Microsoft IE 11 */
-@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-    .adf-container-full-width {
-        width: 100%;
-    }
-}
-
 .adf-layout-container {
     display: block;
     width: 100%;

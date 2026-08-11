@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @use '../../../styles/mat-selectors' as ms;
 
 .adf-task-form {
@@ -10,10 +11,12 @@
         padding-right: 25px;
         padding-bottom: 25px;
 
-        & #{ms.$mat-button} {
-            height: 36px;
-            border-radius: 5px;
-        }
+        @include mat.button-overrides(
+            (
+                text-container-height: 36px,
+                text-container-shape: 5px
+            )
+        );
 
         & #{ms.$mat-button-label} {
             width: 58px;

@@ -18,7 +18,7 @@
             text-align: right;
         }
 
-        #{ms.$mat-button} {
+        .adf-start-process-button {
             width: auto;
             padding: 0 16px;
             margin: 0 8px;
@@ -86,16 +86,6 @@
         flex-direction: row;
         justify-content: space-around;
         align-items: baseline;
-
-        .adf-start-process-definition-select {
-            #{ms.$mat-select-arrow-wrapper} {
-                transform: none;
-
-                svg {
-                    fill: currentcolor;
-                }
-            }
-        }
     }
 
     &-start-process-app-list {

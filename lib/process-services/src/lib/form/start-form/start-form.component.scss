@@ -1,16 +1,13 @@
+@use '@angular/material' as mat;
 @use '../../styles/mat-selectors' as ms;
 
 .adf-form-container {
     max-width: 100%;
     max-height: 100%;
 
-    & #{ms.$mat-card} {
+    & mat-card {
         padding: 16px 24px;
         overflow: hidden;
-    }
-
-    & #{ms.$mat-card-header-text} {
-        margin: 0;
     }
 
     & #{ms.$mat-tab-body-content} {
@@ -22,9 +19,11 @@
         text-transform: uppercase;
     }
 
-    & #{ms.$mat-tab-ink-bar} {
-        height: 4px;
-    }
+    @include mat.tabs-overrides(
+        (
+            active-indicator-height: 4px
+        )
+    );
 
     & #{ms.$mat-form-field-wrapper} {
         margin: 0 12px 0 0;
@@ -84,16 +83,12 @@
             padding-bottom: 25px;
             padding-right: 25px;
 
-            & #{ms.$mat-button} {
-                height: 36px;
-                border-radius: 5px;
-            }
-
-            & #{ms.$mat-button-label} {
-                width: 58px;
-                height: 20px;
-                font: var(--mat-sys-body-large);
-            }
+            @include mat.button-overrides(
+                (
+                    text-container-height: 36px,
+                    text-container-shape: 5px
+                )
+            );
         }
     }
 }

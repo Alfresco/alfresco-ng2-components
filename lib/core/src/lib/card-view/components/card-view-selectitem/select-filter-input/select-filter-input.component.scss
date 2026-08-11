@@ -13,12 +13,12 @@
         }
     }
 
-    #{ms.$mat-form-field} {
+    mat-form-field {
         width: 100%;
     }
 }
 
-#{ms.$mat-select-panel}.adf-select-filter {
+.adf-select-filter.adf-select-filter-panel {
     transform: none;
     overflow-x: hidden;
 }

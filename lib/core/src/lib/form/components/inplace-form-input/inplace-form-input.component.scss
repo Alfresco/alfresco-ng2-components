@@ -4,11 +4,6 @@
 $adf-inplace-input-padding: 7px;
 
 .adf-inplace-input-container {
-    #{ms.$mat-form-text-field-infix} {
-        display: flex;
-        border-top: 0;
-    }
-
     #{ms.$mat-form-field-label} {
         padding: $adf-inplace-input-padding;
     }

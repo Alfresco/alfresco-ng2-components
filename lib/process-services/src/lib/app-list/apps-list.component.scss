@@ -1,5 +1,4 @@
 @use 'sass:map';
-@use '../styles/mat-selectors' as ms;
 @use '../styles/flex' as flex;
 
 .adf-app-list-item {
@@ -57,7 +56,7 @@ $tile-themes: (
     flex-direction: column;
     height: 85vh;
 
-    #{ms.$mat-progress-spinner} {
+    .adf-app-list-spinner-progress {
         margin: 0 auto;
     }
 }

@@ -1,14 +1,9 @@
 /* stylelint-disable selector-class-pattern */
-@use '../../../../mat-selectors' as ms;
 @use '../../../../mixins' as mixins;
 
 .adf {
     // eslint-disable-selector-class-pattern
     &-date-widget {
-        #{ms.$mat-form-field-suffix} {
-            top: 26px;
-        }
-
         .adf-label {
             top: 20px;
         }
@@ -17,16 +12,6 @@
             display: flex;
             align-items: flex-start;
             flex-direction: column;
-        }
-    }
-
-    &-left-label-input-datepicker {
-        #{ms.$mat-form-field-suffix} {
-            top: 0;
-        }
-
-        #{ms.$mat-form-text-field-infix} {
-            width: 100%;
         }
     }
 }

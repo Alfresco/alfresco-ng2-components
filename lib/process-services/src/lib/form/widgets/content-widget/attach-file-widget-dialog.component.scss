@@ -1,22 +1,19 @@
 @use '../../../styles/mat-selectors' as ms;
 
 .adf-attach-file-widget-dialog {
-    #{ms.$mat-dialog-actions} {
+    .adf-login-dialog-actions {
         display: flex;
         justify-content: flex-end;
+        margin-left: -25px;
+        margin-right: -25px;
+        padding-right: 25px;
 
         button {
             text-transform: uppercase;
         }
     }
-
-    .adf-login-dialog-actions {
-        margin-left: -25px;
-        margin-right: -25px;
-        padding-right: 25px;
-    }
 }
 
-#{ms.$mat-dialog-surface} {
+.adf-attach-file-widget-dialog #{ms.$mat-dialog-surface} {
     overflow-x: hidden;
 }

@@ -1,6 +1,14 @@
+@use '@angular/material' as mat;
 @use '../../../styles/mat-selectors' as ms;
 
 .adf-card-view-selectitem {
+    @include mat.form-field-overrides(
+        (
+            filled-active-indicator-height: 0,
+            filled-focus-active-indicator-height: 0
+        )
+    );
+
     .adf-property-value {
         width: 100%;
     }
@@ -45,10 +53,6 @@
         white-space: nowrap;
         cursor: default;
         padding: 6px 0;
-    }
-
-    #{ms.$mat-line-ripple} {
-        display: none;
     }
 
     .adf-property-readonly-value {

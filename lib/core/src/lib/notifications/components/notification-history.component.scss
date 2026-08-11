@@ -8,11 +8,7 @@ $notification-item-height: 72px;
         -webkit-font-smoothing: subpixel-antialiased;
     }
 
-    &-notification-history-menu_button#{ms.$mat-button} {
-        border-radius: 90%;
-        padding: 0;
-        min-width: 40px;
-        height: 40px;
+    &-notification-history-menu_button {
         margin-top: 1px;
 
         .adf-notification-history-menu_button-icon {
@@ -140,7 +136,7 @@ $notification-item-height: 72px;
     }
 }
 
-#{ms.$mat-menu-panel}.adf-notification-history-menu.adf-notification-history-menu-panel {
+.adf-notification-history-menu.adf-notification-history-menu-panel {
     min-width: 320px;
     max-height: 500px;
 

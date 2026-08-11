@@ -93,7 +93,7 @@
                 align-items: center;
                 justify-content: center;
 
-                #{ms.$mat-icon} {
+                .adf-grid-list-row-remove-button-icon {
                     display: flex;
                     justify-content: center;
                     align-items: center;
@@ -144,15 +144,6 @@
         }
     }
 
-    #{mat-input-placeholder} {
-        top: 1.8em;
-    }
-
-    #{ms.$mat-grid-tile} {
-        overflow: visible;
-        width: 80%;
-    }
-
     adf-form-field,
     mat-form-field {
         width: 100%;
@@ -164,32 +155,20 @@
         max-width: 100%;
         max-height: 100%;
 
-        & #{ms.$mat-card} {
+        & mat-card {
             padding: 16px 24px;
             overflow: hidden;
         }
 
-        & #{ms.$mat-card-header-text} {
-            margin: 0;
-        }
-
         & #{ms.$mat-tab-body-content} {
             overflow: hidden;
-            padding-top: 0;
         }
 
-        & #{mat-tab-label-text} {
-            letter-spacing: -0.4px;
-            text-align: left;
-            color: rgba(0, 0, 0, 0.54);
-            text-transform: uppercase;
-        }
-
-        & #{ms.$mat-tab-ink-bar} {
-            #{ms.$mat-tab-indicator-underline} {
-                border-top-width: 4px;
-            }
-        }
+        @include mat.tabs-overrides(
+            (
+                active-indicator-height: 4px
+            )
+        );
 
         & #{ms.$mat-form-field-wrapper} {
             margin: 0 12px 0 0;

@@ -1,13 +1,7 @@
 /* stylelint-disable selector-class-pattern */
-@use '../../../mat-selectors.scss' as ms;
-
 adf-search-chip-autocomplete-input {
     .adf-chip-list {
         width: 100%;
-    }
-
-    .adf-chip-list:has(#{ms.$mat-notched-outline}) {
-        margin-top: 4px;
     }
 
     .adf-search-properties-file-input {
@@ -23,11 +17,9 @@ adf-search-chip-autocomplete-input {
         padding: 4px 0;
     }
 
-    #{ms.$mat-evolution-chip-set} {
-        #{ms.$mat-evolution-chip} {
-            margin-left: 0;
-            margin-right: 4px;
-        }
+    .adf-option-chips.adf-autocomplete-added-option-chips {
+        margin-left: 0;
+        margin-right: 4px;
     }
 
     .adf-option-chips-delete-button.adf-autocomplete-added-option-chips-delete-button {
