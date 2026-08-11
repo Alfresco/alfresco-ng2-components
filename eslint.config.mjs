@@ -17,8 +17,6 @@
 
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import js from '@eslint/js';
-import { FlatCompat } from '@eslint/eslintrc';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import { fixupPluginRules } from '@eslint/compat';
 import unicorn from 'eslint-plugin-unicorn';
@@ -27,11 +25,11 @@ import prettier from 'eslint-plugin-prettier';
 import ban from 'eslint-plugin-ban';
 import licenseHeader from 'eslint-plugin-license-header';
 import cspell from '@cspell/eslint-plugin';
-import importPlugin from 'eslint-plugin-import';
 import storybook from 'eslint-plugin-storybook';
 import nxPlugin from '@nx/eslint-plugin';
 import angularEslintEslintPlugin from '@angular-eslint/eslint-plugin';
 import angularTemplateParser from '@angular-eslint/template-parser';
+import angularEslintTemplatePlugin from '@angular-eslint/eslint-plugin-template';
 import tsParser from '@typescript-eslint/parser';
 import jsonParser from 'jsonc-eslint-parser';
 import alfrescoEslintAngular from './lib/eslint-angular/main.js';
@@ -39,12 +37,6 @@ import jsdoc from 'eslint-plugin-jsdoc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
-});
 
 export default [
     {
@@ -113,13 +105,7 @@ export default [
     {
         files: ['**/*.ts'],
         ignores: ['**/*.d.ts', '**/*.mjs'],
-        ...compat.extends(
-            'plugin:@nx/typescript',
-            'plugin:@nx/angular',
-            'plugin:@cspell/recommended',
-            'plugin:@angular-eslint/recommended',
-            'plugin:@angular-eslint/template/process-inline-templates'
-        )[0],
+        processor: angularEslintTemplatePlugin.processors['extract-inline-html'],
         plugins: {
             '@nx': nxPlugin,
             jsdoc,
@@ -128,7 +114,6 @@ export default [
             prettier: prettier,
             ban: ban,
             '@cspell': cspell,
-            import: importPlugin,
             '@angular-eslint': angularEslintEslintPlugin,
             '@typescript-eslint': typescriptEslint
         },
@@ -142,6 +127,26 @@ export default [
             }
         },
         rules: {
+            // -----------------------------------------------------------------------
+            // Disabled: TypeScript compiler handles these natively, base ESLint rules conflict with @typescript-eslint equivalents
+            // -----------------------------------------------------------------------
+            'no-undef': 'off',
+            'no-unused-vars': 'off',
+            'no-shadow': 'off',
+            'no-empty': 'off',
+            'getter-return': 'off',
+
+            // -----------------------------------------------------------------------
+            // Disabled: rules added in ESLint v9+ that were never enforced in this codebase
+            // Enable individually when ready to fix existing violations
+            // -----------------------------------------------------------------------
+            'no-useless-escape': 'off',
+            'no-useless-assignment': 'off',
+            'no-constant-binary-expression': 'off',
+            'no-unused-private-class-members': 'off',
+            'no-unassigned-vars': 'off',
+            'preserve-caught-error': 'off',
+
             // Uncomment this to enable prettier checks as part of the ESLint
             // Note to developers:
             // you can uncomment the full ruleset locally when fixing issues, and then comment
@@ -221,7 +226,6 @@ export default [
             'brace-style': 'off',
             'comma-dangle': 'error',
             'default-case': 'error',
-            'import/order': 'off',
             'max-len': [
                 'error',
                 {
@@ -303,15 +307,17 @@ export default [
     },
     {
         files: ['**/*.html'],
-        ...compat.extends(
-            'plugin:@angular-eslint/template/recommended',
-            'plugin:@angular-eslint/template/accessibility',
-            'plugin:@nx/angular-template'
-        )[0],
+        plugins: {
+            '@angular-eslint/template': angularEslintTemplatePlugin,
+            '@nx': nxPlugin
+        },
         languageOptions: {
             parser: angularTemplateParser
         },
         rules: {
+            ...angularEslintTemplatePlugin.configs.recommended.rules,
+            ...angularEslintTemplatePlugin.configs.accessibility.rules,
+            ...nxPlugin.configs['angular-template'].rules,
             '@angular-eslint/template/prefer-self-closing-tags': 'error'
         }
     },
