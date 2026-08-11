@@ -12,37 +12,37 @@
         overflow-wrap: anywhere;
         gap: 8px;
 
-        mat-icon {
+        &-icon {
             flex: 0 0 auto;
             align-self: flex-start;
         }
-    }
 
-    .adf-snackbar-message-content-action {
-        margin-left: 24px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 16px;
+        &-action {
+            margin-left: 24px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 16px;
 
-        &-button {
-            min-width: 0;
-            height: unset;
-            -webkit-font-smoothing: subpixel-antialiased;
+            &-button {
+                min-width: 0;
+                height: unset;
+                -webkit-font-smoothing: subpixel-antialiased;
 
-            @include mat.button-overrides(
-                (
-                    text-horizontal-padding: 16px
-                )
-            );
-        }
+                @include mat.button-overrides(
+                    (
+                        text-horizontal-padding: 16px
+                    )
+                );
+            }
 
-        &-icon {
-            @include mat.icon-button-overrides(
-                (
-                    state-layer-size: 24px
-                )
-            );
+            &-icon {
+                @include mat.icon-button-overrides(
+                    (
+                        state-layer-size: 24px
+                    )
+                );
+            }
         }
     }
 }
