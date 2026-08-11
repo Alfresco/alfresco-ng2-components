@@ -1,4 +1,4 @@
-@use '../styles/mat-selectors' as ms;
+@use '@angular/material' as mat;
 
 :host {
     display: flex;
@@ -22,32 +22,27 @@
         margin-left: 24px;
         display: flex;
         flex-direction: row;
+        align-items: center;
+        gap: 16px;
 
-        #{ms.$mat-button} {
+        &-button {
             min-width: 0;
-            margin: -8px;
             height: unset;
+            -webkit-font-smoothing: subpixel-antialiased;
 
-            &.adf-snackbar-message-content-action-button {
-                margin-right: 8px;
-                padding-left: 16px;
-                padding-right: 16px;
-                width: auto;
-                -webkit-font-smoothing: subpixel-antialiased;
-            }
+            @include mat.button-overrides(
+                (
+                    text-horizontal-padding: 16px
+                )
+            );
+        }
 
-            &.adf-snackbar-message-content-action-icon {
-                padding: 0;
-                width: auto;
-
-                mat-icon {
-                    height: 24px;
-                    width: 24px;
-                    font-size: 24px;
-                    margin-right: 0;
-                    margin-top: 4px;
-                }
-            }
+        &-icon {
+            @include mat.icon-button-overrides(
+                (
+                    state-layer-size: 24px
+                )
+            );
         }
     }
 }
