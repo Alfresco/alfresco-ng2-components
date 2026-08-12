@@ -14,6 +14,9 @@ jobs:
     name: Notify Teams when A/N BDU label is added
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    if: >-
+      github.event.label.name == 'A/N BDU' &&
+      github.event.pull_request.state == 'open'
     steps:
       - name: Check if label was added after PR creation (with time threshold)
         id: check_label_timing
