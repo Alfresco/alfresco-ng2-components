@@ -1,6 +1,6 @@
 <p class="adf-snackbar-message-content" data-automation-id="adf-snackbar-message-content">
     @if (data.decorativeIcon) {
-        <mat-icon data-automation-id="adf-snackbar-decorative-icon" [adf-icon]="data.decorativeIcon" />
+        <mat-icon class="adf-snackbar-message-content-icon" data-automation-id="adf-snackbar-decorative-icon" [adf-icon]="data.decorativeIcon" />
     }
     {{ data.message }}
 </p>
@@ -8,14 +8,23 @@
 @if (data.showAction) {
     <div class="adf-snackbar-message-content-action">
         @if (data.actionLabel) {
-            <button mat-button (click)="snackBarRef.dismissWithAction()" class="adf-snackbar-message-content-action-button"
-                    data-automation-id="adf-snackbar-message-content-action-button">
-                {{data.actionLabel}}
+            <button
+                matButton
+                (click)="snackBarRef.dismissWithAction()"
+                class="adf-snackbar-message-content-action-button"
+                data-automation-id="adf-snackbar-message-content-action-button"
+            >
+                {{ data.actionLabel }}
             </button>
         }
         @if (data.actionIcon) {
-            <button mat-button (click)="onIconClicked()" class="adf-snackbar-message-content-action-icon"
-                    [attr.aria-label]="data.actionIconAriaLabel | translate">
+            <button
+                matIconButton
+                (click)="onIconClicked()"
+                class="adf-snackbar-message-content-action-icon"
+                data-automation-id="adf-snackbar-message-content-action-icon"
+                [attr.aria-label]="data.actionIconAriaLabel | translate"
+            >
                 <mat-icon [adf-icon]="data.actionIcon" />
             </button>
         }
