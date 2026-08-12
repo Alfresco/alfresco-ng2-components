@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     if: >-
+      github.event.action == 'labeled' &&
       github.event.label.name == 'A/N BDU' &&
       github.event.pull_request.state == 'open'
     steps:
