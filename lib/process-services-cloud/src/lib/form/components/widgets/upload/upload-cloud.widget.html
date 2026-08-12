@@ -49,6 +49,8 @@
 
         <div *ngIf="!hasFile && field.readOnly">{{ 'FORM.FIELD.NO_FILE_ATTACHED' | translate }}</div>
     </div>
-    <error-widget [error]="field.validationSummary" />
-    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
+    <error-widget
+        [error]="field.validationSummary"
+        [required]="isInvalidFieldRequired() ? ('FORM.FIELD.REQUIRED' | translate) : ''"
+    />
 </div>

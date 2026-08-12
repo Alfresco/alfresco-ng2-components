@@ -283,7 +283,8 @@ describe('DataTableWidgetComponent', () => {
             const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-data-table-widget-failed-message'));
 
             assertData(mockCountryColumns, []);
-            expect(failedErrorMsgElement).toBeNull();
+            expect(failedErrorMsgElement).toBeTruthy();
+            expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe('');
         });
 
         it('path points to single object with appropriate schema definition', () => {
@@ -294,7 +295,8 @@ describe('DataTableWidgetComponent', () => {
             const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-data-table-widget-failed-message'));
 
             assertData(mockCountryColumns, [mockEuropeCountriesRows[1]]);
-            expect(failedErrorMsgElement).toBeNull();
+            expect(failedErrorMsgElement).toBeTruthy();
+            expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe('');
         });
     });
 

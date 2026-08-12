@@ -43,6 +43,6 @@
     @include mixins.adf-error-icon;
 }
 
-.adf-container-widget .adf-multiline-text-widget .adf-form-field-input.adf-has-counter {
-    margin-bottom: 44px;
+.adf-container-widget .adf-multiline-text-widget mat-form-field.adf-form-field-input.adf-has-counter {
+    margin-bottom: 20px;
 }

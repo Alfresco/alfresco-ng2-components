@@ -1,5 +1,5 @@
 <form>
-    <mat-form-field class="adf-cloud-group adf-form-field-input" [class.adf-invalid]="hasError() && isDirty()">
+    <mat-form-field subscriptSizing="dynamic" class="adf-cloud-group adf-form-field-input" [class.adf-invalid]="hasError() && isDirty()">
         @if (label || required) { <mat-label><span>{{label}}</span></mat-label> }
         <mat-chip-grid [required]="required" [disabled]="isReadonly()" #groupChipList data-automation-id="adf-cloud-group-chip-list">
             <mat-chip-row
@@ -53,9 +53,8 @@
             </ng-template>
         </mat-autocomplete>
     </mat-form-field>
-    <mat-progress-bar *ngIf="validationLoading" mode="indeterminate" />
-
     <div class="adf-error-container adf-error-messages-container">
+        <mat-progress-bar *ngIf="validationLoading" mode="indeterminate" />
         <mat-error *ngIf="hasPreselectError() &&  !isValidationLoading()" class="adf-error">
             <mat-icon class="adf-error-icon" adf-icon="error_outline" />
             <div class="adf-error-text">{{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate }}</div>

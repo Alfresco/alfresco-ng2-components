@@ -40,7 +40,7 @@
 
 .adf-container-widget {
     .adf-form-field-input:not(.adf-inplace-input-mat-form-field, .adf-people-cloud, .adf-cloud-group) {
-        margin-bottom: 35px;
+        margin-bottom: 0;
     }
 
     .adf-grid-list {
@@ -265,7 +265,7 @@
     }
 
     &-error-messages-container {
-        min-height: 35px;
+        height: 40px;
     }
 
     &-error-messages-container-visible {
@@ -274,6 +274,12 @@
 
     &-error-messages-container-hidden {
         visibility: hidden;
+    }
+
+    &-form-field-input:not(.adf-inplace-input-mat-form-field, .adf-people-cloud, .adf-cloud-group) {
+        #{ms.$mat-form-field-subscript-wrapper} {
+            height: 40px;
+        }
     }
 }
 

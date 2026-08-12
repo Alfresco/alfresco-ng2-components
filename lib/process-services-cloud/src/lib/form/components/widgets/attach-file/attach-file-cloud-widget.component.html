@@ -40,6 +40,8 @@
 
     </div>
 
-    <error-widget [error]="field.validationSummary" />
-    <error-widget *ngIf="!field.isValid && isTouched() && !isSelected()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
+    <error-widget
+        [error]="field.validationSummary"
+        [required]="!field.isValid && isTouched() && !isSelected() ? ('FORM.FIELD.REQUIRED' | translate) : ''"
+    />
 </div>

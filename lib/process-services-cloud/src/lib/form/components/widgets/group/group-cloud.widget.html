@@ -24,11 +24,5 @@
             [attr.title]="field.tooltip"
             [label] = "field.name | translate"
         />
-        <error-widget [error]="field.validationSummary" />
-        <error-widget
-            class="adf-dropdown-required-message"
-            *ngIf="isInvalidFieldRequired() && isTouched()"
-            required="{{ 'FORM.FIELD.REQUIRED' | translate }}"
-        />
     </div>
 </div>

@@ -19,9 +19,10 @@
             </adf-no-content-template>
         </adf-datatable>
 
-        <error-widget *ngIf="dataTableLoadFailed"
+        <error-widget
             class="adf-data-table-widget-failed-message"
-            [required]="'FORM.FIELD.DATA_TABLE_LOAD_FAILED' | translate" />
+            [required]="dataTableLoadFailed ? ('FORM.FIELD.DATA_TABLE_LOAD_FAILED' | translate) : ''"
+        />
     </ng-container>
 
     <ng-template #previewTemplate>

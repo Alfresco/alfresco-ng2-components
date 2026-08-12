@@ -16,7 +16,7 @@
  */
 
 import { Component, DestroyRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ErrorWidgetComponent, WidgetComponent } from '@alfresco/adf-core';
+import { WidgetComponent } from '@alfresco/adf-core';
 import { UntypedFormControl } from '@angular/forms';
 import { filter } from 'rxjs/operators';
 import { ComponentSelectionMode } from '../../../../types';
@@ -31,7 +31,7 @@ import { GroupCloudComponent } from '../../../../group/components/group-cloud.co
 
 @Component({
     selector: 'group-cloud-widget',
-    imports: [CommonModule, TranslatePipe, ErrorWidgetComponent, GroupCloudComponent],
+    imports: [CommonModule, TranslatePipe, GroupCloudComponent],
     templateUrl: './group-cloud.widget.html',
     host: {
         '(click)': 'event($event)',

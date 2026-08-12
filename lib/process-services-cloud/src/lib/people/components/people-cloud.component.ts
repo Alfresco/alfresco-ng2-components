@@ -169,7 +169,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
      * Material form field subscript sizing (fixed / dynamic)
      */
     @Input()
-    formFieldSubscriptSizing: SubscriptSizing = 'fixed';
+    formFieldSubscriptSizing: SubscriptSizing = 'dynamic';
 
     /**
      * Show errors under the form field
