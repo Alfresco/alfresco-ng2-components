@@ -20,6 +20,12 @@
     .mat-mdc-form-field-infix {
         width: auto;
     }
+
+    .adf-form-field-input:not(.adf-inplace-input-mat-form-field, .adf-people-cloud, .adf-cloud-group) {
+        #{ms.$mat-form-field-subscript-wrapper} {
+            height: 40px;
+        }
+    }
 }
 
 .alfresco-tabs-widget {
@@ -274,12 +280,6 @@
 
     &-error-messages-container-hidden {
         visibility: hidden;
-    }
-
-    &-form-field-input:not(.adf-inplace-input-mat-form-field, .adf-people-cloud, .adf-cloud-group) {
-        #{ms.$mat-form-field-subscript-wrapper} {
-            height: 40px;
-        }
     }
 }
 
