@@ -32,6 +32,8 @@ import {
     provideTranslations,
     AuthModule,
     FormFieldEvent,
+    FormEvent,
+    FormRulesEvent,
     NoopTranslateModule,
     NoopAuthModule,
     FORM_FIELD_VALIDATORS
@@ -1296,6 +1298,38 @@ describe('FormCloudComponent', () => {
         expect(formComponent.visibleOutcomes.length).toBeGreaterThan(0);
 
         formComponent.form = null;
+        expect(formComponent.visibleOutcomes).toEqual([]);
+    });
+
+    it('should recompute visibleOutcomes when form visibility is refreshed', () => {
+        formComponent.showCompleteButton = true;
+        const formModel = new FormModel(cloudFormMock);
+        formComponent.form = formModel;
+
+        expect(formComponent.visibleOutcomes.length).toBeGreaterThan(0);
+
+        formModel.outcomes.forEach((outcome) => {
+            outcome.isVisible = false;
+        });
+
+        TestBed.inject(FormService).formVisibilityRefreshed.next(new FormEvent(formModel));
+
+        expect(formComponent.visibleOutcomes).toEqual([]);
+    });
+
+    it('should recompute visibleOutcomes when fieldValueChanged rule event fires', () => {
+        formComponent.showCompleteButton = true;
+        const formModel = new FormModel(cloudFormMock);
+        formComponent.form = formModel;
+
+        expect(formComponent.visibleOutcomes.length).toBeGreaterThan(0);
+
+        formModel.outcomes.forEach((outcome) => {
+            outcome.isVisible = false;
+        });
+
+        TestBed.inject(FormService).formRulesEvent.next(new FormRulesEvent('fieldValueChanged', new FormEvent(formModel)));
+
         expect(formComponent.visibleOutcomes).toEqual([]);
     });
 
