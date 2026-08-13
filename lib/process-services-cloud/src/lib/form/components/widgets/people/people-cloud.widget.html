@@ -1,10 +1,16 @@
-<div class="adf-dropdown-widget {{field.className}}"
-     [class.adf-invalid]="!field.isValid && isTouched()"
-     [class.adf-readonly]="field.readOnly"
-     [class.adf-left-label-input-container]="field.leftLabels">
-     <div *ngIf="field.leftLabels">
-        <label class="adf-label adf-left-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label>
-    </div>
+<div
+    class="adf-dropdown-widget {{field.className}}"
+    [class.adf-invalid]="!field.isValid && isTouched()"
+    [class.adf-readonly]="field.readOnly"
+    [class.adf-left-label-input-container]="field.leftLabels"
+>
+    @if (field.leftLabels) {
+        <div>
+            <label class="adf-label adf-left-label" [attr.for]="field.id"
+                >{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
+            >
+        </div>
+    }
     <div>
         <adf-cloud-people
             [preSelectUsers]="preSelectUsers"
@@ -23,4 +29,3 @@
         />
     </div>
 </div>
-
