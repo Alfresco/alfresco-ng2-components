@@ -25,8 +25,10 @@ All URIs are relative to *https://localhost/alfresco/api/-default-/public/alfres
 | [unlockNode](#unlockNode)                                           | **POST** /nodes/{nodeId}/unlock                         | Unlock a node                                         |
 | [updateNode](#updateNode)                                           | **PUT** /nodes/{nodeId}                                 | Update a node                                         |
 | [updateNodeContent](#updateNodeContent)                             | **PUT** /nodes/{nodeId}/content                         | Update node content                                   |
-| [initiateFolderSizeCalculation](#initiateFolderSizeCalculation)       | **POST** /nodes/{nodeId}/size-details                   | Initiate a new request to calculate folder size       |
+| [initiateFolderSizeCalculation](#initiateFolderSizeCalculation)     | **POST** /nodes/{nodeId}/size-details                   | Initiate a new request to calculate folder size       |
 | [getFolderSizeInfo](#getFolderSizeInfo)                             | **GET** /nodes/{nodeId}/size-details/{jobId}            | Gets the details of a folder                          |
+| [cancelCheckoutNode](#cancelCheckoutNode)                           | **POST** /nodes/{nodeId}/cancel-checkout                | Cancel checkout of a node                             |
+| [checkoutNode](#checkoutNode)                                       | **POST** /nodes/{nodeId}/checkout                       | Checkout a node                                       |
 
 ## copyNode
 
@@ -1257,6 +1259,66 @@ const opts = {};
 
 nodesApi.getFolderSizeInfo(`<nodeId>`, `<jobId>`).then((data) => {
     console.log('API called successfully. Returned data: ' + data);
+});
+```
+
+## checkoutNode
+
+Checkout a node
+
+Checks out a file node for offline editing. Creates a private working copy and locks the original.
+
+**Parameters**
+
+| Name         | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                             |
+|--------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **nodeId**   | string   | The identifier of a file node to check out.                                                                                                                                                                                                                                                                                                                                                                                             |
+| opts.include | string[] | Returns additional information about the node. The following optional fields can be requested: `allowableOperations`, `association`, `isLink`, `isFavorite`, `isLocked`, `path`, `permissions`, `definition`                                                                                                                                                                                                                            |
+| opts.fields  | string[] | A list of field names. You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth. The list applies to a returned individual entity or entries within a collection. If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter. |
+
+**Return type**: [NodeEntry](NodeEntry.md)
+
+**Example**
+
+```javascript
+import { AlfrescoApi, NodesApi } from '@alfresco/js-api';
+
+const alfrescoApi = new AlfrescoApi(/*..*/);
+const nodesApi = new NodesApi(alfrescoApi);
+const opts = {};
+
+nodesApi.checkoutNode(`<nodeId>`, opts).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+});
+```
+
+## cancelCheckoutNode
+
+Cancel checkout of a node
+
+Cancels a checkout. Accepts either the working copy or the original checked-out node. Deletes the working copy, unlocks the original, and returns the original node.
+
+**Parameters**
+
+| Name         | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                             |
+|--------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **nodeId**   | string   | The identifier of the working copy or original checked-out node.                                                                                                                                                                                                                                                                                                                                                                        |
+| opts.include | string[] | Returns additional information about the node. The following optional fields can be requested: `allowableOperations`, `association`, `isLink`, `isFavorite`, `isLocked`, `path`, `permissions`, `definition`                                                                                                                                                                                                                            |
+| opts.fields  | string[] | A list of field names. You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth. The list applies to a returned individual entity or entries within a collection. If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter. |
+
+**Return type**: [NodeEntry](NodeEntry.md)
+
+**Example**
+
+```javascript
+import { AlfrescoApi, NodesApi } from '@alfresco/js-api';
+
+const alfrescoApi = new AlfrescoApi(/*..*/);
+const nodesApi = new NodesApi(alfrescoApi);
+const opts = {};
+
+nodesApi.cancelCheckoutNode(`<nodeId>`, opts).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
 });
 ```
 

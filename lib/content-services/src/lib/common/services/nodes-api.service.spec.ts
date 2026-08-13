@@ -18,10 +18,18 @@
 import { TestBed } from '@angular/core/testing';
 import { RedirectAuthService } from '@alfresco/adf-core';
 import { EMPTY, firstValueFrom, of } from 'rxjs';
-import { JobIdBodyEntry, SizeDetails, SizeDetailsEntry } from '@alfresco/js-api';
+import { JobIdBodyEntry, NodeEntry, SizeDetails, SizeDetailsEntry } from '@alfresco/js-api';
 import { NodesApiService } from './nodes-api.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
+
+const fakeNodeEntry = {
+    entry: {
+        id: 'fake-node-id',
+        name: 'fake-file.txt',
+        nodeType: 'cm:content'
+    }
+} as NodeEntry;
 
 const fakeInitiateFolderSizeResponse: JobIdBodyEntry = {
     entry: {
@@ -74,5 +82,21 @@ describe('NodesApiService', () => {
         await firstValueFrom(nodesApiService.listParents('fake-node-id', { include: ['path'], where: 'isPrimary=true' }));
 
         expect(nodesApiService.nodesApi.listParents).toHaveBeenCalledWith('fake-node-id', { include: ['path'], where: 'isPrimary=true' });
+    });
+
+    it('should call nodesApi.checkoutNode with the node ID and optional query params', async () => {
+        const opts = { include: ['path', 'allowableOperations'], fields: ['id', 'name'] };
+        spyOn(nodesApiService.nodesApi, 'checkoutNode').and.returnValue(Promise.resolve(fakeNodeEntry));
+        await firstValueFrom(nodesApiService.checkoutNode(fakeNodeEntry.entry.id, opts));
+
+        expect(nodesApiService.nodesApi.checkoutNode).toHaveBeenCalledWith(fakeNodeEntry.entry.id, opts);
+    });
+
+    it('should call nodesApi.cancelCheckoutNode with the node ID and optional query params', async () => {
+        const opts = { include: ['path'], fields: ['id'] };
+        spyOn(nodesApiService.nodesApi, 'cancelCheckoutNode').and.returnValue(Promise.resolve(fakeNodeEntry));
+        await firstValueFrom(nodesApiService.cancelCheckoutNode(fakeNodeEntry.entry.id, opts));
+
+        expect(nodesApiService.nodesApi.cancelCheckoutNode).toHaveBeenCalledWith(fakeNodeEntry.entry.id, opts);
     });
 });

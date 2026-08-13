@@ -141,6 +141,30 @@ describe('Node', () => {
         });
     });
 
+    describe('Checkout', () => {
+        it('should POST to the checkout endpoint', async () => {
+            nodeMock.post200CheckoutNode('fake-node-id');
+            const result = await nodesApi.checkoutNode('fake-node-id');
+            assert.ok(result.entry, 'cancelCheckoutNode should return a NodeEntry');
+        });
+
+        it('should throw if nodeId is not defined', () => {
+            assert.throws(() => nodesApi.checkoutNode(undefined));
+        });
+    });
+
+    describe('Cancel Checkout', () => {
+        it('should POST to the cancel-checkout endpoint', async () => {
+            nodeMock.post200CancelCheckoutNode('fake-node-id');
+            const result = await nodesApi.cancelCheckoutNode('fake-node-id');
+            assert.ok(result.entry, 'checkoutNode should return a NodeEntry');
+        });
+
+        it('should throw if nodeId is not defined', () => {
+            assert.throws(() => nodesApi.cancelCheckoutNode(undefined));
+        });
+    });
+
     describe('FolderInformation', () => {
         it('should return jobId on initiateFolderSizeCalculation API call if everything is ok', async () => {
             nodeMock.post200ResponseInitiateFolderSizeCalculation();

@@ -1033,4 +1033,63 @@ export class NodesApi extends BaseApi {
             returnType: SizeDetailsEntry
         });
     }
+
+    /**
+     * Checkout a node
+     *
+     * Checks out a file node for offline editing. Creates a private working copy and locks the original.
+     *
+     * @param nodeId The identifier of a file node to check out.
+     * @param opts Optional parameters
+     * @returns Promise<NodeEntry> - the working copy node
+     */
+    checkoutNode(nodeId: string, opts?: NodesIncludeQuery): Promise<NodeEntry> {
+        throwIfNotDefined(nodeId, 'nodeId');
+
+        const pathParams = {
+            nodeId
+        };
+
+        const queryParams = {
+            include: buildCollectionParam(opts?.include, 'csv'),
+            fields: buildCollectionParam(opts?.fields, 'csv')
+        };
+
+        return this.post({
+            path: '/nodes/{nodeId}/checkout',
+            pathParams,
+            queryParams,
+            returnType: NodeEntry
+        });
+    }
+
+    /**
+     * Cancel checkout of a node
+     *
+     * Cancels a checkout. Accepts either the working copy or the original checked-out node.
+     * Deletes the working copy, unlocks the original, and returns the original node.
+     *
+     * @param nodeId The identifier of the working copy or the original checked-out node.
+     * @param opts Optional parameters
+     * @returns Promise<NodeEntry> - the original (unlocked) node
+     */
+    cancelCheckoutNode(nodeId: string, opts?: NodesIncludeQuery): Promise<NodeEntry> {
+        throwIfNotDefined(nodeId, 'nodeId');
+
+        const pathParams = {
+            nodeId
+        };
+
+        const queryParams = {
+            include: buildCollectionParam(opts?.include, 'csv'),
+            fields: buildCollectionParam(opts?.fields, 'csv')
+        };
+
+        return this.post({
+            path: '/nodes/{nodeId}/cancel-checkout',
+            pathParams,
+            queryParams,
+            returnType: NodeEntry
+        });
+    }
 }
