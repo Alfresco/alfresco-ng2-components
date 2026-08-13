@@ -38,7 +38,20 @@ export type FieldOptionType = 'rest' | 'manual' | 'variable';
 export type FieldSelectionType = 'single' | 'multiple';
 export type FieldAlignmentType = 'vertical' | 'horizontal';
 
-const cloneJsonCompatibleValue = <T>(value: T): T => (value === undefined ? value : JSON.parse(JSON.stringify(value)));
+const isJsonPrimitive = (value: unknown): value is null | string | number | boolean =>
+    value === null || ['string', 'number', 'boolean'].includes(typeof value);
+
+const cloneJsonCompatibleValue = (value: unknown): unknown => {
+    if (value === undefined || isJsonPrimitive(value)) {
+        return value;
+    }
+
+    try {
+        return JSON.parse(JSON.stringify(value));
+    } catch {
+        return undefined;
+    }
+};
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {

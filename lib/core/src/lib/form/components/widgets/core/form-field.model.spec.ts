@@ -47,6 +47,17 @@ describe('FormFieldModel', () => {
         expect(authoredValue.blocks[0].data.text).toBe('${field.name}');
     });
 
+    it('should return undefined for authored values that cannot be cloned', () => {
+        const circularValue: { self?: unknown } = {};
+        circularValue.self = circularValue;
+
+        const circularValueModel = new FormFieldModel(new FormModel(), { id: 'circular', value: circularValue });
+        const bigintValueModel = new FormFieldModel(new FormModel(), { id: 'bigint', value: BigInt(1) });
+
+        expect(circularValueModel.authoredValue).toBeUndefined();
+        expect(bigintValueModel.authoredValue).toBeUndefined();
+    });
+
     it('should preserve authored value when form data overrides the field value', () => {
         const authoredValue = { blocks: [{ data: { text: '${field.name}' } }] };
         const savedValue = { blocks: [{ data: { text: 'John' } }] };
