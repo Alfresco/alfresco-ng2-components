@@ -36,6 +36,33 @@ describe('FormFieldModel', () => {
         expect(model.json).toBe(json);
     });
 
+    it('should return an isolated authored value snapshot', () => {
+        const authoredValue = { blocks: [{ data: { text: '${field.name}' } }] };
+        const model = new FormFieldModel(new FormModel(), { id: 'richText', value: authoredValue });
+
+        const snapshot = model.authoredValue as typeof authoredValue;
+        snapshot.blocks[0].data.text = 'changed';
+
+        expect((model.authoredValue as typeof authoredValue).blocks[0].data.text).toBe('${field.name}');
+        expect(authoredValue.blocks[0].data.text).toBe('${field.name}');
+    });
+
+    it('should preserve authored value when form data overrides the field value', () => {
+        const authoredValue = { blocks: [{ data: { text: '${field.name}' } }] };
+        const savedValue = { blocks: [{ data: { text: 'John' } }] };
+        const form = new FormModel(
+            {
+                fields: [{ id: 'richText', name: 'richText', type: FormFieldTypes.DISPLAY_RICH_TEXT, value: authoredValue }]
+            },
+            { richText: savedValue }
+        );
+        const model = form.getFieldById('richText');
+
+        expect(model.value).toEqual(savedValue);
+        expect(model.authoredValue).toEqual(authoredValue);
+        expect(model.authoredValue).not.toBe(authoredValue);
+    });
+
     it('should setup with json config', () => {
         const json = {
             fieldType: '<fieldType>',
