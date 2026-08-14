@@ -26,7 +26,9 @@ import { toSignal } from '@angular/core/rxjs-interop';
     selector: 'adf-date-cell',
     template: `
         @if (formattedDate()) {
-            <span [title]="title()" class="adf-datatable-cell-value">{{ formattedDate() }}</span>
+            <time tabindex="0" [attr.datetime]="isoDate()" [attr.aria-label]="title()" [title]="title()" class="adf-datatable-cell-value"
+                >{{ formattedDate() }}
+            </time>
         }
     `,
     encapsulation: ViewEncapsulation.None,
@@ -54,6 +56,12 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
 
     // Convert value$ observable to signal for reactive computation
     private readonly dateValue = toSignal(this.value$);
+
+    // Computed signal that automatically formats the date to ISO string for datetime attribute
+    protected readonly isoDate = computed(() => {
+        const date = this.dateValue();
+        return date ? new Date(date).toISOString() : '';
+    });
 
     // Computed signal that automatically formats the date based on value and config
     protected readonly formattedDate = computed(() => {
