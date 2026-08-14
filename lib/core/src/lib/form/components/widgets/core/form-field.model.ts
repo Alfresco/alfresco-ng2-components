@@ -118,7 +118,7 @@ export class FormFieldModel extends FormWidgetModel {
 
     // util members
     emptyOption: FormFieldOption;
-    validationSummary: ErrorMessageModel;
+    validationSummary: ErrorMessageModel = new ErrorMessageModel();
 
     get validationSummaryChanges$(): Observable<ErrorMessageModel> {
         const existingState = validationSummaryChangesByField.get(this);
@@ -245,7 +245,6 @@ export class FormFieldModel extends FormWidgetModel {
             this.enableFractions = json.enableFractions;
             this.currency = json.currency;
             this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
-            this.validationSummary = new ErrorMessageModel();
             this.tooltip = json.tooltip || '';
             this.selectionType = json.selectionType;
             this.alignmentType = json.alignmentType;

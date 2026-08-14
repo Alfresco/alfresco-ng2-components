@@ -1236,6 +1236,15 @@ describe('FormFieldModel', () => {
             });
         };
 
+        it('should replay an inactive validation summary before the first validation', async () => {
+            const field = new FormFieldModel(new FormModel());
+
+            const validationSummary = await firstValueFrom(field.validationSummaryChanges$);
+
+            expect(validationSummary).toEqual(jasmine.any(ErrorMessageModel));
+            expect(validationSummary.isActive()).toBe(false);
+        });
+
         it('should replay the completed validation summary when subscribing after validation', async () => {
             const field = createField();
             field.validate();
