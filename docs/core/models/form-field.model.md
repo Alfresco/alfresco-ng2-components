@@ -53,6 +53,7 @@ Contains the value and metadata for a field of a [`Form`](../../../lib/process-s
 | rows | [`ContainerRowModel`](../../../lib/core/src/lib/form/components/widgets/core/container-row.model.ts)\[] | \[] | Row definitions for a repeatable section field |
 | emptyOption | [`FormFieldOption`](../../../lib/core/src/lib/form/components/widgets/core/form-field-option.ts) |  | Dropdown menu item to use when no option is chosen |
 | validationSummary | string |  | Error/information message added during field validation (see [`FormFieldValidator`](../../../lib/core/src/lib/form/components/widgets/core/form-field-validator.ts) interface) |
+| validationSummaryChanges$ | Observable<[`ErrorMessageModel`](../../../lib/core/src/lib/form/components/widgets/core/error-message.model.ts)> |  | Replays the current validation summary to subscribers and emits the completed summary after each validation |
 
 ## Details
 

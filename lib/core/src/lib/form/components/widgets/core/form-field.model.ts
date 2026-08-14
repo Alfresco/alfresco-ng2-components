@@ -29,6 +29,7 @@ import { VariableConfig } from './form-field-variable-options';
 import { DataColumn } from '../../../../datatable/data/data-column.model';
 import { DateFnsUtils } from '../../../../common';
 import { isValid as isValidDate } from 'date-fns';
+import { Observable, ReplaySubject } from 'rxjs';
 import { ContainerRowModel } from './container-row.model';
 import { RepeatableSectionModel, ROW_ID_PREFIX, TEMPLATE_ROW_ID } from './repeatable-section.model';
 import { formFieldRuleHandler } from './handlers/form-field-rule.handler';
@@ -37,6 +38,13 @@ import { formFieldVisibilityConditionHandler } from './handlers/form-field-visib
 export type FieldOptionType = 'rest' | 'manual' | 'variable';
 export type FieldSelectionType = 'single' | 'multiple';
 export type FieldAlignmentType = 'vertical' | 'horizontal';
+
+interface ValidationSummaryChangesState {
+    subject: ReplaySubject<ErrorMessageModel>;
+    observable: Observable<ErrorMessageModel>;
+}
+
+const validationSummaryChangesByField = new WeakMap<FormFieldModel, ValidationSummaryChangesState>();
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -112,6 +120,20 @@ export class FormFieldModel extends FormWidgetModel {
     emptyOption: FormFieldOption;
     validationSummary: ErrorMessageModel;
 
+    get validationSummaryChanges$(): Observable<ErrorMessageModel> {
+        const existingState = validationSummaryChangesByField.get(this);
+        if (existingState) {
+            return existingState.observable;
+        }
+
+        const subject = new ReplaySubject<ErrorMessageModel>(1);
+        const observable = subject.asObservable();
+        validationSummaryChangesByField.set(this, { subject, observable });
+        subject.next(this.validationSummary);
+
+        return observable;
+    }
+
     get value(): any {
         return this._value;
     }
@@ -173,11 +195,13 @@ export class FormFieldModel extends FormWidgetModel {
         for (const validator of validators) {
             if (!validator.validate(this)) {
                 this._isValid = false;
+                validationSummaryChangesByField.get(this)?.subject.next(this.validationSummary);
                 return this._isValid;
             }
         }
 
         this._isValid = true;
+        validationSummaryChangesByField.get(this)?.subject.next(this.validationSummary);
         return this._isValid;
     }
 

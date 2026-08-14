@@ -27,6 +27,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { isObservable } from 'rxjs';
 import { ADF_CUSTOM_MESSAGE } from '../core/custom-validation-message.token';
+import { getValidationSummaryTranslationParameters } from '../core/error-message.model';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
@@ -56,6 +57,9 @@ export class MultilineTextWidgetComponentComponent extends WidgetComponent imple
 
     ngOnInit(): void {
         this.initErrorStateMatcher();
+        this.field.validationSummaryChanges$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((validationSummary) => {
+            this.translateParameters = getValidationSummaryTranslationParameters(validationSummary);
+        });
         if (this.enableCustomMessage != null) {
             if (isObservable(this.enableCustomMessage)) {
                 this.enableCustomMessage.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((enabled: boolean) => {
@@ -73,12 +77,10 @@ export class MultilineTextWidgetComponentComponent extends WidgetComponent imple
 
     onBlur(): void {
         this.markAsTouched();
-        this.updateTranslateParameters();
     }
 
     onMultilineTextFieldChanged(): void {
         this.onFieldChanged(this.field);
-        this.updateTranslateParameters();
     }
 
     private initErrorStateMatcher(): void {
@@ -86,13 +88,5 @@ export class MultilineTextWidgetComponentComponent extends WidgetComponent imple
             isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
                 !this.field.isValid && this.isTouched()
         };
-    }
-
-    private updateTranslateParameters(): void {
-        if (this.field.validationSummary?.isActive()) {
-            this.translateParameters = this.field.validationSummary.getAttributesAsJsonObj();
-        } else {
-            this.translateParameters = {};
-        }
     }
 }

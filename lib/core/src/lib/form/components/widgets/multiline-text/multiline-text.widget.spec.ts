@@ -25,8 +25,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UnitTestingUtils } from '../../../../testing/unit-testing-utils';
 import { ADF_CUSTOM_MESSAGE } from '../core/custom-validation-message.token';
 import { of, Subject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('MultilineTextWidgetComponentComponent', () => {
+    const validatorTranslations = {
+        FORM: {
+            FIELD: {
+                VALIDATOR: {
+                    AT_LEAST_LONG: 'Minimum {{ minLength }}',
+                    NO_LONGER_THAN: 'Maximum {{ maxLength }}'
+                }
+            }
+        }
+    };
     let loader: HarnessLoader;
     let widget: MultilineTextWidgetComponentComponent;
     let fixture: ComponentFixture<MultilineTextWidgetComponentComponent>;
@@ -106,6 +117,48 @@ describe('MultilineTextWidgetComponentComponent', () => {
             fixture.detectChanges();
 
             expect(testingUtils.getByCSS('.adf-multiline-text-widget--capped')).toBeTruthy();
+        });
+    });
+
+    describe('when validation runs without widget interaction', () => {
+        let field: FormFieldModel;
+
+        beforeEach(() => {
+            const translateService = TestBed.inject(TranslateService);
+            translateService.use('en').subscribe();
+            translateService.setTranslation('en', validatorTranslations);
+            field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                id: 'multiline-text-id',
+                type: FormFieldTypes.MULTILINE_TEXT,
+                value: 'text',
+                minLength: 10
+            });
+            field.validate();
+            field.form.showAllValidationErrors = true;
+            fixture.componentRef.setInput('field', field);
+            fixture.detectChanges();
+        });
+
+        it('should render the minimum length in the message when initial validation fails', async () => {
+            const formField = await testingUtils.formField.get();
+            const errors = await formField.getTextErrors();
+
+            expect(errors.length).toBe(1);
+            expect(errors[0]).toContain('Minimum 10');
+        });
+
+        it('should render the updated maximum length when programmatic revalidation fails', async () => {
+            field.value = 'too long';
+            field.minLength = 1;
+            field.maxLength = 5;
+            field.validate();
+            fixture.detectChanges();
+
+            const formField = await testingUtils.formField.get();
+            const errors = await formField.getTextErrors();
+
+            expect(errors.length).toBe(1);
+            expect(errors[0]).toContain('Maximum 5');
         });
     });
 
