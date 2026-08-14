@@ -80,6 +80,12 @@ const checkDisplayedTooltip = (expectedTooltip: string) => {
     expect(displayedTooltip).toBe(expectedTooltip);
 };
 
+const checkDatetimeAttribute = (expectedIso: string) => {
+    const datetime = testingUtils.getByCSS('time').nativeElement.getAttribute('datetime');
+
+    expect(datetime).toBe(expectedIso);
+};
+
 const configureTestingModule = (providers: any[]) => {
     TestBed.configureTestingModule({
         imports: [DateCellComponent],
@@ -231,6 +237,16 @@ describe('DateCellComponent', () => {
 
         renderDateCell(mockDateConfig, mockTimestamp);
         checkDisplayedDate(expectedDate);
+    });
+
+    it('should render a datetime attribute with the full ISO date value', () => {
+        const mockDateConfig: DateConfig = {
+            format: 'short',
+            tooltipFormat: 'short'
+        };
+
+        renderDateCell(mockDateConfig, mockDate);
+        checkDatetimeAttribute(mockDate.toISOString());
     });
 });
 
