@@ -53,7 +53,7 @@ jobs:
 
       - name: Send Teams notification
         if: steps.check_label_timing.outputs.should_notify == 'true'
-        uses: Alfresco/alfresco-build-tools/.github/actions/send-teams-notification@5177eca5d3d71342d7f7e0a2a4d74cc16b1eeb1b # v18.21.3
+        uses: Alfresco/alfresco-build-tools/.github/actions/send-teams-notification@98bcfbe06aafffdc0e9a790f352602316f82303b # v18.23.0
         with:
           webhook-url: ${{ secrets.TEAMS_NOTIFICATION_ADF_BDU_WEBHOOK }}
           skip_checkout: true
