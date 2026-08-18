@@ -6,12 +6,12 @@ settings:
 
 overrides:
   fast-uri: 3.1.5
-  js-yaml@4.2.0: 4.3.0
+  js-yaml@4.2.0: 4.3.1
+  brace-expansion@5.0.8: 5.0.9
   brace-expansion@<1.1.18: 1.1.18
   svgo: 4.0.2
   shell-quote: 1.9.0
   adm-zip: 0.6.0
-  brace-expansion@5.0.8: 5.0.9
   minimatch@10.2.5: 10.2.6
   axios: 1.18.0
   serialize-javascript: '>=7.0.5'
@@ -6716,8 +6716,8 @@ packages:
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
-  js-yaml@4.3.0:
-    resolution: {integrity: sha512-1td788aAnnZ5qs7V2QIRl1owjtYpbKt749Y3xauqQgwIIGF/xXWz1wMTEBx5O3LK3lXLVuqXPdPxj2BoFHaW9Q==}
+  js-yaml@4.3.1:
+    resolution: {integrity: sha512-CY6crGq313MX8GkwvB7tzgp99vjQxY1++5y10/BKN/GUfHqWaOGQMNZkBvqSzsZKWk/ijwHlWzzkLulsGHhjWQ==}
     hasBin: true
 
   jsdoc-type-pratt-parser@7.3.0:
@@ -15142,7 +15142,7 @@ snapshots:
   cosmiconfig@8.3.6(typescript@5.9.3):
     dependencies:
       import-fresh: 3.3.1
-      js-yaml: 4.3.0
+      js-yaml: 4.3.1
       parse-json: 5.2.0
       path-type: 4.0.0
     optionalDependencies:
@@ -15152,7 +15152,7 @@ snapshots:
     dependencies:
       env-paths: 2.2.1
       import-fresh: 3.3.1
-      js-yaml: 4.3.0
+      js-yaml: 4.3.1
       parse-json: 5.2.0
     optionalDependencies:
       typescript: 5.9.3
@@ -16831,7 +16831,7 @@ snapshots:
 
   js-tokens@4.0.0: {}
 
-  js-yaml@4.3.0:
+  js-yaml@4.3.1:
     dependencies:
       argparse: 2.0.1
 
