@@ -79,6 +79,17 @@ describe('resolveRichTextExpressions', () => {
         expect(result).not.toBe(value);
     });
 
+    it('should resolve a caller-owned clone without cloning it again', () => {
+        const value = {
+            blocks: [{ type: 'paragraph', data: { text: 'Hello ${field.name}' } }]
+        };
+
+        const result = resolveRichTextExpressions(value, resolve, { cloneValue: false }) as typeof value;
+
+        expect(result).toBe(value);
+        expect(result.blocks[0].data.text).toBe('Hello John');
+    });
+
     it('should preserve unknown blocks and properties', () => {
         const value = {
             blocks: [

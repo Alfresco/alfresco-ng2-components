@@ -203,7 +203,7 @@ export class FormFieldModel extends FormWidgetModel {
 
     constructor(form: any, json?: any, parent?: RepeatableSectionModel) {
         super(form, json);
-        this._authoredValue = cloneJsonCompatibleValue(json?.value);
+        this._authoredValue = json?.type === FormFieldTypes.DISPLAY_RICH_TEXT ? cloneJsonCompatibleValue(json.value) : undefined;
         if (json) {
             this.fieldType = json.fieldType;
             this.id = this.getId(json.id, parent);

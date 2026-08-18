@@ -51,7 +51,7 @@ import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { ProcessWithFormPayloadCloud } from '../models/process-with-form-payload-cloud.model';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
-import { BehaviorSubject, forkJoin, Observable, of, combineLatest, isObservable } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of, combineLatest } from 'rxjs';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 import { FormCloudDisplayModeConfiguration } from '../../../services/form-fields.interfaces';
@@ -69,7 +69,7 @@ import { FormCustomOutcomesComponent } from '../../../form/components/form-cloud
 import { MatDialog } from '@angular/material/dialog';
 import { StartProcessScreenCloudComponent } from '../../../screen/components/screen-cloud/start-process-event-screen/start-process-screen-cloud.component';
 import { TaskTypeResolverService } from '../../../services/task-type-resolver/task-type-resolver.service';
-import { materializeSubmissionValues } from '../../../form/services/form-cloud-submission-values';
+import { getExpressionEvaluationEnabled$, materializeSubmissionValues } from '../../../form/services/form-cloud-submission-values';
 
 const MAX_NAME_LENGTH: number = 255;
 const PROCESS_DEFINITION_DEBOUNCE: number = 300;
@@ -283,13 +283,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.startProcessButtonLabel = this.defaultStartProcessButtonLabel;
         this.cancelButtonLabel = this.defaultCancelProcessButtonLabel;
 
-        if (isObservable(this.displayTextSettings)) {
-            this.displayTextSettings.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((settings) => {
-                this.enableExpressionEvaluation = settings?.enableExpressionEvaluation ?? false;
+        getExpressionEvaluationEnabled$(this.displayTextSettings)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((enabled) => {
+                this.enableExpressionEvaluation = enabled;
             });
-        } else {
-            this.enableExpressionEvaluation = this.displayTextSettings?.enableExpressionEvaluation ?? false;
-        }
     }
 
     ngOnInit() {

@@ -17,7 +17,28 @@
 
 import { TestBed } from '@angular/core/testing';
 import { FormExpressionService, FormFieldModel, FormFieldTypes, FormModel } from '@alfresco/adf-core';
-import { materializeSubmissionValues } from './form-cloud-submission-values';
+import { firstValueFrom, of } from 'rxjs';
+import { getExpressionEvaluationEnabled$, materializeSubmissionValues } from './form-cloud-submission-values';
+
+describe('getExpressionEvaluationEnabled$', () => {
+    it('should return the configured static value', async () => {
+        const enabled = await firstValueFrom(getExpressionEvaluationEnabled$({ enableExpressionEvaluation: true }));
+
+        expect(enabled).toBe(true);
+    });
+
+    it('should return values emitted by observable settings', async () => {
+        const enabled = await firstValueFrom(getExpressionEvaluationEnabled$(of({ enableExpressionEvaluation: true })));
+
+        expect(enabled).toBe(true);
+    });
+
+    it('should return false when settings are unavailable', async () => {
+        const enabled = await firstValueFrom(getExpressionEvaluationEnabled$(undefined));
+
+        expect(enabled).toBe(false);
+    });
+});
 
 describe('materializeSubmissionValues', () => {
     let expressions: FormExpressionService;

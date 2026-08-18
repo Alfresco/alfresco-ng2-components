@@ -19,6 +19,10 @@ type JsonObject = Record<string, unknown>;
 
 export type RichTextExpressionResolver = (value: string) => string;
 
+export interface RichTextExpressionResolverOptions {
+    cloneValue?: boolean;
+}
+
 const isJsonObject = (value: unknown): value is JsonObject => typeof value === 'object' && value !== null && !Array.isArray(value);
 
 const cloneJsonValue = (value: unknown): unknown => {
@@ -55,11 +59,11 @@ const resolveListItems = (items: unknown, resolve: RichTextExpressionResolver): 
             return item;
         }
 
-        if (Object.prototype.hasOwnProperty.call(item, 'content')) {
+        if (Object.hasOwn(item, 'content')) {
             item.content = resolveNestedContent(item.content, resolve);
         }
 
-        if (Object.prototype.hasOwnProperty.call(item, 'items')) {
+        if (Object.hasOwn(item, 'items')) {
             item.items = resolveListItems(item.items, resolve);
         }
 
@@ -67,12 +71,16 @@ const resolveListItems = (items: unknown, resolve: RichTextExpressionResolver): 
     });
 };
 
-export const resolveRichTextExpressions = (value: unknown, resolve: RichTextExpressionResolver): unknown => {
+export const resolveRichTextExpressions = (
+    value: unknown,
+    resolve: RichTextExpressionResolver,
+    options: RichTextExpressionResolverOptions = {}
+): unknown => {
     if (!isJsonObject(value) || !Array.isArray(value.blocks)) {
         return value;
     }
 
-    const resolvedValue = cloneJsonValue(value);
+    const resolvedValue = options.cloneValue === false ? value : cloneJsonValue(value);
     if (!isJsonObject(resolvedValue) || !Array.isArray(resolvedValue.blocks)) {
         return value;
     }
@@ -90,11 +98,11 @@ export const resolveRichTextExpressions = (value: unknown, resolve: RichTextExpr
             block.data.caption = resolve(block.data.caption);
         }
 
-        if (Object.prototype.hasOwnProperty.call(block.data, 'content')) {
+        if (Object.hasOwn(block.data, 'content')) {
             block.data.content = resolveNestedContent(block.data.content, resolve);
         }
 
-        if (block.type === 'list' && Object.prototype.hasOwnProperty.call(block.data, 'items')) {
+        if (block.type === 'list' && Object.hasOwn(block.data, 'items')) {
             block.data.items = resolveListItems(block.data.items, resolve);
         }
     });

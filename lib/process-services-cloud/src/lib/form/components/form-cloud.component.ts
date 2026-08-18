@@ -70,7 +70,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { A11yModule } from '@angular/cdk/a11y';
-import { materializeSubmissionValues } from '../services/form-cloud-submission-values';
+import { getExpressionEvaluationEnabled$, materializeSubmissionValues } from '../services/form-cloud-submission-values';
 
 interface FormFieldRuntimeState {
     value: any;
@@ -279,13 +279,11 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             }
         }
 
-        if (isObservable(displayTextSettings)) {
-            displayTextSettings.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((settings) => {
-                this.enableExpressionEvaluation = settings?.enableExpressionEvaluation ?? false;
+        getExpressionEvaluationEnabled$(displayTextSettings)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((enabled) => {
+                this.enableExpressionEvaluation = enabled;
             });
-        } else {
-            this.enableExpressionEvaluation = displayTextSettings?.enableExpressionEvaluation ?? false;
-        }
 
         this.formService.formContentClicked.pipe(takeUntilDestroyed()).subscribe((content) => {
             if (content instanceof UploadWidgetContentLinkModel) {

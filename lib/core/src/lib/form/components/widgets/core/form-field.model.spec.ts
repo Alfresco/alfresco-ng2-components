@@ -38,7 +38,7 @@ describe('FormFieldModel', () => {
 
     it('should return an isolated authored value snapshot', () => {
         const authoredValue = { blocks: [{ data: { text: '${field.name}' } }] };
-        const model = new FormFieldModel(new FormModel(), { id: 'richText', value: authoredValue });
+        const model = new FormFieldModel(new FormModel(), { id: 'richText', type: FormFieldTypes.DISPLAY_RICH_TEXT, value: authoredValue });
 
         const snapshot = model.authoredValue as typeof authoredValue;
         snapshot.blocks[0].data.text = 'changed';
@@ -47,12 +47,26 @@ describe('FormFieldModel', () => {
         expect(authoredValue.blocks[0].data.text).toBe('${field.name}');
     });
 
+    it('should not capture authored values for other field types', () => {
+        const model = new FormFieldModel(new FormModel(), { id: 'json', type: FormFieldTypes.JSON, value: { content: 'value' } });
+
+        expect(model.authoredValue).toBeUndefined();
+    });
+
     it('should return undefined for authored values that cannot be cloned', () => {
         const circularValue: { self?: unknown } = {};
         circularValue.self = circularValue;
 
-        const circularValueModel = new FormFieldModel(new FormModel(), { id: 'circular', value: circularValue });
-        const bigintValueModel = new FormFieldModel(new FormModel(), { id: 'bigint', value: BigInt(1) });
+        const circularValueModel = new FormFieldModel(new FormModel(), {
+            id: 'circular',
+            type: FormFieldTypes.DISPLAY_RICH_TEXT,
+            value: circularValue
+        });
+        const bigintValueModel = new FormFieldModel(new FormModel(), {
+            id: 'bigint',
+            type: FormFieldTypes.DISPLAY_RICH_TEXT,
+            value: BigInt(1)
+        });
 
         expect(circularValueModel.authoredValue).toBeUndefined();
         expect(bigintValueModel.authoredValue).toBeUndefined();

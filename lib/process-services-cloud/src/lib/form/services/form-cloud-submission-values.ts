@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-import { FormExpressionService, FormFieldTypes, FormModel, FormValues, ROW_ID_PREFIX } from '@alfresco/adf-core';
+import { DisplayTextWidgetSettings, FormExpressionService, FormFieldTypes, FormModel, FormValues, ROW_ID_PREFIX } from '@alfresco/adf-core';
+import { isObservable, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { resolveRichTextExpressions } from '../components/widgets/display-rich-text/rich-text-expression-resolver';
 
 type SubmissionRow = Record<string, unknown>;
@@ -25,6 +27,13 @@ const isSubmissionRow = (value: unknown): value is SubmissionRow => typeof value
 export interface FormCloudSubmissionValuesOptions {
     enableExpressionEvaluation: boolean;
 }
+
+export const getExpressionEvaluationEnabled$ = (
+    settings: Observable<DisplayTextWidgetSettings> | DisplayTextWidgetSettings | null | undefined
+): Observable<boolean> =>
+    isObservable(settings)
+        ? settings.pipe(map((value) => value?.enableExpressionEvaluation ?? false))
+        : of(settings?.enableExpressionEvaluation ?? false);
 
 export const materializeSubmissionValues = (
     form: FormModel,
@@ -43,7 +52,9 @@ export const materializeSubmissionValues = (
             continue;
         }
 
-        const materializedValue = resolveRichTextExpressions(authoredValue, (content) => expressions.resolveExpressions(form, content, true));
+        const materializedValue = resolveRichTextExpressions(authoredValue, (content) => expressions.resolveExpressions(form, content, true), {
+            cloneValue: false
+        });
 
         if (!parent) {
             values[field.id] = materializedValue;

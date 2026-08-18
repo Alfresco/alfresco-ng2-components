@@ -67,7 +67,10 @@ export class DisplayRichTextWidgetComponent extends BaseDisplayTextWidgetCompone
 
     protected storeOriginalValue(): void {
         if (this.field) {
-            this.originalFieldValue = JSON.stringify(this.field.authoredValue);
+            const authoredValue = this.field.authoredValue;
+            if (authoredValue !== undefined) {
+                this.originalFieldValue = JSON.stringify(authoredValue);
+            }
         }
     }
 
@@ -76,7 +79,10 @@ export class DisplayRichTextWidgetComponent extends BaseDisplayTextWidgetCompone
             return;
         }
 
-        this.applyExpressionsToBlocks(this.field.authoredValue);
+        const authoredValue = this.field.authoredValue;
+        if (authoredValue !== undefined) {
+            this.applyExpressionsToBlocks(authoredValue);
+        }
     }
 
     protected reevaluateExpressions(): void {

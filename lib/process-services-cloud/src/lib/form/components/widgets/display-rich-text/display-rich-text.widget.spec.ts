@@ -229,6 +229,22 @@ describe('DisplayRichTextWidgetComponent', () => {
             expect(widget.field.value.blocks[0].data.text).toBe('Hello Jane');
         });
 
+        it('should preserve the current value when the authored value is unavailable', () => {
+            const form = new FormModel({
+                fields: [{ id: 'richText1', type: 'display-rich-text' }]
+            });
+            const currentValue = {
+                blocks: [{ type: 'paragraph', data: { text: 'Current value' } }]
+            };
+            const field = form.getFieldById('richText1');
+            field.value = currentValue;
+            widget.field = field;
+
+            fixture.detectChanges();
+
+            expect(widget.field.value).toBe(currentValue);
+        });
+
         it('should resolve expressions in multiple blocks', () => {
             const form = new FormModel({
                 fields: [
