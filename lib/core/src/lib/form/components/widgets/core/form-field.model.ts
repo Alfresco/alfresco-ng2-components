@@ -38,12 +38,28 @@ export type FieldOptionType = 'rest' | 'manual' | 'variable';
 export type FieldSelectionType = 'single' | 'multiple';
 export type FieldAlignmentType = 'vertical' | 'horizontal';
 
+const isJsonPrimitive = (value: unknown): value is null | string | number | boolean =>
+    value === null || ['string', 'number', 'boolean'].includes(typeof value);
+
+const cloneJsonCompatibleValue = (value: unknown): unknown => {
+    if (value === undefined || isJsonPrimitive(value)) {
+        return value;
+    }
+
+    try {
+        return JSON.parse(JSON.stringify(value));
+    } catch {
+        return undefined;
+    }
+};
+
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
     private _value: string;
     private _readOnly: boolean = false;
     private _isValid: boolean = true;
     private _required: boolean = false;
+    private readonly _authoredValue: unknown;
 
     readonly defaultDateFormat: string = 'D-M-YYYY';
     readonly defaultDateTimeFormat: string = 'D-M-YYYY hh:mm A';
@@ -123,6 +139,10 @@ export class FormFieldModel extends FormWidgetModel {
         }
     }
 
+    get authoredValue(): unknown {
+        return cloneJsonCompatibleValue(this._authoredValue);
+    }
+
     get readOnly(): boolean {
         if (this.form?.readOnly) {
             return true;
@@ -183,6 +203,7 @@ export class FormFieldModel extends FormWidgetModel {
 
     constructor(form: any, json?: any, parent?: RepeatableSectionModel) {
         super(form, json);
+        this._authoredValue = json?.type === FormFieldTypes.DISPLAY_RICH_TEXT ? cloneJsonCompatibleValue(json.value) : undefined;
         if (json) {
             this.fieldType = json.fieldType;
             this.id = this.getId(json.id, parent);
