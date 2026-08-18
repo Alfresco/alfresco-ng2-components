@@ -22,6 +22,7 @@ import { BaseDisplayTextWidgetComponent } from '@alfresco/adf-core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { RichTextParserService } from '../../../services/rich-text-parser.service';
+import { resolveRichTextExpressions } from './rich-text-expression-resolver';
 
 export const RICH_TEXT_PARSER_TOKEN = new InjectionToken<RichTextParserService>('RichTextParserService', {
     factory: () => new RichTextParserService()
@@ -66,7 +67,10 @@ export class DisplayRichTextWidgetComponent extends BaseDisplayTextWidgetCompone
 
     protected storeOriginalValue(): void {
         if (this.field) {
-            this.originalFieldValue = JSON.stringify(this.field.value);
+            const authoredValue = this.field.authoredValue;
+            if (authoredValue !== undefined) {
+                this.originalFieldValue = JSON.stringify(authoredValue);
+            }
         }
     }
 
@@ -75,8 +79,10 @@ export class DisplayRichTextWidgetComponent extends BaseDisplayTextWidgetCompone
             return;
         }
 
-        const value = JSON.parse(JSON.stringify(this.field.value));
-        this.applyExpressionsToBlocks(value);
+        const authoredValue = this.field.authoredValue;
+        if (authoredValue !== undefined) {
+            this.applyExpressionsToBlocks(authoredValue);
+        }
     }
 
     protected reevaluateExpressions(): void {
@@ -89,16 +95,7 @@ export class DisplayRichTextWidgetComponent extends BaseDisplayTextWidgetCompone
     }
 
     private applyExpressionsToBlocks(value: any): void {
-        for (const block of value.blocks) {
-            if (block.type === 'list') {
-                for (const item of block.data.items) {
-                    item.content = this.resolveExpressions(item.content, true);
-                }
-            } else {
-                block.data.text = this.resolveExpressions(block.data.text, true);
-            }
-        }
-        this.field.value = value;
+        this.field.value = resolveRichTextExpressions(value, (content) => this.resolveExpressions(content, true));
     }
 
     private parseAndSanitize(): void {

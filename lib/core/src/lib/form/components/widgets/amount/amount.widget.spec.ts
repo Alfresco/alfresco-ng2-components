@@ -23,13 +23,14 @@ import { FormModel } from '../core/form.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../../../../testing/unit-testing-utils';
-import { of } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
 import { FormService } from '../../../services/form.service';
 import { FormFieldEvent } from '../../../events/form-field.event';
 import { TranslationService } from '../../../../translation/translation.service';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
+import { TranslateService } from '@ngx-translate/core';
 
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
@@ -392,6 +393,76 @@ describe('AmountWidgetComponent - rendering', () => {
         expect(widget.field.isValid).toBe(false);
         errors = await formField.getTextErrors();
         expect(errors[0].trim()).toContain('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
+    });
+
+    describe('when validation runs without amount interaction', () => {
+        const validatorTranslations = {
+            FORM: {
+                FIELD: {
+                    VALIDATOR: {
+                        NOT_LESS_THAN: "Can't be less than {{ minValue }}",
+                        NOT_GREATER_THAN: "Can't be greater than {{ maxValue }}"
+                    }
+                }
+            }
+        };
+        let amountField: FormFieldModel;
+        let form: FormModel;
+
+        beforeEach(async () => {
+            const translateService = TestBed.inject(TranslateService);
+            translateService.setTranslation('en', validatorTranslations);
+            await firstValueFrom(translateService.use('en'));
+
+            form = new FormModel({ taskId: '<id>' }, undefined, false, formService);
+            amountField = new FormFieldModel(form, {
+                id: 'amount-id',
+                type: FormFieldTypes.AMOUNT,
+                value: 1,
+                minValue: '10'
+            });
+            form.fieldsCache = [amountField];
+            amountField.validate();
+            fixture.componentRef.setInput('field', amountField);
+            fixture.detectChanges();
+        });
+
+        it('should render updated parameters after direct revalidation', async () => {
+            const formField = await testingUtils.formField.get();
+            let errors = await formField.getTextErrors();
+            expect(errors[0]).toContain("Can't be less than 10");
+
+            amountField.value = 10;
+            amountField.minValue = '1';
+            amountField.maxValue = '5';
+            amountField.validate();
+            fixture.detectChanges();
+
+            errors = await formField.getTextErrors();
+            expect(errors[0]).toContain("Can't be greater than 5");
+            expect(errors[0]).not.toContain('{{');
+        });
+
+        it('should render updated parameters after sibling field revalidation', async () => {
+            const siblingField = new FormFieldModel(form, {
+                id: 'sibling-id',
+                type: FormFieldTypes.TEXT,
+                value: 'before'
+            });
+            form.fieldsCache = [amountField, siblingField];
+            amountField.value = 10;
+            amountField.minValue = '1';
+            amountField.maxValue = '5';
+
+            siblingField.value = 'after';
+            form.onFormFieldChanged(siblingField);
+            fixture.detectChanges();
+
+            const formField = await testingUtils.formField.get();
+            const errors = await formField.getTextErrors();
+            expect(errors[0]).toContain("Can't be greater than 5");
+            expect(errors[0]).not.toContain('{{');
+        });
     });
 
     describe('when form model has left labels', () => {
