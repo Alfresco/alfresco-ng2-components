@@ -29,6 +29,8 @@ export interface LayoutOrientedConfigItem {
 export interface LayoutOrientedConfigLayoutBlock {
     title: string;
     items: LayoutOrientedConfigItem[];
+    readOnlyProperties?: string | string[];
+    readOnlyAspects?: string | string[];
 }
 
 export type LayoutOrientedConfig = Array<LayoutOrientedConfigLayoutBlock>;

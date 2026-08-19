@@ -63,9 +63,16 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
         return Object.keys(propertyGroups).map((groupName) => {
             const propertyGroup = propertyGroups[groupName];
             const properties = propertyGroup.properties;
+            const isGroupReadOnly = this.isAspectReadOnly(groupName);
 
             return Object.assign({}, propertyGroup, {
-                properties: Object.keys(properties).map((propertyName) => properties[propertyName])
+                properties: Object.keys(properties).map((propertyName) => {
+                    const property = properties[propertyName];
+                    if (isGroupReadOnly || this.isPropertyReadOnly(propertyName)) {
+                        property.editable = false;
+                    }
+                    return property;
+                })
             });
         });
     }
@@ -93,12 +100,35 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
 
     private setEditableProperty(propertyGroup: Property | Property[], itemConfig): Property | Property[] {
         if (Array.isArray(propertyGroup)) {
-            propertyGroup.forEach((property) => (property.editable = itemConfig.editable !== undefined ? itemConfig.editable : true));
+            propertyGroup.forEach((property) => (property.editable = this.resolveEditable(property, itemConfig)));
         } else {
-            propertyGroup.editable = itemConfig.editable !== undefined ? itemConfig.editable : true;
+            propertyGroup.editable = this.resolveEditable(propertyGroup, itemConfig);
         }
 
         return propertyGroup;
+    }
+
+    private resolveEditable(property: Property, itemConfig): boolean {
+        if (this.isAspectReadOnly(itemConfig.groupName) || this.isPropertyReadOnly(property?.name)) {
+            return false;
+        }
+
+        return itemConfig.editable !== undefined ? itemConfig.editable : true;
+    }
+
+    private isPropertyReadOnly(propertyName: string): boolean {
+        return this.getReadOnlyNames('readOnlyProperties').includes(propertyName);
+    }
+
+    private isAspectReadOnly(groupName: string): boolean {
+        return this.getReadOnlyNames('readOnlyAspects').includes(groupName);
+    }
+
+    private getReadOnlyNames(key: 'readOnlyProperties' | 'readOnlyAspects'): string[] {
+        return this.config
+            .map((block) => block?.[key])
+            .filter((names) => names !== undefined)
+            .flat();
     }
 
     private setPropertyTitle(item: Property | Property[], property: Property): Property | Property[] {

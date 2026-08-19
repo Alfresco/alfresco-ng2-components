@@ -102,6 +102,27 @@ describe('ContentMetaDataService', () => {
         }
     };
 
+    const titledResponse: PropertyGroup = {
+        name: 'cm:titled',
+        title: 'Titled',
+        properties: {
+            'cm:title': {
+                title: 'Title',
+                name: 'cm:title',
+                dataType: 'd:text',
+                mandatory: false,
+                multiValued: false
+            },
+            'cm:description': {
+                title: 'Description',
+                name: 'cm:description',
+                dataType: 'd:text',
+                mandatory: false,
+                multiValued: false
+            }
+        }
+    };
+
     const verResponse: PropertyGroup = {
         name: 'cm:versionable',
         title: 'Versionable',
@@ -247,6 +268,69 @@ describe('ContentMetaDataService', () => {
         expect(titleProperty.editable).toBeFalse();
         expect(descriptionProperty.editable).toBeFalse();
         expect(authorProperty.editable).toBeTrue();
+    });
+
+    it('should mark basic properties as read-only when their aspect is listed in readOnlyAspects', async () => {
+        setConfig('custom', [{ includeAll: true, readOnlyAspects: ['cm:titled'] }]);
+        spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(titledResponse));
+
+        const res = await firstValueFrom(service.getBasicProperties(fakeContentNode, 'custom'));
+        const titleProperty = res.find((property) => property.key === 'properties.cm:title');
+        const descriptionProperty = res.find((property) => property.key === 'properties.cm:description');
+        const nameProperty = res.find((property) => property.key === 'properties.cm:name');
+
+        expect(classesApi.getClass).toHaveBeenCalledWith('cm_titled');
+        expect(titleProperty.editable).toBeFalse();
+        expect(descriptionProperty.editable).toBeFalse();
+        expect(nameProperty.editable).toBeTrue();
+    });
+
+    it('should mark custom aspect properties as read-only when that aspect is listed in readOnlyAspects', async () => {
+        const customAspectNode = { ...fakeContentNode, aspectNames: ['fn:custom'] } as Node;
+        setConfig('custom', [{ includeAll: true, readOnlyAspects: ['fn:custom'] }]);
+        spyOn(classesApi, 'getClass').and.returnValue(
+            Promise.resolve({
+                name: 'fn:custom',
+                title: 'Custom',
+                properties: {
+                    'cm:title': { title: 'Title', name: 'cm:title', dataType: 'd:text', mandatory: false, multiValued: false }
+                }
+            } as PropertyGroup)
+        );
+
+        const res = await firstValueFrom(service.getBasicProperties(customAspectNode, 'custom'));
+
+        expect(classesApi.getClass).toHaveBeenCalledWith('fn_custom');
+        expect(res.find((property) => property.key === 'properties.cm:title').editable).toBeFalse();
+    });
+
+    it('should keep basic properties editable when the readOnlyAspects lookup fails', async () => {
+        setConfig('custom', [{ includeAll: true, readOnlyAspects: ['cm:titled'] }]);
+        spyOn(classesApi, 'getClass').and.returnValue(Promise.reject(new Error('boom')));
+
+        const res = await firstValueFrom(service.getBasicProperties(fakeContentNode, 'custom'));
+
+        expect(res.find((property) => property.key === 'properties.cm:title').editable).toBeTrue();
+    });
+
+    it('should not call the classes api when the node does not have the read-only aspect', async () => {
+        setConfig('custom', [{ includeAll: true, readOnlyAspects: ['cm:titled'] }]);
+        spyOn(classesApi, 'getClass');
+
+        const res = await firstValueFrom(service.getBasicProperties(fakeNode, 'custom'));
+
+        expect(classesApi.getClass).not.toHaveBeenCalled();
+        expect(res.find((property) => property.key === 'properties.cm:title').editable).toBeTrue();
+    });
+
+    it('should not call the classes api when no readOnlyAspects are configured', async () => {
+        setConfig('custom', [{ includeAll: true, readOnlyProperties: ['cm:title'] }]);
+        spyOn(classesApi, 'getClass');
+
+        const res = await firstValueFrom(service.getBasicProperties(fakeNode, 'custom'));
+
+        expect(classesApi.getClass).not.toHaveBeenCalled();
+        expect(res.find((property) => property.key === 'properties.cm:title').editable).toBeFalse();
     });
 
     it('should hide basic properties from general info when they are excluded', async () => {
@@ -493,6 +577,62 @@ describe('ContentMetaDataService', () => {
     });
 
     describe('LayoutOriented preset', () => {
+        it('should mark grouped properties as read-only when listed in readOnlyProperties', async () => {
+            setConfig('custom', [{ includeAll: true, readOnlyProperties: ['cm:title'] }]);
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(titledResponse));
+
+            const groups = await firstValueFrom(service.getGroupedProperties(fakeContentNode, 'custom'));
+            const properties = groups.flatMap((group) => group.properties);
+
+            expect(properties.find((property) => property.key === 'properties.cm:title').editable).toBeFalse();
+            expect(properties.find((property) => property.key === 'properties.cm:description').editable).toBeTrue();
+        });
+
+        it('should mark grouped properties as read-only when their aspect is listed in readOnlyAspects', async () => {
+            setConfig('custom', [{ includeAll: true, readOnlyAspects: ['cm:titled'] }]);
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(titledResponse));
+
+            const groups = await firstValueFrom(service.getGroupedProperties(fakeContentNode, 'custom'));
+            const properties = groups.flatMap((group) => group.properties);
+
+            expect(properties.find((property) => property.key === 'properties.cm:title').editable).toBeFalse();
+            expect(properties.find((property) => property.key === 'properties.cm:description').editable).toBeFalse();
+        });
+
+        it('should mark explicitly configured items as read-only when listed in readOnlyProperties', async () => {
+            setConfig('custom', [
+                {
+                    readOnlyProperties: ['cm:title'],
+                    title: 'Titled',
+                    items: [{ aspect: 'cm:titled', properties: '*' }]
+                }
+            ]);
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(titledResponse));
+
+            const groups = await firstValueFrom(service.getGroupedProperties(fakeContentNode, 'custom'));
+            const properties = groups.flatMap((group) => group.properties);
+
+            expect(properties.find((property) => property.key === 'properties.cm:title').editable).toBeFalse();
+            expect(properties.find((property) => property.key === 'properties.cm:description').editable).toBeTrue();
+        });
+
+        it('should mark explicitly configured items as read-only when their aspect is listed in readOnlyAspects', async () => {
+            setConfig('custom', [
+                {
+                    readOnlyAspects: ['cm:titled'],
+                    title: 'Titled',
+                    items: [{ aspect: 'cm:titled', properties: '*' }]
+                }
+            ]);
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(titledResponse));
+
+            const groups = await firstValueFrom(service.getGroupedProperties(fakeContentNode, 'custom'));
+            const properties = groups.flatMap((group) => group.properties);
+
+            expect(properties.find((property) => property.key === 'properties.cm:title').editable).toBeFalse();
+            expect(properties.find((property) => property.key === 'properties.cm:description').editable).toBeFalse();
+        });
+
         it('should return the node property', (done) => {
             const customLayoutOrientedScheme = [
                 {

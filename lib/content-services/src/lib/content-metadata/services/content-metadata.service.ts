@@ -24,13 +24,12 @@ import { AppConfigService, CardViewItem } from '@alfresco/adf-core';
 import { CardViewGroup, OrganisedPropertyGroup, PresetConfig } from '../interfaces/content-metadata.interfaces';
 import { ContentMetadataConfigFactory } from './config/content-metadata-config.factory';
 import { PropertyDescriptorsService } from './property-descriptors.service';
-import { map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { ContentTypePropertiesService } from './content-type-property.service';
 import { LayoutOrientedConfig, LayoutOrientedConfigLayoutBlock } from '../interfaces/layout-oriented-config.interface';
 import { Property } from '../interfaces/property.interface';
 
 interface LayoutBlockWithReadOnly extends LayoutOrientedConfigLayoutBlock {
-    readOnlyProperties?: string | string[];
     exclude?: string | string[];
 }
 
@@ -52,6 +51,7 @@ export class ContentMetadataService {
 
     getBasicProperties(node: Node, preset: string | PresetConfig = 'default'): Observable<CardViewItem[]> {
         const readOnlyProperties = this.getReadOnlyPropertyNames(preset);
+        const readOnlyAspects = this.getReadOnlyAspectNames(preset);
         const excludedNames = this.getExcludedNames(preset);
 
         const properties = this.basicPropertiesService.getProperties(node).filter((property) => {
@@ -59,16 +59,32 @@ export class ContentMetadataService {
             return !propertyName || !excludedNames.includes(propertyName);
         });
 
-        if (readOnlyProperties.length) {
+        const setReadOnly = (names: string[]) =>
             properties.forEach((property) => {
                 const propertyName = this.getBasicPropertyName(property.key);
-                if (propertyName && readOnlyProperties.includes(propertyName)) {
+                if (propertyName && names.includes(propertyName)) {
                     property.editable = false;
                 }
             });
+
+        if (readOnlyProperties.length) {
+            setReadOnly(readOnlyProperties);
         }
 
-        return of(properties);
+        const nodeGroupNames = (node.aspectNames || []).concat(node.nodeType);
+        const groupNamesToLoad = readOnlyAspects.filter((aspectName) => nodeGroupNames.includes(aspectName));
+
+        if (!groupNamesToLoad.length) {
+            return of(properties);
+        }
+
+        return this.propertyDescriptorsService.load(groupNamesToLoad).pipe(
+            map((groups) => {
+                setReadOnly(Object.values(groups).flatMap((group) => Object.keys(group?.properties || {})));
+                return properties;
+            }),
+            catchError(() => of(properties))
+        );
     }
 
     private getBasicPropertyName(key: string): string | undefined {
@@ -84,6 +100,23 @@ export class ContentMetadataService {
 
         if (presetConfig != null && typeof presetConfig === 'object') {
             return this.normaliseToArray(presetConfig.readOnlyProperties);
+        }
+
+        return [];
+    }
+
+    private getReadOnlyAspectNames(preset: string | PresetConfig): string[] {
+        const presetConfig = this.getPresetConfig(preset);
+
+        if (this.isLayoutConfig(presetConfig)) {
+            return presetConfig.reduce(
+                (readOnly, block) => readOnly.concat(this.normaliseToArray((block as LayoutBlockWithReadOnly)?.readOnlyAspects)),
+                [] as string[]
+            );
+        }
+
+        if (presetConfig != null && typeof presetConfig === 'object') {
+            return this.normaliseToArray(presetConfig.readOnlyAspects);
         }
 
         return [];
