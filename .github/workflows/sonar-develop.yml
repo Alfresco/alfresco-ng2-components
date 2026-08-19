@@ -1,9 +1,8 @@
 name: "SonarCloud Full Scan (develop)"
 
 on:
-  push:
-    branches:
-      - develop
+  schedule:
+    - cron: '0 5 * * *'
   workflow_dispatch: {}
 
 concurrency:
