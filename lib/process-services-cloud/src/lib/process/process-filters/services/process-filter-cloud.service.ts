@@ -404,6 +404,12 @@ export class ProcessFilterCloudService {
         ];
     }
 
+    /**
+     * @deprecated use FilterCountersCloudService.getFilterCountersNotifications instead, which shares a single
+     * subscription with the task filters and resolves the counters with a single request.
+     * @param appName Name of the target app
+     * @returns Process engine events
+     */
     getProcessNotificationSubscription(appName: string): Observable<TaskCloudEngineEvent[]> {
         return this.notificationCloudService
             .makeGQLQuery(appName, PROCESS_EVENT_SUBSCRIPTION_QUERY)

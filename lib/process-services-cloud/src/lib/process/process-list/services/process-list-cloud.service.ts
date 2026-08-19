@@ -100,7 +100,13 @@ export class ProcessListCloudService extends BaseCloudService {
         );
     }
 
-    protected buildQueryData(requestNode: ProcessListRequestModel): { [key: string]: any } {
+    /**
+     * Builds the body of a process query, with the empty properties of the request stripped out.
+     *
+     * @param requestNode Query object
+     * @returns Body of the query
+     */
+    buildQueryData(requestNode: ProcessListRequestModel): { [key: string]: any } {
         const queryData: { [key: string]: any } = {
             name: requestNode.name,
             id: requestNode.id,

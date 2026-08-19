@@ -135,7 +135,13 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
         return this.post<object, number>(queryUrl, queryData).pipe(map((response) => response || 0));
     }
 
-    protected buildQueryData(requestNode: TaskListRequestModel) {
+    /**
+     * Builds the body of a task query, with the empty properties of the request stripped out.
+     *
+     * @param requestNode Query object
+     * @returns Body of the query
+     */
+    buildQueryData(requestNode: TaskListRequestModel) {
         const queryData: any = {
             id: requestNode.id,
             parentId: requestNode.parentId,

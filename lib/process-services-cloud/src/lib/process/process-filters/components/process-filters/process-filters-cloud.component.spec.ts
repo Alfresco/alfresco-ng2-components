@@ -16,15 +16,15 @@
  */
 
 import { Component, SimpleChange } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { first, of, Subject, throwError } from 'rxjs';
+import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
+import { EMPTY, first, of, Subject, throwError } from 'rxjs';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFiltersCloudComponent } from './process-filters-cloud.component';
 import { By } from '@angular/platform-browser';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
 import { mockProcessFilters } from '../../mock/process-filters-cloud.mock';
-import { AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigServiceMock, NoopAuthModule } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../../../process-list/services/process-list-cloud.service';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -32,39 +32,36 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatIconHarness } from '@angular/material/icon/testing';
 import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
-import { TaskCloudEngineEvent } from '../../../../models/engine-event-cloud.model';
+import { FilterCountersCloudService } from '../../../../services/filter-counters-cloud.service';
+import { FilterCountersNotification } from '../../../../models/filter-counters-cloud.model';
+import { ProcessFilterCloudModel } from '../../models/process-filter-cloud.model';
 
 @Component({ selector: 'adf-cloud-dummy', template: '' })
 class DummyComponent {}
 
 const ProcessFilterCloudServiceMock = {
     getProcessFilters: () => of(mockProcessFilters),
-    getProcessNotificationSubscription: () => of([]),
     filterKeyToBeRefreshed$: of(mockProcessFilters[0].key)
 };
 
 describe('ProcessFiltersCloudComponent', () => {
     let processFilterService: ProcessFilterCloudService;
+    let filterCountersService: FilterCountersCloudService;
+    let processListService: ProcessListCloudService;
     let component: ProcessFiltersCloudComponent;
     let fixture: ComponentFixture<ProcessFiltersCloudComponent>;
     let getProcessFiltersSpy: jasmine.Spy;
-    let getProcessNotificationSubscriptionSpy: jasmine.Spy;
+    let getFilterCountersNotificationsSpy: jasmine.Spy;
     let loader: HarnessLoader;
     let router: Router;
 
     const configureTestingModule = async (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
-            imports: [ProcessFiltersCloudComponent, ApolloTestingModule],
+            imports: [NoopAuthModule, ProcessFiltersCloudComponent, ApolloTestingModule],
             providers: [
                 { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
-                {
-                    provide: ProcessListCloudService,
-                    useValue: {
-                        getProcessCounter: () => of(10),
-                        getProcessListCount: () => of(10)
-                    }
-                },
+                ProcessListCloudService,
                 { provide: ProcessFilterCloudService, useValue: ProcessFilterCloudServiceMock },
                 provideRouter([{ path: 'process-list-cloud', component: DummyComponent }]),
                 {
@@ -88,11 +85,15 @@ describe('ProcessFiltersCloudComponent', () => {
         component.searchApiMethod = searchApiMethod;
 
         processFilterService = TestBed.inject(ProcessFilterCloudService);
+        filterCountersService = TestBed.inject(FilterCountersCloudService);
+        processListService = TestBed.inject(ProcessListCloudService);
         TestBed.inject(ActivatedRoute);
         router = TestBed.inject(Router);
         await RouterTestingHarness.create();
         getProcessFiltersSpy = spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(mockProcessFilters));
-        getProcessNotificationSubscriptionSpy = spyOn(processFilterService, 'getProcessNotificationSubscription').and.returnValue(of([]));
+        getFilterCountersNotificationsSpy = spyOn(filterCountersService, 'getFilterCountersNotifications').and.returnValue(EMPTY);
+        spyOn(processListService, 'getProcessCounter').and.returnValue(of(10));
+        spyOn(processListService, 'getProcessListCount').and.returnValue(of(10));
     };
 
     const bindAppName = async (appName = 'my-app-1') => {
@@ -476,6 +477,95 @@ describe('ProcessFiltersCloudComponent', () => {
             expect(fetchSpy).not.toHaveBeenCalledWith(filterWithoutCounter);
         });
 
+        describe('Batched counters registration', () => {
+            let registerFiltersSpy: jasmine.Spy;
+
+            beforeEach(() => {
+                registerFiltersSpy = spyOn(filterCountersService, 'registerFilters');
+            });
+
+            const registeredQueries = () => registerFiltersSpy.calls.mostRecent().args[1];
+
+            it('should register every filter with a counter enabled', async () => {
+                getProcessFiltersSpy.and.returnValue(
+                    of(
+                        mockProcessFilters.map(
+                            (filter) => new ProcessFilterCloudModel({ ...filter, showCounter: true, sort: 'startDate', order: 'DESC' })
+                        )
+                    )
+                );
+
+                await bindAppName('mock-app-name');
+
+                expect(registerFiltersSpy).toHaveBeenCalledWith('PROCESS_INSTANCE', jasmine.any(Array));
+                // the first mock filter targets every status, so it holds no status to be keyed by
+                expect(registeredQueries().length).toBe(2);
+                expect(registeredQueries().map((query: any) => query.status)).toEqual([['RUNNING'], ['COMPLETED']]);
+            });
+
+            it('should not register a filter without a counter enabled', async () => {
+                getProcessFiltersSpy.and.returnValue(
+                    of([
+                        new ProcessFilterCloudModel({ ...mockProcessFilters[1], showCounter: true, sort: 'startDate', order: 'DESC' }),
+                        new ProcessFilterCloudModel({ ...mockProcessFilters[2], showCounter: false, sort: 'startDate', order: 'DESC' })
+                    ])
+                );
+
+                await bindAppName('mock-app-name');
+
+                expect(registeredQueries().length).toBe(1);
+                expect(registeredQueries()[0].status).toEqual(['RUNNING']);
+            });
+
+            it('should register the full criteria of a filter', async () => {
+                getProcessFiltersSpy.and.returnValue(
+                    of([
+                        new ProcessFilterCloudModel({
+                            ...mockProcessFilters[1],
+                            showCounter: true,
+                            sort: 'startDate',
+                            order: 'DESC',
+                            initiator: 'mock-user',
+                            processDefinitionName: 'mock-process'
+                        })
+                    ])
+                );
+
+                await bindAppName('mock-app-name');
+
+                const query = registeredQueries()[0];
+                expect(query.status).toEqual(['RUNNING']);
+                expect(query.initiator).toEqual(['mock-user']);
+                expect(query.processDefinitionName).toEqual(['mock-process']);
+                expect(query.sort).toEqual({ field: 'startDate', direction: 'desc', isProcessVariable: false });
+            });
+
+            it('should not register a filter targeting every status', async () => {
+                getProcessFiltersSpy.and.returnValue(
+                    of([new ProcessFilterCloudModel({ ...mockProcessFilters[0], showCounter: true, sort: 'startDate', order: 'DESC' })])
+                );
+
+                await bindAppName('mock-app-name');
+
+                expect(registeredQueries().length).toBe(0);
+            });
+
+            it('should not break the filter list when the query of a filter cannot be built', async () => {
+                getProcessFiltersSpy.and.returnValue(
+                    of([
+                        new ProcessFilterCloudModel({ ...mockProcessFilters[1], showCounter: true, sort: undefined, order: undefined }),
+                        new ProcessFilterCloudModel({ ...mockProcessFilters[2], showCounter: true, sort: 'startDate', order: 'DESC' })
+                    ])
+                );
+
+                await bindAppName('mock-app-name');
+
+                expect(component.filters.length).toBe(2);
+                expect(registeredQueries().length).toBe(1);
+                expect(registeredQueries()[0].status).toEqual(['COMPLETED']);
+            });
+        });
+
         describe('Notifications config', () => {
             it('should read enableNotifications and notificationDebounceTime from app config on init', () => {
                 const appConfigService = TestBed.inject(AppConfigService);
@@ -507,22 +597,47 @@ describe('ProcessFiltersCloudComponent', () => {
                 expect(component.notificationDebounceTime).toBe(5000);
             });
 
-            it('should debounce notification subscription using the configured debounce time', fakeAsync(() => {
-                const notifications$ = new Subject<TaskCloudEngineEvent[]>();
-                getProcessNotificationSubscriptionSpy.and.returnValue(notifications$.asObservable());
+            const initNotifications = (showCounter: boolean): Subject<FilterCountersNotification> => {
+                const notifications$ = new Subject<FilterCountersNotification>();
+                getFilterCountersNotificationsSpy.and.returnValue(notifications$.asObservable());
                 component.appName = 'mock-app-name';
 
                 fixture.detectChanges();
 
-                const updateFilterCountersSpy = spyOn(component, 'updateFilterCounters');
+                component.filters = mockProcessFilters.map((filter) => ({ ...filter, showCounter }));
 
-                notifications$.next([]);
-                tick(1000);
-                expect(updateFilterCountersSpy).not.toHaveBeenCalled();
+                return notifications$;
+            };
 
-                tick(2000);
-                expect(updateFilterCountersSpy).toHaveBeenCalledTimes(1);
+            it('should update the counters with the counts resolved by the batched count request', fakeAsync(() => {
+                const notifications$ = initNotifications(true);
 
+                notifications$.next({ events: [], counters: { PROCESS_INSTANCE: { RUNNING: 7 } } });
+
+                expect(component.counters['FakeRunningProcesses']).toBe(7);
+                flush();
+            }));
+
+            it('should fetch the counters of the filters not resolved by the batched count request on their own', fakeAsync(() => {
+                const notifications$ = initNotifications(true);
+                const updateFilterCounterSpy = spyOn(component, 'updateFilterCounter');
+
+                notifications$.next({ events: [], counters: { PROCESS_INSTANCE: { RUNNING: 7 } } });
+
+                // the RUNNING filter is resolved by the batch, the other two are fetched on their own
+                expect(component.counters['FakeRunningProcesses']).toBe(7);
+                expect(updateFilterCounterSpy).toHaveBeenCalledTimes(2);
+                expect(updateFilterCounterSpy.calls.allArgs().map(([filter]) => filter.key)).toEqual(['FakeAllProcesses', 'completed-processes']);
+                flush();
+            }));
+
+            it('should not update the counter of a filter without counter enabled', fakeAsync(() => {
+                const notifications$ = initNotifications(false);
+                component.counters = {};
+
+                notifications$.next({ events: [], counters: { PROCESS_INSTANCE: { RUNNING: 7 } } });
+
+                expect(component.counters['FakeRunningProcesses']).toBeUndefined();
                 flush();
             }));
         });
@@ -531,7 +646,7 @@ describe('ProcessFiltersCloudComponent', () => {
             it('should make subscription', async () => {
                 component.enableNotifications = true;
                 await bindAppName('mock-app-name');
-                expect(getProcessNotificationSubscriptionSpy).toHaveBeenCalled();
+                expect(getFilterCountersNotificationsSpy).toHaveBeenCalledWith('mock-app-name');
             });
 
             it('should not make subscription when notifications are disabled', async () => {
@@ -539,7 +654,7 @@ describe('ProcessFiltersCloudComponent', () => {
                 spyOn(appConfigService, 'get').and.callFake((key: string, defaultValue: any) => (key === 'notifications' ? false : defaultValue));
                 await bindAppName('mock-app-name');
 
-                expect(getProcessNotificationSubscriptionSpy).not.toHaveBeenCalled();
+                expect(getFilterCountersNotificationsSpy).not.toHaveBeenCalled();
             });
 
             it('should emit filter key when filter counter is set for first time', () => {

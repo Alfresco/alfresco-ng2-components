@@ -17,12 +17,12 @@
 
 import { AppConfigService, NoopAuthModule } from '@alfresco/adf-core';
 import { Component, SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, flush, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { first, of, Subject, throwError } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
-import { defaultTaskFiltersMock, fakeGlobalFilter, taskNotifications } from '../../mock/task-filters-cloud.mock';
+import { defaultTaskFiltersMock, fakeAllTaskFilter, fakeGlobalFilter, taskNotifications } from '../../mock/task-filters-cloud.mock';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { TaskFiltersCloudComponent } from './task-filters-cloud.component';
 import { TaskListCloudService } from '../../../task-list/services/task-list-cloud.service';
@@ -35,6 +35,8 @@ import { TaskFilterCloudModel } from '../../models/filter-cloud.model';
 import { MatIconHarness } from '@angular/material/icon/testing';
 import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
+import { FilterCountersCloudService } from '../../../../services/filter-counters-cloud.service';
+import { FilterCountersNotification } from '../../../../models/filter-counters-cloud.model';
 
 @Component({ selector: 'adf-cloud-dummy', template: '' })
 class DummyComponent {}
@@ -50,8 +52,14 @@ describe('TaskFiltersCloudComponent', () => {
     let getTaskFilterCounterSpy: jasmine.Spy;
     let getTaskListFiltersSpy: jasmine.Spy;
     let getTaskListCountSpy: jasmine.Spy;
-    let getTaskNotificationSubscriptionSpy: jasmine.Spy;
+    let getFilterCountersNotificationsSpy: jasmine.Spy;
+    let filterCountersService: FilterCountersCloudService;
     let router: Router;
+
+    const filterCountersNotificationMock: FilterCountersNotification = {
+        events: taskNotifications,
+        counters: { TASK: { ASSIGNED: 11, CREATED: 0 } }
+    };
 
     const configureTestingModule = async (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
@@ -76,9 +84,12 @@ describe('TaskFiltersCloudComponent', () => {
         });
         taskFilterService = TestBed.inject(TaskFilterCloudService);
         taskListService = TestBed.inject(TaskListCloudService);
+        filterCountersService = TestBed.inject(FilterCountersCloudService);
         getTaskFilterCounterSpy = spyOn(taskFilterService, 'getTaskFilterCounter').and.returnValue(of(11));
         getTaskListCountSpy = spyOn(taskListService, 'getTaskListCount').and.returnValue(of(11));
-        getTaskNotificationSubscriptionSpy = spyOn(taskFilterService, 'getTaskNotificationSubscription').and.returnValue(of(taskNotifications));
+        getFilterCountersNotificationsSpy = spyOn(filterCountersService, 'getFilterCountersNotifications').and.returnValue(
+            of(filterCountersNotificationMock)
+        );
         getTaskListFiltersSpy = spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeGlobalFilter));
 
         appConfigService = TestBed.inject(AppConfigService);
@@ -306,30 +317,60 @@ describe('TaskFiltersCloudComponent', () => {
             });
 
             it('should not subscribe to notifications when appName is missing', () => {
-                getTaskNotificationSubscriptionSpy.calls.reset();
+                getFilterCountersNotificationsSpy.calls.reset();
                 component.appName = '';
 
                 fixture.detectChanges();
 
-                expect(getTaskNotificationSubscriptionSpy).not.toHaveBeenCalled();
+                expect(getFilterCountersNotificationsSpy).not.toHaveBeenCalled();
             });
 
-            it('should debounce notification subscription using the configured debounce time', fakeAsync(() => {
-                const notifications$ = new Subject<typeof taskNotifications>();
-                getTaskNotificationSubscriptionSpy.and.returnValue(notifications$.asObservable());
+            it('should subscribe to the notifications of the bound app', () => {
                 component.appName = 'my-app-1';
 
                 fixture.detectChanges();
 
-                const updateFilterCountersSpy = spyOn(component, 'updateFilterCounters');
+                expect(getFilterCountersNotificationsSpy).toHaveBeenCalledWith('my-app-1');
+            });
 
-                notifications$.next(taskNotifications);
-                tick(1000);
-                expect(updateFilterCountersSpy).not.toHaveBeenCalled();
+            it('should update the counters with the counts resolved by the batched count request', fakeAsync(() => {
+                const notifications$ = new Subject<FilterCountersNotification>();
+                getFilterCountersNotificationsSpy.and.returnValue(notifications$.asObservable());
+                component.appName = 'my-app-1';
 
-                tick(2000);
-                expect(updateFilterCountersSpy).toHaveBeenCalledTimes(1);
+                fixture.detectChanges();
 
+                notifications$.next({ events: [], counters: { TASK: { ASSIGNED: 7 } } });
+
+                expect(component.counters['fake-involved-tasks']).toBe(7);
+                flush();
+            }));
+
+            it('should not update the counters of the filters not resolved by the batched count request', fakeAsync(() => {
+                const notifications$ = new Subject<FilterCountersNotification>();
+                getFilterCountersNotificationsSpy.and.returnValue(notifications$.asObservable());
+                component.appName = 'my-app-1';
+
+                fixture.detectChanges();
+                component.counters = { ...component.counters, 'fake-my-task1': 3 };
+
+                notifications$.next({ events: [], counters: { TASK: { ASSIGNED: 7 } } });
+
+                expect(component.counters['fake-my-task1']).toBe(3);
+                flush();
+            }));
+
+            it('should emit the events of the batch that triggered the count request', fakeAsync(() => {
+                const notifications$ = new Subject<FilterCountersNotification>();
+                getFilterCountersNotificationsSpy.and.returnValue(notifications$.asObservable());
+                const filterCounterUpdatedSpy = spyOn(component.filterCounterUpdated, 'emit');
+                component.appName = 'my-app-1';
+
+                fixture.detectChanges();
+
+                notifications$.next(filterCountersNotificationMock);
+
+                expect(filterCounterUpdatedSpy).toHaveBeenCalledWith(taskNotifications);
                 flush();
             }));
         });
@@ -669,6 +710,94 @@ describe('TaskFiltersCloudComponent', () => {
             expect(fetchSpy).toHaveBeenCalledTimes(1);
             expect(fetchSpy).toHaveBeenCalledWith(filterWithCounter);
             expect(fetchSpy).not.toHaveBeenCalledWith(filterWithoutCounter);
+        });
+
+        describe('Batched counters registration', () => {
+            let registerFiltersSpy: jasmine.Spy;
+
+            beforeEach(() => {
+                registerFiltersSpy = spyOn(filterCountersService, 'registerFilters');
+            });
+
+            const registeredQueries = () => registerFiltersSpy.calls.mostRecent().args[1];
+
+            it('should register every filter with a counter enabled', async () => {
+                getTaskListFiltersSpy.and.returnValue(
+                    of([
+                        new TaskFilterCloudModel({ ...defaultTaskFiltersMock[0], showCounter: true, sort: 'createdDate', order: 'DESC' }),
+                        new TaskFilterCloudModel({ ...defaultTaskFiltersMock[1], showCounter: true, sort: 'createdDate', order: 'DESC' }),
+                        new TaskFilterCloudModel({ ...defaultTaskFiltersMock[2], showCounter: true, sort: 'createdDate', order: 'DESC' })
+                    ])
+                );
+
+                await bindAppName();
+
+                expect(registerFiltersSpy).toHaveBeenCalledWith('TASK', jasmine.any(Array));
+                expect(registeredQueries().length).toBe(3);
+                expect(registeredQueries().map((query: any) => query.status)).toEqual([['CREATED'], ['ASSIGNED'], ['COMPLETED']]);
+            });
+
+            it('should not register a filter without a counter enabled', async () => {
+                getTaskListFiltersSpy.and.returnValue(
+                    of([
+                        new TaskFilterCloudModel({ ...defaultTaskFiltersMock[0], showCounter: true, sort: 'createdDate', order: 'DESC' }),
+                        new TaskFilterCloudModel({ ...defaultTaskFiltersMock[1], showCounter: false, sort: 'createdDate', order: 'DESC' })
+                    ])
+                );
+
+                await bindAppName();
+
+                expect(registeredQueries().length).toBe(1);
+                expect(registeredQueries()[0].status).toEqual(['CREATED']);
+            });
+
+            it('should register the full criteria of a filter', async () => {
+                getTaskListFiltersSpy.and.returnValue(
+                    of([
+                        new TaskFilterCloudModel({
+                            ...defaultTaskFiltersMock[1],
+                            showCounter: true,
+                            sort: 'createdDate',
+                            order: 'DESC',
+                            assignee: 'mock-user',
+                            priority: 4
+                        })
+                    ])
+                );
+
+                await bindAppName();
+
+                const query = registeredQueries()[0];
+                expect(query.status).toEqual(['ASSIGNED']);
+                expect(query.assignee).toEqual(['mock-user']);
+                expect(query.priority).toEqual(['4']);
+                expect(query.sort).toEqual({ field: 'createdDate', direction: 'desc', isProcessVariable: false });
+            });
+
+            it('should not register a filter targeting every status', async () => {
+                getTaskListFiltersSpy.and.returnValue(
+                    of([new TaskFilterCloudModel({ ...fakeAllTaskFilter, showCounter: true, sort: 'createdDate', order: 'DESC' })])
+                );
+
+                await bindAppName();
+
+                expect(registeredQueries().length).toBe(0);
+            });
+
+            it('should not break the filter list when the query of a filter cannot be built', async () => {
+                getTaskListFiltersSpy.and.returnValue(
+                    of([
+                        new TaskFilterCloudModel({ ...defaultTaskFiltersMock[0], showCounter: true, sort: undefined, order: undefined }),
+                        new TaskFilterCloudModel({ ...defaultTaskFiltersMock[1], showCounter: true, sort: 'createdDate', order: 'DESC' })
+                    ])
+                );
+
+                await bindAppName();
+
+                expect(component.filters.length).toBe(2);
+                expect(registeredQueries().length).toBe(1);
+                expect(registeredQueries()[0].status).toEqual(['ASSIGNED']);
+            });
         });
 
         describe('Highlight Selected Filter', () => {
