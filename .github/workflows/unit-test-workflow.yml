@@ -2,6 +2,10 @@ name: "Unit Tests Workflow"
 
 on:
   workflow_call:
+    secrets:
+      SONAR_TOKEN:
+        description: 'Token for SonarCloud analysis'
+        required: false
     inputs:
       base_ref:
         description: 'Base branch for affected calculation'
