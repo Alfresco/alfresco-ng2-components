@@ -20,6 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { BaseScreenCloudComponent } from './base-screen-cloud.component';
 import { provideScreen } from '../../../services/provide-screen';
+import { ScreenRenderingService } from '../../../services/screen-rendering.service';
 
 @Component({
     selector: 'adf-cloud-test-dynamic-screen',
@@ -38,7 +39,8 @@ class TestDynamicScreenComponent implements OnDestroy {
     template: `<ng-container #container />`
 })
 class TestHostScreenComponent extends BaseScreenCloudComponent<TestDynamicScreenComponent> {
-    subscribeToOutputsCallCount = 0;
+    setInputsCalls: ComponentRef<TestDynamicScreenComponent>[] = [];
+    subscribeToOutputsCalls: ComponentRef<TestDynamicScreenComponent>[] = [];
 
     get dynamicComponentRef(): ComponentRef<TestDynamicScreenComponent> | undefined {
         return this.componentRef;
@@ -48,8 +50,12 @@ class TestHostScreenComponent extends BaseScreenCloudComponent<TestDynamicScreen
         return this.componentRefChanged();
     }
 
-    protected subscribeToOutputs(): void {
-        this.subscribeToOutputsCallCount++;
+    protected override setInputsForDynamicComponent(componentRef: ComponentRef<TestDynamicScreenComponent>): void {
+        this.setInputsCalls.push(componentRef);
+    }
+
+    protected subscribeToOutputs(componentRef: ComponentRef<TestDynamicScreenComponent>): void {
+        this.subscribeToOutputsCalls.push(componentRef);
     }
 }
 
@@ -85,7 +91,11 @@ describe('BaseScreenCloudComponent', () => {
             expect(component.dynamicComponentRef).toBeDefined();
             expect(component.dynamicComponentRefSignalValue).toBe(component.dynamicComponentRef);
             expect(fixture.debugElement.query(By.css('.adf-cloud-test-dynamic-screen'))).toBeTruthy();
-            expect(component.subscribeToOutputsCallCount).toBe(1);
+        });
+
+        it('should wire inputs and outputs once, passing the created component reference', () => {
+            expect(component.setInputsCalls).toEqual([component.dynamicComponentRef!]);
+            expect(component.subscribeToOutputsCalls).toEqual([component.dynamicComponentRef!]);
         });
 
         it('should destroy the dynamic component reference on destroy', () => {
@@ -132,10 +142,11 @@ describe('BaseScreenCloudComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should not create any dynamic component', () => {
+        it('should not create any dynamic component nor wire inputs and outputs', () => {
             expect(component.dynamicComponentRef).toBeUndefined();
             expect(component.dynamicComponentRefSignalValue).toBeUndefined();
-            expect(component.subscribeToOutputsCallCount).toBe(0);
+            expect(component.setInputsCalls).toEqual([]);
+            expect(component.subscribeToOutputsCalls).toEqual([]);
             expect(fixture.debugElement.query(By.css('.adf-cloud-test-dynamic-screen'))).toBeNull();
         });
 
@@ -161,6 +172,21 @@ describe('BaseScreenCloudComponent', () => {
             expect(component.container).toBeUndefined();
             expect(component.dynamicComponentRef).toBeUndefined();
             expect(component.dynamicComponentRefSignalValue).toBeUndefined();
+        });
+
+        it('should not wire inputs and outputs when no dynamic component was created', () => {
+            fixture.detectChanges();
+
+            expect(component.setInputsCalls).toEqual([]);
+            expect(component.subscribeToOutputsCalls).toEqual([]);
+        });
+
+        it('should not resolve any component type', () => {
+            const resolveComponentTypeSpy = spyOn(TestBed.inject(ScreenRenderingService), 'resolveComponentType').and.callThrough();
+
+            fixture.detectChanges();
+
+            expect(resolveComponentTypeSpy).not.toHaveBeenCalled();
         });
 
         it('should not throw on destroy', () => {

@@ -44,16 +44,20 @@ export abstract class BaseScreenCloudComponent<TScreenComponent = unknown> imple
     }
 
     private createDynamicComponent(): void {
-        if (this.screenId) {
-            const componentType = this.screenRenderingService.resolveComponentType({ type: this.screenId });
-            this.componentRef = this.container?.createComponent(componentType);
-            this._componentRefChanged.set(this.componentRef);
-            this.setInputsForDynamicComponent();
-            this.subscribeToOutputs();
+        if (!this.screenId || !this.container) {
+            return;
         }
+
+        const componentType = this.screenRenderingService.resolveComponentType({ type: this.screenId });
+        const componentRef: ComponentRef<TScreenComponent> = this.container.createComponent(componentType);
+
+        this.componentRef = componentRef;
+        this._componentRefChanged.set(componentRef);
+        this.setInputsForDynamicComponent(componentRef);
+        this.subscribeToOutputs(componentRef);
     }
 
-    protected setInputsForDynamicComponent(): void {}
+    protected setInputsForDynamicComponent(_componentRef: ComponentRef<TScreenComponent>): void {}
 
-    protected abstract subscribeToOutputs(): void;
+    protected abstract subscribeToOutputs(componentRef: ComponentRef<TScreenComponent>): void;
 }
