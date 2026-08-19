@@ -8,6 +8,11 @@ on:
         required: false
         type: string
         default: 'develop'
+      full:
+        description: 'Run the full (non-affected) test suite for every project instead of only affected ones'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   generate-affected-matrix:
@@ -30,9 +35,15 @@ jobs:
         id: set-matrix
         env:
           BASE_REF: ${{ inputs.base_ref }}
+          FULL_RUN: ${{ inputs.full }}
         run: |
-          echo "Base ref is $BASE_REF"
-          AFFECTED_UNIT=$(pnpm nx show projects --affected --target=test --base=origin/$BASE_REF --head=HEAD --select=projects --plain --exclude=cli,stories,eslint-angular)
+          if [ "$FULL_RUN" == "true" ]; then
+            echo "Running full (non-affected) test suite"
+            AFFECTED_UNIT=$(pnpm nx show projects --target=test --select=projects --plain --exclude=cli,stories,eslint-angular)
+          else
+            echo "Base ref is $BASE_REF"
+            AFFECTED_UNIT=$(pnpm nx show projects --affected --target=test --base=origin/$BASE_REF --head=HEAD --select=projects --plain --exclude=cli,stories,eslint-angular)
+          fi
           echo "Affected projects for UNIT: $AFFECTED_UNIT"
 
           if [ -z "$AFFECTED_UNIT" ]; then
