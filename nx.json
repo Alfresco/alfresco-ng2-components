@@ -10,7 +10,8 @@
       "cache": true
     },
     "test": {
-      "cache": true
+      "cache": true,
+      "outputs": ["{workspaceRoot}/coverage/{projectName}"]
     },
     "stylelint": {
       "cache": true

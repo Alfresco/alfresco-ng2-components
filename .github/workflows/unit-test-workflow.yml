@@ -2,12 +2,21 @@ name: "Unit Tests Workflow"
 
 on:
   workflow_call:
+    secrets:
+      SONAR_TOKEN:
+        description: 'Token for SonarCloud analysis'
+        required: false
     inputs:
       base_ref:
         description: 'Base branch for affected calculation'
         required: false
         type: string
         default: 'develop'
+      full:
+        description: 'Run the full (non-affected) test suite for every project instead of only affected ones'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   generate-affected-matrix:
@@ -30,9 +39,15 @@ jobs:
         id: set-matrix
         env:
           BASE_REF: ${{ inputs.base_ref }}
+          FULL_RUN: ${{ inputs.full }}
         run: |
-          echo "Base ref is $BASE_REF"
-          AFFECTED_UNIT=$(pnpm nx show projects --affected --target=test --base=origin/$BASE_REF --head=HEAD --select=projects --plain --exclude=cli,stories,eslint-angular)
+          if [ "$FULL_RUN" == "true" ]; then
+            echo "Running full (non-affected) test suite"
+            AFFECTED_UNIT=$(pnpm nx show projects --target=test --select=projects --plain --exclude=cli,stories,eslint-angular)
+          else
+            echo "Base ref is $BASE_REF"
+            AFFECTED_UNIT=$(pnpm nx show projects --affected --target=test --base=origin/$BASE_REF --head=HEAD --select=projects --plain --exclude=cli,stories,eslint-angular)
+          fi
           echo "Affected projects for UNIT: $AFFECTED_UNIT"
 
           if [ -z "$AFFECTED_UNIT" ]; then
@@ -74,8 +89,56 @@ jobs:
           NODE_OPTIONS: "--max-old-space-size=5120"
         run: |
           xvfb-run --auto-servernum pnpm nx run ${{ matrix.project }}:test
+      - name: Upload coverage report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: coverage-${{ matrix.project }}
+          path: coverage/${{ matrix.project }}/lcov.info
+          if-no-files-found: ignore
+          retention-days: 1
       - name: Save nx cache
         if: ${{ success() }}
         uses: ./.github/actions/save-nx-cache
         with:
           cache-suffix: test-${{ matrix.project }}
+
+  sonarcloud:
+    name: "SonarCloud Scan"
+    runs-on: ubuntu-latest
+    needs: [generate-affected-matrix, unit-tests]
+    if: ${{ needs.generate-affected-matrix.outputs.hasProjects == 'true' && always() && needs.unit-tests.result != 'cancelled' }}
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Download all coverage artifacts
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          pattern: coverage-*
+          path: coverage-reports
+      - name: Merge coverage reports
+        run: |
+          mkdir -p coverage
+          echo "Artifact structure:"
+          find coverage-reports -type f -name 'lcov.info' 2>/dev/null || true
+          for dir in coverage-reports/coverage-*/; do
+            project_name=$(basename "$dir" | sed 's/^coverage-//')
+            lcov_file=$(find "$dir" -name 'lcov.info' -type f | head -1)
+            if [ -n "$lcov_file" ]; then
+              mkdir -p "coverage/${project_name}"
+              cp "$lcov_file" "coverage/${project_name}/lcov.info"
+              echo "Copied coverage for ${project_name}"
+            fi
+          done
+          echo "Coverage files found:"
+          find coverage -name 'lcov.info' -type f
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@aa494459d7c39c106cc77b166de8b4250a32bb97 # v5.1.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
