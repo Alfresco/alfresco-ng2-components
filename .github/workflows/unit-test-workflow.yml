@@ -110,10 +110,11 @@ jobs:
         run: |
           mkdir -p coverage
           for dir in coverage-reports/coverage-*/; do
-            if [ -f "${dir}lcov.info" ]; then
-              project_name=$(basename "$dir" | sed 's/^coverage-//')
+            project_name=$(basename "$dir" | sed 's/^coverage-//')
+            lcov_path="${dir}coverage/${project_name}/lcov.info"
+            if [ -f "$lcov_path" ]; then
               mkdir -p "coverage/${project_name}"
-              cp "${dir}lcov.info" "coverage/${project_name}/lcov.info"
+              cp "$lcov_path" "coverage/${project_name}/lcov.info"
               echo "Copied coverage for ${project_name}"
             fi
           done
