@@ -16,7 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, ComponentRef, DestroyRef, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { UserTaskCustomUi } from './screen-cloud.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -102,65 +102,65 @@ export class TaskScreenCloudComponent extends BaseScreenCloudComponent<UserTaskC
 
     private readonly destroyRef = inject(DestroyRef);
 
-    protected override setInputsForDynamicComponent(): void {
-        if (this.taskId && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'taskId')) {
-            this.componentRef.setInput('taskId', this.taskId);
+    protected override setInputsForDynamicComponent(componentRef: ComponentRef<UserTaskCustomUi>): void {
+        if (this.taskId && Object.prototype.hasOwnProperty.call(componentRef.instance, 'taskId')) {
+            componentRef.setInput('taskId', this.taskId);
         }
-        if (this.appName && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'appName')) {
-            this.componentRef.setInput('appName', this.appName);
+        if (this.appName && Object.prototype.hasOwnProperty.call(componentRef.instance, 'appName')) {
+            componentRef.setInput('appName', this.appName);
         }
-        if (this.screenId && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'screenId')) {
-            this.componentRef.setInput('screenId', this.screenId);
+        if (this.screenId && Object.prototype.hasOwnProperty.call(componentRef.instance, 'screenId')) {
+            componentRef.setInput('screenId', this.screenId);
         }
-        if (this.processInstanceId && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'processInstanceId')) {
-            this.componentRef.setInput('processInstanceId', this.processInstanceId);
+        if (this.processInstanceId && Object.prototype.hasOwnProperty.call(componentRef.instance, 'processInstanceId')) {
+            componentRef.setInput('processInstanceId', this.processInstanceId);
         }
-        if (this.taskName && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'taskName')) {
-            this.componentRef.setInput('taskName', this.taskName);
+        if (this.taskName && Object.prototype.hasOwnProperty.call(componentRef.instance, 'taskName')) {
+            componentRef.setInput('taskName', this.taskName);
         }
-        if (this.canClaimTask && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'canClaimTask')) {
-            this.componentRef.setInput('canClaimTask', this.canClaimTask);
+        if (this.canClaimTask && Object.prototype.hasOwnProperty.call(componentRef.instance, 'canClaimTask')) {
+            componentRef.setInput('canClaimTask', this.canClaimTask);
         }
-        if (this.canUnclaimTask && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'canUnclaimTask')) {
-            this.componentRef.setInput('canUnclaimTask', this.canUnclaimTask);
+        if (this.canUnclaimTask && Object.prototype.hasOwnProperty.call(componentRef.instance, 'canUnclaimTask')) {
+            componentRef.setInput('canUnclaimTask', this.canUnclaimTask);
         }
-        if (this.showCancelButton && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'showCancelButton')) {
-            this.componentRef.setInput('showCancelButton', this.showCancelButton);
+        if (this.showCancelButton && Object.prototype.hasOwnProperty.call(componentRef.instance, 'showCancelButton')) {
+            componentRef.setInput('showCancelButton', this.showCancelButton);
         }
-        if (this.rootProcessInstanceId && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'rootProcessInstanceId')) {
-            this.componentRef.setInput('rootProcessInstanceId', this.rootProcessInstanceId);
+        if (this.rootProcessInstanceId && Object.prototype.hasOwnProperty.call(componentRef.instance, 'rootProcessInstanceId')) {
+            componentRef.setInput('rootProcessInstanceId', this.rootProcessInstanceId);
         }
-        if (this.showNextTaskCheckbox && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'showNextTaskCheckbox')) {
-            this.componentRef.setInput('showNextTaskCheckbox', this.showNextTaskCheckbox);
+        if (this.showNextTaskCheckbox && Object.prototype.hasOwnProperty.call(componentRef.instance, 'showNextTaskCheckbox')) {
+            componentRef.setInput('showNextTaskCheckbox', this.showNextTaskCheckbox);
         }
-        if (this.isNextTaskCheckboxChecked && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'isNextTaskCheckboxChecked')) {
-            this.componentRef.setInput('isNextTaskCheckboxChecked', this.isNextTaskCheckboxChecked);
+        if (this.isNextTaskCheckboxChecked && Object.prototype.hasOwnProperty.call(componentRef.instance, 'isNextTaskCheckboxChecked')) {
+            componentRef.setInput('isNextTaskCheckboxChecked', this.isNextTaskCheckboxChecked);
         }
     }
 
-    protected override subscribeToOutputs(): void {
-        if (this.componentRef.instance?.taskSaved) {
-            this.componentRef.instance.taskSaved.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.taskSaved.emit());
+    protected override subscribeToOutputs(componentRef: ComponentRef<UserTaskCustomUi>): void {
+        if (componentRef.instance?.taskSaved) {
+            componentRef.instance.taskSaved.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.taskSaved.emit());
         }
-        if (this.componentRef.instance?.taskCompleted) {
-            this.componentRef.instance.taskCompleted
+        if (componentRef.instance?.taskCompleted) {
+            componentRef.instance.taskCompleted
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((openNextTask) => this.taskCompleted.emit(openNextTask));
         }
-        if (this.componentRef.instance?.error) {
-            this.componentRef.instance.error.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.error.emit(data));
+        if (componentRef.instance?.error) {
+            componentRef.instance.error.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.error.emit(data));
         }
-        if (this.componentRef.instance?.claimTask) {
-            this.componentRef.instance.claimTask.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.claimTask.emit(data));
+        if (componentRef.instance?.claimTask) {
+            componentRef.instance.claimTask.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.claimTask.emit(data));
         }
-        if (this.componentRef.instance?.unclaimTask) {
-            this.componentRef.instance.unclaimTask.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.unclaimTask.emit(data));
+        if (componentRef.instance?.unclaimTask) {
+            componentRef.instance.unclaimTask.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.unclaimTask.emit(data));
         }
-        if (this.componentRef.instance?.cancelTask) {
-            this.componentRef.instance.cancelTask.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.cancelTask.emit(data));
+        if (componentRef.instance?.cancelTask) {
+            componentRef.instance.cancelTask.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.cancelTask.emit(data));
         }
-        if (this.componentRef.instance?.nextTaskCheckboxCheckedChanged) {
-            this.componentRef.instance.nextTaskCheckboxCheckedChanged
+        if (componentRef.instance?.nextTaskCheckboxCheckedChanged) {
+            componentRef.instance.nextTaskCheckboxCheckedChanged
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((data) => this.nextTaskCheckboxCheckedChanged.emit(data));
         }
