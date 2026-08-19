@@ -19,6 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { ContainerModel, FormFieldModel, FormFieldTypes, FormModel, TabModel } from '../components/widgets/core';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 import { WidgetVisibilityService } from './widget-visibility.service';
+import { FormService } from './form.service';
 import {
     fakeFormJson,
     formTest,
@@ -48,6 +49,30 @@ describe('WidgetVisibilityService', () => {
 
     beforeEach(() => {
         service = TestBed.inject(WidgetVisibilityService);
+    });
+
+    it('should emit formVisibilityRefreshed when visibility is refreshed', () => {
+        const formService = TestBed.inject(FormService);
+        let emittedForm: FormModel | undefined;
+
+        formService.formVisibilityRefreshed.subscribe((event) => {
+            emittedForm = event.form;
+        });
+
+        service.refreshVisibility(stubFormWithFields);
+
+        expect(emittedForm).toBe(stubFormWithFields);
+    });
+
+    it('should not emit formVisibilityRefreshed when form is null', () => {
+        const formService = TestBed.inject(FormService);
+        let emitCount = 0;
+
+        formService.formVisibilityRefreshed.subscribe(() => emitCount++);
+
+        service.refreshVisibility(null);
+
+        expect(emitCount).toBe(0);
     });
 
     describe('should be able to evaluate next condition operations', () => {

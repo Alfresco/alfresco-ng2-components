@@ -30,7 +30,7 @@ import {
     SimpleChanges,
     ViewChild
 } from '@angular/core';
-import { forkJoin, isObservable, Observable, of, Subscription } from 'rxjs';
+import { forkJoin, isObservable, merge, Observable, of, Subscription } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import {
     ConfirmDialogComponent,
@@ -306,11 +306,11 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             }
         });
 
-        this.formService.formRulesEvent
-            .pipe(
-                filter((event) => event?.type === 'fieldValueChanged' && event.form?.id === this.form?.id),
-                takeUntilDestroyed()
-            )
+        merge(
+            this.formService.formVisibilityRefreshed.pipe(filter((event) => event.form?.id === this.form?.id)),
+            this.formService.formRulesEvent.pipe(filter((event) => event?.type === 'fieldValueChanged' && event.form?.id === this.form?.id))
+        )
+            .pipe(takeUntilDestroyed())
             .subscribe(() => this.recomputeVisibleOutcomes());
     }
 
@@ -595,7 +595,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     checkVisibility(field: FormFieldModel) {
         if (field?.form) {
             this.visibilityService.refreshVisibility(field.form);
-            this.recomputeVisibleOutcomes();
         }
     }
 
@@ -613,7 +612,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.setCheckParentVisibilityForValidationOnFields();
         this.visibilityService.refreshVisibility(this.form);
         this.form.validateForm();
-        this.recomputeVisibleOutcomes();
         this.onFormLoaded(this.form);
         this.formService.formRulesEvent.next(new FormRulesEvent('dataRefreshed', new FormEvent(this.form)));
         this.onFormDataRefreshed(this.form);
