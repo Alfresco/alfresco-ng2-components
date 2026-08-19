@@ -109,12 +109,14 @@ jobs:
       - name: Merge coverage reports
         run: |
           mkdir -p coverage
+          echo "Artifact structure:"
+          find coverage-reports -type f -name 'lcov.info' 2>/dev/null || true
           for dir in coverage-reports/coverage-*/; do
             project_name=$(basename "$dir" | sed 's/^coverage-//')
-            lcov_path="${dir}coverage/${project_name}/lcov.info"
-            if [ -f "$lcov_path" ]; then
+            lcov_file=$(find "$dir" -name 'lcov.info' -type f | head -1)
+            if [ -n "$lcov_file" ]; then
               mkdir -p "coverage/${project_name}"
-              cp "$lcov_path" "coverage/${project_name}/lcov.info"
+              cp "$lcov_file" "coverage/${project_name}/lcov.info"
               echo "Copied coverage for ${project_name}"
             fi
           done
