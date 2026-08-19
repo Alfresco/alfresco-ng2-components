@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { Component, ComponentRef, inject, Input, OnInit, signal, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentRef, inject, Input, OnDestroy, OnInit, signal, ViewChild, ViewContainerRef } from '@angular/core';
 import { ScreenRenderingService } from '../../../services/screen-rendering.service';
 
 @Component({
     template: ''
 })
-export abstract class BaseScreenCloudComponent<TScreenComponent = unknown> implements OnInit {
+export abstract class BaseScreenCloudComponent<TScreenComponent = unknown> implements OnInit, OnDestroy {
     @Input()
     screenId: string = '';
 
     @ViewChild('container', { read: ViewContainerRef, static: true })
-    container: ViewContainerRef;
+    container: ViewContainerRef | undefined;
 
-    protected componentRef: ComponentRef<TScreenComponent>;
+    protected componentRef: ComponentRef<TScreenComponent> | undefined;
     private readonly _componentRefChanged = signal<ComponentRef<TScreenComponent> | undefined>(undefined);
     protected readonly componentRefChanged = this._componentRefChanged.asReadonly();
     protected readonly screenRenderingService = inject(ScreenRenderingService);
@@ -37,10 +37,16 @@ export abstract class BaseScreenCloudComponent<TScreenComponent = unknown> imple
         this.createDynamicComponent();
     }
 
+    ngOnDestroy(): void {
+        this.componentRef?.destroy();
+        this.componentRef = undefined;
+        this._componentRefChanged.set(undefined);
+    }
+
     private createDynamicComponent(): void {
         if (this.screenId) {
             const componentType = this.screenRenderingService.resolveComponentType({ type: this.screenId });
-            this.componentRef = this.container.createComponent(componentType);
+            this.componentRef = this.container?.createComponent(componentType);
             this._componentRefChanged.set(this.componentRef);
             this.setInputsForDynamicComponent();
             this.subscribeToOutputs();

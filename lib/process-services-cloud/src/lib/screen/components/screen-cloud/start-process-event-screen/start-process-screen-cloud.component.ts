@@ -43,22 +43,22 @@ export class StartProcessScreenCloudComponent extends BaseScreenCloudComponent<S
         super();
         effect(() => {
             const componentRef = this.componentRefChanged();
-            if (componentRef.instance && 'appName' in componentRef.instance) {
-                componentRef.setInput('appName', this.appName());
+            if (componentRef?.instance && 'appName' in componentRef.instance) {
+                componentRef?.setInput('appName', this.appName());
             }
         });
         effect(() => this.componentRefChanged()?.setInput('processDefinitionId', this.processDefinitionId()));
         effect(() => {
             const componentRef = this.componentRefChanged();
             if (componentRef?.instance && 'resolvedValues' in componentRef.instance) {
-                componentRef.setInput('resolvedValues', this.resolvedValues());
+                componentRef?.setInput('resolvedValues', this.resolvedValues());
             }
         });
     }
 
     protected subscribeToOutputs(): void {
-        this.componentRef.instance.startProcessPayloadChanged.subscribe((payload) => this.screenStartProcessPayloadChange.emit(payload));
-        this.componentRef.instance.defaultStartProcessButtonsConfigurationChange.subscribe((config) => {
+        this.componentRef?.instance.startProcessPayloadChanged.subscribe((payload) => this.screenStartProcessPayloadChange.emit(payload));
+        this.componentRef?.instance.defaultStartProcessButtonsConfigurationChange.subscribe((config) => {
             this.showStartProcessButtons.set(config.show);
             this.disableStartProcessButton.emit(config.disable);
         });
