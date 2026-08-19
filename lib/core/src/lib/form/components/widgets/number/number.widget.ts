@@ -18,7 +18,8 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { NgIf } from '@angular/common';
-import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,6 +27,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DecimalNumberPipe } from '../../../../pipes';
+import { getValidationSummaryTranslationParameters } from '../core/error-message.model';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
@@ -53,6 +55,7 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
     translateParameters: Record<string, string> = {};
 
     private readonly decimalNumberPipe = inject(DecimalNumberPipe);
+    private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit() {
         if (this.field.readOnly) {
@@ -61,11 +64,13 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
             this.displayValue = this.field.value;
         }
         this.initErrorStateMatcher();
+        this.field.validationSummaryChanges$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((validationSummary) => {
+            this.translateParameters = getValidationSummaryTranslationParameters(validationSummary);
+        });
     }
 
     onBlur(): void {
         this.markAsTouched();
-        this.updateTranslateParameters();
     }
 
     protected onNumberChange(value: string) {
@@ -74,7 +79,6 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
         }
 
         this.onFieldChanged(this.field);
-        this.updateTranslateParameters();
     }
 
     private initErrorStateMatcher(): void {
@@ -82,13 +86,5 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
             isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
                 !!this.field.validationSummary?.message || (this.isInvalidFieldRequired() && this.isTouched())
         };
-    }
-
-    private updateTranslateParameters(): void {
-        if (this.field.validationSummary?.isActive()) {
-            this.translateParameters = this.field.validationSummary.getAttributesAsJsonObj();
-        } else {
-            this.translateParameters = {};
-        }
     }
 }

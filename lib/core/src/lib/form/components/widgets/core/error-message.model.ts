@@ -17,24 +17,36 @@
 
 export class ErrorMessageModel {
     message: string = '';
-    attributes: Map<string, string> = null;
+    attributes: Map<string, string> = new Map();
 
     constructor(obj?: any) {
         this.message = obj?.message || '';
-        this.attributes = obj?.attributes || new Map();
+
+        if (obj?.attributes) {
+            this.attributes = obj.attributes;
+        }
     }
 
     isActive(): boolean {
         return !!this.message;
     }
 
-    getAttributesAsJsonObj() {
-        const result = {};
+    getAttributesAsJsonObj(): Record<string, string> {
+        const result: Record<string, string> = {};
         if (this.attributes.size > 0) {
             this.attributes.forEach((value, key) => {
                 result[key] = typeof value === 'string' ? value : JSON.stringify(value);
             });
         }
+
         return result;
     }
 }
+
+export const getValidationSummaryTranslationParameters = (validationSummary?: ErrorMessageModel): Record<string, string> => {
+    if (validationSummary?.isActive()) {
+        return validationSummary.getAttributesAsJsonObj();
+    }
+
+    return {};
+};

@@ -19,6 +19,7 @@
 
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { Component, Directive, inject, InjectionToken, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,7 +27,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { WidgetComponent } from '../widget.component';
-import { ErrorMessageModel } from '../core/error-message.model';
+import { ErrorMessageModel, getValidationSummaryTranslationParameters } from '../core/error-message.model';
 import { FormattableTextWidgetComponent } from '../core/formattable-text.widget';
 import { DEFAULT_TEXT_MAX_LENGTH } from '../core/form-field-validator';
 import { InputMaskDirective } from './text-mask.component';
@@ -97,6 +98,9 @@ export class TextWidgetComponent extends FormattableTextWidgetComponent {
             this.isMaskReversed = this.field.params['inputMaskReversed'] ? this.field.params['inputMaskReversed'] : false;
         }
         this.initErrorStateMatcher();
+        this.field.validationSummaryChanges$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((validationSummary) => {
+            this.translateParameters = getValidationSummaryTranslationParameters(validationSummary);
+        });
     }
 
     onPaste(event: ClipboardEvent): void {
@@ -125,12 +129,10 @@ export class TextWidgetComponent extends FormattableTextWidgetComponent {
 
     onBlur(): void {
         this.markAsTouched();
-        this.updateTranslateParameters();
     }
 
     onTextFieldChanged(): void {
         this.onFieldChanged(this.field);
-        this.updateTranslateParameters();
     }
 
     private initErrorStateMatcher(): void {
@@ -141,14 +143,6 @@ export class TextWidgetComponent extends FormattableTextWidgetComponent {
                     !!this.field.validationSummary?.message ||
                     (this.isInvalidFieldRequired() && this.isTouched()))
         };
-    }
-
-    private updateTranslateParameters(): void {
-        if (this.field.validationSummary?.isActive()) {
-            this.translateParameters = this.field.validationSummary.getAttributesAsJsonObj();
-        } else {
-            this.translateParameters = {};
-        }
     }
 
     private getLengthAfterPaste(input: HTMLInputElement, pastedValue: string): number {

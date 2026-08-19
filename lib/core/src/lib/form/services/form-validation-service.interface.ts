@@ -16,6 +16,7 @@
  */
 
 import { Subject } from 'rxjs';
+import { FormEvent } from '../events/form.event';
 import { FormFieldEvent } from '../events/form-field.event';
 import { FormRulesEvent } from '../events/form-rules.event';
 import { ValidateFormFieldEvent } from '../events/validate-form-field.event';
@@ -26,4 +27,5 @@ export interface FormValidationService {
     validateForm: Subject<ValidateFormEvent>;
     validateFormField: Subject<ValidateFormFieldEvent>;
     formRulesEvent?: Subject<FormRulesEvent>;
+    formVisibilityRefreshed?: Subject<FormEvent>;
 }
