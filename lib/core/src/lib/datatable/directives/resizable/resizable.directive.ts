@@ -131,7 +131,10 @@ export class ResizableDirective implements OnInit, OnDestroy {
             .pipe(filter(() => !!this.currentRect));
 
         mouseDrag
-            .pipe(map(({ clientX }) => this.getNewBoundingRectangle(this.startingRect, clientX + this.coverPadding)))
+            .pipe(
+                map(({ clientX }) => this.getNewBoundingRectangle(this.startingRect, clientX + this.coverPadding)),
+                takeUntilDestroyed(this.destroyRef)
+            )
             .subscribe((rectangle: BoundingRectangle) => {
                 if (this.resizing.observers.length > 0) {
                     this.zone.run(() => {

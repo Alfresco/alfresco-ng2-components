@@ -131,6 +131,28 @@ describe('ResizeHandleDirective', () => {
             expect(renderer.listen).toHaveBeenCalledWith(element.nativeElement, 'mousemove', jasmine.any(Function));
             expect(renderer.listen).toHaveBeenCalledWith('document', 'mouseup', jasmine.any(Function));
         });
+
+        it('should unregister previous mouseup listener before registering a new one on repeated mousedown', () => {
+            const firstUnlistenMouseUp = jasmine.createSpy('firstUnlistenMouseUp');
+            const secondUnlistenMouseUp = jasmine.createSpy('secondUnlistenMouseUp');
+            let mouseUpCallCount = 0;
+
+            renderer.listen.and.callFake((_target: any, eventName: string, _callback: (event: MouseEvent) => void) => {
+                if (eventName === 'mouseup') {
+                    mouseUpCallCount++;
+                    return mouseUpCallCount === 1 ? firstUnlistenMouseUp : secondUnlistenMouseUp;
+                }
+                return () => {};
+            });
+
+            const mouseEvent = new MouseEvent('mousedown', { cancelable: true });
+
+            mousedownCallback(mouseEvent);
+            expect(firstUnlistenMouseUp).not.toHaveBeenCalled();
+
+            mousedownCallback(mouseEvent);
+            expect(firstUnlistenMouseUp).toHaveBeenCalled();
+        });
     });
 
     describe('keyboard resizing', () => {
