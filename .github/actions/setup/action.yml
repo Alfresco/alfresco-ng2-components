@@ -25,13 +25,11 @@ runs:
       - name: Set consistent machine ID for Nx cache
         shell: bash
         run: echo "nx-github-actions" | sudo tee /etc/machine-id > /dev/null
-      - name: Setup pnpm
-        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: '.nvmrc'
-          cache: 'pnpm'
+          cache: 'npm'
       - name: get latest tag sha
         if: ${{ inputs.full-setup == 'true' }}
         id: tag-sha
@@ -42,10 +40,10 @@ runs:
         uses: ./.github/actions/set-npm-tag
       - name: Install dependencies
         shell: bash
-        run: pnpm install --frozen-lockfile
+        run: npm ci
       - name: Security audit
         shell: bash
-        run: pnpm audit --audit-level=critical
+        run: npm audit --audit-level=critical
       - name: Restore nx cache
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
