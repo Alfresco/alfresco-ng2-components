@@ -55,4 +55,12 @@ describe('UploadCloudWidgetComponent', () => {
             expect(eventSpy).toHaveBeenCalledWith(clickEvent);
         });
     });
+
+    it('should render one reserved form field status area', () => {
+        widget.field = new FormFieldModel(new FormModel(), {});
+        fixture.detectChanges();
+
+        const statusAreas = fixture.nativeElement.querySelectorAll('error-widget');
+        expect(statusAreas.length).toBe(1);
+    });
 });

@@ -16,10 +16,9 @@
         <span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
     </mat-checkbox>
     <div class="adf-error-messages-container">
-        <error-widget [error]="field.validationSummary" />
         <error-widget
-            *ngIf="isInvalidFieldRequired() && isTouched()"
-            required="{{ 'FORM.FIELD.REQUIRED' | translate }}"
+            [error]="field.validationSummary"
+            [required]="isInvalidFieldRequired() && isTouched() ? ('FORM.FIELD.REQUIRED' | translate) : ''"
         />
     </div>
 </div>

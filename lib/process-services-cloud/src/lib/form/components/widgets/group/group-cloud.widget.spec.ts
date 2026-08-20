@@ -141,8 +141,9 @@ describe('GroupCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('.adf-error-text')).toBeTruthy();
-            expect(element.querySelector('.adf-error-text').textContent).toContain('ADF_CLOUD_GROUPS.ERROR.NOT_FOUND');
+            const errorMessages = element.querySelectorAll('.adf-error-text');
+            expect(errorMessages.length).toBe(1);
+            expect(errorMessages[0].textContent).toContain('ADF_CLOUD_GROUPS.ERROR.NOT_FOUND');
         });
     });
 
