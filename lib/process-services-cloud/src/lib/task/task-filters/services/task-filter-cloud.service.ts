@@ -362,7 +362,7 @@ export class TaskFilterCloudService extends BaseCloudService {
     }
 
     /**
-     * @deprecated use FilterCountersCloudService.getFilterCountersNotifications instead, which shares a single
+     * @deprecated use FilterCountersCloudService.getEngineEvents instead, which shares a single
      * subscription with the process filters and resolves the counters with a single request.
      * @param appName Name of the target app
      * @returns Task engine events

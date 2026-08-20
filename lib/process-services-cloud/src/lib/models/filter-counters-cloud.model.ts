@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { TaskCloudEngineEvent } from './engine-event-cloud.model';
-
 /**
  * Entity types accepted by the `POST /query/v1/count` endpoint.
  */
@@ -34,9 +32,12 @@ export interface FilterCountersQuerySort {
 }
 
 /**
- * A single query of the batched count request, holding the criteria of one filter.
+ * A single query of the batched count request, holding the criteria of one filter. The counter
+ * resolved for the query is keyed by its `requestId` in the response.
  */
 export interface FilterCountersQuery {
+    /** Identifies the query, so that its counter can be read back from the response. */
+    requestId: string;
     status?: string[];
     assignee?: string[];
     sort?: FilterCountersQuerySort;
@@ -51,12 +52,12 @@ export type FilterCountersRequest = {
 };
 
 /**
- * Shape of a task or process filter the counters are resolved for.
+ * Shape of a task or process filter the counters are resolved for. The key of the filter is used
+ * as the `requestId` of its query, so that its counter can be read back from the response. A filter
+ * without a key holds no identity for the batched request, so its counter is fetched on its own.
  */
 export interface FilterCounterCandidate {
-    key: string;
-    status?: string | null;
-    statuses?: string[] | null;
+    key?: string | null;
     showCounter?: boolean;
 }
 
@@ -68,30 +69,23 @@ export type FilterCountersFilters = {
 };
 
 /**
- * Counts returned by the batched count request, keyed by entity type and then by status.
- * e.g. `{ TASK: { ASSIGNED: 5, CREATED: 0 }, PROCESS_INSTANCE: { RUNNING: 5 } }`
+ * Counts returned by the batched count request, keyed by entity type and then by the `requestId`
+ * of the query the count was resolved for.
+ * e.g. `{ TASK: { 'my-tasks': 5, 'queued-tasks': 0 }, PROCESS_INSTANCE: { 'running-processes': 5 } }`
  */
 export type FilterCounters = {
-    [entityType in FilterCounterEntityType]?: { [status: string]: number };
+    [entityType in FilterCounterEntityType]?: { [requestId: string]: number };
 };
 
-export interface FilterCountersNotification {
-    /** Engine events of the debounced batch that triggered the count request. */
-    events: TaskCloudEngineEvent[];
-    /** Counts resolved by a single call to the batched count endpoint. */
-    counters: FilterCounters;
-}
-
 /**
- * Resolves the statuses of a filter, which the counters of the count response are keyed by.
- *
- * @param filter task or process filter
- * @param filter.status Status of the filter
- * @param filter.statuses Statuses of the filter
- * @returns the statuses of the filter, empty when the filter targets every status
+ * Counters of the filters of one entity type, keyed by the key of the filter they were resolved for.
  */
-export function resolveFilterCounterStatuses(filter: { status?: string | null; statuses?: string[] | null }): string[] {
-    const statuses = filter?.statuses?.length ? filter.statuses : filter?.status ? [filter.status] : [];
-
-    return statuses.filter((status) => !!status);
+export interface FilterCountersResult {
+    /** Counters keyed by filter key. Empty when the batched count endpoint is not available. */
+    counters: { [filterKey: string]: number };
+    /**
+     * Whether the counters were resolved by the batched count endpoint. When `false`, the endpoint is
+     * not available on the backend of the app and the counters are to be resolved one filter at a time.
+     */
+    batched: boolean;
 }
