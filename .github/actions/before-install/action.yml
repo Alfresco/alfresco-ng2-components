@@ -9,18 +9,17 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Before install
-      if: ${{ ! env.ACT }}
-      shell: bash
-      run: |
-        pip install --user --quiet awscli
-
     - name: base vars
       shell: bash
       run: |
+        if [ -n "${GITHUB_BASE_REF:-}" ]; then
+          BASE_HASH=$(git merge-base "origin/${GITHUB_BASE_REF}" HEAD 2>/dev/null || git rev-parse HEAD)
+        else
+          BASE_HASH=$(git rev-parse HEAD)
+        fi
         {
           echo "GIT_HASH=$(git rev-parse HEAD)";
-          echo "BASE_HASH=$(git merge-base origin/${GITHUB_BASE_REF} HEAD)";
+          echo "BASE_HASH=${BASE_HASH}";
           echo "HEAD_HASH=HEAD";
           echo "HEAD_COMMIT_HASH=${GH_COMMIT}";
           echo "NX_CALCULATION_FLAGS=--all";
@@ -31,10 +30,22 @@ runs:
 
     - name: affected:* flag parser
       shell: bash
-      if: ${{ contains(github.event.head_commit.message , '[affected:*]') }}
+      env:
+        EVENT_NAME: ${{ github.event_name }}
+        PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       run: |
-        echo "Setting up CI to run with commit flag [affected:*] flag."
-        echo "BREAK_ACTION=true" >> $GITHUB_ENV
+        # Get commit message safely from git to avoid script injection
+        # For PRs, use the PR head SHA; for other events use HEAD
+        if [ "$EVENT_NAME" == "pull_request" ] && [ -n "$PR_HEAD_SHA" ]; then
+          COMMIT_MSG=$(git log -1 --format=%B "$PR_HEAD_SHA" 2>/dev/null || echo "")
+        else
+          COMMIT_MSG=$(git log -1 --format=%B 2>/dev/null || echo "")
+        fi
+
+        if echo "$COMMIT_MSG" | grep -qF "[affected:*]"; then
+          echo "Setting up CI to run with commit flag [affected:*] flag."
+          echo "BREAK_ACTION=true" >> $GITHUB_ENV
+        fi
 
     - name: PULL_REQUEST event
       if: ${{ env.BREAK_ACTION == false && github.event_name == 'pull_request' && !github.event.pull_request.merged }}
@@ -49,13 +60,15 @@ runs:
         } >> $GITHUB_ENV
 
     - name: RELEASE on master/develop patch branch
-      if: ${{ env.BREAK_ACTION == false && github.event.pull_request.merged }}
+      if: ${{ env.BREAK_ACTION == false && (github.event.pull_request.merged || github.event_name == 'push') }}
       shell: bash
+      env:
+        REF_NAME: ${{ github.ref_name }}
       run: |
-        if [[ "${{ github.ref_name }}" =~ ^master(-patch.*)?$ ]]; then
+        if [[ "$REF_NAME" =~ ^master(-patch.*)?$ ]]; then
             # into master(-patch*)
             echo "Setting up CI flags for Push on master patch"
-        elif [[ "${{ github.ref_name }}" =~ ^develop-patch.*$ ]]; then
+        elif [[ "$REF_NAME" =~ ^develop-patch.*$ ]]; then
             # into develop-patch*
             echo "Setting up CI flags for Push develop patch"
         else
