@@ -9,6 +9,7 @@ overrides:
   js-yaml@4.2.0: 4.3.1
   brace-expansion@5.0.8: 5.0.9
   brace-expansion@<1.1.18: 1.1.18
+  socket.io-parser@4.2.6: 4.2.7
   svgo: 4.0.2
   shell-quote: 1.9.0
   adm-zip: 0.6.0
@@ -8462,8 +8463,8 @@ packages:
   socket.io-adapter@2.5.8:
     resolution: {integrity: sha512-6Oy52pbg+kvdCVvjcN+FnY7BvxZ7cIHNScbvztT/It5d0vbwoJoVZmF2gjJmnV0/4WlXRfG15zc45ySk9Ah8bw==}
 
-  socket.io-parser@4.2.6:
-    resolution: {integrity: sha512-asJqbVBDsBCJx0pTqw3WfesSY0iRX+2xzWEWzrpcH7L6fLzrhyF8WPI8UaeM4YCuDfpwA/cgsdugMsmtz8EJeg==}
+  socket.io-parser@4.2.7:
+    resolution: {integrity: sha512-IH/iSeO9T6gz1KkFleGDWkG9N3dl4jXVYUtMhIqH10Md0ttMer8nUNWiP1DKuNrybD2xBrixLJdCC9J6ECoYkg==}
     engines: {node: '>=10.0.0'}
 
   socket.io@4.8.3:
@@ -18870,7 +18871,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  socket.io-parser@4.2.6(supports-color@7.2.0):
+  socket.io-parser@4.2.7(supports-color@7.2.0):
     dependencies:
       '@socket.io/component-emitter': 3.1.2
       debug: 4.4.3(supports-color@7.2.0)
@@ -18885,7 +18886,7 @@ snapshots:
       debug: 4.4.3(supports-color@7.2.0)
       engine.io: 6.6.9(supports-color@7.2.0)
       socket.io-adapter: 2.5.8(supports-color@7.2.0)
-      socket.io-parser: 4.2.6(supports-color@7.2.0)
+      socket.io-parser: 4.2.7(supports-color@7.2.0)
     transitivePeerDependencies:
       - bufferutil
       - supports-color
