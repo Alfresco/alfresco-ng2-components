@@ -46,9 +46,9 @@ jobs:
       - uses: ./.github/actions/setup
       - name: install
         run: |
-          pnpm install --frozen-lockfile
-          pnpm bundle:js-api
-          pnpm bundle:cli
+          npm ci
+          npx nx run js-api:bundle
+          npx nx run cli:bundle
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   release-npm:
@@ -88,15 +88,15 @@ jobs:
             setMigrations();
       - name: build libraries
         run: |
-          pnpm build:libs
-          pnpm build:schematics
+          npm run build:libs
+          npm run build:schematics
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         name: release libraries GH registry
         with:
           node-version-file: '.nvmrc'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@alfresco'
-      - run: pnpm run publish --tag ${{ steps.setup.outputs.npm-tag }} --provenance=false ${{ steps.set-dryrun.outputs.dryrun }}
+      - run: npm run publish --tag ${{ steps.setup.outputs.npm-tag }} --provenance=false ${{ steps.set-dryrun.outputs.dryrun }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -105,7 +105,7 @@ jobs:
           node-version-file: '.nvmrc'
           registry-url: 'https://${{ vars.NPM_REGISTRY_ADDRESS }}'
           scope: '@alfresco'
-      - run: pnpm run publish --tag ${{ steps.setup.outputs.npm-tag }} ${{ steps.set-dryrun.outputs.dryrun }}
+      - run: npm run publish --tag ${{ steps.setup.outputs.npm-tag }} ${{ steps.set-dryrun.outputs.dryrun }}
 
   create-git-tag:
     runs-on: ubuntu-latest
