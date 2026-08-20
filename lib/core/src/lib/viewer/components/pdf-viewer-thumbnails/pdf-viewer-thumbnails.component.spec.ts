@@ -77,7 +77,7 @@ describe('PdfThumbListComponent', () => {
         fixture = TestBed.createComponent(PdfThumbListComponent);
         testingUtils = new UnitTestingUtils(fixture.debugElement);
         component = fixture.componentInstance;
-        component.pdfViewer = viewerMock;
+        component.pdfViewer = viewerMock as any;
 
         // provide scrollable container
         fixture.nativeElement.style.display = 'block';

@@ -17,7 +17,7 @@
 
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { DOWN_ARROW, ESCAPE, TAB, UP_ARROW } from '@angular/cdk/keycodes';
-import { DOCUMENT, NgClass, NgForOf } from '@angular/common';
+import { DOCUMENT, NgClass } from '@angular/common';
 import {
     AfterViewInit,
     Component,
@@ -33,7 +33,8 @@ import {
     QueryList,
     TemplateRef,
     ViewChildren,
-    ViewEncapsulation
+    ViewEncapsulation,
+    inject
 } from '@angular/core';
 import { delay } from 'rxjs/operators';
 import { PdfThumbComponent } from '../pdf-viewer-thumb/pdf-viewer-thumb.component';
@@ -43,10 +44,13 @@ import { PdfThumbComponent } from '../pdf-viewer-thumb/pdf-viewer-thumb.componen
     templateUrl: './pdf-viewer-thumbnails.component.html',
     styleUrls: ['./pdf-viewer-thumbnails.component.scss'],
     host: { class: 'adf-pdf-thumbnails' },
-    imports: [PdfThumbComponent, NgClass, NgForOf],
+    imports: [PdfThumbComponent, NgClass],
     encapsulation: ViewEncapsulation.None
 })
 export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
+    private readonly element = inject(ElementRef);
+    private readonly document = inject(DOCUMENT);
+
     @Input({ required: true }) pdfViewer: any;
 
     @Output()
@@ -54,12 +58,12 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     virtualHeight: number = 0;
     translateY: number = 0;
-    renderItems = [];
+    renderItems: any[] = [];
     width: number = 91;
     currentHeight: number = 0;
 
-    private items = [];
-    private margin: number = 15;
+    private items: any[] = [];
+    private readonly margin: number = 15;
     private itemHeight: number = 114 + this.margin;
     private previouslyFocusedElement: HTMLElement | null = null;
     private keyManager: FocusKeyManager<PdfThumbComponent>;
@@ -103,12 +107,10 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.calculateItems();
     }
 
-    constructor(private element: ElementRef, @Inject(DOCUMENT) private document: any) {
+    ngOnInit() {
         this.calculateItems = this.calculateItems.bind(this);
         this.onPageChange = this.onPageChange.bind(this);
-    }
 
-    ngOnInit() {
         /* cspell:disable-next-line */
         this.pdfViewer.eventBus.on('pagechanging', this.onPageChange);
         this.element.nativeElement.addEventListener('scroll', this.calculateItems, true);
@@ -142,10 +144,6 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    trackByFn(_: number, item: any): number {
-        return item.id;
-    }
-
     isSelected(pageNumber: number) {
         return this.pdfViewer.currentPageNumber === pageNumber;
     }
@@ -168,7 +166,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    getPages() {
+    getPages(): any[] {
         // eslint-disable-next-line no-underscore-dangle
         return this.pdfViewer._pages.map((page) => ({
             id: page.id,
@@ -219,7 +217,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         };
     }
 
-    private onPageChange(event) {
+    private onPageChange(event: any) {
         const index = this.renderItems.findIndex((element) => element.id === event.pageNumber);
 
         if (index < 0) {
