@@ -25,7 +25,6 @@ import {
     ElementRef,
     EventEmitter,
     HostListener,
-    Inject,
     Input,
     OnDestroy,
     OnInit,
