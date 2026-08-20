@@ -143,7 +143,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
                 this.success.emit(res);
                 this.loadFilterCounters(appName);
             },
-            error: (err: any) => {
+            error: (err: unknown) => {
                 this.error.emit(err);
             }
         });

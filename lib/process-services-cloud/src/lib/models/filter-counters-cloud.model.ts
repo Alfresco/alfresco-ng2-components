@@ -41,7 +41,8 @@ export interface FilterCountersQuery {
     status?: string[];
     assignee?: string[];
     sort?: FilterCountersQuerySort;
-    [criteria: string]: any;
+    /** Every other criteria of the filter the query was built from. */
+    [criteria: string]: unknown;
 }
 
 /**
@@ -60,13 +61,6 @@ export interface FilterCounterCandidate {
     key?: string | null;
     showCounter?: boolean;
 }
-
-/**
- * Filters of every entity type the counters are resolved for.
- */
-export type FilterCountersFilters = {
-    [entityType in FilterCounterEntityType]: any[];
-};
 
 /**
  * Counts returned by the batched count request, keyed by entity type and then by the `requestId`

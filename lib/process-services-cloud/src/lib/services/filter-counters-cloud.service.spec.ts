@@ -17,7 +17,7 @@
 
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AppConfigService, NoopAuthModule } from '@alfresco/adf-core';
-import { firstValueFrom, of, Subject, throwError } from 'rxjs';
+import { firstValueFrom, Observable, of, Subject, throwError } from 'rxjs';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { FilterCountersCloudService } from './filter-counters-cloud.service';
 import { NotificationCloudService } from './notification-cloud.service';
@@ -27,16 +27,32 @@ import { TaskFilterCloudService } from '../task/task-filters/services/task-filte
 import { ProcessFilterCloudService } from '../process/process-filters/services/process-filter-cloud.service';
 import { TaskFilterCloudModel } from '../task/task-filters/models/filter-cloud.model';
 import { ProcessFilterCloudModel } from '../process/process-filters/models/process-filter-cloud.model';
-import { FilterCounterEntityType, FilterCounters } from '../models/filter-counters-cloud.model';
+import {
+    FilterCounterEntityType,
+    FilterCounters,
+    FilterCountersQuery,
+    FilterCountersRequest,
+    FilterCountersResult
+} from '../models/filter-counters-cloud.model';
 import { TaskCloudEngineEvent } from '../models/engine-event-cloud.model';
+import { FetchResult } from '@apollo/client/core';
+
+type EngineEventsResult = FetchResult<{ engineEvents?: TaskCloudEngineEvent[] }>;
+
+interface CountEndpoint {
+    post: (url: string, request: FilterCountersRequest) => Observable<FilterCounters>;
+}
 
 describe('FilterCountersCloudService', () => {
     let service: FilterCountersCloudService;
     let notificationCloudService: NotificationCloudService;
     let appConfigService: AppConfigService;
-    let engineEvents$: Subject<any>;
+    let engineEvents$: Subject<EngineEventsResult>;
     let makeGQLQuerySpy: jasmine.Spy;
     let postSpy: jasmine.Spy;
+    /** Payload the batched count endpoint was called with. */
+    const countRequest = (): FilterCountersRequest => postSpy.calls.mostRecent().args[1];
+    const countUrl = (): string => postSpy.calls.mostRecent().args[0];
     let getTaskListFiltersSpy: jasmine.Spy;
     let getProcessFiltersSpy: jasmine.Spy;
 
@@ -45,8 +61,10 @@ describe('FilterCountersCloudService', () => {
         PROCESS_INSTANCE: { 'running-processes': 5 }
     };
 
-    const taskFilter = (filter: any) => new TaskFilterCloudModel({ appName: 'mock-app', sort: 'createdDate', order: 'DESC', ...filter });
-    const processFilter = (filter: any) => new ProcessFilterCloudModel({ appName: 'mock-app', sort: 'startDate', order: 'DESC', ...filter });
+    const taskFilter = (filter: Partial<TaskFilterCloudModel>) =>
+        new TaskFilterCloudModel({ appName: 'mock-app', sort: 'createdDate', order: 'DESC', ...filter });
+    const processFilter = (filter: Partial<ProcessFilterCloudModel>) =>
+        new ProcessFilterCloudModel({ appName: 'mock-app', sort: 'startDate', order: 'DESC', ...filter });
 
     const taskFiltersMock = [
         taskFilter({ key: 'my-tasks', status: 'ASSIGNED', assignee: 'mock-user', showCounter: true }),
@@ -58,7 +76,8 @@ describe('FilterCountersCloudService', () => {
         processFilter({ key: 'all-processes', status: '', showCounter: false })
     ];
 
-    const emitEvent = (eventType = 'TASK_CREATED') => engineEvents$.next({ data: { engineEvents: [{ eventType, entity: {} }] } });
+    const emitEvent = (eventType = 'TASK_CREATED') =>
+        engineEvents$.next({ data: { engineEvents: [{ eventType, entity: {} } as TaskCloudEngineEvent] } });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -74,9 +93,10 @@ describe('FilterCountersCloudService', () => {
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config.bpmHost = 'https://fake-bpm-host.com';
 
-        engineEvents$ = new Subject<any>();
-        makeGQLQuerySpy = spyOn(notificationCloudService, 'makeGQLQuery').and.returnValue(engineEvents$.asObservable() as any);
-        postSpy = spyOn<any>(service, 'post').and.returnValue(of(countersMock));
+        engineEvents$ = new Subject<EngineEventsResult>();
+        makeGQLQuerySpy = spyOn(notificationCloudService, 'makeGQLQuery').and.returnValue(engineEvents$.asObservable());
+        /* `post` is protected on BaseCloudService, so it is reached through the shape it is spied on. */
+        postSpy = spyOn(service as unknown as CountEndpoint, 'post').and.returnValue(of(countersMock));
         getTaskListFiltersSpy = spyOn(TestBed.inject(TaskFilterCloudService), 'getTaskListFilters').and.returnValue(of(taskFiltersMock));
         getProcessFiltersSpy = spyOn(TestBed.inject(ProcessFilterCloudService), 'getProcessFilters').and.returnValue(of(processFiltersMock));
     });
@@ -132,7 +152,7 @@ describe('FilterCountersCloudService', () => {
         });
 
         it('should resolve the counters of both entity types with a single request', () => {
-            const results: any[] = [];
+            const results: FilterCountersResult[] = [];
             /* Both filter components hold their subscription, so one request resolves the counters of both. */
             service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe((result) => results.push(result));
             service.getFilterCounters('mock-app', FilterCounterEntityType.PROCESS_INSTANCE).subscribe((result) => results.push(result));
@@ -147,23 +167,23 @@ describe('FilterCountersCloudService', () => {
         it('should send the queries of both entity types to the batched count endpoint', async () => {
             await taskCounters();
 
-            const [url, body] = postSpy.calls.mostRecent().args;
-            expect(url).toBe('https://fake-bpm-host.com/mock-app/query/v1/count');
+            expect(countUrl()).toBe('https://fake-bpm-host.com/mock-app/query/v1/count');
+            const body = countRequest();
             expect(Object.keys(body)).toEqual([FilterCounterEntityType.TASK, FilterCounterEntityType.PROCESS_INSTANCE]);
         });
 
         it('should identify the query of every filter by the key of the filter', async () => {
             await taskCounters();
 
-            const [, body] = postSpy.calls.mostRecent().args;
-            expect(body.TASK.map((query: any) => query.requestId)).toEqual(['my-tasks', 'queued-tasks']);
-            expect(body.PROCESS_INSTANCE.map((query: any) => query.requestId)).toEqual(['running-processes']);
+            const body = countRequest();
+            expect(body.TASK.map((query: FilterCountersQuery) => query.requestId)).toEqual(['my-tasks', 'queued-tasks']);
+            expect(body.PROCESS_INSTANCE.map((query: FilterCountersQuery) => query.requestId)).toEqual(['running-processes']);
         });
 
         it('should send the criteria of every filter along with its request id', async () => {
             await taskCounters();
 
-            const [, body] = postSpy.calls.mostRecent().args;
+            const body = countRequest();
             expect(body.TASK[0]).toEqual({
                 requestId: 'my-tasks',
                 status: ['ASSIGNED'],
@@ -175,8 +195,8 @@ describe('FilterCountersCloudService', () => {
         it('should not send the filters without a counter enabled', async () => {
             await taskCounters();
 
-            const [, body] = postSpy.calls.mostRecent().args;
-            expect(body.TASK.map((query: any) => query.requestId)).not.toContain('completed-tasks');
+            const body = countRequest();
+            expect(body.TASK.map((query: FilterCountersQuery) => query.requestId)).not.toContain('completed-tasks');
         });
 
         it('should send the query of a filter targeting every status', async () => {
@@ -184,8 +204,8 @@ describe('FilterCountersCloudService', () => {
 
             await processCounters();
 
-            const [, body] = postSpy.calls.mostRecent().args;
-            expect(body.PROCESS_INSTANCE.map((query: any) => query.requestId)).toEqual(['all-processes']);
+            const body = countRequest();
+            expect(body.PROCESS_INSTANCE.map((query: FilterCountersQuery) => query.requestId)).toEqual(['all-processes']);
         });
 
         it('should omit an entity type without filters with a counter enabled', async () => {
@@ -193,7 +213,7 @@ describe('FilterCountersCloudService', () => {
 
             await taskCounters();
 
-            const [, body] = postSpy.calls.mostRecent().args;
+            const body = countRequest();
             expect(body.PROCESS_INSTANCE).toBeUndefined();
         });
 
@@ -204,8 +224,8 @@ describe('FilterCountersCloudService', () => {
 
             await taskCounters();
 
-            const [, body] = postSpy.calls.mostRecent().args;
-            expect(body.TASK.map((query: any) => query.requestId)).toEqual(['queued-tasks']);
+            const body = countRequest();
+            expect(body.TASK.map((query: FilterCountersQuery) => query.requestId)).toEqual(['queued-tasks']);
         });
 
         it('should leave out a filter without a key, since it holds no request id', async () => {
@@ -213,7 +233,7 @@ describe('FilterCountersCloudService', () => {
 
             await processCounters();
 
-            const [, body] = postSpy.calls.mostRecent().args;
+            const body = countRequest();
             expect(body.PROCESS_INSTANCE).toBeUndefined();
         });
 
@@ -222,8 +242,8 @@ describe('FilterCountersCloudService', () => {
 
             await taskCounters();
 
-            const [, body] = postSpy.calls.mostRecent().args;
-            expect(body.TASK.map((query: any) => query.requestId)).toEqual(['my-tasks', 'queued-tasks']);
+            const body = countRequest();
+            expect(body.TASK.map((query: FilterCountersQuery) => query.requestId)).toEqual(['my-tasks', 'queued-tasks']);
             expect(body.PROCESS_INSTANCE).toBeUndefined();
         });
 
@@ -274,7 +294,7 @@ describe('FilterCountersCloudService', () => {
 
     describe('refreshFilterCounters', () => {
         it('should resolve the counters again with a single request', fakeAsync(() => {
-            const results: any[] = [];
+            const results: FilterCountersResult[] = [];
             service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe((result) => results.push(result));
             service.getFilterCounters('mock-app', FilterCounterEntityType.PROCESS_INSTANCE).subscribe();
 
@@ -363,7 +383,7 @@ describe('FilterCountersCloudService', () => {
         }));
 
         it('should emit the counters resolved for the batch of events', fakeAsync(() => {
-            const results: any[] = [];
+            const results: FilterCountersResult[] = [];
             service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe((result) => results.push(result));
 
             postSpy.and.returnValue(of({ TASK: { 'my-tasks': 9 } }));
@@ -375,7 +395,7 @@ describe('FilterCountersCloudService', () => {
         }));
 
         it('should not subscribe to the engine events when notifications are disabled', fakeAsync(() => {
-            spyOn(appConfigService, 'get').and.callFake((key: string, defaultValue: any) => (key === 'notifications' ? false : defaultValue));
+            appConfigService.config.notifications = false;
 
             service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
             tick(3000);

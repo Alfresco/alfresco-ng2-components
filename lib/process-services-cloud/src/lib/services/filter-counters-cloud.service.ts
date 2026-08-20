@@ -33,17 +33,26 @@ import {
     FilterCounterCandidate,
     FilterCounterEntityType,
     FilterCounters,
-    FilterCountersFilters,
     FilterCountersQuery,
     FilterCountersRequest,
     FilterCountersResult
 } from '../models/filter-counters-cloud.model';
+import { FetchResult } from '@apollo/client/core';
 
 /**
  * Single subscription covering both the task and the process engine events, so that a batch of
  * events results in one call to the batched count endpoint.
  */
 const BATCHED_COUNTERS_UNAVAILABLE_STATUSES = [404, 501];
+
+/** Filters of both entity types, to resolve the counters of both filter components with one request. */
+interface FilterCountersFilters {
+    [FilterCounterEntityType.TASK]: TaskFilterCloudModel[];
+    [FilterCounterEntityType.PROCESS_INSTANCE]: ProcessFilterCloudModel[];
+}
+
+/** Payload of the engine event subscription. */
+type EngineEventsResult = FetchResult<{ engineEvents?: TaskCloudEngineEvent[] }>;
 
 const FILTER_COUNTERS_EVENT_SUBSCRIPTION_QUERY = `
     subscription {
@@ -157,7 +166,7 @@ export class FilterCountersCloudService extends BaseCloudService {
         let events$ = this.eventsPerApp.get(appName);
         if (!events$) {
             events$ = defer(() => this.notificationCloudService.makeGQLQuery(appName, FILTER_COUNTERS_EVENT_SUBSCRIPTION_QUERY)).pipe(
-                map((events: any) => (events?.data?.engineEvents ?? []) as TaskCloudEngineEvent[]),
+                map((result: EngineEventsResult) => result.data?.engineEvents ?? []),
                 debounceTime(this.notificationDebounceTime),
                 shareReplay({ bufferSize: 1, refCount: true })
             );

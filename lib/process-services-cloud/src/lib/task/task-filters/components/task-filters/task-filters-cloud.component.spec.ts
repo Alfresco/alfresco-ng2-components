@@ -37,6 +37,7 @@ import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { FilterCountersCloudService } from '../../../../services/filter-counters-cloud.service';
 import { FilterCounterEntityType } from '../../../../models/filter-counters-cloud.model';
+import { TaskCloudEngineEvent } from '../../../../models/engine-event-cloud.model';
 
 @Component({ selector: 'adf-cloud-dummy', template: '' })
 class DummyComponent {}
@@ -334,7 +335,7 @@ describe('TaskFiltersCloudComponent', () => {
             });
 
             it('should emit the events of the debounced batch', fakeAsync(() => {
-                const events$ = new Subject<any>();
+                const events$ = new Subject<TaskCloudEngineEvent[]>();
                 getEngineEventsSpy.and.returnValue(events$.asObservable());
                 const filterCounterUpdatedSpy = spyOn(component.filterCounterUpdated, 'emit');
                 component.appName = 'my-app-1';

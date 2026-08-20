@@ -33,7 +33,7 @@ import { MatIconHarness } from '@angular/material/icon/testing';
 import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { FilterCountersCloudService } from '../../../../services/filter-counters-cloud.service';
-import { FilterCounterEntityType } from '../../../../models/filter-counters-cloud.model';
+import { FilterCounterEntityType, FilterCountersResult } from '../../../../models/filter-counters-cloud.model';
 import { ProcessFilterCloudModel } from '../../models/process-filter-cloud.model';
 
 @Component({ selector: 'adf-cloud-dummy', template: '' })
@@ -560,12 +560,12 @@ describe('ProcessFiltersCloudComponent', () => {
             });
 
             it('should keep the counters in sync with the counters stream', fakeAsync(() => {
-                const counters$ = new Subject<any>();
+                const counters$ = new Subject<FilterCountersResult>();
                 getFilterCountersSpy.and.returnValue(counters$.asObservable());
                 component.appName = 'mock-app-name';
 
                 fixture.detectChanges();
-                component.filters = mockProcessFilters.map((filter) => ({ ...filter, showCounter: true })) as any;
+                component.filters = mockProcessFilters.map((filter) => new ProcessFilterCloudModel({ ...filter, showCounter: true }));
 
                 counters$.next({ counters: { FakeRunningProcesses: 7 }, batched: true });
 
@@ -920,12 +920,12 @@ describe('ProcessFiltersCloudComponent', () => {
             });
 
             it('should keep the counters in sync with the counters stream', fakeAsync(() => {
-                const counters$ = new Subject<any>();
+                const counters$ = new Subject<FilterCountersResult>();
                 getFilterCountersSpy.and.returnValue(counters$.asObservable());
                 component.appName = 'mock-app-name';
 
                 fixture.detectChanges();
-                component.filters = mockProcessFilters.map((filter) => ({ ...filter, showCounter: true })) as any;
+                component.filters = mockProcessFilters.map((filter) => new ProcessFilterCloudModel({ ...filter, showCounter: true }));
 
                 counters$.next({ counters: { FakeRunningProcesses: 7 }, batched: true });
 
@@ -934,12 +934,12 @@ describe('ProcessFiltersCloudComponent', () => {
             }));
 
             it('should resolve the counters one filter at a time when the batched endpoint is not available', fakeAsync(() => {
-                const counters$ = new Subject<any>();
+                const counters$ = new Subject<FilterCountersResult>();
                 getFilterCountersSpy.and.returnValue(counters$.asObservable());
                 component.appName = 'mock-app-name';
 
                 fixture.detectChanges();
-                component.filters = mockProcessFilters.map((filter) => ({ ...filter, showCounter: true })) as any;
+                component.filters = mockProcessFilters.map((filter) => new ProcessFilterCloudModel({ ...filter, showCounter: true }));
                 getProcessCounterSpy.calls.reset();
 
                 counters$.next({ counters: {}, batched: false });
