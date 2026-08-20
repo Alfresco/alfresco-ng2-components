@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ScreenRenderingService } from '../../../services/screen-rendering.service';
 import { TaskScreenCloudComponent } from './screen-cloud.component';
@@ -32,17 +32,21 @@ import { TaskScreenCloudComponent } from './screen-cloud.component';
         </div>
     `
 })
-class TestComponent {
+class TestComponent implements OnDestroy {
     @Input() taskId = '';
     @Input() screenId = '';
     @Input() rootProcessInstanceId = '';
     @Output() taskCompleted = new EventEmitter();
-    displayMode: string;
+    displayMode: string | undefined;
+    destroyed = false;
     onComplete() {
         this.taskCompleted.emit();
     }
     switchToDisplayMode(newDisplayMode?: string) {
         this.displayMode = newDisplayMode;
+    }
+    ngOnDestroy(): void {
+        this.destroyed = true;
     }
 }
 
@@ -61,7 +65,7 @@ class TestComponent {
 })
 class TestWrapperComponent {
     @Input() screenId = '';
-    @ViewChild('adfCloudTaskScreen') adfCloudTaskScreen: TaskScreenCloudComponent;
+    @ViewChild('adfCloudTaskScreen') adfCloudTaskScreen: TaskScreenCloudComponent | undefined;
     onTaskCompleted() {}
     switchToDisplayMode(newDisplayMode?: string): void {
         if (this.adfCloudTaskScreen) {
@@ -118,6 +122,118 @@ describe('TaskScreenCloudComponent', () => {
         component.switchToDisplayMode();
         fixture.detectChanges();
 
-        expect(component.adfCloudTaskScreen.switchToDisplayMode).toHaveBeenCalled();
+        expect(component.adfCloudTaskScreen?.switchToDisplayMode).toHaveBeenCalled();
+    });
+});
+
+@Component({
+    selector: 'adf-cloud-test-conditional-component',
+    template: `
+        @if (showTaskScreen) {
+            <adf-cloud-task-screen [taskId]="'1'" [appName]="'app-name-test'" [screenId]="'test'" (taskCompleted)="onTaskCompleted()" />
+        }
+    `,
+    imports: [TaskScreenCloudComponent]
+})
+class TestConditionalWrapperComponent {
+    showTaskScreen = true;
+    onTaskCompleted() {}
+}
+
+describe('TaskScreenCloudComponent - destroy', () => {
+    let fixture: ComponentFixture<TestConditionalWrapperComponent>;
+    let component: TestConditionalWrapperComponent;
+
+    const getDynamicComponentInstance = (): TestComponent => fixture.debugElement.query(By.directive(TestComponent)).componentInstance;
+
+    const getTaskScreen = (): TaskScreenCloudComponent => fixture.debugElement.query(By.directive(TaskScreenCloudComponent)).componentInstance;
+
+    const destroyTaskScreen = () => {
+        component.showTaskScreen = false;
+        fixture.detectChanges();
+    };
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [TaskScreenCloudComponent, TestComponent, TestConditionalWrapperComponent]
+        });
+        TestBed.inject(ScreenRenderingService).register({ ['test']: () => TestComponent });
+
+        fixture = TestBed.createComponent(TestConditionalWrapperComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should destroy the dynamic component when the task screen is destroyed', () => {
+        const dynamicComponentInstance = getDynamicComponentInstance();
+        expect(dynamicComponentInstance.destroyed).toBeFalse();
+
+        destroyTaskScreen();
+
+        expect(dynamicComponentInstance.destroyed).toBeTrue();
+    });
+
+    it('should remove the dynamic component from the DOM when the task screen is destroyed', () => {
+        expect(fixture.debugElement.query(By.css('.adf-cloud-test-container'))).toBeTruthy();
+
+        destroyTaskScreen();
+
+        expect(fixture.debugElement.query(By.css('.adf-cloud-test-container'))).toBeNull();
+    });
+
+    it('should not emit outputs of the dynamic component after the task screen is destroyed', () => {
+        const onTaskCompletedSpy = spyOn(component, 'onTaskCompleted');
+        const dynamicComponentInstance = getDynamicComponentInstance();
+
+        destroyTaskScreen();
+        dynamicComponentInstance.taskCompleted.emit();
+
+        expect(onTaskCompletedSpy).not.toHaveBeenCalled();
+    });
+
+    it('should not call the dynamic component when switching display mode after destroy', () => {
+        const taskScreen = getTaskScreen();
+        const switchToDisplayModeSpy = spyOn(getDynamicComponentInstance(), 'switchToDisplayMode');
+
+        destroyTaskScreen();
+
+        expect(() => taskScreen.switchToDisplayMode('mode')).not.toThrow();
+        expect(switchToDisplayModeSpy).not.toHaveBeenCalled();
+    });
+
+    it('should create a new dynamic component instance when the task screen is re-created', () => {
+        const firstInstance = getDynamicComponentInstance();
+
+        destroyTaskScreen();
+        component.showTaskScreen = true;
+        fixture.detectChanges();
+
+        const secondInstance = getDynamicComponentInstance();
+        expect(secondInstance).not.toBe(firstInstance);
+        expect(secondInstance.destroyed).toBeFalse();
+        expect(secondInstance.taskId).toBe('1');
+    });
+});
+
+describe('TaskScreenCloudComponent - without screenId', () => {
+    let fixture: ComponentFixture<TaskScreenCloudComponent>;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [TaskScreenCloudComponent]
+        });
+        fixture = TestBed.createComponent(TaskScreenCloudComponent);
+    });
+
+    it('should not create any dynamic component and should not throw', () => {
+        expect(() => fixture.detectChanges()).not.toThrow();
+        expect(fixture.debugElement.query(By.directive(TestComponent))).toBeNull();
+    });
+
+    it('should not throw when switching display mode or destroying', () => {
+        fixture.detectChanges();
+
+        expect(() => fixture.componentInstance.switchToDisplayMode('mode')).not.toThrow();
+        expect(() => fixture.destroy()).not.toThrow();
     });
 });

@@ -16,13 +16,15 @@
  */
 
 import { NgIf } from '@angular/common';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
+import { getValidationSummaryTranslationParameters } from '../core/error-message.model';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
@@ -46,19 +48,21 @@ import { WidgetComponent } from '../widget.component';
 export class DecimalWidgetComponent extends WidgetComponent implements OnInit {
     errorStateMatcher: ErrorStateMatcher;
     translateParameters: Record<string, string> = {};
+    private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit(): void {
         this.initErrorStateMatcher();
+        this.field.validationSummaryChanges$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((validationSummary) => {
+            this.translateParameters = getValidationSummaryTranslationParameters(validationSummary);
+        });
     }
 
     onBlur(): void {
         this.markAsTouched();
-        this.updateTranslateParameters();
     }
 
     onDecimalFieldChanged(): void {
         this.onFieldChanged(this.field);
-        this.updateTranslateParameters();
     }
 
     private initErrorStateMatcher(): void {
@@ -66,13 +70,5 @@ export class DecimalWidgetComponent extends WidgetComponent implements OnInit {
             isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
                 !this.field.isValid && this.isTouched()
         };
-    }
-
-    private updateTranslateParameters(): void {
-        if (this.field.validationSummary?.isActive()) {
-            this.translateParameters = this.field.validationSummary.getAttributesAsJsonObj();
-        } else {
-            this.translateParameters = {};
-        }
     }
 }

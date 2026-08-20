@@ -22,8 +22,20 @@ import { UnitTestingUtils } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { NumberWidgetComponent } from './number.widget';
 import { DecimalNumberPipe } from '../../../../pipes';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('NumberWidgetComponent', () => {
+    const validatorTranslations = {
+        FORM: {
+            FIELD: {
+                VALIDATOR: {
+                    NOT_LESS_THAN: "Can't be less than {{ minValue }}",
+                    NOT_GREATER_THAN: "Can't be greater than {{ maxValue }}",
+                    NO_LONGER_THAN: 'Maximum length {{ maxLength }}'
+                }
+            }
+        }
+    };
     let loader: HarnessLoader;
     let widget: NumberWidgetComponent;
     let fixture: ComponentFixture<NumberWidgetComponent>;
@@ -172,6 +184,60 @@ describe('NumberWidgetComponent', () => {
 
             const inputField = testingUtils.getByCSS('.adf-input').nativeElement;
             expect(inputField.hasAttribute('required')).toBeTruthy();
+        });
+    });
+
+    describe('when validation runs without widget interaction', () => {
+        let field: FormFieldModel;
+
+        beforeEach(() => {
+            const translateService = TestBed.inject(TranslateService);
+            translateService.use('en').subscribe();
+            translateService.setTranslation('en', validatorTranslations);
+            field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                id: 'number-id',
+                type: FormFieldTypes.NUMBER,
+                value: 1,
+                minValue: 10
+            });
+            field.validate();
+            fixture.componentRef.setInput('field', field);
+            fixture.detectChanges();
+        });
+
+        it('should render the minimum value in the message when initial validation fails', async () => {
+            const formField = await testingUtils.formField.get();
+            const errors = await formField.getTextErrors();
+
+            expect(errors.length).toBe(1);
+            expect(errors[0]).toContain("Can't be less than 10");
+        });
+
+        it('should render the updated maximum value when programmatic revalidation fails', async () => {
+            field.value = 10;
+            field.minValue = '1';
+            field.maxValue = '5';
+            field.validate();
+            fixture.detectChanges();
+
+            const formField = await testingUtils.formField.get();
+            const errors = await formField.getTextErrors();
+
+            expect(errors.length).toBe(1);
+            expect(errors[0]).toContain("Can't be greater than 5");
+        });
+
+        it('should render the maximum length when programmatic revalidation fails', async () => {
+            field.value = 12345678901;
+            field.minValue = '1';
+            field.validate();
+            fixture.detectChanges();
+
+            const formField = await testingUtils.formField.get();
+            const errors = await formField.getTextErrors();
+
+            expect(errors.length).toBe(1);
+            expect(errors[0]).toContain('Maximum length 10');
         });
     });
 

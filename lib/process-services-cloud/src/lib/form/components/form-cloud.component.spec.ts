@@ -17,6 +17,7 @@
 
 import { VersionCompatibilityService, AlfrescoApiService } from '@alfresco/adf-content-services';
 import {
+    ADF_DISPLAY_TEXT_SETTINGS,
     ContentLinkModel,
     CoreModule,
     FormFieldModel,
@@ -31,6 +32,8 @@ import {
     provideTranslations,
     AuthModule,
     FormFieldEvent,
+    FormEvent,
+    FormRulesEvent,
     NoopTranslateModule,
     NoopAuthModule,
     FORM_FIELD_VALIDATORS
@@ -117,7 +120,8 @@ describe('FormCloudComponent', () => {
                     useValue: {}
                 },
                 { provide: FormRenderingService, useClass: CloudFormRenderingService },
-                { provide: FORM_CLOUD_FIELD_VALIDATORS_TOKEN, useValue: [fakeValidator] }
+                { provide: FORM_CLOUD_FIELD_VALIDATORS_TOKEN, useValue: [fakeValidator] },
+                { provide: ADF_DISPLAY_TEXT_SETTINGS, useValue: { enableExpressionEvaluation: true } }
             ]
         });
         const apiService = TestBed.inject(AlfrescoApiService);
@@ -874,6 +878,39 @@ describe('FormCloudComponent', () => {
         expect(savedForm).toEqual(formModel);
     });
 
+    it('should materialize unrendered rich text expressions when saving a task form', () => {
+        spyOn(formCloudService, 'saveTaskForm').and.returnValue(of(undefined));
+        const formModel = new FormModel({
+            id: '23',
+            taskId: '123-223',
+            fields: [
+                {
+                    id: 'richText',
+                    type: FormFieldTypes.DISPLAY_RICH_TEXT,
+                    value: { blocks: [{ type: 'paragraph', data: { text: 'Hello ${field.name}' } }] }
+                },
+                { id: 'name', type: FormFieldTypes.TEXT, value: 'John' }
+            ]
+        });
+        const originalValues = JSON.parse(JSON.stringify(formModel.values));
+        formComponent.form = formModel;
+        formComponent.taskId = formModel.taskId;
+        formComponent.appName = 'test-app';
+
+        formComponent.saveTaskForm();
+
+        expect(formCloudService.saveTaskForm).toHaveBeenCalledWith(
+            'test-app',
+            formModel.taskId,
+            undefined,
+            formModel.id,
+            jasmine.objectContaining({
+                richText: { blocks: [{ type: 'paragraph', data: { text: 'Hello John' } }] }
+            })
+        );
+        expect(formModel.values).toEqual(originalValues);
+    });
+
     it('should handle error during form save', () => {
         const error = 'Error';
         spyOn(formCloudService, 'saveTaskForm').and.callFake(() => throwError(error));
@@ -979,6 +1016,39 @@ describe('FormCloudComponent', () => {
         expect(completedForm.selectedOutcome).toBe(outcome);
         expect(completedForm.selectedOutcomeId).toBe(outcomeId);
         expect(completedForm).toBe(formComponent.form);
+    });
+
+    it('should materialize unrendered rich text expressions when completing a task form', () => {
+        spyOn(formCloudService, 'completeTaskForm').and.returnValue(of(undefined));
+        const formModel = new FormModel({
+            id: '23',
+            taskId: '123-223',
+            fields: [
+                {
+                    id: 'richText',
+                    type: FormFieldTypes.DISPLAY_RICH_TEXT,
+                    value: { blocks: [{ type: 'paragraph', data: { text: '${field.name}' } }] }
+                },
+                { id: 'name', type: FormFieldTypes.TEXT, value: 'John' }
+            ]
+        });
+        formComponent.form = formModel;
+        formComponent.taskId = formModel.taskId;
+        formComponent.appName = 'test-app';
+
+        formComponent.completeTaskForm('complete');
+
+        expect(formCloudService.completeTaskForm).toHaveBeenCalledWith(
+            'test-app',
+            formModel.taskId,
+            undefined,
+            formModel.id,
+            jasmine.objectContaining({
+                richText: { blocks: [{ type: 'paragraph', data: { text: 'John' } }] }
+            }),
+            'complete',
+            undefined
+        );
     });
 
     it('should open confirmation dialog on complete task', async () => {
@@ -1228,6 +1298,38 @@ describe('FormCloudComponent', () => {
         expect(formComponent.visibleOutcomes.length).toBeGreaterThan(0);
 
         formComponent.form = null;
+        expect(formComponent.visibleOutcomes).toEqual([]);
+    });
+
+    it('should recompute visibleOutcomes when form visibility is refreshed', () => {
+        formComponent.showCompleteButton = true;
+        const formModel = new FormModel(cloudFormMock);
+        formComponent.form = formModel;
+
+        expect(formComponent.visibleOutcomes.length).toBeGreaterThan(0);
+
+        formModel.outcomes.forEach((outcome) => {
+            outcome.isVisible = false;
+        });
+
+        TestBed.inject(FormService).formVisibilityRefreshed.next(new FormEvent(formModel));
+
+        expect(formComponent.visibleOutcomes).toEqual([]);
+    });
+
+    it('should recompute visibleOutcomes when fieldValueChanged rule event fires', () => {
+        formComponent.showCompleteButton = true;
+        const formModel = new FormModel(cloudFormMock);
+        formComponent.form = formModel;
+
+        expect(formComponent.visibleOutcomes.length).toBeGreaterThan(0);
+
+        formModel.outcomes.forEach((outcome) => {
+            outcome.isVisible = false;
+        });
+
+        TestBed.inject(FormService).formRulesEvent.next(new FormRulesEvent('fieldValueChanged', new FormEvent(formModel)));
+
         expect(formComponent.visibleOutcomes).toEqual([]);
     });
 

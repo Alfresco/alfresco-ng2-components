@@ -29,6 +29,7 @@ import { VariableConfig } from './form-field-variable-options';
 import { DataColumn } from '../../../../datatable/data/data-column.model';
 import { DateFnsUtils } from '../../../../common';
 import { isValid as isValidDate } from 'date-fns';
+import { Observable, ReplaySubject } from 'rxjs';
 import { ContainerRowModel } from './container-row.model';
 import { RepeatableSectionModel, ROW_ID_PREFIX, TEMPLATE_ROW_ID } from './repeatable-section.model';
 import { formFieldRuleHandler } from './handlers/form-field-rule.handler';
@@ -38,12 +39,35 @@ export type FieldOptionType = 'rest' | 'manual' | 'variable';
 export type FieldSelectionType = 'single' | 'multiple';
 export type FieldAlignmentType = 'vertical' | 'horizontal';
 
+interface ValidationSummaryChangesState {
+    subject: ReplaySubject<ErrorMessageModel>;
+    observable: Observable<ErrorMessageModel>;
+}
+
+const validationSummaryChangesByField = new WeakMap<FormFieldModel, ValidationSummaryChangesState>();
+
+const isJsonPrimitive = (value: unknown): value is null | string | number | boolean =>
+    value === null || ['string', 'number', 'boolean'].includes(typeof value);
+
+const cloneJsonCompatibleValue = (value: unknown): unknown => {
+    if (value === undefined || isJsonPrimitive(value)) {
+        return value;
+    }
+
+    try {
+        return JSON.parse(JSON.stringify(value));
+    } catch {
+        return undefined;
+    }
+};
+
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
     private _value: string;
     private _readOnly: boolean = false;
     private _isValid: boolean = true;
     private _required: boolean = false;
+    private readonly _authoredValue: unknown;
 
     readonly defaultDateFormat: string = 'D-M-YYYY';
     readonly defaultDateTimeFormat: string = 'D-M-YYYY hh:mm A';
@@ -110,7 +134,21 @@ export class FormFieldModel extends FormWidgetModel {
 
     // util members
     emptyOption: FormFieldOption;
-    validationSummary: ErrorMessageModel;
+    validationSummary: ErrorMessageModel = new ErrorMessageModel();
+
+    get validationSummaryChanges$(): Observable<ErrorMessageModel> {
+        const existingState = validationSummaryChangesByField.get(this);
+        if (existingState) {
+            return existingState.observable;
+        }
+
+        const subject = new ReplaySubject<ErrorMessageModel>(1);
+        const observable = subject.asObservable();
+        validationSummaryChangesByField.set(this, { subject, observable });
+        subject.next(this.validationSummary);
+
+        return observable;
+    }
 
     get value(): any {
         return this._value;
@@ -121,6 +159,10 @@ export class FormFieldModel extends FormWidgetModel {
             this._value = v;
             this.updateForm();
         }
+    }
+
+    get authoredValue(): unknown {
+        return cloneJsonCompatibleValue(this._authoredValue);
     }
 
     get readOnly(): boolean {
@@ -173,16 +215,19 @@ export class FormFieldModel extends FormWidgetModel {
         for (const validator of validators) {
             if (!validator.validate(this)) {
                 this._isValid = false;
+                validationSummaryChangesByField.get(this)?.subject.next(this.validationSummary);
                 return this._isValid;
             }
         }
 
         this._isValid = true;
+        validationSummaryChangesByField.get(this)?.subject.next(this.validationSummary);
         return this._isValid;
     }
 
     constructor(form: any, json?: any, parent?: RepeatableSectionModel) {
         super(form, json);
+        this._authoredValue = json?.type === FormFieldTypes.DISPLAY_RICH_TEXT ? cloneJsonCompatibleValue(json.value) : undefined;
         if (json) {
             this.fieldType = json.fieldType;
             this.id = this.getId(json.id, parent);
@@ -221,7 +266,6 @@ export class FormFieldModel extends FormWidgetModel {
             this.enableFractions = json.enableFractions;
             this.currency = json.currency;
             this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
-            this.validationSummary = new ErrorMessageModel();
             this.tooltip = json.tooltip || '';
             this.selectionType = json.selectionType;
             this.alignmentType = json.alignmentType;

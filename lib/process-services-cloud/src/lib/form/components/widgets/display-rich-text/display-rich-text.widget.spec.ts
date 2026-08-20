@@ -200,6 +200,51 @@ describe('DisplayRichTextWidgetComponent', () => {
             expect(widget.field.value.blocks[0].data.text).toBe('Hello John');
         });
 
+        it('should resolve from authored value after saved data rehydrates the field', () => {
+            const form = new FormModel(
+                {
+                    fields: [
+                        {
+                            id: 'richText1',
+                            name: 'richText1',
+                            type: 'display-rich-text',
+                            value: {
+                                blocks: [{ type: 'paragraph', data: { text: 'Hello ${field.name}' } }]
+                            }
+                        },
+                        { id: 'name', name: 'name', type: 'text', value: 'John' }
+                    ]
+                },
+                {
+                    richText1: {
+                        blocks: [{ type: 'paragraph', data: { text: 'Hello John' } }]
+                    },
+                    name: 'Jane'
+                }
+            );
+
+            widget.field = form.getFieldById('richText1');
+            fixture.detectChanges();
+
+            expect(widget.field.value.blocks[0].data.text).toBe('Hello Jane');
+        });
+
+        it('should preserve the current value when the authored value is unavailable', () => {
+            const form = new FormModel({
+                fields: [{ id: 'richText1', type: 'display-rich-text' }]
+            });
+            const currentValue = {
+                blocks: [{ type: 'paragraph', data: { text: 'Current value' } }]
+            };
+            const field = form.getFieldById('richText1');
+            field.value = currentValue;
+            widget.field = field;
+
+            fixture.detectChanges();
+
+            expect(widget.field.value).toBe(currentValue);
+        });
+
         it('should resolve expressions in multiple blocks', () => {
             const form = new FormModel({
                 fields: [

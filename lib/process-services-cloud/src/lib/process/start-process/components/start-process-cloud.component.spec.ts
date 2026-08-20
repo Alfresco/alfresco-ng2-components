@@ -17,8 +17,8 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
-import { of, throwError } from 'rxjs';
+import { ADF_DISPLAY_TEXT_SETTINGS, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
+import { Subject, of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormCloudService } from '../../../form/services/form-cloud.service';
 import { FormCloudComponent } from '../../../form/components/form-cloud.component';
@@ -47,7 +47,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
-import { FormCloudDisplayMode } from '../../../services/form-fields.interfaces';
+import { FormCloudDisplayMode, FormContent } from '../../../services/form-fields.interfaces';
 import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -92,7 +92,10 @@ describe('StartProcessCloudComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [StartProcessCloudComponent, ReactiveFormsModule, StartProcessScreenCloudComponent],
-            providers: [provideScreen(screenId, MockedTaskScreenCloudComponent)]
+            providers: [
+                provideScreen(screenId, MockedTaskScreenCloudComponent),
+                { provide: ADF_DISPLAY_TEXT_SETTINGS, useValue: { enableExpressionEvaluation: true } }
+            ]
         });
         processService = TestBed.inject(StartProcessCloudService);
         formCloudService = TestBed.inject(FormCloudService);
@@ -415,6 +418,54 @@ describe('StartProcessCloudComponent', () => {
             const startBtn = fixture.nativeElement.querySelector('#button-start');
             expect(component.formCloud.isValid).toBe(true);
             expect(startBtn.disabled).toBe(false);
+        });
+
+        it('should keep the start action unavailable while the form definition is loading', async () => {
+            const formDefinition = new Subject<FormContent>();
+            formDefinitionSpy.and.returnValue(formDefinition);
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
+            await selectOptionByName('processwithform');
+
+            const startButton = fixture.nativeElement.querySelector('#button-start');
+            expect(startButton).toBeNull();
+            expect(startProcessWithFormSpy).not.toHaveBeenCalled();
+        });
+
+        it('should materialize unrendered rich text expressions when starting a process', async () => {
+            formDefinitionSpy.and.returnValue(of(fakeStartForm));
+            component.processDefinitionCurrent = fakeProcessDefinitions[2];
+            component.processPayloadCloud.processDefinitionKey = fakeProcessDefinitions[2].key;
+            component.processInstanceName.setValue('My process');
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const form = new FormModel({
+                fields: [
+                    {
+                        id: 'richText',
+                        type: FormFieldTypes.DISPLAY_RICH_TEXT,
+                        value: { blocks: [{ type: 'paragraph', data: { text: 'Hello ${field.name}' } }] }
+                    },
+                    { id: 'name', type: FormFieldTypes.TEXT, value: 'John' }
+                ]
+            });
+            const formElement = fixture.debugElement.query(By.css('adf-cloud-form'));
+            const startButton = fixture.debugElement.query(By.css('#button-start'));
+
+            formElement.triggerEventHandler('formLoaded', form);
+            fixture.detectChanges();
+            startButton.triggerEventHandler('click', null);
+
+            expect(startProcessWithFormSpy).toHaveBeenCalledWith(
+                component.appName,
+                fakeProcessDefinitions[2].formKey,
+                fakeProcessDefinitions[2].version,
+                jasmine.objectContaining({
+                    values: jasmine.objectContaining({
+                        richText: { blocks: [{ type: 'paragraph', data: { text: 'Hello John' } }] }
+                    })
+                })
+            );
         });
 
         it('should be able to start a process with form full display mode', async () => {
