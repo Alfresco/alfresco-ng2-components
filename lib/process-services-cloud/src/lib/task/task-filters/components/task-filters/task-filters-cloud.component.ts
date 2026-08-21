@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Observable, of, Subscription } from 'rxjs';
+import { defer, EMPTY, Observable, of, Subscription } from 'rxjs';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { FilterParamsModel, TaskFilterCloudModel } from '../../models/filter-cloud.model';
 import { AppConfigService, IconModule, TranslationService } from '@alfresco/adf-core';
@@ -163,8 +163,13 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             return;
         }
 
-        this.fetchTaskFilterCounter(filter)
-            .pipe(takeUntilDestroyed(this.destroyRef))
+        /* `defer` turns the query building of the count request into a failure of the stream, so that a
+           filter the counter cannot be resolved for is left without one instead of breaking the others. */
+        defer(() => this.fetchTaskFilterCounter(filter))
+            .pipe(
+                catchError(() => EMPTY),
+                takeUntilDestroyed(this.destroyRef)
+            )
             .subscribe((counter) => {
                 this.checkIfFilterValuesHasBeenUpdated(filter.key, counter);
                 this.counters = { ...this.counters, [filter.key]: counter };
@@ -309,12 +314,26 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     /**
-     * Holds the counters resolved by the batched count request, which are keyed by filter key.
+     * Holds the counters resolved by the batched count request, which are keyed by filter key. The
+     * counter of a filter the request holds none for is resolved on its own: a filter without a key,
+     * or one the count query cannot be built for, is left out of the batch.
      *
      * @param counters counters keyed by filter key
      */
     private applyFilterCounters(counters: { [filterKey: string]: number }): void {
-        Object.entries(counters).forEach(([filterKey, counter]) => {
+        this.filters.forEach((filter) => {
+            /* A filter without a key holds no request id, so no counter can be keyed by it. */
+            const filterKey = filter?.showCounter ? filter.key : undefined;
+            if (!filterKey) {
+                return;
+            }
+
+            const counter = counters[filterKey];
+            if (counter === undefined) {
+                this.updateFilterCounter(filter);
+                return;
+            }
+
             this.checkIfFilterValuesHasBeenUpdated(filterKey, counter);
             this.counters = { ...this.counters, [filterKey]: counter };
         });

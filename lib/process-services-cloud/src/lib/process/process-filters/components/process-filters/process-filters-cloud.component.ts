@@ -16,7 +16,7 @@
  */
 
 import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { EMPTY, Observable, Subscription } from 'rxjs';
+import { defer, EMPTY, Observable, Subscription } from 'rxjs';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFilterCloudModel } from '../../models/process-filter-cloud.model';
 import { AppConfigService, IconModule, TranslationService } from '@alfresco/adf-core';
@@ -153,7 +153,11 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
      * Initialize counter collection for filters
      */
     initFilterCounters(): void {
-        this.filters.forEach((filter) => (this.counters[filter.key] = 0));
+        this.filters.forEach((filter) => {
+            if (filter.key) {
+                this.counters[filter.key] = 0;
+            }
+        });
     }
 
     /**
@@ -276,15 +280,21 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
      * of one filter, for the backends without the batched count endpoint.
      */
     updateFilterCounter(filter: ProcessFilterCloudModel): void {
-        if (!filter?.showCounter) {
+        const filterKey = filter?.showCounter ? filter.key : undefined;
+        if (!filterKey) {
             return;
         }
 
-        this.fetchProcessFilterCounter(filter)
-            .pipe(takeUntilDestroyed(this.destroyRef))
+        /* `defer` turns the query building of the count request into a failure of the stream, so that a
+           filter the counter cannot be resolved for is left without one instead of breaking the others. */
+        defer(() => this.fetchProcessFilterCounter(filter))
+            .pipe(
+                catchError(() => EMPTY),
+                takeUntilDestroyed(this.destroyRef)
+            )
             .subscribe((counter) => {
-                this.checkIfFilterValuesHasBeenUpdated(filter.key, counter);
-                this.counters = { ...this.counters, [filter.key]: counter };
+                this.checkIfFilterValuesHasBeenUpdated(filterKey, counter);
+                this.counters = { ...this.counters, [filterKey]: counter };
             });
     }
 
@@ -353,12 +363,27 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     }
 
     /**
-     * Holds the counters resolved by the batched count request, which are keyed by filter key.
+     * Holds the counters resolved by the batched count request, which are keyed by filter key. The
+     * counter of a filter the request holds none for is resolved on its own: a filter without a key,
+     * or one the count query cannot be built for, is left out of the batch.
      *
      * @param counters counters keyed by filter key
      */
     private applyFilterCounters(counters: { [filterKey: string]: number }): void {
-        Object.entries(counters).forEach(([filterKey, counter]) => {
+        this.filters.forEach((filter) => {
+            /* A filter without a key holds no request id, so no counter can be keyed by it. */
+            const filterKey = filter?.showCounter ? filter.key : undefined;
+            if (!filterKey) {
+                return;
+            }
+
+            const counter = counters[filterKey];
+            if (counter === undefined) {
+                /* The batch holds no counter for a filter the count query cannot be built for. */
+                this.updateFilterCounter(filter);
+                return;
+            }
+
             this.checkIfFilterValuesHasBeenUpdated(filterKey, counter);
             this.counters = { ...this.counters, [filterKey]: counter };
         });
@@ -370,10 +395,10 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
      *
      * @param filter filter that was clicked
      */
-    private refreshFilterCounter(filter: ProcessFilterCloudModel): void {
+    private refreshFilterCounter(filter?: ProcessFilterCloudModel): void {
         if (this.batchedCounters) {
             this.filterCountersCloudService.refreshFilterCounters(this.appName);
-        } else {
+        } else if (filter) {
             this.updateFilterCounter(filter);
         }
     }

@@ -310,7 +310,7 @@ export class FilterCountersCloudService extends BaseCloudService {
                     return undefined;
                 }
             })
-            .filter((query) => !!query);
+            .filter((query): query is FilterCountersQuery => !!query);
     }
 
     /**

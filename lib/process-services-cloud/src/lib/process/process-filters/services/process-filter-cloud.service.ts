@@ -405,8 +405,8 @@ export class ProcessFilterCloudService {
     }
 
     /**
-     * @deprecated use FilterCountersCloudService.getFilterCountersNotifications instead, which shares a single
-     * subscription with the task filters and resolves the counters with a single request.
+     * @deprecated use FilterCountersCloudService.getEngineEvents instead, which shares a single
+     * subscription with the task filters and provides a debounced engine-event stream used to drive counter refreshes.
      * @param appName Name of the target app
      * @returns Process engine events
      */

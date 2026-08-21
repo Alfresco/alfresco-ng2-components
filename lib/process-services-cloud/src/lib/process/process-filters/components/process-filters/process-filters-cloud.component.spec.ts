@@ -519,6 +519,27 @@ describe('ProcessFiltersCloudComponent', () => {
                 expect(component.counters['FakeRunningProcesses']).toBe(10);
             });
 
+            it('should resolve the counters of the filters the batch left out on their own', async () => {
+                /* A filter without a key, or one the query cannot be built for, is left out of the batch. */
+                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 }, batched: true }));
+
+                await bindAppName('mock-app-name');
+
+                expect(component.counters['FakeRunningProcesses']).toBe(9);
+                /* The model holds no status for the filter targeting every status. */
+                expect(getProcessCounterSpy.calls.allArgs().map(([, status]) => status)).toEqual([null, 'COMPLETED']);
+            });
+
+            it('should keep the counters of the other filters when one counter cannot be resolved', async () => {
+                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 }, batched: true }));
+                getProcessCounterSpy.and.throwError('the query of the filter cannot be built');
+
+                await bindAppName('mock-app-name');
+
+                expect(component.counters['FakeRunningProcesses']).toBe(9);
+                expect(component.counters['completed-processes']).toBe(0);
+            });
+
             it('should refresh the counters of every filter when a filter is clicked', async () => {
                 await bindAppName('mock-app-name');
 
@@ -877,6 +898,27 @@ describe('ProcessFiltersCloudComponent', () => {
 
                 expect(getProcessCounterSpy).toHaveBeenCalledTimes(3);
                 expect(component.counters['FakeRunningProcesses']).toBe(10);
+            });
+
+            it('should resolve the counters of the filters the batch left out on their own', async () => {
+                /* A filter without a key, or one the query cannot be built for, is left out of the batch. */
+                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 }, batched: true }));
+
+                await bindAppName('mock-app-name');
+
+                expect(component.counters['FakeRunningProcesses']).toBe(9);
+                /* The model holds no status for the filter targeting every status. */
+                expect(getProcessCounterSpy.calls.allArgs().map(([, status]) => status)).toEqual([null, 'COMPLETED']);
+            });
+
+            it('should keep the counters of the other filters when one counter cannot be resolved', async () => {
+                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 }, batched: true }));
+                getProcessCounterSpy.and.throwError('the query of the filter cannot be built');
+
+                await bindAppName('mock-app-name');
+
+                expect(component.counters['FakeRunningProcesses']).toBe(9);
+                expect(component.counters['completed-processes']).toBe(0);
             });
 
             it('should refresh the counters of every filter when a filter is clicked', async () => {

@@ -717,6 +717,27 @@ describe('TaskFiltersCloudComponent', () => {
                 expect(updatedFilterSpy).toHaveBeenCalledWith('fake-involved-tasks');
             });
 
+            it('should resolve the counter of a filter the batch left out on its own', async () => {
+                /* A filter without a key, or one the query cannot be built for, is left out of the batch. */
+                getFilterCountersSpy.and.returnValue(of({ counters: {}, batched: true }));
+
+                await bindAppName();
+
+                expect(getTaskFilterCounterSpy).toHaveBeenCalledWith(fakeGlobalFilter[0]);
+                expect(component.counters['fake-involved-tasks']).toBe(11);
+            });
+
+            it('should keep the counters of the other filters when one counter cannot be resolved', async () => {
+                getTaskListFiltersSpy.and.returnValue(of([fakeGlobalFilter[0], { ...fakeGlobalFilter[1], showCounter: true }]));
+                getFilterCountersSpy.and.returnValue(of({ counters: { 'fake-involved-tasks': 4 }, batched: true }));
+                getTaskFilterCounterSpy.and.throwError('the query of the filter cannot be built');
+
+                await bindAppName();
+
+                expect(component.counters['fake-involved-tasks']).toBe(4);
+                expect(component.counters['fake-my-task1']).toBe(0);
+            });
+
             it('should resolve the counters one filter at a time when the batched endpoint is not available', async () => {
                 getFilterCountersSpy.and.returnValue(of({ counters: {}, batched: false }));
 
