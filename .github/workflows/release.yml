@@ -40,15 +40,19 @@ jobs:
           npm run build:libs
           npm run build:schematics
 
-      - name: Configure NPM Registry
+      - name: Setup NPM Registry
         if: ${{ !inputs.dry-run }}
-        run: |
-          npm config set //registry.npmjs.org/:_authToken "${{ secrets.NPM_REGISTRY_TOKEN }}"
-          npm config list
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: '.nvmrc'
+          registry-url: 'https://${{ vars.NPM_REGISTRY_ADDRESS }}'
+          scope: '@alfresco'
 
       - name: Publish to NPM
         if: ${{ !inputs.dry-run }}
-        run: npx nx run-many -t npm-publish --tag=branch
+        run: npm run publish -- --tag=branch
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
       - name: Dry run summary
         if: ${{ inputs.dry-run }}
