@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-core",
   "description": "Alfresco ADF core",
-  "version": "8.0.2",
+  "version": "8.0.3-A.1",
   "author": "Hyland Software, Inc. and its affiliates",
   "repository": {
     "type": "git",
