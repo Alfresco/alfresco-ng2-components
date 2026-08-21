@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { combineLatest, defer, EMPTY, merge, Observable, of, Subject } from 'rxjs';
 import { catchError, debounceTime, map, shareReplay, switchMap, take } from 'rxjs/operators';
 import { BaseCloudService } from './base-cloud.service';
@@ -37,7 +37,6 @@ import {
     FilterCountersRequest,
     FilterCountersResult
 } from '../models/filter-counters-cloud.model';
-import { FetchResult } from '@apollo/client/core';
 
 /**
  * Single subscription covering both the task and the process engine events, so that a batch of
@@ -51,8 +50,10 @@ interface FilterCountersFilters {
     [FilterCounterEntityType.PROCESS_INSTANCE]: ProcessFilterCloudModel[];
 }
 
-/** Payload of the engine event subscription. */
-type EngineEventsResult = FetchResult<{ engineEvents?: TaskCloudEngineEvent[] }>;
+/** Data selected by the engine event subscription. */
+interface EngineEventsData {
+    engineEvents?: TaskCloudEngineEvent[];
+}
 
 const FILTER_COUNTERS_EVENT_SUBSCRIPTION_QUERY = `
     subscription {
@@ -87,11 +88,13 @@ const FILTER_COUNTERS_EVENT_SUBSCRIPTION_QUERY = `
 @Injectable({ providedIn: 'root' })
 export class FilterCountersCloudService extends BaseCloudService {
     private readonly notificationCloudService = inject(NotificationCloudService);
-
-    private readonly taskFilterCloudService = inject(TaskFilterCloudService);
-    private readonly processFilterCloudService = inject(ProcessFilterCloudService);
     private readonly taskListCloudService = inject(TaskListCloudService);
     private readonly processListCloudService = inject(ProcessListCloudService);
+    /**
+     * The filter services are resolved on demand, so that an app holding only one of the two filter
+     * components is not forced to provide the preferences service of the other one.
+     */
+    private readonly injector = inject(Injector);
 
     private readonly eventsPerApp = new Map<string, Observable<TaskCloudEngineEvent[]>>();
     private readonly refreshPerApp = new Map<string, Subject<void>>();
@@ -112,7 +115,7 @@ export class FilterCountersCloudService extends BaseCloudService {
      * @returns Task filters of the app
      */
     getTaskFilters(appName: string): Observable<TaskFilterCloudModel[]> {
-        return this.shareFilters(this.taskFiltersPerApp, appName, () => this.taskFilterCloudService.getTaskListFilters(appName));
+        return this.shareFilters(this.taskFiltersPerApp, appName, () => this.injector.get(TaskFilterCloudService).getTaskListFilters(appName));
     }
 
     /**
@@ -123,7 +126,7 @@ export class FilterCountersCloudService extends BaseCloudService {
      * @returns Process filters of the app
      */
     getProcessFilters(appName: string): Observable<ProcessFilterCloudModel[]> {
-        return this.shareFilters(this.processFiltersPerApp, appName, () => this.processFilterCloudService.getProcessFilters(appName));
+        return this.shareFilters(this.processFiltersPerApp, appName, () => this.injector.get(ProcessFilterCloudService).getProcessFilters(appName));
     }
 
     /**
@@ -165,9 +168,12 @@ export class FilterCountersCloudService extends BaseCloudService {
 
         let events$ = this.eventsPerApp.get(appName);
         if (!events$) {
-            events$ = defer(() => this.notificationCloudService.makeGQLQuery(appName, FILTER_COUNTERS_EVENT_SUBSCRIPTION_QUERY)).pipe(
-                map((result: EngineEventsResult) => result.data?.engineEvents ?? []),
+            events$ = defer(() =>
+                this.notificationCloudService.makeGQLQuery<EngineEventsData>(appName, FILTER_COUNTERS_EVENT_SUBSCRIPTION_QUERY)
+            ).pipe(
+                map((result) => result.data?.engineEvents ?? []),
                 debounceTime(this.notificationDebounceTime),
+                catchError(() => EMPTY),
                 shareReplay({ bufferSize: 1, refCount: true })
             );
             this.eventsPerApp.set(appName, events$);

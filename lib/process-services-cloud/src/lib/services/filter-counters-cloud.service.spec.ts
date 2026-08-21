@@ -53,6 +53,9 @@ describe('FilterCountersCloudService', () => {
     /** Payload the batched count endpoint was called with. */
     const countRequest = (): FilterCountersRequest => postSpy.calls.mostRecent().args[1];
     const countUrl = (): string => postSpy.calls.mostRecent().args[0];
+    /** Queries the batched count endpoint was called with for an entity type. */
+    const countQueries = (entityType: FilterCounterEntityType): FilterCountersQuery[] => countRequest()[entityType] ?? [];
+    const countRequestIds = (entityType: FilterCounterEntityType): string[] => countQueries(entityType).map((query) => query.requestId);
     let getTaskListFiltersSpy: jasmine.Spy;
     let getProcessFiltersSpy: jasmine.Spy;
 
@@ -168,23 +171,20 @@ describe('FilterCountersCloudService', () => {
             await taskCounters();
 
             expect(countUrl()).toBe('https://fake-bpm-host.com/mock-app/query/v1/count');
-            const body = countRequest();
-            expect(Object.keys(body)).toEqual([FilterCounterEntityType.TASK, FilterCounterEntityType.PROCESS_INSTANCE]);
+            expect(Object.keys(countRequest())).toEqual([FilterCounterEntityType.TASK, FilterCounterEntityType.PROCESS_INSTANCE]);
         });
 
         it('should identify the query of every filter by the key of the filter', async () => {
             await taskCounters();
 
-            const body = countRequest();
-            expect(body.TASK.map((query: FilterCountersQuery) => query.requestId)).toEqual(['my-tasks', 'queued-tasks']);
-            expect(body.PROCESS_INSTANCE.map((query: FilterCountersQuery) => query.requestId)).toEqual(['running-processes']);
+            expect(countRequestIds(FilterCounterEntityType.TASK)).toEqual(['my-tasks', 'queued-tasks']);
+            expect(countRequestIds(FilterCounterEntityType.PROCESS_INSTANCE)).toEqual(['running-processes']);
         });
 
         it('should send the criteria of every filter along with its request id', async () => {
             await taskCounters();
 
-            const body = countRequest();
-            expect(body.TASK[0]).toEqual({
+            expect(countQueries(FilterCounterEntityType.TASK)[0]).toEqual({
                 requestId: 'my-tasks',
                 status: ['ASSIGNED'],
                 assignee: ['mock-user'],
@@ -195,8 +195,7 @@ describe('FilterCountersCloudService', () => {
         it('should not send the filters without a counter enabled', async () => {
             await taskCounters();
 
-            const body = countRequest();
-            expect(body.TASK.map((query: FilterCountersQuery) => query.requestId)).not.toContain('completed-tasks');
+            expect(countRequestIds(FilterCounterEntityType.TASK)).not.toContain('completed-tasks');
         });
 
         it('should send the query of a filter targeting every status', async () => {
@@ -204,8 +203,7 @@ describe('FilterCountersCloudService', () => {
 
             await processCounters();
 
-            const body = countRequest();
-            expect(body.PROCESS_INSTANCE.map((query: FilterCountersQuery) => query.requestId)).toEqual(['all-processes']);
+            expect(countRequestIds(FilterCounterEntityType.PROCESS_INSTANCE)).toEqual(['all-processes']);
         });
 
         it('should omit an entity type without filters with a counter enabled', async () => {
@@ -213,8 +211,7 @@ describe('FilterCountersCloudService', () => {
 
             await taskCounters();
 
-            const body = countRequest();
-            expect(body.PROCESS_INSTANCE).toBeUndefined();
+            expect(countRequest().PROCESS_INSTANCE).toBeUndefined();
         });
 
         it('should leave out a filter the query cannot be built for', async () => {
@@ -224,8 +221,7 @@ describe('FilterCountersCloudService', () => {
 
             await taskCounters();
 
-            const body = countRequest();
-            expect(body.TASK.map((query: FilterCountersQuery) => query.requestId)).toEqual(['queued-tasks']);
+            expect(countRequestIds(FilterCounterEntityType.TASK)).toEqual(['queued-tasks']);
         });
 
         it('should leave out a filter without a key, since it holds no request id', async () => {
@@ -233,8 +229,7 @@ describe('FilterCountersCloudService', () => {
 
             await processCounters();
 
-            const body = countRequest();
-            expect(body.PROCESS_INSTANCE).toBeUndefined();
+            expect(countRequest().PROCESS_INSTANCE).toBeUndefined();
         });
 
         it('should resolve the counters of an entity type when the filters of the other one fail to load', async () => {
@@ -242,9 +237,8 @@ describe('FilterCountersCloudService', () => {
 
             await taskCounters();
 
-            const body = countRequest();
-            expect(body.TASK.map((query: FilterCountersQuery) => query.requestId)).toEqual(['my-tasks', 'queued-tasks']);
-            expect(body.PROCESS_INSTANCE).toBeUndefined();
+            expect(countRequestIds(FilterCounterEntityType.TASK)).toEqual(['my-tasks', 'queued-tasks']);
+            expect(countRequest().PROCESS_INSTANCE).toBeUndefined();
         });
 
         it('should resolve no counter when no filter has a counter enabled', async () => {
@@ -308,6 +302,42 @@ describe('FilterCountersCloudService', () => {
             service.refreshFilterCounters('mock-app');
 
             expect(postSpy).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('when only one of the two filter families is wired', () => {
+        /* An app holding only the task filters provides the task preferences service alone. */
+        const configureTasksOnly = () => {
+            TestBed.resetTestingModule();
+            TestBed.configureTestingModule({
+                imports: [NoopAuthModule, ApolloTestingModule],
+                providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
+            });
+
+            const tasksOnlyService = TestBed.inject(FilterCountersCloudService);
+            TestBed.inject(AppConfigService).config.bpmHost = 'https://fake-bpm-host.com';
+            spyOn(TestBed.inject(NotificationCloudService), 'makeGQLQuery').and.returnValue(new Subject<EngineEventsResult>().asObservable());
+            spyOn(TestBed.inject(TaskFilterCloudService), 'getTaskListFilters').and.returnValue(of(taskFiltersMock));
+            postSpy = spyOn(tasksOnlyService as unknown as CountEndpoint, 'post').and.returnValue(of(countersMock));
+
+            return tasksOnlyService;
+        };
+
+        it('should resolve the counters of the wired family', async () => {
+            const tasksOnlyService = configureTasksOnly();
+
+            const result = await firstValueFrom(tasksOnlyService.getFilterCounters('mock-app', FilterCounterEntityType.TASK));
+
+            expect(result).toEqual({ counters: { 'my-tasks': 5, 'queued-tasks': 0 }, batched: true });
+        });
+
+        it('should leave the filters of the family that is not wired out of the request', async () => {
+            const tasksOnlyService = configureTasksOnly();
+
+            await firstValueFrom(tasksOnlyService.getFilterCounters('mock-app', FilterCounterEntityType.TASK));
+
+            expect(countRequestIds(FilterCounterEntityType.TASK)).toEqual(['my-tasks', 'queued-tasks']);
+            expect(countRequest().PROCESS_INSTANCE).toBeUndefined();
         });
     });
 
