@@ -4,24 +4,32 @@ on:
   workflow_dispatch:
     inputs:
       dry-run:
-        description: 'Dry run (skip actual npm publish)'
+        description: 'enable dry-run on artifact push'
         required: false
         type: boolean
         default: false
 
 permissions:
+  id-token: write # Required for OIDC
   contents: read
-  packages: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 env:
+  LOG_LEVEL: "ERROR"
   NODE_OPTIONS: "--max-old-space-size=5120"
 
 jobs:
-  release:
+  release-npm:
     timeout-minutes: 45
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Required for OIDC
+      contents: read
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
@@ -32,31 +40,29 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: install
         run: npm ci
 
-      - name: Build libraries
+      - name: build libraries
         run: |
           npm run build:libs
           npm run build:schematics
 
-      - name: Setup NPM Registry
-        if: ${{ !inputs.dry-run }}
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      # Versions are already set in package.json files (8.0.3-A.1 / js-api 9.0.3-A.1),
+      # so no bumpversion step here.
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        name: release libraries Npm registry
         with:
           node-version-file: '.nvmrc'
           registry-url: 'https://${{ vars.NPM_REGISTRY_ADDRESS }}'
           scope: '@alfresco'
 
-      - name: Publish to NPM
-        if: ${{ !inputs.dry-run }}
-        run: npm run publish -- --tag=branch
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
-
-      - name: Dry run summary
-        if: ${{ inputs.dry-run }}
+      # npmjs auth here is OIDC trusted publishing (no token, same as develop),
+      # which requires npm >= 11.5.1 while .nvmrc pins node 22 (npm 10.9).
+      - name: upgrade npm
         run: |
-          echo "✅ Build completed successfully"
-          echo "📦 Packages ready to publish with tag: branch"
-          echo "🔒 Dry run enabled - skipped npm publish"
+          npm install -g npm@11
+          npm --version
+          echo "registry: $(npm config get registry)"
+
+      - run: npx nx run-many -t npm-publish --tag=branch ${{ inputs.dry-run && '--dry-run' || '' }}
