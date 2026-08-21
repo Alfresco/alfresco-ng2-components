@@ -9,6 +9,8 @@
     "docbuild": "(cd ./tools/doc; npm i) && node tools/doc/node_modules/typedoc/bin/typedoc --tsconfig lib/tsconfig.doc.json && node tools/doc/buildYamlSourceInfo.js docs/docs.json && node ./tools/doc/docProcessor.js",
     "affected:libs": "nx affected:libs",
     "affected:lint": "nx affected:lint",
+    "build:libs": "nx run-many -t build --configuration=production",
+    "build:schematics": "nx run-many -t build-schematics",
     "clean": "rimraf dist node_modules dist/libs"
   },
   "repository": {

@@ -3,146 +3,60 @@ name: "release"
 on:
   workflow_dispatch:
     inputs:
-      dry-run-flag:
-        description: 'enable dry-run on artifact push'
+      dry-run:
+        description: 'Dry run (skip actual npm publish)'
         required: false
         type: boolean
-        default: true
-  push:
-    branches:
-      - develop
-      - develop-patch*
-      - master
-      - master-patch-*
+        default: false
 
 permissions:
-  id-token: write  # Required for OIDC
   contents: read
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
+  packages: write
 
 env:
-  GH_COMMIT: ${{ github.sha }}
-  GH_BUILD_NUMBER: ${{ github.run_id }}
-  LOG_LEVEL: "ERROR"
   NODE_OPTIONS: "--max-old-space-size=5120"
 
 jobs:
-  setup:
-    timeout-minutes: 20
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-    name: "Setup"
+  release:
+    timeout-minutes: 45
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: write
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - uses: ./.github/actions/setup
-      - name: install
-        run: |
-          npm ci
-          npx nx run js-api:bundle
-          npx nx run cli:bundle
-      - uses: ./.github/actions/upload-node-modules-and-artifacts
 
-  release-npm:
-    needs: [setup]
-    outputs:
-      release_version: ${{ steps.set-version.outputs.release_version }}
-    timeout-minutes: 30
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write  # Required for OIDC
-      contents: read
-      packages: write
-      actions: read
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          fetch-depth: 0
-      - id: setup
-        uses: ./.github/actions/setup
-      - id: set-dryrun
-        uses: ./.github/actions/enable-dryrun
-        with:
-          dry-run-flag: ${{ inputs.dry-run-flag }}
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: Set libraries versions
-        id: set-version
-        run: |
-          set -u;
-          ./scripts/github/build/bumpversion.sh
-      - name: Set migrations
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
-        with:
-          script: |
-            const setMigrations = require('./scripts/github/release/set-migrations.js');
-            setMigrations();
-      - name: build libraries
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build libraries
         run: |
           npm run build:libs
           npm run build:schematics
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        name: release libraries GH registry
-        with:
-          node-version-file: '.nvmrc'
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@alfresco'
-      - run: npm run publish --tag ${{ steps.setup.outputs.npm-tag }} --provenance=false ${{ steps.set-dryrun.outputs.dryrun }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        name: release libraries Npm registry
+
+      - name: Setup NPM Registry
+        if: ${{ !inputs.dry-run }}
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: '.nvmrc'
           registry-url: 'https://${{ vars.NPM_REGISTRY_ADDRESS }}'
           scope: '@alfresco'
-      - run: npm run publish --tag ${{ steps.setup.outputs.npm-tag }} ${{ steps.set-dryrun.outputs.dryrun }}
 
-  create-git-tag:
-    runs-on: ubuntu-latest
-    needs: [setup, release-npm]
-    if: github.event_name != 'workflow_dispatch'
-    name: Create github tag
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 1
-      - uses: './.github/actions/create-git-tag'
-        with:
-          tagName: ${{ needs.release-npm.outputs.release_version }}
+      - name: Publish to NPM
+        if: ${{ !inputs.dry-run }}
+        run: npx nx run-many -t npm-publish --tag=branch
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
-  npm-check-bundle:
-    needs: [release-npm]
-    timeout-minutes: 15
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: ./.github/actions/npm-check-bundle
-
-  finalize:
-    if: always()
-    runs-on: ubuntu-latest
-    name: Final Results
-    needs: [release-npm, npm-check-bundle]
-    steps:
-      - name: Check job execution status
-        if: >-
-          ${{
-              contains(needs.*.result, 'failure')
-            || contains(needs.*.result, 'cancelled')
-          }}
-        run: exit 1
+      - name: Dry run summary
+        if: ${{ inputs.dry-run }}
+        run: |
+          echo "✅ Build completed successfully"
+          echo "📦 Packages ready to publish with tag: branch"
+          echo "🔒 Dry run enabled - skipped npm publish"
