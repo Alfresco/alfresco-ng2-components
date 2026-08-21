@@ -47,6 +47,8 @@ jobs:
           node-version-file: '.nvmrc'
           registry-url: 'https://${{ vars.NPM_REGISTRY_ADDRESS }}'
           scope: '@alfresco'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
       - name: Publish to NPM
         if: ${{ !inputs.dry-run }}
