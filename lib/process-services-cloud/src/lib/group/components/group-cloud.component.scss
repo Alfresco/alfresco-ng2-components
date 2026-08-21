@@ -57,10 +57,12 @@
     }
 }
 
-.adf-error-messages-container .adf-error-icon {
-    @include mixins.adf-error-icon;
-}
+.adf-error-messages-container {
+    .adf-error-icon {
+        @include mixins.adf-error-icon;
+    }
 
-.adf-error-messages-container .adf-error {
-    animation: slide-down-fade-in 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
+    .adf-error {
+        animation: slide-down-fade-in 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
+    }
 }

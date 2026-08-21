@@ -27,6 +27,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { MatProgressBar } from '@angular/material/progress-bar';
 import { IdentityUserService } from '../services/identity-user.service';
 
 describe('PeopleCloudComponent', () => {
@@ -97,6 +98,19 @@ describe('PeopleCloudComponent', () => {
         const inputField = await loader.getHarness(MatFormFieldHarness.with({ selector: '.adf-people-cloud' }));
 
         expect(await inputField.getLabel()).toEqual('TITLE_KEY');
+    });
+
+    it('should use dynamic form field subscript sizing by default', () => {
+        expect(component.formFieldSubscriptSizing).toBe('dynamic');
+    });
+
+    it('should render validation progress inside the reserved status area', () => {
+        component.validationLoading = true;
+        fixture.detectChanges();
+
+        const progressBar = fixture.debugElement.query(By.directive(MatProgressBar));
+
+        expect(progressBar.parent.classes['adf-error-messages-container']).toBeTrue();
     });
 
     describe('Search user', () => {

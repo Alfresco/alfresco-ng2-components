@@ -27,6 +27,8 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
+import { MatFormField } from '@angular/material/form-field';
+import { MatProgressBar } from '@angular/material/progress-bar';
 
 describe('GroupCloudComponent', () => {
     let loader: HarnessLoader;
@@ -96,6 +98,22 @@ describe('GroupCloudComponent', () => {
         const inputElement = await loader.getHarness(MatInputHarness.with({ selector: '[data-automation-id="adf-cloud-group-search-input"]' }));
 
         expect(await inputElement.getPlaceholder()).toEqual('');
+    });
+
+    it('should use dynamic form field subscript sizing', () => {
+        fixture.detectChanges();
+
+        const formField = fixture.debugElement.query(By.directive(MatFormField)).componentInstance as MatFormField;
+        expect(formField.subscriptSizing).toBe('dynamic');
+    });
+
+    it('should render validation progress inside the reserved status area', () => {
+        component.validationLoading = true;
+        fixture.detectChanges();
+
+        const progressBar = fixture.debugElement.query(By.directive(MatProgressBar));
+
+        expect(progressBar.parent.classes['adf-error-messages-container']).toBeTrue();
     });
 
     describe('Search group', () => {

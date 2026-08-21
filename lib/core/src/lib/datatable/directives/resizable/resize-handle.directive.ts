@@ -86,6 +86,7 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
             });
         }
 
+        this.unlistenMouseUp?.();
         this.unlistenMouseUp = this.renderer.listen('document', 'mouseup', (mouseUpEvent: MouseEvent) => {
             this.onMouseup(mouseUpEvent);
         });
@@ -96,7 +97,8 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
     private onMouseup(event: MouseEvent): void {
         this.unlistenMouseMove?.();
         this.unlistenMouseMove = undefined;
-        this.unlistenMouseUp();
+        this.unlistenMouseUp?.();
+        this.unlistenMouseUp = undefined;
         this.resizableContainer.mouseup.next(event);
     }
 

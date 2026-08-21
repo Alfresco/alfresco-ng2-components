@@ -10,12 +10,16 @@
     }
 }
 
+error-widget {
+    display: block;
+}
+
 .adf-error {
     display: flex;
     align-items: center;
 
     &-widget-container {
-        height: auto;
+        height: 40px;
     }
 
     &-animate {

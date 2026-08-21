@@ -62,6 +62,12 @@ export class FormService implements FormValidationService {
 
     formRulesEvent = new Subject<FormRulesEvent>();
 
+    /**
+     * Emitted after form field/outcome visibility has been re-evaluated via WidgetVisibilityService.refreshVisibility.
+     * Internal ADF form-rendering event — not part of the FormValidationService contract.
+     */
+    formVisibilityRefreshed = new Subject<FormEvent>();
+
     constructor() {
         const injectedFieldValidators = inject(FORM_SERVICE_FIELD_VALIDATORS_TOKEN, { optional: true });
 

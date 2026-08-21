@@ -15,16 +15,20 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FormFieldModel, FormModel, TabModel, ContainerModel, FormOutcomeModel } from '../components/widgets/core';
+import { FormEvent } from '../events/form.event';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
 import { format, isValid, parse } from 'date-fns';
+import { FormService } from './form.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class WidgetVisibilityService {
+    private readonly formService = inject(FormService);
+
     private processVarList: TaskProcessVariableModel[];
     private form: FormModel;
 
@@ -45,6 +49,8 @@ export class WidgetVisibilityService {
             }
 
             form.getFormFields().map((field) => this.refreshEntityVisibility(field));
+
+            this.formService.formVisibilityRefreshed.next(new FormEvent(form));
         }
     }
 

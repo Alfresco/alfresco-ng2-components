@@ -16,7 +16,7 @@
  */
 
 import { Component, DestroyRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ErrorWidgetComponent, WidgetComponent } from '@alfresco/adf-core';
+import { WidgetComponent } from '@alfresco/adf-core';
 import { UntypedFormControl } from '@angular/forms';
 import { filter } from 'rxjs/operators';
 import { ComponentSelectionMode } from '../../../../types';
@@ -27,13 +27,12 @@ import { ReactivePreselectionService } from '../reactive-preselection.service';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { PeopleCloudComponent } from '../../../../people/components/people-cloud.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
 
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'people-cloud-widget',
-    imports: [CommonModule, TranslatePipe, ErrorWidgetComponent, PeopleCloudComponent, MatFormFieldModule],
+    imports: [CommonModule, TranslatePipe, PeopleCloudComponent],
     templateUrl: './people-cloud.widget.html',
     host: {
         '(click)': 'event($event)',

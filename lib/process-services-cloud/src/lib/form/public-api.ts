@@ -43,5 +43,6 @@ export * from './services/form-cloud.service';
 export * from './services/content-cloud-node-selector.service';
 export * from './services/process-cloud-content.service';
 export * from './services/display-mode.service';
+export * from './services/form-cloud-submission-values';
 
 export * from './form-cloud.module';

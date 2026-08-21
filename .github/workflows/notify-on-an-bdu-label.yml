@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Check if label was added after PR creation (with time threshold)
         id: check_label_timing
-        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const prCreatedAt = new Date('${{ github.event.pull_request.created_at }}');
@@ -53,7 +53,7 @@ jobs:
 
       - name: Send Teams notification
         if: steps.check_label_timing.outputs.should_notify == 'true'
-        uses: Alfresco/alfresco-build-tools/.github/actions/send-teams-notification@5177eca5d3d71342d7f7e0a2a4d74cc16b1eeb1b # v18.21.3
+        uses: Alfresco/alfresco-build-tools/.github/actions/send-teams-notification@98bcfbe06aafffdc0e9a790f352602316f82303b # v18.23.0
         with:
           webhook-url: ${{ secrets.TEAMS_NOTIFICATION_ADF_BDU_WEBHOOK }}
           skip_checkout: true

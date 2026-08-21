@@ -30,14 +30,17 @@ import {
     SimpleChanges,
     ViewChild
 } from '@angular/core';
-import { forkJoin, isObservable, Observable, of, Subscription } from 'rxjs';
+import { forkJoin, isObservable, merge, Observable, of, Subscription } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import {
     ConfirmDialogComponent,
     ContentLinkModel,
+    ADF_DISPLAY_TEXT_SETTINGS,
+    DisplayTextWidgetSettings,
     FormatSpacePipe,
     FormBaseComponent,
     FormEvent,
+    FormExpressionService,
     FormFieldModel,
     FormRulesEvent,
     FormFieldValidator,
@@ -67,6 +70,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { A11yModule } from '@angular/cdk/a11y';
+import { getExpressionEvaluationEnabled$, materializeSubmissionValues } from '../services/form-cloud-submission-values';
 
 interface FormFieldRuntimeState {
     value: any;
@@ -228,6 +232,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     protected changeDetector = inject(ChangeDetectorRef);
 
     private readonly destroyRef = inject(DestroyRef);
+    private readonly expressions = inject(FormExpressionService);
+    private enableExpressionEvaluation = false;
 
     private get currentForm(): FormModel | undefined {
         return super.form;
@@ -252,6 +258,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     constructor() {
         const injectedFieldValidators = inject(FORM_CLOUD_FIELD_VALIDATORS_TOKEN, { optional: true });
         const tabNavEnabledToken = inject(ADF_FORM_TAB_NAV_ENABLED, { optional: true });
+        const displayTextSettings = inject<Observable<DisplayTextWidgetSettings> | DisplayTextWidgetSettings>(ADF_DISPLAY_TEXT_SETTINGS, {
+            optional: true
+        });
 
         super();
         this.loadInjectedFieldValidators(injectedFieldValidators);
@@ -269,6 +278,12 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 this.tabNavEnabledByHost = tabNavEnabledToken;
             }
         }
+
+        getExpressionEvaluationEnabled$(displayTextSettings)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((enabled) => {
+                this.enableExpressionEvaluation = enabled;
+            });
 
         this.formService.formContentClicked.pipe(takeUntilDestroyed()).subscribe((content) => {
             if (content instanceof UploadWidgetContentLinkModel) {
@@ -291,11 +306,11 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             }
         });
 
-        this.formService.formRulesEvent
-            .pipe(
-                filter((event) => event?.type === 'fieldValueChanged' && event.form?.id === this.form?.id),
-                takeUntilDestroyed()
-            )
+        merge(
+            this.formService.formVisibilityRefreshed.pipe(filter((event) => event.form?.id === this.form?.id)),
+            this.formService.formRulesEvent.pipe(filter((event) => event?.type === 'fieldValueChanged' && event.form?.id === this.form?.id))
+        )
+            .pipe(takeUntilDestroyed())
             .subscribe(() => this.recomputeVisibleOutcomes());
     }
 
@@ -482,7 +497,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     saveTaskForm() {
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
-                .saveTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values)
+                .saveTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.getSubmissionValues())
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe({
                     next: () => {
@@ -523,7 +538,15 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     private completeForm(outcome?: string, outcomeId?: string) {
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
-                .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
+                .completeTaskForm(
+                    this.appName,
+                    this.taskId,
+                    this.processInstanceId,
+                    `${this.form.id}`,
+                    this.getSubmissionValues(),
+                    outcome,
+                    this.appVersion
+                )
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe({
                     next: () => {
@@ -534,6 +557,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     error: (error) => this.onTaskCompletedError(error)
                 });
         }
+    }
+
+    private getSubmissionValues(): FormValues {
+        return materializeSubmissionValues(this.form, { enableExpressionEvaluation: this.enableExpressionEvaluation }, this.expressions);
     }
 
     parseForm(formCloudRepresentationJSON?: any): FormModel | null {
@@ -568,7 +595,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     checkVisibility(field: FormFieldModel) {
         if (field?.form) {
             this.visibilityService.refreshVisibility(field.form);
-            this.recomputeVisibleOutcomes();
         }
     }
 
@@ -586,7 +612,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.setCheckParentVisibilityForValidationOnFields();
         this.visibilityService.refreshVisibility(this.form);
         this.form.validateForm();
-        this.recomputeVisibleOutcomes();
         this.onFormLoaded(this.form);
         this.formService.formRulesEvent.next(new FormRulesEvent('dataRefreshed', new FormEvent(this.form)));
         this.onFormDataRefreshed(this.form);
