@@ -16,7 +16,7 @@
  */
 
 import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { defer, EMPTY, Observable, Subscription } from 'rxjs';
+import { combineLatest, defer, EMPTY, Observable, Subscription } from 'rxjs';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFilterCloudModel } from '../../models/process-filter-cloud.model';
 import { AppConfigService, IconModule, TranslationService } from '@alfresco/adf-core';
@@ -48,8 +48,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     /**
      * (optional) From Activiti 8.7.0 forward, use the 'POST' method to get the process count.
      *
-     * @deprecated the counters are resolved by `POST /query/v1/count`, which requires Activiti 8.7.0
-     * forward. This input is only used by the backends without that endpoint and will be removed,
+     * @deprecated only used by the backends without `POST /query/v1/count`. It will be removed,
      * along with the 'GET' method, in ADF 10.0.0.
      */
     @Input()
@@ -141,12 +140,14 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
                 this.initFilterCounters();
                 this.selectFilterAndEmit(this.filterParam);
                 this.success.emit(res);
-                this.loadFilterCounters(appName);
             },
             error: (err: unknown) => {
                 this.error.emit(err);
             }
         });
+
+        /* Read along with the filters, not once they arrive, so both components share one request. */
+        this.loadFilterCounters(appName, filters$);
     }
 
     /**
@@ -253,20 +254,18 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     }
 
     /**
-     * Keeps the counters in sync with the engine events of the app.
-     *
-     * @deprecated the counters stream keeps itself in sync with the engine events, so nothing is
+     * @deprecated `getFilterCounters` keeps the counters in sync with the engine events, so nothing is
      * subscribed here anymore. It will be removed in ADF 10.0.0.
      */
     initProcessNotification(): void {
-        /* Kept for backwards compatibility: `getFilterCounters` subscribes to the engine events. */
+        /* Kept for backwards compatibility. */
     }
 
     /**
      * Iterate over filters and update counters
      *
-     * @deprecated the counters are resolved by the batched count request. This resolves them one
-     * filter at a time, for the backends without the batched count endpoint.
+     * @deprecated resolves the counters one filter at a time, for the backends without the batched
+     * count endpoint. It will be removed in ADF 10.0.0.
      */
     updateFilterCounters(): void {
         this.filters.forEach((filter) => this.updateFilterCounter(filter));
@@ -276,8 +275,8 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
      *  Get current value for filter and check if value has changed
      *
      * @param filter filter
-     * @deprecated the counters are resolved by the batched count request. This resolves the counter
-     * of one filter, for the backends without the batched count endpoint.
+     * @deprecated resolves the counter of one filter, for the backends without the batched count
+     * endpoint. It will be removed in ADF 10.0.0.
      */
     updateFilterCounter(filter: ProcessFilterCloudModel): void {
         const filterKey = filter?.showCounter ? filter.key : undefined;
@@ -285,8 +284,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
             return;
         }
 
-        /* `defer` turns the query building of the count request into a failure of the stream, so that a
-           filter the counter cannot be resolved for is left without one instead of breaking the others. */
+        /* `defer` keeps a query that cannot be built from breaking the counters of the other filters. */
         defer(() => this.fetchProcessFilterCounter(filter))
             .pipe(
                 catchError(() => EMPTY),
@@ -306,9 +304,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         }
     }
 
-    /**
-     * Flags the counter of a filter as read whenever the filter is refreshed by an external action
-     */
+    /** Flags the counter of a filter as read whenever the filter is refreshed elsewhere */
     getFilterKeysAfterExternalRefreshing(): void {
         this.processFilterCloudService.filterKeyToBeRefreshed$
             .pipe(takeUntilDestroyed(this.destroyRef))
@@ -341,18 +337,15 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         this.currentFilter = undefined;
     }
 
-    /**
-     * Resolves the counters of the filters, with one request shared with the task filters. The
-     * counters of a backend without the batched count endpoint are resolved one filter at a time.
-     *
-     * @param appName application name
-     */
-    private loadFilterCounters(appName: string): void {
+    private loadFilterCounters(appName: string, filters$: Observable<ProcessFilterCloudModel[]>): void {
         this.countersSubscription?.unsubscribe();
-        this.countersSubscription = this.filterCountersCloudService
-            .getFilterCounters(appName, FilterCounterEntityType.PROCESS_INSTANCE)
+        /* Counters are keyed by filter key, so they are applied once the filters are known. */
+        this.countersSubscription = combineLatest([
+            filters$.pipe(catchError(() => EMPTY)),
+            this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.PROCESS_INSTANCE)
+        ])
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(({ counters, batched }) => {
+            .subscribe(([, { counters, batched }]) => {
                 this.batchedCounters = batched;
                 if (batched) {
                     this.applyFilterCounters(counters);
@@ -362,16 +355,9 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
             });
     }
 
-    /**
-     * Holds the counters resolved by the batched count request, which are keyed by filter key. The
-     * counter of a filter the request holds none for is resolved on its own: a filter without a key,
-     * or one the count query cannot be built for, is left out of the batch.
-     *
-     * @param counters counters keyed by filter key
-     */
     private applyFilterCounters(counters: { [filterKey: string]: number }): void {
         this.filters.forEach((filter) => {
-            /* A filter without a key holds no request id, so no counter can be keyed by it. */
+            /* A filter without a key holds no request id. */
             const filterKey = filter?.showCounter ? filter.key : undefined;
             if (!filterKey) {
                 return;
@@ -379,7 +365,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
 
             const counter = counters[filterKey];
             if (counter === undefined) {
-                /* The batch holds no counter for a filter the count query cannot be built for. */
+                /* Left out of the batch: counted on its own. */
                 this.updateFilterCounter(filter);
                 return;
             }
@@ -389,12 +375,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         });
     }
 
-    /**
-     * Resolves the counters again, with one request for every filter of the app. The counter of the
-     * given filter alone is resolved when the batched count endpoint is not available.
-     *
-     * @param filter filter that was clicked
-     */
     private refreshFilterCounter(filter?: ProcessFilterCloudModel): void {
         if (this.batchedCounters) {
             this.filterCountersCloudService.refreshFilterCounters(this.appName);

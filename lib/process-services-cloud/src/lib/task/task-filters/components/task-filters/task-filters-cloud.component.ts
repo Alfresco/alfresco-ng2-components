@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { defer, EMPTY, Observable, of, Subscription } from 'rxjs';
+import { combineLatest, defer, EMPTY, Observable, of, Subscription } from 'rxjs';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { FilterParamsModel, TaskFilterCloudModel } from '../../models/filter-cloud.model';
 import { AppConfigService, IconModule, TranslationService } from '@alfresco/adf-core';
@@ -47,8 +47,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     /**
      * (optional) From Activiti 8.7.0 forward, use the 'POST' method to get the task count.
      *
-     * @deprecated the counters are resolved by `POST /query/v1/count`, which requires Activiti 8.7.0
-     * forward. This input is only used by the backends without that endpoint and will be removed,
+     * @deprecated only used by the backends without `POST /query/v1/count`. It will be removed,
      * along with the 'GET' method, in ADF 10.0.0.
      */
     @Input()
@@ -125,13 +124,15 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
                 this.filters = res || [];
                 this.initFilterCounters();
                 this.selectFilterAndEmit(this.filterParam);
-                this.loadFilterCounters(appName);
                 this.success.emit(res);
             },
             error: (err) => {
                 this.error.emit(err);
             }
         });
+
+        /* Read along with the filters, not once they arrive, so both components share one request. */
+        this.loadFilterCounters(appName, filters$);
     }
 
     /**
@@ -144,8 +145,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     /**
      * Iterate over filters and update counters
      *
-     * @deprecated the counters are resolved by the batched count request. This resolves them one
-     * filter at a time, for the backends without the batched count endpoint.
+     * @deprecated resolves the counters one filter at a time, for the backends without the batched
+     * count endpoint. It will be removed in ADF 10.0.0.
      */
     updateFilterCounters(): void {
         this.filters.forEach((filter) => this.updateFilterCounter(filter));
@@ -155,16 +156,15 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
      *  Get current value for filter and check if value has changed
      *
      * @param filter filter
-     * @deprecated the counters are resolved by the batched count request. This resolves the counter
-     * of one filter, for the backends without the batched count endpoint.
+     * @deprecated resolves the counter of one filter, for the backends without the batched count
+     * endpoint. It will be removed in ADF 10.0.0.
      */
     updateFilterCounter(filter: TaskFilterCloudModel): void {
         if (!filter?.showCounter) {
             return;
         }
 
-        /* `defer` turns the query building of the count request into a failure of the stream, so that a
-           filter the counter cannot be resolved for is left without one instead of breaking the others. */
+        /* `defer` keeps a query that cannot be built from breaking the counters of the other filters. */
         defer(() => this.fetchTaskFilterCounter(filter))
             .pipe(
                 catchError(() => EMPTY),
@@ -186,7 +186,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         }
 
         this.filterCountersCloudService
-            .getEngineEvents(this.appName)
+            .getEngineEvents(this.appName, FilterCounterEntityType.TASK)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((events) => {
                 events.forEach((taskEvent) => this.checkFilterCounter(taskEvent.entity));
@@ -283,27 +283,22 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         }
     }
 
-    /**
-     * Flags the counter of a filter as read whenever the filter is refreshed by an external action
-     */
+    /** Flags the counter of a filter as read whenever the filter is refreshed elsewhere */
     getFilterKeysAfterExternalRefreshing(): void {
         this.taskFilterCloudService.filterKeyToBeRefreshed$
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((filterKey: string) => this.updatedCountersSet.delete(filterKey));
     }
 
-    /**
-     * Resolves the counters of the filters, with one request shared with the process filters. The
-     * counters of a backend without the batched count endpoint are resolved one filter at a time.
-     *
-     * @param appName application name
-     */
-    private loadFilterCounters(appName: string): void {
+    private loadFilterCounters(appName: string, filters$: Observable<TaskFilterCloudModel[]>): void {
         this.countersSubscription?.unsubscribe();
-        this.countersSubscription = this.filterCountersCloudService
-            .getFilterCounters(appName, FilterCounterEntityType.TASK)
+        /* Counters are keyed by filter key, so they are applied once the filters are known. */
+        this.countersSubscription = combineLatest([
+            filters$.pipe(catchError(() => of([]))),
+            this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.TASK)
+        ])
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(({ counters, batched }) => {
+            .subscribe(([, { counters, batched }]) => {
                 this.batchedCounters = batched;
                 if (batched) {
                     this.applyFilterCounters(counters);
@@ -313,16 +308,9 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             });
     }
 
-    /**
-     * Holds the counters resolved by the batched count request, which are keyed by filter key. The
-     * counter of a filter the request holds none for is resolved on its own: a filter without a key,
-     * or one the count query cannot be built for, is left out of the batch.
-     *
-     * @param counters counters keyed by filter key
-     */
     private applyFilterCounters(counters: { [filterKey: string]: number }): void {
         this.filters.forEach((filter) => {
-            /* A filter without a key holds no request id, so no counter can be keyed by it. */
+            /* A filter without a key holds no request id. */
             const filterKey = filter?.showCounter ? filter.key : undefined;
             if (!filterKey) {
                 return;
@@ -353,12 +341,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         this.currentFilter = undefined;
     }
 
-    /**
-     * Resolves the counters again, with one request for every filter of the app. The counter of the
-     * given filter alone is resolved when the batched count endpoint is not available.
-     *
-     * @param filter filter that was selected
-     */
     private refreshFilterCounter(filter: TaskFilterCloudModel): void {
         if (this.batchedCounters) {
             this.filterCountersCloudService.refreshFilterCounters(this.appName);

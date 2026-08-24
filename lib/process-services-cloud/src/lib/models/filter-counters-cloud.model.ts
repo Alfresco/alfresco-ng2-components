@@ -31,17 +31,13 @@ export interface FilterCountersQuerySort {
     isProcessVariable: boolean;
 }
 
-/**
- * A single query of the batched count request, holding the criteria of one filter. The counter
- * resolved for the query is keyed by its `requestId` in the response.
- */
+/** A single query of the batched count request, holding the criteria of one filter. */
 export interface FilterCountersQuery {
-    /** Identifies the query, so that its counter can be read back from the response. */
+    /** Identifies the query, so its counter can be read back from the response. */
     requestId: string;
     status?: string[];
     assignee?: string[];
     sort?: FilterCountersQuerySort;
-    /** Every other criteria of the filter the query was built from. */
     [criteria: string]: unknown;
 }
 
@@ -52,34 +48,23 @@ export type FilterCountersRequest = {
     [entityType in FilterCounterEntityType]?: FilterCountersQuery[];
 };
 
-/**
- * Shape of a task or process filter the counters are resolved for. The key of the filter is used
- * as the `requestId` of its query, so that its counter can be read back from the response. A filter
- * without a key holds no identity for the batched request, so its counter is fetched on its own.
- */
+/** Shape of a task or process filter the counters are resolved for. Its key is the `requestId`. */
 export interface FilterCounterCandidate {
     key?: string | null;
     showCounter?: boolean;
 }
 
 /**
- * Counts returned by the batched count request, keyed by entity type and then by the `requestId`
- * of the query the count was resolved for.
- * e.g. `{ TASK: { 'my-tasks': 5, 'queued-tasks': 0 }, PROCESS_INSTANCE: { 'running-processes': 5 } }`
+ * Counts returned by the batched count request, keyed by entity type and then by `requestId`.
+ * e.g. `{ TASK: { 'my-tasks': 5 }, PROCESS_INSTANCE: { 'running-processes': 5 } }`
  */
 export type FilterCounters = {
     [entityType in FilterCounterEntityType]?: { [requestId: string]: number };
 };
 
-/**
- * Counters of the filters of one entity type, keyed by the key of the filter they were resolved for.
- */
 export interface FilterCountersResult {
     /** Counters keyed by filter key. Empty when the batched count endpoint is not available. */
     counters: { [filterKey: string]: number };
-    /**
-     * Whether the counters were resolved by the batched count endpoint. When `false`, the endpoint is
-     * not available on the backend of the app and the counters are to be resolved one filter at a time.
-     */
+    /** When `false`, the backend holds no batched count endpoint: count one filter at a time. */
     batched: boolean;
 }

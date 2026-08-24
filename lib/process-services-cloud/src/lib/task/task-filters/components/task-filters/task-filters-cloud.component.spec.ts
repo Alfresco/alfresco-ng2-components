@@ -19,7 +19,7 @@ import { AppConfigService, NoopAuthModule } from '@alfresco/adf-core';
 import { Component, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { first, of, Subject, throwError } from 'rxjs';
+import { first, NEVER, of, Subject, throwError } from 'rxjs';
 import { PROCESS_FILTERS_SERVICE_TOKEN, TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
 import { defaultTaskFiltersMock, fakeGlobalFilter, taskNotifications } from '../../mock/task-filters-cloud.mock';
@@ -331,7 +331,7 @@ describe('TaskFiltersCloudComponent', () => {
 
                 fixture.detectChanges();
 
-                expect(getEngineEventsSpy).toHaveBeenCalledWith('my-app-1');
+                expect(getEngineEventsSpy).toHaveBeenCalledWith('my-app-1', FilterCounterEntityType.TASK);
             });
 
             it('should emit the events of the debounced batch', fakeAsync(() => {
@@ -694,6 +694,28 @@ describe('TaskFiltersCloudComponent', () => {
         });
 
         describe('Batched counters', () => {
+            it('should read the counters without waiting for the filters', async () => {
+                getTaskListFiltersSpy.and.returnValue(NEVER);
+
+                await bindAppName();
+
+                expect(getFilterCountersSpy).toHaveBeenCalledWith('my-app-1', FilterCounterEntityType.TASK);
+            });
+
+            it('should hold the counters until the filters they belong to arrive', async () => {
+                const filters$ = new Subject<TaskFilterCloudModel[]>();
+                getTaskListFiltersSpy.and.returnValue(filters$.asObservable());
+                getFilterCountersSpy.and.returnValue(of({ counters: { 'fake-involved-tasks': 9 }, batched: true }));
+
+                await bindAppName();
+                expect(component.counters['fake-involved-tasks']).toBeUndefined();
+
+                filters$.next(fakeGlobalFilter);
+                fixture.detectChanges();
+
+                expect(component.counters['fake-involved-tasks']).toBe(9);
+            });
+
             it('should read the counters of the task filters of the bound app', async () => {
                 await bindAppName();
 
@@ -718,7 +740,6 @@ describe('TaskFiltersCloudComponent', () => {
             });
 
             it('should resolve the counter of a filter the batch left out on its own', async () => {
-                /* A filter without a key, or one the query cannot be built for, is left out of the batch. */
                 getFilterCountersSpy.and.returnValue(of({ counters: {}, batched: true }));
 
                 await bindAppName();

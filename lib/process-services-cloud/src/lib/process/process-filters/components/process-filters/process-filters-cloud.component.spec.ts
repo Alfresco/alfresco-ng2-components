@@ -520,13 +520,11 @@ describe('ProcessFiltersCloudComponent', () => {
             });
 
             it('should resolve the counters of the filters the batch left out on their own', async () => {
-                /* A filter without a key, or one the query cannot be built for, is left out of the batch. */
                 getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 }, batched: true }));
 
                 await bindAppName('mock-app-name');
 
                 expect(component.counters['FakeRunningProcesses']).toBe(9);
-                /* The model holds no status for the filter targeting every status. */
                 expect(getProcessCounterSpy.calls.allArgs().map(([, status]) => status)).toEqual([null, 'COMPLETED']);
             });
 
@@ -901,13 +899,11 @@ describe('ProcessFiltersCloudComponent', () => {
             });
 
             it('should resolve the counters of the filters the batch left out on their own', async () => {
-                /* A filter without a key, or one the query cannot be built for, is left out of the batch. */
                 getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 }, batched: true }));
 
                 await bindAppName('mock-app-name');
 
                 expect(component.counters['FakeRunningProcesses']).toBe(9);
-                /* The model holds no status for the filter targeting every status. */
                 expect(getProcessCounterSpy.calls.allArgs().map(([, status]) => status)).toEqual([null, 'COMPLETED']);
             });
 

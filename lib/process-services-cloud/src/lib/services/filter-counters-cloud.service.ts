@@ -16,8 +16,8 @@
  */
 
 import { inject, Injectable, Injector } from '@angular/core';
-import { combineLatest, defer, EMPTY, merge, Observable, of, Subject } from 'rxjs';
-import { catchError, debounceTime, map, shareReplay, switchMap, take } from 'rxjs/operators';
+import { asapScheduler, combineLatest, defer, EMPTY, merge, Observable, of, Subject, Subscription } from 'rxjs';
+import { catchError, debounceTime, finalize, map, shareReplay, switchMap, take } from 'rxjs/operators';
 import { BaseCloudService } from './base-cloud.service';
 import { NotificationCloudService } from './notification-cloud.service';
 import { TaskCloudEngineEvent } from '../models/engine-event-cloud.model';
@@ -38,24 +38,20 @@ import {
     FilterCountersResult
 } from '../models/filter-counters-cloud.model';
 
-/**
- * Single subscription covering both the task and the process engine events, so that a batch of
- * events results in one call to the batched count endpoint.
- */
 const BATCHED_COUNTERS_UNAVAILABLE_STATUSES = [404, 501];
 
-/** Filters of both entity types, to resolve the counters of both filter components with one request. */
 interface FilterCountersFilters {
     [FilterCounterEntityType.TASK]: TaskFilterCloudModel[];
     [FilterCounterEntityType.PROCESS_INSTANCE]: ProcessFilterCloudModel[];
 }
 
-/** Data selected by the engine event subscription. */
 interface EngineEventsData {
     engineEvents?: TaskCloudEngineEvent[];
 }
 
-const FILTER_COUNTERS_EVENT_SUBSCRIPTION_QUERY = `
+/** One subscription per entity type, so an app showing one of them is not notified of the other. */
+const ENGINE_EVENTS_SUBSCRIPTION_QUERIES: Record<FilterCounterEntityType, string> = {
+    [FilterCounterEntityType.TASK]: `
     subscription {
         engineEvents(eventType: [
             TASK_COMPLETED
@@ -64,6 +60,15 @@ const FILTER_COUNTERS_EVENT_SUBSCRIPTION_QUERY = `
             TASK_SUSPENDED
             TASK_CANCELLED
             TASK_CREATED
+        ]) {
+            eventType
+            entity
+        }
+    }
+`,
+    [FilterCounterEntityType.PROCESS_INSTANCE]: `
+    subscription {
+        engineEvents(eventType: [
             PROCESS_CANCELLED
             PROCESS_COMPLETED
             PROCESS_CREATED
@@ -75,29 +80,28 @@ const FILTER_COUNTERS_EVENT_SUBSCRIPTION_QUERY = `
             entity
         }
     }
-`;
+`
+};
 
 /**
- * Central place handling the filter counters of the task and the process filter components: it owns
- * the filters of both components and a single engine event subscription, debounced into one batched
- * count request.
- *
- * Loading the filters here is what keeps the counters of both components resolved by one request,
- * both on load and on every batch of engine events.
+ * Resolves the counters of the task and the process filters with one batched count request, covering
+ * the entity types whose counters are subscribed.
  */
 @Injectable({ providedIn: 'root' })
 export class FilterCountersCloudService extends BaseCloudService {
     private readonly notificationCloudService = inject(NotificationCloudService);
     private readonly taskListCloudService = inject(TaskListCloudService);
     private readonly processListCloudService = inject(ProcessListCloudService);
-    /**
-     * The filter services are resolved on demand, so that an app holding only one of the two filter
-     * components is not forced to provide the preferences service of the other one.
-     */
+    /** The filter services are resolved on demand: an app showing one family must not wire the other. */
     private readonly injector = inject(Injector);
 
-    private readonly eventsPerApp = new Map<string, Observable<TaskCloudEngineEvent[]>>();
-    private readonly refreshPerApp = new Map<string, Subject<void>>();
+    private readonly eventsPerEntityType = new Map<string, Observable<TaskCloudEngineEvent[]>>();
+    private readonly rawEventsPerEntityType = new Map<string, Observable<TaskCloudEngineEvent[]>>();
+    private readonly recountPerApp = new Map<string, Subject<void>>();
+    private readonly eventRecountPerApp = new Map<string, Subject<void>>();
+    private readonly activeEntityTypesPerApp = new Map<string, Set<FilterCounterEntityType>>();
+    private readonly subscribersPerEntityType = new Map<string, number>();
+    private readonly eventSubscriptionsPerEntityType = new Map<string, Subscription>();
     private readonly appsWithoutBatchedCounters = new Set<string>();
     private readonly taskFiltersPerApp = new Map<string, Observable<TaskFilterCloudModel[]>>();
     private readonly processFiltersPerApp = new Map<string, Observable<ProcessFilterCloudModel[]>>();
@@ -108,8 +112,7 @@ export class FilterCountersCloudService extends BaseCloudService {
     }
 
     /**
-     * Task filters of the app, loaded once and shared between the task filter component and the
-     * batched count request, so that one place owns the filters the counters are resolved for.
+     * Task filters of the app, loaded once and shared with the batched count request.
      *
      * @param appName Name of the target app
      * @returns Task filters of the app
@@ -119,8 +122,7 @@ export class FilterCountersCloudService extends BaseCloudService {
     }
 
     /**
-     * Process filters of the app, loaded once and shared between the process filter component and
-     * the batched count request.
+     * Process filters of the app, loaded once and shared with the batched count request.
      *
      * @param appName Name of the target app
      * @returns Process filters of the app
@@ -130,53 +132,74 @@ export class FilterCountersCloudService extends BaseCloudService {
     }
 
     /**
-     * Counters of the filters of an entity type, resolved by the request shared with the filters of
-     * the other entity type: once on subscription, then on every debounced batch of engine events
-     * and on every `refreshFilterCounters` call.
+     * Counters of the filters of an entity type, resolved on subscription and kept in sync with the
+     * engine events of the app. Subscribers of both entity types share one request.
      *
      * @param appName Name of the target app
      * @param entityType Entity type the counters are read for
-     * @returns Counters of the filters of the entity type, keyed by filter key
+     * @returns Counters keyed by filter key
      */
     getFilterCounters(appName: string, entityType: FilterCounterEntityType): Observable<FilterCountersResult> {
         if (!appName) {
             return EMPTY;
         }
 
-        return this.getCounters(appName).pipe(map(({ counters, batched }) => ({ counters: counters[entityType] ?? {}, batched })));
+        return defer(() => {
+            this.activateEntityType(appName, entityType);
+
+            return this.getCounters(appName);
+        }).pipe(
+            map(({ counters, batched }) => ({ counters: counters[entityType] ?? {}, batched })),
+            finalize(() => this.deactivateEntityType(appName, entityType))
+        );
     }
 
     /**
-     * Resolves the counters of the filters of the app again, for both entity types with one request.
+     * Resolves the counters of the app again, with one request.
      *
      * @param appName Name of the target app
      */
     refreshFilterCounters(appName: string): void {
-        this.getRefreshTrigger(appName).next();
+        this.recount(appName);
     }
 
     /**
-     * Debounced batches of engine events of the app, shared between all the subscribers of the app.
+     * Debounced batches of the engine events of an entity type, shared between its subscribers.
      *
      * @param appName Name of the target app
+     * @param entityType Entity type the events are read for
      * @returns Debounced batches of engine events
      */
-    getEngineEvents(appName: string): Observable<TaskCloudEngineEvent[]> {
+    getEngineEvents(appName: string, entityType: FilterCounterEntityType): Observable<TaskCloudEngineEvent[]> {
         if (!appName) {
             return EMPTY;
         }
 
-        let events$ = this.eventsPerApp.get(appName);
+        const key = this.entityTypeKey(appName, entityType);
+        let events$ = this.eventsPerEntityType.get(key);
+        if (!events$) {
+            events$ = this.rawEngineEvents(appName, entityType).pipe(
+                debounceTime(this.notificationDebounceTime),
+                shareReplay({ bufferSize: 1, refCount: true })
+            );
+            this.eventsPerEntityType.set(key, events$);
+        }
+
+        return events$;
+    }
+
+    private rawEngineEvents(appName: string, entityType: FilterCounterEntityType): Observable<TaskCloudEngineEvent[]> {
+        const key = this.entityTypeKey(appName, entityType);
+        let events$ = this.rawEventsPerEntityType.get(key);
         if (!events$) {
             events$ = defer(() =>
-                this.notificationCloudService.makeGQLQuery<EngineEventsData>(appName, FILTER_COUNTERS_EVENT_SUBSCRIPTION_QUERY)
+                this.notificationCloudService.makeGQLQuery<EngineEventsData>(appName, ENGINE_EVENTS_SUBSCRIPTION_QUERIES[entityType])
             ).pipe(
                 map((result) => result.data?.engineEvents ?? []),
-                debounceTime(this.notificationDebounceTime),
                 catchError(() => EMPTY),
                 shareReplay({ bufferSize: 1, refCount: true })
             );
-            this.eventsPerApp.set(appName, events$);
+            this.rawEventsPerEntityType.set(key, events$);
         }
 
         return events$;
@@ -186,18 +209,75 @@ export class FilterCountersCloudService extends BaseCloudService {
         return this.appConfigService.get('notifications', true);
     }
 
-    /**
-     * Filters of both entity types, to resolve the counters of both filter components with one
-     * request. The filters of an entity type that fails to load are left out, so that the counters
-     * of the other entity type are still resolved.
-     *
-     * @param appName Name of the target app
-     * @returns Task and process filters of the app
-     */
+    private activateEntityType(appName: string, entityType: FilterCounterEntityType): void {
+        const key = this.entityTypeKey(appName, entityType);
+        const subscribers = (this.subscribersPerEntityType.get(key) ?? 0) + 1;
+        this.subscribersPerEntityType.set(key, subscribers);
+
+        if (subscribers > 1) {
+            return;
+        }
+
+        const activeEntityTypes = this.activeEntityTypes(appName);
+        const joinsResolvedCounters = activeEntityTypes.size > 0;
+        activeEntityTypes.add(entityType);
+
+        if (this.notificationsEnabled) {
+            this.eventSubscriptionsPerEntityType.set(
+                key,
+                this.rawEngineEvents(appName, entityType).subscribe(() => this.eventRecountTrigger(appName).next())
+            );
+        }
+
+        if (joinsResolvedCounters) {
+            this.recount(appName);
+        }
+    }
+
+    private deactivateEntityType(appName: string, entityType: FilterCounterEntityType): void {
+        const key = this.entityTypeKey(appName, entityType);
+        const subscribers = (this.subscribersPerEntityType.get(key) ?? 1) - 1;
+
+        if (subscribers > 0) {
+            this.subscribersPerEntityType.set(key, subscribers);
+            return;
+        }
+
+        this.subscribersPerEntityType.delete(key);
+        this.activeEntityTypes(appName).delete(entityType);
+        this.eventSubscriptionsPerEntityType.get(key)?.unsubscribe();
+        this.eventSubscriptionsPerEntityType.delete(key);
+    }
+
+    private activeEntityTypes(appName: string): Set<FilterCounterEntityType> {
+        let activeEntityTypes = this.activeEntityTypesPerApp.get(appName);
+        if (!activeEntityTypes) {
+            activeEntityTypes = new Set<FilterCounterEntityType>();
+            this.activeEntityTypesPerApp.set(appName, activeEntityTypes);
+        }
+
+        return activeEntityTypes;
+    }
+
+    private entityTypeKey(appName: string, entityType: FilterCounterEntityType): string {
+        return `${appName}|${entityType}`;
+    }
+
+    private recount(appName: string): void {
+        this.recountTrigger(appName).next();
+    }
+
+    // The filters of an entity type that fails to load are left out, so the other one is still counted.
     private getFiltersForCounters(appName: string): Observable<FilterCountersFilters> {
+        const activeEntityTypes = this.activeEntityTypes(appName);
+
         return combineLatest({
-            [FilterCounterEntityType.TASK]: this.getTaskFilters(appName).pipe(catchError(() => of([]))),
-            [FilterCounterEntityType.PROCESS_INSTANCE]: this.getProcessFilters(appName).pipe(catchError(() => of([])))
+            [FilterCounterEntityType.TASK]: activeEntityTypes.has(FilterCounterEntityType.TASK)
+                ? this.getTaskFilters(appName).pipe(catchError(() => of([])))
+                : of([]),
+            [FilterCounterEntityType.PROCESS_INSTANCE]: activeEntityTypes.has(FilterCounterEntityType.PROCESS_INSTANCE)
+                ? this.getProcessFilters(appName).pipe(catchError(() => of([])))
+                : of([])
         });
     }
 
@@ -211,23 +291,10 @@ export class FilterCountersCloudService extends BaseCloudService {
         return filters$;
     }
 
-    /**
-     * Counters of both entity types, resolved by one request shared between the filter components.
-     * The request is sent on subscription and on every trigger of the app: a batch of engine events,
-     * or a refresh.
-     *
-     * @param appName Name of the target app
-     * @returns Counters of both entity types
-     */
     private getCounters(appName: string): Observable<{ counters: FilterCounters; batched: boolean }> {
         let counters$ = this.countersPerApp.get(appName);
         if (!counters$) {
-            const triggers: Observable<unknown>[] = [of(undefined), this.getRefreshTrigger(appName)];
-            if (this.notificationsEnabled) {
-                triggers.push(this.getEngineEvents(appName));
-            }
-
-            counters$ = merge(...triggers).pipe(
+            counters$ = this.recounts(appName).pipe(
                 switchMap(() => this.resolveCounters(appName)),
                 shareReplay({ bufferSize: 1, refCount: true })
             );
@@ -237,14 +304,6 @@ export class FilterCountersCloudService extends BaseCloudService {
         return counters$;
     }
 
-    /**
-     * Sends one count request for the filters of both entity types. A backend without the batched
-     * count endpoint resolves no counter, so that the filter components fall back to the counters
-     * resolved one filter at a time.
-     *
-     * @param appName Name of the target app
-     * @returns Counters of both entity types
-     */
     private resolveCounters(appName: string): Observable<{ counters: FilterCounters; batched: boolean }> {
         if (this.appsWithoutBatchedCounters.has(appName)) {
             return of({ counters: {}, batched: false });
@@ -256,7 +315,6 @@ export class FilterCountersCloudService extends BaseCloudService {
             map((counters) => ({ counters, batched: true })),
             catchError((error) => {
                 if (BATCHED_COUNTERS_UNAVAILABLE_STATUSES.includes(error?.status)) {
-                    /* The backend of the app holds no batched count endpoint, so it is not asked again. */
                     this.appsWithoutBatchedCounters.add(appName);
                 }
 
@@ -265,22 +323,35 @@ export class FilterCountersCloudService extends BaseCloudService {
         );
     }
 
-    private getRefreshTrigger(appName: string): Subject<void> {
-        let refresh$ = this.refreshPerApp.get(appName);
-        if (!refresh$) {
-            refresh$ = new Subject<void>();
-            this.refreshPerApp.set(appName, refresh$);
-        }
-
-        return refresh$;
+    private recounts(appName: string): Observable<unknown> {
+        return merge(
+            /* Reads landing in the same task are merged, so both filter components share one request. */
+            merge(of(undefined), this.recountTrigger(appName)).pipe(debounceTime(0, asapScheduler)),
+            /* One debounce over every entity type, so a batch of events also results in one request. */
+            this.eventRecountTrigger(appName).pipe(debounceTime(this.notificationDebounceTime))
+        );
     }
 
-    /**
-     * Builds the payload of the batched count request from the filters with a counter enabled.
-     *
-     * @param filters Task and process filters of the app
-     * @returns Payload of the count request
-     */
+    private recountTrigger(appName: string): Subject<void> {
+        let recount$ = this.recountPerApp.get(appName);
+        if (!recount$) {
+            recount$ = new Subject<void>();
+            this.recountPerApp.set(appName, recount$);
+        }
+
+        return recount$;
+    }
+
+    private eventRecountTrigger(appName: string): Subject<void> {
+        let eventRecount$ = this.eventRecountPerApp.get(appName);
+        if (!eventRecount$) {
+            eventRecount$ = new Subject<void>();
+            this.eventRecountPerApp.set(appName, eventRecount$);
+        }
+
+        return eventRecount$;
+    }
+
     private buildRequest(filters: FilterCountersFilters): FilterCountersRequest {
         const request: FilterCountersRequest = {};
 
@@ -309,23 +380,15 @@ export class FilterCountersCloudService extends BaseCloudService {
             .filter((filter) => filter?.showCounter && this.isCounterBatched(filter))
             .map((filter) => {
                 try {
-                    /* Only the filters holding a key reach this point, so every query is identified by one. */
                     return { ...buildQuery(filter), requestId: filter.key as string };
                 } catch {
-                    /* A filter the query cannot be built for is left out of the batch and counted on its own. */
+                    /* Left out of the batch and counted on its own. */
                     return undefined;
                 }
             })
             .filter((query): query is FilterCountersQuery => !!query);
     }
 
-    /**
-     * Resolves the counters of the given queries with a single request.
-     *
-     * @param appName Name of the target app
-     * @param request Payload of the count request
-     * @returns Counters keyed by entity type and status
-     */
     private fetchFilterCounters(appName: string, request: FilterCountersRequest): Observable<FilterCounters> {
         if (!Object.keys(request).length) {
             return of({});
@@ -336,13 +399,7 @@ export class FilterCountersCloudService extends BaseCloudService {
         return this.post<FilterCountersRequest, FilterCounters>(queryUrl, request).pipe(map((counters) => counters || {}));
     }
 
-    /**
-     * Whether the counter of a filter is resolved by the batched count request. A filter without a
-     * key holds no `requestId` its counter could be keyed by, so it is left to be fetched on its own.
-     *
-     * @param filter Filter with a counter enabled
-     * @returns `true` when the counter of the filter is resolved by the batched request, otherwise `false`
-     */
+    // A filter without a key holds no `requestId` its counter could be keyed by.
     private isCounterBatched(filter: FilterCounterCandidate): boolean {
         return !!filter?.key;
     }
