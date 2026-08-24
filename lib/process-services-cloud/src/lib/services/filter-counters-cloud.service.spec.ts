@@ -17,7 +17,7 @@
 
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AppConfigService, NoopAuthModule } from '@alfresco/adf-core';
-import { combineLatest, firstValueFrom, Observable, of, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, combineLatest, firstValueFrom, Observable, of, Subject, throwError } from 'rxjs';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { FilterCountersCloudService } from './filter-counters-cloud.service';
 import { NotificationCloudService } from './notification-cloud.service';
@@ -130,11 +130,9 @@ describe('FilterCountersCloudService', () => {
             expect(await firstValueFrom(service.getProcessFilters('mock-app'))).toEqual(processFiltersMock);
         });
 
-        it('should load the filters of an app once for every subscriber', async () => {
-            await firstValueFrom(service.getTaskFilters('mock-app'));
-            await firstValueFrom(service.getTaskFilters('mock-app'));
-            await firstValueFrom(service.getProcessFilters('mock-app'));
-            await firstValueFrom(service.getProcessFilters('mock-app'));
+        it('should load the filters of an app once for concurrent subscribers', async () => {
+            await firstValueFrom(combineLatest([service.getTaskFilters('mock-app'), service.getTaskFilters('mock-app')]));
+            await firstValueFrom(combineLatest([service.getProcessFilters('mock-app'), service.getProcessFilters('mock-app')]));
 
             expect(getTaskListFiltersSpy).toHaveBeenCalledTimes(1);
             expect(getProcessFiltersSpy).toHaveBeenCalledTimes(1);
@@ -148,8 +146,10 @@ describe('FilterCountersCloudService', () => {
         });
 
         it('should share the filters with the batched count request', async () => {
-            await firstValueFrom(service.getTaskFilters('mock-app'));
+            /* The filter component holds its subscription while the counters are resolved. */
+            const subscription = service.getTaskFilters('mock-app').subscribe();
             await taskCounters();
+            subscription.unsubscribe();
 
             expect(getTaskListFiltersSpy).toHaveBeenCalledTimes(1);
         });
@@ -337,6 +337,63 @@ describe('FilterCountersCloudService', () => {
             tick(0);
 
             expect(Object.keys(countRequest())).toEqual([FilterCounterEntityType.PROCESS_INSTANCE]);
+        }));
+    });
+
+    describe('teardown', () => {
+        it('should close the engine event subscription once the counters hold no subscriber', fakeAsync(() => {
+            const subscription = service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
+            tick(0);
+            expect(makeGQLQuerySpy).toHaveBeenCalledTimes(1);
+
+            subscription.unsubscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
+            tick(0);
+
+            /* Opened again, so the first subscription was closed rather than left behind. */
+            expect(makeGQLQuerySpy).toHaveBeenCalledTimes(2);
+        }));
+
+        it('should keep the engine event subscription while another subscriber holds the same entity type', fakeAsync(() => {
+            const subscription = service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
+            tick(0);
+
+            subscription.unsubscribe();
+            emitTaskEvent();
+            tick(3000);
+
+            expect(makeGQLQuerySpy).toHaveBeenCalledTimes(1);
+            expect(postSpy).toHaveBeenCalledTimes(2);
+        }));
+
+        it('should release the filters subscription once nothing reads them', fakeAsync(() => {
+            /* `TaskFilterCloudService.filters$` never completes, so a subscription left behind would be held. */
+            const filters$ = new BehaviorSubject(taskFiltersMock);
+            getTaskListFiltersSpy.and.returnValue(filters$.asObservable());
+
+            /* As the filter component does: the filters are held while the counters are read. */
+            const subscriptions = [
+                service.getTaskFilters('mock-app').subscribe(),
+                service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe()
+            ];
+            tick(0);
+            expect(filters$.observed).toBeTrue();
+
+            subscriptions.forEach((subscription) => subscription.unsubscribe());
+
+            expect(filters$.observed).toBeFalse();
+        }));
+
+        it('should resolve the counters again for a subscriber that comes after a full teardown', fakeAsync(() => {
+            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe().unsubscribe();
+            tick(0);
+            postSpy.calls.reset();
+
+            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
+            tick(0);
+
+            expect(postSpy).toHaveBeenCalledTimes(1);
         }));
     });
 

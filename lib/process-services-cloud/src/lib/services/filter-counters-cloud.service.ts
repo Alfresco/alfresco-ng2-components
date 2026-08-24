@@ -284,7 +284,7 @@ export class FilterCountersCloudService extends BaseCloudService {
     private shareFilters<T>(cache: Map<string, Observable<T[]>>, appName: string, loadFilters: () => Observable<T[]>): Observable<T[]> {
         let filters$ = cache.get(appName);
         if (!filters$) {
-            filters$ = defer(loadFilters).pipe(shareReplay({ bufferSize: 1, refCount: false }));
+            filters$ = defer(loadFilters).pipe(shareReplay({ bufferSize: 1, refCount: true }));
             cache.set(appName, filters$);
         }
 
