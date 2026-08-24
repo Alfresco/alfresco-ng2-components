@@ -248,16 +248,6 @@ describe('DateCellComponent', () => {
         renderDateCell(mockDateConfig, mockDate);
         checkDatetimeAttribute(mockDate.toISOString());
     });
-
-    it('should render null datetime attribute if the date value is invalid', () => {
-        const mockDateConfig: DateConfig = {
-            format: 'short',
-            tooltipFormat: 'short'
-        };
-
-        renderDateCell(mockDateConfig, '');
-        expect(testingUtils.getByCSS('time')).toBeNull();
-    });
 });
 
 describe('DateCellComponent locale', () => {

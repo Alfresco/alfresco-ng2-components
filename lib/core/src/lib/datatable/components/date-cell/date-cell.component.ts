@@ -60,10 +60,8 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
     // Computed signal that automatically formats the date to ISO string for datetime attribute
     protected readonly isoDate = computed(() => {
         const date = this.dateValue();
-        if (date === null || date === undefined || date === '') {
-            return null;
-        }
         const parsed = new Date(date);
+
         return isNaN(parsed.getTime()) ? null : parsed.toISOString();
     });
 
