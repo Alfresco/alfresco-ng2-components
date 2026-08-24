@@ -284,7 +284,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
             return;
         }
 
-        /* `defer` keeps a query that cannot be built from breaking the counters of the other filters. */
+        /* Building the query throws for a malformed filter: `defer` turns that into a stream error to catch. */
         defer(() => this.fetchProcessFilterCounter(filter))
             .pipe(
                 catchError(() => EMPTY),
