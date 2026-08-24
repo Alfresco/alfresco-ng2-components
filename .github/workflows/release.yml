@@ -48,8 +48,6 @@ jobs:
           npm run build:libs
           npm run build:schematics
 
-      # Versions are already set in package.json files (8.0.3-A.1 / js-api 9.0.3-A.1),
-      # so no bumpversion step here.
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         name: release libraries Npm registry
         with:
@@ -57,12 +55,9 @@ jobs:
           registry-url: 'https://${{ vars.NPM_REGISTRY_ADDRESS }}'
           scope: '@alfresco'
 
-      # npmjs auth here is OIDC trusted publishing (no token, same as develop),
-      # which requires npm >= 11.5.1 while .nvmrc pins node 22 (npm 10.9).
       - name: upgrade npm
         run: |
           npm install -g npm@11
           npm --version
-          echo "registry: $(npm config get registry)"
 
       - run: npx nx run-many -t npm-publish --tag=branch ${{ inputs.dry-run && '--dry-run' || '' }}
