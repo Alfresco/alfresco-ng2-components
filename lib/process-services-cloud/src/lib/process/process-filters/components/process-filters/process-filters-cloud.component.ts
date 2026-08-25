@@ -75,10 +75,10 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     currentFilter?: ProcessFilterCloudModel;
     filters: ProcessFilterCloudModel[] = [];
     counters: { [key: string]: number } = {};
-    currentFiltersValues: { [key: string]: number } = {};
-    updatedFiltersSet = new Set<string>();
     enableNotifications = true;
     notificationDebounceTime = 3000;
+    currentFiltersValues: { [key: string]: number } = {};
+    updatedFiltersSet = new Set<string>();
     private filtersLoadedFor?: string;
     private countersSubscription?: Subscription;
 
@@ -93,7 +93,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
         this.notificationDebounceTime = this.appConfigService.get('notificationDebounceTime', 3000);
-
         if (!this.filtersLoadedFor) {
             this.getFilters(this.appName);
         }
@@ -139,7 +138,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     /**
      * Initialize counter collection for filters
      */
-    initFilterCounters(): void {
+    initFilterCounters() {
         this.filters.forEach((filter) => (this.counters[filter.key] = 0));
     }
 
@@ -163,6 +162,20 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
                     (paramFilter.key && paramFilter.key === filter.key) ||
                     paramFilter.index === index
             ); // fallback to preserve the previous behavior
+    }
+
+    /**
+     * Check equality of the filter names by translating the given name strings
+     *
+     * @param name1 source name
+     * @param name2 target name
+     * @returns `true` if filter names are equal, otherwise `false`
+     */
+    private checkFilterNamesEquality(name1: string, name2: string): boolean {
+        const translatedName1 = this.translationService.instant(name1);
+        const translatedName2 = this.translationService.instant(name2);
+
+        return translatedName1.toLocaleLowerCase() === translatedName2.toLocaleLowerCase();
     }
 
     /**
@@ -231,6 +244,14 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         return this.filters === undefined || (this.filters && this.filters.length === 0);
     }
 
+    /**
+     * Reset the filters
+     */
+    private resetFilter() {
+        this.filters = [];
+        this.currentFilter = undefined;
+    }
+
     isActiveFilter(filter: ProcessFilterCloudModel): boolean {
         return this.currentFilter.name === filter.name;
     }
@@ -243,37 +264,18 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         }
     }
 
-    /** Flags the counter of a filter as read whenever the filter is refreshed elsewhere */
-    getFilterKeysAfterExternalRefreshing(): void {
-        this.processFilterCloudService.filterKeyToBeRefreshed$
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((filterKey: string) => this.updatedFiltersSet.delete(filterKey));
-    }
-
     isFilterUpdated(filterName: string): boolean {
         return this.updatedFiltersSet.has(filterName);
     }
 
     /**
-     * Check equality of the filter names by translating the given name strings
+     * Get filer key when filter was refreshed by external action
      *
-     * @param name1 source name
-     * @param name2 target name
-     * @returns `true` if filter names are equal, otherwise `false`
      */
-    private checkFilterNamesEquality(name1: string, name2: string): boolean {
-        const translatedName1 = this.translationService.instant(name1);
-        const translatedName2 = this.translationService.instant(name2);
-
-        return translatedName1.toLocaleLowerCase() === translatedName2.toLocaleLowerCase();
-    }
-
-    /**
-     * Reset the filters
-     */
-    private resetFilter() {
-        this.filters = [];
-        this.currentFilter = undefined;
+    getFilterKeysAfterExternalRefreshing(): void {
+        this.processFilterCloudService.filterKeyToBeRefreshed$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((filterKey: string) => {
+            this.updatedFiltersSet.delete(filterKey);
+        });
     }
 
     private loadFilterCounters(appName: string, filters$: Observable<ProcessFilterCloudModel[]>): void {

@@ -22,32 +22,12 @@ import { switchMap, map } from 'rxjs/operators';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
-import { NotificationCloudService } from '../../../services/notification-cloud.service';
-import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
-
-const TASK_EVENT_SUBSCRIPTION_QUERY = `
-    subscription {
-        engineEvents(eventType: [
-            TASK_COMPLETED
-            TASK_ASSIGNED
-            TASK_ACTIVATED
-            TASK_SUSPENDED
-            TASK_CANCELLED,
-            TASK_CREATED
-        ]) {
-            eventType
-            entity
-        }
-    }
-`;
 
 @Injectable({
     providedIn: 'root'
 })
 export class TaskFilterCloudService extends BaseCloudService {
-    private readonly notificationCloudService = inject(NotificationCloudService);
-
     public preferenceService = inject<PreferenceCloudServiceInterface>(TASK_FILTERS_SERVICE_TOKEN);
 
     protected identityUserService = inject(IdentityUserService);
@@ -321,17 +301,6 @@ export class TaskFilterCloudService extends BaseCloudService {
                 order: 'DESC'
             })
         ];
-    }
-
-    /**
-     * @deprecated use FilterCountersCloudService.getEngineEvents instead.
-     * @param appName Name of the target app
-     * @returns Task engine events
-     */
-    getTaskNotificationSubscription(appName: string): Observable<TaskCloudEngineEvent[]> {
-        return this.notificationCloudService
-            .makeGQLQuery(appName, TASK_EVENT_SUBSCRIPTION_QUERY)
-            .pipe(map((events: any) => events.data.engineEvents));
     }
 
     /**

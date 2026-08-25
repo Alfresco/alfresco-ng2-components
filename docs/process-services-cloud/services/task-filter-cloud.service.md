@@ -35,11 +35,6 @@ Manages task filters.
     Gets all task filters for a task app.
     -   _appName:_ `string`  - (Optional) Name of the target app
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`[]>` - Observable of task filter details
--   **getTaskNotificationSubscription**(appName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskCloudEngineEvent`](../../../lib/process-services-cloud/src/lib/models/engine-event-cloud.model.ts)`[]>`<br/>
-
-    -   _appName:_ `string`  - 
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskCloudEngineEvent`](../../../lib/process-services-cloud/src/lib/models/engine-event-cloud.model.ts)`[]>` - 
-
 -   **isDefaultFilter**(filterName: `string`): `boolean`<br/>
     Checks if given filter is a default filter
     -   _filterName:_ `string`  - Name of the target task filter
