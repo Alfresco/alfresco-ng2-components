@@ -1,0 +1,101 @@
+<mat-sidenav-container class="adf-form-side-nav-container" [class.adf-form-side-nav-container-small]="isSmallScreen()">
+    <mat-sidenav
+        #drawer
+        class="adf-form-side-nav-drawer"
+        [mode]="isSmallScreen() ? 'over' : 'side'"
+        [opened]="drawerOpened"
+        (openedChange)="drawerOpened = $event"
+    >
+        <div class="adf-form-side-nav-progress">
+            <span class="adf-form-side-nav-progress-label">
+                {{ 'FORM.FORM_RENDERER.SIDE_NAV.PROGRESS' | translate: { completed: completedSections, total: totalSections } }}
+            </span>
+            <div class="adf-form-side-nav-progress-bar" role="progressbar" [attr.aria-valuenow]="completedSections" [attr.aria-valuemin]="0" [attr.aria-valuemax]="totalSections">
+                <div
+                    class="adf-form-side-nav-progress-bar-fill"
+                    [style.width.%]="totalSections ? (completedSections / totalSections) * 100 : 0"
+                ></div>
+            </div>
+        </div>
+
+        <mat-nav-list class="adf-form-side-nav-list" role="tree">
+            <ng-container *ngTemplateOutlet="nodeList; context: { nodes: nodes, level: 0 }" />
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="adf-form-side-nav-content">
+        @if (isSmallScreen()) {
+            <button
+                mat-icon-button
+                class="adf-form-side-nav-toggle"
+                type="button"
+                [attr.aria-label]="'FORM.FORM_RENDERER.SIDE_NAV.TOGGLE_MENU' | translate"
+                (click)="toggleDrawer()"
+            >
+                <mat-icon adf-icon="menu" />
+            </button>
+        }
+
+        <ng-content />
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+<ng-template #nodeList let-nodes="nodes" let-level="level">
+    @for (node of nodes; track node.id) {
+        @if (node.isVisible) {
+            <mat-list-item
+                class="adf-form-side-nav-item"
+                role="treeitem"
+                [class.adf-form-side-nav-item-active]="isActive(node)"
+                [class.adf-form-side-nav-item-error]="node.hasErrors()"
+                [style.padding-left.px]="16 + level * 16"
+                [attr.aria-current]="isActive(node) ? 'true' : null"
+                [attr.aria-expanded]="node.hasChildren() && !node.hasTabbedChildren() ? isExpanded(node) : null"
+                (click)="handleNodeClick(node)"
+            >
+                @if (node.hasChildren() && !node.hasTabbedChildren()) {
+                    <button
+                        mat-icon-button
+                        class="adf-form-side-nav-item-toggle"
+                        type="button"
+                        [attr.aria-label]="(isExpanded(node) ? 'FORM.FORM_RENDERER.SIDE_NAV.COLLAPSE' : 'FORM.FORM_RENDERER.SIDE_NAV.EXPAND') | translate"
+                        (click)="toggleExpanded(node); $event.stopPropagation()"
+                    >
+                        <mat-icon [adf-icon]="isExpanded(node) ? 'expand_more' : 'chevron_right'" />
+                    </button>
+                }
+
+                @if (node.icon) {
+                    <mat-icon [adf-icon]="node.icon" class="adf-form-side-nav-item-icon" />
+                }
+
+                <span class="adf-form-side-nav-item-title">{{ node.title | translate }}</span>
+
+                @if (node.hasErrors()) {
+                    <mat-icon
+                        adf-icon="error"
+                        class="adf-form-side-nav-item-status adf-form-side-nav-item-status-error"
+                        [matTooltip]="'FORM.FORM_RENDERER.SIDE_NAV.HAS_ERRORS' | translate"
+                    />
+                } @else if (node.getRequiredFieldsCount() > 0 && node.isComplete()) {
+                    <mat-icon
+                        adf-icon="check_circle"
+                        class="adf-form-side-nav-item-status adf-form-side-nav-item-status-complete"
+                        [matTooltip]="'FORM.FORM_RENDERER.SIDE_NAV.COMPLETE' | translate"
+                    />
+                } @else if (node.getRequiredFieldsCount() > 0) {
+                    <span
+                        class="adf-form-side-nav-item-required-count"
+                        [matTooltip]="'FORM.FORM_RENDERER.SIDE_NAV.REQUIRED_FIELDS' | translate: { count: node.getRequiredFieldsCount() }"
+                    >
+                        {{ node.getCompletedRequiredFieldsCount() }}/{{ node.getRequiredFieldsCount() }}
+                    </span>
+                }
+            </mat-list-item>
+
+            @if (node.hasChildren() && !node.hasTabbedChildren() && isExpanded(node)) {
+                <ng-container *ngTemplateOutlet="nodeList; context: { nodes: node.children, level: level + 1 }" />
+            }
+        }
+    }
+</ng-template>

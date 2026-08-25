@@ -1,6 +1,33 @@
 <div id="adf-form-renderer" class="{{ formDefinition.className }} adf-form-renderer"
      [ngClass]="{ 'adf-readonly-form': formDefinition.readOnly }">
-    @if (formDefinition.hasTabs()) {
+    @if (formDefinition.hasSideNav()) {
+        <adf-form-side-nav
+            class="adf-form-side-nav"
+            [nodes]="visibleTabs()"
+            [activeNodeId]="activeSideNavSectionId()"
+            (sectionSelected)="selectSideNavSection($event)"
+        >
+            @if (activeSideNavSection(); as activeSection) {
+                @if (activeSection.hasTabbedChildren()) {
+                    <div class="alfresco-tabs-widget">
+                        <mat-tab-group [preserveContent]="true">
+                            @for (childSection of activeSection.visibleChildren(); track childSection.id) {
+                                <mat-tab [label]="childSection.title | translate">
+                                    <ng-template matTabContent>
+                                        <div class="adf-form-tab-content">
+                                            <ng-template *ngTemplateOutlet="render; context: { fieldToRender: childSection.fields }" />
+                                        </div>
+                                    </ng-template>
+                                </mat-tab>
+                            }
+                        </mat-tab-group>
+                    </div>
+                } @else {
+                    <ng-template *ngTemplateOutlet="render; context: { fieldToRender: activeSection.fields }" />
+                }
+            }
+        </adf-form-side-nav>
+    } @else if (formDefinition.hasTabs()) {
         @if (hasTabs()) {
             <div class="alfresco-tabs-widget">
             <mat-tab-group [preserveContent]="true">

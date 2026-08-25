@@ -41,7 +41,7 @@ export class WidgetVisibilityService {
 
         if (form) {
             if (form.tabs?.length > 0) {
-                form.tabs.map((tabModel) => this.refreshEntityVisibility(tabModel));
+                form.tabs.map((tabModel) => this.refreshTabVisibility(tabModel));
             }
 
             if (form.outcomes?.length > 0) {
@@ -56,6 +56,11 @@ export class WidgetVisibilityService {
 
     public refreshEntityVisibility(element: FormFieldModel | TabModel) {
         element.isVisible = this.isParentTabVisible(this.form, element) && this.evaluateVisibility(element.form, element.visibilityCondition);
+    }
+
+    private refreshTabVisibility(tabModel: TabModel) {
+        this.refreshEntityVisibility(tabModel);
+        tabModel.children?.forEach((childTab) => this.refreshTabVisibility(childTab));
     }
 
     private refreshOutcomeVisibility(element: FormOutcomeModel) {

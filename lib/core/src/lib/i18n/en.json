@@ -85,6 +85,15 @@
         "MESSAGE": "Are you sure you want to delete this row?",
         "YES_LABEL": "Delete row",
         "NO_LABEL": "Cancel"
+      },
+      "SIDE_NAV": {
+        "PROGRESS": "{{ completed }} of {{ total }} sections complete",
+        "TOGGLE_MENU": "Toggle navigation menu",
+        "EXPAND": "Expand section",
+        "COLLAPSE": "Collapse section",
+        "HAS_ERRORS": "This section contains validation errors",
+        "COMPLETE": "This section is complete",
+        "REQUIRED_FIELDS": "{{ count }} required fields"
       }
     },
     "BUTTON": {

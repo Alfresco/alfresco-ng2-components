@@ -41,6 +41,9 @@ export interface ConfirmMessage {
     show: boolean;
     message: string;
 }
+
+export type FormLayoutMode = 'tabs' | 'sidenav';
+
 export interface FormRepresentationModel {
     [key: string]: any;
 
@@ -55,6 +58,7 @@ export interface FormRepresentationModel {
     selectedOutcome?: string;
     fields?: any[];
     tabs?: any[];
+    layout?: string;
     outcomes?: any[];
     formDefinition?: {
         [key: string]: any;
@@ -77,6 +81,7 @@ export class FormModel implements ProcessFormModel {
     readonly processDefinitionId: string;
     readonly enableFixedSpace: boolean;
     readonly displayMode: any;
+    readonly layout: FormLayoutMode = 'tabs';
 
     fieldsCache: FormFieldModel[] = [];
 
@@ -126,6 +131,7 @@ export class FormModel implements ProcessFormModel {
             this.confirmMessage = json.confirmMessage || {};
             this.displayMode = json.displayMode;
             this.theme = json.theme || json.formDefinition?.theme;
+            this.layout = json.layout || json.formDefinition?.layout || 'tabs';
 
             this.tabs = (json.tabs || []).map((tabJson) => new TabModel(this, tabJson));
 
@@ -235,7 +241,7 @@ export class FormModel implements ProcessFormModel {
             }
 
             if (field.tab) {
-                const tab = this.tabs.find((currentTab) => field.tab === currentTab.id);
+                const tab = this.findTabById(field.tab);
                 if (tab) {
                     tab.fields.push(currentRootElement);
                 }
@@ -342,6 +348,33 @@ export class FormModel implements ProcessFormModel {
 
     hasTabs(): boolean {
         return this.tabs && this.tabs.length > 0;
+    }
+
+    /**
+     * Indicates whether the form should be rendered using the hierarchical side navigation
+     * layout instead of the classic tabs layout.
+     *
+     * @returns true when the form has tabs and its layout is set to `sidenav`
+     */
+    hasSideNav(): boolean {
+        return this.layout === 'sidenav' && this.hasTabs();
+    }
+
+    /**
+     * Recursively searches the tabs tree (including nested children) for a node matching the given id.
+     *
+     * @param tabId id of the tab/section to find
+     * @returns the matching `TabModel`, or `undefined` when not found
+     */
+    findTabById(tabId: string): TabModel | undefined {
+        for (const tab of this.tabs) {
+            const found = tab.findTabById(tabId);
+            if (found) {
+                return found;
+            }
+        }
+
+        return undefined;
     }
 
     hasFields(): boolean {

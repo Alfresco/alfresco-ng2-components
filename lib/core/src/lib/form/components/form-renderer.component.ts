@@ -43,6 +43,7 @@ import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE, FormFieldModelRenderMiddleware } fr
 import { ContainerModel, FormFieldModel, FormModel, TabModel, RepeatWidgetComponent } from './widgets';
 import { HeaderWidgetComponent } from './widgets/header/header.widget';
 import { FormSectionComponent } from './form-section/form-section.component';
+import { FormSideNavComponent } from './form-side-nav/form-side-nav.component';
 import { DecimalRenderMiddlewareService } from './middlewares/decimal-middleware.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../lib/dialogs/confirm-dialog/confirm.dialog';
@@ -79,6 +80,7 @@ import { RepeatableRowLabelPipe } from '../pipes/repeatable-row-label.pipe';
         NgClass,
         HeaderWidgetComponent,
         FormSectionComponent,
+        FormSideNavComponent,
         RepeatWidgetComponent,
         MatTooltipModule,
         RepeatableRowLabelPipe
@@ -99,6 +101,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     set formDefinition(formDefinition: FormModel) {
         this._formDefinition = formDefinition;
         this.syncCurrentTabIndex();
+        this.syncActiveSection();
     }
 
     get formDefinition(): FormModel {
@@ -124,6 +127,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     }
 
     private readonly currentTabIndex = signal(0);
+    private readonly activeSection = signal<TabModel | undefined>(undefined);
     private _formDefinition: FormModel;
     private _tabGroup?: MatTabGroup;
     private tabGroupSelectionSubscription?: Subscription;
@@ -159,7 +163,10 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
                 filter((event) => event?.type === 'fieldValueChanged' && event.form?.id === this.formDefinition?.id),
                 takeUntilDestroyed(this.destroyRef)
             )
-            .subscribe(() => this.visibilityService.refreshVisibility(this.formDefinition));
+            .subscribe(() => {
+                this.visibilityService.refreshVisibility(this.formDefinition);
+                this.syncActiveSection();
+            });
     }
 
     ngOnDestroy() {
@@ -173,6 +180,53 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
 
     visibleTabs(): TabModel[] {
         return this.formDefinition?.tabs?.filter((tab) => tab.isVisible) ?? [];
+    }
+
+    activeSideNavSection(): TabModel | undefined {
+        return this.activeSection();
+    }
+
+    activeSideNavSectionId(): string | undefined {
+        return this.activeSection()?.id;
+    }
+
+    selectSideNavSection(node: TabModel): void {
+        if (node && (!node.hasChildren() || node.hasTabbedChildren())) {
+            this.activeSection.set(node);
+        }
+    }
+
+    private syncActiveSection(): void {
+        if (!this.formDefinition?.hasSideNav()) {
+            this.activeSection.set(undefined);
+            return;
+        }
+
+        const current = this.activeSection();
+        const stillVisible = current && this.formDefinition.findTabById(current.id)?.isVisible;
+
+        if (!stillVisible) {
+            this.activeSection.set(this.findDefaultSection(this.formDefinition.tabs));
+        }
+    }
+
+    private findDefaultSection(nodes: TabModel[]): TabModel | undefined {
+        for (const node of nodes ?? []) {
+            if (!node.isVisible) {
+                continue;
+            }
+
+            if (!node.hasChildren() || node.hasTabbedChildren()) {
+                return node;
+            }
+
+            const childSection = this.findDefaultSection(node.children);
+            if (childSection) {
+                return childSection;
+            }
+        }
+
+        return undefined;
     }
 
     navigateToNextTab(): void {

@@ -69,4 +69,95 @@ describe('TabModel', () => {
         const model = new TabModel(null, json);
         expect(model.json).toBe(json);
     });
+
+    it('should default to sidenav children layout when not specified', () => {
+        const model = new TabModel(null, { id: 'parent' });
+        expect(model.childrenLayout).toBe('sidenav');
+    });
+
+    it('should parse children nodes and childrenLayout from json', () => {
+        const json = {
+            id: 'parent',
+            title: 'Parent',
+            childrenLayout: 'tabs',
+            children: [
+                { id: 'child1', title: 'Child 1' },
+                { id: 'child2', title: 'Child 2' }
+            ]
+        };
+
+        const model = new TabModel(null, json);
+        expect(model.childrenLayout).toBe('tabs');
+        expect(model.children.length).toBe(2);
+        expect(model.children[0].id).toBe('child1');
+        expect(model.children[1].id).toBe('child2');
+        expect(model.hasChildren()).toBeTruthy();
+        expect(model.hasTabbedChildren()).toBeTruthy();
+    });
+
+    it('should not consider children as tabbed when childrenLayout is sidenav', () => {
+        const json = {
+            id: 'parent',
+            children: [{ id: 'child1' }]
+        };
+
+        const model = new TabModel(null, json);
+        expect(model.hasTabbedChildren()).toBeFalsy();
+    });
+
+    it('should find a nested tab by id', () => {
+        const json = {
+            id: 'root',
+            children: [
+                {
+                    id: 'child1',
+                    children: [{ id: 'grandchild1' }]
+                },
+                { id: 'child2' }
+            ]
+        };
+
+        const model = new TabModel(null, json);
+        expect(model.findTabById('root')).toBe(model);
+        expect(model.findTabById('child2')).toBe(model.children[1]);
+        expect(model.findTabById('grandchild1')).toBe(model.children[0].children[0]);
+        expect(model.findTabById('unknown')).toBeUndefined();
+    });
+
+    it('should filter visible children', () => {
+        const model = new TabModel(null, {
+            id: 'root',
+            children: [{ id: 'visible-child' }, { id: 'hidden-child' }]
+        });
+
+        model.children[1].isVisible = false;
+
+        const visibleChildren = model.visibleChildren();
+        expect(visibleChildren.length).toBe(1);
+        expect(visibleChildren[0].id).toBe('visible-child');
+    });
+
+    it('should collect own and nested fields, and compute completion/error state', () => {
+        const form = new FormModel();
+        const requiredField = new FormFieldModel(form, { id: 'required-field', required: true });
+        const requiredFieldFilled = new FormFieldModel(form, { id: 'required-field-filled', required: true, value: 'value' });
+
+        const model = new TabModel(form, { id: 'root' });
+        model.fields = [new ContainerModel(requiredField)];
+
+        const childModel = new TabModel(form, { id: 'child' });
+        childModel.fields = [new ContainerModel(requiredFieldFilled)];
+        model.children = [childModel];
+
+        expect(model.getOwnFields()).toEqual([requiredField]);
+        expect(model.getAllFields()).toEqual([requiredField, requiredFieldFilled]);
+        expect(model.getRequiredFieldsCount()).toBe(2);
+        expect(model.getCompletedRequiredFieldsCount()).toBe(1);
+        expect(model.isComplete()).toBeFalsy();
+        expect(childModel.isComplete()).toBeTruthy();
+
+        requiredField.markAsInvalid();
+        expect(model.hasErrors()).toBeTruthy();
+        expect(childModel.hasErrors()).toBeFalsy();
+    });
 });

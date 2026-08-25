@@ -110,6 +110,74 @@ const buildTabbedForm = (tabCount: number, hiddenTabIndices: number[] = []): For
     return form;
 };
 
+const buildSideNavForm = (): FormModel => {
+    const json = {
+        layout: 'sidenav',
+        tabs: [
+            {
+                id: 'section-1',
+                title: 'Section 1'
+            },
+            {
+                id: 'category-1',
+                title: 'Category 1',
+                children: [
+                    { id: 'category-1-child-1', title: 'Category 1 Child 1' },
+                    { id: 'category-1-child-2', title: 'Category 1 Child 2' }
+                ]
+            },
+            {
+                id: 'tabbed-category',
+                title: 'Tabbed Category',
+                childrenLayout: 'tabs',
+                children: [
+                    { id: 'tabbed-child-1', title: 'Tabbed Child 1' },
+                    { id: 'tabbed-child-2', title: 'Tabbed Child 2' }
+                ]
+            }
+        ],
+        fields: [
+            {
+                id: 'container-section-1',
+                type: 'container',
+                tab: 'section-1',
+                numberOfColumns: 1,
+                fields: { 1: [{ id: 'text-section-1', type: 'text', name: 'Text in Section 1' }] }
+            },
+            {
+                id: 'container-category-1-child-1',
+                type: 'container',
+                tab: 'category-1-child-1',
+                numberOfColumns: 1,
+                fields: { 1: [{ id: 'text-category-1-child-1', type: 'text', name: 'Text in Category 1 Child 1', required: true }] }
+            },
+            {
+                id: 'container-category-1-child-2',
+                type: 'container',
+                tab: 'category-1-child-2',
+                numberOfColumns: 1,
+                fields: { 1: [{ id: 'text-category-1-child-2', type: 'text', name: 'Text in Category 1 Child 2' }] }
+            },
+            {
+                id: 'container-tabbed-child-1',
+                type: 'container',
+                tab: 'tabbed-child-1',
+                numberOfColumns: 1,
+                fields: { 1: [{ id: 'text-tabbed-child-1', type: 'text', name: 'Text in Tabbed Child 1' }] }
+            },
+            {
+                id: 'container-tabbed-child-2',
+                type: 'container',
+                tab: 'tabbed-child-2',
+                numberOfColumns: 1,
+                fields: { 1: [{ id: 'text-tabbed-child-2', type: 'text', name: 'Text in Tabbed Child 2' }] }
+            }
+        ]
+    };
+
+    return new FormModel(json);
+};
+
 describe('Form Renderer Component', () => {
     let formRendererComponent: FormRendererComponent<any>;
     let fixture: ComponentFixture<FormRendererComponent<any>>;
@@ -1041,6 +1109,92 @@ describe('Form Renderer Component', () => {
                 await fixture.whenStable();
                 expect(formRendererComponent.tabGroup.selectedIndex).toBe(lastIndex);
             });
+        });
+    });
+
+    describe('Side navigation', () => {
+        it('should report hasSideNav as false for a classic tabbed form', () => {
+            const form = buildTabbedForm(2);
+            formRendererComponent.formDefinition = form;
+            expect(form.hasSideNav()).toBeFalse();
+        });
+
+        it('should default the active section to the first visible leaf node', () => {
+            formRendererComponent.formDefinition = buildSideNavForm();
+            expect(formRendererComponent.activeSideNavSectionId()).toBe('section-1');
+        });
+
+        it('should skip a hidden default section and select the next visible one', () => {
+            const form = buildSideNavForm();
+            form.tabs[0].isVisible = false;
+            formRendererComponent.formDefinition = form;
+            expect(formRendererComponent.activeSideNavSectionId()).toBe('category-1-child-1');
+        });
+
+        it('should select a leaf section on selectSideNavSection', () => {
+            const form = buildSideNavForm();
+            formRendererComponent.formDefinition = form;
+            const leaf = form.findTabById('category-1-child-2');
+
+            formRendererComponent.selectSideNavSection(leaf);
+
+            expect(formRendererComponent.activeSideNavSectionId()).toBe('category-1-child-2');
+        });
+
+        it('should not select a category node whose children are rendered as further side nav entries', () => {
+            const form = buildSideNavForm();
+            formRendererComponent.formDefinition = form;
+            const category = form.findTabById('category-1');
+
+            formRendererComponent.selectSideNavSection(category);
+
+            expect(formRendererComponent.activeSideNavSectionId()).toBe('section-1');
+        });
+
+        it('should select a category node whose children are configured to render as tabs', () => {
+            const form = buildSideNavForm();
+            formRendererComponent.formDefinition = form;
+            const tabbedCategory = form.findTabById('tabbed-category');
+
+            formRendererComponent.selectSideNavSection(tabbedCategory);
+
+            expect(formRendererComponent.activeSideNavSectionId()).toBe('tabbed-category');
+            expect(formRendererComponent.activeSideNavSection().hasTabbedChildren()).toBeTrue();
+        });
+
+        it('should render the side nav and the active section content', () => {
+            formRendererComponent.formDefinition = buildSideNavForm();
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('adf-form-side-nav')).toBeTruthy();
+            expect(testingUtils.getByCSS('#field-text-section-1-container')).toBeTruthy();
+        });
+
+        it('should render a tab group for a category configured with childrenLayout tabs', async () => {
+            const form = buildSideNavForm();
+            formRendererComponent.formDefinition = form;
+            formRendererComponent.selectSideNavSection(form.findTabById('tabbed-category'));
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('.alfresco-tabs-widget')).toBeTruthy();
+            expect(testingUtils.getByCSS('#field-container-tabbed-child-1-container')).toBeTruthy();
+            expect(fixture.nativeElement.textContent).toContain('Tabbed Child 2');
+        });
+
+        it('should re-sync the active section when it becomes hidden after a rules event', () => {
+            const form = buildSideNavForm();
+            formRendererComponent.formDefinition = form;
+            fixture.detectChanges();
+
+            const visibilityService = TestBed.inject(WidgetVisibilityService);
+            spyOn(visibilityService, 'refreshVisibility');
+
+            form.findTabById('section-1').isVisible = false;
+            formService.formRulesEvent.next({ type: 'fieldValueChanged', form } as any);
+
+            expect(formRendererComponent.activeSideNavSectionId()).toBe('category-1-child-1');
         });
     });
 
