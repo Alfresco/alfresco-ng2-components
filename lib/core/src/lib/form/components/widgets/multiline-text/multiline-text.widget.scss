@@ -8,10 +8,6 @@
         flex-direction: column;
         position: relative;
 
-        .adf-multiline-text-widget-label {
-            top: 20px;
-        }
-
         &--capped textarea.adf-input {
             max-height: 72px;
             overflow-y: auto;
