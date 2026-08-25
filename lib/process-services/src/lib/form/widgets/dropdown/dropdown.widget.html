@@ -6,17 +6,18 @@
     <label class="adf-label" [attr.for]="field.id"
         >{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
     >
-    <mat-form-field class="adf-form-field-input">
+    <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic">
         <mat-select class="adf-select" [id]="field.id" [formControl]="dropdownControl">
             <mat-option *ngFor="let opt of field.options" [value]="opt" [id]="opt.id">{{opt.name}}</mat-option>
             <mat-option id="readonlyOption" *ngIf="dropdownControl.disabled" [value]="field.value">{{field.value}}</mat-option>
         </mat-select>
         @if (!isReadOnlyField && dropdownControl.touched && (field.validationSummary?.message || dropdownControl.hasError('required'))) {
-            <mat-error data-automation-id="adf-dropdown-error">
+            <mat-error class="adf-form-field-status-slot" data-automation-id="adf-dropdown-error">
                 <mat-icon class="adf-error-icon">error_outline</mat-icon>
                 <span class="adf-error-text"
                     >@if (field.validationSummary?.message) {{{ field.validationSummary.message | translate }}} @else {{{ 'FORM.FIELD.REQUIRED' | translate }}}</span>
             </mat-error>
         }
+        <mat-hint class="adf-form-field-status-slot" aria-hidden="true" />
     </mat-form-field>
 </div>
