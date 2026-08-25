@@ -1,11 +1,12 @@
 .adf-data-table-widget-failed-message {
     display: block;
-    margin: 10px;
 }
 
-.adf-preview-placeholder {
-    height: 100%;
-    width: 100%;
-    min-height: 100px;
-    margin-bottom: 10px;
+.adf-data-table-widget-container {
+    .adf-preview-placeholder {
+        height: 100%;
+        width: 100%;
+        min-height: 100px;
+        margin-bottom: 10px;
+    }
 }

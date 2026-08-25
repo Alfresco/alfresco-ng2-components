@@ -66,6 +66,10 @@
         @include mixins.adf-error-icon;
     }
 
+    .adf-error {
+        padding-top: 3px;
+    }
+
     .adf-error-animate {
         animation: adf-people-cloud-slide-in-down 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
     }
