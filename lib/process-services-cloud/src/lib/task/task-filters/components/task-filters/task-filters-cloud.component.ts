@@ -176,22 +176,18 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             });
     }
 
-    initFilterCounterNotifications() {
-        if (!this.appName) {
-            return;
-        }
-        if (!this.enableNotifications) {
+    initFilterCounterNotifications(): void {
+        if (this.appName && this.enableNotifications) {
+            this.filterCountersCloudService
+                .getEngineEvents(this.appName, FilterCounterEntityType.TASK)
+                .pipe(takeUntilDestroyed(this.destroyRef))
+                .subscribe((events) => {
+                    events.forEach((taskEvent) => this.checkFilterCounter(taskEvent.entity));
+                    this.filterCounterUpdated.emit(events);
+                });
+        } else {
             this.counters = {};
-            return;
         }
-
-        this.filterCountersCloudService
-            .getEngineEvents(this.appName, FilterCounterEntityType.TASK)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((events) => {
-                events.forEach((taskEvent) => this.checkFilterCounter(taskEvent.entity));
-                this.filterCounterUpdated.emit(events);
-            });
     }
 
     checkFilterCounter(filterNotification: TaskDetailsCloudModel) {

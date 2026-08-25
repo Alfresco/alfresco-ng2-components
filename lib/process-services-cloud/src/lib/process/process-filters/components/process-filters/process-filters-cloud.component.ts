@@ -16,7 +16,7 @@
  */
 
 import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { combineLatest, defer, EMPTY, Observable, Subscription } from 'rxjs';
+import { combineLatest, defer, EMPTY, Observable, of, Subscription } from 'rxjs';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFilterCloudModel } from '../../models/process-filter-cloud.model';
 import { AppConfigService, IconModule, TranslationService } from '@alfresco/adf-core';
@@ -131,7 +131,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     getFilters(appName: string): void {
         this.filtersLoadedFor = appName;
         const filters$ = this.filterCountersCloudService.getProcessFilters(appName);
-        this.filters$ = filters$.pipe(catchError(() => EMPTY));
+        this.filters$ = filters$.pipe(catchError(() => of([])));
 
         filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
             next: (res) => {
