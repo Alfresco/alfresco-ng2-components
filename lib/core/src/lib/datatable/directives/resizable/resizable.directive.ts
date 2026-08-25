@@ -69,10 +69,6 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
     private currentRect: BoundingRectangle;
 
-    private unsubscribeMouseDown?: () => void;
-    private unsubscribeMouseMove?: () => void;
-    private unsubscribeMouseUp?: () => void;
-
     private readonly destroyRef = inject(DestroyRef);
 
     constructor() {
@@ -80,27 +76,33 @@ export class ResizableDirective implements OnInit, OnDestroy {
         const zone = this.zone;
 
         this.pointerDown = new Observable((observer: Observer<IResizeMouseEvent>) => {
+            let stopListening: () => void = () => {};
             zone.runOutsideAngular(() => {
-                this.unsubscribeMouseDown = renderer.listen('document', 'mousedown', (event: MouseEvent) => {
+                stopListening = renderer.listen('document', 'mousedown', (event: MouseEvent) => {
                     observer.next(event);
                 });
             });
+            return stopListening;
         }).pipe(share());
 
         this.pointerMove = new Observable((observer: Observer<IResizeMouseEvent>) => {
+            let stopListening: () => void = () => {};
             zone.runOutsideAngular(() => {
-                this.unsubscribeMouseMove = renderer.listen('document', 'mousemove', (event: MouseEvent) => {
+                stopListening = renderer.listen('document', 'mousemove', (event: MouseEvent) => {
                     observer.next(event);
                 });
             });
+            return stopListening;
         }).pipe(share());
 
         this.pointerUp = new Observable((observer: Observer<IResizeMouseEvent>) => {
+            let stopListening: () => void = () => {};
             zone.runOutsideAngular(() => {
-                this.unsubscribeMouseUp = renderer.listen('document', 'mouseup', (event: MouseEvent) => {
+                stopListening = renderer.listen('document', 'mouseup', (event: MouseEvent) => {
                     observer.next(event);
                 });
             });
+            return stopListening;
         }).pipe(share());
     }
 
@@ -184,9 +186,6 @@ export class ResizableDirective implements OnInit, OnDestroy {
         this.mousedown.complete();
         this.mousemove.complete();
         this.mouseup.complete();
-        this.unsubscribeMouseDown?.();
-        this.unsubscribeMouseMove?.();
-        this.unsubscribeMouseUp?.();
     }
 
     resizeByKeyboard(delta: number): void {
