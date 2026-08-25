@@ -16,13 +16,12 @@
  */
 
 import { Injectable, inject } from '@angular/core';
-import { Observable, of, BehaviorSubject, throwError, Subject } from 'rxjs';
+import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
 import { switchMap, map } from 'rxjs/operators';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
-import { TaskCloudNodePaging } from '../../../models/task-cloud.model';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
@@ -245,43 +244,6 @@ export class TaskFilterCloudService extends BaseCloudService {
     isDefaultFilter(filterName: string): boolean {
         const defaultFilters = this.defaultTaskFilters();
         return defaultFilters.findIndex((filter) => filterName === filter.name) !== -1;
-    }
-
-    /**
-     * Finds a task using an object with optional query properties.
-     *
-     * @returns Task information
-     * @param taskFilter task filter model
-     */
-    getTaskFilterCounter(taskFilter: TaskFilterCloudModel): Observable<number> {
-        if (taskFilter.appName || taskFilter.appName === '') {
-            const queryUrl = `${this.getBasePath(taskFilter.appName)}/query/v1/tasks`;
-            const queryParams = {
-                processInstanceId: taskFilter.processInstanceId,
-                processDefinitionId: taskFilter.processDefinitionId,
-                processDefinitionName: taskFilter.processDefinitionName,
-                assignee: taskFilter.assignee,
-                status: taskFilter.status,
-                taskName: taskFilter.taskName,
-                appName: taskFilter.appName,
-                assignmentType: taskFilter.assignmentType,
-                owner: taskFilter.owner,
-                taskId: taskFilter.taskId,
-                parentTaskId: taskFilter.parentTaskId,
-                priority: taskFilter.priority,
-                lastModifiedFrom: taskFilter.lastModifiedFrom,
-                lastModifiedTo: taskFilter.lastModifiedTo,
-                standalone: taskFilter.standalone,
-                createdDate: taskFilter.createdDate,
-                completedDate: taskFilter.completedDate,
-                completedBy: taskFilter.completedBy,
-                dueDate: taskFilter.dueDate,
-                maxItems: 1
-            };
-            return this.get<TaskCloudNodePaging>(queryUrl, queryParams).pipe(map((tasks) => tasks.list.pagination.totalItems));
-        } else {
-            return throwError('Appname not configured');
-        }
     }
 
     /**

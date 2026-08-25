@@ -36,7 +36,6 @@ Shows all available filters.
 | appName     | `string`            | ""            | Display filters available to the current user for the application with the specified name.                                         |
 | filterParam | `FilterParamsModel` |               | Parameters to use for the task filter cloud. If there is no match then the default filter (the first one in the list) is selected. |
 | showIcons   | `boolean`           | false         | Toggles display of the filter's icons.                                                                                             |
-| searchApiMethod | `'GET' \| 'POST'` | "GET"      | **Deprecated:** the counters are resolved by a single `POST /query/v1/count` call, which requires Activiti 8.7.0 forward. This input is only used to resolve the counters one filter at a time, on the backends without that endpoint, and will be removed along with the `GET` method in ADF 10.0.0. |
 
 ### Events
 
