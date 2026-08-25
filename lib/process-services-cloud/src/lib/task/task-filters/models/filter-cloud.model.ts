@@ -84,7 +84,7 @@ export class TaskFilterCloudModel {
         if (obj) {
             this.id = obj.id || Math.random().toString(36).substr(2, 9);
             this.name = obj.name || null;
-            this.key = obj.key || null;
+            this.key = obj.key;
             this.environmentId = obj.environmentId || null;
             this.icon = obj.icon || null;
             this.index = obj.index || null;

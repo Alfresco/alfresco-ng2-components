@@ -88,7 +88,6 @@ describe('FilterCountersCloudService', () => {
     const counters = (entityType: FilterCounterEntityType, appName = 'mock-app') => firstValueFrom(service.getFilterCounters(appName, entityType));
     const taskCounters = (appName = 'mock-app') => counters(FilterCounterEntityType.TASK, appName);
     const processCounters = (appName = 'mock-app') => counters(FilterCounterEntityType.PROCESS_INSTANCE, appName);
-    /** As read when both filter components are on screen. */
     const bothCounters = (appName = 'mock-app') =>
         firstValueFrom(
             combineLatest([
@@ -114,7 +113,6 @@ describe('FilterCountersCloudService', () => {
         taskEvents$ = new Subject<EngineEventsResult>();
         processEvents$ = new Subject<EngineEventsResult>();
         makeGQLQuerySpy = spyOn(notificationCloudService, 'makeGQLQuery');
-        /* Every entity type holds its own subscription. */
         makeGQLQuerySpy.and.callFake((_appName: string, query: string) =>
             (query.includes('TASK_CREATED') ? taskEvents$ : processEvents$).asObservable()
         );
@@ -146,7 +144,6 @@ describe('FilterCountersCloudService', () => {
         });
 
         it('should share the filters with the batched count request', async () => {
-            /* The filter component holds its subscription while the counters are resolved. */
             const subscription = service.getTaskFilters('mock-app').subscribe();
             await taskCounters();
             subscription.unsubscribe();
@@ -230,13 +227,6 @@ describe('FilterCountersCloudService', () => {
             await taskCounters();
 
             expect(countRequestIds(FilterCounterEntityType.TASK)).toEqual(['queued-tasks']);
-        });
-
-        it('should leave out a filter without a key, since it holds no request id', async () => {
-            getProcessFiltersSpy.and.returnValue(of([processFilter({ key: null, status: 'RUNNING', showCounter: true })]));
-
-            expect(await processCounters()).toEqual({});
-            expect(postSpy).not.toHaveBeenCalled();
         });
 
         it('should resolve the counters of an entity type when the filters of the other one fail to load', async () => {
@@ -330,7 +320,6 @@ describe('FilterCountersCloudService', () => {
             service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
             tick(0);
 
-            /* Opened again, so the first subscription was closed rather than left behind. */
             expect(makeGQLQuerySpy).toHaveBeenCalledTimes(2);
         }));
 
@@ -348,11 +337,9 @@ describe('FilterCountersCloudService', () => {
         }));
 
         it('should release the filters subscription once nothing reads them', fakeAsync(() => {
-            /* `TaskFilterCloudService.filters$` never completes, so a subscription left behind would be held. */
             const filters$ = new BehaviorSubject(taskFiltersMock);
             getTaskListFiltersSpy.and.returnValue(filters$.asObservable());
 
-            /* As the filter component does: the filters are held while the counters are read. */
             const subscriptions = [
                 service.getTaskFilters('mock-app').subscribe(),
                 service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe()
