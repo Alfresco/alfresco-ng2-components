@@ -65,8 +65,6 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FileTypePipe, LocalizedDatePipe } from '../../../pipes';
 import { DropZoneDirective } from '../../directives/drop-zone.directive';
-import { ResizableDirective } from '../../directives/resizable/resizable.directive';
-import { ResizeHandleDirective } from '../../directives/resizable/resize-handle.directive';
 import { MatButtonModule } from '@angular/material/button';
 import { UploadDirective } from '../../../directives';
 import { ContextMenuDirective } from '../../../context-menu';
@@ -101,9 +99,7 @@ export type ShowHeaderMode = (typeof ShowHeaderMode)[keyof typeof ShowHeaderMode
         MatCheckboxModule,
         CdkDrag,
         DropZoneDirective,
-        ResizableDirective,
         CdkDragHandle,
-        ResizeHandleDirective,
         MatButtonModule,
         MatMenuModule,
         IconModule,
