@@ -82,8 +82,6 @@
                                 [dropColumn]="col"
                             >
                                 <div
-                                    adf-resizable
-                                    #resizableElement="adf-resizable"
                                     [attr.tabindex]="col.sortable ? 0 : null"
                                     [attr.role]="col.sortable ? 'button' : null"
                                     [attr.aria-description]="
@@ -185,7 +183,6 @@
                                         (click)="$event.stopPropagation()"
                                         (keydown)="$event.stopPropagation()"
                                         class="adf-datatable__resize-handle"
-                                        [resizableContainer]="resizableElement"
                                     >
                                         <div class="adf-datatable__resize-handle--divider"></div>
                                     </div>
