@@ -92,20 +92,16 @@ describe('ResizableDirective', () => {
         directive.ngOnInit();
     });
 
-    it('should attach mousedown event to document', () => {
-        expect(renderer.listen).toHaveBeenCalledWith('document', 'mousedown', jasmine.any(Function));
+    it('should not attach any document listeners on init', () => {
+        expect(renderer.listen).not.toHaveBeenCalled();
     });
 
-    it('should attach mousemove event to document', () => {
+    it('should attach document mousemove listener only during active drag', () => {
         const mouseDownEvent = new MouseEvent('mousedown');
 
         directive.mousedown.next({ ...mouseDownEvent, resize: true });
 
         expect(renderer.listen).toHaveBeenCalledWith('document', 'mousemove', jasmine.any(Function));
-    });
-
-    it('should attach mouseup event to document', () => {
-        expect(renderer.listen).toHaveBeenCalledWith('document', 'mouseup', jasmine.any(Function));
     });
 
     it('should should set the cursor on mouse down', () => {
@@ -186,6 +182,9 @@ describe('ResizableDirective', () => {
     });
 
     it('should unregister document listeners on destroy', () => {
+        directive.mousedown.next({ ...new MouseEvent('mousedown'), resize: true });
+        expect(unlistenSpies.length).toBeGreaterThan(0);
+
         testEnvInjector.destroy();
         unlistenSpies.forEach((spy) => expect(spy).toHaveBeenCalledTimes(1));
     });

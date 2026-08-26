@@ -61,9 +61,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
     mousemove = new Subject<IResizeMouseEvent>();
 
-    private readonly pointerDown: Observable<IResizeMouseEvent>;
     private readonly pointerMove: Observable<IResizeMouseEvent>;
-    private readonly pointerUp: Observable<IResizeMouseEvent>;
 
     private startingRect: BoundingRectangle;
 
@@ -75,16 +73,8 @@ export class ResizableDirective implements OnInit, OnDestroy {
         const renderer = this.renderer;
         const zone = this.zone;
 
-        this.pointerDown = new Observable((observer: Observer<IResizeMouseEvent>) => {
-            let stopListening: () => void = () => {};
-            zone.runOutsideAngular(() => {
-                stopListening = renderer.listen('document', 'mousedown', (event: MouseEvent) => {
-                    observer.next(event);
-                });
-            });
-            return stopListening;
-        }).pipe(share());
-
+        // Document-level mousemove is needed for smooth drag tracking when cursor leaves the handle element.
+        // Only subscribed during active drag via share() refcount.
         this.pointerMove = new Observable((observer: Observer<IResizeMouseEvent>) => {
             let stopListening: () => void = () => {};
             zone.runOutsideAngular(() => {
@@ -94,22 +84,12 @@ export class ResizableDirective implements OnInit, OnDestroy {
             });
             return stopListening;
         }).pipe(share());
-
-        this.pointerUp = new Observable((observer: Observer<IResizeMouseEvent>) => {
-            let stopListening: () => void = () => {};
-            zone.runOutsideAngular(() => {
-                stopListening = renderer.listen('document', 'mouseup', (event: MouseEvent) => {
-                    observer.next(event);
-                });
-            });
-            return stopListening;
-        }).pipe(share());
     }
 
     ngOnInit(): void {
-        const mousedown$ = merge(this.pointerDown, this.mousedown);
+        const mousedown$ = this.mousedown.asObservable();
         const mousemove$ = merge(this.pointerMove, this.mousemove);
-        const mouseup$ = merge(this.pointerUp, this.mouseup);
+        const mouseup$ = this.mouseup.asObservable();
 
         const mouseDrag: Observable<IResizeMouseEvent | ICoordinateX> = mousedown$
             .pipe(
