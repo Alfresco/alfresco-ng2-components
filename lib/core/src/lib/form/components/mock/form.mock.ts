@@ -645,3 +645,263 @@ export const fakeValidatorMock = {
     isSupported: () => true,
     validate: () => true
 };
+
+export const formTabsLayoutMock = {
+    id: 'form-tabs-layout-story',
+    name: 'Employee Details',
+    layout: 'tabs',
+    tabs: [
+        { id: 'tab-personal', title: 'Personal' },
+        { id: 'tab-contact', title: 'Contact' },
+        { id: 'tab-employment', title: 'Employment' }
+    ],
+    fields: [
+        {
+            id: 'container-personal',
+            type: 'container',
+            tab: 'tab-personal',
+            numberOfColumns: 2,
+            fields: {
+                '1': [
+                    {
+                        id: 'firstName',
+                        name: 'First Name',
+                        type: 'text',
+                        required: true,
+                        colspan: 1,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ],
+                '2': [
+                    {
+                        id: 'lastName',
+                        name: 'Last Name',
+                        type: 'text',
+                        required: true,
+                        colspan: 1,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ]
+            }
+        },
+        {
+            id: 'container-contact',
+            type: 'container',
+            tab: 'tab-contact',
+            numberOfColumns: 2,
+            fields: {
+                '1': [
+                    {
+                        id: 'email',
+                        name: 'Email',
+                        type: 'text',
+                        colspan: 1,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ],
+                '2': [
+                    {
+                        id: 'phone',
+                        name: 'Phone',
+                        type: 'text',
+                        colspan: 1,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ]
+            }
+        },
+        {
+            id: 'container-employment',
+            type: 'container',
+            tab: 'tab-employment',
+            numberOfColumns: 2,
+            fields: {
+                '1': [
+                    {
+                        id: 'department',
+                        name: 'Department',
+                        type: 'dropdown',
+                        optionType: 'manual',
+                        options: [
+                            { id: 'empty', name: 'Choose one...' },
+                            { id: 'hr', name: 'HR' },
+                            { id: 'eng', name: 'Engineering' }
+                        ],
+                        value: 'empty',
+                        colspan: 1,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ],
+                '2': [
+                    {
+                        id: 'startDate',
+                        name: 'Start Date',
+                        type: 'date',
+                        colspan: 1,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ]
+            }
+        }
+    ],
+    outcomes: []
+};
+
+export const formSideNavLayoutMock = {
+    id: 'form-sidenav-layout-story',
+    name: 'Project Form',
+    layout: 'sidenav',
+    tabs: [
+        { id: 'overview', title: 'Overview' },
+        {
+            id: 'team',
+            title: 'Team',
+            children: [
+                { id: 'team-lead', title: 'Team Lead' },
+                { id: 'team-members', title: 'Members' }
+            ]
+        },
+        {
+            id: 'milestones',
+            title: 'Milestones',
+            childrenLayout: 'tabs',
+            children: [
+                { id: 'milestone-q1', title: 'Q1' },
+                { id: 'milestone-q2', title: 'Q2' }
+            ]
+        }
+    ],
+    fields: [
+        {
+            id: 'container-overview',
+            type: 'container',
+            tab: 'overview',
+            numberOfColumns: 2,
+            fields: {
+                '1': [
+                    {
+                        id: 'projectName',
+                        name: 'Project Name',
+                        type: 'text',
+                        required: true,
+                        colspan: 1,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ],
+                '2': [
+                    {
+                        id: 'projectStatus',
+                        name: 'Status',
+                        type: 'dropdown',
+                        optionType: 'manual',
+                        options: [
+                            { id: 'empty', name: 'Choose one...' },
+                            { id: 'active', name: 'Active' },
+                            { id: 'on-hold', name: 'On Hold' }
+                        ],
+                        value: 'empty',
+                        colspan: 1,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ]
+            }
+        },
+        {
+            id: 'container-team-lead',
+            type: 'container',
+            tab: 'team-lead',
+            numberOfColumns: 2,
+            fields: {
+                '1': [
+                    {
+                        id: 'leadName',
+                        name: 'Lead Name',
+                        type: 'text',
+                        required: true,
+                        colspan: 1,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ],
+                '2': [
+                    {
+                        id: 'leadEmail',
+                        name: 'Lead Email',
+                        type: 'text',
+                        colspan: 1,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ]
+            }
+        },
+        {
+            id: 'container-team-members',
+            type: 'container',
+            tab: 'team-members',
+            numberOfColumns: 1,
+            fields: {
+                '1': [
+                    {
+                        id: 'membersCount',
+                        name: 'Number of Members',
+                        type: 'integer',
+                        colspan: 1,
+                        params: { existingColspan: 1, maxColspan: 1 }
+                    }
+                ]
+            }
+        },
+        {
+            id: 'container-milestone-q1',
+            type: 'container',
+            tab: 'milestone-q1',
+            numberOfColumns: 2,
+            fields: {
+                '1': [
+                    {
+                        id: 'q1Goal',
+                        name: 'Q1 Goal',
+                        type: 'text',
+                        colspan: 1,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ],
+                '2': [
+                    {
+                        id: 'q1Deadline',
+                        name: 'Q1 Deadline',
+                        type: 'date',
+                        colspan: 1,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ]
+            }
+        },
+        {
+            id: 'container-milestone-q2',
+            type: 'container',
+            tab: 'milestone-q2',
+            numberOfColumns: 2,
+            fields: {
+                '1': [
+                    {
+                        id: 'q2Goal',
+                        name: 'Q2 Goal',
+                        type: 'text',
+                        colspan: 1,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ],
+                '2': [
+                    {
+                        id: 'q2Deadline',
+                        name: 'Q2 Deadline',
+                        type: 'date',
+                        colspan: 1,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ]
+            }
+        }
+    ],
+    outcomes: []
+};
