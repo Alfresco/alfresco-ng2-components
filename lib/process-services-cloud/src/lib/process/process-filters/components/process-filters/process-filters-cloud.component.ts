@@ -133,6 +133,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
             }
         });
 
+        /* Read along with the filters, not once they arrive, so both components share one request. */
         this.loadFilterCounters(appName, filters$);
     }
 
@@ -140,7 +141,11 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
      * Initialize counter collection for filters
      */
     initFilterCounters(): void {
-        this.filters.forEach((filter) => (this.counters[filter.key] = 0));
+        this.filters.forEach((filter) => {
+            if (filter.key) {
+                this.counters[filter.key] = 0;
+            }
+        });
     }
 
     /**
@@ -278,6 +283,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
 
     private loadFilterCounters(appName: string, filters$: Observable<ProcessFilterCloudModel[]>): void {
         this.countersSubscription?.unsubscribe();
+        /* Counters are keyed by filter key, so they are applied once the filters are known. */
         this.countersSubscription = combineLatest([
             filters$.pipe(catchError(() => EMPTY)),
             this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.PROCESS_INSTANCE)
@@ -287,16 +293,21 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     }
 
     private applyFilterCounters(counters: FilterCountersResult): void {
-        this.filters
-            .filter((filter) => filter?.showCounter)
-            .forEach((filter) => {
-                const counter = counters[filter.key];
-                if (counter === undefined) {
-                    return;
-                }
+        this.filters.forEach((filter) => {
+            /* A filter without a key holds no request id. */
+            const filterKey = filter?.showCounter ? filter.key : undefined;
+            if (!filterKey) {
+                return;
+            }
 
-                this.checkIfFilterValuesHasBeenUpdated(filter.key, counter);
-                this.counters = { ...this.counters, [filter.key]: counter };
-            });
+            const counter = counters[filterKey];
+            /* A filter the request left out keeps the counter it holds, rather than showing a wrong one. */
+            if (counter === undefined) {
+                return;
+            }
+
+            this.checkIfFilterValuesHasBeenUpdated(filterKey, counter);
+            this.counters = { ...this.counters, [filterKey]: counter };
+        });
     }
 }

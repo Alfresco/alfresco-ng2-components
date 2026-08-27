@@ -108,7 +108,7 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
             this.filters.find(
                 (filter, index) =>
                     paramFilter.index === index ||
-                    (!!paramFilter.key && paramFilter.key === filter.key) ||
+                    paramFilter.key === filter.key ||
                     paramFilter.id === filter.id ||
                     (paramFilter.name && paramFilter.name.toLocaleLowerCase() === this.translationService.instant(filter.name).toLocaleLowerCase())
             ); // fallback to preserve the previous behavior

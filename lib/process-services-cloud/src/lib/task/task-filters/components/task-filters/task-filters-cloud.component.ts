@@ -118,6 +118,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             }
         });
 
+        /* Read along with the filters, not once they arrive, so both components share one request. */
         this.loadFilterCounters(appName, filters$);
     }
 
@@ -169,7 +170,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             this.filters.find(
                 (filter, index) =>
                     paramFilter.index === index ||
-                    (!!paramFilter.key && paramFilter.key === filter.key) ||
+                    paramFilter.key === filter.key ||
                     paramFilter.id === filter.id ||
                     (paramFilter.name && paramFilter.name.toLocaleLowerCase() === this.translationService.instant(filter.name).toLocaleLowerCase())
             ); // fallback to preserve the previous behavior
@@ -240,6 +241,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     private loadFilterCounters(appName: string, filters$: Observable<TaskFilterCloudModel[]>): void {
         this.countersSubscription?.unsubscribe();
+        /* Counters are keyed by filter key, so they are applied once the filters are known. */
         this.countersSubscription = combineLatest([
             filters$.pipe(catchError(() => of([]))),
             this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.TASK)
@@ -249,17 +251,22 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     private applyFilterCounters(counters: FilterCountersResult): void {
-        this.filters
-            .filter((filter) => filter?.showCounter)
-            .forEach((filter) => {
-                const counter = counters[filter.key];
-                if (counter === undefined) {
-                    return;
-                }
+        this.filters.forEach((filter) => {
+            /* A filter without a key holds no request id. */
+            const filterKey = filter?.showCounter ? filter.key : undefined;
+            if (!filterKey) {
+                return;
+            }
 
-                this.checkIfFilterValuesHasBeenUpdated(filter.key, counter);
-                this.counters = { ...this.counters, [filter.key]: counter };
-            });
+            const counter = counters[filterKey];
+            /* A filter the request left out keeps the counter it holds, rather than showing a wrong one. */
+            if (counter === undefined) {
+                return;
+            }
+
+            this.checkIfFilterValuesHasBeenUpdated(filterKey, counter);
+            this.counters = { ...this.counters, [filterKey]: counter };
+        });
     }
 
     /**

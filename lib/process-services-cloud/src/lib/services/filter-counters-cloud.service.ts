@@ -47,6 +47,7 @@ interface EngineEventsData {
     engineEvents?: TaskCloudEngineEvent[];
 }
 
+/** One subscription per entity type, so an app showing one of them is not notified of the other. */
 const ENGINE_EVENTS_SUBSCRIPTION_QUERIES: Record<FilterCounterEntityType, string> = {
     [FilterCounterEntityType.TASK]: `
     subscription {
@@ -263,6 +264,7 @@ export class FilterCountersCloudService extends BaseCloudService {
         this.recountTrigger(appName).next();
     }
 
+    // The filters of an entity type that fails to load are left out, so the other one is still counted.
     private getFiltersForCounters(appName: string): Observable<FilterCountersFilters> {
         const activeEntityTypes = this.activeEntityTypes(appName);
 
@@ -303,6 +305,7 @@ export class FilterCountersCloudService extends BaseCloudService {
         return this.getFiltersForCounters(appName).pipe(
             take(1),
             switchMap((filters) => this.fetchFilterCounters(appName, this.buildRequest(filters))),
+            /* A failed count leaves the counters as they are, rather than breaking the stream. */
             catchError(() => of({}))
         );
     }
@@ -311,6 +314,7 @@ export class FilterCountersCloudService extends BaseCloudService {
         return merge(
             /* Reads landing in the same task are merged, so both filter components share one request. */
             merge(of(undefined), this.recountTrigger(appName)).pipe(debounceTime(0, asapScheduler)),
+            /* One debounce over every entity type, so a batch of events also results in one request. */
             this.eventRecountTrigger(appName).pipe(debounceTime(this.notificationDebounceTime))
         );
     }
@@ -360,12 +364,12 @@ export class FilterCountersCloudService extends BaseCloudService {
         buildQuery: (filter: T) => Omit<FilterCountersQuery, 'requestId'>
     ): FilterCountersQuery[] {
         return (filters ?? [])
-            .filter((filter) => filter?.showCounter)
+            .filter((filter) => filter?.showCounter && this.isCounterBatched(filter))
             .map((filter) => {
                 try {
-                    return { ...buildQuery(filter), requestId: filter.key };
+                    return { ...buildQuery(filter), requestId: filter.key as string };
                 } catch {
-                    /* Left without a counter, so the other filters still hold theirs. */
+                    /* A malformed filter is left without a counter, so the others still hold one. */
                     return undefined;
                 }
             })
@@ -380,5 +384,10 @@ export class FilterCountersCloudService extends BaseCloudService {
         const queryUrl = `${this.getBasePath(appName)}/query/v1/count`;
 
         return this.post<FilterCountersRequest, FilterCounters>(queryUrl, request).pipe(map((counters) => counters || {}));
+    }
+
+    // A filter without a key holds no `requestId` its counter could be keyed by.
+    private isCounterBatched(filter: FilterCounterCandidate): boolean {
+        return !!filter?.key;
     }
 }

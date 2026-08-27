@@ -25,7 +25,7 @@ import { ProcessVariableFilterModel } from '../../../models/process-variable-fil
 export class ProcessFilterCloudModel {
     id: string;
     name: string | null;
-    key: string;
+    key: string | null;
     icon: string | null;
     index: number | null;
     appName: string | null;
@@ -79,7 +79,7 @@ export class ProcessFilterCloudModel {
 
         this.id = obj.id || Math.random().toString(36).substring(2, 9);
         this.name = obj.name || null;
-        this.key = obj.key;
+        this.key = obj.key || null;
         this.environmentId = obj.environmentId || null;
         this.showCounter = obj.showCounter || false;
         this.icon = obj.icon || null;
