@@ -25,10 +25,12 @@ import {
     fakePreferenceWithNoTaskFilterPreference,
     fakeTaskCloudFilters,
     fakeTaskCloudPreferenceList,
-    fakeTaskFilter
+    fakeTaskFilter,
+    taskCloudEngineEventsMock
 } from '../mock/task-filters-cloud.mock';
 import { UserPreferenceCloudService } from '../../../services/user-preference-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
+import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { StorageService, NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
@@ -36,6 +38,7 @@ import { TaskStatusFilter } from '../models/filter-cloud.model';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
+    let notificationCloudService: NotificationCloudService;
 
     let getPreferencesSpy: jasmine.Spy;
     let getPreferenceByKeySpy: jasmine.Spy;
@@ -55,6 +58,7 @@ describe('TaskFilterCloudService', () => {
             providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }]
         });
         service = TestBed.inject(TaskFilterCloudService);
+        notificationCloudService = TestBed.inject(NotificationCloudService);
 
         const preferenceCloudService = service.preferenceService;
         createPreferenceSpy = spyOn(preferenceCloudService, 'createPreference').and.returnValue(of(fakeTaskCloudFilters));
@@ -229,6 +233,17 @@ describe('TaskFilterCloudService', () => {
 
         expect(service.isDefaultFilter(defaultFilterName)).toBe(true);
         expect(service.isDefaultFilter(fakeFilterName)).toBe(false);
+    });
+
+    it('should return engine event task subscription', (done) => {
+        spyOn(notificationCloudService, 'makeGQLQuery').and.returnValue(of(taskCloudEngineEventsMock));
+
+        service.getTaskNotificationSubscription('myAppName').subscribe((res) => {
+            expect(res.length).toBe(1);
+            expect(res[0].eventType).toBe('TASK_ASSIGNED');
+            expect(res[0].entity.name).toBe('This is a new task');
+            done();
+        });
     });
 });
 

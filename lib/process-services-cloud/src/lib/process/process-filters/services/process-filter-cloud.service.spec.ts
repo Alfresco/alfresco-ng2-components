@@ -25,10 +25,12 @@ import {
     fakeProcessCloudFilterEntries,
     fakeProcessCloudFilters,
     fakeProcessCloudFilterWithDifferentEntries,
-    fakeProcessFilter
+    fakeProcessFilter,
+    processCloudEngineEventsMock
 } from '../mock/process-filters-cloud.mock';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
+import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
 
@@ -39,6 +41,7 @@ describe('ProcessFilterCloudService', () => {
     let updatePreferenceSpy: jasmine.Spy;
     let createPreferenceSpy: jasmine.Spy;
     let getCurrentUserInfoSpy: jasmine.Spy;
+    let notificationCloudService: NotificationCloudService;
 
     const identityUserMock = {
         username: 'mock-username',
@@ -56,6 +59,7 @@ describe('ProcessFilterCloudService', () => {
 
         const preferenceCloudService = TestBed.inject(PROCESS_FILTERS_SERVICE_TOKEN);
         const identityUserService = TestBed.inject(IdentityUserService);
+        notificationCloudService = TestBed.inject(NotificationCloudService);
 
         createPreferenceSpy = spyOn(preferenceCloudService, 'createPreference').and.returnValue(of(fakeProcessCloudFilters));
         updatePreferenceSpy = spyOn(preferenceCloudService, 'updatePreference').and.returnValue(of(fakeProcessCloudFilters));
@@ -245,5 +249,14 @@ describe('ProcessFilterCloudService', () => {
         await firstValueFrom(service.resetProcessFilterToDefaults('mock-appName', changedFilter));
 
         expect(updatePreferenceSpy).toHaveBeenCalledWith('mock-appName', 'process-filters-mock-appName-mock-username', fakeProcessCloudFilters);
+    });
+
+    it('should return engine event task subscription', async () => {
+        spyOn(notificationCloudService, 'makeGQLQuery').and.returnValue(of(processCloudEngineEventsMock));
+
+        const result = await firstValueFrom(service.getProcessNotificationSubscription('testApp'));
+        expect(result.length).toBe(1);
+        expect(result[0].eventType).toBe('PROCESS_CREATED');
+        expect(result[0].entity.status).toBe('CREATED');
     });
 });

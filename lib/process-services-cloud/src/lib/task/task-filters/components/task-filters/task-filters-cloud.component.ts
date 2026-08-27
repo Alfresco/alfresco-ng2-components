@@ -77,6 +77,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
         this.notificationDebounceTime = this.appConfigService.get('notificationDebounceTime', 3000);
+
         if (!this.filtersLoadedFor) {
             this.getFilters(this.appName);
         }
@@ -222,14 +223,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         return this.filters === undefined || (this.filters && this.filters.length === 0);
     }
 
-    /**
-     * Reset the filters properties
-     */
-    private resetFilter() {
-        this.filters = [];
-        this.currentFilter = undefined;
-    }
-
     checkIfFilterValuesHasBeenUpdated(filterKey: string, filterValue: number) {
         if (this.currentFiltersValues[filterKey] === undefined || this.currentFiltersValues[filterKey] !== filterValue) {
             this.currentFiltersValues = { ...this.currentFiltersValues, [filterKey]: filterValue };
@@ -238,14 +231,11 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         }
     }
 
-    /**
-     * Get filer key when filter was refreshed by external action
-     *
-     */
+    /** Flags the counter of a filter as read whenever the filter is refreshed elsewhere */
     getFilterKeysAfterExternalRefreshing(): void {
-        this.taskFilterCloudService.filterKeyToBeRefreshed$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((filterKey: string) => {
-            this.updatedCountersSet.delete(filterKey);
-        });
+        this.taskFilterCloudService.filterKeyToBeRefreshed$
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((filterKey: string) => this.updatedCountersSet.delete(filterKey));
     }
 
     private loadFilterCounters(appName: string, filters$: Observable<TaskFilterCloudModel[]>): void {
@@ -270,5 +260,13 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
                 this.checkIfFilterValuesHasBeenUpdated(filter.key, counter);
                 this.counters = { ...this.counters, [filter.key]: counter };
             });
+    }
+
+    /**
+     * Reset the filters properties
+     */
+    private resetFilter() {
+        this.filters = [];
+        this.currentFilter = undefined;
     }
 }

@@ -285,6 +285,12 @@ export const taskNotifications = [
     }
 ];
 
+export const taskCloudEngineEventsMock = {
+    data: {
+        engineEvents: taskNotifications
+    }
+};
+
 export const defaultTaskFiltersMock: TaskFilterCloudModel[] = [
     new TaskFilterCloudModel({
         name: 'CREATED_TASK_FILTER',
