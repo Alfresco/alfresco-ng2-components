@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { ElementRef, Injector, NgZone, Renderer2, runInInjectionContext } from '@angular/core';
+import { ElementRef, EnvironmentInjector, NgZone, Renderer2, createEnvironmentInjector, runInInjectionContext } from '@angular/core';
 import { ResizableDirective } from './resizable.directive';
 
 describe('ResizableDirective', () => {
@@ -24,6 +24,7 @@ describe('ResizableDirective', () => {
     let renderer: Renderer2;
     let element: ElementRef;
     let directive: ResizableDirective;
+    let testEnvInjector: EnvironmentInjector;
 
     const scrollTop = 0;
     const scrollLeft = 0;
@@ -39,8 +40,14 @@ describe('ResizableDirective', () => {
         scrollLeft
     };
 
+    let unlistenSpies: jasmine.Spy[];
+
     const rendererMock = {
-        listen: jasmine.createSpy('listen'),
+        listen: jasmine.createSpy('listen').and.callFake(() => {
+            const spy = jasmine.createSpy(`unlisten-${unlistenSpies.length}`);
+            unlistenSpies.push(spy);
+            return spy;
+        }),
         setStyle: jasmine.createSpy('setStyle')
     };
 
@@ -53,6 +60,10 @@ describe('ResizableDirective', () => {
     };
 
     beforeEach(() => {
+        unlistenSpies = [];
+        rendererMock.listen.calls.reset();
+        rendererMock.setStyle.calls.reset();
+
         TestBed.configureTestingModule({
             imports: [ResizableDirective],
             providers: [
@@ -64,38 +75,33 @@ describe('ResizableDirective', () => {
         element = TestBed.inject(ElementRef);
         renderer = TestBed.inject(Renderer2);
         ngZone = TestBed.inject(NgZone);
-        const injector = TestBed.inject(Injector);
         spyOn(ngZone, 'runOutsideAngular').and.callFake((fn) => fn());
         spyOn(ngZone, 'run').and.callFake((fn) => fn());
 
-        const testInjector = Injector.create({
-            providers: [
+        testEnvInjector = createEnvironmentInjector(
+            [
                 { provide: Renderer2, useValue: renderer },
                 { provide: ElementRef, useValue: element },
                 { provide: NgZone, useValue: ngZone }
             ],
-            parent: injector
-        });
+            TestBed.inject(EnvironmentInjector)
+        );
 
-        directive = runInInjectionContext(testInjector, () => new ResizableDirective());
+        directive = runInInjectionContext(testEnvInjector, () => new ResizableDirective());
 
         directive.ngOnInit();
     });
 
-    it('should attach mousedown event to document', () => {
-        expect(renderer.listen).toHaveBeenCalledWith('document', 'mousedown', jasmine.any(Function));
+    it('should not attach any document listeners on init', () => {
+        expect(renderer.listen).not.toHaveBeenCalled();
     });
 
-    it('should attach mousemove event to document', () => {
+    it('should attach document mousemove listener only during active drag', () => {
         const mouseDownEvent = new MouseEvent('mousedown');
 
         directive.mousedown.next({ ...mouseDownEvent, resize: true });
 
         expect(renderer.listen).toHaveBeenCalledWith('document', 'mousemove', jasmine.any(Function));
-    });
-
-    it('should attach mouseup event to document', () => {
-        expect(renderer.listen).toHaveBeenCalledWith('document', 'mouseup', jasmine.any(Function));
     });
 
     it('should should set the cursor on mouse down', () => {
@@ -173,5 +179,36 @@ describe('ResizableDirective', () => {
         directive.resizeByKeyboard(step);
 
         expect(directive.keyboardResizing.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, bottom: 0, right: step, width: step } });
+    });
+
+    it('should unregister document listeners on destroy', () => {
+        directive.mousedown.next({ ...new MouseEvent('mousedown'), resize: true });
+        expect(unlistenSpies.length).toBeGreaterThan(0);
+
+        testEnvInjector.destroy();
+        unlistenSpies.forEach((spy) => expect(spy).toHaveBeenCalledTimes(1));
+    });
+
+    it('should not accumulate mousemove listeners across repeated drag cycles', () => {
+        const listenCountAfterInit = rendererMock.listen.calls.count();
+
+        const mouseDownEvent = new MouseEvent('mousedown');
+        const mouseUpEvent = new MouseEvent('mouseup');
+
+        directive.mousedown.next({ ...mouseDownEvent, resize: true });
+        const listenCountAfterFirstDrag = rendererMock.listen.calls.count();
+        expect(listenCountAfterFirstDrag).toBeGreaterThan(listenCountAfterInit);
+
+        directive.mouseup.next(mouseUpEvent);
+        const unlistenedAfterFirstDrag = unlistenSpies.filter((spy) => spy.calls.count() > 0).length;
+
+        directive.mousedown.next({ ...mouseDownEvent, resize: true });
+        directive.mouseup.next(mouseUpEvent);
+        const unlistenedAfterSecondDrag = unlistenSpies.filter((spy) => spy.calls.count() > 0).length;
+
+        expect(unlistenedAfterSecondDrag).toBeGreaterThan(unlistenedAfterFirstDrag);
+
+        testEnvInjector.destroy();
+        unlistenSpies.forEach((spy) => expect(spy).toHaveBeenCalledTimes(1));
     });
 });

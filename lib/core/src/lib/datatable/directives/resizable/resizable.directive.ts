@@ -61,17 +61,11 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
     mousemove = new Subject<IResizeMouseEvent>();
 
-    private readonly pointerDown: Observable<IResizeMouseEvent>;
     private readonly pointerMove: Observable<IResizeMouseEvent>;
-    private readonly pointerUp: Observable<IResizeMouseEvent>;
 
     private startingRect: BoundingRectangle;
 
     private currentRect: BoundingRectangle;
-
-    private unsubscribeMouseDown?: () => void;
-    private unsubscribeMouseMove?: () => void;
-    private unsubscribeMouseUp?: () => void;
 
     private readonly destroyRef = inject(DestroyRef);
 
@@ -79,35 +73,23 @@ export class ResizableDirective implements OnInit, OnDestroy {
         const renderer = this.renderer;
         const zone = this.zone;
 
-        this.pointerDown = new Observable((observer: Observer<IResizeMouseEvent>) => {
-            zone.runOutsideAngular(() => {
-                this.unsubscribeMouseDown = renderer.listen('document', 'mousedown', (event: MouseEvent) => {
-                    observer.next(event);
-                });
-            });
-        }).pipe(share());
-
+        // Document-level mousemove is needed for smooth drag tracking when cursor leaves the handle element.
+        // Only subscribed during active drag via share() refcount.
         this.pointerMove = new Observable((observer: Observer<IResizeMouseEvent>) => {
+            let stopListening: () => void = () => {};
             zone.runOutsideAngular(() => {
-                this.unsubscribeMouseMove = renderer.listen('document', 'mousemove', (event: MouseEvent) => {
+                stopListening = renderer.listen('document', 'mousemove', (event: MouseEvent) => {
                     observer.next(event);
                 });
             });
-        }).pipe(share());
-
-        this.pointerUp = new Observable((observer: Observer<IResizeMouseEvent>) => {
-            zone.runOutsideAngular(() => {
-                this.unsubscribeMouseUp = renderer.listen('document', 'mouseup', (event: MouseEvent) => {
-                    observer.next(event);
-                });
-            });
+            return stopListening;
         }).pipe(share());
     }
 
     ngOnInit(): void {
-        const mousedown$ = merge(this.pointerDown, this.mousedown);
+        const mousedown$ = this.mousedown.asObservable();
         const mousemove$ = merge(this.pointerMove, this.mousemove);
-        const mouseup$ = merge(this.pointerUp, this.mouseup);
+        const mouseup$ = this.mouseup.asObservable();
 
         const mouseDrag: Observable<IResizeMouseEvent | ICoordinateX> = mousedown$
             .pipe(
@@ -184,9 +166,6 @@ export class ResizableDirective implements OnInit, OnDestroy {
         this.mousedown.complete();
         this.mousemove.complete();
         this.mouseup.complete();
-        this.unsubscribeMouseDown?.();
-        this.unsubscribeMouseMove?.();
-        this.unsubscribeMouseUp?.();
     }
 
     resizeByKeyboard(delta: number): void {
