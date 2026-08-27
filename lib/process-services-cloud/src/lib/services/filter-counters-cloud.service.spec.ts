@@ -171,7 +171,10 @@ describe('FilterCountersCloudService', () => {
         });
 
         it('should resolve the counters of both entity types with a single request', async () => {
-            expect(await bothCounters()).toEqual([{ 'my-tasks': 5, 'queued-tasks': 0 }, { 'running-processes': 5 }]);
+            expect(await bothCounters()).toEqual([
+                { counters: { 'my-tasks': 5, 'queued-tasks': 0 }, batched: true },
+                { counters: { 'running-processes': 5 }, batched: true }
+            ]);
 
             expect(postSpy).toHaveBeenCalledTimes(1);
         });
@@ -235,7 +238,7 @@ describe('FilterCountersCloudService', () => {
         it('should leave out a filter without a key, since it holds no request id', async () => {
             getProcessFiltersSpy.and.returnValue(of([processFilter({ key: null, status: 'RUNNING', showCounter: true })]));
 
-            expect(await processCounters()).toEqual({});
+            expect(await processCounters()).toEqual({ counters: {}, batched: true });
             expect(postSpy).not.toHaveBeenCalled();
         });
 
@@ -252,23 +255,40 @@ describe('FilterCountersCloudService', () => {
             getTaskListFiltersSpy.and.returnValue(of([]));
             getProcessFiltersSpy.and.returnValue(of([]));
 
-            expect(await taskCounters()).toEqual({});
+            expect(await taskCounters()).toEqual({ counters: {}, batched: true });
             expect(postSpy).not.toHaveBeenCalled();
         });
 
-        describe('when the count request fails', () => {
-            it('should resolve no counter, rather than breaking the stream', async () => {
-                postSpy.and.returnValue(throwError(() => ({ status: 500 })));
+        describe('when the batched count endpoint is not available', () => {
+            it('should report the counters as not batched', async () => {
+                postSpy.and.returnValue(throwError(() => ({ status: 404 })));
 
-                expect(await taskCounters()).toEqual({});
+                expect(await taskCounters()).toEqual({ counters: {}, batched: false });
             });
 
-            it('should keep calling the endpoint afterwards', async () => {
+            it('should not call the endpoint again for the same app', async () => {
                 postSpy.and.returnValue(throwError(() => ({ status: 404 })));
-                expect(await taskCounters()).toEqual({});
+
+                await taskCounters();
+                expect(await processCounters()).toEqual({ counters: {}, batched: false });
+
+                expect(postSpy).toHaveBeenCalledTimes(1);
+            });
+
+            it('should keep calling the endpoint of the apps that do hold it', async () => {
+                postSpy.and.returnValue(throwError(() => ({ status: 404 })));
+                await taskCounters();
 
                 postSpy.and.returnValue(of(countersMock));
-                expect(await taskCounters()).toEqual({ 'my-tasks': 5, 'queued-tasks': 0 });
+                expect(await taskCounters('other-app')).toEqual({ counters: { 'my-tasks': 5, 'queued-tasks': 0 }, batched: true });
+            });
+
+            it('should keep calling the endpoint after a transient failure', async () => {
+                postSpy.and.returnValue(throwError(() => ({ status: 500 })));
+                expect(await taskCounters()).toEqual({ counters: {}, batched: false });
+
+                postSpy.and.returnValue(of(countersMock));
+                expect(await taskCounters()).toEqual({ counters: { 'my-tasks': 5, 'queued-tasks': 0 }, batched: true });
                 expect(postSpy).toHaveBeenCalledTimes(2);
             });
         });
@@ -421,7 +441,7 @@ describe('FilterCountersCloudService', () => {
 
             const result = await firstValueFrom(tasksOnlyService.getFilterCounters('mock-app', FilterCounterEntityType.TASK));
 
-            expect(result).toEqual({ 'my-tasks': 5, 'queued-tasks': 0 });
+            expect(result).toEqual({ counters: { 'my-tasks': 5, 'queued-tasks': 0 }, batched: true });
         });
 
         it('should leave the filters of the family that is not wired out of the request', async () => {
@@ -545,7 +565,7 @@ describe('FilterCountersCloudService', () => {
             tick(3000);
 
             expect(results.length).toBe(2);
-            expect(results[1]).toEqual({ 'my-tasks': 9 });
+            expect(results[1]).toEqual({ counters: { 'my-tasks': 9 }, batched: true });
         }));
 
         it('should not subscribe to the events of an entity type that is not on screen', fakeAsync(() => {

@@ -62,7 +62,9 @@ export type FilterCounters = {
     [entityType in FilterCounterEntityType]?: { [requestId: string]: number };
 };
 
-/** Counters of the filters of one entity type, keyed by filter key. */
 export interface FilterCountersResult {
-    [filterKey: string]: number;
+    /** Counters keyed by filter key. Empty when the batched count endpoint is not available. */
+    counters: { [filterKey: string]: number };
+    /** When `false`, the backend holds no batched count endpoint: count one filter at a time. */
+    batched: boolean;
 }

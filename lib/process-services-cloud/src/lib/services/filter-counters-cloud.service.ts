@@ -38,6 +38,8 @@ import {
     FilterCountersResult
 } from '../models/filter-counters-cloud.model';
 
+const BATCHED_COUNTERS_UNAVAILABLE_STATUSES = [404, 501];
+
 interface FilterCountersFilters {
     [FilterCounterEntityType.TASK]: TaskFilterCloudModel[];
     [FilterCounterEntityType.PROCESS_INSTANCE]: ProcessFilterCloudModel[];
@@ -100,9 +102,10 @@ export class FilterCountersCloudService extends BaseCloudService {
     private readonly activeEntityTypesPerApp = new Map<string, Set<FilterCounterEntityType>>();
     private readonly subscribersPerEntityType = new Map<string, number>();
     private readonly eventSubscriptionsPerEntityType = new Map<string, Subscription>();
+    private readonly appsWithoutBatchedCounters = new Set<string>();
     private readonly taskFiltersPerApp = new Map<string, Observable<TaskFilterCloudModel[]>>();
     private readonly processFiltersPerApp = new Map<string, Observable<ProcessFilterCloudModel[]>>();
-    private readonly countersPerApp = new Map<string, Observable<FilterCounters>>();
+    private readonly countersPerApp = new Map<string, Observable<{ counters: FilterCounters; batched: boolean }>>();
 
     get notificationDebounceTime(): number {
         return this.appConfigService.get('notificationDebounceTime', 3000);
@@ -146,7 +149,7 @@ export class FilterCountersCloudService extends BaseCloudService {
 
             return this.getCounters(appName);
         }).pipe(
-            map((counters) => counters[entityType] ?? {}),
+            map(({ counters, batched }) => ({ counters: counters[entityType] ?? {}, batched })),
             finalize(() => this.deactivateEntityType(appName, entityType))
         );
     }
@@ -288,7 +291,7 @@ export class FilterCountersCloudService extends BaseCloudService {
         return filters$;
     }
 
-    private getCounters(appName: string): Observable<FilterCounters> {
+    private getCounters(appName: string): Observable<{ counters: FilterCounters; batched: boolean }> {
         let counters$ = this.countersPerApp.get(appName);
         if (!counters$) {
             counters$ = this.recounts(appName).pipe(
@@ -301,12 +304,22 @@ export class FilterCountersCloudService extends BaseCloudService {
         return counters$;
     }
 
-    private resolveCounters(appName: string): Observable<FilterCounters> {
+    private resolveCounters(appName: string): Observable<{ counters: FilterCounters; batched: boolean }> {
+        if (this.appsWithoutBatchedCounters.has(appName)) {
+            return of({ counters: {}, batched: false });
+        }
+
         return this.getFiltersForCounters(appName).pipe(
             take(1),
             switchMap((filters) => this.fetchFilterCounters(appName, this.buildRequest(filters))),
-            /* A failed count leaves the counters as they are, rather than breaking the stream. */
-            catchError(() => of({}))
+            map((counters) => ({ counters, batched: true })),
+            catchError((error) => {
+                if (BATCHED_COUNTERS_UNAVAILABLE_STATUSES.includes(error?.status)) {
+                    this.appsWithoutBatchedCounters.add(appName);
+                }
+
+                return of({ counters: {}, batched: false });
+            })
         );
     }
 
@@ -369,7 +382,7 @@ export class FilterCountersCloudService extends BaseCloudService {
                 try {
                     return { ...buildQuery(filter), requestId: filter.key as string };
                 } catch {
-                    /* A malformed filter is left without a counter, so the others still hold one. */
+                    /* Left out of the batch and counted on its own. */
                     return undefined;
                 }
             })

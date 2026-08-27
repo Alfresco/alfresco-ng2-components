@@ -25,8 +25,11 @@ import { LocalPreferenceCloudService } from '../../../../services/local-preferen
 import { defaultTaskFiltersMock, fakeGlobalFilter, taskNotifications } from '../../mock/task-filters-cloud.mock';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { TaskFiltersCloudComponent } from './task-filters-cloud.component';
+import { TaskListCloudService } from '../../../task-list/services/task-list-cloud.service';
 import { HarnessLoader } from '@angular/cdk/testing';
+import { MatNavListItemHarness } from '@angular/material/list/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { TaskFilterCloudAdapter } from '../../../../models/filter-cloud-model';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { TaskFilterCloudModel } from '../../models/filter-cloud.model';
 import { MatIconHarness } from '@angular/material/icon/testing';
@@ -42,18 +45,21 @@ class DummyComponent {}
 describe('TaskFiltersCloudComponent', () => {
     let loader: HarnessLoader;
     let taskFilterService: TaskFilterCloudService;
+    let taskListService: TaskListCloudService;
     let appConfigService: AppConfigService;
 
     let component: TaskFiltersCloudComponent;
     let fixture: ComponentFixture<TaskFiltersCloudComponent>;
+    let getTaskFilterCounterSpy: jasmine.Spy;
     let getTaskListFiltersSpy: jasmine.Spy;
+    let getTaskListCountSpy: jasmine.Spy;
     let getEngineEventsSpy: jasmine.Spy;
     let filterCountersService: FilterCountersCloudService;
     let getFilterCountersSpy: jasmine.Spy;
     let refreshFilterCountersSpy: jasmine.Spy;
     let router: Router;
 
-    const configureTestingModule = async () => {
+    const configureTestingModule = async (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
             imports: [NoopAuthModule, TaskFiltersCloudComponent, ApolloTestingModule],
             providers: [
@@ -76,10 +82,15 @@ describe('TaskFiltersCloudComponent', () => {
             ]
         });
         taskFilterService = TestBed.inject(TaskFilterCloudService);
+        taskListService = TestBed.inject(TaskListCloudService);
         filterCountersService = TestBed.inject(FilterCountersCloudService);
+        getTaskFilterCounterSpy = spyOn(taskFilterService, 'getTaskFilterCounter').and.returnValue(of(11));
+        getTaskListCountSpy = spyOn(taskListService, 'getTaskListCount').and.returnValue(of(11));
         getEngineEventsSpy = spyOn(filterCountersService, 'getEngineEvents').and.returnValue(of(taskNotifications));
         getTaskListFiltersSpy = spyOn(filterCountersService, 'getTaskFilters').and.returnValue(of(fakeGlobalFilter));
-        getFilterCountersSpy = spyOn(filterCountersService, 'getFilterCounters').and.returnValue(of({ 'fake-involved-tasks': 11 }));
+        getFilterCountersSpy = spyOn(filterCountersService, 'getFilterCounters').and.returnValue(
+            of({ counters: { 'fake-involved-tasks': 11 }, batched: true })
+        );
         refreshFilterCountersSpy = spyOn(filterCountersService, 'refreshFilterCounters');
 
         appConfigService = TestBed.inject(AppConfigService);
@@ -88,6 +99,7 @@ describe('TaskFiltersCloudComponent', () => {
         component = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
 
+        component.searchApiMethod = searchApiMethod;
         TestBed.inject(ActivatedRoute);
         router = TestBed.inject(Router);
         await RouterTestingHarness.create();
@@ -103,9 +115,9 @@ describe('TaskFiltersCloudComponent', () => {
         fixture.destroy();
     });
 
-    describe('filters on screen', () => {
+    describe('searchApiMethod set to GET', () => {
         beforeEach(async () => {
-            await configureTestingModule();
+            await configureTestingModule('GET');
         });
 
         it('should attach specific icon for each filter if hasIcon is true', async () => {
@@ -338,9 +350,132 @@ describe('TaskFiltersCloudComponent', () => {
         });
     });
 
-    describe('filter selection and counters', () => {
+    describe('searchApiMethod set to POST', () => {
         beforeEach(async () => {
-            await configureTestingModule();
+            await configureTestingModule('POST');
+            component.showIcons = true;
+        });
+
+        it('should attach specific icon for each filter if hasIcon is true', async () => {
+            await bindAppName();
+
+            const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+
+            expect(component.filters.length).toBe(3);
+            expect(filterIcons.length).toBe(3);
+            expect(await filterIcons[0].getName()).toContain('adjust');
+            expect(await filterIcons[1].getName()).toContain('done');
+            expect(await filterIcons[2].getName()).toContain('inbox');
+        });
+
+        it('should not attach icons for each filter if showIcons is false', async () => {
+            component.showIcons = false;
+            await bindAppName();
+
+            const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+            expect(filterIcons.length).toBe(0);
+        });
+
+        it('should display the filters', async () => {
+            await bindAppName();
+
+            const filters = fixture.debugElement.queryAll(By.css('.adf-task-filters__entry'));
+
+            expect(component.filters.length).toBe(3);
+            expect(filters.length).toBe(3);
+            expect(filters[0].nativeElement.innerText).toContain('FakeInvolvedTasks');
+            expect(filters[1].nativeElement.innerText).toContain('FakeMyTasks1');
+            expect(filters[2].nativeElement.innerText).toContain('FakeMyTasks2');
+        });
+
+        it('should not select any filter as default', async () => {
+            await bindAppName();
+
+            expect(component.currentFilter).toBeUndefined();
+        });
+
+        it('should emit filterClicked when a filter is clicked from the UI', async () => {
+            await bindAppName();
+            const spy = spyOn(component.filterClicked, 'emit');
+
+            const filterButton = await loader.getHarness(
+                MatNavListItemHarness.with({ selector: `[data-automation-id="${fakeGlobalFilter[0].key}_filter"]` })
+            );
+            await filterButton.click();
+
+            expect(spy).toHaveBeenCalledWith(fakeGlobalFilter[0]);
+        });
+
+        it('should display filter counter if property set to true', async () => {
+            await bindAppName();
+
+            const filterCounters = fixture.debugElement.queryAll(By.css('.adf-task-filters__entry-counter'));
+
+            expect(component.filters.length).toBe(3);
+            expect(filterCounters.length).toBe(1);
+            expect(filterCounters[0].nativeElement.innerText).toContain('11');
+        });
+
+        it('should update filter counter when notification received', async () => {
+            await bindAppName();
+
+            const updatedFilterCounters = fixture.debugElement.queryAll(By.css('span.adf-active'));
+
+            expect(updatedFilterCounters.length).toBe(1);
+            expect(Object.keys(component.counters).length).toBe(3);
+            expect(component.counters['fake-involved-tasks']).toBeDefined();
+        });
+
+        it('should not update filter counter when notifications are disabled from app.config.json', async () => {
+            spyOn(appConfigService, 'get').and.returnValue(false);
+            await bindAppName();
+
+            expect(fixture.componentInstance.counters).toBeDefined();
+            const updatedFilterCounters = fixture.debugElement.queryAll(By.css('span.adf-active'));
+            expect(updatedFilterCounters.length).toBe(0);
+        });
+
+        it('should reset filter counter notification when filter is selected', async () => {
+            await bindAppName();
+            spyOn(appConfigService, 'get').and.returnValue(true);
+            const change = new SimpleChange(null, { key: fakeGlobalFilter[0].key }, true);
+
+            let updatedFilterCounters = fixture.debugElement.queryAll(By.css('span.adf-active'));
+            expect(updatedFilterCounters.length).toBe(1);
+
+            component.filters = fakeGlobalFilter;
+            component.currentFilter = null;
+
+            component.ngOnChanges({ filterParam: change });
+            fixture.detectChanges();
+
+            updatedFilterCounters = fixture.debugElement.queryAll(By.css('span.adf-active'));
+            expect(updatedFilterCounters.length).toBe(0);
+        });
+
+        it('should refresh the filter counters when a filter is selected', async () => {
+            await bindAppName();
+
+            const filterButton = await loader.getHarness(
+                MatNavListItemHarness.with({ selector: `[data-automation-id="${fakeGlobalFilter[0].key}_filter"]` })
+            );
+            await filterButton.click();
+
+            expect(refreshFilterCountersSpy).toHaveBeenCalledWith('my-app-1');
+        });
+
+        it('should resolve the counters with the POST method when the batched endpoint is not available', async () => {
+            getFilterCountersSpy.and.returnValue(of({ counters: {}, batched: false }));
+
+            await bindAppName();
+
+            expect(getTaskListCountSpy).toHaveBeenCalledWith(new TaskFilterCloudAdapter(fakeGlobalFilter[0]));
+        });
+    });
+
+    describe('API agnostic', () => {
+        beforeEach(async () => {
+            await configureTestingModule('GET');
         });
 
         it('should emit an error with a bad response', (done) => {
@@ -546,16 +681,16 @@ describe('TaskFiltersCloudComponent', () => {
             expect(component.updatedCountersSet.has(fakeFilterKey)).toBe(true);
         });
 
-        it('should hold the counter only of the filters with a counter enabled', async () => {
+        it('should resolve the counter only of the filters with a counter enabled', () => {
             const filterWithCounter = new TaskFilterCloudModel({ ...defaultTaskFiltersMock[0], showCounter: true });
             const filterWithoutCounter = new TaskFilterCloudModel({ ...defaultTaskFiltersMock[1], showCounter: false });
-            getTaskListFiltersSpy.and.returnValue(of([filterWithCounter, filterWithoutCounter]));
-            getFilterCountersSpy.and.returnValue(of({ [filterWithCounter.key]: 7, [filterWithoutCounter.key]: 9 }));
+            getTaskFilterCounterSpy.calls.reset();
 
-            await bindAppName();
+            component.filters = [filterWithCounter, filterWithoutCounter];
+            component.updateFilterCounters();
 
-            expect(component.counters[filterWithCounter.key]).toBe(7);
-            expect(component.counters[filterWithoutCounter.key]).toBe(0);
+            expect(getTaskFilterCounterSpy).toHaveBeenCalledTimes(1);
+            expect(getTaskFilterCounterSpy).toHaveBeenCalledWith(filterWithCounter);
         });
 
         describe('Batched counters', () => {
@@ -570,7 +705,7 @@ describe('TaskFiltersCloudComponent', () => {
             it('should hold the counters until the filters they belong to arrive', async () => {
                 const filters$ = new Subject<TaskFilterCloudModel[]>();
                 getTaskListFiltersSpy.and.returnValue(filters$.asObservable());
-                getFilterCountersSpy.and.returnValue(of({ 'fake-involved-tasks': 9 }));
+                getFilterCountersSpy.and.returnValue(of({ counters: { 'fake-involved-tasks': 9 }, batched: true }));
 
                 await bindAppName();
                 expect(component.counters['fake-involved-tasks']).toBeUndefined();
@@ -588,7 +723,7 @@ describe('TaskFiltersCloudComponent', () => {
             });
 
             it('should hold the counters resolved by the batched count request', async () => {
-                getFilterCountersSpy.and.returnValue(of({ 'fake-involved-tasks': 9 }));
+                getFilterCountersSpy.and.returnValue(of({ counters: { 'fake-involved-tasks': 9 }, batched: true }));
 
                 await bindAppName();
 
@@ -596,7 +731,7 @@ describe('TaskFiltersCloudComponent', () => {
             });
 
             it('should emit the filters whose counter changed', async () => {
-                getFilterCountersSpy.and.returnValue(of({ 'fake-involved-tasks': 9 }));
+                getFilterCountersSpy.and.returnValue(of({ counters: { 'fake-involved-tasks': 9 }, batched: true }));
                 const updatedFilterSpy = spyOn(component.updatedFilter, 'emit');
 
                 await bindAppName();
@@ -604,25 +739,33 @@ describe('TaskFiltersCloudComponent', () => {
                 expect(updatedFilterSpy).toHaveBeenCalledWith('fake-involved-tasks');
             });
 
-            it('should keep the counter of a filter the request left out', async () => {
-                getFilterCountersSpy.and.returnValue(of({ 'fake-involved-tasks': 9 }));
-                await bindAppName();
-                expect(component.counters['fake-involved-tasks']).toBe(9);
+            it('should resolve the counter of a filter the batch left out on its own', async () => {
+                getFilterCountersSpy.and.returnValue(of({ counters: {}, batched: true }));
 
-                getFilterCountersSpy.and.returnValue(of({}));
                 await bindAppName();
 
-                expect(component.counters['fake-involved-tasks']).toBe(9);
+                expect(getTaskFilterCounterSpy).toHaveBeenCalledWith(fakeGlobalFilter[0]);
+                expect(component.counters['fake-involved-tasks']).toBe(11);
             });
 
             it('should keep the counters of the other filters when one counter cannot be resolved', async () => {
                 getTaskListFiltersSpy.and.returnValue(of([fakeGlobalFilter[0], { ...fakeGlobalFilter[1], showCounter: true }]));
-                getFilterCountersSpy.and.returnValue(of({ 'fake-involved-tasks': 4 }));
+                getFilterCountersSpy.and.returnValue(of({ counters: { 'fake-involved-tasks': 4 }, batched: true }));
+                getTaskFilterCounterSpy.and.throwError('the query of the filter cannot be built');
 
                 await bindAppName();
 
                 expect(component.counters['fake-involved-tasks']).toBe(4);
                 expect(component.counters['fake-my-task1']).toBe(0);
+            });
+
+            it('should resolve the counters one filter at a time when the batched endpoint is not available', async () => {
+                getFilterCountersSpy.and.returnValue(of({ counters: {}, batched: false }));
+
+                await bindAppName();
+
+                expect(getTaskFilterCounterSpy).toHaveBeenCalled();
+                expect(component.counters['fake-involved-tasks']).toBe(11);
             });
 
             it('should refresh the counters of every filter when a filter is clicked', async () => {
@@ -631,6 +774,17 @@ describe('TaskFiltersCloudComponent', () => {
                 component.onFilterClick(fakeGlobalFilter[0]);
 
                 expect(refreshFilterCountersSpy).toHaveBeenCalledWith('my-app-1');
+            });
+
+            it('should refresh the counter of the clicked filter alone when the batched endpoint is not available', async () => {
+                getFilterCountersSpy.and.returnValue(of({ counters: {}, batched: false }));
+                await bindAppName();
+                getTaskFilterCounterSpy.calls.reset();
+
+                component.onFilterClick(fakeGlobalFilter[0]);
+
+                expect(refreshFilterCountersSpy).not.toHaveBeenCalled();
+                expect(getTaskFilterCounterSpy).toHaveBeenCalledTimes(1);
             });
         });
 

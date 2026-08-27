@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, inject, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { combineLatest, Observable, of, Subscription } from 'rxjs';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { combineLatest, defer, EMPTY, Observable, of, Subscription } from 'rxjs';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { FilterParamsModel, TaskFilterCloudModel } from '../../models/filter-cloud.model';
 import { AppConfigService, IconModule, TranslationService } from '@alfresco/adf-core';
@@ -24,8 +24,10 @@ import { catchError, map } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from '../base-task-filters-cloud.component';
 import { TaskDetailsCloudModel } from '../../../models/task-details-cloud.model';
 import { TaskCloudEngineEvent } from '../../../../models/engine-event-cloud.model';
+import { TaskListCloudService } from '../../../task-list/services/task-list-cloud.service';
+import { TaskFilterCloudAdapter } from '../../../../models/filter-cloud-model';
 import { FilterCountersCloudService } from '../../../../services/filter-counters-cloud.service';
-import { FilterCounterEntityType, FilterCountersResult } from '../../../../models/filter-counters-cloud.model';
+import { FilterCounterEntityType } from '../../../../models/filter-counters-cloud.model';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -41,6 +43,15 @@ import { AsyncPipe } from '@angular/common';
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
     protected readonly TASKS_ROUTE = '/task-list-cloud';
+
+    /**
+     * (optional) From Activiti 8.7.0 forward, use the 'POST' method to get the task count.
+     *
+     * @deprecated only used by the backends without `POST /query/v1/count`. It will be removed,
+     * along with the 'GET' method, in ADF 10.0.0.
+     */
+    @Input()
+    searchApiMethod: 'GET' | 'POST' = 'GET';
 
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
@@ -66,8 +77,10 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     currentFiltersValues: { [key: string]: number } = {};
     private filtersLoadedFor?: string;
     private countersSubscription?: Subscription;
+    private batchedCounters = true;
 
     private readonly taskFilterCloudService = inject(TaskFilterCloudService);
+    private readonly taskListCloudService = inject(TaskListCloudService);
     private readonly filterCountersCloudService = inject(FilterCountersCloudService);
     private readonly translationService = inject(TranslationService);
     private readonly appConfigService = inject(AppConfigService);
@@ -127,6 +140,40 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
      */
     initFilterCounters(): void {
         this.filters.forEach((filter) => (this.counters[filter.key] = 0));
+    }
+
+    /**
+     * Iterate over filters and update counters
+     *
+     * @deprecated resolves the counters one filter at a time, for the backends without the batched
+     * count endpoint. It will be removed in ADF 10.0.0.
+     */
+    updateFilterCounters(): void {
+        this.filters.forEach((filter) => this.updateFilterCounter(filter));
+    }
+
+    /**
+     *  Get current value for filter and check if value has changed
+     *
+     * @param filter filter
+     * @deprecated resolves the counter of one filter, for the backends without the batched count
+     * endpoint. It will be removed in ADF 10.0.0.
+     */
+    updateFilterCounter(filter: TaskFilterCloudModel): void {
+        if (!filter?.showCounter) {
+            return;
+        }
+
+        /* Building the query throws for a malformed filter: `defer` turns that into a stream error to catch. */
+        defer(() => this.fetchTaskFilterCounter(filter))
+            .pipe(
+                catchError(() => EMPTY),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe((counter) => {
+                this.checkIfFilterValuesHasBeenUpdated(filter.key, counter);
+                this.counters = { ...this.counters, [filter.key]: counter };
+            });
     }
 
     initFilterCounterNotifications(): void {
@@ -197,7 +244,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     onFilterClick(filter: FilterParamsModel) {
         if (filter) {
             this.selectFilter(filter);
-            this.filterCountersCloudService.refreshFilterCounters(this.appName);
+            this.refreshFilterCounter(this.currentFilter);
             this.filterClicked.emit(this.currentFilter);
             this.updatedCountersSet.delete(filter.key);
         } else {
@@ -247,10 +294,17 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.TASK)
         ])
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(([, counters]) => this.applyFilterCounters(counters));
+            .subscribe(([, { counters, batched }]) => {
+                this.batchedCounters = batched;
+                if (batched) {
+                    this.applyFilterCounters(counters);
+                } else {
+                    this.updateFilterCounters();
+                }
+            });
     }
 
-    private applyFilterCounters(counters: FilterCountersResult): void {
+    private applyFilterCounters(counters: { [filterKey: string]: number }): void {
         this.filters.forEach((filter) => {
             /* A filter without a key holds no request id. */
             const filterKey = filter?.showCounter ? filter.key : undefined;
@@ -259,8 +313,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             }
 
             const counter = counters[filterKey];
-            /* A filter the request left out keeps the counter it holds, rather than showing a wrong one. */
             if (counter === undefined) {
+                this.updateFilterCounter(filter);
                 return;
             }
 
@@ -269,11 +323,25 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         });
     }
 
+    private fetchTaskFilterCounter(filter: TaskFilterCloudModel): Observable<number> {
+        return this.searchApiMethod === 'POST'
+            ? this.taskListCloudService.getTaskListCount(new TaskFilterCloudAdapter(filter))
+            : this.taskFilterCloudService.getTaskFilterCounter(filter);
+    }
+
     /**
      * Reset the filters properties
      */
     private resetFilter() {
         this.filters = [];
         this.currentFilter = undefined;
+    }
+
+    private refreshFilterCounter(filter: TaskFilterCloudModel): void {
+        if (this.batchedCounters) {
+            this.filterCountersCloudService.refreshFilterCounters(this.appName);
+        } else {
+            this.updateFilterCounter(filter);
+        }
     }
 }

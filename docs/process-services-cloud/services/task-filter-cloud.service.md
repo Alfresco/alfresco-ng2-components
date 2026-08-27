@@ -31,6 +31,10 @@ Manages task filters.
     -   _appName:_ `string`  - Name of the target app
     -   _id:_ `string`  - ID of the task
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` - Details of the task filter
+-   **getTaskFilterCounter**(taskFilter: [`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    Finds a task using an object with optional query properties.
+    -   _taskFilter:_ [`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)  - 
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Task information
 -   **getTaskListFilters**(appName?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`[]>`<br/>
     Gets all task filters for a task app.
     -   _appName:_ `string`  - (Optional) Name of the target app

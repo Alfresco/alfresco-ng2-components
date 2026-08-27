@@ -124,6 +124,17 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
         return this.fetchTaskList(requestNode).pipe(map((tasks) => tasks.list.pagination.totalItems));
     }
 
+    getTaskListCount(requestNode: TaskListRequestModel): Observable<number> {
+        if (!requestNode?.appName) {
+            return throwError(() => new Error('Appname not configured'));
+        }
+
+        const queryUrl = `${this.getBasePath(requestNode.appName)}/query/v1/tasks/count`;
+        const queryData = this.buildQueryData(requestNode);
+
+        return this.post<object, number>(queryUrl, queryData).pipe(map((response) => response || 0));
+    }
+
     /**
      * Builds the body of a task query, with the empty properties of the request stripped out.
      *
