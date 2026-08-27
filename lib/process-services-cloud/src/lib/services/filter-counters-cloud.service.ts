@@ -37,8 +37,11 @@ import {
     FilterCountersRequest,
     FilterCountersResult
 } from '../models/filter-counters-cloud.model';
+import { IFeaturesService, FeaturesServiceToken } from '@alfresco/adf-core/feature-flags';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const BATCHED_COUNTERS_UNAVAILABLE_STATUSES = [404, 501];
+const BATCHED_COUNTERS_FEATURE_FLAG = 'workspace-batch-count-endpoint';
 
 interface FilterCountersFilters {
     [FilterCounterEntityType.TASK]: TaskFilterCloudModel[];
@@ -92,6 +95,10 @@ export class FilterCountersCloudService extends BaseCloudService {
     private readonly notificationCloudService = inject(NotificationCloudService);
     private readonly taskListCloudService = inject(TaskListCloudService);
     private readonly processListCloudService = inject(ProcessListCloudService);
+    private readonly featureService: IFeaturesService | null = inject<IFeaturesService>(FeaturesServiceToken, { optional: true });
+    private readonly isBatchedCountersEnabled$ = this.featureService
+        ? this.featureService.isOn$(BATCHED_COUNTERS_FEATURE_FLAG).pipe(takeUntilDestroyed())
+        : of(false);
     /** The filter services are resolved on demand: an app showing one family must not wire the other. */
     private readonly injector = inject(Injector);
 
@@ -309,16 +316,26 @@ export class FilterCountersCloudService extends BaseCloudService {
             return of({ counters: {}, batched: false });
         }
 
-        return this.getFiltersForCounters(appName).pipe(
+        return combineLatest({
+            isBatchedCountersEnabled: this.isBatchedCountersEnabled$,
+            filters: this.getFiltersForCounters(appName)
+        }).pipe(
             take(1),
-            switchMap((filters) => this.fetchFilterCounters(appName, this.buildRequest(filters))),
-            map((counters) => ({ counters, batched: true })),
-            catchError((error) => {
-                if (BATCHED_COUNTERS_UNAVAILABLE_STATUSES.includes(error?.status)) {
-                    this.appsWithoutBatchedCounters.add(appName);
+            switchMap(({ isBatchedCountersEnabled, filters }) => {
+                if (!isBatchedCountersEnabled) {
+                    return of({ counters: {}, batched: false });
                 }
 
-                return of({ counters: {}, batched: false });
+                return this.fetchFilterCounters(appName, this.buildRequest(filters)).pipe(
+                    map((counters) => ({ counters, batched: true })),
+                    catchError((error) => {
+                        if (BATCHED_COUNTERS_UNAVAILABLE_STATUSES.includes(error?.status)) {
+                            this.appsWithoutBatchedCounters.add(appName);
+                        }
+
+                        return of({ counters: {}, batched: false });
+                    })
+                );
             })
         );
     }
