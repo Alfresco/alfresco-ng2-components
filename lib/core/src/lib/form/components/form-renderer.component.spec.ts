@@ -1119,6 +1119,12 @@ describe('Form Renderer Component', () => {
             expect(form.hasSideNav()).toBeFalse();
         });
 
+        it('should report hasSideNav as true when layout is sidenav even with no sections', () => {
+            const form = new FormModel({ layout: 'sidenav', tabs: [], fields: [] });
+            formRendererComponent.formDefinition = form;
+            expect(form.hasSideNav()).toBeTrue();
+        });
+
         it('should default the active section to the first visible leaf node', () => {
             formRendererComponent.formDefinition = buildSideNavForm();
             expect(formRendererComponent.activeSideNavSectionId()).toBe('section-1');

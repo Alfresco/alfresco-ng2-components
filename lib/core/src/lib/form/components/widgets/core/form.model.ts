@@ -354,10 +354,10 @@ export class FormModel implements ProcessFormModel {
      * Indicates whether the form should be rendered using the hierarchical side navigation
      * layout instead of the classic tabs layout.
      *
-     * @returns true when the form has tabs and its layout is set to `sidenav`
+     * @returns true when the form layout is set to `sidenav`
      */
     hasSideNav(): boolean {
-        return this.layout === 'sidenav' && this.hasTabs();
+        return this.layout === 'sidenav';
     }
 
     /**
