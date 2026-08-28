@@ -44,8 +44,14 @@ export class FormSideNavComponent implements OnChanges {
     @Input()
     activeNodeId: string;
 
+    @Input()
+    showAddSection = false;
+
     @Output()
     sectionSelected = new EventEmitter<TabModel>();
+
+    @Output()
+    addSectionClicked = new EventEmitter<void>();
 
     protected readonly isSmallScreen = toSignal(
         this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).pipe(map(({ matches }) => matches)),

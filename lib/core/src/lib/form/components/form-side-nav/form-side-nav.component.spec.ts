@@ -169,4 +169,32 @@ describe('FormSideNavComponent', () => {
 
         expect(testingUtils.getByCSS('.adf-form-side-nav-toggle')).toBeTruthy();
     });
+
+    describe('Add section button', () => {
+        it('should not show the add section button by default', () => {
+            fixture.componentRef.setInput('nodes', []);
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('.adf-form-side-nav-add-section')).toBeFalsy();
+        });
+
+        it('should show the add section button when showAddSection is true', () => {
+            fixture.componentRef.setInput('nodes', []);
+            fixture.componentRef.setInput('showAddSection', true);
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('.adf-form-side-nav-add-section')).toBeTruthy();
+        });
+
+        it('should emit addSectionClicked when the add section button is clicked', () => {
+            fixture.componentRef.setInput('nodes', []);
+            fixture.componentRef.setInput('showAddSection', true);
+            fixture.detectChanges();
+
+            const emitSpy = spyOn(component.addSectionClicked, 'emit');
+            testingUtils.getByCSS('.adf-form-side-nav-add-section-button').nativeElement.click();
+
+            expect(emitSpy).toHaveBeenCalledOnceWith();
+        });
+    });
 });

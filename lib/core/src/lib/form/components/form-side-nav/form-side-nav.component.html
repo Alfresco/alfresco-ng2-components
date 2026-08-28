@@ -21,6 +21,20 @@
         <mat-nav-list class="adf-form-side-nav-list" role="tree">
             <ng-container *ngTemplateOutlet="nodeList; context: { nodes: nodes, level: 0 }" />
         </mat-nav-list>
+
+        @if (showAddSection) {
+            <div class="adf-form-side-nav-add-section">
+                <button
+                    mat-stroked-button
+                    class="adf-form-side-nav-add-section-button"
+                    type="button"
+                    (click)="addSectionClicked.emit()"
+                >
+                    <mat-icon adf-icon="add" />
+                    {{ 'FORM.FORM_RENDERER.SIDE_NAV.ADD_SECTION' | translate }}
+                </button>
+            </div>
+        }
     </mat-sidenav>
 
     <mat-sidenav-content class="adf-form-side-nav-content">

@@ -93,7 +93,8 @@
         "COLLAPSE": "Collapse section",
         "HAS_ERRORS": "This section contains validation errors",
         "COMPLETE": "This section is complete",
-        "REQUIRED_FIELDS": "{{ count }} required fields"
+        "REQUIRED_FIELDS": "{{ count }} required fields",
+        "ADD_SECTION": "Add section"
       }
     },
     "BUTTON": {

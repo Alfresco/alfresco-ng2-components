@@ -56,6 +56,14 @@
     padding-top: 0;
 }
 
+.adf-form-side-nav-add-section {
+    padding: 8px 16px;
+
+    &-button {
+        width: 100%;
+    }
+}
+
 .adf-form-side-nav-item {
     display: flex;
     align-items: center;
