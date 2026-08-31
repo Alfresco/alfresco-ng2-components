@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { gql } from '@apollo/client/core';
+import { FetchResult, gql } from '@apollo/client/core';
 import { Injectable, inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { WebSocketService } from './web-socket.service';
 @Injectable({
     providedIn: 'root'
@@ -24,8 +25,8 @@ import { WebSocketService } from './web-socket.service';
 export class NotificationCloudService {
     private readonly webSocketService = inject(WebSocketService);
 
-    makeGQLQuery(appName: string, gqlQuery: string) {
-        return this.webSocketService.getSubscription({
+    makeGQLQuery<T = unknown>(appName: string, gqlQuery: string): Observable<FetchResult<T>> {
+        return this.webSocketService.getSubscription<T>({
             apolloClientName: appName,
             wsUrl: `${appName}/notifications`,
             httpUrl: `${appName}/notifications/v2/ws/graphql`,

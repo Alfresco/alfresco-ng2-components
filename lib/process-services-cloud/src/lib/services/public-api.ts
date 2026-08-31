@@ -17,6 +17,7 @@
 
 export * from './base-cloud.service';
 export * from './cloud-token.service';
+export * from './filter-counters-cloud.service';
 export * from './form-fields.interfaces';
 export * from './local-preference-cloud.service';
 export * from './notification-cloud.service';

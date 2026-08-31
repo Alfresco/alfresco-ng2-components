@@ -16,16 +16,18 @@
  */
 
 import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { EMPTY, Observable } from 'rxjs';
+import { combineLatest, defer, EMPTY, Observable, of, Subscription } from 'rxjs';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { FilterParamsModel, TaskFilterCloudModel } from '../../models/filter-cloud.model';
 import { AppConfigService, IconModule, TranslationService } from '@alfresco/adf-core';
-import { catchError, debounceTime, map, shareReplay, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from '../base-task-filters-cloud.component';
 import { TaskDetailsCloudModel } from '../../../models/task-details-cloud.model';
 import { TaskCloudEngineEvent } from '../../../../models/engine-event-cloud.model';
 import { TaskListCloudService } from '../../../task-list/services/task-list-cloud.service';
 import { TaskFilterCloudAdapter } from '../../../../models/filter-cloud-model';
+import { FilterCountersCloudService } from '../../../../services/filter-counters-cloud.service';
+import { FilterCounterEntityType } from '../../../../models/filter-counters-cloud.model';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -42,9 +44,20 @@ import { AsyncPipe } from '@angular/common';
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
     protected readonly TASKS_ROUTE = '/task-list-cloud';
 
-    /** (optional) From Activiti 8.7.0 forward, use the 'POST' method to get the task count. */
+    /**
+     * (optional) From Activiti 8.7.0 forward, use the 'POST' method to get the task count.
+     *
+     */
     @Input()
     searchApiMethod: 'GET' | 'POST' = 'GET';
+
+    /**
+     * (optional) Resolves the counters of the task and the process filters with a single call to
+     * `POST /query/v1/count`. Both filter components have to
+     * ask for it, otherwise the counters are resolved one filter at a time.
+     */
+    @Input()
+    useBatchedCounters = false;
 
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
@@ -69,9 +82,13 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     notificationDebounceTime = 3000;
     currentFiltersValues: { [key: string]: number } = {};
     private filtersLoadedFor?: string;
+    private countersSubscription?: Subscription;
+    private countersFilters$?: Observable<TaskFilterCloudModel[]>;
+    private batchedCounters = true;
 
     private readonly taskFilterCloudService = inject(TaskFilterCloudService);
     private readonly taskListCloudService = inject(TaskListCloudService);
+    private readonly filterCountersCloudService = inject(FilterCountersCloudService);
     private readonly translationService = inject(TranslationService);
     private readonly appConfigService = inject(AppConfigService);
     private readonly activatedRoute = inject(ActivatedRoute);
@@ -80,6 +97,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
         this.notificationDebounceTime = this.appConfigService.get('notificationDebounceTime', 3000);
+
         if (!this.filtersLoadedFor) {
             this.getFilters(this.appName);
         }
@@ -94,6 +112,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             this.getFilters(appName.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectFilterAndEmit(filter.currentValue);
+        } else if (changes['useBatchedCounters'] && !changes['useBatchedCounters'].firstChange && this.filtersLoadedFor) {
+            this.loadFilterCounters(this.filtersLoadedFor);
         }
     }
 
@@ -104,8 +124,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
      */
     getFilters(appName: string): void {
         this.filtersLoadedFor = appName;
-        const filters$ = this.taskFilterCloudService.getTaskListFilters(appName).pipe(shareReplay({ bufferSize: 1, refCount: true }));
-        this.filters$ = filters$.pipe(catchError(() => EMPTY));
+        const filters$ = this.filterCountersCloudService.getTaskFilters(appName);
+        this.filters$ = filters$.pipe(catchError(() => of([])));
 
         filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
             next: (res) => {
@@ -113,13 +133,15 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
                 this.filters = res || [];
                 this.initFilterCounters();
                 this.selectFilterAndEmit(this.filterParam);
-                this.updateFilterCounters();
                 this.success.emit(res);
             },
             error: (err) => {
                 this.error.emit(err);
             }
         });
+
+        this.countersFilters$ = filters$;
+        this.loadFilterCounters(appName);
     }
 
     /**
@@ -131,55 +153,47 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     /**
      * Iterate over filters and update counters
+     *
+     * @deprecated counts one filter at a time. Removed in ADF 10.0.0.
      */
     updateFilterCounters(): void {
-        this.filters.forEach((filter: TaskFilterCloudModel) => this.updateFilterCounter(filter));
+        this.filters.forEach((filter) => this.updateFilterCounter(filter));
     }
 
     /**
      *  Get current value for filter and check if value has changed
      *
      * @param filter filter
+     * @deprecated counts one filter at a time. Removed in ADF 10.0.0.
      */
     updateFilterCounter(filter: TaskFilterCloudModel): void {
         if (!filter?.showCounter) {
             return;
         }
-        this.fetchTaskFilterCounter(filter)
+
+        defer(() => this.fetchTaskFilterCounter(filter))
             .pipe(
-                tap((filterCounter) => {
-                    this.checkIfFilterValuesHasBeenUpdated(filter.key, filterCounter);
-                })
+                catchError(() => EMPTY),
+                takeUntilDestroyed(this.destroyRef)
             )
-            .subscribe((data) => {
-                this.counters = {
-                    ...this.counters,
-                    [filter.key]: data
-                };
+            .subscribe((counter) => {
+                this.checkIfFilterValuesHasBeenUpdated(filter.key, counter);
+                this.counters = { ...this.counters, [filter.key]: counter };
             });
     }
 
-    private fetchTaskFilterCounter(filter: TaskFilterCloudModel): Observable<number> {
-        return this.searchApiMethod === 'POST'
-            ? this.taskListCloudService.getTaskListCount(new TaskFilterCloudAdapter(filter))
-            : this.taskFilterCloudService.getTaskFilterCounter(filter);
-    }
-
-    initFilterCounterNotifications() {
+    initFilterCounterNotifications(): void {
         if (!this.appName) {
             return;
         }
-        if (this.enableNotifications) {
-            this.taskFilterCloudService
-                .getTaskNotificationSubscription(this.appName)
-                .pipe(debounceTime(this.notificationDebounceTime), takeUntilDestroyed(this.destroyRef))
-                .subscribe((result) => {
-                    result.forEach((taskEvent) => {
-                        this.checkFilterCounter(taskEvent.entity);
-                    });
 
-                    this.updateFilterCounters();
-                    this.filterCounterUpdated.emit(result);
+        if (this.enableNotifications) {
+            this.filterCountersCloudService
+                .getEngineEvents(this.appName, FilterCounterEntityType.TASK)
+                .pipe(takeUntilDestroyed(this.destroyRef))
+                .subscribe((events) => {
+                    events.forEach((taskEvent) => this.checkFilterCounter(taskEvent.entity));
+                    this.filterCounterUpdated.emit(events);
                 });
         } else {
             this.counters = {};
@@ -240,7 +254,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     onFilterClick(filter: FilterParamsModel) {
         if (filter) {
             this.selectFilter(filter);
-            this.updateFilterCounter(this.currentFilter);
+            this.refreshFilterCounter(this.currentFilter);
             this.filterClicked.emit(this.currentFilter);
             this.updatedCountersSet.delete(filter.key);
         } else {
@@ -267,17 +281,9 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         return this.filters === undefined || (this.filters && this.filters.length === 0);
     }
 
-    /**
-     * Reset the filters properties
-     */
-    private resetFilter() {
-        this.filters = [];
-        this.currentFilter = undefined;
-    }
-
     checkIfFilterValuesHasBeenUpdated(filterKey: string, filterValue: number) {
         if (this.currentFiltersValues[filterKey] === undefined || this.currentFiltersValues[filterKey] !== filterValue) {
-            this.currentFiltersValues[filterKey] = filterValue;
+            this.currentFiltersValues = { ...this.currentFiltersValues, [filterKey]: filterValue };
             this.updatedFilter.emit(filterKey);
             this.updatedCountersSet.add(filterKey);
         }
@@ -288,8 +294,69 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
      *
      */
     getFilterKeysAfterExternalRefreshing(): void {
-        this.taskFilterCloudService.filterKeyToBeRefreshed$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((filterKey: string) => {
-            this.updatedCountersSet.delete(filterKey);
+        this.taskFilterCloudService.filterKeyToBeRefreshed$
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((filterKey: string) => this.updatedCountersSet.delete(filterKey));
+    }
+
+    private loadFilterCounters(appName: string): void {
+        if (!this.countersFilters$) {
+            return;
+        }
+
+        this.countersSubscription?.unsubscribe();
+        this.countersSubscription = combineLatest([
+            this.countersFilters$.pipe(catchError(() => of([]))),
+            this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.TASK, this.useBatchedCounters)
+        ])
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(([, { counters, batched }]) => {
+                this.batchedCounters = batched;
+                if (batched) {
+                    this.applyFilterCounters(counters);
+                } else {
+                    this.updateFilterCounters();
+                }
+            });
+    }
+
+    private applyFilterCounters(counters: { [filterKey: string]: number }): void {
+        this.filters.forEach((filter) => {
+            const filterKey = filter?.showCounter ? filter.key : undefined;
+            if (!filterKey) {
+                return;
+            }
+
+            const counter = counters[filterKey];
+            if (counter === undefined) {
+                this.updateFilterCounter(filter);
+                return;
+            }
+
+            this.checkIfFilterValuesHasBeenUpdated(filterKey, counter);
+            this.counters = { ...this.counters, [filterKey]: counter };
         });
+    }
+
+    private fetchTaskFilterCounter(filter: TaskFilterCloudModel): Observable<number> {
+        return this.searchApiMethod === 'POST'
+            ? this.taskListCloudService.getTaskListCount(new TaskFilterCloudAdapter(filter))
+            : this.taskFilterCloudService.getTaskFilterCounter(filter);
+    }
+
+    /**
+     * Reset the filters properties
+     */
+    private resetFilter() {
+        this.filters = [];
+        this.currentFilter = undefined;
+    }
+
+    private refreshFilterCounter(filter: TaskFilterCloudModel): void {
+        if (this.batchedCounters) {
+            this.filterCountersCloudService.refreshFilterCounters(this.appName);
+        } else {
+            this.updateFilterCounter(filter);
+        }
     }
 }
