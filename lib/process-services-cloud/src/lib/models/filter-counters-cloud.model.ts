@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 
-/**
- * Entity types accepted by the `POST /query/v1/count` endpoint.
- */
 export const FilterCounterEntityType = {
     TASK: 'TASK',
     PROCESS_INSTANCE: 'PROCESS_INSTANCE'
@@ -31,9 +28,7 @@ export interface FilterCountersQuerySort {
     isProcessVariable: boolean;
 }
 
-/** A single query of the batched count request, holding the criteria of one filter. */
 export interface FilterCountersQuery {
-    /** Identifies the query, so its counter can be read back from the response. */
     requestId: string;
     status?: string[];
     assignee?: string[];
@@ -41,30 +36,20 @@ export interface FilterCountersQuery {
     [criteria: string]: unknown;
 }
 
-/**
- * Payload of the batched count request, one entry per counter to be resolved.
- */
 export type FilterCountersRequest = {
     [entityType in FilterCounterEntityType]?: FilterCountersQuery[];
 };
 
-/** Shape of a task or process filter the counters are resolved for. Its key is the `requestId`. */
 export interface FilterCounterCandidate {
     key?: string | null;
     showCounter?: boolean;
 }
 
-/**
- * Counts returned by the batched count request, keyed by entity type and then by `requestId`.
- * e.g. `{ TASK: { 'my-tasks': 5 }, PROCESS_INSTANCE: { 'running-processes': 5 } }`
- */
 export type FilterCounters = {
     [entityType in FilterCounterEntityType]?: { [requestId: string]: number };
 };
 
 export interface FilterCountersResult {
-    /** Counters keyed by filter key. Empty when the batched count endpoint is not available. */
     counters: { [filterKey: string]: number };
-    /** When `false`, the backend holds no batched count endpoint: count one filter at a time. */
     batched: boolean;
 }

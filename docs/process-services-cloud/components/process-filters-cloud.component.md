@@ -27,8 +27,7 @@ Lists all available process filters and allows to select a filter.
 | appName     | `string`                       | ""            | (required) The application name                               |
 | filterParam | `UserTaskFilterRepresentation` |               | (optional) The filter to be selected by default               |
 | showIcons   | `boolean`                      | false         | (optional) Toggles showing an icon by the side of each filter |
-| useBatchedCounters | `boolean`                   | false         | Resolves the counters of the process and the task filters with a single call to `POST /query/v1/count`, which requires Activiti 8.7.0 forward. Both filter components have to ask for it, otherwise the counters are resolved one filter at a time. |
-| searchApiMethod | `'GET' \| 'POST'`          | "GET"         | **Deprecated:** the counters are resolved by a single `POST /query/v1/count` call, which requires Activiti 8.7.0 forward. This input is only used to resolve the counters one filter at a time, on the backends without that endpoint, and will be removed along with the `GET` method in ADF 10.0.0. |
+| useBatchedCounters | `boolean` | false | Get all the filter counters with one call to `POST /query/v1/count` (needs Activiti 8.7.0). Turn it on for both filter components. |
 
 ### Events
 

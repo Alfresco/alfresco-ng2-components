@@ -25,13 +25,6 @@ import { WebSocketService } from './web-socket.service';
 export class NotificationCloudService {
     private readonly webSocketService = inject(WebSocketService);
 
-    /**
-     * Opens a GraphQL subscription over the notifications of an app.
-     *
-     * @param appName Name of the target app
-     * @param gqlQuery Subscription to make
-     * @returns Results of the subscription, holding the data the subscription selected
-     */
     makeGQLQuery<T = unknown>(appName: string, gqlQuery: string): Observable<FetchResult<T>> {
         return this.webSocketService.getSubscription<T>({
             apolloClientName: appName,

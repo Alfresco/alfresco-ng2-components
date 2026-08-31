@@ -47,15 +47,13 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     /**
      * (optional) From Activiti 8.7.0 forward, use the 'POST' method to get the task count.
      *
-     * @deprecated only used by the backends without `POST /query/v1/count`. It will be removed,
-     * along with the 'GET' method, in ADF 10.0.0.
      */
     @Input()
     searchApiMethod: 'GET' | 'POST' = 'GET';
 
     /**
      * (optional) Resolves the counters of the task and the process filters with a single call to
-     * `POST /query/v1/count`, which requires Activiti 8.7.0 forward. Both filter components have to
+     * `POST /query/v1/count`. Both filter components have to
      * ask for it, otherwise the counters are resolved one filter at a time.
      */
     @Input()
@@ -143,7 +141,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         });
 
         this.countersFilters$ = filters$;
-        /* Read along with the filters, not once they arrive, so both components share one request. */
         this.loadFilterCounters(appName);
     }
 
@@ -157,8 +154,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     /**
      * Iterate over filters and update counters
      *
-     * @deprecated resolves the counters one filter at a time, for the backends without the batched
-     * count endpoint. It will be removed in ADF 10.0.0.
+     * @deprecated counts one filter at a time. Removed in ADF 10.0.0.
      */
     updateFilterCounters(): void {
         this.filters.forEach((filter) => this.updateFilterCounter(filter));
@@ -168,15 +164,13 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
      *  Get current value for filter and check if value has changed
      *
      * @param filter filter
-     * @deprecated resolves the counter of one filter, for the backends without the batched count
-     * endpoint. It will be removed in ADF 10.0.0.
+     * @deprecated counts one filter at a time. Removed in ADF 10.0.0.
      */
     updateFilterCounter(filter: TaskFilterCloudModel): void {
         if (!filter?.showCounter) {
             return;
         }
 
-        /* Building the query throws for a malformed filter: `defer` turns that into a stream error to catch. */
         defer(() => this.fetchTaskFilterCounter(filter))
             .pipe(
                 catchError(() => EMPTY),
@@ -295,7 +289,10 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         }
     }
 
-    /** Flags the counter of a filter as read whenever the filter is refreshed elsewhere */
+    /**
+     * Get filer key when filter was refreshed by external action
+     *
+     */
     getFilterKeysAfterExternalRefreshing(): void {
         this.taskFilterCloudService.filterKeyToBeRefreshed$
             .pipe(takeUntilDestroyed(this.destroyRef))
@@ -308,7 +305,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         }
 
         this.countersSubscription?.unsubscribe();
-        /* Counters are keyed by filter key, so they are applied once the filters are known. */
         this.countersSubscription = combineLatest([
             this.countersFilters$.pipe(catchError(() => of([]))),
             this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.TASK, this.useBatchedCounters)
@@ -326,7 +322,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     private applyFilterCounters(counters: { [filterKey: string]: number }): void {
         this.filters.forEach((filter) => {
-            /* A filter without a key holds no request id. */
             const filterKey = filter?.showCounter ? filter.key : undefined;
             if (!filterKey) {
                 return;
