@@ -699,7 +699,7 @@ describe('TaskFiltersCloudComponent', () => {
 
                 await bindAppName();
 
-                expect(getFilterCountersSpy).toHaveBeenCalledWith('my-app-1', FilterCounterEntityType.TASK);
+                expect(getFilterCountersSpy).toHaveBeenCalledWith('my-app-1', FilterCounterEntityType.TASK, false);
             });
 
             it('should hold the counters until the filters they belong to arrive', async () => {
@@ -719,7 +719,33 @@ describe('TaskFiltersCloudComponent', () => {
             it('should read the counters of the task filters of the bound app', async () => {
                 await bindAppName();
 
-                expect(getFilterCountersSpy).toHaveBeenCalledWith('my-app-1', FilterCounterEntityType.TASK);
+                expect(getFilterCountersSpy).toHaveBeenCalledWith('my-app-1', FilterCounterEntityType.TASK, false);
+            });
+
+            it('should not ask for the batched count endpoint by default', async () => {
+                await bindAppName();
+
+                expect(component.useBatchedCounters).toBeFalse();
+                expect(getFilterCountersSpy).toHaveBeenCalledWith('my-app-1', FilterCounterEntityType.TASK, false);
+            });
+
+            it('should ask for the batched count endpoint when the input is set', async () => {
+                fixture.componentRef.setInput('useBatchedCounters', true);
+
+                await bindAppName();
+
+                expect(getFilterCountersSpy).toHaveBeenCalledWith('my-app-1', FilterCounterEntityType.TASK, true);
+            });
+
+            it('should read the counters again when the input changes', async () => {
+                await bindAppName();
+                getFilterCountersSpy.calls.reset();
+
+                fixture.componentRef.setInput('useBatchedCounters', true);
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(getFilterCountersSpy).toHaveBeenCalledWith('my-app-1', FilterCounterEntityType.TASK, true);
             });
 
             it('should hold the counters resolved by the batched count request', async () => {

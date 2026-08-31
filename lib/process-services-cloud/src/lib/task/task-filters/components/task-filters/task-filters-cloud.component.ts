@@ -53,6 +53,14 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     @Input()
     searchApiMethod: 'GET' | 'POST' = 'GET';
 
+    /**
+     * (optional) Resolves the counters of the task and the process filters with a single call to
+     * `POST /query/v1/count`, which requires Activiti 8.7.0 forward. Both filter components have to
+     * ask for it, otherwise the counters are resolved one filter at a time.
+     */
+    @Input()
+    useBatchedCounters = false;
+
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<TaskFilterCloudModel>();
@@ -77,6 +85,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     currentFiltersValues: { [key: string]: number } = {};
     private filtersLoadedFor?: string;
     private countersSubscription?: Subscription;
+    private countersFilters$?: Observable<TaskFilterCloudModel[]>;
     private batchedCounters = true;
 
     private readonly taskFilterCloudService = inject(TaskFilterCloudService);
@@ -105,6 +114,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             this.getFilters(appName.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectFilterAndEmit(filter.currentValue);
+        } else if (changes['useBatchedCounters'] && !changes['useBatchedCounters'].firstChange && this.filtersLoadedFor) {
+            this.loadFilterCounters(this.filtersLoadedFor);
         }
     }
 
@@ -131,8 +142,9 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             }
         });
 
+        this.countersFilters$ = filters$;
         /* Read along with the filters, not once they arrive, so both components share one request. */
-        this.loadFilterCounters(appName, filters$);
+        this.loadFilterCounters(appName);
     }
 
     /**
@@ -177,7 +189,11 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     initFilterCounterNotifications(): void {
-        if (this.appName && this.enableNotifications) {
+        if (!this.appName) {
+            return;
+        }
+
+        if (this.enableNotifications) {
             this.filterCountersCloudService
                 .getEngineEvents(this.appName, FilterCounterEntityType.TASK)
                 .pipe(takeUntilDestroyed(this.destroyRef))
@@ -286,12 +302,16 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             .subscribe((filterKey: string) => this.updatedCountersSet.delete(filterKey));
     }
 
-    private loadFilterCounters(appName: string, filters$: Observable<TaskFilterCloudModel[]>): void {
+    private loadFilterCounters(appName: string): void {
+        if (!this.countersFilters$) {
+            return;
+        }
+
         this.countersSubscription?.unsubscribe();
         /* Counters are keyed by filter key, so they are applied once the filters are known. */
         this.countersSubscription = combineLatest([
-            filters$.pipe(catchError(() => of([]))),
-            this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.TASK)
+            this.countersFilters$.pipe(catchError(() => of([]))),
+            this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.TASK, this.useBatchedCounters)
         ])
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(([, { counters, batched }]) => {

@@ -54,6 +54,14 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     @Input()
     searchApiMethod: 'GET' | 'POST' = 'GET';
 
+    /**
+     * (optional) Resolves the counters of the process and the task filters with a single call to
+     * `POST /query/v1/count`, which requires Activiti 8.7.0 forward. Both filter components have to
+     * ask for it, otherwise the counters are resolved one filter at a time.
+     */
+    @Input()
+    useBatchedCounters = false;
+
     /** (optional) The filter to be selected by default */
     @Input()
     filterParam: FilterParamsModel;
@@ -92,6 +100,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     notificationDebounceTime = 3000;
     private filtersLoadedFor?: string;
     private countersSubscription?: Subscription;
+    private countersFilters$?: Observable<ProcessFilterCloudModel[]>;
     private batchedCounters = true;
 
     private readonly destroyRef = inject(DestroyRef);
@@ -120,6 +129,8 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
             this.getFilters(appName.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectFilterAndEmit(filter.currentValue);
+        } else if (changes['useBatchedCounters'] && !changes['useBatchedCounters'].firstChange && this.filtersLoadedFor) {
+            this.loadFilterCounters(this.filtersLoadedFor);
         }
     }
 
@@ -146,8 +157,9 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
             }
         });
 
+        this.countersFilters$ = filters$;
         /* Read along with the filters, not once they arrive, so both components share one request. */
-        this.loadFilterCounters(appName, filters$);
+        this.loadFilterCounters(appName);
     }
 
     /**
@@ -337,12 +349,16 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         this.currentFilter = undefined;
     }
 
-    private loadFilterCounters(appName: string, filters$: Observable<ProcessFilterCloudModel[]>): void {
+    private loadFilterCounters(appName: string): void {
+        if (!this.countersFilters$) {
+            return;
+        }
+
         this.countersSubscription?.unsubscribe();
         /* Counters are keyed by filter key, so they are applied once the filters are known. */
         this.countersSubscription = combineLatest([
-            filters$.pipe(catchError(() => EMPTY)),
-            this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.PROCESS_INSTANCE)
+            this.countersFilters$.pipe(catchError(() => of([]))),
+            this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.PROCESS_INSTANCE, this.useBatchedCounters)
         ])
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(([, { counters, batched }]) => {
