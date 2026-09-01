@@ -288,7 +288,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 viewer,
                 renderingQueue: this.renderingQueueServices,
                 eventBus: this.eventBus,
-                annotationMode: 0
+                annotationMode: 1
             });
 
             // cspell: disable-next

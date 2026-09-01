@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-process-services",
   "description": "Alfresco ADF process services",
-  "version": "8.0.3",
+  "version": "8.0.4",
   "author": "Hyland Software, Inc. and its affiliates",
   "repository": {
     "type": "git",
