@@ -535,7 +535,18 @@ export class FormModel implements ProcessFormModel {
         const variable = this.getFormVariable(variableId);
         if (variable) {
             variable.value = value;
+            variable.runtimeSet = true;
         }
+    }
+
+    /**
+     * Checks whether a form variable has been given a value at runtime, for example by a form rule.
+     *
+     * @param identifier The `name` or `id` value
+     * @returns `true` when the value was set at runtime rather than coming from the form definition
+     */
+    isVariableSetAtRuntime(identifier: string): boolean {
+        return !!this.getFormVariable(identifier)?.runtimeSet;
     }
 
     private loadInjectedFieldValidators(injectedFieldValidators: FormFieldValidator[]): void {

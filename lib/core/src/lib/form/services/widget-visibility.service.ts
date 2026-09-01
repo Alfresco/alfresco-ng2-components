@@ -271,10 +271,13 @@ export class WidgetVisibilityService {
     }
 
     public getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]): string {
-        const processVariableValue = this.getProcessVariableValue(name, processVarList);
-        const variableDefaultValue = form.getDefaultFormVariableValue(name);
+        if (form.isVariableSetAtRuntime(name)) {
+            return form.getDefaultFormVariableValue(name);
+        }
 
-        return processVariableValue === undefined ? variableDefaultValue : processVariableValue;
+        const processVariableValue = this.getProcessVariableValue(name, processVarList);
+
+        return processVariableValue === undefined ? form.getProcessVariableValue(name) : processVariableValue;
     }
 
     private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]): string {
