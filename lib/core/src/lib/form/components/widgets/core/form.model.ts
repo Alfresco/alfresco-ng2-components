@@ -307,22 +307,17 @@ export class FormModel implements ProcessFormModel {
      * @returns process variable value
      */
     getProcessVariableValue(name: string): any {
-        let value;
         if (this.processVariables?.length) {
             const names = [`variables.${name}`, name];
 
             const processVariable = this.processVariables.find((entry) => names.includes(entry.name));
 
             if (processVariable) {
-                value = this.parseValue(processVariable.type, processVariable.value);
+                return this.parseValue(processVariable.type, processVariable.value);
             }
         }
 
-        if (!value) {
-            value = this.getDefaultFormVariableValue(name);
-        }
-
-        return value;
+        return this.getDefaultFormVariableValue(name);
     }
 
     protected parseValue(type: string, value: any): any {

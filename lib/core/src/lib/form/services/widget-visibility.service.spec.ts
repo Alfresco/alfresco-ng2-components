@@ -1120,5 +1120,51 @@ describe('WidgetVisibilityService', () => {
 
             expect(service.evaluateVisibility(numericForm, amountOverTen)).toBe(false);
         });
+
+        it('should resolve a zero process variable from the form when the refreshed data omits it', () => {
+            const zeroForm = new FormModel({
+                id: 'zero-form',
+                variables: [{ id: 'amount-var', name: 'amount', type: 'integer', value: 99 }],
+                processVariables: [{ name: 'variables.amount', value: 0, type: 'integer' }]
+            });
+            const amountIsZero = new WidgetVisibilityModel({
+                leftType: 'variable',
+                leftValue: 'amount',
+                operator: '==',
+                rightType: 'value',
+                rightValue: '0',
+                nextConditionOperator: '',
+                nextCondition: null
+            });
+
+            service.refreshVisibility(zeroForm, [{ id: 'variables.amount', value: 0 as any }]);
+            service.refreshVisibility(zeroForm, [{ id: 'processOutput', value: 'result' }]);
+
+            expect(service.getVariableValue(zeroForm, 'amount', [])).toBe(0 as any);
+            expect(service.evaluateVisibility(zeroForm, amountIsZero)).toBe(true);
+        });
+
+        it('should resolve a false process variable from the form when the refreshed data omits it', () => {
+            const falseForm = new FormModel({
+                id: 'false-form',
+                variables: [{ id: 'flag-var', name: 'flag', type: 'boolean', value: true }],
+                processVariables: [{ name: 'variables.flag', value: false, type: 'boolean' }]
+            });
+            const flagIsFalse = new WidgetVisibilityModel({
+                leftType: 'variable',
+                leftValue: 'flag',
+                operator: '==',
+                rightType: 'value',
+                rightValue: 'false',
+                nextConditionOperator: '',
+                nextCondition: null
+            });
+
+            service.refreshVisibility(falseForm, [{ id: 'variables.flag', value: false as any }]);
+            service.refreshVisibility(falseForm, [{ id: 'processOutput', value: 'result' }]);
+
+            expect(service.getVariableValue(falseForm, 'flag', [])).toBe(false as any);
+            expect(service.evaluateVisibility(falseForm, flagIsFalse)).toBe(true);
+        });
     });
 });
