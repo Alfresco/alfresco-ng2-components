@@ -29,7 +29,7 @@ import { FormService } from './form.service';
 export class WidgetVisibilityService {
     private readonly formService = inject(FormService);
 
-    private processVarList: TaskProcessVariableModel[];
+    private processVarList: TaskProcessVariableModel[] = [];
     private form: FormModel;
 
     public refreshVisibility(form: FormModel, processVarList?: TaskProcessVariableModel[]) {
@@ -110,7 +110,7 @@ export class WidgetVisibilityService {
         }
     }
 
-    getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
+    getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel): any {
         let leftValue = '';
         if (visibilityObj.leftType === WidgetTypeEnum.variable) {
             leftValue = this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
@@ -124,7 +124,7 @@ export class WidgetVisibilityService {
         return leftValue;
     }
 
-    getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
+    getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel): any {
         let valueFound = '';
 
         if (visibilityObj.rightType === WidgetTypeEnum.variable) {
@@ -270,7 +270,7 @@ export class WidgetVisibilityService {
         return field.id && fieldToFind ? field.id.toUpperCase() === fieldToFind.toUpperCase() : false;
     }
 
-    public getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]): string {
+    public getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[] = []): any {
         if (form.isVariableSetAtRuntime(name)) {
             return form.getDefaultFormVariableValue(name);
         }
@@ -280,13 +280,11 @@ export class WidgetVisibilityService {
         return processVariableValue === undefined ? form.getProcessVariableValue(name) : processVariableValue;
     }
 
-    private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]): string {
-        if (processVarList) {
-            const processVariable = processVarList.find((variable) => variable.id === name || variable.id === `variables.${name}`);
+    private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]): any {
+        const processVariable = processVarList.find((variable) => variable.id === name || variable.id === `variables.${name}`);
 
-            if (processVariable) {
-                return processVariable.value;
-            }
+        if (processVariable) {
+            return processVariable.value;
         }
         return undefined;
     }

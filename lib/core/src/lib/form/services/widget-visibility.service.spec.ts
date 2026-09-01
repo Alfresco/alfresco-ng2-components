@@ -1095,8 +1095,8 @@ describe('WidgetVisibilityService', () => {
             service.refreshVisibility(numericForm);
             service.refreshVisibility(booleanForm);
 
-            expect(service.getVariableValue(numericForm, 'amount', [])).toBe(5 as any);
-            expect(service.getVariableValue(booleanForm, 'flag', [])).toBe(false as any);
+            expect(service.getVariableValue(numericForm, 'amount')).toBe(5);
+            expect(service.getVariableValue(booleanForm, 'flag', [])).toBe(false);
         });
 
         it('should evaluate a numeric variable changed at runtime without string comparison', () => {
@@ -1137,10 +1137,10 @@ describe('WidgetVisibilityService', () => {
                 nextCondition: null
             });
 
-            service.refreshVisibility(zeroForm, [{ id: 'variables.amount', value: 0 as any }]);
+            service.refreshVisibility(zeroForm, [{ id: 'variables.amount', value: 0 }]);
             service.refreshVisibility(zeroForm, [{ id: 'processOutput', value: 'result' }]);
 
-            expect(service.getVariableValue(zeroForm, 'amount', [])).toBe(0 as any);
+            expect(service.getVariableValue(zeroForm, 'amount', [])).toBe(0);
             expect(service.evaluateVisibility(zeroForm, amountIsZero)).toBe(true);
         });
 
@@ -1160,10 +1160,10 @@ describe('WidgetVisibilityService', () => {
                 nextCondition: null
             });
 
-            service.refreshVisibility(falseForm, [{ id: 'variables.flag', value: false as any }]);
+            service.refreshVisibility(falseForm, [{ id: 'variables.flag', value: false }]);
             service.refreshVisibility(falseForm, [{ id: 'processOutput', value: 'result' }]);
 
-            expect(service.getVariableValue(falseForm, 'flag', [])).toBe(false as any);
+            expect(service.getVariableValue(falseForm, 'flag', [])).toBe(false);
             expect(service.evaluateVisibility(falseForm, flagIsFalse)).toBe(true);
         });
     });
