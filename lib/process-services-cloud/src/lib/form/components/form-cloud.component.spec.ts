@@ -2575,3 +2575,126 @@ describe('FormCloudComponent — runtime state preservation on data refresh', ()
         });
     });
 });
+
+describe('FormCloudComponent — form variable visibility on data refresh', () => {
+    let fixture: ComponentFixture<FormCloudComponent>;
+    let formComponent: FormCloudComponent;
+    let visibilityService: WidgetVisibilityService;
+
+    /** field is hidden while person_type is Requestor */
+    const personTypeFormJson = {
+        id: 'person-type-form',
+        name: 'Person Type Form',
+        variables: [{ id: 'person-type-var', name: 'person_type', value: null }],
+        fields: [
+            {
+                fieldType: 'ContainerRepresentation',
+                id: 'container1',
+                name: 'Container',
+                type: 'container',
+                tab: null,
+                numberOfColumns: 1,
+                fields: {
+                    1: [
+                        {
+                            fieldType: 'FormFieldRepresentation',
+                            id: 'conditionalField',
+                            name: 'Conditional Field',
+                            type: 'multiline-text',
+                            value: null,
+                            required: false,
+                            readOnly: false,
+                            visibilityCondition: {
+                                leftType: 'variable',
+                                leftValue: 'person_type',
+                                operator: '!=',
+                                rightType: 'value',
+                                rightValue: 'Requestor',
+                                nextConditionOperator: '',
+                                nextCondition: null
+                            },
+                            params: { existingColspan: 1, maxColspan: 1 }
+                        }
+                    ]
+                }
+            }
+        ]
+    };
+
+    const requestorVariables = () => [new TaskVariableCloud({ name: 'variables.person_type', value: 'Requestor' })];
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [NoopTranslateModule, NoopAuthModule, FormCloudComponent],
+            providers: [
+                { provide: VersionCompatibilityService, useValue: {} },
+                { provide: FormRenderingService, useClass: CloudFormRenderingService }
+            ]
+        });
+
+        const apiService = TestBed.inject(AlfrescoApiService);
+        spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
+
+        visibilityService = TestBed.inject(WidgetVisibilityService);
+        visibilityService.cleanProcessVariable();
+
+        fixture = TestBed.createComponent(FormCloudComponent);
+        formComponent = fixture.componentInstance;
+
+        formComponent.formCloudRepresentationJSON = new FormCloudRepresentation(JSON.parse(JSON.stringify(personTypeFormJson)));
+        formComponent.formCloudRepresentationJSON.processVariables = requestorVariables();
+        formComponent.data = requestorVariables();
+        formComponent.form = formComponent.parseForm(formComponent.formCloudRepresentationJSON);
+        visibilityService.refreshVisibility(formComponent.form, formComponent.data);
+
+        fixture.detectChanges();
+    });
+
+    it('should keep the field hidden when the refreshed data omits the variable', () => {
+        expect(formComponent.form.getFieldById('conditionalField').isVisible).toBeFalse();
+
+        const partialData = [new TaskVariableCloud({ name: 'processOutput', value: 'result' })];
+        const change = new SimpleChange(formComponent.data, partialData, false);
+        formComponent.data = partialData;
+
+        formComponent.ngOnChanges({ data: change });
+
+        expect(formComponent.form.getFieldById('conditionalField').isVisible).toBeFalse();
+    });
+
+    it('should show the field when the refreshed data changes the variable', () => {
+        const approverData = [new TaskVariableCloud({ name: 'variables.person_type', value: 'Approver' })];
+        const change = new SimpleChange(formComponent.data, approverData, false);
+        formComponent.data = approverData;
+
+        formComponent.ngOnChanges({ data: change });
+
+        expect(formComponent.form.getFieldById('conditionalField').isVisible).toBeTrue();
+    });
+
+    it('should keep a variable changed by a form rule when the refreshed data omits it', () => {
+        formComponent.form.changeVariableValue('person-type-var', 'Approver');
+
+        const partialData = [new TaskVariableCloud({ name: 'processOutput', value: 'result' })];
+        const change = new SimpleChange(formComponent.data, partialData, false);
+        formComponent.data = partialData;
+
+        formComponent.ngOnChanges({ data: change });
+
+        expect(formComponent.form.getFieldById('conditionalField').isVisible).toBeTrue();
+    });
+
+    it('should keep the latest received variable value across a following partial refresh', () => {
+        const approverData = [new TaskVariableCloud({ name: 'variables.person_type', value: 'Approver' })];
+        formComponent.data = approverData;
+        formComponent.ngOnChanges({ data: new SimpleChange(requestorVariables(), approverData, false) });
+
+        expect(formComponent.form.getFieldById('conditionalField').isVisible).toBeTrue();
+
+        const partialData = [new TaskVariableCloud({ name: 'processOutput', value: 'result' })];
+        formComponent.data = partialData;
+        formComponent.ngOnChanges({ data: new SimpleChange(approverData, partialData, false) });
+
+        expect(formComponent.form.getFieldById('conditionalField').isVisible).toBeTrue();
+    });
+});
