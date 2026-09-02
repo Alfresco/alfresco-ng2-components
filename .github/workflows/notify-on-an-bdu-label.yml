@@ -7,6 +7,7 @@ on:
 
 permissions:
   pull-requests: read
+  issues: read
 
 jobs:
   notify-bdu:
@@ -18,8 +19,41 @@ jobs:
       github.event.label.name == 'A/N BDU' &&
       github.event.pull_request.state == 'open'
     steps:
+      - name: Check if label was added after PR creation (with time threshold)
+        id: check_label_timing
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const prCreatedAt = new Date('${{ github.event.pull_request.created_at }}');
+            
+            const timeline = await github.rest.issues.listEvents({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const labelEvent = timeline.data.reverse().find(event => 
+              event.event === 'labeled' && 
+              event.label.name === 'A/N BDU'
+            );
+            
+            if (!labelEvent) {
+              core.setOutput('should_notify', 'false');
+              return;
+            }
+            
+            const labelAddedAt = new Date(labelEvent.created_at);
+            const timeDiffSeconds = (labelAddedAt - prCreatedAt) / 1000;
+            
+            if (timeDiffSeconds > 15) {
+              core.setOutput('should_notify', 'true');
+            } else {
+              core.setOutput('should_notify', 'false');
+            }
+
       - name: Send Teams notification
-        uses: Alfresco/alfresco-build-tools/.github/actions/send-teams-notification@5177eca5d3d71342d7f7e0a2a4d74cc16b1eeb1b # v18.21.3
+        if: steps.check_label_timing.outputs.should_notify == 'true'
+        uses: Alfresco/alfresco-build-tools/.github/actions/send-teams-notification@da99ab845e78301fcb0680d16cbc185a40a1938c # v18.24.1
         with:
           webhook-url: ${{ secrets.TEAMS_NOTIFICATION_ADF_BDU_WEBHOOK }}
           skip_checkout: true

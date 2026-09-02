@@ -10,7 +10,11 @@
         >
     </div>
     <div class="adf-amount-widget-container">
-        <mat-form-field class="adf-amount-widget__input adf-form-field-input" [floatLabel]="placeholder ? 'always' : null">
+        <mat-form-field
+            class="adf-amount-widget__input adf-form-field-input"
+            subscriptSizing="dynamic"
+            [floatLabel]="placeholder ? 'always' : null"
+        >
             @if ( (field.name || field?.required) && !field.leftLabels) { <mat-label class="adf-label" [attr.for]="field.id">{{field.name | translate }}</mat-label> }
             @if(!enableDisplayBasedOnLocale) {
                 <span matTextPrefix class="adf-amount-widget__prefix-spacing">{{ currency }}&nbsp;</span>
@@ -32,12 +36,13 @@
                 (blur)="amountWidgetOnBlur()"
                 />
             @if (field.validationSummary?.message || (isInvalidFieldRequired() && isTouched())) {
-                <mat-error>
+                <mat-error class="adf-form-field-status-slot">
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
                     <span class="adf-error-text"
                         >@if (field.validationSummary?.message) {{{ field.validationSummary.message | translate:translateParameters }}} @else {{{ 'FORM.FIELD.REQUIRED' | translate }}}</span>
                 </mat-error>
             }
+            <mat-hint class="adf-form-field-status-slot" aria-hidden="true" />
         </mat-form-field>
     </div>
 </div>

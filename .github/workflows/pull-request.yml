@@ -254,6 +254,8 @@ jobs:
     name: "Unit Tests"
     needs: [setup]
     uses: ./.github/workflows/unit-test-workflow.yml
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     with:
       base_ref: ${{ github.base_ref || 'develop' }}
 

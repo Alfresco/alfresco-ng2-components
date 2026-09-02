@@ -11,7 +11,6 @@
     }
 
     &-radio-button-container-horizontal {
-        margin-bottom: 15px;
         display: flex;
         flex-flow: column wrap;
         align-items: flex-start;
@@ -45,9 +44,5 @@
             white-space: normal;
             word-break: break-word;
         }
-    }
-
-    &-radio-group-error-message .adf-error-container {
-        margin-top: 5px;
     }
 }

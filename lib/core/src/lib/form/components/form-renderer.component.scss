@@ -20,6 +20,12 @@
     .mat-mdc-form-field-infix {
         width: auto;
     }
+
+    .adf-form-field-status-slot {
+        display: block;
+        height: 40px;
+        box-sizing: border-box;
+    }
 }
 
 .alfresco-tabs-widget {
@@ -27,6 +33,7 @@
 
     .adf-form-tab-content {
         margin-top: 1em;
+        padding-bottom: 3px;
     }
 
     .adf-form-tab-group {
@@ -40,7 +47,7 @@
 
 .adf-container-widget {
     .adf-form-field-input:not(.adf-inplace-input-mat-form-field, .adf-people-cloud, .adf-cloud-group) {
-        margin-bottom: 35px;
+        margin-bottom: 0;
     }
 
     .adf-grid-list {
@@ -265,7 +272,7 @@
     }
 
     &-error-messages-container {
-        min-height: 35px;
+        height: 40px;
     }
 
     &-error-messages-container-visible {

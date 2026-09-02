@@ -16,6 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, Input, OnDestroy, input, output } from '@angular/core';
 import { StartProcessScreenCloudComponent } from './start-process-screen-cloud.component';
 import { MockedTaskScreenCloudComponent } from '../../../../testing/start-process-screen-mock.component';
 import { provideScreen } from '../../../services/provide-screen';
@@ -66,11 +67,11 @@ describe('StartProcessScreenCloudComponent', () => {
 
     it('should set appName', () => {
         const screenInstance: StartProcessScreenCloud = fixture.debugElement.query(By.directive(MockedTaskScreenCloudComponent)).componentInstance;
-        expect(screenInstance.appName()).toEqual('');
+        expect(screenInstance.appName?.()).toEqual('');
         const newValue = 'new-app-name';
         fixture.componentRef.setInput('appName', newValue);
         fixture.detectChanges();
-        expect(screenInstance.appName()).toEqual(newValue);
+        expect(screenInstance.appName?.()).toEqual(newValue);
     });
 
     it('should set process definition id', () => {
@@ -84,10 +85,125 @@ describe('StartProcessScreenCloudComponent', () => {
 
     it('should set resolvedValues', () => {
         const screenInstance: StartProcessScreenCloud = fixture.debugElement.query(By.directive(MockedTaskScreenCloudComponent)).componentInstance;
-        expect(screenInstance.resolvedValues()).toBeUndefined();
+        expect(screenInstance.resolvedValues?.()).toBeUndefined();
         const newValues = [new TaskVariableCloud({ id: 'new-id', name: 'new-name' })];
         fixture.componentRef.setInput('resolvedValues', newValues);
         fixture.detectChanges();
-        expect(screenInstance.resolvedValues()).toEqual(newValues);
+        expect(screenInstance.resolvedValues?.()).toEqual(newValues);
+    });
+});
+
+@Component({
+    selector: 'adf-cloud-destroy-tracking-screen',
+    template: `<div class="adf-cloud-destroy-tracking-screen">screen</div>`
+})
+class DestroyTrackingScreenComponent implements StartProcessScreenCloud, OnDestroy {
+    readonly appName = input('');
+    processDefinitionId = input('');
+    readonly resolvedValues = input<TaskVariableCloud[] | undefined>();
+    defaultStartProcessButtonsConfigurationChange = output<StartProcessScreenDefaultButtons>();
+    startProcessPayloadChanged = output<unknown>();
+
+    destroyed = false;
+
+    ngOnDestroy(): void {
+        this.destroyed = true;
+    }
+}
+
+@Component({
+    selector: 'adf-cloud-test-start-process-wrapper',
+    template: `
+        @if (showScreen) {
+            <adf-cloud-start-process-screen-cloud [screenId]="screenId" [processDefinitionId]="'definition-id'" />
+        }
+    `,
+    imports: [StartProcessScreenCloudComponent]
+})
+class TestStartProcessWrapperComponent {
+    @Input() screenId = '';
+    showScreen = true;
+}
+
+describe('StartProcessScreenCloudComponent - destroy', () => {
+    let fixture: ComponentFixture<TestStartProcessWrapperComponent>;
+    let component: TestStartProcessWrapperComponent;
+    const screenId = 'screen-1234-5678-121212-123456';
+
+    const getScreenInstance = (): DestroyTrackingScreenComponent =>
+        fixture.debugElement.query(By.directive(DestroyTrackingScreenComponent)).componentInstance;
+
+    const destroyScreen = () => {
+        component.showScreen = false;
+        fixture.detectChanges();
+    };
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [TestStartProcessWrapperComponent],
+            providers: [provideScreen(screenId, DestroyTrackingScreenComponent)]
+        });
+
+        fixture = TestBed.createComponent(TestStartProcessWrapperComponent);
+        component = fixture.componentInstance;
+        fixture.componentRef.setInput('screenId', screenId);
+        fixture.detectChanges();
+    });
+
+    it('should destroy the screen component when the host is destroyed', () => {
+        const screenInstance = getScreenInstance();
+        expect(screenInstance.destroyed).toBeFalse();
+
+        destroyScreen();
+
+        expect(screenInstance.destroyed).toBeTrue();
+    });
+
+    it('should remove the screen component from the DOM when the host is destroyed', () => {
+        expect(fixture.debugElement.query(By.css('.adf-cloud-destroy-tracking-screen'))).toBeTruthy();
+
+        destroyScreen();
+
+        expect(fixture.debugElement.query(By.css('.adf-cloud-destroy-tracking-screen'))).toBeNull();
+    });
+
+    it('should create a new screen component instance when the host is re-created', () => {
+        const firstInstance = getScreenInstance();
+
+        destroyScreen();
+        component.showScreen = true;
+        fixture.detectChanges();
+
+        const secondInstance = getScreenInstance();
+        expect(secondInstance).not.toBe(firstInstance);
+        expect(secondInstance.destroyed).toBeFalse();
+        expect(secondInstance.processDefinitionId()).toBe('definition-id');
+    });
+});
+
+describe('StartProcessScreenCloudComponent - without screenId', () => {
+    let fixture: ComponentFixture<StartProcessScreenCloudComponent>;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [StartProcessScreenCloudComponent]
+        });
+        fixture = TestBed.createComponent(StartProcessScreenCloudComponent);
+    });
+
+    it('should not create any screen component and should not throw', () => {
+        expect(() => fixture.detectChanges()).not.toThrow();
+        expect(fixture.debugElement.query(By.directive(DestroyTrackingScreenComponent))).toBeNull();
+    });
+
+    it('should not throw when inputs change or on destroy', () => {
+        fixture.detectChanges();
+
+        expect(() => {
+            fixture.componentRef.setInput('appName', 'new-app-name');
+            fixture.componentRef.setInput('resolvedValues', [new TaskVariableCloud({ id: 'id', name: 'name' })]);
+            fixture.detectChanges();
+        }).not.toThrow();
+        expect(() => fixture.destroy()).not.toThrow();
     });
 });

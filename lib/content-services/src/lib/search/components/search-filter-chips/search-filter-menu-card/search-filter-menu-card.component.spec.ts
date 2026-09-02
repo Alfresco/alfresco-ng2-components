@@ -38,4 +38,11 @@ describe('SearchFilterMenuComponent', () => {
         closeButton.click();
         expect(spyCloseEvent).toHaveBeenCalled();
     });
+
+    it('should expose the title as a heading', () => {
+        const heading = fixture.debugElement.nativeElement.querySelector('.adf-search-filter-title-heading');
+
+        expect(heading).not.toBeNull();
+        expect(heading.tagName).toBe('H2');
+    });
 });

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, effect, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentRef, effect, input, output, signal } from '@angular/core';
 import { BaseScreenCloudComponent } from '../base-screen/base-screen-cloud.component';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
@@ -43,7 +43,7 @@ export class StartProcessScreenCloudComponent extends BaseScreenCloudComponent<S
         super();
         effect(() => {
             const componentRef = this.componentRefChanged();
-            if (componentRef.instance && 'appName' in componentRef.instance) {
+            if (componentRef?.instance && 'appName' in componentRef.instance) {
                 componentRef.setInput('appName', this.appName());
             }
         });
@@ -56,9 +56,9 @@ export class StartProcessScreenCloudComponent extends BaseScreenCloudComponent<S
         });
     }
 
-    protected subscribeToOutputs(): void {
-        this.componentRef.instance.startProcessPayloadChanged.subscribe((payload) => this.screenStartProcessPayloadChange.emit(payload));
-        this.componentRef.instance.defaultStartProcessButtonsConfigurationChange.subscribe((config) => {
+    protected subscribeToOutputs(componentRef: ComponentRef<StartProcessScreenCloud>): void {
+        componentRef.instance.startProcessPayloadChanged.subscribe((payload) => this.screenStartProcessPayloadChange.emit(payload));
+        componentRef.instance.defaultStartProcessButtonsConfigurationChange.subscribe((config) => {
             this.showStartProcessButtons.set(config.show);
             this.disableStartProcessButton.emit(config.disable);
         });

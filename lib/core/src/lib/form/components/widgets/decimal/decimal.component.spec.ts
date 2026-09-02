@@ -22,8 +22,20 @@ import { UnitTestingUtils } from '../../../../testing';
 import { FormService } from '../../../services/form.service';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { DecimalWidgetComponent } from './decimal.component';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('DecimalComponent', () => {
+    const validatorTranslations = {
+        FORM: {
+            FIELD: {
+                VALIDATOR: {
+                    NOT_LESS_THAN: "Can't be less than {{ minValue }}",
+                    NOT_GREATER_THAN: "Can't be greater than {{ maxValue }}",
+                    INVALID_DECIMAL_PRECISION: 'Precision {{ precision }}'
+                }
+            }
+        }
+    };
     let loader: HarnessLoader;
     let widget: DecimalWidgetComponent;
     let fixture: ComponentFixture<DecimalWidgetComponent>;
@@ -104,6 +116,62 @@ describe('DecimalComponent', () => {
 
             const inputField = testingUtils.getByCSS('.adf-input').nativeElement;
             expect(inputField.hasAttribute('required')).toBeTruthy();
+        });
+    });
+
+    describe('when validation runs without widget interaction', () => {
+        let field: FormFieldModel;
+
+        beforeEach(() => {
+            const translateService = TestBed.inject(TranslateService);
+            translateService.use('en').subscribe();
+            translateService.setTranslation('en', validatorTranslations);
+            field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                id: 'decimal-id',
+                type: FormFieldTypes.DECIMAL,
+                value: 1,
+                minValue: 10
+            });
+            field.validate();
+            field.form.showAllValidationErrors = true;
+            fixture.componentRef.setInput('field', field);
+            fixture.detectChanges();
+        });
+
+        it('should render the minimum value in the message when initial validation fails', async () => {
+            const formField = await testingUtils.formField.get();
+            const errors = await formField.getTextErrors();
+
+            expect(errors.length).toBe(1);
+            expect(errors[0]).toContain("Can't be less than 10");
+        });
+
+        it('should render the updated maximum value when programmatic revalidation fails', async () => {
+            field.value = 10;
+            field.minValue = '1';
+            field.maxValue = '5';
+            field.validate();
+            fixture.detectChanges();
+
+            const formField = await testingUtils.formField.get();
+            const errors = await formField.getTextErrors();
+
+            expect(errors.length).toBe(1);
+            expect(errors[0]).toContain("Can't be greater than 5");
+        });
+
+        it('should render decimal precision when programmatic revalidation fails', async () => {
+            field.value = 1.234;
+            field.minValue = '1';
+            field.precision = 2;
+            field.validate();
+            fixture.detectChanges();
+
+            const formField = await testingUtils.formField.get();
+            const errors = await formField.getTextErrors();
+
+            expect(errors.length).toBe(1);
+            expect(errors[0]).toContain('Precision 2');
         });
     });
 

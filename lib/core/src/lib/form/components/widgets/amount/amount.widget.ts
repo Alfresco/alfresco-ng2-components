@@ -25,6 +25,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
+import { getValidationSummaryTranslationParameters } from '../core/error-message.model';
 import { WidgetComponent } from '../widget.component';
 import { filter, isObservable, Observable } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -121,7 +122,9 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
             this.subscribeToFieldChanges();
             this.setInitialValues();
             this.initErrorStateMatcher();
-            this.updateTranslateParameters();
+            this.field.validationSummaryChanges$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((validationSummary) => {
+                this.translateParameters = getValidationSummaryTranslationParameters(validationSummary);
+            });
         }
     }
 
@@ -143,7 +146,6 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
             }
         }
         this.markAsTouched();
-        this.updateTranslateParameters();
     }
 
     amountWidgetOnFocus(): void {
@@ -163,7 +165,6 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
         this.field.value = this.amountWidgetValue;
         super.onFieldChanged(this.field);
         this.markAsTouched();
-        this.updateTranslateParameters();
     }
 
     setInitialValues(): void {
@@ -188,7 +189,6 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
                 } else if (!this.isInputInFocus) {
                     this.amountWidgetValue = ev.field.value;
                 }
-                this.updateTranslateParameters();
             });
     }
 
@@ -207,13 +207,5 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
             isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
                 !!this.field.validationSummary?.message || (this.isInvalidFieldRequired() && this.isTouched())
         };
-    }
-
-    private updateTranslateParameters(): void {
-        if (this.field?.validationSummary?.isActive()) {
-            this.translateParameters = this.field.validationSummary.getAttributesAsJsonObj();
-        } else {
-            this.translateParameters = {};
-        }
     }
 }

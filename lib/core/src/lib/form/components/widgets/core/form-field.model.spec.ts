@@ -17,9 +17,10 @@
 
 import { DateFnsUtils } from '../../../../common';
 import { FormRulesEvent } from '../../../events/form-rules.event';
-import { firstValueFrom, map, Subject, take, timeout } from 'rxjs';
+import { firstValueFrom, map, skip, Subject, take, timeout } from 'rxjs';
+import { ErrorMessageModel, getValidationSummaryTranslationParameters } from './error-message.model';
 import { FormFieldTypes } from './form-field-types';
-import { RequiredFieldValidator } from './form-field-validator';
+import { MinValueFieldValidator, RequiredFieldValidator } from './form-field-validator';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
 
@@ -34,6 +35,58 @@ describe('FormFieldModel', () => {
         const json = {};
         const model = new FormFieldModel(new FormModel(), json);
         expect(model.json).toBe(json);
+    });
+
+    it('should return an isolated authored value snapshot', () => {
+        const authoredValue = { blocks: [{ data: { text: '${field.name}' } }] };
+        const model = new FormFieldModel(new FormModel(), { id: 'richText', type: FormFieldTypes.DISPLAY_RICH_TEXT, value: authoredValue });
+
+        const snapshot = model.authoredValue as typeof authoredValue;
+        snapshot.blocks[0].data.text = 'changed';
+
+        expect((model.authoredValue as typeof authoredValue).blocks[0].data.text).toBe('${field.name}');
+        expect(authoredValue.blocks[0].data.text).toBe('${field.name}');
+    });
+
+    it('should not capture authored values for other field types', () => {
+        const model = new FormFieldModel(new FormModel(), { id: 'json', type: FormFieldTypes.JSON, value: { content: 'value' } });
+
+        expect(model.authoredValue).toBeUndefined();
+    });
+
+    it('should return undefined for authored values that cannot be cloned', () => {
+        const circularValue: { self?: unknown } = {};
+        circularValue.self = circularValue;
+
+        const circularValueModel = new FormFieldModel(new FormModel(), {
+            id: 'circular',
+            type: FormFieldTypes.DISPLAY_RICH_TEXT,
+            value: circularValue
+        });
+        const bigintValueModel = new FormFieldModel(new FormModel(), {
+            id: 'bigint',
+            type: FormFieldTypes.DISPLAY_RICH_TEXT,
+            value: BigInt(1)
+        });
+
+        expect(circularValueModel.authoredValue).toBeUndefined();
+        expect(bigintValueModel.authoredValue).toBeUndefined();
+    });
+
+    it('should preserve authored value when form data overrides the field value', () => {
+        const authoredValue = { blocks: [{ data: { text: '${field.name}' } }] };
+        const savedValue = { blocks: [{ data: { text: 'John' } }] };
+        const form = new FormModel(
+            {
+                fields: [{ id: 'richText', name: 'richText', type: FormFieldTypes.DISPLAY_RICH_TEXT, value: authoredValue }]
+            },
+            { richText: savedValue }
+        );
+        const model = form.getFieldById('richText');
+
+        expect(model.value).toEqual(savedValue);
+        expect(model.authoredValue).toEqual(authoredValue);
+        expect(model.authoredValue).not.toBe(authoredValue);
     });
 
     it('should setup with json config', () => {
@@ -1222,6 +1275,57 @@ describe('FormFieldModel', () => {
         });
     });
 
+    describe('validation summary changes', () => {
+        const createField = (): FormFieldModel => {
+            const form = new FormModel();
+            form.fieldValidators = [new MinValueFieldValidator()];
+
+            return new FormFieldModel(form, {
+                id: 'number-field',
+                type: FormFieldTypes.NUMBER,
+                value: 1,
+                minValue: '10'
+            });
+        };
+
+        it('should replay an inactive validation summary before the first validation', async () => {
+            const field = new FormFieldModel(new FormModel());
+
+            const validationSummary = await firstValueFrom(field.validationSummaryChanges$);
+
+            expect(validationSummary).toEqual(jasmine.any(ErrorMessageModel));
+            expect(validationSummary.isActive()).toBe(false);
+        });
+
+        it('should replay the completed validation summary when subscribing after validation', async () => {
+            const field = createField();
+            field.validate();
+
+            const validationSummary = await firstValueFrom(field.validationSummaryChanges$);
+
+            expect(validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
+            expect(validationSummary.attributes.get('minValue')).toBe('10');
+        });
+
+        it('should emit completed summaries when validation state changes', async () => {
+            const field = createField();
+            const invalidSummaryPromise = firstValueFrom(field.validationSummaryChanges$.pipe(skip(1)));
+
+            field.validate();
+            const invalidSummary = await invalidSummaryPromise;
+
+            field.value = 10;
+            const validSummaryPromise = firstValueFrom(field.validationSummaryChanges$.pipe(skip(1)));
+            field.validate();
+            const validSummary = await validSummaryPromise;
+
+            expect(invalidSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
+            expect(invalidSummary.attributes.get('minValue')).toBe('10');
+            expect(validSummary.isActive()).toBe(false);
+            expect(validSummary.attributes.size).toBe(0);
+        });
+    });
+
     it('should fail validation for readOnly required display-external-property field with null value', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
@@ -2054,5 +2158,37 @@ describe('FormFieldTypes', () => {
         it('should return false for an unknown type', () => {
             expect(FormFieldTypes.isDisplayTextType('unknown-type')).toBe(false);
         });
+    });
+});
+
+describe('ErrorMessageModel', () => {
+    it('should initialize empty attributes when attributes are omitted', () => {
+        const errorMessage = new ErrorMessageModel();
+
+        expect(errorMessage.attributes).toEqual(new Map());
+    });
+
+    it('should retain provided attributes', () => {
+        const attributes = new Map([['minValue', '10']]);
+
+        const errorMessage = new ErrorMessageModel({ attributes });
+
+        expect(errorMessage.attributes).toBe(attributes);
+    });
+});
+
+describe('getValidationSummaryTranslationParameters', () => {
+    it('should return validation attributes when the summary is active', () => {
+        const validationSummary = new ErrorMessageModel({
+            message: 'FORM.FIELD.VALIDATOR.NOT_LESS_THAN',
+            attributes: new Map([['minValue', '10']])
+        });
+
+        expect(getValidationSummaryTranslationParameters(validationSummary)).toEqual({ minValue: '10' });
+    });
+
+    it('should return empty parameters when the summary is inactive or omitted', () => {
+        expect(getValidationSummaryTranslationParameters(new ErrorMessageModel())).toEqual({});
+        expect(getValidationSummaryTranslationParameters()).toEqual({});
     });
 });

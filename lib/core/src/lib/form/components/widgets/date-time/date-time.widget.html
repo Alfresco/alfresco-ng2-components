@@ -10,6 +10,7 @@
     </div>
     <div class="adf-date-time-widget-container">
         <mat-form-field class="adf-date-time-widget adf-form-field-input"
+                        subscriptSizing="dynamic"
                         [class.adf-left-label-input-datepicker]="field.leftLabels"
                         [floatLabel]="field.placeholder ? 'always' : null">
             @if( (field.name || field?.required) && !field.leftLabels) {
@@ -38,11 +39,12 @@
                 [timeInterval]="5"
                 [disabled]="field.readOnly" />
             @if (datetimeInputControl.invalid && datetimeInputControl.touched && field.validationSummary?.message) {
-                <mat-error>
+                <mat-error class="adf-form-field-status-slot">
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
                     <span class="adf-error-text">{{ field.validationSummary.message | translate:translateParameters }}</span>
                 </mat-error>
             }
+            <mat-hint class="adf-form-field-status-slot" aria-hidden="true" />
         </mat-form-field>
     </div>
 </div>

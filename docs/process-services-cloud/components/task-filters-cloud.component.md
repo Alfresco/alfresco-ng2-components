@@ -36,6 +36,7 @@ Shows all available filters.
 | appName     | `string`            | ""            | Display filters available to the current user for the application with the specified name.                                         |
 | filterParam | `FilterParamsModel` |               | Parameters to use for the task filter cloud. If there is no match then the default filter (the first one in the list) is selected. |
 | showIcons   | `boolean`           | false         | Toggles display of the filter's icons.                                                                                             |
+| useBatchedCounters | `boolean` | false | Get all the filter counters with one call to `POST /query/v1/count` (needs Activiti 8.7.0). Turn it on for both filter components. |
 
 ### Events
 

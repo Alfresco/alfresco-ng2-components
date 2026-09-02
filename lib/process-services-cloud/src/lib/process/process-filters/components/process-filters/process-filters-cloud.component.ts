@@ -16,14 +16,16 @@
  */
 
 import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { EMPTY, Observable } from 'rxjs';
+import { combineLatest, defer, EMPTY, Observable, of, Subscription } from 'rxjs';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFilterCloudModel } from '../../models/process-filter-cloud.model';
 import { AppConfigService, IconModule, TranslationService } from '@alfresco/adf-core';
 import { FilterParamsModel } from '../../../../task/task-filters/models/filter-cloud.model';
-import { catchError, debounceTime, map, shareReplay, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { ProcessListCloudService } from '../../../process-list/services/process-list-cloud.service';
 import { ProcessFilterCloudAdapter } from '../../../process-list/models/process-cloud-query-request.model';
+import { FilterCountersCloudService } from '../../../../services/filter-counters-cloud.service';
+import { FilterCounterEntityType } from '../../../../models/filter-counters-cloud.model';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AsyncPipe } from '@angular/common';
@@ -43,9 +45,20 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     @Input()
     appName: string = '';
 
-    /** (optional) From Activiti 8.7.0 forward, use the 'POST' method to get the process count */
+    /**
+     * (optional) From Activiti 8.7.0 forward, use the 'POST' method to get the process count.
+     *
+     */
     @Input()
     searchApiMethod: 'GET' | 'POST' = 'GET';
+
+    /**
+     * (optional) Resolves the counters of the task and the process filters with a single call to
+     * `POST /query/v1/count`. Both filter components have to
+     * ask for it, otherwise the counters are resolved one filter at a time.
+     */
+    @Input()
+    useBatchedCounters = false;
 
     /** (optional) The filter to be selected by default */
     @Input()
@@ -79,27 +92,31 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     currentFilter?: ProcessFilterCloudModel;
     filters: ProcessFilterCloudModel[] = [];
     counters: { [key: string]: number } = {};
-    enableNotifications = true;
-    notificationDebounceTime = 3000;
     currentFiltersValues: { [key: string]: number } = {};
     updatedFiltersSet = new Set<string>();
+    enableNotifications = true;
+    notificationDebounceTime = 3000;
     private filtersLoadedFor?: string;
+    private countersSubscription?: Subscription;
+    private countersFilters$?: Observable<ProcessFilterCloudModel[]>;
+    private batchedCounters = true;
 
     private readonly destroyRef = inject(DestroyRef);
     private readonly processFilterCloudService = inject(ProcessFilterCloudService);
     private readonly translationService = inject(TranslationService);
     private readonly appConfigService = inject(AppConfigService);
     private readonly processListCloudService = inject(ProcessListCloudService);
+    private readonly filterCountersCloudService = inject(FilterCountersCloudService);
     private readonly activatedRoute = inject(ActivatedRoute);
     protected readonly currentRouteFilterId = toSignal(this.activatedRoute.queryParamMap.pipe(map((params) => params.get('filterId'))));
 
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
         this.notificationDebounceTime = this.appConfigService.get('notificationDebounceTime', 3000);
+
         if (!this.filtersLoadedFor) {
             this.getFilters(this.appName);
         }
-        this.initProcessNotification();
         this.getFilterKeysAfterExternalRefreshing();
     }
 
@@ -110,6 +127,8 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
             this.getFilters(appName.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectFilterAndEmit(filter.currentValue);
+        } else if (changes['useBatchedCounters'] && !changes['useBatchedCounters'].firstChange && this.filtersLoadedFor) {
+            this.loadFilterCounters(this.filtersLoadedFor);
         }
     }
 
@@ -120,8 +139,8 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
      */
     getFilters(appName: string): void {
         this.filtersLoadedFor = appName;
-        const filters$ = this.processFilterCloudService.getProcessFilters(appName).pipe(shareReplay({ bufferSize: 1, refCount: true }));
-        this.filters$ = filters$.pipe(catchError(() => EMPTY));
+        const filters$ = this.filterCountersCloudService.getProcessFilters(appName);
+        this.filters$ = filters$.pipe(catchError(() => of([])));
 
         filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
             next: (res) => {
@@ -130,19 +149,25 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
                 this.initFilterCounters();
                 this.selectFilterAndEmit(this.filterParam);
                 this.success.emit(res);
-                this.updateFilterCounters();
             },
-            error: (err: any) => {
+            error: (err: unknown) => {
                 this.error.emit(err);
             }
         });
+
+        this.countersFilters$ = filters$;
+        this.loadFilterCounters(appName);
     }
 
     /**
      * Initialize counter collection for filters
      */
-    initFilterCounters() {
-        this.filters.forEach((filter) => (this.counters[filter.key] = 0));
+    initFilterCounters(): void {
+        this.filters.forEach((filter) => {
+            if (filter.key) {
+                this.counters[filter.key] = 0;
+            }
+        });
     }
 
     /**
@@ -165,20 +190,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
                     (paramFilter.key && paramFilter.key === filter.key) ||
                     paramFilter.index === index
             ); // fallback to preserve the previous behavior
-    }
-
-    /**
-     * Check equality of the filter names by translating the given name strings
-     *
-     * @param name1 source name
-     * @param name2 target name
-     * @returns `true` if filter names are equal, otherwise `false`
-     */
-    private checkFilterNamesEquality(name1: string, name2: string): boolean {
-        const translatedName1 = this.translationService.instant(name1);
-        const translatedName2 = this.translationService.instant(name2);
-
-        return translatedName1.toLocaleLowerCase() === translatedName2.toLocaleLowerCase();
     }
 
     /**
@@ -213,7 +224,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         if (filter) {
             this.selectFilter(filter);
             this.filterClicked.emit(this.currentFilter);
-            this.updateFilterCounter(this.currentFilter);
+            this.refreshFilterCounter(this.currentFilter);
             this.updatedFiltersSet.delete(filter.key);
         } else {
             this.currentFilter = undefined;
@@ -247,6 +258,83 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         return this.filters === undefined || (this.filters && this.filters.length === 0);
     }
 
+    isActiveFilter(filter: ProcessFilterCloudModel): boolean {
+        return this.currentFilter.name === filter.name;
+    }
+
+    /**
+     * @deprecated does nothing: the counters keep themselves in sync. Removed in ADF 10.0.0.
+     */
+    initProcessNotification(): void {}
+
+    /**
+     * Iterate over filters and update counters
+     *
+     * @deprecated counts one filter at a time. Removed in ADF 10.0.0.
+     */
+    updateFilterCounters(): void {
+        this.filters.forEach((filter) => this.updateFilterCounter(filter));
+    }
+
+    /**
+     *  Get current value for filter and check if value has changed
+     *
+     * @param filter filter
+     * @deprecated counts one filter at a time. Removed in ADF 10.0.0.
+     */
+    updateFilterCounter(filter: ProcessFilterCloudModel): void {
+        const filterKey = filter?.showCounter ? filter.key : undefined;
+        if (!filterKey) {
+            return;
+        }
+
+        defer(() => this.fetchProcessFilterCounter(filter))
+            .pipe(
+                catchError(() => EMPTY),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe((counter) => {
+                this.checkIfFilterValuesHasBeenUpdated(filterKey, counter);
+                this.counters = { ...this.counters, [filterKey]: counter };
+            });
+    }
+
+    checkIfFilterValuesHasBeenUpdated(filterKey: string, filterValue: number): void {
+        if (this.currentFiltersValues[filterKey] === undefined || this.currentFiltersValues[filterKey] !== filterValue) {
+            this.currentFiltersValues = { ...this.currentFiltersValues, [filterKey]: filterValue };
+            this.updatedFilter.emit(filterKey);
+            this.updatedFiltersSet.add(filterKey);
+        }
+    }
+
+    /**
+     * Get filer key when filter was refreshed by external action
+     *
+     */
+    getFilterKeysAfterExternalRefreshing(): void {
+        this.processFilterCloudService.filterKeyToBeRefreshed$
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((filterKey: string) => this.updatedFiltersSet.delete(filterKey));
+    }
+
+    isFilterUpdated(filterName: string): boolean {
+        return this.updatedFiltersSet.has(filterName);
+    }
+
+    /**
+     * Check equality of the filter names by translating the given name strings
+     *
+     * @param name1 source name
+     * @param name2 target name
+     * @returns `true` if filter names are equal, otherwise `false`
+     */
+    private checkFilterNamesEquality(name1: string, name2: string): boolean {
+        const translatedName1 = this.translationService.instant(name1);
+        const translatedName2 = this.translationService.instant(name2);
+
+        return translatedName1.toLocaleLowerCase() === translatedName2.toLocaleLowerCase();
+    }
+
     /**
      * Reset the filters
      */
@@ -255,74 +343,51 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         this.currentFilter = undefined;
     }
 
-    isActiveFilter(filter: ProcessFilterCloudModel): boolean {
-        return this.currentFilter.name === filter.name;
-    }
-
-    initProcessNotification(): void {
-        if (this.appName && this.enableNotifications) {
-            this.processFilterCloudService
-                .getProcessNotificationSubscription(this.appName)
-                .pipe(debounceTime(this.notificationDebounceTime), takeUntilDestroyed(this.destroyRef))
-                .subscribe(() => {
-                    this.updateFilterCounters();
-                });
-        }
-    }
-
-    /**
-     * Iterate over filters and update counters
-     */
-    updateFilterCounters(): void {
-        this.filters.forEach((filter: ProcessFilterCloudModel) => {
-            this.updateFilterCounter(filter);
-        });
-    }
-
-    /**
-     *  Get current value for filter and check if value has changed
-     *
-     * @param filter filter
-     */
-    updateFilterCounter(filter: ProcessFilterCloudModel): void {
-        if (!filter?.showCounter) {
+    private loadFilterCounters(appName: string): void {
+        if (!this.countersFilters$) {
             return;
         }
 
-        this.fetchProcessFilterCounter(filter)
-            .pipe(
-                tap((filterCounter) => {
-                    this.checkIfFilterValuesHasBeenUpdated(filter.key, filterCounter);
-                })
-            )
-            .subscribe((data) => {
-                this.counters = {
-                    ...this.counters,
-                    [filter.key]: data
-                };
+        this.countersSubscription?.unsubscribe();
+        this.countersSubscription = combineLatest([
+            this.countersFilters$.pipe(catchError(() => of([]))),
+            this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.PROCESS_INSTANCE, this.useBatchedCounters)
+        ])
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(([, { counters, batched }]) => {
+                this.batchedCounters = batched;
+                if (batched) {
+                    this.applyFilterCounters(counters);
+                } else {
+                    this.updateFilterCounters();
+                }
             });
     }
 
-    checkIfFilterValuesHasBeenUpdated(filterKey: string, filterValue: number): void {
-        if (this.currentFiltersValues[filterKey] === undefined || this.currentFiltersValues[filterKey] !== filterValue) {
-            this.currentFiltersValues[filterKey] = filterValue;
-            this.updatedFilter.emit(filterKey);
-            this.updatedFiltersSet.add(filterKey);
-        }
-    }
+    private applyFilterCounters(counters: { [filterKey: string]: number }): void {
+        this.filters.forEach((filter) => {
+            const filterKey = filter?.showCounter ? filter.key : undefined;
+            if (!filterKey) {
+                return;
+            }
 
-    isFilterUpdated(filterName: string): boolean {
-        return this.updatedFiltersSet.has(filterName);
-    }
+            const counter = counters[filterKey];
+            if (counter === undefined) {
+                this.updateFilterCounter(filter);
+                return;
+            }
 
-    /**
-     * Get filer key when filter was refreshed by external action
-     *
-     */
-    getFilterKeysAfterExternalRefreshing(): void {
-        this.processFilterCloudService.filterKeyToBeRefreshed$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((filterKey: string) => {
-            this.updatedFiltersSet.delete(filterKey);
+            this.checkIfFilterValuesHasBeenUpdated(filterKey, counter);
+            this.counters = { ...this.counters, [filterKey]: counter };
         });
+    }
+
+    private refreshFilterCounter(filter?: ProcessFilterCloudModel): void {
+        if (this.batchedCounters) {
+            this.filterCountersCloudService.refreshFilterCounters(this.appName);
+        } else if (filter) {
+            this.updateFilterCounter(filter);
+        }
     }
 
     private fetchProcessFilterCounter(filter: ProcessFilterCloudModel): Observable<number> {
