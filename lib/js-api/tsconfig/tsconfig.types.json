@@ -6,6 +6,5 @@
     "removeComments": false,
     "declaration": true,
     "declarationDir": "../../../dist/libs/js-api/typings",
-    "emitDeclarationOnly": false
   }
 }
