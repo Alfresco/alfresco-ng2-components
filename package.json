@@ -60,7 +60,7 @@
     "chart.js": "4.5.1",
     "cropperjs": "1.6.2",
     "date-fns": "2.30.0",
-    "dotenv-expand": "5.1.0",
+    "dotenv-expand": "1000.0.0",
     "editorjs-html": "4.0.5",
     "eventemitter3": "5.0.4",
     "graphql-ws": "6.0.8",
