@@ -57,7 +57,7 @@
     "@ngx-translate/core": "17.0.0",
     "angular-oauth2-oidc": "19.0.0",
     "apollo-angular": "11.0.0",
-    "chart.js": "4.4.4",
+    "chart.js": "4.5.1",
     "cropperjs": "1.6.2",
     "date-fns": "2.30.0",
     "dotenv-expand": "5.1.0",
