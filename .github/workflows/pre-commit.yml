@@ -1,0 +1,34 @@
+name: "pre-commit"
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - master
+      - develop-patch*
+      - master-patch*
+    paths:
+      - '.github/workflows/**'
+      - '.github/actions/**'
+      - '.pre-commit-config.yaml'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  pre-commit:
+    name: "Run pre-commit hooks"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Run pre-commit
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@da99ab845e78301fcb0680d16cbc185a40a1938c # v18.24.1
+        with:
+          skip_checkout: true
