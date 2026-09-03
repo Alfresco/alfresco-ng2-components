@@ -315,8 +315,6 @@ export default [
             parser: angularTemplateParser
         },
         rules: {
-            ...angularEslintTemplatePlugin.configs.recommended.rules,
-            ...angularEslintTemplatePlugin.configs.accessibility.rules,
             ...nxPlugin.configs['angular-template'].rules,
             '@angular-eslint/template/prefer-self-closing-tags': 'error'
         }
