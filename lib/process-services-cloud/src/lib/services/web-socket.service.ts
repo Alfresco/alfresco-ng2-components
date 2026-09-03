@@ -18,7 +18,6 @@
 import { createClient } from 'graphql-ws';
 import { inject, Injectable } from '@angular/core';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
-import { WebSocketLink } from '@apollo/client/link/ws';
 import {
     DefaultContext,
     FetchResult,
@@ -56,9 +55,8 @@ export class WebSocketService {
     private readonly authService = inject(AuthenticationService);
 
     private readonly appConfigService = inject(AppConfigService);
-    private readonly subscriptionProtocol: 'graphql-ws' | 'transport-ws' = 'graphql-ws';
-    private wsLink: GraphQLWsLink | WebSocketLink;
-    private httpLinkHandler: HttpLinkHandler;
+    private wsLink!: GraphQLWsLink;
+    private httpLinkHandler: HttpLinkHandler | undefined;
 
     public getSubscription<T>(options: serviceOptions): Observable<FetchResult<T>> {
         const { apolloClientName, subscriptionOptions } = options;
@@ -110,8 +108,7 @@ export class WebSocketService {
             operation.setContext(({ headers }: DefaultContext) => ({
                 headers: {
                     ...headers,
-                    ...(this.subscriptionProtocol === 'graphql-ws' && { Authorization: `Bearer ${this.authService.getToken()}` }),
-                    ...(this.subscriptionProtocol === 'transport-ws' && { 'X-Authorization': `Bearer ${this.authService.getToken()}` })
+                    Authorization: `Bearer ${this.authService.getToken()}`
                 }
             }));
             return forward(operation);
@@ -120,7 +117,7 @@ export class WebSocketService {
         const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
             if (graphQLErrors) {
                 for (const error of graphQLErrors) {
-                    if (error.extensions && error.extensions['code'] === 'UNAUTHENTICATED') {
+                    if (error.extensions?.['code'] === 'UNAUTHENTICATED') {
                         authLink(operation, forward);
                     }
                 }
@@ -145,8 +142,7 @@ export class WebSocketService {
 
         this.apollo.createNamed(options.apolloClientName, {
             headers: {
-                ...(this.subscriptionProtocol === 'graphql-ws' && { Authorization: `Bearer ${this.authService.getToken()}` }),
-                ...(this.subscriptionProtocol === 'transport-ws' && { 'X-Authorization': `Bearer ${this.authService.getToken()}` })
+                Authorization: `Bearer ${this.authService.getToken()}`
             },
             link: from([authLink, retryLink, errorLink, link]),
             cache: new InMemoryCache({ merge: true } as InMemoryCacheConfig)
@@ -161,14 +157,16 @@ export class WebSocketService {
                     Authorization: 'Bearer ' + this.authService.getToken()
                 }),
                 on: {
-                    error: () => {
-                        this.apollo.removeClient(options.apolloClientName);
-                        this.initSubscriptions(options);
-                    }
+                    error: () => this.reconnect(options)
                 },
                 lazy: true
             })
         );
+    }
+
+    private reconnect(options: serviceOptions): void {
+        this.apollo.removeClient(options.apolloClientName);
+        this.initSubscriptions(options);
     }
 
     private createHttpLinkHandler(options: serviceOptions): void {
