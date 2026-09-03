@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { createClient } from 'graphql-ws';
+import { Client, ClientOptions, createClient } from 'graphql-ws';
 import { inject, Injectable } from '@angular/core';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import {
@@ -118,7 +118,7 @@ export class WebSocketService {
             if (graphQLErrors) {
                 for (const error of graphQLErrors) {
                     if (error.extensions?.['code'] === 'UNAUTHENTICATED') {
-                        authLink(operation, forward);
+                        return authLink(operation, forward);
                     }
                 }
             }
@@ -126,6 +126,8 @@ export class WebSocketService {
             if (networkError) {
                 console.error(`[Network error]: ${networkError}`);
             }
+
+            return undefined;
         });
 
         const retryLink = new RetryLink({
@@ -151,7 +153,7 @@ export class WebSocketService {
 
     private createGraphQLWsLink(options: serviceOptions): void {
         this.wsLink = new GraphQLWsLink(
-            createClient({
+            this.createWsClient({
                 url: this.createWsUrl(options.wsUrl) + '/v2/ws/graphql',
                 connectionParams: () => ({
                     Authorization: 'Bearer ' + this.authService.getToken()
@@ -162,6 +164,10 @@ export class WebSocketService {
                 lazy: true
             })
         );
+    }
+
+    protected createWsClient(clientOptions: ClientOptions): Client {
+        return createClient(clientOptions);
     }
 
     private reconnect(options: serviceOptions): void {
