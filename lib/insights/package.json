@@ -11,9 +11,9 @@
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "dependencies": {
-    "chart.js": "^4.3.0",
-    "ng2-charts": "^9.0.0",
-    "raphael": ">=2.3.0"
+    "chart.js": "4.3.0",
+    "ng2-charts": "9.0.0",
+    "raphael": "2.3.0"
   },
   "peerDependencies": {
     "@angular/common": ">=20.3.27",
