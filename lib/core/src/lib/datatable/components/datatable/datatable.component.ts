@@ -640,7 +640,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         }
 
         if (row) {
-            const rowIndex = this.data.getRows().indexOf(row) + (this.isHeaderVisible() ? 1 : 0);
+            const rowIndex = this.data.getRows().indexOf(row) + this.rowsOffset;
             this.keyManager.setActiveItem(rowIndex);
 
             const dataRowEvent = new DataRowEvent(row, mouseEvent, this);
@@ -921,6 +921,23 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     isMultiSelectionMode(): boolean {
         return this.selectionMode && this.selectionMode.toLowerCase() === 'multiple';
+    }
+
+    isRowKeyboardNavigable(): boolean {
+        return this.enableDragRows || this.multiselect || this.isSingleSelectionMode() || this.isMultiSelectionMode();
+    }
+
+    isRowActive(rowIndex: number): boolean {
+        const activeItemIndex = this.keyManager?.activeItemIndex ?? -1;
+        return activeItemIndex < this.rowsOffset ? rowIndex === 0 : activeItemIndex === rowIndex + this.rowsOffset;
+    }
+
+    onRowFocus(rowIndex: number): void {
+        this.keyManager?.updateActiveItem(rowIndex + this.rowsOffset);
+    }
+
+    private get rowsOffset(): number {
+        return this.isHeaderVisible() ? 1 : 0;
     }
 
     getRowStyle(row: DataRow): string {
