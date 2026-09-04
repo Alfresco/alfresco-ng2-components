@@ -2,11 +2,11 @@
      [class.adf-invalid]="!field.isValid && isTouched()"
      [class.adf-readonly]="field.readOnly"
      id="people-widget-content">
-    <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label>
     <mat-form-field
         class="adf-people-widget-field">
+        <mat-label class="adf-people-widget-label" data-automation-id="adf-people-widget-label">{{ field.name | translate }}</mat-label>
         <mat-chip-grid #chipGrid [attr.aria-label]="'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECTED_PEOPLE' | translate"
-            [ngModel]="selectedUsers" [errorStateMatcher]="errorStateMatcher">
+            [required]="isRequired()" [ngModel]="selectedUsers" [errorStateMatcher]="errorStateMatcher">
             <mat-chip-row
                 *ngFor="let user of selectedUsers"
                 (removed)="onRemove(user)"

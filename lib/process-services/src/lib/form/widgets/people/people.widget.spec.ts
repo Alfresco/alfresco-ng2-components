@@ -23,7 +23,7 @@ import { PeopleWidgetComponent } from './people.widget';
 import { TranslateService } from '@ngx-translate/core';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
-import { MatChipHarness } from '@angular/material/chips/testing';
+import { MatChipGridHarness, MatChipHarness } from '@angular/material/chips/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 
@@ -325,10 +325,9 @@ describe('PeopleWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+            const chipGrid = await loader.getHarness(MatChipGridHarness);
 
-            expect(asterisk).toBeTruthy();
-            expect(asterisk.textContent).toEqual('*');
+            expect(await chipGrid.isRequired()).toBeTrue();
         });
     });
 
