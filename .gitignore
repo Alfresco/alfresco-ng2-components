@@ -1,5 +1,6 @@
 *.log
 node_modules
+.pnpm-store/
 bundles
 .idea/
 *.iml
