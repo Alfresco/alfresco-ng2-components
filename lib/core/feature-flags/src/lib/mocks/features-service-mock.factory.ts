@@ -15,11 +15,27 @@
  * limitations under the License.
  */
 
-import { of } from 'rxjs';
-import { FeaturesServiceToken, FlagChangeset, IFeaturesService } from '../interfaces/features.interface';
+import { of, Observable, map, combineLatest, take, defer } from 'rxjs';
+import { FeaturesServiceToken, FlagChangeset, FlagChangesetValues, IFeaturesService } from '../interfaces/features.interface';
 
+/**
+ * Feature flags to mock. A boolean sets a fixed value, an observable lets the test change the value over time.
+ *
+ * Observable flags must have a current value, use 'BehaviorSubject' or 'of(...)'.
+ * A bare 'Subject' has no value until it emits, and 'getFlags$()'/'init()' withhold the whole changeset
+ * until every observable flag has emitted at least once.
+ */
 export interface MockFeatureFlags {
-    [key: string]: boolean;
+    [key: string]: boolean | Observable<boolean>;
+}
+
+interface MockFlagChangesetValues extends FlagChangesetValues {
+    current: boolean | Observable<boolean>;
+    previous: boolean | Observable<boolean>;
+}
+
+interface MockFlagChangeset extends FlagChangeset {
+    [key: string]: MockFlagChangesetValues;
 }
 
 const assertFeatureFlag = (flagChangeset: FlagChangeset, key: string): void => {
@@ -32,18 +48,71 @@ const assertFeatureFlag = (flagChangeset: FlagChangeset, key: string): void => {
     }
 };
 
-const mockFeaturesService = (flagChangeset: FlagChangeset): IFeaturesService => ({
-    init: () => of(flagChangeset),
+/**
+ * Calling 'pipe' on a 'Subject' returns an 'AnonymousSubject' that still writes through to the original 'Subject',
+ * so piping alone does not stop a consumer from pushing values into the mocked flag.
+ * 'defer' breaks that chain and gives back a plain, read only observable.
+ *
+ * @param value$ Observable feature flag value provided by the test
+ * @returns Observable that cannot be used to change the mocked value
+ */
+const toReadOnly = (value$: Observable<boolean>): Observable<boolean> => defer(() => value$);
+
+const mockFeaturesService = (flagChangeset: MockFlagChangeset): IFeaturesService => ({
+    init: () => resolveFeatureFlagValues(flagChangeset).pipe(take(1)),
     isOn$: (key) => {
         assertFeatureFlag(flagChangeset, key);
-        return of(flagChangeset[key].current);
+        const featureFlagValue = flagChangeset[key].current;
+
+        // In case of an observable, we do not want to return the original observable, so a consumer cannot 'next', 'error' or 'complete' it
+        return typeof featureFlagValue === 'boolean' ? of(featureFlagValue) : toReadOnly(featureFlagValue).pipe(map(Boolean));
     },
     isOff$: (key) => {
         assertFeatureFlag(flagChangeset, key);
-        return of(!flagChangeset[key].current);
+        const featureFlagValue = flagChangeset[key].current;
+
+        return typeof featureFlagValue === 'boolean' ? of(!featureFlagValue) : toReadOnly(featureFlagValue).pipe(map((value) => !value));
     },
-    getFlags$: () => of(flagChangeset)
+    getFlags$: () => resolveFeatureFlagValues(flagChangeset)
 });
+
+/**
+ * 'provideMockFeatureFlags' can receive observables, therefore we need to resolve these values
+ *
+ * @param mockFlagChangeset Mocked flag changeset
+ * @returns FlagChangeset
+ */
+const resolveFeatureFlagValues = (mockFlagChangeset: MockFlagChangeset): Observable<FlagChangeset> => {
+    // No FF provided, just return empty object
+    if (Object.keys(mockFlagChangeset).length === 0) {
+        return of({});
+    }
+
+    const resolveFeatureFlagValues$ = Object.entries(mockFlagChangeset).map(([featureKey, values]) => {
+        if (typeof values.current === 'boolean') {
+            return of([featureKey, { ...values }] as const);
+        }
+
+        // Value is observable, we need to resolve it
+        const observableValue$ = values.current;
+
+        const resolveFlagValue$ = observableValue$.pipe(map((resolvedValue) => [featureKey, { current: resolvedValue, previous: null }] as const));
+
+        return resolveFlagValue$;
+    });
+
+    return combineLatest(resolveFeatureFlagValues$).pipe(
+        map((resolvedFlags) => {
+            const resolvedFeatureFlag: FlagChangeset = {};
+
+            resolvedFlags.forEach(([key, values]) => {
+                resolvedFeatureFlag[key] = values;
+            });
+
+            return resolvedFeatureFlag;
+        })
+    );
+};
 
 const arrayToFlagChangeset = (featureFlags: string[]): FlagChangeset => {
     const flagChangeset: FlagChangeset = {};
@@ -62,6 +131,34 @@ const mockFeatureFlagsToFlagChangeset = (mockFeatureFlags: MockFeatureFlags) => 
     return flagChangeset;
 };
 
+/**
+ * Mock the FeaturesService with the provided feature flags.
+ * When we provide string or string[], all these features will be set to true.
+ * For MockFeatureFlags, we can set value depending on our needs
+ *
+ * Every flag the component under test asks for has to be mocked, 'isOn$'/'isOff$' throw for an unknown flag.
+ *
+ * @example
+ *
+ * Enable a single feature, or a few of them
+ *
+ * providers: [provideMockFeatureFlags('featureA')]
+ * providers: [provideMockFeatureFlags(['featureA', 'featureB'])]
+ *
+ * Set each value explicitly
+ *
+ * providers: [provideMockFeatureFlags({ featureA: true, featureB: false })]
+ *
+ * Change a value during the test, 'BehaviorSubject' (or 'of(...)') is required so the flag has a current
+ * value from the start, a bare 'Subject' withholds the whole changeset until it emits
+ *
+ * const featureA$ = new BehaviorSubject(false);
+ * providers: [provideMockFeatureFlags({ featureA: featureA$ })]
+ * featureA$.next(true);
+ *
+ * @param featureFlag The feature flag(s) to mock. Can be a single feature flag string, an array of feature flag strings, or a MockFeatureFlags object.
+ * @returns A provider object for the FeaturesServiceToken with the mocked feature flags.
+ */
 export const provideMockFeatureFlags = (featureFlag: MockFeatureFlags | string | string[]) => {
     if (typeof featureFlag === 'string') {
         featureFlag = [featureFlag];
