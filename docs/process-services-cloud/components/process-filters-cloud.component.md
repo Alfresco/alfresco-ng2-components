@@ -27,6 +27,7 @@ Lists all available process filters and allows to select a filter.
 | appName     | `string`                       | ""            | (required) The application name                               |
 | filterParam | `UserTaskFilterRepresentation` |               | (optional) The filter to be selected by default               |
 | showIcons   | `boolean`                      | false         | (optional) Toggles showing an icon by the side of each filter |
+| useBatchedCounters | `boolean` | false | Get all the filter counters with one call to `POST /query/v1/count` (needs Activiti 8.7.0). Turn it on for both filter components. |
 
 ### Events
 

@@ -1002,4 +1002,169 @@ describe('WidgetVisibilityService', () => {
             expect(textField.isVisible).toBe(true);
         });
     });
+
+    describe('Visibility calculation from form variables', () => {
+        const hiddenWhileRequestor = new WidgetVisibilityModel({
+            leftType: 'variable',
+            leftValue: 'person_type',
+            operator: '!=',
+            rightType: 'value',
+            rightValue: 'Requestor',
+            nextConditionOperator: '',
+            nextCondition: null
+        });
+
+        const requestorProcessVariables = [{ id: 'variables.person_type', value: 'Requestor' }];
+
+        let formJson: any;
+        let form: FormModel;
+
+        beforeEach(() => {
+            formJson = {
+                id: 'person-type-form',
+                variables: [{ id: 'person-type-var', name: 'person_type', value: null }],
+                processVariables: [{ name: 'variables.person_type', value: 'Requestor' }]
+            };
+            form = new FormModel(formJson);
+            service.cleanProcessVariable();
+        });
+
+        it('should resolve a variable from the form when the cached process variables no longer hold it', () => {
+            service.refreshVisibility(form, requestorProcessVariables);
+
+            service.refreshVisibility(new FormModel({ id: 'another-form' }), [{ id: 'variables.other', value: 'other' }]);
+
+            expect(service.evaluateVisibility(form, hiddenWhileRequestor)).toBe(false);
+        });
+
+        it('should resolve a variable from the form when the refreshed data omits it', () => {
+            service.refreshVisibility(form, requestorProcessVariables);
+            service.refreshVisibility(form, [{ id: 'processOutput', value: 'result' }]);
+
+            expect(service.evaluateVisibility(form, hiddenWhileRequestor)).toBe(false);
+        });
+
+        it('should prefer a process variable over the value defined in the form definition', () => {
+            const formWithDefault = new FormModel({
+                id: 'person-type-form-with-default',
+                variables: [{ id: 'person-type-var', name: 'person_type', value: 'Approver' }],
+                processVariables: [{ name: 'variables.person_type', value: 'Requestor' }]
+            });
+
+            expect(service.getVariableValue(formWithDefault, 'person_type', requestorProcessVariables)).toBe('Requestor');
+        });
+
+        it('should prefer a variable changed at runtime over a process variable of the same name', () => {
+            service.refreshVisibility(form, requestorProcessVariables);
+
+            form.changeVariableValue('person-type-var', 'Approver');
+            service.refreshVisibility(form, requestorProcessVariables);
+
+            expect(service.evaluateVisibility(form, hiddenWhileRequestor)).toBe(true);
+        });
+
+        it('should prefer a variable cleared at runtime over a process variable of the same name', () => {
+            service.refreshVisibility(form, requestorProcessVariables);
+
+            form.changeVariableValue('person-type-var', '');
+            service.refreshVisibility(form, requestorProcessVariables);
+
+            expect(service.evaluateVisibility(form, hiddenWhileRequestor)).toBe(true);
+        });
+
+        it('should keep a variable changed at runtime when the form is rebuilt from the same definition', () => {
+            service.refreshVisibility(form, requestorProcessVariables);
+            form.changeVariableValue('person-type-var', 'Approver');
+
+            const rebuiltForm = new FormModel(formJson);
+            service.refreshVisibility(rebuiltForm, [{ id: 'processOutput', value: 'result' }]);
+
+            expect(service.evaluateVisibility(rebuiltForm, hiddenWhileRequestor)).toBe(true);
+        });
+
+        it('should not convert the type of a variable changed at runtime', () => {
+            const numericForm = new FormModel({ id: 'numeric-form', variables: [{ id: 'amount-var', name: 'amount', type: 'integer', value: 0 }] });
+            const booleanForm = new FormModel({ id: 'boolean-form', variables: [{ id: 'flag-var', name: 'flag', type: 'boolean', value: true }] });
+
+            service.refreshVisibility(numericForm);
+            service.refreshVisibility(booleanForm);
+
+            numericForm.changeVariableValue('amount-var', 5);
+            booleanForm.changeVariableValue('flag-var', false);
+
+            service.refreshVisibility(numericForm);
+            service.refreshVisibility(booleanForm);
+
+            expect(service.getVariableValue(numericForm, 'amount')).toBe(5);
+            expect(service.getVariableValue(booleanForm, 'flag', [])).toBe(false);
+        });
+
+        it('should evaluate a numeric variable changed at runtime without string comparison', () => {
+            const numericForm = new FormModel({
+                id: 'numeric-visibility-form',
+                variables: [{ id: 'amount-var', name: 'amount', type: 'integer', value: 0 }]
+            });
+            const amountOverTen = new WidgetVisibilityModel({
+                leftType: 'variable',
+                leftValue: 'amount',
+                operator: '>',
+                rightType: 'value',
+                rightValue: '10',
+                nextConditionOperator: '',
+                nextCondition: null
+            });
+
+            service.refreshVisibility(numericForm);
+            numericForm.changeVariableValue('amount-var', 5);
+            service.refreshVisibility(numericForm);
+
+            expect(service.evaluateVisibility(numericForm, amountOverTen)).toBe(false);
+        });
+
+        it('should resolve a zero process variable from the form when the refreshed data omits it', () => {
+            const zeroForm = new FormModel({
+                id: 'zero-form',
+                variables: [{ id: 'amount-var', name: 'amount', type: 'integer', value: 99 }],
+                processVariables: [{ name: 'variables.amount', value: 0, type: 'integer' }]
+            });
+            const amountIsZero = new WidgetVisibilityModel({
+                leftType: 'variable',
+                leftValue: 'amount',
+                operator: '==',
+                rightType: 'value',
+                rightValue: '0',
+                nextConditionOperator: '',
+                nextCondition: null
+            });
+
+            service.refreshVisibility(zeroForm, [{ id: 'variables.amount', value: 0 }]);
+            service.refreshVisibility(zeroForm, [{ id: 'processOutput', value: 'result' }]);
+
+            expect(service.getVariableValue(zeroForm, 'amount', [])).toBe(0);
+            expect(service.evaluateVisibility(zeroForm, amountIsZero)).toBe(true);
+        });
+
+        it('should resolve a false process variable from the form when the refreshed data omits it', () => {
+            const falseForm = new FormModel({
+                id: 'false-form',
+                variables: [{ id: 'flag-var', name: 'flag', type: 'boolean', value: true }],
+                processVariables: [{ name: 'variables.flag', value: false, type: 'boolean' }]
+            });
+            const flagIsFalse = new WidgetVisibilityModel({
+                leftType: 'variable',
+                leftValue: 'flag',
+                operator: '==',
+                rightType: 'value',
+                rightValue: 'false',
+                nextConditionOperator: '',
+                nextCondition: null
+            });
+
+            service.refreshVisibility(falseForm, [{ id: 'variables.flag', value: false }]);
+            service.refreshVisibility(falseForm, [{ id: 'processOutput', value: 'result' }]);
+
+            expect(service.getVariableValue(falseForm, 'flag', [])).toBe(false);
+            expect(service.evaluateVisibility(falseForm, flagIsFalse)).toBe(true);
+        });
+    });
 });

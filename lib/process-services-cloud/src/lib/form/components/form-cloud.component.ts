@@ -601,6 +601,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     private refreshFormData(previousData: TaskVariableCloud[] = []) {
         const snapshot = this.snapshotRuntimeState();
 
+        this.mergeProcessVariables(this.data ?? []);
+
         this.form = this.parseForm(this.formCloudRepresentationJSON);
         if (!this.form) {
             return;
@@ -610,11 +612,34 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.restoreRuntimeState(this.form, snapshot, changedFieldIds);
 
         this.setCheckParentVisibilityForValidationOnFields();
-        this.visibilityService.refreshVisibility(this.form);
+        this.visibilityService.refreshVisibility(this.form, this.data);
         this.form.validateForm();
         this.onFormLoaded(this.form);
         this.formService.formRulesEvent.next(new FormRulesEvent('dataRefreshed', new FormEvent(this.form)));
         this.onFormDataRefreshed(this.form);
+    }
+
+    /**
+     * Keeps the process variables on the stored representation up to date with the latest data, so that a
+     * variable omitted by a later partial refresh still resolves to the most recent value received.
+     *
+     * @param updates Variables received on the latest data refresh
+     */
+    private mergeProcessVariables(updates: TaskVariableCloud[]): void {
+        if (!this.formCloudRepresentationJSON) {
+            return;
+        }
+
+        const existing: TaskVariableCloud[] = this.formCloudRepresentationJSON.processVariables ?? [];
+        const byName = new Map<string, TaskVariableCloud>();
+
+        for (const variable of [...existing, ...updates]) {
+            if (variable?.name) {
+                byName.set(variable.name, variable);
+            }
+        }
+
+        this.formCloudRepresentationJSON.processVariables = Array.from(byName.values());
     }
 
     private snapshotRuntimeState(): Map<string, FormFieldRuntimeState> {

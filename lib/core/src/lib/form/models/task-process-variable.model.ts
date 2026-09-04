@@ -18,5 +18,5 @@
 export class TaskProcessVariableModel {
     id?: string;
     type?: string;
-    value: string;
+    value: any;
 }
