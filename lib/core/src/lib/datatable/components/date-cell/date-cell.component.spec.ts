@@ -67,17 +67,23 @@ const renderDateCell = (dateConfig: DateConfig, value: number | string | Date, t
 };
 
 const checkDisplayedDate = (expectedDate: string) => {
-    const displayedDate = testingUtils.getByCSS('span').nativeElement.textContent.trim();
+    const displayedDate = testingUtils.getByCSS('time').nativeElement.textContent.trim();
 
     expect(displayedDate).toBeTruthy();
     expect(displayedDate).toBe(expectedDate);
 };
 
 const checkDisplayedTooltip = (expectedTooltip: string) => {
-    const displayedTooltip = testingUtils.getByCSS('span').nativeElement.title;
+    const displayedTooltip = testingUtils.getByCSS('time').nativeElement.title;
 
     expect(displayedTooltip).toBeTruthy();
     expect(displayedTooltip).toBe(expectedTooltip);
+};
+
+const checkDatetimeAttribute = (expectedIso: string) => {
+    const datetime = testingUtils.getByCSS('time').nativeElement.getAttribute('datetime');
+
+    expect(datetime).toBe(expectedIso);
 };
 
 const configureTestingModule = (providers: any[]) => {
@@ -141,7 +147,7 @@ describe('DateCellComponent', () => {
         expect(component.config().locale).toEqual('en-US');
     });
 
-    it('should display date and tooltip with defaules values if NO dateConfig or appConfig is provided', () => {
+    it('should display date and tooltip with default values if NO dateConfig or appConfig is provided', () => {
         appConfigService.config = {
             dateValues: {}
         };
@@ -231,6 +237,16 @@ describe('DateCellComponent', () => {
 
         renderDateCell(mockDateConfig, mockTimestamp);
         checkDisplayedDate(expectedDate);
+    });
+
+    it('should render a datetime attribute with the full ISO date value', () => {
+        const mockDateConfig: DateConfig = {
+            format: 'short',
+            tooltipFormat: 'short'
+        };
+
+        renderDateCell(mockDateConfig, mockDate);
+        checkDatetimeAttribute(mockDate.toISOString());
     });
 });
 
