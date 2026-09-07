@@ -96,19 +96,24 @@ describe('provideMockFeatureFlags', () => {
         expect(await firstValueFrom(service.init())).toEqual({});
     });
 
-    [
-        { initialState: true, expectedIsOn: true, expectedIsOff: false },
-        { initialState: false, expectedIsOn: false, expectedIsOff: true }
-    ].forEach(({ initialState, expectedIsOn, expectedIsOff }) => {
-        it(`should return the expected state when the feature flag is ${initialState}`, async () => {
-            const service = setupFeatureService({ [feature1]: initialState });
+    it('should return the expected state when the feature flag is true', async () => {
+        const service = setupFeatureService({ [feature1]: true });
 
-            expect(await firstValueFrom(service.init())).toEqual({
-                [feature1]: { current: initialState, previous: null }
-            });
-            expect(await firstValueFrom(service.isOn$(feature1))).toBe(expectedIsOn);
-            expect(await firstValueFrom(service.isOff$(feature1))).toBe(expectedIsOff);
+        expect(await firstValueFrom(service.init())).toEqual({
+            [feature1]: { current: true, previous: null }
         });
+        expect(await firstValueFrom(service.isOn$(feature1))).toBe(true);
+        expect(await firstValueFrom(service.isOff$(feature1))).toBe(false);
+    });
+
+    it('should return the expected state when the feature flag is false', async () => {
+        const service = setupFeatureService({ [feature1]: false });
+
+        expect(await firstValueFrom(service.init())).toEqual({
+            [feature1]: { current: false, previous: null }
+        });
+        expect(await firstValueFrom(service.isOn$(feature1))).toBe(false);
+        expect(await firstValueFrom(service.isOff$(feature1))).toBe(true);
     });
 
     it('should resolve observable values in the complete feature flags result', async () => {
