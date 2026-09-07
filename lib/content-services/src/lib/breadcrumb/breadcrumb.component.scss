@@ -1,3 +1,5 @@
+@use '../mat-selectors.scss' as ms;
+
 .adf-breadcrumb {
     display: flex;
     flex: 1;
@@ -100,6 +102,11 @@
             &:focus {
                 outline: 1px solid var(--mat-sys-outline-variant);
                 outline-offset: -1px;
+            }
+
+            &#{ms.$cdk-drop-list-dragging}:hover {
+                text-decoration: underline;
+                text-underline-offset: 4px;
             }
         }
 

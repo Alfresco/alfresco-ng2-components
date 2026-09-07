@@ -768,3 +768,12 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         max-height: 50%;
     }
 }
+
+.adf-datatable-row__dragging-preview {
+    height: auto;
+    min-height: 0;
+    padding: 15px;
+    gap: 10px;
+    background-color: color-mix(in srgb, var(--mat-sys-surface) 87%, transparent);
+    box-shadow: var(--mat-sys-level2);
+}

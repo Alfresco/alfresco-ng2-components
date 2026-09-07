@@ -125,6 +125,9 @@ export class DataColumnComponent implements OnInit {
     @Input()
     dateConfig?: DateConfig;
 
+    @Input()
+    visibleInDragPreview?: boolean;
+
     /** Data column header template */
     header?: TemplateRef<any>;
 

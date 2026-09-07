@@ -35,10 +35,11 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IconModule } from '@alfresco/adf-core';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'adf-breadcrumb',
-    imports: [IconModule, TranslatePipe, MatSelectModule],
+    imports: [IconModule, TranslatePipe, MatSelectModule, CdkDropList],
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -112,6 +113,9 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @Output()
     navigate = new EventEmitter<PathElement>();
 
+    @Output()
+    breadcrumbPathElementsChange = new EventEmitter<string[]>();
+
     ngOnInit() {
         this.transform = this.transform ? this.transform : null;
 
@@ -145,6 +149,11 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             this.lastNodes = this.route;
             this.previousNodes = null;
         }
+        this.breadcrumbPathElementsChange.emit(
+            this.lastNodes
+                .filter((_pathElement, i) => this.breadcrumbItemIsAnchor(i === this.lastNodes.length - 1))
+                .map((pathElement) => pathElement.id)
+        );
     }
 
     open(): void {
@@ -216,6 +225,12 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             if (this.target) {
                 this.target.navigateTo(route.id);
             }
+        }
+    }
+
+    onDrop(event: CdkDragDrop<CdkDrag>) {
+        if (!event.isPointerOverContainer) {
+            return;
         }
     }
 }

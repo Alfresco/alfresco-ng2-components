@@ -45,6 +45,7 @@ export interface DataColumn<T = unknown> {
     decimalConfig?: DecimalConfig;
     dateConfig?: DateConfig;
     maxTextLength?: number;
+    visibleInDragPreview?: boolean;
 }
 
 export interface LocaleConfig {

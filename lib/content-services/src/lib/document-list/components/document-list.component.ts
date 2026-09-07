@@ -383,6 +383,20 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     displayDragAndDropHint = true;
 
     /**
+     * Flag that enables dragging rows
+     */
+    @Input()
+    enableDragRows = false;
+
+    /** The connected drop lists for drag and drop functionality. */
+    @Input()
+    dropListConnectedTo: string[] = [];
+
+    /** The boundary element for drag and drop functionality. */
+    @Input()
+    dragBoundary = '.adf-datatable-body';
+
+    /**
      * Indicates if the data is provided externally.
      * If true the component won't fetch data itself
      */
