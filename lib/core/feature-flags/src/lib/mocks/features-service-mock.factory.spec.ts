@@ -21,7 +21,7 @@ import { FeaturesServiceToken, IFeaturesService } from '../interfaces/features.i
 import { MockFeatureFlags, provideMockFeatureFlags } from './features-service-mock.factory';
 
 describe('provideMockFeatureFlags', () => {
-    let featureValue$: Subject<boolean>;
+    let featureValue$: BehaviorSubject<boolean>;
     const feature1 = 'feature1';
 
     const setupFeatureService = (featureFlags: MockFeatureFlags | string | string[]): IFeaturesService => {
@@ -33,24 +33,24 @@ describe('provideMockFeatureFlags', () => {
     };
 
     beforeEach(() => {
-        featureValue$ = new Subject();
+        featureValue$ = new BehaviorSubject(false);
     });
 
     it('should emit the updated value when an observable feature flag changes', async () => {
         const featuresService = setupFeatureService({ [feature1]: featureValue$ });
-        const isOnResult = firstValueFrom(featuresService.isOn$(feature1));
-        const isOffResult = firstValueFrom(featuresService.isOff$(feature1));
+
+        expect(await firstValueFrom(featuresService.isOn$(feature1))).toBe(false);
+        expect(await firstValueFrom(featuresService.isOff$(feature1))).toBe(true);
 
         featureValue$.next(true);
-        expect(await isOnResult).toBe(true);
-        expect(await isOffResult).toBe(false);
 
-        const updatedIsOnResult = firstValueFrom(featuresService.isOn$(feature1));
-        const updatedIsOffResult = firstValueFrom(featuresService.isOff$(feature1));
+        expect(await firstValueFrom(featuresService.isOn$(feature1))).toBe(true);
+        expect(await firstValueFrom(featuresService.isOff$(feature1))).toBe(false);
 
         featureValue$.next(false);
-        expect(await updatedIsOnResult).toBe(false);
-        expect(await updatedIsOffResult).toBe(true);
+
+        expect(await firstValueFrom(featuresService.isOn$(feature1))).toBe(false);
+        expect(await firstValueFrom(featuresService.isOff$(feature1))).toBe(true);
     });
 
     it('should not let a consumer change the feature flag value through the observable returned by isOn$', async () => {
