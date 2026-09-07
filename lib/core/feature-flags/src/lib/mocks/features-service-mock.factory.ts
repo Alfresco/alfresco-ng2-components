@@ -31,7 +31,7 @@ export interface MockFeatureFlags {
 
 interface MockFlagChangesetValues extends FlagChangesetValues {
     current: boolean | Observable<boolean>;
-    previous: boolean | Observable<boolean>;
+    previous: null;
 }
 
 interface MockFlagChangeset extends FlagChangeset {
