@@ -133,28 +133,20 @@ const mockFeatureFlagsToFlagChangeset = (mockFeatureFlags: MockFeatureFlags) => 
 
 /**
  * Mock the FeaturesService with the provided feature flags.
- * When we provide string or string[], all these features will be set to true.
- * For MockFeatureFlags, we can set value depending on our needs
+ * A string or string[] sets every listed feature to true, a MockFeatureFlags object sets each value explicitly.
+ * Every flag the code under test asks for has to be mocked, otherwise 'isOn$'/'isOff$' throw.
  *
- * Every flag the component under test asks for has to be mocked, 'isOn$'/'isOff$' throw for an unknown flag.
+ * Use a 'BehaviorSubject' for a flag that changes during the test. A bare 'Subject' has no current value,
+ * so the flag stays silent and 'getFlags$()'/'init()' withhold the whole changeset, until it emits.
  *
  * @example
  *
- * Enable a single feature, or a few of them
+ * const featureA$ = new BehaviorSubject(false);
  *
  * providers: [provideMockFeatureFlags('featureA')]
  * providers: [provideMockFeatureFlags(['featureA', 'featureB'])]
- *
- * Set each value explicitly
- *
  * providers: [provideMockFeatureFlags({ featureA: true, featureB: false })]
- *
- * Change a value during the test, 'BehaviorSubject' (or 'of(...)') is required so the flag has a current
- * value from the start, a bare 'Subject' withholds the whole changeset until it emits
- *
- * const featureA$ = new BehaviorSubject(false);
  * providers: [provideMockFeatureFlags({ featureA: featureA$ })]
- * featureA$.next(true);
  *
  * @param featureFlag The feature flag(s) to mock. Can be a single feature flag string, an array of feature flag strings, or a MockFeatureFlags object.
  * @returns A provider object for the FeaturesServiceToken with the mocked feature flags.
