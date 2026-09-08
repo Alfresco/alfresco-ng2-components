@@ -89,6 +89,9 @@ export class CardViewItemDispatcherComponent implements OnChanges {
             this.componentReference.instance[changeName] = change.currentValue;
         });
 
+        // Writing to `.instance` does not mark the view dirty, which zoneless change detection requires.
+        this.componentReference.changeDetectorRef.markForCheck();
+
         this.proxy('ngOnChanges', changes);
     }
 
