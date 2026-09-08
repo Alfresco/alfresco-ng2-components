@@ -361,6 +361,11 @@ export class TaskFilterCloudService extends BaseCloudService {
         ];
     }
 
+    /**
+     * @deprecated use FilterCountersCloudService.getEngineEvents instead.
+     * @param appName Name of the target app
+     * @returns Task engine events
+     */
     getTaskNotificationSubscription(appName: string): Observable<TaskCloudEngineEvent[]> {
         return this.notificationCloudService
             .makeGQLQuery(appName, TASK_EVENT_SUBSCRIPTION_QUERY)

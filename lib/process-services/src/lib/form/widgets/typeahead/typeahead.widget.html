@@ -4,7 +4,7 @@
         [class.adf-invalid]="!field.isValid"
         [class.adf-readonly]="field.readOnly"
         id="typehead-div">
-        <mat-form-field class="adf-form-field-input">
+        <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic">
             <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}</label>
             <input matInput class="adf-input"
                    type="text"
@@ -23,12 +23,13 @@
                 </mat-option>
             </mat-autocomplete>
             @if (field.validationSummary?.message || isInvalidFieldRequired()) {
-                <mat-error>
+                <mat-error class="adf-form-field-status-slot">
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
                     <span class="adf-error-text"
                         >@if (field.validationSummary?.message) {{{ field.validationSummary.message | translate }}} @else {{{ 'FORM.FIELD.REQUIRED' | translate }}}</span>
                 </mat-error>
             }
+            <mat-hint class="adf-form-field-status-slot" aria-hidden="true" />
         </mat-form-field>
     </div>
 </div>

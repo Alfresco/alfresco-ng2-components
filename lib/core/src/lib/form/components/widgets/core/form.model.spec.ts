@@ -600,6 +600,33 @@ describe('FormModel', () => {
             const missing = form.getProcessVariableValue('missing');
             expect(missing).toBeUndefined();
         });
+
+        it('should return zero process variable value instead of the form default', () => {
+            const formWithZero = new FormModel({
+                variables: [{ id: 'amount-var', name: 'amount', type: 'integer', value: 99 }],
+                processVariables: [{ name: 'variables.amount', value: 0, type: 'integer' }]
+            });
+
+            expect(formWithZero.getProcessVariableValue('amount')).toBe(0);
+        });
+
+        it('should return false process variable value instead of the form default', () => {
+            const formWithFalse = new FormModel({
+                variables: [{ id: 'flag-var', name: 'flag', type: 'boolean', value: true }],
+                processVariables: [{ name: 'variables.flag', value: false, type: 'boolean' }]
+            });
+
+            expect(formWithFalse.getProcessVariableValue('flag')).toBe(false);
+        });
+
+        it('should return empty string process variable value instead of the form default', () => {
+            const formWithEmpty = new FormModel({
+                variables: [{ id: 'text-var', name: 'text', type: 'string', value: 'default' }],
+                processVariables: [{ name: 'variables.text', value: '', type: 'string' }]
+            });
+
+            expect(formWithEmpty.getProcessVariableValue('text')).toBe('');
+        });
     });
 
     describe('add values not present', () => {

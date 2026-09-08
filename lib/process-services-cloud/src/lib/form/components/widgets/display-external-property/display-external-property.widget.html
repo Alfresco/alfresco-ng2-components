@@ -11,7 +11,7 @@
     </div>
 
     <div>
-        <mat-form-field class="adf-form-field-input" [floatLabel]="field.placeholder ? 'always' : null">
+        <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic" [floatLabel]="field.placeholder ? 'always' : null">
             @if( (field.name || field?.required) && !field.leftLabels) {
             <mat-label class="adf-label" [attr.for]="field.id"> {{ field.name | translate }} </mat-label>
             }
@@ -32,8 +32,9 @@
                 </span>
             </ng-container>
             @if (propertyLoadFailed && !previewState) {
-                <mat-error><mat-icon class="adf-error-icon">error_outline</mat-icon><span class="adf-error-text">{{ 'FORM.FIELD.EXTERNAL_PROPERTY_LOAD_FAILED' | translate }}</span></mat-error>
+                <mat-error class="adf-form-field-status-slot"><mat-icon class="adf-error-icon">error_outline</mat-icon><span class="adf-error-text">{{ 'FORM.FIELD.EXTERNAL_PROPERTY_LOAD_FAILED' | translate }}</span></mat-error>
             }
+            <mat-hint class="adf-form-field-status-slot" aria-hidden="true" />
         </mat-form-field>
     </div>
 </div>

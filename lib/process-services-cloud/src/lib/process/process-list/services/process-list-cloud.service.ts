@@ -100,7 +100,7 @@ export class ProcessListCloudService extends BaseCloudService {
         );
     }
 
-    protected buildQueryData(requestNode: ProcessListRequestModel): { [key: string]: any } {
+    buildQueryData(requestNode: ProcessListRequestModel): { [key: string]: any } {
         const queryData: { [key: string]: any } = {
             name: requestNode.name,
             id: requestNode.id,

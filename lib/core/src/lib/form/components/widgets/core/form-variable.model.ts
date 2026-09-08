@@ -20,4 +20,5 @@ export interface FormVariableModel {
     name: string;
     type: string;
     value?: any;
+    runtimeSet?: boolean;
 }

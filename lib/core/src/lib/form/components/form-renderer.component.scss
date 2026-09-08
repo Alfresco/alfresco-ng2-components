@@ -21,10 +21,10 @@
         width: auto;
     }
 
-    .adf-form-field-input:not(.adf-inplace-input-mat-form-field, .adf-people-cloud, .adf-cloud-group) {
-        #{ms.$mat-form-field-subscript-wrapper} {
-            height: 40px;
-        }
+    .adf-form-field-status-slot {
+        display: block;
+        height: 40px;
+        box-sizing: border-box;
     }
 }
 
@@ -33,6 +33,7 @@
 
     .adf-form-tab-content {
         margin-top: 1em;
+        padding-bottom: 3px;
     }
 
     .adf-form-tab-group {

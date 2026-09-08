@@ -307,22 +307,17 @@ export class FormModel implements ProcessFormModel {
      * @returns process variable value
      */
     getProcessVariableValue(name: string): any {
-        let value;
         if (this.processVariables?.length) {
             const names = [`variables.${name}`, name];
 
             const processVariable = this.processVariables.find((entry) => names.includes(entry.name));
 
             if (processVariable) {
-                value = this.parseValue(processVariable.type, processVariable.value);
+                return this.parseValue(processVariable.type, processVariable.value);
             }
         }
 
-        if (!value) {
-            value = this.getDefaultFormVariableValue(name);
-        }
-
-        return value;
+        return this.getDefaultFormVariableValue(name);
     }
 
     protected parseValue(type: string, value: any): any {
@@ -535,7 +530,18 @@ export class FormModel implements ProcessFormModel {
         const variable = this.getFormVariable(variableId);
         if (variable) {
             variable.value = value;
+            variable.runtimeSet = true;
         }
+    }
+
+    /**
+     * Checks whether a form variable has been given a value at runtime, for example by a form rule.
+     *
+     * @param identifier The `name` or `id` value
+     * @returns `true` when the value was set at runtime rather than coming from the form definition
+     */
+    isVariableSetAtRuntime(identifier: string): boolean {
+        return !!this.getFormVariable(identifier)?.runtimeSet;
     }
 
     private loadInjectedFieldValidators(injectedFieldValidators: FormFieldValidator[]): void {

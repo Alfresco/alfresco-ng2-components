@@ -98,7 +98,7 @@
                 [hidden]="!currentRootElement?.isVisible"
             >
                 <adf-repeat-widget [element]="currentRootElement" [isEditor]="false">
-                    @for (row of currentRootElement.field.rows; track row; let rowIndex = $index) {
+                    @for (row of currentRootElement.field.rows; track row.id; let rowIndex = $index) {
                         @let hasMultipleRows = currentRootElement.field.rows.length > 1;
                         <div
                             class="adf-grid-list-container"
@@ -125,11 +125,11 @@
                                 }
                             </div>
                             <section  class="adf-grid-list-column-view">
-                                @for (column of row.columns; track column; let columnIndex = $index) {
+                                @for (column of row.columns; track column.id; let columnIndex = $index) {
                                         <div
                                             class="adf-grid-list-single-column"
                                             [style.width.%]="getColumnWidth(currentRootElement, row.columns, columnIndex)">
-                                            @for (field of column?.fields; track field) {
+                                            @for (field of column?.fields; track field.id) {
                                                 @if (field.type === 'section') {
                                                     <adf-form-section [field]="field"/>
                                                 } @else {

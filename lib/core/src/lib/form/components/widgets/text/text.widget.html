@@ -8,7 +8,11 @@
         </label>
     </div>
     <div class="adf-text-widget-container">
-        <mat-form-field class="adf-form-field-input" [floatLabel]="placeholder ? 'always' : null">
+        <mat-form-field
+            class="adf-form-field-input"
+            subscriptSizing="dynamic"
+            [floatLabel]="placeholder ? 'always' : null"
+        >
             @if ( (field.name || this.field?.required) && !field.leftLabels) { <mat-label class="adf-label" [attr.for]="field.id">
                 {{ field.name | translate }}
             </mat-label>
@@ -30,7 +34,7 @@
                    (paste)="onPaste($event)"
                    (blur)="onBlur()">
             @if (!fieldStatusTemplate && (maxLengthPasteError.isActive() || field.validationSummary?.message || (isInvalidFieldRequired() && isTouched()))) {
-                <mat-error>
+                <mat-error class="adf-form-field-status-slot">
                     <mat-icon class="adf-error-icon" adf-icon="error_outline" />
                     <span class="adf-error-text">
                         @if (maxLengthPasteError.isActive()) {
@@ -42,6 +46,9 @@
                         }
                     </span>
                 </mat-error>
+            }
+            @if (!fieldStatusTemplate) {
+                <mat-hint class="adf-form-field-status-slot" aria-hidden="true" />
             }
         </mat-form-field>
         <ng-container *ngTemplateOutlet="maxLengthPasteError.isActive() && fieldStatusTemplate ? maxLengthPasteErrorTemplate : (fieldStatusTemplate ?? null); context: { $implicit: this }" />

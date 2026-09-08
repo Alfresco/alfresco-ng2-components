@@ -15,7 +15,11 @@
         >
     </div>
     <div class="adf-date-widget-container">
-        <mat-form-field class="adf-date-widget adf-form-field-input" [class.adf-left-label-input-datepicker]="field.leftLabels">
+        <mat-form-field
+            class="adf-date-widget adf-form-field-input"
+            subscriptSizing="dynamic"
+            [class.adf-left-label-input-datepicker]="field.leftLabels"
+        >
             @if ( (field.name || field?.required) && !field.leftLabels) {
                 <mat-label class="adf-label" [attr.for]="field.id">
                     {{field.name | translate }} ({{field.dateDisplayFormat}})
@@ -36,12 +40,13 @@
             <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly" />
             <mat-datepicker #datePicker [startAt]="startAt" [disabled]="field.readOnly" />
             @if (dateInputControl.invalid && dateInputControl.touched) {
-                <mat-error>
+                <mat-error class="adf-form-field-status-slot">
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
                     <span class="adf-error-text"
                         >@if (dateInputControl.hasError('required')) {{{ 'FORM.FIELD.REQUIRED' | translate }}} @else if (dateInputControl.hasError('matDatepickerParse')) {{{ 'FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT' | translate: { format: field.dateDisplayFormat || field.defaultDateTimeFormat } }}} @else if (dateInputControl.hasError('matDatepickerMin')) {{{ 'FORM.FIELD.VALIDATOR.NOT_LESS_THAN' | translate: { minValue: formattedMinDate } }}} @else if (dateInputControl.hasError('matDatepickerMax')) {{{ 'FORM.FIELD.VALIDATOR.NOT_GREATER_THAN' | translate: { maxValue: formattedMaxDate } }}}</span>
                 </mat-error>
             }
+            <mat-hint class="adf-form-field-status-slot" aria-hidden="true" />
         </mat-form-field>
     </div>
 </div>

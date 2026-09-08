@@ -36,6 +36,10 @@ export class DropZoneDirective implements OnInit, OnDestroy {
     @Input()
     dropColumn: DataColumn;
 
+    private readonly onDragEnterHandler = this.onDragEnter.bind(this);
+    private readonly onDragOverHandler = this.onDragOver.bind(this);
+    private readonly onDropHandler = this.onDrop.bind(this);
+
     constructor() {
         const elementRef = inject(ElementRef);
 
@@ -44,16 +48,16 @@ export class DropZoneDirective implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.ngZone.runOutsideAngular(() => {
-            this.element.addEventListener('dragenter', this.onDragEnter.bind(this));
-            this.element.addEventListener('dragover', this.onDragOver.bind(this));
-            this.element.addEventListener('drop', this.onDrop.bind(this));
+            this.element.addEventListener('dragenter', this.onDragEnterHandler);
+            this.element.addEventListener('dragover', this.onDragOverHandler);
+            this.element.addEventListener('drop', this.onDropHandler);
         });
     }
 
     ngOnDestroy() {
-        this.element.removeEventListener('dragenter', this.onDragEnter);
-        this.element.removeEventListener('dragover', this.onDragOver);
-        this.element.removeEventListener('drop', this.onDrop);
+        this.element.removeEventListener('dragenter', this.onDragEnterHandler);
+        this.element.removeEventListener('dragover', this.onDragOverHandler);
+        this.element.removeEventListener('drop', this.onDropHandler);
     }
 
     onDragEnter(event: DragEvent) {
