@@ -15,7 +15,7 @@
             subscriptSizing="dynamic"
             [floatLabel]="placeholder ? 'always' : null"
         >
-            @if ( (field.name || field?.required) && !field.leftLabels) { <mat-label data-automation-id="adf-amount-widget-label">{{field.name | translate }}</mat-label> }
+            @if ( (field.name || field?.required) && !field.leftLabels) { <mat-label class="adf-label" data-automation-id="adf-amount-widget-label">{{field.name | translate }}</mat-label> }
             @if(!enableDisplayBasedOnLocale) {
                 <span matTextPrefix class="adf-amount-widget__prefix-spacing">{{ currency }}&nbsp;</span>
             }

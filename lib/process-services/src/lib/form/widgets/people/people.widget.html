@@ -4,7 +4,7 @@
      id="people-widget-content">
     <mat-form-field
         class="adf-people-widget-field">
-        <mat-label class="adf-people-widget-label" data-automation-id="adf-people-widget-label">{{ field.name | translate }}</mat-label>
+        <mat-label class="adf-label adf-people-widget-label" data-automation-id="adf-people-widget-label">{{ field.name | translate }}</mat-label>
         <mat-chip-grid #chipGrid [attr.aria-label]="'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECTED_PEOPLE' | translate"
             [required]="isRequired()" [ngModel]="selectedUsers" [errorStateMatcher]="errorStateMatcher">
             <mat-chip-row

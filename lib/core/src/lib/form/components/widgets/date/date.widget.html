@@ -2,7 +2,7 @@
      [class.adf-invalid]="dateInputControl.invalid && dateInputControl.touched"
      [class.adf-readonly]="field.readOnly">
     <mat-form-field class="adf-date-widget adf-form-field-input" subscriptSizing="dynamic" [floatLabel]="field.placeholder ? 'always' : null">
-        <mat-label data-automation-id="adf-date-widget-label">
+        <mat-label class="adf-label" data-automation-id="adf-date-widget-label">
             {{ field.name | translate }} ({{ field.dateDisplayFormat }})
         </mat-label>
         <input matInput

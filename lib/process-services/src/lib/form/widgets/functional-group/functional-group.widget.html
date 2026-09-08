@@ -6,7 +6,7 @@
     id="functional-group-div"
 >
     <mat-form-field class="adf-group-widget-field">
-        <mat-label data-automation-id="adf-group-widget-label">{{ field.name | translate }}</mat-label>
+        <mat-label class="adf-label" data-automation-id="adf-group-widget-label">{{ field.name | translate }}</mat-label>
         <mat-chip-grid #chipGrid [required]="isRequired()">
             <mat-chip-row
                 *ngFor="let group of selectedGroups"
