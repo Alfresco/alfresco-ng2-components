@@ -347,6 +347,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     private readonly destroyRef = inject(DestroyRef);
 
+    private get rowsOffset(): number {
+        return this.isHeaderVisible() ? 1 : 0;
+    }
+
     @HostListener('keyup', ['$event'])
     onKeydown(event: KeyboardEvent): void {
         if (event.shiftKey && this.enableDragRows) {
@@ -923,21 +927,17 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         return this.selectionMode && this.selectionMode.toLowerCase() === 'multiple';
     }
 
-    isRowKeyboardNavigable(): boolean {
+    protected isRowKeyboardNavigable(): boolean {
         return this.enableDragRows || this.multiselect || this.isSingleSelectionMode() || this.isMultiSelectionMode();
     }
 
-    isRowActive(rowIndex: number): boolean {
+    protected isRowActive(rowIndex: number): boolean {
         const activeItemIndex = this.keyManager?.activeItemIndex ?? -1;
         return activeItemIndex < this.rowsOffset ? rowIndex === 0 : activeItemIndex === rowIndex + this.rowsOffset;
     }
 
-    onRowFocus(rowIndex: number): void {
+    protected onRowFocus(rowIndex: number): void {
         this.keyManager?.updateActiveItem(rowIndex + this.rowsOffset);
-    }
-
-    private get rowsOffset(): number {
-        return this.isHeaderVisible() ? 1 : 0;
     }
 
     getRowStyle(row: DataRow): string {
