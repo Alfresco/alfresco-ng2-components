@@ -18,19 +18,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatChipRemove } from '@angular/material/chips';
 import { By } from '@angular/platform-browser';
-import { Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { SearchChipAutocompleteInputComponent } from './search-chip-autocomplete-input.component';
 import { DebugElement, SimpleChanges } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness, MatChipGridHarness } from '@angular/material/chips/testing';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatOptionHarness } from '@angular/material/core/testing';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { UnitTestingUtils } from '@alfresco/adf-core';
 
 describe('SearchChipAutocompleteInputComponent', () => {
     let component: SearchChipAutocompleteInputComponent;
     let fixture: ComponentFixture<SearchChipAutocompleteInputComponent>;
     let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
     const onResetSubject = new Subject<void>();
 
     beforeEach(() => {
@@ -40,6 +44,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
         fixture = TestBed.createComponent(SearchChipAutocompleteInputComponent);
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
         component = fixture.componentInstance;
         component.onReset$ = onResetSubject.asObservable();
         component.autocompleteOptions = [{ value: 'option1' }, { value: 'option2' }];
@@ -119,6 +124,15 @@ describe('SearchChipAutocompleteInputComponent', () => {
      */
     function getAddedOptionElements(): DebugElement[] {
         return fixture.debugElement.queryAll(By.css('.adf-autocomplete-added-option'));
+    }
+
+    /**
+     * Force the autocomplete panel to open regardless of the current options
+     */
+    function openAutocompletePanel() {
+        const trigger = fixture.debugElement.query(By.directive(MatAutocompleteTrigger)).injector.get(MatAutocompleteTrigger);
+        trigger.openPanel();
+        fixture.detectChanges();
     }
 
     it('should assign preselected values to selected options on init', () => {
@@ -293,13 +307,24 @@ describe('SearchChipAutocompleteInputComponent', () => {
         expect((await getChipList()).length).toEqual(1);
     });
 
-    it('should show full category path when fullPath provided', async () => {
+    it('should display the option value and render the info icon when fullPath is provided', () => {
         component.filteredOptions = [{ id: 'test-id', value: 'test-value', fullPath: 'test-full-path' }];
 
         enterNewInputValue('test-value');
 
-        const matOption = fixture.debugElement.query(By.css('.adf-search-chip-autocomplete-added-option')).nativeElement;
-        expect(matOption.textContent).toEqual(' test-full-path ');
+        const matOption = testingUtils.getByCSS('.adf-search-chip-autocomplete-added-option').nativeElement;
+        expect(matOption.textContent).toContain('test-value');
+        expect(testingUtils.getByCSS('.adf-search-chip-autocomplete-added-option .adf-info-icon')).toBeTruthy();
+    });
+
+    it('should not render the info icon when fullPath is not provided', () => {
+        component.filteredOptions = [{ id: 'test-id', value: 'test-value' }];
+
+        enterNewInputValue('test-value');
+
+        const matOption = testingUtils.getByCSS('.adf-search-chip-autocomplete-added-option').nativeElement;
+        expect(matOption.textContent).toContain('test-value');
+        expect(testingUtils.getAllByCSS('.adf-search-chip-autocomplete-added-option .adf-info-icon').length).toBe(0);
     });
 
     it('should emit input value when input changed', async () => {
@@ -314,6 +339,38 @@ describe('SearchChipAutocompleteInputComponent', () => {
         enterNewInputValue('');
         await fixture.whenStable();
         expect(inputChangedSpy).not.toHaveBeenCalled();
+    });
+
+    describe('loading', () => {
+        it('should show a loading spinner in the autocomplete panel when loading emits true', async () => {
+            component.loading = of(true);
+            fixture.detectChanges();
+            openAutocompletePanel();
+            await fixture.whenStable();
+
+            expect(testingUtils.getAllByDirective(MatProgressSpinner).length).toBe(1);
+        });
+
+        it('should not render selectable options while loading emits true', async () => {
+            component.filteredOptions = [{ value: 'option1' }, { value: 'option2' }];
+            component.loading = of(true);
+            fixture.detectChanges();
+            openAutocompletePanel();
+            await fixture.whenStable();
+
+            expect(testingUtils.getAllByCSS('.adf-search-chip-autocomplete-added-option').length).toBe(0);
+        });
+
+        it('should render options and no spinner when loading emits false', async () => {
+            component.filteredOptions = [{ value: 'option1' }, { value: 'option2' }];
+            component.loading = of(false);
+            fixture.detectChanges();
+            openAutocompletePanel();
+            await fixture.whenStable();
+
+            expect((await getOptionElements()).length).toBe(2);
+            expect(testingUtils.getAllByCSS('.adf-search-chip-autocomplete-loading').length).toBe(0);
+        });
     });
 
     describe('isOptionSelected', () => {

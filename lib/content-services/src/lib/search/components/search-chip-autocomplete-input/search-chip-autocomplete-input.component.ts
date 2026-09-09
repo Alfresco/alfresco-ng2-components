@@ -33,7 +33,7 @@ import { ENTER } from '@angular/cdk/keycodes';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
-import { Observable, timer } from 'rxjs';
+import { Observable, of, timer } from 'rxjs';
 import { debounce, startWith, tap } from 'rxjs/operators';
 import { AutocompleteOption } from '../../models/autocomplete-option.interface';
 import { CommonModule } from '@angular/common';
@@ -41,10 +41,22 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IconModule } from '@alfresco/adf-core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'adf-search-chip-autocomplete-input',
-    imports: [CommonModule, MatFormFieldModule, MatChipsModule, TranslatePipe, IconModule, ReactiveFormsModule, MatAutocompleteModule],
+    imports: [
+        CommonModule,
+        MatFormFieldModule,
+        MatChipsModule,
+        TranslatePipe,
+        IconModule,
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        MatTooltipModule,
+        MatProgressSpinnerModule
+    ],
     templateUrl: './search-chip-autocomplete-input.component.html',
     styleUrls: ['./search-chip-autocomplete-input.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -67,6 +79,9 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnChanges {
 
     @Input()
     placeholder = 'SEARCH.FILTER.ACTIONS.ADD_OPTION';
+
+    @Input()
+    loading: Observable<boolean> = of(false);
 
     @Input()
     compareOption?: (option1: AutocompleteOption, option2: AutocompleteOption) => boolean;

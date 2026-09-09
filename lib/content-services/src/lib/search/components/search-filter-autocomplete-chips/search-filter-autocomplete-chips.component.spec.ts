@@ -18,18 +18,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SearchFilterAutocompleteChipsComponent } from './search-filter-autocomplete-chips.component';
-import { of, ReplaySubject } from 'rxjs';
+import { of, ReplaySubject, Subject, throwError } from 'rxjs';
 import { AutocompleteField, AutocompleteOption } from '../../models/autocomplete-option.interface';
 import { TagService } from '../../../tag/services/tag.service';
 import { SitesService } from '../../../common/services/sites.service';
-import { SitePaging } from '@alfresco/js-api';
+import { ResultSetPaging, SitePaging } from '@alfresco/js-api';
 import { CategoryService } from '../../../category';
+import { SearchService } from '../../services/search.service';
+import { AppConfigService } from '@alfresco/adf-core';
 
 describe('SearchFilterAutocompleteChipsComponent', () => {
     let component: SearchFilterAutocompleteChipsComponent;
     let fixture: ComponentFixture<SearchFilterAutocompleteChipsComponent>;
     let tagService: TagService;
     let sitesService: SitesService;
+    let categoryService: CategoryService;
+    let searchService: SearchService;
+    let appConfig: AppConfigService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -40,6 +45,9 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         component = fixture.componentInstance;
         tagService = TestBed.inject(TagService);
         sitesService = TestBed.inject(SitesService);
+        categoryService = TestBed.inject(CategoryService);
+        searchService = TestBed.inject(SearchService);
+        appConfig = TestBed.inject(AppConfigService);
         component.id = 'test-id';
         component.context = {
             queryFragments: {
@@ -47,7 +55,10 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
             },
             filterRawParams: {},
             populateFilters: new ReplaySubject(1),
-            execute: jasmine.createSpy('execute')
+            execute: jasmine.createSpy('execute'),
+            get wildcardsEnabled(): boolean {
+                return appConfig.get<boolean>('search-wildcards-enabled', true);
+            }
         } as any;
         component.settings = {
             field: 'test',
@@ -238,6 +249,169 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         component.onInputChange('tag');
 
         expect(searchSpy).toHaveBeenCalledWith('tag', { orderBy: 'tag', direction: 'asc' }, false, 0, 15);
+    });
+
+    describe('loading state', () => {
+        function categoriesResult(name: string): ResultSetPaging {
+            return { list: { pagination: {}, entries: [{ entry: { id: `${name}-id`, name, path: { name: '/a/b' } } }] } } as ResultSetPaging;
+        }
+
+        it('should be false initially', (done) => {
+            component.loading$.subscribe((loading) => {
+                expect(loading).toBeFalse();
+                done();
+            });
+        });
+
+        it('should toggle true while fetching and back to false once results arrive', () => {
+            component.settings.field = AutocompleteField.CATEGORIES;
+            const response$ = new Subject<any>();
+            spyOn(categoryService, 'searchCategories').and.returnValue(response$.asObservable());
+            const emitted: boolean[] = [];
+            component.loading$.subscribe((loading) => emitted.push(loading));
+
+            component.onInputChange('mark');
+            expect(emitted).toEqual([false, true]);
+
+            response$.next(categoriesResult('Marketing'));
+            response$.complete();
+            expect(emitted).toEqual([false, true, false]);
+        });
+
+        it('should clear loading and emit empty options when the fetch fails', () => {
+            component.settings.field = AutocompleteField.CATEGORIES;
+            spyOn(categoryService, 'searchCategories').and.returnValue(throwError(() => new Error('failure')));
+            const loadingStates: boolean[] = [];
+            const optionResults: AutocompleteOption[][] = [];
+            component.loading$.subscribe((loading) => loadingStates.push(loading));
+            component.autocompleteOptions$.subscribe((options) => optionResults.push(options));
+
+            component.onInputChange('mark');
+
+            expect(loadingStates).toEqual([false, true, false]);
+            expect(optionResults[optionResults.length - 1]).toEqual([]);
+        });
+
+        it('should keep the stream alive after a failed fetch', () => {
+            component.settings.field = AutocompleteField.CATEGORIES;
+            const searchSpy = spyOn(categoryService, 'searchCategories').and.returnValues(
+                throwError(() => new Error('failure')),
+                of(categoriesResult('Marketing'))
+            );
+            const optionResults: AutocompleteOption[][] = [];
+            component.autocompleteOptions$.subscribe((options) => optionResults.push(options));
+
+            component.onInputChange('mark');
+            component.onInputChange('mark');
+
+            expect(searchSpy).toHaveBeenCalledTimes(2);
+            expect(optionResults[optionResults.length - 1]).toEqual([{ id: 'Marketing-id', value: 'Marketing', fullPath: 'Marketing' }]);
+        });
+
+        it('should ignore results from a superseded request', () => {
+            component.settings.field = AutocompleteField.CATEGORIES;
+            const firstResponse$ = new Subject<any>();
+            const secondResponse$ = new Subject<any>();
+            spyOn(categoryService, 'searchCategories').and.returnValues(firstResponse$.asObservable(), secondResponse$.asObservable());
+            const optionResults: AutocompleteOption[][] = [];
+            component.autocompleteOptions$.subscribe((options) => optionResults.push(options));
+
+            component.onInputChange('ma');
+            component.onInputChange('mark');
+
+            secondResponse$.next(categoriesResult('Fresh'));
+            secondResponse$.complete();
+            firstResponse$.next(categoriesResult('Stale'));
+            firstResponse$.complete();
+
+            expect(optionResults[optionResults.length - 1]).toEqual([{ id: 'Fresh-id', value: 'Fresh', fullPath: 'Fresh' }]);
+            expect(optionResults.some((result) => result.some((option) => option.value === 'Stale'))).toBeFalse();
+        });
+
+        it('should not trigger a fetch for a non-async field', () => {
+            component.settings.field = 'test';
+            const searchSpy = spyOn(categoryService, 'searchCategories');
+            component.onInputChange('mark');
+            expect(searchSpy).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('PARENT_FOLDER field', () => {
+        const folderPaging: ResultSetPaging = {
+            list: {
+                pagination: {},
+                entries: [{ entry: { id: 'folder1', name: 'Documents', path: { name: '/Company Home/Sites/ws/folderA' } } }]
+            }
+        } as ResultSetPaging;
+
+        function mockWildcardsEnabled(enabled: boolean) {
+            spyOn(appConfig, 'get').and.callFake((key: string, defaultValue?: any) => (key === 'search-wildcards-enabled' ? enabled : defaultValue));
+        }
+
+        beforeEach(() => {
+            component.settings.field = AutocompleteField.PARENT_FOLDER;
+            component.context.config = { filterQueries: [{ query: 'existing' }] } as any;
+        });
+
+        it('should search folders and map results into options with full paths', (done) => {
+            spyOn(searchService, 'searchByQueryBody').and.returnValue(of(folderPaging));
+            component.onInputChange('doc');
+            component.autocompleteOptions$.subscribe((result) => {
+                expect(result).toEqual([{ id: 'folder1', value: 'Documents', fullPath: '/Company Home/Sites/ws/folderA/Documents' }]);
+                done();
+            });
+        });
+
+        it('should fall back to the folder name when the path name is empty', (done) => {
+            const folderWithoutPath: ResultSetPaging = {
+                list: {
+                    pagination: {},
+                    entries: [{ entry: { id: 'folder2', name: 'Documents', path: { name: '' } } }]
+                }
+            } as ResultSetPaging;
+            spyOn(searchService, 'searchByQueryBody').and.returnValue(of(folderWithoutPath));
+            component.onInputChange('doc');
+            component.autocompleteOptions$.subscribe((result) => {
+                expect(result).toEqual([{ id: 'folder2', value: 'Documents', fullPath: 'Documents' }]);
+                done();
+            });
+        });
+
+        it('should build a folder-scoped query without emitting the dataLoaded event', () => {
+            mockWildcardsEnabled(true);
+            const searchSpy = spyOn(searchService, 'searchByQueryBody').and.returnValue(of(folderPaging));
+            component.onInputChange('doc');
+
+            const [queryBody, shouldEmit] = searchSpy.calls.mostRecent().args;
+            expect(shouldEmit).toBeFalse();
+            expect(queryBody.query.query).toBe(`cm:name:"*doc*"`);
+            expect(queryBody.include).toEqual(['path']);
+            expect(queryBody.filterQueries).toEqual([{ query: 'existing' }, { query: "TYPE:'cm:folder'" }]);
+        });
+
+        it('should not mutate the shared context filter queries', () => {
+            spyOn(searchService, 'searchByQueryBody').and.returnValue(of(folderPaging));
+            component.onInputChange('doc');
+            component.onInputChange('docs');
+            expect(component.context.config.filterQueries).toEqual([{ query: 'existing' }]);
+        });
+
+        it('should not wrap the search term with wildcards when wildcards are disabled', () => {
+            mockWildcardsEnabled(false);
+            component.context.config = {} as any;
+            const searchSpy = spyOn(searchService, 'searchByQueryBody').and.returnValue(of(folderPaging));
+            component.onInputChange('doc');
+
+            const [queryBody] = searchSpy.calls.mostRecent().args;
+            expect(queryBody.query.query).toBe(`cm:name:"doc"`);
+            expect(queryBody.filterQueries).toEqual([{ query: "TYPE:'cm:folder'" }]);
+        });
+
+        it('should compose the query fragment using the node reference', () => {
+            component.selectedOptions = [{ id: 'folder1', value: 'Documents' }];
+            component.submitValues();
+            expect(component.context.queryFragments[component.id]).toBe('ANCESTOR:"workspace://SpacesStore/folder1"');
+        });
     });
 
     describe('optionComparator', () => {
