@@ -83,9 +83,13 @@ export class SearchService {
         const promise = this.searchApi.search(queryBody);
 
         if (shouldEmit) {
-            promise.then((nodePaging) => {
-                this.dataLoaded.next(nodePaging);
-            });
+            promise
+                .then((nodePaging) => {
+                    this.dataLoaded.next(nodePaging);
+                })
+                .catch(() => {
+                    /* error is surfaced to subscribers through the returned Observable */
+                });
         }
 
         return from(promise);

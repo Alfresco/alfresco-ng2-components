@@ -5,7 +5,7 @@
     [allowOnlyPredefinedValues]="settings.allowOnlyPredefinedValues"
     (inputChanged)="onInputChange($event)"
     [compareOption]="optionComparator"
-    [placeholder]="settings?.label"
+    [placeholder]="settings?.label ?? 'SEARCH.FILTER.ACTIONS.ADD_OPTION'"
     [loading]="loading$"
     (optionsChanged)="onOptionsChange($event)" />
 
