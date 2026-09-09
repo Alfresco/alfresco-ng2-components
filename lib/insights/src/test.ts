@@ -19,14 +19,19 @@
 
 import 'zone.js';
 import 'zone.js/testing';
-import { getTestBed } from '@angular/core/testing';
-import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+import { BrowserTestingModule, platformBrowserTesting } from '@angular/platform-browser/testing';
+import { TestBed, getTestBed } from '@angular/core/testing';
+import { provideZoneChangeDetection } from '@angular/core';
 import * as ChartJs from 'chart.js/auto';
 import Raphael from 'raphael';
 
 // First, initialize the Angular testing environment.
-getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting(), {
+getTestBed().initTestEnvironment(BrowserTestingModule, platformBrowserTesting(), {
     teardown: { destroyAfterEach: false }
+});
+
+beforeEach(() => {
+    TestBed.configureTestingModule({ providers: [provideZoneChangeDetection()] });
 });
 
 (window as any).Chart = (window as any).Chart || ChartJs.Chart;
