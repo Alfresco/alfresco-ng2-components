@@ -239,6 +239,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Input()
     showDragIndicator = true;
 
+    @Input()
+    useWholeRowAsDragPreview = true;
+
     /** Emitted when the user clicks a row. */
     @Output()
     rowClick = new EventEmitter<DataRowEvent>();

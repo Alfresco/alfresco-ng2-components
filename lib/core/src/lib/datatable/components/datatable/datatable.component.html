@@ -596,75 +596,77 @@
                             </div>
                         }
 
-                        <div *cdkDragPreview class="adf-datatable-row__dragging-preview">
-                            @for (col of getVisibleColumns(); track col.key) {
-                                @if (col.visibleInDragPreview) {
-                                    @if (!col.template) {
-                                        <div class="adf-datatable-cell-container">
-                                            @switch (data.getColumnType(row, col)) {
-                                                @case ('image') {
-                                                    <div class="adf-cell-value">
-                                                        @if (isIconValue(row, col)) {
-                                                            <mat-icon
-                                                                [attr.aria-label]="col.srTitle ? (col.srTitle | translate) : null"
-                                                                [attr.aria-hidden]="!asIconValue(row, col)"
-                                                                [adf-icon]="asIconValue(row, col)"
-                                                            />
-                                                        } @else {
-                                                            @if (row.isSelected && !multiselect) {
-                                                                <mat-icon class="adf-datatable-selected" svgIcon="selected" />
-                                                            } @else {
-                                                                <img
-                                                                    class="adf-datatable-center-img-ie"
-                                                                    [attr.aria-label]="
-                                                                        (data.getValue(row, col) | fileType) === 'disable'
-                                                                            ? ('ADF-DATATABLE.ACCESSIBILITY.ICON_DISABLED' | translate)
-                                                                            : ('ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT'
-                                                                              | translate
-                                                                                  : {
-                                                                                        type:
-                                                                                            'ADF-DATATABLE.FILE_TYPE.' +
-                                                                                                (data.getValue(row, col) | fileType | uppercase)
-                                                                                            | translate
-                                                                                    })
-                                                                    "
-                                                                    [attr.alt]="
-                                                                        (data.getValue(row, col) | fileType) === 'disable'
-                                                                            ? ('ADF-DATATABLE.ACCESSIBILITY.ICON_DISABLED' | translate)
-                                                                            : ('ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT'
-                                                                              | translate
-                                                                                  : {
-                                                                                        type:
-                                                                                            'ADF-DATATABLE.FILE_TYPE.' +
-                                                                                                (data.getValue(row, col) | fileType | uppercase)
-                                                                                            | translate
-                                                                                    })
-                                                                    "
-                                                                    src="{{ data.getValue(row, col) }}"
-                                                                    (error)="onImageLoadingError($event, row)"
+                        @if (!useWholeRowAsDragPreview) {
+                            <div *cdkDragPreview class="adf-datatable-row__dragging-preview">
+                                @for (col of getVisibleColumns(); track col.key) {
+                                    @if (col.visibleInDragPreview) {
+                                        @if (!col.template) {
+                                            <div class="adf-datatable-cell-container">
+                                                @switch (data.getColumnType(row, col)) {
+                                                    @case ('image') {
+                                                        <div class="adf-cell-value">
+                                                            @if (isIconValue(row, col)) {
+                                                                <mat-icon
+                                                                    [attr.aria-label]="col.srTitle ? (col.srTitle | translate) : null"
+                                                                    [attr.aria-hidden]="!asIconValue(row, col)"
+                                                                    [adf-icon]="asIconValue(row, col)"
                                                                 />
+                                                            } @else {
+                                                                @if (row.isSelected && !multiselect) {
+                                                                    <mat-icon class="adf-datatable-selected" svgIcon="selected" />
+                                                                } @else {
+                                                                    <img
+                                                                        class="adf-datatable-center-img-ie"
+                                                                        [attr.aria-label]="
+                                                                            (data.getValue(row, col) | fileType) === 'disable'
+                                                                                ? ('ADF-DATATABLE.ACCESSIBILITY.ICON_DISABLED' | translate)
+                                                                                : ('ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT'
+                                                                                  | translate
+                                                                                      : {
+                                                                                            type:
+                                                                                                'ADF-DATATABLE.FILE_TYPE.' +
+                                                                                                    (data.getValue(row, col) | fileType | uppercase)
+                                                                                                | translate
+                                                                                        })
+                                                                        "
+                                                                        [attr.alt]="
+                                                                            (data.getValue(row, col) | fileType) === 'disable'
+                                                                                ? ('ADF-DATATABLE.ACCESSIBILITY.ICON_DISABLED' | translate)
+                                                                                : ('ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT'
+                                                                                  | translate
+                                                                                      : {
+                                                                                            type:
+                                                                                                'ADF-DATATABLE.FILE_TYPE.' +
+                                                                                                    (data.getValue(row, col) | fileType | uppercase)
+                                                                                                | translate
+                                                                                        })
+                                                                        "
+                                                                        src="{{ data.getValue(row, col) }}"
+                                                                        (error)="onImageLoadingError($event, row)"
+                                                                    />
+                                                                }
                                                             }
-                                                        }
-                                                    </div>
+                                                        </div>
+                                                    }
                                                 }
-                                            }
-                                        </div>
-                                    } @else {
-                                        <div class="adf-datatable-cell-container">
-                                            <div class="adf-cell-value">
-                                                <ng-container
-                                                    [ngTemplateOutlet]="col.template"
-                                                    [ngTemplateOutletContext]="{
-                                                        $implicit: { data: data, row: row, col: col },
-                                                        value: data.getValue(row, col, resolverFn)
-                                                    }"
-                                                />
                                             </div>
-                                        </div>
+                                        } @else {
+                                            <div class="adf-datatable-cell-container">
+                                                <div class="adf-cell-value">
+                                                    <ng-container
+                                                        [ngTemplateOutlet]="col.template"
+                                                        [ngTemplateOutletContext]="{
+                                                            $implicit: { data: data, row: row, col: col },
+                                                            value: data.getValue(row, col, resolverFn)
+                                                        }"
+                                                    />
+                                                </div>
+                                            </div>
+                                        }
                                     }
                                 }
-                            }
-                        </div>
+                            </div>
+                        }
                     </adf-datatable-row>
                     @if (isEmpty()) {
                         <div role="row" class="adf-datatable-row">

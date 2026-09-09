@@ -399,6 +399,9 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     showDragIndicator = true;
 
+    @Input()
+    useWholeRowAsDragPreview = true;
+
     /**
      * Indicates if the data is provided externally.
      * If true the component won't fetch data itself
