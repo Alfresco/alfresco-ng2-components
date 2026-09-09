@@ -299,6 +299,11 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     .adf-datatable-cell {
         color: var(--mat-sys-on-surface);
         min-height: inherit;
+
+        [role='link'],
+        a {
+            cursor: pointer;
+        }
     }
 
     /* stylelint-disable-next-line no-duplicate-selectors */
@@ -672,6 +677,11 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     }
 }
 
+#{ms.$cdk-drag-placeholder},
+#{ms.$cdk-drag-anchor} {
+    opacity: 0.4;
+}
+
 /* [Accessibility] Material checkbox labels */
 .adf-checkbox-sr-only #{ms.$mat-checkbox-label} {
     position: absolute;
@@ -775,4 +785,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     gap: 10px;
     background-color: color-mix(in srgb, var(--mat-sys-surface) 87%, transparent);
     box-shadow: var(--mat-sys-level2);
+}
+
+.adf-is-dragging * {
+    cursor: grabbing;
 }

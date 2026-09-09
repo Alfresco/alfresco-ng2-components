@@ -17,7 +17,7 @@
                     role="row"
                 >
                     <!-- Drag -->
-                    @if (enableDragRows) {
+                    @if (enableDragRows && showDragIndicator) {
                         <div class="adf-datatable-cell-header adf-drag-column">
                             <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.DRAG' | translate }}</span>
                         </div>
@@ -241,6 +241,7 @@
                 cdkDropList
                 [cdkDropListConnectedTo]="dropListConnectedTo"
                 [cdkDropListDisabled]="!enableDragRows"
+                cdkDropListHasAnchor
                 role="rowgroup"
             >
                 @if (!noPermission) {
@@ -252,6 +253,7 @@
                         (cdkDragStarted)="onDragStart()"
                         (cdkDragEnded)="onDragEnd()"
                         [cdkDragBoundary]="dragBoundary"
+                        [cdkDragData]="row"
                         [row]="row"
                         (select)="onEnterKeyPressed(row, $event)"
                         (keyup)="onRowKeyUp(row, $event)"
@@ -271,7 +273,7 @@
                         "
                     >
                         <!-- Drag button -->
-                        @if (enableDragRows) {
+                        @if (enableDragRows && showDragIndicator) {
                             <div role="gridcell" class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-hover-only">
                                 <mat-icon adf-icon="drag_indicator" aria-hidden="true" />
                             </div>
@@ -663,7 +665,6 @@
                                 }
                             }
                         </div>
-                        <ng-container *cdkDragPlaceholder />
                     </adf-datatable-row>
                     @if (isEmpty()) {
                         <div role="row" class="adf-datatable-row">

@@ -236,6 +236,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Input()
     dragBoundary = '.adf-datatable-body';
 
+    @Input()
+    showDragIndicator = true;
+
     /** Emitted when the user clicks a row. */
     @Output()
     rowClick = new EventEmitter<DataRowEvent>();
@@ -1103,10 +1106,12 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     onDragStart(): void {
         this.isDraggingRow = true;
+        document.body.classList.add('adf-is-dragging');
     }
 
     onDragEnd(): void {
         this.isDraggingRow = false;
+        document.body.classList.remove('adf-is-dragging');
     }
 
     private updateColumnsWidths(): void {

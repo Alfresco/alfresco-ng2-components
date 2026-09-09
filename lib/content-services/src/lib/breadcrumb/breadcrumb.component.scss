@@ -108,6 +108,10 @@
                 text-decoration: underline;
                 text-underline-offset: 4px;
             }
+
+            #{ms.$cdk-drag-placeholder} {
+                display: none;
+            }
         }
 
         &-current {

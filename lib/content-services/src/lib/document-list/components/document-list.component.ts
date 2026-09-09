@@ -396,6 +396,9 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     dragBoundary = '.adf-datatable-body';
 
+    @Input()
+    showDragIndicator = true;
+
     /**
      * Indicates if the data is provided externally.
      * If true the component won't fetch data itself

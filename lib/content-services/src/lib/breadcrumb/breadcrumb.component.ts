@@ -33,9 +33,9 @@ import { Node, PathElement } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { IconModule } from '@alfresco/adf-core';
+import { DataRow, IconModule } from '@alfresco/adf-core';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'adf-breadcrumb',
@@ -115,6 +115,9 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
     @Output()
     breadcrumbPathElementsChange = new EventEmitter<string[]>();
+
+    @Output()
+    dropped = new EventEmitter<CdkDragDrop<PathElement, PathElement, DataRow>>();
 
     ngOnInit() {
         this.transform = this.transform ? this.transform : null;
@@ -228,9 +231,9 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
         }
     }
 
-    onDrop(event: CdkDragDrop<CdkDrag>) {
-        if (!event.isPointerOverContainer) {
-            return;
+    onDrop(event: CdkDragDrop<PathElement, PathElement, DataRow>): void {
+        if (event.isPointerOverContainer) {
+            this.dropped.emit(event);
         }
     }
 }
