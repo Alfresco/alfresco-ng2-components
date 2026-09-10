@@ -26,6 +26,7 @@ import { ResultSetPaging, SitePaging } from '@alfresco/js-api';
 import { CategoryService } from '../../../category';
 import { SearchService } from '../../services/search.service';
 import { AppConfigService } from '@alfresco/adf-core';
+import { SearchConfiguration } from '../../models/search-configuration.interface';
 
 describe('SearchFilterAutocompleteChipsComponent', () => {
     let component: SearchFilterAutocompleteChipsComponent;
@@ -265,7 +266,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
 
         it('should toggle true while fetching and back to false once results arrive', () => {
             component.settings.field = AutocompleteField.CATEGORIES;
-            const response$ = new Subject<any>();
+            const response$ = new Subject<ResultSetPaging>();
             spyOn(categoryService, 'searchCategories').and.returnValue(response$.asObservable());
             const emitted: boolean[] = [];
             component.loading$.subscribe((loading) => emitted.push(loading));
@@ -310,8 +311,8 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
 
         it('should ignore results from a superseded request', () => {
             component.settings.field = AutocompleteField.CATEGORIES;
-            const firstResponse$ = new Subject<any>();
-            const secondResponse$ = new Subject<any>();
+            const firstResponse$ = new Subject<ResultSetPaging>();
+            const secondResponse$ = new Subject<ResultSetPaging>();
             spyOn(categoryService, 'searchCategories').and.returnValues(firstResponse$.asObservable(), secondResponse$.asObservable());
             const optionResults: AutocompleteOption[][] = [];
             component.autocompleteOptions$.subscribe((options) => optionResults.push(options));
@@ -350,7 +351,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
 
         beforeEach(() => {
             component.settings.field = AutocompleteField.PARENT_FOLDER;
-            component.context.config = { filterQueries: [{ query: 'existing' }] } as any;
+            component.context.config = { filterQueries: [{ query: 'existing' }] } as SearchConfiguration;
         });
 
         it('should search folders and map results into options with full paths', (done) => {
@@ -398,7 +399,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
 
         it('should not wrap the search term with wildcards when wildcards are disabled', () => {
             mockWildcardsEnabled(false);
-            component.context.config = {} as any;
+            component.context.config = {} as SearchConfiguration;
             const searchSpy = spyOn(searchService, 'searchByQueryBody').and.returnValue(of(folderPaging));
             component.onInputChange('doc');
 

@@ -81,7 +81,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnChanges {
     placeholder = 'SEARCH.FILTER.ACTIONS.ADD_OPTION';
 
     @Input()
-    loading: Observable<boolean> = of(false);
+    loading$ = of(false);
 
     @Input()
     compareOption?: (option1: AutocompleteOption, option2: AutocompleteOption) => boolean;

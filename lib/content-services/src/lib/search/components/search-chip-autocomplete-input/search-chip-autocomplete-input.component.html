@@ -34,8 +34,8 @@
             data-automation-id="adf-search-chip-autocomplete-input">
     </mat-chip-grid>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" id="adf-search-chip-autocomplete"
-                      (optionActivated)="activeAnyOption = true" (closed)="activeAnyOption = false">
-        @if (loading | async) {
+                      (optionActivated)="activeAnyOption = true" (closed)="activeAnyOption = false" hideSingleSelectionIndicator>
+        @if (loading$ | async) {
             <mat-option class="adf-search-chip-autocomplete-loading" disabled data-automation-id="adf-search-chip-autocomplete-loading">
                 <mat-progress-spinner mode="indeterminate" [diameter]="24" />
             </mat-option>

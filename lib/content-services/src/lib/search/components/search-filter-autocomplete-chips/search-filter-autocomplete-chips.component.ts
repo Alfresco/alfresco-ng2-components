@@ -72,7 +72,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     enableChangeUpdate: boolean;
     reset$: Observable<void> = this.resetSubject$.asObservable();
     autocompleteOptions$: Observable<AutocompleteOption[]> = this.autocompleteOptionsSubject$.asObservable();
-    loading$: Observable<boolean> = this.loadingSubject$.asObservable();
+    loading$ = this.loadingSubject$.asObservable();
 
     constructor() {
         this.options = new SearchFilterList<AutocompleteOption[]>();

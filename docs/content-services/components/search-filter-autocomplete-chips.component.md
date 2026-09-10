@@ -39,25 +39,25 @@ Implements a [search widget](../../../lib/content-services/src/lib/search/models
 
 ### Settings
 
-| Name | Type     | Description                                                                                                        |
-| ---- |----------|--------------------------------------------------------------------------------------------------------------------|
-| field | `string`   | Field to apply the query to. Required value. See [Supported fields](#supported-fields) for the values that enable dynamically fetched options |
-| label | `string` | Label displayed for the autocomplete input |
-| autocompleteOptions | `AutocompleteOption[]` | Predefined options for autocomplete                                                                                |
-| allowOnlyPredefinedValues | `boolean` | Specifies whether the input values should only be from predefined                                                  |
-| allowUpdateOnChange | `boolean` | Enable/Disable the update fire event when text has been changed. By default is true                                |
-| hideDefaultAction | `boolean` | Show/hide the widget actions. By default is false |
+| Name                      | Type                   | Description                                                                                                                                   |
+| ------------------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| field                     | `string`               | Field to apply the query to. Required value. See [Supported fields](#supported-fields) for the values that enable dynamically fetched options |
+| label                     | `string`               | Label displayed for the autocomplete input                                                                                                    |
+| autocompleteOptions       | `AutocompleteOption[]` | Predefined options for autocomplete                                                                                                           |
+| allowOnlyPredefinedValues | `boolean`              | Specifies whether the input values should only be from predefined                                                                             |
+| allowUpdateOnChange       | `boolean`              | Enable/Disable the update fire event when text has been changed. By default is true                                                           |
+| hideDefaultAction         | `boolean`              | Show/hide the widget actions. By default is false                                                                                             |
 
 ### Supported fields
 
 Besides using static `autocompleteOptions`, the `field` value can be set to one of the following to fetch options dynamically from the repository as the user types:
 
-| `field` value | Source of options |
-| ------------- | ----------------- |
-| `TAG` | Existing tags |
-| `cm:categories` | Existing categories |
-| `SITE` | Available sites (plus any predefined `autocompleteOptions`) |
-| `ANCESTOR` | Folders matching the typed name (parent folder search) |
+| `field` value   | Source of options                                           |
+| --------------- | ----------------------------------------------------------- |
+| `TAG`           | Existing tags                                               |
+| `cm:categories` | Existing categories                                         |
+| `SITE`          | Available sites (plus any predefined `autocompleteOptions`) |
+| `ANCESTOR`      | Folders matching the typed name (parent folder search)      |
 
 While a batch of options is being fetched for any of these fields, a loading spinner is shown inside the autocomplete panel until the results arrive. Only the results of the latest request are applied, so quickly changing the input does not display stale options.
 

@@ -6,7 +6,7 @@
     (inputChanged)="onInputChange($event)"
     [compareOption]="optionComparator"
     [placeholder]="settings?.label ?? 'SEARCH.FILTER.ACTIONS.ADD_OPTION'"
-    [loading]="loading$"
+    [loading$]="loading$"
     (optionsChanged)="onOptionsChange($event)" />
 
 @if (!settings?.hideDefaultAction) {

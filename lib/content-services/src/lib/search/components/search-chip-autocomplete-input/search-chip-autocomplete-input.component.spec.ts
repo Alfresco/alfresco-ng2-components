@@ -130,7 +130,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
      * Force the autocomplete panel to open regardless of the current options
      */
     function openAutocompletePanel() {
-        const trigger = fixture.debugElement.query(By.directive(MatAutocompleteTrigger)).injector.get(MatAutocompleteTrigger);
+        const trigger = testingUtils.getByDirective(MatAutocompleteTrigger).injector.get(MatAutocompleteTrigger);
         trigger.openPanel();
         fixture.detectChanges();
     }
@@ -343,7 +343,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     describe('loading', () => {
         it('should show a loading spinner in the autocomplete panel when loading emits true', async () => {
-            component.loading = of(true);
+            component.loading$ = of(true);
             fixture.detectChanges();
             openAutocompletePanel();
             await fixture.whenStable();
@@ -353,7 +353,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
         it('should not render selectable options while loading emits true', async () => {
             component.filteredOptions = [{ value: 'option1' }, { value: 'option2' }];
-            component.loading = of(true);
+            component.loading$ = of(true);
             fixture.detectChanges();
             openAutocompletePanel();
             await fixture.whenStable();
@@ -363,7 +363,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
         it('should render options and no spinner when loading emits false', async () => {
             component.filteredOptions = [{ value: 'option1' }, { value: 'option2' }];
-            component.loading = of(false);
+            component.loading$ = of(false);
             fixture.detectChanges();
             openAutocompletePanel();
             await fixture.whenStable();
