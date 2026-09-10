@@ -211,7 +211,7 @@ describe('SearchLogicalFilterComponent', () => {
     describe('Accessibility', () => {
         it('should use aria-labelledby attribute for input fields', () => {
             const inputs = getInputs();
-            const fieldset = unitTestingUtils.getAllByCSS('[data-automation-id="adf-search-input-label"]');
+            const fieldset = unitTestingUtils.getAllByDataAutomationId('adf-search-input-label');
 
             inputs.forEach((input, index) => {
                 const fieldsetId = fieldset[index].nativeElement.getAttribute('id');
