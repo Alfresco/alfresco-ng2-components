@@ -232,13 +232,15 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Input()
     dropListConnectedTo: string[] = [];
 
-    /** The boundary element for drag and drop functionality. */
+    /** Selector for boundary element for drag and drop functionality that limits the drag area */
     @Input()
     dragBoundary = '.adf-datatable-body';
 
+    /** Flag that decides if drag indicator is visible or not */
     @Input()
     showDragIndicator = true;
 
+    /** Flag that decides if drag preview should look like original row or should be limited to name and node type icon */
     @Input()
     useWholeRowAsDragPreview = true;
 

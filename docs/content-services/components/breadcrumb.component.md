@@ -36,9 +36,11 @@ Indicates the current position within a navigation hierarchy.
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| navigate | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PathElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PathElement.md)`>` | Emitted when the user clicks on a breadcrumb. |
+| Name                         | Type                                                                                                                                                                                                                                                                                                                                                                                            | Description                                                                          |
+|------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| navigate                     | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PathElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PathElement.md)`>`                                                                                                                                                                                                          | Emitted when the user clicks on a breadcrumb.                                        |
+| breadcrumbPathElementsChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string[]>`                                                                                                                                                                                                                                                                                                                          | Emitted when the breadcrumb path elements change.                                    |
+| dropped                      | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`CdkDragDrop`](https://material.angular.io/cdk/drag-drop/api#CdkDragDrop)`<`[`PathElement`](../../../lib/js-api/src/api/content-rest-api/docs/PathElement.md)`,` [`PathElement`](../../../lib/js-api/src/api/content-rest-api/docs/PathElement.md)`,` [`DataRow`](../../../lib/core/src/lib/datatable/data/data-row.model.ts)`>>` | Emitted when dragged item is dropped onto the breadcrumb. Emits drag and drop event. |
 
 ## Details
 

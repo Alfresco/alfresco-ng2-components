@@ -113,9 +113,11 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @Output()
     navigate = new EventEmitter<PathElement>();
 
+    /** Emitted when the breadcrumb path elements change. */
     @Output()
     breadcrumbPathElementsChange = new EventEmitter<string[]>();
 
+    /** Emitted when dragged item is dropped onto the breadcrumb. Emits drag and drop event. */
     @Output()
     dropped = new EventEmitter<CdkDragDrop<PathElement, PathElement, DataRow>>();
 
