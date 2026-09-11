@@ -2,7 +2,7 @@
 Title: Search Chip Autocomplete Input component
 Added: v6.1.0
 Status: Active
-Last reviewed: 2023-06-13
+Last reviewed: 2026-09-09
 ---
 
 # [Search Chip Autocomplete Input component](../../../lib/content-services/src/lib/search/components/search-chip-autocomplete-input/search-chip-autocomplete-input.component.ts "Defined in search-chip-autocomplete-input.component.ts")
@@ -31,6 +31,7 @@ Represents an input with autocomplete options.
 | preselectedOptions         | `AutocompleteOption[]`                                                 | [] | Options which are selected from start                                                                                                         |
 | onReset$                   | [`Observable`](https://rxjs.dev/guide/observable)`<void>`              |    | Observable that will listen to any reset event causing component to clear the chips and input                                                 |
 | allowOnlyPredefinedValues  | boolean                                                                | true | A flag that indicates whether it is possible to add a value not from the predefined ones                                                      |
+| loading                    | [`Observable`](https://rxjs.dev/guide/observable)`<boolean>`          | `of(false)` | Stream driving a loading spinner shown inside the autocomplete panel while a new batch of options is being fetched. While it emits `true`, the options list is replaced by the spinner. |
 | placeholder                | string                                                                 | 'SEARCH.FILTER.ACTIONS.ADD_OPTION' | Placeholder which should be displayed in input.                                                                                               |
 | compareOption              | (option1: AutocompleteOption, option2: AutocompleteOption) => boolean  |  | Function which is used to selected options with all options so it allows to detect which options are already selected.                        |
 | formatChipValue            | (option: string) => string                                             |  | Function which is used to format custom typed options.                                                                                        |
