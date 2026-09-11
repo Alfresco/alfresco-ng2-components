@@ -22,7 +22,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { MatChipRowHarness } from '@angular/material/chips/testing';
+import { MatChipGridHarness, MatChipRowHarness } from '@angular/material/chips/testing';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 
 describe('FunctionalGroupWidgetComponent', () => {
@@ -30,7 +30,6 @@ describe('FunctionalGroupWidgetComponent', () => {
     let component: FunctionalGroupWidgetComponent;
     let peopleProcessService: PeopleProcessService;
     let getWorkflowGroupsSpy: jasmine.Spy;
-    let element: HTMLElement;
     let loader: HarnessLoader;
     let unitTestingUtils: UnitTestingUtils;
 
@@ -51,7 +50,6 @@ describe('FunctionalGroupWidgetComponent', () => {
         unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
         loader = TestbedHarnessEnvironment.loader(fixture);
         component.field = new FormFieldModel(new FormModel());
-        element = fixture.nativeElement;
         fixture.detectChanges();
     });
 
@@ -176,10 +174,9 @@ describe('FunctionalGroupWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+            const chipGrid = await loader.getHarness(MatChipGridHarness);
 
-            expect(asterisk).toBeTruthy();
-            expect(asterisk.textContent).toEqual('*');
+            expect(await chipGrid.isRequired()).toBeTrue();
         });
     });
 

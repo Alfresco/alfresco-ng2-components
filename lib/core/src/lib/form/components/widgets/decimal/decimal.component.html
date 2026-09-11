@@ -10,7 +10,7 @@
 
     <div class="adf-decimal-widget-container">
         <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic" [floatLabel]="field.placeholder ? 'always' : null">
-           @if ( (field.name || field?.required) && !field.leftLabels) { <mat-label class="adf-label" [attr.for]="field.id">{{ field.name | translate }}</mat-label> }
+           @if ( (field.name || field?.required) && !field.leftLabels) { <mat-label class="adf-label">{{ field.name | translate }}</mat-label> }
             <input matInput
                    class="adf-input"
                    type="text"
