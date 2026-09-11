@@ -8,7 +8,7 @@
     <button mat-button type="button" data-automation-id="session-timeout-dialog__logout-button" (click)="logout()">
         {{ 'SESSION_TIMEOUT.LOG_OUT' | translate }}
     </button>
-    <button mat-flat-button color="primary" type="button" data-automation-id="session-timeout-dialog__continue-button" (click)="continueWorking()">
+    <button mat-button type="button" class="adf-continue-working-btn" data-automation-id="session-timeout-dialog__continue-button" (click)="continueWorking()">
         {{ 'SESSION_TIMEOUT.CONTINUE_WORKING' | translate }}
     </button>
 </mat-dialog-actions>

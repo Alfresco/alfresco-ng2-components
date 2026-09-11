@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 $dialog-large-l-width: 1075px;
 $dialog-large-l-height: 907px;
 
@@ -190,6 +192,14 @@ $dialog-padding: 24px;
         .adf-additional-actions-container {
             display: flex;
             column-gap: 8px;
+        }
+
+        .adf-dialog-actions-confirm-btn {
+            @include mat.button-overrides(
+                (
+                    text-label-text-color: var(--theme-primary-color)
+                )
+            );
         }
     }
 
