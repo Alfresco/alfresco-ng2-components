@@ -1,8 +1,18 @@
+@use '@angular/material' as mat;
+
 adf-select-apps-dialog {
     .adf-select-apps-dialog-actions {
         display: flex;
         max-height: 100%;
         place-content: center flex-end;
         align-items: center;
+
+        .adf-select-apps-dialog-start-btn {
+            @include mat.button-overrides(
+                (
+                    text-label-text-color: var(--theme-primary-color)
+                )
+            );
+        }
     }
 }
