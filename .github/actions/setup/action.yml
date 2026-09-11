@@ -8,12 +8,10 @@ inputs:
   full-setup:
     description: 'Run git-latest-tag, npm-tag, and before-install (requires fetch-depth: 0). Set to false for matrix jobs that only need node/cache.'
     required: false
-    type: boolean
     default: 'true'
   act:
     description: 'enable act debug'
     required: false
-    type: boolean
     default: 'false'
 outputs:
   npm-tag:

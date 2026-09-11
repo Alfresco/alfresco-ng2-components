@@ -5,8 +5,7 @@ inputs:
   dry-run-flag:
     description: 'enable dryrun'
     required: false
-    type: boolean
-    default: true
+    default: 'true'
 
 outputs:
   dryrun:

@@ -46,19 +46,19 @@ jobs:
             AFFECTED_UNIT=$(pnpm nx show projects --target=test --select=projects --plain --exclude=cli,stories,eslint-angular)
           else
             echo "Base ref is $BASE_REF"
-            AFFECTED_UNIT=$(pnpm nx show projects --affected --target=test --base=origin/$BASE_REF --head=HEAD --select=projects --plain --exclude=cli,stories,eslint-angular)
+            AFFECTED_UNIT=$(pnpm nx show projects --affected --target=test --base="origin/$BASE_REF" --head=HEAD --select=projects --plain --exclude=cli,stories,eslint-angular)
           fi
           echo "Affected projects for UNIT: $AFFECTED_UNIT"
 
           if [ -z "$AFFECTED_UNIT" ]; then
             echo "No affected projects found"
-            echo "hasProjects=false" >> $GITHUB_OUTPUT
-            echo "unitMatrix=[]" >> $GITHUB_OUTPUT
+            echo "hasProjects=false" >> "$GITHUB_OUTPUT"
+            echo "unitMatrix=[]" >> "$GITHUB_OUTPUT"
           else
             UNIT_MATRIX_JSON=$(echo "$AFFECTED_UNIT" | xargs -n1 | jq -R -s -c 'split("\n") | map(select(length > 0)) | map({ "project": . })')
             echo "Matrix UNIT: $UNIT_MATRIX_JSON"
-            echo "hasProjects=true" >> $GITHUB_OUTPUT
-            echo "unitMatrix=$UNIT_MATRIX_JSON" >> $GITHUB_OUTPUT
+            echo "hasProjects=true" >> "$GITHUB_OUTPUT"
+            echo "unitMatrix=$UNIT_MATRIX_JSON" >> "$GITHUB_OUTPUT"
           fi
       - name: Save nx cache
         if: ${{ success() }}
