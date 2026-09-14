@@ -35,7 +35,9 @@ runs:
           if [[ -n $ADF_VERSION ]]; then
             break
           fi
-          sleep "$NPM_VIEW_RETRY_DELAY"
+          if [[ $attempt -lt $NPM_VIEW_RETRIES ]]; then
+            sleep "$NPM_VIEW_RETRY_DELAY"
+          fi
         done
 
         if [[ -z $ADF_VERSION ]]; then
