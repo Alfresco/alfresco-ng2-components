@@ -125,7 +125,7 @@ jobs:
 
   npm-check-bundle:
     needs: [release-npm]
-    timeout-minutes: 15
+    timeout-minutes: 25
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:

@@ -35,8 +35,8 @@ error_out() {
 }
 
 # Retry to absorb npm registry propagation delay right after publish.
-NPM_VIEW_RETRIES=6
-NPM_VIEW_RETRY_DELAY=10
+NPM_VIEW_RETRIES=24
+NPM_VIEW_RETRY_DELAY=20
 
 npm_view_version() {
     local spec=$1
