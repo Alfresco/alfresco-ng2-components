@@ -34,6 +34,26 @@ error_out() {
     # bg: 40 black, 41 red, 44 blue, 45 purple
 }
 
+# Retry to absorb npm registry propagation delay right after publish.
+NPM_VIEW_RETRIES=6
+NPM_VIEW_RETRY_DELAY=10
+
+npm_view_version() {
+    local spec=$1
+    local attempt result
+    for attempt in $(seq 1 "$NPM_VIEW_RETRIES"); do
+        result=$(npm view "$spec" version 2>/dev/null)
+        if [ -n "$result" ]; then
+            echo "$result"
+            return 0
+        fi
+        if [ "$attempt" -lt "$NPM_VIEW_RETRIES" ]; then
+            sleep "$NPM_VIEW_RETRY_DELAY"
+        fi
+    done
+    return 1
+}
+
 rm -rf temp
 mkdir temp
 cd temp
@@ -65,13 +85,13 @@ do
     fi
 
     # Try the calculated package version first
-    PKG_VERSION=$(npm view @alfresco/$PACKAGE@$PACKAGE_VERSION version 2>/dev/null)
+    PKG_VERSION=$(npm_view_version @alfresco/$PACKAGE@$PACKAGE_VERSION)
 
     # If that fails for js-api, try the original version
     if [ -z "$PKG_VERSION" ] && [ $PACKAGE == 'js-api' ]; then
         echo "Warning: js-api@$PACKAGE_VERSION not found, trying @$VERSION"
         PACKAGE_VERSION=$VERSION
-        PKG_VERSION=$(npm view @alfresco/$PACKAGE@$PACKAGE_VERSION version 2>/dev/null)
+        PKG_VERSION=$(npm_view_version @alfresco/$PACKAGE@$PACKAGE_VERSION)
     fi
 
     # If still no version found, exit with error
