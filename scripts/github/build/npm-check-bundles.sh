@@ -42,10 +42,12 @@ npm_pack_version() {
     local spec=$1
     local attempt
     for attempt in $(seq 1 "$NPM_RETRIES"); do
+        echo "📦 npm pack attempt $attempt/$NPM_RETRIES: $spec"
         if npm pack "$spec"; then
             return 0
         fi
         if [ "$attempt" -lt "$NPM_RETRIES" ]; then
+            echo "⏳ Attempt $attempt/$NPM_RETRIES failed, retrying in ${NPM_RETRY_DELAY}s..."
             sleep "$NPM_RETRY_DELAY"
         fi
     done
