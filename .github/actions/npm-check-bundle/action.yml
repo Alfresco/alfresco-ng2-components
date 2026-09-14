@@ -28,10 +28,10 @@ runs:
         fi
 
         # Retry to absorb npm registry propagation delay right after publish.
-        NPM_VIEW_RETRIES=6
-        NPM_VIEW_RETRY_DELAY=10
+        NPM_VIEW_RETRIES=24
+        NPM_VIEW_RETRY_DELAY=20
         for attempt in $(seq 1 "$NPM_VIEW_RETRIES"); do
-          ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version 2>/dev/null)
+          ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version 2>/dev/null) || true
           if [[ -n $ADF_VERSION ]]; then
             break
           fi
