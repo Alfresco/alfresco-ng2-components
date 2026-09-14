@@ -54,6 +54,22 @@ npm_view_version() {
     return 1
 }
 
+# npm view confirming a version exists does not guarantee npm pack can fetch
+# it yet, so this needs its own retry against the same propagation delay.
+npm_pack_version() {
+    local spec=$1
+    local attempt
+    for attempt in $(seq 1 "$NPM_VIEW_RETRIES"); do
+        if npm pack "$spec"; then
+            return 0
+        fi
+        if [ "$attempt" -lt "$NPM_VIEW_RETRIES" ]; then
+            sleep "$NPM_VIEW_RETRY_DELAY"
+        fi
+    done
+    return 1
+}
+
 rm -rf temp
 mkdir temp
 cd temp
@@ -102,7 +118,10 @@ do
 
     echo "Inspecting: $PACKAGE@$PKG_VERSION"
 
-    npm pack '@alfresco/'$PACKAGE@$PACKAGE_VERSION
+    if ! npm_pack_version '@alfresco/'$PACKAGE@$PACKAGE_VERSION; then
+        error_out '31;1' "npm pack failed for @alfresco/$PACKAGE@$PACKAGE_VERSION" >&2
+        exit 1
+    fi
     tar zxf 'alfresco-'$PACKAGE-$PKG_VERSION.tgz
 
     if [ $PACKAGE == 'js-api' ]; then
