@@ -42,7 +42,7 @@ npm_pack_version() {
     local spec=$1
     local attempt
     for attempt in $(seq 1 "$NPM_RETRIES"); do
-        if npm pack "$spec" 2>/dev/null; then
+        if npm pack "$spec"; then
             return 0
         fi
         if [ "$attempt" -lt "$NPM_RETRIES" ]; then
