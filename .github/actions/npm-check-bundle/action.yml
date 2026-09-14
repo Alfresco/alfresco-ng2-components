@@ -27,9 +27,7 @@ runs:
           exit 1
         fi
 
-        # The alpha tag on adf-core is updated by the release-npm job just before this
-        # runs, so this can briefly 404 from registry propagation delay too. Retry it
-        # the same way npm-check-bundles.sh retries its own lookups.
+        # Retry to absorb npm registry propagation delay right after publish.
         for attempt in $(seq 1 6); do
           ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version 2>/dev/null)
           if [[ -n $ADF_VERSION ]]; then

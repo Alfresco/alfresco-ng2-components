@@ -34,9 +34,7 @@ error_out() {
     # bg: 40 black, 41 red, 44 blue, 45 purple
 }
 
-# Newly published versions can take a little while to propagate on the npm registry,
-# so a package published moments ago (e.g. late in the release-npm publish order) can
-# briefly 404 here even though the publish itself succeeded. Retry before giving up.
+# Retry to absorb npm registry propagation delay right after publish.
 NPM_VIEW_RETRIES=6
 NPM_VIEW_RETRY_DELAY=10
 
