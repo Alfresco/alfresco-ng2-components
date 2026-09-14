@@ -26,6 +26,22 @@ runs:
           echo "TAG_NPM not set, aborting"
           exit 1
         fi
-        ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
+
+        # The alpha tag on adf-core is updated by the release-npm job just before this
+        # runs, so this can briefly 404 from registry propagation delay too. Retry it
+        # the same way npm-check-bundles.sh retries its own lookups.
+        for attempt in $(seq 1 6); do
+          ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version 2>/dev/null)
+          if [[ -n $ADF_VERSION ]]; then
+            break
+          fi
+          sleep 10
+        done
+
+        if [[ -z $ADF_VERSION ]]; then
+          echo "Could not resolve @alfresco/adf-core@${TAG_NPM} version, aborting" >&2
+          exit 1
+        fi
+
         echo "check bundle on TAG_NPM='${TAG_NPM}' and ADF_VERSION='${ADF_VERSION}'"
         ./scripts/github/build/npm-check-bundles.sh -v ${ADF_VERSION}
