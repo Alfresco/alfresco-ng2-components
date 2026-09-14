@@ -15,36 +15,36 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import {
     AppConfigService,
-    DataRowEvent,
-    ObjectDataRow,
-    User,
-    DataColumn,
     ColumnsSelectorComponent,
-    DataColumnListComponent,
-    DataColumnComponent,
     CustomEmptyContentTemplateDirective,
-    NoopAuthModule
+    DataColumn,
+    DataColumnComponent,
+    DataColumnListComponent,
+    DataRowEvent,
+    NoopAuthModule,
+    ObjectDataRow,
+    User
 } from '@alfresco/adf-core';
-import { TaskListCloudService } from '../../services/task-list-cloud.service';
-import { TaskListCloudComponent } from './task-list-cloud.component';
-import { fakeGlobalTasks, fakeCustomSchema, fakeGlobalTask } from '../../mock/fake-task-response.mock';
-import { of } from 'rxjs';
-import { TaskListCloudSortingModel } from '../../../../models/task-list-sorting.model';
-import { shareReplay, skip } from 'rxjs/operators';
-import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { Component, SimpleChange, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { By } from '@angular/platform-browser';
+import { of } from 'rxjs';
+import { shareReplay, skip } from 'rxjs/operators';
+import { TaskListCloudSortingModel } from '../../../../models/task-list-sorting.model';
 import { provideCloudPreferences } from '../../../../providers';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../../services/preference-cloud.interface';
 import { UserPreferenceCloudService } from '../../../../services/user-preference-cloud.service';
+import { fakeCustomSchema, fakeGlobalTask, fakeGlobalTasks } from '../../mock/fake-task-response.mock';
+import { TaskListCloudService } from '../../services/task-list-cloud.service';
+import { TaskListCloudComponent } from './task-list-cloud.component';
 
 @Component({
     imports: [TaskListCloudComponent, DataColumnListComponent, DataColumnComponent],
@@ -905,7 +905,6 @@ describe('TaskListCloudWrapperComponent', () => {
         TestBed.configureTestingModule({
             imports: [NoopAuthModule, TaskListCloudWrapperComponent],
             providers: [
-                // provideCloudPreferences(),
                 provideHttpClientTesting(),
                 { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService },
                 { provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
