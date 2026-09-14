@@ -450,6 +450,7 @@ Learn more about styling your datatable: [Customizing the component's styles](#c
 | dragBoundary             | `string`                                                                            | '.adf-datatable-body' | Selector for boundary element for drag and drop functionality that limits the drag area. When set, the rows can be dragged only within the specified boundary.                                          |
 | showDragIndicator        | `boolean`                                                                           | true                  | Flag that decides if drag indicator is visible or not. It's visible when true, otherwise is hidden.                                                                                                     |
 | useWholeRowAsDragPreview | `boolean`                                                                           | true                  | Flag that decides if drag preview should look like original row or should be limited to name and node type icon. If true then uses original row as preview, if false then uses name and node type icon. |
+| rowDropSortingDisabled   | `boolean`                                                                           | false                 | Flag that decides if dragging should change rows order. If true then dragging doesn't change rows order, if false then it does.                                                                         |
 
 ### Events
 

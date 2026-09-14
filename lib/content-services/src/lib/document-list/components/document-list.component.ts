@@ -404,6 +404,10 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     useWholeRowAsDragPreview = true;
 
+    /** Flag that decides if dragging should change rows order */
+    @Input()
+    rowDropSortingDisabled = false;
+
     /**
      * Indicates if the data is provided externally.
      * If true the component won't fetch data itself

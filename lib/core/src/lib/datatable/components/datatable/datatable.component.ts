@@ -244,6 +244,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Input()
     useWholeRowAsDragPreview = true;
 
+    /** Flag that decides if dragging should change rows order */
+    @Input()
+    rowDropSortingDisabled = false;
+
     /** Emitted when the user clicks a row. */
     @Output()
     rowClick = new EventEmitter<DataRowEvent>();
