@@ -42,6 +42,9 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { provideCloudPreferences } from '../../../../providers';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { PreferenceCloudServiceInterface } from '../../../../services/preference-cloud.interface';
+import { UserPreferenceCloudService } from '../../../../services/user-preference-cloud.service';
 
 @Component({
     imports: [TaskListCloudComponent, DataColumnListComponent, DataColumnComponent],
@@ -95,6 +98,14 @@ class EmptyTemplateComponent {}
 class CustomCopyContentTaskListComponent {
     @ViewChild(TaskListCloudComponent, { static: true })
     taskList: TaskListCloudComponent;
+}
+
+@Component({
+    imports: [TaskListCloudComponent],
+    template: `<adf-cloud-task-list [appName]="appName" />`
+})
+class TaskListCloudWrapperComponent {
+    appName: string;
 }
 
 describe('TaskListCloudComponent', () => {
@@ -882,5 +893,45 @@ describe('TaskListCloudComponent: Copy cell content directive from app.config sp
                 }
             )
         ).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW');
+    });
+});
+
+describe('TaskListCloudWrapperComponent', () => {
+    let wrapperFixture: ComponentFixture<TaskListCloudWrapperComponent>;
+    let preferenceService: PreferenceCloudServiceInterface;
+    let wrapperComponent: TaskListCloudWrapperComponent;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule, TaskListCloudWrapperComponent],
+            providers: [
+                // provideCloudPreferences(),
+                provideHttpClientTesting(),
+                { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService },
+                { provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
+            ]
+        });
+
+        preferenceService = TestBed.inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN);
+        wrapperFixture = TestBed.createComponent(TaskListCloudWrapperComponent);
+        wrapperComponent = wrapperFixture.componentInstance;
+
+        spyOn(preferenceService, 'getPreferences').and.callThrough();
+    });
+
+    afterEach(() => {
+        wrapperFixture.destroy();
+    });
+
+    it('should fetch preferences once on init and every time the appName is changed', () => {
+        expect(preferenceService.getPreferences).toHaveBeenCalledTimes(0);
+
+        wrapperComponent.appName = 'fake-app';
+        wrapperFixture.detectChanges();
+        expect(preferenceService.getPreferences).toHaveBeenCalledTimes(1);
+
+        wrapperComponent.appName = 'fake-app-changed';
+        wrapperFixture.detectChanges();
+        expect(preferenceService.getPreferences).toHaveBeenCalledTimes(2);
     });
 });
