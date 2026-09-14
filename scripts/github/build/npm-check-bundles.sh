@@ -47,7 +47,7 @@ npm_pack_version() {
             return 0
         fi
         if [ "$attempt" -lt "$NPM_RETRIES" ]; then
-            echo "Attempt $attempt/$NPM_RETRIES failed, likely registry propagation delay, not a final failure, retrying in ${NPM_RETRY_DELAY}s..."
+            echo "Attempt $attempt/$NPM_RETRIES failed, retrying in ${NPM_RETRY_DELAY}s..."
             sleep "$NPM_RETRY_DELAY"
         fi
     done
