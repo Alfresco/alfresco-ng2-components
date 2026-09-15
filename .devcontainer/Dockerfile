@@ -1,0 +1,27 @@
+# Base image pinned by digest for reproducible devcontainer builds.
+# Important: keep this FROM line comment-free (no inline trailing comment),
+# or some Docker/Buildx versions can fail to parse it.
+FROM mcr.microsoft.com/devcontainers/javascript-node@sha256:21b17a0c1fd000eff7280c9eea21f04779d1825531b144e400e5d028a0d967b1
+
+ENV PNPM_HOME=/home/node/.local/share/pnpm
+ENV PATH=${PNPM_HOME}:${PATH}
+# Let Corepack provision the pnpm version from package.json#packageManager on
+# first use without an interactive download prompt.
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+
+# Install Chromium for Karma/ChromeHeadless test execution inside the container.
+# gnupg2 is required so VS Code can forward the host gpg-agent for signed commits.
+# Enable Corepack shims too. The pnpm version is not pinned here: Corepack reads
+# package.json#packageManager (the single source of truth) and provisions the
+# matching pnpm on first use during postCreateCommand.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends chromium gnupg2 \
+    && rm -rf /var/lib/apt/lists/* \
+    && corepack enable \
+    && mkdir -p ${PNPM_HOME} /home/node/.pnpm-store /commandhistory \
+    && mkdir -p /home/node/.gnupg \
+    && touch /commandhistory/.bash_history \
+    && chmod 700 /home/node/.gnupg \
+    && chown -R node:node /home/node/.local /home/node/.pnpm-store /commandhistory /home/node/.gnupg \
+    && echo "export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" >> /home/node/.bashrc
+USER node
