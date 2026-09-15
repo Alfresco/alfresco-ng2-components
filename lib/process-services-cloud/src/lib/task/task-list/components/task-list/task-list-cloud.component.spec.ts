@@ -933,4 +933,16 @@ describe('TaskListCloudWrapperComponent', () => {
         wrapperFixture.detectChanges();
         expect(preferenceService.getPreferences).toHaveBeenCalledTimes(2);
     });
+
+    it('should fetch prefecences even if appName is set after ngAfterContentInit', () => {
+        expect(preferenceService.getPreferences).toHaveBeenCalledTimes(0);
+
+        wrapperFixture.detectChanges();
+        expect(preferenceService.getPreferences).toHaveBeenCalledTimes(1);
+        expect(preferenceService.getPreferences).toHaveBeenCalledWith(undefined);
+
+        wrapperComponent.appName = 'fake-app';
+        wrapperFixture.detectChanges(); //this is second change, first was initial binding
+        expect(preferenceService.getPreferences).toHaveBeenCalledTimes(2);
+    });
 });
