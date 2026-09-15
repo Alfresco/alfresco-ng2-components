@@ -1,51 +1,51 @@
 {
   "ANALYTICS": {
-    "TITLE": "Analytics",
+    "TITLE": "ANALYTICS",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "Onbekend widgettype",
-      "FILL-PARAMETER": "Maak een keuze uit de rapportopties",
-      "NO-DATA-FOUND": "Geen gegevens gevonden",
-      "ZERO-DATA-FOUND": "Er zijn alleen nulwaarden",
-      "ICON-SETTING": "Instellingen",
-      "ICON-SAVE": "Opslaan",
-      "ICON-DELETE": "Verwijderen",
-      "ICON-EXPORT-CSV": "Exporteren"
+      "UNKNOWN-WIDGET-TYPE": "UNKNOWN WIDGET TYPE",
+      "FILL-PARAMETER": "Choose from the report options",
+      "NO-DATA-FOUND": "No data found",
+      "ZERO-DATA-FOUND": "There are only zero values",
+      "ICON-SETTING": "Settings",
+      "ICON-SAVE": "Save",
+      "ICON-DELETE": "Delete",
+      "ICON-EXPORT-CSV": "Export"
     }
   },
   "__KEY_REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-DEFINITION-OVERVIEW": {
-        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Totaal aantal procesdefinities",
-        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Totaal aantal procesinstances",
-        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Totaal aantal actieve procesinstances",
-        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Totaal aantal voltooide procesinstances"
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Total number of process definitions",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Total number of process instances",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Total number of active process instances",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Total number of completed process instances"
       }
     }
   },
   "REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "Inclusief Pass Through-stappen zoals startgebeurtenissen en gateways"
+        "TYPE-FILTERING": "Include pass through steps such as start events and gateways"
       },
       "PROCESS-INSTANCES-OVERVIEW": {
-        "PROCESS-DEFINITION": "Procesdefinitie",
-        "DATE-RANGE": "Datumbereik",
-        "SLOW-PROC-INST-NUMBER": "Hoeveel langzaamste procesinstances moeten worden weergegeven?"
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "SLOW-PROC-INST-NUMBER": "How many of the slowest process instances should be displayed?"
       },
       "TASK-OVERVIEW": {
-        "PROCESS-DEFINITION": "Procesdefinitie",
-        "DATE-RANGE": "Datumbereik",
-        "DATE-RANGE-INTERVAL": "Groepsdatums op"
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "DATE-RANGE-INTERVAL": "Group dates by"
       },
       "TASK-SLA": {
-        "TASK": "Taak",
-        "PROCESS-DEFINITION": "Procesdefinitie",
-        "DATE-RANGE": "Datumbereik",
-        "SLA-DURATION": "In SLA vereiste voltooiingstijd"
+        "TASK": "Task",
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "SLA-DURATION": "SLA required completion time"
       }
     },
-    "PROCESS-STATUS": "Processtatus",
-    "TASK-STATUS": "Taakstatus"
+    "PROCESS-STATUS": "Process status",
+    "TASK-STATUS": "Task status"
   },
-  "DIAGRAMS": "Diagrammen"
+  "DIAGRAMS": "Diagrams"
 }

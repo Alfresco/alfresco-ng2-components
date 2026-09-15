@@ -1,638 +1,740 @@
 {
   "COMMON": {
-    "APPLY": "Toepassen",
-    "CANCEL": "Annuleren"
+    "APPLY": "Apply",
+    "CANCEL": "Cancel",
+    "NAME": "Name",
+    "CLEAR": "Clear"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
-      "RESTORE": "Herstellen",
-      "DELETE": "Verwijderen",
-      "DOWNLOAD": "Downloaden",
-      "VIEW": "Weergeven",
+      "RESTORE": "Restore",
+      "DELETE": "Delete",
+      "DOWNLOAD": "Download",
+      "VIEW": "View",
       "UPLOAD": {
-        "TITLE": "Nieuwe versie uploaden",
-        "TOOLTIP": "Beperking: u moet een bestand met dezelfde naam uploaden om een nieuwe versie van het bestand te maken",
-        "MAJOR": "belangrijke wijzigingen ({{version}})",
-        "MINOR": "kleine wijzigingen ({{version}})",
-        "COMMENT": "Opmerking toevoegen",
-        "ADD": "Nieuwe versie toevoegen",
-        "CANCEL": "Annuleren"
+        "TITLE": "Upload new version",
+        "TOOLTIP": "Restriction: you must upload a file with the same name to create a new version of it",
+        "MAJOR": "major changes ({{version}})",
+        "MINOR": "minor changes ({{version}})",
+        "COMMENT": "Leave a comment",
+        "ADD": "Add New Version",
+        "CANCEL": "Cancel",
+        "VERSION_TYPE_LABEL": "Select version type"
       }
     },
     "CONFIRM_DELETE": {
-      "TITLE": "Versie verwijderen",
-      "MESSAGE": "Verwijderde bestandsversies kunnen niet worden hersteld. Doorgaan?",
-      "YES_LABEL": "Ja",
-      "NO_LABEL": "Nee"
+      "TITLE": "Delete version",
+      "MESSAGE": "Deleted file versions cannot be restored. Continue?",
+      "YES_LABEL": "Yes",
+      "NO_LABEL": "No"
     },
-    "MANAGE_VERSION_OPTIONS": "Versieopties beheren"
+    "MANAGE_VERSION_OPTIONS": "Manage version options"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Versies beheren",
-      "CLOSE": "Sluiten"
+      "TITLE": "Manage Versions",
+      "CLOSE": "Close"
     },
     "DIALOG_UPLOAD": {
-      "TITLE": "Nieuwe versie uploaden",
-      "CANCEL": "Annuleren",
-      "UPLOAD": "Uploaden"
+      "TITLE": "Upload New Version",
+      "CANCEL": "Cancel",
+      "UPLOAD": "Upload"
     }
   },
   "ADF_VERSION_COMPARISON": {
-    "CURRENT_VERSION": "Huidige",
-    "NEW_VERSION": "Nieuw",
+    "CURRENT_VERSION": "Current",
+    "NEW_VERSION": "New",
     "ACCESSIBILITY": {
-      "ICON_TEXT": "Itemtype {{ type }}",
-      "ARROW_ICON": "Pictogram pijl-rechts"
+      "ICON_TEXT": "Item type {{ type }}",
+      "ARROW_ICON": "Arrow right icon"
     }
   },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
-      "HEADER": "Deze map is leeg"
+      "HEADER": "This folder is empty"
     },
-    "NO_PERMISSION": "U hebt geen rechten voor het weergeven van dit bestand of deze map.",
+    "NO_PERMISSION": "You don't have permission to view this file or folder.",
     "LAYOUT": {
-      "CREATED": "Gemaakt",
-      "CREATED_BY": "Gemaakt door",
-      "THUMBNAIL": "Miniatuur",
-      "NAME": "Naam",
-      "LOCATION": "Locatie",
-      "SIZE": "Grootte",
-      "DELETED_ON": "Verwijderd",
-      "DELETED_BY": "Verwijderd door",
+      "CREATED": "Created",
+      "CREATED_BY": "Created by",
+      "THUMBNAIL": "Thumbnail",
+      "NAME": "Name",
+      "LOCATION": "Location",
+      "SIZE": "Size",
+      "DELETED_ON": "Deleted",
+      "DELETED_BY": "Deleted by",
       "STATUS": "Status",
-      "MODIFIED_ON": "Aangepast",
-      "MODIFIED_BY": "Aangepast door",
-      "SHARED_BY": "Gedeeld door",
-      "LOAD_MORE": "Meer laden"
+      "MODIFIED_ON": "Modified",
+      "MODIFIED_BY": "Modified by",
+      "SHARED_BY": "Shared by",
+      "LOAD_MORE": "Load more"
     },
     "MENU_ACTIONS": {
-      "VIEW": "Weergeven",
-      "REMOVE": "Verwijderen",
-      "DOWNLOAD": "Downloaden"
+      "VIEW": "View",
+      "REMOVE": "Remove",
+      "DOWNLOAD": "Download"
     },
-    "LOADER_LABEL": "Lader lijst met documenten",
+    "LOADER_LABEL": "Document list loader",
     "FILE_AUTO_DOWNLOAD_DIALOG": {
-      "HEADER": "Voorbeeld laden reageert niet",
-      "LABEL": "Download om dit document te bekijken of annuleer om door te gaan zonder voorbeeld.",
+      "HEADER": "Preview loading unresponsive",
+      "LABEL": "Download to view this document, or cancel to continue without preview.",
       "ACTIONS": {
-        "CANCEL": "Annuleren",
-        "DOWNLOAD": "Downloaden"
+        "CANCEL": "Cancel",
+        "DOWNLOAD": "Download"
       }
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
-      "ACTION_CREATE": "Maken...",
-      "ACTION_NEW_FOLDER": "Nieuwe map",
-      "CREATE": "Maken",
-      "CANCEL": "Annuleren"
+      "ACTION_CREATE": "Create...",
+      "ACTION_NEW_FOLDER": "New Folder",
+      "CREATE": "Create",
+      "CANCEL": "Cancel"
     }
   },
   "DROPDOWN": {
-    "PLACEHOLDER_LABEL": "Lijst met sites",
-    "MY_FILES_OPTION": "Mijn bestanden"
+    "PLACEHOLDER_LABEL": "Site List",
+    "MY_FILES_OPTION": "My files"
   },
   "NODE_SELECTOR": {
-    "CANCEL": "Annuleren",
-    "CHOOSE": "Selecteren",
-    "ATTACH": "Bijvoegen",
-    "CHOOSE_ITEM": "Selecteer content om bij te voegen vanuit '{{ name }}'",
-    "COPY": "Kopiëren",
-    "COPY_ITEM": "'{{ name }}' kopiëren naar...",
-    "LOCATION": "Locatie",
-    "MOVE": "Verplaatsen",
-    "MOVE_ITEM": "'{{ name }}' verplaatsen naar...",
-    "NO_RESULTS": "Geen resultaten gevonden",
-    "SEARCH": "Zoeken",
-    "SEARCH_RESULTS": "Zoekresultaten",
-    "SELECT_LIBRARY": "Selecteer een bibliotheek",
-    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "U kunt geen bestand uploaden terwijl een zoekopdracht wordt uitgevoerd",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Gebruiker heeft geen rechten voor het uploaden van content naar de map",
+    "CANCEL": "Cancel",
+    "CHOOSE": "Select",
+    "ATTACH": "Attach",
+    "CHOOSE_ITEM": "Select content to attach from '{{ name }}'",
+    "COPY": "Copy",
+    "LINK": "Create Link",
+    "COPY_ITEM": "Copy '{{ name }}' to...",
+    "LOCATION": "Location",
+    "MOVE": "Move",
+    "MOVE_ITEM": "Move '{{ name }}' to...",
+    "NO_RESULTS": "No results found",
+    "SEARCH": "Search",
+    "SEARCH_RESULTS": "Search results",
+    "SELECT_LIBRARY": "Select a Library",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "You can't upload a file whilst a search is still running",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "User doesn't have permission to upload content to the folder",
     "REPOSITORY": "Repository",
-    "UPLOAD_FROM_DEVICE": "Uploaden vanaf uw apparaat"
+    "UPLOAD_FROM_DEVICE": "Upload from your device"
   },
   "OPERATION": {
     "SUCCESS": {
       "CONTENT": {
-        "COPY": "Kopiëren geslaagd",
-        "MOVE": "Verplaatsen geslaagd"
+        "COPY": "Copy successful",
+        "MOVE": "Move successful"
       },
       "FOLDER": {
-        "COPY": "Kopiëren geslaagd",
-        "MOVE": "Verplaatsen geslaagd"
+        "COPY": "Copy successful",
+        "MOVE": "Move successful"
       }
     },
     "ERROR": {
-      "CONFLICT": "Deze naam wordt al gebruikt, probeer een andere naam.",
-      "UNKNOWN": "De actie is mislukt. Probeer het opnieuw of neem contact op met het IT-team.",
-      "PERMISSION": "U beschikt niet over de benodigde toegang om dit te doen."
+      "CONFLICT": "This name is already in use, try a different name.",
+      "UNKNOWN": "The action was unsuccessful. Try again or contact your IT Team.",
+      "PERMISSION": "You don't have access to do this."
     }
   },
   "TAG": {
     "LABEL": {
-      "NEWTAG": "Nieuwe tag"
+      "NEWTAG": "New Tag"
     },
     "MESSAGES": {
-      "EXIST": "Tag bestaat al"
+      "EXIST": "Tag already exists"
     },
     "BUTTON": {
-      "ADD": "Tag toevoegen"
+      "ADD": "Add Tag"
     },
     "TAGS_CREATOR": {
-      "EXISTING_TAGS": "Bestaande tags:",
-      "EXISTING_TAGS_SELECTION": "Selecteer een bestaande tag:",
-      "NO_TAGS_CREATED": "Geen tags gemaakt",
-      "NO_EXISTING_TAGS": "Geen bestaande tags",
-      "TITLE": "Tags maken",
-      "CREATE_TAG": "Maken: {{tag}}",
-      "NAME": "Naam",
+      "EXISTING_TAGS": "Existing tags:",
+      "EXISTING_TAGS_SELECTION": "Select an existing Tag:",
+      "NO_TAGS_CREATED": "No Tags Created",
+      "NO_EXISTING_TAGS": "No Existing Tags",
+      "TITLE": "Create Tags",
+      "CREATE_TAG": "Create: {{tag}}",
+      "TAG_SEARCH_PLACEHOLDER": "Search Tags",
       "ERRORS": {
-        "EXISTING_TAG": "Tag bestaat al",
-        "ALREADY_ADDED_TAG": "Tag is al toegevoegd",
-        "EMPTY_TAG": "Tagnaam mag niet alleen uit spaties bestaan",
-        "REQUIRED": "Een tagnaam is vereist",
-        "FETCH_TAGS": "Fout bij het ophalen van de tags",
-        "CREATE_TAGS": "Fout bij het maken van de tags"
+        "EXISTING_TAG": "Tag already exists",
+        "ALREADY_ADDED_TAG": "Tag is already added",
+        "EMPTY_TAG": "Tag name can't contain only spaces",
+        "FETCH_TAGS": "Error while fetching the tags",
+        "CREATE_TAGS": "Error while creating the tags",
+        "SPECIAL_CHARACTERS": "Tag name cannot contain prohibited characters"
       },
       "TOOLTIPS": {
-        "DELETE_TAG": "Tag verwijderen",
-        "HIDE_INPUT": "Invoer verbergen"
+        "DELETE_TAG": "Delete tag"
       },
-      "TAGS_LOADING": "Tags laden",
-      "CREATE_TAGS_SUCCESS": "Tags zijn gemaakt"
+      "TAGS_LOADING": "Tags loading",
+      "CREATE_TAGS_SUCCESS": "Tags created successfully"
     }
   },
   "CATEGORIES_MANAGEMENT": {
-    "CATEGORIES_TITLE": "Categorieën",
-    "NO_CATEGORIES_CREATED": "Geen categorieën gemaakt",
-    "NO_CATEGORIES_ASSIGNED": "Geen categorieën toegewezen",
-    "ASSIGN_CATEGORIES": "Categorieën toewijzen",
-    "UNASSIGN_CATEGORY": "Toewijzing van categorie ongedaan maken",
-    "DELETE_CATEGORY": "Categorie verwijderen",
-    "EXISTING_CATEGORIES": "Bestaande categorieën:",
-    "SELECT_EXISTING_CATEGORY": "Selecteer een bestaande categorie:",
-    "NO_EXISTING_CATEGORIES": "Geen bestaande categorieën",
-    "GENERIC_CREATE": "Maken: {{name}}",
-    "NAME": "Categorienaam",
-    "LOADING": "Wordt geladen",
-    "HIDE_INPUT": "Invoer verbergen",
+    "CATEGORIES_TITLE": "Categories",
+    "NO_CATEGORIES_CREATED": "No Categories created",
+    "NO_CATEGORIES_ASSIGNED": "No Categories assigned",
+    "UNASSIGN_CATEGORY": "Unassign Category",
+    "DELETE_CATEGORY": "Delete Category",
+    "EXISTING_CATEGORIES": "Existing Categories:",
+    "SELECT_EXISTING_CATEGORY": "Select an existing Category:",
+    "NO_EXISTING_CATEGORIES": "No Existing Categories",
+    "GENERIC_CREATE": "Create: {{name}}",
+    "NAME": "Category name",
+    "LOADING": "Loading",
+    "NO_CATEGORIES_ADDED": "There are currently no categories added",
     "ERRORS": {
-      "NOT_FOUND": "Categorieën niet gevonden",
-      "REQUIRED": "Een categorienaam is vereist",
-      "EMPTY_CATEGORY": "Categorienaam mag niet alleen uit spaties bestaan",
-      "ALREADY_EXISTS": "Categorie bestaat al",
-      "DUPLICATED_CATEGORY": "Categorie is al toegevoegd",
-      "CREATE_CATEGORIES": "Fout bij het maken van categorieën",
-      "EXISTING_CATEGORIES": "Sommige categorieën bestaan al"
-    }
+      "NOT_FOUND": "Categories not found",
+      "REQUIRED": "Category name is required",
+      "EMPTY_CATEGORY": "Category name can't contain only spaces",
+      "ALREADY_EXISTS": "Category already exists",
+      "DUPLICATED_CATEGORY": "Category is already added",
+      "CREATE_CATEGORIES": "Error while creating categories",
+      "EXISTING_CATEGORIES": "Some categories already exist",
+      "SPECIAL_CHARACTERS": "Category name cannot contain prohibited characters",
+      "ENDS_WITH_DOT": "Category name cannot end with a dot"
+    },
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Search Categories"
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
-      "MINIMIZE": "Minimaliseren",
-      "MAXIMIZE": "Maximaliseren",
-      "CLOSE": "Sluiten",
-      "STOP_ALL": "Uploads stoppen",
-      "STOP_FILE": "Uploaden stoppen",
-      "UPLOAD_SUCCESSFUL": "Uploaden geslaagd"
+      "MINIMIZE": "Minimize",
+      "MAXIMIZE": "Maximize",
+      "CLOSE": "Close",
+      "STOP_ALL": "Stop uploads",
+      "STOP_FILE": "Stop upload",
+      "UPLOAD_SUCCESSFUL": "Upload successful"
     },
     "STATUS": {
-      "FILE_CANCELED_STATUS": "Geannuleerd",
-      "FILE_DONE_STATUS": "Geüpload"
+      "FILE_CANCELED_STATUS": "Canceled",
+      "FILE_DONE_STATUS": "Uploaded"
     },
     "CONFIRMATION": {
       "BUTTON": {
-        "CANCEL": "Ja",
-        "CONTINUE": "Nee"
+        "CANCEL": "Yes",
+        "CONTINUE": "No"
       },
       "MESSAGE": {
-        "TITLE": "Uploaden stoppen",
-        "TEXT": "Stop het uploaden en annuleer alle uploads in behandeling."
+        "TITLE": "Stop Upload",
+        "TEXT": "Stop and cancel all in-progress and pending uploads."
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "Bestandsversie {{ version }}",
-      "DIALOG": "Lijst uploaden",
-      "DIALOG_MAXIMIZE": "Uploaddialoogvenster maximaliseren",
-      "DIALOG_MINIMIZE": "Uploaddialoogvenster minimaliseren",
-      "DIALOG_CLOSE": "Uploaddialoogvenster sluiten",
-      "STOP_ALL": "Uploads stoppen",
-      "UPLOAD_SUCCESSFUL": "Het bestand {{ file }} is geüpload",
-      "STOP_FILE": "Bestand {{ file }} stoppen",
-      "STOP_FILE_UPLOAD": "Uploaden van bestand {{ file }} stoppen",
-      "UPLOAD_FILE_ERROR": "Fout bij uploaden {{ error }}",
+      "VERSION": "File version {{ version }}",
+      "DIALOG": "Upload list",
+      "DIALOG_MAXIMIZE": "Maximize upload dialog",
+      "DIALOG_MINIMIZE": "Minimize upload dialog",
+      "DIALOG_CLOSE": "Close upload dialog",
+      "STOP_ALL": "Stop uploads",
+      "UPLOAD_SUCCESSFUL": "Uploaded successfully file {{ file }}",
+      "STOP_FILE": "Stop file {{ file }}",
+      "STOP_FILE_UPLOAD": "Stop file upload {{ file }}",
+      "UPLOAD_FILE_ERROR": "Upload error {{ error }}",
       "CONFIRMATION": {
-        "CANCEL": "Annuleren bevestigen",
-        "CONTINUE": "Doorgaan met uploaden"
+        "CANCEL": "Confirm cancel",
+        "CONTINUE": "Continue upload"
       }
     }
   },
   "FILE_UPLOAD": {
     "BUTTON": {
-      "UPLOAD_FILE": "Bestand uploaden",
-      "UPLOAD_FOLDER": "Map uploaden",
-      "PERMISSION_CHECK_ERROR": "Fout bij controleren van rechten."
+      "UPLOAD_FILE": "Upload file",
+      "UPLOAD_FOLDER": "Upload folder",
+      "PERMISSION_CHECK_ERROR": "Error checking permission."
     },
     "VERSION": {
       "MESSAGES": {
-        "NO_ACCEPTED_FILE_TYPES": "De instelling \"Geaccepteerd bestandstype\" heeft geen gevolgen voor nieuwe versie-uploads. Het bestandstype is gelijk aan dat van het originele bestand.",
-        "INCOMPATIBLE_VERSION": "Alleen een bestand van hetzelfde type kan worden geüpload als een nieuwe versie."
+        "NO_ACCEPTED_FILE_TYPES": "Please note that the setting of \"acceptedFilesType\" has no effect for new version uploads. The file type will be the same as the original file's.",
+        "INCOMPATIBLE_VERSION": "Only a file of the same type may be uploaded as a new version."
       }
     },
     "MESSAGES": {
-      "UPLOAD_CANCELED": "Uploaden geannuleerd",
-      "UPLOAD_PROGRESS": "{{ completed }} / {{ total }} geüpload",
-      "UPLOAD_ERROR": "{{ total }} upload mislukt",
-      "UPLOAD_ERRORS": "{{ total }} uploads mislukt",
-      "PROGRESS": "Upload wordt uitgevoerd...",
-      "FOLDER_ALREADY_EXIST": "De map {0} bestaat al",
-      "FOLDER_NOT_SUPPORTED": "Het uploaden van mappen wordt niet ondersteund door uw browser, probeer het met een andere browser",
-      "REMOVE_FILE_ERROR": "{{ fileName }} kan niet worden verwijderd, probeer het opnieuw of neem contact op met het IT-team.",
-      "REMOVE_FILES_ERROR": "{{ total }} bestanden kunnen niet worden verwijderd, probeer het opnieuw of neem contact op met het IT-team.",
-      "EXCEED_MAX_FILE_SIZE": "Het bestand {{ fileName }} overschrijdt de toegestane bestandsgrootte"
+      "UPLOAD_CANCELED": "Upload canceled",
+      "UPLOAD_PROGRESS": "Uploaded {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "{{ total }} upload unsuccessful",
+      "UPLOAD_ERRORS": "{{ total }} uploads unsuccessful",
+      "PROGRESS": "Upload in progress...",
+      "FOLDER_ALREADY_EXIST": "The folder {0} already exists",
+      "FOLDER_NOT_SUPPORTED": "Folder upload isn't supported by your browser, try a different browser",
+      "REMOVE_FILE_ERROR": "{{ fileName }} couldn't be removed, try again or check with your IT Team.",
+      "REMOVE_FILES_ERROR": "{{ total }} files couldn't be removed, try again or check with your IT Team.",
+      "EXCEED_MAX_FILE_SIZE": "File {{ fileName }} is larger than the allowed file size"
     },
     "ACTION": {
-      "UNDO": "Ongedaan maken"
+      "UNDO": "Undo"
     },
     "ERRORS": {
-      "GENERIC": "Uploaden is mislukt. Neem contact op met IT als het probleem zich blijft voordoen",
-      "500": "Interne serverfout, probeer het opnieuw of neem contact op met de IT-ondersteuning [500]",
-      "504": "Er is een time-out opgetreden in de server, probeer het opnieuw of neem contact op met de IT-ondersteuning [504]",
-      "403": "Onvoldoende rechten voor uploaden op deze locatie [403]",
-      "404": "Uploadlocatie bestaat niet meer [404]",
-      "409": "Er bestaat al een bestand met dezelfde naam [409]"
+      "GENERIC": "Upload unsuccessful. Contact IT if this problem persists",
+      "500": "Internal server error, try again or contact IT support [500]",
+      "504": "The server timed out, try again or contact IT support [504]",
+      "403": "Insufficient permissions to upload in this location [403]",
+      "404": "Upload location no longer exists [404]",
+      "409": "A file with the same name already exists [409]"
     },
     "ARIA-LABEL": {
-      "ERROR": "Uploadfout"
+      "ERROR": "Upload error"
     }
   },
   "SEARCH": {
     "CONTROL": {},
     "BUTTON": {
-      "TOOLTIP": "Zoeken",
-      "ARIA-LABEL": "Knop Zoeken"
+      "TOOLTIP": "Search",
+      "ARIA-LABEL": "Search button"
     },
     "INPUT": {
-      "ARIA-LABEL": "Invoer voor zoekopdracht"
+      "LABEL": "Search",
+      "PLACEHOLDER": "Search Query",
+      "ARIA-LABEL": "Search input"
     },
     "RESULTS": {
-      "SUMMARY": "{{numResults}} resultaat gevonden voor {{searchTerm}}",
-      "NONE": "Geen resultaten gevonden voor {{searchTerm}}",
-      "ERROR": "Er is een probleem opgetreden tijdens het zoeken - probeer het opnieuw.",
+      "SUMMARY": "{{numResults}} result found for {{searchTerm}}",
+      "NONE": "No results found for {{searchTerm}}",
+      "ERROR": "We hit a problem during the search - try again.",
+      "WILL_CONTAIN": "Results will contain '{{searchTerm}}'",
       "COLUMNS": {
-        "NAME": "Getoonde naam",
-        "MODIFIED_BY": "Aangepast door",
-        "MODIFIED_AT": "Aangepast op"
+        "NAME": "Display name",
+        "MODIFIED_BY": "Modified by",
+        "MODIFIED_AT": "Modified at"
       }
     },
     "FILTER": {
       "ACTIONS": {
-        "SEARCH": "Zoeken",
-        "CLEAR": "Wissen",
-        "APPLY": "Toepassen",
-        "CLEAR-ALL": "Alles wissen",
-        "SHOW-MORE": "Meer weergeven",
-        "SHOW-LESS": "Minder weergeven",
-        "ADD_OPTION": "Optie toevoegen..."
+        "SEARCH": "Search",
+        "CLEAR": "Clear",
+        "APPLY": "Apply",
+        "CLEAR-ALL": "Clear all",
+        "SHOW-MORE": "Show more",
+        "SHOW-LESS": "Show less",
+        "ADD_OPTION": "Add Option..."
       },
       "BUTTONS": {
-        "CLOSE": "Sluiten",
-        "CLEAR": "Wissen",
-        "REMOVE": "Verwijderen",
-        "APPLY": "Toepassen",
+        "CLOSE": "Close",
+        "CLEAR": "Clear",
+        "REMOVE": "Remove",
+        "APPLY": "Apply",
         "CLEAR-ALL": {
-          "LABEL": "Alles wissen",
-          "TOOLTIP": "Hiermee verwijdert u alle selecties"
+          "LABEL": "Clear all",
+          "TOOLTIP": "This will remove all selections"
         },
         "RESET-ALL": {
-          "LABEL": "Alles opnieuw instellen",
-          "TOOLTIP": "Hiermee stelt u alle selecties en alle filters opnieuw in"
+          "LABEL": "Reset all",
+          "TOOLTIP": "This will reset all selections and all filters"
         }
       },
       "RANGE": {
-        "FROM": "Van",
-        "TO": "Tot",
-        "FROM-DATE": "Van",
-        "TO-DATE": "Tot",
-        "SELECT-FROM-DATE": "Van-datum selecteren",
-        "SELECT-TO-DATE": "Tot-datum selecteren"
+        "FROM": "From",
+        "TO": "To",
+        "FROM-DATE": "From",
+        "TO-DATE": "To"
       },
       "VALIDATION": {
-        "REQUIRED-VALUE": "Vereiste waarde",
-        "NO-DAYS": "Geen dagen geselecteerd.",
-        "INVALID-FORMAT": "Ongeldige notatie",
-        "INVALID-DATE": "Ongeldige datum. De datum moet de volgende notatie hebben: '{{ requiredFormat }}'",
-        "BEYOND-MAX-DATE": "De datum ligt na de laatste datum.",
-        "INVALID-DATETIME": "Ongeldige datum/tijd. De datum/tijd moet de volgende notatie hebben: '{{ requiredFormat }}'",
-        "BEYOND-MAX-DATETIME": "De datum/tijd ligt na de laatste datum/tijd."
+        "REQUIRED-VALUE": "Required value",
+        "NO-DAYS": "No days selected.",
+        "INVALID-FORMAT": "Invalid Format",
+        "INVALID-DATE": "Invalid date. The date must be in the format '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATE": "The date is beyond the maximum date.",
+        "INVALID-DATETIME": "Invalid datetime. The datetime must be in the format '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATETIME": "The datetime is beyond the maximum datetime."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "Zoekfilterlijst",
-        "OPTIONS-SELECTION": "Selectie van opties"
+        "SEARCH_FILTER": "Search Filter List",
+        "OPTIONS-SELECTION": "Options Selection"
       },
-      "ANY": "Elk"
+      "ANY": "Any",
+      "PEOPLE": "People"
+    },
+    "FACET_FIELDS": {
+      "MODIFIER_LABEL": "Modified by",
+      "CREATOR_LABEL": "Created by"
     },
     "ICONS": {
-      "ft_ic_raster_image": "Afbeeldingsbestand",
-      "ft_ic_pdf": "PDF-document",
-      "ft_ic_ms_excel": "Microsoft Excel-bestand",
-      "ft_ic_ms_word": "Microsoft Word-document",
-      "ft_ic_ms_powerpoint": "Microsoft PowerPoint-bestand",
-      "ft_ic_video": "Videobestand",
-      "ft_ic_document": "Documentbestand",
-      "ft_ic_website": "Webresource",
-      "ft_ic_archive": "Archiefbestand",
-      "ft_ic_presentation": "Presentatiebestand",
-      "ft_ic_spreadsheet": "Werkbladbestand"
+      "ft_ic_raster_image": "Image file",
+      "ft_ic_pdf": "PDF document",
+      "ft_ic_ms_excel": "Microsoft Excel file",
+      "ft_ic_ms_word": "Microsoft Word document",
+      "ft_ic_ms_powerpoint": "Microsoft PowerPoint file",
+      "ft_ic_video": "Video file",
+      "ft_ic_document": "Document file",
+      "ft_ic_website": "Web resource",
+      "ft_ic_archive": "Archive file",
+      "ft_ic_presentation": "Presentation file",
+      "ft_ic_spreadsheet": "Spreadsheet file"
     },
     "DOCUMENT_LIST": {
       "COLUMNS": {
-        "DISPLAY_NAME": "Getoonde naam",
-        "CREATED_BY": "Gemaakt door",
-        "CREATED_ON": "Gemaakt"
+        "DISPLAY_NAME": "Display name",
+        "CREATED_BY": "Created by",
+        "CREATED_ON": "Created"
       },
       "ACTIONS": {
         "FOLDER": {
-          "DELETE": "Verwijderen",
-          "MOVE": "Verplaatsen",
-          "COPY": "Kopiëren"
+          "DELETE": "Delete",
+          "MOVE": "Move",
+          "COPY": "Copy"
         },
         "DOCUMENT": {
-          "DOWNLOAD": "Downloaden",
-          "DELETE": "Verwijderen",
-          "MOVE": "Verplaatsen",
-          "COPY": "Kopiëren",
-          "PROCESS_ACTION": "Proces starten"
+          "DOWNLOAD": "Download",
+          "DELETE": "Delete",
+          "MOVE": "Move",
+          "COPY": "Copy",
+          "PROCESS_ACTION": "Start Process"
         }
       }
     },
-    "UNKNOWN_CONFIGURATION": "Onbekende configuratie",
+    "UNKNOWN_CONFIGURATION": "Unknown Configuration",
     "SEARCH_HEADER": {
       "TITLE": "Filter",
       "TYPE": "Type",
-      "FILTER_BY": "Filteren op {{ category }}",
-      "CLEAR": "Wissen",
-      "APPLY": "Toepassen",
+      "FILTER_BY": "Filter by {{ category }}",
+      "ACTIVE_FILTER": "Active filter",
+      "CLEAR": "Clear",
+      "APPLY": "Apply",
       "FILTERS": {
         "NAME": {
-          "TITLE": "Naam",
-          "PLACEHOLDER": "Voer de naam in"
+          "TITLE": "Name",
+          "PLACEHOLDER": "Enter the name"
         },
         "TYPE": {
-          "TITLE": "Bevestig type",
-          "FOLDER": "Map",
+          "TITLE": "Check type",
+          "FOLDER": "Folder",
           "DOCUMENT": "Document"
         },
         "SIZE": {
-          "TITLE": "Contentgrootte (bereik)",
-          "SMALL": "Klein",
-          "MEDIUM": "Gemiddeld",
-          "LARGE": "Groot",
-          "HUGE": "Zeer groot"
+          "TITLE": "Content Size (range)",
+          "SMALL": "Small",
+          "MEDIUM": "Medium",
+          "LARGE": "Large",
+          "HUGE": "Huge"
         },
         "DATE": {
-          "TITLE": "Datum gemaakt (bereik)"
+          "TITLE": "Created Date (range)"
         }
       }
     },
     "LOGICAL_SEARCH": {
-      "SEARCH_CHIP_INPUT": {
-        "ADD_PHRASE": "Woordgroep toevoegen..."
+      "MATCH_ALL": "ALL",
+      "MATCH_ALL_LABEL": "Match ALL of these words",
+      "MATCH_ALL_HINT": "Results will match all words entered here",
+      "MATCH_ANY": "ANY",
+      "MATCH_ANY_LABEL": "Match ANY of these words",
+      "MATCH_ANY_HINT": "Results will match any words entered here",
+      "MATCH_EXACT": "EXACT",
+      "MATCH_EXACT_LABEL": "Match this EXACT PHRASE",
+      "MATCH_EXACT_HINT": "Results will match this entire phrase",
+      "EXCLUDE": "EXCLUDE",
+      "EXCLUDE_LABEL": "EXCLUDE these words",
+      "EXCLUDE_HINT": "Results will exclude matches with these words"
+    },
+    "DATE_RANGE_ADVANCED": {
+      "OPTIONS": {
+        "ANYTIME": "Anytime",
+        "IN_LAST": "In the last",
+        "BETWEEN": "Between"
       },
-      "MATCH_ALL": "ALLE",
-      "MATCH_ALL_LABEL": "Overeenkomen met AL deze woordgroepen",
-      "MATCH_ANY": "WILLEKEURIG",
-      "MATCH_ANY_LABEL": "Overeenkomen met een WILLEKEURIGE woordgroep van deze woordgroepen",
-      "EXCLUDE": "UITSLUITEN",
-      "EXCLUDE_LABEL": "Deze woordgroepen UITSLUITEN"
+      "IN_LAST_LABELS": {
+        "DAYS": "Days",
+        "WEEKS": "Weeks",
+        "MONTHS": "Months",
+        "QUANTITY": "Quantity"
+      },
+      "IN_LAST_DISPLAY_LABELS": {
+        "DAYS": "In the last {{value}} days",
+        "WEEKS": "In the last {{value}} weeks",
+        "MONTHS": "In the last {{value}} months"
+      },
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "Start Date",
+        "END_DATE": "End Date",
+        "DATE_RANGE": "Date Range"
+      },
+      "ERROR": {
+        "IN_LAST": "Value required",
+        "START_DATE": {
+          "REQUIRED": "Start Date required",
+          "INVALID_FORMAT": "Start Date invalid. The date must be in the format '{{ requiredFormat }}'"
+        },
+        "END_DATE": {
+          "REQUIRED": "End Date required",
+          "INVALID_FORMAT": "End Date invalid. The date must be in the format '{{ requiredFormat }}'"
+        }
+      },
+      "ARIA_LABEL": {
+        "NUMBER_INPUT": "Number input"
+      }
+    },
+    "SEARCH_PROPERTIES": {
+      "FILE_SIZE": "File Size",
+      "FILE_SIZE_PLACEHOLDER": "Enter file size",
+      "FILE_SIZE_OPERATOR": {
+        "AT_LEAST": "At Least",
+        "AT_MOST": "At Most",
+        "EXACTLY": "Exactly"
+      },
+      "FILE_SIZE_UNIT_ABBREVIATION": {
+        "KB": "KB",
+        "MB": "MB",
+        "GB": "GB"
+      },
+      "FILE_TYPE": "File Type",
+      "FILE_TYPE_PLACEHOLDER": "Add file type",
+      "ACCESSIBILITY": {
+        "CONDITION": "Condition",
+        "SIZE_VALUE": "File size value",
+        "UNIT": "Unit"
+      }
     }
   },
   "PERMISSION": {
-    "LACKOF": "U hebt geen {{permission}} rechten voor het {{action}} van {{type}}"
+    "LACKOF": "You don't have the {{permission}} permission to {{action}} the {{type}}"
   },
   "METADATA": {
     "BASIC": {
-      "HEADER": "Eigenschappen",
-      "NAME": "Naam",
-      "TITLE": "Titel",
-      "DESCRIPTION": "Beschrijving",
-      "AUTHOR": "Auteur",
+      "HEADER": "Properties",
+      "NAME": "Name",
+      "TITLE": "Title",
+      "DESCRIPTION": "Description",
+      "AUTHOR": "Author",
       "MIMETYPE": "Mimetype",
-      "SIZE": "Grootte",
-      "CREATOR": "Maker",
-      "CREATED_DATE": "Datum gemaakt",
-      "MODIFIER": "Gewijzigd door",
-      "MODIFIED_DATE": "Datum gewijzigd",
-      "CONTENT_TYPE": "Contenttype",
+      "SIZE": "Size",
+      "CREATOR": "Creator",
+      "CREATED_DATE": "Created Date",
+      "MODIFIER": "Modifier",
+      "MODIFIED_DATE": "Modified Date",
+      "CONTENT_TYPE": "Content Type",
       "TAGS": "Tags",
-      "ADD_TAG_TOOLTIP": "Tag toevoegen"
+      "NO_TAGS_ADDED": "There are currently no tags added",
+      "NO_ITEMS_MESSAGE": "There are currently no {{ groupTitle }} added",
+      "SAVE_OR_DISCARD_CHANGES": "Save or discard changes to continue"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
-        "TITLE": "Contenttype wijzigen",
-        "DESCRIPTION": "Met deze wijziging van het contenttype worden permanent bepaalde eigenschappen en opgeslagen metagegevens aan het document toegevoegd.",
-        "CONFIRM": "Weet u zeker dat u het contenttype wilt wijzigen?",
-        "CANCEL": "Annuleren",
-        "APPLY": "Wijzigingen opslaan",
-        "VIEW_DETAILS": "Details weergeven",
+        "TITLE": "Change content type",
+        "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
+        "CONFIRM": "Are you sure you want to change the content type?",
+        "CANCEL": "CANCEL",
+        "APPLY": "SAVE CHANGES",
+        "VIEW_DETAILS": "View details",
         "PROPERTY": {
-          "NAME": "Naam",
-          "DESCRIPTION": "Beschrijving",
-          "DATA_TYPE": "Gegevenstype"
+          "NAME": "Name",
+          "DESCRIPTION": "Description",
+          "DATA_TYPE": "Data type"
         }
       }
     },
     "ERRORS": {
-      "GENERIC": "Fout bij het bijwerken van de eigenschap",
-      "409": "Dubbele naam onderliggend element niet toegestaan [409]",
-      "422": "Ongeldige eigenschapswaarde"
+      "GENERIC": "Error updating property",
+      "409": "Duplicate child name not allowed [409]",
+      "422": "Invalid property value"
     }
   },
   "SHARE": {
-    "PUBLIC-LINK": "Openbare koppeling",
-    "DIALOG-TITLE": "Delen",
-    "DESCRIPTION": "Klik op de onderstaande koppeling om deze te kopiëren naar het klembord.",
-    "TITLE": "Koppeling om te delen",
-    "SHARE-LINK": "Koppeling voor delen",
-    "SHARABLE-LINK-CREATED": "Deelbare koppeling is gemaakt",
-    "PUBLIC-CONTENT": "Deze content is openbaar toegankelijk voor iedereen met deze koppeling",
-    "LINK-WITH-EXPIRY-SETTINGS": "Nieuwe koppeling is gegenereerd met verloopinstellingen",
-    "EXPIRES": "Verloopt op",
-    "LINK-EXPIRY-DATE": "Verloopdatum koppeling",
-    "EXPIRATION-LABEL": "Verloopdatum",
-    "EXPIRATION-PLACEHOLDER": "MM/DD/JJJJ",
-    "CLIPBOARD-MESSAGE": "Koppeling gekopieerd naar het klembord",
-    "CLOSE": "Sluiten",
-    "COPY_BUTTON_LABEL": "Koppeling kopiëren",
+    "PUBLIC-LINK": "Public link",
+    "DIALOG-TITLE": "Share",
+    "DESCRIPTION": "Click the link below to copy it to the clipboard.",
+    "TITLE": "Link to share",
+    "SHARE-LINK": "Share Link",
+    "SHARABLE-LINK-CREATED": "Sharable Link is Created",
+    "PUBLIC-CONTENT": "This content is publicly available to anyone with this link",
+    "LINK-WITH-EXPIRY-SETTINGS": "New link has been generated with expiry settings",
+    "EXPIRES": "Expires on",
+    "LINK-EXPIRY-DATE": "Link Expiry Date",
+    "EXPIRATION-LABEL": "Expiration Date. Enter date in MM/DD/YYYY format",
+    "EXPIRATION-PLACEHOLDER": "MM/DD/YYYY",
+    "CLIPBOARD-MESSAGE": "Link copied to the clipboard",
+    "CLOSE": "Close",
+    "COPY_BUTTON_LABEL": "Copy link",
     "CONFIRMATION": {
-      "DIALOG-TITLE": "Deze gedeelde koppeling verwijderen",
-      "MESSAGE": "Deze koppeling wordt verwijderd en er wordt een nieuwe koppeling gemaakt de volgende keer dat dit bestand wordt gedeeld",
-      "CANCEL": "Annuleren",
-      "REMOVE": "Verwijderen"
+      "DIALOG-TITLE": "Remove this shared link",
+      "MESSAGE": "This link will be deleted and a new link will be created next time this file is shared",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove"
     },
-    "UNSHARE_ERROR": "Fout bij het ongedaan maken van het delen van dit bestand",
-    "UNSHARE_PERMISSION_ERROR": "U hebt geen rechten om het delen van dit bestand ongedaan te maken"
+    "UNSHARE_ERROR": "Error unsharing this file",
+    "UNSHARE_PERMISSION_ERROR": "You don't have permission to unshare this file",
+    "INVALID_DATE_ERROR": "Invalid date"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
-      "INHERITED": "Overgenomen",
-      "AUTHORITY_ID": "Autoriteits-id",
-      "ROLE": "Rol",
-      "LOCALLY_SET": "Lokaal ingesteld",
-      "NO_PERMISSIONS": "Geen rechten"
+      "INHERITED": "Inherited",
+      "AUTHORITY_ID": "Authority ID",
+      "ROLE": "Role",
+      "LOCALLY_SET": "Locally set",
+      "NO_PERMISSIONS": "No permissions"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "Zoeken naar gebruikers of groepen om toe te voegen",
-      "TITLE": "Rechten toevoegen",
-      "TYPE-MESSAGE": "Voer iets in om te beginnen met zoeken naar groepen of personen",
-      "NO-RESULT": "Geen resultaten gevonden voor deze zoekopdracht",
-      "SELECT-ACTION": "Selecteren",
-      "ADD-ACTION": "Toevoegen",
-      "CLOSE-ACTION": "Annuleren",
-      "BASE-DIALOG-TITLE": "Een groep of personen zoeken om toe te voegen...",
-      "EVERYONE": "Iedereen",
-      "USER-GROUP-LIST": "Gebruiker of groepslijst"
+      "SEARCH": "Search for users or groups to add",
+      "TITLE": "Add permission",
+      "TYPE-MESSAGE": "Type something to start searching groups or people",
+      "NO-RESULT": "No result found for this search",
+      "SELECT-ACTION": "SELECT",
+      "ADD-ACTION": "ADD",
+      "CLOSE-ACTION": "CANCEL",
+      "BASE-DIALOG-TITLE": "Search a group or people to add...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "Add user or group permission",
+      "EVERYONE": "EVERYONE",
+      "USER-GROUP-LIST": "User or Group List",
+      "REMOVE_USER_GROUP": "Remove"
     },
     "COLUMN": {
-      "NAME": "Gebruikers en groepen ({{ count }})",
-      "LOCATION": "Locatie",
-      "BULK-ROLE": "Alle rollen instellen op"
+      "NAME": "Users and Groups ({{ count }})",
+      "LOCATION": "Location",
+      "BULK-ROLE": "Set all role to"
     },
     "LABELS": {
-      "HIDE": "Verbergen",
-      "SHOW": "Weergeven",
-      "ON": "Aan",
-      "OFF": "Uit",
-      "DIRECT-PERMISSIONS": "Rechtstreeks toegepaste rechten",
-      "INHERITED-PERMISSIONS": "Overgenomen rechten",
-      "INHERITED-SUBTITLE": "{{count}} gebruikers of groepen nemen rechten over van een bovenliggende map",
-      "SELECT-ROLE": "Rol selecteren",
-      "INHERITED_PERMISSION_TOGGLE": "Overgenomen recht in-/uitschakelen"
+      "HIDE": "Hide",
+      "SHOW": "Show",
+      "ON": "On",
+      "OFF": "Off",
+      "DIRECT-PERMISSIONS": "Directly Applied Permission",
+      "INHERITED-PERMISSIONS": "Inherited Permission",
+      "INHERITED-SUBTITLE": "{{count}} users or groups are inheriting permission from a parent folder",
+      "SELECT-ROLE": "Select role",
+      "INHERITED_PERMISSION_TOGGLE": "Toggle Inherited Permission"
     },
     "MESSAGE": {
-      "EMPTY-PERMISSION": "Geen gebruikers/groepen",
-      "EMPTY-SUBTITLE": "Voeg gebruiker/groep toe om rechten te beheren.",
-      "NO-MEMBERS": "Voeg groepen of personen toe om rollen te beheren",
-      "PERMISSION-BULK-UPDATE-SUCCESS": "{{user}} gebruiker(s) {{group}} groep(en) bijgewerkt",
-      "PERMISSION-UPDATE-SUCCESS": "Gebruiker/groep bijgewerkt",
-      "PERMISSION-UPDATE-FAIL": "Kan gebruiker/groep niet bijwerken",
-      "PERMISSION-BULK-DELETE-SUCCESS": "{{user}} gebruiker(s) {{group}} groep(en) verwijderd",
-      "PERMISSION-DELETE-SUCCESS": "Gebruiker/groep verwijderd",
-      "PERMISSION-DELETE-FAIL": "Kan gebruiker/groep niet verwijderen",
-      "PERMISSION-ADD-SUCCESS": "{{user}} gebruiker(s) {{group}} groep(en) toegevoegd",
-      "PERMISSION-ADD-FAIL": "Kan gebruiker/groep niet toevoegen",
-      "INHERIT-ENABLE-SUCCESS": "Overgenomen rechten ingeschakeld",
-      "INHERIT-DISABLE-SUCCESS": "Overgenomen rechten uitgeschakeld",
-      "TOGGLE-PERMISSION-FAILED": "Kan overgenomen rechten niet in-/uitschakelen"
+      "EMPTY-PERMISSION": "No users/groups",
+      "EMPTY-SUBTITLE": "Add user/group to manage permission.",
+      "NO-MEMBERS": "Add groups or people to manage roles",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "Updated {{user}} user(s) {{group}} group(s)",
+      "PERMISSION-UPDATE-SUCCESS": "User/Group updated",
+      "PERMISSION-UPDATE-FAIL": "Failed to update user/group",
+      "PERMISSION-BULK-DELETE-SUCCESS": "Deleted {{user}} user(s) {{group}} group(s)",
+      "PERMISSION-DELETE-SUCCESS": "User/Group deleted",
+      "PERMISSION-DELETE-FAIL": "Failed to delete user/group",
+      "PERMISSION-ADD-SUCCESS": "Added {{user}} user(s) {{group}} group(s)",
+      "PERMISSION-ADD-FAIL": "Failed to add user/group",
+      "INHERIT-ENABLE-SUCCESS": "Enabled inherited permission",
+      "INHERIT-DISABLE-SUCCESS": "Disabled inherited permission",
+      "TOGGLE-PERMISSION-FAILED": "Failed to toggle inherit Permission"
     },
     "ACTION": {
-      "DELETE": "Verwijderen",
-      "ADD-PERMISSION": "Gebruiker of groep toevoegen"
+      "DELETE": "Delete",
+      "ADD-PERMISSION": "Add User or Group"
     },
     "ERROR": {
-      "NOT-FOUND": "Dit item bestaat niet meer of u hebt geen rechten om het weer te geven.",
-      "DUPLICATE-PERMISSION": "Een of meerdere rechten die u hebt ingesteld zijn al aanwezig: {{list}}",
-      "NOT-ALLOWED": "Het is u niet toegestaan om rechten te wijzigen"
+      "NOT-FOUND": "This item no longer exists or you don't have permission to view it.",
+      "DUPLICATE-PERMISSION": "One or more of the permissions you have set is already present : {{list}}",
+      "NOT-ALLOWED": "You are not allowed to change permissions"
     }
   },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "Group icon",
+    "GROUP_USER_SELECTED_ALT": "Selected group or user icon"
+  },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "Geen node-id opgegeven!",
+    "MISSING-ID": "No nodeId provided!",
     "ACCESSIBILITY": {
-      "ARIA_LABEL": "{{ name }} in-/uitschakelen"
+      "ARIA_LABEL": "Toggle {{ name }}"
     }
   },
   "ADF-TREE": {
-    "LOAD-MORE-BUTTON": "Meer {{ name }} laden"
+    "LOAD-MORE-BUTTON": "Load more {{ name }}",
+    "ACTIONS": {
+      "TOOLTIP": "Open actions menu"
+    },
+    "ARIA": {
+      "SELECTED": "{{ name }} selected",
+      "DESELECTED": "{{ name }} deselected"
+    }
   },
   "LIBRARY": {
     "DIALOG": {
-      "CREATE_TITLE": "Bibliotheek maken",
-      "CREATE": "Maken",
-      "UPDATE": "Bijwerken",
-      "EDIT": "Bewerken",
-      "CANCEL": "Annuleren",
+      "CREATE_TITLE": "Create Library",
+      "CREATE": "Create",
+      "UPDATE": "Update",
+      "EDIT": "Edit",
+      "CANCEL": "Cancel",
       "FORM": {
-        "DESCRIPTION": "Beschrijving",
-        "SITE_ID": "Bibliotheek-id",
-        "NAME": "Naam",
-        "VISIBILITY": "Zichtbaarheid"
+        "DESCRIPTION": "Description",
+        "SITE_ID": "Library ID",
+        "NAME": "Name",
+        "VISIBILITY": "Visibility"
       }
     },
     "ROLE": {
-      "MANAGER": "Beheerder",
-      "COLLABORATOR": "Medewerker",
-      "CONTRIBUTOR": "Bijdrager",
-      "CONSUMER": "Consument",
-      "NONE": "Geen lid"
+      "MANAGER": "Manager",
+      "COLLABORATOR": "Collaborator",
+      "CONTRIBUTOR": "Contributor",
+      "CONSUMER": "Consumer",
+      "NONE": "Not a member"
     },
     "VISIBILITY": {
-      "PRIVATE": "Privé",
-      "PUBLIC": "Openbaar",
-      "MODERATED": "Onder toezicht"
+      "PRIVATE": "Private",
+      "PUBLIC": "Public",
+      "MODERATED": "Moderated"
     },
     "HINTS": {
-      "SITE_TITLE_EXISTS": "Bibliotheeknaam wordt al gebruikt"
+      "SITE_TITLE_EXISTS": "Library name already in use"
     },
     "ERRORS": {
-      "GENERIC": "Er is een probleem opgetreden",
-      "EXISTENT_SITE": "Deze bibliotheek-id is niet beschikbaar. Probeer een andere bibliotheek-id.",
-      "CONFLICT": "Deze bibliotheek-id wordt al gebruikt. Controleer de prullenbak.",
-      "ID_TOO_LONG": "Gebruik 72 tekens of minder voor de URL-naam",
-      "DESCRIPTION_TOO_LONG": "Gebruik 512 tekens of minder voor de beschrijving",
-      "TITLE_TOO_LONG": "Gebruik 256 tekens of minder voor de titel",
-      "TITLE_TOO_SHORT": "Titel moet minstens 2 tekens lang zijn",
-      "ILLEGAL_CHARACTERS": "Gebruik alleen cijfers en letters",
-      "ONLY_SPACES": "Bibliotheeknaam mag niet alleen uit spaties bestaan",
-      "LIBRARY_UPDATE_ERROR": "Er is een fout opgetreden bij het bijwerken van de bibliotheekeigenschappen"
+      "GENERIC": "We hit a problem",
+      "EXISTENT_SITE": "This Library ID isn't available. Try a different Library ID.",
+      "CONFLICT": "This Library ID is already used. Check the trashcan.",
+      "ID_TOO_LONG": "Use 72 characters or less for the URL name",
+      "DESCRIPTION_TOO_LONG": "Use 512 characters or less for description",
+      "TITLE_TOO_LONG": "Use 256 characters or less for title",
+      "TITLE_TOO_SHORT": "Title must be at least 2 characters long",
+      "ILLEGAL_CHARACTERS": "Use numbers and letters only",
+      "ONLY_SPACES": "Library name can't contain only spaces",
+      "LIBRARY_UPDATE_ERROR": "There was an error updating library properties",
+      "NAME_REQUIRED": "Library name is required",
+      "ID_REQUIRED": "Library ID is required"
     },
     "SUCCESS": {
-      "LIBRARY_UPDATED": "Bibliotheekeigenschappen bijgewerkt"
+      "LIBRARY_UPDATED": "Library properties updated"
     }
   },
   "BREADCRUMB": {
     "ARIA-LABEL": {
-      "BREADCRUMB": "Navigatiepad",
-      "DROPDOWN": "Dropdown"
+      "BREADCRUMB": "Breadcrumb navigation",
+      "DROPDOWN": "Open breadcrumb menu for {{folderName}}"
+    },
+    "HEADER": {
+      "SELECTED": "Selected ({{ count }})"
     }
   },
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
-      "ARIA_LABEL": "{{ name }} openen"
+      "ARIA_LABEL": "Open {{ name }}"
     }
   },
   "ADF-ASPECT-LIST": {
-    "PROPERTY_NAME": "Eigenschapsnaam",
-    "DESCRIPTION": "Beschrijving",
-    "DATA_TYPE": "Gegevenstype",
+    "PROPERTY_NAME": "Property Name",
+    "DESCRIPTION": "Description",
+    "DATA_TYPE": "Data Type",
     "DIALOG": {
-      "TITLE": "Eigenschappen aanpassen",
-      "DESCRIPTION": "Beheer de eigenschappen die zijn gekoppeld aan geselecteerde bestanden. Kies uit de onderstaande eigenschap-aspecten om aanvullende metagegevens en functionaliteit weer te geven en toe te passen",
-      "RESET": "Opnieuw instellen",
-      "CLEAR": "Wissen",
-      "CANCEL": "Annuleren",
-      "APPLY": "Toepassen",
-      "OVER-TABLE-MESSAGE": "Eigenschap-aspecten selecteren",
-      "SELECTED": "Geselecteerd"
+      "TITLE": "Customize Properties",
+      "DESCRIPTION": "Manage the properties associated with selected file(s). Choose from property aspects listed below, to expose and apply additional metadata and functionality",
+      "RESET": "Reset",
+      "CLEAR": "Clear",
+      "CANCEL": "Cancel",
+      "APPLY": "Apply",
+      "OVER-TABLE-MESSAGE": "Select property aspects",
+      "SELECTED": "Selected"
     }
   },
   "NODE_COUNTER": {
-    "SELECTED_COUNT": "{{ count }} geselecteerd"
+    "SELECTED_COUNT": "{{ count }} selected"
   },
   "TAG_NODE_LIST": {
-    "VIEW_MORE": "{{ count }} meer weergeven"
+    "VIEW_MORE": "View {{ count }} more"
   },
-  "swsdp": "Voorbeeld: Websiteontwerpproject",
+  "swsdp": "Sample: Web Site Design Project",
   "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
     "ERRORS": {
-      "INVALID_RECEIVER_EMAIL": "Het e-mailadres van de ontvanger(s) is niet geldig, neem contact op met IT.",
-      "INVALID_SENDER_EMAIL": "U moet een geldig e-mailadres hebben voordat u kunt aanvragen om lid te worden.",
-      "JOIN_CANCEL_FAILED": "Uw aanvraag om lid te worden kan niet worden geannuleerd",
-      "JOIN_REQUEST_FAILED": "Lid worden van de bibliotheek niet mogelijk"
+      "INVALID_RECEIVER_EMAIL": "Recipient(s) email address not valid, contact IT.",
+      "INVALID_SENDER_EMAIL": "Your email address must be valid before requesting to join.",
+      "JOIN_CANCEL_FAILED": "Cannot cancel your join request",
+      "JOIN_REQUEST_FAILED": "Cannot join the library"
     },
     "INFO": {
-      "JOINED": "Lid geworden van bibliotheek",
-      "JOIN_CANCELED": "Aanvraag om lid te worden van de bibliotheek is geannuleerd",
-      "JOIN_REQUESTED": "Aanvraag om lid te worden van deze bibliotheek is verzonden"
+      "JOINED": "Library joined",
+      "JOIN_CANCELED": "Canceled the request to join the library",
+      "JOIN_REQUESTED": "Request sent to join this library"
+    }
+  },
+  "NODE_FAVORITE_DIRECTIVE": {
+    "MESSAGES": {
+      "NODE_ADDED": "Added {{ name }} to favorites",
+      "NODES_ADDED": "Added {{ number }} items to favorites",
+      "NODE_REMOVED": "Removed {{ name }} from favorites",
+      "NODES_REMOVED": "Removed {{ number }} items from favorites"
     }
   }
 }

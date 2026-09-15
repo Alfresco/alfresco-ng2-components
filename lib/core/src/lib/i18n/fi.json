@@ -1,349 +1,463 @@
 {
   "ADF": {
-    "LANGUAGE": "Kieli",
+    "LANGUAGE": "Language",
     "ROLES": {
-      "ALL": "Kaikki",
-      "CONTRIBUTOR": "Osallistuja",
-      "COLLABORATOR": "Yhteistyökumppani",
-      "COORDINATOR": "Koordinaattori",
-      "EDITOR": "Muokkaaja",
-      "CONSUMER": "Kuluttaja",
-      "SITECOLLABORATOR": "Sivuston yhteistyökumppani",
-      "SITECONSUMER": "Sivuston kuluttaja",
-      "SITECONTRIBUTOR": "Sivuston osallistuja",
-      "SITEMANAGER": "Sivuston vastaava"
+      "ALL": "All",
+      "CONTRIBUTOR": "Contributor",
+      "COLLABORATOR": "Collaborator",
+      "COORDINATOR": "Coordinator",
+      "EDITOR": "Editor",
+      "CONSUMER": "Consumer",
+      "SITECOLLABORATOR": "Site Collaborator",
+      "SITECONSUMER": "Site Consumer",
+      "SITECONTRIBUTOR": "Site Contributor",
+      "SITEMANAGER": "Site Manager"
     }
   },
-  "SAVE": "Tallenna",
-  "COMPLETE": "Merkitse valmiiksi",
-  "CANCEL": "Peruuta",
-  "CLAIM": "Varaa",
-  "UNCLAIM": "Vapauta",
-  "START PROCESS": "Käynnistä prosessi",
-  "DATA_LOADING": "Tiedot latautuvat",
-  "CLOSE": "Sulje",
+  "SAVE": "SAVE",
+  "COMPLETE": "COMPLETE",
+  "CANCEL": "CANCEL",
+  "CLAIM": "CLAIM",
+  "UNCLAIM": "RELEASE",
+  "START PROCESS": "START PROCESS",
+  "DATA_LOADING": "Data is loading",
+  "CLOSE": "CLOSE",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "Sinulla ei ole ilmoituksia.",
-    "TITLE": "Ilmoitukset",
-    "MARK_AS_READ": "Merkitse kaikki luetuiksi",
-    "SYSTEM": "Järjestelmä",
-    "LOAD_MORE": "Lataa lisää",
-    "OPEN_HISTORY": "Avaa ilmoitushistoria"
+    "NO_MESSAGE": "You have no notifications at this time.",
+    "UNREAD_MESSAGES": "You have unread notifications.",
+    "TITLE": "Notifications",
+    "MARK_AS_READ": "Mark all as read",
+    "SYSTEM": "System",
+    "LOAD_MORE": "Load more",
+    "OPEN_HISTORY": "Open notification history"
   },
   "FORM": {
     "START_FORM": {
-      "TITLE": "Aloita lomake"
+      "TITLE": "Start Form"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Esikatselu ei ole käytettävissä"
+      "IMAGE_NOT_AVAILABLE": "Preview not available",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "In preview mode you cannot attach a file"
+      }
     },
     "FIELD": {
-      "LOCALSTORAGE": "Paikallinen tallennustila",
-      "SOURCE": "Valitse lähde kohteesta: ",
-      "VIEW_FILE": "Näytä",
-      "DOWNLOAD_FILE": "Lataa",
-      "REMOVE_FILE": "Poista",
-      "UPLOAD": "Lataa",
-      "REQUIRED": "Pakollinen kenttä",
-      "REST_API_FAILED": "Palvelin '{{ hostname }}' ei ole tavoitettavissa",
-      "FILE_NAME": "Tiedostonimi",
-      "NO_FILE_ATTACHED": "Ei liitettyä tiedostoa",
+      "LOCALSTORAGE": "Local storage",
+      "SOURCE": "Select source from ",
+      "VIEW_FILE": "View",
+      "DOWNLOAD_FILE": "Download",
+      "REMOVE_FILE": "Remove",
+      "UPLOAD": "UPLOAD",
+      "REQUIRED": "This is a required field",
+      "REST_API_FAILED": "The server `{{ hostname }}` is not reachable",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "There was a problem loading dropdown elements. Please contact administrator.",
+      "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
+      "DATA_TABLE_EMPTY_CONTENT": "No data found",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
+      "FILE_NAME": "File Name",
+      "TITLE": "Title",
+      "NO_FILE_ATTACHED": "No file attached",
       "VALIDATOR": {
-        "INVALID_NUMBER": "Käytä toista numeromuotoa",
-        "INVALID_DATE": "Käytä toista päivämäärämuotoa",
-        "INVALID_VALUE": "Anna toinen arvo",
-        "NOT_GREATER_THAN": "Ei voi olla suurempi kuin {{ maxValue }}",
-        "NOT_LESS_THAN": "Ei voi olla pienempi kuin {{ minValue }}",
-        "AT_LEAST_LONG": "Anna vähintään {{ minLength }} merkkiä",
-        "NO_LONGER_THAN": "Anna enintään {{ maxLength }} merkkiä"
+        "INVALID_NUMBER": "Use a different number format",
+        "INVALID_DECIMAL_NUMBER": "Use a decimal number format",
+        "INVALID_DECIMAL_PRECISION": "Incorrect decimal value, there should be a maximum of {{precision}} digits after the decimal point.",
+        "INVALID_DATE": "Use a different date format",
+        "INVALID_DATE_FORMAT": "Invalid date format.",
+        "INVALID_VALUE": "Enter a different value",
+        "NOT_GREATER_THAN": "Can't be greater than {{ maxValue }}",
+        "NOT_LESS_THAN": "Can't be less than {{ minValue }}",
+        "AT_LEAST_LONG": "Enter at least {{ minLength }} characters",
+        "NO_LONGER_THAN": "Enter no more than {{ maxLength }} characters"
       },
-      "FILE_ALREADY_UPLOADED": "Samanniminen tiedosto on jo ladattu.",
-      "ATTACH": "Liitä"
+      "FILE_ALREADY_UPLOADED": "A file with the same name is already uploaded.",
+      "ATTACH": "Attach",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "add",
+        "ROW_LIMIT_REACHED": "Rows limit ({{ limit }}) reached."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Nimetön tehtävä"
+      "NAMELESS_TASK": "Nameless task",
+      "ROW_LABEL": "Row {{ number }}",
+      "DELETE_ROW": "Delete row",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Delete the row",
+        "MESSAGE": "Are you sure you want to delete this row?",
+        "YES_LABEL": "Delete row",
+        "NO_LABEL": "Cancel"
+      }
+    },
+    "BUTTON": {
+      "PREVIOUS_TAB": "Previous",
+      "PREVIOUS_TAB_TITLE": "Navigate to previous tab",
+      "NEXT_TAB": "Next",
+      "NEXT_TAB_TITLE": "Navigate to next tab"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "Font size",
+      "FONT_WEIGHT": "Font weight",
+      "FONT_COLOR": "Font color",
+      "FONT_WEIGHTS": {
+        "REGULAR": "regular",
+        "BOLD": "bold"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "system color",
+        "BLACK": "black",
+        "GREY": "grey",
+        "RED": "red",
+        "GREEN": "green",
+        "BLUE": "blue",
+        "YELLOW": "yellow"
+      },
+      "PREDEFINED": {
+        "HEADER": {
+          "NORMAL": "normal",
+          "HEADING": "heading",
+          "TITLE": "title"
+        },
+        "RADIO_BUTTONS": {
+          "NORMAL": "normal",
+          "STRONG": "strong",
+          "HEADING": "heading"
+        },
+        "READONLY_TEXT": {
+          "NORMAL": "normal",
+          "STRONG": "strong",
+          "HEADING": "heading",
+          "TITLE": "title",
+          "ANNOTATION": "annotation"
+        }
+      }
     }
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Yrityksen logo",
+      "LOGO_ARIA": "Company Logo",
       "ACCESSIBILITY": {
-        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Valikko"
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Toggle Menu"
       }
     },
     "FILE_SIZE": {
-      "BYTES": "tavua",
-      "KB": "kt",
-      "MB": "Mt",
-      "GB": "Gt",
-      "TB": "Tt",
-      "PB": "Pt",
-      "EB": "Et",
+      "BYTES": "Bytes",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
       "ZB": "ZB",
       "YB": "YB"
     },
     "PAGINATION": {
       "ARIA": {
-        "ITEMS_PER_PAGE": "Sivukoon valitsin",
-        "CURRENT_PAGE": "Nykyinen sivuvalitsin",
-        "PREVIOUS_PAGE": "Edellisen sivun painike",
-        "NEXT_PAGE": "Seuraavan sivun painike"
+        "ITEMS_PER_PAGE": "Page size selector",
+        "CURRENT_PAGE": "Current page selector",
+        "PREVIOUS_PAGE": "Previous page button",
+        "NEXT_PAGE": "Next page button"
       },
-      "ITEMS_RANGE": "Näytetään {{ range }}/{{ total }}",
-      "ITEMS_PER_PAGE": "Kohteita sivulla",
-      "CURRENT_PAGE": "Sivu {{ number }}",
-      "TOTAL_PAGES": "/{{ total }}"
+      "ITEMS_RANGE": "Showing {{ range }} of {{ total }}",
+      "ITEMS_PER_PAGE": "Items per page",
+      "CURRENT_PAGE": "Page {{ number }}",
+      "TOTAL_PAGES": "of {{ total }}"
     },
     "DIALOG": {
       "DOWNLOAD_ZIP": {
         "ACTIONS": {
-          "CANCEL": "Peruuta"
+          "CANCEL": "Cancel"
         },
-        "TITLE": "Tiedostoja lisätään zip-kansioon. Tämä voi kestää muutaman minuutin."
+        "TITLE": "Adding files to zip, this could take a few minutes",
+        "COMPLETE": "complete"
       },
       "EDIT_JSON": {
-        "CLOSE": "Sulje",
-        "UPDATE": "Päivitä"
+        "CLOSE": "Close",
+        "UPDATE": "Update",
+        "COPY": "Copy",
+        "COPIED": "Copied to clipboard"
+      },
+      "UNSAVED_CHANGES": {
+        "TITLE": "Unsaved changes",
+        "DESCRIPTION": "You have unsaved changes on this screen. Are you sure want to leave without saving changes?",
+        "DISCARD_CHANGES_BUTTON": "Discard Changes"
       }
     },
+    "BREADCRUMBS": {
+      "TITLE": "Breadcrumbs",
+      "SHOWALL": "Show all"
+    },
     "FILE_DIALOG": {
-      "FILE_LOCK": "Lukitse tiedosto",
-      "ALLOW_OTHERS_CHECKBOX": "Salli omistajan muokata tätä tiedostoa",
-      "FILE_LOCK_CHECKBOX": "Lukitse tiedosto",
-      "TIME_LOCK_CHECKBOX": "Aikalukko",
+      "FILE_LOCK": "Lock file",
+      "ALLOW_OTHERS_CHECKBOX": "Allow the owner to modify this file",
+      "FILE_LOCK_CHECKBOX": "Lock file",
+      "TIME_LOCK_CHECKBOX": "Time lock",
       "SAVE_BUTTON": {
-        "LABEL": "Tallenna"
+        "LABEL": "Save"
       },
       "CANCEL_BUTTON": {
-        "LABEL": "Peruuta"
+        "LABEL": "Cancel"
       }
     },
     "FOLDER_DIALOG": {
-      "CREATE_FOLDER_TITLE": "Luo uusi kansio",
-      "EDIT_FOLDER_TITLE": "Muokkaa kansiota",
+      "CREATE_FOLDER_TITLE": "Create new folder",
+      "EDIT_FOLDER_TITLE": "Edit folder",
       "FOLDER_NAME": {
-        "LABEL": "Nimi",
+        "LABEL": "Name",
         "ERRORS": {
-          "REQUIRED": "Kansion nimi on pakollinen",
-          "SPECIAL_CHARACTERS": "Kansion nimi ei voi sisältää seuraavia merkkejä: * \" < > \\ / ? : |",
-          "ENDING_DOT": "Kansion nimi ei voi loppua pisteeseen (.)",
-          "ONLY_SPACES": "Kansion nimessä ei voi olla välilyöntejä"
+          "REQUIRED": "Folder name is required",
+          "SPECIAL_CHARACTERS": "Folder name can't contain these characters * \" < > \\ / ? : |",
+          "ENDING_DOT": "Folder name can't end with a period .",
+          "ONLY_SPACES": "Folder name can't contain only spaces"
         }
       },
       "FOLDER_DESCRIPTION": {
-        "LABEL": "Kuvaus"
+        "LABEL": "Description"
       },
       "FOLDER_TITLE": {
-        "LABEL": "Otsikko"
+        "LABEL": "Title"
       },
       "CREATE_BUTTON": {
-        "LABEL": "Luo"
+        "LABEL": "Create"
       },
       "UPDATE_BUTTON": {
-        "LABEL": "Päivitä"
+        "LABEL": "Update"
       },
       "CANCEL_BUTTON": {
-        "LABEL": "Peruuta"
-      }
+        "LABEL": "Cancel"
+      },
+      "FOLDER_CREATED_SUCCESS": "Folder '{{ name }}' created successfully",
+      "FOLDER_UPDATED_SUCCESS": "Folder '{{ name }}' updated successfully"
     },
     "MESSAGES": {
       "ERRORS": {
-        "GENERIC": "Toiminto ei onnistunut. Yritä uudelleen tai ota yhteyttä IT-tukeesi.",
-        "EXISTENT_FOLDER": "Samanniminen kansio on jo olemassa. Käytä toista nimeä."
+        "GENERIC": "The action was unsuccessful. Try again or contact your IT Team.",
+        "EXISTENT_FOLDER": "There's already a folder with this name. Try a different name."
       }
     },
     "RESTORE_NODE": {
-      "VIEW": "Näytä",
-      "PARTIAL_PLURAL": "{{ number }} kohdetta ei palautettu palautussijainnin ongelmien vuoksi",
-      "NODE_EXISTS": "Palauttaminen ei onnistu: {{ name }} on jo olemassa",
-      "LOCATION_MISSING": "Kohteen {{ name }} palauttaminen ei onnistu, koska alkuperäistä sijaintia ei ole enää olemassa",
-      "GENERIC": "Kohteen {{ name }} palauttamisessa ilmeni ongelma",
-      "PLURAL": "Palautus onnistui",
-      "SINGULAR": "{{ name }} palautettiin"
+      "VIEW": "View",
+      "PARTIAL_PLURAL": "{{ number }} items not restored because of issues with the restore location",
+      "NODE_EXISTS": "Can't restore, {{ name }} item already exists",
+      "LOCATION_MISSING": "Can't restore {{ name }} item, the original location no longer exists",
+      "GENERIC": "There was a problem restoring {{ name }} item",
+      "PLURAL": "Restore successful",
+      "SINGULAR": "{{ name }} item restored"
     },
     "DELETE_NODE": {
-      "SINGULAR": "{{ name }} poistettiin",
-      "PLURAL": "{{ number }} kohdetta poistettiin",
-      "PARTIAL_SINGULAR": "Poistettiin {{ success }} kohde, {{ failed }} kohteen poistaminen ei onnistunut",
-      "PARTIAL_PLURAL": "Poistettiin {{ success }} kohdetta, {{ failed }} kohteen poistaminen ei onnistunut",
-      "ERROR_SINGULAR": "Kohteen {{ name }} poistaminen ei onnistunut",
-      "ERROR_PLURAL": "{{ number }} kohteen poistaminen ei onnistunut"
+      "SINGULAR": "{{ name }} deleted",
+      "PLURAL": "{{ number }} items deleted",
+      "PARTIAL_SINGULAR": "Deleted {{ success }} item, {{ failed }} couldn't be deleted",
+      "PARTIAL_PLURAL": "Deleted {{ success }} items, {{ failed }} couldn't be deleted",
+      "ERROR_SINGULAR": "{{ name }} couldn't be deleted",
+      "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
-        "ADD": "Lisää uusi",
-        "NAME": "Nimi",
-        "VALUE": "Arvo"
+        "ADD": "Add New",
+        "NAME": "Name",
+        "VALUE": "Value"
       },
-      "NONE": "Ei mitään",
+      "NONE": "None",
+      "SELECTED_VALUES": "Selected values",
+      "REMOVE": "Remove {{ value }}",
       "VALIDATORS": {
-        "FLOAT_VALIDATION_ERROR": "Käytä numeromuotoa",
-        "INT_VALIDATION_ERROR": "Käytä kokonaislukumuotoa",
-        "LENGTH_VALIDATION_ERROR": "Arvon tulee olla pituudeltaan {{ minLength }} ja {{ maxLength }} välillä",
-        "MATCH_VALIDATION_ERROR": "Arvo ei vastaa kaavaa: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Arvon tulee olla {{ minValue }} ja {{ maxValue }} välillä"
+        "FLOAT_VALIDATION_ERROR": "Use a number format",
+        "INT_VALIDATION_ERROR": "Use an integer format",
+        "LONG_VALIDATION_ERROR": "Use a long format",
+        "LENGTH_VALIDATION_ERROR": "Value should be between {{ minLength }} and {{ maxLength }} in length",
+        "MATCH_VALIDATION_ERROR": "Value doesn't match pattern: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "Value should be between {{ minValue }} and {{ maxValue }}",
+        "ONLY_POSITIVE_NUMBER": "Only positive value is allowed"
       },
-      "MORE": "Lisää"
+      "MORE": "More"
     },
     "METADATA": {
       "BASIC": {
-        "HEADER": "Ominaisuudet",
-        "NAME": "Nimi",
-        "TITLE": "Otsikko",
-        "DESCRIPTION": "Kuvaus",
-        "AUTHOR": "Tekijä",
-        "MIMETYPE": "MIME-tyyppi",
-        "SIZE": "Koko",
-        "CREATOR": "Tekijä",
-        "CREATED_DATE": "Luontipäivämäärä",
-        "MODIFIER": "Muokkaaja",
-        "MODIFIED_DATE": "Muokkauspäivämäärä",
-        "CONTENT_TYPE": "Sisältötyyppi"
+        "HEADER": "General info",
+        "NAME": "Name",
+        "TITLE": "Title",
+        "DESCRIPTION": "Description",
+        "AUTHOR": "Author",
+        "MIMETYPE": "Mimetype",
+        "SIZE": "Size",
+        "CREATOR": "Creator",
+        "CREATED_DATE": "Created Date",
+        "MODIFIER": "Modifier",
+        "MODIFIED_DATE": "Modified Date",
+        "CONTENT_TYPE": "Content Type"
       },
       "CONTENT_TYPE": {
         "DIALOG": {
-          "TITLE": "Muuta sisältötyyppi",
-          "DESCRIPTION": "Sisältötyypin muuttaminen lisää asiakirjaan pysyvästi joitakin ominaisuuksia ja säilöttyjä metatietoja.",
-          "CONFIRM": "Haluatko varmasti muuttaa sisältötyypin?",
-          "CANCEL": "Peruuta",
-          "APPLY": "Tallenna muutokset",
-          "VIEW_DETAILS": "Näytä tiedot",
+          "TITLE": "Change content type",
+          "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
+          "CONFIRM": "Are you sure you want to change the content type?",
+          "CANCEL": "CANCEL",
+          "APPLY": "Save Changes",
+          "VIEW_DETAILS": "View details",
           "PROPERTY": {
-            "NAME": "Nimi",
-            "DESCRIPTION": "Kuvaus",
-            "DATA_TYPE": "Tietotyyppi"
+            "NAME": "Name",
+            "DESCRIPTION": "Description",
+            "DATA_TYPE": "Data type"
           }
         }
       },
       "ACTIONS": {
-        "EDIT": "Muokkaa",
-        "SAVE": "Tallenna",
-        "CANCEL": "Peruuta",
-        "CLEAR": "Tyhjennä",
-        "TOGGLE": "Vaihda arvoa",
-        "COPY_TO_CLIPBOARD": "Kopioi arvo kaksoisnapsauttamalla",
-        "EDIT_ASPECTS": "Muokkaa ominaisuusjoukkoja"
+        "EDIT": "Edit",
+        "SAVE": "Save",
+        "CANCEL": "Cancel",
+        "CLEAR": "Clear",
+        "TOGGLE": "Toggle value",
+        "COPY_TO_CLIPBOARD": "Double click to copy value",
+        "EDIT_ASPECTS": "Edit Aspect"
       },
       "ACCESSIBILITY": {
-        "EDIT": "Muokkaa-painike",
-        "DATEPICKER": "Navigoi päivämäärien välillä nuolinäppäinten avulla. Nuolet ylös ja alas siirtävät seuraavaan tai edelliseen viikkoon, mutta samaan viikonpäivään. Nuolet vasemmalle ja oikealle siirtävät seuraavan tai edelliseen päivään. Valitse päivämäärä Enter-näppäimellä.",
-        "COPY_TO_CLIPBOARD_MESSAGE": "Arvo kopioitu leikepöydälle",
-        "EDIT_ASPECTS": "Muokkaa ominaisuusjoukkoja"
+        "EDIT": "Edit {{ sectionName }}",
+        "DATEPICKER": "Use the arrow keys to navigate between dates. Up and down move to the next or previous week but on the same day. Left and right move to the next or previous day. Press Enter or Return to select a date.",
+        "COPY_TO_CLIPBOARD_MESSAGE": "Value copied to clipboard",
+        "EDIT_ASPECTS": "Edit Aspect",
+        "SECTION": "{{ sectionName }} section"
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "Tarkastele tulosnäkymää nousevassa tai laskevassa järjestyksessä",
-      "SORT_BY": "Lajittele"
+      "TOGGLE_ASC_DESC_ORDER": "Toggle results between ascending and descending order",
+      "SORT_BY": "Sort by",
+      "BUTTON": {
+        "TOOLTIP": "Search",
+        "ARIA-LABEL": "Search button"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "Search input"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "Close"
+        }
+      }
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "Feature flag overrides",
+      "FILTER_OR_ADD_NEW": "Filter or add new",
+      "FILTER": "Filter",
+      "ADD_NEW": "Add new feature flag (Shift + Enter)"
     }
   },
   "COMMENTS": {
-    "NONE": "Ei kommentteja",
-    "ADD": "Lisää",
-    "HEADER": "Kommentit ({{ count }})",
-    "CREATED_BY_HEADER": "Tekijä:",
-    "MESSAGE_HEADER": "Viesti",
+    "PROFILE_IMAGE": "Profile Image",
+    "NONE": "No comments",
+    "ADD": "Add",
+    "HEADER": "Comments ({{ count }})",
+    "CREATED_BY_HEADER": "Created by",
+    "MESSAGE_HEADER": "Message",
+    "EMPTY_ERROR": "Comment can't be empty",
     "DIALOG": {
-      "TITLE": "Uusi kommentti",
+      "TITLE": "New comment",
       "LABELS": {
-        "MESSAGE": "Viesti"
+        "MESSAGE": "Message"
       },
       "BUTTON": {
-        "ADD": "Lisää kommentti",
-        "CANCEL": "Peruuta"
+        "ADD": "Add Comment",
+        "CANCEL": "Cancel"
       }
     }
   },
   "LOGIN": {
     "LOGO": "Alfresco, make business flow",
     "LABEL": {
-      "LOGIN": "Kirjaudu sisään",
-      "USERNAME": "Käyttäjänimi",
-      "PASSWORD": "Salasana",
-      "REMEMBER": "Muista minut"
+      "LOGIN": "Sign in",
+      "USERNAME": "Username",
+      "PASSWORD": "Password",
+      "REMEMBER": "Remember me"
     },
     "ARIA-LABEL": {
-      "SHOW-PASSWORD": "Näytä salasana",
-      "HIDE-PASSWORD": "Piilota salasana"
+      "SHOW-PASSWORD": "Show password",
+      "HIDE-PASSWORD": "Hide password"
     },
     "MESSAGES": {
-      "USERNAME-REQUIRED": "Pakollinen",
-      "USERNAME-MIN": "Käyttäjänimessä täytyy olla vähintään {{ minLength }} merkkiä.",
-      "PASSWORD-REQUIRED": "Jos haluat kirjautua sisään, anna salasanasi",
-      "LOGIN-ERROR-CREDENTIALS": "Annoit tuntemattoman käyttäjänimen tai salasanan",
-      "LOGIN-ERROR-PROVIDERS": "Palveluiden määritystä ei voi poistaa",
-      "LOGIN-ERROR-CORS": "Ilmeni CORS-poikkeus, tarkista palvelinmääritykset",
-      "LOGIN-ERROR-CSRF": "Ilmeni CSRF-poikkeus, määritä asetuksen \"disableCSRF\": arvoksi true kohteessa app.config.json",
-      "LOGIN-ECM-LICENSE": "Alfresco Content Services -säilö on Vain luku -tilassa",
-      "SSO-WRONG-CONFIGURATION": "Kertakirjautumisen todennuspalvelimeen ei saada yhteyttä"
+      "USERNAME-REQUIRED": "Required",
+      "USERNAME-MIN": "Your username needs to be at least {{ minLength }} characters.",
+      "PASSWORD-REQUIRED": "Enter your password to sign in",
+      "LOGIN-ERROR-CREDENTIALS": "You've entered an unknown username or password",
+      "LOGIN-ERROR-PROVIDERS": "Providers cannot be undefined",
+      "LOGIN-ERROR-CORS": "CORS exception, check your server configuration",
+      "LOGIN-ERROR-CSRF": "CSRF exception, set \"disableCSRF\": true in app.config.json",
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services repository is in read-only mode",
+      "SSO-WRONG-CONFIGURATION": "SSO Authentication server unreachable"
     },
     "BUTTON": {
-      "LOGIN": "Kirjaudu sisään",
-      "CHECKING": "Tarkistetaan",
-      "WELCOME": "Tervetuloa",
-      "SSO": "Kertakirjautuminen"
+      "LOGIN": "SIGN IN",
+      "CHECKING": "CHECKING",
+      "WELCOME": "WELCOME",
+      "SSO": "SIGN IN SSO"
     },
     "ACTION": {
-      "HELP": "Tarvitsetko apua?",
-      "REGISTER": "Rekisteröidy"
+      "HELP": "NEED HELP?",
+      "REGISTER": "REGISTER"
     }
   },
   "ADF-DATATABLE": {
     "EMPTY": {
-      "HEADER": "Tämä luettelo on tyhjä",
+      "HEADER": "This list is empty",
       "DRAG-AND-DROP": {
-        "TITLE": "Lataa tiedostoja",
-        "SUBTITLE": "vetämällä ja pudottamalla"
+        "TITLE": "Drag and drop",
+        "SUBTITLE": "to upload files"
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "Sisältötoiminnot"
+      "TOOLTIP": "Content actions",
+      "SELECT_COLUMNS": "Select columns"
     },
     "ACCESSIBILITY": {
-      "ACTIONS": "Toiminnot",
-      "SELECT_ALL": "Valitse kaikki",
-      "SELECT_FILE": "Valitse tiedosto",
-      "SORT_ASCENDING": "Nouseva",
-      "SORT_DESCENDING": "Laskeva",
-      "SORT_NONE": "Ei mitään",
-      "SORT_DEFAULT": "Lajiteltavissa",
-      "SORT_ASCENDING_BY": "Nouseva: {{ string }} ensin",
-      "SORT_DESCENDING_BY": "Laskeva {{ string }} ensin",
-      "ICON_TEXT": "Kohteen tyyppi {{ type }}",
-      "ICON_DISABLED": "Poistettu käytöstä",
-      "ROW_OPTION_BUTTON": "Toiminnot",
-      "EMPTY_HEADER": "Tyhjä otsikko"
+      "ACTIONS": "Actions",
+      "SELECT_ALL": "Select all",
+      "SELECT_FILE": "Select file",
+      "SELECTED": "Selected",
+      "ROW_SELECTION": "Press Space to toggle row selection",
+      "SORT_ASCENDING": "Ascending",
+      "SORT_DESCENDING": "Descending",
+      "SORT_NONE": "None",
+      "SORT_DEFAULT": "Sortable",
+      "SORT_ASCENDING_BY": "Ascending by {{ string }}",
+      "SORT_DESCENDING_BY": "Descending by {{ string }}",
+      "ICON_TEXT": "Item type {{ type }}",
+      "ICON_DISABLED": "Disabled",
+      "ROW_OPTION_BUTTON": "Actions",
+      "DRAG": "Drag button",
+      "DRAGGABLE": "Draggable",
+      "EMPTY_HEADER": "Empty header",
+      "RESIZE_COLUMN": "Resize {{ column }} column. Use arrow keys to adjust width, Shift for larger steps.",
+      "COLUMN_WIDTH_CHANGED": "{{ column }} column width: {{ width }} pixels"
     },
     "FILE_TYPE": {
-      "DOCUMENT": "Asiakirja",
-      "FOLDER": "Kansio",
+      "DOCUMENT": "Document",
+      "FOLDER": "Folder",
       "PDF": "PDF",
-      "IMAGE": "Kuva",
-      "EXCEL": "Excel-taulukko",
-      "WORD": "Word-asiakirja",
-      "POWERPOINT": "Powerpoint-esitys",
+      "IMAGE": "Image",
+      "EXCEL": "Excel spreadsheet",
+      "WORD": "Word document",
+      "POWERPOINT": "Powerpoint presentation",
       "VIDEO": "Video",
-      "AUDIO": "Ääni",
-      "WEBSITE": "Verkkosivusto",
-      "ARCHIVE": "Arkisto",
-      "PRESENTATION": "Esitys",
-      "SPREADSHEET": "Laskentataulukko",
-      "MISCELLANEOUS": "Sekalainen"
+      "AUDIO": "Audio",
+      "WEBSITE": "Website",
+      "ARCHIVE": "Archive",
+      "PRESENTATION": "Presentation",
+      "SPREADSHEET": "Spreadsheet",
+      "MISCELLANEOUS": "Miscellaneous"
     },
     "COLUMNS_SELECTOR": {
-      "COLUMNS": "Sarakkeet",
-      "SEARCH": "Hae",
-      "APPLY": "Käytä"
+      "COLUMNS": "Choose visible columns",
+      "SEARCH": "Search",
+      "APPLY": "Apply",
+      "COLUMNS_VISIBILITY": "Select columns to display"
     }
   },
   "USER_PROFILE": {
     "LABELS": {
       "ECM": {
-        "JOB_TITLE": "Tehtävänimi"
+        "JOB_TITLE": "Job Title"
       },
       "BPM": {
-        "TENANT": "Tilaaja"
+        "TENANT": "Tenant"
       },
-      "MY_PROFILE": "Oma profiili"
+      "MY_PROFILE": "My Profile"
     },
     "TAB": {
       "CS": "Content Services",
@@ -352,220 +466,214 @@
   },
   "ADF_VIEWER": {
     "ACTIONS": {
-      "BACK": "Takaisin",
-      "OPEN_WITH": "Avaa seuraavalla:",
-      "DOWNLOAD": "Lataa",
-      "PRINT": "Tulosta",
-      "SHARE": "Jaa",
-      "MORE_ACTIONS": "Lisää toimintoja",
-      "INFO": "Tiedot",
-      "FULLSCREEN": "Ota koko näytön tila käyttöön",
-      "CLOSE": "Sulje",
-      "NEXT_FILE": "Seuraava tiedosto",
-      "PREV_FILE": "Edellinen tiedosto",
-      "WAIT": "Odota"
+      "BACK": "Back",
+      "OPEN_WITH": "Open with",
+      "DOWNLOAD": "Download",
+      "PRINT": "Print",
+      "SHARE": "Share",
+      "MORE_ACTIONS": "More actions",
+      "INFO": "Info",
+      "FULLSCREEN": "Activate full-screen mode",
+      "CLOSE": "Close",
+      "NEXT_FILE": "Next File",
+      "PREV_FILE": "Previous File",
+      "WAIT": "Wait"
     },
     "ARIA": {
-      "PREVIOUS_PAGE": "Edellinen sivu",
-      "NEXT_PAGE": "Seuraava sivu",
-      "ZOOM_IN": "Lähennä",
-      "ZOOM_OUT": "Loitonna",
-      "FIT_PAGE": "Sovita sivu",
-      "ROTATE": "Kierrä",
-      "CROP": "Rajaa",
-      "SAVE": "Tallenna",
-      "CANCEL": "Peruuta",
-      "RESET": "Nollaa",
-      "THUMBNAILS": "Asiakirjojen esikatselukuvakkeet",
-      "THUMBNAILS_PANLEL_CLOSE": "Sulje pikkukuvapaneeli"
+      "MIME_TYPE_ICON": "File type icon",
+      "PREVIOUS_PAGE": "Previous page",
+      "NEXT_PAGE": "Next page",
+      "ZOOM_IN": "Zoom in",
+      "ZOOM_OUT": "Zoom out",
+      "FIT_PAGE": "Fit page",
+      "ROTATE": "Rotate",
+      "CROP": "Crop",
+      "SAVE": "Save rotate or crop",
+      "CANCEL": "Cancel rotate or crop",
+      "RESET": "Reset",
+      "THUMBNAILS": "Document thumbnails",
+      "THUMBNAILS_PANLEL_CLOSE": "Close thumbnails panel",
+      "LOADING": "Document is loading",
+      "NOTE_ANNOTATION_IMG": "Note Annotation"
     },
     "PAGE_LABEL": {
-      "SHOWING": "Näytetään",
-      "OF": "/",
-      "PAGE_SELECTOR_LABEL": "Sivuvalitsin"
+      "SHOWING": "Showing",
+      "OF": "of",
+      "PAGE_SELECTOR_LABEL": "Page selector"
     },
-    "LOADING": "Ladataan",
-    "UNKNOWN_FORMAT": "Esikatselun lataaminen epäonnistui. Tuntematon muoto.",
+    "LOADING": "Loading",
+    "UNKNOWN_FORMAT": "Couldn't load preview. Unsupported file type or loading error. Please try refreshing the page.",
     "SIDEBAR": {
       "THUMBNAILS": {
-        "PAGE": "Sivu {{ pageNum }}"
-      },
-      "METADATA": {
-        "MORE_INFORMATION": "Lisää tietoja",
-        "LESS_INFORMATION": "Vähemmän tietoja"
+        "PAGE": "Page {{ pageNum }}"
       }
     },
     "PDF_DIALOG": {
-      "SUBMIT": "Lähetä",
-      "CLOSE": "Sulje",
-      "PLACEHOLDER": "Salasana",
-      "ERROR": "Salasana on väärä"
+      "SUBMIT": "Submit",
+      "CLOSE": "Close",
+      "PLACEHOLDER": "Password",
+      "ERROR": "Password is wrong"
     },
-    "SUBTITLES": "Tekstitykset",
+    "SUBTITLES": "Subtitles",
     "NON_RESPONSIVE_DIALOG": {
-      "HEADER": "Esikatselun lataus viivästynyt",
-      "LABEL": "Voit odottaa edelleen tai ladata asiakirjan."
+      "HEADER": "Preview loading delayed",
+      "LABEL": "You can continue to wait, or download the document."
     }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "Ilmeni ongelma.",
-      "DESCRIPTION": "Jokin meni ilmeisesti vikaan.",
+      "TITLE": "We hit a problem.",
+      "DESCRIPTION": "Looks like something went wrong.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Takaisin aloitussivulle"
+        "TEXT": "Back to home"
       }
     },
     "403": {
-      "TITLE": "Sinulla ei ole oikeutta tämän palvelimen käyttöön.",
-      "DESCRIPTION": "Sinulla ei ole oikeuksia tämän resurssin käyttöön palvelimessa.",
+      "TITLE": "You don't have permission to access this server.",
+      "DESCRIPTION": "You're not allowed access to this resource on the server.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Ilmoita ongelmasta"
+        "TEXT": "Report issue"
       },
       "RETURN_BUTTON": {
-        "TEXT": "Takaisin aloitussivulle"
+        "TEXT": "Back to home"
       }
     },
     "404": {
-      "TITLE": "Tapahtui virhe.",
-      "DESCRIPTION": "Etsimääsi sivua ei löydy.",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "We couldn’t find the page you were looking for.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Takaisin aloitussivulle"
+        "TEXT": "Back to home"
       }
     },
     "500": {
-      "TITLE": "Tapahtui virhe.",
-      "DESCRIPTION": "Ilmeni sisäinen palvelinvirhe, yritä uudelleen tai ota yhteyttä IT-tukeen [500].",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "Internal server error, try again or contact IT support [500].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Takaisin aloitussivulle"
+        "TEXT": "Back to home"
       }
     },
     "502": {
-      "TITLE": "Tapahtui virhe.",
-      "DESCRIPTION": "Virheellinen yhdyskäytävä, yritä uudelleen tai ota yhteyttä IT-tukeen [502].",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "Bad Gateway, try again or contact IT support [502].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Takaisin aloitussivulle"
+        "TEXT": "Back to home"
       }
     },
     "503": {
-      "TITLE": "Tapahtui virhe.",
-      "DESCRIPTION": "Palvelu ei ole tilapäisesti saatavilla [503].",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "Service Temporarily Unavailable [503].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Takaisin aloitussivulle"
+        "TEXT": "Back to home"
       }
     },
     "504": {
-      "TITLE": "Tapahtui virhe.",
-      "DESCRIPTION": "Palvelin aikakatkaistiin, yritä uudelleen tai ota yhteyttä IT-tukeen [504].",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "The server timed out, try again or contact IT support [504].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Takaisin aloitussivulle"
+        "TEXT": "Back to home"
       }
     }
   },
   "ABOUT": {
-    "VERSION": "Versio",
+    "VERSION": "Version",
     "SERVER_SETTINGS": {
-      "TITLE": "Palvelinasetukset",
-      "CONTENT_SERVICE_HOST": "Alfresco Content Servicesin URL-osoite: {{ value }}",
-      "PROCESS_SERVICE_HOST": "Alfresco Process Servicesin URL-osoite: {{ value }}"
+      "TITLE": "Server settings",
+      "CONTENT_SERVICE_HOST": "Alfresco Content Services URL: {{ value }}",
+      "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
     },
-    "REPOSITORY": "Säilö",
-    "VERSIONS": {
-      "TITLE": "Tuoteversiot",
-      "CONTENT_SERVICE": "Content Services",
-      "PROCESS_SERVICE": "Process Services",
-      "MODELING_SERVICE": "Mallinnuspalvelu",
-      "DEPLOYMENT_SERVICE": "Käyttöönottopalvelu",
-      "QUERY_SERVICE": "Käyttöönottopalvelu",
-      "RB": "Suorituspalvelu",
-      "LABELS": {
-        "EDITION": "Versio",
-        "VERSION": "Versio",
-        "LICENSE": "Käyttöoikeus",
-        "STATUS": "Tila",
-        "MODULES": "Moduulit"
-      }
-    },
-    "SOURCE_CODE": {
-      "TITLE": "Lähdekoodi",
-      "DESCRIPTION": "Suoritat projektin seuraavan vahvistuksen perusteella:"
-    },
+    "REPOSITORY": "Repository",
     "PACKAGES": {
-      "TITLE": "Paketit",
-      "NAME": "Nimi",
-      "VERSION": "Versio"
+      "TITLE": "Packages",
+      "NAME": "Name",
+      "VERSION": "Version"
     },
     "EXTENSIONS": {
-      "TITLE": "Lisäosat",
+      "TITLE": "Plugins",
       "TABLE_HEADERS": {
-        "ID": "Tunnus",
-        "NAME": "Nimi",
-        "VERSION": "Versio",
-        "VENDOR": "Toimittaja",
-        "LICENSE": "Käyttöoikeus",
-        "RUNTIME": "Suorituspalvelu",
-        "DESCRIPTION": "Kuvaus"
+        "ID": "ID",
+        "NAME": "Name",
+        "VERSION": "Version",
+        "VENDOR": "Vendor",
+        "LICENSE": "License",
+        "RUNTIME": "Runtime",
+        "DESCRIPTION": "Description"
       }
     },
     "LICENSE": {
-      "TITLE": "Käyttöoikeus",
-      "PROPERTY": "Ominaisuus",
-      "VALUE": "Arvo"
+      "TITLE": "License",
+      "PROPERTY": "Property",
+      "VALUE": "Value",
+      "ENABLED": "Enabled",
+      "DISABLED": "Disabled"
     },
     "STATUS": {
-      "TITLE": "Tila",
-      "PROPERTY": "Ominaisuus",
-      "VALUE": "Arvo"
+      "TITLE": "Status",
+      "PROPERTY": "Property",
+      "VALUE": "Value"
     },
     "MODULES": {
-      "TITLE": "Moduulit",
-      "NAME": "Nimi",
-      "VERSION": "Versio"
+      "TITLE": "Modules",
+      "NAME": "Name",
+      "VERSION": "Version"
     },
     "PLUGINS": {
-      "TITLE": "Lisäosat",
-      "NAME": "Nimi",
-      "VERSION": "Versio"
+      "TITLE": "Plugins",
+      "NAME": "Name",
+      "VERSION": "Version"
     }
   },
   "CLIPBOARD": {
-    "CLICK_TO_COPY": "Kopioi napsauttamalla",
-    "SUCCESS_COPY": "Teksti kopioitiin leikepöydälle"
+    "CLICK_TO_COPY": "Click to copy",
+    "SUCCESS_COPY": "Text copied to clipboard"
   },
   "SELECT_FILTER": {
     "INPUT": {
-      "PLACEHOLDER": "Hae",
-      "ARIA_LABEL": "Haun valikko"
+      "PLACEHOLDER": "Search",
+      "ARIA_LABEL": "Search options"
     },
     "BUTTON": {
-      "ARIA_LABEL": "Tyhjennä"
+      "ARIA_LABEL": "Clear"
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Ladataan...",
-    "SELECTION_ARIA_LABEL": "{{placeholder}} yhdistelmäruutu {{selectedOption}}"
+    "LOADING": "Loading...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
+  },
+  "INFO_DRAWER": {
+    "ICON": "Node Icon"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "Load more",
+    "DELETE": "Remove {{ name }}"
   },
   "ADF_CONFIRM_DIALOG": {
-    "TITLE": "Vahvista",
-    "ACTION": "Haluatko jatkaa?",
-    "YES_LABEL": "Kyllä",
-    "NO_LABEL": "Ei"
+    "TITLE": "Confirm",
+    "ACTION": "Do you want to proceed?",
+    "YES_LABEL": "Yes",
+    "NO_LABEL": "No"
+  },
+  "SESSION_TIMEOUT": {
+    "TITLE": "Are you still working?",
+    "MESSAGE": "Your session will end in {{seconds}} seconds because there has been no activity.",
+    "LOG_OUT": "Log out",
+    "CONTINUE_WORKING": "Continue working"
   }
 }

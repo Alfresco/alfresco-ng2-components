@@ -1,78 +1,145 @@
 {
   "ADF": {
-    "LANGUAGE": "Sprog",
+    "LANGUAGE": "Language",
     "ROLES": {
-      "ALL": "Alle",
-      "CONTRIBUTOR": "Bidragyder",
-      "COLLABORATOR": "Samarbejdspartner",
-      "COORDINATOR": "Koordinator",
-      "EDITOR": "Redaktør",
-      "CONSUMER": "Forbruger",
-      "SITECOLLABORATOR": "Site samarbejdspartner",
-      "SITECONSUMER": "Site forbruger",
-      "SITECONTRIBUTOR": "Site bidragyder",
-      "SITEMANAGER": "Site chef"
+      "ALL": "All",
+      "CONTRIBUTOR": "Contributor",
+      "COLLABORATOR": "Collaborator",
+      "COORDINATOR": "Coordinator",
+      "EDITOR": "Editor",
+      "CONSUMER": "Consumer",
+      "SITECOLLABORATOR": "Site Collaborator",
+      "SITECONSUMER": "Site Consumer",
+      "SITECONTRIBUTOR": "Site Contributor",
+      "SITEMANAGER": "Site Manager"
     }
   },
-  "SAVE": "Gem",
-  "COMPLETE": "Fuldført",
-  "CANCEL": "Annuller",
-  "CLAIM": "Gør krav på",
-  "UNCLAIM": "Frigiv",
-  "START PROCESS": "Start proces",
-  "DATA_LOADING": "Data indlæses",
-  "CLOSE": "Luk",
+  "SAVE": "SAVE",
+  "COMPLETE": "COMPLETE",
+  "CANCEL": "CANCEL",
+  "CLAIM": "CLAIM",
+  "UNCLAIM": "RELEASE",
+  "START PROCESS": "START PROCESS",
+  "DATA_LOADING": "Data is loading",
+  "CLOSE": "CLOSE",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "Du har ingen meddelelser i øjeblikket.",
-    "TITLE": "Meddelelser",
-    "MARK_AS_READ": "Markér alle som læst",
+    "NO_MESSAGE": "You have no notifications at this time.",
+    "UNREAD_MESSAGES": "You have unread notifications.",
+    "TITLE": "Notifications",
+    "MARK_AS_READ": "Mark all as read",
     "SYSTEM": "System",
-    "LOAD_MORE": "Indlæs flere",
-    "OPEN_HISTORY": "Åbn meddelelseshistorie"
+    "LOAD_MORE": "Load more",
+    "OPEN_HISTORY": "Open notification history"
   },
   "FORM": {
     "START_FORM": {
-      "TITLE": "Åbn formular"
+      "TITLE": "Start Form"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Forhåndsvisning er ikke tilgængelig"
+      "IMAGE_NOT_AVAILABLE": "Preview not available",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "In preview mode you cannot attach a file"
+      }
     },
     "FIELD": {
-      "LOCALSTORAGE": "Lokalt lager",
-      "SOURCE": "Vælg kilde fra ",
-      "VIEW_FILE": "Vis",
+      "LOCALSTORAGE": "Local storage",
+      "SOURCE": "Select source from ",
+      "VIEW_FILE": "View",
       "DOWNLOAD_FILE": "Download",
-      "REMOVE_FILE": "Fjern",
-      "UPLOAD": "Upload",
-      "REQUIRED": "Obligatorisk felt",
-      "REST_API_FAILED": "Serveren '{{ hostname }}' er ikke tilgængelig",
-      "FILE_NAME": "Filnavn",
-      "NO_FILE_ATTACHED": "Der er ikke vedhæftet en fil",
+      "REMOVE_FILE": "Remove",
+      "UPLOAD": "UPLOAD",
+      "REQUIRED": "This is a required field",
+      "REST_API_FAILED": "The server `{{ hostname }}` is not reachable",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "There was a problem loading dropdown elements. Please contact administrator.",
+      "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
+      "DATA_TABLE_EMPTY_CONTENT": "No data found",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
+      "FILE_NAME": "File Name",
+      "TITLE": "Title",
+      "NO_FILE_ATTACHED": "No file attached",
       "VALIDATOR": {
-        "INVALID_NUMBER": "Brug et andet talformat",
-        "INVALID_DATE": "Brug et andet datoformat",
-        "INVALID_VALUE": "Angiv en anden værdi",
-        "NOT_GREATER_THAN": "Må ikke være større end {{ maxValue }}",
-        "NOT_LESS_THAN": "Må ikke være mindre end {{ minValue }}",
-        "AT_LEAST_LONG": "Skriv mindst {{ minLength }} tegn",
-        "NO_LONGER_THAN": "Skriv højst {{ maxLength }} tegn"
+        "INVALID_NUMBER": "Use a different number format",
+        "INVALID_DECIMAL_NUMBER": "Use a decimal number format",
+        "INVALID_DECIMAL_PRECISION": "Incorrect decimal value, there should be a maximum of {{precision}} digits after the decimal point.",
+        "INVALID_DATE": "Use a different date format",
+        "INVALID_DATE_FORMAT": "Invalid date format.",
+        "INVALID_VALUE": "Enter a different value",
+        "NOT_GREATER_THAN": "Can't be greater than {{ maxValue }}",
+        "NOT_LESS_THAN": "Can't be less than {{ minValue }}",
+        "AT_LEAST_LONG": "Enter at least {{ minLength }} characters",
+        "NO_LONGER_THAN": "Enter no more than {{ maxLength }} characters"
       },
-      "FILE_ALREADY_UPLOADED": "En fil med samme navn er allerede uploadet.",
-      "ATTACH": "Vedhæft"
+      "FILE_ALREADY_UPLOADED": "A file with the same name is already uploaded.",
+      "ATTACH": "Attach",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "add",
+        "ROW_LIMIT_REACHED": "Rows limit ({{ limit }}) reached."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Opgave uden navn"
+      "NAMELESS_TASK": "Nameless task",
+      "ROW_LABEL": "Row {{ number }}",
+      "DELETE_ROW": "Delete row",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Delete the row",
+        "MESSAGE": "Are you sure you want to delete this row?",
+        "YES_LABEL": "Delete row",
+        "NO_LABEL": "Cancel"
+      }
+    },
+    "BUTTON": {
+      "PREVIOUS_TAB": "Previous",
+      "PREVIOUS_TAB_TITLE": "Navigate to previous tab",
+      "NEXT_TAB": "Next",
+      "NEXT_TAB_TITLE": "Navigate to next tab"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "Font size",
+      "FONT_WEIGHT": "Font weight",
+      "FONT_COLOR": "Font color",
+      "FONT_WEIGHTS": {
+        "REGULAR": "regular",
+        "BOLD": "bold"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "system color",
+        "BLACK": "black",
+        "GREY": "grey",
+        "RED": "red",
+        "GREEN": "green",
+        "BLUE": "blue",
+        "YELLOW": "yellow"
+      },
+      "PREDEFINED": {
+        "HEADER": {
+          "NORMAL": "normal",
+          "HEADING": "heading",
+          "TITLE": "title"
+        },
+        "RADIO_BUTTONS": {
+          "NORMAL": "normal",
+          "STRONG": "strong",
+          "HEADING": "heading"
+        },
+        "READONLY_TEXT": {
+          "NORMAL": "normal",
+          "STRONG": "strong",
+          "HEADING": "heading",
+          "TITLE": "title",
+          "ANNOTATION": "annotation"
+        }
+      }
     }
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Firmalogo",
+      "LOGO_ARIA": "Company Logo",
       "ACCESSIBILITY": {
-        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Slå menu til/fra"
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Toggle Menu"
       }
     },
     "FILE_SIZE": {
-      "BYTES": "Byte",
+      "BYTES": "Bytes",
       "KB": "KB",
       "MB": "MB",
       "GB": "GB",
@@ -84,266 +151,313 @@
     },
     "PAGINATION": {
       "ARIA": {
-        "ITEMS_PER_PAGE": "Sidestørrelsevælger",
-        "CURRENT_PAGE": "Aktuel sidevælger",
-        "PREVIOUS_PAGE": "Knappen Forrige side",
-        "NEXT_PAGE": "Knappen Næste side"
+        "ITEMS_PER_PAGE": "Page size selector",
+        "CURRENT_PAGE": "Current page selector",
+        "PREVIOUS_PAGE": "Previous page button",
+        "NEXT_PAGE": "Next page button"
       },
-      "ITEMS_RANGE": "Viser {{ range }} af {{ total }}",
-      "ITEMS_PER_PAGE": "Elementer pr. side",
-      "CURRENT_PAGE": "Side {{ number }}",
-      "TOTAL_PAGES": "af {{ total }}"
+      "ITEMS_RANGE": "Showing {{ range }} of {{ total }}",
+      "ITEMS_PER_PAGE": "Items per page",
+      "CURRENT_PAGE": "Page {{ number }}",
+      "TOTAL_PAGES": "of {{ total }}"
     },
     "DIALOG": {
       "DOWNLOAD_ZIP": {
         "ACTIONS": {
-          "CANCEL": "Annuller"
+          "CANCEL": "Cancel"
         },
-        "TITLE": "Føjer filer til zip-filen. Dette kan tage nogle minutter"
+        "TITLE": "Adding files to zip, this could take a few minutes",
+        "COMPLETE": "complete"
       },
       "EDIT_JSON": {
-        "CLOSE": "Luk",
-        "UPDATE": "Opdater"
+        "CLOSE": "Close",
+        "UPDATE": "Update",
+        "COPY": "Copy",
+        "COPIED": "Copied to clipboard"
+      },
+      "UNSAVED_CHANGES": {
+        "TITLE": "Unsaved changes",
+        "DESCRIPTION": "You have unsaved changes on this screen. Are you sure want to leave without saving changes?",
+        "DISCARD_CHANGES_BUTTON": "Discard Changes"
       }
     },
+    "BREADCRUMBS": {
+      "TITLE": "Breadcrumbs",
+      "SHOWALL": "Show all"
+    },
     "FILE_DIALOG": {
-      "FILE_LOCK": "Lås fil",
-      "ALLOW_OTHERS_CHECKBOX": "Tillad, at ejeren ændrer filen",
-      "FILE_LOCK_CHECKBOX": "Lås fil",
-      "TIME_LOCK_CHECKBOX": "Tidslås",
+      "FILE_LOCK": "Lock file",
+      "ALLOW_OTHERS_CHECKBOX": "Allow the owner to modify this file",
+      "FILE_LOCK_CHECKBOX": "Lock file",
+      "TIME_LOCK_CHECKBOX": "Time lock",
       "SAVE_BUTTON": {
-        "LABEL": "Gem"
+        "LABEL": "Save"
       },
       "CANCEL_BUTTON": {
-        "LABEL": "Annuller"
+        "LABEL": "Cancel"
       }
     },
     "FOLDER_DIALOG": {
-      "CREATE_FOLDER_TITLE": "Opret ny mappe",
-      "EDIT_FOLDER_TITLE": "Rediger mappe",
+      "CREATE_FOLDER_TITLE": "Create new folder",
+      "EDIT_FOLDER_TITLE": "Edit folder",
       "FOLDER_NAME": {
-        "LABEL": "Navn",
+        "LABEL": "Name",
         "ERRORS": {
-          "REQUIRED": "Du skal angive et mappenavn",
-          "SPECIAL_CHARACTERS": "Mappenavnet må ikke indeholde følgende tegn: * \" < >  / ? : |",
-          "ENDING_DOT": "Mappenavnet må ikke slutte med et punktum.",
-          "ONLY_SPACES": "Mappenavnet skal indeholde andet end mellemrum"
+          "REQUIRED": "Folder name is required",
+          "SPECIAL_CHARACTERS": "Folder name can't contain these characters * \" < > \\ / ? : |",
+          "ENDING_DOT": "Folder name can't end with a period .",
+          "ONLY_SPACES": "Folder name can't contain only spaces"
         }
       },
       "FOLDER_DESCRIPTION": {
-        "LABEL": "Beskrivelse"
+        "LABEL": "Description"
       },
       "FOLDER_TITLE": {
-        "LABEL": "Titel"
+        "LABEL": "Title"
       },
       "CREATE_BUTTON": {
-        "LABEL": "Opret"
+        "LABEL": "Create"
       },
       "UPDATE_BUTTON": {
-        "LABEL": "Opdater"
+        "LABEL": "Update"
       },
       "CANCEL_BUTTON": {
-        "LABEL": "Annuller"
-      }
+        "LABEL": "Cancel"
+      },
+      "FOLDER_CREATED_SUCCESS": "Folder '{{ name }}' created successfully",
+      "FOLDER_UPDATED_SUCCESS": "Folder '{{ name }}' updated successfully"
     },
     "MESSAGES": {
       "ERRORS": {
-        "GENERIC": "Handlingen blev ikke fuldført. Prøv igen, eller kontakt dit it-team.",
-        "EXISTENT_FOLDER": "Der er allerede en mappe med det navn. Prøv et andet navn."
+        "GENERIC": "The action was unsuccessful. Try again or contact your IT Team.",
+        "EXISTENT_FOLDER": "There's already a folder with this name. Try a different name."
       }
     },
     "RESTORE_NODE": {
-      "VIEW": "Vis",
-      "PARTIAL_PLURAL": "{{ number }} elementer kunne ikke gendannes, fordi der er problemer med placeringen for gendannelse",
-      "NODE_EXISTS": "Der kan ikke gendannes, da elementet {{ name }} allerede findes",
-      "LOCATION_MISSING": "Elementet {{ name }} kan ikke gendannes. Den oprindelige placering findes ikke længere",
-      "GENERIC": "Der opstod et problem under forsøget på at gendanne elementet {{ name }}",
-      "PLURAL": "Gendannelsen er fuldført",
-      "SINGULAR": "Elementet {{ name }} er gendannet"
+      "VIEW": "View",
+      "PARTIAL_PLURAL": "{{ number }} items not restored because of issues with the restore location",
+      "NODE_EXISTS": "Can't restore, {{ name }} item already exists",
+      "LOCATION_MISSING": "Can't restore {{ name }} item, the original location no longer exists",
+      "GENERIC": "There was a problem restoring {{ name }} item",
+      "PLURAL": "Restore successful",
+      "SINGULAR": "{{ name }} item restored"
     },
     "DELETE_NODE": {
-      "SINGULAR": "{{ name }} er blevet slettet",
-      "PLURAL": "{{ number }} elementer er blevet slettet",
-      "PARTIAL_SINGULAR": "{{ success }} element er blevet slettet. {{ failed }} elementer kunne ikke slettes",
-      "PARTIAL_PLURAL": "{{ success }} elementer er blevet slettet. {{ failed }} elementer kunne ikke slettes",
-      "ERROR_SINGULAR": "{{ name }} kunne ikke slettes",
-      "ERROR_PLURAL": "{{ number }} elementer kunne ikke slettes"
+      "SINGULAR": "{{ name }} deleted",
+      "PLURAL": "{{ number }} items deleted",
+      "PARTIAL_SINGULAR": "Deleted {{ success }} item, {{ failed }} couldn't be deleted",
+      "PARTIAL_PLURAL": "Deleted {{ success }} items, {{ failed }} couldn't be deleted",
+      "ERROR_SINGULAR": "{{ name }} couldn't be deleted",
+      "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
-        "ADD": "Tilføj ny(t)",
-        "NAME": "Navn",
-        "VALUE": "Værdi"
+        "ADD": "Add New",
+        "NAME": "Name",
+        "VALUE": "Value"
       },
-      "NONE": "Ingen",
+      "NONE": "None",
+      "SELECTED_VALUES": "Selected values",
+      "REMOVE": "Remove {{ value }}",
       "VALIDATORS": {
-        "FLOAT_VALIDATION_ERROR": "Brug et talformat",
-        "INT_VALIDATION_ERROR": "Brug et heltalsformat",
-        "LENGTH_VALIDATION_ERROR": "Værdien skal ligge mellem {{ minLength }} og {{ maxLength }} i længden",
-        "MATCH_VALIDATION_ERROR": "Værdien matcher ikke mønstret: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Værdien skal ligge mellem {{ minValue }} og {{ maxValue }}"
+        "FLOAT_VALIDATION_ERROR": "Use a number format",
+        "INT_VALIDATION_ERROR": "Use an integer format",
+        "LONG_VALIDATION_ERROR": "Use a long format",
+        "LENGTH_VALIDATION_ERROR": "Value should be between {{ minLength }} and {{ maxLength }} in length",
+        "MATCH_VALIDATION_ERROR": "Value doesn't match pattern: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "Value should be between {{ minValue }} and {{ maxValue }}",
+        "ONLY_POSITIVE_NUMBER": "Only positive value is allowed"
       },
-      "MORE": "Mere"
+      "MORE": "More"
     },
     "METADATA": {
       "BASIC": {
-        "HEADER": "Egenskaber",
-        "NAME": "Navn",
-        "TITLE": "Titel",
-        "DESCRIPTION": "Beskrivelse",
-        "AUTHOR": "Forfatter",
+        "HEADER": "General info",
+        "NAME": "Name",
+        "TITLE": "Title",
+        "DESCRIPTION": "Description",
+        "AUTHOR": "Author",
         "MIMETYPE": "Mimetype",
-        "SIZE": "Størrelse",
-        "CREATOR": "Oprettet af",
-        "CREATED_DATE": "Oprettelsesdato",
-        "MODIFIER": "Ændret af",
-        "MODIFIED_DATE": "Ændringsdato",
-        "CONTENT_TYPE": "Indholdstype"
+        "SIZE": "Size",
+        "CREATOR": "Creator",
+        "CREATED_DATE": "Created Date",
+        "MODIFIER": "Modifier",
+        "MODIFIED_DATE": "Modified Date",
+        "CONTENT_TYPE": "Content Type"
       },
       "CONTENT_TYPE": {
         "DIALOG": {
-          "TITLE": "Skift indholdstype",
-          "DESCRIPTION": "Udførelse af denne ændring til indholdstypen, vil tilføje visse egenskaber og lagrede metadata permanent til dokumentet.",
-          "CONFIRM": "Er du sikker på at du vil ændre indholdstypen?",
-          "CANCEL": "Annuller",
-          "APPLY": "Gem ændringerne",
-          "VIEW_DETAILS": "Vis detaljer",
+          "TITLE": "Change content type",
+          "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
+          "CONFIRM": "Are you sure you want to change the content type?",
+          "CANCEL": "CANCEL",
+          "APPLY": "Save Changes",
+          "VIEW_DETAILS": "View details",
           "PROPERTY": {
-            "NAME": "Navn",
-            "DESCRIPTION": "Beskrivelse",
-            "DATA_TYPE": "Datatype"
+            "NAME": "Name",
+            "DESCRIPTION": "Description",
+            "DATA_TYPE": "Data type"
           }
         }
       },
       "ACTIONS": {
-        "EDIT": "Rediger",
-        "SAVE": "Gem",
-        "CANCEL": "Annuller",
-        "CLEAR": "Ryd",
-        "TOGGLE": "Slå værdi til/fra",
-        "COPY_TO_CLIPBOARD": "Dobbeltklik for at kopiere værdien",
-        "EDIT_ASPECTS": "Rediger aspekt"
+        "EDIT": "Edit",
+        "SAVE": "Save",
+        "CANCEL": "Cancel",
+        "CLEAR": "Clear",
+        "TOGGLE": "Toggle value",
+        "COPY_TO_CLIPBOARD": "Double click to copy value",
+        "EDIT_ASPECTS": "Edit Aspect"
       },
       "ACCESSIBILITY": {
-        "EDIT": "Redigér knap",
-        "DATEPICKER": "Brug piletasterne til at navigere mellem datoer. Pil op og pil ned bruges til at gå til den næste eller forrige uge, på den samme dag. Brug venstre og højre pil til at gå til næste eller forrige dag. Tryk på Enter eller Return for at vælge en dato.",
-        "COPY_TO_CLIPBOARD_MESSAGE": "Værdien er kopieret til udklipsholderen",
-        "EDIT_ASPECTS": "Rediger aspekt"
+        "EDIT": "Edit {{ sectionName }}",
+        "DATEPICKER": "Use the arrow keys to navigate between dates. Up and down move to the next or previous week but on the same day. Left and right move to the next or previous day. Press Enter or Return to select a date.",
+        "COPY_TO_CLIPBOARD_MESSAGE": "Value copied to clipboard",
+        "EDIT_ASPECTS": "Edit Aspect",
+        "SECTION": "{{ sectionName }} section"
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "Slå resultater til/fra mellem stigende og faldende rækkefølge",
-      "SORT_BY": "Sortér efter"
+      "TOGGLE_ASC_DESC_ORDER": "Toggle results between ascending and descending order",
+      "SORT_BY": "Sort by",
+      "BUTTON": {
+        "TOOLTIP": "Search",
+        "ARIA-LABEL": "Search button"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "Search input"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "Close"
+        }
+      }
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "Feature flag overrides",
+      "FILTER_OR_ADD_NEW": "Filter or add new",
+      "FILTER": "Filter",
+      "ADD_NEW": "Add new feature flag (Shift + Enter)"
     }
   },
   "COMMENTS": {
-    "NONE": "Ingen kommentarer",
-    "ADD": "Tilføj",
-    "HEADER": "Kommentarer ({{ count }})",
-    "CREATED_BY_HEADER": "Oprettet af",
-    "MESSAGE_HEADER": "Meddelelse",
+    "PROFILE_IMAGE": "Profile Image",
+    "NONE": "No comments",
+    "ADD": "Add",
+    "HEADER": "Comments ({{ count }})",
+    "CREATED_BY_HEADER": "Created by",
+    "MESSAGE_HEADER": "Message",
+    "EMPTY_ERROR": "Comment can't be empty",
     "DIALOG": {
-      "TITLE": "Ny kommentar",
+      "TITLE": "New comment",
       "LABELS": {
-        "MESSAGE": "Meddelelse"
+        "MESSAGE": "Message"
       },
       "BUTTON": {
-        "ADD": "Tilføj kommentar",
-        "CANCEL": "Annuller"
+        "ADD": "Add Comment",
+        "CANCEL": "Cancel"
       }
     }
   },
   "LOGIN": {
     "LOGO": "Alfresco, make business flow",
     "LABEL": {
-      "LOGIN": "Log ind",
-      "USERNAME": "Brugernavn",
-      "PASSWORD": "Adgangskode",
-      "REMEMBER": "Husk mig"
+      "LOGIN": "Sign in",
+      "USERNAME": "Username",
+      "PASSWORD": "Password",
+      "REMEMBER": "Remember me"
     },
     "ARIA-LABEL": {
-      "SHOW-PASSWORD": "Vis adgangskode",
-      "HIDE-PASSWORD": "Skjul adgangskode"
+      "SHOW-PASSWORD": "Show password",
+      "HIDE-PASSWORD": "Hide password"
     },
     "MESSAGES": {
-      "USERNAME-REQUIRED": "Påkrævet",
-      "USERNAME-MIN": "Dit brugernavn skal være på mindst {{ minLength }} tegn.",
-      "PASSWORD-REQUIRED": "Skriv din adgangskode for at logge på",
-      "LOGIN-ERROR-CREDENTIALS": "Du har skrevet et ukendt brugernavn eller en ukendt adgangskode",
-      "LOGIN-ERROR-PROVIDERS": "Der skal angives en definition for udbydere",
-      "LOGIN-ERROR-CORS": "CORS-undtagelse. Kontrollér din serverkonfiguration",
-      "LOGIN-ERROR-CSRF": "Undtagelse i CSRF. Indstil \"disableCSRF\": sand i app.config.json",
-      "LOGIN-ECM-LICENSE": "Alfresco Content Services-lageret er i skrivebeskyttet tilstand",
-      "SSO-WRONG-CONFIGURATION": "Der kan ikke oprettes forbindelse til SSO-godkendelsesserveren"
+      "USERNAME-REQUIRED": "Required",
+      "USERNAME-MIN": "Your username needs to be at least {{ minLength }} characters.",
+      "PASSWORD-REQUIRED": "Enter your password to sign in",
+      "LOGIN-ERROR-CREDENTIALS": "You've entered an unknown username or password",
+      "LOGIN-ERROR-PROVIDERS": "Providers cannot be undefined",
+      "LOGIN-ERROR-CORS": "CORS exception, check your server configuration",
+      "LOGIN-ERROR-CSRF": "CSRF exception, set \"disableCSRF\": true in app.config.json",
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services repository is in read-only mode",
+      "SSO-WRONG-CONFIGURATION": "SSO Authentication server unreachable"
     },
     "BUTTON": {
-      "LOGIN": "Log ind",
-      "CHECKING": "Kontrollerer",
-      "WELCOME": "Velkommen",
-      "SSO": "Log på SSO"
+      "LOGIN": "SIGN IN",
+      "CHECKING": "CHECKING",
+      "WELCOME": "WELCOME",
+      "SSO": "SIGN IN SSO"
     },
     "ACTION": {
-      "HELP": "Har du brug for hjælp?",
-      "REGISTER": "Tilmeld"
+      "HELP": "NEED HELP?",
+      "REGISTER": "REGISTER"
     }
   },
   "ADF-DATATABLE": {
     "EMPTY": {
-      "HEADER": "Denne liste er tom",
+      "HEADER": "This list is empty",
       "DRAG-AND-DROP": {
-        "TITLE": "Træk og slip",
-        "SUBTITLE": "for at uploade filer"
+        "TITLE": "Drag and drop",
+        "SUBTITLE": "to upload files"
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "Indholdshandlinger"
+      "TOOLTIP": "Content actions",
+      "SELECT_COLUMNS": "Select columns"
     },
     "ACCESSIBILITY": {
-      "ACTIONS": "Handlinger",
-      "SELECT_ALL": "Vælg alle",
-      "SELECT_FILE": "Vælg fil",
-      "SORT_ASCENDING": "Stigende",
-      "SORT_DESCENDING": "Faldende",
-      "SORT_NONE": "Ingen",
-      "SORT_DEFAULT": "Kan sorteres",
-      "SORT_ASCENDING_BY": "Stigende efter {{ string }}",
-      "SORT_DESCENDING_BY": "Faldende efter {{ string }}",
-      "ICON_TEXT": "Elementtype {{ type }}",
-      "ICON_DISABLED": "Deaktiveret",
-      "ROW_OPTION_BUTTON": "Handlinger",
-      "EMPTY_HEADER": "Tom toptekst"
+      "ACTIONS": "Actions",
+      "SELECT_ALL": "Select all",
+      "SELECT_FILE": "Select file",
+      "SELECTED": "Selected",
+      "ROW_SELECTION": "Press Space to toggle row selection",
+      "SORT_ASCENDING": "Ascending",
+      "SORT_DESCENDING": "Descending",
+      "SORT_NONE": "None",
+      "SORT_DEFAULT": "Sortable",
+      "SORT_ASCENDING_BY": "Ascending by {{ string }}",
+      "SORT_DESCENDING_BY": "Descending by {{ string }}",
+      "ICON_TEXT": "Item type {{ type }}",
+      "ICON_DISABLED": "Disabled",
+      "ROW_OPTION_BUTTON": "Actions",
+      "DRAG": "Drag button",
+      "DRAGGABLE": "Draggable",
+      "EMPTY_HEADER": "Empty header",
+      "RESIZE_COLUMN": "Resize {{ column }} column. Use arrow keys to adjust width, Shift for larger steps.",
+      "COLUMN_WIDTH_CHANGED": "{{ column }} column width: {{ width }} pixels"
     },
     "FILE_TYPE": {
-      "DOCUMENT": "Dokument",
-      "FOLDER": "Mappe",
+      "DOCUMENT": "Document",
+      "FOLDER": "Folder",
       "PDF": "PDF",
-      "IMAGE": "Billede",
-      "EXCEL": "Excel-regneark",
-      "WORD": "Word-dokument",
-      "POWERPOINT": "PowerPoint-præsentation",
+      "IMAGE": "Image",
+      "EXCEL": "Excel spreadsheet",
+      "WORD": "Word document",
+      "POWERPOINT": "Powerpoint presentation",
       "VIDEO": "Video",
-      "AUDIO": "Lyd",
-      "WEBSITE": "Websted",
-      "ARCHIVE": "Arkiv",
-      "PRESENTATION": "Præsentation",
-      "SPREADSHEET": "Regneark",
-      "MISCELLANEOUS": "Diverse"
+      "AUDIO": "Audio",
+      "WEBSITE": "Website",
+      "ARCHIVE": "Archive",
+      "PRESENTATION": "Presentation",
+      "SPREADSHEET": "Spreadsheet",
+      "MISCELLANEOUS": "Miscellaneous"
     },
     "COLUMNS_SELECTOR": {
-      "COLUMNS": "Kolonner",
-      "SEARCH": "Søg",
-      "APPLY": "Anvend"
+      "COLUMNS": "Choose visible columns",
+      "SEARCH": "Search",
+      "APPLY": "Apply",
+      "COLUMNS_VISIBILITY": "Select columns to display"
     }
   },
   "USER_PROFILE": {
     "LABELS": {
       "ECM": {
-        "JOB_TITLE": "Jobtitel"
+        "JOB_TITLE": "Job Title"
       },
       "BPM": {
         "TENANT": "Tenant"
       },
-      "MY_PROFILE": "Min profil"
+      "MY_PROFILE": "My Profile"
     },
     "TAB": {
       "CS": "Content Services",
@@ -352,220 +466,214 @@
   },
   "ADF_VIEWER": {
     "ACTIONS": {
-      "BACK": "Tilbage",
-      "OPEN_WITH": "Åbn med",
+      "BACK": "Back",
+      "OPEN_WITH": "Open with",
       "DOWNLOAD": "Download",
-      "PRINT": "Udskriv",
-      "SHARE": "Del",
-      "MORE_ACTIONS": "Flere handlinger",
-      "INFO": "Oplysninger",
-      "FULLSCREEN": "Aktivér fuld skærm",
-      "CLOSE": "Luk",
-      "NEXT_FILE": "Næste fil",
-      "PREV_FILE": "Forrige fil",
-      "WAIT": "Vent"
+      "PRINT": "Print",
+      "SHARE": "Share",
+      "MORE_ACTIONS": "More actions",
+      "INFO": "Info",
+      "FULLSCREEN": "Activate full-screen mode",
+      "CLOSE": "Close",
+      "NEXT_FILE": "Next File",
+      "PREV_FILE": "Previous File",
+      "WAIT": "Wait"
     },
     "ARIA": {
-      "PREVIOUS_PAGE": "Forrige side",
-      "NEXT_PAGE": "Næste side",
-      "ZOOM_IN": "Zoom ind",
-      "ZOOM_OUT": "Zoom ud",
-      "FIT_PAGE": "Tilpas side",
-      "ROTATE": "Roter",
-      "CROP": "Beskær",
-      "SAVE": "Gem",
-      "CANCEL": "Annuller",
-      "RESET": "Nulstil",
-      "THUMBNAILS": "Dokumentminiaturer",
-      "THUMBNAILS_PANLEL_CLOSE": "Luk miniaturepanel"
+      "MIME_TYPE_ICON": "File type icon",
+      "PREVIOUS_PAGE": "Previous page",
+      "NEXT_PAGE": "Next page",
+      "ZOOM_IN": "Zoom in",
+      "ZOOM_OUT": "Zoom out",
+      "FIT_PAGE": "Fit page",
+      "ROTATE": "Rotate",
+      "CROP": "Crop",
+      "SAVE": "Save rotate or crop",
+      "CANCEL": "Cancel rotate or crop",
+      "RESET": "Reset",
+      "THUMBNAILS": "Document thumbnails",
+      "THUMBNAILS_PANLEL_CLOSE": "Close thumbnails panel",
+      "LOADING": "Document is loading",
+      "NOTE_ANNOTATION_IMG": "Note Annotation"
     },
     "PAGE_LABEL": {
-      "SHOWING": "Viser",
-      "OF": "af",
-      "PAGE_SELECTOR_LABEL": "Sidevælger"
+      "SHOWING": "Showing",
+      "OF": "of",
+      "PAGE_SELECTOR_LABEL": "Page selector"
     },
-    "LOADING": "Indlæser",
-    "UNKNOWN_FORMAT": "Forhåndsvisningen kunne ikke indlæses. Ukendt format.",
+    "LOADING": "Loading",
+    "UNKNOWN_FORMAT": "Couldn't load preview. Unsupported file type or loading error. Please try refreshing the page.",
     "SIDEBAR": {
       "THUMBNAILS": {
-        "PAGE": "Side {{ pageNum }}"
-      },
-      "METADATA": {
-        "MORE_INFORMATION": "Flere oplysninger",
-        "LESS_INFORMATION": "Færre oplysninger"
+        "PAGE": "Page {{ pageNum }}"
       }
     },
     "PDF_DIALOG": {
-      "SUBMIT": "Send",
-      "CLOSE": "Luk",
-      "PLACEHOLDER": "Adgangskode",
-      "ERROR": "Adgangskoden er forkert"
+      "SUBMIT": "Submit",
+      "CLOSE": "Close",
+      "PLACEHOLDER": "Password",
+      "ERROR": "Password is wrong"
     },
-    "SUBTITLES": "Undertekster",
+    "SUBTITLES": "Subtitles",
     "NON_RESPONSIVE_DIALOG": {
-      "HEADER": "Indlæsning af forhåndsvisning forsinket",
-      "LABEL": "Du kan fortsætte med at vente eller downloade dokumentet."
+      "HEADER": "Preview loading delayed",
+      "LABEL": "You can continue to wait, or download the document."
     }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "Der opstod et problem",
-      "DESCRIPTION": "Det ser ud til, at noget gik forkert.",
+      "TITLE": "We hit a problem.",
+      "DESCRIPTION": "Looks like something went wrong.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tilbage til forsiden"
+        "TEXT": "Back to home"
       }
     },
     "403": {
-      "TITLE": "Du har ikke tilladelse til at få adgang til serveren.",
-      "DESCRIPTION": "Du har ikke tilladt adgang til denne ressource på serveren.",
+      "TITLE": "You don't have permission to access this server.",
+      "DESCRIPTION": "You're not allowed access to this resource on the server.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Rapportér problem"
+        "TEXT": "Report issue"
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tilbage til forsiden"
+        "TEXT": "Back to home"
       }
     },
     "404": {
-      "TITLE": "Der opstod en fejl.",
-      "DESCRIPTION": "Vi kunne ikke finde den side, du ledte efter.",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "We couldn’t find the page you were looking for.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tilbage til forsiden"
+        "TEXT": "Back to home"
       }
     },
     "500": {
-      "TITLE": "Der opstod en fejl.",
-      "DESCRIPTION": "Intern serverfejl. Prøv igen, eller kontakt it-support [500].",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "Internal server error, try again or contact IT support [500].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tilbage til forsiden"
+        "TEXT": "Back to home"
       }
     },
     "502": {
-      "TITLE": "Der opstod en fejl.",
-      "DESCRIPTION": "Forkert gateway. Prøv igen, eller kontakt it-support [502].",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "Bad Gateway, try again or contact IT support [502].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tilbage til forsiden"
+        "TEXT": "Back to home"
       }
     },
     "503": {
-      "TITLE": "Der opstod en fejl.",
-      "DESCRIPTION": "Tjenesten er midlertidig utilgængelig [503].",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "Service Temporarily Unavailable [503].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tilbage til forsiden"
+        "TEXT": "Back to home"
       }
     },
     "504": {
-      "TITLE": "Der opstod en fejl.",
-      "DESCRIPTION": "Der opstod timeout for serveren. Prøv igen, eller kontakt it-support [504].",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "The server timed out, try again or contact IT support [504].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tilbage til forsiden"
+        "TEXT": "Back to home"
       }
     }
   },
   "ABOUT": {
     "VERSION": "Version",
     "SERVER_SETTINGS": {
-      "TITLE": "Serverindstillinger",
-      "CONTENT_SERVICE_HOST": "URL-adresse til Alfresco-indholdstjenester: {{ value }}",
-      "PROCESS_SERVICE_HOST": "URL-adresse til Alfresco-procestjenester: {{ value }}"
+      "TITLE": "Server settings",
+      "CONTENT_SERVICE_HOST": "Alfresco Content Services URL: {{ value }}",
+      "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
     },
-    "REPOSITORY": "Opbevaringssted",
-    "VERSIONS": {
-      "TITLE": "Produktversioner",
-      "CONTENT_SERVICE": "Content Services",
-      "PROCESS_SERVICE": "Process Services",
-      "MODELING_SERVICE": "Modelleringstjenester",
-      "DEPLOYMENT_SERVICE": "Udrulningstjenester",
-      "QUERY_SERVICE": "Udrulningstjenester",
-      "RB": "Kørselstidspunkt",
-      "LABELS": {
-        "EDITION": "Version",
-        "VERSION": "Version",
-        "LICENSE": "Licens",
-        "STATUS": "Status",
-        "MODULES": "Moduler"
-      }
-    },
-    "SOURCE_CODE": {
-      "TITLE": "Kildekode",
-      "DESCRIPTION": "Du kører projektet på baggrund af følgende bekræftelse:"
-    },
+    "REPOSITORY": "Repository",
     "PACKAGES": {
-      "TITLE": "Pakker",
-      "NAME": "Navn",
+      "TITLE": "Packages",
+      "NAME": "Name",
       "VERSION": "Version"
     },
     "EXTENSIONS": {
-      "TITLE": "Plug-ins",
+      "TITLE": "Plugins",
       "TABLE_HEADERS": {
-        "ID": "Id",
-        "NAME": "Navn",
+        "ID": "ID",
+        "NAME": "Name",
         "VERSION": "Version",
-        "VENDOR": "Leverandør",
-        "LICENSE": "Licens",
-        "RUNTIME": "Kørselstidspunkt",
-        "DESCRIPTION": "Beskrivelse"
+        "VENDOR": "Vendor",
+        "LICENSE": "License",
+        "RUNTIME": "Runtime",
+        "DESCRIPTION": "Description"
       }
     },
     "LICENSE": {
-      "TITLE": "Licens",
-      "PROPERTY": "Egenskab",
-      "VALUE": "Værdi"
+      "TITLE": "License",
+      "PROPERTY": "Property",
+      "VALUE": "Value",
+      "ENABLED": "Enabled",
+      "DISABLED": "Disabled"
     },
     "STATUS": {
       "TITLE": "Status",
-      "PROPERTY": "Egenskab",
-      "VALUE": "Værdi"
+      "PROPERTY": "Property",
+      "VALUE": "Value"
     },
     "MODULES": {
-      "TITLE": "Moduler",
-      "NAME": "Navn",
+      "TITLE": "Modules",
+      "NAME": "Name",
       "VERSION": "Version"
     },
     "PLUGINS": {
-      "TITLE": "Plug-ins",
-      "NAME": "Navn",
+      "TITLE": "Plugins",
+      "NAME": "Name",
       "VERSION": "Version"
     }
   },
   "CLIPBOARD": {
-    "CLICK_TO_COPY": "Klik for at kopiere",
-    "SUCCESS_COPY": "Teksten er kopieret til Udklipsholder"
+    "CLICK_TO_COPY": "Click to copy",
+    "SUCCESS_COPY": "Text copied to clipboard"
   },
   "SELECT_FILTER": {
     "INPUT": {
-      "PLACEHOLDER": "Søg",
-      "ARIA_LABEL": "Søgemuligheder"
+      "PLACEHOLDER": "Search",
+      "ARIA_LABEL": "Search options"
     },
     "BUTTON": {
-      "ARIA_LABEL": "Ryd"
+      "ARIA_LABEL": "Clear"
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Indlæser...",
-    "SELECTION_ARIA_LABEL": "{{placeholder}} kombiboks {{selectedOption}}"
+    "LOADING": "Loading...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
+  },
+  "INFO_DRAWER": {
+    "ICON": "Node Icon"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "Load more",
+    "DELETE": "Remove {{ name }}"
   },
   "ADF_CONFIRM_DIALOG": {
-    "TITLE": "Bekræft",
-    "ACTION": "Vil du fortsætte?",
-    "YES_LABEL": "Ja",
-    "NO_LABEL": "Nej"
+    "TITLE": "Confirm",
+    "ACTION": "Do you want to proceed?",
+    "YES_LABEL": "Yes",
+    "NO_LABEL": "No"
+  },
+  "SESSION_TIMEOUT": {
+    "TITLE": "Are you still working?",
+    "MESSAGE": "Your session will end in {{seconds}} seconds because there has been no activity.",
+    "LOG_OUT": "Log out",
+    "CONTINUE_WORKING": "Continue working"
   }
 }

@@ -1,638 +1,740 @@
 {
   "COMMON": {
-    "APPLY": "Применить",
-    "CANCEL": "Отмена"
+    "APPLY": "Apply",
+    "CANCEL": "Cancel",
+    "NAME": "Name",
+    "CLEAR": "Clear"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
-      "RESTORE": "Восстановить",
-      "DELETE": "Удалить",
-      "DOWNLOAD": "Скачать",
-      "VIEW": "Посмотреть",
+      "RESTORE": "Restore",
+      "DELETE": "Delete",
+      "DOWNLOAD": "Download",
+      "VIEW": "View",
       "UPLOAD": {
-        "TITLE": "Отправить новую версию",
-        "TOOLTIP": "Ограничение: загрузите файл с тем же именем, чтобы создать его новую версию",
-        "MAJOR": "существенные изменения ({{version}})",
-        "MINOR": "незначительные изменения ({{version}})",
-        "COMMENT": "Оставить комментарий",
-        "ADD": "Добавить новую версию",
-        "CANCEL": "Отмена"
+        "TITLE": "Upload new version",
+        "TOOLTIP": "Restriction: you must upload a file with the same name to create a new version of it",
+        "MAJOR": "major changes ({{version}})",
+        "MINOR": "minor changes ({{version}})",
+        "COMMENT": "Leave a comment",
+        "ADD": "Add New Version",
+        "CANCEL": "Cancel",
+        "VERSION_TYPE_LABEL": "Select version type"
       }
     },
     "CONFIRM_DELETE": {
-      "TITLE": "Удалить версию",
-      "MESSAGE": "Удаленные версии файла не могут быть восстановлены. Продолжить?",
-      "YES_LABEL": "Да",
-      "NO_LABEL": "Нет"
+      "TITLE": "Delete version",
+      "MESSAGE": "Deleted file versions cannot be restored. Continue?",
+      "YES_LABEL": "Yes",
+      "NO_LABEL": "No"
     },
-    "MANAGE_VERSION_OPTIONS": "Управление параметрами версии"
+    "MANAGE_VERSION_OPTIONS": "Manage version options"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Управление версиями",
-      "CLOSE": "Закрыть"
+      "TITLE": "Manage Versions",
+      "CLOSE": "Close"
     },
     "DIALOG_UPLOAD": {
-      "TITLE": "Загрузить новую версию",
-      "CANCEL": "Отмена",
-      "UPLOAD": "Загрузить"
+      "TITLE": "Upload New Version",
+      "CANCEL": "Cancel",
+      "UPLOAD": "Upload"
     }
   },
   "ADF_VERSION_COMPARISON": {
-    "CURRENT_VERSION": "Текущее",
-    "NEW_VERSION": "Создать",
+    "CURRENT_VERSION": "Current",
+    "NEW_VERSION": "New",
     "ACCESSIBILITY": {
-      "ICON_TEXT": "Тип элемента {{ type }}",
-      "ARROW_ICON": "Значок правой стрелки"
+      "ICON_TEXT": "Item type {{ type }}",
+      "ARROW_ICON": "Arrow right icon"
     }
   },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
-      "HEADER": "Эта папка пуста"
+      "HEADER": "This folder is empty"
     },
-    "NO_PERMISSION": "У вас нет разрешения на просмотр этого файла или папки.",
+    "NO_PERMISSION": "You don't have permission to view this file or folder.",
     "LAYOUT": {
-      "CREATED": "Создано",
-      "CREATED_BY": "Создано пользователем",
-      "THUMBNAIL": "Эскиз",
-      "NAME": "Имя",
-      "LOCATION": "Местоположение",
-      "SIZE": "Размер",
-      "DELETED_ON": "Удаленные",
-      "DELETED_BY": "Удалено пользователем",
-      "STATUS": "Статус",
-      "MODIFIED_ON": "Изменено",
-      "MODIFIED_BY": "Изменено пользователем",
-      "SHARED_BY": "Доступ открыт пользователем",
-      "LOAD_MORE": "Загрузить еще"
+      "CREATED": "Created",
+      "CREATED_BY": "Created by",
+      "THUMBNAIL": "Thumbnail",
+      "NAME": "Name",
+      "LOCATION": "Location",
+      "SIZE": "Size",
+      "DELETED_ON": "Deleted",
+      "DELETED_BY": "Deleted by",
+      "STATUS": "Status",
+      "MODIFIED_ON": "Modified",
+      "MODIFIED_BY": "Modified by",
+      "SHARED_BY": "Shared by",
+      "LOAD_MORE": "Load more"
     },
     "MENU_ACTIONS": {
-      "VIEW": "Посмотреть",
-      "REMOVE": "Удалить",
-      "DOWNLOAD": "Скачать"
+      "VIEW": "View",
+      "REMOVE": "Remove",
+      "DOWNLOAD": "Download"
     },
-    "LOADER_LABEL": "Загрузчик списка документов",
+    "LOADER_LABEL": "Document list loader",
     "FILE_AUTO_DOWNLOAD_DIALOG": {
-      "HEADER": "Загрузка предварительного просмотра не отвечает",
-      "LABEL": "Скачайте, чтобы просмотреть этот документ, или отмените, чтобы продолжить без предварительного просмотра.",
+      "HEADER": "Preview loading unresponsive",
+      "LABEL": "Download to view this document, or cancel to continue without preview.",
       "ACTIONS": {
-        "CANCEL": "Отмена",
-        "DOWNLOAD": "Скачать"
+        "CANCEL": "Cancel",
+        "DOWNLOAD": "Download"
       }
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
-      "ACTION_CREATE": "Создать...",
-      "ACTION_NEW_FOLDER": "Новая папка",
-      "CREATE": "Создать",
-      "CANCEL": "Отмена"
+      "ACTION_CREATE": "Create...",
+      "ACTION_NEW_FOLDER": "New Folder",
+      "CREATE": "Create",
+      "CANCEL": "Cancel"
     }
   },
   "DROPDOWN": {
-    "PLACEHOLDER_LABEL": "Список сайтов",
-    "MY_FILES_OPTION": "Мои файлы"
+    "PLACEHOLDER_LABEL": "Site List",
+    "MY_FILES_OPTION": "My files"
   },
   "NODE_SELECTOR": {
-    "CANCEL": "Отмена",
-    "CHOOSE": "Выбрать",
-    "ATTACH": "Прикрепить",
-    "CHOOSE_ITEM": "Выберите содержимое, чтобы прикрепить из '{{ name }}'",
-    "COPY": "Копировать",
-    "COPY_ITEM": "Копировать '{{ name }}' в...",
-    "LOCATION": "Местоположение",
-    "MOVE": "Переместить",
-    "MOVE_ITEM": "Переместить '{{ name }}' в...",
-    "NO_RESULTS": "Результаты не найдены",
-    "SEARCH": "Поиск",
-    "SEARCH_RESULTS": "Результаты поиска",
-    "SELECT_LIBRARY": "Выберите библиотеку",
-    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Вы не можете загрузить файл, пока выполняется поиск",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "У пользователя нет разрешения на загрузку содержимого в папку",
-    "REPOSITORY": "Репозиторий",
-    "UPLOAD_FROM_DEVICE": "Загрузить с вашего устройства"
+    "CANCEL": "Cancel",
+    "CHOOSE": "Select",
+    "ATTACH": "Attach",
+    "CHOOSE_ITEM": "Select content to attach from '{{ name }}'",
+    "COPY": "Copy",
+    "LINK": "Create Link",
+    "COPY_ITEM": "Copy '{{ name }}' to...",
+    "LOCATION": "Location",
+    "MOVE": "Move",
+    "MOVE_ITEM": "Move '{{ name }}' to...",
+    "NO_RESULTS": "No results found",
+    "SEARCH": "Search",
+    "SEARCH_RESULTS": "Search results",
+    "SELECT_LIBRARY": "Select a Library",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "You can't upload a file whilst a search is still running",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "User doesn't have permission to upload content to the folder",
+    "REPOSITORY": "Repository",
+    "UPLOAD_FROM_DEVICE": "Upload from your device"
   },
   "OPERATION": {
     "SUCCESS": {
       "CONTENT": {
-        "COPY": "Копирование выполнено",
-        "MOVE": "Перенос выполнен"
+        "COPY": "Copy successful",
+        "MOVE": "Move successful"
       },
       "FOLDER": {
-        "COPY": "Копирование выполнено",
-        "MOVE": "Перенос выполнен"
+        "COPY": "Copy successful",
+        "MOVE": "Move successful"
       }
     },
     "ERROR": {
-      "CONFLICT": "Это имя уже используется, попробуйте другое.",
-      "UNKNOWN": "Действие не выполнено. Повторите попытку или обратитесь к IT-специалистам.",
-      "PERMISSION": "У вас нет доступа."
+      "CONFLICT": "This name is already in use, try a different name.",
+      "UNKNOWN": "The action was unsuccessful. Try again or contact your IT Team.",
+      "PERMISSION": "You don't have access to do this."
     }
   },
   "TAG": {
     "LABEL": {
-      "NEWTAG": "Новая метка"
+      "NEWTAG": "New Tag"
     },
     "MESSAGES": {
-      "EXIST": "Метка уже существует"
+      "EXIST": "Tag already exists"
     },
     "BUTTON": {
-      "ADD": "Добавить метку"
+      "ADD": "Add Tag"
     },
     "TAGS_CREATOR": {
-      "EXISTING_TAGS": "Существующие метки:",
-      "EXISTING_TAGS_SELECTION": "Выберите существующую метку:",
-      "NO_TAGS_CREATED": "Метки не созданы",
-      "NO_EXISTING_TAGS": "Существующих меток нет",
-      "TITLE": "Создать метки",
-      "CREATE_TAG": "Создать: {{tag}}",
-      "NAME": "Имя",
+      "EXISTING_TAGS": "Existing tags:",
+      "EXISTING_TAGS_SELECTION": "Select an existing Tag:",
+      "NO_TAGS_CREATED": "No Tags Created",
+      "NO_EXISTING_TAGS": "No Existing Tags",
+      "TITLE": "Create Tags",
+      "CREATE_TAG": "Create: {{tag}}",
+      "TAG_SEARCH_PLACEHOLDER": "Search Tags",
       "ERRORS": {
-        "EXISTING_TAG": "Метка уже существует",
-        "ALREADY_ADDED_TAG": "Метка уже добавлена",
-        "EMPTY_TAG": "Имя метки не может содержать только пробелы",
-        "REQUIRED": "Необходимо указать имя метки",
-        "FETCH_TAGS": "Ошибка при получении меток",
-        "CREATE_TAGS": "Ошибка при создании меток"
+        "EXISTING_TAG": "Tag already exists",
+        "ALREADY_ADDED_TAG": "Tag is already added",
+        "EMPTY_TAG": "Tag name can't contain only spaces",
+        "FETCH_TAGS": "Error while fetching the tags",
+        "CREATE_TAGS": "Error while creating the tags",
+        "SPECIAL_CHARACTERS": "Tag name cannot contain prohibited characters"
       },
       "TOOLTIPS": {
-        "DELETE_TAG": "Удалить метку",
-        "HIDE_INPUT": "Скрыть ввод"
+        "DELETE_TAG": "Delete tag"
       },
-      "TAGS_LOADING": "Загрузка меток",
-      "CREATE_TAGS_SUCCESS": "Метки успешно созданы"
+      "TAGS_LOADING": "Tags loading",
+      "CREATE_TAGS_SUCCESS": "Tags created successfully"
     }
   },
   "CATEGORIES_MANAGEMENT": {
-    "CATEGORIES_TITLE": "Категории",
-    "NO_CATEGORIES_CREATED": "Категории не созданы",
-    "NO_CATEGORIES_ASSIGNED": "Категории не назначены",
-    "ASSIGN_CATEGORIES": "Назначить категории",
-    "UNASSIGN_CATEGORY": "Отменить назначение категории",
-    "DELETE_CATEGORY": "Удалить категорию",
-    "EXISTING_CATEGORIES": "Существующие категории:",
-    "SELECT_EXISTING_CATEGORY": "Выберите существующую категорию:",
-    "NO_EXISTING_CATEGORIES": "Существующих категорий нет",
-    "GENERIC_CREATE": "Создать: {{name}}",
-    "NAME": "Имя категории",
-    "LOADING": "Загружается",
-    "HIDE_INPUT": "Скрыть ввод",
+    "CATEGORIES_TITLE": "Categories",
+    "NO_CATEGORIES_CREATED": "No Categories created",
+    "NO_CATEGORIES_ASSIGNED": "No Categories assigned",
+    "UNASSIGN_CATEGORY": "Unassign Category",
+    "DELETE_CATEGORY": "Delete Category",
+    "EXISTING_CATEGORIES": "Existing Categories:",
+    "SELECT_EXISTING_CATEGORY": "Select an existing Category:",
+    "NO_EXISTING_CATEGORIES": "No Existing Categories",
+    "GENERIC_CREATE": "Create: {{name}}",
+    "NAME": "Category name",
+    "LOADING": "Loading",
+    "NO_CATEGORIES_ADDED": "There are currently no categories added",
     "ERRORS": {
-      "NOT_FOUND": "Категории не найдены",
-      "REQUIRED": "Необходимо указать имя категории",
-      "EMPTY_CATEGORY": "Имя категории не может состоять только из пробелов",
-      "ALREADY_EXISTS": "Категория уже существует",
-      "DUPLICATED_CATEGORY": "Категория уже добавлена",
-      "CREATE_CATEGORIES": "Ошибка при создании категорий",
-      "EXISTING_CATEGORIES": "Некоторые категории уже существуют"
-    }
+      "NOT_FOUND": "Categories not found",
+      "REQUIRED": "Category name is required",
+      "EMPTY_CATEGORY": "Category name can't contain only spaces",
+      "ALREADY_EXISTS": "Category already exists",
+      "DUPLICATED_CATEGORY": "Category is already added",
+      "CREATE_CATEGORIES": "Error while creating categories",
+      "EXISTING_CATEGORIES": "Some categories already exist",
+      "SPECIAL_CHARACTERS": "Category name cannot contain prohibited characters",
+      "ENDS_WITH_DOT": "Category name cannot end with a dot"
+    },
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Search Categories"
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
-      "MINIMIZE": "Свернуть",
-      "MAXIMIZE": "Развернуть",
-      "CLOSE": "Закрыть",
-      "STOP_ALL": "Остановить загрузки",
-      "STOP_FILE": "Остановить загрузку",
-      "UPLOAD_SUCCESSFUL": "Загрузка выполнена"
+      "MINIMIZE": "Minimize",
+      "MAXIMIZE": "Maximize",
+      "CLOSE": "Close",
+      "STOP_ALL": "Stop uploads",
+      "STOP_FILE": "Stop upload",
+      "UPLOAD_SUCCESSFUL": "Upload successful"
     },
     "STATUS": {
-      "FILE_CANCELED_STATUS": "Oтменено",
-      "FILE_DONE_STATUS": "Загружено"
+      "FILE_CANCELED_STATUS": "Canceled",
+      "FILE_DONE_STATUS": "Uploaded"
     },
     "CONFIRMATION": {
       "BUTTON": {
-        "CANCEL": "Да",
-        "CONTINUE": "Нет"
+        "CANCEL": "Yes",
+        "CONTINUE": "No"
       },
       "MESSAGE": {
-        "TITLE": "Остановить загрузку",
-        "TEXT": "Остановить и отменить все текущие и ожидающие загрузки."
+        "TITLE": "Stop Upload",
+        "TEXT": "Stop and cancel all in-progress and pending uploads."
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "Версия файла {{ version }}",
-      "DIALOG": "Список загрузок",
-      "DIALOG_MAXIMIZE": "Развернуть диалоговое окно загрузки",
-      "DIALOG_MINIMIZE": "Свернуть диалоговое окно загрузки",
-      "DIALOG_CLOSE": "Закрыть диалоговое окно загрузки",
-      "STOP_ALL": "Остановить загрузки",
-      "UPLOAD_SUCCESSFUL": "Успешно загружен файл {{ file }}",
-      "STOP_FILE": "Остановить файл {{ file }}",
-      "STOP_FILE_UPLOAD": "Остановить загрузку файла {{ file }}",
-      "UPLOAD_FILE_ERROR": "Ошибка загрузки {{ error }}",
+      "VERSION": "File version {{ version }}",
+      "DIALOG": "Upload list",
+      "DIALOG_MAXIMIZE": "Maximize upload dialog",
+      "DIALOG_MINIMIZE": "Minimize upload dialog",
+      "DIALOG_CLOSE": "Close upload dialog",
+      "STOP_ALL": "Stop uploads",
+      "UPLOAD_SUCCESSFUL": "Uploaded successfully file {{ file }}",
+      "STOP_FILE": "Stop file {{ file }}",
+      "STOP_FILE_UPLOAD": "Stop file upload {{ file }}",
+      "UPLOAD_FILE_ERROR": "Upload error {{ error }}",
       "CONFIRMATION": {
-        "CANCEL": "Подтвердить отмену",
-        "CONTINUE": "Продолжить загрузку"
+        "CANCEL": "Confirm cancel",
+        "CONTINUE": "Continue upload"
       }
     }
   },
   "FILE_UPLOAD": {
     "BUTTON": {
-      "UPLOAD_FILE": "Выгрузить файл",
-      "UPLOAD_FOLDER": "Выгрузить папку",
-      "PERMISSION_CHECK_ERROR": "Разрешение проверки ошибок."
+      "UPLOAD_FILE": "Upload file",
+      "UPLOAD_FOLDER": "Upload folder",
+      "PERMISSION_CHECK_ERROR": "Error checking permission."
     },
     "VERSION": {
       "MESSAGES": {
-        "NO_ACCEPTED_FILE_TYPES": "Обратите внимание: настройка \"acceptedFilesType\" никак не влияет на загрузки новых версий. Тип файла останется таким же, как тип исходного файла.",
-        "INCOMPATIBLE_VERSION": "В качестве новой версии может быть загружен только файл того же типа."
+        "NO_ACCEPTED_FILE_TYPES": "Please note that the setting of \"acceptedFilesType\" has no effect for new version uploads. The file type will be the same as the original file's.",
+        "INCOMPATIBLE_VERSION": "Only a file of the same type may be uploaded as a new version."
       }
     },
     "MESSAGES": {
-      "UPLOAD_CANCELED": "Выгрузка отменена",
-      "UPLOAD_PROGRESS": "Выгружено {{ completed }} / {{ total }}",
-      "UPLOAD_ERROR": "Ошибка {{ total }} загрузки",
-      "UPLOAD_ERRORS": "Ошибка {{ total }} выгрузок",
-      "PROGRESS": "Идет выгрузка...",
-      "FOLDER_ALREADY_EXIST": "Папка {0} уже существует",
-      "FOLDER_NOT_SUPPORTED": "Данный браузер не поддерживает загрузку папок, используйте другой браузер",
-      "REMOVE_FILE_ERROR": "Ошибка удаления файла {{ fileName }}, повторите попытку или обратитесь к IT-специалистам.",
-      "REMOVE_FILES_ERROR": "Не удалось удалить следующее количество файлов: {{ total }}. Повторите попытку или обратитесь к IT-специалистам.",
-      "EXCEED_MAX_FILE_SIZE": "Размер файла {{ fileName }} больше допустимого значения"
+      "UPLOAD_CANCELED": "Upload canceled",
+      "UPLOAD_PROGRESS": "Uploaded {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "{{ total }} upload unsuccessful",
+      "UPLOAD_ERRORS": "{{ total }} uploads unsuccessful",
+      "PROGRESS": "Upload in progress...",
+      "FOLDER_ALREADY_EXIST": "The folder {0} already exists",
+      "FOLDER_NOT_SUPPORTED": "Folder upload isn't supported by your browser, try a different browser",
+      "REMOVE_FILE_ERROR": "{{ fileName }} couldn't be removed, try again or check with your IT Team.",
+      "REMOVE_FILES_ERROR": "{{ total }} files couldn't be removed, try again or check with your IT Team.",
+      "EXCEED_MAX_FILE_SIZE": "File {{ fileName }} is larger than the allowed file size"
     },
     "ACTION": {
-      "UNDO": "Отменить"
+      "UNDO": "Undo"
     },
     "ERRORS": {
-      "GENERIC": "Не удалось отправить. Обратитесь в службу поддержки, если проблему не удастся устранить.",
-      "500": "Внутренняя ошибка сервера. Повторите попытку или обратитесь в службу поддержки [500]",
-      "504": "Время сеанса сервера истекло. Повторите попытку или обратитесь в службу поддержки [504]",
-      "403": "Недостаточно разрешений для отправки в это местоположение [403]",
-      "404": "Местоположение, в которое выполняется отправка, больше не существует [404]",
-      "409": "Файл с таким именем уже существует [409]"
+      "GENERIC": "Upload unsuccessful. Contact IT if this problem persists",
+      "500": "Internal server error, try again or contact IT support [500]",
+      "504": "The server timed out, try again or contact IT support [504]",
+      "403": "Insufficient permissions to upload in this location [403]",
+      "404": "Upload location no longer exists [404]",
+      "409": "A file with the same name already exists [409]"
     },
     "ARIA-LABEL": {
-      "ERROR": "Ошибка загрузки"
+      "ERROR": "Upload error"
     }
   },
   "SEARCH": {
     "CONTROL": {},
     "BUTTON": {
-      "TOOLTIP": "Поиск",
-      "ARIA-LABEL": "Кнопка поиска"
+      "TOOLTIP": "Search",
+      "ARIA-LABEL": "Search button"
     },
     "INPUT": {
-      "ARIA-LABEL": "Данные для поиска"
+      "LABEL": "Search",
+      "PLACEHOLDER": "Search Query",
+      "ARIA-LABEL": "Search input"
     },
     "RESULTS": {
-      "SUMMARY": "Найдено результатов по поисковому запросу {{searchTerm}}: {{numResults}}",
-      "NONE": "Не найдено результатов по поисковому запросу {{searchTerm}}",
-      "ERROR": "Возникла проблема во время поиска — повторите попытку.",
+      "SUMMARY": "{{numResults}} result found for {{searchTerm}}",
+      "NONE": "No results found for {{searchTerm}}",
+      "ERROR": "We hit a problem during the search - try again.",
+      "WILL_CONTAIN": "Results will contain '{{searchTerm}}'",
       "COLUMNS": {
-        "NAME": "Отображаемое имя",
-        "MODIFIED_BY": "Изменено пользователем",
-        "MODIFIED_AT": "Изменено"
+        "NAME": "Display name",
+        "MODIFIED_BY": "Modified by",
+        "MODIFIED_AT": "Modified at"
       }
     },
     "FILTER": {
       "ACTIONS": {
-        "SEARCH": "Поиск",
-        "CLEAR": "Очистить",
-        "APPLY": "Применить",
-        "CLEAR-ALL": "Очистить все",
-        "SHOW-MORE": "Больше",
-        "SHOW-LESS": "показать меньше",
-        "ADD_OPTION": "Добавить вариант..."
+        "SEARCH": "Search",
+        "CLEAR": "Clear",
+        "APPLY": "Apply",
+        "CLEAR-ALL": "Clear all",
+        "SHOW-MORE": "Show more",
+        "SHOW-LESS": "Show less",
+        "ADD_OPTION": "Add Option..."
       },
       "BUTTONS": {
-        "CLOSE": "Закрыть",
-        "CLEAR": "Очистить",
-        "REMOVE": "Удалить",
-        "APPLY": "Применить",
+        "CLOSE": "Close",
+        "CLEAR": "Clear",
+        "REMOVE": "Remove",
+        "APPLY": "Apply",
         "CLEAR-ALL": {
-          "LABEL": "Очистить все",
-          "TOOLTIP": "Это действие отменяет все выделения"
+          "LABEL": "Clear all",
+          "TOOLTIP": "This will remove all selections"
         },
         "RESET-ALL": {
-          "LABEL": "Сбросить все",
-          "TOOLTIP": "Это действие сбрасывает все выделения и фильтры"
+          "LABEL": "Reset all",
+          "TOOLTIP": "This will reset all selections and all filters"
         }
       },
       "RANGE": {
-        "FROM": "От",
-        "TO": "До",
-        "FROM-DATE": "От",
-        "TO-DATE": "До",
-        "SELECT-FROM-DATE": "Выбрать с даты",
-        "SELECT-TO-DATE": "Выбрать по дату"
+        "FROM": "From",
+        "TO": "To",
+        "FROM-DATE": "From",
+        "TO-DATE": "To"
       },
       "VALIDATION": {
-        "REQUIRED-VALUE": "Обязательное значение",
-        "NO-DAYS": "Не выбрано число дней.",
-        "INVALID-FORMAT": "Недействительный формат",
-        "INVALID-DATE": "Недействительная дата. Дата должна быть указана в формате {{ requiredFormat }}",
-        "BEYOND-MAX-DATE": "Дата приходится на более поздний период, чем максимально допустимая дата.",
-        "INVALID-DATETIME": "Недопустимые дата и время. Дата и время должны иметь формат '{{ requiredFormat }}'",
-        "BEYOND-MAX-DATETIME": "Дата и время меньше максимальных."
+        "REQUIRED-VALUE": "Required value",
+        "NO-DAYS": "No days selected.",
+        "INVALID-FORMAT": "Invalid Format",
+        "INVALID-DATE": "Invalid date. The date must be in the format '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATE": "The date is beyond the maximum date.",
+        "INVALID-DATETIME": "Invalid datetime. The datetime must be in the format '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATETIME": "The datetime is beyond the maximum datetime."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "Список фильтров поиска",
-        "OPTIONS-SELECTION": "Выбор вариантов"
+        "SEARCH_FILTER": "Search Filter List",
+        "OPTIONS-SELECTION": "Options Selection"
       },
-      "ANY": "Любой"
+      "ANY": "Any",
+      "PEOPLE": "People"
+    },
+    "FACET_FIELDS": {
+      "MODIFIER_LABEL": "Modified by",
+      "CREATOR_LABEL": "Created by"
     },
     "ICONS": {
-      "ft_ic_raster_image": "Файл изображения",
-      "ft_ic_pdf": "Документ в формате PDF",
-      "ft_ic_ms_excel": "Файл Microsoft Excel",
-      "ft_ic_ms_word": "Документ Microsoft Word",
-      "ft_ic_ms_powerpoint": "Файл Microsoft PowerPoint",
-      "ft_ic_video": "Видеофайл",
-      "ft_ic_document": "Файл документа",
-      "ft_ic_website": "Веб-ресурс",
-      "ft_ic_archive": "Архивный файл",
-      "ft_ic_presentation": "Файл презентации",
-      "ft_ic_spreadsheet": "Файл электронной таблицы"
+      "ft_ic_raster_image": "Image file",
+      "ft_ic_pdf": "PDF document",
+      "ft_ic_ms_excel": "Microsoft Excel file",
+      "ft_ic_ms_word": "Microsoft Word document",
+      "ft_ic_ms_powerpoint": "Microsoft PowerPoint file",
+      "ft_ic_video": "Video file",
+      "ft_ic_document": "Document file",
+      "ft_ic_website": "Web resource",
+      "ft_ic_archive": "Archive file",
+      "ft_ic_presentation": "Presentation file",
+      "ft_ic_spreadsheet": "Spreadsheet file"
     },
     "DOCUMENT_LIST": {
       "COLUMNS": {
-        "DISPLAY_NAME": "Отображаемое имя",
-        "CREATED_BY": "Создано пользователем",
-        "CREATED_ON": "Создано"
+        "DISPLAY_NAME": "Display name",
+        "CREATED_BY": "Created by",
+        "CREATED_ON": "Created"
       },
       "ACTIONS": {
         "FOLDER": {
-          "DELETE": "Удалить",
-          "MOVE": "Переместить",
-          "COPY": "Копировать"
+          "DELETE": "Delete",
+          "MOVE": "Move",
+          "COPY": "Copy"
         },
         "DOCUMENT": {
-          "DOWNLOAD": "Скачать",
-          "DELETE": "Удалить",
-          "MOVE": "Переместить",
-          "COPY": "Копировать",
-          "PROCESS_ACTION": "Начать процесс"
+          "DOWNLOAD": "Download",
+          "DELETE": "Delete",
+          "MOVE": "Move",
+          "COPY": "Copy",
+          "PROCESS_ACTION": "Start Process"
         }
       }
     },
-    "UNKNOWN_CONFIGURATION": "Неизвестная конфигурация",
+    "UNKNOWN_CONFIGURATION": "Unknown Configuration",
     "SEARCH_HEADER": {
-      "TITLE": "Фильтр",
-      "TYPE": "Тип",
-      "FILTER_BY": "Фильтровать по {{ category }}",
-      "CLEAR": "Очистить",
-      "APPLY": "Применить",
+      "TITLE": "Filter",
+      "TYPE": "Type",
+      "FILTER_BY": "Filter by {{ category }}",
+      "ACTIVE_FILTER": "Active filter",
+      "CLEAR": "Clear",
+      "APPLY": "Apply",
       "FILTERS": {
         "NAME": {
-          "TITLE": "Имя",
-          "PLACEHOLDER": "Введите имя"
+          "TITLE": "Name",
+          "PLACEHOLDER": "Enter the name"
         },
         "TYPE": {
-          "TITLE": "Отметьте тип",
-          "FOLDER": "Папка",
-          "DOCUMENT": "Документ"
+          "TITLE": "Check type",
+          "FOLDER": "Folder",
+          "DOCUMENT": "Document"
         },
         "SIZE": {
-          "TITLE": "Размер контента (диапазон)",
-          "SMALL": "Маленький",
-          "MEDIUM": "Средний",
-          "LARGE": "Большой",
-          "HUGE": "Огромный"
+          "TITLE": "Content Size (range)",
+          "SMALL": "Small",
+          "MEDIUM": "Medium",
+          "LARGE": "Large",
+          "HUGE": "Huge"
         },
         "DATE": {
-          "TITLE": "Созданная дата (диапазон)"
+          "TITLE": "Created Date (range)"
         }
       }
     },
     "LOGICAL_SEARCH": {
-      "SEARCH_CHIP_INPUT": {
-        "ADD_PHRASE": "Добавить фразу..."
+      "MATCH_ALL": "ALL",
+      "MATCH_ALL_LABEL": "Match ALL of these words",
+      "MATCH_ALL_HINT": "Results will match all words entered here",
+      "MATCH_ANY": "ANY",
+      "MATCH_ANY_LABEL": "Match ANY of these words",
+      "MATCH_ANY_HINT": "Results will match any words entered here",
+      "MATCH_EXACT": "EXACT",
+      "MATCH_EXACT_LABEL": "Match this EXACT PHRASE",
+      "MATCH_EXACT_HINT": "Results will match this entire phrase",
+      "EXCLUDE": "EXCLUDE",
+      "EXCLUDE_LABEL": "EXCLUDE these words",
+      "EXCLUDE_HINT": "Results will exclude matches with these words"
+    },
+    "DATE_RANGE_ADVANCED": {
+      "OPTIONS": {
+        "ANYTIME": "Anytime",
+        "IN_LAST": "In the last",
+        "BETWEEN": "Between"
       },
-      "MATCH_ALL": "ВСЕ",
-      "MATCH_ALL_LABEL": "Совпадение со ВСЕМИ этими фразами",
-      "MATCH_ANY": "ЛЮБАЯ",
-      "MATCH_ANY_LABEL": "Совпадение с ЛЮБОЙ из этих фраз",
-      "EXCLUDE": "ИСКЛЮЧИТЬ",
-      "EXCLUDE_LABEL": "ИСКЛЮЧИТЬ эти фразы"
+      "IN_LAST_LABELS": {
+        "DAYS": "Days",
+        "WEEKS": "Weeks",
+        "MONTHS": "Months",
+        "QUANTITY": "Quantity"
+      },
+      "IN_LAST_DISPLAY_LABELS": {
+        "DAYS": "In the last {{value}} days",
+        "WEEKS": "In the last {{value}} weeks",
+        "MONTHS": "In the last {{value}} months"
+      },
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "Start Date",
+        "END_DATE": "End Date",
+        "DATE_RANGE": "Date Range"
+      },
+      "ERROR": {
+        "IN_LAST": "Value required",
+        "START_DATE": {
+          "REQUIRED": "Start Date required",
+          "INVALID_FORMAT": "Start Date invalid. The date must be in the format '{{ requiredFormat }}'"
+        },
+        "END_DATE": {
+          "REQUIRED": "End Date required",
+          "INVALID_FORMAT": "End Date invalid. The date must be in the format '{{ requiredFormat }}'"
+        }
+      },
+      "ARIA_LABEL": {
+        "NUMBER_INPUT": "Number input"
+      }
+    },
+    "SEARCH_PROPERTIES": {
+      "FILE_SIZE": "File Size",
+      "FILE_SIZE_PLACEHOLDER": "Enter file size",
+      "FILE_SIZE_OPERATOR": {
+        "AT_LEAST": "At Least",
+        "AT_MOST": "At Most",
+        "EXACTLY": "Exactly"
+      },
+      "FILE_SIZE_UNIT_ABBREVIATION": {
+        "KB": "KB",
+        "MB": "MB",
+        "GB": "GB"
+      },
+      "FILE_TYPE": "File Type",
+      "FILE_TYPE_PLACEHOLDER": "Add file type",
+      "ACCESSIBILITY": {
+        "CONDITION": "Condition",
+        "SIZE_VALUE": "File size value",
+        "UNIT": "Unit"
+      }
     }
   },
   "PERMISSION": {
-    "LACKOF": "У вас нет разрешения {{permission}}, чтобы {{action}} {{type}}"
+    "LACKOF": "You don't have the {{permission}} permission to {{action}} the {{type}}"
   },
   "METADATA": {
     "BASIC": {
-      "HEADER": "Свойства",
-      "NAME": "Имя",
-      "TITLE": "Заголовок",
-      "DESCRIPTION": "Описание",
-      "AUTHOR": "Автор",
-      "MIMETYPE": "Тип MIME",
-      "SIZE": "Размер",
-      "CREATOR": "Создатель",
-      "CREATED_DATE": "Дата создания",
-      "MODIFIER": "Редактор",
-      "MODIFIED_DATE": "Дата изменения",
-      "CONTENT_TYPE": "Тип содержимого",
-      "TAGS": "Метки",
-      "ADD_TAG_TOOLTIP": "Добавить метку"
+      "HEADER": "Properties",
+      "NAME": "Name",
+      "TITLE": "Title",
+      "DESCRIPTION": "Description",
+      "AUTHOR": "Author",
+      "MIMETYPE": "Mimetype",
+      "SIZE": "Size",
+      "CREATOR": "Creator",
+      "CREATED_DATE": "Created Date",
+      "MODIFIER": "Modifier",
+      "MODIFIED_DATE": "Modified Date",
+      "CONTENT_TYPE": "Content Type",
+      "TAGS": "Tags",
+      "NO_TAGS_ADDED": "There are currently no tags added",
+      "NO_ITEMS_MESSAGE": "There are currently no {{ groupTitle }} added",
+      "SAVE_OR_DISCARD_CHANGES": "Save or discard changes to continue"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
-        "TITLE": "Изменить тип содержимого",
-        "DESCRIPTION": "Внесение этого изменения в тип содержимого навсегда добавит в документ некоторые свойства и сохраненные метаданные.",
-        "CONFIRM": "Вы уверены, что хотите изменить тип содержимого?",
-        "CANCEL": "Отмена",
-        "APPLY": "Сохранить изменения",
-        "VIEW_DETAILS": "Посмотреть детали",
+        "TITLE": "Change content type",
+        "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
+        "CONFIRM": "Are you sure you want to change the content type?",
+        "CANCEL": "CANCEL",
+        "APPLY": "SAVE CHANGES",
+        "VIEW_DETAILS": "View details",
         "PROPERTY": {
-          "NAME": "Имя",
-          "DESCRIPTION": "Описание",
-          "DATA_TYPE": "Тип данных"
+          "NAME": "Name",
+          "DESCRIPTION": "Description",
+          "DATA_TYPE": "Data type"
         }
       }
     },
     "ERRORS": {
-      "GENERIC": "Ошибка обновления свойства",
-      "409": "Дублирование имени подкаталога не допускается [409]",
-      "422": "Недопустимое значение свойства"
+      "GENERIC": "Error updating property",
+      "409": "Duplicate child name not allowed [409]",
+      "422": "Invalid property value"
     }
   },
   "SHARE": {
-    "PUBLIC-LINK": "Общедоступная ссылка",
-    "DIALOG-TITLE": "Открыть доступ",
-    "DESCRIPTION": "Нажмите ссылку ниже, чтобы скопировать её в буфер обмена.",
-    "TITLE": "Создать ссылку",
-    "SHARE-LINK": "Поделиться ссылкой",
-    "SHARABLE-LINK-CREATED": "Общая ссылка создана",
-    "PUBLIC-CONTENT": "Это содержимое общедоступно для всех, у кого есть эта ссылка",
-    "LINK-WITH-EXPIRY-SETTINGS": "Создана новая ссылка с параметрами срока действия",
-    "EXPIRES": "Истекает",
-    "LINK-EXPIRY-DATE": "Срок действия ссылки",
-    "EXPIRATION-LABEL": "Дата истечения срока действия",
-    "EXPIRATION-PLACEHOLDER": "ММ/ДД/ГГГГ",
-    "CLIPBOARD-MESSAGE": "Ссылка скопирована в буфер обмена",
-    "CLOSE": "Закрыть",
-    "COPY_BUTTON_LABEL": "Копировать ссылку",
+    "PUBLIC-LINK": "Public link",
+    "DIALOG-TITLE": "Share",
+    "DESCRIPTION": "Click the link below to copy it to the clipboard.",
+    "TITLE": "Link to share",
+    "SHARE-LINK": "Share Link",
+    "SHARABLE-LINK-CREATED": "Sharable Link is Created",
+    "PUBLIC-CONTENT": "This content is publicly available to anyone with this link",
+    "LINK-WITH-EXPIRY-SETTINGS": "New link has been generated with expiry settings",
+    "EXPIRES": "Expires on",
+    "LINK-EXPIRY-DATE": "Link Expiry Date",
+    "EXPIRATION-LABEL": "Expiration Date. Enter date in MM/DD/YYYY format",
+    "EXPIRATION-PLACEHOLDER": "MM/DD/YYYY",
+    "CLIPBOARD-MESSAGE": "Link copied to the clipboard",
+    "CLOSE": "Close",
+    "COPY_BUTTON_LABEL": "Copy link",
     "CONFIRMATION": {
-      "DIALOG-TITLE": "Удалить ссылку",
-      "MESSAGE": "Эта ссылка будет удалена, и новая ссылка будет создана при следующем совместном использовании этого файла",
-      "CANCEL": "Отмена",
-      "REMOVE": "Удалить"
+      "DIALOG-TITLE": "Remove this shared link",
+      "MESSAGE": "This link will be deleted and a new link will be created next time this file is shared",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove"
     },
-    "UNSHARE_ERROR": "Ошибка снятия этого файла с публикации",
-    "UNSHARE_PERMISSION_ERROR": "У вас нет разрешения на снятие этого файла с публикации"
+    "UNSHARE_ERROR": "Error unsharing this file",
+    "UNSHARE_PERMISSION_ERROR": "You don't have permission to unshare this file",
+    "INVALID_DATE_ERROR": "Invalid date"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
-      "INHERITED": "Унаследовано",
-      "AUTHORITY_ID": "Идентификатор полномочий",
-      "ROLE": "Роль",
-      "LOCALLY_SET": "Установлено локально",
-      "NO_PERMISSIONS": "Нет разрешений"
+      "INHERITED": "Inherited",
+      "AUTHORITY_ID": "Authority ID",
+      "ROLE": "Role",
+      "LOCALLY_SET": "Locally set",
+      "NO_PERMISSIONS": "No permissions"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "Искать пользователей или группы для добавления",
-      "TITLE": "Добавить разрешение",
-      "TYPE-MESSAGE": "Введите любой символ, чтобы начать поиск групп или людей",
-      "NO-RESULT": "Ничего не найдено по этому запросу",
-      "SELECT-ACTION": "ВЫБРАТЬ",
-      "ADD-ACTION": "Добавить",
-      "CLOSE-ACTION": "Отмена",
-      "BASE-DIALOG-TITLE": "Искать группу или людей для добавления...",
-      "EVERYONE": "Вcе",
-      "USER-GROUP-LIST": "Пользователь или список групп"
+      "SEARCH": "Search for users or groups to add",
+      "TITLE": "Add permission",
+      "TYPE-MESSAGE": "Type something to start searching groups or people",
+      "NO-RESULT": "No result found for this search",
+      "SELECT-ACTION": "SELECT",
+      "ADD-ACTION": "ADD",
+      "CLOSE-ACTION": "CANCEL",
+      "BASE-DIALOG-TITLE": "Search a group or people to add...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "Add user or group permission",
+      "EVERYONE": "EVERYONE",
+      "USER-GROUP-LIST": "User or Group List",
+      "REMOVE_USER_GROUP": "Remove"
     },
     "COLUMN": {
-      "NAME": "Пользователи и группы ({{ count }})",
-      "LOCATION": "Местоположение",
-      "BULK-ROLE": "Установить все роли:"
+      "NAME": "Users and Groups ({{ count }})",
+      "LOCATION": "Location",
+      "BULK-ROLE": "Set all role to"
     },
     "LABELS": {
-      "HIDE": "Спрятать",
-      "SHOW": "Показать",
-      "ON": "Включено",
-      "OFF": "Выключено",
-      "DIRECT-PERMISSIONS": "Напрямую применённое разрешение",
-      "INHERITED-PERMISSIONS": "Унаследованное разрешение",
-      "INHERITED-SUBTITLE": "Пользователи или группы ({{count}}) наследуют разрешение из родительской папки",
-      "SELECT-ROLE": "Выбрать роль",
-      "INHERITED_PERMISSION_TOGGLE": "Включить наследуемое разрешение"
+      "HIDE": "Hide",
+      "SHOW": "Show",
+      "ON": "On",
+      "OFF": "Off",
+      "DIRECT-PERMISSIONS": "Directly Applied Permission",
+      "INHERITED-PERMISSIONS": "Inherited Permission",
+      "INHERITED-SUBTITLE": "{{count}} users or groups are inheriting permission from a parent folder",
+      "SELECT-ROLE": "Select role",
+      "INHERITED_PERMISSION_TOGGLE": "Toggle Inherited Permission"
     },
     "MESSAGE": {
-      "EMPTY-PERMISSION": "Пользователей/групп нет",
-      "EMPTY-SUBTITLE": "Добавить пользователей/группу для управления разрешением.",
-      "NO-MEMBERS": "Добавить группы или людей для управления ролями",
-      "PERMISSION-BULK-UPDATE-SUCCESS": "Обновлено пользователей: {{user}}, групп: {{group}}",
-      "PERMISSION-UPDATE-SUCCESS": "Пользователь/группа обновлена",
-      "PERMISSION-UPDATE-FAIL": "Не удалось обновить пользователя/группу",
-      "PERMISSION-BULK-DELETE-SUCCESS": "Удалено пользователей: {{user}}, групп: {{group}}",
-      "PERMISSION-DELETE-SUCCESS": "Пользователь/группа удалена",
-      "PERMISSION-DELETE-FAIL": "Не удалось удалить пользователя/группу",
-      "PERMISSION-ADD-SUCCESS": "Добавлено пользователей: {{user}}, групп: {{group}}",
-      "PERMISSION-ADD-FAIL": "Не удалось добавить пользователя/группу",
-      "INHERIT-ENABLE-SUCCESS": "Включено унаследованное разрешение",
-      "INHERIT-DISABLE-SUCCESS": "Отключено унаследованное разрешение",
-      "TOGGLE-PERMISSION-FAILED": "Не удалось переключить унаследованное разрешение"
+      "EMPTY-PERMISSION": "No users/groups",
+      "EMPTY-SUBTITLE": "Add user/group to manage permission.",
+      "NO-MEMBERS": "Add groups or people to manage roles",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "Updated {{user}} user(s) {{group}} group(s)",
+      "PERMISSION-UPDATE-SUCCESS": "User/Group updated",
+      "PERMISSION-UPDATE-FAIL": "Failed to update user/group",
+      "PERMISSION-BULK-DELETE-SUCCESS": "Deleted {{user}} user(s) {{group}} group(s)",
+      "PERMISSION-DELETE-SUCCESS": "User/Group deleted",
+      "PERMISSION-DELETE-FAIL": "Failed to delete user/group",
+      "PERMISSION-ADD-SUCCESS": "Added {{user}} user(s) {{group}} group(s)",
+      "PERMISSION-ADD-FAIL": "Failed to add user/group",
+      "INHERIT-ENABLE-SUCCESS": "Enabled inherited permission",
+      "INHERIT-DISABLE-SUCCESS": "Disabled inherited permission",
+      "TOGGLE-PERMISSION-FAILED": "Failed to toggle inherit Permission"
     },
     "ACTION": {
-      "DELETE": "Удалить",
-      "ADD-PERMISSION": "Добавить пользователя или группу"
+      "DELETE": "Delete",
+      "ADD-PERMISSION": "Add User or Group"
     },
     "ERROR": {
-      "NOT-FOUND": "Этот элемент или больше не существует, или у вас нет разрешения на просмотр.",
-      "DUPLICATE-PERMISSION": "Одно или несколько установленных вами разрешений уже присутствует: {{list}}",
-      "NOT-ALLOWED": "У вас нет прав на изменение разрешений"
+      "NOT-FOUND": "This item no longer exists or you don't have permission to view it.",
+      "DUPLICATE-PERMISSION": "One or more of the permissions you have set is already present : {{list}}",
+      "NOT-ALLOWED": "You are not allowed to change permissions"
     }
   },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "Group icon",
+    "GROUP_USER_SELECTED_ALT": "Selected group or user icon"
+  },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "Не указан идентификатор узла!",
+    "MISSING-ID": "No nodeId provided!",
     "ACCESSIBILITY": {
-      "ARIA_LABEL": "Переключить {{ name }}"
+      "ARIA_LABEL": "Toggle {{ name }}"
     }
   },
   "ADF-TREE": {
-    "LOAD-MORE-BUTTON": "Загрузить еще {{ name }}"
+    "LOAD-MORE-BUTTON": "Load more {{ name }}",
+    "ACTIONS": {
+      "TOOLTIP": "Open actions menu"
+    },
+    "ARIA": {
+      "SELECTED": "{{ name }} selected",
+      "DESELECTED": "{{ name }} deselected"
+    }
   },
   "LIBRARY": {
     "DIALOG": {
-      "CREATE_TITLE": "Создание библиотеки",
-      "CREATE": "Создать",
-      "UPDATE": "Обновить",
-      "EDIT": "Редактировать",
-      "CANCEL": "Отмена",
+      "CREATE_TITLE": "Create Library",
+      "CREATE": "Create",
+      "UPDATE": "Update",
+      "EDIT": "Edit",
+      "CANCEL": "Cancel",
       "FORM": {
-        "DESCRIPTION": "Описание",
-        "SITE_ID": "Идентификатор библиотеки",
-        "NAME": "Имя",
-        "VISIBILITY": "Видимость"
+        "DESCRIPTION": "Description",
+        "SITE_ID": "Library ID",
+        "NAME": "Name",
+        "VISIBILITY": "Visibility"
       }
     },
     "ROLE": {
-      "MANAGER": "Менеджер",
-      "COLLABORATOR": "Редактор",
-      "CONTRIBUTOR": "Писатель",
-      "CONSUMER": "Читатель",
-      "NONE": "Не является участником"
+      "MANAGER": "Manager",
+      "COLLABORATOR": "Collaborator",
+      "CONTRIBUTOR": "Contributor",
+      "CONSUMER": "Consumer",
+      "NONE": "Not a member"
     },
     "VISIBILITY": {
-      "PRIVATE": "Частный",
-      "PUBLIC": "Общедоступный",
-      "MODERATED": "Модерируемый"
+      "PRIVATE": "Private",
+      "PUBLIC": "Public",
+      "MODERATED": "Moderated"
     },
     "HINTS": {
-      "SITE_TITLE_EXISTS": "Библиотека с таким именем уже существует"
+      "SITE_TITLE_EXISTS": "Library name already in use"
     },
     "ERRORS": {
-      "GENERIC": "Возникла проблема",
-      "EXISTENT_SITE": "Идентификатор библиотеки недоступен. Попробуйте использовать другой идентификатор библиотеки.",
-      "CONFLICT": "Этот идентификатор библиотеки уже используется. Проверьте корзину.",
-      "ID_TOO_LONG": "Имя URL должно содержать не более 72 символов",
-      "DESCRIPTION_TOO_LONG": "Описание должно содержать не более 512 символов",
-      "TITLE_TOO_LONG": "Название должно содержать не более 256 символов",
-      "TITLE_TOO_SHORT": "Длина заголовка должна быть не менее 2 символов",
-      "ILLEGAL_CHARACTERS": "Используйте только буквы и цифры",
-      "ONLY_SPACES": "Имя библиотеки не может состоять только из пробелов",
-      "LIBRARY_UPDATE_ERROR": "Произошла ошибка при обновлении свойств библиотеки"
+      "GENERIC": "We hit a problem",
+      "EXISTENT_SITE": "This Library ID isn't available. Try a different Library ID.",
+      "CONFLICT": "This Library ID is already used. Check the trashcan.",
+      "ID_TOO_LONG": "Use 72 characters or less for the URL name",
+      "DESCRIPTION_TOO_LONG": "Use 512 characters or less for description",
+      "TITLE_TOO_LONG": "Use 256 characters or less for title",
+      "TITLE_TOO_SHORT": "Title must be at least 2 characters long",
+      "ILLEGAL_CHARACTERS": "Use numbers and letters only",
+      "ONLY_SPACES": "Library name can't contain only spaces",
+      "LIBRARY_UPDATE_ERROR": "There was an error updating library properties",
+      "NAME_REQUIRED": "Library name is required",
+      "ID_REQUIRED": "Library ID is required"
     },
     "SUCCESS": {
-      "LIBRARY_UPDATED": "Свойства библиотеки обновлены"
+      "LIBRARY_UPDATED": "Library properties updated"
     }
   },
   "BREADCRUMB": {
     "ARIA-LABEL": {
-      "BREADCRUMB": "Иерархия",
-      "DROPDOWN": "Выпадающий список"
+      "BREADCRUMB": "Breadcrumb navigation",
+      "DROPDOWN": "Open breadcrumb menu for {{folderName}}"
+    },
+    "HEADER": {
+      "SELECTED": "Selected ({{ count }})"
     }
   },
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
-      "ARIA_LABEL": "Открыть {{ name }}"
+      "ARIA_LABEL": "Open {{ name }}"
     }
   },
   "ADF-ASPECT-LIST": {
-    "PROPERTY_NAME": "Тип содержимого",
-    "DESCRIPTION": "Описание",
-    "DATA_TYPE": "Тип данных",
+    "PROPERTY_NAME": "Property Name",
+    "DESCRIPTION": "Description",
+    "DATA_TYPE": "Data Type",
     "DIALOG": {
-      "TITLE": "Имя свойства",
-      "DESCRIPTION": "Управляйте свойствами, связанными с выбранным файлом (ами). Выберите один из аспектов свойств, перечисленных ниже, чтобы раскрыть и применить дополнительные метаданные и функциональность",
-      "RESET": "Сброс",
-      "CLEAR": "Очистить",
-      "CANCEL": "Отмена",
-      "APPLY": "Применить",
-      "OVER-TABLE-MESSAGE": "Выберите аспекты свойства",
-      "SELECTED": "Выбрано"
+      "TITLE": "Customize Properties",
+      "DESCRIPTION": "Manage the properties associated with selected file(s). Choose from property aspects listed below, to expose and apply additional metadata and functionality",
+      "RESET": "Reset",
+      "CLEAR": "Clear",
+      "CANCEL": "Cancel",
+      "APPLY": "Apply",
+      "OVER-TABLE-MESSAGE": "Select property aspects",
+      "SELECTED": "Selected"
     }
   },
   "NODE_COUNTER": {
-    "SELECTED_COUNT": "Выбрано {{ count }}"
+    "SELECTED_COUNT": "{{ count }} selected"
   },
   "TAG_NODE_LIST": {
-    "VIEW_MORE": "Просмотреть еще {{ count }}"
+    "VIEW_MORE": "View {{ count }} more"
   },
-  "swsdp": "Пример: проект дизайна веб-сайта",
+  "swsdp": "Sample: Web Site Design Project",
   "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
     "ERRORS": {
-      "INVALID_RECEIVER_EMAIL": "Адрес электронной почты получателя(-ей) недействителен, обратитесь в службу поддержки.",
-      "INVALID_SENDER_EMAIL": "Перед запросом на присоединение убедитесь, что у вас есть действительный адрес электронной почты.",
-      "JOIN_CANCEL_FAILED": "Не удается отменить запрос на присоединение",
-      "JOIN_REQUEST_FAILED": "Не удается присоединиться к библиотеке"
+      "INVALID_RECEIVER_EMAIL": "Recipient(s) email address not valid, contact IT.",
+      "INVALID_SENDER_EMAIL": "Your email address must be valid before requesting to join.",
+      "JOIN_CANCEL_FAILED": "Cannot cancel your join request",
+      "JOIN_REQUEST_FAILED": "Cannot join the library"
     },
     "INFO": {
-      "JOINED": "Библиотека присоединена",
-      "JOIN_CANCELED": "Запрос на присоединение к этой библиотеке отменен",
-      "JOIN_REQUESTED": "Отправлен запрос на присоединение к этой библиотеке"
+      "JOINED": "Library joined",
+      "JOIN_CANCELED": "Canceled the request to join the library",
+      "JOIN_REQUESTED": "Request sent to join this library"
+    }
+  },
+  "NODE_FAVORITE_DIRECTIVE": {
+    "MESSAGES": {
+      "NODE_ADDED": "Added {{ name }} to favorites",
+      "NODES_ADDED": "Added {{ number }} items to favorites",
+      "NODE_REMOVED": "Removed {{ name }} from favorites",
+      "NODES_REMOVED": "Removed {{ number }} items from favorites"
     }
   }
 }

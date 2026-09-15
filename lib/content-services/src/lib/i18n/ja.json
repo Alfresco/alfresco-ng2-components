@@ -1,638 +1,740 @@
 {
   "COMMON": {
-    "APPLY": "適用",
-    "CANCEL": "キャンセル"
+    "APPLY": "Apply",
+    "CANCEL": "Cancel",
+    "NAME": "Name",
+    "CLEAR": "Clear"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
-      "RESTORE": "復元",
-      "DELETE": "削除",
-      "DOWNLOAD": "ダウンロード",
-      "VIEW": "表示",
+      "RESTORE": "Restore",
+      "DELETE": "Delete",
+      "DOWNLOAD": "Download",
+      "VIEW": "View",
       "UPLOAD": {
-        "TITLE": "新しいバージョンのアップロード",
-        "TOOLTIP": "制限事項: 作成する新しいバージョンのファイルと同じ名前のファイルをアップロードする必要があります",
-        "MAJOR": "大きな変更 ({{version}})",
-        "MINOR": "小さな変更 ({{version}})",
-        "COMMENT": "コメントを残す",
-        "ADD": "新しいバージョンを追加する",
-        "CANCEL": "キャンセル"
+        "TITLE": "Upload new version",
+        "TOOLTIP": "Restriction: you must upload a file with the same name to create a new version of it",
+        "MAJOR": "major changes ({{version}})",
+        "MINOR": "minor changes ({{version}})",
+        "COMMENT": "Leave a comment",
+        "ADD": "Add New Version",
+        "CANCEL": "Cancel",
+        "VERSION_TYPE_LABEL": "Select version type"
       }
     },
     "CONFIRM_DELETE": {
-      "TITLE": "バージョンの削除",
-      "MESSAGE": "削除したバージョンは復元できません。削除しますか?",
-      "YES_LABEL": "はい",
-      "NO_LABEL": "いいえ"
+      "TITLE": "Delete version",
+      "MESSAGE": "Deleted file versions cannot be restored. Continue?",
+      "YES_LABEL": "Yes",
+      "NO_LABEL": "No"
     },
-    "MANAGE_VERSION_OPTIONS": "バージョンオプションの管理"
+    "MANAGE_VERSION_OPTIONS": "Manage version options"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "バージョンの管理",
-      "CLOSE": "閉じる"
+      "TITLE": "Manage Versions",
+      "CLOSE": "Close"
     },
     "DIALOG_UPLOAD": {
-      "TITLE": "新しいバージョンのアップロード",
-      "CANCEL": "キャンセル",
-      "UPLOAD": "アップロード"
+      "TITLE": "Upload New Version",
+      "CANCEL": "Cancel",
+      "UPLOAD": "Upload"
     }
   },
   "ADF_VERSION_COMPARISON": {
-    "CURRENT_VERSION": "現在",
-    "NEW_VERSION": "新規",
+    "CURRENT_VERSION": "Current",
+    "NEW_VERSION": "New",
     "ACCESSIBILITY": {
-      "ICON_TEXT": "アイテムタイプ {{ type }}",
-      "ARROW_ICON": "右矢印アイコン"
+      "ICON_TEXT": "Item type {{ type }}",
+      "ARROW_ICON": "Arrow right icon"
     }
   },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
-      "HEADER": "このフォルダは空です"
+      "HEADER": "This folder is empty"
     },
-    "NO_PERMISSION": "このファイルまたはフォルダを表示する権限がありません。",
+    "NO_PERMISSION": "You don't have permission to view this file or folder.",
     "LAYOUT": {
-      "CREATED": "作成日",
-      "CREATED_BY": "作成者",
-      "THUMBNAIL": "サムネイル",
-      "NAME": "名前",
-      "LOCATION": "場所",
-      "SIZE": "サイズ",
-      "DELETED_ON": "削除済み",
-      "DELETED_BY": "削除者",
-      "STATUS": "ステータス",
-      "MODIFIED_ON": "変更日",
-      "MODIFIED_BY": "変更者",
-      "SHARED_BY": "共有者",
-      "LOAD_MORE": "もっと見る"
+      "CREATED": "Created",
+      "CREATED_BY": "Created by",
+      "THUMBNAIL": "Thumbnail",
+      "NAME": "Name",
+      "LOCATION": "Location",
+      "SIZE": "Size",
+      "DELETED_ON": "Deleted",
+      "DELETED_BY": "Deleted by",
+      "STATUS": "Status",
+      "MODIFIED_ON": "Modified",
+      "MODIFIED_BY": "Modified by",
+      "SHARED_BY": "Shared by",
+      "LOAD_MORE": "Load more"
     },
     "MENU_ACTIONS": {
-      "VIEW": "表示",
-      "REMOVE": "削除",
-      "DOWNLOAD": "ダウンロード"
+      "VIEW": "View",
+      "REMOVE": "Remove",
+      "DOWNLOAD": "Download"
     },
-    "LOADER_LABEL": "ドキュメントリストローダー",
+    "LOADER_LABEL": "Document list loader",
     "FILE_AUTO_DOWNLOAD_DIALOG": {
-      "HEADER": "プレビューの読み込みの応答なし",
-      "LABEL": "このドキュメントをダウンロードして表示するか、キャンセルしてプレビュー無しで続行します。",
+      "HEADER": "Preview loading unresponsive",
+      "LABEL": "Download to view this document, or cancel to continue without preview.",
       "ACTIONS": {
-        "CANCEL": "キャンセル",
-        "DOWNLOAD": "ダウンロード"
+        "CANCEL": "Cancel",
+        "DOWNLOAD": "Download"
       }
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
-      "ACTION_CREATE": "作成...",
-      "ACTION_NEW_FOLDER": "新しいフォルダ",
-      "CREATE": "作成",
-      "CANCEL": "キャンセル"
+      "ACTION_CREATE": "Create...",
+      "ACTION_NEW_FOLDER": "New Folder",
+      "CREATE": "Create",
+      "CANCEL": "Cancel"
     }
   },
   "DROPDOWN": {
-    "PLACEHOLDER_LABEL": "サイトリスト",
-    "MY_FILES_OPTION": "あなたのファイル"
+    "PLACEHOLDER_LABEL": "Site List",
+    "MY_FILES_OPTION": "My files"
   },
   "NODE_SELECTOR": {
-    "CANCEL": "キャンセル",
-    "CHOOSE": "選択",
-    "ATTACH": "添付",
-    "CHOOSE_ITEM": "'{{ name }}' から添付するコンテンツを選択してください",
-    "COPY": "コピー",
-    "COPY_ITEM": "'{{ name }}' のコピー先...",
-    "LOCATION": "場所",
-    "MOVE": "移動",
-    "MOVE_ITEM": "'{{ name }}' の移動先...",
-    "NO_RESULTS": "一致するアイテムはありません",
-    "SEARCH": "検索",
-    "SEARCH_RESULTS": "検索結果",
-    "SELECT_LIBRARY": "ライブラリの選択",
-    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "検索がまだ実行中のため、ファイルをアップロードできません",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "ユーザーに、コンテンツをフォルダにアップロードする権限がありません",
-    "REPOSITORY": "リポジトリ",
-    "UPLOAD_FROM_DEVICE": "使用中のデバイスからアップロード"
+    "CANCEL": "Cancel",
+    "CHOOSE": "Select",
+    "ATTACH": "Attach",
+    "CHOOSE_ITEM": "Select content to attach from '{{ name }}'",
+    "COPY": "Copy",
+    "LINK": "Create Link",
+    "COPY_ITEM": "Copy '{{ name }}' to...",
+    "LOCATION": "Location",
+    "MOVE": "Move",
+    "MOVE_ITEM": "Move '{{ name }}' to...",
+    "NO_RESULTS": "No results found",
+    "SEARCH": "Search",
+    "SEARCH_RESULTS": "Search results",
+    "SELECT_LIBRARY": "Select a Library",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "You can't upload a file whilst a search is still running",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "User doesn't have permission to upload content to the folder",
+    "REPOSITORY": "Repository",
+    "UPLOAD_FROM_DEVICE": "Upload from your device"
   },
   "OPERATION": {
     "SUCCESS": {
       "CONTENT": {
-        "COPY": "コピーが完了しました",
-        "MOVE": "移動が完了しました"
+        "COPY": "Copy successful",
+        "MOVE": "Move successful"
       },
       "FOLDER": {
-        "COPY": "コピーが完了しました",
-        "MOVE": "移動が完了しました"
+        "COPY": "Copy successful",
+        "MOVE": "Move successful"
       }
     },
     "ERROR": {
-      "CONFLICT": "この名前はすでに使用されています。別の名前を使用してください。",
-      "UNKNOWN": "処理が失敗しました。もう一度操作をやり直すか、IT 担当者に連絡してください。",
-      "PERMISSION": "この処理を行うための権限がありません。"
+      "CONFLICT": "This name is already in use, try a different name.",
+      "UNKNOWN": "The action was unsuccessful. Try again or contact your IT Team.",
+      "PERMISSION": "You don't have access to do this."
     }
   },
   "TAG": {
     "LABEL": {
-      "NEWTAG": "新しいタグ"
+      "NEWTAG": "New Tag"
     },
     "MESSAGES": {
-      "EXIST": "タグはすでに存在します"
+      "EXIST": "Tag already exists"
     },
     "BUTTON": {
-      "ADD": "タグの追加"
+      "ADD": "Add Tag"
     },
     "TAGS_CREATOR": {
-      "EXISTING_TAGS": "既存のタグ",
-      "EXISTING_TAGS_SELECTION": "既存のタグの選択：",
-      "NO_TAGS_CREATED": "作成されたタグはありません",
-      "NO_EXISTING_TAGS": "既存のタグはありません",
-      "TITLE": "タグの作成",
-      "CREATE_TAG": "作成: {{tag}}",
-      "NAME": "名前",
+      "EXISTING_TAGS": "Existing tags:",
+      "EXISTING_TAGS_SELECTION": "Select an existing Tag:",
+      "NO_TAGS_CREATED": "No Tags Created",
+      "NO_EXISTING_TAGS": "No Existing Tags",
+      "TITLE": "Create Tags",
+      "CREATE_TAG": "Create: {{tag}}",
+      "TAG_SEARCH_PLACEHOLDER": "Search Tags",
       "ERRORS": {
-        "EXISTING_TAG": "タグはすでに存在します",
-        "ALREADY_ADDED_TAG": "タグはすでに追加されています",
-        "EMPTY_TAG": "タグ名をスペースだけにすることはできません",
-        "REQUIRED": "タグ名は必須です",
-        "FETCH_TAGS": "タグの取得中にエラーが発生しました",
-        "CREATE_TAGS": "タグの作成中にエラーが発生しました"
+        "EXISTING_TAG": "Tag already exists",
+        "ALREADY_ADDED_TAG": "Tag is already added",
+        "EMPTY_TAG": "Tag name can't contain only spaces",
+        "FETCH_TAGS": "Error while fetching the tags",
+        "CREATE_TAGS": "Error while creating the tags",
+        "SPECIAL_CHARACTERS": "Tag name cannot contain prohibited characters"
       },
       "TOOLTIPS": {
-        "DELETE_TAG": "タグの削除",
-        "HIDE_INPUT": "入力の非表示"
+        "DELETE_TAG": "Delete tag"
       },
-      "TAGS_LOADING": "タグの読み込み中",
-      "CREATE_TAGS_SUCCESS": "タグが正常に作成されました"
+      "TAGS_LOADING": "Tags loading",
+      "CREATE_TAGS_SUCCESS": "Tags created successfully"
     }
   },
   "CATEGORIES_MANAGEMENT": {
-    "CATEGORIES_TITLE": "カテゴリ",
-    "NO_CATEGORIES_CREATED": "作成されたカテゴリはありません",
-    "NO_CATEGORIES_ASSIGNED": "割り当てられたカテゴリはありません",
-    "ASSIGN_CATEGORIES": "カテゴリの割り当て",
-    "UNASSIGN_CATEGORY": "カテゴリの割り当て解除",
-    "DELETE_CATEGORY": "カテゴリの削除",
-    "EXISTING_CATEGORIES": "既存のカテゴリ:",
-    "SELECT_EXISTING_CATEGORY": "既存のカテゴリの選択",
-    "NO_EXISTING_CATEGORIES": "既存のカテゴリはありません",
-    "GENERIC_CREATE": "作成：{{name}}",
-    "NAME": "カテゴリ名",
-    "LOADING": "読み込み中",
-    "HIDE_INPUT": "入力の非表示",
+    "CATEGORIES_TITLE": "Categories",
+    "NO_CATEGORIES_CREATED": "No Categories created",
+    "NO_CATEGORIES_ASSIGNED": "No Categories assigned",
+    "UNASSIGN_CATEGORY": "Unassign Category",
+    "DELETE_CATEGORY": "Delete Category",
+    "EXISTING_CATEGORIES": "Existing Categories:",
+    "SELECT_EXISTING_CATEGORY": "Select an existing Category:",
+    "NO_EXISTING_CATEGORIES": "No Existing Categories",
+    "GENERIC_CREATE": "Create: {{name}}",
+    "NAME": "Category name",
+    "LOADING": "Loading",
+    "NO_CATEGORIES_ADDED": "There are currently no categories added",
     "ERRORS": {
-      "NOT_FOUND": "カテゴリが見つかりませんでした",
-      "REQUIRED": "カテゴリ名は必須です",
-      "EMPTY_CATEGORY": "カテゴリ名をスペースだけにすることはできません",
-      "ALREADY_EXISTS": "カテゴリはすでに存在します",
-      "DUPLICATED_CATEGORY": "カテゴリはすでに追加されています",
-      "CREATE_CATEGORIES": "カテゴリの作成中にエラーが発生しました",
-      "EXISTING_CATEGORIES": "いくつかのカテゴリは、すでに存在します"
-    }
+      "NOT_FOUND": "Categories not found",
+      "REQUIRED": "Category name is required",
+      "EMPTY_CATEGORY": "Category name can't contain only spaces",
+      "ALREADY_EXISTS": "Category already exists",
+      "DUPLICATED_CATEGORY": "Category is already added",
+      "CREATE_CATEGORIES": "Error while creating categories",
+      "EXISTING_CATEGORIES": "Some categories already exist",
+      "SPECIAL_CHARACTERS": "Category name cannot contain prohibited characters",
+      "ENDS_WITH_DOT": "Category name cannot end with a dot"
+    },
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Search Categories"
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
-      "MINIMIZE": "最小化",
-      "MAXIMIZE": "最大化",
-      "CLOSE": "閉じる",
-      "STOP_ALL": "アップロードの停止",
-      "STOP_FILE": "アップロードの停止",
-      "UPLOAD_SUCCESSFUL": "正常にアップロードしました"
+      "MINIMIZE": "Minimize",
+      "MAXIMIZE": "Maximize",
+      "CLOSE": "Close",
+      "STOP_ALL": "Stop uploads",
+      "STOP_FILE": "Stop upload",
+      "UPLOAD_SUCCESSFUL": "Upload successful"
     },
     "STATUS": {
-      "FILE_CANCELED_STATUS": "キャンセルされました",
-      "FILE_DONE_STATUS": "アップロード済み"
+      "FILE_CANCELED_STATUS": "Canceled",
+      "FILE_DONE_STATUS": "Uploaded"
     },
     "CONFIRMATION": {
       "BUTTON": {
-        "CANCEL": "はい",
-        "CONTINUE": "いいえ"
+        "CANCEL": "Yes",
+        "CONTINUE": "No"
       },
       "MESSAGE": {
-        "TITLE": "アップロードの停止",
-        "TEXT": "アップロード中のもの、保留中のものをすべて停止、キャンセルします。"
+        "TITLE": "Stop Upload",
+        "TEXT": "Stop and cancel all in-progress and pending uploads."
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "ファイルのバージョン: {{ version }}",
-      "DIALOG": "リストのアップロード",
-      "DIALOG_MAXIMIZE": "アップロードダイアログを最大化",
-      "DIALOG_MINIMIZE": "アップロードダイアログを最小化",
-      "DIALOG_CLOSE": "アップロードダイアログを閉じる",
-      "STOP_ALL": "アップロードの停止",
-      "UPLOAD_SUCCESSFUL": "ファイル{{ file }}を正常にアップロードしました",
-      "STOP_FILE": "ファイル{{ file }}の停止",
-      "STOP_FILE_UPLOAD": "ファイルアップロード{{ file }}の停止",
-      "UPLOAD_FILE_ERROR": "アップロードエラー: {{ error }}",
+      "VERSION": "File version {{ version }}",
+      "DIALOG": "Upload list",
+      "DIALOG_MAXIMIZE": "Maximize upload dialog",
+      "DIALOG_MINIMIZE": "Minimize upload dialog",
+      "DIALOG_CLOSE": "Close upload dialog",
+      "STOP_ALL": "Stop uploads",
+      "UPLOAD_SUCCESSFUL": "Uploaded successfully file {{ file }}",
+      "STOP_FILE": "Stop file {{ file }}",
+      "STOP_FILE_UPLOAD": "Stop file upload {{ file }}",
+      "UPLOAD_FILE_ERROR": "Upload error {{ error }}",
       "CONFIRMATION": {
-        "CANCEL": "キャンセルを確認",
-        "CONTINUE": "アップロードを続行"
+        "CANCEL": "Confirm cancel",
+        "CONTINUE": "Continue upload"
       }
     }
   },
   "FILE_UPLOAD": {
     "BUTTON": {
-      "UPLOAD_FILE": "ファイルのアップロード",
-      "UPLOAD_FOLDER": "フォルダのアップロード",
-      "PERMISSION_CHECK_ERROR": "権限のチェック中にエラーが発生しました。"
+      "UPLOAD_FILE": "Upload file",
+      "UPLOAD_FOLDER": "Upload folder",
+      "PERMISSION_CHECK_ERROR": "Error checking permission."
     },
     "VERSION": {
       "MESSAGES": {
-        "NO_ACCEPTED_FILE_TYPES": "\"acceptedFilesType\" の設定は新しいバージョンのアップロードにまったく影響しません。ファイルタイプは、元のファイルと同じになります。",
-        "INCOMPATIBLE_VERSION": "同じタイプのファイルだけが、新しいバージョンとしてアップロードされます。"
+        "NO_ACCEPTED_FILE_TYPES": "Please note that the setting of \"acceptedFilesType\" has no effect for new version uploads. The file type will be the same as the original file's.",
+        "INCOMPATIBLE_VERSION": "Only a file of the same type may be uploaded as a new version."
       }
     },
     "MESSAGES": {
-      "UPLOAD_CANCELED": "アップロードがキャンセルされました",
-      "UPLOAD_PROGRESS": "{{ completed }} / {{ total }} 個をアップロードしました",
-      "UPLOAD_ERROR": "{{ total }} 個をアップロードできませんでした",
-      "UPLOAD_ERRORS": "{{ total }} 個をアップロードできませんでした",
-      "PROGRESS": "アップロードしています...",
-      "FOLDER_ALREADY_EXIST": "フォルダ ''{0}'' はすでに存在します",
-      "FOLDER_NOT_SUPPORTED": "お使いのブラウザではフォルダをアップロードできません。別のブラウザを使用してください",
-      "REMOVE_FILE_ERROR": "{{ fileName }} を削除できませんでした。もう一度操作をやり直すか、IT 担当者に確認してください。",
-      "REMOVE_FILES_ERROR": "{{ total }} 個のファイルを削除できませんでした。もう一度操作をやり直すか、IT 担当者に確認してください。",
-      "EXCEED_MAX_FILE_SIZE": "ファイル {{ fileName }} は最大許容サイズを超えています"
+      "UPLOAD_CANCELED": "Upload canceled",
+      "UPLOAD_PROGRESS": "Uploaded {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "{{ total }} upload unsuccessful",
+      "UPLOAD_ERRORS": "{{ total }} uploads unsuccessful",
+      "PROGRESS": "Upload in progress...",
+      "FOLDER_ALREADY_EXIST": "The folder {0} already exists",
+      "FOLDER_NOT_SUPPORTED": "Folder upload isn't supported by your browser, try a different browser",
+      "REMOVE_FILE_ERROR": "{{ fileName }} couldn't be removed, try again or check with your IT Team.",
+      "REMOVE_FILES_ERROR": "{{ total }} files couldn't be removed, try again or check with your IT Team.",
+      "EXCEED_MAX_FILE_SIZE": "File {{ fileName }} is larger than the allowed file size"
     },
     "ACTION": {
-      "UNDO": "元に戻す"
+      "UNDO": "Undo"
     },
     "ERRORS": {
-      "GENERIC": "アップロードできませんでした。問題が解決しない場合は、IT 担当者に連絡してください。",
-      "500": "内部サーバーエラーが発生しました。もう一度操作をやり直すか、IT 担当者に連絡してください。 [500]",
-      "504": "サーバーがタイムアウトになりました。もう一度操作をやり直すか、IT 担当者に連絡してください。[504]",
-      "403": "この場所にアップロードするための権限がありません [403]",
-      "404": "アップロード場所は削除されました [404]",
-      "409": "同じ名前のファイルがすでに存在します [409]"
+      "GENERIC": "Upload unsuccessful. Contact IT if this problem persists",
+      "500": "Internal server error, try again or contact IT support [500]",
+      "504": "The server timed out, try again or contact IT support [504]",
+      "403": "Insufficient permissions to upload in this location [403]",
+      "404": "Upload location no longer exists [404]",
+      "409": "A file with the same name already exists [409]"
     },
     "ARIA-LABEL": {
-      "ERROR": "アップロードエラー"
+      "ERROR": "Upload error"
     }
   },
   "SEARCH": {
     "CONTROL": {},
     "BUTTON": {
-      "TOOLTIP": "検索",
-      "ARIA-LABEL": "検索ボタン"
+      "TOOLTIP": "Search",
+      "ARIA-LABEL": "Search button"
     },
     "INPUT": {
-      "ARIA-LABEL": "検索条件"
+      "LABEL": "Search",
+      "PLACEHOLDER": "Search Query",
+      "ARIA-LABEL": "Search input"
     },
     "RESULTS": {
-      "SUMMARY": "{{searchTerm}} の検索結果は {{numResults}} 件です",
-      "NONE": "{{searchTerm}} の検索結果は 0 件です",
-      "ERROR": "検索中に問題が発生しました。操作をやり直してください。",
+      "SUMMARY": "{{numResults}} result found for {{searchTerm}}",
+      "NONE": "No results found for {{searchTerm}}",
+      "ERROR": "We hit a problem during the search - try again.",
+      "WILL_CONTAIN": "Results will contain '{{searchTerm}}'",
       "COLUMNS": {
-        "NAME": "表示名",
-        "MODIFIED_BY": "変更者",
-        "MODIFIED_AT": "変更日"
+        "NAME": "Display name",
+        "MODIFIED_BY": "Modified by",
+        "MODIFIED_AT": "Modified at"
       }
     },
     "FILTER": {
       "ACTIONS": {
-        "SEARCH": "検索",
-        "CLEAR": "消去",
-        "APPLY": "適用",
-        "CLEAR-ALL": "すべて消去",
-        "SHOW-MORE": "続きを表示",
-        "SHOW-LESS": "表示数を減らす",
-        "ADD_OPTION": "オプションの追加..."
+        "SEARCH": "Search",
+        "CLEAR": "Clear",
+        "APPLY": "Apply",
+        "CLEAR-ALL": "Clear all",
+        "SHOW-MORE": "Show more",
+        "SHOW-LESS": "Show less",
+        "ADD_OPTION": "Add Option..."
       },
       "BUTTONS": {
-        "CLOSE": "閉じる",
-        "CLEAR": "消去",
-        "REMOVE": "削除",
-        "APPLY": "適用",
+        "CLOSE": "Close",
+        "CLEAR": "Clear",
+        "REMOVE": "Remove",
+        "APPLY": "Apply",
         "CLEAR-ALL": {
-          "LABEL": "すべて消去",
-          "TOOLTIP": "選択した項目がすべて削除されます"
+          "LABEL": "Clear all",
+          "TOOLTIP": "This will remove all selections"
         },
         "RESET-ALL": {
-          "LABEL": "すべてリセット",
-          "TOOLTIP": "選択した項目とフィルタがすべてリセットされます"
+          "LABEL": "Reset all",
+          "TOOLTIP": "This will reset all selections and all filters"
         }
       },
       "RANGE": {
-        "FROM": "開始",
-        "TO": "終了日",
-        "FROM-DATE": "開始",
-        "TO-DATE": "終了日",
-        "SELECT-FROM-DATE": "開始日の選択",
-        "SELECT-TO-DATE": "終了日の選択"
+        "FROM": "From",
+        "TO": "To",
+        "FROM-DATE": "From",
+        "TO-DATE": "To"
       },
       "VALIDATION": {
-        "REQUIRED-VALUE": "必須の値",
-        "NO-DAYS": "日付が選択されていません。",
-        "INVALID-FORMAT": "無効な形式",
-        "INVALID-DATE": "無効な日付です。日付は '{{ requiredFormat }}' 形式で指定する必要があります",
-        "BEYOND-MAX-DATE": "この日付は最長の日付よりも後です。",
-        "INVALID-DATETIME": "日時が無効です。日時は '{{ requiredFormat }}' 形式で指定する必要があります",
-        "BEYOND-MAX-DATETIME": "指定した日時は最大日時を超えています"
+        "REQUIRED-VALUE": "Required value",
+        "NO-DAYS": "No days selected.",
+        "INVALID-FORMAT": "Invalid Format",
+        "INVALID-DATE": "Invalid date. The date must be in the format '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATE": "The date is beyond the maximum date.",
+        "INVALID-DATETIME": "Invalid datetime. The datetime must be in the format '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATETIME": "The datetime is beyond the maximum datetime."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "検索フィルタリスト",
-        "OPTIONS-SELECTION": "オプション選択"
+        "SEARCH_FILTER": "Search Filter List",
+        "OPTIONS-SELECTION": "Options Selection"
       },
-      "ANY": "任意"
+      "ANY": "Any",
+      "PEOPLE": "People"
+    },
+    "FACET_FIELDS": {
+      "MODIFIER_LABEL": "Modified by",
+      "CREATOR_LABEL": "Created by"
     },
     "ICONS": {
-      "ft_ic_raster_image": "画像ファイル",
-      "ft_ic_pdf": "PDF 文書",
-      "ft_ic_ms_excel": "Microsoft Excel ファイル",
-      "ft_ic_ms_word": "Microsoft Word 文書",
-      "ft_ic_ms_powerpoint": "Microsoft PowerPoint ファイル",
-      "ft_ic_video": "ビデオファイル",
-      "ft_ic_document": "文書ファイル",
-      "ft_ic_website": "Web リソース",
-      "ft_ic_archive": "アーカイブファイル",
-      "ft_ic_presentation": "プレゼンテーションファイル",
-      "ft_ic_spreadsheet": "表計算ファイル"
+      "ft_ic_raster_image": "Image file",
+      "ft_ic_pdf": "PDF document",
+      "ft_ic_ms_excel": "Microsoft Excel file",
+      "ft_ic_ms_word": "Microsoft Word document",
+      "ft_ic_ms_powerpoint": "Microsoft PowerPoint file",
+      "ft_ic_video": "Video file",
+      "ft_ic_document": "Document file",
+      "ft_ic_website": "Web resource",
+      "ft_ic_archive": "Archive file",
+      "ft_ic_presentation": "Presentation file",
+      "ft_ic_spreadsheet": "Spreadsheet file"
     },
     "DOCUMENT_LIST": {
       "COLUMNS": {
-        "DISPLAY_NAME": "表示名",
-        "CREATED_BY": "作成者",
-        "CREATED_ON": "作成日"
+        "DISPLAY_NAME": "Display name",
+        "CREATED_BY": "Created by",
+        "CREATED_ON": "Created"
       },
       "ACTIONS": {
         "FOLDER": {
-          "DELETE": "削除",
-          "MOVE": "移動",
-          "COPY": "コピー"
+          "DELETE": "Delete",
+          "MOVE": "Move",
+          "COPY": "Copy"
         },
         "DOCUMENT": {
-          "DOWNLOAD": "ダウンロード",
-          "DELETE": "削除",
-          "MOVE": "移動",
-          "COPY": "コピー",
-          "PROCESS_ACTION": "プロセスの開始"
+          "DOWNLOAD": "Download",
+          "DELETE": "Delete",
+          "MOVE": "Move",
+          "COPY": "Copy",
+          "PROCESS_ACTION": "Start Process"
         }
       }
     },
-    "UNKNOWN_CONFIGURATION": "不明な設定",
+    "UNKNOWN_CONFIGURATION": "Unknown Configuration",
     "SEARCH_HEADER": {
-      "TITLE": "フィルタ",
-      "TYPE": "タイプ",
-      "FILTER_BY": "{{ category }} でフィルタ",
-      "CLEAR": "消去",
-      "APPLY": "適用",
+      "TITLE": "Filter",
+      "TYPE": "Type",
+      "FILTER_BY": "Filter by {{ category }}",
+      "ACTIVE_FILTER": "Active filter",
+      "CLEAR": "Clear",
+      "APPLY": "Apply",
       "FILTERS": {
         "NAME": {
-          "TITLE": "名前",
-          "PLACEHOLDER": "名前を入力してください"
+          "TITLE": "Name",
+          "PLACEHOLDER": "Enter the name"
         },
         "TYPE": {
-          "TITLE": "確認タイプ",
-          "FOLDER": "フォルダ",
-          "DOCUMENT": "文書"
+          "TITLE": "Check type",
+          "FOLDER": "Folder",
+          "DOCUMENT": "Document"
         },
         "SIZE": {
-          "TITLE": "コンテンツのサイズ (範囲)",
-          "SMALL": "小",
-          "MEDIUM": "中",
-          "LARGE": "大",
-          "HUGE": "特大"
+          "TITLE": "Content Size (range)",
+          "SMALL": "Small",
+          "MEDIUM": "Medium",
+          "LARGE": "Large",
+          "HUGE": "Huge"
         },
         "DATE": {
-          "TITLE": "作成日 (範囲)"
+          "TITLE": "Created Date (range)"
         }
       }
     },
     "LOGICAL_SEARCH": {
-      "SEARCH_CHIP_INPUT": {
-        "ADD_PHRASE": "語句の追加..."
+      "MATCH_ALL": "ALL",
+      "MATCH_ALL_LABEL": "Match ALL of these words",
+      "MATCH_ALL_HINT": "Results will match all words entered here",
+      "MATCH_ANY": "ANY",
+      "MATCH_ANY_LABEL": "Match ANY of these words",
+      "MATCH_ANY_HINT": "Results will match any words entered here",
+      "MATCH_EXACT": "EXACT",
+      "MATCH_EXACT_LABEL": "Match this EXACT PHRASE",
+      "MATCH_EXACT_HINT": "Results will match this entire phrase",
+      "EXCLUDE": "EXCLUDE",
+      "EXCLUDE_LABEL": "EXCLUDE these words",
+      "EXCLUDE_HINT": "Results will exclude matches with these words"
+    },
+    "DATE_RANGE_ADVANCED": {
+      "OPTIONS": {
+        "ANYTIME": "Anytime",
+        "IN_LAST": "In the last",
+        "BETWEEN": "Between"
       },
-      "MATCH_ALL": "すべて",
-      "MATCH_ALL_LABEL": "これらの語句のすべてに一致",
-      "MATCH_ANY": "いずれか",
-      "MATCH_ANY_LABEL": "これらの語句のいずれかに一致",
-      "EXCLUDE": "除外",
-      "EXCLUDE_LABEL": "これらの語句の除外"
+      "IN_LAST_LABELS": {
+        "DAYS": "Days",
+        "WEEKS": "Weeks",
+        "MONTHS": "Months",
+        "QUANTITY": "Quantity"
+      },
+      "IN_LAST_DISPLAY_LABELS": {
+        "DAYS": "In the last {{value}} days",
+        "WEEKS": "In the last {{value}} weeks",
+        "MONTHS": "In the last {{value}} months"
+      },
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "Start Date",
+        "END_DATE": "End Date",
+        "DATE_RANGE": "Date Range"
+      },
+      "ERROR": {
+        "IN_LAST": "Value required",
+        "START_DATE": {
+          "REQUIRED": "Start Date required",
+          "INVALID_FORMAT": "Start Date invalid. The date must be in the format '{{ requiredFormat }}'"
+        },
+        "END_DATE": {
+          "REQUIRED": "End Date required",
+          "INVALID_FORMAT": "End Date invalid. The date must be in the format '{{ requiredFormat }}'"
+        }
+      },
+      "ARIA_LABEL": {
+        "NUMBER_INPUT": "Number input"
+      }
+    },
+    "SEARCH_PROPERTIES": {
+      "FILE_SIZE": "File Size",
+      "FILE_SIZE_PLACEHOLDER": "Enter file size",
+      "FILE_SIZE_OPERATOR": {
+        "AT_LEAST": "At Least",
+        "AT_MOST": "At Most",
+        "EXACTLY": "Exactly"
+      },
+      "FILE_SIZE_UNIT_ABBREVIATION": {
+        "KB": "KB",
+        "MB": "MB",
+        "GB": "GB"
+      },
+      "FILE_TYPE": "File Type",
+      "FILE_TYPE_PLACEHOLDER": "Add file type",
+      "ACCESSIBILITY": {
+        "CONDITION": "Condition",
+        "SIZE_VALUE": "File size value",
+        "UNIT": "Unit"
+      }
     }
   },
   "PERMISSION": {
-    "LACKOF": "{{type}} を {{action}} するための {{permission}} 権限がありません"
+    "LACKOF": "You don't have the {{permission}} permission to {{action}} the {{type}}"
   },
   "METADATA": {
     "BASIC": {
-      "HEADER": "プロパティ",
-      "NAME": "名前",
-      "TITLE": "タイトル",
-      "DESCRIPTION": "説明",
-      "AUTHOR": "作成者",
-      "MIMETYPE": "MIME タイプ",
-      "SIZE": "サイズ",
-      "CREATOR": "作成者",
-      "CREATED_DATE": "作成日",
-      "MODIFIER": "変更者",
-      "MODIFIED_DATE": "変更日",
-      "CONTENT_TYPE": "コンテンツタイプ",
-      "TAGS": "タグ",
-      "ADD_TAG_TOOLTIP": "タグの追加"
+      "HEADER": "Properties",
+      "NAME": "Name",
+      "TITLE": "Title",
+      "DESCRIPTION": "Description",
+      "AUTHOR": "Author",
+      "MIMETYPE": "Mimetype",
+      "SIZE": "Size",
+      "CREATOR": "Creator",
+      "CREATED_DATE": "Created Date",
+      "MODIFIER": "Modifier",
+      "MODIFIED_DATE": "Modified Date",
+      "CONTENT_TYPE": "Content Type",
+      "TAGS": "Tags",
+      "NO_TAGS_ADDED": "There are currently no tags added",
+      "NO_ITEMS_MESSAGE": "There are currently no {{ groupTitle }} added",
+      "SAVE_OR_DISCARD_CHANGES": "Save or discard changes to continue"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
-        "TITLE": "コンテンツタイプを変更",
-        "DESCRIPTION": "この変更をコンテンツタイプに加えると、いくつかのプロパティと保存されているメタデータがドキュメントに恒久的に追加されます。",
-        "CONFIRM": "コンテンツタイプを変更しますか？",
-        "CANCEL": "キャンセル",
-        "APPLY": "変更を保存する",
-        "VIEW_DETAILS": "詳細の表示",
+        "TITLE": "Change content type",
+        "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
+        "CONFIRM": "Are you sure you want to change the content type?",
+        "CANCEL": "CANCEL",
+        "APPLY": "SAVE CHANGES",
+        "VIEW_DETAILS": "View details",
         "PROPERTY": {
-          "NAME": "名前",
-          "DESCRIPTION": "説明",
-          "DATA_TYPE": "データタイプ"
+          "NAME": "Name",
+          "DESCRIPTION": "Description",
+          "DATA_TYPE": "Data type"
         }
       }
     },
     "ERRORS": {
-      "GENERIC": "プロパティの更新中にエラーが発生しました",
-      "409": "子の名前を重複させることはできません [409]",
-      "422": "無効なプロパティ値"
+      "GENERIC": "Error updating property",
+      "409": "Duplicate child name not allowed [409]",
+      "422": "Invalid property value"
     }
   },
   "SHARE": {
-    "PUBLIC-LINK": "公開リンク",
-    "DIALOG-TITLE": "共有",
-    "DESCRIPTION": "下のリンクをクリックすると、リンクがクリップボードにコピーされます。",
-    "TITLE": "共有するリンク",
-    "SHARE-LINK": "リンクの共有",
-    "SHARABLE-LINK-CREATED": "共有可能なリンクが作成されました",
-    "PUBLIC-CONTENT": "このコンテンツは、このリンクがあれば、誰にでも公開されます",
-    "LINK-WITH-EXPIRY-SETTINGS": "有効期限を設定した新しいリンクが作成されました",
-    "EXPIRES": "有効期限",
-    "LINK-EXPIRY-DATE": "リンク有効期限",
-    "EXPIRATION-LABEL": "有効期限",
+    "PUBLIC-LINK": "Public link",
+    "DIALOG-TITLE": "Share",
+    "DESCRIPTION": "Click the link below to copy it to the clipboard.",
+    "TITLE": "Link to share",
+    "SHARE-LINK": "Share Link",
+    "SHARABLE-LINK-CREATED": "Sharable Link is Created",
+    "PUBLIC-CONTENT": "This content is publicly available to anyone with this link",
+    "LINK-WITH-EXPIRY-SETTINGS": "New link has been generated with expiry settings",
+    "EXPIRES": "Expires on",
+    "LINK-EXPIRY-DATE": "Link Expiry Date",
+    "EXPIRATION-LABEL": "Expiration Date. Enter date in MM/DD/YYYY format",
     "EXPIRATION-PLACEHOLDER": "MM/DD/YYYY",
-    "CLIPBOARD-MESSAGE": "リンクがクリップボードにコピーされました",
-    "CLOSE": "閉じる",
-    "COPY_BUTTON_LABEL": "リンクのコピー",
+    "CLIPBOARD-MESSAGE": "Link copied to the clipboard",
+    "CLOSE": "Close",
+    "COPY_BUTTON_LABEL": "Copy link",
     "CONFIRMATION": {
-      "DIALOG-TITLE": "共有リンクの削除",
-      "MESSAGE": "このリンクは削除され、次回このファイルを共有するときに新しいリンクが作成されます。",
-      "CANCEL": "キャンセル",
-      "REMOVE": "削除"
+      "DIALOG-TITLE": "Remove this shared link",
+      "MESSAGE": "This link will be deleted and a new link will be created next time this file is shared",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove"
     },
-    "UNSHARE_ERROR": "このファイルの共有解除中にエラーが発生しました",
-    "UNSHARE_PERMISSION_ERROR": "このファイルの共有を解除する権限がありません。"
+    "UNSHARE_ERROR": "Error unsharing this file",
+    "UNSHARE_PERMISSION_ERROR": "You don't have permission to unshare this file",
+    "INVALID_DATE_ERROR": "Invalid date"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
-      "INHERITED": "継承済み",
-      "AUTHORITY_ID": "権限 ID",
-      "ROLE": "役割",
-      "LOCALLY_SET": "ローカルで設定された権限",
-      "NO_PERMISSIONS": "権限がありません"
+      "INHERITED": "Inherited",
+      "AUTHORITY_ID": "Authority ID",
+      "ROLE": "Role",
+      "LOCALLY_SET": "Locally set",
+      "NO_PERMISSIONS": "No permissions"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "追加するユーザー / グループを検索",
-      "TITLE": "権限を追加",
-      "TYPE-MESSAGE": "グループまたはメンバーの検索条件を入力してください",
-      "NO-RESULT": "この条件に一致する結果はありません",
-      "SELECT-ACTION": "選択",
-      "ADD-ACTION": "追加",
-      "CLOSE-ACTION": "キャンセル",
-      "BASE-DIALOG-TITLE": "追加するグループまたはメンバーの検索...",
-      "EVERYONE": "全員",
-      "USER-GROUP-LIST": "ユーザーまたはグループのリスト"
+      "SEARCH": "Search for users or groups to add",
+      "TITLE": "Add permission",
+      "TYPE-MESSAGE": "Type something to start searching groups or people",
+      "NO-RESULT": "No result found for this search",
+      "SELECT-ACTION": "SELECT",
+      "ADD-ACTION": "ADD",
+      "CLOSE-ACTION": "CANCEL",
+      "BASE-DIALOG-TITLE": "Search a group or people to add...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "Add user or group permission",
+      "EVERYONE": "EVERYONE",
+      "USER-GROUP-LIST": "User or Group List",
+      "REMOVE_USER_GROUP": "Remove"
     },
     "COLUMN": {
-      "NAME": "ユーザーとグループ({{ count }})",
-      "LOCATION": "場所",
-      "BULK-ROLE": "すべての役割を設定"
+      "NAME": "Users and Groups ({{ count }})",
+      "LOCATION": "Location",
+      "BULK-ROLE": "Set all role to"
     },
     "LABELS": {
-      "HIDE": "非表示",
-      "SHOW": "表示",
-      "ON": "オン",
-      "OFF": "オフ",
-      "DIRECT-PERMISSIONS": "直接適用される権限",
-      "INHERITED-PERMISSIONS": "継承権限",
-      "INHERITED-SUBTITLE": "{{count}}ユーザーやグループが親フォルダから権限を継承しています",
-      "SELECT-ROLE": "役割の選択",
-      "INHERITED_PERMISSION_TOGGLE": "継承した権限の切り替え"
+      "HIDE": "Hide",
+      "SHOW": "Show",
+      "ON": "On",
+      "OFF": "Off",
+      "DIRECT-PERMISSIONS": "Directly Applied Permission",
+      "INHERITED-PERMISSIONS": "Inherited Permission",
+      "INHERITED-SUBTITLE": "{{count}} users or groups are inheriting permission from a parent folder",
+      "SELECT-ROLE": "Select role",
+      "INHERITED_PERMISSION_TOGGLE": "Toggle Inherited Permission"
     },
     "MESSAGE": {
-      "EMPTY-PERMISSION": "ユーザー/グループなし",
-      "EMPTY-SUBTITLE": "ユーザー/グループを追加して権限を管理します。",
-      "NO-MEMBERS": "グループや人を追加して役割を管理します",
-      "PERMISSION-BULK-UPDATE-SUCCESS": "更新した{{user}}ユーザー{{group}}グループ",
-      "PERMISSION-UPDATE-SUCCESS": "ユーザー/グループの更新",
-      "PERMISSION-UPDATE-FAIL": "ユーザー/グループの更新に失敗しました",
-      "PERMISSION-BULK-DELETE-SUCCESS": "削除した{{user}}ユーザー{{group}}グループ",
-      "PERMISSION-DELETE-SUCCESS": "ユーザー/グループの削除",
-      "PERMISSION-DELETE-FAIL": "ユーザー/グループの削除に失敗しました",
-      "PERMISSION-ADD-SUCCESS": "追加した{{user}}ユーザー{{group}}グループ",
-      "PERMISSION-ADD-FAIL": "ユーザー/グループの追加に失敗しました",
-      "INHERIT-ENABLE-SUCCESS": "継承権限を有効化",
-      "INHERIT-DISABLE-SUCCESS": "継承権限を無効化",
-      "TOGGLE-PERMISSION-FAILED": "継承権限の切り替えに失敗しました"
+      "EMPTY-PERMISSION": "No users/groups",
+      "EMPTY-SUBTITLE": "Add user/group to manage permission.",
+      "NO-MEMBERS": "Add groups or people to manage roles",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "Updated {{user}} user(s) {{group}} group(s)",
+      "PERMISSION-UPDATE-SUCCESS": "User/Group updated",
+      "PERMISSION-UPDATE-FAIL": "Failed to update user/group",
+      "PERMISSION-BULK-DELETE-SUCCESS": "Deleted {{user}} user(s) {{group}} group(s)",
+      "PERMISSION-DELETE-SUCCESS": "User/Group deleted",
+      "PERMISSION-DELETE-FAIL": "Failed to delete user/group",
+      "PERMISSION-ADD-SUCCESS": "Added {{user}} user(s) {{group}} group(s)",
+      "PERMISSION-ADD-FAIL": "Failed to add user/group",
+      "INHERIT-ENABLE-SUCCESS": "Enabled inherited permission",
+      "INHERIT-DISABLE-SUCCESS": "Disabled inherited permission",
+      "TOGGLE-PERMISSION-FAILED": "Failed to toggle inherit Permission"
     },
     "ACTION": {
-      "DELETE": "削除",
-      "ADD-PERMISSION": "ユーザー/グループの追加"
+      "DELETE": "Delete",
+      "ADD-PERMISSION": "Add User or Group"
     },
     "ERROR": {
-      "NOT-FOUND": "このアイテムは削除されたか、このアイテムを表示する権限がありません。",
-      "DUPLICATE-PERMISSION": "設定済みの権限がすでにあります: {{list}}",
-      "NOT-ALLOWED": "権限を変更することはできません"
+      "NOT-FOUND": "This item no longer exists or you don't have permission to view it.",
+      "DUPLICATE-PERMISSION": "One or more of the permissions you have set is already present : {{list}}",
+      "NOT-ALLOWED": "You are not allowed to change permissions"
     }
   },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "Group icon",
+    "GROUP_USER_SELECTED_ALT": "Selected group or user icon"
+  },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "ノード ID が指定されていません。",
+    "MISSING-ID": "No nodeId provided!",
     "ACCESSIBILITY": {
-      "ARIA_LABEL": "{{ name }} を切り替えます"
+      "ARIA_LABEL": "Toggle {{ name }}"
     }
   },
   "ADF-TREE": {
-    "LOAD-MORE-BUTTON": "もっと読み込む {{ name }}"
+    "LOAD-MORE-BUTTON": "Load more {{ name }}",
+    "ACTIONS": {
+      "TOOLTIP": "Open actions menu"
+    },
+    "ARIA": {
+      "SELECTED": "{{ name }} selected",
+      "DESELECTED": "{{ name }} deselected"
+    }
   },
   "LIBRARY": {
     "DIALOG": {
-      "CREATE_TITLE": "ライブラリの作成",
-      "CREATE": "作成",
-      "UPDATE": "更新",
-      "EDIT": "編集",
-      "CANCEL": "キャンセル",
+      "CREATE_TITLE": "Create Library",
+      "CREATE": "Create",
+      "UPDATE": "Update",
+      "EDIT": "Edit",
+      "CANCEL": "Cancel",
       "FORM": {
-        "DESCRIPTION": "説明",
-        "SITE_ID": "ライブラリ ID",
-        "NAME": "名前",
-        "VISIBILITY": "公開レベル"
+        "DESCRIPTION": "Description",
+        "SITE_ID": "Library ID",
+        "NAME": "Name",
+        "VISIBILITY": "Visibility"
       }
     },
     "ROLE": {
-      "MANAGER": "マネージャ",
-      "COLLABORATOR": "共同作業者",
-      "CONTRIBUTOR": "投稿者",
-      "CONSUMER": "利用者",
-      "NONE": "非メンバー"
+      "MANAGER": "Manager",
+      "COLLABORATOR": "Collaborator",
+      "CONTRIBUTOR": "Contributor",
+      "CONSUMER": "Consumer",
+      "NONE": "Not a member"
     },
     "VISIBILITY": {
-      "PRIVATE": "非公開",
-      "PUBLIC": "公開",
-      "MODERATED": "条件付き公開"
+      "PRIVATE": "Private",
+      "PUBLIC": "Public",
+      "MODERATED": "Moderated"
     },
     "HINTS": {
-      "SITE_TITLE_EXISTS": "ライブラリ名はすでに使用されています"
+      "SITE_TITLE_EXISTS": "Library name already in use"
     },
     "ERRORS": {
-      "GENERIC": "問題が発生しました",
-      "EXISTENT_SITE": "このライブラリ ID は使用できません。別のライブラリ ID を使用してください。",
-      "CONFLICT": "このライブラリ ID はすでに使われています。ごみ箱を確認してください。",
-      "ID_TOO_LONG": "URL 名は 72 文字以内で入力してください",
-      "DESCRIPTION_TOO_LONG": "説明は 512 文字以内で入力してください",
-      "TITLE_TOO_LONG": "タイトルは 256 文字以内で入力してください",
-      "TITLE_TOO_SHORT": "タイトルは 2 文字以上でなければなりません",
-      "ILLEGAL_CHARACTERS": "英数字だけを使用してください",
-      "ONLY_SPACES": "ライブラリ名をスペース (空白文字) だけにすることはできません",
-      "LIBRARY_UPDATE_ERROR": "ライブラリのプロパティの更新中にエラーが発生しました"
+      "GENERIC": "We hit a problem",
+      "EXISTENT_SITE": "This Library ID isn't available. Try a different Library ID.",
+      "CONFLICT": "This Library ID is already used. Check the trashcan.",
+      "ID_TOO_LONG": "Use 72 characters or less for the URL name",
+      "DESCRIPTION_TOO_LONG": "Use 512 characters or less for description",
+      "TITLE_TOO_LONG": "Use 256 characters or less for title",
+      "TITLE_TOO_SHORT": "Title must be at least 2 characters long",
+      "ILLEGAL_CHARACTERS": "Use numbers and letters only",
+      "ONLY_SPACES": "Library name can't contain only spaces",
+      "LIBRARY_UPDATE_ERROR": "There was an error updating library properties",
+      "NAME_REQUIRED": "Library name is required",
+      "ID_REQUIRED": "Library ID is required"
     },
     "SUCCESS": {
-      "LIBRARY_UPDATED": "ライブラリのプロパティが更新されました"
+      "LIBRARY_UPDATED": "Library properties updated"
     }
   },
   "BREADCRUMB": {
     "ARIA-LABEL": {
-      "BREADCRUMB": "階層リンク",
-      "DROPDOWN": "ドロップダウン"
+      "BREADCRUMB": "Breadcrumb navigation",
+      "DROPDOWN": "Open breadcrumb menu for {{folderName}}"
+    },
+    "HEADER": {
+      "SELECTED": "Selected ({{ count }})"
     }
   },
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
-      "ARIA_LABEL": "{{ name }} を開く"
+      "ARIA_LABEL": "Open {{ name }}"
     }
   },
   "ADF-ASPECT-LIST": {
-    "PROPERTY_NAME": "プロパティ名",
-    "DESCRIPTION": "説明",
-    "DATA_TYPE": "データタイプ",
+    "PROPERTY_NAME": "Property Name",
+    "DESCRIPTION": "Description",
+    "DATA_TYPE": "Data Type",
     "DIALOG": {
-      "TITLE": "プロパティをカスタマイズ",
-      "DESCRIPTION": "選択したファイルに関連付けられたプロパティを管理します。追加のメタデータと機能性を公開したり適用したりするには、以下にリストされたプロパティアスペクトから選択します",
-      "RESET": "リセット",
-      "CLEAR": "消去",
-      "CANCEL": "キャンセル",
-      "APPLY": "適用",
-      "OVER-TABLE-MESSAGE": "プロパティアスペクトを選択します",
-      "SELECTED": "選択済み"
+      "TITLE": "Customize Properties",
+      "DESCRIPTION": "Manage the properties associated with selected file(s). Choose from property aspects listed below, to expose and apply additional metadata and functionality",
+      "RESET": "Reset",
+      "CLEAR": "Clear",
+      "CANCEL": "Cancel",
+      "APPLY": "Apply",
+      "OVER-TABLE-MESSAGE": "Select property aspects",
+      "SELECTED": "Selected"
     }
   },
   "NODE_COUNTER": {
-    "SELECTED_COUNT": "{{ count }}を選択"
+    "SELECTED_COUNT": "{{ count }} selected"
   },
   "TAG_NODE_LIST": {
-    "VIEW_MORE": "もっと {{ count }} 表示する"
+    "VIEW_MORE": "View {{ count }} more"
   },
-  "swsdp": "サンプル：Webサイトデザインプロジェクト",
+  "swsdp": "Sample: Web Site Design Project",
   "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
     "ERRORS": {
-      "INVALID_RECEIVER_EMAIL": "受取人の E メールアドレスが無効です。IT 担当者に連絡してください。",
-      "INVALID_SENDER_EMAIL": "参加リクエストを行うには、有効な E メールアドレスが必要です。",
-      "JOIN_CANCEL_FAILED": "参加リクエストをキャンセルできません",
-      "JOIN_REQUEST_FAILED": "ライブラリに参加できません"
+      "INVALID_RECEIVER_EMAIL": "Recipient(s) email address not valid, contact IT.",
+      "INVALID_SENDER_EMAIL": "Your email address must be valid before requesting to join.",
+      "JOIN_CANCEL_FAILED": "Cannot cancel your join request",
+      "JOIN_REQUEST_FAILED": "Cannot join the library"
     },
     "INFO": {
-      "JOINED": "ライブラリに参加しました",
-      "JOIN_CANCELED": "ライブラリへの参加リクエストをキャンセルしました",
-      "JOIN_REQUESTED": "このライブラリへの参加リクエストが送信されました"
+      "JOINED": "Library joined",
+      "JOIN_CANCELED": "Canceled the request to join the library",
+      "JOIN_REQUESTED": "Request sent to join this library"
+    }
+  },
+  "NODE_FAVORITE_DIRECTIVE": {
+    "MESSAGES": {
+      "NODE_ADDED": "Added {{ name }} to favorites",
+      "NODES_ADDED": "Added {{ number }} items to favorites",
+      "NODE_REMOVED": "Removed {{ name }} from favorites",
+      "NODES_REMOVED": "Removed {{ number }} items from favorites"
     }
   }
 }

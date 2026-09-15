@@ -1,383 +1,386 @@
 {
   "ADF_CLOUD_PROCESS_LIST": {
     "MESSAGES": {
-      "TITLE": "Процессы не найдены",
-      "SUBTITLE": "Создайте новый процесс, который вы сможете легко найти позже",
-      "NONE": "Фильтр экземпляров процессов не найден."
+      "TITLE": "No Processes Found",
+      "SUBTITLE": "Create a new process that you want to easily find later",
+      "NONE": "No process instance filter selected."
     },
     "PROPERTIES": {
-      "NAME": "Имя процесса",
-      "CREATED": "Создано",
-      "STATUS": "Статус",
-      "START_DATE": "Дата начала",
-      "COMPLETED_DATE": "Дата выполнения",
-      "COMPLETED_BY": "Выполнил(-а)",
-      "ID": "Идентификатор",
-      "INITIATOR": "Инициатор",
-      "STARTED_BY": "Запущено пользователем",
-      "APP_NAME": "Имя приложения",
-      "BUSINESS_KEY": "Бизнес-ключ",
-      "DESCRIPTION": "Описание",
-      "LAST_MODIFIED": "Дата последнего изменения",
-      "PROCESS_NAME": "Имя процесса",
-      "PROCESS_DEFINITION_NAME": "Имя определения процесса",
-      "PARENT_TASK_ID": "Идентификатор родительского задания",
-      "PROCESS_DEF_ID": "Идентификатор определения процесса",
-      "PROCESS_DEF_KEY": "Ключ определения процесса",
-      "APP_VERSION": "Версия приложения"
+      "NAME": "Process Name",
+      "CREATED": "Created",
+      "STATUS": "Status",
+      "START_DATE": "Start Date",
+      "COMPLETED_DATE": "Completed Date",
+      "COMPLETED_BY": "Completed By",
+      "ID": "Id",
+      "INITIATOR": "Initiator",
+      "STARTED_BY": "Started by",
+      "APP_NAME": "Application Name",
+      "BUSINESS_KEY": "Business Key",
+      "DESCRIPTION": "Description",
+      "LAST_MODIFIED": "Last Modified",
+      "PROCESS_NAME": "Process Name",
+      "PROCESS_DEFINITION_NAME": "Process Definition Name",
+      "PARENT_TASK_ID": "Parent Task Id",
+      "PROCESS_DEF_ID": "Process Definition Id",
+      "PROCESS_DEF_KEY": "Process Definition Key",
+      "APP_VERSION": "App Version"
     },
     "ADF_CLOUD_START_PROCESS": {
-      "BUTTON": "Начать процесс",
-      "NO_PROCESS_DEFINITIONS": "Невозможно начать процесс, поскольку нет определений процесса",
+      "BUTTON": "Start Process",
+      "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
       "FORM": {
-        "TITLE": "Начать процесс",
+        "TITLE": "Start Process",
         "LABEL": {
-          "TYPE": "Выбрать процесс",
-          "NAME": "Имя процесса"
+          "TYPE": "Select Process",
+          "NAME": "Process Name"
         },
-        "TYPE_PLACEHOLDER": "Выбрать элемент...",
+        "TYPE_PLACEHOLDER": "Choose one...",
         "ACTION": {
-          "START": "Начать процесс",
-          "CANCEL": "Отмена"
+          "START": "Start Process",
+          "CANCEL": "Cancel"
         },
-        "SELECT_PROCESS_DROPDOWN": "Кнопка раскрывающегося меню выбора процесса"
+        "SELECT_PROCESS_DROPDOWN": "Select Process Dropdown BUTTON"
       },
       "ERROR": {
-        "LOAD_PROCESS_DEFS": "Не удалось загрузить определения процесса, проверьте, есть ли у вас доступ.",
-        "START": "Не удалось начать новый экземпляр процесса, проверьте, есть ли у вас доступ.",
-        "PROCESS_NAME_REQUIRED": "Требуется имя процесса",
-        "PROCESS_DEFINITION_REQUIRED": "Требуется определение процесса",
-        "MAXIMUM_LENGTH": "Превышение длины, макс. символов: {{characters}}",
-        "SPACE_VALIDATOR": "Нельзя начинать и заканчивать пробелом."
+        "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
+        "START": "Couldn't start new process instance, check you have access.",
+        "PROCESS_NAME_REQUIRED": "Process Name is required",
+        "PROCESS_DEFINITION_REQUIRED": "Process Definition is required",
+        "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
+        "SPACE_VALIDATOR": "Cannot begin or end with a space."
       }
-    }
+    },
+    "LOADING": "Loading"
   },
   "ADF_CLOUD_TASK_LIST": {
     "START_TASK": {
       "FORM": {
-        "TITLE": "Начать задачу",
+        "TITLE": "Start Task",
         "LABEL": {
-          "NAME": "Имя",
-          "DESCRIPTION": "Описание",
-          "ATTACHFORM": "Прикрепить форму",
-          "ASSIGNEE": "Исполнитель",
-          "CANDIDATE_GROUP": "Группа-кандидат",
-          "DATE": "Выбрать дату",
-          "PRIORITY": "Приоритет"
+          "NAME": "Name",
+          "DESCRIPTION": "Description",
+          "ATTACHFORM": "Attach Form",
+          "ASSIGNEE": "Assignee",
+          "CANDIDATE_GROUP": "Candidate Group",
+          "DATE": "Choose Date",
+          "PRIORITY": "Priority"
         },
         "ACTION": {
-          "START": "Начать",
-          "CANCEL": "Отмена"
+          "START": "Start",
+          "CANCEL": "Cancel"
         }
       }
     },
     "PROPERTIES": {
-      "NAME": "Имя задачи",
-      "ASSIGNEE": "Исполнитель",
-      "ID": "Идентификатор",
-      "STATUS": "Статус",
-      "PRIORITY": "Приоритет",
-      "CREATED_DATE": "Дата создания",
-      "LAST_MODIFIED": "Дата последнего изменения",
-      "DUE_DATE": "Срок",
-      "CREATED": "Создано",
+      "NAME": "Task Name",
+      "ASSIGNEE": "Assignee",
+      "ID": "Id",
+      "STATUS": "Status",
+      "PRIORITY": "Priority",
+      "CREATED_DATE": "Created Date",
+      "LAST_MODIFIED": "Last Modified",
+      "DUE_DATE": "Due Date",
+      "CREATED": "Created",
       "JSON_CELL": "Json",
-      "COMPLETED_BY": "Выполнил(-а)",
+      "COMPLETED_BY": "Completed By",
       "PRIORITY_VALUES": {
-        "NONE": "Нет",
-        "LOW": "Низкий",
-        "NORMAL": "Средний",
-        "HIGH": "Высокий"
+        "NONE": "None",
+        "LOW": "Low",
+        "NORMAL": "Normal",
+        "HIGH": "High"
       },
-      "DESCRIPTION": "Описание"
+      "DESCRIPTION": "Description"
     },
     "LIST": {
       "MESSAGES": {
-        "TITLE": "Задачи не найдены",
-        "SUBTITLE": "Создать новую задачу для быстрого поиска позже",
-        "NONE": "Списков задач не найдено"
+        "TITLE": "No Tasks Found",
+        "SUBTITLE": "Create a new task that you want to easily find later",
+        "NONE": "No task lists found"
       }
-    }
+    },
+    "LOADING": "Loading"
   },
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {
-      "ACTIVITY_NAME": "Название действия",
-      "ACTIVITY_TYPE": "Статус",
-      "ID": "Идентификатор",
-      "COMPLETED_DATE": "Дата выполнения",
-      "STARTED_DATE": "Дата начала",
-      "STATUS": "Статус"
+      "ACTIVITY_NAME": "Activity name",
+      "ACTIVITY_TYPE": "Status",
+      "ID": "Id",
+      "COMPLETED_DATE": "Completed date",
+      "STARTED_DATE": "Started date",
+      "STATUS": "Status"
     }
   },
   "ADF_CLOUD_TASK_FILTERS": {
-    "MY_TASKS": "Мои задачи",
-    "QUEUED_TASKS": "Задачи в очереди",
-    "COMPLETED_TASKS": "Завершенные задачи",
+    "MY_TASKS": "My Tasks",
+    "QUEUED_TASKS": "Queued Tasks",
+    "COMPLETED_TASKS": "Completed Tasks",
     "STATUS": {
-      "ALL": "Все",
-      "CREATED": "Создано",
-      "ASSIGNED": "Назначенный",
-      "SUSPENDED": "Приостановленный",
-      "CANCELLED": "Отменённый",
-      "COMPLETED": "Завершенные"
+      "ALL": "All",
+      "CREATED": "Created",
+      "ASSIGNED": "Assigned",
+      "SUSPENDED": "Suspended",
+      "CANCELLED": "Cancelled",
+      "COMPLETED": "Completed"
     },
     "DIRECTION": {
-      "ASCENDING": "По возрастанию",
-      "DESCENDING": "По убыванию"
+      "ASCENDING": "Ascending",
+      "DESCENDING": "Descending"
     }
   },
   "ADF_CLOUD_SERVICE_TASK_FILTERS": {
-    "ALL_SERVICE_TASKS": "Все сервисные задачи",
-    "ERRORED_TASKS": "Задачи с ошибками",
-    "COMPLETED_TASKS": "Завершенные задачи",
+    "ALL_SERVICE_TASKS": "All Service Tasks",
+    "ERRORED_TASKS": "Errored Tasks",
+    "COMPLETED_TASKS": "Completed Tasks",
     "STATUS": {
-      "ALL": "Все",
-      "STARTED": "Запущено",
-      "COMPLETED": "Завершенные",
-      "CANCELLED": "Отменённый",
-      "ERROR": "Ошибка"
+      "ALL": "All",
+      "STARTED": "Started",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled",
+      "ERROR": "Error"
     }
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
-    "ALL_PROCESSES": "Все",
-    "RUNNING_PROCESSES": "Выполняются",
-    "COMPLETED_PROCESSES": "Завершенные",
+    "ALL_PROCESSES": "All",
+    "RUNNING_PROCESSES": "Running",
+    "COMPLETED_PROCESSES": "Completed",
     "STATUS": {
-      "ALL": "Все",
-      "RUNNING": "Выполняются",
-      "SUSPENDED": "Приостановленный",
-      "CANCELLED": "Отменённый",
-      "COMPLETED": "Завершенные"
+      "ALL": "All",
+      "RUNNING": "Running",
+      "SUSPENDED": "Suspended",
+      "CANCELLED": "Cancelled",
+      "COMPLETED": "Completed"
     },
     "DIRECTION": {
-      "ASCENDING": "По возрастанию",
-      "DESCENDING": "По убыванию"
+      "ASCENDING": "Ascending",
+      "DESCENDING": "Descending"
     }
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {
-      "MESSAGE": "Введите другое значение",
-      "REQUIRED": "Обязательное поле",
-      "DATE": "Формат даты ДД.ММ.ГГГГ",
-      "MAXIMUM_LENGTH": "Превышение длины, макс. символов: {{characters}}"
+      "MESSAGE": "Enter a different value",
+      "REQUIRED": "Field required",
+      "DATE": "Date format DD/MM/YYYY",
+      "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max."
     }
   },
   "ADF_CLOUD_EDIT_TASK_FILTER": {
-    "TITLE": "Настройка фильтра",
-    "FILTER_NAME": "Имя фильтра",
+    "TITLE": "Customize your filter",
+    "FILTER_NAME": "Filter name",
     "TOOL_TIP": {
-      "SAVE": "Сохранить фильтр",
-      "SAVE_AS": "Сохранить фильтр как",
-      "DELETE": "Удалить фильтр"
+      "SAVE": "Save filter",
+      "SAVE_AS": "Save filter as",
+      "DELETE": "Delete filter"
     },
     "LABEL": {
-      "APP_NAME": "Название приложения",
-      "TASK_ID": "ИД задачи",
-      "PROCESS_DEF_NAME": "Имя определения процесса",
-      "PROCESS_DEF_ID": "Идентификатор определения процесса",
-      "STATUS": "Статус",
-      "ASSIGNMENT": "Исполнитель",
-      "DIRECTION": "Направление",
-      "PROCESS_INSTANCE_ID": "Идентификатор экземпляра процесса",
-      "TASK_NAME": "Имя задачи",
-      "PARENT_TASK_ID": "Идентификатор родительской задачи",
-      "PRIORITY": "Приоритет",
-      "STAND_ALONE": "Автономный",
-      "LAST_MODIFIED_FROM": "Начальная дата последнего изменения",
-      "LAST_MODIFIED_TO": "Конечная дата последнего изменения",
-      "OWNER": "Владелец",
-      "DUE_DATE": "Срок выполнения",
-      "SORT": "Сортировать",
-      "START_DATE": "Дата начала",
-      "COMPLETED_BY": "Выполнил(-а)",
-      "COMPLETED_DATE": "Дата завершения",
-      "CREATED_DATE": "Дата создания",
-      "CANDIDATE_GROUPS": "Группы кандидатов"
+      "APP_NAME": "ApplicationName",
+      "TASK_ID": "Task ID",
+      "PROCESS_DEF_NAME": "ProcessDefinitionName",
+      "PROCESS_DEF_ID": "ProcessDefinitionId",
+      "STATUS": "Status",
+      "ASSIGNMENT": "Assignee",
+      "DIRECTION": "Direction",
+      "PROCESS_INSTANCE_ID": "ProcessInstanceId",
+      "TASK_NAME": "TaskName",
+      "PARENT_TASK_ID": "ParentTaskId",
+      "PRIORITY": "Priority",
+      "STAND_ALONE": "Standalone",
+      "LAST_MODIFIED_FROM": "LastModifiedFrom",
+      "LAST_MODIFIED_TO": "LastModifiedTo",
+      "OWNER": "Owner",
+      "DUE_DATE": "DueDate",
+      "SORT": "Sort",
+      "START_DATE": "StartDate",
+      "COMPLETED_BY": "Completed By",
+      "COMPLETED_DATE": "CompletedDate",
+      "CREATED_DATE": "CreatedDate",
+      "CANDIDATE_GROUPS": "CandidateGroups"
     },
     "DIALOG": {
-      "TITLE": "Сохранить фильтр как",
-      "SAVE": "Сохранить",
-      "CANCEL": "Отмена"
+      "TITLE": "Save filter as",
+      "SAVE": "SAVE",
+      "CANCEL": "CANCEL"
     }
   },
   "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
     "LABEL": {
-      "APP_NAME": "Название приложения",
-      "SERVICE_TASK_ID": "Идентификатор сервисной задачи",
-      "SERVICE_NAME": "Название сервиса",
-      "ELEMENT_ID": "Идентификатор элемента",
-      "PROCESS_DEF_NAME": "Имя определения процесса",
-      "PROCESS_DEF_ID": "Идентификатор определения процесса",
-      "PROCESS_INSTANCE_ID": "Идентификатор экземпляра процесса",
-      "STATUS": "Статус",
-      "DIRECTION": "Направление",
-      "ACTIVITY_NAME": "Название действия",
-      "ACTIVITY_TYPE": "Тип действия",
-      "SORT": "Сортировать",
-      "STARTED_DATE": "Дата начала",
-      "COMPLETED_DATE": "Дата завершения"
+      "APP_NAME": "ApplicationName",
+      "SERVICE_TASK_ID": "ServiceTaskId",
+      "SERVICE_NAME": "ServiceName",
+      "ELEMENT_ID": "ElementId",
+      "PROCESS_DEF_NAME": "ProcessDefinitionName",
+      "PROCESS_DEF_ID": "ProcessDefinitionId",
+      "PROCESS_INSTANCE_ID": "ProcessInstanceId",
+      "STATUS": "Status",
+      "DIRECTION": "Direction",
+      "ACTIVITY_NAME": "ActivityName",
+      "ACTIVITY_TYPE": "ActivityType",
+      "SORT": "Sort",
+      "STARTED_DATE": "StartedDate",
+      "COMPLETED_DATE": "CompletedDate"
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
-    "TITLE": "Настройка фильтра",
-    "FILTER_NAME": "Имя фильтра",
+    "TITLE": "Customize your filter",
+    "FILTER_NAME": "Filter name",
     "LABEL": {
-      "APP_NAME": "Название приложения",
-      "PROCESS_INS_ID": "Идентификатор экземпляра процесса",
-      "STATUS": "Статус",
-      "INITIATOR": "Инициатор",
-      "ASSIGNMENT": "Исполнитель",
-      "SORT": "Сортировать",
-      "DIRECTION": "Направление",
-      "PROCESS_DEF_ID": "Идентификатор определения процесса",
-      "PROCESS_DEF_NAME": "Имя определения процесса",
-      "PROCESS_DEF_KEY": "Ключ определения процесса",
-      "LAST_MODIFIED": "Дата последнего изменения",
-      "LAST_MODIFIED_DATE_FORM": "Начальная дата последнего изменения",
-      "LAST_MODIFIED_TO": "Конечная дата последнего изменения",
-      "PROCESS_NAME": "Имя процесса",
-      "APP_VERSION": "Версия приложения",
-      "STARTED_DATE": "Дата начала",
-      "SUSPENDED_DATE": "Дата приостановки",
-      "STARTED_BY": "Запущено пользователем",
-      "COMPLETED_DATE": "Дата выполнения",
+      "APP_NAME": "ApplicationName",
+      "PROCESS_INS_ID": "ProcessInstanceId",
+      "STATUS": "Status",
+      "INITIATOR": "Initiator",
+      "ASSIGNMENT": "Assignee",
+      "SORT": "Sort",
+      "DIRECTION": "Direction",
+      "PROCESS_DEF_ID": "ProcessDefinitionId",
+      "PROCESS_DEF_NAME": "ProcessDefinitionName",
+      "PROCESS_DEF_KEY": "ProcessDefinitionKey",
+      "LAST_MODIFIED": "Last Modified",
+      "LAST_MODIFIED_DATE_FORM": "LastModifiedFrom",
+      "LAST_MODIFIED_TO": "LastModifiedTo",
+      "PROCESS_NAME": "Process Name",
+      "APP_VERSION": "AppVersion",
+      "STARTED_DATE": "Started Date",
+      "SUSPENDED_DATE": "Suspended Date",
+      "STARTED_BY": "Started by",
+      "COMPLETED_DATE": "Completed Date",
+      "MAIN_PROCESS_ID": "Main process id",
       "DATE_RANGE": {
-        "NO_DATE": "Нет срока",
-        "TODAY": "Сегодня",
-        "TOMORROW": "Завтра",
-        "NEXT_7_DAYS": "В течение следующих 7 дней",
-        "WEEK": "На этой неделе",
-        "MONTH": "В этом месяце",
-        "QUARTER": "В этом квартале",
-        "YEAR": "В этом году",
-        "RANGE": "Дата в рамках"
+        "NO_DATE": "No Date",
+        "TODAY": "Today",
+        "TOMORROW": "Tomorow",
+        "NEXT_7_DAYS": "Next 7 Days",
+        "WEEK": "This week",
+        "MONTH": "This month",
+        "QUARTER": "This quarter",
+        "YEAR": "This year",
+        "RANGE": "Date within"
       },
-      "DATE_RANGE_TITLE": "Дата начала - дата окончания",
-      "START_DATE": "Дата начала",
-      "END_DATE": "Дата окончания",
-      "ID": "Идентификатор",
-      "BUSINESS_KEY": "Бизнес-ключ"
+      "DATE_RANGE_TITLE": "Start date - End date",
+      "START_DATE": "Start Date",
+      "END_DATE": "End date",
+      "ID": "Id",
+      "BUSINESS_KEY": "Business Key"
     },
     "ERROR": {
-      "DATE": "Формат даты ДД.ММ.ГГГГ",
-      "INDALID_START_DATE": "Недействительная дата начала",
-      "INDALID_END_DATE": "Недействительная дата окончания",
-      "INVALID_DATE_FILTER": "Фильтр по дате не поддерживается"
+      "DATE": "Date format DD/MM/YYYY",
+      "INDALID_START_DATE": "Invalid start date",
+      "INDALID_END_DATE": "Invalid end date",
+      "INVALID_DATE_FILTER": "Date filter option is not supported"
     },
     "TOOL_TIP": {
-      "SAVE": "Сохранить фильтр",
-      "SAVE_AS": "Сохранить фильтр как",
-      "DELETE": "Удалить фильтр",
-      "RESTORE": "Восстановить фильтр"
+      "SAVE": "Save filter",
+      "SAVE_AS": "Save filter as",
+      "DELETE": "Delete filter",
+      "RESTORE": "Restore filter"
     },
     "DIALOG": {
-      "TITLE": "Сохранить фильтр как",
-      "SAVE": "Сохранить",
-      "CANCEL": "Отмена"
+      "TITLE": "Save filter as",
+      "SAVE": "SAVE",
+      "CANCEL": "CANCEL"
     }
   },
   "ADF_CLOUD_GROUPS": {
-    "SEARCH-GROUP": "Группы",
-    "MANDATORY": "Обязательно",
+    "SEARCH-GROUP": "Groups",
+    "MANDATORY": "Mandatory",
     "ERROR": {
-      "NOT_FOUND": "Группа не найдена"
+      "NOT_FOUND": "Group not found"
     }
   },
   "ADF_CLOUD_USERS": {
     "ERROR": {
-      "NOT_FOUND": "Не найден пользователь с именем пользователя {{userName}}"
+      "NOT_FOUND": "No user found with the username {{userName}}"
     }
   },
   "ADF_CLOUD_PEOPLE_GROUPS": {
     "ERROR": {
-      "INVALID_PATTERN": "Должно соответствовать шаблону {{pattern}}",
-      "INVALID_MIN_LENGTH": "Должно быть минимум {{requiredLength}} символа(-ов)",
-      "INVALID_MAX_LENGTH": "Длина превышена, максимальное количество символов: {{requiredLength}}",
-      "REQUIRED": "Обязательное поле"
+      "INVALID_PATTERN": "Must match the pattern {{pattern}}",
+      "INVALID_MIN_LENGTH": "Must be at least {{requiredLength}} characters",
+      "INVALID_MAX_LENGTH": "Length exceeded, {{requiredLength}} characters max",
+      "REQUIRED": "This is a required field"
     }
   },
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
-      "CLAIM": "Принять",
-      "RELEASE": "Освободить"
+      "CLAIM": "Claim",
+      "RELEASE": "Release"
     },
     "PROPERTIES": {
-      "TASK_NAME": "Задача",
-      "THUMBNAIL": "Эскиз",
-      "DURATION": "Продолжительность",
-      "PARENT_TASK_ID": "Идентификатор родительского задания",
-      "NAME": "Имя",
-      "ASSIGNEE": "Исполнитель",
-      "ASSIGNEE_DEFAULT": "Нет исполнителя",
-      "PRIORITY": "Приоритет",
-      "DUE_DATE": "Срок",
-      "DUE_DATE_DEFAULT": "Нет срока",
-      "STATUS": "Статус",
-      "CATEGORY": "Категория",
-      "CATEGORY_DEFAULT": "Нет категории",
-      "PARENT_NAME": "Имя родительского элемента",
-      "PARENT_NAME_DEFAULT": "Нет родительского элемента",
-      "CREATED_BY": "Создано пользователем",
-      "CREATED": "Создано",
-      "END_DATE": "Дата окончания",
-      "ID": "Идентификатор",
-      "PROCESS_INSTANCE_ID": "Идентификатор экземпляра процесса",
-      "PROCESS_INSTANCE_ID_DEFAULT": "Нет идентификатора экземпляра процесса",
-      "DESCRIPTION": "Описание",
-      "DESCRIPTION_DEFAULT": "Нет описания",
-      "FORM_NAME": "Имя формы",
-      "FORM_NAME_DEFAULT": "Без формы",
-      "CANDIDATE_USERS": "Пользователи-кандидаты",
-      "CANDIDATE_USERS_DEFAULT": "Пользователи-кандидаты отсутствуют",
-      "CANDIDATE_GROUPS": "Группы-кандидаты",
-      "CANDIDATE_GROUPS_DEFAULT": "Группы-кандидаты отсутствуют"
+      "TASK_NAME": "Task",
+      "THUMBNAIL": "Thumbnail",
+      "DURATION": "Duration",
+      "PARENT_TASK_ID": "Parent task id",
+      "NAME": "Name",
+      "ASSIGNEE": "Assignee",
+      "ASSIGNEE_DEFAULT": "No assignee",
+      "PRIORITY": "Priority",
+      "DUE_DATE": "Due Date",
+      "DUE_DATE_DEFAULT": "No date",
+      "STATUS": "Status",
+      "CATEGORY": "Category",
+      "CATEGORY_DEFAULT": "No category",
+      "PARENT_NAME": "Parent name",
+      "PARENT_NAME_DEFAULT": "No parent",
+      "CREATED_BY": "Created By",
+      "CREATED": "Created",
+      "END_DATE": "End date",
+      "ID": "ID",
+      "PROCESS_INSTANCE_ID": "Process instance id",
+      "PROCESS_INSTANCE_ID_DEFAULT": "No process instance id",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_DEFAULT": "No description",
+      "FORM_NAME": "Form Name",
+      "FORM_NAME_DEFAULT": "No form",
+      "CANDIDATE_USERS": "Candidate Users",
+      "CANDIDATE_USERS_DEFAULT": "No Candidate Users",
+      "CANDIDATE_GROUPS": "Candidate Groups",
+      "CANDIDATE_GROUPS_DEFAULT": "No Candidate Groups"
     },
     "FORM_VALIDATION": {
-      "INVALID_FIELD": "Введите другое значение"
+      "INVALID_FIELD": "Enter a different value"
     }
   },
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
-      "ID": "Идентификатор",
-      "NAME": "Имя процесса",
-      "NAME_DEFAULT": "Нет имени",
-      "DESCRIPTION": "Описание",
-      "DESCRIPTION_DEFAULT": "Нет описания",
-      "STATUS": "Статус",
-      "BUSINESS_KEY": "Бизнес-ключ",
-      "INITIATOR": "Инициатор",
-      "START_DATE": "Запущено",
-      "LAST_MODIFIED": "Обновлено",
-      "PARENT_ID": "ID родителя",
-      "NONE": "Нет"
+      "ID": "ID",
+      "NAME": "Process name",
+      "NAME_DEFAULT": "No name",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_DEFAULT": "No description",
+      "STATUS": "Status",
+      "BUSINESS_KEY": "Business Key",
+      "INITIATOR": "Initiator",
+      "START_DATE": "Started",
+      "LAST_MODIFIED": "Updated",
+      "PARENT_ID": "Parent Id",
+      "NONE": "None"
     }
   },
   "ADF_CLOUD_TASK_FORM": {
     "EMPTY_FORM": {
-      "TITLE": "Нет доступных форм",
-      "SUBTITLE": "Прикрепите форму для дальнейшего просмотра",
+      "TITLE": "No form available",
+      "SUBTITLE": "Attach a form that can be viewed later",
       "BUTTONS": {
-        "COMPLETE": "Завершить",
-        "CANCEL": "Отмена",
-        "CLAIM": "Принять",
-        "UNCLAIM": "Освободить"
+        "COMPLETE": "COMPLETE",
+        "CANCEL": "CANCEL",
+        "CLAIM": "CLAIM",
+        "UNCLAIM": "RELEASE"
       }
     },
     "ERROR": {
-      "INVALID_DESTINATION_FOLDER_PATH": "Неверный путь доступа к папке назначения",
-      "DESTINATION_FOLDER_PATH_ERROR": "Путь назначения неправильный или не существует, откат в мое местоположение"
+      "INVALID_DESTINATION_FOLDER_PATH": "Invalid destination folder path",
+      "DESTINATION_FOLDER_PATH_ERROR": "The destination path is incorrect or does not exist, rollback to -my- location"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
-    "RETRIEVE_METADATA": "Автоматически заполнить форму"
+    "RETRIEVE_METADATA": "Autofill Form"
   },
   "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
-    "ASSIGNED_TO": "Назначено",
-    "CURRENT_USER": "Назначенные мне",
-    "UNASSIGNED": "Неназначенные",
-    "NONE": "Нет",
-    "CANDIDATE_GROUPS": "Список групп-кандидатов",
-    "ASSIGNEE": "Исполнитель",
-    "ASSIGNMENT_TYPE": "Тип задания"
+    "ASSIGNED_TO": "Assigned to",
+    "CURRENT_USER": "Assigned to me",
+    "UNASSIGNED": "Unassigned",
+    "NONE": "None",
+    "CANDIDATE_GROUPS": "List of candidate groups",
+    "ASSIGNEE": "Assignee",
+    "ASSIGNMENT_TYPE": "Assignment type"
   }
 }

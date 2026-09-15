@@ -1,78 +1,145 @@
 {
   "ADF": {
-    "LANGUAGE": "Språk",
+    "LANGUAGE": "Language",
     "ROLES": {
-      "ALL": "Alla",
-      "CONTRIBUTOR": "Deltagare",
-      "COLLABORATOR": "Medarbetare",
-      "COORDINATOR": "Samordnare",
-      "EDITOR": "Redaktör",
-      "CONSUMER": "Förbrukare",
-      "SITECOLLABORATOR": "Samarbetsyta medarbetare",
-      "SITECONSUMER": "Samarbetsyta förbrukare",
-      "SITECONTRIBUTOR": "Samarbetsyta deltagare",
-      "SITEMANAGER": "Samarbetsyta hanterare"
+      "ALL": "All",
+      "CONTRIBUTOR": "Contributor",
+      "COLLABORATOR": "Collaborator",
+      "COORDINATOR": "Coordinator",
+      "EDITOR": "Editor",
+      "CONSUMER": "Consumer",
+      "SITECOLLABORATOR": "Site Collaborator",
+      "SITECONSUMER": "Site Consumer",
+      "SITECONTRIBUTOR": "Site Contributor",
+      "SITEMANAGER": "Site Manager"
     }
   },
-  "SAVE": "Spara",
-  "COMPLETE": "Slutför",
-  "CANCEL": "Avbryt",
-  "CLAIM": "Anta",
-  "UNCLAIM": "Avsäga",
-  "START PROCESS": "Starta process",
-  "DATA_LOADING": "Data laddas",
-  "CLOSE": "Stäng",
+  "SAVE": "SAVE",
+  "COMPLETE": "COMPLETE",
+  "CANCEL": "CANCEL",
+  "CLAIM": "CLAIM",
+  "UNCLAIM": "RELEASE",
+  "START PROCESS": "START PROCESS",
+  "DATA_LOADING": "Data is loading",
+  "CLOSE": "CLOSE",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "Du har inga aviseringar just nu.",
-    "TITLE": "Aviseringar",
-    "MARK_AS_READ": "Markera allt som läst",
+    "NO_MESSAGE": "You have no notifications at this time.",
+    "UNREAD_MESSAGES": "You have unread notifications.",
+    "TITLE": "Notifications",
+    "MARK_AS_READ": "Mark all as read",
     "SYSTEM": "System",
-    "LOAD_MORE": "Läs in mer",
-    "OPEN_HISTORY": "Öppna meddelandehistorik"
+    "LOAD_MORE": "Load more",
+    "OPEN_HISTORY": "Open notification history"
   },
   "FORM": {
     "START_FORM": {
-      "TITLE": "Startformulär"
+      "TITLE": "Start Form"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Förhandgranskning inte tillgänglig"
+      "IMAGE_NOT_AVAILABLE": "Preview not available",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "In preview mode you cannot attach a file"
+      }
     },
     "FIELD": {
-      "LOCALSTORAGE": "Lokal lagring",
-      "SOURCE": "Välj källa från ",
-      "VIEW_FILE": "Visa",
-      "DOWNLOAD_FILE": "Ladda ner",
-      "REMOVE_FILE": "Ta bort",
-      "UPLOAD": "Ladda upp",
-      "REQUIRED": "Fält obligatoriskt",
-      "REST_API_FAILED": "Servern '{{ hostname }}' kan inte nås",
-      "FILE_NAME": "Filnamn",
-      "NO_FILE_ATTACHED": "Ingen fil bifogad",
+      "LOCALSTORAGE": "Local storage",
+      "SOURCE": "Select source from ",
+      "VIEW_FILE": "View",
+      "DOWNLOAD_FILE": "Download",
+      "REMOVE_FILE": "Remove",
+      "UPLOAD": "UPLOAD",
+      "REQUIRED": "This is a required field",
+      "REST_API_FAILED": "The server `{{ hostname }}` is not reachable",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "There was a problem loading dropdown elements. Please contact administrator.",
+      "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
+      "DATA_TABLE_EMPTY_CONTENT": "No data found",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
+      "FILE_NAME": "File Name",
+      "TITLE": "Title",
+      "NO_FILE_ATTACHED": "No file attached",
       "VALIDATOR": {
-        "INVALID_NUMBER": "Använd ett annat nummerformat",
-        "INVALID_DATE": "Använd ett annat datumformat",
-        "INVALID_VALUE": "Ange ett annat värde",
-        "NOT_GREATER_THAN": "Kan inte vara större än {{ maxValue }}",
-        "NOT_LESS_THAN": "Kan inte vara mindre än {{ minValue }}",
-        "AT_LEAST_LONG": "Ange minst {{ minLength }} tecken",
-        "NO_LONGER_THAN": "Ange inte fler än {{ maxLength }} tecken"
+        "INVALID_NUMBER": "Use a different number format",
+        "INVALID_DECIMAL_NUMBER": "Use a decimal number format",
+        "INVALID_DECIMAL_PRECISION": "Incorrect decimal value, there should be a maximum of {{precision}} digits after the decimal point.",
+        "INVALID_DATE": "Use a different date format",
+        "INVALID_DATE_FORMAT": "Invalid date format.",
+        "INVALID_VALUE": "Enter a different value",
+        "NOT_GREATER_THAN": "Can't be greater than {{ maxValue }}",
+        "NOT_LESS_THAN": "Can't be less than {{ minValue }}",
+        "AT_LEAST_LONG": "Enter at least {{ minLength }} characters",
+        "NO_LONGER_THAN": "Enter no more than {{ maxLength }} characters"
       },
-      "FILE_ALREADY_UPLOADED": "En fil med samma namn finns redan uppladdad.",
-      "ATTACH": "Bifoga"
+      "FILE_ALREADY_UPLOADED": "A file with the same name is already uploaded.",
+      "ATTACH": "Attach",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "add",
+        "ROW_LIMIT_REACHED": "Rows limit ({{ limit }}) reached."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Namnlös uppgift"
+      "NAMELESS_TASK": "Nameless task",
+      "ROW_LABEL": "Row {{ number }}",
+      "DELETE_ROW": "Delete row",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Delete the row",
+        "MESSAGE": "Are you sure you want to delete this row?",
+        "YES_LABEL": "Delete row",
+        "NO_LABEL": "Cancel"
+      }
+    },
+    "BUTTON": {
+      "PREVIOUS_TAB": "Previous",
+      "PREVIOUS_TAB_TITLE": "Navigate to previous tab",
+      "NEXT_TAB": "Next",
+      "NEXT_TAB_TITLE": "Navigate to next tab"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "Font size",
+      "FONT_WEIGHT": "Font weight",
+      "FONT_COLOR": "Font color",
+      "FONT_WEIGHTS": {
+        "REGULAR": "regular",
+        "BOLD": "bold"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "system color",
+        "BLACK": "black",
+        "GREY": "grey",
+        "RED": "red",
+        "GREEN": "green",
+        "BLUE": "blue",
+        "YELLOW": "yellow"
+      },
+      "PREDEFINED": {
+        "HEADER": {
+          "NORMAL": "normal",
+          "HEADING": "heading",
+          "TITLE": "title"
+        },
+        "RADIO_BUTTONS": {
+          "NORMAL": "normal",
+          "STRONG": "strong",
+          "HEADING": "heading"
+        },
+        "READONLY_TEXT": {
+          "NORMAL": "normal",
+          "STRONG": "strong",
+          "HEADING": "heading",
+          "TITLE": "title",
+          "ANNOTATION": "annotation"
+        }
+      }
     }
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Företagslogotyp",
+      "LOGO_ARIA": "Company Logo",
       "ACCESSIBILITY": {
-        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Växla meny"
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Toggle Menu"
       }
     },
     "FILE_SIZE": {
-      "BYTES": "Byte",
+      "BYTES": "Bytes",
       "KB": "KB",
       "MB": "MB",
       "GB": "GB",
@@ -84,266 +151,313 @@
     },
     "PAGINATION": {
       "ARIA": {
-        "ITEMS_PER_PAGE": "Sidstorleksväljare",
-        "CURRENT_PAGE": "Aktuell sidväljare",
-        "PREVIOUS_PAGE": "Knappen föregående sida",
-        "NEXT_PAGE": "Knappen nästa sida"
+        "ITEMS_PER_PAGE": "Page size selector",
+        "CURRENT_PAGE": "Current page selector",
+        "PREVIOUS_PAGE": "Previous page button",
+        "NEXT_PAGE": "Next page button"
       },
-      "ITEMS_RANGE": "Visar {{ range }} av {{ total }}",
-      "ITEMS_PER_PAGE": "Objekt per sida",
-      "CURRENT_PAGE": "Sida {{ number }}",
-      "TOTAL_PAGES": "av {{ total }}"
+      "ITEMS_RANGE": "Showing {{ range }} of {{ total }}",
+      "ITEMS_PER_PAGE": "Items per page",
+      "CURRENT_PAGE": "Page {{ number }}",
+      "TOTAL_PAGES": "of {{ total }}"
     },
     "DIALOG": {
       "DOWNLOAD_ZIP": {
         "ACTIONS": {
-          "CANCEL": "Avbryt"
+          "CANCEL": "Cancel"
         },
-        "TITLE": "Lägg till filer till zip, det här kan ta några minuter"
+        "TITLE": "Adding files to zip, this could take a few minutes",
+        "COMPLETE": "complete"
       },
       "EDIT_JSON": {
-        "CLOSE": "Stäng",
-        "UPDATE": "Uppdatera"
+        "CLOSE": "Close",
+        "UPDATE": "Update",
+        "COPY": "Copy",
+        "COPIED": "Copied to clipboard"
+      },
+      "UNSAVED_CHANGES": {
+        "TITLE": "Unsaved changes",
+        "DESCRIPTION": "You have unsaved changes on this screen. Are you sure want to leave without saving changes?",
+        "DISCARD_CHANGES_BUTTON": "Discard Changes"
       }
     },
+    "BREADCRUMBS": {
+      "TITLE": "Breadcrumbs",
+      "SHOWALL": "Show all"
+    },
     "FILE_DIALOG": {
-      "FILE_LOCK": "Lås fil",
-      "ALLOW_OTHERS_CHECKBOX": "Tillåt ägaren att ändra den här filen",
-      "FILE_LOCK_CHECKBOX": "Lås fil",
-      "TIME_LOCK_CHECKBOX": "Tidslås",
+      "FILE_LOCK": "Lock file",
+      "ALLOW_OTHERS_CHECKBOX": "Allow the owner to modify this file",
+      "FILE_LOCK_CHECKBOX": "Lock file",
+      "TIME_LOCK_CHECKBOX": "Time lock",
       "SAVE_BUTTON": {
-        "LABEL": "Spara"
+        "LABEL": "Save"
       },
       "CANCEL_BUTTON": {
-        "LABEL": "Avbryt"
+        "LABEL": "Cancel"
       }
     },
     "FOLDER_DIALOG": {
-      "CREATE_FOLDER_TITLE": "Skapa ny mapp",
-      "EDIT_FOLDER_TITLE": "Redigera mapp",
+      "CREATE_FOLDER_TITLE": "Create new folder",
+      "EDIT_FOLDER_TITLE": "Edit folder",
       "FOLDER_NAME": {
-        "LABEL": "Namn",
+        "LABEL": "Name",
         "ERRORS": {
-          "REQUIRED": "Mappnamn krävs",
-          "SPECIAL_CHARACTERS": "Mappnamnet får inte innehålla något av följande tecken: * \" < > \\ / ? : |",
-          "ENDING_DOT": "Mappnamnet får inte sluta med en punkt .",
-          "ONLY_SPACES": "Mappnamnet får inte bara innehålla mellanslag"
+          "REQUIRED": "Folder name is required",
+          "SPECIAL_CHARACTERS": "Folder name can't contain these characters * \" < > \\ / ? : |",
+          "ENDING_DOT": "Folder name can't end with a period .",
+          "ONLY_SPACES": "Folder name can't contain only spaces"
         }
       },
       "FOLDER_DESCRIPTION": {
-        "LABEL": "Beskrivning"
+        "LABEL": "Description"
       },
       "FOLDER_TITLE": {
-        "LABEL": "Titel"
+        "LABEL": "Title"
       },
       "CREATE_BUTTON": {
-        "LABEL": "Skapa"
+        "LABEL": "Create"
       },
       "UPDATE_BUTTON": {
-        "LABEL": "Uppdatera"
+        "LABEL": "Update"
       },
       "CANCEL_BUTTON": {
-        "LABEL": "Avbryt"
-      }
+        "LABEL": "Cancel"
+      },
+      "FOLDER_CREATED_SUCCESS": "Folder '{{ name }}' created successfully",
+      "FOLDER_UPDATED_SUCCESS": "Folder '{{ name }}' updated successfully"
     },
     "MESSAGES": {
       "ERRORS": {
-        "GENERIC": "Åtgärden lyckades inte. Försök igen eller kontakta din IT-avdelning.",
-        "EXISTENT_FOLDER": "Det finns redan en mapp med det här namnet. Testa ett annat namn"
+        "GENERIC": "The action was unsuccessful. Try again or contact your IT Team.",
+        "EXISTENT_FOLDER": "There's already a folder with this name. Try a different name."
       }
     },
     "RESTORE_NODE": {
-      "VIEW": "Visa",
-      "PARTIAL_PLURAL": "{{ number }} objekt ej återställda på grund av problem med återställningsplatsen",
-      "NODE_EXISTS": "Kan inte återställa, {{ name }} objektet finns redan",
-      "LOCATION_MISSING": "Kan inte återställa {{ name }} objekt, den ursprungliga platsen finns inte längre",
-      "GENERIC": "Det uppdstod ett problem med att återställa objektet {{ name }}",
-      "PLURAL": "Återställning lyckades",
-      "SINGULAR": "{{ name }} objekt återställt"
+      "VIEW": "View",
+      "PARTIAL_PLURAL": "{{ number }} items not restored because of issues with the restore location",
+      "NODE_EXISTS": "Can't restore, {{ name }} item already exists",
+      "LOCATION_MISSING": "Can't restore {{ name }} item, the original location no longer exists",
+      "GENERIC": "There was a problem restoring {{ name }} item",
+      "PLURAL": "Restore successful",
+      "SINGULAR": "{{ name }} item restored"
     },
     "DELETE_NODE": {
-      "SINGULAR": "{{ name }} raderad",
-      "PLURAL": "{{ number }} objekt raderade",
-      "PARTIAL_SINGULAR": "Raderade {{ success }} objekt, {{ failed }} kunde inte raderas",
-      "PARTIAL_PLURAL": "Raderade {{ success }} objekt, {{ failed }} kunde inte raderas",
-      "ERROR_SINGULAR": "{{ name }} kunde inte raderas",
-      "ERROR_PLURAL": "{{ number }} objekt kunde inte raderas"
+      "SINGULAR": "{{ name }} deleted",
+      "PLURAL": "{{ number }} items deleted",
+      "PARTIAL_SINGULAR": "Deleted {{ success }} item, {{ failed }} couldn't be deleted",
+      "PARTIAL_PLURAL": "Deleted {{ success }} items, {{ failed }} couldn't be deleted",
+      "ERROR_SINGULAR": "{{ name }} couldn't be deleted",
+      "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
-        "ADD": "Lägg till ny",
-        "NAME": "Namn",
-        "VALUE": "Värde"
+        "ADD": "Add New",
+        "NAME": "Name",
+        "VALUE": "Value"
       },
-      "NONE": "Ingen",
+      "NONE": "None",
+      "SELECTED_VALUES": "Selected values",
+      "REMOVE": "Remove {{ value }}",
       "VALIDATORS": {
-        "FLOAT_VALIDATION_ERROR": "Använd ett nummerformat",
-        "INT_VALIDATION_ERROR": "Använd ett heltalsformat",
-        "LENGTH_VALIDATION_ERROR": "Värdet ska vara mellan {{ minLength }} och {{ maxLength }} i längd",
-        "MATCH_VALIDATION_ERROR": "Värdet matchar inte mönstret: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Värdet ska vara mellan {{ minValue }} och {{ maxValue }}"
+        "FLOAT_VALIDATION_ERROR": "Use a number format",
+        "INT_VALIDATION_ERROR": "Use an integer format",
+        "LONG_VALIDATION_ERROR": "Use a long format",
+        "LENGTH_VALIDATION_ERROR": "Value should be between {{ minLength }} and {{ maxLength }} in length",
+        "MATCH_VALIDATION_ERROR": "Value doesn't match pattern: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "Value should be between {{ minValue }} and {{ maxValue }}",
+        "ONLY_POSITIVE_NUMBER": "Only positive value is allowed"
       },
-      "MORE": "Mer"
+      "MORE": "More"
     },
     "METADATA": {
       "BASIC": {
-        "HEADER": "Egenskaper",
-        "NAME": "Namn",
-        "TITLE": "Titel",
-        "DESCRIPTION": "Beskrivning",
-        "AUTHOR": "Författare",
-        "MIMETYPE": "Mime-typ",
-        "SIZE": "Storlek",
-        "CREATOR": "Skapad av",
-        "CREATED_DATE": "Skapad datum",
-        "MODIFIER": "Ändrad av",
-        "MODIFIED_DATE": "Ändringsdatum",
-        "CONTENT_TYPE": "Innehållstyp"
+        "HEADER": "General info",
+        "NAME": "Name",
+        "TITLE": "Title",
+        "DESCRIPTION": "Description",
+        "AUTHOR": "Author",
+        "MIMETYPE": "Mimetype",
+        "SIZE": "Size",
+        "CREATOR": "Creator",
+        "CREATED_DATE": "Created Date",
+        "MODIFIER": "Modifier",
+        "MODIFIED_DATE": "Modified Date",
+        "CONTENT_TYPE": "Content Type"
       },
       "CONTENT_TYPE": {
         "DIALOG": {
-          "TITLE": "Ändra innehållstyp",
-          "DESCRIPTION": "Genom att göra denna ändring av innehållstypen läggs vissa egenskaper och lagrade metadata permanent till dokumentet.",
-          "CONFIRM": "Är du säker på att du vill ändra innehållstypen?",
-          "CANCEL": "Avbryt",
-          "APPLY": "Spara ändringar",
-          "VIEW_DETAILS": "Visa detaljer",
+          "TITLE": "Change content type",
+          "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
+          "CONFIRM": "Are you sure you want to change the content type?",
+          "CANCEL": "CANCEL",
+          "APPLY": "Save Changes",
+          "VIEW_DETAILS": "View details",
           "PROPERTY": {
-            "NAME": "Namn",
-            "DESCRIPTION": "Beskrivning",
-            "DATA_TYPE": "Datatyp"
+            "NAME": "Name",
+            "DESCRIPTION": "Description",
+            "DATA_TYPE": "Data type"
           }
         }
       },
       "ACTIONS": {
-        "EDIT": "Redigera",
-        "SAVE": "Spara",
-        "CANCEL": "Avbryt",
-        "CLEAR": "Rensa",
-        "TOGGLE": "Växla värde",
-        "COPY_TO_CLIPBOARD": "Dubbelklicka för att kopiera värde",
-        "EDIT_ASPECTS": "Redigera aspekt"
+        "EDIT": "Edit",
+        "SAVE": "Save",
+        "CANCEL": "Cancel",
+        "CLEAR": "Clear",
+        "TOGGLE": "Toggle value",
+        "COPY_TO_CLIPBOARD": "Double click to copy value",
+        "EDIT_ASPECTS": "Edit Aspect"
       },
       "ACCESSIBILITY": {
-        "EDIT": "Redigeringsknapp",
-        "DATEPICKER": "Använd piltangenterna för att navigera mellan datumen. Upp och ner flyttar till nästa eller föregående vecka men på samma dag. Vänster och höger flyttar till nästa eller föregående dag. Tryck på Retur för att välja ett datum.",
-        "COPY_TO_CLIPBOARD_MESSAGE": "Värde kopierat till urklipp",
-        "EDIT_ASPECTS": "Redigera aspekt"
+        "EDIT": "Edit {{ sectionName }}",
+        "DATEPICKER": "Use the arrow keys to navigate between dates. Up and down move to the next or previous week but on the same day. Left and right move to the next or previous day. Press Enter or Return to select a date.",
+        "COPY_TO_CLIPBOARD_MESSAGE": "Value copied to clipboard",
+        "EDIT_ASPECTS": "Edit Aspect",
+        "SECTION": "{{ sectionName }} section"
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "Växla mellan att visa resultaten i stigande eller sjunkande ordning",
-      "SORT_BY": "Sortera efter"
+      "TOGGLE_ASC_DESC_ORDER": "Toggle results between ascending and descending order",
+      "SORT_BY": "Sort by",
+      "BUTTON": {
+        "TOOLTIP": "Search",
+        "ARIA-LABEL": "Search button"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "Search input"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "Close"
+        }
+      }
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "Feature flag overrides",
+      "FILTER_OR_ADD_NEW": "Filter or add new",
+      "FILTER": "Filter",
+      "ADD_NEW": "Add new feature flag (Shift + Enter)"
     }
   },
   "COMMENTS": {
-    "NONE": "Inga kommentarer",
-    "ADD": "Lägg till",
-    "HEADER": "Kommentarer ({{ count }})",
-    "CREATED_BY_HEADER": "Skapad av",
-    "MESSAGE_HEADER": "Meddelande",
+    "PROFILE_IMAGE": "Profile Image",
+    "NONE": "No comments",
+    "ADD": "Add",
+    "HEADER": "Comments ({{ count }})",
+    "CREATED_BY_HEADER": "Created by",
+    "MESSAGE_HEADER": "Message",
+    "EMPTY_ERROR": "Comment can't be empty",
     "DIALOG": {
-      "TITLE": "Ny kommentar",
+      "TITLE": "New comment",
       "LABELS": {
-        "MESSAGE": "Meddelande"
+        "MESSAGE": "Message"
       },
       "BUTTON": {
-        "ADD": "Lägg till kommentar",
-        "CANCEL": "Avbryt"
+        "ADD": "Add Comment",
+        "CANCEL": "Cancel"
       }
     }
   },
   "LOGIN": {
     "LOGO": "Alfresco, make business flow",
     "LABEL": {
-      "LOGIN": "Logga in",
-      "USERNAME": "Användarnamn",
-      "PASSWORD": "Lösenord",
-      "REMEMBER": "Kom ihåg mig"
+      "LOGIN": "Sign in",
+      "USERNAME": "Username",
+      "PASSWORD": "Password",
+      "REMEMBER": "Remember me"
     },
     "ARIA-LABEL": {
-      "SHOW-PASSWORD": "Visa lösenord",
-      "HIDE-PASSWORD": "Dölj lösenord"
+      "SHOW-PASSWORD": "Show password",
+      "HIDE-PASSWORD": "Hide password"
     },
     "MESSAGES": {
-      "USERNAME-REQUIRED": "Obligatorisk",
-      "USERNAME-MIN": "Ditt användarna måste vara minst {{ minLength }} tecken.",
-      "PASSWORD-REQUIRED": "Ange ditt lösenord för att logga in",
-      "LOGIN-ERROR-CREDENTIALS": "Du har angett ett okänt användarnamn eller lösenord",
-      "LOGIN-ERROR-PROVIDERS": "Leverantörer kan inte avdefinieras",
-      "LOGIN-ERROR-CORS": "CORS-undantag, kontrollera din serverkonfiguration",
-      "LOGIN-ERROR-CSRF": "CSRF undantag, ange \"disableCSRF\": sann i app.config.json",
-      "LOGIN-ECM-LICENSE": "Alfresco Content Services-datakatalog är i skrivskyddat läge",
-      "SSO-WRONG-CONFIGURATION": "SSO-autentiseringsserver kan inte nås"
+      "USERNAME-REQUIRED": "Required",
+      "USERNAME-MIN": "Your username needs to be at least {{ minLength }} characters.",
+      "PASSWORD-REQUIRED": "Enter your password to sign in",
+      "LOGIN-ERROR-CREDENTIALS": "You've entered an unknown username or password",
+      "LOGIN-ERROR-PROVIDERS": "Providers cannot be undefined",
+      "LOGIN-ERROR-CORS": "CORS exception, check your server configuration",
+      "LOGIN-ERROR-CSRF": "CSRF exception, set \"disableCSRF\": true in app.config.json",
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services repository is in read-only mode",
+      "SSO-WRONG-CONFIGURATION": "SSO Authentication server unreachable"
     },
     "BUTTON": {
-      "LOGIN": "Logga in",
-      "CHECKING": "Kontrollerar",
-      "WELCOME": "Välkommen",
-      "SSO": "Logga in SSO"
+      "LOGIN": "SIGN IN",
+      "CHECKING": "CHECKING",
+      "WELCOME": "WELCOME",
+      "SSO": "SIGN IN SSO"
     },
     "ACTION": {
-      "HELP": "Behöver du hjälp?",
-      "REGISTER": "Registrera"
+      "HELP": "NEED HELP?",
+      "REGISTER": "REGISTER"
     }
   },
   "ADF-DATATABLE": {
     "EMPTY": {
-      "HEADER": "Den här listan är tom",
+      "HEADER": "This list is empty",
       "DRAG-AND-DROP": {
-        "TITLE": "Dra och släpp",
-        "SUBTITLE": "för att ladda upp filer"
+        "TITLE": "Drag and drop",
+        "SUBTITLE": "to upload files"
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "Innehållsåtgärder"
+      "TOOLTIP": "Content actions",
+      "SELECT_COLUMNS": "Select columns"
     },
     "ACCESSIBILITY": {
-      "ACTIONS": "Åtgärder",
-      "SELECT_ALL": "Välj alla",
-      "SELECT_FILE": "Välj fil",
-      "SORT_ASCENDING": "Stigande",
-      "SORT_DESCENDING": "Sjunkande",
-      "SORT_NONE": "Ingen",
-      "SORT_DEFAULT": "Sorterbar",
-      "SORT_ASCENDING_BY": "Stigande efter {{ string }}",
-      "SORT_DESCENDING_BY": "Sjunkande efter {{ string }}",
-      "ICON_TEXT": "Artikeltyp {{ type }}",
-      "ICON_DISABLED": "Avaktiverad",
-      "ROW_OPTION_BUTTON": "Åtgärder",
-      "EMPTY_HEADER": "Tomt sidhuvud"
+      "ACTIONS": "Actions",
+      "SELECT_ALL": "Select all",
+      "SELECT_FILE": "Select file",
+      "SELECTED": "Selected",
+      "ROW_SELECTION": "Press Space to toggle row selection",
+      "SORT_ASCENDING": "Ascending",
+      "SORT_DESCENDING": "Descending",
+      "SORT_NONE": "None",
+      "SORT_DEFAULT": "Sortable",
+      "SORT_ASCENDING_BY": "Ascending by {{ string }}",
+      "SORT_DESCENDING_BY": "Descending by {{ string }}",
+      "ICON_TEXT": "Item type {{ type }}",
+      "ICON_DISABLED": "Disabled",
+      "ROW_OPTION_BUTTON": "Actions",
+      "DRAG": "Drag button",
+      "DRAGGABLE": "Draggable",
+      "EMPTY_HEADER": "Empty header",
+      "RESIZE_COLUMN": "Resize {{ column }} column. Use arrow keys to adjust width, Shift for larger steps.",
+      "COLUMN_WIDTH_CHANGED": "{{ column }} column width: {{ width }} pixels"
     },
     "FILE_TYPE": {
-      "DOCUMENT": "Dokument",
-      "FOLDER": "Mapp",
+      "DOCUMENT": "Document",
+      "FOLDER": "Folder",
       "PDF": "PDF",
-      "IMAGE": "Bild",
-      "EXCEL": "Excel-kalkylblad",
-      "WORD": "Word-dokument",
-      "POWERPOINT": "Powerpoint-presentation",
+      "IMAGE": "Image",
+      "EXCEL": "Excel spreadsheet",
+      "WORD": "Word document",
+      "POWERPOINT": "Powerpoint presentation",
       "VIDEO": "Video",
-      "AUDIO": "Ljud",
-      "WEBSITE": "Webbplats",
-      "ARCHIVE": "Arkiv",
+      "AUDIO": "Audio",
+      "WEBSITE": "Website",
+      "ARCHIVE": "Archive",
       "PRESENTATION": "Presentation",
-      "SPREADSHEET": "Kalkylblad",
-      "MISCELLANEOUS": "Övrigt"
+      "SPREADSHEET": "Spreadsheet",
+      "MISCELLANEOUS": "Miscellaneous"
     },
     "COLUMNS_SELECTOR": {
-      "COLUMNS": "Kolonner",
-      "SEARCH": "Sök",
-      "APPLY": "Tillämpa"
+      "COLUMNS": "Choose visible columns",
+      "SEARCH": "Search",
+      "APPLY": "Apply",
+      "COLUMNS_VISIBILITY": "Select columns to display"
     }
   },
   "USER_PROFILE": {
     "LABELS": {
       "ECM": {
-        "JOB_TITLE": "Jobbtitel"
+        "JOB_TITLE": "Job Title"
       },
       "BPM": {
-        "TENANT": "Kund"
+        "TENANT": "Tenant"
       },
-      "MY_PROFILE": "Min profil"
+      "MY_PROFILE": "My Profile"
     },
     "TAB": {
       "CS": "Content Services",
@@ -352,220 +466,214 @@
   },
   "ADF_VIEWER": {
     "ACTIONS": {
-      "BACK": "Tillbaka",
-      "OPEN_WITH": "Öppna med",
-      "DOWNLOAD": "Ladda ner",
-      "PRINT": "Skriv ut",
-      "SHARE": "Dela",
-      "MORE_ACTIONS": "Fler åtgärder",
+      "BACK": "Back",
+      "OPEN_WITH": "Open with",
+      "DOWNLOAD": "Download",
+      "PRINT": "Print",
+      "SHARE": "Share",
+      "MORE_ACTIONS": "More actions",
       "INFO": "Info",
-      "FULLSCREEN": "Aktivera helskärmsläge",
-      "CLOSE": "Stäng",
-      "NEXT_FILE": "Nästa fil",
-      "PREV_FILE": "Föregående fil",
-      "WAIT": "Vänta"
+      "FULLSCREEN": "Activate full-screen mode",
+      "CLOSE": "Close",
+      "NEXT_FILE": "Next File",
+      "PREV_FILE": "Previous File",
+      "WAIT": "Wait"
     },
     "ARIA": {
-      "PREVIOUS_PAGE": "Föregående sida",
-      "NEXT_PAGE": "Nästa sida",
-      "ZOOM_IN": "Zooma in",
-      "ZOOM_OUT": "Zooma ut",
-      "FIT_PAGE": "Passa in sida",
-      "ROTATE": "Rotera",
-      "CROP": "Beskär",
-      "SAVE": "Spara",
-      "CANCEL": "Avbryt",
-      "RESET": "Återställ",
-      "THUMBNAILS": "Dokumentminiatyrbilder",
-      "THUMBNAILS_PANLEL_CLOSE": "Stäng panel för miniatyrbilder"
+      "MIME_TYPE_ICON": "File type icon",
+      "PREVIOUS_PAGE": "Previous page",
+      "NEXT_PAGE": "Next page",
+      "ZOOM_IN": "Zoom in",
+      "ZOOM_OUT": "Zoom out",
+      "FIT_PAGE": "Fit page",
+      "ROTATE": "Rotate",
+      "CROP": "Crop",
+      "SAVE": "Save rotate or crop",
+      "CANCEL": "Cancel rotate or crop",
+      "RESET": "Reset",
+      "THUMBNAILS": "Document thumbnails",
+      "THUMBNAILS_PANLEL_CLOSE": "Close thumbnails panel",
+      "LOADING": "Document is loading",
+      "NOTE_ANNOTATION_IMG": "Note Annotation"
     },
     "PAGE_LABEL": {
-      "SHOWING": "Visar",
-      "OF": "av",
-      "PAGE_SELECTOR_LABEL": "Sidväljare"
+      "SHOWING": "Showing",
+      "OF": "of",
+      "PAGE_SELECTOR_LABEL": "Page selector"
     },
-    "LOADING": "Läser in",
-    "UNKNOWN_FORMAT": "Kunde inte läsa in förhandsgranskning. Okänt format.",
+    "LOADING": "Loading",
+    "UNKNOWN_FORMAT": "Couldn't load preview. Unsupported file type or loading error. Please try refreshing the page.",
     "SIDEBAR": {
       "THUMBNAILS": {
-        "PAGE": "Sida {{ pageNum }}"
-      },
-      "METADATA": {
-        "MORE_INFORMATION": "Mer information",
-        "LESS_INFORMATION": "Mindre information"
+        "PAGE": "Page {{ pageNum }}"
       }
     },
     "PDF_DIALOG": {
-      "SUBMIT": "Skicka in",
-      "CLOSE": "Stäng",
-      "PLACEHOLDER": "Lösenord",
-      "ERROR": "Lösenordet är fel"
+      "SUBMIT": "Submit",
+      "CLOSE": "Close",
+      "PLACEHOLDER": "Password",
+      "ERROR": "Password is wrong"
     },
-    "SUBTITLES": "Undertexter",
+    "SUBTITLES": "Subtitles",
     "NON_RESPONSIVE_DIALOG": {
-      "HEADER": "Förhandsgranskning fördröjd",
-      "LABEL": "Du kan fortsätta vänta, eller ladda ner dokumentet"
+      "HEADER": "Preview loading delayed",
+      "LABEL": "You can continue to wait, or download the document."
     }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "Vi har stött på ett problem.",
-      "DESCRIPTION": "Det verkar som om något gått fel.",
+      "TITLE": "We hit a problem.",
+      "DESCRIPTION": "Looks like something went wrong.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tillbaka hem"
+        "TEXT": "Back to home"
       }
     },
     "403": {
-      "TITLE": "Du har inte behörighet att komma åt den här servern.",
-      "DESCRIPTION": "Du är inte tillåten åtkomst till den här resursen på servern.",
+      "TITLE": "You don't have permission to access this server.",
+      "DESCRIPTION": "You're not allowed access to this resource on the server.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Rapportera problem"
+        "TEXT": "Report issue"
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tillbaka hem"
+        "TEXT": "Back to home"
       }
     },
     "404": {
-      "TITLE": "Ett fel inträffade.",
-      "DESCRIPTION": "Vi kunde inte hitta sidan du letade efter",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "We couldn’t find the page you were looking for.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tillbaka hem"
+        "TEXT": "Back to home"
       }
     },
     "500": {
-      "TITLE": "Ett fel inträffade.",
-      "DESCRIPTION": "Internt serverfel, försök igen eller kontakta IT-support [500].",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "Internal server error, try again or contact IT support [500].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tillbaka hem"
+        "TEXT": "Back to home"
       }
     },
     "502": {
-      "TITLE": "Ett fel inträffade.",
-      "DESCRIPTION": "Felaktig gateway, försök igen eller kontakta IT-support [502].",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "Bad Gateway, try again or contact IT support [502].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tillbaka hem"
+        "TEXT": "Back to home"
       }
     },
     "503": {
-      "TITLE": "Ett fel inträffade.",
-      "DESCRIPTION": "Service för tillfället ej tillgänglig [503].",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "Service Temporarily Unavailable [503].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tillbaka hem"
+        "TEXT": "Back to home"
       }
     },
     "504": {
-      "TITLE": "Ett fel inträffade.",
-      "DESCRIPTION": "Server-time out, försök igen eller kontakta IT-support [504].",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "The server timed out, try again or contact IT support [504].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tillbaka hem"
+        "TEXT": "Back to home"
       }
     }
   },
   "ABOUT": {
     "VERSION": "Version",
     "SERVER_SETTINGS": {
-      "TITLE": "Serverinställningar",
+      "TITLE": "Server settings",
       "CONTENT_SERVICE_HOST": "Alfresco Content Services URL: {{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
     },
-    "REPOSITORY": "Arkiv",
-    "VERSIONS": {
-      "TITLE": "Produktversioner",
-      "CONTENT_SERVICE": "Content Services",
-      "PROCESS_SERVICE": "Process Services",
-      "MODELING_SERVICE": "Modelleringstjänster",
-      "DEPLOYMENT_SERVICE": "Distribueringstjänster",
-      "QUERY_SERVICE": "Distribueringstjänster",
-      "RB": "Runtime",
-      "LABELS": {
-        "EDITION": "Version",
-        "VERSION": "Version",
-        "LICENSE": "Licens",
-        "STATUS": "Status",
-        "MODULES": "Moduler"
-      }
-    },
-    "SOURCE_CODE": {
-      "TITLE": "Källkod",
-      "DESCRIPTION": "Du driver projektet baserat på följande åtaganden:"
-    },
+    "REPOSITORY": "Repository",
     "PACKAGES": {
-      "TITLE": "Paket",
-      "NAME": "Namn",
+      "TITLE": "Packages",
+      "NAME": "Name",
       "VERSION": "Version"
     },
     "EXTENSIONS": {
       "TITLE": "Plugins",
       "TABLE_HEADERS": {
         "ID": "ID",
-        "NAME": "Namn",
+        "NAME": "Name",
         "VERSION": "Version",
-        "VENDOR": "Tillverkare",
-        "LICENSE": "Licens",
+        "VENDOR": "Vendor",
+        "LICENSE": "License",
         "RUNTIME": "Runtime",
-        "DESCRIPTION": "Beskrivning"
+        "DESCRIPTION": "Description"
       }
     },
     "LICENSE": {
-      "TITLE": "Licens",
-      "PROPERTY": "Egenskap",
-      "VALUE": "Värde"
+      "TITLE": "License",
+      "PROPERTY": "Property",
+      "VALUE": "Value",
+      "ENABLED": "Enabled",
+      "DISABLED": "Disabled"
     },
     "STATUS": {
       "TITLE": "Status",
-      "PROPERTY": "Egenskap",
-      "VALUE": "Värde"
+      "PROPERTY": "Property",
+      "VALUE": "Value"
     },
     "MODULES": {
-      "TITLE": "Moduler",
-      "NAME": "Namn",
+      "TITLE": "Modules",
+      "NAME": "Name",
       "VERSION": "Version"
     },
     "PLUGINS": {
       "TITLE": "Plugins",
-      "NAME": "Namn",
+      "NAME": "Name",
       "VERSION": "Version"
     }
   },
   "CLIPBOARD": {
-    "CLICK_TO_COPY": "Klicka för att kopiera",
-    "SUCCESS_COPY": "Texten har kopierats till urklipp"
+    "CLICK_TO_COPY": "Click to copy",
+    "SUCCESS_COPY": "Text copied to clipboard"
   },
   "SELECT_FILTER": {
     "INPUT": {
-      "PLACEHOLDER": "Sök",
-      "ARIA_LABEL": "Sökalternativ"
+      "PLACEHOLDER": "Search",
+      "ARIA_LABEL": "Search options"
     },
     "BUTTON": {
-      "ARIA_LABEL": "Rensa"
+      "ARIA_LABEL": "Clear"
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Läser in...",
-    "SELECTION_ARIA_LABEL": "{{placeholder}} kombinationsrutan {{selectedOption}}"
+    "LOADING": "Loading...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
+  },
+  "INFO_DRAWER": {
+    "ICON": "Node Icon"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "Load more",
+    "DELETE": "Remove {{ name }}"
   },
   "ADF_CONFIRM_DIALOG": {
-    "TITLE": "Bekräfta",
-    "ACTION": "Vill du fortsätta?",
-    "YES_LABEL": "Ja",
-    "NO_LABEL": "Nej"
+    "TITLE": "Confirm",
+    "ACTION": "Do you want to proceed?",
+    "YES_LABEL": "Yes",
+    "NO_LABEL": "No"
+  },
+  "SESSION_TIMEOUT": {
+    "TITLE": "Are you still working?",
+    "MESSAGE": "Your session will end in {{seconds}} seconds because there has been no activity.",
+    "LOG_OUT": "Log out",
+    "CONTINUE_WORKING": "Continue working"
   }
 }
