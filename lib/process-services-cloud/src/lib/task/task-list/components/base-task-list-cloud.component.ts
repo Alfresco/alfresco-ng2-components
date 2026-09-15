@@ -228,7 +228,6 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
             this.formatSorting(changes['sorting'].currentValue);
         }
         if (changes['appName']) {
-            // this.retrieveTasksPreferences();
             this.appNameSubject$.next(changes['appName'].currentValue);
         }
         this.reload();
