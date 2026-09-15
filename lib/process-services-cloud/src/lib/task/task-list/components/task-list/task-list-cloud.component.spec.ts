@@ -15,33 +15,36 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import {
     AppConfigService,
-    DataRowEvent,
-    ObjectDataRow,
-    User,
-    DataColumn,
     ColumnsSelectorComponent,
-    DataColumnListComponent,
-    DataColumnComponent,
     CustomEmptyContentTemplateDirective,
-    NoopAuthModule
+    DataColumn,
+    DataColumnComponent,
+    DataColumnListComponent,
+    DataRowEvent,
+    NoopAuthModule,
+    ObjectDataRow,
+    User
 } from '@alfresco/adf-core';
-import { TaskListCloudService } from '../../services/task-list-cloud.service';
-import { TaskListCloudComponent } from './task-list-cloud.component';
-import { fakeGlobalTasks, fakeCustomSchema, fakeGlobalTask } from '../../mock/fake-task-response.mock';
-import { of } from 'rxjs';
-import { TaskListCloudSortingModel } from '../../../../models/task-list-sorting.model';
-import { shareReplay, skip } from 'rxjs/operators';
-import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { Component, SimpleChange, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { By } from '@angular/platform-browser';
+import { of } from 'rxjs';
+import { shareReplay, skip } from 'rxjs/operators';
+import { TaskListCloudSortingModel } from '../../../../models/task-list-sorting.model';
 import { provideCloudPreferences } from '../../../../providers';
+import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
+import { PreferenceCloudServiceInterface } from '../../../../services/preference-cloud.interface';
+import { UserPreferenceCloudService } from '../../../../services/user-preference-cloud.service';
+import { fakeCustomSchema, fakeGlobalTask, fakeGlobalTasks } from '../../mock/fake-task-response.mock';
+import { TaskListCloudService } from '../../services/task-list-cloud.service';
+import { TaskListCloudComponent } from './task-list-cloud.component';
 
 @Component({
     imports: [TaskListCloudComponent, DataColumnListComponent, DataColumnComponent],
@@ -95,6 +98,14 @@ class EmptyTemplateComponent {}
 class CustomCopyContentTaskListComponent {
     @ViewChild(TaskListCloudComponent, { static: true })
     taskList: TaskListCloudComponent;
+}
+
+@Component({
+    imports: [TaskListCloudComponent],
+    template: `<adf-cloud-task-list [appName]="appName" />`
+})
+class TaskListCloudWrapperComponent {
+    appName: string;
 }
 
 describe('TaskListCloudComponent', () => {
@@ -882,5 +893,55 @@ describe('TaskListCloudComponent: Copy cell content directive from app.config sp
                 }
             )
         ).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW');
+    });
+});
+
+describe('TaskListCloudWrapperComponent', () => {
+    let wrapperFixture: ComponentFixture<TaskListCloudWrapperComponent>;
+    let preferenceService: PreferenceCloudServiceInterface;
+    let wrapperComponent: TaskListCloudWrapperComponent;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule, TaskListCloudWrapperComponent],
+            providers: [
+                provideHttpClientTesting(),
+                { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService },
+                { provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
+            ]
+        });
+
+        preferenceService = TestBed.inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN);
+        wrapperFixture = TestBed.createComponent(TaskListCloudWrapperComponent);
+        wrapperComponent = wrapperFixture.componentInstance;
+
+        spyOn(preferenceService, 'getPreferences').and.callThrough();
+    });
+
+    afterEach(() => {
+        wrapperFixture.destroy();
+    });
+
+    it('should fetch preferences once on init and every time the appName is changed', () => {
+        expect(preferenceService.getPreferences).toHaveBeenCalledTimes(0);
+
+        wrapperComponent.appName = 'fake-app';
+        wrapperFixture.detectChanges();
+        expect(preferenceService.getPreferences).toHaveBeenCalledTimes(1);
+
+        wrapperComponent.appName = 'fake-app-changed';
+        wrapperFixture.detectChanges();
+        expect(preferenceService.getPreferences).toHaveBeenCalledTimes(2);
+    });
+
+    it('should fetch preferences even if appName is set after ngAfterContentInit', () => {
+        expect(preferenceService.getPreferences).toHaveBeenCalledTimes(0);
+
+        wrapperFixture.detectChanges();
+        expect(preferenceService.getPreferences).toHaveBeenCalledTimes(1);
+
+        wrapperComponent.appName = 'fake-app';
+        wrapperFixture.detectChanges(); //this is second change, first was initial binding
+        expect(preferenceService.getPreferences).toHaveBeenCalledTimes(2);
     });
 });
