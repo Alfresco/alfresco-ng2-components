@@ -1,51 +1,51 @@
 {
   "ANALYTICS": {
-    "TITLE": "Analytiikka",
+    "TITLE": "ANALYTICS",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "Tuntematon piensovellustyyppi",
-      "FILL-PARAMETER": "Valitse raporttiasetuksista",
-      "NO-DATA-FOUND": "Tietoja ei löydy",
-      "ZERO-DATA-FOUND": "Mukana on vain nolla -arvoja",
-      "ICON-SETTING": "Asetukset",
-      "ICON-SAVE": "Tallenna",
-      "ICON-DELETE": "Poista",
-      "ICON-EXPORT-CSV": "Vie"
+      "UNKNOWN-WIDGET-TYPE": "UNKNOWN WIDGET TYPE",
+      "FILL-PARAMETER": "Choose from the report options",
+      "NO-DATA-FOUND": "No data found",
+      "ZERO-DATA-FOUND": "There are only zero values",
+      "ICON-SETTING": "Settings",
+      "ICON-SAVE": "Save",
+      "ICON-DELETE": "Delete",
+      "ICON-EXPORT-CSV": "Export"
     }
   },
   "__KEY_REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-DEFINITION-OVERVIEW": {
-        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Prosessimääritelmien kokonaismäärä",
-        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Prosessiesiintymien kokonaismäärä",
-        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Aktiivisten prosessiesiintymien kokonaismäärä",
-        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Suoritettujen prosessiesiintymien kokonaismäärä"
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Total number of process definitions",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Total number of process instances",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Total number of active process instances",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Total number of completed process instances"
       }
     }
   },
   "REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "Sisällytä läpivientivaiheet, esimerkiksi käynnistystapahtumat ja yhdyskäytävät"
+        "TYPE-FILTERING": "Include pass through steps such as start events and gateways"
       },
       "PROCESS-INSTANCES-OVERVIEW": {
-        "PROCESS-DEFINITION": "Prosessimääritelmä",
-        "DATE-RANGE": "Päivämääräalue",
-        "SLOW-PROC-INST-NUMBER": "Kuinka monta hitaimmista prosessiesiintymistä näytetään?"
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "SLOW-PROC-INST-NUMBER": "How many of the slowest process instances should be displayed?"
       },
       "TASK-OVERVIEW": {
-        "PROCESS-DEFINITION": "Prosessimääritelmä",
-        "DATE-RANGE": "Päivämääräalue",
-        "DATE-RANGE-INTERVAL": "Ryhmittele päivämäärät tämän perusteella:"
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "DATE-RANGE-INTERVAL": "Group dates by"
       },
       "TASK-SLA": {
-        "TASK": "Tehtävä",
-        "PROCESS-DEFINITION": "Prosessimääritelmä",
-        "DATE-RANGE": "Päivämääräalue",
-        "SLA-DURATION": "Palvelutasosopimuksen edellyttämä valmistumisaika"
+        "TASK": "Task",
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "SLA-DURATION": "SLA required completion time"
       }
     },
-    "PROCESS-STATUS": "Prosessin tila",
-    "TASK-STATUS": "Tehtävän tila"
+    "PROCESS-STATUS": "Process status",
+    "TASK-STATUS": "Task status"
   },
-  "DIAGRAMS": "Kaaviot"
+  "DIAGRAMS": "Diagrams"
 }

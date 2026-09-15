@@ -1,51 +1,51 @@
 {
   "ANALYTICS": {
-    "TITLE": "Analytics",
+    "TITLE": "ANALYTICS",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "Okänd widgettyp",
-      "FILL-PARAMETER": "Välj från rapportalternativen",
-      "NO-DATA-FOUND": "Inga data hittades",
-      "ZERO-DATA-FOUND": "Det finns bara nollvärden",
-      "ICON-SETTING": "Inställningar",
-      "ICON-SAVE": "Spara",
-      "ICON-DELETE": "Radera",
-      "ICON-EXPORT-CSV": "Exportera"
+      "UNKNOWN-WIDGET-TYPE": "UNKNOWN WIDGET TYPE",
+      "FILL-PARAMETER": "Choose from the report options",
+      "NO-DATA-FOUND": "No data found",
+      "ZERO-DATA-FOUND": "There are only zero values",
+      "ICON-SETTING": "Settings",
+      "ICON-SAVE": "Save",
+      "ICON-DELETE": "Delete",
+      "ICON-EXPORT-CSV": "Export"
     }
   },
   "__KEY_REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-DEFINITION-OVERVIEW": {
-        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Totalt antal processdefinitioner",
-        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Totalt antal processinstanser",
-        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Totalt antal aktiva processinstanser",
-        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Totalt antal slutförda processinstanser"
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Total number of process definitions",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Total number of process instances",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Total number of active process instances",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Total number of completed process instances"
       }
     }
   },
   "REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "Inkludera genomgångssteg såsom starthändelser och gateways"
+        "TYPE-FILTERING": "Include pass through steps such as start events and gateways"
       },
       "PROCESS-INSTANCES-OVERVIEW": {
-        "PROCESS-DEFINITION": "Processdefinition",
-        "DATE-RANGE": "Datumintervall",
-        "SLOW-PROC-INST-NUMBER": "Hur många av de långsammaste processinstanserna ska visas?"
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "SLOW-PROC-INST-NUMBER": "How many of the slowest process instances should be displayed?"
       },
       "TASK-OVERVIEW": {
-        "PROCESS-DEFINITION": "Processdefinition",
-        "DATE-RANGE": "Datumintervall",
-        "DATE-RANGE-INTERVAL": "Gruppdatum per"
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "DATE-RANGE-INTERVAL": "Group dates by"
       },
       "TASK-SLA": {
-        "TASK": "Uppgift",
-        "PROCESS-DEFINITION": "Processdefinition",
-        "DATE-RANGE": "Datumintervall",
-        "SLA-DURATION": "Serviceavtal begärd slutförandetid"
+        "TASK": "Task",
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "SLA-DURATION": "SLA required completion time"
       }
     },
-    "PROCESS-STATUS": "Processtatus",
-    "TASK-STATUS": "Uppgiftsstatus"
+    "PROCESS-STATUS": "Process status",
+    "TASK-STATUS": "Task status"
   },
-  "DIAGRAMS": "Diagram"
+  "DIAGRAMS": "Diagrams"
 }

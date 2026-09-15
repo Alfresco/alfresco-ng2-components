@@ -1,78 +1,145 @@
 {
   "ADF": {
-    "LANGUAGE": "言語",
+    "LANGUAGE": "Language",
     "ROLES": {
-      "ALL": "すべて",
-      "CONTRIBUTOR": "投稿者",
-      "COLLABORATOR": "共同作業者",
-      "COORDINATOR": "調整者",
-      "EDITOR": "編集者",
-      "CONSUMER": "利用者",
-      "SITECOLLABORATOR": "サイト共同作業者",
-      "SITECONSUMER": "サイト利用者",
-      "SITECONTRIBUTOR": "サイト投稿者",
-      "SITEMANAGER": "サイトマネージャ"
+      "ALL": "All",
+      "CONTRIBUTOR": "Contributor",
+      "COLLABORATOR": "Collaborator",
+      "COORDINATOR": "Coordinator",
+      "EDITOR": "Editor",
+      "CONSUMER": "Consumer",
+      "SITECOLLABORATOR": "Site Collaborator",
+      "SITECONSUMER": "Site Consumer",
+      "SITECONTRIBUTOR": "Site Contributor",
+      "SITEMANAGER": "Site Manager"
     }
   },
-  "SAVE": "保存",
-  "COMPLETE": "完了",
-  "CANCEL": "キャンセル",
-  "CLAIM": "担当する",
-  "UNCLAIM": "担当解除",
-  "START PROCESS": "プロセスの開始",
-  "DATA_LOADING": "データの読込中",
-  "CLOSE": "閉じる",
+  "SAVE": "SAVE",
+  "COMPLETE": "COMPLETE",
+  "CANCEL": "CANCEL",
+  "CLAIM": "CLAIM",
+  "UNCLAIM": "RELEASE",
+  "START PROCESS": "START PROCESS",
+  "DATA_LOADING": "Data is loading",
+  "CLOSE": "CLOSE",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "現在通知はありません。",
-    "TITLE": "通知",
-    "MARK_AS_READ": "すべて既読にする",
-    "SYSTEM": "システム",
-    "LOAD_MORE": "もっと見る",
-    "OPEN_HISTORY": "通知履歴を開く"
+    "NO_MESSAGE": "You have no notifications at this time.",
+    "UNREAD_MESSAGES": "You have unread notifications.",
+    "TITLE": "Notifications",
+    "MARK_AS_READ": "Mark all as read",
+    "SYSTEM": "System",
+    "LOAD_MORE": "Load more",
+    "OPEN_HISTORY": "Open notification history"
   },
   "FORM": {
     "START_FORM": {
-      "TITLE": "開始フォーム"
+      "TITLE": "Start Form"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "プレビューは使用できません"
+      "IMAGE_NOT_AVAILABLE": "Preview not available",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "In preview mode you cannot attach a file"
+      }
     },
     "FIELD": {
-      "LOCALSTORAGE": "ローカルストレージ",
-      "SOURCE": "ソースの選択先 ",
-      "VIEW_FILE": "表示",
-      "DOWNLOAD_FILE": "ダウンロード",
-      "REMOVE_FILE": "削除",
-      "UPLOAD": "アップロード",
-      "REQUIRED": "これは必須フィールドです",
-      "REST_API_FAILED": "'{{ hostname }}' サーバーは、到達不能です",
-      "FILE_NAME": "ファイル名",
-      "NO_FILE_ATTACHED": "ファイルが添付されていません",
+      "LOCALSTORAGE": "Local storage",
+      "SOURCE": "Select source from ",
+      "VIEW_FILE": "View",
+      "DOWNLOAD_FILE": "Download",
+      "REMOVE_FILE": "Remove",
+      "UPLOAD": "UPLOAD",
+      "REQUIRED": "This is a required field",
+      "REST_API_FAILED": "The server `{{ hostname }}` is not reachable",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "There was a problem loading dropdown elements. Please contact administrator.",
+      "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
+      "DATA_TABLE_EMPTY_CONTENT": "No data found",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
+      "FILE_NAME": "File Name",
+      "TITLE": "Title",
+      "NO_FILE_ATTACHED": "No file attached",
       "VALIDATOR": {
-        "INVALID_NUMBER": "別の番号形式を使用してください",
-        "INVALID_DATE": "別の日付形式を使用してください",
-        "INVALID_VALUE": "別の値を入力してください",
-        "NOT_GREATER_THAN": "{{ maxValue }} より大きい値にすることはできません",
-        "NOT_LESS_THAN": "{{ minValue }} より小さい値にすることはできません",
-        "AT_LEAST_LONG": "{{ minLength }} 文字以上で入力してください",
-        "NO_LONGER_THAN": "{{ maxLength }} 文字以内で入力してください"
+        "INVALID_NUMBER": "Use a different number format",
+        "INVALID_DECIMAL_NUMBER": "Use a decimal number format",
+        "INVALID_DECIMAL_PRECISION": "Incorrect decimal value, there should be a maximum of {{precision}} digits after the decimal point.",
+        "INVALID_DATE": "Use a different date format",
+        "INVALID_DATE_FORMAT": "Invalid date format.",
+        "INVALID_VALUE": "Enter a different value",
+        "NOT_GREATER_THAN": "Can't be greater than {{ maxValue }}",
+        "NOT_LESS_THAN": "Can't be less than {{ minValue }}",
+        "AT_LEAST_LONG": "Enter at least {{ minLength }} characters",
+        "NO_LONGER_THAN": "Enter no more than {{ maxLength }} characters"
       },
-      "FILE_ALREADY_UPLOADED": "同じ名前のファイルがすでにアップロードされています。",
-      "ATTACH": "添付"
+      "FILE_ALREADY_UPLOADED": "A file with the same name is already uploaded.",
+      "ATTACH": "Attach",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "add",
+        "ROW_LIMIT_REACHED": "Rows limit ({{ limit }}) reached."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "無名のタスク"
+      "NAMELESS_TASK": "Nameless task",
+      "ROW_LABEL": "Row {{ number }}",
+      "DELETE_ROW": "Delete row",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Delete the row",
+        "MESSAGE": "Are you sure you want to delete this row?",
+        "YES_LABEL": "Delete row",
+        "NO_LABEL": "Cancel"
+      }
+    },
+    "BUTTON": {
+      "PREVIOUS_TAB": "Previous",
+      "PREVIOUS_TAB_TITLE": "Navigate to previous tab",
+      "NEXT_TAB": "Next",
+      "NEXT_TAB_TITLE": "Navigate to next tab"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "Font size",
+      "FONT_WEIGHT": "Font weight",
+      "FONT_COLOR": "Font color",
+      "FONT_WEIGHTS": {
+        "REGULAR": "regular",
+        "BOLD": "bold"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "system color",
+        "BLACK": "black",
+        "GREY": "grey",
+        "RED": "red",
+        "GREEN": "green",
+        "BLUE": "blue",
+        "YELLOW": "yellow"
+      },
+      "PREDEFINED": {
+        "HEADER": {
+          "NORMAL": "normal",
+          "HEADING": "heading",
+          "TITLE": "title"
+        },
+        "RADIO_BUTTONS": {
+          "NORMAL": "normal",
+          "STRONG": "strong",
+          "HEADING": "heading"
+        },
+        "READONLY_TEXT": {
+          "NORMAL": "normal",
+          "STRONG": "strong",
+          "HEADING": "heading",
+          "TITLE": "title",
+          "ANNOTATION": "annotation"
+        }
+      }
     }
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "会社のロゴ",
+      "LOGO_ARIA": "Company Logo",
       "ACCESSIBILITY": {
-        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "トグルメニュー"
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Toggle Menu"
       }
     },
     "FILE_SIZE": {
-      "BYTES": "バイト",
+      "BYTES": "Bytes",
       "KB": "KB",
       "MB": "MB",
       "GB": "GB",
@@ -84,266 +151,313 @@
     },
     "PAGINATION": {
       "ARIA": {
-        "ITEMS_PER_PAGE": "ページサイズセレクター",
-        "CURRENT_PAGE": "現在のページセレクター",
-        "PREVIOUS_PAGE": "[前のページ] ボタン",
-        "NEXT_PAGE": "[次のページ] ボタン"
+        "ITEMS_PER_PAGE": "Page size selector",
+        "CURRENT_PAGE": "Current page selector",
+        "PREVIOUS_PAGE": "Previous page button",
+        "NEXT_PAGE": "Next page button"
       },
-      "ITEMS_RANGE": "表示中: {{ range }} / {{ total }} 件",
-      "ITEMS_PER_PAGE": "1 ページのアイテム数",
-      "CURRENT_PAGE": "ページ: {{ number }}",
-      "TOTAL_PAGES": "/ {{ total }}"
+      "ITEMS_RANGE": "Showing {{ range }} of {{ total }}",
+      "ITEMS_PER_PAGE": "Items per page",
+      "CURRENT_PAGE": "Page {{ number }}",
+      "TOTAL_PAGES": "of {{ total }}"
     },
     "DIALOG": {
       "DOWNLOAD_ZIP": {
         "ACTIONS": {
-          "CANCEL": "キャンセル"
+          "CANCEL": "Cancel"
         },
-        "TITLE": "ファイルを圧縮 (zip) します。この処理には数分かかります"
+        "TITLE": "Adding files to zip, this could take a few minutes",
+        "COMPLETE": "complete"
       },
       "EDIT_JSON": {
-        "CLOSE": "閉じる",
-        "UPDATE": "更新"
+        "CLOSE": "Close",
+        "UPDATE": "Update",
+        "COPY": "Copy",
+        "COPIED": "Copied to clipboard"
+      },
+      "UNSAVED_CHANGES": {
+        "TITLE": "Unsaved changes",
+        "DESCRIPTION": "You have unsaved changes on this screen. Are you sure want to leave without saving changes?",
+        "DISCARD_CHANGES_BUTTON": "Discard Changes"
       }
     },
+    "BREADCRUMBS": {
+      "TITLE": "Breadcrumbs",
+      "SHOWALL": "Show all"
+    },
     "FILE_DIALOG": {
-      "FILE_LOCK": "ファイルのロック",
-      "ALLOW_OTHERS_CHECKBOX": "所有者にこのファイルの変更を許可する",
-      "FILE_LOCK_CHECKBOX": "ファイルのロック",
-      "TIME_LOCK_CHECKBOX": "ロックされていた時間",
+      "FILE_LOCK": "Lock file",
+      "ALLOW_OTHERS_CHECKBOX": "Allow the owner to modify this file",
+      "FILE_LOCK_CHECKBOX": "Lock file",
+      "TIME_LOCK_CHECKBOX": "Time lock",
       "SAVE_BUTTON": {
-        "LABEL": "保存"
+        "LABEL": "Save"
       },
       "CANCEL_BUTTON": {
-        "LABEL": "キャンセル"
+        "LABEL": "Cancel"
       }
     },
     "FOLDER_DIALOG": {
-      "CREATE_FOLDER_TITLE": "新しいフォルダを作成します",
-      "EDIT_FOLDER_TITLE": "フォルダの編集",
+      "CREATE_FOLDER_TITLE": "Create new folder",
+      "EDIT_FOLDER_TITLE": "Edit folder",
       "FOLDER_NAME": {
-        "LABEL": "名前",
+        "LABEL": "Name",
         "ERRORS": {
-          "REQUIRED": "フォルダ名は必須です",
-          "SPECIAL_CHARACTERS": "フォルダ名に次の文字を含めることはできません。 * \" < > \\ / ? : |",
-          "ENDING_DOT": "フォルダ名の最後にピリオド (。) を付けることはできません 。",
-          "ONLY_SPACES": "フォルダ名をスペースだけにすることはできません"
+          "REQUIRED": "Folder name is required",
+          "SPECIAL_CHARACTERS": "Folder name can't contain these characters * \" < > \\ / ? : |",
+          "ENDING_DOT": "Folder name can't end with a period .",
+          "ONLY_SPACES": "Folder name can't contain only spaces"
         }
       },
       "FOLDER_DESCRIPTION": {
-        "LABEL": "説明"
+        "LABEL": "Description"
       },
       "FOLDER_TITLE": {
-        "LABEL": "タイトル"
+        "LABEL": "Title"
       },
       "CREATE_BUTTON": {
-        "LABEL": "作成"
+        "LABEL": "Create"
       },
       "UPDATE_BUTTON": {
-        "LABEL": "更新"
+        "LABEL": "Update"
       },
       "CANCEL_BUTTON": {
-        "LABEL": "キャンセル"
-      }
+        "LABEL": "Cancel"
+      },
+      "FOLDER_CREATED_SUCCESS": "Folder '{{ name }}' created successfully",
+      "FOLDER_UPDATED_SUCCESS": "Folder '{{ name }}' updated successfully"
     },
     "MESSAGES": {
       "ERRORS": {
-        "GENERIC": "処理が失敗しました。もう一度操作をやり直すか、IT 担当者に連絡してください。",
-        "EXISTENT_FOLDER": "この名前のフォルダはすでに存在します。別の名前を使用してください。"
+        "GENERIC": "The action was unsuccessful. Try again or contact your IT Team.",
+        "EXISTENT_FOLDER": "There's already a folder with this name. Try a different name."
       }
     },
     "RESTORE_NODE": {
-      "VIEW": "表示",
-      "PARTIAL_PLURAL": "{{ number }} 件のアイテムが復元されませんでした。復元先の場所に問題があります。",
-      "NODE_EXISTS": "復元できません。''{{ name }}'' 項目はすでに存在します",
-      "LOCATION_MISSING": "''{{ name }}'' アイテムを復元できません。アイテムの元の場所が削除されています",
-      "GENERIC": "''{{ name }}'' アイテムの復元中に問題が発生しました",
-      "PLURAL": "正常に復元されました",
-      "SINGULAR": "''{{ name }}'' アイテムを復元しました"
+      "VIEW": "View",
+      "PARTIAL_PLURAL": "{{ number }} items not restored because of issues with the restore location",
+      "NODE_EXISTS": "Can't restore, {{ name }} item already exists",
+      "LOCATION_MISSING": "Can't restore {{ name }} item, the original location no longer exists",
+      "GENERIC": "There was a problem restoring {{ name }} item",
+      "PLURAL": "Restore successful",
+      "SINGULAR": "{{ name }} item restored"
     },
     "DELETE_NODE": {
-      "SINGULAR": "''{{ name }}'' アイテムを削除しました",
-      "PLURAL": "{{ number }} 件のアイテムを削除しました",
-      "PARTIAL_SINGULAR": "{{ success }} 件のアイテムを削除しましたが、{{ failed }} 件は削除できませんでした",
-      "PARTIAL_PLURAL": "{{ success }} 件のアイテムを削除しましたが、{{ failed }} 件は削除できませんでした",
-      "ERROR_SINGULAR": "{{ name }} を削除できませんでした",
-      "ERROR_PLURAL": "{{ number }} 件のアイテムを削除できませんでした"
+      "SINGULAR": "{{ name }} deleted",
+      "PLURAL": "{{ number }} items deleted",
+      "PARTIAL_SINGULAR": "Deleted {{ success }} item, {{ failed }} couldn't be deleted",
+      "PARTIAL_PLURAL": "Deleted {{ success }} items, {{ failed }} couldn't be deleted",
+      "ERROR_SINGULAR": "{{ name }} couldn't be deleted",
+      "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
-        "ADD": "新規追加",
-        "NAME": "名前",
-        "VALUE": "値"
+        "ADD": "Add New",
+        "NAME": "Name",
+        "VALUE": "Value"
       },
-      "NONE": "なし",
+      "NONE": "None",
+      "SELECTED_VALUES": "Selected values",
+      "REMOVE": "Remove {{ value }}",
       "VALIDATORS": {
-        "FLOAT_VALIDATION_ERROR": "番号形式を使用してください",
-        "INT_VALIDATION_ERROR": "整数形式を使用してください",
-        "LENGTH_VALIDATION_ERROR": "値は {{ minLength }} ～ {{ maxLength }} 文字以内で入力してください",
-        "MATCH_VALIDATION_ERROR": "値がパターンと一致していません: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "値は {{ minValue }} ～ {{ maxValue }} でなければなりません"
+        "FLOAT_VALIDATION_ERROR": "Use a number format",
+        "INT_VALIDATION_ERROR": "Use an integer format",
+        "LONG_VALIDATION_ERROR": "Use a long format",
+        "LENGTH_VALIDATION_ERROR": "Value should be between {{ minLength }} and {{ maxLength }} in length",
+        "MATCH_VALIDATION_ERROR": "Value doesn't match pattern: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "Value should be between {{ minValue }} and {{ maxValue }}",
+        "ONLY_POSITIVE_NUMBER": "Only positive value is allowed"
       },
-      "MORE": "詳細"
+      "MORE": "More"
     },
     "METADATA": {
       "BASIC": {
-        "HEADER": "プロパティ",
-        "NAME": "名前",
-        "TITLE": "タイトル",
-        "DESCRIPTION": "説明",
-        "AUTHOR": "作成者",
-        "MIMETYPE": "MIME タイプ",
-        "SIZE": "サイズ",
-        "CREATOR": "作成者",
-        "CREATED_DATE": "作成日",
-        "MODIFIER": "変更者",
-        "MODIFIED_DATE": "変更日",
-        "CONTENT_TYPE": "コンテンツタイプ"
+        "HEADER": "General info",
+        "NAME": "Name",
+        "TITLE": "Title",
+        "DESCRIPTION": "Description",
+        "AUTHOR": "Author",
+        "MIMETYPE": "Mimetype",
+        "SIZE": "Size",
+        "CREATOR": "Creator",
+        "CREATED_DATE": "Created Date",
+        "MODIFIER": "Modifier",
+        "MODIFIED_DATE": "Modified Date",
+        "CONTENT_TYPE": "Content Type"
       },
       "CONTENT_TYPE": {
         "DIALOG": {
-          "TITLE": "コンテンツタイプを変更",
-          "DESCRIPTION": "この変更をコンテンツタイプに加えると、いくつかのプロパティと保存されているメタデータがドキュメントに恒久的に追加されます。",
-          "CONFIRM": "コンテンツタイプを変更しますか？",
-          "CANCEL": "キャンセル",
-          "APPLY": "変更を保存する",
-          "VIEW_DETAILS": "詳細の表示",
+          "TITLE": "Change content type",
+          "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
+          "CONFIRM": "Are you sure you want to change the content type?",
+          "CANCEL": "CANCEL",
+          "APPLY": "Save Changes",
+          "VIEW_DETAILS": "View details",
           "PROPERTY": {
-            "NAME": "名前",
-            "DESCRIPTION": "説明",
-            "DATA_TYPE": "データタイプ"
+            "NAME": "Name",
+            "DESCRIPTION": "Description",
+            "DATA_TYPE": "Data type"
           }
         }
       },
       "ACTIONS": {
-        "EDIT": "編集",
-        "SAVE": "保存",
-        "CANCEL": "キャンセル",
-        "CLEAR": "消去",
-        "TOGGLE": "値の切り替え",
-        "COPY_TO_CLIPBOARD": "ダブルクリックして値をコピーします",
-        "EDIT_ASPECTS": "アスペクトを編集"
+        "EDIT": "Edit",
+        "SAVE": "Save",
+        "CANCEL": "Cancel",
+        "CLEAR": "Clear",
+        "TOGGLE": "Toggle value",
+        "COPY_TO_CLIPBOARD": "Double click to copy value",
+        "EDIT_ASPECTS": "Edit Aspect"
       },
       "ACCESSIBILITY": {
-        "EDIT": "編集ボタン",
-        "DATEPICKER": "矢印キーを使って日付を変更します。上下の矢印キーを使うと、同じ日付の次の週または前の週に移動できます。左右の矢印キーを使うと、次の日または前の日に移動できます。日付を選択するには、Enter キーまたはリターンキーを押します。",
-        "COPY_TO_CLIPBOARD_MESSAGE": "値がクリップボードにコピーされました",
-        "EDIT_ASPECTS": "アスペクトを編集"
+        "EDIT": "Edit {{ sectionName }}",
+        "DATEPICKER": "Use the arrow keys to navigate between dates. Up and down move to the next or previous week but on the same day. Left and right move to the next or previous day. Press Enter or Return to select a date.",
+        "COPY_TO_CLIPBOARD_MESSAGE": "Value copied to clipboard",
+        "EDIT_ASPECTS": "Edit Aspect",
+        "SECTION": "{{ sectionName }} section"
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "検索結果の昇順と降順を切り替えます",
-      "SORT_BY": "並べ替え"
+      "TOGGLE_ASC_DESC_ORDER": "Toggle results between ascending and descending order",
+      "SORT_BY": "Sort by",
+      "BUTTON": {
+        "TOOLTIP": "Search",
+        "ARIA-LABEL": "Search button"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "Search input"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "Close"
+        }
+      }
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "Feature flag overrides",
+      "FILTER_OR_ADD_NEW": "Filter or add new",
+      "FILTER": "Filter",
+      "ADD_NEW": "Add new feature flag (Shift + Enter)"
     }
   },
   "COMMENTS": {
-    "NONE": "コメントなし",
-    "ADD": "追加",
-    "HEADER": "コメント ({{ count }} 件)",
-    "CREATED_BY_HEADER": "作成者",
-    "MESSAGE_HEADER": "メッセージ",
+    "PROFILE_IMAGE": "Profile Image",
+    "NONE": "No comments",
+    "ADD": "Add",
+    "HEADER": "Comments ({{ count }})",
+    "CREATED_BY_HEADER": "Created by",
+    "MESSAGE_HEADER": "Message",
+    "EMPTY_ERROR": "Comment can't be empty",
     "DIALOG": {
-      "TITLE": "新しいコメント",
+      "TITLE": "New comment",
       "LABELS": {
-        "MESSAGE": "メッセージ"
+        "MESSAGE": "Message"
       },
       "BUTTON": {
-        "ADD": "コメントの追加",
-        "CANCEL": "キャンセル"
+        "ADD": "Add Comment",
+        "CANCEL": "Cancel"
       }
     }
   },
   "LOGIN": {
     "LOGO": "Alfresco, make business flow",
     "LABEL": {
-      "LOGIN": "サインイン",
-      "USERNAME": "ユーザー名",
-      "PASSWORD": "パスワード",
-      "REMEMBER": "ログイン情報を保存する"
+      "LOGIN": "Sign in",
+      "USERNAME": "Username",
+      "PASSWORD": "Password",
+      "REMEMBER": "Remember me"
     },
     "ARIA-LABEL": {
-      "SHOW-PASSWORD": "パスワードを表示",
-      "HIDE-PASSWORD": "パスワードの非表示"
+      "SHOW-PASSWORD": "Show password",
+      "HIDE-PASSWORD": "Hide password"
     },
     "MESSAGES": {
-      "USERNAME-REQUIRED": "必須",
-      "USERNAME-MIN": "ユーザー名は {{ minLength }} 文字以上でなければなりません。",
-      "PASSWORD-REQUIRED": "サインイン用のパスワードを入力してください",
-      "LOGIN-ERROR-CREDENTIALS": "入力したユーザー名またはパスワードが間違っています",
-      "LOGIN-ERROR-PROVIDERS": "プロバイダは必ず定義する必要があります",
-      "LOGIN-ERROR-CORS": "CORS の例外が発生しました。サーバーの設定を確認してください",
-      "LOGIN-ERROR-CSRF": "CSRF の例外が発生しました。app.config.json で \"disableCSRF\": true を設定してください。",
-      "LOGIN-ECM-LICENSE": "Alfresco Content Services のリポジトリが読み取り専用モードです",
-      "SSO-WRONG-CONFIGURATION": "SSO 認証サーバーにアクセスできません"
+      "USERNAME-REQUIRED": "Required",
+      "USERNAME-MIN": "Your username needs to be at least {{ minLength }} characters.",
+      "PASSWORD-REQUIRED": "Enter your password to sign in",
+      "LOGIN-ERROR-CREDENTIALS": "You've entered an unknown username or password",
+      "LOGIN-ERROR-PROVIDERS": "Providers cannot be undefined",
+      "LOGIN-ERROR-CORS": "CORS exception, check your server configuration",
+      "LOGIN-ERROR-CSRF": "CSRF exception, set \"disableCSRF\": true in app.config.json",
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services repository is in read-only mode",
+      "SSO-WRONG-CONFIGURATION": "SSO Authentication server unreachable"
     },
     "BUTTON": {
-      "LOGIN": "サインイン",
-      "CHECKING": "確認中",
-      "WELCOME": "ようこそ",
-      "SSO": "サインイン SSO"
+      "LOGIN": "SIGN IN",
+      "CHECKING": "CHECKING",
+      "WELCOME": "WELCOME",
+      "SSO": "SIGN IN SSO"
     },
     "ACTION": {
-      "HELP": "ヘルプが必要ですか?",
-      "REGISTER": "登録"
+      "HELP": "NEED HELP?",
+      "REGISTER": "REGISTER"
     }
   },
   "ADF-DATATABLE": {
     "EMPTY": {
-      "HEADER": "このリストは空です",
+      "HEADER": "This list is empty",
       "DRAG-AND-DROP": {
-        "TITLE": "アップロードするファイルをドラッグ & ドロップしてください",
-        "SUBTITLE": "ファイルのアップロード"
+        "TITLE": "Drag and drop",
+        "SUBTITLE": "to upload files"
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "コンテンツの処理"
+      "TOOLTIP": "Content actions",
+      "SELECT_COLUMNS": "Select columns"
     },
     "ACCESSIBILITY": {
-      "ACTIONS": "アクション",
-      "SELECT_ALL": "すべて選択",
-      "SELECT_FILE": "ファイルを選択してください",
-      "SORT_ASCENDING": "昇順",
-      "SORT_DESCENDING": "降順",
-      "SORT_NONE": "なし",
-      "SORT_DEFAULT": "並べ替え可能",
-      "SORT_ASCENDING_BY": "{{ string }} (昇順)",
-      "SORT_DESCENDING_BY": "{{ string }} (降順)",
-      "ICON_TEXT": "アイテムタイプ {{ type }}",
-      "ICON_DISABLED": "無効",
-      "ROW_OPTION_BUTTON": "アクション",
-      "EMPTY_HEADER": "空のヘッダー"
+      "ACTIONS": "Actions",
+      "SELECT_ALL": "Select all",
+      "SELECT_FILE": "Select file",
+      "SELECTED": "Selected",
+      "ROW_SELECTION": "Press Space to toggle row selection",
+      "SORT_ASCENDING": "Ascending",
+      "SORT_DESCENDING": "Descending",
+      "SORT_NONE": "None",
+      "SORT_DEFAULT": "Sortable",
+      "SORT_ASCENDING_BY": "Ascending by {{ string }}",
+      "SORT_DESCENDING_BY": "Descending by {{ string }}",
+      "ICON_TEXT": "Item type {{ type }}",
+      "ICON_DISABLED": "Disabled",
+      "ROW_OPTION_BUTTON": "Actions",
+      "DRAG": "Drag button",
+      "DRAGGABLE": "Draggable",
+      "EMPTY_HEADER": "Empty header",
+      "RESIZE_COLUMN": "Resize {{ column }} column. Use arrow keys to adjust width, Shift for larger steps.",
+      "COLUMN_WIDTH_CHANGED": "{{ column }} column width: {{ width }} pixels"
     },
     "FILE_TYPE": {
-      "DOCUMENT": "文書",
-      "FOLDER": "フォルダ",
+      "DOCUMENT": "Document",
+      "FOLDER": "Folder",
       "PDF": "PDF",
-      "IMAGE": "画像",
-      "EXCEL": "Excel スプレッドシート",
-      "WORD": "Word 文書",
-      "POWERPOINT": "Powerpoint プレゼンテーション",
-      "VIDEO": "ビデオ",
-      "AUDIO": "オーディオ",
-      "WEBSITE": "Web サイト",
-      "ARCHIVE": "アーカイブ",
-      "PRESENTATION": "プレゼンテーション",
-      "SPREADSHEET": "スプレッドシート",
-      "MISCELLANEOUS": "その他"
+      "IMAGE": "Image",
+      "EXCEL": "Excel spreadsheet",
+      "WORD": "Word document",
+      "POWERPOINT": "Powerpoint presentation",
+      "VIDEO": "Video",
+      "AUDIO": "Audio",
+      "WEBSITE": "Website",
+      "ARCHIVE": "Archive",
+      "PRESENTATION": "Presentation",
+      "SPREADSHEET": "Spreadsheet",
+      "MISCELLANEOUS": "Miscellaneous"
     },
     "COLUMNS_SELECTOR": {
-      "COLUMNS": "列",
-      "SEARCH": "検索",
-      "APPLY": "適用"
+      "COLUMNS": "Choose visible columns",
+      "SEARCH": "Search",
+      "APPLY": "Apply",
+      "COLUMNS_VISIBILITY": "Select columns to display"
     }
   },
   "USER_PROFILE": {
     "LABELS": {
       "ECM": {
-        "JOB_TITLE": "役職"
+        "JOB_TITLE": "Job Title"
       },
       "BPM": {
-        "TENANT": "テナント"
+        "TENANT": "Tenant"
       },
-      "MY_PROFILE": "あなたのプロフィール"
+      "MY_PROFILE": "My Profile"
     },
     "TAB": {
       "CS": "Content Services",
@@ -352,220 +466,214 @@
   },
   "ADF_VIEWER": {
     "ACTIONS": {
-      "BACK": "戻る",
-      "OPEN_WITH": "プログラムから開く",
-      "DOWNLOAD": "ダウンロード",
-      "PRINT": "印刷",
-      "SHARE": "共有",
-      "MORE_ACTIONS": "その他の処理",
-      "INFO": "情報",
-      "FULLSCREEN": "全画面表示モードをアクティブにする",
-      "CLOSE": "閉じる",
-      "NEXT_FILE": "次のファイル",
-      "PREV_FILE": "前のファイル",
-      "WAIT": "待機"
+      "BACK": "Back",
+      "OPEN_WITH": "Open with",
+      "DOWNLOAD": "Download",
+      "PRINT": "Print",
+      "SHARE": "Share",
+      "MORE_ACTIONS": "More actions",
+      "INFO": "Info",
+      "FULLSCREEN": "Activate full-screen mode",
+      "CLOSE": "Close",
+      "NEXT_FILE": "Next File",
+      "PREV_FILE": "Previous File",
+      "WAIT": "Wait"
     },
     "ARIA": {
-      "PREVIOUS_PAGE": "前のページ",
-      "NEXT_PAGE": "次のページ",
-      "ZOOM_IN": "ズームイン",
-      "ZOOM_OUT": "ズームアウト",
-      "FIT_PAGE": "ページに合わせる",
-      "ROTATE": "回転",
-      "CROP": "トリミング",
-      "SAVE": "保存",
-      "CANCEL": "キャンセル",
-      "RESET": "リセット",
-      "THUMBNAILS": "文書のサムネイル",
-      "THUMBNAILS_PANLEL_CLOSE": "サムネイルパネルを閉じる"
+      "MIME_TYPE_ICON": "File type icon",
+      "PREVIOUS_PAGE": "Previous page",
+      "NEXT_PAGE": "Next page",
+      "ZOOM_IN": "Zoom in",
+      "ZOOM_OUT": "Zoom out",
+      "FIT_PAGE": "Fit page",
+      "ROTATE": "Rotate",
+      "CROP": "Crop",
+      "SAVE": "Save rotate or crop",
+      "CANCEL": "Cancel rotate or crop",
+      "RESET": "Reset",
+      "THUMBNAILS": "Document thumbnails",
+      "THUMBNAILS_PANLEL_CLOSE": "Close thumbnails panel",
+      "LOADING": "Document is loading",
+      "NOTE_ANNOTATION_IMG": "Note Annotation"
     },
     "PAGE_LABEL": {
-      "SHOWING": "表示中",
-      "OF": "/",
-      "PAGE_SELECTOR_LABEL": "ページセレクター"
+      "SHOWING": "Showing",
+      "OF": "of",
+      "PAGE_SELECTOR_LABEL": "Page selector"
     },
-    "LOADING": "読み込み中",
-    "UNKNOWN_FORMAT": "プレビューを読み込めませんでした。不明な形式です。",
+    "LOADING": "Loading",
+    "UNKNOWN_FORMAT": "Couldn't load preview. Unsupported file type or loading error. Please try refreshing the page.",
     "SIDEBAR": {
       "THUMBNAILS": {
-        "PAGE": "{{ pageNum }} ページ"
-      },
-      "METADATA": {
-        "MORE_INFORMATION": "詳細",
-        "LESS_INFORMATION": "概要"
+        "PAGE": "Page {{ pageNum }}"
       }
     },
     "PDF_DIALOG": {
-      "SUBMIT": "送信",
-      "CLOSE": "閉じる",
-      "PLACEHOLDER": "パスワード",
-      "ERROR": "パスワードが間違っています"
+      "SUBMIT": "Submit",
+      "CLOSE": "Close",
+      "PLACEHOLDER": "Password",
+      "ERROR": "Password is wrong"
     },
-    "SUBTITLES": "字幕",
+    "SUBTITLES": "Subtitles",
     "NON_RESPONSIVE_DIALOG": {
-      "HEADER": "プレビュー読み込みの遅延",
-      "LABEL": "そのまま待機するか、ドキュメントをダウンロードできます。"
+      "HEADER": "Preview loading delayed",
+      "LABEL": "You can continue to wait, or download the document."
     }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "問題が発生しました。",
-      "DESCRIPTION": "何らかの問題がある可能性があります。",
+      "TITLE": "We hit a problem.",
+      "DESCRIPTION": "Looks like something went wrong.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "ホームへ戻る"
+        "TEXT": "Back to home"
       }
     },
     "403": {
-      "TITLE": "このサーバーにアクセスする権限がありません。",
-      "DESCRIPTION": "サーバー上のこのリソースにはアクセスできません。",
+      "TITLE": "You don't have permission to access this server.",
+      "DESCRIPTION": "You're not allowed access to this resource on the server.",
       "SECONDARY_BUTTON": {
-        "TEXT": "問題の報告"
+        "TEXT": "Report issue"
       },
       "RETURN_BUTTON": {
-        "TEXT": "ホームへ戻る"
+        "TEXT": "Back to home"
       }
     },
     "404": {
-      "TITLE": "エラーが発生しました。",
-      "DESCRIPTION": "お探しのページが見つかりませんでした。",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "We couldn’t find the page you were looking for.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "ホームへ戻る"
+        "TEXT": "Back to home"
       }
     },
     "500": {
-      "TITLE": "エラーが発生しました。",
-      "DESCRIPTION": "内部サーバーエラーが発生しました。もう一度操作をやり直すか、IT 担当者に連絡してください [500]。",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "Internal server error, try again or contact IT support [500].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "ホームへ戻る"
+        "TEXT": "Back to home"
       }
     },
     "502": {
-      "TITLE": "エラーが発生しました。",
-      "DESCRIPTION": "不正なゲートウェイです。もう一度操作をやり直すか、IT 担当者に連絡してください [502]。",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "Bad Gateway, try again or contact IT support [502].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "ホームへ戻る"
+        "TEXT": "Back to home"
       }
     },
     "503": {
-      "TITLE": "エラーが発生しました。",
-      "DESCRIPTION": "サービスは一時的に中断しています [503]。",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "Service Temporarily Unavailable [503].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "ホームへ戻る"
+        "TEXT": "Back to home"
       }
     },
     "504": {
-      "TITLE": "エラーが発生しました。",
-      "DESCRIPTION": "サーバーがタイムアウトになりました。もう一度操作をやり直すか、IT 担当者に連絡してください [504]。",
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "The server timed out, try again or contact IT support [504].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "ホームへ戻る"
+        "TEXT": "Back to home"
       }
     }
   },
   "ABOUT": {
-    "VERSION": "バージョン",
+    "VERSION": "Version",
     "SERVER_SETTINGS": {
-      "TITLE": "サーバーの設定",
-      "CONTENT_SERVICE_HOST": "Alfresco Content Services の URL: {{ value }}",
-      "PROCESS_SERVICE_HOST": "Alfresco Process Services の URL: {{ value }}"
+      "TITLE": "Server settings",
+      "CONTENT_SERVICE_HOST": "Alfresco Content Services URL: {{ value }}",
+      "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
     },
-    "REPOSITORY": "リポジトリ",
-    "VERSIONS": {
-      "TITLE": "製品のバージョン",
-      "CONTENT_SERVICE": "Content Services",
-      "PROCESS_SERVICE": "Process Services",
-      "MODELING_SERVICE": "モデリングサービス",
-      "DEPLOYMENT_SERVICE": "展開サービス",
-      "QUERY_SERVICE": "展開サービス",
-      "RB": "ランタイム",
-      "LABELS": {
-        "EDITION": "エディション",
-        "VERSION": "バージョン",
-        "LICENSE": "ライセンス",
-        "STATUS": "ステータス",
-        "MODULES": "モジュール"
-      }
-    },
-    "SOURCE_CODE": {
-      "TITLE": "ソースコード",
-      "DESCRIPTION": "実行しているプロジェクトは次のコミットに基づいています:"
-    },
+    "REPOSITORY": "Repository",
     "PACKAGES": {
-      "TITLE": "パッケージ",
-      "NAME": "名前",
-      "VERSION": "バージョン"
+      "TITLE": "Packages",
+      "NAME": "Name",
+      "VERSION": "Version"
     },
     "EXTENSIONS": {
-      "TITLE": "プラグイン",
+      "TITLE": "Plugins",
       "TABLE_HEADERS": {
         "ID": "ID",
-        "NAME": "名前",
-        "VERSION": "バージョン",
-        "VENDOR": "ベンダー",
-        "LICENSE": "ライセンス",
-        "RUNTIME": "ランタイム",
-        "DESCRIPTION": "説明"
+        "NAME": "Name",
+        "VERSION": "Version",
+        "VENDOR": "Vendor",
+        "LICENSE": "License",
+        "RUNTIME": "Runtime",
+        "DESCRIPTION": "Description"
       }
     },
     "LICENSE": {
-      "TITLE": "ライセンス",
-      "PROPERTY": "プロパティ",
-      "VALUE": "値"
+      "TITLE": "License",
+      "PROPERTY": "Property",
+      "VALUE": "Value",
+      "ENABLED": "Enabled",
+      "DISABLED": "Disabled"
     },
     "STATUS": {
-      "TITLE": "ステータス",
-      "PROPERTY": "プロパティ",
-      "VALUE": "値"
+      "TITLE": "Status",
+      "PROPERTY": "Property",
+      "VALUE": "Value"
     },
     "MODULES": {
-      "TITLE": "モジュール",
-      "NAME": "名前",
-      "VERSION": "バージョン"
+      "TITLE": "Modules",
+      "NAME": "Name",
+      "VERSION": "Version"
     },
     "PLUGINS": {
-      "TITLE": "プラグイン",
-      "NAME": "名前",
-      "VERSION": "バージョン"
+      "TITLE": "Plugins",
+      "NAME": "Name",
+      "VERSION": "Version"
     }
   },
   "CLIPBOARD": {
-    "CLICK_TO_COPY": "コピーするにはクリックします",
-    "SUCCESS_COPY": "テキストがクリップボードにコピーされました"
+    "CLICK_TO_COPY": "Click to copy",
+    "SUCCESS_COPY": "Text copied to clipboard"
   },
   "SELECT_FILTER": {
     "INPUT": {
-      "PLACEHOLDER": "検索",
-      "ARIA_LABEL": "検索オプション"
+      "PLACEHOLDER": "Search",
+      "ARIA_LABEL": "Search options"
     },
     "BUTTON": {
-      "ARIA_LABEL": "消去"
+      "ARIA_LABEL": "Clear"
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "読み込んでいます...",
-    "SELECTION_ARIA_LABEL": "{{placeholder}}コンボボックス{{selectedOption}}"
+    "LOADING": "Loading...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
+  },
+  "INFO_DRAWER": {
+    "ICON": "Node Icon"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "Load more",
+    "DELETE": "Remove {{ name }}"
   },
   "ADF_CONFIRM_DIALOG": {
-    "TITLE": "確認",
-    "ACTION": "作業を続けますか?",
-    "YES_LABEL": "はい",
-    "NO_LABEL": "いいえ"
+    "TITLE": "Confirm",
+    "ACTION": "Do you want to proceed?",
+    "YES_LABEL": "Yes",
+    "NO_LABEL": "No"
+  },
+  "SESSION_TIMEOUT": {
+    "TITLE": "Are you still working?",
+    "MESSAGE": "Your session will end in {{seconds}} seconds because there has been no activity.",
+    "LOG_OUT": "Log out",
+    "CONTINUE_WORKING": "Continue working"
   }
 }

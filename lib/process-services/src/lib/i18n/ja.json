@@ -1,354 +1,354 @@
 {
   "DIALOG": {
-    "SAVE_MESSAGE": "レポートを現在の設定でレポートリストに追加するには、[保存] をクリックします。",
+    "SAVE_MESSAGE": "Click Save to add a report with the current settings to your reports list.",
     "EXPORT_MESSAGE": ""
   },
   "DATE-WIDGET": {
-    "START-DATE": "開始日",
-    "END-DATE": "終了日",
+    "START-DATE": "Start date",
+    "END-DATE": "End date",
     "MESSAGES": {
-      "START-DATE-REQUIRED": "開始日は必須です",
-      "START-LESS-THAN-END-DATE": "開始日は終了日より前の日付でなければなりません"
+      "START-DATE-REQUIRED": "Start date is required",
+      "START-LESS-THAN-END-DATE": "Start date must be before end date"
     }
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "TITLE": "アプリケーションが見つかりません",
-      "SUBTITLE": "後で簡単に見つけられるよう、新しいアプリケーションを作成してください",
-      "TASK_APP_NAME": "タスクアプリ"
+      "TITLE": "No Applications Found",
+      "SUBTITLE": "Create a new application that you want to easily find later",
+      "TASK_APP_NAME": "Task App"
     },
     "LIST": {
       "MESSAGES": {
-        "TITLE": "タスクが見つかりません",
-        "SUBTITLE": "後で簡単に見つけられるよう、新しいタスクを作成してください",
-        "NONE": "タスクリストが見つかりません"
+        "TITLE": "No Tasks Found",
+        "SUBTITLE": "Create a new task that you want to easily find later",
+        "NONE": "No task lists found"
       }
     },
     "PROPERTIES": {
-      "TASK_NAME": "タスク",
-      "THUMBNAIL": "サムネイル",
-      "DURATION": "期間",
-      "PARENT_TASK_ID": "親タスク ID",
-      "NAME": "名前",
-      "ASSIGNEE": "担当者",
-      "ASSIGNEE_DEFAULT": "担当者なし",
-      "PRIORITY": "優先度",
-      "DUE_DATE": "期限",
-      "DUE_DATE_DEFAULT": "期限なし",
-      "STATUS": "ステータス",
-      "CATEGORY": "カテゴリ",
-      "CATEGORY_DEFAULT": "カテゴリなし",
-      "PARENT_NAME": "親名",
-      "PARENT_NAME_DEFAULT": "親なし",
-      "CREATED_BY": "作成者",
-      "CREATED": "作成日",
-      "END_DATE": "終了日",
+      "TASK_NAME": "Task",
+      "THUMBNAIL": "Thumbnail",
+      "DURATION": "Duration",
+      "PARENT_TASK_ID": "Parent task id",
+      "NAME": "Task Name",
+      "ASSIGNEE": "Assignee",
+      "ASSIGNEE_DEFAULT": "No assignee",
+      "PRIORITY": "Priority",
+      "DUE_DATE": "Due Date",
+      "DUE_DATE_DEFAULT": "No date",
+      "STATUS": "Status",
+      "CATEGORY": "Category",
+      "CATEGORY_DEFAULT": "No category",
+      "PARENT_NAME": "Parent name",
+      "PARENT_NAME_DEFAULT": "No parent",
+      "CREATED_BY": "Created By",
+      "CREATED": "Created",
+      "END_DATE": "End date",
       "ID": "ID",
-      "DESCRIPTION": "説明",
-      "DESCRIPTION_DEFAULT": "説明なし",
-      "FORM_NAME": "フォームの名前",
-      "FORM_NAME_DEFAULT": "フォームなし"
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_DEFAULT": "No description",
+      "FORM_NAME": "Form Name",
+      "FORM_NAME_DEFAULT": "No form"
     },
     "MENU_ACTIONS": {
-      "VIEW_CONTENT": "表示",
-      "REMOVE_CONTENT": "削除",
-      "DOWNLOAD_CONTENT": "ダウンロード",
-      "DOWNLOAD_AUDIT": "監査のダウンロード"
+      "VIEW_CONTENT": "View",
+      "REMOVE_CONTENT": "Remove",
+      "DOWNLOAD_CONTENT": "Download",
+      "DOWNLOAD_AUDIT": "Download Audit"
     },
     "DETAILS": {
       "LABELS": {
-        "INFO_DRAWER_TITLE": "アクティビティ",
-        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "アクティビティ",
-        "INFO_DRAWER_TAB_DETAILS_TITLE": "詳細",
-        "ASSIGNEE": "担当者",
-        "DUE": "期限",
-        "FORM": "フォーム",
-        "PEOPLE": "このタスクを共有しているメンバー",
-        "COMMENTS": "コメント",
-        "CHECKLIST": "チェックリスト",
-        "INVOLVED_PEOPLE": "タスクに関わっているメンバー",
-        "ADD_PEOPLE": "メンバーとグループの追加",
-        "ADD_ASSIGNEE": "新しい担当者の追加"
+        "INFO_DRAWER_TITLE": "Activities",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Activity",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "Details",
+        "ASSIGNEE": "Assignee",
+        "DUE": "Due",
+        "FORM": "Form",
+        "PEOPLE": "People this task is shared with",
+        "COMMENTS": "Comments",
+        "CHECKLIST": "Checklist",
+        "INVOLVED_PEOPLE": "People Involved",
+        "ADD_PEOPLE": "Add people and groups",
+        "ADD_ASSIGNEE": "Add new assignee"
       },
       "BUTTON": {
-        "COMPLETE": "完了",
-        "CLAIM": "担当する",
-        "UNCLAIM": "担当解除",
-        "DRAG-ATTACHMENT": "アップロードするファイルをここにドロップしてください",
-        "UPLOAD-ATTACHMENT": "添付ファイルのアップロード"
+        "COMPLETE": "Complete",
+        "CLAIM": "Claim",
+        "UNCLAIM": "Release",
+        "DRAG-ATTACHMENT": "Drop files to upload",
+        "UPLOAD-ATTACHMENT": "Upload Attachment"
       },
       "MESSAGES": {
-        "NONE": "タスクの詳細が見つかりません",
-        "CLAIM": "このタスクの作業を行うには、[担当する] をクリックします"
+        "NONE": "No task details found",
+        "CLAIM": "Click Claim to work on this task"
       },
       "FORM": {
-        "NONE": "フォームなし"
+        "NONE": "No form"
       },
       "DUE": {
-        "NONE": "期限なし"
+        "NONE": "No due date"
       },
       "ASSIGNEE": {
-        "NONE": "担当者なし"
+        "NONE": "No assignee"
       },
       "PEOPLE": {
-        "NONE": "関わっているメンバーなし"
+        "NONE": "Nobody involved"
       },
       "CHECKLIST": {
-        "NONE": "チェックリストなし",
+        "NONE": "No checklist",
         "DIALOG": {
-          "TITLE": "タスクの選択",
-          "CANCEL-BUTTON": "キャンセル",
-          "ADD-BUTTON": "チェックリストの追加",
-          "PLACEHOLDER": "名前"
+          "TITLE": "New Check",
+          "CANCEL-BUTTON": "Cancel",
+          "ADD-BUTTON": "Add Checklist",
+          "PLACEHOLDER": "Name"
         }
       },
       "ERROR": {
-        "TITLE": "処理を完了できませんでした",
-        "DESCRIPTION": "もう一度操作をやり直すか、アクセス権があることを確認してください。",
-        "CLOSE": "閉じる"
+        "TITLE": "Couldn't complete the action",
+        "DESCRIPTION": "Try again or check that you have access.",
+        "CLOSE": "Close"
       }
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "タスクのフィルタが選択されていません"
+        "NONE": "No task filter selected"
       }
     },
     "START_TASK": {
-      "DEFAULT_NAME": "あなたのデフォルトのタスク",
-      "BUTTON": "タスクの作成",
+      "DEFAULT_NAME": "My Default Task",
+      "BUTTON": "CREATE TASK",
       "FORM": {
-        "TITLE": "タスクの開始",
+        "TITLE": "Start Task",
         "LABEL": {
-          "NONE": "なし",
-          "NAME": "名前",
-          "DESCRIPTION": "説明",
-          "ATTACHFORM": "フォームの添付",
-          "ASSIGNEE": "担当者",
-          "FORM": "フォーム",
-          "DATE": "日付の選択"
+          "NONE": "None",
+          "NAME": "Name",
+          "DESCRIPTION": "Description",
+          "ATTACHFORM": "Attach Form",
+          "ASSIGNEE": "Assignee",
+          "FORM": "Form",
+          "DATE": "Choose Date"
         },
         "ACTION": {
-          "START": "開始",
-          "CANCEL": "キャンセル"
+          "START": "Start",
+          "CANCEL": "Cancel"
         },
         "ERROR": {
-          "REQUIRED": "必須フィールドです",
-          "DATE": "日付形式: YYYY-MM-DD",
-          "MAXIMUM_LENGTH": "長すぎます。{{characters}} 文字以内で入力してください。",
-          "MESSAGE": "別の値を入力してください"
+          "REQUIRED": "Field required",
+          "DATE": "Date format DD/MM/YYYY",
+          "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
+          "MESSAGE": "Enter a different value"
         }
       }
     },
     "PEOPLE": {
-      "ASSIGNEE": "担当者",
-      "DIALOG_CLOSE": "閉じる",
-      "ADD_USER": "追加",
-      "ADD_ASSIGNEE": "割り当て",
-      "SEARCH_USER": "ユーザーの検索",
+      "ASSIGNEE": "Assignee",
+      "DIALOG_CLOSE": "CLOSE",
+      "ADD_USER": "ADD",
+      "ADD_ASSIGNEE": "ASSIGN",
+      "SEARCH_USER": "Search user",
       "SEARCH": {
-        "NO_USERS": "タスクに関わっているメンバーが見つかりません"
+        "NO_USERS": "Nobody found to involve"
       }
     },
     "ATTACHMENT": {
       "EMPTY": {
-        "HEADER": "このリストは空です",
+        "HEADER": "This list is empty",
         "DRAG-AND-DROP": {
-          "TITLE": "アップロードするファイルをドラッグ & ドロップしてください",
-          "SUBTITLE": "ファイルのアップロード"
+          "TITLE": "Drag and drop",
+          "SUBTITLE": "to upload files"
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "使用できるファイルがありません"
+        "HEADER": "No files are available"
       }
     },
     "STANDALONE_TASK": {
-      "NO_FORM_MESSAGE": "フォームが添付されていません",
-      "COMPLETE_TASK_MESSAGE": "タスク {{taskName}} が完了しました",
-      "COMPLETE_TASK_SUB_MESSAGE": "フォームは追加されません"
+      "NO_FORM_MESSAGE": "No forms attached",
+      "COMPLETE_TASK_MESSAGE": "Task {{taskName}} completed",
+      "COMPLETE_TASK_SUB_MESSAGE": "No forms to be added"
     },
     "ATTACH_FORM": {
-      "SELECT_FORM": "添付するフォームを選択してください",
-      "REMOVE_FORM": "フォームの削除",
-      "SELECT_OPTION": "オプションを選択してください"
+      "SELECT_FORM": "Select Form To Attach",
+      "REMOVE_FORM": "Remove Form",
+      "SELECT_OPTION": "Select an option"
     }
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "TITLE": "プロセスが見つかりません",
-      "SUBTITLE": "後で簡単に見つけられるよう、新しいプロセスを作成してください",
-      "SUMMARY": "{{total}} 個のプロセスインスタンスが見つかりました",
-      "ERROR": "プロセスインスタンスを読み込めませんでした。操作をやり直すか、次のメッセージを IT 担当者に伝えてください: {{errorMessage}}"
+      "TITLE": "No Processes Found",
+      "SUBTITLE": "Create a new process that you want to easily find later",
+      "SUMMARY": "{{total}} process instances found",
+      "ERROR": "Couldn't load processes instances. Try again or share the following message with your IT Team: {{errorMessage}}"
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "プロセスインスタンスのフィルタが選択されていません。"
+        "NONE": "No process instance filter selected."
       }
     },
     "PROPERTIES": {
-      "PROCESS_NAME": "プロセス",
-      "NAME": "名前",
-      "THUMBNAIL": "サムネイル",
-      "STATUS": "ステータス",
-      "END_DATE": "終了日",
-      "END_DATE_DEFAULT": "期限なし",
-      "CATEGORY": "カテゴリ",
-      "CATEGORY_DEFAULT": "カテゴリなし",
-      "CREATED_BY": "作成者",
-      "CREATED_BY_DEFAULT": "担当者なし",
-      "CREATED": "作成日",
-      "BUSINESS_KEY": "ビジネスキー",
-      "BUSINESS_KEY_DEFAULT": "なし",
-      "DESCRIPTION": "説明",
-      "DESCRIPTION_DEFAULT": "説明なし",
+      "PROCESS_NAME": "Process",
+      "NAME": "Name",
+      "THUMBNAIL": "Thumbnail",
+      "STATUS": "Status",
+      "END_DATE": "End Date",
+      "END_DATE_DEFAULT": "No date",
+      "CATEGORY": "Category",
+      "CATEGORY_DEFAULT": "No category",
+      "CREATED_BY": "Created By",
+      "CREATED_BY_DEFAULT": "No assignee",
+      "CREATED": "Created",
+      "BUSINESS_KEY": "Business key",
+      "BUSINESS_KEY_DEFAULT": "None",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_DEFAULT": "No description",
       "ID": "ID"
     },
     "MENU_ACTIONS": {
-      "VIEW_CONTENT": "表示",
-      "REMOVE_CONTENT": "削除",
-      "DOWNLOAD_CONTENT": "ダウンロード",
-      "DOWNLOAD_AUDIT": "監査のダウンロード",
-      "VIEW_TASK": "タスクの表示"
+      "VIEW_CONTENT": "View",
+      "REMOVE_CONTENT": "Remove",
+      "DOWNLOAD_CONTENT": "Download",
+      "DOWNLOAD_AUDIT": "Download audit",
+      "VIEW_TASK": "View Task"
     },
     "DETAILS": {
       "LABELS": {
-        "STARTED_BY": "開始者",
-        "STARTED": "開始日",
-        "ENDED": "終了日",
-        "COMMENTS": "コメント",
-        "START_FORM": "開始フォーム",
-        "TASKS_ACTIVE": "アクティブなタスク",
-        "TASKS_COMPLETED": "完了済みタスク",
-        "TASK_SUBTITLE": "割り当て先: {{user}}, 作成日: {{created}}",
-        "REFRESH": "再読み込み"
+        "STARTED_BY": "Started by",
+        "STARTED": "Started",
+        "ENDED": "Ended",
+        "COMMENTS": "Comments",
+        "START_FORM": "Start Form",
+        "TASKS_ACTIVE": "Active Tasks",
+        "TASKS_COMPLETED": "Completed Tasks",
+        "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}",
+        "REFRESH": "Refresh"
       },
       "BUTTON": {
-        "CANCEL": "プロセスのキャンセル",
-        "CLOSE": "閉じる",
-        "SHOW_DIAGRAM": "図の表示",
-        "DRAG-ATTACHMENT": "アップロードするファイルをここにドロップしてください",
-        "UPLOAD-ATTACHMENT": "添付ファイルのアップロード",
-        "FILE_OPTION_MENU": "ファイルオプションメニュ"
+        "CANCEL": "Cancel Process",
+        "CLOSE": "Close",
+        "SHOW_DIAGRAM": "Show Diagram",
+        "DRAG-ATTACHMENT": "Drop files to upload",
+        "UPLOAD-ATTACHMENT": "Upload Attachment",
+        "FILE_OPTION_MENU": "File Option Menu"
       },
       "MESSAGES": {
-        "NONE": "プロセスの詳細が見つかりません"
+        "NONE": "No process details found"
       },
       "TASKS": {
-        "NO_ACTIVE": "現在アクティブなタスクはありません",
-        "NO_COMPLETED": "完了済みのタスクはまだありません",
-        "TASK_DETAILS": "タスクの詳細",
-        "TASK_CLOSE": "閉じる"
+        "NO_ACTIVE": "No currently active tasks",
+        "NO_COMPLETED": "No tasks completed yet",
+        "TASK_DETAILS": "Task details",
+        "TASK_CLOSE": "Close"
       },
       "COMMENTS": {
-        "ADD": "コメントの追加",
-        "HEADER": "コメント ({{ count }} 件)",
-        "NONE": "コメントなし",
+        "ADD": "Add a comment",
+        "HEADER": "Comments ({{ count }})",
+        "NONE": "No comments",
         "BUTTON": {
-          "ADD": "コメントの追加"
+          "ADD": "Add a comment"
         },
         "ADD_DIALOG": {
-          "TITLE": "新しいコメント",
+          "TITLE": "New comment",
           "LABEL": {
-            "MESSAGE": "メッセージ"
+            "MESSAGE": "Message"
           },
           "BUTTON": {
-            "ADD": "コメントの追加",
-            "CANCEL": "キャンセル"
+            "ADD": "Add Comment",
+            "CANCEL": "Cancel"
           }
         }
       },
       "ADD_DIALOG": {
-        "TITLE": "プロセス変数の設定",
+        "TITLE": "Set process variable",
         "LABEL": {
-          "NAME": "名前",
-          "VALUE": "値",
-          "SCOPE": "範囲"
+          "NAME": "Name",
+          "VALUE": "Value",
+          "SCOPE": "Scope"
         }
       },
       "EDIT_DIALOG": {
-        "TITLE": "プロセス変数の編集"
+        "TITLE": "Edit process variable"
       },
       "ERROR_DIALOG": {
-        "TITLE": "処理を完了できませんでした",
-        "DESCRIPTION": "必要なレベルのアクセス権がない可能性があります。IT 担当者に確認してください。"
+        "TITLE": "Couldn't complete the action",
+        "DESCRIPTION": "You might not have the required access level, check with your IT Team."
       }
     },
     "START_PROCESS": {
-      "BUTTON": "プロセスの開始",
-      "NO_PROCESS_DEFINITIONS": "使用できるプロセス定義がないため、プロセスを開始できません",
-      "NO_START_FORM": "開始フォームがありません",
-      "NO_PROCESS_DEF_SELECTED": "プロセス定義が選択されていません",
+      "BUTTON": "Start Process",
+      "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
+      "NO_START_FORM": "No start form",
+      "NO_PROCESS_DEF_SELECTED": "No process definition selected",
       "FORM": {
-        "TITLE": "プロセスの開始",
         "LABEL": {
-          "SELECT_APPLICATION": "アプリケーションの選択",
-          "TYPE": "プロセスの選択",
-          "NAME": "プロセス名"
+          "SELECT_APPLICATION": "Select Application",
+          "TYPE": "Select Process",
+          "NAME": "Process Name",
+          "SELECTED_PEOPLE": "Selected people"
         },
-        "TYPE_PLACEHOLDER": "1 つ選択してください...",
+        "TYPE_PLACEHOLDER": "Choose one...",
         "ACTION": {
-          "START": "プロセスの開始",
-          "CANCEL": "キャンセル"
+          "START": "Start Process",
+          "CANCEL": "Cancel"
         }
       },
       "ERROR": {
-        "LOAD_PROCESS_DEFS": "プロセス定義を読み込めませんでした。アクセス権があることを確認してください。",
-        "START": "新しいプロセスインスタンスを開始できませんでした。アクセス権があることを確認してください。",
-        "MAXIMUM_LENGTH": "長すぎます。{{characters}} 文字以内で入力してください。",
-        "SPACE_VALIDATOR": "先頭または末尾にスペースを使用することはできません。",
-        "PROCESS_NAME_REQUIRED": "プロセス名は必須です。"
+        "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
+        "START": "Couldn't start new process instance, check you have access.",
+        "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
+        "SPACE_VALIDATOR": "Cannot begin or end with a space.",
+        "PROCESS_NAME_REQUIRED": "Process name is required."
       }
     },
     "PROCESS-ATTACHMENT": {
       "EMPTY": {
-        "HEADER": "このリストは空です",
+        "HEADER": "This list is empty",
         "DRAG-AND-DROP": {
-          "TITLE": "アップロードするファイルをドラッグ & ドロップしてください",
-          "SUBTITLE": "ファイルのアップロード"
+          "TITLE": "Drag and drop",
+          "SUBTITLE": "to upload files"
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "使用できるファイルがありません"
+        "HEADER": "No files are available"
       },
       "COLUMNS": {
-        "NAME": "名前",
-        "CREATED-ON": "作成日"
+        "NAME": "Name",
+        "CREATED-ON": "Created on"
       }
     }
   },
   "APP": {
     "DIALOG": {
-      "START": "続行",
-      "TITLE": "プロセスアプリケーションの選択",
-      "LIST": "プロセスアプリケーションのリスト",
-      "ERROR": "Process Services への接続中に問題が発生しました"
+      "START": "Continue",
+      "TITLE": "Select a process app",
+      "LIST": "Process App list",
+      "ERROR": "There is a problem connecting to Process Services"
     }
   },
   "ATTACH-FILE": {
     "DIALOG": {
-      "LOGIN": "'{{ ecmHost }}' にサインイン"
+      "LOGIN": "Sign into '{{ ecmHost }}'"
     },
     "ACTIONS": {
-      "LOGIN": "ログイン",
-      "CANCEL": "キャンセル",
-      "CHOOSE": "選択",
-      "CHOOSE_ITEM": "'{{ name }}' から添付するコンテンツを選択してください"
+      "LOGIN": "Login",
+      "CANCEL": "Cancel",
+      "CHOOSE": "Select",
+      "CHOOSE_ITEM": "Select content to attach from '{{ name }}'"
     }
   },
   "ADF_TASK_FORM": {
     "EMPTY_FORM": {
-      "SUBTITLE": "後で表示できるフォームを添付してください",
-      "COMPLETE-TASK-MESSAGE": "タスク {{taskName}} が完了しました",
-      "COMPLETE-TASK-SUB-MESSAGE": "フォームは追加されません",
+      "SUBTITLE": "Attach a form that can be viewed later",
+      "COMPLETE-TASK-MESSAGE": "Task {{taskName}} completed",
+      "COMPLETE-TASK-SUB-MESSAGE": "No forms to be added",
       "BUTTONS": {
-        "COMPLETE": "完了",
-        "CANCEL": "キャンセル",
-        "CLAIM": "担当する",
-        "UNCLAIM": "担当解除"
+        "COMPLETE": "COMPLETE",
+        "CANCEL": "CANCEL",
+        "CLAIM": "CLAIM",
+        "UNCLAIM": "RELEASE"
       }
     },
     "COMPLETED_TASK": {
-      "TITLE": "タスク {{taskName}} が完了しました",
-      "SUBTITLE": "フォームは追加されません"
+      "TITLE": "Task {{taskName}} completed",
+      "SUBTITLE": "No forms to be added"
     }
   }
 }
