@@ -38,6 +38,11 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { provideCloudPreferences } from '../../../../providers';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { PreferenceCloudServiceInterface } from '../../../../services/preference-cloud.interface';
+import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
+import { TaskListCloudService } from '../../services/task-list-cloud.service';
+import { UserPreferenceCloudService } from '../../../../services/user-preference-cloud.service';
 
 @Component({
     template: ` <adf-cloud-service-task-list #taskListCloud>
@@ -80,6 +85,13 @@ class EmptyTemplateComponent {}
 class CustomCopyContentTaskListComponent {
     @ViewChild(ServiceTaskListCloudComponent, { static: true })
     taskList: ServiceTaskListCloudComponent;
+}
+@Component({
+    imports: [ServiceTaskListCloudComponent],
+    template: `<adf-cloud-service-task-list [appName]="appName" />`
+})
+class ServiceTaskListCloudWrapperComponent {
+    appName: string;
 }
 
 describe('ServiceTaskListCloudComponent', () => {
@@ -499,4 +511,43 @@ describe('ServiceTaskListCloudComponent: Copy cell content directive from app.co
         const tooltips = await loader.getAllHarnesses(MatTooltipHarness.with({ selector: 'span[title="serviceTaskName"]' }));
         expect(tooltips.length).toBe(0);
     }));
+});
+
+describe('ServiceTaskListCloudWrapperComponent', () => {
+    let wrapperFixture: ComponentFixture<ServiceTaskListCloudWrapperComponent>;
+    let preferenceService: PreferenceCloudServiceInterface;
+    let wrapperComponent: ServiceTaskListCloudWrapperComponent;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule, ServiceTaskListCloudWrapperComponent],
+            providers: [
+                provideHttpClientTesting(),
+                { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService },
+                { provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
+            ]
+        });
+
+        preferenceService = TestBed.inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN);
+        wrapperFixture = TestBed.createComponent(ServiceTaskListCloudWrapperComponent);
+        wrapperComponent = wrapperFixture.componentInstance;
+
+        spyOn(preferenceService, 'getPreferences').and.callThrough();
+    });
+
+    afterEach(() => {
+        wrapperFixture.destroy();
+    });
+
+    it('should fetch preferences once on init and every time the appName is changed', () => {
+        expect(preferenceService.getPreferences).toHaveBeenCalledTimes(0);
+
+        wrapperComponent.appName = 'fake-app';
+        wrapperFixture.detectChanges();
+        expect(preferenceService.getPreferences).toHaveBeenCalledTimes(1);
+
+        wrapperComponent.appName = 'fake-app-changed';
+        wrapperFixture.detectChanges();
+        expect(preferenceService.getPreferences).toHaveBeenCalledTimes(2);
+    });
 });
