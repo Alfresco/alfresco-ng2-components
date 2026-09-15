@@ -934,7 +934,7 @@ describe('TaskListCloudWrapperComponent', () => {
         expect(preferenceService.getPreferences).toHaveBeenCalledTimes(2);
     });
 
-    it('should fetch prefecences even if appName is set after ngAfterContentInit', () => {
+    it('should fetch preferences even if appName is set after ngAfterContentInit', () => {
         expect(preferenceService.getPreferences).toHaveBeenCalledTimes(0);
 
         wrapperFixture.detectChanges();
