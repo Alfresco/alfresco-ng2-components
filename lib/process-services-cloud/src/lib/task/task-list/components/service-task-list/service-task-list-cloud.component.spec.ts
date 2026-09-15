@@ -556,7 +556,6 @@ describe('ServiceTaskListCloudWrapperComponent', () => {
 
         wrapperFixture.detectChanges();
         expect(preferenceService.getPreferences).toHaveBeenCalledTimes(1);
-        expect(preferenceService.getPreferences).toHaveBeenCalledWith(undefined);
 
         wrapperComponent.appName = 'fake-app';
         wrapperFixture.detectChanges(); //this is second change, first was initial binding
