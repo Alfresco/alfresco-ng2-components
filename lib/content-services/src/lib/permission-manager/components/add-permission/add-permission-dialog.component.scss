@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 .adf-add-permission-dialog {
     .adf-add-permission-dialog-title {
         margin-bottom: 28px;
@@ -46,7 +48,11 @@
             }
 
             &:enabled {
-                color: var(--mat-sys-primary);
+                @include mat.button-overrides(
+                    (
+                        text-label-text-color: var(--theme-primary-color)
+                    )
+                );
             }
         }
     }

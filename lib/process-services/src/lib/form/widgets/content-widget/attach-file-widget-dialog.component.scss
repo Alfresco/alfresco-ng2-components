@@ -1,4 +1,5 @@
 @use '../../../styles/mat-selectors' as ms;
+@use '@angular/material' as mat;
 
 .adf-attach-file-widget-dialog {
     #{ms.$mat-dialog-actions} {
@@ -7,6 +8,14 @@
 
         button {
             text-transform: uppercase;
+        }
+
+        .adf-choose-action {
+            @include mat.button-overrides(
+                (
+                    text-label-text-color: var(--theme-primary-color)
+                )
+            );
         }
     }
 
