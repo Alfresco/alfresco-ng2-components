@@ -620,18 +620,26 @@ describe('Test PdfViewer - User interaction', () => {
     });
 
     describe('Rotation', () => {
-        it('should rotate only the current page clockwise by 90 degrees', () => {
+        it('should rotate only the current page counter-clockwise by 90 degrees', () => {
             testingUtils.clickByCSS('#viewer-rotate-page-button');
 
-            expect(pageViewMock.update).toHaveBeenCalledWith({ rotation: 90 });
+            expect(pageViewMock.update).toHaveBeenCalledWith({ rotation: 270 });
         });
 
         it('should wrap rotation back to 0 after a full turn', () => {
-            pageViewMock.rotation = 270;
+            pageViewMock.rotation = 90;
 
             testingUtils.clickByCSS('#viewer-rotate-page-button');
 
             expect(pageViewMock.update).toHaveBeenCalledWith({ rotation: 0 });
+        });
+
+        it('should recompute the document overflow after rotation', () => {
+            spyOn(component, 'setDocumentOverflow');
+
+            testingUtils.clickByCSS('#viewer-rotate-page-button');
+
+            expect(component.setDocumentOverflow).toHaveBeenCalled();
         });
     });
 
