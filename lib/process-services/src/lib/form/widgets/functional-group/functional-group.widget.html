@@ -5,11 +5,9 @@
     [class.adf-readonly]="field.readOnly"
     id="functional-group-div"
 >
-    <label class="adf-label" [attr.for]="field.id"
-        >{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
-    >
     <mat-form-field class="adf-group-widget-field">
-        <mat-chip-grid #chipGrid>
+        <mat-label class="adf-label" data-automation-id="adf-group-widget-label">{{ field.name | translate }}</mat-label>
+        <mat-chip-grid #chipGrid [required]="isRequired()">
             <mat-chip-row
                 *ngFor="let group of selectedGroups"
                 (removed)="onRemove(group)"

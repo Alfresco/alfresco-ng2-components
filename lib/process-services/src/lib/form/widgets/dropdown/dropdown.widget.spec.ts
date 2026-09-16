@@ -161,10 +161,10 @@ describe('DropdownWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '[data-automation-id="adf-dropdown-widget-select"]' }));
+            const isRequired = await dropdown.isRequired();
 
-            expect(asterisk).toBeTruthy();
-            expect(asterisk.textContent).toEqual('*');
+            expect(isRequired).toBeTrue();
         });
 
         it('should be invalid if no default option after interaction', async () => {
