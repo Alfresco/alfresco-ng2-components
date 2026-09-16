@@ -326,8 +326,9 @@ describe('PeopleWidgetComponent', () => {
             await fixture.whenStable();
 
             const chipGrid = await loader.getHarness(MatChipGridHarness);
+            const isRequired = await chipGrid.isRequired();
 
-            expect(await chipGrid.isRequired()).toBeTrue();
+            expect(isRequired).toBeTrue();
         });
     });
 

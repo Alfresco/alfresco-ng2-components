@@ -34,7 +34,7 @@
                 [errorStateMatcher]="errorStateMatcher"
                 (focus)="amountWidgetOnFocus()"
                 (blur)="amountWidgetOnBlur()"
-            />
+                />
             @if (field.validationSummary?.message || (isInvalidFieldRequired() && isTouched())) {
                 <mat-error class="adf-form-field-status-slot">
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>

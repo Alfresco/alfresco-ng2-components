@@ -162,8 +162,9 @@ describe('DropdownWidgetComponent', () => {
             await fixture.whenStable();
 
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '[data-automation-id="adf-dropdown-widget-select"]' }));
+            const isRequired = await dropdown.isRequired();
 
-            expect(await dropdown.isRequired()).toBeTrue();
+            expect(isRequired).toBeTrue();
         });
 
         it('should be invalid if no default option after interaction', async () => {

@@ -16,7 +16,9 @@
                [readonly]="field.readOnly"
         />
         <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly" />
-        <mat-datepicker #datePicker [startAt]="startAt" [disabled]="field.readOnly" />
+        <mat-datepicker #datePicker
+                        [startAt]="startAt"
+                        [disabled]="field.readOnly" />
         @if (dateInputControl.invalid && dateInputControl.touched) {
             <mat-error class="adf-form-field-status-slot">
                 <mat-icon class="adf-error-icon">error_outline</mat-icon>
