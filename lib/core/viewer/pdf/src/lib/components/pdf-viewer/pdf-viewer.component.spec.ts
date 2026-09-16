@@ -461,8 +461,10 @@ describe('Test PdfViewer - User interaction', () => {
     let component: PdfViewerComponent;
     let testingUtils: UnitTestingUtils;
     let pdfViewerSpy: jasmine.Spy;
+    let pageViewMock: { width: number; height: number; scale: number; rotation: number; update: jasmine.Spy };
 
     beforeEach(fakeAsync(() => {
+        pageViewMock = { width: 100, height: 100, scale: 1, rotation: 0, update: jasmine.createSpy() };
         pdfViewerSpy = jasmine.createSpy('PDFViewer').and.returnValue({
             setDocument: jasmine.createSpy().and.returnValue({
                 loadingTask: () => ({
@@ -479,7 +481,7 @@ describe('Test PdfViewer - User interaction', () => {
             update: jasmine.createSpy(),
             currentScaleValue: 1,
             _currentPageNumber: 1,
-            _pages: [{ width: 100, height: 100, scale: 1 }]
+            _pages: [pageViewMock]
         });
 
         TestBed.configureTestingModule({
@@ -615,6 +617,22 @@ describe('Test PdfViewer - User interaction', () => {
             testingUtils.clickByCSS('#viewer-scale-page-button');
             expect(component.currentScaleMode).toBe('page-fit');
         }), 300);
+    });
+
+    describe('Rotation', () => {
+        it('should rotate only the current page clockwise by 90 degrees', () => {
+            testingUtils.clickByCSS('#viewer-rotate-page-button');
+
+            expect(pageViewMock.update).toHaveBeenCalledWith({ rotation: 90 });
+        });
+
+        it('should wrap rotation back to 0 after a full turn', () => {
+            pageViewMock.rotation = 270;
+
+            testingUtils.clickByCSS('#viewer-rotate-page-button');
+
+            expect(pageViewMock.update).toHaveBeenCalledWith({ rotation: 0 });
+        });
     });
 
     describe('Resize interaction', () => {
