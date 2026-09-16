@@ -43,7 +43,32 @@ adf-search-chip-autocomplete-input {
     }
 }
 
+.adf-search-chip-autocomplete-added-option {
+    #{ms.$mat-list-item-primary-text} {
+        width: 100%;
+    }
+
+    &-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        .adf-info-icon#{ms.$mat-icon} {
+            margin-right: 0;
+        }
+    }
+}
+
 .adf-search-chip-autocomplete-added-option.adf-autocomplete-added-option {
     background: var(--mat-sys-surface-variant);
     color: var(--mat-sys-primary);
+}
+
+.adf-search-chip-autocomplete-loading {
+    #{ms.$mat-list-item-primary-text} {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
 }

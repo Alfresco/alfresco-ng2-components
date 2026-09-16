@@ -156,10 +156,15 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
 
         this.formService.formRulesEvent
             .pipe(
-                filter((event) => event?.type === 'fieldValueChanged' && event.form?.id === this.formDefinition?.id),
+                filter((event) => !!event?.type && event.form?.id === this.formDefinition?.id),
                 takeUntilDestroyed(this.destroyRef)
             )
-            .subscribe(() => this.visibilityService.refreshVisibility(this.formDefinition));
+            .subscribe((event) => {
+                if (event.type === 'fieldValueChanged') {
+                    this.visibilityService.refreshVisibility(this.formDefinition);
+                }
+                this.formDefinition?.validateForm();
+            });
     }
 
     ngOnDestroy() {

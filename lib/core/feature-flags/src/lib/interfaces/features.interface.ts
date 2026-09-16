@@ -32,11 +32,13 @@ export interface QaFeaturesHelperConfig {
     helperExposeKeyOnDocument?: string;
 }
 
+export interface FlagChangesetValues {
+    current: any;
+    previous: any;
+}
+
 export interface FlagChangeset {
-    [key: string]: {
-        current: any;
-        previous: any;
-    };
+    [key: string]: FlagChangesetValues;
 }
 
 export interface WritableFlagChangeset {
