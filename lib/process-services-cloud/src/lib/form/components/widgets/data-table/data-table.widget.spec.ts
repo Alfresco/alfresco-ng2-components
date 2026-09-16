@@ -239,6 +239,140 @@ describe('DataTableWidgetComponent', () => {
         expect(widgetRows).toEqual(expectedDataSource);
     });
 
+    it('should prefer a runtime-updated form variable over a mapped process variable', () => {
+        const processValue = [{ id: 'process', name: 'Process row' }];
+        const formValue = [{ id: 'default', name: 'Default row' }];
+        const updatedValue = [{ id: 'runtime', name: 'Runtime row' }];
+        const processVariables = [new TaskVariableCloud({ name: 'variables.json-variable', value: processValue, type: 'json' })];
+        const variables = [new TaskVariableCloud({ id: 'json-form-variable', name: 'json-variable', type: 'json', value: formValue })];
+
+        const field = getDataVariable({ variableName: 'json-variable' }, mockSchemaDefinition, processVariables, variables);
+        widget.field = field;
+        fixture.detectChanges();
+
+        expect(widget.dataSource.getRows().map((row) => row.getValue('name'))).toEqual(['Process row']);
+
+        field.form.changeVariableValue('json-variable', updatedValue);
+        formService.onFormVariableChanged.next({ field });
+        fixture.detectChanges();
+
+        expect(widget.dataSource.getRows().map((row) => row.getValue('name'))).toEqual(['Runtime row']);
+    });
+
+    it('should reinitialize when the backing variable changes without optionType on the field', () => {
+        const processValue = [{ id: 'process', name: 'Process row' }];
+        const updatedValue = [{ id: 'runtime', name: 'Runtime row' }];
+        const form = new FormModel({
+            variables: [{ id: 'json-form-variable', name: 'json-variable', type: 'json', value: [] }],
+            processVariables: [{ name: 'variables.json-variable', value: processValue, type: 'json' }]
+        });
+        const field = new FormFieldModel(form, {
+            id: 'fake-datatable-id',
+            name: 'Data Table',
+            type: FormFieldTypes.DATA_TABLE,
+            schemaDefinition: mockSchemaDefinition,
+            variableConfig: { variableName: 'json-variable' }
+        });
+
+        widget.field = field;
+        fixture.detectChanges();
+        expect(widget.dataSource.getRows().map((row) => row.getValue('name'))).toEqual(['Process row']);
+
+        form.changeVariableValue('json-form-variable', updatedValue);
+        formService.onFormVariableChanged.next({ field });
+        fixture.detectChanges();
+
+        expect(widget.dataSource.getRows().map((row) => row.getValue('name'))).toEqual(['Runtime row']);
+    });
+
+    describe('repeatable section', () => {
+        const processValue = [{ id: 'process', name: 'Process row' }];
+        const updatedValue = [{ id: 'runtime', name: 'Runtime row' }];
+
+        const repeatableSectionFormJson = () => ({
+            variables: [{ id: 'json-form-variable', name: 'json-variable', type: 'json', value: [] }],
+            processVariables: [{ name: 'variables.json-variable', value: processValue, type: 'json' }],
+            fields: [
+                {
+                    id: 'repeatableSection',
+                    type: FormFieldTypes.REPEATABLE_SECTION,
+                    params: { initialNumberOfRows: 2, allowInitialRowsDelete: true },
+                    numberOfColumns: 1,
+                    fields: {
+                        '1': [
+                            {
+                                id: 'fake-datatable-id',
+                                name: 'Data Table',
+                                type: FormFieldTypes.DATA_TABLE,
+                                optionType: 'variable',
+                                schemaDefinition: mockSchemaDefinition,
+                                variableConfig: { variableName: 'json-variable' }
+                            }
+                        ]
+                    }
+                }
+            ]
+        });
+
+        const getDataTableFields = (form: FormModel): FormFieldModel[] =>
+            form.getFormFields([], true).filter((field) => field.type === FormFieldTypes.DATA_TABLE);
+
+        it('should update rows when the backing variable changes in another row', () => {
+            const form = new FormModel(repeatableSectionFormJson());
+            const dataTableFields = getDataTableFields(form);
+
+            expect(dataTableFields.length).toBe(2);
+
+            widget.field = dataTableFields[1];
+            fixture.detectChanges();
+            expect(widget.dataSource.getRows().map((row) => row.getValue('name'))).toEqual(['Process row']);
+
+            form.changeVariableValue('json-form-variable', updatedValue);
+            formService.onFormVariableChanged.next({ field: dataTableFields[0] });
+            fixture.detectChanges();
+
+            expect(widget.dataSource.getRows().map((row) => row.getValue('name'))).toEqual(['Runtime row']);
+        });
+
+        /*
+            Row scoped field ids embed a row id that is regenerated on every parse, so the same field
+            carries a different id once the form is re-parsed, for example on a task data refresh.
+            Matching the changed field by id alone would never reach the widgets inside repeatable sections.
+        */
+        it('should update rows when the changed field comes from a re-parsed form', () => {
+            const renderedForm = new FormModel(repeatableSectionFormJson());
+            const reparsedForm = new FormModel(repeatableSectionFormJson());
+
+            const renderedFields = getDataTableFields(renderedForm);
+            const reparsedFields = getDataTableFields(reparsedForm);
+
+            expect(renderedFields[0].id).not.toEqual(reparsedFields[0].id);
+
+            widget.field = renderedFields[0];
+            fixture.detectChanges();
+            expect(widget.dataSource.getRows().map((row) => row.getValue('name'))).toEqual(['Process row']);
+
+            renderedForm.changeVariableValue('json-form-variable', updatedValue);
+            formService.onFormVariableChanged.next({ field: reparsedFields[0] });
+            fixture.detectChanges();
+
+            expect(widget.dataSource.getRows().map((row) => row.getValue('name'))).toEqual(['Runtime row']);
+        });
+
+        it('should stop reacting to form variable changes once the widget is destroyed', () => {
+            const form = new FormModel(repeatableSectionFormJson());
+            widget.field = getDataTableFields(form)[0];
+            fixture.detectChanges();
+
+            const initSpy = spyOn<any>(widget, 'init');
+            fixture.destroy();
+
+            formService.onFormVariableChanged.next({ field: getDataTableFields(form)[1] });
+
+            expect(initSpy).not.toHaveBeenCalled();
+        });
+    });
+
     it('should NOT display data table with data source if form is in preview state', () => {
         widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinition, [], mockJsonFormVariable);
         spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
