@@ -109,6 +109,71 @@ describe('materializeSubmissionValues', () => {
         expect(secondValues).toEqual(firstValues);
     });
 
+    it('should submit the form data value when the authored template has no expressions', () => {
+        const providedValue = {
+            blocks: [{ id: 'k0U1wHPrQ9', type: 'paragraph', data: { text: 'I am trying to see whats wrong' } }]
+        };
+        const form = new FormModel(
+            {
+                fields: [
+                    {
+                        id: 'richText',
+                        name: 'richText',
+                        type: FormFieldTypes.DISPLAY_RICH_TEXT,
+                        value: { blocks: [{ type: 'paragraph', data: { text: 'Default text' } }] }
+                    }
+                ]
+            },
+            { richText: providedValue }
+        );
+
+        const values = materializeSubmissionValues(form, { enableExpressionEvaluation: true }, expressions);
+
+        expect(values.richText).toEqual(providedValue);
+    });
+
+    const mappedValue = { blocks: [{ type: 'paragraph', data: { text: 'Mapped text' } }] };
+
+    const formWithAuthoredBlock = (authoredBlock: unknown) =>
+        new FormModel(
+            {
+                fields: [
+                    {
+                        id: 'richText',
+                        name: 'richText',
+                        type: FormFieldTypes.DISPLAY_RICH_TEXT,
+                        value: { blocks: [authoredBlock] }
+                    },
+                    { id: 'name', name: 'name', type: FormFieldTypes.TEXT, value: 'John' }
+                ]
+            },
+            { richText: mappedValue }
+        );
+
+    it('should submit the form data value when the authored template only has expressions inside a code block', () => {
+        const form = formWithAuthoredBlock({ type: 'code', data: { code: 'greeting = ${field.name}' } });
+
+        const values = materializeSubmissionValues(form, { enableExpressionEvaluation: true }, expressions);
+
+        expect(values.richText).toEqual(mappedValue);
+    });
+
+    it('should submit the form data value when the authored template only has expressions inside an image url', () => {
+        const form = formWithAuthoredBlock({ type: 'image', data: { file: { url: 'https://host/${field.name}.png' } } });
+
+        const values = materializeSubmissionValues(form, { enableExpressionEvaluation: true }, expressions);
+
+        expect(values.richText).toEqual(mappedValue);
+    });
+
+    it('should never submit an unresolved expression in a rich text value', () => {
+        const form = formWithAuthoredBlock({ type: 'code', data: { code: 'greeting = ${field.name}' } });
+
+        const values = materializeSubmissionValues(form, { enableExpressionEvaluation: true }, expressions);
+
+        expect(JSON.stringify(values.richText)).not.toContain('${field.name}');
+    });
+
     it('should return a shallow clone without resolving expressions when evaluation is disabled', () => {
         const form = new FormModel({
             fields: [

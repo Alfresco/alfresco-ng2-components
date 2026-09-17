@@ -109,3 +109,14 @@ export const resolveRichTextExpressions = (
 
     return resolvedValue;
 };
+
+export const hasResolvableRichTextExpressions = (value: unknown, hasExpressions: (content: string) => boolean): boolean => {
+    let resolvable = false;
+
+    resolveRichTextExpressions(value, (content) => {
+        resolvable = resolvable || hasExpressions(content);
+        return content;
+    });
+
+    return resolvable;
+};

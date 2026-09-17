@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { resolveRichTextExpressions } from './rich-text-expression-resolver';
+import { hasResolvableRichTextExpressions, resolveRichTextExpressions } from './rich-text-expression-resolver';
 
 describe('resolveRichTextExpressions', () => {
     const resolve = (value: string) => value.replaceAll('${field.name}', 'John').replaceAll('${variable.status}', 'Active');
@@ -133,5 +133,53 @@ describe('resolveRichTextExpressions', () => {
 
         expect(resolveRichTextExpressions(value, resolve)).toBe(value);
         expect(value.blocks[0].data.text).toBe('${field.name}');
+    });
+});
+
+describe('hasResolvableRichTextExpressions', () => {
+    const hasExpressions = (content: string) => content.includes('${');
+
+    [
+        { position: 'paragraph text', block: { type: 'paragraph', data: { text: 'Hello ${field.name}' } } },
+        { position: 'a caption', block: { type: 'image', data: { caption: '${field.name}' } } },
+        { position: 'nested content', block: { type: 'table', data: { content: [['${field.name}']] } } },
+        { position: 'list items', block: { type: 'list', data: { items: [{ content: '${field.name}' }] } } }
+    ].forEach(({ position, block }) => {
+        it(`should detect an expression in ${position}`, () => {
+            expect(hasResolvableRichTextExpressions({ blocks: [block] }, hasExpressions)).toBeTrue();
+        });
+    });
+
+    [
+        { position: 'a code block', block: { type: 'code', data: { code: 'greeting = ${field.name}' } } },
+        { position: 'an image url', block: { type: 'image', data: { file: { url: 'https://host/${field.name}.png' } } } },
+        { position: 'an unvisited list property', block: { type: 'list', data: { style: '${field.name}', items: [] } } }
+    ].forEach(({ position, block }) => {
+        it(`should not detect an expression in ${position}`, () => {
+            expect(hasResolvableRichTextExpressions({ blocks: [block] }, hasExpressions)).toBeFalse();
+        });
+    });
+
+    it('should not detect expressions in plain content', () => {
+        const value = { blocks: [{ type: 'paragraph', data: { text: 'Plain text' } }] };
+
+        expect(hasResolvableRichTextExpressions(value, hasExpressions)).toBeFalse();
+    });
+
+    it('should not mutate the probed value', () => {
+        const value = { blocks: [{ type: 'paragraph', data: { text: 'Hello ${field.name}' } }] };
+        const originalValue = JSON.parse(JSON.stringify(value));
+
+        hasResolvableRichTextExpressions(value, hasExpressions);
+
+        expect(value).toEqual(originalValue);
+    });
+
+    it('should not detect expressions in malformed values', () => {
+        const malformedValues = [null, undefined, 'text', [], {}, { blocks: null }];
+
+        malformedValues.forEach((value) => {
+            expect(hasResolvableRichTextExpressions(value, hasExpressions)).toBeFalse();
+        });
     });
 });
