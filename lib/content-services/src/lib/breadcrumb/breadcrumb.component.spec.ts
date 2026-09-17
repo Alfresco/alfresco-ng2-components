@@ -21,7 +21,7 @@ import { fakeNodeWithCreatePermission } from '../mock';
 import { DocumentListComponent, DocumentListService } from '../document-list';
 import { BreadcrumbComponent } from './breadcrumb.component';
 import { of } from 'rxjs';
-import { NoopAuthModule } from '@alfresco/adf-core';
+import { NoopAuthModule, UnitTestingUtils } from '@alfresco/adf-core';
 import { SimpleChange } from '@angular/core';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { TranslateService } from '@ngx-translate/core';
@@ -36,6 +36,7 @@ describe('Breadcrumb', () => {
     let documentListComponent: DocumentListComponent;
     let liveAnnouncer: LiveAnnouncer;
     let translateService: TranslateService;
+    let unitTestingUtils: UnitTestingUtils;
 
     const getBreadcrumbActionText = (): string => fixture.debugElement.nativeElement.querySelector('.adf-breadcrumb-item-current').textContent.trim();
 
@@ -50,6 +51,7 @@ describe('Breadcrumb', () => {
         documentListService = TestBed.inject(DocumentListService);
         liveAnnouncer = TestBed.inject(LiveAnnouncer);
         translateService = TestBed.inject(TranslateService);
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     afterEach(() => {
@@ -205,9 +207,9 @@ describe('Breadcrumb', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
 
-        const titleElement = fixture.debugElement.nativeElement.querySelector('.adf-breadcrumb-item-current');
-        expect(titleElement.getAttribute('role')).toBe('heading');
-        expect(titleElement.getAttribute('aria-level')).toBe('1');
+        const titleElement = unitTestingUtils.getByCSS('.adf-breadcrumb-item-current');
+        expect(titleElement.nativeElement.getAttribute('role')).toBe('heading');
+        expect(titleElement.nativeElement.getAttribute('aria-level')).toBe('1');
     });
 
     it('should not parse the route when node not provided', () => {
