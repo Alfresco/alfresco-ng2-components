@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, inject, InjectionToken, OnDestroy, OnInit, SecurityContext, ViewEncapsulation } from '@angular/core';
-import { BaseDisplayTextWidgetComponent } from '@alfresco/adf-core';
+import { BaseDisplayTextWidgetComponent, FormExpressionService } from '@alfresco/adf-core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { RichTextParserService } from '../../../services/rich-text-parser.service';
@@ -46,10 +46,11 @@ export const RICH_TEXT_PARSER_TOKEN = new InjectionToken<RichTextParserService>(
     encapsulation: ViewEncapsulation.None
 })
 export class DisplayRichTextWidgetComponent extends BaseDisplayTextWidgetComponent implements OnInit, OnDestroy {
-    parsedHTML: string | Error;
+    parsedHTML: string | null = null;
 
     private readonly richTextParserService = inject(RICH_TEXT_PARSER_TOKEN);
     private readonly sanitizer = inject(DomSanitizer);
+    private readonly expressions = inject(FormExpressionService);
     private fieldChangedSubscription?: Subscription;
 
     ngOnInit(): void {
@@ -66,49 +67,38 @@ export class DisplayRichTextWidgetComponent extends BaseDisplayTextWidgetCompone
     }
 
     protected storeOriginalValue(): void {
-        if (this.field) {
-            const authoredValue = this.field.authoredValue;
-            if (authoredValue !== undefined) {
-                this.originalFieldValue = JSON.stringify(authoredValue);
-            }
-        }
+        this.originalFieldValue = this.getAuthoredExpressionTemplate();
     }
 
     protected evaluateExpressions(): void {
-        if (!this.field) {
-            return;
-        }
-
-        const authoredValue = this.field.authoredValue;
-        if (authoredValue !== undefined) {
-            this.applyExpressionsToBlocks(authoredValue);
-        }
+        this.renderAuthoredExpressionTemplate();
     }
 
     protected reevaluateExpressions(): void {
+        this.renderAuthoredExpressionTemplate();
+    }
+
+    private getAuthoredExpressionTemplate(): string | undefined {
+        const authoredTemplate = JSON.stringify(this.field?.authoredValue ?? null);
+
+        return this.expressions.hasExpressions(authoredTemplate) ? authoredTemplate : undefined;
+    }
+
+    private renderAuthoredExpressionTemplate(): void {
         if (!this.field || !this.originalFieldValue) {
             return;
         }
 
-        const value = JSON.parse(this.originalFieldValue);
-        this.applyExpressionsToBlocks(value);
-    }
-
-    private applyExpressionsToBlocks(value: any): void {
-        this.field.value = resolveRichTextExpressions(value, (content) => this.resolveExpressions(content, true));
+        this.field.value = resolveRichTextExpressions(JSON.parse(this.originalFieldValue), (content) => this.resolveExpressions(content, true));
     }
 
     private parseAndSanitize(): void {
-        this.parsedHTML = this.richTextParserService.parse(this.field.value);
+        const parsedValue = this.richTextParserService.parse(this.field.value);
 
-        if (this.parsedHTML instanceof Error) {
-            throw this.parsedHTML;
-        } else {
-            this.sanitizeHtmlContent();
+        if (parsedValue instanceof Error) {
+            throw parsedValue;
         }
-    }
 
-    private sanitizeHtmlContent(): void {
-        this.parsedHTML = this.sanitizer.sanitize(SecurityContext.HTML, this.parsedHTML);
+        this.parsedHTML = this.sanitizer.sanitize(SecurityContext.HTML, parsedValue);
     }
 }

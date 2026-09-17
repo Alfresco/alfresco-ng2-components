@@ -229,6 +229,60 @@ describe('DisplayRichTextWidgetComponent', () => {
             expect(widget.field.value.blocks[0].data.text).toBe('Hello Jane');
         });
 
+        it('should keep the value provided by form data when the authored value has no expressions', () => {
+            const form = new FormModel(
+                {
+                    fields: [
+                        {
+                            id: 'richText1',
+                            name: 'richText1',
+                            type: 'display-rich-text',
+                            value: {
+                                blocks: [{ type: 'paragraph', data: { text: 'Default text' } }]
+                            }
+                        }
+                    ]
+                },
+                {
+                    richText1: {
+                        blocks: [{ id: 'k0U1wHPrQ9', type: 'paragraph', data: { text: 'I am trying to see whats wrong' } }]
+                    }
+                }
+            );
+
+            fixture.componentRef.setInput('field', form.getFieldById('richText1'));
+            fixture.detectChanges();
+
+            expect(widget.field.value.blocks[0].data.text).toBe('I am trying to see whats wrong');
+        });
+
+        it('should keep the value mapped from a process variable when the authored value has no expressions', () => {
+            const form = new FormModel(
+                {
+                    fields: [
+                        {
+                            id: 'richText1',
+                            name: 'richText1',
+                            type: 'display-rich-text',
+                            value: {
+                                blocks: [{ type: 'paragraph', data: { text: 'Default text' } }]
+                            }
+                        }
+                    ]
+                },
+                {
+                    'variables.richText1': {
+                        blocks: [{ type: 'paragraph', data: { text: 'Mapped text' } }]
+                    }
+                }
+            );
+
+            fixture.componentRef.setInput('field', form.getFieldById('richText1'));
+            fixture.detectChanges();
+
+            expect(widget.field.value.blocks[0].data.text).toBe('Mapped text');
+        });
+
         it('should preserve the current value when the authored value is unavailable', () => {
             const form = new FormModel({
                 fields: [{ id: 'richText1', type: 'display-rich-text' }]

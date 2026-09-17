@@ -109,6 +109,29 @@ describe('materializeSubmissionValues', () => {
         expect(secondValues).toEqual(firstValues);
     });
 
+    it('should submit the form data value when the authored template has no expressions', () => {
+        const providedValue = {
+            blocks: [{ id: 'k0U1wHPrQ9', type: 'paragraph', data: { text: 'I am trying to see whats wrong' } }]
+        };
+        const form = new FormModel(
+            {
+                fields: [
+                    {
+                        id: 'richText',
+                        name: 'richText',
+                        type: FormFieldTypes.DISPLAY_RICH_TEXT,
+                        value: { blocks: [{ type: 'paragraph', data: { text: 'Default text' } }] }
+                    }
+                ]
+            },
+            { richText: providedValue }
+        );
+
+        const values = materializeSubmissionValues(form, { enableExpressionEvaluation: true }, expressions);
+
+        expect(values.richText).toEqual(providedValue);
+    });
+
     it('should return a shallow clone without resolving expressions when evaluation is disabled', () => {
         const form = new FormModel({
             fields: [

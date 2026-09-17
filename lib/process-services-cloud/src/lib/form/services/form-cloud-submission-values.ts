@@ -24,6 +24,9 @@ type SubmissionRow = Record<string, unknown>;
 
 const isSubmissionRow = (value: unknown): value is SubmissionRow => typeof value === 'object' && value !== null && !Array.isArray(value);
 
+const isExpressionTemplate = (authoredValue: unknown, expressions: FormExpressionService): boolean =>
+    expressions.hasExpressions(JSON.stringify(authoredValue ?? null));
+
 export interface FormCloudSubmissionValuesOptions {
     enableExpressionEvaluation: boolean;
 }
@@ -48,7 +51,12 @@ export const materializeSubmissionValues = (
 
     for (const field of form.getFormFields([FormFieldTypes.DISPLAY_RICH_TEXT])) {
         const { authoredValue, parent } = field;
-        if (authoredValue === undefined || parent?.isTemplate) {
+
+        if (parent?.isTemplate) {
+            continue;
+        }
+
+        if (!isExpressionTemplate(authoredValue, expressions)) {
             continue;
         }
 
