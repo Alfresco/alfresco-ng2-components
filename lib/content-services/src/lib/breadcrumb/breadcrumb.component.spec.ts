@@ -193,6 +193,23 @@ describe('Breadcrumb', () => {
         });
     });
 
+    it('should announce breadcrumb as a non-heading element with an aria heading role', () => {
+        const mockFolderNode: any = {
+            id: 'test-id',
+            name: 'test-name',
+            path: {
+                elements: [{ id: 'element-1-id', name: 'element-1-name' }]
+            }
+        };
+        component.folderNode = mockFolderNode;
+        component.ngOnChanges({});
+        fixture.detectChanges();
+
+        const titleElement = fixture.debugElement.nativeElement.querySelector('.adf-breadcrumb-item-current');
+        expect(titleElement.getAttribute('role')).toBe('heading');
+        expect(titleElement.getAttribute('aria-level')).toBe('1');
+    });
+
     it('should not parse the route when node not provided', () => {
         expect(component.parseRoute(null)).toEqual([]);
     });
