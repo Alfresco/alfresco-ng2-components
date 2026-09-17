@@ -193,7 +193,7 @@ describe('Breadcrumb', () => {
         });
     });
 
-    it('should announce breadcrumb as a non-heading element with an aria heading role', () => {
+    it('should announce heading role for the current breadcrumb item', () => {
         const mockFolderNode: any = {
             id: 'test-id',
             name: 'test-name',
