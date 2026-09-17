@@ -46,6 +46,11 @@ jobs:
       - name: Ensure SHA pinned actions
         uses: hyland/github-actions-ensure-sha-pinned-actions@7957efb76aba0eec7580a9c0392d3e5bec381359 # v2.0.1
 
+      - name: Run pre-commit
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@da99ab845e78301fcb0680d16cbc185a40a1938c # v18.24.1
+        with:
+          skip_checkout: true
+
       - name: Check pnpm-lock.yaml version
         run: |
           if [[ -f "pnpm-lock.yaml" ]]; then
@@ -68,16 +73,16 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" != "pull_request" ]; then
             echo "Not a PR event — assuming code changed"
-            echo "code-changed=true" >> $GITHUB_OUTPUT
+            echo "code-changed=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          FILES=$(gh api /repos/$GITHUB_REPOSITORY/pulls/${{ github.event.pull_request.number }}/files --paginate --jq '.[].filename')
+          FILES=$(gh api "/repos/$GITHUB_REPOSITORY/pulls/${{ github.event.pull_request.number }}/files" --paginate --jq '.[].filename')
 
           CODE_CHANGED="false"
           while IFS= read -r file; do
             case "$file" in
-              *.md|docs/*|.github/*.md|.github/CODEOWNERS|.github/dependabot.yml|LICENSE*|NOTICE*|.editorconfig|.gitattributes)
+              *.md|docs/*|.github/CODEOWNERS|.github/dependabot.yml|LICENSE*|NOTICE*|.editorconfig|.gitattributes)
                 ;;
               *)
                 CODE_CHANGED="true"
@@ -86,7 +91,7 @@ jobs:
             esac
           done <<< "$FILES"
 
-          echo "code-changed=$CODE_CHANGED" >> $GITHUB_OUTPUT
+          echo "code-changed=$CODE_CHANGED" >> "$GITHUB_OUTPUT"
           echo "Code changed: $CODE_CHANGED"
 
   check-if-pr-is-approved:
@@ -134,7 +139,7 @@ jobs:
             skip="true"
           fi
 
-          echo "skip=$skip" >> $GITHUB_OUTPUT
+          echo "skip=$skip" >> "$GITHUB_OUTPUT"
 
       - name: Get PR number
         if: ${{ steps.skip-check.outputs.skip != 'true' }}
@@ -146,7 +151,7 @@ jobs:
           if [ -z "$PR_NUMBER" ]; then
             PR_NUMBER=$(gh pr view --json number --jq '.number' 2>/dev/null || echo "")
           fi
-          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "pr_number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
           echo "PR: $PR_NUMBER"
 
       - name: Check if PR is approved
@@ -156,7 +161,7 @@ jobs:
           PR_NUMBER: ${{ steps.pr-number.outputs.pr_number }}
         run: |
           echo "Checking approval for PR: $PR_NUMBER"
-          checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
+          checkApproval=$(gh api "/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/reviews" | jq '.[] | select(.state == "APPROVED") | .user.login')
           if [[ $checkApproval ]]; then
             echo -e "\033[32mPR approved\033[0m"
           else
@@ -209,7 +214,7 @@ jobs:
       - name: Run lint
         env:
           BASE_REF: ${{ github.base_ref || 'develop' }}
-        run: pnpm nx affected --target=lint --base=origin/$BASE_REF --head=HEAD
+        run: pnpm nx affected --target=lint --base="origin/$BASE_REF" --head=HEAD
       - name: Save nx cache
         if: ${{ success() }}
         uses: ./.github/actions/save-nx-cache
@@ -243,7 +248,7 @@ jobs:
         env:
           BASE_REF: ${{ github.base_ref || 'develop' }}
         run: |
-          pnpm nx affected --target=build-storybook --base=origin/$BASE_REF --head=HEAD --configuration=ci
+          pnpm nx affected --target=build-storybook --base="origin/$BASE_REF" --head=HEAD --configuration=ci
       - name: Save nx cache
         if: ${{ success() }}
         uses: ./.github/actions/save-nx-cache
