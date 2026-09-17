@@ -1,152 +1,152 @@
 {
   "DIALOG": {
-    "SAVE_MESSAGE": "Jos haluat tallentaa raportin nykyisillä asetuksilla raporttiluetteloosi, napsauta Tallenna.",
+    "SAVE_MESSAGE": "Click Save to add a report with the current settings to your reports list.",
     "EXPORT_MESSAGE": ""
   },
   "DATE-WIDGET": {
-    "START-DATE": "Alkamispäivä",
-    "END-DATE": "Päättymispäivä",
+    "START-DATE": "Start date",
+    "END-DATE": "End date",
     "MESSAGES": {
-      "START-DATE-REQUIRED": "Alkamispäivä on pakollinen",
-      "START-LESS-THAN-END-DATE": "Alkamispäivän täytyy olla ennen päättymispäivää"
+      "START-DATE-REQUIRED": "Start date is required",
+      "START-LESS-THAN-END-DATE": "Start date must be before end date"
     }
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "TITLE": "Yhtään sovellusta ei löydy",
-      "SUBTITLE": "Luo uusi sovellus, jonka löydät helposti myöhemmin",
-      "TASK_APP_NAME": "Tehtäväsovellus"
+      "TITLE": "No Applications Found",
+      "SUBTITLE": "Create a new application that you want to easily find later",
+      "TASK_APP_NAME": "Task App"
     },
     "LIST": {
       "MESSAGES": {
-        "TITLE": "Yhtään tehtävää ei löydy",
-        "SUBTITLE": "Luo uusi tehtävä, jonka löydät helposti myöhemmin",
-        "NONE": "Yhtään tehtäväluetteloa ei löydy"
+        "TITLE": "No Tasks Found",
+        "SUBTITLE": "Create a new task that you want to easily find later",
+        "NONE": "No task lists found"
       }
     },
     "PROPERTIES": {
-      "TASK_NAME": "Tehtävä",
+      "TASK_NAME": "Task",
       "THUMBNAIL": "Pikkukuva",
-      "DURATION": "Kesto",
-      "PARENT_TASK_ID": "Ylätason tehtävän tunnus",
-      "NAME": "Nimi",
-      "ASSIGNEE": "Vastuuhenkilö",
-      "ASSIGNEE_DEFAULT": "Ei vastuuhenkilöä",
-      "PRIORITY": "Prioriteetti",
-      "DUE_DATE": "Määräpäivä",
-      "DUE_DATE_DEFAULT": "Ei päivämäärää",
+      "DURATION": "Duration",
+      "PARENT_TASK_ID": "Parent task id",
+      "NAME": "Task Name",
+      "ASSIGNEE": "Assignee",
+      "ASSIGNEE_DEFAULT": "No assignee",
+      "PRIORITY": "Priority",
+      "DUE_DATE": "Due Date",
+      "DUE_DATE_DEFAULT": "No date",
       "STATUS": "Tila",
-      "CATEGORY": "Luokka",
-      "CATEGORY_DEFAULT": "Ei luokkaa",
-      "PARENT_NAME": "Ylätason nimi",
-      "PARENT_NAME_DEFAULT": "Ei ylätasoa",
-      "CREATED_BY": "Tekijä:",
+      "CATEGORY": "Category",
+      "CATEGORY_DEFAULT": "No category",
+      "PARENT_NAME": "Parent name",
+      "PARENT_NAME_DEFAULT": "No parent",
+      "CREATED_BY": "Created By",
       "CREATED": "Luotu",
-      "END_DATE": "Päättymispäivä",
+      "END_DATE": "End date",
       "ID": "Tunnus",
       "DESCRIPTION": "Kuvaus",
       "DESCRIPTION_DEFAULT": "Ei kuvausta",
-      "FORM_NAME": "Lomakkeen nimi",
-      "FORM_NAME_DEFAULT": "Ei lomaketta"
+      "FORM_NAME": "Form Name",
+      "FORM_NAME_DEFAULT": "No form"
     },
     "MENU_ACTIONS": {
       "VIEW_CONTENT": "Näytä",
       "REMOVE_CONTENT": "Poista",
       "DOWNLOAD_CONTENT": "Lataa",
-      "DOWNLOAD_AUDIT": "Lataa tarkastus"
+      "DOWNLOAD_AUDIT": "Download Audit"
     },
     "DETAILS": {
       "LABELS": {
-        "INFO_DRAWER_TITLE": "Toiminnot",
-        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Toiminto",
+        "INFO_DRAWER_TITLE": "Activities",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Activity",
         "INFO_DRAWER_TAB_DETAILS_TITLE": "Tiedot",
-        "ASSIGNEE": "Vastuuhenkilö",
-        "DUE": "Määräpäivä",
-        "FORM": "Lomake",
-        "PEOPLE": "Käyttäjät, joille tämä tehtävä on jaettu",
+        "ASSIGNEE": "Assignee",
+        "DUE": "Due",
+        "FORM": "Form",
+        "PEOPLE": "People this task is shared with",
         "COMMENTS": "Kommentit",
-        "CHECKLIST": "Tarkistuslista",
-        "INVOLVED_PEOPLE": "Mukana olevat käyttäjät",
-        "ADD_PEOPLE": "Lisää ihmisiä ja ryhmiä",
-        "ADD_ASSIGNEE": "Lisää uusi vastuuhenkilö"
+        "CHECKLIST": "Checklist",
+        "INVOLVED_PEOPLE": "People Involved",
+        "ADD_PEOPLE": "Add people and groups",
+        "ADD_ASSIGNEE": "Add new assignee"
       },
       "BUTTON": {
-        "COMPLETE": "Merkitse valmiiksi",
-        "CLAIM": "Varaa",
-        "UNCLAIM": "Vapauta",
-        "DRAG-ATTACHMENT": "Lataa tiedostoja pudottamalla niitä",
-        "UPLOAD-ATTACHMENT": "Lataa liite"
+        "COMPLETE": "Complete",
+        "CLAIM": "Claim",
+        "UNCLAIM": "Release",
+        "DRAG-ATTACHMENT": "Drop files to upload",
+        "UPLOAD-ATTACHMENT": "Upload Attachment"
       },
       "MESSAGES": {
-        "NONE": "Tehtävätietoja ei löydy",
-        "CLAIM": "Jos haluat työstää tätä tehtävää, napsauta Varaa"
+        "NONE": "No task details found",
+        "CLAIM": "Click Claim to work on this task"
       },
       "FORM": {
-        "NONE": "Ei lomaketta"
+        "NONE": "No form"
       },
       "DUE": {
-        "NONE": "Ei määräpäivää"
+        "NONE": "No due date"
       },
       "ASSIGNEE": {
-        "NONE": "Ei vastuuhenkilöä"
+        "NONE": "No assignee"
       },
       "PEOPLE": {
-        "NONE": "Ei ketään mukana"
+        "NONE": "Nobody involved"
       },
       "CHECKLIST": {
-        "NONE": "Ei tarkistuslistaa",
+        "NONE": "No checklist",
         "DIALOG": {
-          "TITLE": "Uusi tarkistus",
+          "TITLE": "New Check",
           "CANCEL-BUTTON": "Peruuta",
-          "ADD-BUTTON": "Lisää tarkistuslista",
+          "ADD-BUTTON": "Add Checklist",
           "PLACEHOLDER": "Nimi"
         }
       },
       "ERROR": {
-        "TITLE": "Toiminnon suorittaminen ei onnistu",
-        "DESCRIPTION": "Yritä uudelleen tai tarkista, että sinulla on tarvittavat oikeudet.",
+        "TITLE": "Couldn't complete the action",
+        "DESCRIPTION": "Try again or check that you have access.",
         "CLOSE": "Sulje"
       }
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "Ei valittua tehtäväsuodatinta"
+        "NONE": "No task filter selected"
       }
     },
     "START_TASK": {
-      "DEFAULT_NAME": "Oma oletustehtävä",
-      "BUTTON": "Luo tehtävä",
+      "DEFAULT_NAME": "My Default Task",
+      "BUTTON": "CREATE TASK",
       "FORM": {
-        "TITLE": "Aloita tehtävä",
+        "TITLE": "Start Task",
         "LABEL": {
           "NONE": "Ei mitään",
           "NAME": "Nimi",
           "DESCRIPTION": "Kuvaus",
-          "ATTACHFORM": "Liitä lomake",
-          "ASSIGNEE": "Vastuuhenkilö",
-          "FORM": "Lomake",
-          "DATE": "Valitse päivämäärä"
+          "ATTACHFORM": "Attach Form",
+          "ASSIGNEE": "Assignee",
+          "FORM": "Form",
+          "DATE": "Choose Date"
         },
         "ACTION": {
-          "START": "Aloita",
+          "START": "Start",
           "CANCEL": "Peruuta"
         },
         "ERROR": {
-          "REQUIRED": "Pakollinen kenttä",
-          "DATE": "Päivämäärämuoto: PP/KK/VVVV",
-          "MAXIMUM_LENGTH": "Liian pitkä: voit käyttää enintään {{characters}} merkkiä.",
+          "REQUIRED": "Field required",
+          "DATE": "Date format DD/MM/YYYY",
+          "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
           "MESSAGE": "Anna toinen arvo"
         }
       }
     },
     "PEOPLE": {
-      "ASSIGNEE": "Vastuuhenkilö",
+      "ASSIGNEE": "Assignee",
       "DIALOG_CLOSE": "Sulje",
       "ADD_USER": "Lisää",
-      "ADD_ASSIGNEE": "Määritä",
-      "SEARCH_USER": "Hae käyttäjää",
+      "ADD_ASSIGNEE": "ASSIGN",
+      "SEARCH_USER": "Search user",
       "SEARCH": {
-        "NO_USERS": "Ei löydy ketään mukaan lisättäväksi"
+        "NO_USERS": "Nobody found to involve"
       }
     },
     "ATTACHMENT": {
@@ -158,45 +158,45 @@
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "Yhtään tiedostoa ei ole saatavilla"
+        "HEADER": "No files are available"
       }
     },
     "STANDALONE_TASK": {
-      "NO_FORM_MESSAGE": "Ei liitettyjä lomakkeita",
-      "COMPLETE_TASK_MESSAGE": "Tehtävä {{taskName}} suoritettu",
-      "COMPLETE_TASK_SUB_MESSAGE": "Ei lisättäviä lomakkeita"
+      "NO_FORM_MESSAGE": "No forms attached",
+      "COMPLETE_TASK_MESSAGE": "Task {{taskName}} completed",
+      "COMPLETE_TASK_SUB_MESSAGE": "No forms to be added"
     },
     "ATTACH_FORM": {
-      "SELECT_FORM": "Valitse liitettävä lomake",
-      "REMOVE_FORM": "Poista lomake",
-      "SELECT_OPTION": "Valitse asetus"
+      "SELECT_FORM": "Select Form To Attach",
+      "REMOVE_FORM": "Remove Form",
+      "SELECT_OPTION": "Select an option"
     }
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "TITLE": "Yhtään prosessia ei löydy",
-      "SUBTITLE": "Luo uusi prosessi, jonka löydät helposti myöhemmin",
-      "SUMMARY": "Löytyi {{total}} prosessiesiintymää",
-      "ERROR": "Prosessiesiintymien lataaminen ei onnistu. Yritä uudelleen tai ilmoita seuraava virheilmoitus IT-tuelle: {{errorMessage}}"
+      "TITLE": "No Processes Found",
+      "SUBTITLE": "Create a new process that you want to easily find later",
+      "SUMMARY": "{{total}} process instances found",
+      "ERROR": "Couldn't load processes instances. Try again or share the following message with your IT Team: {{errorMessage}}"
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "Prosessiesiintymäsuodatinta ei ole valittu."
+        "NONE": "No process instance filter selected."
       }
     },
     "PROPERTIES": {
-      "PROCESS_NAME": "Prosessi",
+      "PROCESS_NAME": "Process",
       "NAME": "Nimi",
       "THUMBNAIL": "Pikkukuva",
       "STATUS": "Tila",
-      "END_DATE": "Päättymispäivä",
-      "END_DATE_DEFAULT": "Ei päivämäärää",
-      "CATEGORY": "Luokka",
-      "CATEGORY_DEFAULT": "Ei luokkaa",
-      "CREATED_BY": "Tekijä:",
-      "CREATED_BY_DEFAULT": "Ei vastuuhenkilöä",
+      "END_DATE": "End Date",
+      "END_DATE_DEFAULT": "No date",
+      "CATEGORY": "Category",
+      "CATEGORY_DEFAULT": "No category",
+      "CREATED_BY": "Created By",
+      "CREATED_BY_DEFAULT": "No assignee",
       "CREATED": "Luotu",
-      "BUSINESS_KEY": "Liiketoiminta-avain",
+      "BUSINESS_KEY": "Business key",
       "BUSINESS_KEY_DEFAULT": "Ei mitään",
       "DESCRIPTION": "Kuvaus",
       "DESCRIPTION_DEFAULT": "Ei kuvausta",
@@ -206,44 +206,44 @@
       "VIEW_CONTENT": "Näytä",
       "REMOVE_CONTENT": "Poista",
       "DOWNLOAD_CONTENT": "Lataa",
-      "DOWNLOAD_AUDIT": "Lataa tarkastus",
-      "VIEW_TASK": "Näytä tehtävä"
+      "DOWNLOAD_AUDIT": "Download audit",
+      "VIEW_TASK": "View Task"
     },
     "DETAILS": {
       "LABELS": {
-        "STARTED_BY": "Aloittaja:",
-        "STARTED": "Aloitettu",
-        "ENDED": "Lopetettu",
+        "STARTED_BY": "Started by",
+        "STARTED": "Started",
+        "ENDED": "Ended",
         "COMMENTS": "Kommentit",
         "START_FORM": "Aloita lomake",
-        "TASKS_ACTIVE": "Aktiiviset tehtävät",
-        "TASKS_COMPLETED": "Suoritetut tehtävät",
-        "TASK_SUBTITLE": "Määritetty käyttäjälle {{user}}, luotu {{created}}",
-        "REFRESH": "Päivitä"
+        "TASKS_ACTIVE": "Active Tasks",
+        "TASKS_COMPLETED": "Completed Tasks",
+        "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}",
+        "REFRESH": "Refresh"
       },
       "BUTTON": {
-        "CANCEL": "Peruuta prosessi",
+        "CANCEL": "Cancel Process",
         "CLOSE": "Sulje",
-        "SHOW_DIAGRAM": "Näytä kaavio",
-        "DRAG-ATTACHMENT": "Lataa tiedostoja pudottamalla niitä",
-        "UPLOAD-ATTACHMENT": "Lataa liite",
-        "FILE_OPTION_MENU": "Tiedostoasetukset-valikko"
+        "SHOW_DIAGRAM": "Show Diagram",
+        "DRAG-ATTACHMENT": "Drop files to upload",
+        "UPLOAD-ATTACHMENT": "Upload Attachment",
+        "FILE_OPTION_MENU": "File Option Menu"
       },
       "MESSAGES": {
-        "NONE": "Prosessitietoja ei löydy"
+        "NONE": "No process details found"
       },
       "TASKS": {
-        "NO_ACTIVE": "Ei tällä hetkellä aktiivisia tehtäviä",
-        "NO_COMPLETED": "Ei vielä yhtään suoritettua tehtävää",
-        "TASK_DETAILS": "Tehtävätiedot",
+        "NO_ACTIVE": "No currently active tasks",
+        "NO_COMPLETED": "No tasks completed yet",
+        "TASK_DETAILS": "Task details",
         "TASK_CLOSE": "Sulje"
       },
       "COMMENTS": {
-        "ADD": "Lisää kommentti",
+        "ADD": "Add a comment",
         "HEADER": "Kommentit ({{ count }})",
         "NONE": "Ei kommentteja",
         "BUTTON": {
-          "ADD": "Lisää kommentti"
+          "ADD": "Add a comment"
         },
         "ADD_DIALOG": {
           "TITLE": "Uusi kommentti",
@@ -257,45 +257,45 @@
         }
       },
       "ADD_DIALOG": {
-        "TITLE": "Määritä prosessimuuttuja",
+        "TITLE": "Set process variable",
         "LABEL": {
           "NAME": "Nimi",
           "VALUE": "Arvo",
-          "SCOPE": "Laajuus"
+          "SCOPE": "Scope"
         }
       },
       "EDIT_DIALOG": {
-        "TITLE": "Muokkaa prosessimuuttujaa"
+        "TITLE": "Edit process variable"
       },
       "ERROR_DIALOG": {
-        "TITLE": "Toiminnon suorittaminen ei onnistu",
-        "DESCRIPTION": "Sinulla ei ehkä ole riittäviä oikeuksia. Tarkista asia IT-tuesta."
+        "TITLE": "Couldn't complete the action",
+        "DESCRIPTION": "You might not have the required access level, check with your IT Team."
       }
     },
     "START_PROCESS": {
       "BUTTON": "Käynnistä prosessi",
-      "NO_PROCESS_DEFINITIONS": "Et voi käynnistää prosessia, koska prosessimääritelmiä ei ole saatavilla",
-      "NO_START_FORM": "Ei aloituslomaketta",
-      "NO_PROCESS_DEF_SELECTED": "Prosessimääritelmää ei ole valittu",
+      "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
+      "NO_START_FORM": "No start form",
+      "NO_PROCESS_DEF_SELECTED": "No process definition selected",
       "FORM": {
-        "TITLE": "Käynnistä prosessi",
         "LABEL": {
-          "SELECT_APPLICATION": "Valitse sovellus",
-          "TYPE": "Valitse prosessi",
-          "NAME": "Prosessin nimi"
+          "SELECT_APPLICATION": "Select Application",
+          "TYPE": "Select Process",
+          "NAME": "Process Name",
+          "SELECTED_PEOPLE": "Selected people"
         },
-        "TYPE_PLACEHOLDER": "Valitse yksi...",
+        "TYPE_PLACEHOLDER": "Choose one...",
         "ACTION": {
           "START": "Käynnistä prosessi",
           "CANCEL": "Peruuta"
         }
       },
       "ERROR": {
-        "LOAD_PROCESS_DEFS": "Prosessimääritelmien lataaminen ei onnistu. Tarkista, että sinulla on tarvittavat oikeudet.",
-        "START": "Uuden prosessiesiintymän käynnistäminen ei onnistu. Tarkista, että sinulla on tarvittavat oikeudet.",
-        "MAXIMUM_LENGTH": "Liian pitkä: voit käyttää enintään {{characters}} merkkiä.",
-        "SPACE_VALIDATOR": "Ei voi alkaa välilyönnillä tai päättyä siihen.",
-        "PROCESS_NAME_REQUIRED": "Prosessin nimi on pakollinen."
+        "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
+        "START": "Couldn't start new process instance, check you have access.",
+        "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
+        "SPACE_VALIDATOR": "Cannot begin or end with a space.",
+        "PROCESS_NAME_REQUIRED": "Process name is required."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -307,25 +307,25 @@
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "Yhtään tiedostoa ei ole saatavilla"
+        "HEADER": "No files are available"
       },
       "COLUMNS": {
         "NAME": "Nimi",
-        "CREATED-ON": "Luotu"
+        "CREATED-ON": "Created on"
       }
     }
   },
   "APP": {
     "DIALOG": {
-      "START": "Jatka",
-      "TITLE": "Valitse prosessisovellus",
-      "LIST": "Prosessisovellusluettelo",
-      "ERROR": "Process Services -yhteyden muodostamisessa on ongelma"
+      "START": "Continue",
+      "TITLE": "Select a process app",
+      "LIST": "Process App list",
+      "ERROR": "There is a problem connecting to Process Services"
     }
   },
   "ATTACH-FILE": {
     "DIALOG": {
-      "LOGIN": "Kirjaudu uudelleen osoitteessa '{{ ecmHost }}'"
+      "LOGIN": "Sign into '{{ ecmHost }}'"
     },
     "ACTIONS": {
       "LOGIN": "Kirjaudu sisään",
@@ -336,9 +336,9 @@
   },
   "ADF_TASK_FORM": {
     "EMPTY_FORM": {
-      "SUBTITLE": "Liitä lomake, jota voi tarkastella myöhemmin",
-      "COMPLETE-TASK-MESSAGE": "Tehtävä {{taskName}} suoritettu",
-      "COMPLETE-TASK-SUB-MESSAGE": "Ei lisättäviä lomakkeita",
+      "SUBTITLE": "Attach a form that can be viewed later",
+      "COMPLETE-TASK-MESSAGE": "Task {{taskName}} completed",
+      "COMPLETE-TASK-SUB-MESSAGE": "No forms to be added",
       "BUTTONS": {
         "COMPLETE": "Merkitse valmiiksi",
         "CANCEL": "Peruuta",
@@ -347,8 +347,8 @@
       }
     },
     "COMPLETED_TASK": {
-      "TITLE": "Tehtävä {{taskName}} suoritettu",
-      "SUBTITLE": "Ei lisättäviä lomakkeita"
+      "TITLE": "Task {{taskName}} completed",
+      "SUBTITLE": "No forms to be added"
     }
   }
 }

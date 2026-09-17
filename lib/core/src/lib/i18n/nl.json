@@ -24,6 +24,7 @@
   "CLOSE": "Sluiten",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "U hebt op dit moment geen meldingen.",
+    "UNREAD_MESSAGES": "You have unread notifications.",
     "TITLE": "Meldingen",
     "MARK_AS_READ": "Alles markeren als gelezen",
     "SYSTEM": "Systeem",
@@ -35,7 +36,10 @@
       "TITLE": "Beginformulier"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Preview niet beschikbaar"
+      "IMAGE_NOT_AVAILABLE": "Preview niet beschikbaar",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "In preview mode you cannot attach a file"
+      }
     },
     "FIELD": {
       "LOCALSTORAGE": "Lokale opslag",
@@ -46,11 +50,19 @@
       "UPLOAD": "Uploaden",
       "REQUIRED": "Veld vereist",
       "REST_API_FAILED": "De server '{{ hostname }}' is niet bereikbaar",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "There was a problem loading dropdown elements. Please contact administrator.",
+      "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
+      "DATA_TABLE_EMPTY_CONTENT": "No data found",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
       "FILE_NAME": "Bestandsnaam",
+      "TITLE": "Titel",
       "NO_FILE_ATTACHED": "Geen bestand bijgevoegd",
       "VALIDATOR": {
         "INVALID_NUMBER": "Gebruik een andere getalnotatie",
+        "INVALID_DECIMAL_NUMBER": "Use a decimal number format",
+        "INVALID_DECIMAL_PRECISION": "Incorrect decimal value, there should be a maximum of {{precision}} digits after the decimal point.",
         "INVALID_DATE": "Gebruik een andere datumnotatie",
+        "INVALID_DATE_FORMAT": "Invalid date format.",
         "INVALID_VALUE": "Voer een andere waarde in",
         "NOT_GREATER_THAN": "Mag niet groter zijn dan {{ maxValue }}",
         "NOT_LESS_THAN": "Mag niet kleiner zijn dan {{ minValue }}",
@@ -58,10 +70,65 @@
         "NO_LONGER_THAN": "Voer niet meer dan {{ maxLength }} tekens in"
       },
       "FILE_ALREADY_UPLOADED": "Er is al een bestand met dezelfde naam geüpload.",
-      "ATTACH": "Bijvoegen"
+      "ATTACH": "Bijvoegen",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "add",
+        "ROW_LIMIT_REACHED": "Rows limit ({{ limit }}) reached."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Naamloze taak"
+      "NAMELESS_TASK": "Naamloze taak",
+      "ROW_LABEL": "Row {{ number }}",
+      "DELETE_ROW": "Delete row",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Delete the row",
+        "MESSAGE": "Are you sure you want to delete this row?",
+        "YES_LABEL": "Delete row",
+        "NO_LABEL": "Annuleren"
+      }
+    },
+    "BUTTON": {
+      "PREVIOUS_TAB": "Previous",
+      "PREVIOUS_TAB_TITLE": "Navigate to previous tab",
+      "NEXT_TAB": "Volgende",
+      "NEXT_TAB_TITLE": "Navigate to next tab"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "Font size",
+      "FONT_WEIGHT": "Font weight",
+      "FONT_COLOR": "Font color",
+      "FONT_WEIGHTS": {
+        "REGULAR": "regular",
+        "BOLD": "bold"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "system color",
+        "BLACK": "black",
+        "GREY": "grey",
+        "RED": "red",
+        "GREEN": "green",
+        "BLUE": "blue",
+        "YELLOW": "yellow"
+      },
+      "PREDEFINED": {
+        "HEADER": {
+          "NORMAL": "normal",
+          "HEADING": "heading",
+          "TITLE": "title"
+        },
+        "RADIO_BUTTONS": {
+          "NORMAL": "normal",
+          "STRONG": "strong",
+          "HEADING": "heading"
+        },
+        "READONLY_TEXT": {
+          "NORMAL": "normal",
+          "STRONG": "strong",
+          "HEADING": "heading",
+          "TITLE": "title",
+          "ANNOTATION": "annotation"
+        }
+      }
     }
   },
   "CORE": {
@@ -99,12 +166,24 @@
         "ACTIONS": {
           "CANCEL": "Annuleren"
         },
-        "TITLE": "Bestanden toevoegen aan .zip-bestand, dit kan een paar minuten duren"
+        "TITLE": "Bestanden toevoegen aan .zip-bestand, dit kan een paar minuten duren",
+        "COMPLETE": "complete"
       },
       "EDIT_JSON": {
         "CLOSE": "Sluiten",
-        "UPDATE": "Bijwerken"
+        "UPDATE": "Bijwerken",
+        "COPY": "Kopiëren",
+        "COPIED": "Copied to clipboard"
+      },
+      "UNSAVED_CHANGES": {
+        "TITLE": "Unsaved changes",
+        "DESCRIPTION": "You have unsaved changes on this screen. Are you sure want to leave without saving changes?",
+        "DISCARD_CHANGES_BUTTON": "Discard Changes"
       }
+    },
+    "BREADCRUMBS": {
+      "TITLE": "Breadcrumbs",
+      "SHOWALL": "Show all"
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "Bestand vergrendelen",
@@ -144,7 +223,9 @@
       },
       "CANCEL_BUTTON": {
         "LABEL": "Annuleren"
-      }
+      },
+      "FOLDER_CREATED_SUCCESS": "Folder '{{ name }}' created successfully",
+      "FOLDER_UPDATED_SUCCESS": "Folder '{{ name }}' updated successfully"
     },
     "MESSAGES": {
       "ERRORS": {
@@ -176,12 +257,16 @@
         "VALUE": "Waarde"
       },
       "NONE": "Geen",
+      "SELECTED_VALUES": "Selected values",
+      "REMOVE": "Remove {{ value }}",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Gebruik een getalnotatie",
         "INT_VALIDATION_ERROR": "Gebruik een notatie voor gehele getallen",
+        "LONG_VALIDATION_ERROR": "Use a long format",
         "LENGTH_VALIDATION_ERROR": "Lengte van waarde moet liggen tussen {{ minLength }} en {{ maxLength }}",
         "MATCH_VALIDATION_ERROR": "Waarde komt niet overeen met patroon: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Waarde moet liggen tussen {{ minValue }} en {{ maxValue }}"
+        "MINMAX_VALIDATION_ERROR": "Waarde moet liggen tussen {{ minValue }} en {{ maxValue }}",
+        "ONLY_POSITIVE_NUMBER": "Only positive value is allowed"
       },
       "MORE": "Meer"
     },
@@ -225,23 +310,44 @@
         "EDIT_ASPECTS": "Aspect bewerken"
       },
       "ACCESSIBILITY": {
-        "EDIT": "Knop Bewerken",
+        "EDIT": "Edit {{ sectionName }}",
         "DATEPICKER": "Gebruik de pijltoetsen om te navigeren tussen datums. Met pijl-omhoog en pijl-omlaag gaat u naar dezelfde dag in de  volgende of vorige week. Met pijl-links en pijl-rechts gaat u naar de volgende of vorige dag. Druk op Enter of Return om een datum te selecteren.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Waarde gekopieerd naar klembord",
-        "EDIT_ASPECTS": "Aspect bewerken"
+        "EDIT_ASPECTS": "Aspect bewerken",
+        "SECTION": "{{ sectionName }} section"
       }
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "Schakelen tussen resultaten in oplopende en aflopende volgorde",
-      "SORT_BY": "Sorteren op"
+      "SORT_BY": "Sorteren op",
+      "BUTTON": {
+        "TOOLTIP": "Zoeken",
+        "ARIA-LABEL": "Knop Zoeken"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "Invoer voor zoekopdracht"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "Sluiten"
+        }
+      }
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "Feature flag overrides",
+      "FILTER_OR_ADD_NEW": "Filter or add new",
+      "FILTER": "Filteren",
+      "ADD_NEW": "Add new feature flag (Shift + Enter)"
     }
   },
   "COMMENTS": {
+    "PROFILE_IMAGE": "Profile Image",
     "NONE": "Geen opmerkingen",
     "ADD": "Toevoegen",
     "HEADER": "Opmerkingen ({{ count }})",
     "CREATED_BY_HEADER": "Gemaakt door",
     "MESSAGE_HEADER": "Bericht",
+    "EMPTY_ERROR": "Comment can't be empty",
     "DIALOG": {
       "TITLE": "Nieuwe opmerking",
       "LABELS": {
@@ -296,12 +402,15 @@
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "Content-acties"
+      "TOOLTIP": "Content-acties",
+      "SELECT_COLUMNS": "Select columns"
     },
     "ACCESSIBILITY": {
       "ACTIONS": "Acties",
       "SELECT_ALL": "Alles selecteren",
       "SELECT_FILE": "Bestand selecteren",
+      "SELECTED": "Geselecteerd",
+      "ROW_SELECTION": "Press Space to toggle row selection",
       "SORT_ASCENDING": "Oplopend",
       "SORT_DESCENDING": "Aflopend",
       "SORT_NONE": "Geen",
@@ -311,7 +420,11 @@
       "ICON_TEXT": "Itemtype {{ type }}",
       "ICON_DISABLED": "Uitgeschakeld",
       "ROW_OPTION_BUTTON": "Acties",
-      "EMPTY_HEADER": "Lege kop"
+      "DRAG": "Drag button",
+      "DRAGGABLE": "Draggable",
+      "EMPTY_HEADER": "Lege kop",
+      "RESIZE_COLUMN": "Resize {{ column }} column. Use arrow keys to adjust width, Shift for larger steps.",
+      "COLUMN_WIDTH_CHANGED": "{{ column }} column width: {{ width }} pixels"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Document",
@@ -330,9 +443,10 @@
       "MISCELLANEOUS": "Overig"
     },
     "COLUMNS_SELECTOR": {
-      "COLUMNS": "Kolommen",
+      "COLUMNS": "Choose visible columns",
       "SEARCH": "Zoeken",
-      "APPLY": "Toepassen"
+      "APPLY": "Toepassen",
+      "COLUMNS_VISIBILITY": "Select columns to display"
     }
   },
   "USER_PROFILE": {
@@ -366,6 +480,7 @@
       "WAIT": "Wachten"
     },
     "ARIA": {
+      "MIME_TYPE_ICON": "File type icon",
       "PREVIOUS_PAGE": "Vorige pagina",
       "NEXT_PAGE": "Volgende pagina",
       "ZOOM_IN": "Inzoomen",
@@ -373,11 +488,13 @@
       "FIT_PAGE": "Aangepast aan pagina",
       "ROTATE": "Draaien",
       "CROP": "Bijsnijden",
-      "SAVE": "Opslaan",
-      "CANCEL": "Annuleren",
+      "SAVE": "Save rotate or crop",
+      "CANCEL": "Cancel rotate or crop",
       "RESET": "Opnieuw instellen",
       "THUMBNAILS": "Documentminiaturen",
-      "THUMBNAILS_PANLEL_CLOSE": "Venster met miniaturen sluiten"
+      "THUMBNAILS_PANLEL_CLOSE": "Venster met miniaturen sluiten",
+      "LOADING": "Document is loading",
+      "NOTE_ANNOTATION_IMG": "Note Annotation"
     },
     "PAGE_LABEL": {
       "SHOWING": "Wordt weergegeven",
@@ -389,10 +506,6 @@
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Pagina {{ pageNum }}"
-      },
-      "METADATA": {
-        "MORE_INFORMATION": "Meer informatie",
-        "LESS_INFORMATION": "Minder informatie"
       }
     },
     "PDF_DIALOG": {
@@ -486,27 +599,7 @@
       "CONTENT_SERVICE_HOST": "Alfresco Content Services-URL: {{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Services-URL: {{ value }}"
     },
-    "REPOSITORY": "Repository",
-    "VERSIONS": {
-      "TITLE": "Productversies",
-      "CONTENT_SERVICE": "Content Services",
-      "PROCESS_SERVICE": "Process Services",
-      "MODELING_SERVICE": "Modelleringsservices",
-      "DEPLOYMENT_SERVICE": "Implementatieservices",
-      "QUERY_SERVICE": "Implementatieservices",
-      "RB": "Runtime",
-      "LABELS": {
-        "EDITION": "Editie",
-        "VERSION": "Versie",
-        "LICENSE": "Licentie",
-        "STATUS": "Status",
-        "MODULES": "Modules"
-      }
-    },
-    "SOURCE_CODE": {
-      "TITLE": "Broncode",
-      "DESCRIPTION": "U voert het project uit op basis van de volgende doorvoer:"
-    },
+    "REPOSITORY": "Opslagplaats",
     "PACKAGES": {
       "TITLE": "Pakketten",
       "NAME": "Naam",
@@ -527,7 +620,9 @@
     "LICENSE": {
       "TITLE": "Licentie",
       "PROPERTY": "Eigenschap",
-      "VALUE": "Waarde"
+      "VALUE": "Waarde",
+      "ENABLED": "Enabled",
+      "DISABLED": "Uitgeschakeld"
     },
     "STATUS": {
       "TITLE": "Status",
@@ -562,10 +657,23 @@
     "LOADING": "Laden...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} keuzelijst met invoervak {{selectedOption}}"
   },
+  "INFO_DRAWER": {
+    "ICON": "Node Icon"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "Meer laden",
+    "DELETE": "Remove {{ name }}"
+  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Bevestigen",
     "ACTION": "Wilt u doorgaan?",
     "YES_LABEL": "Ja",
     "NO_LABEL": "Nee"
+  },
+  "SESSION_TIMEOUT": {
+    "TITLE": "Are you still working?",
+    "MESSAGE": "Your session will end in {{seconds}} seconds because there has been no activity.",
+    "LOG_OUT": "Log out",
+    "CONTINUE_WORKING": "Continue working"
   }
 }

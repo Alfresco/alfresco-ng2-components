@@ -1,6 +1,6 @@
 {
   "ADF": {
-    "LANGUAGE": "Language",
+    "LANGUAGE": "Språk",
     "ROLES": {
       "ALL": "All",
       "CONTRIBUTOR": "Contributor",
@@ -16,11 +16,11 @@
   },
   "SAVE": "SAVE",
   "COMPLETE": "COMPLETE",
-  "CANCEL": "CANCEL",
+  "CANCEL": "AVBRYT",
   "CLAIM": "CLAIM",
   "UNCLAIM": "RELEASE",
   "START PROCESS": "START PROCESS",
-  "DATA_LOADING": "Data is loading",
+  "DATA_LOADING": "Data lastes inn",
   "CLOSE": "CLOSE",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "You have no notifications at this time.",
@@ -44,9 +44,9 @@
     "FIELD": {
       "LOCALSTORAGE": "Local storage",
       "SOURCE": "Select source from ",
-      "VIEW_FILE": "View",
-      "DOWNLOAD_FILE": "Download",
-      "REMOVE_FILE": "Remove",
+      "VIEW_FILE": "Vis",
+      "DOWNLOAD_FILE": "Last ned",
+      "REMOVE_FILE": "Fjern",
       "UPLOAD": "UPLOAD",
       "REQUIRED": "This is a required field",
       "REST_API_FAILED": "The server `{{ hostname }}` is not reachable",
@@ -55,7 +55,7 @@
       "DATA_TABLE_EMPTY_CONTENT": "No data found",
       "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
       "FILE_NAME": "File Name",
-      "TITLE": "Title",
+      "TITLE": "Tittel",
       "NO_FILE_ATTACHED": "No file attached",
       "VALIDATOR": {
         "INVALID_NUMBER": "Use a different number format",
@@ -84,13 +84,13 @@
         "TITLE": "Delete the row",
         "MESSAGE": "Are you sure you want to delete this row?",
         "YES_LABEL": "Delete row",
-        "NO_LABEL": "Cancel"
+        "NO_LABEL": "Avbryt"
       }
     },
     "BUTTON": {
       "PREVIOUS_TAB": "Previous",
       "PREVIOUS_TAB_TITLE": "Navigate to previous tab",
-      "NEXT_TAB": "Next",
+      "NEXT_TAB": "Neste",
       "NEXT_TAB_TITLE": "Navigate to next tab"
     },
     "FIELD_STYLE": {
@@ -164,15 +164,15 @@
     "DIALOG": {
       "DOWNLOAD_ZIP": {
         "ACTIONS": {
-          "CANCEL": "Cancel"
+          "CANCEL": "Avbryt"
         },
         "TITLE": "Adding files to zip, this could take a few minutes",
         "COMPLETE": "complete"
       },
       "EDIT_JSON": {
-        "CLOSE": "Close",
-        "UPDATE": "Update",
-        "COPY": "Copy",
+        "CLOSE": "Lukk",
+        "UPDATE": "Oppdater",
+        "COPY": "Kopier",
         "COPIED": "Copied to clipboard"
       },
       "UNSAVED_CHANGES": {
@@ -191,17 +191,17 @@
       "FILE_LOCK_CHECKBOX": "Lock file",
       "TIME_LOCK_CHECKBOX": "Time lock",
       "SAVE_BUTTON": {
-        "LABEL": "Save"
+        "LABEL": "Lagre"
       },
       "CANCEL_BUTTON": {
-        "LABEL": "Cancel"
+        "LABEL": "Avbryt"
       }
     },
     "FOLDER_DIALOG": {
-      "CREATE_FOLDER_TITLE": "Create new folder",
+      "CREATE_FOLDER_TITLE": "Opprett ny mappe",
       "EDIT_FOLDER_TITLE": "Edit folder",
       "FOLDER_NAME": {
-        "LABEL": "Name",
+        "LABEL": "Navn",
         "ERRORS": {
           "REQUIRED": "Folder name is required",
           "SPECIAL_CHARACTERS": "Folder name can't contain these characters * \" < > \\ / ? : |",
@@ -213,50 +213,50 @@
         "LABEL": "Description"
       },
       "FOLDER_TITLE": {
-        "LABEL": "Title"
+        "LABEL": "Tittel"
       },
       "CREATE_BUTTON": {
-        "LABEL": "Create"
+        "LABEL": "Opprett"
       },
       "UPDATE_BUTTON": {
-        "LABEL": "Update"
+        "LABEL": "Oppdater"
       },
       "CANCEL_BUTTON": {
-        "LABEL": "Cancel"
+        "LABEL": "Avbryt"
       },
       "FOLDER_CREATED_SUCCESS": "Folder '{{ name }}' created successfully",
       "FOLDER_UPDATED_SUCCESS": "Folder '{{ name }}' updated successfully"
     },
     "MESSAGES": {
       "ERRORS": {
-        "GENERIC": "The action was unsuccessful. Try again or contact your IT Team.",
-        "EXISTENT_FOLDER": "There's already a folder with this name. Try a different name."
+        "GENERIC": "Handlingen mislyktes. Prøv igjen eller kontakt IT-teamet ditt.",
+        "EXISTENT_FOLDER": "Det er allerede en mappe med dette navnet. Prøv et annet navn."
       }
     },
     "RESTORE_NODE": {
-      "VIEW": "View",
-      "PARTIAL_PLURAL": "{{ number }} items not restored because of issues with the restore location",
+      "VIEW": "Vis",
+      "PARTIAL_PLURAL": "{{ number }} elementer ble ikke gjenopprettet på grunn av problemer med plasseringen for gjenoppretting",
       "NODE_EXISTS": "Can't restore, {{ name }} item already exists",
       "LOCATION_MISSING": "Can't restore {{ name }} item, the original location no longer exists",
       "GENERIC": "There was a problem restoring {{ name }} item",
-      "PLURAL": "Restore successful",
+      "PLURAL": "Gjenopprettingen er fullført",
       "SINGULAR": "{{ name }} item restored"
     },
     "DELETE_NODE": {
-      "SINGULAR": "{{ name }} deleted",
-      "PLURAL": "{{ number }} items deleted",
-      "PARTIAL_SINGULAR": "Deleted {{ success }} item, {{ failed }} couldn't be deleted",
-      "PARTIAL_PLURAL": "Deleted {{ success }} items, {{ failed }} couldn't be deleted",
-      "ERROR_SINGULAR": "{{ name }} couldn't be deleted",
-      "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
+      "SINGULAR": "{{ name }} er slettet",
+      "PLURAL": "{{ number }} elementer er slettet",
+      "PARTIAL_SINGULAR": "Slettet {{ success }} element, {{ failed }} kunne ikke slettes",
+      "PARTIAL_PLURAL": "Slettet {{ success }} elementer, {{ failed }} kunne ikke slettes",
+      "ERROR_SINGULAR": "{{ name }} kunne ikke slettes",
+      "ERROR_PLURAL": "{{ number }} elementer kunne ikke slettes"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Add New",
-        "NAME": "Name",
-        "VALUE": "Value"
+        "NAME": "Navn",
+        "VALUE": "Verdi"
       },
-      "NONE": "None",
+      "NONE": "Ingen",
       "SELECTED_VALUES": "Selected values",
       "REMOVE": "Remove {{ value }}",
       "VALIDATORS": {
@@ -273,15 +273,15 @@
     "METADATA": {
       "BASIC": {
         "HEADER": "General info",
-        "NAME": "Name",
-        "TITLE": "Title",
+        "NAME": "Navn",
+        "TITLE": "Tittel",
         "DESCRIPTION": "Description",
         "AUTHOR": "Author",
         "MIMETYPE": "Mimetype",
-        "SIZE": "Size",
-        "CREATOR": "Creator",
+        "SIZE": "Størrelse",
+        "CREATOR": "Oppretter",
         "CREATED_DATE": "Created Date",
-        "MODIFIER": "Modifier",
+        "MODIFIER": "Modifikator",
         "MODIFIED_DATE": "Modified Date",
         "CONTENT_TYPE": "Content Type"
       },
@@ -290,21 +290,21 @@
           "TITLE": "Change content type",
           "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
           "CONFIRM": "Are you sure you want to change the content type?",
-          "CANCEL": "CANCEL",
+          "CANCEL": "AVBRYT",
           "APPLY": "Save Changes",
-          "VIEW_DETAILS": "View details",
+          "VIEW_DETAILS": "Vis detaljer",
           "PROPERTY": {
-            "NAME": "Name",
+            "NAME": "Navn",
             "DESCRIPTION": "Description",
             "DATA_TYPE": "Data type"
           }
         }
       },
       "ACTIONS": {
-        "EDIT": "Edit",
-        "SAVE": "Save",
-        "CANCEL": "Cancel",
-        "CLEAR": "Clear",
+        "EDIT": "Rediger",
+        "SAVE": "Lagre",
+        "CANCEL": "Avbryt",
+        "CLEAR": "Tøm",
         "TOGGLE": "Toggle value",
         "COPY_TO_CLIPBOARD": "Double click to copy value",
         "EDIT_ASPECTS": "Edit Aspect"
@@ -319,9 +319,9 @@
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "Toggle results between ascending and descending order",
-      "SORT_BY": "Sort by",
+      "SORT_BY": "Sorter etter",
       "BUTTON": {
-        "TOOLTIP": "Search",
+        "TOOLTIP": "Søk",
         "ARIA-LABEL": "Search button"
       },
       "INPUT": {
@@ -329,7 +329,7 @@
       },
       "FILTER": {
         "BUTTONS": {
-          "CLOSE": "Close"
+          "CLOSE": "Lukk"
         }
       }
     },
@@ -355,16 +355,16 @@
       },
       "BUTTON": {
         "ADD": "Add Comment",
-        "CANCEL": "Cancel"
+        "CANCEL": "Avbryt"
       }
     }
   },
   "LOGIN": {
     "LOGO": "Alfresco, make business flow",
     "LABEL": {
-      "LOGIN": "Sign in",
-      "USERNAME": "Username",
-      "PASSWORD": "Password",
+      "LOGIN": "Logg på",
+      "USERNAME": "Brukernavn",
+      "PASSWORD": "Passord",
       "REMEMBER": "Remember me"
     },
     "ARIA-LABEL": {
@@ -411,9 +411,9 @@
       "SELECT_FILE": "Select file",
       "SELECTED": "Selected",
       "ROW_SELECTION": "Press Space to toggle row selection",
-      "SORT_ASCENDING": "Ascending",
-      "SORT_DESCENDING": "Descending",
-      "SORT_NONE": "None",
+      "SORT_ASCENDING": "Stigende",
+      "SORT_DESCENDING": "Synkende",
+      "SORT_NONE": "Ingen",
       "SORT_DEFAULT": "Sortable",
       "SORT_ASCENDING_BY": "Ascending by {{ string }}",
       "SORT_DESCENDING_BY": "Descending by {{ string }}",
@@ -427,8 +427,8 @@
       "COLUMN_WIDTH_CHANGED": "{{ column }} column width: {{ width }} pixels"
     },
     "FILE_TYPE": {
-      "DOCUMENT": "Document",
-      "FOLDER": "Folder",
+      "DOCUMENT": "Dokument",
+      "FOLDER": "Mappe",
       "PDF": "PDF",
       "IMAGE": "Image",
       "EXCEL": "Excel spreadsheet",
@@ -444,8 +444,8 @@
     },
     "COLUMNS_SELECTOR": {
       "COLUMNS": "Choose visible columns",
-      "SEARCH": "Search",
-      "APPLY": "Apply",
+      "SEARCH": "Søk",
+      "APPLY": "Bruk",
       "COLUMNS_VISIBILITY": "Select columns to display"
     }
   },
@@ -457,7 +457,7 @@
       "BPM": {
         "TENANT": "Tenant"
       },
-      "MY_PROFILE": "My Profile"
+      "MY_PROFILE": "Min profil"
     },
     "TAB": {
       "CS": "Content Services",
@@ -468,13 +468,13 @@
     "ACTIONS": {
       "BACK": "Back",
       "OPEN_WITH": "Open with",
-      "DOWNLOAD": "Download",
-      "PRINT": "Print",
-      "SHARE": "Share",
+      "DOWNLOAD": "Last ned",
+      "PRINT": "Utskrift",
+      "SHARE": "Del",
       "MORE_ACTIONS": "More actions",
       "INFO": "Info",
-      "FULLSCREEN": "Activate full-screen mode",
-      "CLOSE": "Close",
+      "FULLSCREEN": "Aktiver fullskjermmodus",
+      "CLOSE": "Lukk",
       "NEXT_FILE": "Next File",
       "PREV_FILE": "Previous File",
       "WAIT": "Wait"
@@ -490,7 +490,7 @@
       "CROP": "Crop",
       "SAVE": "Save rotate or crop",
       "CANCEL": "Cancel rotate or crop",
-      "RESET": "Reset",
+      "RESET": "Tilbakestill",
       "THUMBNAILS": "Document thumbnails",
       "THUMBNAILS_PANLEL_CLOSE": "Close thumbnails panel",
       "LOADING": "Document is loading",
@@ -510,8 +510,8 @@
     },
     "PDF_DIALOG": {
       "SUBMIT": "Submit",
-      "CLOSE": "Close",
-      "PLACEHOLDER": "Password",
+      "CLOSE": "Lukk",
+      "PLACEHOLDER": "Passord",
       "ERROR": "Password is wrong"
     },
     "SUBTITLES": "Subtitles",
@@ -593,51 +593,51 @@
     }
   },
   "ABOUT": {
-    "VERSION": "Version",
+    "VERSION": "Versjon",
     "SERVER_SETTINGS": {
       "TITLE": "Server settings",
       "CONTENT_SERVICE_HOST": "Alfresco Content Services URL: {{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
     },
-    "REPOSITORY": "Repository",
+    "REPOSITORY": "Arkiv",
     "PACKAGES": {
-      "TITLE": "Packages",
-      "NAME": "Name",
-      "VERSION": "Version"
+      "TITLE": "Pakker",
+      "NAME": "Navn",
+      "VERSION": "Versjon"
     },
     "EXTENSIONS": {
       "TITLE": "Plugins",
       "TABLE_HEADERS": {
         "ID": "ID",
-        "NAME": "Name",
-        "VERSION": "Version",
-        "VENDOR": "Vendor",
-        "LICENSE": "License",
-        "RUNTIME": "Runtime",
+        "NAME": "Navn",
+        "VERSION": "Versjon",
+        "VENDOR": "Leverandør",
+        "LICENSE": "Lisens",
+        "RUNTIME": "Gjennomkjøring",
         "DESCRIPTION": "Description"
       }
     },
     "LICENSE": {
-      "TITLE": "License",
-      "PROPERTY": "Property",
-      "VALUE": "Value",
+      "TITLE": "Lisens",
+      "PROPERTY": "Egenskap",
+      "VALUE": "Verdi",
       "ENABLED": "Enabled",
       "DISABLED": "Disabled"
     },
     "STATUS": {
       "TITLE": "Status",
-      "PROPERTY": "Property",
-      "VALUE": "Value"
+      "PROPERTY": "Egenskap",
+      "VALUE": "Verdi"
     },
     "MODULES": {
       "TITLE": "Modules",
-      "NAME": "Name",
-      "VERSION": "Version"
+      "NAME": "Navn",
+      "VERSION": "Versjon"
     },
     "PLUGINS": {
       "TITLE": "Plugins",
-      "NAME": "Name",
-      "VERSION": "Version"
+      "NAME": "Navn",
+      "VERSION": "Versjon"
     }
   },
   "CLIPBOARD": {
@@ -646,11 +646,11 @@
   },
   "SELECT_FILTER": {
     "INPUT": {
-      "PLACEHOLDER": "Search",
+      "PLACEHOLDER": "Søk",
       "ARIA_LABEL": "Search options"
     },
     "BUTTON": {
-      "ARIA_LABEL": "Clear"
+      "ARIA_LABEL": "Tøm"
     }
   },
   "ADF_DROPDOWN": {
@@ -658,7 +658,7 @@
     "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
   },
   "INFO_DRAWER": {
-    "ICON": "Node Icon"
+    "ICON": "Node-ikon"
   },
   "DYNAMIC_CHIP_LIST": {
     "LOAD_MORE": "Load more",
