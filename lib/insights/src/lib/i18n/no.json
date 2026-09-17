@@ -7,8 +7,8 @@
       "NO-DATA-FOUND": "No data found",
       "ZERO-DATA-FOUND": "There are only zero values",
       "ICON-SETTING": "Settings",
-      "ICON-SAVE": "Сохранить",
-      "ICON-DELETE": "Удалить",
+      "ICON-SAVE": "Lagre",
+      "ICON-DELETE": "Slett",
       "ICON-EXPORT-CSV": "Export"
     }
   },

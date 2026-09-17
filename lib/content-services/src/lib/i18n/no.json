@@ -1,24 +1,24 @@
 {
   "COMMON": {
-    "APPLY": "Apply",
-    "CANCEL": "Cancel",
-    "NAME": "Name",
-    "CLEAR": "Clear"
+    "APPLY": "Bruk",
+    "CANCEL": "Avbryt",
+    "NAME": "Navn",
+    "CLEAR": "Tøm"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
-      "RESTORE": "Restore",
-      "DELETE": "Delete",
-      "DOWNLOAD": "Download",
-      "VIEW": "View",
+      "RESTORE": "Gjenopprett",
+      "DELETE": "Slett",
+      "DOWNLOAD": "Last ned",
+      "VIEW": "Vis",
       "UPLOAD": {
-        "TITLE": "Upload new version",
+        "TITLE": "Last opp ny versjon",
         "TOOLTIP": "Restriction: you must upload a file with the same name to create a new version of it",
         "MAJOR": "major changes ({{version}})",
         "MINOR": "minor changes ({{version}})",
         "COMMENT": "Leave a comment",
         "ADD": "Add New Version",
-        "CANCEL": "Cancel",
+        "CANCEL": "Avbryt",
         "VERSION_TYPE_LABEL": "Select version type"
       }
     },
@@ -32,13 +32,13 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Manage Versions",
-      "CLOSE": "Close"
+      "TITLE": "Administrer versjoner",
+      "CLOSE": "Lukk"
     },
     "DIALOG_UPLOAD": {
-      "TITLE": "Upload New Version",
-      "CANCEL": "Cancel",
-      "UPLOAD": "Upload"
+      "TITLE": "Last opp ny versjon",
+      "CANCEL": "Avbryt",
+      "UPLOAD": "Last opp"
     }
   },
   "ADF_VERSION_COMPARISON": {
@@ -55,32 +55,32 @@
     },
     "NO_PERMISSION": "You don't have permission to view this file or folder.",
     "LAYOUT": {
-      "CREATED": "Created",
+      "CREATED": "Opprettet",
       "CREATED_BY": "Created by",
       "THUMBNAIL": "Thumbnail",
-      "NAME": "Name",
-      "LOCATION": "Location",
-      "SIZE": "Size",
-      "DELETED_ON": "Deleted",
-      "DELETED_BY": "Deleted by",
+      "NAME": "Navn",
+      "LOCATION": "Lokalisering",
+      "SIZE": "Størrelse",
+      "DELETED_ON": "Slettet",
+      "DELETED_BY": "Slettet av",
       "STATUS": "Status",
-      "MODIFIED_ON": "Modified",
-      "MODIFIED_BY": "Modified by",
-      "SHARED_BY": "Shared by",
+      "MODIFIED_ON": "Endret",
+      "MODIFIED_BY": "Endret av",
+      "SHARED_BY": "Delt av",
       "LOAD_MORE": "Load more"
     },
     "MENU_ACTIONS": {
-      "VIEW": "View",
-      "REMOVE": "Remove",
-      "DOWNLOAD": "Download"
+      "VIEW": "Vis",
+      "REMOVE": "Fjern",
+      "DOWNLOAD": "Last ned"
     },
     "LOADER_LABEL": "Document list loader",
     "FILE_AUTO_DOWNLOAD_DIALOG": {
       "HEADER": "Preview loading unresponsive",
       "LABEL": "Download to view this document, or cancel to continue without preview.",
       "ACTIONS": {
-        "CANCEL": "Cancel",
-        "DOWNLOAD": "Download"
+        "CANCEL": "Avbryt",
+        "DOWNLOAD": "Last ned"
       }
     }
   },
@@ -88,8 +88,8 @@
     "BUTTON": {
       "ACTION_CREATE": "Create...",
       "ACTION_NEW_FOLDER": "New Folder",
-      "CREATE": "Create",
-      "CANCEL": "Cancel"
+      "CREATE": "Opprett",
+      "CANCEL": "Avbryt"
     }
   },
   "DROPDOWN": {
@@ -97,23 +97,23 @@
     "MY_FILES_OPTION": "My files"
   },
   "NODE_SELECTOR": {
-    "CANCEL": "Cancel",
+    "CANCEL": "Avbryt",
     "CHOOSE": "Select",
     "ATTACH": "Attach",
     "CHOOSE_ITEM": "Select content to attach from '{{ name }}'",
-    "COPY": "Copy",
-    "LINK": "Create Link",
-    "COPY_ITEM": "Copy '{{ name }}' to...",
-    "LOCATION": "Location",
-    "MOVE": "Move",
-    "MOVE_ITEM": "Move '{{ name }}' to...",
+    "COPY": "Kopier",
+    "LINK": "Opprett kobling",
+    "COPY_ITEM": "Kopier «{{ name }}» til...",
+    "LOCATION": "Lokalisering",
+    "MOVE": "Flytt",
+    "MOVE_ITEM": "Flytt «{{ name }}» til...",
     "NO_RESULTS": "No results found",
-    "SEARCH": "Search",
+    "SEARCH": "Søk",
     "SEARCH_RESULTS": "Search results",
     "SELECT_LIBRARY": "Select a Library",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "You can't upload a file whilst a search is still running",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "User doesn't have permission to upload content to the folder",
-    "REPOSITORY": "Repository",
+    "REPOSITORY": "Arkiv",
     "UPLOAD_FROM_DEVICE": "Upload from your device"
   },
   "OPERATION": {
@@ -128,8 +128,8 @@
       }
     },
     "ERROR": {
-      "CONFLICT": "This name is already in use, try a different name.",
-      "UNKNOWN": "The action was unsuccessful. Try again or contact your IT Team.",
+      "CONFLICT": "Dette navnet er allerede i bruk. Prøv et annet navn.",
+      "UNKNOWN": "Handlingen mislyktes. Prøv igjen eller kontakt IT-teamet ditt.",
       "PERMISSION": "You don't have access to do this."
     }
   },
@@ -167,7 +167,7 @@
     }
   },
   "CATEGORIES_MANAGEMENT": {
-    "CATEGORIES_TITLE": "Categories",
+    "CATEGORIES_TITLE": "Kategorier",
     "NO_CATEGORIES_CREATED": "No Categories created",
     "NO_CATEGORIES_ASSIGNED": "No Categories assigned",
     "UNASSIGN_CATEGORY": "Unassign Category",
@@ -196,7 +196,7 @@
     "BUTTON": {
       "MINIMIZE": "Minimize",
       "MAXIMIZE": "Maximize",
-      "CLOSE": "Close",
+      "CLOSE": "Lukk",
       "STOP_ALL": "Stop uploads",
       "STOP_FILE": "Stop upload",
       "UPLOAD_SUCCESSFUL": "Upload successful"
@@ -257,14 +257,14 @@
       "EXCEED_MAX_FILE_SIZE": "File {{ fileName }} is larger than the allowed file size"
     },
     "ACTION": {
-      "UNDO": "Undo"
+      "UNDO": "Angre"
     },
     "ERRORS": {
-      "GENERIC": "Upload unsuccessful. Contact IT if this problem persists",
-      "500": "Internal server error, try again or contact IT support [500]",
-      "504": "The server timed out, try again or contact IT support [504]",
-      "403": "Insufficient permissions to upload in this location [403]",
-      "404": "Upload location no longer exists [404]",
+      "GENERIC": "Opplastingen mislyktes. Kontakt IT hvis dette problemet vedvarer",
+      "500": "Intern serverfeil, prøv igjen eller kontakt IT-støtte [500]",
+      "504": "Serveren ble tidsavbrutt, prøv igjen eller kontakt IT-støtte [504]",
+      "403": "Utilstrekkelige tillatelser til å laste opp til denne plasseringen [403]",
+      "404": "Plasseringen for opplasting eksisterer ikke lenger [404]",
       "409": "A file with the same name already exists [409]"
     },
     "ARIA-LABEL": {
@@ -274,11 +274,11 @@
   "SEARCH": {
     "CONTROL": {},
     "BUTTON": {
-      "TOOLTIP": "Search",
+      "TOOLTIP": "Søk",
       "ARIA-LABEL": "Search button"
     },
     "INPUT": {
-      "LABEL": "Search",
+      "LABEL": "Søk",
       "PLACEHOLDER": "Search Query",
       "ARIA-LABEL": "Search input"
     },
@@ -289,25 +289,25 @@
       "WILL_CONTAIN": "Results will contain '{{searchTerm}}'",
       "COLUMNS": {
         "NAME": "Display name",
-        "MODIFIED_BY": "Modified by",
+        "MODIFIED_BY": "Endret av",
         "MODIFIED_AT": "Modified at"
       }
     },
     "FILTER": {
       "ACTIONS": {
-        "SEARCH": "Search",
-        "CLEAR": "Clear",
-        "APPLY": "Apply",
+        "SEARCH": "Søk",
+        "CLEAR": "Tøm",
+        "APPLY": "Bruk",
         "CLEAR-ALL": "Clear all",
         "SHOW-MORE": "Show more",
         "SHOW-LESS": "Show less",
         "ADD_OPTION": "Add Option..."
       },
       "BUTTONS": {
-        "CLOSE": "Close",
-        "CLEAR": "Clear",
-        "REMOVE": "Remove",
-        "APPLY": "Apply",
+        "CLOSE": "Lukk",
+        "CLEAR": "Tøm",
+        "REMOVE": "Fjern",
+        "APPLY": "Bruk",
         "CLEAR-ALL": {
           "LABEL": "Clear all",
           "TOOLTIP": "This will remove all selections"
@@ -340,7 +340,7 @@
       "PEOPLE": "People"
     },
     "FACET_FIELDS": {
-      "MODIFIER_LABEL": "Modified by",
+      "MODIFIER_LABEL": "Endret av",
       "CREATOR_LABEL": "Created by"
     },
     "ICONS": {
@@ -360,19 +360,19 @@
       "COLUMNS": {
         "DISPLAY_NAME": "Display name",
         "CREATED_BY": "Created by",
-        "CREATED_ON": "Created"
+        "CREATED_ON": "Opprettet"
       },
       "ACTIONS": {
         "FOLDER": {
-          "DELETE": "Delete",
-          "MOVE": "Move",
-          "COPY": "Copy"
+          "DELETE": "Slett",
+          "MOVE": "Flytt",
+          "COPY": "Kopier"
         },
         "DOCUMENT": {
-          "DOWNLOAD": "Download",
-          "DELETE": "Delete",
-          "MOVE": "Move",
-          "COPY": "Copy",
+          "DOWNLOAD": "Last ned",
+          "DELETE": "Slett",
+          "MOVE": "Flytt",
+          "COPY": "Kopier",
           "PROCESS_ACTION": "Start Process"
         }
       }
@@ -381,29 +381,29 @@
     "SEARCH_HEADER": {
       "TITLE": "Filter",
       "TYPE": "Type",
-      "FILTER_BY": "Filter by {{ category }}",
+      "FILTER_BY": "Filtrer etter {{ category }}",
       "ACTIVE_FILTER": "Active filter",
-      "CLEAR": "Clear",
-      "APPLY": "Apply",
+      "CLEAR": "Tøm",
+      "APPLY": "Bruk",
       "FILTERS": {
         "NAME": {
-          "TITLE": "Name",
-          "PLACEHOLDER": "Enter the name"
+          "TITLE": "Navn",
+          "PLACEHOLDER": "Skriv inn navnet"
         },
         "TYPE": {
-          "TITLE": "Check type",
-          "FOLDER": "Folder",
-          "DOCUMENT": "Document"
+          "TITLE": "Kontroller type",
+          "FOLDER": "Mappe",
+          "DOCUMENT": "Dokument"
         },
         "SIZE": {
-          "TITLE": "Content Size (range)",
-          "SMALL": "Small",
-          "MEDIUM": "Medium",
-          "LARGE": "Large",
-          "HUGE": "Huge"
+          "TITLE": "Innholdsstørrelse (område)",
+          "SMALL": "Liten",
+          "MEDIUM": "Mellomstor",
+          "LARGE": "Stor",
+          "HUGE": "Enorm"
         },
         "DATE": {
-          "TITLE": "Created Date (range)"
+          "TITLE": "Opprettet dato (område)"
         }
       }
     },
@@ -485,19 +485,19 @@
   },
   "METADATA": {
     "BASIC": {
-      "HEADER": "Properties",
-      "NAME": "Name",
-      "TITLE": "Title",
+      "HEADER": "Egenskaper",
+      "NAME": "Navn",
+      "TITLE": "Tittel",
       "DESCRIPTION": "Description",
       "AUTHOR": "Author",
       "MIMETYPE": "Mimetype",
-      "SIZE": "Size",
-      "CREATOR": "Creator",
+      "SIZE": "Størrelse",
+      "CREATOR": "Oppretter",
       "CREATED_DATE": "Created Date",
-      "MODIFIER": "Modifier",
+      "MODIFIER": "Modifikator",
       "MODIFIED_DATE": "Modified Date",
       "CONTENT_TYPE": "Content Type",
-      "TAGS": "Tags",
+      "TAGS": "Tagger",
       "NO_TAGS_ADDED": "There are currently no tags added",
       "NO_ITEMS_MESSAGE": "There are currently no {{ groupTitle }} added",
       "SAVE_OR_DISCARD_CHANGES": "Save or discard changes to continue"
@@ -507,11 +507,11 @@
         "TITLE": "Change content type",
         "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
         "CONFIRM": "Are you sure you want to change the content type?",
-        "CANCEL": "CANCEL",
+        "CANCEL": "AVBRYT",
         "APPLY": "SAVE CHANGES",
-        "VIEW_DETAILS": "View details",
+        "VIEW_DETAILS": "Vis detaljer",
         "PROPERTY": {
-          "NAME": "Name",
+          "NAME": "Navn",
           "DESCRIPTION": "Description",
           "DATA_TYPE": "Data type"
         }
@@ -525,7 +525,7 @@
   },
   "SHARE": {
     "PUBLIC-LINK": "Public link",
-    "DIALOG-TITLE": "Share",
+    "DIALOG-TITLE": "Del",
     "DESCRIPTION": "Click the link below to copy it to the clipboard.",
     "TITLE": "Link to share",
     "SHARE-LINK": "Share Link",
@@ -537,16 +537,16 @@
     "EXPIRATION-LABEL": "Expiration Date. Enter date in MM/DD/YYYY format",
     "EXPIRATION-PLACEHOLDER": "MM/DD/YYYY",
     "CLIPBOARD-MESSAGE": "Link copied to the clipboard",
-    "CLOSE": "Close",
+    "CLOSE": "Lukk",
     "COPY_BUTTON_LABEL": "Copy link",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Remove this shared link",
       "MESSAGE": "This link will be deleted and a new link will be created next time this file is shared",
-      "CANCEL": "Cancel",
-      "REMOVE": "Remove"
+      "CANCEL": "Avbryt",
+      "REMOVE": "Fjern"
     },
     "UNSHARE_ERROR": "Error unsharing this file",
-    "UNSHARE_PERMISSION_ERROR": "You don't have permission to unshare this file",
+    "UNSHARE_PERMISSION_ERROR": "Du har ikke tillatelse til å oppheve deling av denne filen",
     "INVALID_DATE_ERROR": "Invalid date"
   },
   "PERMISSION_MANAGER": {
@@ -564,16 +564,16 @@
       "NO-RESULT": "No result found for this search",
       "SELECT-ACTION": "SELECT",
       "ADD-ACTION": "ADD",
-      "CLOSE-ACTION": "CANCEL",
+      "CLOSE-ACTION": "AVBRYT",
       "BASE-DIALOG-TITLE": "Search a group or people to add...",
       "BASE_DIALOG_SCREEN_READER_TITLE": "Add user or group permission",
       "EVERYONE": "EVERYONE",
       "USER-GROUP-LIST": "User or Group List",
-      "REMOVE_USER_GROUP": "Remove"
+      "REMOVE_USER_GROUP": "Fjern"
     },
     "COLUMN": {
       "NAME": "Users and Groups ({{ count }})",
-      "LOCATION": "Location",
+      "LOCATION": "Lokalisering",
       "BULK-ROLE": "Set all role to"
     },
     "LABELS": {
@@ -604,11 +604,11 @@
       "TOGGLE-PERMISSION-FAILED": "Failed to toggle inherit Permission"
     },
     "ACTION": {
-      "DELETE": "Delete",
+      "DELETE": "Slett",
       "ADD-PERMISSION": "Add User or Group"
     },
     "ERROR": {
-      "NOT-FOUND": "This item no longer exists or you don't have permission to view it.",
+      "NOT-FOUND": "Dette elementet eksisterer ikke lenger, eller du har ikke tillatelse til å vise det.",
       "DUPLICATE-PERMISSION": "One or more of the permissions you have set is already present : {{list}}",
       "NOT-ALLOWED": "You are not allowed to change permissions"
     }
@@ -635,16 +635,16 @@
   },
   "LIBRARY": {
     "DIALOG": {
-      "CREATE_TITLE": "Create Library",
-      "CREATE": "Create",
-      "UPDATE": "Update",
-      "EDIT": "Edit",
-      "CANCEL": "Cancel",
+      "CREATE_TITLE": "Opprett bibliotek",
+      "CREATE": "Opprett",
+      "UPDATE": "Oppdater",
+      "EDIT": "Rediger",
+      "CANCEL": "Avbryt",
       "FORM": {
         "DESCRIPTION": "Description",
-        "SITE_ID": "Library ID",
-        "NAME": "Name",
-        "VISIBILITY": "Visibility"
+        "SITE_ID": "Bibliotek-ID",
+        "NAME": "Navn",
+        "VISIBILITY": "Synlighet"
       }
     },
     "ROLE": {
@@ -655,29 +655,29 @@
       "NONE": "Not a member"
     },
     "VISIBILITY": {
-      "PRIVATE": "Private",
-      "PUBLIC": "Public",
-      "MODERATED": "Moderated"
+      "PRIVATE": "Privat",
+      "PUBLIC": "Offentlig",
+      "MODERATED": "Moderert"
     },
     "HINTS": {
-      "SITE_TITLE_EXISTS": "Library name already in use"
+      "SITE_TITLE_EXISTS": "Biblioteknavnet er allerede i bruk"
     },
     "ERRORS": {
-      "GENERIC": "We hit a problem",
-      "EXISTENT_SITE": "This Library ID isn't available. Try a different Library ID.",
-      "CONFLICT": "This Library ID is already used. Check the trashcan.",
-      "ID_TOO_LONG": "Use 72 characters or less for the URL name",
-      "DESCRIPTION_TOO_LONG": "Use 512 characters or less for description",
-      "TITLE_TOO_LONG": "Use 256 characters or less for title",
+      "GENERIC": "Vi har støtt på et problem",
+      "EXISTENT_SITE": "Denne bibliotek-ID-en er ikke tilgjengelig. Prøv en annen bibliotek-ID.",
+      "CONFLICT": "Denne bibliotek-ID-en er allerede i bruk. Sjekk papirkurven.",
+      "ID_TOO_LONG": "Bruk 72 tegn eller mindre for URL-navnet",
+      "DESCRIPTION_TOO_LONG": "Bruk 512 tegn eller mindre for beskrivelse",
+      "TITLE_TOO_LONG": "Bruk 256 tegn eller mindre for tittel",
       "TITLE_TOO_SHORT": "Title must be at least 2 characters long",
-      "ILLEGAL_CHARACTERS": "Use numbers and letters only",
-      "ONLY_SPACES": "Library name can't contain only spaces",
-      "LIBRARY_UPDATE_ERROR": "There was an error updating library properties",
+      "ILLEGAL_CHARACTERS": "Bruk kun tall og bokstaver",
+      "ONLY_SPACES": "Biblioteknavnet kan ikke bare bestå av mellomrom",
+      "LIBRARY_UPDATE_ERROR": "Det oppsto en feil under oppdatering av bibliotekets egenskaper",
       "NAME_REQUIRED": "Library name is required",
       "ID_REQUIRED": "Library ID is required"
     },
     "SUCCESS": {
-      "LIBRARY_UPDATED": "Library properties updated"
+      "LIBRARY_UPDATED": "Bibliotekets egenskaper er oppdatert"
     }
   },
   "BREADCRUMB": {
@@ -686,7 +686,7 @@
       "DROPDOWN": "Open breadcrumb menu for {{folderName}}"
     },
     "HEADER": {
-      "SELECTED": "Selected ({{ count }})"
+      "SELECTED": "Valgt ({{ count }})"
     }
   },
   "NAME_COLUMN_LINK": {
@@ -701,10 +701,10 @@
     "DIALOG": {
       "TITLE": "Customize Properties",
       "DESCRIPTION": "Manage the properties associated with selected file(s). Choose from property aspects listed below, to expose and apply additional metadata and functionality",
-      "RESET": "Reset",
-      "CLEAR": "Clear",
-      "CANCEL": "Cancel",
-      "APPLY": "Apply",
+      "RESET": "Tilbakestill",
+      "CLEAR": "Tøm",
+      "CANCEL": "Avbryt",
+      "APPLY": "Bruk",
       "OVER-TABLE-MESSAGE": "Select property aspects",
       "SELECTED": "Selected"
     }
@@ -731,10 +731,10 @@
   },
   "NODE_FAVORITE_DIRECTIVE": {
     "MESSAGES": {
-      "NODE_ADDED": "Added {{ name }} to favorites",
-      "NODES_ADDED": "Added {{ number }} items to favorites",
-      "NODE_REMOVED": "Removed {{ name }} from favorites",
-      "NODES_REMOVED": "Removed {{ number }} items from favorites"
+      "NODE_ADDED": "Lagt {{ name }} til favoritter",
+      "NODES_ADDED": "Lagt til {{ number }} elementer i favoritter",
+      "NODE_REMOVED": "Fjernet {{ name }} fra favoritter",
+      "NODES_REMOVED": "Fjernet {{ number }} elementer fra favoritter"
     }
   }
 }

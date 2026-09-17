@@ -1,152 +1,152 @@
 {
   "DIALOG": {
-    "SAVE_MESSAGE": "Klik op Opslaan om een rapport met de huidige instellingen toe te voegen aan uw lijst met rapporten.",
+    "SAVE_MESSAGE": "Click Save to add a report with the current settings to your reports list.",
     "EXPORT_MESSAGE": ""
   },
   "DATE-WIDGET": {
-    "START-DATE": "Begindatum",
-    "END-DATE": "Einddatum",
+    "START-DATE": "Start date",
+    "END-DATE": "End date",
     "MESSAGES": {
-      "START-DATE-REQUIRED": "Begindatum is vereist",
-      "START-LESS-THAN-END-DATE": "De begindatum moet voor de einddatum liggen"
+      "START-DATE-REQUIRED": "Start date is required",
+      "START-LESS-THAN-END-DATE": "Start date must be before end date"
     }
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "TITLE": "Geen toepassingen gevonden",
-      "SUBTITLE": "Maak een nieuwe toepassing die u later gemakkelijk wilt kunnen vinden",
+      "TITLE": "No Applications Found",
+      "SUBTITLE": "Create a new application that you want to easily find later",
       "TASK_APP_NAME": "Task App"
     },
     "LIST": {
       "MESSAGES": {
-        "TITLE": "Geen taken gevonden",
-        "SUBTITLE": "Maak een nieuwe taak die u later gemakkelijk wilt kunnen vinden",
-        "NONE": "Geen lijsten met taken gevonden"
+        "TITLE": "No Tasks Found",
+        "SUBTITLE": "Create a new task that you want to easily find later",
+        "NONE": "No task lists found"
       }
     },
     "PROPERTIES": {
-      "TASK_NAME": "Taak",
+      "TASK_NAME": "Task",
       "THUMBNAIL": "Miniatuur",
-      "DURATION": "Duur",
-      "PARENT_TASK_ID": "Id bovenliggende taak",
-      "NAME": "Naam",
-      "ASSIGNEE": "Toegewezen persoon",
-      "ASSIGNEE_DEFAULT": "Geen toegewezen persoon",
-      "PRIORITY": "Prioriteit",
-      "DUE_DATE": "Vervaldatum",
-      "DUE_DATE_DEFAULT": "Geen vervaldatum",
+      "DURATION": "Duration",
+      "PARENT_TASK_ID": "Parent task id",
+      "NAME": "Task Name",
+      "ASSIGNEE": "Assignee",
+      "ASSIGNEE_DEFAULT": "No assignee",
+      "PRIORITY": "Priority",
+      "DUE_DATE": "Due Date",
+      "DUE_DATE_DEFAULT": "No date",
       "STATUS": "Status",
-      "CATEGORY": "Categorie",
-      "CATEGORY_DEFAULT": "Geen categorie",
-      "PARENT_NAME": "Naam bovenliggend element",
-      "PARENT_NAME_DEFAULT": "Geen bovenliggend element",
-      "CREATED_BY": "Gemaakt door",
-      "CREATED": "Gemaakt",
-      "END_DATE": "Einddatum",
+      "CATEGORY": "Category",
+      "CATEGORY_DEFAULT": "No category",
+      "PARENT_NAME": "Parent name",
+      "PARENT_NAME_DEFAULT": "No parent",
+      "CREATED_BY": "Created By",
+      "CREATED": "Aangemaakt",
+      "END_DATE": "End date",
       "ID": "Id",
       "DESCRIPTION": "Beschrijving",
       "DESCRIPTION_DEFAULT": "Geen beschrijving",
-      "FORM_NAME": "Formuliernaam",
-      "FORM_NAME_DEFAULT": "Geen formulier"
+      "FORM_NAME": "Form Name",
+      "FORM_NAME_DEFAULT": "No form"
     },
     "MENU_ACTIONS": {
       "VIEW_CONTENT": "Weergeven",
       "REMOVE_CONTENT": "Verwijderen",
       "DOWNLOAD_CONTENT": "Downloaden",
-      "DOWNLOAD_AUDIT": "Audit downloaden"
+      "DOWNLOAD_AUDIT": "Download Audit"
     },
     "DETAILS": {
       "LABELS": {
-        "INFO_DRAWER_TITLE": "Activiteiten",
-        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Activiteit",
-        "INFO_DRAWER_TAB_DETAILS_TITLE": "Details",
-        "ASSIGNEE": "Toegewezen persoon",
-        "DUE": "Vervalt",
-        "FORM": "Formulier",
-        "PEOPLE": "Personen met wie deze taak is gedeeld",
+        "INFO_DRAWER_TITLE": "Activities",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Activity",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "Gegevens",
+        "ASSIGNEE": "Assignee",
+        "DUE": "Due",
+        "FORM": "Form",
+        "PEOPLE": "People this task is shared with",
         "COMMENTS": "Opmerkingen",
-        "CHECKLIST": "Controlelijst",
-        "INVOLVED_PEOPLE": "Betrokken personen",
-        "ADD_PEOPLE": "Personen en groepen toevoegen",
-        "ADD_ASSIGNEE": "Nieuwe toegewezen persoon toevoegen"
+        "CHECKLIST": "Checklist",
+        "INVOLVED_PEOPLE": "People Involved",
+        "ADD_PEOPLE": "Add people and groups",
+        "ADD_ASSIGNEE": "Add new assignee"
       },
       "BUTTON": {
-        "COMPLETE": "Voltooid",
-        "CLAIM": "Claimen",
-        "UNCLAIM": "Vrijgeven",
-        "DRAG-ATTACHMENT": "Bestanden neerzetten om te uploaden",
-        "UPLOAD-ATTACHMENT": "Bijlage uploaden"
+        "COMPLETE": "Complete",
+        "CLAIM": "Claim",
+        "UNCLAIM": "Release",
+        "DRAG-ATTACHMENT": "Drop files to upload",
+        "UPLOAD-ATTACHMENT": "Upload Attachment"
       },
       "MESSAGES": {
-        "NONE": "Geen taakdetails gevonden",
-        "CLAIM": "Klik op Claimen om aan deze taak te werken"
+        "NONE": "No task details found",
+        "CLAIM": "Click Claim to work on this task"
       },
       "FORM": {
-        "NONE": "Geen formulier"
+        "NONE": "No form"
       },
       "DUE": {
-        "NONE": "Geen vervaldatum"
+        "NONE": "No due date"
       },
       "ASSIGNEE": {
-        "NONE": "Geen toegewezen persoon"
+        "NONE": "No assignee"
       },
       "PEOPLE": {
-        "NONE": "Niemand betrokken"
+        "NONE": "Nobody involved"
       },
       "CHECKLIST": {
-        "NONE": "Geen controlelijst",
+        "NONE": "No checklist",
         "DIALOG": {
-          "TITLE": "Nieuw vakje geselecteerd",
+          "TITLE": "New Check",
           "CANCEL-BUTTON": "Annuleren",
-          "ADD-BUTTON": "Controlelijst toevoegen",
+          "ADD-BUTTON": "Add Checklist",
           "PLACEHOLDER": "Naam"
         }
       },
       "ERROR": {
-        "TITLE": "Kan de actie niet voltooien",
-        "DESCRIPTION": "Probeer het opnieuw of controleer of u over toegang beschikt.",
+        "TITLE": "Couldn't complete the action",
+        "DESCRIPTION": "Try again or check that you have access.",
         "CLOSE": "Sluiten"
       }
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "Geen taakfilter geselecteerd"
+        "NONE": "No task filter selected"
       }
     },
     "START_TASK": {
-      "DEFAULT_NAME": "Mijn standaardtaak",
-      "BUTTON": "Taak maken",
+      "DEFAULT_NAME": "My Default Task",
+      "BUTTON": "CREATE TASK",
       "FORM": {
-        "TITLE": "Taak starten",
+        "TITLE": "Start Task",
         "LABEL": {
           "NONE": "Geen",
           "NAME": "Naam",
           "DESCRIPTION": "Beschrijving",
-          "ATTACHFORM": "Formulier bijvoegen",
-          "ASSIGNEE": "Toegewezen persoon",
-          "FORM": "Formulier",
-          "DATE": "Datum kiezen"
+          "ATTACHFORM": "Attach Form",
+          "ASSIGNEE": "Assignee",
+          "FORM": "Form",
+          "DATE": "Choose Date"
         },
         "ACTION": {
           "START": "Start",
           "CANCEL": "Annuleren"
         },
         "ERROR": {
-          "REQUIRED": "Veld vereist",
-          "DATE": "Datumnotatie dd-mm-jjjj",
-          "MAXIMUM_LENGTH": "Lengte overschreden, max. {{characters}} tekens.",
+          "REQUIRED": "Field required",
+          "DATE": "Date format DD/MM/YYYY",
+          "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
           "MESSAGE": "Voer een andere waarde in"
         }
       }
     },
     "PEOPLE": {
-      "ASSIGNEE": "Toegewezen persoon",
+      "ASSIGNEE": "Assignee",
       "DIALOG_CLOSE": "Sluiten",
       "ADD_USER": "Toevoegen",
-      "ADD_ASSIGNEE": "Toewijzen",
-      "SEARCH_USER": "Gebruiker zoeken",
+      "ADD_ASSIGNEE": "ASSIGN",
+      "SEARCH_USER": "Search user",
       "SEARCH": {
-        "NO_USERS": "Niemand gevonden om te betrekken"
+        "NO_USERS": "Nobody found to involve"
       }
     },
     "ATTACHMENT": {
@@ -158,44 +158,44 @@
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "Er zijn geen bestanden beschikbaar"
+        "HEADER": "No files are available"
       }
     },
     "STANDALONE_TASK": {
-      "NO_FORM_MESSAGE": "Geen formulieren bijgevoegd",
-      "COMPLETE_TASK_MESSAGE": "Taak {{taskName}} voltooid",
-      "COMPLETE_TASK_SUB_MESSAGE": "Geen formulieren om toe te voegen"
+      "NO_FORM_MESSAGE": "No forms attached",
+      "COMPLETE_TASK_MESSAGE": "Task {{taskName}} completed",
+      "COMPLETE_TASK_SUB_MESSAGE": "No forms to be added"
     },
     "ATTACH_FORM": {
-      "SELECT_FORM": "Selecteer formulier om bij te voegen",
-      "REMOVE_FORM": "Formulier verwijderen",
-      "SELECT_OPTION": "Selecteer een optie"
+      "SELECT_FORM": "Select Form To Attach",
+      "REMOVE_FORM": "Remove Form",
+      "SELECT_OPTION": "Select an option"
     }
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "TITLE": "Geen processen gevonden",
-      "SUBTITLE": "Maak een nieuw proces dat u later gemakkelijk wilt kunnen vinden",
-      "SUMMARY": "{{total}} procesinstances gevonden",
-      "ERROR": "Kan procesinstances niet laden. Probeer het opnieuw of geef het volgende bericht door aan het IT-team: {{errorMessage}}"
+      "TITLE": "No Processes Found",
+      "SUBTITLE": "Create a new process that you want to easily find later",
+      "SUMMARY": "{{total}} process instances found",
+      "ERROR": "Couldn't load processes instances. Try again or share the following message with your IT Team: {{errorMessage}}"
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "Geen procesinstancefilter geselecteerd."
+        "NONE": "No process instance filter selected."
       }
     },
     "PROPERTIES": {
-      "PROCESS_NAME": "Proces",
+      "PROCESS_NAME": "Process",
       "NAME": "Naam",
       "THUMBNAIL": "Miniatuur",
       "STATUS": "Status",
-      "END_DATE": "Einddatum",
-      "END_DATE_DEFAULT": "Geen vervaldatum",
-      "CATEGORY": "Categorie",
-      "CATEGORY_DEFAULT": "Geen categorie",
-      "CREATED_BY": "Gemaakt door",
-      "CREATED_BY_DEFAULT": "Geen toegewezen persoon",
-      "CREATED": "Gemaakt",
+      "END_DATE": "End Date",
+      "END_DATE_DEFAULT": "No date",
+      "CATEGORY": "Category",
+      "CATEGORY_DEFAULT": "No category",
+      "CREATED_BY": "Created By",
+      "CREATED_BY_DEFAULT": "No assignee",
+      "CREATED": "Aangemaakt",
       "BUSINESS_KEY": "Business key",
       "BUSINESS_KEY_DEFAULT": "Geen",
       "DESCRIPTION": "Beschrijving",
@@ -206,44 +206,44 @@
       "VIEW_CONTENT": "Weergeven",
       "REMOVE_CONTENT": "Verwijderen",
       "DOWNLOAD_CONTENT": "Downloaden",
-      "DOWNLOAD_AUDIT": "Audit downloaden",
-      "VIEW_TASK": "Taak weergeven"
+      "DOWNLOAD_AUDIT": "Download audit",
+      "VIEW_TASK": "View Task"
     },
     "DETAILS": {
       "LABELS": {
-        "STARTED_BY": "Gestart door",
-        "STARTED": "Gestart",
-        "ENDED": "Beëindigd",
+        "STARTED_BY": "Started by",
+        "STARTED": "Started",
+        "ENDED": "Ended",
         "COMMENTS": "Opmerkingen",
         "START_FORM": "Beginformulier",
-        "TASKS_ACTIVE": "Actieve taken",
-        "TASKS_COMPLETED": "Voltooide taken",
-        "TASK_SUBTITLE": "Toegewezen aan {{user}}, gemaakt {{created}}",
-        "REFRESH": "Vernieuwen"
+        "TASKS_ACTIVE": "Active Tasks",
+        "TASKS_COMPLETED": "Completed Tasks",
+        "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}",
+        "REFRESH": "Refresh"
       },
       "BUTTON": {
-        "CANCEL": "Proces annuleren",
+        "CANCEL": "Cancel Process",
         "CLOSE": "Sluiten",
-        "SHOW_DIAGRAM": "Diagram weergeven",
-        "DRAG-ATTACHMENT": "Bestanden neerzetten om te uploaden",
-        "UPLOAD-ATTACHMENT": "Bijlage uploaden",
-        "FILE_OPTION_MENU": "Menu Bestandsopties"
+        "SHOW_DIAGRAM": "Show Diagram",
+        "DRAG-ATTACHMENT": "Drop files to upload",
+        "UPLOAD-ATTACHMENT": "Upload Attachment",
+        "FILE_OPTION_MENU": "File Option Menu"
       },
       "MESSAGES": {
-        "NONE": "Geen procesdetails gevonden"
+        "NONE": "No process details found"
       },
       "TASKS": {
-        "NO_ACTIVE": "Geen momenteel actieve taken",
-        "NO_COMPLETED": "Nog geen taken voltooid",
-        "TASK_DETAILS": "Taakdetails",
+        "NO_ACTIVE": "No currently active tasks",
+        "NO_COMPLETED": "No tasks completed yet",
+        "TASK_DETAILS": "Task details",
         "TASK_CLOSE": "Sluiten"
       },
       "COMMENTS": {
-        "ADD": "Opmerking toevoegen",
+        "ADD": "Add a comment",
         "HEADER": "Opmerkingen ({{ count }})",
         "NONE": "Geen opmerkingen",
         "BUTTON": {
-          "ADD": "Opmerking toevoegen"
+          "ADD": "Add a comment"
         },
         "ADD_DIALOG": {
           "TITLE": "Nieuwe opmerking",
@@ -257,45 +257,45 @@
         }
       },
       "ADD_DIALOG": {
-        "TITLE": "Procesvariabele instellen",
+        "TITLE": "Set process variable",
         "LABEL": {
           "NAME": "Naam",
           "VALUE": "Waarde",
-          "SCOPE": "Bereik"
+          "SCOPE": "Scope"
         }
       },
       "EDIT_DIALOG": {
-        "TITLE": "Procesvariabele bewerken"
+        "TITLE": "Edit process variable"
       },
       "ERROR_DIALOG": {
-        "TITLE": "Kan de actie niet voltooien",
-        "DESCRIPTION": "U beschikt mogelijk niet over het vereiste toegangsniveau, neem contact op met het IT-team."
+        "TITLE": "Couldn't complete the action",
+        "DESCRIPTION": "You might not have the required access level, check with your IT Team."
       }
     },
     "START_PROCESS": {
       "BUTTON": "Proces starten",
-      "NO_PROCESS_DEFINITIONS": "U kunt geen proces starten omdat er geen procesdefinities beschikbaar zijn",
-      "NO_START_FORM": "Geen beginformulier",
-      "NO_PROCESS_DEF_SELECTED": "Geen procesdefinitie geselecteerd",
+      "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
+      "NO_START_FORM": "No start form",
+      "NO_PROCESS_DEF_SELECTED": "No process definition selected",
       "FORM": {
-        "TITLE": "Proces starten",
         "LABEL": {
-          "SELECT_APPLICATION": "Toepassing selecteren",
-          "TYPE": "Proces selecteren",
-          "NAME": "Procesnaam"
+          "SELECT_APPLICATION": "Select Application",
+          "TYPE": "Select Process",
+          "NAME": "Process Name",
+          "SELECTED_PEOPLE": "Selected people"
         },
-        "TYPE_PLACEHOLDER": "Maak een keuze...",
+        "TYPE_PLACEHOLDER": "Choose one...",
         "ACTION": {
           "START": "Proces starten",
           "CANCEL": "Annuleren"
         }
       },
       "ERROR": {
-        "LOAD_PROCESS_DEFS": "Kan procesdefinities niet laden, controleer of u over toegang beschikt.",
-        "START": "Kan geen nieuwe procesinstance starten, controleer of u over toegang beschikt.",
-        "MAXIMUM_LENGTH": "Lengte overschreden, max. {{characters}} tekens.",
-        "SPACE_VALIDATOR": "Mag niet beginnen of eindigen met een spatie.",
-        "PROCESS_NAME_REQUIRED": "Procesnaam is vereist."
+        "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
+        "START": "Couldn't start new process instance, check you have access.",
+        "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
+        "SPACE_VALIDATOR": "Cannot begin or end with a space.",
+        "PROCESS_NAME_REQUIRED": "Process name is required."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -307,25 +307,25 @@
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "Er zijn geen bestanden beschikbaar"
+        "HEADER": "No files are available"
       },
       "COLUMNS": {
         "NAME": "Naam",
-        "CREATED-ON": "Gemaakt op"
+        "CREATED-ON": "Created on"
       }
     }
   },
   "APP": {
     "DIALOG": {
-      "START": "Doorgaan",
-      "TITLE": "App selecteren",
-      "LIST": "Lijst met apps",
-      "ERROR": "Er is een probleem opgetreden bij het verbinden met Process Services"
+      "START": "Continue",
+      "TITLE": "Select a process app",
+      "LIST": "Process App list",
+      "ERROR": "There is a problem connecting to Process Services"
     }
   },
   "ATTACH-FILE": {
     "DIALOG": {
-      "LOGIN": "Aanmelden bij '{{ ecmHost }}'"
+      "LOGIN": "Sign into '{{ ecmHost }}'"
     },
     "ACTIONS": {
       "LOGIN": "Aanmelden",
@@ -336,9 +336,9 @@
   },
   "ADF_TASK_FORM": {
     "EMPTY_FORM": {
-      "SUBTITLE": "Voeg een formulier bij dat later kan worden weergegeven",
-      "COMPLETE-TASK-MESSAGE": "Taak {{taskName}} voltooid",
-      "COMPLETE-TASK-SUB-MESSAGE": "Geen formulieren om toe te voegen",
+      "SUBTITLE": "Attach a form that can be viewed later",
+      "COMPLETE-TASK-MESSAGE": "Task {{taskName}} completed",
+      "COMPLETE-TASK-SUB-MESSAGE": "No forms to be added",
       "BUTTONS": {
         "COMPLETE": "Voltooid",
         "CANCEL": "Annuleren",
@@ -347,8 +347,8 @@
       }
     },
     "COMPLETED_TASK": {
-      "TITLE": "Taak {{taskName}} voltooid",
-      "SUBTITLE": "Geen formulieren om toe te voegen"
+      "TITLE": "Task {{taskName}} completed",
+      "SUBTITLE": "No forms to be added"
     }
   }
 }

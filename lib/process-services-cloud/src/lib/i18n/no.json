@@ -7,8 +7,8 @@
     },
     "PROPERTIES": {
       "NAME": "Process Name",
-      "CREATED": "Vytvořeno",
-      "STATUS": "Stav",
+      "CREATED": "Opprettet",
+      "STATUS": "Status",
       "START_DATE": "Start Date",
       "COMPLETED_DATE": "Completed Date",
       "COMPLETED_BY": "Completed By",
@@ -17,7 +17,7 @@
       "STARTED_BY": "Started by",
       "APP_NAME": "Application Name",
       "BUSINESS_KEY": "Business Key",
-      "DESCRIPTION": "Popis",
+      "DESCRIPTION": "Description",
       "LAST_MODIFIED": "Last Modified",
       "PROCESS_NAME": "Process Name",
       "PROCESS_DEFINITION_NAME": "Process Definition Name",
@@ -27,18 +27,18 @@
       "APP_VERSION": "App Version"
     },
     "ADF_CLOUD_START_PROCESS": {
-      "BUTTON": "Zahájit proces",
+      "BUTTON": "Start Process",
       "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
       "FORM": {
-        "TITLE": "Zahájit proces",
+        "TITLE": "Start Process",
         "LABEL": {
           "TYPE": "Select Process",
           "NAME": "Process Name"
         },
         "TYPE_PLACEHOLDER": "Choose one...",
         "ACTION": {
-          "START": "Zahájit proces",
-          "CANCEL": "Zrušit"
+          "START": "Start Process",
+          "CANCEL": "Avbryt"
         },
         "SELECT_PROCESS_DROPDOWN": "Select Process Dropdown BUTTON"
       },
@@ -51,15 +51,15 @@
         "SPACE_VALIDATOR": "Cannot begin or end with a space."
       }
     },
-    "LOADING": "Načítání"
+    "LOADING": "Loading"
   },
   "ADF_CLOUD_TASK_LIST": {
     "START_TASK": {
       "FORM": {
         "TITLE": "Start Task",
         "LABEL": {
-          "NAME": "Název",
-          "DESCRIPTION": "Popis",
+          "NAME": "Navn",
+          "DESCRIPTION": "Description",
           "ATTACHFORM": "Attach Form",
           "ASSIGNEE": "Assignee",
           "CANDIDATE_GROUP": "Candidate Group",
@@ -68,7 +68,7 @@
         },
         "ACTION": {
           "START": "Start",
-          "CANCEL": "Zrušit"
+          "CANCEL": "Avbryt"
         }
       }
     },
@@ -76,21 +76,21 @@
       "NAME": "Task Name",
       "ASSIGNEE": "Assignee",
       "ID": "Id",
-      "STATUS": "Stav",
+      "STATUS": "Status",
       "PRIORITY": "Priority",
-      "CREATED_DATE": "Datum vytvoření",
+      "CREATED_DATE": "Created Date",
       "LAST_MODIFIED": "Last Modified",
       "DUE_DATE": "Due Date",
-      "CREATED": "Vytvořeno",
+      "CREATED": "Opprettet",
       "JSON_CELL": "Json",
       "COMPLETED_BY": "Completed By",
       "PRIORITY_VALUES": {
-        "NONE": "Žádné",
+        "NONE": "Ingen",
         "LOW": "Low",
         "NORMAL": "Normal",
         "HIGH": "High"
       },
-      "DESCRIPTION": "Popis"
+      "DESCRIPTION": "Description"
     },
     "LIST": {
       "MESSAGES": {
@@ -99,16 +99,16 @@
         "NONE": "No task lists found"
       }
     },
-    "LOADING": "Načítání"
+    "LOADING": "Loading"
   },
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {
       "ACTIVITY_NAME": "Activity name",
-      "ACTIVITY_TYPE": "Stav",
+      "ACTIVITY_TYPE": "Status",
       "ID": "Id",
       "COMPLETED_DATE": "Completed date",
       "STARTED_DATE": "Started date",
-      "STATUS": "Stav"
+      "STATUS": "Status"
     }
   },
   "ADF_CLOUD_TASK_FILTERS": {
@@ -116,16 +116,16 @@
     "QUEUED_TASKS": "Queued Tasks",
     "COMPLETED_TASKS": "Completed Tasks",
     "STATUS": {
-      "ALL": "Vše",
-      "CREATED": "Vytvořeno",
+      "ALL": "All",
+      "CREATED": "Opprettet",
       "ASSIGNED": "Assigned",
       "SUSPENDED": "Suspended",
       "CANCELLED": "Cancelled",
       "COMPLETED": "Completed"
     },
     "DIRECTION": {
-      "ASCENDING": "Vzestupně",
-      "DESCENDING": "Sestupně"
+      "ASCENDING": "Stigende",
+      "DESCENDING": "Synkende"
     }
   },
   "ADF_CLOUD_SERVICE_TASK_FILTERS": {
@@ -133,7 +133,7 @@
     "ERRORED_TASKS": "Errored Tasks",
     "COMPLETED_TASKS": "Completed Tasks",
     "STATUS": {
-      "ALL": "Vše",
+      "ALL": "All",
       "STARTED": "Started",
       "COMPLETED": "Completed",
       "CANCELLED": "Cancelled",
@@ -141,24 +141,24 @@
     }
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
-    "ALL_PROCESSES": "Vše",
+    "ALL_PROCESSES": "All",
     "RUNNING_PROCESSES": "Running",
     "COMPLETED_PROCESSES": "Completed",
     "STATUS": {
-      "ALL": "Vše",
+      "ALL": "All",
       "RUNNING": "Running",
       "SUSPENDED": "Suspended",
       "CANCELLED": "Cancelled",
       "COMPLETED": "Completed"
     },
     "DIRECTION": {
-      "ASCENDING": "Vzestupně",
-      "DESCENDING": "Sestupně"
+      "ASCENDING": "Stigende",
+      "DESCENDING": "Synkende"
     }
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {
-      "MESSAGE": "Zadejte jinou hodnotu",
+      "MESSAGE": "Enter a different value",
       "REQUIRED": "Field required",
       "DATE": "Date format DD/MM/YYYY",
       "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max."
@@ -177,7 +177,7 @@
       "TASK_ID": "Task ID",
       "PROCESS_DEF_NAME": "ProcessDefinitionName",
       "PROCESS_DEF_ID": "ProcessDefinitionId",
-      "STATUS": "Stav",
+      "STATUS": "Status",
       "ASSIGNMENT": "Assignee",
       "DIRECTION": "Direction",
       "PROCESS_INSTANCE_ID": "ProcessInstanceId",
@@ -198,8 +198,8 @@
     },
     "DIALOG": {
       "TITLE": "Save filter as",
-      "SAVE": "Uložit",
-      "CANCEL": "Zrušit"
+      "SAVE": "SAVE",
+      "CANCEL": "AVBRYT"
     }
   },
   "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
@@ -211,7 +211,7 @@
       "PROCESS_DEF_NAME": "ProcessDefinitionName",
       "PROCESS_DEF_ID": "ProcessDefinitionId",
       "PROCESS_INSTANCE_ID": "ProcessInstanceId",
-      "STATUS": "Stav",
+      "STATUS": "Status",
       "DIRECTION": "Direction",
       "ACTIVITY_NAME": "ActivityName",
       "ACTIVITY_TYPE": "ActivityType",
@@ -226,7 +226,7 @@
     "LABEL": {
       "APP_NAME": "ApplicationName",
       "PROCESS_INS_ID": "ProcessInstanceId",
-      "STATUS": "Stav",
+      "STATUS": "Status",
       "INITIATOR": "Initiator",
       "ASSIGNMENT": "Assignee",
       "SORT": "Sort",
@@ -275,8 +275,8 @@
     },
     "DIALOG": {
       "TITLE": "Save filter as",
-      "SAVE": "Uložit",
-      "CANCEL": "Zrušit"
+      "SAVE": "SAVE",
+      "CANCEL": "AVBRYT"
     }
   },
   "ADF_CLOUD_GROUPS": {
@@ -296,7 +296,7 @@
       "INVALID_PATTERN": "Must match the pattern {{pattern}}",
       "INVALID_MIN_LENGTH": "Must be at least {{requiredLength}} characters",
       "INVALID_MAX_LENGTH": "Length exceeded, {{requiredLength}} characters max",
-      "REQUIRED": "Povinné pole"
+      "REQUIRED": "This is a required field"
     }
   },
   "ADF_CLOUD_TASK_HEADER": {
@@ -306,28 +306,28 @@
     },
     "PROPERTIES": {
       "TASK_NAME": "Task",
-      "THUMBNAIL": "Miniatura",
+      "THUMBNAIL": "Thumbnail",
       "DURATION": "Duration",
       "PARENT_TASK_ID": "Parent task id",
-      "NAME": "Název",
+      "NAME": "Navn",
       "ASSIGNEE": "Assignee",
       "ASSIGNEE_DEFAULT": "No assignee",
       "PRIORITY": "Priority",
       "DUE_DATE": "Due Date",
       "DUE_DATE_DEFAULT": "No date",
-      "STATUS": "Stav",
+      "STATUS": "Status",
       "CATEGORY": "Category",
       "CATEGORY_DEFAULT": "No category",
       "PARENT_NAME": "Parent name",
       "PARENT_NAME_DEFAULT": "No parent",
       "CREATED_BY": "Created By",
-      "CREATED": "Vytvořeno",
+      "CREATED": "Opprettet",
       "END_DATE": "End date",
       "ID": "ID",
       "PROCESS_INSTANCE_ID": "Process instance id",
       "PROCESS_INSTANCE_ID_DEFAULT": "No process instance id",
-      "DESCRIPTION": "Popis",
-      "DESCRIPTION_DEFAULT": "Žádný popis",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_DEFAULT": "Ingen beskrivelse",
       "FORM_NAME": "Form Name",
       "FORM_NAME_DEFAULT": "No form",
       "CANDIDATE_USERS": "Candidate Users",
@@ -336,7 +336,7 @@
       "CANDIDATE_GROUPS_DEFAULT": "No Candidate Groups"
     },
     "FORM_VALIDATION": {
-      "INVALID_FIELD": "Zadejte jinou hodnotu"
+      "INVALID_FIELD": "Enter a different value"
     }
   },
   "ADF_CLOUD_PROCESS_HEADER": {
@@ -344,15 +344,15 @@
       "ID": "ID",
       "NAME": "Process name",
       "NAME_DEFAULT": "No name",
-      "DESCRIPTION": "Popis",
-      "DESCRIPTION_DEFAULT": "Žádný popis",
-      "STATUS": "Stav",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_DEFAULT": "Ingen beskrivelse",
+      "STATUS": "Status",
       "BUSINESS_KEY": "Business Key",
       "INITIATOR": "Initiator",
       "START_DATE": "Started",
       "LAST_MODIFIED": "Updated",
       "PARENT_ID": "Parent Id",
-      "NONE": "Žádné"
+      "NONE": "Ingen"
     }
   },
   "ADF_CLOUD_TASK_FORM": {
@@ -360,10 +360,10 @@
       "TITLE": "No form available",
       "SUBTITLE": "Attach a form that can be viewed later",
       "BUTTONS": {
-        "COMPLETE": "Dokončit",
-        "CANCEL": "Zrušit",
-        "CLAIM": "Převzít",
-        "UNCLAIM": "Vzdát se"
+        "COMPLETE": "COMPLETE",
+        "CANCEL": "AVBRYT",
+        "CLAIM": "CLAIM",
+        "UNCLAIM": "RELEASE"
       }
     },
     "ERROR": {
@@ -378,7 +378,7 @@
     "ASSIGNED_TO": "Assigned to",
     "CURRENT_USER": "Assigned to me",
     "UNASSIGNED": "Unassigned",
-    "NONE": "Žádné",
+    "NONE": "Ingen",
     "CANDIDATE_GROUPS": "List of candidate groups",
     "ASSIGNEE": "Assignee",
     "ASSIGNMENT_TYPE": "Assignment type"

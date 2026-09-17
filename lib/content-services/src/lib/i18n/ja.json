@@ -1,7 +1,9 @@
 {
   "COMMON": {
     "APPLY": "適用",
-    "CANCEL": "キャンセル"
+    "CANCEL": "キャンセル",
+    "NAME": "名前",
+    "CLEAR": "消去"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
@@ -16,12 +18,13 @@
         "MINOR": "小さな変更 ({{version}})",
         "COMMENT": "コメントを残す",
         "ADD": "新しいバージョンを追加する",
-        "CANCEL": "キャンセル"
+        "CANCEL": "キャンセル",
+        "VERSION_TYPE_LABEL": "Select version type"
       }
     },
     "CONFIRM_DELETE": {
       "TITLE": "バージョンの削除",
-      "MESSAGE": "削除したバージョンは復元できません。削除しますか?",
+      "MESSAGE": "削除したバージョンは復元できません。削除しますか？",
       "YES_LABEL": "はい",
       "NO_LABEL": "いいえ"
     },
@@ -99,6 +102,7 @@
     "ATTACH": "添付",
     "CHOOSE_ITEM": "'{{ name }}' から添付するコンテンツを選択してください",
     "COPY": "コピー",
+    "LINK": "リンクを作成",
     "COPY_ITEM": "'{{ name }}' のコピー先...",
     "LOCATION": "場所",
     "MOVE": "移動",
@@ -140,24 +144,23 @@
       "ADD": "タグの追加"
     },
     "TAGS_CREATOR": {
-      "EXISTING_TAGS": "既存のタグ",
-      "EXISTING_TAGS_SELECTION": "既存のタグの選択：",
+      "EXISTING_TAGS": "既存のタグ:",
+      "EXISTING_TAGS_SELECTION": "Select an existing Tag:",
       "NO_TAGS_CREATED": "作成されたタグはありません",
       "NO_EXISTING_TAGS": "既存のタグはありません",
       "TITLE": "タグの作成",
       "CREATE_TAG": "作成: {{tag}}",
-      "NAME": "名前",
+      "TAG_SEARCH_PLACEHOLDER": "Search Tags",
       "ERRORS": {
         "EXISTING_TAG": "タグはすでに存在します",
         "ALREADY_ADDED_TAG": "タグはすでに追加されています",
         "EMPTY_TAG": "タグ名をスペースだけにすることはできません",
-        "REQUIRED": "タグ名は必須です",
         "FETCH_TAGS": "タグの取得中にエラーが発生しました",
-        "CREATE_TAGS": "タグの作成中にエラーが発生しました"
+        "CREATE_TAGS": "タグの作成中にエラーが発生しました",
+        "SPECIAL_CHARACTERS": "Tag name cannot contain prohibited characters"
       },
       "TOOLTIPS": {
-        "DELETE_TAG": "タグの削除",
-        "HIDE_INPUT": "入力の非表示"
+        "DELETE_TAG": "タグの削除"
       },
       "TAGS_LOADING": "タグの読み込み中",
       "CREATE_TAGS_SUCCESS": "タグが正常に作成されました"
@@ -167,16 +170,15 @@
     "CATEGORIES_TITLE": "カテゴリ",
     "NO_CATEGORIES_CREATED": "作成されたカテゴリはありません",
     "NO_CATEGORIES_ASSIGNED": "割り当てられたカテゴリはありません",
-    "ASSIGN_CATEGORIES": "カテゴリの割り当て",
     "UNASSIGN_CATEGORY": "カテゴリの割り当て解除",
     "DELETE_CATEGORY": "カテゴリの削除",
     "EXISTING_CATEGORIES": "既存のカテゴリ:",
-    "SELECT_EXISTING_CATEGORY": "既存のカテゴリの選択",
-    "NO_EXISTING_CATEGORIES": "既存のカテゴリはありません",
+    "SELECT_EXISTING_CATEGORY": "既存のカテゴリの選択:",
+    "NO_EXISTING_CATEGORIES": "No Existing Categories",
     "GENERIC_CREATE": "作成：{{name}}",
     "NAME": "カテゴリ名",
     "LOADING": "読み込み中",
-    "HIDE_INPUT": "入力の非表示",
+    "NO_CATEGORIES_ADDED": "There are currently no categories added",
     "ERRORS": {
       "NOT_FOUND": "カテゴリが見つかりませんでした",
       "REQUIRED": "カテゴリ名は必須です",
@@ -184,8 +186,11 @@
       "ALREADY_EXISTS": "カテゴリはすでに存在します",
       "DUPLICATED_CATEGORY": "カテゴリはすでに追加されています",
       "CREATE_CATEGORIES": "カテゴリの作成中にエラーが発生しました",
-      "EXISTING_CATEGORIES": "いくつかのカテゴリは、すでに存在します"
-    }
+      "EXISTING_CATEGORIES": "いくつかのカテゴリは、すでに存在します",
+      "SPECIAL_CHARACTERS": "Category name cannot contain prohibited characters",
+      "ENDS_WITH_DOT": "Category name cannot end with a dot"
+    },
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Search Categories"
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
@@ -255,7 +260,7 @@
       "UNDO": "元に戻す"
     },
     "ERRORS": {
-      "GENERIC": "アップロードできませんでした。問題が解決しない場合は、IT 担当者に連絡してください。",
+      "GENERIC": "アップロードできませんでした。問題が解決しない場合は、IT 担当者に連絡してください",
       "500": "内部サーバーエラーが発生しました。もう一度操作をやり直すか、IT 担当者に連絡してください。 [500]",
       "504": "サーバーがタイムアウトになりました。もう一度操作をやり直すか、IT 担当者に連絡してください。[504]",
       "403": "この場所にアップロードするための権限がありません [403]",
@@ -273,12 +278,15 @@
       "ARIA-LABEL": "検索ボタン"
     },
     "INPUT": {
+      "LABEL": "検索",
+      "PLACEHOLDER": "Search Query",
       "ARIA-LABEL": "検索条件"
     },
     "RESULTS": {
       "SUMMARY": "{{searchTerm}} の検索結果は {{numResults}} 件です",
       "NONE": "{{searchTerm}} の検索結果は 0 件です",
       "ERROR": "検索中に問題が発生しました。操作をやり直してください。",
+      "WILL_CONTAIN": "Results will contain '{{searchTerm}}'",
       "COLUMNS": {
         "NAME": "表示名",
         "MODIFIED_BY": "変更者",
@@ -313,9 +321,7 @@
         "FROM": "開始",
         "TO": "終了日",
         "FROM-DATE": "開始",
-        "TO-DATE": "終了日",
-        "SELECT-FROM-DATE": "開始日の選択",
-        "SELECT-TO-DATE": "終了日の選択"
+        "TO-DATE": "終了日"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "必須の値",
@@ -324,13 +330,18 @@
         "INVALID-DATE": "無効な日付です。日付は '{{ requiredFormat }}' 形式で指定する必要があります",
         "BEYOND-MAX-DATE": "この日付は最長の日付よりも後です。",
         "INVALID-DATETIME": "日時が無効です。日時は '{{ requiredFormat }}' 形式で指定する必要があります",
-        "BEYOND-MAX-DATETIME": "指定した日時は最大日時を超えています"
+        "BEYOND-MAX-DATETIME": "指定した日時は最大日時を超えています。"
       },
       "ARIA-LABEL": {
         "SEARCH_FILTER": "検索フィルタリスト",
         "OPTIONS-SELECTION": "オプション選択"
       },
-      "ANY": "任意"
+      "ANY": "任意",
+      "PEOPLE": "People"
+    },
+    "FACET_FIELDS": {
+      "MODIFIER_LABEL": "変更者",
+      "CREATOR_LABEL": "作成者"
     },
     "ICONS": {
       "ft_ic_raster_image": "画像ファイル",
@@ -371,6 +382,7 @@
       "TITLE": "フィルタ",
       "TYPE": "タイプ",
       "FILTER_BY": "{{ category }} でフィルタ",
+      "ACTIVE_FILTER": "Active filter",
       "CLEAR": "消去",
       "APPLY": "適用",
       "FILTERS": {
@@ -379,7 +391,7 @@
           "PLACEHOLDER": "名前を入力してください"
         },
         "TYPE": {
-          "TITLE": "確認タイプ",
+          "TITLE": "タイプを選択してください",
           "FOLDER": "フォルダ",
           "DOCUMENT": "文書"
         },
@@ -396,15 +408,76 @@
       }
     },
     "LOGICAL_SEARCH": {
-      "SEARCH_CHIP_INPUT": {
-        "ADD_PHRASE": "語句の追加..."
-      },
       "MATCH_ALL": "すべて",
       "MATCH_ALL_LABEL": "これらの語句のすべてに一致",
+      "MATCH_ALL_HINT": "Results will match all words entered here",
       "MATCH_ANY": "いずれか",
       "MATCH_ANY_LABEL": "これらの語句のいずれかに一致",
+      "MATCH_ANY_HINT": "Results will match any words entered here",
+      "MATCH_EXACT": "EXACT",
+      "MATCH_EXACT_LABEL": "Match this EXACT PHRASE",
+      "MATCH_EXACT_HINT": "Results will match this entire phrase",
       "EXCLUDE": "除外",
-      "EXCLUDE_LABEL": "これらの語句の除外"
+      "EXCLUDE_LABEL": "これらの語句の除外",
+      "EXCLUDE_HINT": "Results will exclude matches with these words"
+    },
+    "DATE_RANGE_ADVANCED": {
+      "OPTIONS": {
+        "ANYTIME": "Anytime",
+        "IN_LAST": "In the last",
+        "BETWEEN": "Between"
+      },
+      "IN_LAST_LABELS": {
+        "DAYS": "Days",
+        "WEEKS": "Weeks",
+        "MONTHS": "Months",
+        "QUANTITY": "Quantity"
+      },
+      "IN_LAST_DISPLAY_LABELS": {
+        "DAYS": "In the last {{value}} days",
+        "WEEKS": "In the last {{value}} weeks",
+        "MONTHS": "In the last {{value}} months"
+      },
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "Start Date",
+        "END_DATE": "End Date",
+        "DATE_RANGE": "Date Range"
+      },
+      "ERROR": {
+        "IN_LAST": "Value required",
+        "START_DATE": {
+          "REQUIRED": "Start Date required",
+          "INVALID_FORMAT": "Start Date invalid. The date must be in the format '{{ requiredFormat }}'"
+        },
+        "END_DATE": {
+          "REQUIRED": "End Date required",
+          "INVALID_FORMAT": "End Date invalid. The date must be in the format '{{ requiredFormat }}'"
+        }
+      },
+      "ARIA_LABEL": {
+        "NUMBER_INPUT": "Number input"
+      }
+    },
+    "SEARCH_PROPERTIES": {
+      "FILE_SIZE": "File Size",
+      "FILE_SIZE_PLACEHOLDER": "Enter file size",
+      "FILE_SIZE_OPERATOR": {
+        "AT_LEAST": "At Least",
+        "AT_MOST": "At Most",
+        "EXACTLY": "Exactly"
+      },
+      "FILE_SIZE_UNIT_ABBREVIATION": {
+        "KB": "KB",
+        "MB": "MB",
+        "GB": "GB"
+      },
+      "FILE_TYPE": "File Type",
+      "FILE_TYPE_PLACEHOLDER": "Add file type",
+      "ACCESSIBILITY": {
+        "CONDITION": "Condition",
+        "SIZE_VALUE": "File size value",
+        "UNIT": "Unit"
+      }
     }
   },
   "PERMISSION": {
@@ -425,7 +498,9 @@
       "MODIFIED_DATE": "変更日",
       "CONTENT_TYPE": "コンテンツタイプ",
       "TAGS": "タグ",
-      "ADD_TAG_TOOLTIP": "タグの追加"
+      "NO_TAGS_ADDED": "There are currently no tags added",
+      "NO_ITEMS_MESSAGE": "There are currently no {{ groupTitle }} added",
+      "SAVE_OR_DISCARD_CHANGES": "Save or discard changes to continue"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
@@ -459,19 +534,20 @@
     "LINK-WITH-EXPIRY-SETTINGS": "有効期限を設定した新しいリンクが作成されました",
     "EXPIRES": "有効期限",
     "LINK-EXPIRY-DATE": "リンク有効期限",
-    "EXPIRATION-LABEL": "有効期限",
+    "EXPIRATION-LABEL": "Expiration Date. Enter date in MM/DD/YYYY format",
     "EXPIRATION-PLACEHOLDER": "MM/DD/YYYY",
     "CLIPBOARD-MESSAGE": "リンクがクリップボードにコピーされました",
     "CLOSE": "閉じる",
     "COPY_BUTTON_LABEL": "リンクのコピー",
     "CONFIRMATION": {
       "DIALOG-TITLE": "共有リンクの削除",
-      "MESSAGE": "このリンクは削除され、次回このファイルを共有するときに新しいリンクが作成されます。",
+      "MESSAGE": "このリンクは削除され、次回このファイルを共有するときに新しいリンクが作成されます",
       "CANCEL": "キャンセル",
       "REMOVE": "削除"
     },
     "UNSHARE_ERROR": "このファイルの共有解除中にエラーが発生しました",
-    "UNSHARE_PERMISSION_ERROR": "このファイルの共有を解除する権限がありません。"
+    "UNSHARE_PERMISSION_ERROR": "このファイルの共有を解除する権限がありません",
+    "INVALID_DATE_ERROR": "Invalid date"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
@@ -490,8 +566,10 @@
       "ADD-ACTION": "追加",
       "CLOSE-ACTION": "キャンセル",
       "BASE-DIALOG-TITLE": "追加するグループまたはメンバーの検索...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "Add user or group permission",
       "EVERYONE": "全員",
-      "USER-GROUP-LIST": "ユーザーまたはグループのリスト"
+      "USER-GROUP-LIST": "ユーザーまたはグループのリスト",
+      "REMOVE_USER_GROUP": "削除"
     },
     "COLUMN": {
       "NAME": "ユーザーとグループ({{ count }})",
@@ -535,14 +613,25 @@
       "NOT-ALLOWED": "権限を変更することはできません"
     }
   },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "Group icon",
+    "GROUP_USER_SELECTED_ALT": "Selected group or user icon"
+  },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "ノード ID が指定されていません。",
+    "MISSING-ID": "ノード ID が指定されていません！",
     "ACCESSIBILITY": {
       "ARIA_LABEL": "{{ name }} を切り替えます"
     }
   },
   "ADF-TREE": {
-    "LOAD-MORE-BUTTON": "もっと読み込む {{ name }}"
+    "LOAD-MORE-BUTTON": "もっと読み込む {{ name }}",
+    "ACTIONS": {
+      "TOOLTIP": "Open actions menu"
+    },
+    "ARIA": {
+      "SELECTED": "{{ name }} selected",
+      "DESELECTED": "{{ name }} deselected"
+    }
   },
   "LIBRARY": {
     "DIALOG": {
@@ -571,19 +660,21 @@
       "MODERATED": "条件付き公開"
     },
     "HINTS": {
-      "SITE_TITLE_EXISTS": "ライブラリ名はすでに使用されています"
+      "SITE_TITLE_EXISTS": "ライブラリ名は既に使用されています"
     },
     "ERRORS": {
-      "GENERIC": "問題が発生しました",
+      "GENERIC": "問題の発生",
       "EXISTENT_SITE": "このライブラリ ID は使用できません。別のライブラリ ID を使用してください。",
-      "CONFLICT": "このライブラリ ID はすでに使われています。ごみ箱を確認してください。",
+      "CONFLICT": "このライブラリ ID は既に使われています。ごみ箱をチェックしてください。",
       "ID_TOO_LONG": "URL 名は 72 文字以内で入力してください",
       "DESCRIPTION_TOO_LONG": "説明は 512 文字以内で入力してください",
       "TITLE_TOO_LONG": "タイトルは 256 文字以内で入力してください",
       "TITLE_TOO_SHORT": "タイトルは 2 文字以上でなければなりません",
       "ILLEGAL_CHARACTERS": "英数字だけを使用してください",
-      "ONLY_SPACES": "ライブラリ名をスペース (空白文字) だけにすることはできません",
-      "LIBRARY_UPDATE_ERROR": "ライブラリのプロパティの更新中にエラーが発生しました"
+      "ONLY_SPACES": "ライブラリ名にスペースだけを含めることはできません",
+      "LIBRARY_UPDATE_ERROR": "ライブラリのプロパティの更新中にエラーが発生しました",
+      "NAME_REQUIRED": "Library name is required",
+      "ID_REQUIRED": "Library ID is required"
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "ライブラリのプロパティが更新されました"
@@ -591,8 +682,11 @@
   },
   "BREADCRUMB": {
     "ARIA-LABEL": {
-      "BREADCRUMB": "階層リンク",
-      "DROPDOWN": "ドロップダウン"
+      "BREADCRUMB": "Breadcrumb navigation",
+      "DROPDOWN": "Open breadcrumb menu for {{folderName}}"
+    },
+    "HEADER": {
+      "SELECTED": "選択された ({{ count }})"
     }
   },
   "NAME_COLUMN_LINK": {
@@ -633,6 +727,14 @@
       "JOINED": "ライブラリに参加しました",
       "JOIN_CANCELED": "ライブラリへの参加リクエストをキャンセルしました",
       "JOIN_REQUESTED": "このライブラリへの参加リクエストが送信されました"
+    }
+  },
+  "NODE_FAVORITE_DIRECTIVE": {
+    "MESSAGES": {
+      "NODE_ADDED": "{{ name }} がお気に入りに追加されました",
+      "NODES_ADDED": "{{ number }} 件のアイテムがお気に入りに追加されました",
+      "NODE_REMOVED": "{{ name }} がお気に入りから削除されました",
+      "NODES_REMOVED": "{{ number }} 件のアイテムがお気に入りから削除されました"
     }
   }
 }

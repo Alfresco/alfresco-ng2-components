@@ -1,51 +1,51 @@
 {
   "ANALYTICS": {
-    "TITLE": "分析",
+    "TITLE": "ANALYTICS",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "ウィジェットタイプが不明です",
-      "FILL-PARAMETER": "レポートオプションから選択してください",
-      "NO-DATA-FOUND": "データが見つかりません",
-      "ZERO-DATA-FOUND": "ゼロ (0) の値しかありません",
-      "ICON-SETTING": "設定",
+      "UNKNOWN-WIDGET-TYPE": "UNKNOWN WIDGET TYPE",
+      "FILL-PARAMETER": "Choose from the report options",
+      "NO-DATA-FOUND": "No data found",
+      "ZERO-DATA-FOUND": "There are only zero values",
+      "ICON-SETTING": "Settings",
       "ICON-SAVE": "保存",
       "ICON-DELETE": "削除",
-      "ICON-EXPORT-CSV": "エクスポート"
+      "ICON-EXPORT-CSV": "Export"
     }
   },
   "__KEY_REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-DEFINITION-OVERVIEW": {
-        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "プロセス定義の合計数",
-        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "プロセスインスタンスの合計数",
-        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "アクティブなプロセスインスタンスの合計数",
-        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "完了したプロセスインスタンスの合計数"
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Total number of process definitions",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Total number of process instances",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Total number of active process instances",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Total number of completed process instances"
       }
     }
   },
   "REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "開始イベントやゲートウェイなどのパススルーステップを含める"
+        "TYPE-FILTERING": "Include pass through steps such as start events and gateways"
       },
       "PROCESS-INSTANCES-OVERVIEW": {
-        "PROCESS-DEFINITION": "プロセス定義",
-        "DATE-RANGE": "日付範囲",
-        "SLOW-PROC-INST-NUMBER": "最も遅いプロセスインスタンスの表示数?"
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "SLOW-PROC-INST-NUMBER": "How many of the slowest process instances should be displayed?"
       },
       "TASK-OVERVIEW": {
-        "PROCESS-DEFINITION": "プロセス定義",
-        "DATE-RANGE": "日付範囲",
-        "DATE-RANGE-INTERVAL": "日付範囲で並べ替え"
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "DATE-RANGE-INTERVAL": "Group dates by"
       },
       "TASK-SLA": {
-        "TASK": "タスク",
-        "PROCESS-DEFINITION": "プロセス定義",
-        "DATE-RANGE": "日付範囲",
-        "SLA-DURATION": "SLA に定義されている完了日時"
+        "TASK": "Task",
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "SLA-DURATION": "SLA required completion time"
       }
     },
-    "PROCESS-STATUS": "プロセスのステータス",
-    "TASK-STATUS": "タスクのステータス"
+    "PROCESS-STATUS": "Process status",
+    "TASK-STATUS": "Task status"
   },
-  "DIAGRAMS": "図"
+  "DIAGRAMS": "Diagrams"
 }

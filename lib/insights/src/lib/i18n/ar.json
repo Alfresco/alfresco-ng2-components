@@ -1,12 +1,12 @@
 {
   "ANALYTICS": {
-    "TITLE": "تحليلات",
+    "TITLE": "التحليلات",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "نوع عنصر واجهة مستخدم غير معروف",
+      "UNKNOWN-WIDGET-TYPE": "نوع الودجة غير معروف",
       "FILL-PARAMETER": "اختر من خيارات التقرير",
       "NO-DATA-FOUND": "لم يتم العثور على بيانات",
-      "ZERO-DATA-FOUND": "توجد القيم الصفرية فقط",
-      "ICON-SETTING": "إعدادات",
+      "ZERO-DATA-FOUND": "هناك فقط قيم صفرية",
+      "ICON-SETTING": "الإعدادات",
       "ICON-SAVE": "حفظ",
       "ICON-DELETE": "حذف",
       "ICON-EXPORT-CSV": "تصدير"
@@ -25,12 +25,12 @@
   "REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "تضمين المرور عبر الخطوات مثل أحداث البدء والبوابات"
+        "TYPE-FILTERING": "تضمين الخطوات العابرة مثل أحداث البدء والبوابات"
       },
       "PROCESS-INSTANCES-OVERVIEW": {
         "PROCESS-DEFINITION": "تعريف العملية",
         "DATE-RANGE": "نطاق التاريخ",
-        "SLOW-PROC-INST-NUMBER": "كم عدد مثيلات العملية الأبطأ التي ينبغي عرضها؟"
+        "SLOW-PROC-INST-NUMBER": "كم عدد مثيلات العملية الأبطأ التي يجب عرضها؟"
       },
       "TASK-OVERVIEW": {
         "PROCESS-DEFINITION": "تعريف العملية",
@@ -41,11 +41,11 @@
         "TASK": "مهمة",
         "PROCESS-DEFINITION": "تعريف العملية",
         "DATE-RANGE": "نطاق التاريخ",
-        "SLA-DURATION": "وقت إكمال SLA المطلوب"
+        "SLA-DURATION": "وقت الإنجاز المطلوب لاتفاقية مستوى الخدمة"
       }
     },
     "PROCESS-STATUS": "حالة العملية",
     "TASK-STATUS": "حالة المهمة"
   },
-  "DIAGRAMS": "مخططات"
+  "DIAGRAMS": "المخططات"
 }
