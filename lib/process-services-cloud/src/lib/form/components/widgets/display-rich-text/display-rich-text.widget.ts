@@ -22,7 +22,7 @@ import { BaseDisplayTextWidgetComponent, FormExpressionService } from '@alfresco
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { RichTextParserService } from '../../../services/rich-text-parser.service';
-import { resolveRichTextExpressions } from './rich-text-expression-resolver';
+import { hasResolvableRichTextExpressions, resolveRichTextExpressions } from './rich-text-expression-resolver';
 
 export const RICH_TEXT_PARSER_TOKEN = new InjectionToken<RichTextParserService>('RichTextParserService', {
     factory: () => new RichTextParserService()
@@ -79,9 +79,10 @@ export class DisplayRichTextWidgetComponent extends BaseDisplayTextWidgetCompone
     }
 
     private getAuthoredExpressionTemplate(): string | undefined {
-        const authoredTemplate = JSON.stringify(this.field?.authoredValue ?? null);
+        const authoredValue = this.field?.authoredValue ?? null;
+        const isExpressionTemplate = hasResolvableRichTextExpressions(authoredValue, (content) => this.expressions.hasExpressions(content));
 
-        return this.expressions.hasExpressions(authoredTemplate) ? authoredTemplate : undefined;
+        return isExpressionTemplate ? JSON.stringify(authoredValue) : undefined;
     }
 
     private renderAuthoredExpressionTemplate(): void {

@@ -18,14 +18,17 @@
 import { DisplayTextWidgetSettings, FormExpressionService, FormFieldTypes, FormModel, FormValues, ROW_ID_PREFIX } from '@alfresco/adf-core';
 import { isObservable, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { resolveRichTextExpressions } from '../components/widgets/display-rich-text/rich-text-expression-resolver';
+import {
+    hasResolvableRichTextExpressions,
+    resolveRichTextExpressions
+} from '../components/widgets/display-rich-text/rich-text-expression-resolver';
 
 type SubmissionRow = Record<string, unknown>;
 
 const isSubmissionRow = (value: unknown): value is SubmissionRow => typeof value === 'object' && value !== null && !Array.isArray(value);
 
 const isExpressionTemplate = (authoredValue: unknown, expressions: FormExpressionService): boolean =>
-    expressions.hasExpressions(JSON.stringify(authoredValue ?? null));
+    hasResolvableRichTextExpressions(authoredValue, (content) => expressions.hasExpressions(content));
 
 export interface FormCloudSubmissionValuesOptions {
     enableExpressionEvaluation: boolean;
