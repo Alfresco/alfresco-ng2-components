@@ -463,6 +463,31 @@ describe('TaskListCloudComponent', () => {
             configureTestingModule('GET');
         });
 
+        it('should run appNameSubject on appInit', () => {
+            const appNameSubjectSpy = spyOn(component['appNameSubject$'], 'next');
+            component.appName = 'mock-app-name';
+            fixture.detectChanges();
+            expect(appNameSubjectSpy).toHaveBeenCalledWith('mock-app-name');
+            expect(appNameSubjectSpy).toHaveBeenCalledTimes(1);
+        });
+
+        it('should run appNameSubject on appInit twice on appInit with appName change, but getPreference only once', () => {
+            const appNameSubjectSpy = spyOn(component['appNameSubject$'], 'next').and.callThrough();
+            const retrieveTasksPreferencesSpy = spyOn(component as any, 'retrieveTasksPreferences').and.callThrough();
+            const appNameChange = new SimpleChange(undefined, 'mock-app-name', true);
+
+            component.appName = 'mock-app-name';
+            component.ngOnChanges({
+                appName: appNameChange
+            });
+
+            fixture.detectChanges();
+            expect(appNameSubjectSpy).toHaveBeenCalledTimes(2);
+
+            expect(retrieveTasksPreferencesSpy).toHaveBeenCalledWith('mock-app-name');
+            expect(retrieveTasksPreferencesSpy).toHaveBeenCalledTimes(1);
+        });
+
         it('should be able to inject TaskListCloudService instance', () => {
             fixture.detectChanges();
 
