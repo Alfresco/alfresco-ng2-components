@@ -30,6 +30,9 @@ updates:
       - dependency-name: "pdfjs-dist"
       - dependency-name: "@types/*"
       - dependency-name: "typescript"
+      # Important: Always update @angular/* and @angular-devkit/* together.
+      - dependency-name: "@angular-devkit/*"
+      - dependency-name: "@angular/*"
 
   - package-ecosystem: "github-actions"
     directories:
