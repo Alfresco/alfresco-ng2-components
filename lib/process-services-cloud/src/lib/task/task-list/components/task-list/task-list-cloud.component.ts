@@ -32,7 +32,7 @@ import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../.
 import { PreferenceCloudServiceInterface } from '../../../../services/preference-cloud.interface';
 import { TaskListCloudServiceInterface } from '../../../../services/task-list-cloud.service.interface';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
-import { filter, map, switchMap, take, tap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { VariableMapperService } from '../../../../services/variable-mapper.sevice';
 import { ProcessListDataColumnCustomData } from '../../../../models/data-column-custom-data';
 import { TaskCloudModel } from '../../../../models/task-cloud.model';
@@ -273,18 +273,23 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         const cloudPreferenceService = inject<PreferenceCloudServiceInterface>(TASK_LIST_PREFERENCES_SERVICE_TOKEN);
         super(PRESET_KEY, cloudPreferenceService);
 
-        combineLatest([this.isLoadingPreferences$, this.isColumnSchemaCreated$, this.fetchProcessesTrigger$])
+        combineLatest([
+            this.isLoadingPreferences$.pipe(distinctUntilChanged()),
+            this.isColumnSchemaCreated$.pipe(distinctUntilChanged()),
+            this.fetchProcessesTrigger$
+        ])
             .pipe(
-                tap(() => this.isReloadingSubject$.next(true)),
                 filter(([isLoadingPreferences, isColumnSchemaCreated]) => !isLoadingPreferences && !!isColumnSchemaCreated),
-                switchMap(() => {
+                map(() => (this.searchApiMethod === 'POST' ? this.createTaskListRequestNode() : this.createRequestNode())),
+                // avoid firing identical requests when the request node did not actually change
+                distinctUntilChanged((previous, current) => JSON.stringify(previous) === JSON.stringify(current)),
+                tap(() => this.isReloadingSubject$.next(true)),
+                switchMap((requestNode) => {
                     if (this.searchApiMethod === 'POST') {
-                        const requestNode = this.createTaskListRequestNode();
-                        return this.taskListCloudService.fetchTaskList(requestNode).pipe(take(1));
+                        return this.taskListCloudService.fetchTaskList(requestNode as TaskListRequestModel).pipe(take(1));
                     } else {
-                        const requestNode = this.createRequestNode();
-                        this.requestNode = requestNode;
-                        return this.taskListCloudService.getTaskByRequest(requestNode);
+                        this.requestNode = requestNode as TaskQueryCloudRequestModel;
+                        return this.taskListCloudService.getTaskByRequest(requestNode as TaskQueryCloudRequestModel);
                     }
                 }),
                 takeUntilDestroyed()
