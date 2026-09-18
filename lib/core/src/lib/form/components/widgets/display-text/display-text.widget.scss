@@ -1,5 +1,8 @@
 .adf-display-text-widget {
     white-space: pre-wrap;
+    font-size: var(--adf-readonly-text-font-size, var(--mat-sys-body-medium-size));
+    font-weight: var(--adf-readonly-text-font-weight, var(--mat-sys-body-medium-weight));
+    color: var(--adf-readonly-text-color, var(--mat-sys-on-surface));
     line-height: normal;
     word-break: break-word;
     position: relative;
