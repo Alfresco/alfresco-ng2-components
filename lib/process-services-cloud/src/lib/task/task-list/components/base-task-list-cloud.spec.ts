@@ -19,7 +19,7 @@ import { NoopAuthModule } from '@alfresco/adf-core';
 import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { TaskListCloudComponent } from './task-list/task-list-cloud.component';
@@ -56,40 +56,34 @@ describe('BaseTaskListCloudComponent - appNameSubject integration', () => {
     });
 
     afterEach(() => {
+        (preferencesService.getPreferences as jasmine.Spy).calls.reset();
         fixture.destroy();
     });
 
-    it('should call retrieveTasksPreferences when appName changes in ngOnChanges', fakeAsync(() => {
-        spyOn(preferencesService, 'getPreferences').and.returnValue(of({}));
-
+    it('should call retrieveTasksPreferences when appName changes in ngOnChanges', () => {
         const appNameChange = new SimpleChange('old', 'new', false);
         component.ngOnChanges({
             appName: appNameChange
         });
-        tick();
+
+        fixture.detectChanges();
 
         expect(preferencesService.getPreferences).toHaveBeenCalledWith('new');
-    }));
+    });
 
-    it('should call retrieveTasksPreferences when appName is set in ngAfterContentInit', fakeAsync(() => {
-        spyOn(preferencesService, 'getPreferences').and.returnValue(of({}));
+    it('should call retrieveTasksPreferences when appName is set in ngAfterContentInit', () => {
         component.appName = 'init-app';
 
         component.ngAfterContentInit();
-        tick();
 
         expect(preferencesService.getPreferences).toHaveBeenCalledWith('init-app');
-    }));
+    });
 
-    it('should filter duplicate appName values via distinctUntilChanged', fakeAsync(() => {
-        spyOn(preferencesService, 'getPreferences').and.returnValue(of({}));
-
+    it('should filter duplicate appName values via distinctUntilChanged', () => {
         component['appNameSubject$'].next('same-app');
-        tick();
         component['appNameSubject$'].next('same-app');
-        tick();
 
         expect(preferencesService.getPreferences).toHaveBeenCalledTimes(1);
         expect(preferencesService.getPreferences).toHaveBeenCalledWith('same-app');
-    }));
+    });
 });
