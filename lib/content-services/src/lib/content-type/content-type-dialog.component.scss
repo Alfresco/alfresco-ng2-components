@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 .adf {
     &-content-type-dialog {
         & .adf-content-type-accordion {
@@ -19,6 +21,10 @@
     }
 
     &-content-type-dialog-apply-button {
-        color: var(--mat-sys-primary);
+        @include mat.button-overrides(
+            (
+                text-label-text-color: var(--theme-primary-color)
+            )
+        );
     }
 }
