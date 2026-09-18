@@ -282,14 +282,13 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         ])
             .pipe(
                 filter(([isLoadingPreferences, isColumnSchemaCreated]) => !isLoadingPreferences && !!isColumnSchemaCreated),
-                map(([, , reloadNonce]) => ({
-                    reloadNonce,
-                    requestNode: this.searchApiMethod === 'POST' ? this.createTaskListRequestNode() : this.createRequestNode()
-                })),
+                map(([, , reloadNonce]) => {
+                    const requestNode = this.searchApiMethod === 'POST' ? this.createTaskListRequestNode() : this.createRequestNode();
+                    return { reloadNonce, requestNode, requestKey: JSON.stringify(requestNode) };
+                }),
                 // skip identical requests triggered by schema/preference re-emissions, but always refetch on an explicit reload()
                 distinctUntilChanged(
-                    (previous, current) =>
-                        previous.reloadNonce === current.reloadNonce && JSON.stringify(previous.requestNode) === JSON.stringify(current.requestNode)
+                    (previous, current) => previous.reloadNonce === current.reloadNonce && previous.requestKey === current.requestKey
                 ),
                 tap(() => this.isReloadingSubject$.next(true)),
                 switchMap(({ requestNode }) => {
