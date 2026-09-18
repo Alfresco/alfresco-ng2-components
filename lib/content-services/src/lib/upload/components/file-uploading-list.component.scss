@@ -2,3 +2,19 @@
     display: flex;
     flex-direction: column;
 }
+
+.adf-upload-list {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.adf-upload-list-item {
+    list-style: none;
+
+    &:not(:first-child) {
+        display: block;
+        border-top: 1px solid var(--mat-sys-outline-variant);
+    }
+}
