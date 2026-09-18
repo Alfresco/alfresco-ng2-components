@@ -1,51 +1,51 @@
 {
   "ANALYTICS": {
-    "TITLE": "ANALYTICS",
+    "TITLE": "Analyse",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "UNKNOWN WIDGET TYPE",
-      "FILL-PARAMETER": "Choose from the report options",
-      "NO-DATA-FOUND": "No data found",
-      "ZERO-DATA-FOUND": "There are only zero values",
-      "ICON-SETTING": "Settings",
+      "UNKNOWN-WIDGET-TYPE": "Ukendt widgettype",
+      "FILL-PARAMETER": "Vælg fra rapportindstillingerne",
+      "NO-DATA-FOUND": "Der blev ikke fundet nogen data",
+      "ZERO-DATA-FOUND": "Der er kun nul-værdier",
+      "ICON-SETTING": "Indstillinger",
       "ICON-SAVE": "Gem",
       "ICON-DELETE": "Slet",
-      "ICON-EXPORT-CSV": "Export"
+      "ICON-EXPORT-CSV": "Eksportér"
     }
   },
   "__KEY_REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-DEFINITION-OVERVIEW": {
-        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Total number of process definitions",
-        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Total number of process instances",
-        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Total number of active process instances",
-        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Total number of completed process instances"
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Det samlede antal procesdefinitioner",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Det samlede antal procesforekomster",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Det samlede antal aktive procesforekomster",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Det samlede antal fuldførte procesforekomster"
       }
     }
   },
   "REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "Include pass through steps such as start events and gateways"
+        "TYPE-FILTERING": "Inkluder gennemløbstrin, f.eks. starthændelser og gateways"
       },
       "PROCESS-INSTANCES-OVERVIEW": {
-        "PROCESS-DEFINITION": "Process definition",
-        "DATE-RANGE": "Date range",
-        "SLOW-PROC-INST-NUMBER": "How many of the slowest process instances should be displayed?"
+        "PROCESS-DEFINITION": "Procesdefinition",
+        "DATE-RANGE": "Dateinterval",
+        "SLOW-PROC-INST-NUMBER": "Hvor mange af de langsomste procesforekomster skal der vises?"
       },
       "TASK-OVERVIEW": {
-        "PROCESS-DEFINITION": "Process definition",
-        "DATE-RANGE": "Date range",
-        "DATE-RANGE-INTERVAL": "Group dates by"
+        "PROCESS-DEFINITION": "Procesdefinition",
+        "DATE-RANGE": "Dateinterval",
+        "DATE-RANGE-INTERVAL": "Gruppér datoer efter"
       },
       "TASK-SLA": {
-        "TASK": "Task",
-        "PROCESS-DEFINITION": "Process definition",
-        "DATE-RANGE": "Date range",
-        "SLA-DURATION": "SLA required completion time"
+        "TASK": "Opgave",
+        "PROCESS-DEFINITION": "Procesdefinition",
+        "DATE-RANGE": "Dateinterval",
+        "SLA-DURATION": "Påkrævet fuldførelsestid ifølge serviceniveauaftale"
       }
     },
-    "PROCESS-STATUS": "Process status",
-    "TASK-STATUS": "Task status"
+    "PROCESS-STATUS": "Processtatus",
+    "TASK-STATUS": "Opgavestatus"
   },
-  "DIAGRAMS": "Diagrams"
+  "DIAGRAMS": "Diagrammer"
 }

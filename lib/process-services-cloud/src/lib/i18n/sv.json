@@ -1,127 +1,125 @@
 {
   "ADF_CLOUD_PROCESS_LIST": {
     "MESSAGES": {
-      "TITLE": "No Processes Found",
-      "SUBTITLE": "Create a new process that you want to easily find later",
-      "NONE": "No process instance filter selected."
+      "TITLE": "Inga processer hittades",
+      "SUBTITLE": "Skapa en ny process som du enkelt hittar senare",
+      "NONE": "Inget processinstansfilter valt"
     },
     "PROPERTIES": {
-      "NAME": "Process Name",
+      "NAME": "Processnamn",
       "CREATED": "Skapad",
       "STATUS": "Status",
-      "START_DATE": "Start Date",
-      "COMPLETED_DATE": "Completed Date",
-      "COMPLETED_BY": "Completed By",
-      "ID": "Id",
-      "INITIATOR": "Initiator",
-      "STARTED_BY": "Started by",
-      "APP_NAME": "Application Name",
-      "BUSINESS_KEY": "Business Key",
+      "START_DATE": "Startdatum",
+      "COMPLETED_DATE": "Datum slutförd",
+      "COMPLETED_BY": "Slutförd av",
+      "ID": "ID",
+      "INITIATOR": "Initerare",
+      "STARTED_BY": "Startad av",
+      "APP_NAME": "Programnamn",
+      "BUSINESS_KEY": "Affärsnyckel",
       "DESCRIPTION": "Beskrivning",
-      "LAST_MODIFIED": "Last Modified",
-      "PROCESS_NAME": "Process Name",
-      "PROCESS_DEFINITION_NAME": "Process Definition Name",
-      "PARENT_TASK_ID": "Parent Task Id",
-      "PROCESS_DEF_ID": "Process Definition Id",
-      "PROCESS_DEF_KEY": "Process Definition Key",
-      "APP_VERSION": "App Version"
+      "LAST_MODIFIED": "Senast ändrad",
+      "PROCESS_NAME": "Processnamn",
+      "PROCESS_DEFINITION_NAME": "Processdefinitionsnamn",
+      "PARENT_TASK_ID": "Överordnad uppgift ID",
+      "PROCESS_DEF_ID": "Processdefinitions-ID",
+      "PROCESS_DEF_KEY": "Processdefinitionsnyckel",
+      "APP_VERSION": "Version av program"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Starta process",
-      "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
+      "NO_PROCESS_DEFINITIONS": "Du kan inte starta en process eftersom inga processdefinitioner är tillgängliga",
       "FORM": {
         "TITLE": "Starta process",
         "LABEL": {
-          "TYPE": "Select Process",
-          "NAME": "Process Name"
+          "TYPE": "Välj process",
+          "NAME": "Processnamn"
         },
-        "TYPE_PLACEHOLDER": "Choose one...",
+        "TYPE_PLACEHOLDER": "Välj en...",
         "ACTION": {
           "START": "Starta process",
           "CANCEL": "Avbryt"
         },
-        "SELECT_PROCESS_DROPDOWN": "Select Process Dropdown BUTTON"
+        "SELECT_PROCESS_DROPDOWN": "RULLGARDINSKNAPP för val av process"
       },
       "ERROR": {
-        "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
-        "START": "Couldn't start new process instance, check you have access.",
-        "PROCESS_NAME_REQUIRED": "Process Name is required",
-        "PROCESS_DEFINITION_REQUIRED": "Process Definition is required",
-        "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
-        "SPACE_VALIDATOR": "Cannot begin or end with a space."
+        "LOAD_PROCESS_DEFS": "Kunde inte läsa in processdefinitioner, kontrollera att du har åtkomst.",
+        "START": "Kunde inte starta ny processinstans, kontrollera att du har åtkomst.",
+        "PROCESS_NAME_REQUIRED": "Processnamn krävs",
+        "PROCESS_DEFINITION_REQUIRED": "Processdefinition krävs",
+        "MAXIMUM_LENGTH": "Längd överskriden, {{characters}} tecken max.",
+        "SPACE_VALIDATOR": "Får inte börja eller sluta med ett mellanslag."
       }
-    },
-    "LOADING": "Läser in"
+    }
   },
   "ADF_CLOUD_TASK_LIST": {
     "START_TASK": {
       "FORM": {
-        "TITLE": "Start Task",
+        "TITLE": "Starta uppgift",
         "LABEL": {
           "NAME": "Namn",
           "DESCRIPTION": "Beskrivning",
-          "ATTACHFORM": "Attach Form",
-          "ASSIGNEE": "Assignee",
-          "CANDIDATE_GROUP": "Candidate Group",
-          "DATE": "Choose Date",
-          "PRIORITY": "Priority"
+          "ATTACHFORM": "Bifoga formulär",
+          "ASSIGNEE": "Tilldelad användare",
+          "CANDIDATE_GROUP": "Kandidatgrupp",
+          "DATE": "Välj datum",
+          "PRIORITY": "Prioritet"
         },
         "ACTION": {
-          "START": "Start",
+          "START": "Starta",
           "CANCEL": "Avbryt"
         }
       }
     },
     "PROPERTIES": {
-      "NAME": "Task Name",
-      "ASSIGNEE": "Assignee",
-      "ID": "Id",
+      "NAME": "Uppgiftsnamn",
+      "ASSIGNEE": "Tilldelad användare",
+      "ID": "ID",
       "STATUS": "Status",
-      "PRIORITY": "Priority",
+      "PRIORITY": "Prioritet",
       "CREATED_DATE": "Skapad datum",
-      "LAST_MODIFIED": "Last Modified",
-      "DUE_DATE": "Due Date",
+      "LAST_MODIFIED": "Senast ändrad",
+      "DUE_DATE": "Förfallodatum",
       "CREATED": "Skapad",
       "JSON_CELL": "Json",
-      "COMPLETED_BY": "Completed By",
+      "COMPLETED_BY": "Slutförd av",
       "PRIORITY_VALUES": {
         "NONE": "Ingen",
-        "LOW": "Low",
-        "NORMAL": "Normal",
-        "HIGH": "High"
+        "LOW": "Låg",
+        "NORMAL": "Medium",
+        "HIGH": "Hög"
       },
       "DESCRIPTION": "Beskrivning"
     },
     "LIST": {
       "MESSAGES": {
-        "TITLE": "No Tasks Found",
-        "SUBTITLE": "Create a new task that you want to easily find later",
-        "NONE": "No task lists found"
+        "TITLE": "Inga uppgifter hittades",
+        "SUBTITLE": "Skapa en ny uppgift som du enkelt hittar senare",
+        "NONE": "Inga uppgiftslistor hittades"
       }
-    },
-    "LOADING": "Läser in"
+    }
   },
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {
-      "ACTIVITY_NAME": "Activity name",
+      "ACTIVITY_NAME": "Aktivitetsnamn",
       "ACTIVITY_TYPE": "Status",
-      "ID": "Id",
-      "COMPLETED_DATE": "Completed date",
-      "STARTED_DATE": "Started date",
+      "ID": "ID",
+      "COMPLETED_DATE": "Datum slutförd",
+      "STARTED_DATE": "Datum startad",
       "STATUS": "Status"
     }
   },
   "ADF_CLOUD_TASK_FILTERS": {
-    "MY_TASKS": "My Tasks",
-    "QUEUED_TASKS": "Queued Tasks",
-    "COMPLETED_TASKS": "Completed Tasks",
+    "MY_TASKS": "Mina uppgifter",
+    "QUEUED_TASKS": "Köade uppgifter",
+    "COMPLETED_TASKS": "Slutförda uppgifter",
     "STATUS": {
       "ALL": "Alla",
       "CREATED": "Skapad",
-      "ASSIGNED": "Assigned",
-      "SUSPENDED": "Suspended",
-      "CANCELLED": "Cancelled",
-      "COMPLETED": "Completed"
+      "ASSIGNED": "Tilldelad",
+      "SUSPENDED": "Avstängd",
+      "CANCELLED": "Avbruten",
+      "COMPLETED": "Slutförd"
     },
     "DIRECTION": {
       "ASCENDING": "Stigande",
@@ -129,27 +127,27 @@
     }
   },
   "ADF_CLOUD_SERVICE_TASK_FILTERS": {
-    "ALL_SERVICE_TASKS": "All Service Tasks",
-    "ERRORED_TASKS": "Errored Tasks",
-    "COMPLETED_TASKS": "Completed Tasks",
+    "ALL_SERVICE_TASKS": "Alla serviceuppgifter",
+    "ERRORED_TASKS": "Uppgifter med fel",
+    "COMPLETED_TASKS": "Slutförda uppgifter",
     "STATUS": {
       "ALL": "Alla",
-      "STARTED": "Started",
-      "COMPLETED": "Completed",
-      "CANCELLED": "Cancelled",
-      "ERROR": "Error"
+      "STARTED": "Startade",
+      "COMPLETED": "Slutförd",
+      "CANCELLED": "Avbruten",
+      "ERROR": "Fel"
     }
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
     "ALL_PROCESSES": "Alla",
-    "RUNNING_PROCESSES": "Running",
-    "COMPLETED_PROCESSES": "Completed",
+    "RUNNING_PROCESSES": "Kör",
+    "COMPLETED_PROCESSES": "Slutförd",
     "STATUS": {
       "ALL": "Alla",
-      "RUNNING": "Running",
-      "SUSPENDED": "Suspended",
-      "CANCELLED": "Cancelled",
-      "COMPLETED": "Completed"
+      "RUNNING": "Kör",
+      "SUSPENDED": "Avstängd",
+      "CANCELLED": "Avbruten",
+      "COMPLETED": "Slutförd"
     },
     "DIRECTION": {
       "ASCENDING": "Stigande",
@@ -159,181 +157,180 @@
   "ADF_CLOUD_START_TASK": {
     "ERROR": {
       "MESSAGE": "Ange ett annat värde",
-      "REQUIRED": "Field required",
-      "DATE": "Date format DD/MM/YYYY",
-      "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max."
+      "REQUIRED": "Fält obligatoriskt",
+      "DATE": "Datumformat DD/MM/ÅÅÅÅ",
+      "MAXIMUM_LENGTH": "Längd överskriden, {{characters}} tecken max."
     }
   },
   "ADF_CLOUD_EDIT_TASK_FILTER": {
-    "TITLE": "Customize your filter",
-    "FILTER_NAME": "Filter name",
+    "TITLE": "Anpassa ditt filter",
+    "FILTER_NAME": "Filternamn",
     "TOOL_TIP": {
-      "SAVE": "Save filter",
-      "SAVE_AS": "Save filter as",
-      "DELETE": "Delete filter"
+      "SAVE": "Spara filter",
+      "SAVE_AS": "Spara filter som",
+      "DELETE": "Radera filter"
     },
     "LABEL": {
-      "APP_NAME": "ApplicationName",
-      "TASK_ID": "Task ID",
-      "PROCESS_DEF_NAME": "ProcessDefinitionName",
-      "PROCESS_DEF_ID": "ProcessDefinitionId",
+      "APP_NAME": "Programnamn",
+      "TASK_ID": "Uppgifts-ID",
+      "PROCESS_DEF_NAME": "Processdefinitionsnamn",
+      "PROCESS_DEF_ID": "Processdefinitions-ID",
       "STATUS": "Status",
-      "ASSIGNMENT": "Assignee",
-      "DIRECTION": "Direction",
-      "PROCESS_INSTANCE_ID": "ProcessInstanceId",
-      "TASK_NAME": "TaskName",
-      "PARENT_TASK_ID": "ParentTaskId",
-      "PRIORITY": "Priority",
-      "STAND_ALONE": "Standalone",
-      "LAST_MODIFIED_FROM": "LastModifiedFrom",
-      "LAST_MODIFIED_TO": "LastModifiedTo",
-      "OWNER": "Owner",
-      "DUE_DATE": "DueDate",
-      "SORT": "Sort",
-      "START_DATE": "StartDate",
-      "COMPLETED_BY": "Completed By",
-      "COMPLETED_DATE": "CompletedDate",
-      "CREATED_DATE": "CreatedDate",
-      "CANDIDATE_GROUPS": "CandidateGroups"
+      "ASSIGNMENT": "Tilldelad användare",
+      "DIRECTION": "Riktning",
+      "PROCESS_INSTANCE_ID": "Processinstans-ID",
+      "TASK_NAME": "Uppgiftsnamn",
+      "PARENT_TASK_ID": "Överordnad uppgift ID",
+      "PRIORITY": "Prioritet",
+      "STAND_ALONE": "Stand-alone",
+      "LAST_MODIFIED_FROM": "Senast ändrad från",
+      "LAST_MODIFIED_TO": "Senast ändrad till",
+      "OWNER": "Ägare",
+      "DUE_DATE": "Förfallodatum",
+      "SORT": "Sortera",
+      "START_DATE": "Startdatum",
+      "COMPLETED_BY": "Slutförd av",
+      "COMPLETED_DATE": "Slutförandedatum",
+      "CREATED_DATE": "Skapandedatum",
+      "CANDIDATE_GROUPS": "Kandidatgrupper"
     },
     "DIALOG": {
-      "TITLE": "Save filter as",
+      "TITLE": "Spara filter som",
       "SAVE": "Spara",
       "CANCEL": "Avbryt"
     }
   },
   "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
     "LABEL": {
-      "APP_NAME": "ApplicationName",
-      "SERVICE_TASK_ID": "ServiceTaskId",
-      "SERVICE_NAME": "ServiceName",
+      "APP_NAME": "Programnamn",
+      "SERVICE_TASK_ID": "ServiceuppgiftId",
+      "SERVICE_NAME": "Servicenamn",
       "ELEMENT_ID": "ElementId",
-      "PROCESS_DEF_NAME": "ProcessDefinitionName",
-      "PROCESS_DEF_ID": "ProcessDefinitionId",
-      "PROCESS_INSTANCE_ID": "ProcessInstanceId",
+      "PROCESS_DEF_NAME": "Processdefinitionsnamn",
+      "PROCESS_DEF_ID": "Processdefinitions-ID",
+      "PROCESS_INSTANCE_ID": "Processinstans-ID",
       "STATUS": "Status",
-      "DIRECTION": "Direction",
-      "ACTIVITY_NAME": "ActivityName",
-      "ACTIVITY_TYPE": "ActivityType",
-      "SORT": "Sort",
-      "STARTED_DATE": "StartedDate",
-      "COMPLETED_DATE": "CompletedDate"
+      "DIRECTION": "Riktning",
+      "ACTIVITY_NAME": "Aktivitetsnamn",
+      "ACTIVITY_TYPE": "Aktivitetstyp",
+      "SORT": "Sortera",
+      "STARTED_DATE": "Startdatum",
+      "COMPLETED_DATE": "Slutförandedatum"
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
-    "TITLE": "Customize your filter",
-    "FILTER_NAME": "Filter name",
+    "TITLE": "Anpassa ditt filter",
+    "FILTER_NAME": "Filternamn",
     "LABEL": {
-      "APP_NAME": "ApplicationName",
-      "PROCESS_INS_ID": "ProcessInstanceId",
+      "APP_NAME": "Programnamn",
+      "PROCESS_INS_ID": "Processinstans-ID",
       "STATUS": "Status",
-      "INITIATOR": "Initiator",
-      "ASSIGNMENT": "Assignee",
-      "SORT": "Sort",
-      "DIRECTION": "Direction",
-      "PROCESS_DEF_ID": "ProcessDefinitionId",
-      "PROCESS_DEF_NAME": "ProcessDefinitionName",
-      "PROCESS_DEF_KEY": "ProcessDefinitionKey",
-      "LAST_MODIFIED": "Last Modified",
-      "LAST_MODIFIED_DATE_FORM": "LastModifiedFrom",
-      "LAST_MODIFIED_TO": "LastModifiedTo",
-      "PROCESS_NAME": "Process Name",
-      "APP_VERSION": "AppVersion",
-      "STARTED_DATE": "Started Date",
-      "SUSPENDED_DATE": "Suspended Date",
-      "STARTED_BY": "Started by",
-      "COMPLETED_DATE": "Completed Date",
-      "MAIN_PROCESS_ID": "Main process id",
+      "INITIATOR": "Initerare",
+      "ASSIGNMENT": "Tilldelad användare",
+      "SORT": "Sortera",
+      "DIRECTION": "Riktning",
+      "PROCESS_DEF_ID": "Processdefinitions-ID",
+      "PROCESS_DEF_NAME": "Processdefinitionsnamn",
+      "PROCESS_DEF_KEY": "Processdefinitionsnyckel",
+      "LAST_MODIFIED": "Senast ändrad",
+      "LAST_MODIFIED_DATE_FORM": "Senast ändrad från",
+      "LAST_MODIFIED_TO": "Senast ändrad till",
+      "PROCESS_NAME": "Processnamn",
+      "APP_VERSION": "Version av program",
+      "STARTED_DATE": "Datum startad",
+      "SUSPENDED_DATE": "Avstängd datum",
+      "STARTED_BY": "Startad av",
+      "COMPLETED_DATE": "Datum slutförd",
       "DATE_RANGE": {
-        "NO_DATE": "No Date",
-        "TODAY": "Today",
-        "TOMORROW": "Tomorow",
-        "NEXT_7_DAYS": "Next 7 Days",
-        "WEEK": "This week",
-        "MONTH": "This month",
-        "QUARTER": "This quarter",
-        "YEAR": "This year",
-        "RANGE": "Date within"
+        "NO_DATE": "Inget datum",
+        "TODAY": "I dag",
+        "TOMORROW": "Imorgon",
+        "NEXT_7_DAYS": "Följande 7 dagar",
+        "WEEK": "Denna vecka",
+        "MONTH": "Denna månad",
+        "QUARTER": "Detta kvartal",
+        "YEAR": "Detta år",
+        "RANGE": "Datum inom"
       },
-      "DATE_RANGE_TITLE": "Start date - End date",
-      "START_DATE": "Start Date",
-      "END_DATE": "End date",
-      "ID": "Id",
-      "BUSINESS_KEY": "Business Key"
+      "DATE_RANGE_TITLE": "Startdatum – Slutdatum",
+      "START_DATE": "Startdatum",
+      "END_DATE": "Slutdatum",
+      "ID": "ID",
+      "BUSINESS_KEY": "Affärsnyckel"
     },
     "ERROR": {
-      "DATE": "Date format DD/MM/YYYY",
-      "INDALID_START_DATE": "Invalid start date",
-      "INDALID_END_DATE": "Invalid end date",
-      "INVALID_DATE_FILTER": "Date filter option is not supported"
+      "DATE": "Datumformat DD/MM/ÅÅÅÅ",
+      "INDALID_START_DATE": "Ogiltigt startdatum",
+      "INDALID_END_DATE": "Ogiltigt slutdatum",
+      "INVALID_DATE_FILTER": "Alternativet datumfilter stöds inte"
     },
     "TOOL_TIP": {
-      "SAVE": "Save filter",
-      "SAVE_AS": "Save filter as",
-      "DELETE": "Delete filter",
-      "RESTORE": "Restore filter"
+      "SAVE": "Spara filter",
+      "SAVE_AS": "Spara filter som",
+      "DELETE": "Radera filter",
+      "RESTORE": "Återställ filter"
     },
     "DIALOG": {
-      "TITLE": "Save filter as",
+      "TITLE": "Spara filter som",
       "SAVE": "Spara",
       "CANCEL": "Avbryt"
     }
   },
   "ADF_CLOUD_GROUPS": {
-    "SEARCH-GROUP": "Groups",
-    "MANDATORY": "Mandatory",
+    "SEARCH-GROUP": "Grupper",
+    "MANDATORY": "Obligatoriskt",
     "ERROR": {
-      "NOT_FOUND": "Group not found"
+      "NOT_FOUND": "Gruppen hittades inte"
     }
   },
   "ADF_CLOUD_USERS": {
     "ERROR": {
-      "NOT_FOUND": "No user found with the username {{userName}}"
+      "NOT_FOUND": "Ingen användare med användarnamnet {{userName}} hittades"
     }
   },
   "ADF_CLOUD_PEOPLE_GROUPS": {
     "ERROR": {
-      "INVALID_PATTERN": "Must match the pattern {{pattern}}",
-      "INVALID_MIN_LENGTH": "Must be at least {{requiredLength}} characters",
-      "INVALID_MAX_LENGTH": "Length exceeded, {{requiredLength}} characters max",
+      "INVALID_PATTERN": "Måste matcha mönstret {{pattern}}",
+      "INVALID_MIN_LENGTH": "Måste innehålla minst {{requiredLength}} tecken",
+      "INVALID_MAX_LENGTH": "För långt, max {{requiredLength}} tecken",
       "REQUIRED": "Fält obligatoriskt"
     }
   },
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
-      "CLAIM": "Claim",
-      "RELEASE": "Release"
+      "CLAIM": "Anta",
+      "RELEASE": "Avsäga"
     },
     "PROPERTIES": {
-      "TASK_NAME": "Task",
+      "TASK_NAME": "Uppgift",
       "THUMBNAIL": "Miniatyrbild",
-      "DURATION": "Duration",
-      "PARENT_TASK_ID": "Parent task id",
+      "DURATION": "Varaktighet",
+      "PARENT_TASK_ID": "Överordnad uppgift ID",
       "NAME": "Namn",
-      "ASSIGNEE": "Assignee",
-      "ASSIGNEE_DEFAULT": "No assignee",
-      "PRIORITY": "Priority",
-      "DUE_DATE": "Due Date",
-      "DUE_DATE_DEFAULT": "No date",
+      "ASSIGNEE": "Tilldelad användare",
+      "ASSIGNEE_DEFAULT": "Ingen tilldelad användare",
+      "PRIORITY": "Prioritet",
+      "DUE_DATE": "Förfallodatum",
+      "DUE_DATE_DEFAULT": "Inget datum",
       "STATUS": "Status",
-      "CATEGORY": "Category",
-      "CATEGORY_DEFAULT": "No category",
-      "PARENT_NAME": "Parent name",
-      "PARENT_NAME_DEFAULT": "No parent",
-      "CREATED_BY": "Created By",
+      "CATEGORY": "Kategori",
+      "CATEGORY_DEFAULT": "Ingen kategori",
+      "PARENT_NAME": "Överordnad namn",
+      "PARENT_NAME_DEFAULT": "Ingen överordnad",
+      "CREATED_BY": "Skapad av",
       "CREATED": "Skapad",
-      "END_DATE": "End date",
+      "END_DATE": "Slutdatum",
       "ID": "ID",
-      "PROCESS_INSTANCE_ID": "Process instance id",
-      "PROCESS_INSTANCE_ID_DEFAULT": "No process instance id",
+      "PROCESS_INSTANCE_ID": "Processinstans-ID",
+      "PROCESS_INSTANCE_ID_DEFAULT": "Ingen processinstans-ID",
       "DESCRIPTION": "Beskrivning",
       "DESCRIPTION_DEFAULT": "Ingen beskrivning",
-      "FORM_NAME": "Form Name",
-      "FORM_NAME_DEFAULT": "No form",
-      "CANDIDATE_USERS": "Candidate Users",
-      "CANDIDATE_USERS_DEFAULT": "No Candidate Users",
-      "CANDIDATE_GROUPS": "Candidate Groups",
-      "CANDIDATE_GROUPS_DEFAULT": "No Candidate Groups"
+      "FORM_NAME": "Formulärnamn",
+      "FORM_NAME_DEFAULT": "Inget formulär",
+      "CANDIDATE_USERS": "Kandidatanvändare",
+      "CANDIDATE_USERS_DEFAULT": "Inga kandidatanvändare",
+      "CANDIDATE_GROUPS": "Kandidatgrupper",
+      "CANDIDATE_GROUPS_DEFAULT": "Inga kandidatgrupper"
     },
     "FORM_VALIDATION": {
       "INVALID_FIELD": "Ange ett annat värde"
@@ -342,23 +339,23 @@
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
       "ID": "ID",
-      "NAME": "Process name",
-      "NAME_DEFAULT": "No name",
+      "NAME": "Processnamn",
+      "NAME_DEFAULT": "Inget namn",
       "DESCRIPTION": "Beskrivning",
       "DESCRIPTION_DEFAULT": "Ingen beskrivning",
       "STATUS": "Status",
-      "BUSINESS_KEY": "Business Key",
-      "INITIATOR": "Initiator",
-      "START_DATE": "Started",
-      "LAST_MODIFIED": "Updated",
-      "PARENT_ID": "Parent Id",
+      "BUSINESS_KEY": "Affärsnyckel",
+      "INITIATOR": "Initerare",
+      "START_DATE": "Startade",
+      "LAST_MODIFIED": "Uppdaterad",
+      "PARENT_ID": "Överordnad ID",
       "NONE": "Ingen"
     }
   },
   "ADF_CLOUD_TASK_FORM": {
     "EMPTY_FORM": {
-      "TITLE": "No form available",
-      "SUBTITLE": "Attach a form that can be viewed later",
+      "TITLE": "Inget formulär finns tillgängligt",
+      "SUBTITLE": "Bifoga ett formulär som kan visas senare",
       "BUTTONS": {
         "COMPLETE": "Slutför",
         "CANCEL": "Avbryt",
@@ -367,20 +364,20 @@
       }
     },
     "ERROR": {
-      "INVALID_DESTINATION_FOLDER_PATH": "Invalid destination folder path",
-      "DESTINATION_FOLDER_PATH_ERROR": "The destination path is incorrect or does not exist, rollback to -my- location"
+      "INVALID_DESTINATION_FOLDER_PATH": "Ogiltig sökväg för målmapp",
+      "DESTINATION_FOLDER_PATH_ERROR": "Målsökvägen är felaktig eller finns inte, återför till -min- plats"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
-    "RETRIEVE_METADATA": "Autofill Form"
+    "RETRIEVE_METADATA": "Fyll i formuläret automatiskt"
   },
   "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
-    "ASSIGNED_TO": "Assigned to",
-    "CURRENT_USER": "Assigned to me",
-    "UNASSIGNED": "Unassigned",
+    "ASSIGNED_TO": "Tilldelad till",
+    "CURRENT_USER": "Tilldelad till mig",
+    "UNASSIGNED": "Otilldelad",
     "NONE": "Ingen",
-    "CANDIDATE_GROUPS": "List of candidate groups",
-    "ASSIGNEE": "Assignee",
-    "ASSIGNMENT_TYPE": "Assignment type"
+    "CANDIDATE_GROUPS": "Lista över kandidatgrupper",
+    "ASSIGNEE": "Tilldelad användare",
+    "ASSIGNMENT_TYPE": "Uppgiftstyp"
   }
 }

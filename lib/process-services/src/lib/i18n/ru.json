@@ -1,152 +1,152 @@
 {
   "DIALOG": {
-    "SAVE_MESSAGE": "Click Save to add a report with the current settings to your reports list.",
+    "SAVE_MESSAGE": "Нажмите Сохранить, чтобы добавить отчет с текущими параметрами в список отчетов.",
     "EXPORT_MESSAGE": ""
   },
   "DATE-WIDGET": {
-    "START-DATE": "Start date",
-    "END-DATE": "End date",
+    "START-DATE": "Дата начала",
+    "END-DATE": "Дата окончания",
     "MESSAGES": {
-      "START-DATE-REQUIRED": "Start date is required",
-      "START-LESS-THAN-END-DATE": "Start date must be before end date"
+      "START-DATE-REQUIRED": "Необходимо указать дату начала",
+      "START-LESS-THAN-END-DATE": "Дата начала должна быть раньше даты окончания"
     }
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "TITLE": "No Applications Found",
-      "SUBTITLE": "Create a new application that you want to easily find later",
-      "TASK_APP_NAME": "Task App"
+      "TITLE": "Приложения не найдены",
+      "SUBTITLE": "Создайте новое приложение, которое вы сможете легко найти позже",
+      "TASK_APP_NAME": "Приложение для задач"
     },
     "LIST": {
       "MESSAGES": {
-        "TITLE": "No Tasks Found",
-        "SUBTITLE": "Create a new task that you want to easily find later",
-        "NONE": "No task lists found"
+        "TITLE": "Задачи не найдены",
+        "SUBTITLE": "Создать новую задачу для быстрого поиска позже",
+        "NONE": "Списков задач не найдено"
       }
     },
     "PROPERTIES": {
-      "TASK_NAME": "Task",
+      "TASK_NAME": "Задача",
       "THUMBNAIL": "Эскиз",
-      "DURATION": "Duration",
-      "PARENT_TASK_ID": "Parent task id",
-      "NAME": "Task Name",
-      "ASSIGNEE": "Assignee",
-      "ASSIGNEE_DEFAULT": "No assignee",
-      "PRIORITY": "Priority",
-      "DUE_DATE": "Due Date",
-      "DUE_DATE_DEFAULT": "No date",
+      "DURATION": "Продолжительность",
+      "PARENT_TASK_ID": "Идентификатор родительского задания",
+      "NAME": "Имя",
+      "ASSIGNEE": "Исполнитель",
+      "ASSIGNEE_DEFAULT": "Нет исполнителя",
+      "PRIORITY": "Приоритет",
+      "DUE_DATE": "Срок",
+      "DUE_DATE_DEFAULT": "Нет срока",
       "STATUS": "Статус",
-      "CATEGORY": "Category",
-      "CATEGORY_DEFAULT": "No category",
-      "PARENT_NAME": "Parent name",
-      "PARENT_NAME_DEFAULT": "No parent",
-      "CREATED_BY": "Created By",
+      "CATEGORY": "Категория",
+      "CATEGORY_DEFAULT": "Нет категории",
+      "PARENT_NAME": "Имя родительского элемента",
+      "PARENT_NAME_DEFAULT": "Нет родительского элемента",
+      "CREATED_BY": "Создано пользователем",
       "CREATED": "Создано",
-      "END_DATE": "End date",
+      "END_DATE": "Дата окончания",
       "ID": "Идентификатор",
       "DESCRIPTION": "Описание",
       "DESCRIPTION_DEFAULT": "Нет описания",
-      "FORM_NAME": "Form Name",
-      "FORM_NAME_DEFAULT": "No form"
+      "FORM_NAME": "Имя формы",
+      "FORM_NAME_DEFAULT": "Без формы"
     },
     "MENU_ACTIONS": {
       "VIEW_CONTENT": "Посмотреть",
       "REMOVE_CONTENT": "Удалить",
       "DOWNLOAD_CONTENT": "Скачать",
-      "DOWNLOAD_AUDIT": "Download Audit"
+      "DOWNLOAD_AUDIT": "Скачать аудит"
     },
     "DETAILS": {
       "LABELS": {
-        "INFO_DRAWER_TITLE": "Activities",
-        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Activity",
+        "INFO_DRAWER_TITLE": "Действия",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Действие",
         "INFO_DRAWER_TAB_DETAILS_TITLE": "Сведения",
-        "ASSIGNEE": "Assignee",
-        "DUE": "Due",
-        "FORM": "Form",
-        "PEOPLE": "People this task is shared with",
+        "ASSIGNEE": "Исполнитель",
+        "DUE": "Срок",
+        "FORM": "Форма",
+        "PEOPLE": "Люди, которым открыт доступ к этой задаче",
         "COMMENTS": "Комментарии",
-        "CHECKLIST": "Checklist",
-        "INVOLVED_PEOPLE": "People Involved",
-        "ADD_PEOPLE": "Add people and groups",
-        "ADD_ASSIGNEE": "Add new assignee"
+        "CHECKLIST": "Контрольный список",
+        "INVOLVED_PEOPLE": "Участвующие люди",
+        "ADD_PEOPLE": "Добавить людей и группы",
+        "ADD_ASSIGNEE": "Добавить нового исполнителя"
       },
       "BUTTON": {
-        "COMPLETE": "Complete",
-        "CLAIM": "Claim",
-        "UNCLAIM": "Release",
-        "DRAG-ATTACHMENT": "Drop files to upload",
-        "UPLOAD-ATTACHMENT": "Upload Attachment"
+        "COMPLETE": "Завершить",
+        "CLAIM": "Принять",
+        "UNCLAIM": "Освободить",
+        "DRAG-ATTACHMENT": "Перетащите файлы для загрузки",
+        "UPLOAD-ATTACHMENT": "Загрузить вложение"
       },
       "MESSAGES": {
-        "NONE": "No task details found",
-        "CLAIM": "Click Claim to work on this task"
+        "NONE": "Сведений о задаче не найдено",
+        "CLAIM": "Чтобы приступить к работе над этой задачей, нажмите \"Принять\""
       },
       "FORM": {
-        "NONE": "No form"
+        "NONE": "Без формы"
       },
       "DUE": {
-        "NONE": "No due date"
+        "NONE": "Без срока"
       },
       "ASSIGNEE": {
-        "NONE": "No assignee"
+        "NONE": "Нет исполнителя"
       },
       "PEOPLE": {
-        "NONE": "Nobody involved"
+        "NONE": "Нет участников"
       },
       "CHECKLIST": {
-        "NONE": "No checklist",
+        "NONE": "Нет контрольных списков",
         "DIALOG": {
-          "TITLE": "New Check",
+          "TITLE": "Новая проверка",
           "CANCEL-BUTTON": "Отмена",
-          "ADD-BUTTON": "Add Checklist",
+          "ADD-BUTTON": "Добавить контрольный список",
           "PLACEHOLDER": "Имя"
         }
       },
       "ERROR": {
-        "TITLE": "Couldn't complete the action",
-        "DESCRIPTION": "Try again or check that you have access.",
+        "TITLE": "Не удалось выполнить действие",
+        "DESCRIPTION": "Повторите попытку или убедитесь, что у вас есть доступ.",
         "CLOSE": "Закрыть"
       }
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "No task filter selected"
+        "NONE": "Фильтр задач не выбран"
       }
     },
     "START_TASK": {
-      "DEFAULT_NAME": "My Default Task",
-      "BUTTON": "CREATE TASK",
+      "DEFAULT_NAME": "Моя задача по умолчанию",
+      "BUTTON": "Создать задачу",
       "FORM": {
-        "TITLE": "Start Task",
+        "TITLE": "Начать задачу",
         "LABEL": {
           "NONE": "Нет",
           "NAME": "Имя",
           "DESCRIPTION": "Описание",
-          "ATTACHFORM": "Attach Form",
-          "ASSIGNEE": "Assignee",
-          "FORM": "Form",
-          "DATE": "Choose Date"
+          "ATTACHFORM": "Прикрепить форму",
+          "ASSIGNEE": "Исполнитель",
+          "FORM": "Форма",
+          "DATE": "Выбрать дату"
         },
         "ACTION": {
-          "START": "Start",
+          "START": "Начать",
           "CANCEL": "Отмена"
         },
         "ERROR": {
-          "REQUIRED": "Field required",
-          "DATE": "Date format DD/MM/YYYY",
-          "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
+          "REQUIRED": "Обязательное поле",
+          "DATE": "Формат даты ДД.ММ.ГГГГ",
+          "MAXIMUM_LENGTH": "Превышение длины, макс. символов: {{characters}}",
           "MESSAGE": "Введите другое значение"
         }
       }
     },
     "PEOPLE": {
-      "ASSIGNEE": "Assignee",
+      "ASSIGNEE": "Исполнитель",
       "DIALOG_CLOSE": "Закрыть",
       "ADD_USER": "Добавить",
-      "ADD_ASSIGNEE": "ASSIGN",
-      "SEARCH_USER": "Search user",
+      "ADD_ASSIGNEE": "Назначить",
+      "SEARCH_USER": "Искать пользователя",
       "SEARCH": {
-        "NO_USERS": "Nobody found to involve"
+        "NO_USERS": "Участников не найдено"
       }
     },
     "ATTACHMENT": {
@@ -158,45 +158,45 @@
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "No files are available"
+        "HEADER": "Файлы отсутствуют"
       }
     },
     "STANDALONE_TASK": {
-      "NO_FORM_MESSAGE": "No forms attached",
-      "COMPLETE_TASK_MESSAGE": "Task {{taskName}} completed",
-      "COMPLETE_TASK_SUB_MESSAGE": "No forms to be added"
+      "NO_FORM_MESSAGE": "Нет прикрепленных форм",
+      "COMPLETE_TASK_MESSAGE": "Задача {{taskName}} выполнена",
+      "COMPLETE_TASK_SUB_MESSAGE": "Нет форм для добавления"
     },
     "ATTACH_FORM": {
-      "SELECT_FORM": "Select Form To Attach",
-      "REMOVE_FORM": "Remove Form",
-      "SELECT_OPTION": "Select an option"
+      "SELECT_FORM": "Выбрать форму для прикрепления",
+      "REMOVE_FORM": "Удалить форму",
+      "SELECT_OPTION": "Выбрать параметр"
     }
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "TITLE": "No Processes Found",
-      "SUBTITLE": "Create a new process that you want to easily find later",
-      "SUMMARY": "{{total}} process instances found",
-      "ERROR": "Couldn't load processes instances. Try again or share the following message with your IT Team: {{errorMessage}}"
+      "TITLE": "Процессы не найдены",
+      "SUBTITLE": "Создайте новый процесс, который вы сможете легко найти позже",
+      "SUMMARY": "Найдено экземпляров процесса: {{total}}",
+      "ERROR": "Не удалось загрузить экземпляры процессов. Повторите попытку или покажите IT-специалистам следующее сообщение: {{errorMessage}}"
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "No process instance filter selected."
+        "NONE": "Фильтр экземпляров процессов не найден."
       }
     },
     "PROPERTIES": {
-      "PROCESS_NAME": "Process",
+      "PROCESS_NAME": "Процесс",
       "NAME": "Имя",
       "THUMBNAIL": "Эскиз",
       "STATUS": "Статус",
-      "END_DATE": "End Date",
-      "END_DATE_DEFAULT": "No date",
-      "CATEGORY": "Category",
-      "CATEGORY_DEFAULT": "No category",
-      "CREATED_BY": "Created By",
-      "CREATED_BY_DEFAULT": "No assignee",
+      "END_DATE": "Дата окончания",
+      "END_DATE_DEFAULT": "Нет срока",
+      "CATEGORY": "Категория",
+      "CATEGORY_DEFAULT": "Нет категории",
+      "CREATED_BY": "Создано пользователем",
+      "CREATED_BY_DEFAULT": "Нет исполнителя",
       "CREATED": "Создано",
-      "BUSINESS_KEY": "Business key",
+      "BUSINESS_KEY": "Бизнес-ключ",
       "BUSINESS_KEY_DEFAULT": "Нет",
       "DESCRIPTION": "Описание",
       "DESCRIPTION_DEFAULT": "Нет описания",
@@ -206,44 +206,44 @@
       "VIEW_CONTENT": "Посмотреть",
       "REMOVE_CONTENT": "Удалить",
       "DOWNLOAD_CONTENT": "Скачать",
-      "DOWNLOAD_AUDIT": "Download audit",
-      "VIEW_TASK": "View Task"
+      "DOWNLOAD_AUDIT": "Скачать аудит",
+      "VIEW_TASK": "Посмотреть задачу"
     },
     "DETAILS": {
       "LABELS": {
-        "STARTED_BY": "Started by",
-        "STARTED": "Started",
-        "ENDED": "Ended",
+        "STARTED_BY": "Запущено пользователем",
+        "STARTED": "Запущено",
+        "ENDED": "Завершено",
         "COMMENTS": "Комментарии",
         "START_FORM": "Запустить форму",
-        "TASKS_ACTIVE": "Active Tasks",
-        "TASKS_COMPLETED": "Completed Tasks",
-        "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}",
-        "REFRESH": "Refresh"
+        "TASKS_ACTIVE": "Активные задачи",
+        "TASKS_COMPLETED": "Завершенные задачи",
+        "TASK_SUBTITLE": "Назначено пользователю {{user}}, создано {{created}}",
+        "REFRESH": "Обновить"
       },
       "BUTTON": {
-        "CANCEL": "Cancel Process",
+        "CANCEL": "Отменить процесс",
         "CLOSE": "Закрыть",
-        "SHOW_DIAGRAM": "Show Diagram",
-        "DRAG-ATTACHMENT": "Drop files to upload",
-        "UPLOAD-ATTACHMENT": "Upload Attachment",
-        "FILE_OPTION_MENU": "File Option Menu"
+        "SHOW_DIAGRAM": "Показать схему",
+        "DRAG-ATTACHMENT": "Перетащите файлы для загрузки",
+        "UPLOAD-ATTACHMENT": "Загрузить вложение",
+        "FILE_OPTION_MENU": "Меню параметров файла"
       },
       "MESSAGES": {
-        "NONE": "No process details found"
+        "NONE": "Сведения о процессе не найдены"
       },
       "TASKS": {
-        "NO_ACTIVE": "No currently active tasks",
-        "NO_COMPLETED": "No tasks completed yet",
-        "TASK_DETAILS": "Task details",
+        "NO_ACTIVE": "Активные задачи в настоящее время отсутствуют",
+        "NO_COMPLETED": "Выполненные задачи пока отсутствуют",
+        "TASK_DETAILS": "Сведения о задаче",
         "TASK_CLOSE": "Закрыть"
       },
       "COMMENTS": {
-        "ADD": "Add a comment",
+        "ADD": "Добавить комментарий",
         "HEADER": "Комментарии ({{ count }})",
         "NONE": "Нет комментариев",
         "BUTTON": {
-          "ADD": "Add a comment"
+          "ADD": "Добавить комментарий"
         },
         "ADD_DIALOG": {
           "TITLE": "Новый комментарий",
@@ -257,45 +257,45 @@
         }
       },
       "ADD_DIALOG": {
-        "TITLE": "Set process variable",
+        "TITLE": "Установить переменную процесса",
         "LABEL": {
           "NAME": "Имя",
           "VALUE": "Значение",
-          "SCOPE": "Scope"
+          "SCOPE": "Область применения"
         }
       },
       "EDIT_DIALOG": {
-        "TITLE": "Edit process variable"
+        "TITLE": "Редактировать переменную процесса"
       },
       "ERROR_DIALOG": {
-        "TITLE": "Couldn't complete the action",
-        "DESCRIPTION": "You might not have the required access level, check with your IT Team."
+        "TITLE": "Не удалось выполнить действие",
+        "DESCRIPTION": "Возможно, у вас нет необходимого уровня доступа, обратитесь к IT-специалистам."
       }
     },
     "START_PROCESS": {
       "BUTTON": "Начать процесс",
-      "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
-      "NO_START_FORM": "No start form",
-      "NO_PROCESS_DEF_SELECTED": "No process definition selected",
+      "NO_PROCESS_DEFINITIONS": "Невозможно начать процесс, поскольку нет определений процесса",
+      "NO_START_FORM": "Не начинать с",
+      "NO_PROCESS_DEF_SELECTED": "Определение процесса не выбрано",
       "FORM": {
+        "TITLE": "Начать процесс",
         "LABEL": {
-          "SELECT_APPLICATION": "Select Application",
-          "TYPE": "Select Process",
-          "NAME": "Process Name",
-          "SELECTED_PEOPLE": "Selected people"
+          "SELECT_APPLICATION": "Выберите приложение",
+          "TYPE": "Выбрать процесс",
+          "NAME": "Имя процесса"
         },
-        "TYPE_PLACEHOLDER": "Choose one...",
+        "TYPE_PLACEHOLDER": "Выбрать элемент...",
         "ACTION": {
           "START": "Начать процесс",
           "CANCEL": "Отмена"
         }
       },
       "ERROR": {
-        "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
-        "START": "Couldn't start new process instance, check you have access.",
-        "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
-        "SPACE_VALIDATOR": "Cannot begin or end with a space.",
-        "PROCESS_NAME_REQUIRED": "Process name is required."
+        "LOAD_PROCESS_DEFS": "Не удалось загрузить определения процесса, проверьте, есть ли у вас доступ.",
+        "START": "Не удалось начать новый экземпляр процесса, проверьте, есть ли у вас доступ.",
+        "MAXIMUM_LENGTH": "Превышение длины, макс. символов: {{characters}}",
+        "SPACE_VALIDATOR": "Нельзя начинать и заканчивать пробелом.",
+        "PROCESS_NAME_REQUIRED": "Требуется имя процесса."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -307,25 +307,25 @@
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "No files are available"
+        "HEADER": "Файлы отсутствуют"
       },
       "COLUMNS": {
         "NAME": "Имя",
-        "CREATED-ON": "Created on"
+        "CREATED-ON": "Дата создания"
       }
     }
   },
   "APP": {
     "DIALOG": {
-      "START": "Continue",
-      "TITLE": "Select a process app",
-      "LIST": "Process App list",
-      "ERROR": "There is a problem connecting to Process Services"
+      "START": "Продолжить",
+      "TITLE": "Выбрать приложение",
+      "LIST": "Список приложений",
+      "ERROR": "Возникла проблема при подключении к Process Services"
     }
   },
   "ATTACH-FILE": {
     "DIALOG": {
-      "LOGIN": "Sign into '{{ ecmHost }}'"
+      "LOGIN": "Войти в '{{ ecmHost }}'"
     },
     "ACTIONS": {
       "LOGIN": "Войти",
@@ -336,9 +336,9 @@
   },
   "ADF_TASK_FORM": {
     "EMPTY_FORM": {
-      "SUBTITLE": "Attach a form that can be viewed later",
-      "COMPLETE-TASK-MESSAGE": "Task {{taskName}} completed",
-      "COMPLETE-TASK-SUB-MESSAGE": "No forms to be added",
+      "SUBTITLE": "Прикрепите форму для дальнейшего просмотра",
+      "COMPLETE-TASK-MESSAGE": "Задача {{taskName}} выполнена",
+      "COMPLETE-TASK-SUB-MESSAGE": "Нет форм для добавления",
       "BUTTONS": {
         "COMPLETE": "Завершить",
         "CANCEL": "Отмена",
@@ -347,8 +347,8 @@
       }
     },
     "COMPLETED_TASK": {
-      "TITLE": "Task {{taskName}} completed",
-      "SUBTITLE": "No forms to be added"
+      "TITLE": "Задача {{taskName}} выполнена",
+      "SUBTITLE": "Нет форм для добавления"
     }
   }
 }
