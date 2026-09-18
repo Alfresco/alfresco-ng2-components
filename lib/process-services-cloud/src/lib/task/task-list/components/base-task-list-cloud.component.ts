@@ -16,6 +16,19 @@
  */
 
 import {
+    AfterContentInit,
+    ContentChild,
+    DestroyRef,
+    Directive,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges
+} from '@angular/core';
+import {
     AppConfigService,
     CustomEmptyContentTemplateDirective,
     DataCellEvent,
@@ -30,26 +43,13 @@ import {
     UserPreferencesService,
     UserPreferenceValues
 } from '@alfresco/adf-core';
-import {
-    AfterContentInit,
-    ContentChild,
-    DestroyRef,
-    Directive,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { distinctUntilChanged, map, take } from 'rxjs/operators';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
-import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
+import { map, take } from 'rxjs/operators';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export const TasksListCloudPreferences = {
     columnOrder: 'tasks-list-cloud-columns-order',
@@ -195,7 +195,6 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
     protected readonly taskCloudService = inject(TaskCloudService);
     protected readonly userPreferences = inject(UserPreferencesService);
     private readonly cloudPreferenceService: PreferenceCloudServiceInterface;
-    private readonly appNameSubject$ = new Subject<string>();
 
     // eslint-disable-next-line @angular-eslint/prefer-inject
     constructor(presetKey: string, cloudPreferenceService: PreferenceCloudServiceInterface) {
@@ -207,10 +206,6 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
             maxItems: this.size,
             skipCount: 0,
             totalItems: 0
-        });
-
-        this.appNameSubject$.pipe(takeUntilDestroyed(this.destroyRef), distinctUntilChanged()).subscribe((appName) => {
-            this.retrieveTasksPreferences(appName);
         });
 
         this.boundReplacePriorityValues = this.replacePriorityValues.bind(this);
@@ -228,15 +223,15 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
             this.formatSorting(changes['sorting'].currentValue);
         }
         if (changes['appName']) {
-            this.appNameSubject$.next(changes['appName'].currentValue);
+            this.retrieveTasksPreferences();
         }
         this.reload();
     }
 
-    private retrieveTasksPreferences(appName: string): void {
+    private retrieveTasksPreferences(): void {
         this.isLoadingPreferences$.next(true);
         this.cloudPreferenceService
-            .getPreferences(appName)
+            .getPreferences(this.appName)
             .pipe(
                 take(1),
                 map((preferences) => {
@@ -280,7 +275,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
     }
 
     ngAfterContentInit(): void {
-        this.appNameSubject$.next(this.appName);
+        this.retrieveTasksPreferences();
     }
 
     isListEmpty(): boolean {
