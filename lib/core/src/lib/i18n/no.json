@@ -1,0 +1,679 @@
+{
+  "ADF": {
+    "LANGUAGE": "Språk",
+    "ROLES": {
+      "ALL": "Alle",
+      "CONTRIBUTOR": "Bidragsyter",
+      "COLLABORATOR": "Medarbeider",
+      "COORDINATOR": "Koordinator",
+      "EDITOR": "Redaktør",
+      "CONSUMER": "Forbruker",
+      "SITECOLLABORATOR": "Områdemedarbeider",
+      "SITECONSUMER": "Områdeforbruker",
+      "SITECONTRIBUTOR": "Områdebidragsyter",
+      "SITEMANAGER": "Områdeadministrator"
+    }
+  },
+  "SAVE": "Lagre",
+  "COMPLETE": "Fullfør",
+  "CANCEL": "AVBRYT",
+  "CLAIM": "Krev",
+  "UNCLAIM": "Frigi",
+  "START PROCESS": "Start prosess",
+  "DATA_LOADING": "Data lastes inn",
+  "CLOSE": "Lukk",
+  "NOTIFICATIONS": {
+    "NO_MESSAGE": "Du har ingen varsler for øyeblikket.",
+    "UNREAD_MESSAGES": "Du har uleste varsler.",
+    "TITLE": "Varsler",
+    "MARK_AS_READ": "Merk alle som lest",
+    "SYSTEM": "System",
+    "LOAD_MORE": "Last ned mer",
+    "OPEN_HISTORY": "Åpne varslingshistorikk"
+  },
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Start skjema"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Forhåndsvisning er ikke tilgjengelig",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "I forhåndsvisningsmodus kan du ikke legge til en fil"
+      }
+    },
+    "FIELD": {
+      "LOCALSTORAGE": "Lokal lagring",
+      "SOURCE": "Velg kilde fra ",
+      "VIEW_FILE": "Vis",
+      "DOWNLOAD_FILE": "Last ned",
+      "REMOVE_FILE": "Fjern",
+      "UPLOAD": "Laster opp",
+      "REQUIRED": "Felt er obligatorisk",
+      "REST_API_FAILED": "Serveren '{{ hostname }}' kan ikke nås",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Det oppstod et problem med å laste nedtrekkselementer. Vennligst kontakt administrator.",
+      "DATA_TABLE_LOAD_FAILED": "Det oppstod et problem med å laste tabellelementer. Vennligst kontakt administrator.",
+      "DATA_TABLE_EMPTY_CONTENT": "Ingen data funnet",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "Det oppstod et problem med å laste ekstern egenskap. Vennligst kontakt administrator.",
+      "FILE_NAME": "Filnavn",
+      "TITLE": "Tittel",
+      "NO_FILE_ATTACHED": "Ingen fil vedlagt",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Bruk et annet nummerformat",
+        "INVALID_DECIMAL_NUMBER": "Bruk et desimaltallformat",
+        "INVALID_DECIMAL_PRECISION": "Feil desimalverdi, det skal være maksimalt {{precision}} sifre etter desimaltegnet.",
+        "INVALID_DATE": "Bruk et annet datoformat",
+        "INVALID_DATE_FORMAT": "Ugyldig datoformat.",
+        "INVALID_VALUE": "Angi en annen verdi",
+        "NOT_GREATER_THAN": "Kan ikke være større enn {{ maxValue }}",
+        "NOT_LESS_THAN": "Kan ikke være mindre enn {{ minValue }}",
+        "AT_LEAST_LONG": "Angi minst {{ minLength }} tegn",
+        "NO_LONGER_THAN": "Angi opptil {{ maxLength }} tegn"
+      },
+      "FILE_ALREADY_UPLOADED": "En fil med samme navn er allerede opplastet.",
+      "ATTACH": "Legg ved",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "legg til",
+        "ROW_LIMIT_REACHED": "Radgrense ({{ limit }}) nådd."
+      }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "Navnløs oppgave",
+      "ROW_LABEL": "Rad {{ number }}",
+      "DELETE_ROW": "Slett rad",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Slett raden",
+        "MESSAGE": "Er du sikker på at du vil slette denne raden?",
+        "YES_LABEL": "Slett rad",
+        "NO_LABEL": "Avbryt"
+      }
+    },
+    "BUTTON": {
+      "PREVIOUS_TAB": "Forrige",
+      "PREVIOUS_TAB_TITLE": "Naviger til forrige fane",
+      "NEXT_TAB": "Neste",
+      "NEXT_TAB_TITLE": "Naviger til neste fane"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "Skriftstørrelse",
+      "FONT_WEIGHT": "Skrifttykkelse",
+      "FONT_COLOR": "Skriftfarge",
+      "FONT_WEIGHTS": {
+        "REGULAR": "vanlig",
+        "BOLD": "fet"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "systemfarge",
+        "BLACK": "svart",
+        "GREY": "grå",
+        "RED": "rød",
+        "GREEN": "grønn",
+        "BLUE": "blå",
+        "YELLOW": "gul"
+      },
+      "PREDEFINED": {
+        "HEADER": {
+          "NORMAL": "normal",
+          "HEADING": "overskrift",
+          "TITLE": "tittel"
+        },
+        "RADIO_BUTTONS": {
+          "NORMAL": "normal",
+          "STRONG": "sterk",
+          "HEADING": "overskrift"
+        },
+        "READONLY_TEXT": {
+          "NORMAL": "normal",
+          "STRONG": "sterk",
+          "HEADING": "overskrift",
+          "TITLE": "tittel",
+          "ANNOTATION": "merknad"
+        }
+      }
+    }
+  },
+  "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "Selskapslogo",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Bytt meny"
+      }
+    },
+    "FILE_SIZE": {
+      "BYTES": "Byte",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
+    "PAGINATION": {
+      "ARIA": {
+        "ITEMS_PER_PAGE": "Velger for sidestørrelse",
+        "CURRENT_PAGE": "Velger for gjeldende side",
+        "PREVIOUS_PAGE": "Knapp for forrige side",
+        "NEXT_PAGE": "Knapp for neste side"
+      },
+      "ITEMS_RANGE": "Vis {{ range }} av {{ total }}",
+      "ITEMS_PER_PAGE": "Elementer per side",
+      "CURRENT_PAGE": "Side {{ number }}",
+      "TOTAL_PAGES": "av {{ total }}"
+    },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Avbryt"
+        },
+        "TITLE": "Legger til filer som skal komprimeres, dette kan ta noen minutter",
+        "COMPLETE": "fullført"
+      },
+      "EDIT_JSON": {
+        "CLOSE": "Lukk",
+        "UPDATE": "Oppdater",
+        "COPY": "Kopier",
+        "COPIED": "Kopiert til utklippstavlen"
+      },
+      "UNSAVED_CHANGES": {
+        "TITLE": "Ulagrede endringer",
+        "DESCRIPTION": "Du har ulagrede endringer på denne skjermen. Er du sikker på at du vil forlate uten å lagre endringene?",
+        "DISCARD_CHANGES_BUTTON": "Forkast endringer"
+      }
+    },
+    "BREADCRUMBS": {
+      "TITLE": "Brødsmuler",
+      "SHOWALL": "Vis alle"
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Lås fil",
+      "ALLOW_OTHERS_CHECKBOX": "Tillat eieren å endre denne filen",
+      "FILE_LOCK_CHECKBOX": "Lås fil",
+      "TIME_LOCK_CHECKBOX": "Tidslås",
+      "SAVE_BUTTON": {
+        "LABEL": "Lagre"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Avbryt"
+      }
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Opprett ny mappe",
+      "EDIT_FOLDER_TITLE": "Rediger mappe",
+      "FOLDER_NAME": {
+        "LABEL": "Navn",
+        "ERRORS": {
+          "REQUIRED": "Mappenavn påkrevd",
+          "SPECIAL_CHARACTERS": "Mappenavn kan ikke inneholde disse tegnene * \" < > \\ / ? : |",
+          "ENDING_DOT": "Mappenavn kan ikke slutte med punktum .",
+          "ONLY_SPACES": "Mappenavn kan ikke inneholde bare mellomrom"
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Beskrivelse"
+      },
+      "FOLDER_TITLE": {
+        "LABEL": "Tittel"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Opprett"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Oppdater"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Avbryt"
+      },
+      "FOLDER_CREATED_SUCCESS": "Mappen '{{ name }}' ble opprettet",
+      "FOLDER_UPDATED_SUCCESS": "Mappen '{{ name }}' ble oppdatert"
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "Handlingen mislyktes. Prøv igjen eller kontakt IT-teamet ditt.",
+        "EXISTENT_FOLDER": "Det er allerede en mappe med dette navnet. Prøv et annet navn."
+      }
+    },
+    "RESTORE_NODE": {
+      "VIEW": "Vis",
+      "PARTIAL_PLURAL": "{{ number }} elementer ble ikke gjenopprettet på grunn av problemer med plasseringen for gjenoppretting",
+      "NODE_EXISTS": "Kan ikke gjenopprette, {{ name }} item already exists",
+      "LOCATION_MISSING": "Kan ikke gjenopprette elementet {{ name }}, det opprinnelige stedet finnes ikke lenger",
+      "GENERIC": "Problem med å gjenopprette elementet {{ name }}",
+      "PLURAL": "Gjenopprettingen er fullført",
+      "SINGULAR": "Elementet {{ name }} gjenopprettet"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "{{ name }} er slettet",
+      "PLURAL": "{{ number }} elementer er slettet",
+      "PARTIAL_SINGULAR": "Slettet {{ success }} element, {{ failed }} kunne ikke slettes",
+      "PARTIAL_PLURAL": "Slettet {{ success }} elementer, {{ failed }} kunne ikke slettes",
+      "ERROR_SINGULAR": "{{ name }} kunne ikke slettes",
+      "ERROR_PLURAL": "{{ number }} elementer kunne ikke slettes"
+    },
+    "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "Legg til ny",
+        "NAME": "Navn",
+        "VALUE": "Verdi"
+      },
+      "NONE": "Ingen",
+      "SELECTED_VALUES": "Valgte verdier",
+      "REMOVE": "Fjern {{ value }}",
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "Bruk et nummerformat",
+        "INT_VALIDATION_ERROR": "Bruk heltall",
+        "LONG_VALIDATION_ERROR": "Bruk et langt format",
+        "LENGTH_VALIDATION_ERROR": "Verdiens lengde skal være mellom {{ minLength }} og {{ maxLength }}",
+        "MATCH_VALIDATION_ERROR": "Verdien samsvarer ikke med mønsteret: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "Verdien skal være mellom {{ minValue }} og {{ maxValue }}",
+        "ONLY_POSITIVE_NUMBER": "Kun positiv verdi er tillatt"
+      },
+      "MORE": "Mer"
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "Egenskaper",
+        "NAME": "Navn",
+        "TITLE": "Tittel",
+        "DESCRIPTION": "Beskrivelse",
+        "AUTHOR": "Forfatter",
+        "MIMETYPE": "Mimetype",
+        "SIZE": "Størrelse",
+        "CREATOR": "Oppretter",
+        "CREATED_DATE": "Opprettelsesdato",
+        "MODIFIER": "Modifikator",
+        "MODIFIED_DATE": "Endringsdato",
+        "CONTENT_TYPE": "Innholdstype"
+      },
+      "CONTENT_TYPE": {
+        "DIALOG": {
+          "TITLE": "Endre innholdstype",
+          "DESCRIPTION": "Ved å foreta denne endringen i innholdstypen legges visse egenskaper og lagrede metadata permanent til i dokumentet.",
+          "CONFIRM": "Er du sikker på at du vil endre innholdstypen?",
+          "CANCEL": "AVBRYT",
+          "APPLY": "Lagre endringer",
+          "VIEW_DETAILS": "Vis detaljer",
+          "PROPERTY": {
+            "NAME": "Navn",
+            "DESCRIPTION": "Beskrivelse",
+            "DATA_TYPE": "Datatype"
+          }
+        }
+      },
+      "ACTIONS": {
+        "EDIT": "Rediger",
+        "SAVE": "Lagre",
+        "CANCEL": "Avbryt",
+        "CLEAR": "Tøm",
+        "TOGGLE": "Bytt verdi",
+        "COPY_TO_CLIPBOARD": "Dobbeltkllikk for å kopiere verdi",
+        "EDIT_ASPECTS": "Rediger aspekt"
+      },
+      "ACCESSIBILITY": {
+        "EDIT": "Redigeringsknapp",
+        "DATEPICKER": "Bruk piltastene for å navigere mellom datoer. Med pil opp og pil ned går du til samme dag i neste eller forrige uke. Med venstre og høyre pil går du én dag frem eller tilbake. Trykk på Enter eller Retur for å velge en dato.",
+        "COPY_TO_CLIPBOARD_MESSAGE": "Verdi kopiert til utklippstavle",
+        "EDIT_ASPECTS": "Rediger aspekt",
+        "SECTION": "{{ sectionName }}-seksjon"
+      }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "Bytt mellom å vise resultater i stigende og synkende rekkefølge",
+      "SORT_BY": "Sorter etter",
+      "BUTTON": {
+        "TOOLTIP": "Søk",
+        "ARIA-LABEL": "Søk knapp"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "Søk inndata"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "Lukk"
+        }
+      }
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "Overstyringer av funksjonsflagg",
+      "FILTER_OR_ADD_NEW": "Filtrer eller legg til ny",
+      "FILTER": "Filter",
+      "ADD_NEW": "Legg til nytt funksjonsflagg (Shift + Enter)"
+    }
+  },
+  "COMMENTS": {
+    "PROFILE_IMAGE": "Profilbilde",
+    "NONE": "Ingen kommentarer",
+    "ADD": "Legg til",
+    "HEADER": "Kommentarer ({{ count }})",
+    "CREATED_BY_HEADER": "Opprettet av",
+    "MESSAGE_HEADER": "Melding",
+    "EMPTY_ERROR": "Kommentar kan ikke være tom",
+    "DIALOG": {
+      "TITLE": "Nytt kommentar",
+      "LABELS": {
+        "MESSAGE": "Melding"
+      },
+      "BUTTON": {
+        "ADD": "Legg til kommentar",
+        "CANCEL": "Avbryt"
+      }
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco, skap forretningsflyt",
+    "LABEL": {
+      "LOGIN": "Logg på",
+      "USERNAME": "Brukernavn",
+      "PASSWORD": "Passord",
+      "REMEMBER": "Husk meg"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "Vis passord",
+      "HIDE-PASSWORD": "Skjul passord"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Påkrevd",
+      "USERNAME-MIN": "Brukernavnet må ha minst {{ minLength }} tegn.",
+      "PASSWORD-REQUIRED": "Angi passordet for å logge på",
+      "LOGIN-ERROR-CREDENTIALS": "Du har angitt ukjent brukernavn eller passord",
+      "LOGIN-ERROR-PROVIDERS": "Leverandører kan ikke være udefinert",
+      "LOGIN-ERROR-CORS": "CORS-unntak, kontroller serverkonfigurasjonen",
+      "LOGIN-ERROR-CSRF": "CSRF-unntak, angi \"disableCSRF\": true i app.config.json",
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services-datalager i skrivebeskyttet modus",
+      "SSO-WRONG-CONFIGURATION": "SSO-godkjenningsserver kan ikke nås"
+    },
+    "BUTTON": {
+      "LOGIN": "Logg på",
+      "CHECKING": "Kontrollerer",
+      "WELCOME": "Velkommen",
+      "SSO": "Påloggings-SSO"
+    },
+    "ACTION": {
+      "HELP": "Trenger hjelp?",
+      "REGISTER": "Registrer"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Denne listen er tom",
+      "DRAG-AND-DROP": {
+        "TITLE": "Dra og slipp",
+        "SUBTITLE": "for å laste opp filer"
+      }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "Innholdshandlinger",
+      "SELECT_COLUMNS": "Velg kolonner"
+    },
+    "ACCESSIBILITY": {
+      "ACTIONS": "Handlinger",
+      "SELECT_ALL": "Velg alle",
+      "SELECT_FILE": "Velg fil",
+      "SELECTED": "Valgt",
+      "ROW_SELECTION": "Trykk på mellomrom for å veksle radvalg",
+      "SORT_ASCENDING": "Stigende",
+      "SORT_DESCENDING": "Synkende",
+      "SORT_NONE": "Ingen",
+      "SORT_DEFAULT": "Sorterbar",
+      "SORT_ASCENDING_BY": "Stigende med {{ string }}",
+      "SORT_DESCENDING_BY": "Synkende med {{ string }}",
+      "ICON_TEXT": "Elementtype {{ type }}",
+      "ICON_DISABLED": "Deaktivert",
+      "ROW_OPTION_BUTTON": "Handlinger",
+      "DRAG": "Dra-knapp",
+      "DRAGGABLE": "Kan dras",
+      "EMPTY_HEADER": "Tom topptekst",
+      "RESIZE_COLUMN": "Endre størrelse på kolonnen {{ column }}. Bruk piltastene for å justere bredden, Shift for større steg.",
+      "COLUMN_WIDTH_CHANGED": "{{ column }} kolonnebredde: {{ width }} piksler"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "Dokument",
+      "FOLDER": "Mappe",
+      "PDF": "PDF",
+      "IMAGE": "Bilde",
+      "EXCEL": "Excel-regneark",
+      "WORD": "Word-dokument",
+      "POWERPOINT": "Powerpoint-presentasjon",
+      "VIDEO": "Video",
+      "AUDIO": "Lyd",
+      "WEBSITE": "Nettsted",
+      "ARCHIVE": "Arkiv",
+      "PRESENTATION": "Presentasjon",
+      "SPREADSHEET": "Regneark",
+      "MISCELLANEOUS": "Diverse"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "Rader",
+      "SEARCH": "Søk",
+      "APPLY": "Bruk",
+      "COLUMNS_VISIBILITY": "Velg kolonner som skal vises"
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Jobbtittel"
+      },
+      "BPM": {
+        "TENANT": "Leietaker"
+      },
+      "MY_PROFILE": "Min profil"
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
+    }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Tilbake",
+      "OPEN_WITH": "Åpne med",
+      "DOWNLOAD": "Last ned",
+      "PRINT": "Utskrift",
+      "SHARE": "Del",
+      "MORE_ACTIONS": "Flere handlinger",
+      "INFO": "Info",
+      "FULLSCREEN": "Aktiver fullskjermmodus",
+      "CLOSE": "Lukk",
+      "NEXT_FILE": "Neste fil",
+      "PREV_FILE": "Forrige fil",
+      "WAIT": "Vent"
+    },
+    "ARIA": {
+      "MIME_TYPE_ICON": "Filtype-ikon",
+      "PREVIOUS_PAGE": "Forrige side",
+      "NEXT_PAGE": "Neste side",
+      "ZOOM_IN": "Zoom inn",
+      "ZOOM_OUT": "Zoom ut",
+      "FIT_PAGE": "Tilpass side",
+      "ROTATE": "Roter",
+      "CROP": "Beskjær",
+      "SAVE": "Lagre",
+      "CANCEL": "Avbryt",
+      "RESET": "Tilbakestill",
+      "THUMBNAILS": "Miniatyrbilder for dokument",
+      "THUMBNAILS_PANLEL_CLOSE": "Lukk miniatyrbildepanel",
+      "LOADING": "Dokument lastes",
+      "NOTE_ANNOTATION_IMG": "Notatmerknad"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Viser",
+      "OF": "av",
+      "PAGE_SELECTOR_LABEL": "Sidevelger"
+    },
+    "LOADING": "Laster",
+    "UNKNOWN_FORMAT": "Kan ikke laste forhåndsvisning. Ukjent format.",
+    "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "Side {{ pageNum }}"
+      }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Send inn",
+      "CLOSE": "Lukk",
+      "PLACEHOLDER": "Passord",
+      "ERROR": "Passordet er feil"
+    },
+    "SUBTITLES": "Undertekster",
+    "NON_RESPONSIVE_DIALOG": {
+      "HEADER": "Lasting av forhåndsvisning utsatt",
+      "LABEL": "Du kan vente videre, eller laste ned dokumentet."
+    }
+  },
+  "ERROR_CONTENT": {
+    "UNKNOWN": {
+      "TITLE": "Vi støtte på et problem.",
+      "DESCRIPTION": "Noe gikk galt.",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbake til startsiden"
+      }
+    },
+    "403": {
+      "TITLE": "Du har ikke tillatelse for tilgang til denne serveren.",
+      "DESCRIPTION": "Du har ikke lov til å få tilgang til denne ressursen på serveren.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "Rapporter problem"
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbake til startsiden"
+      }
+    },
+    "404": {
+      "TITLE": "Det oppstod en feil.",
+      "DESCRIPTION": "Vi kunne ikke finne siden du så etter.",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbake til startsiden"
+      }
+    },
+    "500": {
+      "TITLE": "Det oppstod en feil.",
+      "DESCRIPTION": "Intern serverfeil. Prøv igjen eller kontakt IT-støtten [500].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbake til startsiden"
+      }
+    },
+    "502": {
+      "TITLE": "Det oppstod en feil.",
+      "DESCRIPTION": "Ugyldig gateway. Prøv igjen eller kontakt IT-støtten [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbake til startsiden"
+      }
+    },
+    "503": {
+      "TITLE": "Det oppstod en feil.",
+      "DESCRIPTION": "Tjenesten er midlertidig utilgjengelig [503].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbake til startsiden"
+      }
+    },
+    "504": {
+      "TITLE": "Det oppstod en feil.",
+      "DESCRIPTION": "Serveren ble tidsavbrutt. Prøv igjen eller kontakt IT-støtten [504].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbake til startsiden"
+      }
+    }
+  },
+  "ABOUT": {
+    "VERSION": "Versjon",
+    "SERVER_SETTINGS": {
+      "TITLE": "Serverinnstillinger",
+      "CONTENT_SERVICE_HOST": "URL til Alfresco Content Services: {{ value }}",
+      "PROCESS_SERVICE_HOST": "URL til Alfresco Process Services: {{ value }}"
+    },
+    "REPOSITORY": "Arkiv",
+    "PACKAGES": {
+      "TITLE": "Pakker",
+      "NAME": "Navn",
+      "VERSION": "Versjon"
+    },
+    "EXTENSIONS": {
+      "TITLE": "Plugin-moduler",
+      "TABLE_HEADERS": {
+        "ID": "ID",
+        "NAME": "Navn",
+        "VERSION": "Versjon",
+        "VENDOR": "Leverandør",
+        "LICENSE": "Lisens",
+        "RUNTIME": "Gjennomkjøring",
+        "DESCRIPTION": "Beskrivelse"
+      }
+    },
+    "LICENSE": {
+      "TITLE": "Lisens",
+      "PROPERTY": "Egenskap",
+      "VALUE": "Verdi",
+      "ENABLED": "Aktivert",
+      "DISABLED": "Deaktivert"
+    },
+    "STATUS": {
+      "TITLE": "Status",
+      "PROPERTY": "Egenskap",
+      "VALUE": "Verdi"
+    },
+    "MODULES": {
+      "TITLE": "Moduler",
+      "NAME": "Navn",
+      "VERSION": "Versjon"
+    },
+    "PLUGINS": {
+      "TITLE": "Plugin-moduler",
+      "NAME": "Navn",
+      "VERSION": "Versjon"
+    }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "Klikk for å kopiere",
+    "SUCCESS_COPY": "Tekst kopiert til utklippstavle"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "Søk",
+      "ARIA_LABEL": "Søkealternativer"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "Tøm"
+    }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "Laster inn...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} komboboks {{selectedOption}}"
+  },
+  "INFO_DRAWER": {
+    "ICON": "Node-ikon"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "Last flere",
+    "DELETE": "Fjern {{ name }}"
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Bekreft",
+    "ACTION": "Vil du fortsette?",
+    "YES_LABEL": "Ja",
+    "NO_LABEL": "Nei"
+  },
+  "SESSION_TIMEOUT": {
+    "TITLE": "Jobber du fortsatt?",
+    "MESSAGE": "Sesjonen din avsluttes om {{seconds}} sekunder på grunn av inaktivitet.",
+    "LOG_OUT": "Logg ut",
+    "CONTINUE_WORKING": "Fortsett å arbeide"
+  }
+}

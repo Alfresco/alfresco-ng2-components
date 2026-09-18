@@ -1,47 +1,47 @@
 {
   "ANALYTICS": {
-    "TITLE": "Analyse",
+    "TITLE": "ANALYTICS",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "Ukendt widgettype",
-      "FILL-PARAMETER": "Vælg fra rapportindstillingerne",
-      "NO-DATA-FOUND": "Der blev ikke fundet nogen data",
-      "ZERO-DATA-FOUND": "Der er kun nul-værdier",
+      "UNKNOWN-WIDGET-TYPE": "UKENDT WIDGET TYPE",
+      "FILL-PARAMETER": "Vælg fra rapportmulighederne",
+      "NO-DATA-FOUND": "Ingen data fundet",
+      "ZERO-DATA-FOUND": "Der er kun nulværdier",
       "ICON-SETTING": "Indstillinger",
       "ICON-SAVE": "Gem",
       "ICON-DELETE": "Slet",
-      "ICON-EXPORT-CSV": "Eksportér"
+      "ICON-EXPORT-CSV": "Eksporter"
     }
   },
   "__KEY_REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-DEFINITION-OVERVIEW": {
-        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Det samlede antal procesdefinitioner",
-        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Det samlede antal procesforekomster",
-        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Det samlede antal aktive procesforekomster",
-        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Det samlede antal fuldførte procesforekomster"
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Samlet antal procesdefinitioner",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Samlet antal procesforekomster",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Samlet antal aktive procesforekomster",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Samlet antal afsluttede procesforekomster"
       }
     }
   },
   "REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "Inkluder gennemløbstrin, f.eks. starthændelser og gateways"
+        "TYPE-FILTERING": "Inkluder gennemgangstrin såsom startbegivenheder og gateways"
       },
       "PROCESS-INSTANCES-OVERVIEW": {
         "PROCESS-DEFINITION": "Procesdefinition",
-        "DATE-RANGE": "Dateinterval",
-        "SLOW-PROC-INST-NUMBER": "Hvor mange af de langsomste procesforekomster skal der vises?"
+        "DATE-RANGE": "Datointerval",
+        "SLOW-PROC-INST-NUMBER": "Hvor mange af de langsomste procesforekomster skal vises?"
       },
       "TASK-OVERVIEW": {
         "PROCESS-DEFINITION": "Procesdefinition",
-        "DATE-RANGE": "Dateinterval",
+        "DATE-RANGE": "Datointerval",
         "DATE-RANGE-INTERVAL": "Gruppér datoer efter"
       },
       "TASK-SLA": {
         "TASK": "Opgave",
         "PROCESS-DEFINITION": "Procesdefinition",
-        "DATE-RANGE": "Dateinterval",
-        "SLA-DURATION": "Påkrævet fuldførelsestid ifølge serviceniveauaftale"
+        "DATE-RANGE": "Datointerval",
+        "SLA-DURATION": "SLA påkrævet gennemførelsestid"
       }
     },
     "PROCESS-STATUS": "Processtatus",

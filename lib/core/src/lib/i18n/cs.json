@@ -24,6 +24,7 @@
   "CLOSE": "Zavřít",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Momentálně nemáte žádná oznámení.",
+    "UNREAD_MESSAGES": "Máte nepřečtená upozornění.",
     "TITLE": "Upozornění",
     "MARK_AS_READ": "Označit všechny jako přečtené",
     "SYSTEM": "Systém",
@@ -35,7 +36,10 @@
       "TITLE": "Spustit formulář"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Náhled není k dispozici"
+      "IMAGE_NOT_AVAILABLE": "Náhled není k dispozici",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "V náhledu nelze připojit soubor"
+      }
     },
     "FIELD": {
       "LOCALSTORAGE": "Místní úložiště",
@@ -46,11 +50,19 @@
       "UPLOAD": "Odeslat",
       "REQUIRED": "Povinné pole",
       "REST_API_FAILED": "Server {{ hostname }} není dosažitelný",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Při načítání prvků rozevíracího seznamu došlo k problému. Kontaktujte administrátora.",
+      "DATA_TABLE_LOAD_FAILED": "Při načítání prvků tabulky došlo k problému. Kontaktujte administrátora.",
+      "DATA_TABLE_EMPTY_CONTENT": "Nebyla nalezena žádná data",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "Při načítání externí vlastnosti došlo k problému. Kontaktujte administrátora.",
       "FILE_NAME": "Název souboru",
+      "TITLE": "Označení",
       "NO_FILE_ATTACHED": "Není připojen žádný soubor",
       "VALIDATOR": {
         "INVALID_NUMBER": "Použijte jiný formát čísla",
+        "INVALID_DECIMAL_NUMBER": "Použijte formát desetinného čísla",
+        "INVALID_DECIMAL_PRECISION": "Neplatná desetinná hodnota, za desetinnou čárkou by mělo být maximálně {{precision}} číslic.",
         "INVALID_DATE": "Použijte jiný formát data",
+        "INVALID_DATE_FORMAT": "Neplatný formát data.",
         "INVALID_VALUE": "Zadejte jinou hodnotu",
         "NOT_GREATER_THAN": "Nesmí být vyšší než {{ maxValue }}",
         "NOT_LESS_THAN": "Nesmí být nižší než {{ minValue }}",
@@ -58,10 +70,65 @@
         "NO_LONGER_THAN": "Zadat můžete nejvýše následující počet znaků: {{ maxLength }}"
       },
       "FILE_ALREADY_UPLOADED": "Soubor s tímto názvem již byl odeslán.",
-      "ATTACH": "Připojit"
+      "ATTACH": "Připojit",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "přidat",
+        "ROW_LIMIT_REACHED": "Byl dosažen limit řádků ({{ limit }})."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Úloha bez názvu"
+      "NAMELESS_TASK": "Úloha bez názvu",
+      "ROW_LABEL": "Řádek {{ number }}",
+      "DELETE_ROW": "Odstranit řádek",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Odstranit řádek",
+        "MESSAGE": "Opravdu chcete odstranit tento řádek?",
+        "YES_LABEL": "Odstranit řádek",
+        "NO_LABEL": "Zrušit"
+      }
+    },
+    "BUTTON": {
+      "PREVIOUS_TAB": "Předchozí",
+      "PREVIOUS_TAB_TITLE": "Přejít na předchozí kartu",
+      "NEXT_TAB": "Další",
+      "NEXT_TAB_TITLE": "Přejít na další kartu"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "Velikost písma",
+      "FONT_WEIGHT": "Tloušťka písma",
+      "FONT_COLOR": "Barva písma",
+      "FONT_WEIGHTS": {
+        "REGULAR": "normální",
+        "BOLD": "tučné"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "systémová barva",
+        "BLACK": "černá",
+        "GREY": "šedá",
+        "RED": "červená",
+        "GREEN": "zelená",
+        "BLUE": "modrá",
+        "YELLOW": "žlutá"
+      },
+      "PREDEFINED": {
+        "HEADER": {
+          "NORMAL": "normální",
+          "HEADING": "nadpis",
+          "TITLE": "označení"
+        },
+        "RADIO_BUTTONS": {
+          "NORMAL": "normální",
+          "STRONG": "silné",
+          "HEADING": "nadpis"
+        },
+        "READONLY_TEXT": {
+          "NORMAL": "normální",
+          "STRONG": "silné",
+          "HEADING": "nadpis",
+          "TITLE": "označení",
+          "ANNOTATION": "poznámka"
+        }
+      }
     }
   },
   "CORE": {
@@ -99,12 +166,24 @@
         "ACTIONS": {
           "CANCEL": "Zrušit"
         },
-        "TITLE": "Probíhá vkládání souborů do archivu ZIP. Akce může několik minut trvat."
+        "TITLE": "Probíhá vkládání souborů do archivu ZIP. Akce může několik minut trvat.",
+        "COMPLETE": "dokončit"
       },
       "EDIT_JSON": {
         "CLOSE": "Zavřít",
-        "UPDATE": "Aktualizovat"
+        "UPDATE": "Aktualizovat",
+        "COPY": "Kopírovat",
+        "COPIED": "Zkopírováno do schránky"
+      },
+      "UNSAVED_CHANGES": {
+        "TITLE": "Neuložené změny",
+        "DESCRIPTION": "Na této obrazovce máte neuložené změny. Opravdu chcete odejít bez uložení změn?",
+        "DISCARD_CHANGES_BUTTON": "Zrušit změny"
       }
+    },
+    "BREADCRUMBS": {
+      "TITLE": "Popis cesty",
+      "SHOWALL": "Zobrazit vše"
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "Uzamknout soubor",
@@ -144,7 +223,9 @@
       },
       "CANCEL_BUTTON": {
         "LABEL": "Zrušit"
-      }
+      },
+      "FOLDER_CREATED_SUCCESS": "Složka „{{ name }}“ byla úspěšně vytvořena",
+      "FOLDER_UPDATED_SUCCESS": "Složka „{{ name }}“ byla úspěšně aktualizována"
     },
     "MESSAGES": {
       "ERRORS": {
@@ -176,12 +257,16 @@
         "VALUE": "Hodnota"
       },
       "NONE": "Žádné",
+      "SELECTED_VALUES": "Vybrané hodnoty",
+      "REMOVE": "Odebrat {{ value }}",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Použít formát čísla",
         "INT_VALIDATION_ERROR": "Použít formát celého čísla",
+        "LONG_VALIDATION_ERROR": "Použijte dlouhý formát",
         "LENGTH_VALIDATION_ERROR": "Hodnota musí mít délku v rozmezí od {{ minLength }} do {{ maxLength }}",
         "MATCH_VALIDATION_ERROR": "Hodnota nevyhovuje schématu: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Hodnota musí být v rozmezí od {{ minValue }} do {{ maxValue }}"
+        "MINMAX_VALIDATION_ERROR": "Hodnota musí být v rozmezí od {{ minValue }} do {{ maxValue }}",
+        "ONLY_POSITIVE_NUMBER": "Povolena je pouze kladná hodnota"
       },
       "MORE": "Více"
     },
@@ -228,20 +313,41 @@
         "EDIT": "Tlačítko Upravit",
         "DATEPICKER": "Pro přechod mezi daty používejte klávesy se šipkami. Pomocí šipek nahoru a dolů přejdete do příštího nebo minulého týdne, ale na stejný den. Pomocí šipek vlevo a vpravo přejdete na další nebo předchozí den. Datum vyberte stisknutím klávesy Enter nebo Return.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Hodnota se zkopírovala do schránky",
-        "EDIT_ASPECTS": "Úprava aspektů"
+        "EDIT_ASPECTS": "Úprava aspektů",
+        "SECTION": "sekce {{ sectionName }}"
       }
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "Přepnout řazení výsledků mezi vzestupným a sestupným",
-      "SORT_BY": "Řadit podle"
+      "SORT_BY": "Řadit podle",
+      "BUTTON": {
+        "TOOLTIP": "Hledat",
+        "ARIA-LABEL": "Tlačítko Hledat"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "Zadání hledaného výrazu"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "Zavřít"
+        }
+      }
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "Přepsání příznaků funkcí",
+      "FILTER_OR_ADD_NEW": "Filtrovat nebo přidat nové",
+      "FILTER": "Filtr",
+      "ADD_NEW": "Přidat nový příznak funkce (Shift + Enter)"
     }
   },
   "COMMENTS": {
+    "PROFILE_IMAGE": "Profilový obrázek",
     "NONE": "Žádné komentáře",
     "ADD": "Přidat",
     "HEADER": "Komentáře ({{ count }})",
     "CREATED_BY_HEADER": "Vytvořil(a)",
     "MESSAGE_HEADER": "Zpráva",
+    "EMPTY_ERROR": "Komentář nemůže být prázdný",
     "DIALOG": {
       "TITLE": "Nový komentář",
       "LABELS": {
@@ -254,7 +360,7 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco, make business flow",
+    "LOGO": "Alfresco, vytvořte obchodní tok",
     "LABEL": {
       "LOGIN": "Přihlásit se",
       "USERNAME": "Uživatelské jméno",
@@ -296,12 +402,15 @@
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "Akce pro obsah"
+      "TOOLTIP": "Akce pro obsah",
+      "SELECT_COLUMNS": "Vybrat sloupce"
     },
     "ACCESSIBILITY": {
       "ACTIONS": "Akce",
       "SELECT_ALL": "Vybrat vše",
       "SELECT_FILE": "Vybrat soubor",
+      "SELECTED": "Vybráno",
+      "ROW_SELECTION": "Stisknutím mezerníku přepnete výběr řádku",
       "SORT_ASCENDING": "Vzestupně",
       "SORT_DESCENDING": "Sestupně",
       "SORT_NONE": "Žádné",
@@ -311,7 +420,11 @@
       "ICON_TEXT": "Typ položky {{ type }}",
       "ICON_DISABLED": "Zakázáno",
       "ROW_OPTION_BUTTON": "Akce",
-      "EMPTY_HEADER": "Prázdný nadpis"
+      "DRAG": "Tlačítko přesunu",
+      "DRAGGABLE": "Přesunutelné",
+      "EMPTY_HEADER": "Prázdný nadpis",
+      "RESIZE_COLUMN": "Změnit velikost sloupce {{ column }}. Pro úpravu šířky použijte klávesy se šipkami, pro větší kroky použijte Shift.",
+      "COLUMN_WIDTH_CHANGED": "Šířka sloupce {{ column }}: {{ width }} pixelů"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -332,7 +445,8 @@
     "COLUMNS_SELECTOR": {
       "COLUMNS": "Sloupce",
       "SEARCH": "Hledat",
-      "APPLY": "Použít"
+      "APPLY": "Použít",
+      "COLUMNS_VISIBILITY": "Vyberte sloupce k zobrazení"
     }
   },
   "USER_PROFILE": {
@@ -366,6 +480,7 @@
       "WAIT": "Čekat"
     },
     "ARIA": {
+      "MIME_TYPE_ICON": "Ikona typu souboru",
       "PREVIOUS_PAGE": "Předchozí stránka",
       "NEXT_PAGE": "Další stránka",
       "ZOOM_IN": "Přiblížit",
@@ -375,9 +490,11 @@
       "CROP": "Oříznout",
       "SAVE": "Uložit",
       "CANCEL": "Zrušit",
-      "RESET": "Reset",
+      "RESET": "Resetovat",
       "THUMBNAILS": "Miniatury dokumentů",
-      "THUMBNAILS_PANLEL_CLOSE": "Zavřít panel Miniatury"
+      "THUMBNAILS_PANLEL_CLOSE": "Zavřít panel Miniatury",
+      "LOADING": "Dokument se načítá",
+      "NOTE_ANNOTATION_IMG": "Anotace poznámky"
     },
     "PAGE_LABEL": {
       "SHOWING": "Zobrazeno",
@@ -389,10 +506,6 @@
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Stránka {{ pageNum }}"
-      },
-      "METADATA": {
-        "MORE_INFORMATION": "Další informace",
-        "LESS_INFORMATION": "Méně informací"
       }
     },
     "PDF_DIALOG": {
@@ -487,26 +600,6 @@
       "PROCESS_SERVICE_HOST": "Adresa URL pro Alfresco Process Services: {{ value }}"
     },
     "REPOSITORY": "Úložiště",
-    "VERSIONS": {
-      "TITLE": "Verze produktu",
-      "CONTENT_SERVICE": "Content Services",
-      "PROCESS_SERVICE": "Process Services",
-      "MODELING_SERVICE": "Modelovací služby",
-      "DEPLOYMENT_SERVICE": "Služby nasazení",
-      "QUERY_SERVICE": "Služby nasazení",
-      "RB": "Délka",
-      "LABELS": {
-        "EDITION": "Edice",
-        "VERSION": "Verze",
-        "LICENSE": "Licence",
-        "STATUS": "Stav",
-        "MODULES": "Moduly"
-      }
-    },
-    "SOURCE_CODE": {
-      "TITLE": "Zdrojový kód",
-      "DESCRIPTION": "Projekt vychází z následujícího commitu:"
-    },
     "PACKAGES": {
       "TITLE": "Balíčky",
       "NAME": "Název",
@@ -527,7 +620,9 @@
     "LICENSE": {
       "TITLE": "Licence",
       "PROPERTY": "Vlastnost",
-      "VALUE": "Hodnota"
+      "VALUE": "Hodnota",
+      "ENABLED": "Povoleno",
+      "DISABLED": "Zakázáno"
     },
     "STATUS": {
       "TITLE": "Stav",
@@ -560,12 +655,25 @@
   },
   "ADF_DROPDOWN": {
     "LOADING": "Načítání...",
-    "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
+    "SELECTION_ARIA_LABEL": "{{placeholder}} rozbalovací seznam {{selectedOption}}"
+  },
+  "INFO_DRAWER": {
+    "ICON": "Ikona uzlu"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "Načíst další",
+    "DELETE": "Odebrat {{ name }}"
   },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Potvrdit",
     "ACTION": "Chcete pokračovat?",
     "YES_LABEL": "Ano",
     "NO_LABEL": "Ne"
+  },
+  "SESSION_TIMEOUT": {
+    "TITLE": "Stále pracujete?",
+    "MESSAGE": "Vaše relace bude ukončena za {{seconds}} sekund z důvodu nečinnosti.",
+    "LOG_OUT": "Odhlásit se",
+    "CONTINUE_WORKING": "Pokračovat v práci"
   }
 }

@@ -24,6 +24,7 @@
   "CLOSE": "Sluiten",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "U hebt op dit moment geen meldingen.",
+    "UNREAD_MESSAGES": "U hebt ongelezen meldingen.",
     "TITLE": "Meldingen",
     "MARK_AS_READ": "Alles markeren als gelezen",
     "SYSTEM": "Systeem",
@@ -35,7 +36,10 @@
       "TITLE": "Beginformulier"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Preview niet beschikbaar"
+      "IMAGE_NOT_AVAILABLE": "Preview niet beschikbaar",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "In de voorvertoningsmodus kunt u geen bestand bijvoegen"
+      }
     },
     "FIELD": {
       "LOCALSTORAGE": "Lokale opslag",
@@ -46,11 +50,19 @@
       "UPLOAD": "Uploaden",
       "REQUIRED": "Veld vereist",
       "REST_API_FAILED": "De server '{{ hostname }}' is niet bereikbaar",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Er is een probleem opgetreden bij het laden van vervolgkeuzelijstelementen. Neem contact op met de beheerder.",
+      "DATA_TABLE_LOAD_FAILED": "Er is een probleem opgetreden bij het laden van tabelelementen. Neem contact op met de beheerder.",
+      "DATA_TABLE_EMPTY_CONTENT": "Geen gegevens gevonden",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "Er is een probleem opgetreden bij het laden van de externe eigenschap. Neem contact op met de beheerder.",
       "FILE_NAME": "Bestandsnaam",
+      "TITLE": "Titel",
       "NO_FILE_ATTACHED": "Geen bestand bijgevoegd",
       "VALIDATOR": {
         "INVALID_NUMBER": "Gebruik een andere getalnotatie",
+        "INVALID_DECIMAL_NUMBER": "Gebruik een decimale getalnotatie",
+        "INVALID_DECIMAL_PRECISION": "Onjuiste decimale waarde, er mogen maximaal {{precision}} cijfers na de komma staan.",
         "INVALID_DATE": "Gebruik een andere datumnotatie",
+        "INVALID_DATE_FORMAT": "Ongeldige datumnotatie.",
         "INVALID_VALUE": "Voer een andere waarde in",
         "NOT_GREATER_THAN": "Mag niet groter zijn dan {{ maxValue }}",
         "NOT_LESS_THAN": "Mag niet kleiner zijn dan {{ minValue }}",
@@ -58,10 +70,65 @@
         "NO_LONGER_THAN": "Voer niet meer dan {{ maxLength }} tekens in"
       },
       "FILE_ALREADY_UPLOADED": "Er is al een bestand met dezelfde naam geüpload.",
-      "ATTACH": "Bijvoegen"
+      "ATTACH": "Bijvoegen",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "toevoegen",
+        "ROW_LIMIT_REACHED": "Rijenlimiet ({{ limit }}) bereikt."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Naamloze taak"
+      "NAMELESS_TASK": "Naamloze taak",
+      "ROW_LABEL": "Rij {{ number }}",
+      "DELETE_ROW": "Rij verwijderen",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "De rij verwijderen",
+        "MESSAGE": "Weet u zeker dat u deze rij wilt verwijderen?",
+        "YES_LABEL": "Rij verwijderen",
+        "NO_LABEL": "Annuleren"
+      }
+    },
+    "BUTTON": {
+      "PREVIOUS_TAB": "Vorige",
+      "PREVIOUS_TAB_TITLE": "Naar vorige tabblad navigeren",
+      "NEXT_TAB": "Volgende",
+      "NEXT_TAB_TITLE": "Naar volgende tabblad navigeren"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "Lettergrootte",
+      "FONT_WEIGHT": "Letterdikte",
+      "FONT_COLOR": "Lettertypekleur",
+      "FONT_WEIGHTS": {
+        "REGULAR": "normaal",
+        "BOLD": "vet"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "systeemkleur",
+        "BLACK": "zwart",
+        "GREY": "grijs",
+        "RED": "rood",
+        "GREEN": "groen",
+        "BLUE": "blauw",
+        "YELLOW": "geel"
+      },
+      "PREDEFINED": {
+        "HEADER": {
+          "NORMAL": "normaal",
+          "HEADING": "kop",
+          "TITLE": "titel"
+        },
+        "RADIO_BUTTONS": {
+          "NORMAL": "normaal",
+          "STRONG": "sterk",
+          "HEADING": "kop"
+        },
+        "READONLY_TEXT": {
+          "NORMAL": "normaal",
+          "STRONG": "sterk",
+          "HEADING": "kop",
+          "TITLE": "titel",
+          "ANNOTATION": "annotatie"
+        }
+      }
     }
   },
   "CORE": {
@@ -99,12 +166,24 @@
         "ACTIONS": {
           "CANCEL": "Annuleren"
         },
-        "TITLE": "Bestanden toevoegen aan .zip-bestand, dit kan een paar minuten duren"
+        "TITLE": "Bestanden toevoegen aan .zip-bestand, dit kan een paar minuten duren",
+        "COMPLETE": "voltooid"
       },
       "EDIT_JSON": {
         "CLOSE": "Sluiten",
-        "UPDATE": "Bijwerken"
+        "UPDATE": "Bijwerken",
+        "COPY": "Kopiëren",
+        "COPIED": "Gekopieerd naar klembord"
+      },
+      "UNSAVED_CHANGES": {
+        "TITLE": "Niet-opgeslagen wijzigingen",
+        "DESCRIPTION": "U hebt niet-opgeslagen wijzigingen op dit scherm. Weet u zeker dat u wilt vertrekken zonder de wijzigingen op te slaan?",
+        "DISCARD_CHANGES_BUTTON": "Wijzigingen negeren"
       }
+    },
+    "BREADCRUMBS": {
+      "TITLE": "Navigatiepad",
+      "SHOWALL": "Alles bekijken"
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "Bestand vergrendelen",
@@ -144,7 +223,9 @@
       },
       "CANCEL_BUTTON": {
         "LABEL": "Annuleren"
-      }
+      },
+      "FOLDER_CREATED_SUCCESS": "Map '{{ name }}' is succesvol gemaakt",
+      "FOLDER_UPDATED_SUCCESS": "Map '{{ name }}' is succesvol bijgewerkt"
     },
     "MESSAGES": {
       "ERRORS": {
@@ -176,12 +257,16 @@
         "VALUE": "Waarde"
       },
       "NONE": "Geen",
+      "SELECTED_VALUES": "Geselecteerde waarden",
+      "REMOVE": "{{ value }} verwijderen",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Gebruik een getalnotatie",
         "INT_VALIDATION_ERROR": "Gebruik een notatie voor gehele getallen",
+        "LONG_VALIDATION_ERROR": "Gebruik een lange notatie",
         "LENGTH_VALIDATION_ERROR": "Lengte van waarde moet liggen tussen {{ minLength }} en {{ maxLength }}",
         "MATCH_VALIDATION_ERROR": "Waarde komt niet overeen met patroon: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Waarde moet liggen tussen {{ minValue }} en {{ maxValue }}"
+        "MINMAX_VALIDATION_ERROR": "Waarde moet liggen tussen {{ minValue }} en {{ maxValue }}",
+        "ONLY_POSITIVE_NUMBER": "Alleen een positieve waarde is toegestaan"
       },
       "MORE": "Meer"
     },
@@ -228,20 +313,41 @@
         "EDIT": "Knop Bewerken",
         "DATEPICKER": "Gebruik de pijltoetsen om te navigeren tussen datums. Met pijl-omhoog en pijl-omlaag gaat u naar dezelfde dag in de  volgende of vorige week. Met pijl-links en pijl-rechts gaat u naar de volgende of vorige dag. Druk op Enter of Return om een datum te selecteren.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Waarde gekopieerd naar klembord",
-        "EDIT_ASPECTS": "Aspect bewerken"
+        "EDIT_ASPECTS": "Aspect bewerken",
+        "SECTION": "Sectie {{ sectionName }}"
       }
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "Schakelen tussen resultaten in oplopende en aflopende volgorde",
-      "SORT_BY": "Sorteren op"
+      "SORT_BY": "Sorteren op",
+      "BUTTON": {
+        "TOOLTIP": "Zoeken",
+        "ARIA-LABEL": "Knop Zoeken"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "Invoer voor zoekopdracht"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "Sluiten"
+        }
+      }
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "Feature flag-overschrijvingen",
+      "FILTER_OR_ADD_NEW": "Filteren of nieuwe toevoegen",
+      "FILTER": "Filteren",
+      "ADD_NEW": "Nieuwe feature flag toevoegen (Shift + Enter)"
     }
   },
   "COMMENTS": {
+    "PROFILE_IMAGE": "Profielafbeelding",
     "NONE": "Geen opmerkingen",
     "ADD": "Toevoegen",
     "HEADER": "Opmerkingen ({{ count }})",
     "CREATED_BY_HEADER": "Gemaakt door",
     "MESSAGE_HEADER": "Bericht",
+    "EMPTY_ERROR": "Opmerking mag niet leeg zijn",
     "DIALOG": {
       "TITLE": "Nieuwe opmerking",
       "LABELS": {
@@ -254,7 +360,7 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco, make business flow",
+    "LOGO": "Alfresco, laat bedrijfsprocessen stromen",
     "LABEL": {
       "LOGIN": "Aanmelden",
       "USERNAME": "Gebruikersnaam",
@@ -296,12 +402,15 @@
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "Content-acties"
+      "TOOLTIP": "Content-acties",
+      "SELECT_COLUMNS": "Kolommen selecteren"
     },
     "ACCESSIBILITY": {
       "ACTIONS": "Acties",
       "SELECT_ALL": "Alles selecteren",
       "SELECT_FILE": "Bestand selecteren",
+      "SELECTED": "Geselecteerd",
+      "ROW_SELECTION": "Druk op spatie om rijselectie in/uit te schakelen",
       "SORT_ASCENDING": "Oplopend",
       "SORT_DESCENDING": "Aflopend",
       "SORT_NONE": "Geen",
@@ -311,7 +420,11 @@
       "ICON_TEXT": "Itemtype {{ type }}",
       "ICON_DISABLED": "Uitgeschakeld",
       "ROW_OPTION_BUTTON": "Acties",
-      "EMPTY_HEADER": "Lege kop"
+      "DRAG": "Sleepknop",
+      "DRAGGABLE": "Versleepbaar",
+      "EMPTY_HEADER": "Lege kop",
+      "RESIZE_COLUMN": "Formaat van kolom {{ column }} wijzigen. Gebruik de pijltoetsen om de breedte aan te passen, Shift voor grotere stappen.",
+      "COLUMN_WIDTH_CHANGED": "Breedte van kolom {{ column }}: {{ width }} pixels"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Document",
@@ -332,7 +445,8 @@
     "COLUMNS_SELECTOR": {
       "COLUMNS": "Kolommen",
       "SEARCH": "Zoeken",
-      "APPLY": "Toepassen"
+      "APPLY": "Toepassen",
+      "COLUMNS_VISIBILITY": "Selecteer kolommen om weer te geven"
     }
   },
   "USER_PROFILE": {
@@ -366,6 +480,7 @@
       "WAIT": "Wachten"
     },
     "ARIA": {
+      "MIME_TYPE_ICON": "Bestandstype-icoon",
       "PREVIOUS_PAGE": "Vorige pagina",
       "NEXT_PAGE": "Volgende pagina",
       "ZOOM_IN": "Inzoomen",
@@ -377,7 +492,9 @@
       "CANCEL": "Annuleren",
       "RESET": "Opnieuw instellen",
       "THUMBNAILS": "Documentminiaturen",
-      "THUMBNAILS_PANLEL_CLOSE": "Venster met miniaturen sluiten"
+      "THUMBNAILS_PANLEL_CLOSE": "Venster met miniaturen sluiten",
+      "LOADING": "Document wordt geladen",
+      "NOTE_ANNOTATION_IMG": "Notitieannotatie"
     },
     "PAGE_LABEL": {
       "SHOWING": "Wordt weergegeven",
@@ -389,10 +506,6 @@
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Pagina {{ pageNum }}"
-      },
-      "METADATA": {
-        "MORE_INFORMATION": "Meer informatie",
-        "LESS_INFORMATION": "Minder informatie"
       }
     },
     "PDF_DIALOG": {
@@ -486,27 +599,7 @@
       "CONTENT_SERVICE_HOST": "Alfresco Content Services-URL: {{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Services-URL: {{ value }}"
     },
-    "REPOSITORY": "Repository",
-    "VERSIONS": {
-      "TITLE": "Productversies",
-      "CONTENT_SERVICE": "Content Services",
-      "PROCESS_SERVICE": "Process Services",
-      "MODELING_SERVICE": "Modelleringsservices",
-      "DEPLOYMENT_SERVICE": "Implementatieservices",
-      "QUERY_SERVICE": "Implementatieservices",
-      "RB": "Runtime",
-      "LABELS": {
-        "EDITION": "Editie",
-        "VERSION": "Versie",
-        "LICENSE": "Licentie",
-        "STATUS": "Status",
-        "MODULES": "Modules"
-      }
-    },
-    "SOURCE_CODE": {
-      "TITLE": "Broncode",
-      "DESCRIPTION": "U voert het project uit op basis van de volgende doorvoer:"
-    },
+    "REPOSITORY": "Opslagplaats",
     "PACKAGES": {
       "TITLE": "Pakketten",
       "NAME": "Naam",
@@ -527,7 +620,9 @@
     "LICENSE": {
       "TITLE": "Licentie",
       "PROPERTY": "Eigenschap",
-      "VALUE": "Waarde"
+      "VALUE": "Waarde",
+      "ENABLED": "Ingeschakeld",
+      "DISABLED": "Uitgeschakeld"
     },
     "STATUS": {
       "TITLE": "Status",
@@ -562,10 +657,23 @@
     "LOADING": "Laden...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} keuzelijst met invoervak {{selectedOption}}"
   },
+  "INFO_DRAWER": {
+    "ICON": "Node Icon"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "Meer laden",
+    "DELETE": "{{ name }} verwijderen"
+  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Bevestigen",
     "ACTION": "Wilt u doorgaan?",
     "YES_LABEL": "Ja",
     "NO_LABEL": "Nee"
+  },
+  "SESSION_TIMEOUT": {
+    "TITLE": "Bent u nog aan het werk?",
+    "MESSAGE": "Uw sessie wordt beëindigd binnen {{seconds}} seconden omdat er geen activiteit is geweest.",
+    "LOG_OUT": "Afmelden",
+    "CONTINUE_WORKING": "Doorgaan met werken"
   }
 }

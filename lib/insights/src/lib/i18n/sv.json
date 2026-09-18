@@ -1,11 +1,11 @@
 {
   "ANALYTICS": {
-    "TITLE": "Analytics",
+    "TITLE": "ANALYTICS",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "Okänd widgettyp",
-      "FILL-PARAMETER": "Välj från rapportalternativen",
+      "UNKNOWN-WIDGET-TYPE": "OKÄND WIDGETTYP",
+      "FILL-PARAMETER": "Välj bland rapportalternativen",
       "NO-DATA-FOUND": "Inga data hittades",
-      "ZERO-DATA-FOUND": "Det finns bara nollvärden",
+      "ZERO-DATA-FOUND": "Det finns endast nollvärden",
       "ICON-SETTING": "Inställningar",
       "ICON-SAVE": "Spara",
       "ICON-DELETE": "Radera",
@@ -25,7 +25,7 @@
   "REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "Inkludera genomgångssteg såsom starthändelser och gateways"
+        "TYPE-FILTERING": "Inkludera genomgångssteg som starthändelser och gateways"
       },
       "PROCESS-INSTANCES-OVERVIEW": {
         "PROCESS-DEFINITION": "Processdefinition",
@@ -35,16 +35,16 @@
       "TASK-OVERVIEW": {
         "PROCESS-DEFINITION": "Processdefinition",
         "DATE-RANGE": "Datumintervall",
-        "DATE-RANGE-INTERVAL": "Gruppdatum per"
+        "DATE-RANGE-INTERVAL": "Gruppera datum efter"
       },
       "TASK-SLA": {
         "TASK": "Uppgift",
         "PROCESS-DEFINITION": "Processdefinition",
         "DATE-RANGE": "Datumintervall",
-        "SLA-DURATION": "Serviceavtal begärd slutförandetid"
+        "SLA-DURATION": "SLA-krav för sluttid"
       }
     },
-    "PROCESS-STATUS": "Processtatus",
+    "PROCESS-STATUS": "Processstatus",
     "TASK-STATUS": "Uppgiftsstatus"
   },
   "DIAGRAMS": "Diagram"
