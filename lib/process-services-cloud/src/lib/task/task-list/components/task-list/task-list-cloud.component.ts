@@ -267,7 +267,9 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
     );
 
-    private readonly fetchProcessesTrigger$ = new Subject<void>();
+    // incremented on every explicit reload() so it always refetches, even when the computed request is unchanged
+    private reloadNonce = 0;
+    private readonly fetchProcessesTrigger$ = new Subject<number>();
 
     constructor() {
         const cloudPreferenceService = inject<PreferenceCloudServiceInterface>(TASK_LIST_PREFERENCES_SERVICE_TOKEN);
@@ -280,11 +282,17 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         ])
             .pipe(
                 filter(([isLoadingPreferences, isColumnSchemaCreated]) => !isLoadingPreferences && !!isColumnSchemaCreated),
-                map(() => (this.searchApiMethod === 'POST' ? this.createTaskListRequestNode() : this.createRequestNode())),
-                // avoid firing identical requests when the request node did not actually change
-                distinctUntilChanged((previous, current) => JSON.stringify(previous) === JSON.stringify(current)),
+                map(([, , reloadNonce]) => ({
+                    reloadNonce,
+                    requestNode: this.searchApiMethod === 'POST' ? this.createTaskListRequestNode() : this.createRequestNode()
+                })),
+                // skip identical requests triggered by schema/preference re-emissions, but always refetch on an explicit reload()
+                distinctUntilChanged(
+                    (previous, current) =>
+                        previous.reloadNonce === current.reloadNonce && JSON.stringify(previous.requestNode) === JSON.stringify(current.requestNode)
+                ),
                 tap(() => this.isReloadingSubject$.next(true)),
-                switchMap((requestNode) => {
+                switchMap(({ requestNode }) => {
                     if (this.searchApiMethod === 'POST') {
                         return this.taskListCloudService.fetchTaskList(requestNode as TaskListRequestModel).pipe(take(1));
                     } else {
@@ -319,7 +327,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
 
     reload() {
         this.isReloadingSubject$.next(true);
-        this.fetchProcessesTrigger$.next();
+        this.fetchProcessesTrigger$.next(++this.reloadNonce);
     }
 
     private createTaskListRequestNode(): TaskListRequestModel {
