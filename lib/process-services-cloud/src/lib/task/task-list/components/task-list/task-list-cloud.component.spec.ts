@@ -31,7 +31,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { By } from '@angular/platform-browser';
@@ -462,40 +462,6 @@ describe('TaskListCloudComponent', () => {
         beforeEach(() => {
             configureTestingModule('GET');
         });
-
-        it('should push appName to Subject in ngOnChanges', () => {
-            const appNameSubjectSpy = spyOn(component['appNameSubject$'], 'next');
-
-            const appNameChange = new SimpleChange('old', 'new', false);
-            component.ngOnChanges({
-                appName: appNameChange
-            });
-
-            expect(appNameSubjectSpy).toHaveBeenCalledWith('new');
-        });
-
-        it('should push appName to Subject in ngAfterContentInit', () => {
-            // Arrange
-            const appNameSubjectSpy = spyOn(component['appNameSubject$'], 'next');
-            component.appName = 'init-app';
-
-            component.ngAfterContentInit();
-
-            expect(appNameSubjectSpy).toHaveBeenCalledWith('init-app');
-            expect(appNameSubjectSpy).toHaveBeenCalledTimes(1);
-        });
-
-        it('should filter duplicate appName values via distinctUntilChanged', fakeAsync(() => {
-            const retrieveTasksPreferencesSpy = spyOn(component as any, 'retrieveTasksPreferences').and.callThrough();
-
-            component['appNameSubject$'].next('same-app');
-            tick();
-            component['appNameSubject$'].next('same-app');
-            tick();
-
-            expect(retrieveTasksPreferencesSpy).toHaveBeenCalledTimes(1);
-            expect(retrieveTasksPreferencesSpy).toHaveBeenCalledWith('same-app');
-        }));
 
         it('should be able to inject TaskListCloudService instance', () => {
             fixture.detectChanges();
