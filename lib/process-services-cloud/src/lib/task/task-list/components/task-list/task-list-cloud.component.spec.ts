@@ -599,6 +599,39 @@ describe('TaskListCloudComponent', () => {
             expect(component.createDatatableSchema).toHaveBeenCalled();
         });
 
+        it('should call retrieveTasksPreferences when appName changes in ngOnChanges', () => {
+            const appNameChange = new SimpleChange('app-name', 'app-name-changed', false);
+            const appNameSubjectNextSpy = spyOn(component['appNameSubject$'], 'next').and.callThrough();
+
+            component.ngOnChanges({
+                appName: appNameChange
+            });
+
+            expect(appNameSubjectNextSpy).toHaveBeenCalled();
+            expect(appNameSubjectNextSpy).toHaveBeenCalledWith('app-name-changed');
+        });
+
+        it('should call retrieveTasksPreferences when appName is set in ngAfterContentInit', () => {
+            const appNameSubjectNextSpy = spyOn(component['appNameSubject$'], 'next').and.callThrough();
+
+            component.appName = 'app-name';
+
+            component.ngAfterContentInit();
+
+            expect(appNameSubjectNextSpy).toHaveBeenCalled();
+            expect(appNameSubjectNextSpy).toHaveBeenCalledWith('app-name');
+        });
+
+        it('should filter duplicate appName values via distinctUntilChanged', () => {
+            const retrieveTasksPreferencesSpy = spyOn(component as any, 'retrieveTasksPreferences');
+
+            component['appNameSubject$'].next('app-name-the-same');
+            component['appNameSubject$'].next('app-name-the-same');
+
+            expect(retrieveTasksPreferencesSpy).toHaveBeenCalled();
+            expect(retrieveTasksPreferencesSpy).toHaveBeenCalledWith('app-name-the-same');
+        });
+
         describe('component changes', () => {
             beforeEach(() => {
                 component.rows = fakeGlobalTasks.list.entries;
