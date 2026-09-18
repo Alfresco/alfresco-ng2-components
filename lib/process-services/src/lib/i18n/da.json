@@ -1,152 +1,152 @@
 {
   "DIALOG": {
-    "SAVE_MESSAGE": "Click Save to add a report with the current settings to your reports list.",
+    "SAVE_MESSAGE": "Klik på Gem for at tilføje en rapport med de aktuelle indstillinger på din rapportliste.",
     "EXPORT_MESSAGE": ""
   },
   "DATE-WIDGET": {
-    "START-DATE": "Start date",
-    "END-DATE": "End date",
+    "START-DATE": "Startdato",
+    "END-DATE": "Slutdato",
     "MESSAGES": {
-      "START-DATE-REQUIRED": "Start date is required",
-      "START-LESS-THAN-END-DATE": "Start date must be before end date"
+      "START-DATE-REQUIRED": "Startdatoen er påkrævet",
+      "START-LESS-THAN-END-DATE": "Startdatoen skal være før slutdatoen"
     }
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "TITLE": "No Applications Found",
-      "SUBTITLE": "Create a new application that you want to easily find later",
-      "TASK_APP_NAME": "Task App"
+      "TITLE": "Der blev ikke fundet nogen programmer",
+      "SUBTITLE": "Opret et nyt program, som skal være nemt at finde senere",
+      "TASK_APP_NAME": "Opgaveapp"
     },
     "LIST": {
       "MESSAGES": {
-        "TITLE": "No Tasks Found",
-        "SUBTITLE": "Create a new task that you want to easily find later",
-        "NONE": "No task lists found"
+        "TITLE": "Der blev ikke fundet nogen opgaver",
+        "SUBTITLE": "Opret en ny opgave, som skal være nem at finde senere",
+        "NONE": "Der blev ikke fundet nogen opgavelister"
       }
     },
     "PROPERTIES": {
-      "TASK_NAME": "Task",
+      "TASK_NAME": "Opgave",
       "THUMBNAIL": "Miniaturevisning",
-      "DURATION": "Duration",
-      "PARENT_TASK_ID": "Parent task id",
-      "NAME": "Task Name",
-      "ASSIGNEE": "Assignee",
-      "ASSIGNEE_DEFAULT": "No assignee",
-      "PRIORITY": "Priority",
-      "DUE_DATE": "Due Date",
-      "DUE_DATE_DEFAULT": "No date",
+      "DURATION": "Varighed",
+      "PARENT_TASK_ID": "Id for overordnet opgave",
+      "NAME": "Navn",
+      "ASSIGNEE": "Modtager",
+      "ASSIGNEE_DEFAULT": "Ingen modtager",
+      "PRIORITY": "Prioritet",
+      "DUE_DATE": "Forfaldsdato",
+      "DUE_DATE_DEFAULT": "Ingen dato",
       "STATUS": "Status",
-      "CATEGORY": "Category",
-      "CATEGORY_DEFAULT": "No category",
-      "PARENT_NAME": "Parent name",
-      "PARENT_NAME_DEFAULT": "No parent",
-      "CREATED_BY": "Created By",
+      "CATEGORY": "Kategori",
+      "CATEGORY_DEFAULT": "Ingen kategori",
+      "PARENT_NAME": "Overordnet navn",
+      "PARENT_NAME_DEFAULT": "Ingen overordnet",
+      "CREATED_BY": "Oprettet af",
       "CREATED": "Oprettet",
-      "END_DATE": "End date",
+      "END_DATE": "Slutdato",
       "ID": "Id",
       "DESCRIPTION": "Beskrivelse",
       "DESCRIPTION_DEFAULT": "Ingen beskrivelse",
-      "FORM_NAME": "Form Name",
-      "FORM_NAME_DEFAULT": "No form"
+      "FORM_NAME": "Formularnavn",
+      "FORM_NAME_DEFAULT": "Ingen formular"
     },
     "MENU_ACTIONS": {
       "VIEW_CONTENT": "Vis",
       "REMOVE_CONTENT": "Fjern",
       "DOWNLOAD_CONTENT": "Download",
-      "DOWNLOAD_AUDIT": "Download Audit"
+      "DOWNLOAD_AUDIT": "Download overvågning"
     },
     "DETAILS": {
       "LABELS": {
-        "INFO_DRAWER_TITLE": "Activities",
-        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Activity",
+        "INFO_DRAWER_TITLE": "Aktiviteter",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Aktivitet",
         "INFO_DRAWER_TAB_DETAILS_TITLE": "Detaljer",
-        "ASSIGNEE": "Assignee",
-        "DUE": "Due",
-        "FORM": "Form",
-        "PEOPLE": "People this task is shared with",
+        "ASSIGNEE": "Modtager",
+        "DUE": "Forfalder",
+        "FORM": "Formular",
+        "PEOPLE": "Personer, som denne opgave er delt med",
         "COMMENTS": "Kommentarer",
-        "CHECKLIST": "Checklist",
-        "INVOLVED_PEOPLE": "People Involved",
-        "ADD_PEOPLE": "Add people and groups",
-        "ADD_ASSIGNEE": "Add new assignee"
+        "CHECKLIST": "Tjekliste",
+        "INVOLVED_PEOPLE": "Involverede personer",
+        "ADD_PEOPLE": "Tilføj personer og grupper",
+        "ADD_ASSIGNEE": "Tilføj ny modtager"
       },
       "BUTTON": {
-        "COMPLETE": "Complete",
-        "CLAIM": "Claim",
-        "UNCLAIM": "Release",
-        "DRAG-ATTACHMENT": "Drop files to upload",
-        "UPLOAD-ATTACHMENT": "Upload Attachment"
+        "COMPLETE": "Fuldført",
+        "CLAIM": "Gør krav på",
+        "UNCLAIM": "Frigiv",
+        "DRAG-ATTACHMENT": "Slip filer for at uploade dem",
+        "UPLOAD-ATTACHMENT": "Upload vedhæftet fil"
       },
       "MESSAGES": {
-        "NONE": "No task details found",
-        "CLAIM": "Click Claim to work on this task"
+        "NONE": "Der blev ikke fundet nogen opgavedetaljer",
+        "CLAIM": "Klik på Gør krav på for at arbejde på denne opgave"
       },
       "FORM": {
-        "NONE": "No form"
+        "NONE": "Ingen formular"
       },
       "DUE": {
-        "NONE": "No due date"
+        "NONE": "Ingen forfaldsdato"
       },
       "ASSIGNEE": {
-        "NONE": "No assignee"
+        "NONE": "Ingen modtager"
       },
       "PEOPLE": {
-        "NONE": "Nobody involved"
+        "NONE": "Der er ingen involverede"
       },
       "CHECKLIST": {
-        "NONE": "No checklist",
+        "NONE": "Ingen tjekliste",
         "DIALOG": {
-          "TITLE": "New Check",
+          "TITLE": "Nyt tjek",
           "CANCEL-BUTTON": "Annuller",
-          "ADD-BUTTON": "Add Checklist",
+          "ADD-BUTTON": "Tilføj kontrolliste",
           "PLACEHOLDER": "Navn"
         }
       },
       "ERROR": {
-        "TITLE": "Couldn't complete the action",
-        "DESCRIPTION": "Try again or check that you have access.",
+        "TITLE": "Handlingen kunne ikke fuldføres",
+        "DESCRIPTION": "Prøv igen, eller kontrollér, om du har adgang.",
         "CLOSE": "Luk"
       }
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "No task filter selected"
+        "NONE": "Der er ikke valgt noget opgavefilter"
       }
     },
     "START_TASK": {
-      "DEFAULT_NAME": "My Default Task",
-      "BUTTON": "CREATE TASK",
+      "DEFAULT_NAME": "Min standardopgave",
+      "BUTTON": "Opret opgave",
       "FORM": {
-        "TITLE": "Start Task",
+        "TITLE": "Start opgave",
         "LABEL": {
           "NONE": "Ingen",
           "NAME": "Navn",
           "DESCRIPTION": "Beskrivelse",
-          "ATTACHFORM": "Attach Form",
-          "ASSIGNEE": "Assignee",
-          "FORM": "Form",
-          "DATE": "Choose Date"
+          "ATTACHFORM": "Vedhæft formular",
+          "ASSIGNEE": "Modtager",
+          "FORM": "Formular",
+          "DATE": "Vælg dato"
         },
         "ACTION": {
           "START": "Start",
           "CANCEL": "Annuller"
         },
         "ERROR": {
-          "REQUIRED": "Field required",
-          "DATE": "Date format DD/MM/YYYY",
-          "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
+          "REQUIRED": "Obligatorisk felt",
+          "DATE": "Datoformat DD/MM/ÅÅÅÅ",
+          "MAXIMUM_LENGTH": "Længden er overskredet, maks. {{characters}} tegn.",
           "MESSAGE": "Angiv en anden værdi"
         }
       }
     },
     "PEOPLE": {
-      "ASSIGNEE": "Assignee",
+      "ASSIGNEE": "Modtager",
       "DIALOG_CLOSE": "Luk",
       "ADD_USER": "Tilføj",
-      "ADD_ASSIGNEE": "ASSIGN",
-      "SEARCH_USER": "Search user",
+      "ADD_ASSIGNEE": "Tildel",
+      "SEARCH_USER": "Søg efter bruger",
       "SEARCH": {
-        "NO_USERS": "Nobody found to involve"
+        "NO_USERS": "Der blev ikke fundet nogen involverede"
       }
     },
     "ATTACHMENT": {
@@ -158,45 +158,45 @@
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "No files are available"
+        "HEADER": "Der er ingen tilgængelige filer"
       }
     },
     "STANDALONE_TASK": {
-      "NO_FORM_MESSAGE": "No forms attached",
-      "COMPLETE_TASK_MESSAGE": "Task {{taskName}} completed",
-      "COMPLETE_TASK_SUB_MESSAGE": "No forms to be added"
+      "NO_FORM_MESSAGE": "Der er ikke vedhæftet en formular",
+      "COMPLETE_TASK_MESSAGE": "Opgaven {{taskName}} er fuldført",
+      "COMPLETE_TASK_SUB_MESSAGE": "Der er ikke tilføjet nogen formularer"
     },
     "ATTACH_FORM": {
-      "SELECT_FORM": "Select Form To Attach",
-      "REMOVE_FORM": "Remove Form",
-      "SELECT_OPTION": "Select an option"
+      "SELECT_FORM": "Vælg den formular, du vil vedhæfte",
+      "REMOVE_FORM": "Fjern formular",
+      "SELECT_OPTION": "Vælg en valgmulighed"
     }
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "TITLE": "No Processes Found",
-      "SUBTITLE": "Create a new process that you want to easily find later",
-      "SUMMARY": "{{total}} process instances found",
-      "ERROR": "Couldn't load processes instances. Try again or share the following message with your IT Team: {{errorMessage}}"
+      "TITLE": "Der blev ikke fundet nogen processer",
+      "SUBTITLE": "Opret en ny proces, som skal være nem at finde senere",
+      "SUMMARY": "{{total}} procesforekomster fundet",
+      "ERROR": "Procesforekomsterne kunne ikke indlæses. Prøv igen, eller giv følgende meddelelse til din it-afdeling: {{errorMessage}}"
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "No process instance filter selected."
+        "NONE": "Der er ikke valgt et filter for procesforekomster."
       }
     },
     "PROPERTIES": {
-      "PROCESS_NAME": "Process",
+      "PROCESS_NAME": "Proces",
       "NAME": "Navn",
       "THUMBNAIL": "Miniaturevisning",
       "STATUS": "Status",
-      "END_DATE": "End Date",
-      "END_DATE_DEFAULT": "No date",
-      "CATEGORY": "Category",
-      "CATEGORY_DEFAULT": "No category",
-      "CREATED_BY": "Created By",
-      "CREATED_BY_DEFAULT": "No assignee",
+      "END_DATE": "Slutdato",
+      "END_DATE_DEFAULT": "Ingen dato",
+      "CATEGORY": "Kategori",
+      "CATEGORY_DEFAULT": "Ingen kategori",
+      "CREATED_BY": "Oprettet af",
+      "CREATED_BY_DEFAULT": "Ingen modtager",
       "CREATED": "Oprettet",
-      "BUSINESS_KEY": "Business key",
+      "BUSINESS_KEY": "Forretningsnøgle",
       "BUSINESS_KEY_DEFAULT": "Ingen",
       "DESCRIPTION": "Beskrivelse",
       "DESCRIPTION_DEFAULT": "Ingen beskrivelse",
@@ -206,44 +206,44 @@
       "VIEW_CONTENT": "Vis",
       "REMOVE_CONTENT": "Fjern",
       "DOWNLOAD_CONTENT": "Download",
-      "DOWNLOAD_AUDIT": "Download audit",
-      "VIEW_TASK": "View Task"
+      "DOWNLOAD_AUDIT": "Download overvågning",
+      "VIEW_TASK": "Vis opgave"
     },
     "DETAILS": {
       "LABELS": {
-        "STARTED_BY": "Started by",
-        "STARTED": "Started",
-        "ENDED": "Ended",
+        "STARTED_BY": "Startet af",
+        "STARTED": "Startet",
+        "ENDED": "Sluttet",
         "COMMENTS": "Kommentarer",
         "START_FORM": "Åbn formular",
-        "TASKS_ACTIVE": "Active Tasks",
-        "TASKS_COMPLETED": "Completed Tasks",
-        "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}",
-        "REFRESH": "Refresh"
+        "TASKS_ACTIVE": "Aktive opgaver",
+        "TASKS_COMPLETED": "Fuldførte opgaver",
+        "TASK_SUBTITLE": "Tildelt til {{user}}, oprettet {{created}}",
+        "REFRESH": "Opdater"
       },
       "BUTTON": {
-        "CANCEL": "Cancel Process",
+        "CANCEL": "Annuller proces",
         "CLOSE": "Luk",
-        "SHOW_DIAGRAM": "Show Diagram",
-        "DRAG-ATTACHMENT": "Drop files to upload",
-        "UPLOAD-ATTACHMENT": "Upload Attachment",
-        "FILE_OPTION_MENU": "File Option Menu"
+        "SHOW_DIAGRAM": "Vis diagram",
+        "DRAG-ATTACHMENT": "Slip filer for at uploade dem",
+        "UPLOAD-ATTACHMENT": "Upload vedhæftet fil",
+        "FILE_OPTION_MENU": "Filoptionsmenu"
       },
       "MESSAGES": {
-        "NONE": "No process details found"
+        "NONE": "Der blev ikke fundet nogen procesdetaljer"
       },
       "TASKS": {
-        "NO_ACTIVE": "No currently active tasks",
-        "NO_COMPLETED": "No tasks completed yet",
-        "TASK_DETAILS": "Task details",
+        "NO_ACTIVE": "Der er ikke nogen aktive opgaver",
+        "NO_COMPLETED": "Der er endnu ikke fuldført nogen opgaver",
+        "TASK_DETAILS": "Opgavedetaljer",
         "TASK_CLOSE": "Luk"
       },
       "COMMENTS": {
-        "ADD": "Add a comment",
+        "ADD": "Tilføj en kommentar",
         "HEADER": "Kommentarer ({{ count }})",
         "NONE": "Ingen kommentarer",
         "BUTTON": {
-          "ADD": "Add a comment"
+          "ADD": "Tilføj en kommentar"
         },
         "ADD_DIALOG": {
           "TITLE": "Ny kommentar",
@@ -257,45 +257,45 @@
         }
       },
       "ADD_DIALOG": {
-        "TITLE": "Set process variable",
+        "TITLE": "Angiv procesvariabel",
         "LABEL": {
           "NAME": "Navn",
           "VALUE": "Værdi",
-          "SCOPE": "Scope"
+          "SCOPE": "Omfang"
         }
       },
       "EDIT_DIALOG": {
-        "TITLE": "Edit process variable"
+        "TITLE": "Rediger procesvariabel"
       },
       "ERROR_DIALOG": {
-        "TITLE": "Couldn't complete the action",
-        "DESCRIPTION": "You might not have the required access level, check with your IT Team."
+        "TITLE": "Handlingen kunne ikke fuldføres",
+        "DESCRIPTION": "Du har muligvis ikke det påkrævede adgangsniveau. Kontakt din it-afdeling."
       }
     },
     "START_PROCESS": {
       "BUTTON": "Start proces",
-      "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
-      "NO_START_FORM": "No start form",
-      "NO_PROCESS_DEF_SELECTED": "No process definition selected",
+      "NO_PROCESS_DEFINITIONS": "Du kan ikke starte en proces, da der ikke er nogen tilgængelige procesdefinitioner",
+      "NO_START_FORM": "Ingen startform",
+      "NO_PROCESS_DEF_SELECTED": "Ingen proces er valgt",
       "FORM": {
+        "TITLE": "Start proces",
         "LABEL": {
-          "SELECT_APPLICATION": "Select Application",
-          "TYPE": "Select Process",
-          "NAME": "Process Name",
-          "SELECTED_PEOPLE": "Selected people"
+          "SELECT_APPLICATION": "Vælg applikation",
+          "TYPE": "Vælg proces",
+          "NAME": "Procesnavn"
         },
-        "TYPE_PLACEHOLDER": "Choose one...",
+        "TYPE_PLACEHOLDER": "Vælg en...",
         "ACTION": {
           "START": "Start proces",
           "CANCEL": "Annuller"
         }
       },
       "ERROR": {
-        "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
-        "START": "Couldn't start new process instance, check you have access.",
-        "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
-        "SPACE_VALIDATOR": "Cannot begin or end with a space.",
-        "PROCESS_NAME_REQUIRED": "Process name is required."
+        "LOAD_PROCESS_DEFS": "Der kunne ikke indlæses nogen procesdefinitioner. Kontrollér, om du har adgang til dem.",
+        "START": "Der kunne ikke startes en ny procesforekomst. Kontrollér, om du har adgang.",
+        "MAXIMUM_LENGTH": "Længden er overskredet, maks. {{characters}} tegn.",
+        "SPACE_VALIDATOR": "Må ikke starte eller slutte med et mellemrum.",
+        "PROCESS_NAME_REQUIRED": "Procesnavn er påkrævet."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -307,25 +307,25 @@
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "No files are available"
+        "HEADER": "Der er ingen tilgængelige filer"
       },
       "COLUMNS": {
         "NAME": "Navn",
-        "CREATED-ON": "Created on"
+        "CREATED-ON": "Oprettet den"
       }
     }
   },
   "APP": {
     "DIALOG": {
-      "START": "Continue",
-      "TITLE": "Select a process app",
-      "LIST": "Process App list",
-      "ERROR": "There is a problem connecting to Process Services"
+      "START": "Fortsæt",
+      "TITLE": "Vælg en procesapp",
+      "LIST": "Liste over procesapps",
+      "ERROR": "Der kan ikke oprettes forbindelse til Process Services"
     }
   },
   "ATTACH-FILE": {
     "DIALOG": {
-      "LOGIN": "Sign into '{{ ecmHost }}'"
+      "LOGIN": "Log på '{{ ecmHost }}'"
     },
     "ACTIONS": {
       "LOGIN": "Log ind",
@@ -336,9 +336,9 @@
   },
   "ADF_TASK_FORM": {
     "EMPTY_FORM": {
-      "SUBTITLE": "Attach a form that can be viewed later",
-      "COMPLETE-TASK-MESSAGE": "Task {{taskName}} completed",
-      "COMPLETE-TASK-SUB-MESSAGE": "No forms to be added",
+      "SUBTITLE": "Vedhæft en formular, der kan blive vist senere",
+      "COMPLETE-TASK-MESSAGE": "Opgaven {{taskName}} er fuldført",
+      "COMPLETE-TASK-SUB-MESSAGE": "Der er ikke tilføjet nogen formularer",
       "BUTTONS": {
         "COMPLETE": "Fuldført",
         "CANCEL": "Annuller",
@@ -347,8 +347,8 @@
       }
     },
     "COMPLETED_TASK": {
-      "TITLE": "Task {{taskName}} completed",
-      "SUBTITLE": "No forms to be added"
+      "TITLE": "Opgaven {{taskName}} er fuldført",
+      "SUBTITLE": "Der er ikke tilføjet nogen formularer"
     }
   }
 }

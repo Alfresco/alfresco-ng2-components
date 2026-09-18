@@ -1,152 +1,152 @@
 {
   "DIALOG": {
-    "SAVE_MESSAGE": "Click Save to add a report with the current settings to your reports list.",
+    "SAVE_MESSAGE": "Kliknutím na tlačítko Uložit přidáte zprávu se současným nastavením do svého seznamu zpráv.",
     "EXPORT_MESSAGE": ""
   },
   "DATE-WIDGET": {
-    "START-DATE": "Start date",
-    "END-DATE": "End date",
+    "START-DATE": "Datum zahájení",
+    "END-DATE": "Datum ukončení",
     "MESSAGES": {
-      "START-DATE-REQUIRED": "Start date is required",
-      "START-LESS-THAN-END-DATE": "Start date must be before end date"
+      "START-DATE-REQUIRED": "Je třeba zadat datum zahájení",
+      "START-LESS-THAN-END-DATE": "Datum zahájení musí předcházet datu ukončení"
     }
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "TITLE": "No Applications Found",
-      "SUBTITLE": "Create a new application that you want to easily find later",
-      "TASK_APP_NAME": "Task App"
+      "TITLE": "Nenalezeny žádné aplikace",
+      "SUBTITLE": "Pro lepší přehlednost vytvořte novou aplikaci",
+      "TASK_APP_NAME": "Aplikace úkolů"
     },
     "LIST": {
       "MESSAGES": {
-        "TITLE": "No Tasks Found",
-        "SUBTITLE": "Create a new task that you want to easily find later",
-        "NONE": "No task lists found"
+        "TITLE": "Nenalezeny žádné úkoly",
+        "SUBTITLE": "Pro lepší přehlednost vytvořte nový úkol",
+        "NONE": "Nenalezeny žádné seznamy úkolů"
       }
     },
     "PROPERTIES": {
-      "TASK_NAME": "Task",
+      "TASK_NAME": "Úkol",
       "THUMBNAIL": "Miniatura",
-      "DURATION": "Duration",
-      "PARENT_TASK_ID": "Parent task id",
-      "NAME": "Task Name",
-      "ASSIGNEE": "Assignee",
-      "ASSIGNEE_DEFAULT": "No assignee",
-      "PRIORITY": "Priority",
-      "DUE_DATE": "Due Date",
-      "DUE_DATE_DEFAULT": "No date",
+      "DURATION": "Trvání",
+      "PARENT_TASK_ID": "ID nadřazeného úkolu",
+      "NAME": "Název",
+      "ASSIGNEE": "Pověřená osoba",
+      "ASSIGNEE_DEFAULT": "Žádná pověřená osoba",
+      "PRIORITY": "Priorita",
+      "DUE_DATE": "Termín",
+      "DUE_DATE_DEFAULT": "Žádné datum",
       "STATUS": "Stav",
-      "CATEGORY": "Category",
-      "CATEGORY_DEFAULT": "No category",
-      "PARENT_NAME": "Parent name",
-      "PARENT_NAME_DEFAULT": "No parent",
-      "CREATED_BY": "Created By",
+      "CATEGORY": "Kategorie",
+      "CATEGORY_DEFAULT": "Žádná kategorie",
+      "PARENT_NAME": "Název nadřazené složky",
+      "PARENT_NAME_DEFAULT": "Žádná nadřazená složka",
+      "CREATED_BY": "Vytvořil(a)",
       "CREATED": "Vytvořeno",
-      "END_DATE": "End date",
+      "END_DATE": "Datum ukončení",
       "ID": "ID",
       "DESCRIPTION": "Popis",
       "DESCRIPTION_DEFAULT": "Žádný popis",
-      "FORM_NAME": "Form Name",
-      "FORM_NAME_DEFAULT": "No form"
+      "FORM_NAME": "Název formuláře",
+      "FORM_NAME_DEFAULT": "Žádný formulář"
     },
     "MENU_ACTIONS": {
       "VIEW_CONTENT": "Zobrazit",
       "REMOVE_CONTENT": "Odstranit",
       "DOWNLOAD_CONTENT": "Stáhnout",
-      "DOWNLOAD_AUDIT": "Download Audit"
+      "DOWNLOAD_AUDIT": "Stáhnout audit"
     },
     "DETAILS": {
       "LABELS": {
-        "INFO_DRAWER_TITLE": "Activities",
-        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Activity",
+        "INFO_DRAWER_TITLE": "Aktivity",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Aktivita",
         "INFO_DRAWER_TAB_DETAILS_TITLE": "Podrobnosti",
-        "ASSIGNEE": "Assignee",
-        "DUE": "Due",
-        "FORM": "Form",
-        "PEOPLE": "People this task is shared with",
+        "ASSIGNEE": "Pověřená osoba",
+        "DUE": "Termín",
+        "FORM": "Formulář",
+        "PEOPLE": "Osoby, se kterými je tento úkol sdílený",
         "COMMENTS": "Poznámky",
-        "CHECKLIST": "Checklist",
-        "INVOLVED_PEOPLE": "People Involved",
-        "ADD_PEOPLE": "Add people and groups",
-        "ADD_ASSIGNEE": "Add new assignee"
+        "CHECKLIST": "Kontrolní seznam",
+        "INVOLVED_PEOPLE": "Zapojené osoby",
+        "ADD_PEOPLE": "Přidat osoby a skupiny",
+        "ADD_ASSIGNEE": "Přidat novou pověřenou osobu"
       },
       "BUTTON": {
-        "COMPLETE": "Complete",
-        "CLAIM": "Claim",
-        "UNCLAIM": "Release",
-        "DRAG-ATTACHMENT": "Drop files to upload",
-        "UPLOAD-ATTACHMENT": "Upload Attachment"
+        "COMPLETE": "Dokončit",
+        "CLAIM": "Převzít",
+        "UNCLAIM": "Vzdát se",
+        "DRAG-ATTACHMENT": "Přetáhněte soubory, které chcete odeslat",
+        "UPLOAD-ATTACHMENT": "Odeslat přílohu"
       },
       "MESSAGES": {
-        "NONE": "No task details found",
-        "CLAIM": "Click Claim to work on this task"
+        "NONE": "Nenalezeny žádné podrobnosti o úkolu",
+        "CLAIM": "Po kliknutí na tlačítko Převzít můžete začít pracovat na tomto úkolu"
       },
       "FORM": {
-        "NONE": "No form"
+        "NONE": "Žádný formulář"
       },
       "DUE": {
-        "NONE": "No due date"
+        "NONE": "Žádný termín"
       },
       "ASSIGNEE": {
-        "NONE": "No assignee"
+        "NONE": "Žádná pověřená osoba"
       },
       "PEOPLE": {
-        "NONE": "Nobody involved"
+        "NONE": "Nikdo není zapojen"
       },
       "CHECKLIST": {
-        "NONE": "No checklist",
+        "NONE": "Žádný kontrolní seznam",
         "DIALOG": {
-          "TITLE": "New Check",
+          "TITLE": "Nová kontrola",
           "CANCEL-BUTTON": "Zrušit",
-          "ADD-BUTTON": "Add Checklist",
+          "ADD-BUTTON": "Přidat kontrolní seznam",
           "PLACEHOLDER": "Název"
         }
       },
       "ERROR": {
-        "TITLE": "Couldn't complete the action",
-        "DESCRIPTION": "Try again or check that you have access.",
+        "TITLE": "Akci se nepodařilo dokončit",
+        "DESCRIPTION": "Zkuste to znovu nebo se ujistěte, že máte potřebná přístupová oprávnění.",
         "CLOSE": "Zavřít"
       }
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "No task filter selected"
+        "NONE": "Nebyl vybrán žádný filtr úkolů"
       }
     },
     "START_TASK": {
-      "DEFAULT_NAME": "My Default Task",
-      "BUTTON": "CREATE TASK",
+      "DEFAULT_NAME": "Můj výchozí úkol",
+      "BUTTON": "Vytvořit úkol",
       "FORM": {
-        "TITLE": "Start Task",
+        "TITLE": "Zahájit úkol",
         "LABEL": {
           "NONE": "Žádné",
           "NAME": "Název",
           "DESCRIPTION": "Popis",
-          "ATTACHFORM": "Attach Form",
-          "ASSIGNEE": "Assignee",
-          "FORM": "Form",
-          "DATE": "Choose Date"
+          "ATTACHFORM": "Připojit formulář",
+          "ASSIGNEE": "Pověřená osoba",
+          "FORM": "Formulář",
+          "DATE": "Zvolit datum"
         },
         "ACTION": {
-          "START": "Start",
+          "START": "Spustit",
           "CANCEL": "Zrušit"
         },
         "ERROR": {
-          "REQUIRED": "Field required",
-          "DATE": "Date format DD/MM/YYYY",
-          "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
+          "REQUIRED": "Povinné pole",
+          "DATE": "Formát data je DD/MM/RRRR",
+          "MAXIMUM_LENGTH": "Přesáhli jste délku (maximálně lze zadat {{characters}} znaků).",
           "MESSAGE": "Zadejte jinou hodnotu"
         }
       }
     },
     "PEOPLE": {
-      "ASSIGNEE": "Assignee",
+      "ASSIGNEE": "Pověřená osoba",
       "DIALOG_CLOSE": "Zavřít",
       "ADD_USER": "Přidat",
-      "ADD_ASSIGNEE": "ASSIGN",
-      "SEARCH_USER": "Search user",
+      "ADD_ASSIGNEE": "Přiřadit",
+      "SEARCH_USER": "Hledat uživatele",
       "SEARCH": {
-        "NO_USERS": "Nobody found to involve"
+        "NO_USERS": "Nenalezen nikdo, koho by bylo možné zapojit"
       }
     },
     "ATTACHMENT": {
@@ -158,45 +158,45 @@
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "No files are available"
+        "HEADER": "Nejsou k dispozici žádné soubory"
       }
     },
     "STANDALONE_TASK": {
-      "NO_FORM_MESSAGE": "No forms attached",
-      "COMPLETE_TASK_MESSAGE": "Task {{taskName}} completed",
-      "COMPLETE_TASK_SUB_MESSAGE": "No forms to be added"
+      "NO_FORM_MESSAGE": "Nepřipojeny žádné formuláře",
+      "COMPLETE_TASK_MESSAGE": "Úkol {{taskName}} dokončen",
+      "COMPLETE_TASK_SUB_MESSAGE": "Žádné formuláře určené k připojení"
     },
     "ATTACH_FORM": {
-      "SELECT_FORM": "Select Form To Attach",
-      "REMOVE_FORM": "Remove Form",
-      "SELECT_OPTION": "Select an option"
+      "SELECT_FORM": "Vyberte formulář, který chcete připojit",
+      "REMOVE_FORM": "Odebrat formulář",
+      "SELECT_OPTION": "Vybrat možnost"
     }
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "TITLE": "No Processes Found",
-      "SUBTITLE": "Create a new process that you want to easily find later",
-      "SUMMARY": "{{total}} process instances found",
-      "ERROR": "Couldn't load processes instances. Try again or share the following message with your IT Team: {{errorMessage}}"
+      "TITLE": "Nenalezeny žádné procesy",
+      "SUBTITLE": "Pro lepší přehlednost vytvořte nový proces",
+      "SUMMARY": "Nalezené instance procesu: {{total}}",
+      "ERROR": "Instance procesu se nepodařilo načíst. Zkuste to znovu nebo oddělení IT předejte následující zprávu: {{errorMessage}}"
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "No process instance filter selected."
+        "NONE": "Nebyl zvolen žádný filtr instancí."
       }
     },
     "PROPERTIES": {
-      "PROCESS_NAME": "Process",
+      "PROCESS_NAME": "Proces",
       "NAME": "Název",
       "THUMBNAIL": "Miniatura",
       "STATUS": "Stav",
-      "END_DATE": "End Date",
-      "END_DATE_DEFAULT": "No date",
-      "CATEGORY": "Category",
-      "CATEGORY_DEFAULT": "No category",
-      "CREATED_BY": "Created By",
-      "CREATED_BY_DEFAULT": "No assignee",
+      "END_DATE": "Datum ukončení",
+      "END_DATE_DEFAULT": "Žádné datum",
+      "CATEGORY": "Kategorie",
+      "CATEGORY_DEFAULT": "Žádná kategorie",
+      "CREATED_BY": "Vytvořil(a)",
+      "CREATED_BY_DEFAULT": "Žádná pověřená osoba",
       "CREATED": "Vytvořeno",
-      "BUSINESS_KEY": "Business key",
+      "BUSINESS_KEY": "Obchodní klíč",
       "BUSINESS_KEY_DEFAULT": "Žádné",
       "DESCRIPTION": "Popis",
       "DESCRIPTION_DEFAULT": "Žádný popis",
@@ -206,44 +206,44 @@
       "VIEW_CONTENT": "Zobrazit",
       "REMOVE_CONTENT": "Odstranit",
       "DOWNLOAD_CONTENT": "Stáhnout",
-      "DOWNLOAD_AUDIT": "Download audit",
-      "VIEW_TASK": "View Task"
+      "DOWNLOAD_AUDIT": "Stáhnout audit",
+      "VIEW_TASK": "Zobrazit úkol"
     },
     "DETAILS": {
       "LABELS": {
-        "STARTED_BY": "Started by",
-        "STARTED": "Started",
-        "ENDED": "Ended",
+        "STARTED_BY": "Zahájil(a)",
+        "STARTED": "Zahájeno",
+        "ENDED": "Ukončeno",
         "COMMENTS": "Poznámky",
         "START_FORM": "Spustit formulář",
-        "TASKS_ACTIVE": "Active Tasks",
-        "TASKS_COMPLETED": "Completed Tasks",
-        "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}",
-        "REFRESH": "Refresh"
+        "TASKS_ACTIVE": "Aktivní úkoly",
+        "TASKS_COMPLETED": "Dokončené úkoly",
+        "TASK_SUBTITLE": "Přiřazeno: {{user}}. Vytvořeno k {{created}}",
+        "REFRESH": "Obnovit"
       },
       "BUTTON": {
-        "CANCEL": "Cancel Process",
+        "CANCEL": "Zrušit proces",
         "CLOSE": "Zavřít",
-        "SHOW_DIAGRAM": "Show Diagram",
-        "DRAG-ATTACHMENT": "Drop files to upload",
-        "UPLOAD-ATTACHMENT": "Upload Attachment",
-        "FILE_OPTION_MENU": "File Option Menu"
+        "SHOW_DIAGRAM": "Zobrazit diagram",
+        "DRAG-ATTACHMENT": "Přetáhněte soubory, které chcete odeslat",
+        "UPLOAD-ATTACHMENT": "Odeslat přílohu",
+        "FILE_OPTION_MENU": "Menu Možnosti souborů"
       },
       "MESSAGES": {
-        "NONE": "No process details found"
+        "NONE": "Nenalezeny žádné podrobnosti o procesu"
       },
       "TASKS": {
-        "NO_ACTIVE": "No currently active tasks",
-        "NO_COMPLETED": "No tasks completed yet",
-        "TASK_DETAILS": "Task details",
+        "NO_ACTIVE": "Momentálně nejsou aktivní žádné úkoly",
+        "NO_COMPLETED": "Nebyly zatím dokončeny žádné úkoly",
+        "TASK_DETAILS": "Podrobnosti o úkolu",
         "TASK_CLOSE": "Zavřít"
       },
       "COMMENTS": {
-        "ADD": "Add a comment",
+        "ADD": "Přidat komentář",
         "HEADER": "Komentáře ({{ count }})",
         "NONE": "Žádné komentáře",
         "BUTTON": {
-          "ADD": "Add a comment"
+          "ADD": "Přidat komentář"
         },
         "ADD_DIALOG": {
           "TITLE": "Nový komentář",
@@ -257,45 +257,45 @@
         }
       },
       "ADD_DIALOG": {
-        "TITLE": "Set process variable",
+        "TITLE": "Nastavit proměnnou procesu",
         "LABEL": {
           "NAME": "Název",
           "VALUE": "Hodnota",
-          "SCOPE": "Scope"
+          "SCOPE": "Rozsah"
         }
       },
       "EDIT_DIALOG": {
-        "TITLE": "Edit process variable"
+        "TITLE": "Upravit proměnnou procesu"
       },
       "ERROR_DIALOG": {
-        "TITLE": "Couldn't complete the action",
-        "DESCRIPTION": "You might not have the required access level, check with your IT Team."
+        "TITLE": "Akci se nepodařilo dokončit",
+        "DESCRIPTION": "Nemáte pravděpodobně potřebná přístupová oprávněni. Obraťte se na oddělení IT."
       }
     },
     "START_PROCESS": {
       "BUTTON": "Zahájit proces",
-      "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
-      "NO_START_FORM": "No start form",
-      "NO_PROCESS_DEF_SELECTED": "No process definition selected",
+      "NO_PROCESS_DEFINITIONS": "Proces nelze zahájit, protože nejsou k dispozici žádné definice procesu",
+      "NO_START_FORM": "Žádný formulář zahájení",
+      "NO_PROCESS_DEF_SELECTED": "Není vybrána žádná definice procesu",
       "FORM": {
+        "TITLE": "Zahájit proces",
         "LABEL": {
-          "SELECT_APPLICATION": "Select Application",
-          "TYPE": "Select Process",
-          "NAME": "Process Name",
-          "SELECTED_PEOPLE": "Selected people"
+          "SELECT_APPLICATION": "Vybrat aplikaci",
+          "TYPE": "Vybrat proces",
+          "NAME": "Název procesu"
         },
-        "TYPE_PLACEHOLDER": "Choose one...",
+        "TYPE_PLACEHOLDER": "Vyberte...",
         "ACTION": {
           "START": "Zahájit proces",
           "CANCEL": "Zrušit"
         }
       },
       "ERROR": {
-        "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
-        "START": "Couldn't start new process instance, check you have access.",
-        "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
-        "SPACE_VALIDATOR": "Cannot begin or end with a space.",
-        "PROCESS_NAME_REQUIRED": "Process name is required."
+        "LOAD_PROCESS_DEFS": "Definice procesu se nepodařilo načíst. Zkontrolujte svá přístupová oprávnění.",
+        "START": "Nepodařilo se spustit novou instanci procesu. Zkontrolujte svá přístupová oprávnění.",
+        "MAXIMUM_LENGTH": "Přesáhli jste délku (maximálně lze zadat {{characters}} znaků).",
+        "SPACE_VALIDATOR": "Nesmí začínat ani končit mezerou.",
+        "PROCESS_NAME_REQUIRED": "Název procesu je povinný."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -307,25 +307,25 @@
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "No files are available"
+        "HEADER": "Nejsou k dispozici žádné soubory"
       },
       "COLUMNS": {
         "NAME": "Název",
-        "CREATED-ON": "Created on"
+        "CREATED-ON": "Vytvořeno"
       }
     }
   },
   "APP": {
     "DIALOG": {
-      "START": "Continue",
-      "TITLE": "Select a process app",
-      "LIST": "Process App list",
-      "ERROR": "There is a problem connecting to Process Services"
+      "START": "Pokračovat",
+      "TITLE": "Vyberte procesní aplikaci",
+      "LIST": "Seznam procesních aplikací",
+      "ERROR": "Při pokusu připojit se k aplikaci Process Services došlo k problému"
     }
   },
   "ATTACH-FILE": {
     "DIALOG": {
-      "LOGIN": "Sign into '{{ ecmHost }}'"
+      "LOGIN": "Připojit se k '{{ ecmHost }}'"
     },
     "ACTIONS": {
       "LOGIN": "Přihlášení",
@@ -336,9 +336,9 @@
   },
   "ADF_TASK_FORM": {
     "EMPTY_FORM": {
-      "SUBTITLE": "Attach a form that can be viewed later",
-      "COMPLETE-TASK-MESSAGE": "Task {{taskName}} completed",
-      "COMPLETE-TASK-SUB-MESSAGE": "No forms to be added",
+      "SUBTITLE": "Připojte formulář pro pozdější použití",
+      "COMPLETE-TASK-MESSAGE": "Úkol {{taskName}} dokončen",
+      "COMPLETE-TASK-SUB-MESSAGE": "Žádné formuláře určené k připojení",
       "BUTTONS": {
         "COMPLETE": "Dokončit",
         "CANCEL": "Zrušit",
@@ -347,8 +347,8 @@
       }
     },
     "COMPLETED_TASK": {
-      "TITLE": "Task {{taskName}} completed",
-      "SUBTITLE": "No forms to be added"
+      "TITLE": "Úkol {{taskName}} dokončen",
+      "SUBTITLE": "Žádné formuláře určené k připojení"
     }
   }
 }

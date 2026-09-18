@@ -1,9 +1,7 @@
 {
   "COMMON": {
     "APPLY": "Toepassen",
-    "CANCEL": "Annuleren",
-    "NAME": "Naam",
-    "CLEAR": "Wissen"
+    "CANCEL": "Annuleren"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
@@ -18,8 +16,7 @@
         "MINOR": "kleine wijzigingen ({{version}})",
         "COMMENT": "Opmerking toevoegen",
         "ADD": "Nieuwe versie toevoegen",
-        "CANCEL": "Annuleren",
-        "VERSION_TYPE_LABEL": "Select version type"
+        "CANCEL": "Annuleren"
       }
     },
     "CONFIRM_DELETE": {
@@ -102,7 +99,6 @@
     "ATTACH": "Bijvoegen",
     "CHOOSE_ITEM": "Selecteer content om bij te voegen vanuit '{{ name }}'",
     "COPY": "Kopiëren",
-    "LINK": "Link maken",
     "COPY_ITEM": "'{{ name }}' kopiëren naar...",
     "LOCATION": "Locatie",
     "MOVE": "Verplaatsen",
@@ -113,7 +109,7 @@
     "SELECT_LIBRARY": "Selecteer een bibliotheek",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "U kunt geen bestand uploaden terwijl een zoekopdracht wordt uitgevoerd",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Gebruiker heeft geen rechten voor het uploaden van content naar de map",
-    "REPOSITORY": "Opslagplaats",
+    "REPOSITORY": "Repository",
     "UPLOAD_FROM_DEVICE": "Uploaden vanaf uw apparaat"
   },
   "OPERATION": {
@@ -145,22 +141,23 @@
     },
     "TAGS_CREATOR": {
       "EXISTING_TAGS": "Bestaande tags:",
-      "EXISTING_TAGS_SELECTION": "Select an existing Tag:",
+      "EXISTING_TAGS_SELECTION": "Selecteer een bestaande tag:",
       "NO_TAGS_CREATED": "Geen tags gemaakt",
       "NO_EXISTING_TAGS": "Geen bestaande tags",
       "TITLE": "Tags maken",
       "CREATE_TAG": "Maken: {{tag}}",
-      "TAG_SEARCH_PLACEHOLDER": "Search Tags",
+      "NAME": "Naam",
       "ERRORS": {
         "EXISTING_TAG": "Tag bestaat al",
         "ALREADY_ADDED_TAG": "Tag is al toegevoegd",
         "EMPTY_TAG": "Tagnaam mag niet alleen uit spaties bestaan",
+        "REQUIRED": "Een tagnaam is vereist",
         "FETCH_TAGS": "Fout bij het ophalen van de tags",
-        "CREATE_TAGS": "Fout bij het maken van de tags",
-        "SPECIAL_CHARACTERS": "Tag name cannot contain prohibited characters"
+        "CREATE_TAGS": "Fout bij het maken van de tags"
       },
       "TOOLTIPS": {
-        "DELETE_TAG": "Tag verwijderen"
+        "DELETE_TAG": "Tag verwijderen",
+        "HIDE_INPUT": "Invoer verbergen"
       },
       "TAGS_LOADING": "Tags laden",
       "CREATE_TAGS_SUCCESS": "Tags zijn gemaakt"
@@ -170,15 +167,16 @@
     "CATEGORIES_TITLE": "Categorieën",
     "NO_CATEGORIES_CREATED": "Geen categorieën gemaakt",
     "NO_CATEGORIES_ASSIGNED": "Geen categorieën toegewezen",
+    "ASSIGN_CATEGORIES": "Categorieën toewijzen",
     "UNASSIGN_CATEGORY": "Toewijzing van categorie ongedaan maken",
     "DELETE_CATEGORY": "Categorie verwijderen",
     "EXISTING_CATEGORIES": "Bestaande categorieën:",
     "SELECT_EXISTING_CATEGORY": "Selecteer een bestaande categorie:",
-    "NO_EXISTING_CATEGORIES": "No Existing Categories",
+    "NO_EXISTING_CATEGORIES": "Geen bestaande categorieën",
     "GENERIC_CREATE": "Maken: {{name}}",
     "NAME": "Categorienaam",
     "LOADING": "Wordt geladen",
-    "NO_CATEGORIES_ADDED": "There are currently no categories added",
+    "HIDE_INPUT": "Invoer verbergen",
     "ERRORS": {
       "NOT_FOUND": "Categorieën niet gevonden",
       "REQUIRED": "Een categorienaam is vereist",
@@ -186,11 +184,8 @@
       "ALREADY_EXISTS": "Categorie bestaat al",
       "DUPLICATED_CATEGORY": "Categorie is al toegevoegd",
       "CREATE_CATEGORIES": "Fout bij het maken van categorieën",
-      "EXISTING_CATEGORIES": "Sommige categorieën bestaan al",
-      "SPECIAL_CHARACTERS": "Category name cannot contain prohibited characters",
-      "ENDS_WITH_DOT": "Category name cannot end with a dot"
-    },
-    "CATEGORIES_SEARCH_PLACEHOLDER": "Search Categories"
+      "EXISTING_CATEGORIES": "Sommige categorieën bestaan al"
+    }
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
@@ -278,15 +273,12 @@
       "ARIA-LABEL": "Knop Zoeken"
     },
     "INPUT": {
-      "LABEL": "Zoeken",
-      "PLACEHOLDER": "Search Query",
       "ARIA-LABEL": "Invoer voor zoekopdracht"
     },
     "RESULTS": {
       "SUMMARY": "{{numResults}} resultaat gevonden voor {{searchTerm}}",
       "NONE": "Geen resultaten gevonden voor {{searchTerm}}",
       "ERROR": "Er is een probleem opgetreden tijdens het zoeken - probeer het opnieuw.",
-      "WILL_CONTAIN": "Results will contain '{{searchTerm}}'",
       "COLUMNS": {
         "NAME": "Getoonde naam",
         "MODIFIED_BY": "Aangepast door",
@@ -321,7 +313,9 @@
         "FROM": "Van",
         "TO": "Tot",
         "FROM-DATE": "Van",
-        "TO-DATE": "Tot"
+        "TO-DATE": "Tot",
+        "SELECT-FROM-DATE": "Van-datum selecteren",
+        "SELECT-TO-DATE": "Tot-datum selecteren"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Vereiste waarde",
@@ -336,12 +330,7 @@
         "SEARCH_FILTER": "Zoekfilterlijst",
         "OPTIONS-SELECTION": "Selectie van opties"
       },
-      "ANY": "Elk",
-      "PEOPLE": "People"
-    },
-    "FACET_FIELDS": {
-      "MODIFIER_LABEL": "Aangepast door",
-      "CREATOR_LABEL": "Gemaakt door"
+      "ANY": "Elk"
     },
     "ICONS": {
       "ft_ic_raster_image": "Afbeeldingsbestand",
@@ -379,10 +368,9 @@
     },
     "UNKNOWN_CONFIGURATION": "Onbekende configuratie",
     "SEARCH_HEADER": {
-      "TITLE": "Filteren",
+      "TITLE": "Filter",
       "TYPE": "Type",
       "FILTER_BY": "Filteren op {{ category }}",
-      "ACTIVE_FILTER": "Active filter",
       "CLEAR": "Wissen",
       "APPLY": "Toepassen",
       "FILTERS": {
@@ -408,76 +396,15 @@
       }
     },
     "LOGICAL_SEARCH": {
+      "SEARCH_CHIP_INPUT": {
+        "ADD_PHRASE": "Woordgroep toevoegen..."
+      },
       "MATCH_ALL": "ALLE",
       "MATCH_ALL_LABEL": "Overeenkomen met AL deze woordgroepen",
-      "MATCH_ALL_HINT": "Results will match all words entered here",
       "MATCH_ANY": "WILLEKEURIG",
       "MATCH_ANY_LABEL": "Overeenkomen met een WILLEKEURIGE woordgroep van deze woordgroepen",
-      "MATCH_ANY_HINT": "Results will match any words entered here",
-      "MATCH_EXACT": "EXACT",
-      "MATCH_EXACT_LABEL": "Match this EXACT PHRASE",
-      "MATCH_EXACT_HINT": "Results will match this entire phrase",
       "EXCLUDE": "UITSLUITEN",
-      "EXCLUDE_LABEL": "Deze woordgroepen UITSLUITEN",
-      "EXCLUDE_HINT": "Results will exclude matches with these words"
-    },
-    "DATE_RANGE_ADVANCED": {
-      "OPTIONS": {
-        "ANYTIME": "Anytime",
-        "IN_LAST": "In the last",
-        "BETWEEN": "Between"
-      },
-      "IN_LAST_LABELS": {
-        "DAYS": "Days",
-        "WEEKS": "Weeks",
-        "MONTHS": "Months",
-        "QUANTITY": "Quantity"
-      },
-      "IN_LAST_DISPLAY_LABELS": {
-        "DAYS": "In the last {{value}} days",
-        "WEEKS": "In the last {{value}} weeks",
-        "MONTHS": "In the last {{value}} months"
-      },
-      "BETWEEN_PLACEHOLDERS": {
-        "START_DATE": "Start Date",
-        "END_DATE": "End Date",
-        "DATE_RANGE": "Date Range"
-      },
-      "ERROR": {
-        "IN_LAST": "Value required",
-        "START_DATE": {
-          "REQUIRED": "Start Date required",
-          "INVALID_FORMAT": "Start Date invalid. The date must be in the format '{{ requiredFormat }}'"
-        },
-        "END_DATE": {
-          "REQUIRED": "End Date required",
-          "INVALID_FORMAT": "End Date invalid. The date must be in the format '{{ requiredFormat }}'"
-        }
-      },
-      "ARIA_LABEL": {
-        "NUMBER_INPUT": "Number input"
-      }
-    },
-    "SEARCH_PROPERTIES": {
-      "FILE_SIZE": "File Size",
-      "FILE_SIZE_PLACEHOLDER": "Enter file size",
-      "FILE_SIZE_OPERATOR": {
-        "AT_LEAST": "At Least",
-        "AT_MOST": "At Most",
-        "EXACTLY": "Exactly"
-      },
-      "FILE_SIZE_UNIT_ABBREVIATION": {
-        "KB": "kB",
-        "MB": "MB",
-        "GB": "GB"
-      },
-      "FILE_TYPE": "File Type",
-      "FILE_TYPE_PLACEHOLDER": "Add file type",
-      "ACCESSIBILITY": {
-        "CONDITION": "Condition",
-        "SIZE_VALUE": "File size value",
-        "UNIT": "Unit"
-      }
+      "EXCLUDE_LABEL": "Deze woordgroepen UITSLUITEN"
     }
   },
   "PERMISSION": {
@@ -498,9 +425,7 @@
       "MODIFIED_DATE": "Datum gewijzigd",
       "CONTENT_TYPE": "Contenttype",
       "TAGS": "Tags",
-      "NO_TAGS_ADDED": "There are currently no tags added",
-      "NO_ITEMS_MESSAGE": "There are currently no {{ groupTitle }} added",
-      "SAVE_OR_DISCARD_CHANGES": "Save or discard changes to continue"
+      "ADD_TAG_TOOLTIP": "Tag toevoegen"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
@@ -534,7 +459,7 @@
     "LINK-WITH-EXPIRY-SETTINGS": "Nieuwe koppeling is gegenereerd met verloopinstellingen",
     "EXPIRES": "Verloopt op",
     "LINK-EXPIRY-DATE": "Verloopdatum koppeling",
-    "EXPIRATION-LABEL": "Expiration Date. Enter date in MM/DD/YYYY format",
+    "EXPIRATION-LABEL": "Verloopdatum",
     "EXPIRATION-PLACEHOLDER": "MM/DD/JJJJ",
     "CLIPBOARD-MESSAGE": "Koppeling gekopieerd naar het klembord",
     "CLOSE": "Sluiten",
@@ -546,8 +471,7 @@
       "REMOVE": "Verwijderen"
     },
     "UNSHARE_ERROR": "Fout bij het ongedaan maken van het delen van dit bestand",
-    "UNSHARE_PERMISSION_ERROR": "U hebt geen rechten om het delen van dit bestand ongedaan te maken",
-    "INVALID_DATE_ERROR": "Invalid date"
+    "UNSHARE_PERMISSION_ERROR": "U hebt geen rechten om het delen van dit bestand ongedaan te maken"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
@@ -566,10 +490,8 @@
       "ADD-ACTION": "Toevoegen",
       "CLOSE-ACTION": "Annuleren",
       "BASE-DIALOG-TITLE": "Een groep of personen zoeken om toe te voegen...",
-      "BASE_DIALOG_SCREEN_READER_TITLE": "Add user or group permission",
       "EVERYONE": "Iedereen",
-      "USER-GROUP-LIST": "Gebruiker of groepslijst",
-      "REMOVE_USER_GROUP": "Verwijderen"
+      "USER-GROUP-LIST": "Gebruiker of groepslijst"
     },
     "COLUMN": {
       "NAME": "Gebruikers en groepen ({{ count }})",
@@ -613,10 +535,6 @@
       "NOT-ALLOWED": "Het is u niet toegestaan om rechten te wijzigen"
     }
   },
-  "USER_ICON": {
-    "GROUP_ICON_ALT": "Group icon",
-    "GROUP_USER_SELECTED_ALT": "Selected group or user icon"
-  },
   "ADF-TREE-VIEW": {
     "MISSING-ID": "Geen node-id opgegeven!",
     "ACCESSIBILITY": {
@@ -624,14 +542,7 @@
     }
   },
   "ADF-TREE": {
-    "LOAD-MORE-BUTTON": "Meer {{ name }} laden",
-    "ACTIONS": {
-      "TOOLTIP": "Open actions menu"
-    },
-    "ARIA": {
-      "SELECTED": "{{ name }} selected",
-      "DESELECTED": "{{ name }} deselected"
-    }
+    "LOAD-MORE-BUTTON": "Meer {{ name }} laden"
   },
   "LIBRARY": {
     "DIALOG": {
@@ -672,9 +583,7 @@
       "TITLE_TOO_SHORT": "Titel moet minstens 2 tekens lang zijn",
       "ILLEGAL_CHARACTERS": "Gebruik alleen cijfers en letters",
       "ONLY_SPACES": "Bibliotheeknaam mag niet alleen uit spaties bestaan",
-      "LIBRARY_UPDATE_ERROR": "Er is een fout opgetreden bij het bijwerken van de bibliotheekeigenschappen",
-      "NAME_REQUIRED": "Library name is required",
-      "ID_REQUIRED": "Library ID is required"
+      "LIBRARY_UPDATE_ERROR": "Er is een fout opgetreden bij het bijwerken van de bibliotheekeigenschappen"
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Bibliotheekeigenschappen bijgewerkt"
@@ -682,11 +591,8 @@
   },
   "BREADCRUMB": {
     "ARIA-LABEL": {
-      "BREADCRUMB": "Breadcrumb navigation",
-      "DROPDOWN": "Open breadcrumb menu for {{folderName}}"
-    },
-    "HEADER": {
-      "SELECTED": "Geselecteerd ({{ count }})"
+      "BREADCRUMB": "Navigatiepad",
+      "DROPDOWN": "Dropdown"
     }
   },
   "NAME_COLUMN_LINK": {
@@ -727,14 +633,6 @@
       "JOINED": "Lid geworden van bibliotheek",
       "JOIN_CANCELED": "Aanvraag om lid te worden van de bibliotheek is geannuleerd",
       "JOIN_REQUESTED": "Aanvraag om lid te worden van deze bibliotheek is verzonden"
-    }
-  },
-  "NODE_FAVORITE_DIRECTIVE": {
-    "MESSAGES": {
-      "NODE_ADDED": "{{ name }} toegevoegd aan favorieten",
-      "NODES_ADDED": "{{ number }} items toegevoegd aan favorieten",
-      "NODE_REMOVED": "{{ name }} verwijderd uit favorieten",
-      "NODES_REMOVED": "{{ number }} items verwijderd uit favorieten"
     }
   }
 }

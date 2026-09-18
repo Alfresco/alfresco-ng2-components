@@ -1,152 +1,152 @@
 {
   "DIALOG": {
-    "SAVE_MESSAGE": "Click Save to add a report with the current settings to your reports list.",
+    "SAVE_MESSAGE": "Klicka på Spara för att lägga till en rapport med aktuella inställningar till din rapportlista.",
     "EXPORT_MESSAGE": ""
   },
   "DATE-WIDGET": {
-    "START-DATE": "Start date",
-    "END-DATE": "End date",
+    "START-DATE": "Startdatum",
+    "END-DATE": "Slutdatum",
     "MESSAGES": {
-      "START-DATE-REQUIRED": "Start date is required",
-      "START-LESS-THAN-END-DATE": "Start date must be before end date"
+      "START-DATE-REQUIRED": "Startdatum krävs",
+      "START-LESS-THAN-END-DATE": "Startdatum måste ligga innan slutdatum"
     }
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "TITLE": "No Applications Found",
-      "SUBTITLE": "Create a new application that you want to easily find later",
-      "TASK_APP_NAME": "Task App"
+      "TITLE": "Inga program hittades",
+      "SUBTITLE": "Skapa ett nytt program som du enkelt hittar senare",
+      "TASK_APP_NAME": "Uppgiftsapp"
     },
     "LIST": {
       "MESSAGES": {
-        "TITLE": "No Tasks Found",
-        "SUBTITLE": "Create a new task that you want to easily find later",
-        "NONE": "No task lists found"
+        "TITLE": "Inga uppgifter hittades",
+        "SUBTITLE": "Skapa en ny uppgift som du enkelt hittar senare",
+        "NONE": "Inga uppgiftslistor hittades"
       }
     },
     "PROPERTIES": {
-      "TASK_NAME": "Task",
+      "TASK_NAME": "Uppgift",
       "THUMBNAIL": "Miniatyrbild",
-      "DURATION": "Duration",
-      "PARENT_TASK_ID": "Parent task id",
-      "NAME": "Task Name",
-      "ASSIGNEE": "Assignee",
-      "ASSIGNEE_DEFAULT": "No assignee",
-      "PRIORITY": "Priority",
-      "DUE_DATE": "Due Date",
-      "DUE_DATE_DEFAULT": "No date",
+      "DURATION": "Varaktighet",
+      "PARENT_TASK_ID": "Överordnad uppgift ID",
+      "NAME": "Namn",
+      "ASSIGNEE": "Tilldelad användare",
+      "ASSIGNEE_DEFAULT": "Ingen tilldelad användare",
+      "PRIORITY": "Prioritet",
+      "DUE_DATE": "Förfallodatum",
+      "DUE_DATE_DEFAULT": "Inget datum",
       "STATUS": "Status",
-      "CATEGORY": "Category",
-      "CATEGORY_DEFAULT": "No category",
-      "PARENT_NAME": "Parent name",
-      "PARENT_NAME_DEFAULT": "No parent",
-      "CREATED_BY": "Created By",
+      "CATEGORY": "Kategori",
+      "CATEGORY_DEFAULT": "Ingen kategori",
+      "PARENT_NAME": "Överordnad namn",
+      "PARENT_NAME_DEFAULT": "Ingen överordnad",
+      "CREATED_BY": "Skapad av",
       "CREATED": "Skapad",
-      "END_DATE": "End date",
+      "END_DATE": "Slutdatum",
       "ID": "ID",
       "DESCRIPTION": "Beskrivning",
       "DESCRIPTION_DEFAULT": "Ingen beskrivning",
-      "FORM_NAME": "Form Name",
-      "FORM_NAME_DEFAULT": "No form"
+      "FORM_NAME": "Formulärnamn",
+      "FORM_NAME_DEFAULT": "Inget formulär"
     },
     "MENU_ACTIONS": {
       "VIEW_CONTENT": "Visa",
       "REMOVE_CONTENT": "Ta bort",
       "DOWNLOAD_CONTENT": "Ladda ner",
-      "DOWNLOAD_AUDIT": "Download Audit"
+      "DOWNLOAD_AUDIT": "Ladda ner granskning"
     },
     "DETAILS": {
       "LABELS": {
-        "INFO_DRAWER_TITLE": "Activities",
-        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Activity",
+        "INFO_DRAWER_TITLE": "Aktiviteter",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Aktivitet",
         "INFO_DRAWER_TAB_DETAILS_TITLE": "Detaljer",
-        "ASSIGNEE": "Assignee",
-        "DUE": "Due",
-        "FORM": "Form",
-        "PEOPLE": "People this task is shared with",
+        "ASSIGNEE": "Tilldelad användare",
+        "DUE": "Förfaller",
+        "FORM": "Formulär",
+        "PEOPLE": "Personer den här uppgiften delas med",
         "COMMENTS": "Kommentarer",
-        "CHECKLIST": "Checklist",
-        "INVOLVED_PEOPLE": "People Involved",
-        "ADD_PEOPLE": "Add people and groups",
-        "ADD_ASSIGNEE": "Add new assignee"
+        "CHECKLIST": "Checklista",
+        "INVOLVED_PEOPLE": "Personer involverade",
+        "ADD_PEOPLE": "Lägg till personer och grupper",
+        "ADD_ASSIGNEE": "Lägg till ny tilldelad användare"
       },
       "BUTTON": {
-        "COMPLETE": "Complete",
-        "CLAIM": "Claim",
-        "UNCLAIM": "Release",
-        "DRAG-ATTACHMENT": "Drop files to upload",
-        "UPLOAD-ATTACHMENT": "Upload Attachment"
+        "COMPLETE": "Slutför",
+        "CLAIM": "Anta",
+        "UNCLAIM": "Avsäga",
+        "DRAG-ATTACHMENT": "Släpp filer att ladda upp",
+        "UPLOAD-ATTACHMENT": "Ladda upp bilaga"
       },
       "MESSAGES": {
-        "NONE": "No task details found",
-        "CLAIM": "Click Claim to work on this task"
+        "NONE": "Inga uppgiftsdetaljer hittades",
+        "CLAIM": "Klicka på Anta för att arbeta på den här uppgiften"
       },
       "FORM": {
-        "NONE": "No form"
+        "NONE": "Inget formulär"
       },
       "DUE": {
-        "NONE": "No due date"
+        "NONE": "Inget förfallodatum"
       },
       "ASSIGNEE": {
-        "NONE": "No assignee"
+        "NONE": "Ingen tilldelad användare"
       },
       "PEOPLE": {
-        "NONE": "Nobody involved"
+        "NONE": "Ingen inbjuden"
       },
       "CHECKLIST": {
-        "NONE": "No checklist",
+        "NONE": "Ingen checklista",
         "DIALOG": {
-          "TITLE": "New Check",
+          "TITLE": "Ny kontroll",
           "CANCEL-BUTTON": "Avbryt",
-          "ADD-BUTTON": "Add Checklist",
+          "ADD-BUTTON": "Lägg till checklista",
           "PLACEHOLDER": "Namn"
         }
       },
       "ERROR": {
-        "TITLE": "Couldn't complete the action",
-        "DESCRIPTION": "Try again or check that you have access.",
+        "TITLE": "Kunde inte slutföra åtgärden",
+        "DESCRIPTION": "Försök igen eller kontrollera att du har åtkomst.",
         "CLOSE": "Stäng"
       }
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "No task filter selected"
+        "NONE": "Inget uppgiftsfilter valt"
       }
     },
     "START_TASK": {
-      "DEFAULT_NAME": "My Default Task",
-      "BUTTON": "CREATE TASK",
+      "DEFAULT_NAME": "Min standarduppgift",
+      "BUTTON": "Skapa uppgift",
       "FORM": {
-        "TITLE": "Start Task",
+        "TITLE": "Starta uppgift",
         "LABEL": {
           "NONE": "Ingen",
           "NAME": "Namn",
           "DESCRIPTION": "Beskrivning",
-          "ATTACHFORM": "Attach Form",
-          "ASSIGNEE": "Assignee",
-          "FORM": "Form",
-          "DATE": "Choose Date"
+          "ATTACHFORM": "Bifoga formulär",
+          "ASSIGNEE": "Tilldelad användare",
+          "FORM": "Formulär",
+          "DATE": "Välj datum"
         },
         "ACTION": {
-          "START": "Start",
+          "START": "Starta",
           "CANCEL": "Avbryt"
         },
         "ERROR": {
-          "REQUIRED": "Field required",
-          "DATE": "Date format DD/MM/YYYY",
-          "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
+          "REQUIRED": "Fält obligatoriskt",
+          "DATE": "Datumformat DD/MM/ÅÅÅÅ",
+          "MAXIMUM_LENGTH": "Längd överskriden, {{characters}} tecken max.",
           "MESSAGE": "Ange ett annat värde"
         }
       }
     },
     "PEOPLE": {
-      "ASSIGNEE": "Assignee",
+      "ASSIGNEE": "Tilldelad användare",
       "DIALOG_CLOSE": "Stäng",
       "ADD_USER": "Lägg till",
-      "ADD_ASSIGNEE": "ASSIGN",
-      "SEARCH_USER": "Search user",
+      "ADD_ASSIGNEE": "Tilldela",
+      "SEARCH_USER": "Sök användare",
       "SEARCH": {
-        "NO_USERS": "Nobody found to involve"
+        "NO_USERS": "Hittade ingen att involvera"
       }
     },
     "ATTACHMENT": {
@@ -158,30 +158,30 @@
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "No files are available"
+        "HEADER": "Inga filer är tillgängliga"
       }
     },
     "STANDALONE_TASK": {
-      "NO_FORM_MESSAGE": "No forms attached",
-      "COMPLETE_TASK_MESSAGE": "Task {{taskName}} completed",
-      "COMPLETE_TASK_SUB_MESSAGE": "No forms to be added"
+      "NO_FORM_MESSAGE": "Inga formulär bifogade",
+      "COMPLETE_TASK_MESSAGE": "Uppgift {{taskName}} slutförd",
+      "COMPLETE_TASK_SUB_MESSAGE": "Inga formulär ska läggas till"
     },
     "ATTACH_FORM": {
-      "SELECT_FORM": "Select Form To Attach",
-      "REMOVE_FORM": "Remove Form",
-      "SELECT_OPTION": "Select an option"
+      "SELECT_FORM": "Välj formulär att bifoga",
+      "REMOVE_FORM": "Ta bort formulär",
+      "SELECT_OPTION": "Välj ett alternativ"
     }
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "TITLE": "No Processes Found",
-      "SUBTITLE": "Create a new process that you want to easily find later",
-      "SUMMARY": "{{total}} process instances found",
-      "ERROR": "Couldn't load processes instances. Try again or share the following message with your IT Team: {{errorMessage}}"
+      "TITLE": "Inga processer hittades",
+      "SUBTITLE": "Skapa en ny process som du enkelt hittar senare",
+      "SUMMARY": "{{total}} processinstanser hittades",
+      "ERROR": "Kunde inte läsa in processinstanser. Försök igen eller dela följande meddelande med din IT-avdelning: {{errorMessage}}"
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "No process instance filter selected."
+        "NONE": "Inget processinstansfilter valt"
       }
     },
     "PROPERTIES": {
@@ -189,14 +189,14 @@
       "NAME": "Namn",
       "THUMBNAIL": "Miniatyrbild",
       "STATUS": "Status",
-      "END_DATE": "End Date",
-      "END_DATE_DEFAULT": "No date",
-      "CATEGORY": "Category",
-      "CATEGORY_DEFAULT": "No category",
-      "CREATED_BY": "Created By",
-      "CREATED_BY_DEFAULT": "No assignee",
+      "END_DATE": "Slutdatum",
+      "END_DATE_DEFAULT": "Inget datum",
+      "CATEGORY": "Kategori",
+      "CATEGORY_DEFAULT": "Ingen kategori",
+      "CREATED_BY": "Skapad av",
+      "CREATED_BY_DEFAULT": "Ingen tilldelad användare",
       "CREATED": "Skapad",
-      "BUSINESS_KEY": "Business key",
+      "BUSINESS_KEY": "Affärsnyckel",
       "BUSINESS_KEY_DEFAULT": "Ingen",
       "DESCRIPTION": "Beskrivning",
       "DESCRIPTION_DEFAULT": "Ingen beskrivning",
@@ -206,44 +206,44 @@
       "VIEW_CONTENT": "Visa",
       "REMOVE_CONTENT": "Ta bort",
       "DOWNLOAD_CONTENT": "Ladda ner",
-      "DOWNLOAD_AUDIT": "Download audit",
-      "VIEW_TASK": "View Task"
+      "DOWNLOAD_AUDIT": "Ladda ner granskning",
+      "VIEW_TASK": "Visa uppgift"
     },
     "DETAILS": {
       "LABELS": {
-        "STARTED_BY": "Started by",
-        "STARTED": "Started",
-        "ENDED": "Ended",
+        "STARTED_BY": "Startad av",
+        "STARTED": "Startade",
+        "ENDED": "Avslutade",
         "COMMENTS": "Kommentarer",
         "START_FORM": "Startformulär",
-        "TASKS_ACTIVE": "Active Tasks",
-        "TASKS_COMPLETED": "Completed Tasks",
-        "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}",
-        "REFRESH": "Refresh"
+        "TASKS_ACTIVE": "Aktiva uppgifter",
+        "TASKS_COMPLETED": "Slutförda uppgifter",
+        "TASK_SUBTITLE": "Tilldelad till {{user}}, skapad {{created}}",
+        "REFRESH": "Uppdatera"
       },
       "BUTTON": {
-        "CANCEL": "Cancel Process",
+        "CANCEL": "Avbryt processen",
         "CLOSE": "Stäng",
-        "SHOW_DIAGRAM": "Show Diagram",
-        "DRAG-ATTACHMENT": "Drop files to upload",
-        "UPLOAD-ATTACHMENT": "Upload Attachment",
-        "FILE_OPTION_MENU": "File Option Menu"
+        "SHOW_DIAGRAM": "Visa diagram",
+        "DRAG-ATTACHMENT": "Släpp filer att ladda upp",
+        "UPLOAD-ATTACHMENT": "Ladda upp bilaga",
+        "FILE_OPTION_MENU": "Menyn för filalternativ"
       },
       "MESSAGES": {
-        "NONE": "No process details found"
+        "NONE": "Inga processdetaljer hittades"
       },
       "TASKS": {
-        "NO_ACTIVE": "No currently active tasks",
-        "NO_COMPLETED": "No tasks completed yet",
-        "TASK_DETAILS": "Task details",
+        "NO_ACTIVE": "Inga aktiva uppgifter för närvarande",
+        "NO_COMPLETED": "Inga uppgifter slutförda än",
+        "TASK_DETAILS": "Uppgiftsdetaljer",
         "TASK_CLOSE": "Stäng"
       },
       "COMMENTS": {
-        "ADD": "Add a comment",
+        "ADD": "Lägg till en kommentar",
         "HEADER": "Kommentarer ({{ count }})",
         "NONE": "Inga kommentarer",
         "BUTTON": {
-          "ADD": "Add a comment"
+          "ADD": "Lägg till en kommentar"
         },
         "ADD_DIALOG": {
           "TITLE": "Ny kommentar",
@@ -257,45 +257,45 @@
         }
       },
       "ADD_DIALOG": {
-        "TITLE": "Set process variable",
+        "TITLE": "Ställ in processvariabel",
         "LABEL": {
           "NAME": "Namn",
           "VALUE": "Värde",
-          "SCOPE": "Scope"
+          "SCOPE": "Definitionsområde"
         }
       },
       "EDIT_DIALOG": {
-        "TITLE": "Edit process variable"
+        "TITLE": "Redigera processvariabel"
       },
       "ERROR_DIALOG": {
-        "TITLE": "Couldn't complete the action",
-        "DESCRIPTION": "You might not have the required access level, check with your IT Team."
+        "TITLE": "Kunde inte slutföra åtgärden",
+        "DESCRIPTION": "Du kanske inte har den åtkomstnivå som krävs, kolla med din IT-avdelning."
       }
     },
     "START_PROCESS": {
       "BUTTON": "Starta process",
-      "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
-      "NO_START_FORM": "No start form",
-      "NO_PROCESS_DEF_SELECTED": "No process definition selected",
+      "NO_PROCESS_DEFINITIONS": "Du kan inte starta en process eftersom inga processdefinitioner är tillgängliga",
+      "NO_START_FORM": "Inget startformulär",
+      "NO_PROCESS_DEF_SELECTED": "Ingen processdefinition vald",
       "FORM": {
+        "TITLE": "Starta process",
         "LABEL": {
-          "SELECT_APPLICATION": "Select Application",
-          "TYPE": "Select Process",
-          "NAME": "Process Name",
-          "SELECTED_PEOPLE": "Selected people"
+          "SELECT_APPLICATION": "Välj program",
+          "TYPE": "Välj process",
+          "NAME": "Processnamn"
         },
-        "TYPE_PLACEHOLDER": "Choose one...",
+        "TYPE_PLACEHOLDER": "Välj en...",
         "ACTION": {
           "START": "Starta process",
           "CANCEL": "Avbryt"
         }
       },
       "ERROR": {
-        "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
-        "START": "Couldn't start new process instance, check you have access.",
-        "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
-        "SPACE_VALIDATOR": "Cannot begin or end with a space.",
-        "PROCESS_NAME_REQUIRED": "Process name is required."
+        "LOAD_PROCESS_DEFS": "Kunde inte läsa in processdefinitioner, kontrollera att du har åtkomst.",
+        "START": "Kunde inte starta ny processinstans, kontrollera att du har åtkomst.",
+        "MAXIMUM_LENGTH": "Längd överskriden, {{characters}} tecken max.",
+        "SPACE_VALIDATOR": "Får inte börja eller sluta med ett mellanslag.",
+        "PROCESS_NAME_REQUIRED": "Processnamn krävs."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -307,25 +307,25 @@
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "No files are available"
+        "HEADER": "Inga filer är tillgängliga"
       },
       "COLUMNS": {
         "NAME": "Namn",
-        "CREATED-ON": "Created on"
+        "CREATED-ON": "Skapad den"
       }
     }
   },
   "APP": {
     "DIALOG": {
-      "START": "Continue",
-      "TITLE": "Select a process app",
-      "LIST": "Process App list",
-      "ERROR": "There is a problem connecting to Process Services"
+      "START": "Fortsätt",
+      "TITLE": "Välj ett processprogram",
+      "LIST": "Lista över processprogram",
+      "ERROR": "Det är problem med att ansluta till Process Services"
     }
   },
   "ATTACH-FILE": {
     "DIALOG": {
-      "LOGIN": "Sign into '{{ ecmHost }}'"
+      "LOGIN": "Logga in på '{{ ecmHost }}'"
     },
     "ACTIONS": {
       "LOGIN": "Inloggning",
@@ -336,9 +336,9 @@
   },
   "ADF_TASK_FORM": {
     "EMPTY_FORM": {
-      "SUBTITLE": "Attach a form that can be viewed later",
-      "COMPLETE-TASK-MESSAGE": "Task {{taskName}} completed",
-      "COMPLETE-TASK-SUB-MESSAGE": "No forms to be added",
+      "SUBTITLE": "Bifoga ett formulär som kan visas senare",
+      "COMPLETE-TASK-MESSAGE": "Uppgift {{taskName}} slutförd",
+      "COMPLETE-TASK-SUB-MESSAGE": "Inga formulär ska läggas till",
       "BUTTONS": {
         "COMPLETE": "Slutför",
         "CANCEL": "Avbryt",
@@ -347,8 +347,8 @@
       }
     },
     "COMPLETED_TASK": {
-      "TITLE": "Task {{taskName}} completed",
-      "SUBTITLE": "No forms to be added"
+      "TITLE": "Uppgift {{taskName}} slutförd",
+      "SUBTITLE": "Inga formulär ska läggas till"
     }
   }
 }

@@ -50,8 +50,7 @@
         "MAXIMUM_LENGTH": "تم تجاوز الطول، {{characters}} من الحد الأقصى للحروف.",
         "SPACE_VALIDATOR": "لا يمكن البدء أو الانتهاء بمسافة."
       }
-    },
-    "LOADING": "تحميل"
+    }
   },
   "ADF_CLOUD_TASK_LIST": {
     "START_TASK": {
@@ -85,7 +84,7 @@
       "JSON_CELL": "Json",
       "COMPLETED_BY": "إكمال بواسطة",
       "PRIORITY_VALUES": {
-        "NONE": "لا يوجد",
+        "NONE": "بلا",
         "LOW": "منخفضة",
         "NORMAL": "متوسطة",
         "HIGH": "مرتفعة"
@@ -98,8 +97,7 @@
         "SUBTITLE": "أنشئ مهمة جديدة تريد العثور عليها بسهولة لاحقًا",
         "NONE": "لم يتم العثور على قوائم مهام"
       }
-    },
-    "LOADING": "تحميل"
+    }
   },
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {
@@ -243,7 +241,6 @@
       "SUSPENDED_DATE": "تاريخ معلق",
       "STARTED_BY": "بدأ حسب",
       "COMPLETED_DATE": "تاريخ الإكمال",
-      "MAIN_PROCESS_ID": "معرف العملية الرئيسية",
       "DATE_RANGE": {
         "NO_DATE": "لا يوجد تاريخ",
         "TODAY": "اليوم",
@@ -352,7 +349,7 @@
       "START_DATE": "بدأ",
       "LAST_MODIFIED": "تم التحديث",
       "PARENT_ID": "المعرف الأصلي",
-      "NONE": "لا يوجد"
+      "NONE": "بلا"
     }
   },
   "ADF_CLOUD_TASK_FORM": {
@@ -378,7 +375,7 @@
     "ASSIGNED_TO": "معين إلى",
     "CURRENT_USER": "معين لي",
     "UNASSIGNED": "غير معين",
-    "NONE": "لا يوجد",
+    "NONE": "بلا",
     "CANDIDATE_GROUPS": "قائمة المجموعات المرشحة",
     "ASSIGNEE": "معين له",
     "ASSIGNMENT_TYPE": "نوع التعيين"

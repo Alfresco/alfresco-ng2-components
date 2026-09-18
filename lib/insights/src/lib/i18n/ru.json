@@ -1,51 +1,51 @@
 {
   "ANALYTICS": {
-    "TITLE": "ANALYTICS",
+    "TITLE": "Анализ данных",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "UNKNOWN WIDGET TYPE",
-      "FILL-PARAMETER": "Choose from the report options",
-      "NO-DATA-FOUND": "No data found",
-      "ZERO-DATA-FOUND": "There are only zero values",
-      "ICON-SETTING": "Settings",
+      "UNKNOWN-WIDGET-TYPE": "Неизвестный тип виджета",
+      "FILL-PARAMETER": "Выберите из параметров отчета",
+      "NO-DATA-FOUND": "Данные не найдены",
+      "ZERO-DATA-FOUND": "Есть только нулевые значения",
+      "ICON-SETTING": "Параметры",
       "ICON-SAVE": "Сохранить",
       "ICON-DELETE": "Удалить",
-      "ICON-EXPORT-CSV": "Export"
+      "ICON-EXPORT-CSV": "Экспорт"
     }
   },
   "__KEY_REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-DEFINITION-OVERVIEW": {
-        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Total number of process definitions",
-        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Total number of process instances",
-        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Total number of active process instances",
-        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Total number of completed process instances"
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Общее количество определений процесса",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Общее количество экземпляров процесса",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Общее количество активных экземпляров процесса",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Общее количество завершенных экземпляров процесса"
       }
     }
   },
   "REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "Include pass through steps such as start events and gateways"
+        "TYPE-FILTERING": "Включите прохождение таких шагов, как стартовые события и шлюзы"
       },
       "PROCESS-INSTANCES-OVERVIEW": {
-        "PROCESS-DEFINITION": "Process definition",
-        "DATE-RANGE": "Date range",
-        "SLOW-PROC-INST-NUMBER": "How many of the slowest process instances should be displayed?"
+        "PROCESS-DEFINITION": "Определение процесса",
+        "DATE-RANGE": "Диапазон дат",
+        "SLOW-PROC-INST-NUMBER": "Сколько самых медленных экземпляров процесса должно отображаться?"
       },
       "TASK-OVERVIEW": {
-        "PROCESS-DEFINITION": "Process definition",
-        "DATE-RANGE": "Date range",
-        "DATE-RANGE-INTERVAL": "Group dates by"
+        "PROCESS-DEFINITION": "Определение процесса",
+        "DATE-RANGE": "Диапазон дат",
+        "DATE-RANGE-INTERVAL": "Группировать даты по"
       },
       "TASK-SLA": {
-        "TASK": "Task",
-        "PROCESS-DEFINITION": "Process definition",
-        "DATE-RANGE": "Date range",
-        "SLA-DURATION": "SLA required completion time"
+        "TASK": "Задача",
+        "PROCESS-DEFINITION": "Определение процесса",
+        "DATE-RANGE": "Диапазон дат",
+        "SLA-DURATION": "Время завершения, требуемое соглашением об уровне обслуживания"
       }
     },
-    "PROCESS-STATUS": "Process status",
-    "TASK-STATUS": "Task status"
+    "PROCESS-STATUS": "Статус процесса",
+    "TASK-STATUS": "Статус задачи"
   },
-  "DIAGRAMS": "Diagrams"
+  "DIAGRAMS": "Схемы"
 }
