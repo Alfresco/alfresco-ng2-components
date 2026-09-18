@@ -384,7 +384,7 @@ describe('TaskListCloudComponent', () => {
             component.reload();
         });
 
-        it('should call endpoint when a column visibility gets changed', () => {
+        it('should not call endpoint again when a column visibility change does not affect the request', () => {
             component.ngAfterContentInit();
             spyOn(component, 'createDatatableSchema');
             component.appName = 'fake-app-name';
@@ -395,7 +395,7 @@ describe('TaskListCloudComponent', () => {
 
             fixture.detectChanges();
 
-            expect(fetchTaskListSpy).toHaveBeenCalledTimes(2);
+            expect(fetchTaskListSpy).toHaveBeenCalledTimes(1);
         });
         describe('component changes', () => {
             beforeEach(() => {
