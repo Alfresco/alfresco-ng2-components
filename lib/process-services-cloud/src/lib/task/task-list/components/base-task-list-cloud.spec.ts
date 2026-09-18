@@ -49,6 +49,9 @@ describe('BaseTaskListCloudComponent - appNameSubject integration', () => {
 
         appNameSubjectNextSpy = spyOn(component['appNameSubject$'], 'next').and.callThrough();
         retrieveTasksPreferencesSpy = spyOn(component as any, 'retrieveTasksPreferences');
+
+        (retrieveTasksPreferencesSpy.calls as any).reset();
+        (appNameSubjectNextSpy.calls as any).reset();
     });
 
     afterEach(() => {
