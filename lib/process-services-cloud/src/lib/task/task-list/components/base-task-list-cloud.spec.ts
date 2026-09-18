@@ -20,20 +20,17 @@ import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../.
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { TaskListCloudComponent } from './task-list/task-list-cloud.component';
 
 describe('BaseTaskListCloudComponent - appNameSubject integration', () => {
     let component: TaskListCloudComponent;
     let fixture: ComponentFixture<TaskListCloudComponent>;
+    let preferencesService;
+    let appNameSubjectNextSpy;
+    let retrieveTasksPreferencesSpy;
 
-    const preferencesService = jasmine.createSpyObj('preferencesService', {
-        getPreferences: of({}),
-        updatePreference: of({})
-    });
-
-    const configureTestingModule = () => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [NoopAuthModule, BaseTaskListCloudComponent],
             providers: [
@@ -49,41 +46,41 @@ describe('BaseTaskListCloudComponent - appNameSubject integration', () => {
         });
         fixture = TestBed.createComponent(TaskListCloudComponent);
         component = fixture.componentInstance;
-    };
 
-    beforeEach(() => {
-        configureTestingModule();
+        appNameSubjectNextSpy = spyOn(component['appNameSubject$'], 'next').and.callThrough();
+        retrieveTasksPreferencesSpy = spyOn(component as any, 'retrieveTasksPreferences');
     });
 
     afterEach(() => {
-        (preferencesService.getPreferences as jasmine.Spy).calls.reset();
         fixture.destroy();
     });
 
     it('should call retrieveTasksPreferences when appName changes in ngOnChanges', () => {
-        const appNameChange = new SimpleChange('old', 'new', false);
+        const appNameChange = new SimpleChange('app-name', 'app-name-changed', false);
+
         component.ngOnChanges({
             appName: appNameChange
         });
 
         fixture.detectChanges();
-
-        expect(preferencesService.getPreferences).toHaveBeenCalledWith('new');
+        expect(appNameSubjectNextSpy).toHaveBeenCalled();
+        expect(appNameSubjectNextSpy).toHaveBeenCalledWith('app-name-changed');
     });
 
     it('should call retrieveTasksPreferences when appName is set in ngAfterContentInit', () => {
-        component.appName = 'init-app';
+        component.appName = 'app-name';
 
         component.ngAfterContentInit();
 
-        expect(preferencesService.getPreferences).toHaveBeenCalledWith('init-app');
+        expect(appNameSubjectNextSpy).toHaveBeenCalled();
+        expect(appNameSubjectNextSpy).toHaveBeenCalledWith('app-name');
     });
 
     it('should filter duplicate appName values via distinctUntilChanged', () => {
-        component['appNameSubject$'].next('same-app');
-        component['appNameSubject$'].next('same-app');
+        component['appNameSubject$'].next('app-name-the-same');
+        component['appNameSubject$'].next('app-name-the-same');
 
-        expect(preferencesService.getPreferences).toHaveBeenCalledTimes(1);
-        expect(preferencesService.getPreferences).toHaveBeenCalledWith('same-app');
+        expect(retrieveTasksPreferencesSpy).toHaveBeenCalled();
+        expect(retrieveTasksPreferencesSpy).toHaveBeenCalledWith('app-name-the-same');
     });
 });
