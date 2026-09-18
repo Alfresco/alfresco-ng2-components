@@ -7,7 +7,7 @@
     },
     "PROPERTIES": {
       "NAME": "Procesnaam",
-      "CREATED": "Gemaakt",
+      "CREATED": "Aangemaakt",
       "STATUS": "Status",
       "START_DATE": "Begindatum",
       "COMPLETED_DATE": "Voltooiingsdatum",
@@ -50,7 +50,8 @@
         "MAXIMUM_LENGTH": "Lengte overschreden, max. {{characters}} tekens.",
         "SPACE_VALIDATOR": "Mag niet beginnen of eindigen met een spatie."
       }
-    }
+    },
+    "LOADING": "Wordt geladen"
   },
   "ADF_CLOUD_TASK_LIST": {
     "START_TASK": {
@@ -66,7 +67,7 @@
           "PRIORITY": "Prioriteit"
         },
         "ACTION": {
-          "START": "Start",
+          "START": "Starten",
           "CANCEL": "Annuleren"
         }
       }
@@ -80,7 +81,7 @@
       "CREATED_DATE": "Datum gemaakt",
       "LAST_MODIFIED": "Laatst gewijzigd",
       "DUE_DATE": "Vervaldatum",
-      "CREATED": "Gemaakt",
+      "CREATED": "Aangemaakt",
       "JSON_CELL": "Json",
       "COMPLETED_BY": "Voltooid door",
       "PRIORITY_VALUES": {
@@ -97,7 +98,8 @@
         "SUBTITLE": "Maak een nieuwe taak die u later gemakkelijk wilt kunnen vinden",
         "NONE": "Geen lijsten met taken gevonden"
       }
-    }
+    },
+    "LOADING": "Wordt geladen"
   },
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {
@@ -115,7 +117,7 @@
     "COMPLETED_TASKS": "Voltooide taken",
     "STATUS": {
       "ALL": "Alle",
-      "CREATED": "Gemaakt",
+      "CREATED": "Aangemaakt",
       "ASSIGNED": "Toegewezen",
       "SUSPENDED": "Uitgesteld",
       "CANCELLED": "Geannuleerd",
@@ -241,6 +243,7 @@
       "SUSPENDED_DATE": "Uitstellingsdatum",
       "STARTED_BY": "Gestart door",
       "COMPLETED_DATE": "Voltooiingsdatum",
+      "MAIN_PROCESS_ID": "Hoofdproces-id",
       "DATE_RANGE": {
         "NO_DATE": "Geen datum",
         "TODAY": "Vandaag",
@@ -318,7 +321,7 @@
       "PARENT_NAME": "Naam bovenliggend element",
       "PARENT_NAME_DEFAULT": "Geen bovenliggend element",
       "CREATED_BY": "Gemaakt door",
-      "CREATED": "Gemaakt",
+      "CREATED": "Aangemaakt",
       "END_DATE": "Einddatum",
       "ID": "Id",
       "PROCESS_INSTANCE_ID": "Procesinstance-id",

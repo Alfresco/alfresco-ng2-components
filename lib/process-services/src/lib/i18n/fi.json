@@ -40,7 +40,7 @@
       "CATEGORY_DEFAULT": "Ei luokkaa",
       "PARENT_NAME": "Ylätason nimi",
       "PARENT_NAME_DEFAULT": "Ei ylätasoa",
-      "CREATED_BY": "Tekijä:",
+      "CREATED_BY": "Tekijä",
       "CREATED": "Luotu",
       "END_DATE": "Päättymispäivä",
       "ID": "Tunnus",
@@ -193,7 +193,7 @@
       "END_DATE_DEFAULT": "Ei päivämäärää",
       "CATEGORY": "Luokka",
       "CATEGORY_DEFAULT": "Ei luokkaa",
-      "CREATED_BY": "Tekijä:",
+      "CREATED_BY": "Tekijä",
       "CREATED_BY_DEFAULT": "Ei vastuuhenkilöä",
       "CREATED": "Luotu",
       "BUSINESS_KEY": "Liiketoiminta-avain",
@@ -211,7 +211,7 @@
     },
     "DETAILS": {
       "LABELS": {
-        "STARTED_BY": "Aloittaja:",
+        "STARTED_BY": "Aloittaja",
         "STARTED": "Aloitettu",
         "ENDED": "Lopetettu",
         "COMMENTS": "Kommentit",
@@ -278,11 +278,11 @@
       "NO_START_FORM": "Ei aloituslomaketta",
       "NO_PROCESS_DEF_SELECTED": "Prosessimääritelmää ei ole valittu",
       "FORM": {
-        "TITLE": "Käynnistä prosessi",
         "LABEL": {
           "SELECT_APPLICATION": "Valitse sovellus",
           "TYPE": "Valitse prosessi",
-          "NAME": "Prosessin nimi"
+          "NAME": "Prosessin nimi",
+          "SELECTED_PEOPLE": "Valitut henkilöt"
         },
         "TYPE_PLACEHOLDER": "Valitse yksi...",
         "ACTION": {
