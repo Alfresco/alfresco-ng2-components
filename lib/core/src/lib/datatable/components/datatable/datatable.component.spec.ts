@@ -766,7 +766,7 @@ describe('DataTable', () => {
     it('should initialize default adapter', () => {
         const table = TestBed.createComponent(DataTableComponent).componentInstance;
         expect(table.data).toBeUndefined();
-        table.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        table.ngOnChanges({ data: new SimpleChange(null, {}, true) });
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
     });
 
@@ -1023,7 +1023,7 @@ describe('DataTable', () => {
 
     it('should allow "select all" calls with no rows', () => {
         dataTable.multiselect = true;
-        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange(null, {}, true) });
 
         dataTable.onSelectAllClick({ checked: true } as MatCheckboxChange);
         expect(dataTable.isSelectAllChecked).toBe(true);
@@ -1053,7 +1053,7 @@ describe('DataTable', () => {
         const rows = data.getRows();
 
         dataTable.multiselect = true;
-        dataTable.ngOnChanges({ data: new SimpleChange('123', data, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange(null, data, true) });
 
         expect(rows[0].isSelected).toBe(false);
         expect(rows[1].isSelected).toBe(false);
@@ -1181,13 +1181,13 @@ describe('DataTable', () => {
     });
 
     it('should require adapter sorting to evaluate sorting state', () => {
-        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange(null, {}, true) });
         spyOn(dataTable.data, 'getSorting').and.returnValue(null);
         expect(dataTable.isColumnSorted({} as DataColumn, 'asc')).toBeFalsy();
     });
 
     it('should evaluate column sorting state', () => {
-        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange(null, {}, true) });
         spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'asc'));
         expect(dataTable.isColumnSorted({ key: 'column_1' } as DataColumn, 'asc')).toBeTruthy();
         expect(dataTable.isColumnSorted({ key: 'column_2' } as DataColumn, 'desc')).toBeFalsy();
@@ -1267,7 +1267,7 @@ describe('DataTable', () => {
         };
 
         dataTable.getRowActions(row, column);
-        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange(null, {}, true) });
         dataTable.getRowActions(row, column);
 
         expect(emitted).toBe(2);
