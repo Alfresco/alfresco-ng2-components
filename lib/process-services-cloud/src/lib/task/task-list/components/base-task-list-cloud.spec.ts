@@ -59,37 +59,37 @@ describe('BaseTaskListCloudComponent - appNameSubject integration', () => {
         fixture.destroy();
     });
 
-    it('should push appName to Subject in ngOnChanges', () => {
-        const appNameSubjectSpy = spyOn(component['appNameSubject$'], 'next');
+    it('should call retrieveTasksPreferences when appName changes in ngOnChanges', fakeAsync(() => {
+        spyOn(preferencesService, 'getPreferences').and.returnValue(of({}));
 
         const appNameChange = new SimpleChange('old', 'new', false);
         component.ngOnChanges({
             appName: appNameChange
         });
+        tick();
 
-        expect(appNameSubjectSpy).toHaveBeenCalledWith('new');
-    });
+        expect(preferencesService.getPreferences).toHaveBeenCalledWith('new');
+    }));
 
-    it('should push appName to Subject in ngAfterContentInit', () => {
-        // Arrange
-        const appNameSubjectSpy = spyOn(component['appNameSubject$'], 'next');
+    it('should call retrieveTasksPreferences when appName is set in ngAfterContentInit', fakeAsync(() => {
+        spyOn(preferencesService, 'getPreferences').and.returnValue(of({}));
         component.appName = 'init-app';
 
         component.ngAfterContentInit();
+        tick();
 
-        expect(appNameSubjectSpy).toHaveBeenCalledWith('init-app');
-        expect(appNameSubjectSpy).toHaveBeenCalledTimes(1);
-    });
+        expect(preferencesService.getPreferences).toHaveBeenCalledWith('init-app');
+    }));
 
     it('should filter duplicate appName values via distinctUntilChanged', fakeAsync(() => {
-        const retrieveTasksPreferencesSpy = spyOn(component as any, 'retrieveTasksPreferences').and.callThrough();
+        spyOn(preferencesService, 'getPreferences').and.returnValue(of({}));
 
         component['appNameSubject$'].next('same-app');
         tick();
         component['appNameSubject$'].next('same-app');
         tick();
 
-        expect(retrieveTasksPreferencesSpy).toHaveBeenCalledTimes(1);
-        expect(retrieveTasksPreferencesSpy).toHaveBeenCalledWith('same-app');
+        expect(preferencesService.getPreferences).toHaveBeenCalledTimes(1);
+        expect(preferencesService.getPreferences).toHaveBeenCalledWith('same-app');
     }));
 });
