@@ -2,9 +2,9 @@
   "extends": ["stylelint-config-standard-scss"],
   "rules": {
     "custom-property-pattern": [
-      "^(mat-sys|mdc)",
+      "^(mat-sys|mdc|adf)-",
       {
-        "message": "Use only Angular Material system variables (--mat-sys-*, --mdc-*)"
+        "message": "Use only Angular Material system variables (--mat-sys-*, --mdc-*) or ADF form theme variables (--adf-*)"
       }
     ],
     "color-function-notation": "legacy",
