@@ -642,7 +642,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
         for (const variable of [...existing, ...updates]) {
             if (variable?.name) {
-                byName.set(variable.name, variable);
+                const name = variable.name.startsWith('variables.') ? variable.name.slice('variables.'.length) : variable.name;
+                byName.set(name, variable);
             }
         }
 
