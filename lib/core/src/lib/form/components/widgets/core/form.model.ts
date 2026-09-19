@@ -320,6 +320,25 @@ export class FormModel implements ProcessFormModel {
         return this.getDefaultFormVariableValue(name);
     }
 
+    /**
+     * Resolves a form variable value using the standard precedence order:
+     * runtime-set form variable, refreshed process variable list, cached process variables, then form default.
+     *
+     * @param identifier The `name` or `id` value of the form variable
+     * @param processVarList Optional refreshed process variables from a data update
+     * @returns The resolved variable value, or `undefined` when the variable cannot be found
+     */
+    resolveVariableValue(identifier: string, processVarList: { id?: string; name?: string; type?: string; value?: any }[] = []): any {
+        if (this.isVariableSetAtRuntime(identifier)) {
+            return this.getDefaultFormVariableValue(identifier);
+        }
+
+        const names = [identifier, `variables.${identifier}`];
+        const refreshed = processVarList.find((variable) => names.includes(variable.id) || names.includes(variable.name));
+
+        return refreshed ? this.parseValue(refreshed.type, refreshed.value) : this.getProcessVariableValue(identifier);
+    }
+
     protected parseValue(type: string, value: any): any {
         if (type && value) {
             switch (type) {

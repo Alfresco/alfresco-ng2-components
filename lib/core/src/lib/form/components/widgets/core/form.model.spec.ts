@@ -629,6 +629,61 @@ describe('FormModel', () => {
         });
     });
 
+    describe('resolveVariableValue', () => {
+        const createFormJson = () => ({
+            variables: [{ id: 'list-var', name: 'accountList', type: 'json', value: { list: [{ id: 'default', name: 'Default' }] } }],
+            processVariables: [{ name: 'variables.accountList', value: { list: [{ id: 'process', name: 'Process' }] }, type: 'json' }]
+        });
+
+        it('should prefer a runtime-set form variable over a process variable of the same name', () => {
+            const form = new FormModel(createFormJson());
+            const updatedValue = { list: [{ id: 'runtime', name: 'Runtime' }] };
+
+            form.changeVariableValue('list-var', updatedValue);
+
+            expect(form.resolveVariableValue('accountList')).toEqual(updatedValue);
+        });
+
+        it('should prefer a refreshed process variable over the cached process variable', () => {
+            const form = new FormModel(createFormJson());
+            const refreshedValue = { list: [{ id: 'refreshed', name: 'Refreshed' }] };
+
+            expect(form.resolveVariableValue('accountList', [{ id: 'variables.accountList', value: refreshedValue, type: 'json' }])).toEqual(
+                refreshedValue
+            );
+        });
+
+        it('should resolve from cached process variables when no refresh list entry is provided', () => {
+            const form = new FormModel(createFormJson());
+
+            expect(form.resolveVariableValue('accountList')).toEqual({ list: [{ id: 'process', name: 'Process' }] });
+        });
+
+        it('should return falsy process variable values without falling back to the form default', () => {
+            const formWithZero = new FormModel({
+                variables: [{ id: 'amount-var', name: 'amount', type: 'integer', value: 99 }],
+                processVariables: [{ name: 'variables.amount', value: 0, type: 'integer' }]
+            });
+
+            expect(formWithZero.resolveVariableValue('amount')).toBe(0);
+        });
+
+        it('should return undefined for an unknown variable', () => {
+            const form = new FormModel(createFormJson());
+
+            expect(form.resolveVariableValue('missing')).toBeUndefined();
+        });
+
+        it('should resolve a refreshed process variable by name', () => {
+            const form = new FormModel(createFormJson());
+            const refreshedValue = { list: [{ id: 'refreshed', name: 'Refreshed' }] };
+
+            expect(form.resolveVariableValue('accountList', [{ name: 'variables.accountList', value: refreshedValue, type: 'json' }])).toEqual(
+                refreshedValue
+            );
+        });
+    });
+
     describe('add values not present', () => {
         let form: FormModel;
 
@@ -1345,6 +1400,53 @@ describe('FormModel', () => {
             });
             field.isVisible = false;
             expect(form.isFieldOrParentHidden(field)).toBe(true);
+        });
+    });
+
+    describe('repeatable section field ids', () => {
+        const formJson = () => ({
+            id: 'test-form',
+            fields: [
+                { id: 'topLevelField', type: FormFieldTypes.TEXT },
+                {
+                    id: 'repeatableSection1',
+                    type: FormFieldTypes.REPEATABLE_SECTION,
+                    numberOfColumns: 1,
+                    params: { initialNumberOfRows: 2 },
+                    fields: {
+                        1: [{ id: 'rowField', type: FormFieldTypes.TEXT }]
+                    }
+                }
+            ]
+        });
+
+        const getRowFieldIds = (model: FormModel): string[] =>
+            model
+                .getFormFields([], true)
+                .filter((field) => field.id.startsWith('rowField'))
+                .map((field) => field.id);
+
+        it('should give each repeatable section row its own field id', () => {
+            const rowFieldIds = getRowFieldIds(new FormModel(formJson()));
+
+            expect(rowFieldIds.length).toBe(2);
+            expect(rowFieldIds[0]).not.toEqual(rowFieldIds[1]);
+        });
+
+        /*
+            Row ids are generated per parse, so consumers cannot identify a row scoped field across
+            two models built from the same definition, for example before and after a data refresh.
+        */
+        it('should generate different row scoped ids when the same definition is parsed twice', () => {
+            const firstParse = getRowFieldIds(new FormModel(formJson()));
+            const secondParse = getRowFieldIds(new FormModel(formJson()));
+
+            expect(firstParse).not.toEqual(secondParse);
+        });
+
+        it('should keep ids of fields outside a repeatable section stable across parses', () => {
+            expect(new FormModel(formJson()).getFieldById('topLevelField')).toBeDefined();
+            expect(new FormModel(formJson()).getFieldById('topLevelField')).toBeDefined();
         });
     });
 });
