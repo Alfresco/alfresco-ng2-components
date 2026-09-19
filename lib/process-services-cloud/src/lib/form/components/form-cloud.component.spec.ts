@@ -2721,6 +2721,22 @@ describe('FormCloudComponent — form variable visibility on data refresh', () =
         formComponent.ngOnChanges({ data: change });
 
         expect(formComponent.form.isVariableSetAtRuntime('person_type')).toBeFalse();
+        expect(formComponent.form.resolveVariableValue('person_type')).toBe('Manager');
+    });
+
+    it('should replace an unprefixed cached variable when refreshed data uses the variables prefix', () => {
+        const unprefixedData = [new TaskVariableCloud({ name: 'person_type', value: 'Requestor' })];
+        formComponent.formCloudRepresentationJSON.processVariables = unprefixedData;
+        formComponent.data = unprefixedData;
+        formComponent.form = formComponent.parseForm(formComponent.formCloudRepresentationJSON)!;
+        formComponent.form.changeVariableValue('person-type-var', 'Approver');
+
+        const managerData = [new TaskVariableCloud({ name: 'variables.person_type', value: 'Manager' })];
+        formComponent.data = managerData;
+        formComponent.ngOnChanges({ data: new SimpleChange(unprefixedData, managerData, false) });
+
+        expect(formComponent.form.isVariableSetAtRuntime('person_type')).toBeFalse();
+        expect(formComponent.form.resolveVariableValue('person_type')).toBe('Manager');
     });
 
     it('should keep the latest received variable value across a following partial refresh', () => {
