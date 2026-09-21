@@ -645,6 +645,46 @@ describe('StartProcessCloudComponent', () => {
             expect(errorEl.innerText.trim()).toBe('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
         });
 
+        it('should emit an error if process defs cannot be loaded', async () => {
+            const errorSpy = spyOn(component.error, 'emit');
+            getProcessDefinitionsSpy.and.returnValue(throwError(() => new Error('failed')));
+            const change = new SimpleChange('myApp', 'myApp1', true);
+            component.ngOnChanges({ appName: change });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(errorSpy).toHaveBeenCalledWith('ERROR_LOAD_PROCESS_DEFS');
+            expect(component.isFormCloudLoading).toBeFalse();
+        });
+
+        it('should emit an error if the given processDefinitionName is not found in the loaded process definitions', async () => {
+            const errorSpy = spyOn(component.error, 'emit');
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            component.processDefinitionName = 'not-existing-process';
+            const change = new SimpleChange('myApp', 'myApp1', true);
+            component.ngOnChanges({ appName: change });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(errorSpy).toHaveBeenCalledWith('PROCESS_DEFINITION_NOT_FOUND');
+            expect(component.isFormCloudLoading).toBeFalse();
+        });
+
+        it('should not emit an error if the given processDefinitionName is found in the loaded process definitions', async () => {
+            const errorSpy = spyOn(component.error, 'emit');
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            component.processDefinitionName = fakeProcessDefinitions[0].name;
+            const change = new SimpleChange('myApp', 'myApp1', true);
+            component.ngOnChanges({ appName: change });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(errorSpy).not.toHaveBeenCalled();
+        });
+
         it('should show no process available message when no process definition is loaded', async () => {
             getProcessDefinitionsSpy.and.returnValue(of([]));
             const change = new SimpleChange('myApp', 'myApp1', true);
