@@ -215,4 +215,20 @@ describe('FileUploadingListComponent', () => {
             expect(component.isUploadCancelled()).toBe(true);
         });
     });
+
+    it('should render lists of files uploaded in li tag', () => {
+        component.files = [
+            { id: '1', status: FileUploadStatus.Complete, name: 'file1.txt' } as FileModel,
+            { id: '2', status: FileUploadStatus.Complete, name: 'file2.txt' } as FileModel,
+            { id: '3', status: FileUploadStatus.Complete, name: 'file3.txt' } as FileModel
+        ];
+
+        fixture.detectChanges();
+        const listContainer = fixture.nativeElement.querySelectorAll('ul.adf-upload-list');
+        expect(listContainer).not.toBeNull();
+        expect(listContainer.length).toBe(1);
+
+        const listItems = listContainer[0].querySelectorAll('li');
+        expect(listItems.length).toBe(3);
+    });
 });
