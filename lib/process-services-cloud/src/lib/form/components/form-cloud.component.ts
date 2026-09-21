@@ -80,6 +80,11 @@ interface FormFieldRuntimeState {
     visibilityCondition: any;
 }
 
+interface FormVariableRuntimeState {
+    value: any;
+    runtimeSet: boolean;
+}
+
 export const FORM_CLOUD_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldValidator[]>('FORM_CLOUD_FIELD_VALIDATORS_TOKEN');
 export const ADF_FORM_TAB_NAV_ENABLED = new InjectionToken<Observable<boolean> | boolean>('ADF_FORM_TAB_NAV_ENABLED');
 
@@ -600,6 +605,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     private refreshFormData(previousData: TaskVariableCloud[] = []) {
         const snapshot = this.snapshotRuntimeState();
+        const variableSnapshot = this.snapshotVariablesRuntimeState();
 
         this.mergeProcessVariables(this.data ?? []);
 
@@ -610,6 +616,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
         const changedFieldIds = this.getChangedFieldIds(previousData, this.data ?? []);
         this.restoreRuntimeState(this.form, snapshot, changedFieldIds);
+        this.restoreVariablesRuntimeState(this.form, variableSnapshot, changedFieldIds, this.data ?? []);
 
         this.setCheckParentVisibilityForValidationOnFields();
         this.visibilityService.refreshVisibility(this.form, this.data);
@@ -635,7 +642,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
         for (const variable of [...existing, ...updates]) {
             if (variable?.name) {
-                byName.set(variable.name, variable);
+                const name = variable.name.startsWith('variables.') ? variable.name.slice('variables.'.length) : variable.name;
+                byName.set(name, variable);
             }
         }
 
@@ -693,6 +701,58 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             field.restoreRuntimeFlags(prior.required, prior.readOnly);
             field.isVisible = prior.isVisible;
             field.visibilityCondition = prior.visibilityCondition;
+        }
+    }
+
+    private snapshotVariablesRuntimeState(): Map<string, FormVariableRuntimeState> {
+        const snapshot = new Map<string, FormVariableRuntimeState>();
+        if (!this.form?.variables?.length) {
+            return snapshot;
+        }
+
+        for (const variable of this.form.variables) {
+            snapshot.set(variable.id, {
+                value: variable.value,
+                runtimeSet: variable.runtimeSet
+            });
+        }
+
+        return snapshot;
+    }
+
+    private restoreVariablesRuntimeState(
+        form: FormModel,
+        snapshot: Map<string, FormVariableRuntimeState>,
+        changedVariableNames: Set<string>,
+        updates: TaskVariableCloud[]
+    ): void {
+        if (!form?.variables?.length || !snapshot.size) {
+            return;
+        }
+
+        for (const variable of form.variables) {
+            const prior = snapshot.get(variable.id);
+            if (!prior?.runtimeSet) {
+                continue;
+            }
+
+            const identifiers = [variable.id, variable.name, `variables.${variable.name}`];
+            const changedIdentifier = identifiers.find((identifier) => changedVariableNames.has(identifier));
+
+            /*
+                Form variables are shared with the stored representation, so a value set at runtime survives
+                the re-parse on its own. It has to be cleared explicitly once the refresh brings a newer value,
+                otherwise the runtime value would mask every later update from the server.
+            */
+            if (changedIdentifier) {
+                const refreshed = updates.find((update) => update?.name === changedIdentifier);
+                variable.value = refreshed ? refreshed.value : variable.value;
+                variable.runtimeSet = false;
+                continue;
+            }
+
+            variable.value = prior.value;
+            variable.runtimeSet = true;
         }
     }
 
