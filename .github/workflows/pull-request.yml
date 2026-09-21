@@ -41,7 +41,6 @@ env:
   GH_COMMIT: ${{ github.sha }}
   NODE_OPTIONS: "--max-old-space-size=5120"
   PR_BASE_REF: ${{ github.event.pull_request.base.ref || github.base_ref || 'develop' }}
-  PR_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
   PR_CHECKOUT_REF: ${{ github.event_name == 'pull_request' && github.sha || github.event.pull_request.head.sha || github.sha }}
 
 jobs:
