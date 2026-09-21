@@ -611,24 +611,36 @@ describe('StartProcessCloudComponent', () => {
             component.appName = 'myApp';
         });
 
-        it('should emit ERROR_LOAD_PROCESS_DEFS and stop loading when the process definitions cannot be fetched', async () => {
+        it('should emit ERROR_LOAD_PROCESS_DEFINITIONS and stop loading when the process definitions cannot be fetched', async () => {
             getProcessDefinitionsSpy.and.returnValue(throwError(() => new Error('failed')));
 
             await loadProcessDefinitions();
 
-            expect(errorSpy).toHaveBeenCalledOnceWith('ERROR_LOAD_PROCESS_DEFS');
+            expect(errorSpy).toHaveBeenCalledOnceWith('ERROR_LOAD_PROCESS_DEFINITIONS');
             expect(component.errorMessageId).toBe('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
             expect(component.isFormCloudLoading).toBeFalse();
+            expect(component.processDefinitionLoaded).toBeTrue();
         });
 
-        it('should emit PROCESS_DEFINITION_NOT_FOUND and stop loading when the given processDefinitionName does not exist', async () => {
+        it('should render the error message instead of the loading spinner when the process definitions cannot be fetched', async () => {
+            getProcessDefinitionsSpy.and.returnValue(throwError(() => new Error('failed')));
+
+            await loadProcessDefinitions();
+            fixture.detectChanges();
+
+            expect(fixture.nativeElement.querySelector('.adf-loading')).toBeNull();
+            expect(fixture.nativeElement.querySelector('#error-message')).not.toBeNull();
+        });
+
+        it('should stop loading without emitting an error when the given processDefinitionName does not exist', async () => {
             component.processDefinitionName = 'not-existing-process';
             getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
 
             await loadProcessDefinitions();
 
-            expect(errorSpy).toHaveBeenCalledOnceWith('PROCESS_DEFINITION_NOT_FOUND');
+            expect(errorSpy).not.toHaveBeenCalled();
             expect(component.isFormCloudLoading).toBeFalse();
+            expect(component.processDefinitionLoaded).toBeTrue();
         });
 
         it('should not emit an error when the given processDefinitionName exists', async () => {
