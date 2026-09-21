@@ -32,7 +32,7 @@ import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../.
 import { PreferenceCloudServiceInterface } from '../../../../services/preference-cloud.interface';
 import { TaskListCloudServiceInterface } from '../../../../services/task-list-cloud.service.interface';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
-import { filter, map, switchMap, take, tap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { VariableMapperService } from '../../../../services/variable-mapper.sevice';
 import { ProcessListDataColumnCustomData } from '../../../../models/data-column-custom-data';
 import { TaskCloudModel } from '../../../../models/task-cloud.model';
@@ -267,24 +267,32 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
     );
 
-    private readonly fetchProcessesTrigger$ = new Subject<void>();
+    // incremented on every explicit reload() so it always refetches, even when the computed request is unchanged
+    private reloadNonce = 0;
+    private readonly fetchProcessesTrigger$ = new Subject<number>();
 
     constructor() {
         const cloudPreferenceService = inject<PreferenceCloudServiceInterface>(TASK_LIST_PREFERENCES_SERVICE_TOKEN);
         super(PRESET_KEY, cloudPreferenceService);
 
-        combineLatest([this.isLoadingPreferences$, this.isColumnSchemaCreated$, this.fetchProcessesTrigger$])
+        combineLatest([this.isLoadingPreferences$.pipe(distinctUntilChanged()), this.isColumnSchemaCreated$, this.fetchProcessesTrigger$])
             .pipe(
-                tap(() => this.isReloadingSubject$.next(true)),
                 filter(([isLoadingPreferences, isColumnSchemaCreated]) => !isLoadingPreferences && !!isColumnSchemaCreated),
-                switchMap(() => {
+                map(([, , reloadNonce]) => {
+                    const requestNode = this.searchApiMethod === 'POST' ? this.createTaskListRequestNode() : this.createRequestNode();
+                    return { reloadNonce, requestNode, requestKey: JSON.stringify(requestNode) };
+                }),
+                // skip identical requests triggered by schema/preference re-emissions, but always refetch on an explicit reload()
+                distinctUntilChanged(
+                    (previous, current) => previous.reloadNonce === current.reloadNonce && previous.requestKey === current.requestKey
+                ),
+                tap(() => this.isReloadingSubject$.next(true)),
+                switchMap(({ requestNode }) => {
                     if (this.searchApiMethod === 'POST') {
-                        const requestNode = this.createTaskListRequestNode();
-                        return this.taskListCloudService.fetchTaskList(requestNode).pipe(take(1));
+                        return this.taskListCloudService.fetchTaskList(requestNode as TaskListRequestModel).pipe(take(1));
                     } else {
-                        const requestNode = this.createRequestNode();
-                        this.requestNode = requestNode;
-                        return this.taskListCloudService.getTaskByRequest(requestNode);
+                        this.requestNode = requestNode as TaskQueryCloudRequestModel;
+                        return this.taskListCloudService.getTaskByRequest(requestNode as TaskQueryCloudRequestModel);
                     }
                 }),
                 takeUntilDestroyed()
@@ -314,7 +322,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
 
     reload() {
         this.isReloadingSubject$.next(true);
-        this.fetchProcessesTrigger$.next();
+        this.fetchProcessesTrigger$.next(++this.reloadNonce);
     }
 
     private createTaskListRequestNode(): TaskListRequestModel {
