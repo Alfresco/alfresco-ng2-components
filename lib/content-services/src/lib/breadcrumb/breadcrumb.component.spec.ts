@@ -196,13 +196,13 @@ describe('Breadcrumb', () => {
     });
 
     it('should announce heading role for the current breadcrumb item', () => {
-        const mockFolderNode: any = {
+        const mockFolderNode = {
             id: 'test-id',
             name: 'test-name',
             path: {
                 elements: [{ id: 'element-1-id', name: 'element-1-name' }]
             }
-        };
+        } as Node;
         component.folderNode = mockFolderNode;
         component.ngOnChanges({});
         fixture.detectChanges();
