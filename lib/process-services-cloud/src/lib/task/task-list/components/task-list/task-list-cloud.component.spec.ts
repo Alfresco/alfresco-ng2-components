@@ -416,6 +416,14 @@ describe('TaskListCloudComponent', () => {
             expect(fetchTaskListSpy).toHaveBeenCalledTimes(1);
         });
 
+        it('should refetch when explicitly reloaded with an unchanged request', () => {
+            component.ngAfterContentInit();
+            component.reload();
+            component.reload();
+
+            expect(fetchTaskListSpy).toHaveBeenCalledTimes(2);
+        });
+
         it('should refetch when showing a process variable column changes the request', () => {
             component.presetColumn = 'schemaWithVariableColumn';
             component.ngAfterContentInit();
