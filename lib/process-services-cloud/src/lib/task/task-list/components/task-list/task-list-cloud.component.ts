@@ -275,11 +275,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         const cloudPreferenceService = inject<PreferenceCloudServiceInterface>(TASK_LIST_PREFERENCES_SERVICE_TOKEN);
         super(PRESET_KEY, cloudPreferenceService);
 
-        combineLatest([
-            this.isLoadingPreferences$.pipe(distinctUntilChanged()),
-            this.isColumnSchemaCreated$.pipe(distinctUntilChanged()),
-            this.fetchProcessesTrigger$
-        ])
+        combineLatest([this.isLoadingPreferences$.pipe(distinctUntilChanged()), this.isColumnSchemaCreated$, this.fetchProcessesTrigger$])
             .pipe(
                 filter(([isLoadingPreferences, isColumnSchemaCreated]) => !isLoadingPreferences && !!isColumnSchemaCreated),
                 map(([, , reloadNonce]) => {

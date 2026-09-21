@@ -148,6 +148,24 @@ describe('TaskListCloudComponent', () => {
                             title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
                             sortable: true
                         }
+                    ],
+                    schemaWithVariableColumn: [
+                        {
+                            id: 'name',
+                            key: 'name',
+                            type: 'text',
+                            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.NAME'
+                        },
+                        {
+                            id: 'variableColumn',
+                            key: 'variableColumn',
+                            type: 'text',
+                            title: 'VARIABLE_COLUMN',
+                            customData: {
+                                columnType: 'process-variable-column',
+                                variableDefinitionsPayload: ['processKey/variableName']
+                            }
+                        }
                     ]
                 }
             }
@@ -396,6 +414,24 @@ describe('TaskListCloudComponent', () => {
             fixture.detectChanges();
 
             expect(fetchTaskListSpy).toHaveBeenCalledTimes(1);
+        });
+
+        it('should refetch when showing a process variable column changes the request', () => {
+            component.presetColumn = 'schemaWithVariableColumn';
+            component.ngAfterContentInit();
+            component.reload();
+
+            component.onColumnsVisibilityChange(component.columns.map((column) => ({ ...column, isHidden: column.id === 'variableColumn' })));
+
+            expect(fetchTaskListSpy).toHaveBeenCalledTimes(2);
+            expect(fetchTaskListSpy.calls.mostRecent().args[0].processVariableKeys).toBeUndefined();
+
+            component.onColumnsVisibilityChange(
+                component.columns.map((column) => ({ ...column, isHidden: column.id === 'variableColumn' ? false : column.isHidden }))
+            );
+
+            expect(fetchTaskListSpy).toHaveBeenCalledTimes(3);
+            expect(fetchTaskListSpy.calls.mostRecent().args[0].processVariableKeys).toEqual(['processKey/variableName']);
         });
         describe('component changes', () => {
             beforeEach(() => {
