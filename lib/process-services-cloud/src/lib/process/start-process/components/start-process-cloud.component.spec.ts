@@ -594,6 +594,53 @@ describe('StartProcessCloudComponent', () => {
         });
     });
 
+    describe('error output', () => {
+        let errorSpy: jasmine.Spy;
+
+        /** Triggers the very first process definitions load, without any preceding successful load. */
+        const loadProcessDefinitions = async () => {
+            fixture.detectChanges();
+            component.ngOnChanges({ appName: firstChange });
+            fixture.detectChanges();
+            await fixture.whenStable();
+        };
+
+        beforeEach(() => {
+            errorSpy = spyOn(component.error, 'emit');
+            component.name = 'My new process';
+            component.appName = 'myApp';
+        });
+
+        it('should emit ERROR_LOAD_PROCESS_DEFS and stop loading when the process definitions cannot be fetched', async () => {
+            getProcessDefinitionsSpy.and.returnValue(throwError(() => new Error('failed')));
+
+            await loadProcessDefinitions();
+
+            expect(errorSpy).toHaveBeenCalledOnceWith('ERROR_LOAD_PROCESS_DEFS');
+            expect(component.errorMessageId).toBe('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
+            expect(component.isFormCloudLoading).toBeFalse();
+        });
+
+        it('should emit PROCESS_DEFINITION_NOT_FOUND and stop loading when the given processDefinitionName does not exist', async () => {
+            component.processDefinitionName = 'not-existing-process';
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+
+            await loadProcessDefinitions();
+
+            expect(errorSpy).toHaveBeenCalledOnceWith('PROCESS_DEFINITION_NOT_FOUND');
+            expect(component.isFormCloudLoading).toBeFalse();
+        });
+
+        it('should not emit an error when the given processDefinitionName exists', async () => {
+            component.processDefinitionName = fakeProcessDefinitions[1].name;
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+
+            await loadProcessDefinitions();
+
+            expect(errorSpy).not.toHaveBeenCalled();
+        });
+    });
+
     describe('process definitions list', () => {
         beforeEach(() => {
             component.name = 'My new process';
@@ -643,46 +690,6 @@ describe('StartProcessCloudComponent', () => {
 
             const errorEl = fixture.nativeElement.querySelector('#error-message');
             expect(errorEl.innerText.trim()).toBe('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
-        });
-
-        it('should emit an error if process defs cannot be loaded', async () => {
-            const errorSpy = spyOn(component.error, 'emit');
-            getProcessDefinitionsSpy.and.returnValue(throwError(() => new Error('failed')));
-            const change = new SimpleChange('myApp', 'myApp1', true);
-            component.ngOnChanges({ appName: change });
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(errorSpy).toHaveBeenCalledWith('ERROR_LOAD_PROCESS_DEFS');
-            expect(component.isFormCloudLoading).toBeFalse();
-        });
-
-        it('should emit an error if the given processDefinitionName is not found in the loaded process definitions', async () => {
-            const errorSpy = spyOn(component.error, 'emit');
-            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
-            component.processDefinitionName = 'not-existing-process';
-            const change = new SimpleChange('myApp', 'myApp1', true);
-            component.ngOnChanges({ appName: change });
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(errorSpy).toHaveBeenCalledWith('PROCESS_DEFINITION_NOT_FOUND');
-            expect(component.isFormCloudLoading).toBeFalse();
-        });
-
-        it('should not emit an error if the given processDefinitionName is found in the loaded process definitions', async () => {
-            const errorSpy = spyOn(component.error, 'emit');
-            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
-            component.processDefinitionName = fakeProcessDefinitions[0].name;
-            const change = new SimpleChange('myApp', 'myApp1', true);
-            component.ngOnChanges({ appName: change });
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(errorSpy).not.toHaveBeenCalled();
         });
 
         it('should show no process available message when no process definition is loaded', async () => {

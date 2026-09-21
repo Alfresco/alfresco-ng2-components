@@ -460,7 +460,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                             this.processDefinitionSelectionChanged(processDefinition);
                         } else {
                             this.isFormCloudLoading = false;
-                            this.error.emit('PROCESS_DEFINITION_NOT_FOUND');
                         }
                     } else {
                         this.isFormCloudLoading = false;
