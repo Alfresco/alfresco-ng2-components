@@ -144,8 +144,8 @@ describe('ProcessInstanceListComponent', () => {
         component.appId = 1;
         component.state = 'open';
         component.success.subscribe(() => {
-            expect(component.rows[0]['name']).toEqual('Fake Process Name - Nov 9, 2017, 12:36:14 PM');
-            expect(component.rows[1]['name']).toEqual('Fake Process Name - Nov 9, 2017, 12:37:25 PM');
+            expect(component.rows[0]['name']).toEqual('Fake Process Name - Nov 9, 2017, 12:36:14 PM');
+            expect(component.rows[1]['name']).toEqual('Fake Process Name - Nov 9, 2017, 12:37:25 PM');
             done();
         });
         fixture.detectChanges();

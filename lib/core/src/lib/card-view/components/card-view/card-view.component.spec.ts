@@ -109,7 +109,7 @@ describe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
         expect(getPropertyLabel()).toBe('My date label');
-        expect(getPropertyValueText()).toBe('6/14/17, 12:00 AM');
+        expect(getPropertyValueText()).toBe('6/14/17, 12:00 AM');
     });
 
     it('should render the default value if the value is empty, not editable and displayEmpty is true', async () => {

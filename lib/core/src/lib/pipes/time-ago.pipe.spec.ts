@@ -188,7 +188,7 @@ describe('TimeAgoPipe', () => {
         it('should return exact date if given date is more than seven days for en locale ', () => {
             const date = new Date('1990-11-04T15:25:42.749');
 
-            expect(pipe.transform(date)).toBe('11/4/90, 3:25 PM');
+            expect(pipe.transform(date)).toBe('11/4/90, 3:25 PM');
         });
 
         it('should return empty string if given date is empty', () => {
@@ -228,7 +228,7 @@ describe('TimeAgoPipe', () => {
             const oldDate = new Date('2026-03-01T10:00:00.000Z');
             const result = pipe.transform(oldDate, 'en-US');
 
-            expect(result).toBe('3/1/26, 10:00 AM');
+            expect(result).toBe('3/1/26, 10:00 AM');
         });
     });
 
