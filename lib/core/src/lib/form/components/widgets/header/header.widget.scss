@@ -1,10 +1,12 @@
-.adf-container-widget-header__text {
+// Scoped through the parent container so the header wins against the Material
+// typography hierarchy, which styles bare `h4` elements via `.mat-typography h4`.
+.adf-container-widget-header .adf-container-widget-header__text {
     border-bottom: 1px solid var(--mat-sys-outline-variant);
     padding-bottom: 10px;
     cursor: default;
     user-select: none;
-    font-size: var(--adf-header-font-size, var(--mat-sys-title-small-size));
-    font-weight: var(--adf-header-font-weight, var(--mat-sys-title-small-weight));
+    font-size: var(--adf-header-font-size, var(--mat-sys-headline-large-size));
+    font-weight: var(--adf-header-font-weight, var(--mat-sys-headline-large-weight));
     color: var(--adf-header-color, var(--mat-sys-on-surface));
     line-height: normal;
 
