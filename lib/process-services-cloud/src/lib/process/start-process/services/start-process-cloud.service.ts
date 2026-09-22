@@ -47,7 +47,7 @@ export class StartProcessCloudService extends BaseCloudService {
                 map((res: any) => res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry)))
             );
         } else {
-            return throwError(() => 'AppName not configured');
+            return throwError('AppName not configured');
         }
     }
 
