@@ -177,6 +177,15 @@ describe('CategoriesManagementComponent', () => {
         fixture.detectChanges();
     }
 
+    /**
+     * Get status text of the category management component
+     *
+     * @returns status text of the categories found
+     */
+    function getStatusText(): string {
+        return fixture.nativeElement.querySelector('output').textContent.trim();
+    }
+
     describe('Shared tests', () => {
         beforeEach(() => {
             component.managementMode = CategoriesManagementMode.CRUD;
@@ -463,6 +472,28 @@ describe('CategoriesManagementComponent', () => {
             expect(component.categories[1].name).toBe('testCat4');
             expect(categoriesChangeSpy).toHaveBeenCalledOnceWith(component.categories);
         }));
+
+        describe('Accessibility', () => {
+            it('should announce the status of categories available', fakeAsync(() => {
+                const category = 'testCat';
+
+                typeCategory(category);
+                component.categoryNameControl.markAsTouched();
+                fixture.detectChanges();
+
+                expect(getStatusText()).toBe('CATEGORIES_MANAGEMENT.EXISTING_CATEGORIES_AVAILABLE');
+            }));
+
+            it('should announce the status of no existing categories available', fakeAsync(() => {
+                const category = 'nonExistingCategory';
+
+                typeCategory(category);
+                component.categoryNameControl.markAsTouched();
+                fixture.detectChanges();
+
+                expect(getStatusText()).toBe('CATEGORIES_MANAGEMENT.NO_EXISTING_CATEGORIES');
+            }));
+        });
 
         describe('Errors', () => {
             it('should display validation error when searching for empty category', fakeAsync(() => {
