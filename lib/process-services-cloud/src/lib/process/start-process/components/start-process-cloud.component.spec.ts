@@ -594,6 +594,65 @@ describe('StartProcessCloudComponent', () => {
         });
     });
 
+    describe('error output', () => {
+        let errorSpy: jasmine.Spy;
+
+        /** Triggers the very first process definitions load, without any preceding successful load. */
+        const loadProcessDefinitions = async () => {
+            fixture.detectChanges();
+            component.ngOnChanges({ appName: firstChange });
+            fixture.detectChanges();
+            await fixture.whenStable();
+        };
+
+        beforeEach(() => {
+            errorSpy = spyOn(component.error, 'emit');
+            component.name = 'My new process';
+            component.appName = 'myApp';
+        });
+
+        it('should emit ERROR_LOAD_PROCESS_DEFINITIONS and stop loading when the process definitions cannot be fetched', async () => {
+            getProcessDefinitionsSpy.and.returnValue(throwError(() => new Error('failed')));
+
+            await loadProcessDefinitions();
+
+            expect(errorSpy).toHaveBeenCalledOnceWith('ERROR_LOAD_PROCESS_DEFINITIONS');
+            expect(component.errorMessageId).toBe('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
+            expect(component.isFormCloudLoading).toBeFalse();
+            expect(component.processDefinitionLoaded).toBeTrue();
+        });
+
+        it('should render the error message instead of the loading spinner when the process definitions cannot be fetched', async () => {
+            getProcessDefinitionsSpy.and.returnValue(throwError(() => new Error('failed')));
+
+            await loadProcessDefinitions();
+            fixture.detectChanges();
+
+            expect(fixture.nativeElement.querySelector('.adf-loading')).toBeNull();
+            expect(fixture.nativeElement.querySelector('#error-message')).not.toBeNull();
+        });
+
+        it('should stop loading without emitting an error when the given processDefinitionName does not exist', async () => {
+            component.processDefinitionName = 'not-existing-process';
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+
+            await loadProcessDefinitions();
+
+            expect(errorSpy).not.toHaveBeenCalled();
+            expect(component.isFormCloudLoading).toBeFalse();
+            expect(component.processDefinitionLoaded).toBeTrue();
+        });
+
+        it('should not emit an error when the given processDefinitionName exists', async () => {
+            component.processDefinitionName = fakeProcessDefinitions[1].name;
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+
+            await loadProcessDefinitions();
+
+            expect(errorSpy).not.toHaveBeenCalled();
+        });
+    });
+
     describe('process definitions list', () => {
         beforeEach(() => {
             component.name = 'My new process';
