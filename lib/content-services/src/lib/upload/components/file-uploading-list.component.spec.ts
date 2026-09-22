@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAuthModule, TranslationService } from '@alfresco/adf-core';
+import { NoopAuthModule, TranslationService, UnitTestingUtils } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { UploadService } from '../../common/services/upload.service';
@@ -29,6 +29,7 @@ describe('FileUploadingListComponent', () => {
     let uploadService: UploadService;
     let nodesApiService: NodesApiService;
     let translateService: TranslationService;
+    let unitTestingUtils: UnitTestingUtils;
     let file: any;
 
     beforeEach(() => {
@@ -47,6 +48,7 @@ describe('FileUploadingListComponent', () => {
         translateService = TestBed.inject(TranslationService);
         fixture = TestBed.createComponent(FileUploadingListComponent);
         component = fixture.componentInstance;
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
 
         spyOn(translateService, 'get').and.returnValue(of('some error message'));
         spyOn(uploadService, 'cancelUpload');
@@ -224,11 +226,11 @@ describe('FileUploadingListComponent', () => {
         ];
 
         fixture.detectChanges();
-        const listContainer = fixture.nativeElement.querySelectorAll('ul.adf-upload-list');
+        const listContainer = unitTestingUtils.getAllByCSS('ul');
         expect(listContainer).not.toBeNull();
         expect(listContainer.length).toBe(1);
 
-        const listItems = listContainer[0].querySelectorAll('li');
+        const listItems = unitTestingUtils.getAllByCSS('li');
         expect(listItems.length).toBe(3);
     });
 });
