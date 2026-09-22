@@ -1,9 +1,9 @@
 .adf {
     &-radio-buttons-widget-cloud {
         .adf-label {
-            font-size: var(--adf-radio-buttons-font-size, var(--mat-sys-body-medium-size));
-            font-weight: var(--adf-radio-buttons-font-weight, var(--mat-sys-body-medium-weight));
-            color: var(--adf-radio-buttons-color, var(--mat-sys-on-surface-variant));
+            font-size: var(--adf-radio-buttons-font-size, var(--adf-form-label-font-size, var(--mat-sys-body-medium-size)));
+            font-weight: var(--adf-radio-buttons-font-weight, var(--adf-form-label-font-weight, var(--mat-sys-body-medium-weight)));
+            color: var(--adf-radio-buttons-color, var(--adf-form-label-color, var(--mat-sys-on-surface-variant)));
             line-height: normal;
         }
     }
@@ -51,7 +51,7 @@
 
         label {
             white-space: normal;
-            word-break: break-word;
+            overflow-wrap: break-word;
         }
     }
 }
