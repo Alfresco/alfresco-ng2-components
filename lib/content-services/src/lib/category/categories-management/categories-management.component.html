@@ -49,7 +49,7 @@
         </span>
     </ng-container>
     <div *ngIf="categoryNameControlVisible" class="adf-categories-list">
-        <div role="status" aria-live="polite" class="cdk-visually-hidden">
+        <output class="cdk-visually-hidden">
             @if (!existingCategoriesLoading) {
                 @if (existingCategories?.length > 0) {
                     @if (existingCategories?.length === 1) {
@@ -61,7 +61,7 @@
                     {{ 'CATEGORIES_MANAGEMENT.NO_EXISTING_CATEGORIES' | translate }}
                 }
             }
-        </div>
+        </output>
         <ng-container *ngIf="!existingCategoriesLoading && existingCategories">
             <p class="adf-existing-categories-label">
                 {{ existingCategoriesMsg | translate }}
