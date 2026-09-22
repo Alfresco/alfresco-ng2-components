@@ -104,7 +104,7 @@
     "@typescript-eslint/utils": "8.70.0",
     "ajv": "8.20.0",
     "dotenv": "16.4.7",
-    "eslint": "10.8.0",
+    "eslint": "10.11.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-ban": "2.0.0",
     "eslint-plugin-jsdoc": "63.2.2",
