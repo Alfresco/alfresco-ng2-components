@@ -100,7 +100,7 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
     }
 
     @HostListener('keyup.enter')
-    private toggleOverlay(): void {
+    toggleOverlay(): void {
         if (!this.overlayRef.hasAttached()) {
             this.attachOverlay();
         } else {
@@ -125,7 +125,7 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
     }
 
     @HostListener('document:keyup.esc')
-    private detachOverlay(): void {
+    detachOverlay(): void {
         if (this.overlayRef.hasAttached()) {
             this.overlayRef.detach();
             this._open = false;

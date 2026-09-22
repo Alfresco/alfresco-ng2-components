@@ -318,7 +318,8 @@ export default [
             ...angularEslintTemplatePlugin.configs.recommended.rules,
             ...angularEslintTemplatePlugin.configs.accessibility.rules,
             ...nxPlugin.configs['angular-template'].rules,
-            '@angular-eslint/template/prefer-self-closing-tags': 'error'
+            '@angular-eslint/template/prefer-self-closing-tags': 'error',
+            '@angular-eslint/template/prefer-control-flow': 'off'
         }
     },
     {

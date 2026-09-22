@@ -125,7 +125,7 @@ describe('DateCellComponent', () => {
             tooltipFormat: 'shortDate'
         };
 
-        const expectedDate = '10/25/23, 12:00 AM';
+        const expectedDate = '10/25/23, 12:00 AM';
         const expectedTooltip = '10/25/23';
 
         renderDateCell(mockDateConfig, mockDate);
@@ -153,7 +153,7 @@ describe('DateCellComponent', () => {
         };
         const mockDateConfig: DateConfig = {};
 
-        const expectedDate = 'Oct 25, 2023, 12:00:00 AM';
+        const expectedDate = 'Oct 25, 2023, 12:00:00 AM';
         const expectedTooltip = expectedDate;
 
         renderDateCell(mockDateConfig, mockDate);
@@ -207,7 +207,7 @@ describe('DateCellComponent', () => {
             format: 'short'
         };
 
-        const expectedDate = '10/25/23, 12:00 AM';
+        const expectedDate = '10/25/23, 12:00 AM';
 
         renderDateCell(mockDateConfig, mockDate);
         checkDisplayedDate(expectedDate);
@@ -220,7 +220,7 @@ describe('DateCellComponent', () => {
         };
         const mockStringDate = 'Oct 25, 2023';
 
-        const expectedDate = '10/25/23, 12:00 AM';
+        const expectedDate = '10/25/23, 12:00 AM';
 
         renderDateCell(mockDateConfig, mockStringDate);
         checkDisplayedDate(expectedDate);
@@ -233,7 +233,7 @@ describe('DateCellComponent', () => {
         };
         const mockTimestamp = Date.parse('Oct 25, 2023');
 
-        const expectedDate = '10/25/23, 12:00 AM';
+        const expectedDate = '10/25/23, 12:00 AM';
 
         renderDateCell(mockDateConfig, mockTimestamp);
         checkDisplayedDate(expectedDate);

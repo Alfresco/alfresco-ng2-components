@@ -59,7 +59,7 @@ describe('DropdownBreadcrumb', () => {
     };
 
     const clickOnTheFirstOption = () => {
-        const option: any = document.querySelector(`[data-automation-class="dropdown-breadcrumb-path-option"]`);
+        const option: any = fixture.nativeElement.querySelector(`[data-automation-class="dropdown-breadcrumb-path-option"]`);
         option.click();
     };
 

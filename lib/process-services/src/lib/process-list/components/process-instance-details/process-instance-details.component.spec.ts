@@ -83,7 +83,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         component.ngOnChanges({ processInstanceId: new SimpleChange(null, '123', true) });
 
         const headerEl = await loader.getHarness(MatCardHarness);
-        expect(await headerEl.getTitleText()).toBe('My Process - Nov 10, 2016, 3:37:30 AM');
+        expect(await headerEl.getTitleText()).toBe('My Process - Nov 10, 2016, 3:37:30 AM');
     });
 
     it('should enable diagram button if the process is running', async () => {

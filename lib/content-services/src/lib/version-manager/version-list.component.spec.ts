@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { formatDate } from '@angular/common';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { VersionListComponent, VersionListDataSource } from './version-list.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -178,9 +179,7 @@ describe('VersionListComponent', () => {
                 expect(versionIdText).toBe('1.0');
                 expect(versionComment.trim()).toBe('test-version-comment');
                 expect(testingUtils.getInnerTextByDataAutomationId('adf-version-list-item-modified-by-1.0')).toBe('TestUser1');
-                const expectedModifiedAt = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeStyle: 'medium' }).format(
-                    versionTest[0].entry.modifiedAt
-                );
+                const expectedModifiedAt = formatDate(versionTest[0].entry.modifiedAt, 'medium', 'en-US');
                 expect(testingUtils.getInnerTextByCSS('#adf-version-list-item-date-1\\.0')).toBe(expectedModifiedAt);
                 done();
             });
