@@ -1,5 +1,3 @@
-// Scoped through the parent container so the header wins against the Material
-// typography hierarchy, which styles bare `h4` elements via `.mat-typography h4`.
 .adf-container-widget-header .adf-container-widget-header__text {
     border-bottom: 1px solid var(--mat-sys-outline-variant);
     padding-bottom: 10px;
