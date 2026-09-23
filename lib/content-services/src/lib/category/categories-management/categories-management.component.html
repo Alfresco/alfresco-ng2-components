@@ -49,8 +49,8 @@
         </span>
     </ng-container>
     <div *ngIf="categoryNameControlVisible" class="adf-categories-list">
-        <output class="cdk-visually-hidden">
-            @if (!existingCategoriesLoading) {
+        <output class="cdk-visually-hidden" role="status">
+            @if (!existingCategoriesLoading && existingCategories) {
                 @if (existingCategories?.length > 0) {
                     @if (existingCategories?.length === 1) {
                         {{ 'CATEGORIES_MANAGEMENT.ONE_EXISTING_CATEGORY_AVAILABLE' | translate }}
