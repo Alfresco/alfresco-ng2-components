@@ -60,4 +60,10 @@ describe('isOutcomeButtonVisible', () => {
         const o = outcome({ name: 'custom-outcome' });
         expect(isOutcomeButtonVisible(o, defaultProps)).toBe(true);
     });
+
+    it('should hide an outcome when its visibility rule is not satisfied', () => {
+        const o = outcome({ name: 'custom-outcome', isVisible: false });
+
+        expect(isOutcomeButtonVisible(o, defaultProps)).toBe(false);
+    });
 });

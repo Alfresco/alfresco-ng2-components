@@ -33,6 +33,7 @@ import {
     AuthModule,
     FormFieldEvent,
     FormEvent,
+    FormOutcomeRequestEvent,
     FormRulesEvent,
     NoopTranslateModule,
     NoopAuthModule,
@@ -48,7 +49,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateLoader, TranslateService, provideTranslateService, provideTranslateLoader } from '@ngx-translate/core';
-import { BehaviorSubject, firstValueFrom, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, of, Subject, throwError } from 'rxjs';
 import {
     cloudFormMock,
     conditionalUploadWidgetsMock,
@@ -66,6 +67,7 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
+import { TaskDetailsCloudModel } from '../../task/models/task-details-cloud.model';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -606,6 +608,28 @@ describe('FormCloudComponent', () => {
         expect(result).toBeTruthy();
         expect(saved).toBeFalse();
         expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcomeName, outcomeId);
+    });
+
+    it('should route a button outcome request through the existing outcome lifecycle', () => {
+        const formModel = new FormModel({ id: 'form', fields: [], outcomes: [{ id: 'approve', name: 'Approve' }] });
+        formComponent.form = formModel;
+        spyOn(formComponent, 'completeTaskForm').and.stub();
+
+        formComponent['formService'].outcomeRequested.next(new FormOutcomeRequestEvent(formModel, 'approve'));
+
+        expect(formComponent.completeTaskForm).toHaveBeenCalledOnceWith('Approve', 'approve');
+    });
+
+    it('should reject an invalid button outcome request without completing the task', () => {
+        const formModel = new FormModel({ id: 'form', fields: [], outcomes: [{ id: 'approve', name: 'Approve' }] });
+        formModel.fieldsCache = [jasmine.createSpyObj('FormFieldModel', { validate: false })];
+        formComponent.form = formModel;
+        spyOn(formComponent, 'completeTaskForm').and.stub();
+
+        formComponent['formService'].outcomeRequested.next(new FormOutcomeRequestEvent(formModel, 'approve'));
+
+        expect(formModel.showAllValidationErrors).toBeTrue();
+        expect(formComponent.completeTaskForm).not.toHaveBeenCalled();
     });
 
     it('should complete form on custom outcome click when id is null (APS)', () => {
@@ -2184,6 +2208,62 @@ describe('retrieve metadata on submit', () => {
         expect(formComponent.form.selectedOutcome).toBe(outcome);
         expect(formComponent.form.selectedOutcomeId).toBe(outcomeId);
         expect(formComponent['formCloudService'].completeTaskForm).toHaveBeenCalled();
+    });
+
+    it('should preserve the previous outcome when task completion fails', () => {
+        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(throwError(() => new Error('Task completion failed')));
+
+        const formModel = new FormModel({ selectedOutcome: 'Previous outcome' });
+        formModel.selectedOutcomeId = 'previous-outcome-id';
+        formComponent.form = formModel;
+        formComponent.taskId = 'task-123';
+        formComponent.appName = 'test-app';
+
+        formComponent.completeTaskForm('Approve', 'approve-outcome-id');
+
+        expect(formComponent.form.selectedOutcome).toBe('Previous outcome');
+        expect(formComponent.form.selectedOutcomeId).toBe('previous-outcome-id');
+    });
+
+    it('should emit the outcome owned by each overlapping completion request', () => {
+        const firstCompletion = new Subject<TaskDetailsCloudModel>();
+        const secondCompletion = new Subject<TaskDetailsCloudModel>();
+        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValues(firstCompletion, secondCompletion);
+        formComponent.form = new FormModel();
+        formComponent.taskId = 'task-123';
+        formComponent.appName = 'test-app';
+        const emittedOutcomes: string[] = [];
+        const emittedOutcomeIds: string[] = [];
+        formComponent.formCompleted.subscribe((form) => {
+            emittedOutcomes.push(form.selectedOutcome);
+            emittedOutcomeIds.push(form.selectedOutcomeId);
+        });
+
+        formComponent.completeTaskForm('Approve', 'approve-id');
+        formComponent.completeTaskForm('Reject', 'reject-id');
+        firstCompletion.next({} as TaskDetailsCloudModel);
+        secondCompletion.next({} as TaskDetailsCloudModel);
+
+        expect(emittedOutcomes).toEqual(['Approve', 'Reject']);
+        expect(emittedOutcomeIds).toEqual(['approve-id', 'reject-id']);
+    });
+
+    it('should not restore stale outcome state when an older completion fails', () => {
+        const firstCompletion = new Subject<TaskDetailsCloudModel>();
+        const secondCompletion = new Subject<TaskDetailsCloudModel>();
+        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValues(firstCompletion, secondCompletion);
+        formComponent.form = new FormModel({ selectedOutcome: 'Previous outcome' });
+        formComponent.form.selectedOutcomeId = 'previous-id';
+        formComponent.taskId = 'task-123';
+        formComponent.appName = 'test-app';
+
+        formComponent.completeTaskForm('Approve', 'approve-id');
+        formComponent.completeTaskForm('Reject', 'reject-id');
+        secondCompletion.next({} as TaskDetailsCloudModel);
+        firstCompletion.error(new Error('First completion failed'));
+
+        expect(formComponent.form.selectedOutcome).toBe('Reject');
+        expect(formComponent.form.selectedOutcomeId).toBe('reject-id');
     });
 
     it('should set form values before calling onTaskCompleted', () => {

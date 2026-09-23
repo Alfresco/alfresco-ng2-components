@@ -26,7 +26,7 @@ interface IsOutcomeButtonVisibleProps {
 export const isOutcomeButtonVisible = (outcome: FormOutcomeModel, props: IsOutcomeButtonVisibleProps): boolean => {
     const { isFormReadOnly, showCompleteButton, showSaveButton } = props;
 
-    if (outcome?.name) {
+    if (outcome?.name && outcome.isVisible !== false) {
         if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
             return showCompleteButton;
         }

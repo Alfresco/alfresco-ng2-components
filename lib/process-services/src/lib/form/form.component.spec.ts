@@ -26,6 +26,7 @@ import {
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel,
+    FormOutcomeRequestEvent,
     FormService,
     WidgetVisibilityService,
     ContainerModel,
@@ -343,6 +344,33 @@ describe('FormComponent', () => {
         expect(result).toBeTruthy();
         expect(saved).toBeFalse();
         expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcomeName, outcome.id);
+    });
+
+    it('should route an outcome request through the existing outcome lifecycle', () => {
+        const formModel = new FormModel({ fields: [], outcomes: [{ id: 'approve', name: 'Approve' }] });
+        spyOn(formComponent, 'completeTaskForm').and.stub();
+        const outcomeRequestedSpy = spyOn(formComponent, 'onOutcomeRequested').and.callThrough();
+        formComponent.form = formModel;
+        formComponent.ngOnInit();
+
+        formComponent['formService'].outcomeRequested.next(new FormOutcomeRequestEvent(formModel, 'approve'));
+
+        expect(outcomeRequestedSpy).toHaveBeenCalledOnceWith('approve');
+        expect(formComponent.completeTaskForm).toHaveBeenCalledTimes(1);
+        expect((formComponent.completeTaskForm as jasmine.Spy).calls.mostRecent().args).toEqual(['Approve', 'approve']);
+    });
+
+    it('should reject an invalid outcome request without completing the form', () => {
+        const formModel = new FormModel({ fields: [], outcomes: [{ id: 'approve', name: 'Approve' }] });
+        formModel.fieldsCache = [jasmine.createSpyObj('FormFieldModel', { validate: false })];
+        spyOn(formComponent, 'completeTaskForm').and.stub();
+        formComponent.form = formModel;
+        formComponent.ngOnInit();
+
+        formComponent['formService'].outcomeRequested.next(new FormOutcomeRequestEvent(formModel, 'approve'));
+
+        expect(formModel.showAllValidationErrors).toBeTrue();
+        expect(formComponent.completeTaskForm).not.toHaveBeenCalled();
     });
 
     it('should complete form on custom outcome click when id is null (APS)', () => {

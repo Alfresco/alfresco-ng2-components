@@ -37,6 +37,7 @@ export * from './services/form-field-value-adapter.service';
 export * from './pipes';
 
 export * from './events';
+export * from './errors/form-outcome-not-found.error';
 
 export * from './form-base.module';
 

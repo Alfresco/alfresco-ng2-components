@@ -143,7 +143,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
         if (outcome?.isSystem && (outcome.name === FormOutcomeModel.SAVE_ACTION || outcome.name === FormOutcomeModel.COMPLETE_ACTION)) {
             return false;
         } else if (outcome?.name === FormOutcomeModel.START_PROCESS_ACTION) {
-            return true;
+            return outcome.isVisible !== false;
         }
         return super.isOutcomeButtonVisible(outcome, isFormReadOnly);
     }

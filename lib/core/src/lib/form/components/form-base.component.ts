@@ -18,6 +18,7 @@
 import { Directive, EventEmitter, Input, Output } from '@angular/core';
 import { FormFieldModel, FormFieldValidator, FormModel, FormOutcomeEvent, FormOutcomeModel } from './widgets';
 import { isOutcomeButtonVisible } from './helpers/buttons-visibility';
+import { FormOutcomeNotFoundError } from '../errors/form-outcome-not-found.error';
 
 @Directive({
     standalone: true
@@ -224,6 +225,35 @@ export abstract class FormBaseComponent {
         }
 
         return false;
+    }
+
+    /**
+     * Executes an outcome requested by another form control using strict id lookup.
+     *
+     * @param outcomeId Stable id of the configured outcome
+     * @returns `true` when the outcome lifecycle was started, otherwise `false`
+     */
+    onOutcomeRequested(outcomeId: string): boolean {
+        const outcome = this.form?.outcomes?.find((candidate) => candidate.id === outcomeId);
+
+        if (!outcome) {
+            this.handleError(new FormOutcomeNotFoundError(outcomeId));
+            return false;
+        }
+
+        if (!outcome.skipValidation) {
+            this.form.validateForm();
+            if (!this.form.isValid) {
+                this.form.showAllValidationErrors = true;
+                return false;
+            }
+        }
+
+        if (!this.isOutcomeButtonEnabled(outcome)) {
+            return false;
+        }
+
+        return this.onOutcomeClicked(outcome);
     }
 
     handleError(err: any): any {
