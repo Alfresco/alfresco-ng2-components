@@ -28,12 +28,14 @@ import { CategoriesManagementComponent } from './categories-management.component
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { UnitTestingUtils } from '@alfresco/adf-core';
 
 describe('CategoriesManagementComponent', () => {
     let loader: HarnessLoader;
     let component: CategoriesManagementComponent;
     let fixture: ComponentFixture<CategoriesManagementComponent>;
     let categoryService: CategoryService;
+    let unitTestingUtils: UnitTestingUtils;
     const classifiableChangedSubject = new Subject<void>();
     const category1 = new Category({ id: 'test', name: 'testCat' });
     const category2 = new Category({ id: 'test2', name: 'testCat2' });
@@ -63,6 +65,7 @@ describe('CategoriesManagementComponent', () => {
         component = fixture.componentInstance;
         categoryService = TestBed.inject(CategoryService);
         loader = TestbedHarnessEnvironment.loader(fixture);
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     /**
@@ -183,7 +186,7 @@ describe('CategoriesManagementComponent', () => {
      * @returns status text of the categories found
      */
     function getStatusText(): string {
-        return fixture.nativeElement.querySelector('output').textContent.trim();
+        return unitTestingUtils.getByCSS('output').nativeElement.textContent.trim();
     }
 
     describe('Shared tests', () => {

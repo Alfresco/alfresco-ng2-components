@@ -163,7 +163,7 @@ describe('TagsCreatorComponent', () => {
      * @returns status text of the tags found
      */
     function getStatusText(): string {
-        return fixture.nativeElement.querySelector('output').textContent.trim();
+        return testingUtils.getByCSS('output').nativeElement.textContent.trim();
     }
 
     describe('Created tags list', () => {
