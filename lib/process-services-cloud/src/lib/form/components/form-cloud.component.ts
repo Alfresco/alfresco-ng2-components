@@ -374,6 +374,13 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     ngOnInit(): void {
+        this.formService.outcomeRequested
+            .pipe(
+                filter((request) => request.form === this.form),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe((request) => this.onOutcomeRequested(request.outcomeId));
+
         DisplayModeService.displayMode$
             .pipe(
                 filter((change) => change.id === this.id),
@@ -542,30 +549,31 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     private completeForm(outcome?: string, outcomeId?: string) {
         if (this.form && this.appName && this.taskId) {
+            const form = this.form;
             this.formCloudService
                 .completeTaskForm(
                     this.appName,
                     this.taskId,
                     this.processInstanceId,
-                    `${this.form.id}`,
-                    this.getSubmissionValues(),
+                    `${form.id}`,
+                    this.getSubmissionValues(form),
                     outcome,
                     this.appVersion
                 )
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe({
                     next: () => {
-                        this.form.selectedOutcome = outcome;
-                        this.form.selectedOutcomeId = outcomeId;
-                        this.onTaskCompleted(this.form);
+                        form.selectedOutcome = outcome;
+                        form.selectedOutcomeId = outcomeId;
+                        this.onTaskCompleted(form);
                     },
                     error: (error) => this.onTaskCompletedError(error)
                 });
         }
     }
 
-    private getSubmissionValues(): FormValues {
-        return materializeSubmissionValues(this.form, { enableExpressionEvaluation: this.enableExpressionEvaluation }, this.expressions);
+    private getSubmissionValues(form: FormModel = this.form): FormValues {
+        return materializeSubmissionValues(form, { enableExpressionEvaluation: this.enableExpressionEvaluation }, this.expressions);
     }
 
     parseForm(formCloudRepresentationJSON?: any): FormModel | null {

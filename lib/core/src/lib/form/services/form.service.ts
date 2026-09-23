@@ -30,6 +30,7 @@ import { ValidateFormFieldEvent } from '../events/validate-form-field.event';
 import { FormValidationService } from './form-validation-service.interface';
 import { FormRulesEvent } from '../events/form-rules.event';
 import { FormSpinnerEvent } from '../events';
+import { FormOutcomeRequestEvent } from '../events/form-outcome-request.event';
 import { FormFieldModel, FormFieldValidator } from '../components/widgets';
 
 export const FORM_SERVICE_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldValidator[]>('FORM_SERVICE_FIELD_VALIDATORS_TOKEN');
@@ -57,6 +58,7 @@ export class FormService implements FormValidationService {
     validateDynamicTableRow = new Subject<FormFieldEvent>();
 
     executeOutcome = new Subject<FormOutcomeEvent>();
+    outcomeRequested = new Subject<FormOutcomeRequestEvent>();
 
     updateFormValuesRequested = new Subject<FormValues>();
 

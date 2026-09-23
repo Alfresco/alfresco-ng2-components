@@ -514,6 +514,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             submissionValues = this.getFormSubmissionValues(this.formCloud);
         }
 
+        const submittedForm = this.formCloud;
+        const requestedOutcome = this.customOutcomeName;
+        const requestedOutcomeId = this.customOutcomeId;
+
         this.isProcessStarting = true;
 
         let action: Observable<ProcessInstanceCloud>;
@@ -528,7 +532,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                     processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
                     variables: this.variables ?? {},
                     values: submissionValues,
-                    outcome: this.customOutcomeName
+                    outcome: requestedOutcome
                 })
             );
         } else {
@@ -544,7 +548,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
         action.subscribe({
             next: (res) => {
-                this.customOutcomeSelected.emit(this.customOutcomeId);
+                if (submittedForm && requestedOutcomeId) {
+                    submittedForm.selectedOutcome = requestedOutcome;
+                    submittedForm.selectedOutcomeId = requestedOutcomeId;
+                }
+                this.customOutcomeSelected.emit(requestedOutcomeId);
                 this.success.emit(res);
                 this.isProcessStarting = false;
             },

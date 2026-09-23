@@ -17,7 +17,14 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { ADF_DISPLAY_TEXT_SETTINGS, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
+import {
+    ADF_DISPLAY_TEXT_SETTINGS,
+    FormFieldTypes,
+    FormModel,
+    FormOutcomeEvent,
+    FormOutcomeModel,
+    FormOutcomeRequestEvent
+} from '@alfresco/adf-core';
 import { Subject, of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormCloudService } from '../../../form/services/form-cloud.service';
@@ -418,6 +425,28 @@ describe('StartProcessCloudComponent', () => {
             const startBtn = fixture.nativeElement.querySelector('#button-start');
             expect(component.formCloud.isValid).toBe(true);
             expect(startBtn.disabled).toBe(false);
+        });
+
+        it('should start a process when a form rule requests an outcome', async () => {
+            formDefinitionSpy.and.returnValue(of(fakeStartFormWithOutcomes));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
+            typeValueInto('#processDefinitionName', 'processwithform');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const startForm = fixture.debugElement.query(By.directive(FormCloudComponent)).componentInstance as FormCloudComponent;
+            const requestedOutcome = startForm.form.outcomes.find((outcome) => !outcome.isSystem);
+            startForm['formService'].outcomeRequested.next(new FormOutcomeRequestEvent(startForm.form, requestedOutcome.id));
+
+            expect(startProcessWithFormSpy).toHaveBeenCalledTimes(1);
+            expect(startProcessWithFormSpy).toHaveBeenCalledWith(
+                component.appName,
+                component.processDefinitionCurrent.formKey,
+                component.processDefinitionCurrent.version,
+                jasmine.objectContaining({ outcome: requestedOutcome.name })
+            );
         });
 
         it('should keep the start action unavailable while the form definition is loading', async () => {
@@ -1502,9 +1531,36 @@ describe('StartProcessCloudComponent', () => {
         await fixture.whenStable();
 
         expect(customOutcomeSelectedSpy).toHaveBeenCalledWith(customOutcome.id);
+        expect(customOutcomeSelectedSpy).toHaveBeenCalledTimes(1);
         expect(successSpy).toHaveBeenCalledWith(fakeProcessInstance);
+        expect(successSpy).toHaveBeenCalledTimes(1);
         expect(startProcessWithFormSpy).toHaveBeenCalledTimes(1);
         expect(component.customOutcomeName).toBe(customOutcome.name);
         expect(component.customOutcomeId).toBe(customOutcome.id);
+        expect(component.formCloud.selectedOutcome).toBe(customOutcome.name);
+        expect(component.formCloud.selectedOutcomeId).toBe(customOutcome.id);
+    });
+
+    it('should preserve the previous outcome when starting a process fails', () => {
+        const error = new Error('Process start failed');
+        startProcessWithFormSpy.and.returnValue(throwError(() => error));
+        component.formCloud = new FormModel();
+        component.formCloud.selectedOutcome = 'Previous outcome';
+        component.formCloud.selectedOutcomeId = 'previous-outcome-id';
+        component.processDefinitionCurrent = fakeProcessDefinitions[2];
+        component.processPayloadCloud.processDefinitionKey = fakeProcessDefinitions[2].key;
+        component.processInstanceName.setValue('My Process 1');
+        component.appName = 'test app name';
+        const customOutcome = {
+            id: 'custom_outcome_id',
+            name: 'custom_outcome'
+        };
+        const event = new FormOutcomeEvent(new FormOutcomeModel(null, customOutcome));
+
+        component.onCustomOutcomeClicked(event);
+
+        expect(startProcessWithFormSpy).toHaveBeenCalledTimes(1);
+        expect(component.formCloud.selectedOutcome).toBe('Previous outcome');
+        expect(component.formCloud.selectedOutcomeId).toBe('previous-outcome-id');
     });
 });
