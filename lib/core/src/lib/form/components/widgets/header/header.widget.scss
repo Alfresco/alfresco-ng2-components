@@ -1,9 +1,11 @@
-.adf-container-widget-header__text {
+.adf-container-widget-header .adf-container-widget-header__text {
     border-bottom: 1px solid var(--mat-sys-outline-variant);
     padding-bottom: 10px;
     cursor: default;
     user-select: none;
-    font-size: var(--mat-sys-title-small-size);
+    font-size: var(--adf-header-font-size, var(--mat-sys-headline-small-size));
+    font-weight: var(--adf-header-font-weight, var(--mat-sys-headline-large-weight));
+    color: var(--adf-header-color, var(--mat-sys-on-surface));
     line-height: normal;
 
     &.adf-collapsible {
