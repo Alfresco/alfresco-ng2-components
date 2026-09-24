@@ -1311,6 +1311,38 @@ describe('StartProcessCloudComponent', () => {
             expect(startProcessSpy).not.toHaveBeenCalled();
         });
 
+        it('should ignore repeated starts while confirmation is pending', () => {
+            const matDialog = TestBed.inject(MatDialog);
+            const confirmationResult = new Subject<boolean>();
+            const openDialogSpy = spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => confirmationResult } as never);
+            component.formCloud = new FormModel({ confirmMessage: { show: true } });
+
+            component.startProcess();
+            component.startProcess();
+
+            expect(openDialogSpy).toHaveBeenCalledTimes(1);
+            expect(component.isProcessStarting).toBeTrue();
+            expect(startProcessSpy).not.toHaveBeenCalled();
+
+            confirmationResult.next(true);
+
+            expect(startProcessSpy).toHaveBeenCalledTimes(1);
+        });
+
+        it('should allow another start when confirmation is rejected', () => {
+            const matDialog = TestBed.inject(MatDialog);
+            const confirmationResult = new Subject<boolean>();
+            const openDialogSpy = spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => confirmationResult } as never);
+            component.formCloud = new FormModel({ confirmMessage: { show: true } });
+
+            component.startProcess();
+            confirmationResult.next(false);
+            component.startProcess();
+
+            expect(openDialogSpy).toHaveBeenCalledTimes(2);
+            expect(startProcessSpy).not.toHaveBeenCalled();
+        });
+
         it('should emit error when process name field is empty', () => {
             fixture.detectChanges();
             const processInstanceName = component.processForm.controls['processInstanceName'];
