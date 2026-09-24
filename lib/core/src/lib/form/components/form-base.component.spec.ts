@@ -68,6 +68,16 @@ describe('FormBaseComponent', () => {
         expect(errorSpy).toHaveBeenCalledOnceWith(jasmine.any(FormOutcomeNotFoundError));
     });
 
+    it('should preserve submission state when the configured outcome no longer exists', () => {
+        component.disableSaveButton = true;
+        component.disableCompleteButton = true;
+
+        component.onOutcomeRequested('deleted');
+
+        expect(component.disableSaveButton).toBeTrue();
+        expect(component.disableCompleteButton).toBeTrue();
+    });
+
     it('should not execute a target outcome when the form is invalid', () => {
         component.form.fieldsCache = [jasmine.createSpyObj('FormFieldModel', { validate: false })];
 
@@ -94,6 +104,63 @@ describe('FormBaseComponent', () => {
         expect(component.completeTaskForm).toHaveBeenCalledOnceWith(target.name, target.id);
     });
 
+    it('should not execute a disabled validation-skipping complete outcome', () => {
+        target = new FormOutcomeModel(component.form, {
+            id: 'approve',
+            name: FormOutcomeModel.COMPLETE_ACTION,
+            skipValidation: true,
+            isSystem: true
+        });
+        component.form.outcomes = [target];
+        component.disableCompleteButton = true;
+
+        expect(component.onOutcomeRequested('approve')).toBeFalse();
+        expect(component.completeTaskForm).not.toHaveBeenCalled();
+    });
+
+    it('should not execute a disabled validation-skipping save outcome', () => {
+        target = new FormOutcomeModel(component.form, {
+            id: 'approve',
+            name: FormOutcomeModel.SAVE_ACTION,
+            skipValidation: true,
+            isSystem: true
+        });
+        component.form.outcomes = [target];
+        component.disableSaveButton = true;
+
+        expect(component.onOutcomeRequested('approve')).toBeFalse();
+        expect(component.saveTaskForm).not.toHaveBeenCalled();
+    });
+
+    it('should not execute a disabled validation-skipping start process outcome', () => {
+        target = new FormOutcomeModel(component.form, {
+            id: 'approve',
+            name: FormOutcomeModel.START_PROCESS_ACTION,
+            skipValidation: true,
+            isSystem: true
+        });
+        component.form.outcomes = [target];
+        component.disableStartProcessButton = true;
+
+        expect(component.onOutcomeRequested('approve')).toBeFalse();
+        expect(component.completeTaskForm).not.toHaveBeenCalled();
+    });
+
+    it('should save an invalid form without validation', () => {
+        target = new FormOutcomeModel(component.form, {
+            id: FormModel.SAVE_OUTCOME,
+            name: FormOutcomeModel.SAVE_ACTION,
+            isSystem: true
+        });
+        component.form.outcomes = [target];
+        component.form.isValid = false;
+        const validateFormSpy = spyOn(component.form, 'validateForm');
+
+        expect(component.onOutcomeRequested(FormModel.SAVE_OUTCOME)).toBeTrue();
+        expect(validateFormSpy).not.toHaveBeenCalled();
+        expect(component.saveTaskForm).toHaveBeenCalledTimes(1);
+    });
+
     it('should route a target outcome through the lifecycle exactly once', () => {
         expect(component.onOutcomeRequested('approve')).toBeTrue();
         expect(component.completeTaskForm).toHaveBeenCalledTimes(1);
@@ -102,7 +169,11 @@ describe('FormBaseComponent', () => {
     it('should not execute a requested outcome when the form is read-only', () => {
         component.form.readOnly = true;
 
+        const validateFormSpy = spyOn(component.form, 'validateForm');
+
         expect(component.onOutcomeRequested('approve')).toBeFalse();
+        expect(validateFormSpy).not.toHaveBeenCalled();
+        expect(component.form.showAllValidationErrors).toBeFalse();
         expect(component.completeTaskForm).not.toHaveBeenCalled();
     });
 });

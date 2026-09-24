@@ -21,9 +21,12 @@ import {
     ADF_DISPLAY_TEXT_SETTINGS,
     FormFieldTypes,
     FormModel,
+    FormOutcomeNotFoundError,
     FormOutcomeEvent,
     FormOutcomeModel,
-    FormOutcomeRequestEvent
+    FormOutcomeRequestEvent,
+    FormEvent,
+    FormService
 } from '@alfresco/adf-core';
 import { Subject, of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
@@ -447,6 +450,50 @@ describe('StartProcessCloudComponent', () => {
                 component.processDefinitionCurrent.version,
                 jasmine.objectContaining({ outcome: requestedOutcome.name })
             );
+        });
+
+        it('should replace the default start button when an outcome becomes visible', async () => {
+            formDefinitionSpy.and.returnValue(of(fakeStartFormWithOutcomes));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
+            typeValueInto('#processDefinitionName', 'processwithform');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const startForm = fixture.debugElement.query(By.directive(FormCloudComponent)).componentInstance as FormCloudComponent;
+            startForm.form.outcomes.forEach((outcome) => (outcome.isVisible = false));
+            TestBed.inject(FormService).formVisibilityRefreshed.next(new FormEvent(startForm.form));
+            fixture.detectChanges();
+
+            expect(fixture.nativeElement.querySelector('#button-start')).not.toBeNull();
+
+            const requestedOutcome = startForm.form.outcomes.find((outcome) => !outcome.isSystem);
+            requestedOutcome.isVisible = true;
+            TestBed.inject(FormService).formVisibilityRefreshed.next(new FormEvent(startForm.form));
+            fixture.detectChanges();
+
+            expect(fixture.nativeElement.querySelector('#button-start')).toBeNull();
+            expect(fixture.nativeElement.querySelectorAll('.adf-cloud-form-custom-outcome-button').length).toBe(1);
+        });
+
+        it('should surface form outcome request errors', async () => {
+            formDefinitionSpy.and.returnValue(of(fakeStartFormWithOutcomes));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
+            typeValueInto('#processDefinitionName', 'processwithform');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+            const errorSpy = spyOn(component.error, 'emit');
+            const error = new FormOutcomeNotFoundError('deleted');
+
+            const startForm = fixture.debugElement.query(By.directive(FormCloudComponent)).componentInstance as FormCloudComponent;
+            startForm.error.emit(error);
+            fixture.detectChanges();
+
+            expect(component.errorMessageId).toBe(error.message);
+            expect(errorSpy).toHaveBeenCalledOnceWith(error);
         });
 
         it('should keep the start action unavailable while the form definition is loading', async () => {
@@ -1562,5 +1609,21 @@ describe('StartProcessCloudComponent', () => {
         expect(startProcessWithFormSpy).toHaveBeenCalledTimes(1);
         expect(component.formCloud.selectedOutcome).toBe('Previous outcome');
         expect(component.formCloud.selectedOutcomeId).toBe('previous-outcome-id');
+    });
+
+    it('should ignore a custom outcome while a process is starting', () => {
+        component.isProcessStarting = true;
+        const event = new FormOutcomeEvent(
+            new FormOutcomeModel(null, {
+                id: 'custom_outcome_id',
+                name: 'custom_outcome'
+            })
+        );
+
+        component.onCustomOutcomeClicked(event);
+
+        expect(startProcessWithFormSpy).not.toHaveBeenCalled();
+        expect(component.customOutcomeName).toBeUndefined();
+        expect(component.customOutcomeId).toBeUndefined();
     });
 });

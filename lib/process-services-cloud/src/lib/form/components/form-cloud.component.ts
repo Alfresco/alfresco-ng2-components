@@ -176,6 +176,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Output()
     formDataRefreshed = new EventEmitter<FormModel>();
 
+    /** Emitted when the outcomes rendered by the form change. */
+    @Output()
+    visibleOutcomesChanged = new EventEmitter<FormOutcomeModel[]>();
+
     /** Emitted when form content is clicked. */
     @Output()
     formContentClicked = new EventEmitter<ContentLinkModel>();
@@ -768,10 +772,12 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         const outcomes = this.form?.outcomes;
         if (!outcomes) {
             this.visibleOutcomes = [];
+            this.visibleOutcomesChanged.emit(this.visibleOutcomes);
             return;
         }
 
         this.visibleOutcomes = outcomes.filter((outcome) => outcome.isVisible && this.isOutcomeButtonVisible(outcome, this.form.readOnly));
+        this.visibleOutcomesChanged.emit(this.visibleOutcomes);
     }
 
     /**

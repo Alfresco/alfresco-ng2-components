@@ -58,6 +58,11 @@ export class FormService implements FormValidationService {
     validateDynamicTableRow = new Subject<FormFieldEvent>();
 
     executeOutcome = new Subject<FormOutcomeEvent>();
+
+    /**
+     * Requests outcome execution from the component rendering the supplied form.
+     * Delivery is fire-and-forget; execution results are exposed through the form component's existing completion and error outputs.
+     */
     outcomeRequested = new Subject<FormOutcomeRequestEvent>();
 
     updateFormValuesRequested = new Subject<FormValues>();

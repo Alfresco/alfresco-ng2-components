@@ -37,6 +37,7 @@ import {
     FormExpressionService,
     FormModel,
     FormOutcomeEvent,
+    FormOutcomeModel,
     FormValues,
     IconModule,
     InplaceFormInputComponent,
@@ -332,14 +333,24 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.isFormCloudLoaded = true;
         this.formCloud = form;
 
-        const anyOutcomeVisible = form?.outcomes?.some((outcome) =>
-            isOutcomeButtonVisible(outcome, {
-                isFormReadOnly: form.readOnly,
-                showCompleteButton: this.showCompleteButton,
-                showSaveButton: this.showSaveButton
-            })
-        );
-        this.hasVisibleOutcomesSubject.next(anyOutcomeVisible);
+        const visibleOutcomes =
+            form?.outcomes?.filter((outcome) =>
+                isOutcomeButtonVisible(outcome, {
+                    isFormReadOnly: form.readOnly,
+                    showCompleteButton: this.showCompleteButton,
+                    showSaveButton: this.showSaveButton
+                })
+            ) ?? [];
+        this.onVisibleOutcomesChanged(visibleOutcomes);
+    }
+
+    onVisibleOutcomesChanged(visibleOutcomes: FormOutcomeModel[]): void {
+        this.hasVisibleOutcomesSubject.next(visibleOutcomes.length > 0);
+    }
+
+    onFormError(error: Error): void {
+        this.errorMessageId = error?.message || 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START';
+        this.error.emit(error);
     }
 
     onDisableStartProcessButtonForScreen(disable: boolean): void {
@@ -500,6 +511,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     onCustomOutcomeClicked(outcome: FormOutcomeEvent) {
+        if (this.isProcessStarting) {
+            return;
+        }
+
         this.customOutcomeName = outcome.outcome.name;
         this.customOutcomeId = outcome.outcome.id;
         this.startProcess();

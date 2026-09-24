@@ -157,19 +157,16 @@ export abstract class FormBaseComponent {
         }
 
         if (outcome) {
-            if (outcome.skipValidation) {
-                return true;
-            }
             if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
                 return !this.disableSaveButton;
             }
             if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
-                return this.disableCompleteButton ? false : this.form.isValid;
+                return !this.disableCompleteButton && (outcome.skipValidation || this.form.isValid);
             }
             if (outcome.name === FormOutcomeModel.START_PROCESS_ACTION) {
-                return this.disableStartProcessButton ? false : this.form.isValid;
+                return !this.disableStartProcessButton && (outcome.skipValidation || this.form.isValid);
             }
-            return this.form.isValid;
+            return outcome.skipValidation || this.form.isValid;
         }
 
         return false;
@@ -237,11 +234,15 @@ export abstract class FormBaseComponent {
         const outcome = this.form?.outcomes?.find((candidate) => candidate.id === outcomeId);
 
         if (!outcome) {
-            this.handleError(new FormOutcomeNotFoundError(outcomeId));
+            this.error.emit(new FormOutcomeNotFoundError(outcomeId));
             return false;
         }
 
-        if (!outcome.skipValidation) {
+        if (this.readOnly || this.form.readOnly) {
+            return false;
+        }
+
+        if (!outcome.skipValidation && outcome.name !== FormOutcomeModel.SAVE_ACTION) {
             this.form.validateForm();
             if (!this.form.isValid) {
                 this.form.showAllValidationErrors = true;
