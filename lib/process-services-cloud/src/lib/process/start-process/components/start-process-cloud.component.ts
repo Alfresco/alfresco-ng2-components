@@ -521,9 +521,50 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     startProcessWithoutConfirmation() {
+        if (this.isProcessStarting) {
+            return;
+        }
+
+        this.isProcessStarting = true;
+        this.executeProcessStart();
+    }
+
+    startProcess() {
+        if (!this.formCloud?.confirmMessage?.show) {
+            this.startProcessWithoutConfirmation();
+            return;
+        }
+
+        if (this.isProcessStarting) {
+            return;
+        }
+
+        this.isProcessStarting = true;
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+            data: {
+                message: this.formCloud.confirmMessage.message
+            },
+            minWidth: '450px'
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                this.executeProcessStart();
+            } else {
+                this.isProcessStarting = false;
+            }
+        });
+    }
+
+    cancelStartProcess() {
+        this.cancel.emit();
+    }
+
+    private executeProcessStart(): void {
         let submissionValues = this.screenSubmitPayload;
         if (this.hasForm) {
             if (!this.formCloud) {
+                this.isProcessStarting = false;
                 return;
             }
             submissionValues = this.getFormSubmissionValues(this.formCloud);
@@ -532,8 +573,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         const submittedForm = this.formCloud;
         const requestedOutcome = this.customOutcomeName;
         const requestedOutcomeId = this.customOutcomeId;
-
-        this.isProcessStarting = true;
 
         let action: Observable<ProcessInstanceCloud>;
 
@@ -581,29 +620,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     private getFormSubmissionValues(form: FormModel): FormValues {
         return materializeSubmissionValues(form, { enableExpressionEvaluation: this.enableExpressionEvaluation }, this.expressions);
-    }
-
-    startProcess() {
-        if (!this.formCloud?.confirmMessage?.show) {
-            this.startProcessWithoutConfirmation();
-        } else {
-            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-                data: {
-                    message: this.formCloud.confirmMessage.message
-                },
-                minWidth: '450px'
-            });
-
-            dialogRef.afterClosed().subscribe((result) => {
-                if (result) {
-                    this.startProcessWithoutConfirmation();
-                }
-            });
-        }
-    }
-
-    cancelStartProcess() {
-        this.cancel.emit();
     }
 
     private resetErrorMessage() {
