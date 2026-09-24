@@ -1329,6 +1329,7 @@ describe('FormCloudComponent', () => {
         formComponent.showCompleteButton = true;
         const formModel = new FormModel(cloudFormMock);
         formComponent.form = formModel;
+        const visibleOutcomesChangedSpy = spyOn(formComponent.visibleOutcomesChanged, 'emit');
 
         expect(formComponent.visibleOutcomes.length).toBeGreaterThan(0);
 
@@ -1339,6 +1340,7 @@ describe('FormCloudComponent', () => {
         TestBed.inject(FormService).formVisibilityRefreshed.next(new FormEvent(formModel));
 
         expect(formComponent.visibleOutcomes).toEqual([]);
+        expect(visibleOutcomesChangedSpy).toHaveBeenCalledOnceWith([]);
     });
 
     it('should recompute visibleOutcomes when fieldValueChanged rule event fires', () => {

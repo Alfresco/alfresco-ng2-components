@@ -104,7 +104,9 @@
                             [showTitle]="false"
                             (formContentClicked)="onFormContentClicked($event)"
                             (formLoaded)="onFormLoaded($event)"
+                            (visibleOutcomesChanged)="onVisibleOutcomesChanged($event)"
                             (executeOutcome)="onCustomOutcomeClicked($event)"
+                            (error)="onFormError($event)"
                         >
                             <adf-cloud-form-custom-outcomes>
                                 <ng-template [ngTemplateOutlet]="taskFormCloudButtons" />
