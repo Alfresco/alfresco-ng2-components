@@ -1,7 +1,9 @@
 {
   "COMMON": {
     "APPLY": "Tillämpa",
-    "CANCEL": "Avbryt"
+    "CANCEL": "Avbryt",
+    "NAME": "Namn",
+    "CLEAR": "Rensa"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
@@ -11,12 +13,13 @@
       "VIEW": "Visa",
       "UPLOAD": {
         "TITLE": "Ladda upp ny version",
-        "TOOLTIP": "Begränsning: du måste ladda upp en fil med samma namn för att skapa en ny version av den.",
+        "TOOLTIP": "Begränsning: du måste ladda upp en fil med samma namn för att skapa en ny version av den",
         "MAJOR": "större förändringar ({{version}})",
         "MINOR": "mindre förändringar ({{version}})",
         "COMMENT": "Lämna en kommentar",
         "ADD": "Lägg till ny version",
-        "CANCEL": "Avbryt"
+        "CANCEL": "Avbryt",
+        "VERSION_TYPE_LABEL": "Välj versionstyp"
       }
     },
     "CONFIRM_DELETE": {
@@ -99,6 +102,7 @@
     "ATTACH": "Bifoga",
     "CHOOSE_ITEM": "Välj innehåll att bifoga från '{{ name }}'",
     "COPY": "Kopiera",
+    "LINK": "Skapa länk",
     "COPY_ITEM": "Kopiera '{{ name }}' till...",
     "LOCATION": "Plats",
     "MOVE": "Flytta",
@@ -146,18 +150,17 @@
       "NO_EXISTING_TAGS": "Inga befintliga taggar",
       "TITLE": "Skapa taggar",
       "CREATE_TAG": "Skapa: {{tag}}",
-      "NAME": "Namn",
+      "TAG_SEARCH_PLACEHOLDER": "Sök taggar",
       "ERRORS": {
         "EXISTING_TAG": "Tagg finns redan",
         "ALREADY_ADDED_TAG": "Tagg är redan tillagd",
         "EMPTY_TAG": "Namnet kan inte innehålla endast mellanslag",
-        "REQUIRED": "Taggnamn krävs",
         "FETCH_TAGS": "Fel vid hämtning av taggarn",
-        "CREATE_TAGS": "Det gick inte att skapa taggar"
+        "CREATE_TAGS": "Det gick inte att skapa taggar",
+        "SPECIAL_CHARACTERS": "Taggnamnet kan inte innehålla förbjudna tecken"
       },
       "TOOLTIPS": {
-        "DELETE_TAG": "Radera tagg",
-        "HIDE_INPUT": "Dölj indata"
+        "DELETE_TAG": "Radera tagg"
       },
       "TAGS_LOADING": "Taggar läses in",
       "CREATE_TAGS_SUCCESS": "Taggar skapades"
@@ -167,7 +170,6 @@
     "CATEGORIES_TITLE": "Kategorier",
     "NO_CATEGORIES_CREATED": "Inga kategorier skapade",
     "NO_CATEGORIES_ASSIGNED": "Inga kategorier tilldelade",
-    "ASSIGN_CATEGORIES": "Tilldela kategorier",
     "UNASSIGN_CATEGORY": "Avtilldela kategori",
     "DELETE_CATEGORY": "Radera kategori",
     "EXISTING_CATEGORIES": "Befintliga kategorier:",
@@ -176,7 +178,7 @@
     "GENERIC_CREATE": "Skapa: {{name}}",
     "NAME": "Kategorinamn",
     "LOADING": "Läser in",
-    "HIDE_INPUT": "Dölj indata",
+    "NO_CATEGORIES_ADDED": "Det finns för närvarande inga kategorier tillagda",
     "ERRORS": {
       "NOT_FOUND": "Hittade inte kategorier",
       "REQUIRED": "Kategorinamn krävs",
@@ -184,8 +186,11 @@
       "ALREADY_EXISTS": "Kategorin finns redan",
       "DUPLICATED_CATEGORY": "Kategorin är redan tillagd",
       "CREATE_CATEGORIES": "Det gick inte att skapa kategorier",
-      "EXISTING_CATEGORIES": "Vissa kategorier finns redan"
-    }
+      "EXISTING_CATEGORIES": "Vissa kategorier finns redan",
+      "SPECIAL_CHARACTERS": "Kategorinamnet kan inte innehålla förbjudna tecken",
+      "ENDS_WITH_DOT": "Kategorinamnet får inte sluta med en punkt"
+    },
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Sök kategorier"
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
@@ -273,12 +278,15 @@
       "ARIA-LABEL": "Sökknapp"
     },
     "INPUT": {
+      "LABEL": "Sök",
+      "PLACEHOLDER": "Sökfråga",
       "ARIA-LABEL": "Sökindata"
     },
     "RESULTS": {
       "SUMMARY": "{{numResults}} resultat hittades för {{searchTerm}}",
       "NONE": "Inga resultat hittades för {{searchTerm}}",
       "ERROR": "Vi stötte på ett problem under sökningen - försök igen.",
+      "WILL_CONTAIN": "Resultaten kommer att innehålla '{{searchTerm}}'",
       "COLUMNS": {
         "NAME": "Visa namn",
         "MODIFIED_BY": "Ändrad av",
@@ -313,16 +321,14 @@
         "FROM": "Från",
         "TO": "Till",
         "FROM-DATE": "Från",
-        "TO-DATE": "Till",
-        "SELECT-FROM-DATE": "Välj Från-datum",
-        "SELECT-TO-DATE": "Välj Till-datum"
+        "TO-DATE": "Till"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Obligatoriskt värde",
-        "NO-DAYS": "Inga dagar valda",
+        "NO-DAYS": "Inga dagar valda.",
         "INVALID-FORMAT": "Ogiltigt format",
         "INVALID-DATE": "Ogiltigt datum. Datumet måste vara i formatet '{{ requiredFormat }}'",
-        "BEYOND-MAX-DATE": "Datumet ligger bortom maximidatum",
+        "BEYOND-MAX-DATE": "Datumet ligger bortom maximidatum.",
         "INVALID-DATETIME": "Ogiltig datumtid. Datumtiden måste ha formatet '{{ requiredFormat }}'",
         "BEYOND-MAX-DATETIME": "Datumtiden är bortom den maximala datumtiden."
       },
@@ -330,7 +336,12 @@
         "SEARCH_FILTER": "Lista över sökfilter",
         "OPTIONS-SELECTION": "Val av alternativ"
       },
-      "ANY": "Alla"
+      "ANY": "Alla",
+      "PEOPLE": "Personer"
+    },
+    "FACET_FIELDS": {
+      "MODIFIER_LABEL": "Ändrad av",
+      "CREATOR_LABEL": "Skapad av"
     },
     "ICONS": {
       "ft_ic_raster_image": "Bild-fil",
@@ -371,6 +382,7 @@
       "TITLE": "Filter",
       "TYPE": "Typ",
       "FILTER_BY": "Filtrera efter {{ category }}",
+      "ACTIVE_FILTER": "Aktivt filter",
       "CLEAR": "Rensa",
       "APPLY": "Tillämpa",
       "FILTERS": {
@@ -396,15 +408,76 @@
       }
     },
     "LOGICAL_SEARCH": {
-      "SEARCH_CHIP_INPUT": {
-        "ADD_PHRASE": "Lägg till fras ..."
-      },
       "MATCH_ALL": "ALLA",
       "MATCH_ALL_LABEL": "Matcha ALLA dessa fraser",
+      "MATCH_ALL_HINT": "Resultaten kommer att matcha alla ord som anges här",
       "MATCH_ANY": "VALFRI",
       "MATCH_ANY_LABEL": "Matcha VALFRI fras från listan",
+      "MATCH_ANY_HINT": "Resultaten kommer att matcha alla ord som anges här",
+      "MATCH_EXACT": "EXAKT",
+      "MATCH_EXACT_LABEL": "Matcha denna EXAKTA FRAS",
+      "MATCH_EXACT_HINT": "Resultaten kommer att matcha denna hela fras",
       "EXCLUDE": "EXKLUDERA",
-      "EXCLUDE_LABEL": "EXKLUDERA dessa fraser"
+      "EXCLUDE_LABEL": "EXKLUDERA dessa fraser",
+      "EXCLUDE_HINT": "Resultaten kommer att exkludera träffar med dessa ord"
+    },
+    "DATE_RANGE_ADVANCED": {
+      "OPTIONS": {
+        "ANYTIME": "När som helst",
+        "IN_LAST": "I de senaste",
+        "BETWEEN": "Mellan"
+      },
+      "IN_LAST_LABELS": {
+        "DAYS": "Dagar",
+        "WEEKS": "Veckor",
+        "MONTHS": "Månader",
+        "QUANTITY": "Antal"
+      },
+      "IN_LAST_DISPLAY_LABELS": {
+        "DAYS": "I de senaste {{value}} dagarna",
+        "WEEKS": "I de senaste {{value}} veckorna",
+        "MONTHS": "I de senaste {{value}} månaderna"
+      },
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "Startdatum",
+        "END_DATE": "Slutdatum",
+        "DATE_RANGE": "Datumintervall"
+      },
+      "ERROR": {
+        "IN_LAST": "Värde krävs",
+        "START_DATE": {
+          "REQUIRED": "Startdatum krävs",
+          "INVALID_FORMAT": "Startdatum ogiltigt. Datumet måste vara i formatet '{{ requiredFormat }}'"
+        },
+        "END_DATE": {
+          "REQUIRED": "Slutdatum krävs",
+          "INVALID_FORMAT": "Slutdatum ogiltigt. Datumet måste vara i formatet '{{ requiredFormat }}'"
+        }
+      },
+      "ARIA_LABEL": {
+        "NUMBER_INPUT": "Nummerinmatning"
+      }
+    },
+    "SEARCH_PROPERTIES": {
+      "FILE_SIZE": "Filstorlek",
+      "FILE_SIZE_PLACEHOLDER": "Ange filstorlek",
+      "FILE_SIZE_OPERATOR": {
+        "AT_LEAST": "Minst",
+        "AT_MOST": "Högst",
+        "EXACTLY": "Exakt"
+      },
+      "FILE_SIZE_UNIT_ABBREVIATION": {
+        "KB": "KB",
+        "MB": "MB",
+        "GB": "GB"
+      },
+      "FILE_TYPE": "Filtyp",
+      "FILE_TYPE_PLACEHOLDER": "Lägg till filtyp",
+      "ACCESSIBILITY": {
+        "CONDITION": "Villkor",
+        "SIZE_VALUE": "Filstorleksvärde",
+        "UNIT": "Enhet"
+      }
     }
   },
   "PERMISSION": {
@@ -425,7 +498,9 @@
       "MODIFIED_DATE": "Ändringsdatum",
       "CONTENT_TYPE": "Innehållstyp",
       "TAGS": "Taggar",
-      "ADD_TAG_TOOLTIP": "Lägg till tagg"
+      "NO_TAGS_ADDED": "Det finns för närvarande inga taggar tillagda",
+      "NO_ITEMS_MESSAGE": "Det finns för närvarande inga {{ groupTitle }} tillagda",
+      "SAVE_OR_DISCARD_CHANGES": "Spara eller släng ändringar för att fortsätta"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
@@ -451,7 +526,7 @@
   "SHARE": {
     "PUBLIC-LINK": "Offentlig länk",
     "DIALOG-TITLE": "Dela",
-    "DESCRIPTION": "Klicka på länken nedan för att kopiera den till urklipp",
+    "DESCRIPTION": "Klicka på länken nedan för att kopiera den till urklipp.",
     "TITLE": "Länk att dela",
     "SHARE-LINK": "Dela länk",
     "SHARABLE-LINK-CREATED": "Delbar länk skapas",
@@ -471,7 +546,8 @@
       "REMOVE": "Ta bort"
     },
     "UNSHARE_ERROR": "Fel uppstod vid försök att sluta dela denna fil",
-    "UNSHARE_PERMISSION_ERROR": "Du har inte behörighet att sluta dela den här filen"
+    "UNSHARE_PERMISSION_ERROR": "Du har inte behörighet att sluta dela den här filen",
+    "INVALID_DATE_ERROR": "Ogiltigt datum"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
@@ -490,8 +566,10 @@
       "ADD-ACTION": "Lägg till",
       "CLOSE-ACTION": "Avbryt",
       "BASE-DIALOG-TITLE": "Sök en grupp eller personer att lägga till...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "Lägg till behörighet för användare eller grupp",
       "EVERYONE": "Alla",
-      "USER-GROUP-LIST": "Användar- eller grupplista"
+      "USER-GROUP-LIST": "Användar- eller grupplista",
+      "REMOVE_USER_GROUP": "Ta bort"
     },
     "COLUMN": {
       "NAME": "Användare och grupper ({{ count }})",
@@ -535,6 +613,10 @@
       "NOT-ALLOWED": "Du har inte tillåtelse att ändra behörigheter"
     }
   },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "Gruppikon",
+    "GROUP_USER_SELECTED_ALT": "Vald grupp- eller användarikon"
+  },
   "ADF-TREE-VIEW": {
     "MISSING-ID": "Ingen nod-ID tillhandahållen!",
     "ACCESSIBILITY": {
@@ -542,7 +624,14 @@
     }
   },
   "ADF-TREE": {
-    "LOAD-MORE-BUTTON": "Ladda fler {{ name }}"
+    "LOAD-MORE-BUTTON": "Ladda fler {{ name }}",
+    "ACTIONS": {
+      "TOOLTIP": "Öppna åtgärdsmenyn"
+    },
+    "ARIA": {
+      "SELECTED": "{{ name }} vald",
+      "DESELECTED": "{{ name }} avmarkerad"
+    }
   },
   "LIBRARY": {
     "DIALOG": {
@@ -576,14 +665,16 @@
     "ERRORS": {
       "GENERIC": "Vi har stött på ett problem",
       "EXISTENT_SITE": "Detta biblioteks-ID är inte tillgängligt. Testa ett annat Biblioteks-ID.",
-      "CONFLICT": "Detta Biblioteks-ID används redan. Kontrollera papperskorgen",
+      "CONFLICT": "Detta Biblioteks-ID används redan. Kontrollera papperskorgen.",
       "ID_TOO_LONG": "Använd 72 tecken eller färre för URL-namnet",
       "DESCRIPTION_TOO_LONG": "Använd 512 tecken eller färre till beskrivningen",
       "TITLE_TOO_LONG": "Använd 256 tecken eller färre till titeln",
       "TITLE_TOO_SHORT": "Titeln måste vara minst 2 tecken lång",
       "ILLEGAL_CHARACTERS": "Använd bara siffror och bokstäver",
       "ONLY_SPACES": "Biblioteksnamnet kan inte innehålla enbart mellanrum",
-      "LIBRARY_UPDATE_ERROR": "Det uppstod ett fel när biblioteksegenskaperna uppdaterades"
+      "LIBRARY_UPDATE_ERROR": "Det uppstod ett fel när biblioteksegenskaperna uppdaterades",
+      "NAME_REQUIRED": "Biblioteksnamn krävs",
+      "ID_REQUIRED": "Biblioteks-ID krävs"
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Biblioteksegenskaper uppdaterade"
@@ -592,7 +683,10 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Synlig sökväg",
-      "DROPDOWN": "Rullgardinsmeny"
+      "DROPDOWN": "Öppna sidhuvudsmeny för {{folderName}}"
+    },
+    "HEADER": {
+      "SELECTED": "Vald ({{ count }})"
     }
   },
   "NAME_COLUMN_LINK": {
@@ -606,7 +700,7 @@
     "DATA_TYPE": "Datatyp",
     "DIALOG": {
       "TITLE": "Anpassa egenskaper",
-      "DESCRIPTION": "Hantera egenskaperna som är associerade med valda filer. Välj bland egenskapsaspekterna nedan för att exponera och tillämpa ytterligare metadata och funktionalitet.",
+      "DESCRIPTION": "Hantera egenskaperna som är associerade med valda filer. Välj bland egenskapsaspekterna nedan för att exponera och tillämpa ytterligare metadata och funktionalitet",
       "RESET": "Återställ",
       "CLEAR": "Rensa",
       "CANCEL": "Avbryt",
@@ -633,6 +727,14 @@
       "JOINED": "Gick med i bibliotek",
       "JOIN_CANCELED": "Avbröt begäran om att gå med i biblioteket",
       "JOIN_REQUESTED": "Begäran skickad om att gå med i det här biblioteket"
+    }
+  },
+  "NODE_FAVORITE_DIRECTIVE": {
+    "MESSAGES": {
+      "NODE_ADDED": "Har lagt till {{ name }} till favoriter",
+      "NODES_ADDED": "Har lagt till {{ number }} objekt till favoriter",
+      "NODE_REMOVED": "Har tagit bort {{ name }} från favoriter",
+      "NODES_REMOVED": "Har tagit bort {{ number }} objekt från favoriter"
     }
   }
 }

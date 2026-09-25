@@ -15,7 +15,7 @@
     "APPS": {
       "TITLE": "Geen toepassingen gevonden",
       "SUBTITLE": "Maak een nieuwe toepassing die u later gemakkelijk wilt kunnen vinden",
-      "TASK_APP_NAME": "Task App"
+      "TASK_APP_NAME": "Taak-app"
     },
     "LIST": {
       "MESSAGES": {
@@ -41,7 +41,7 @@
       "PARENT_NAME": "Naam bovenliggend element",
       "PARENT_NAME_DEFAULT": "Geen bovenliggend element",
       "CREATED_BY": "Gemaakt door",
-      "CREATED": "Gemaakt",
+      "CREATED": "Aangemaakt",
       "END_DATE": "Einddatum",
       "ID": "Id",
       "DESCRIPTION": "Beschrijving",
@@ -59,7 +59,7 @@
       "LABELS": {
         "INFO_DRAWER_TITLE": "Activiteiten",
         "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Activiteit",
-        "INFO_DRAWER_TAB_DETAILS_TITLE": "Details",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "Gegevens",
         "ASSIGNEE": "Toegewezen persoon",
         "DUE": "Vervalt",
         "FORM": "Formulier",
@@ -128,7 +128,7 @@
           "DATE": "Datum kiezen"
         },
         "ACTION": {
-          "START": "Start",
+          "START": "Starten",
           "CANCEL": "Annuleren"
         },
         "ERROR": {
@@ -195,7 +195,7 @@
       "CATEGORY_DEFAULT": "Geen categorie",
       "CREATED_BY": "Gemaakt door",
       "CREATED_BY_DEFAULT": "Geen toegewezen persoon",
-      "CREATED": "Gemaakt",
+      "CREATED": "Aangemaakt",
       "BUSINESS_KEY": "Business key",
       "BUSINESS_KEY_DEFAULT": "Geen",
       "DESCRIPTION": "Beschrijving",
@@ -278,11 +278,11 @@
       "NO_START_FORM": "Geen beginformulier",
       "NO_PROCESS_DEF_SELECTED": "Geen procesdefinitie geselecteerd",
       "FORM": {
-        "TITLE": "Proces starten",
         "LABEL": {
           "SELECT_APPLICATION": "Toepassing selecteren",
           "TYPE": "Proces selecteren",
-          "NAME": "Procesnaam"
+          "NAME": "Procesnaam",
+          "SELECTED_PEOPLE": "Geselecteerde personen"
         },
         "TYPE_PLACEHOLDER": "Maak een keuze...",
         "ACTION": {

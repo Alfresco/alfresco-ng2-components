@@ -24,6 +24,7 @@
   "CLOSE": "閉じる",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "現在通知はありません。",
+    "UNREAD_MESSAGES": "未読の通知があります。",
     "TITLE": "通知",
     "MARK_AS_READ": "すべて既読にする",
     "SYSTEM": "システム",
@@ -35,7 +36,10 @@
       "TITLE": "開始フォーム"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "プレビューは使用できません"
+      "IMAGE_NOT_AVAILABLE": "プレビューは使用できません",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "プレビューモードではファイルを添付できません"
+      }
     },
     "FIELD": {
       "LOCALSTORAGE": "ローカルストレージ",
@@ -46,11 +50,19 @@
       "UPLOAD": "アップロード",
       "REQUIRED": "これは必須フィールドです",
       "REST_API_FAILED": "'{{ hostname }}' サーバーは、到達不能です",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "ドロップダウン要素の読み込み中に問題が発生しました。管理者に連絡してください。",
+      "DATA_TABLE_LOAD_FAILED": "テーブル要素の読み込み中に問題が発生しました。管理者に連絡してください。",
+      "DATA_TABLE_EMPTY_CONTENT": "データが見つかりません",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "外部プロパティの読み込み中に問題が発生しました。管理者に連絡してください。",
       "FILE_NAME": "ファイル名",
+      "TITLE": "タイトル",
       "NO_FILE_ATTACHED": "ファイルが添付されていません",
       "VALIDATOR": {
         "INVALID_NUMBER": "別の番号形式を使用してください",
+        "INVALID_DECIMAL_NUMBER": "10進数の数値形式を使用してください",
+        "INVALID_DECIMAL_PRECISION": "小数値が正しくありません。小数点以下は最大{{precision}}桁までにしてください。",
         "INVALID_DATE": "別の日付形式を使用してください",
+        "INVALID_DATE_FORMAT": "無効な日付形式です。",
         "INVALID_VALUE": "別の値を入力してください",
         "NOT_GREATER_THAN": "{{ maxValue }} より大きい値にすることはできません",
         "NOT_LESS_THAN": "{{ minValue }} より小さい値にすることはできません",
@@ -58,10 +70,65 @@
         "NO_LONGER_THAN": "{{ maxLength }} 文字以内で入力してください"
       },
       "FILE_ALREADY_UPLOADED": "同じ名前のファイルがすでにアップロードされています。",
-      "ATTACH": "添付"
+      "ATTACH": "添付",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "追加",
+        "ROW_LIMIT_REACHED": "行数の上限 ({{ limit }}) に達しました。"
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "無名のタスク"
+      "NAMELESS_TASK": "無名のタスク",
+      "ROW_LABEL": "行 {{ number }}",
+      "DELETE_ROW": "行を削除",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "行を削除",
+        "MESSAGE": "この行を削除してもよろしいですか?",
+        "YES_LABEL": "行を削除",
+        "NO_LABEL": "キャンセル"
+      }
+    },
+    "BUTTON": {
+      "PREVIOUS_TAB": "前へ",
+      "PREVIOUS_TAB_TITLE": "前のタブに移動",
+      "NEXT_TAB": "次へ",
+      "NEXT_TAB_TITLE": "次のタブに移動"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "フォントサイズ",
+      "FONT_WEIGHT": "フォントの太さ",
+      "FONT_COLOR": "フォントの色",
+      "FONT_WEIGHTS": {
+        "REGULAR": "標準",
+        "BOLD": "太字"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "システムカラー",
+        "BLACK": "黒",
+        "GREY": "グレー",
+        "RED": "赤",
+        "GREEN": "緑",
+        "BLUE": "青",
+        "YELLOW": "黄"
+      },
+      "PREDEFINED": {
+        "HEADER": {
+          "NORMAL": "標準",
+          "HEADING": "見出し",
+          "TITLE": "タイトル"
+        },
+        "RADIO_BUTTONS": {
+          "NORMAL": "標準",
+          "STRONG": "強調",
+          "HEADING": "見出し"
+        },
+        "READONLY_TEXT": {
+          "NORMAL": "標準",
+          "STRONG": "強調",
+          "HEADING": "見出し",
+          "TITLE": "タイトル",
+          "ANNOTATION": "注釈"
+        }
+      }
     }
   },
   "CORE": {
@@ -99,12 +166,24 @@
         "ACTIONS": {
           "CANCEL": "キャンセル"
         },
-        "TITLE": "ファイルを圧縮 (zip) します。この処理には数分かかります"
+        "TITLE": "ファイルを圧縮 (zip) します。この処理には数分かかります",
+        "COMPLETE": "完了"
       },
       "EDIT_JSON": {
         "CLOSE": "閉じる",
-        "UPDATE": "更新"
+        "UPDATE": "更新",
+        "COPY": "コピー",
+        "COPIED": "クリップボードにコピーしました"
+      },
+      "UNSAVED_CHANGES": {
+        "TITLE": "未保存の変更",
+        "DESCRIPTION": "この画面には未保存の変更があります。変更を保存せずに終了してもよろしいですか?",
+        "DISCARD_CHANGES_BUTTON": "変更を破棄する"
       }
+    },
+    "BREADCRUMBS": {
+      "TITLE": "階層リンク",
+      "SHOWALL": "すべてを表示"
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "ファイルのロック",
@@ -144,7 +223,9 @@
       },
       "CANCEL_BUTTON": {
         "LABEL": "キャンセル"
-      }
+      },
+      "FOLDER_CREATED_SUCCESS": "フォルダ '{{ name }}' が正常に作成されました",
+      "FOLDER_UPDATED_SUCCESS": "フォルダ '{{ name }}' が正常に更新されました"
     },
     "MESSAGES": {
       "ERRORS": {
@@ -154,7 +235,7 @@
     },
     "RESTORE_NODE": {
       "VIEW": "表示",
-      "PARTIAL_PLURAL": "{{ number }} 件のアイテムが復元されませんでした。復元先の場所に問題があります。",
+      "PARTIAL_PLURAL": "{{ number }} 件のアイテムが復元されませんでした。復元先の場所に問題があります",
       "NODE_EXISTS": "復元できません。''{{ name }}'' 項目はすでに存在します",
       "LOCATION_MISSING": "''{{ name }}'' アイテムを復元できません。アイテムの元の場所が削除されています",
       "GENERIC": "''{{ name }}'' アイテムの復元中に問題が発生しました",
@@ -176,12 +257,16 @@
         "VALUE": "値"
       },
       "NONE": "なし",
+      "SELECTED_VALUES": "選択した値",
+      "REMOVE": "{{ value }} を削除",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "番号形式を使用してください",
         "INT_VALIDATION_ERROR": "整数形式を使用してください",
+        "LONG_VALIDATION_ERROR": "長い形式を使用してください",
         "LENGTH_VALIDATION_ERROR": "値は {{ minLength }} ～ {{ maxLength }} 文字以内で入力してください",
         "MATCH_VALIDATION_ERROR": "値がパターンと一致していません: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "値は {{ minValue }} ～ {{ maxValue }} でなければなりません"
+        "MINMAX_VALIDATION_ERROR": "値は {{ minValue }} ～ {{ maxValue }} でなければなりません",
+        "ONLY_POSITIVE_NUMBER": "正の値のみ使用できます"
       },
       "MORE": "詳細"
     },
@@ -225,23 +310,44 @@
         "EDIT_ASPECTS": "アスペクトを編集"
       },
       "ACCESSIBILITY": {
-        "EDIT": "編集ボタン",
+        "EDIT": "{{ sectionName }} を編集",
         "DATEPICKER": "矢印キーを使って日付を変更します。上下の矢印キーを使うと、同じ日付の次の週または前の週に移動できます。左右の矢印キーを使うと、次の日または前の日に移動できます。日付を選択するには、Enter キーまたはリターンキーを押します。",
         "COPY_TO_CLIPBOARD_MESSAGE": "値がクリップボードにコピーされました",
-        "EDIT_ASPECTS": "アスペクトを編集"
+        "EDIT_ASPECTS": "アスペクトを編集",
+        "SECTION": "{{ sectionName }} セクション"
       }
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "検索結果の昇順と降順を切り替えます",
-      "SORT_BY": "並べ替え"
+      "SORT_BY": "並べ替え",
+      "BUTTON": {
+        "TOOLTIP": "検索",
+        "ARIA-LABEL": "検索ボタン"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "検索条件"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "閉じる"
+        }
+      }
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "機能フラグのオーバーライド",
+      "FILTER_OR_ADD_NEW": "フィルタまたは新規追加",
+      "FILTER": "フィルタ",
+      "ADD_NEW": "新規機能フラグを追加 (Shift + Enter)"
     }
   },
   "COMMENTS": {
+    "PROFILE_IMAGE": "プロフィール画像",
     "NONE": "コメントなし",
     "ADD": "追加",
     "HEADER": "コメント ({{ count }} 件)",
     "CREATED_BY_HEADER": "作成者",
     "MESSAGE_HEADER": "メッセージ",
+    "EMPTY_ERROR": "コメントを空にすることはできません",
     "DIALOG": {
       "TITLE": "新しいコメント",
       "LABELS": {
@@ -254,7 +360,7 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco, make business flow",
+    "LOGO": "Alfresco、ビジネスフローを構築",
     "LABEL": {
       "LOGIN": "サインイン",
       "USERNAME": "ユーザー名",
@@ -272,7 +378,7 @@
       "LOGIN-ERROR-CREDENTIALS": "入力したユーザー名またはパスワードが間違っています",
       "LOGIN-ERROR-PROVIDERS": "プロバイダは必ず定義する必要があります",
       "LOGIN-ERROR-CORS": "CORS の例外が発生しました。サーバーの設定を確認してください",
-      "LOGIN-ERROR-CSRF": "CSRF の例外が発生しました。app.config.json で \"disableCSRF\": true を設定してください。",
+      "LOGIN-ERROR-CSRF": "CSRF の例外が発生しました。app.config.json で \"disableCSRF\": true を設定してください",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services のリポジトリが読み取り専用モードです",
       "SSO-WRONG-CONFIGURATION": "SSO 認証サーバーにアクセスできません"
     },
@@ -283,7 +389,7 @@
       "SSO": "サインイン SSO"
     },
     "ACTION": {
-      "HELP": "ヘルプが必要ですか?",
+      "HELP": "ヘルプが必要ですか？",
       "REGISTER": "登録"
     }
   },
@@ -296,12 +402,15 @@
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "コンテンツの処理"
+      "TOOLTIP": "コンテンツの処理",
+      "SELECT_COLUMNS": "列を選択"
     },
     "ACCESSIBILITY": {
       "ACTIONS": "アクション",
       "SELECT_ALL": "すべて選択",
       "SELECT_FILE": "ファイルを選択してください",
+      "SELECTED": "選択済み",
+      "ROW_SELECTION": "スペースキーを押して行の選択を切り替えます",
       "SORT_ASCENDING": "昇順",
       "SORT_DESCENDING": "降順",
       "SORT_NONE": "なし",
@@ -311,7 +420,11 @@
       "ICON_TEXT": "アイテムタイプ {{ type }}",
       "ICON_DISABLED": "無効",
       "ROW_OPTION_BUTTON": "アクション",
-      "EMPTY_HEADER": "空のヘッダー"
+      "DRAG": "ドラッグボタン",
+      "DRAGGABLE": "ドラッグ可能",
+      "EMPTY_HEADER": "空のヘッダー",
+      "RESIZE_COLUMN": "{{ column }} 列のサイズを変更します。矢印キーで幅を調整し、Shiftキーでより大きなステップで調整します。",
+      "COLUMN_WIDTH_CHANGED": "{{ column }} 列の幅: {{ width }} ピクセル"
     },
     "FILE_TYPE": {
       "DOCUMENT": "文書",
@@ -332,7 +445,8 @@
     "COLUMNS_SELECTOR": {
       "COLUMNS": "列",
       "SEARCH": "検索",
-      "APPLY": "適用"
+      "APPLY": "適用",
+      "COLUMNS_VISIBILITY": "表示する列を選択"
     }
   },
   "USER_PROFILE": {
@@ -346,8 +460,8 @@
       "MY_PROFILE": "あなたのプロフィール"
     },
     "TAB": {
-      "CS": "Content Services",
-      "PS": "Process Services"
+      "CS": "コンテンツサービス",
+      "PS": "プロセスサービス"
     }
   },
   "ADF_VIEWER": {
@@ -366,6 +480,7 @@
       "WAIT": "待機"
     },
     "ARIA": {
+      "MIME_TYPE_ICON": "ファイルタイプアイコン",
       "PREVIOUS_PAGE": "前のページ",
       "NEXT_PAGE": "次のページ",
       "ZOOM_IN": "ズームイン",
@@ -377,7 +492,9 @@
       "CANCEL": "キャンセル",
       "RESET": "リセット",
       "THUMBNAILS": "文書のサムネイル",
-      "THUMBNAILS_PANLEL_CLOSE": "サムネイルパネルを閉じる"
+      "THUMBNAILS_PANLEL_CLOSE": "サムネイルパネルを閉じる",
+      "LOADING": "文書を読み込み中",
+      "NOTE_ANNOTATION_IMG": "メモの注釈"
     },
     "PAGE_LABEL": {
       "SHOWING": "表示中",
@@ -389,10 +506,6 @@
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "{{ pageNum }} ページ"
-      },
-      "METADATA": {
-        "MORE_INFORMATION": "詳細",
-        "LESS_INFORMATION": "概要"
       }
     },
     "PDF_DIALOG": {
@@ -487,26 +600,6 @@
       "PROCESS_SERVICE_HOST": "Alfresco Process Services の URL: {{ value }}"
     },
     "REPOSITORY": "リポジトリ",
-    "VERSIONS": {
-      "TITLE": "製品のバージョン",
-      "CONTENT_SERVICE": "Content Services",
-      "PROCESS_SERVICE": "Process Services",
-      "MODELING_SERVICE": "モデリングサービス",
-      "DEPLOYMENT_SERVICE": "展開サービス",
-      "QUERY_SERVICE": "展開サービス",
-      "RB": "ランタイム",
-      "LABELS": {
-        "EDITION": "エディション",
-        "VERSION": "バージョン",
-        "LICENSE": "ライセンス",
-        "STATUS": "ステータス",
-        "MODULES": "モジュール"
-      }
-    },
-    "SOURCE_CODE": {
-      "TITLE": "ソースコード",
-      "DESCRIPTION": "実行しているプロジェクトは次のコミットに基づいています:"
-    },
     "PACKAGES": {
       "TITLE": "パッケージ",
       "NAME": "名前",
@@ -527,7 +620,9 @@
     "LICENSE": {
       "TITLE": "ライセンス",
       "PROPERTY": "プロパティ",
-      "VALUE": "値"
+      "VALUE": "値",
+      "ENABLED": "有効",
+      "DISABLED": "無効"
     },
     "STATUS": {
       "TITLE": "ステータス",
@@ -562,10 +657,23 @@
     "LOADING": "読み込んでいます...",
     "SELECTION_ARIA_LABEL": "{{placeholder}}コンボボックス{{selectedOption}}"
   },
+  "INFO_DRAWER": {
+    "ICON": "ノードアイコン"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "もっと見る",
+    "DELETE": "{{ name }} を削除"
+  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "確認",
-    "ACTION": "作業を続けますか?",
+    "ACTION": "作業を続けますか？",
     "YES_LABEL": "はい",
     "NO_LABEL": "いいえ"
+  },
+  "SESSION_TIMEOUT": {
+    "TITLE": "作業を続けていますか?",
+    "MESSAGE": "操作がないため、セッションは{{seconds}}秒後に終了します。",
+    "LOG_OUT": "ログアウト",
+    "CONTINUE_WORKING": "作業を続ける"
   }
 }

@@ -50,7 +50,8 @@
         "MAXIMUM_LENGTH": "Přesáhli jste délku (maximálně lze zadat {{characters}} znaků).",
         "SPACE_VALIDATOR": "Nesmí začínat ani končit mezerou."
       }
-    }
+    },
+    "LOADING": "Načítání"
   },
   "ADF_CLOUD_TASK_LIST": {
     "START_TASK": {
@@ -97,7 +98,8 @@
         "SUBTITLE": "Pro lepší přehlednost vytvořte nový úkol",
         "NONE": "Nenalezeny žádné seznamy úkolů"
       }
-    }
+    },
+    "LOADING": "Načítání"
   },
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {
@@ -241,6 +243,7 @@
       "SUSPENDED_DATE": "Datum pozastavení",
       "STARTED_BY": "Zahájil(a)",
       "COMPLETED_DATE": "Datum dokončení",
+      "MAIN_PROCESS_ID": "ID hlavního procesu",
       "DATE_RANGE": {
         "NO_DATE": "Žádné datum",
         "TODAY": "Dnes",

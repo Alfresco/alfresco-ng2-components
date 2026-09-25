@@ -47,10 +47,11 @@
         "START": "Не удалось начать новый экземпляр процесса, проверьте, есть ли у вас доступ.",
         "PROCESS_NAME_REQUIRED": "Требуется имя процесса",
         "PROCESS_DEFINITION_REQUIRED": "Требуется определение процесса",
-        "MAXIMUM_LENGTH": "Превышение длины, макс. символов: {{characters}}",
+        "MAXIMUM_LENGTH": "Превышение длины, макс. символов: {{characters}}.",
         "SPACE_VALIDATOR": "Нельзя начинать и заканчивать пробелом."
       }
-    }
+    },
+    "LOADING": "Загружается"
   },
   "ADF_CLOUD_TASK_LIST": {
     "START_TASK": {
@@ -97,7 +98,8 @@
         "SUBTITLE": "Создать новую задачу для быстрого поиска позже",
         "NONE": "Списков задач не найдено"
       }
-    }
+    },
+    "LOADING": "Загружается"
   },
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {
@@ -159,7 +161,7 @@
       "MESSAGE": "Введите другое значение",
       "REQUIRED": "Обязательное поле",
       "DATE": "Формат даты ДД.ММ.ГГГГ",
-      "MAXIMUM_LENGTH": "Превышение длины, макс. символов: {{characters}}"
+      "MAXIMUM_LENGTH": "Превышение длины, макс. символов: {{characters}}."
     }
   },
   "ADF_CLOUD_EDIT_TASK_FILTER": {
@@ -241,6 +243,7 @@
       "SUSPENDED_DATE": "Дата приостановки",
       "STARTED_BY": "Запущено пользователем",
       "COMPLETED_DATE": "Дата выполнения",
+      "MAIN_PROCESS_ID": "Идентификатор основного процесса",
       "DATE_RANGE": {
         "NO_DATE": "Нет срока",
         "TODAY": "Сегодня",

@@ -24,6 +24,7 @@
   "CLOSE": "Luk",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Du har ingen meddelelser i øjeblikket.",
+    "UNREAD_MESSAGES": "Du har ulæste meddelelser.",
     "TITLE": "Meddelelser",
     "MARK_AS_READ": "Markér alle som læst",
     "SYSTEM": "System",
@@ -35,7 +36,10 @@
       "TITLE": "Åbn formular"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Forhåndsvisning er ikke tilgængelig"
+      "IMAGE_NOT_AVAILABLE": "Forhåndsvisning er ikke tilgængelig",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "I forhåndsvisningstilstand kan du ikke vedhæfte en fil"
+      }
     },
     "FIELD": {
       "LOCALSTORAGE": "Lokalt lager",
@@ -46,11 +50,19 @@
       "UPLOAD": "Upload",
       "REQUIRED": "Obligatorisk felt",
       "REST_API_FAILED": "Serveren '{{ hostname }}' er ikke tilgængelig",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Der opstod et problem under indlæsning af rullemenu-elementer. Kontakt venligst administratoren.",
+      "DATA_TABLE_LOAD_FAILED": "Der opstod et problem under indlæsning af tabelelementer. Kontakt venligst administratoren.",
+      "DATA_TABLE_EMPTY_CONTENT": "Ingen data fundet",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "Der opstod et problem under indlæsning af ekstern egenskab. Kontakt venligst administratoren.",
       "FILE_NAME": "Filnavn",
+      "TITLE": "Titel",
       "NO_FILE_ATTACHED": "Der er ikke vedhæftet en fil",
       "VALIDATOR": {
         "INVALID_NUMBER": "Brug et andet talformat",
+        "INVALID_DECIMAL_NUMBER": "Brug et decimaltalformat",
+        "INVALID_DECIMAL_PRECISION": "Forkert decimalværdi, der bør maksimalt være {{precision}} cifre efter decimaltegnet.",
         "INVALID_DATE": "Brug et andet datoformat",
+        "INVALID_DATE_FORMAT": "Ugyldigt datoformat.",
         "INVALID_VALUE": "Angiv en anden værdi",
         "NOT_GREATER_THAN": "Må ikke være større end {{ maxValue }}",
         "NOT_LESS_THAN": "Må ikke være mindre end {{ minValue }}",
@@ -58,10 +70,65 @@
         "NO_LONGER_THAN": "Skriv højst {{ maxLength }} tegn"
       },
       "FILE_ALREADY_UPLOADED": "En fil med samme navn er allerede uploadet.",
-      "ATTACH": "Vedhæft"
+      "ATTACH": "Vedhæft",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "tilføj",
+        "ROW_LIMIT_REACHED": "Rækkegrænsen ({{ limit }}) er nået."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Opgave uden navn"
+      "NAMELESS_TASK": "Opgave uden navn",
+      "ROW_LABEL": "Række {{ number }}",
+      "DELETE_ROW": "Slet række",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Slet rækken",
+        "MESSAGE": "Er du sikker på, at du vil slette denne række?",
+        "YES_LABEL": "Slet række",
+        "NO_LABEL": "Annuller"
+      }
+    },
+    "BUTTON": {
+      "PREVIOUS_TAB": "Forrige",
+      "PREVIOUS_TAB_TITLE": "Naviger til forrige fane",
+      "NEXT_TAB": "Næste",
+      "NEXT_TAB_TITLE": "Naviger til næste fane"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "Skriftstørrelse",
+      "FONT_WEIGHT": "Skrifttykkelse",
+      "FONT_COLOR": "Skriftfarve",
+      "FONT_WEIGHTS": {
+        "REGULAR": "normal",
+        "BOLD": "fed"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "systemfarve",
+        "BLACK": "sort",
+        "GREY": "grå",
+        "RED": "rød",
+        "GREEN": "grøn",
+        "BLUE": "blå",
+        "YELLOW": "gul"
+      },
+      "PREDEFINED": {
+        "HEADER": {
+          "NORMAL": "normal",
+          "HEADING": "overskrift",
+          "TITLE": "titel"
+        },
+        "RADIO_BUTTONS": {
+          "NORMAL": "normal",
+          "STRONG": "fed",
+          "HEADING": "overskrift"
+        },
+        "READONLY_TEXT": {
+          "NORMAL": "normal",
+          "STRONG": "fed",
+          "HEADING": "overskrift",
+          "TITLE": "titel",
+          "ANNOTATION": "annotation"
+        }
+      }
     }
   },
   "CORE": {
@@ -99,12 +166,24 @@
         "ACTIONS": {
           "CANCEL": "Annuller"
         },
-        "TITLE": "Føjer filer til zip-filen. Dette kan tage nogle minutter"
+        "TITLE": "Føjer filer til zip-filen. Dette kan tage nogle minutter",
+        "COMPLETE": "fuldført"
       },
       "EDIT_JSON": {
         "CLOSE": "Luk",
-        "UPDATE": "Opdater"
+        "UPDATE": "Opdater",
+        "COPY": "Kopiér",
+        "COPIED": "Kopieret til udklipsholder"
+      },
+      "UNSAVED_CHANGES": {
+        "TITLE": "Ikke-gemte ændringer",
+        "DESCRIPTION": "Du har ikke-gemte ændringer på denne skærm. Er du sikker på, at du vil forlade siden uden at gemme ændringerne?",
+        "DISCARD_CHANGES_BUTTON": "Kassér ændringerne"
       }
+    },
+    "BREADCRUMBS": {
+      "TITLE": "Brødkrummer",
+      "SHOWALL": "Se alle"
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "Lås fil",
@@ -144,7 +223,9 @@
       },
       "CANCEL_BUTTON": {
         "LABEL": "Annuller"
-      }
+      },
+      "FOLDER_CREATED_SUCCESS": "Mappen '{{ name }}' blev oprettet",
+      "FOLDER_UPDATED_SUCCESS": "Mappen '{{ name }}' blev opdateret"
     },
     "MESSAGES": {
       "ERRORS": {
@@ -176,12 +257,16 @@
         "VALUE": "Værdi"
       },
       "NONE": "Ingen",
+      "SELECTED_VALUES": "Valgte værdier",
+      "REMOVE": "Fjern {{ value }}",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Brug et talformat",
         "INT_VALIDATION_ERROR": "Brug et heltalsformat",
+        "LONG_VALIDATION_ERROR": "Brug et langt format",
         "LENGTH_VALIDATION_ERROR": "Værdien skal ligge mellem {{ minLength }} og {{ maxLength }} i længden",
         "MATCH_VALIDATION_ERROR": "Værdien matcher ikke mønstret: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Værdien skal ligge mellem {{ minValue }} og {{ maxValue }}"
+        "MINMAX_VALIDATION_ERROR": "Værdien skal ligge mellem {{ minValue }} og {{ maxValue }}",
+        "ONLY_POSITIVE_NUMBER": "Kun positiv værdi er tilladt"
       },
       "MORE": "Mere"
     },
@@ -228,20 +313,41 @@
         "EDIT": "Redigér knap",
         "DATEPICKER": "Brug piletasterne til at navigere mellem datoer. Pil op og pil ned bruges til at gå til den næste eller forrige uge, på den samme dag. Brug venstre og højre pil til at gå til næste eller forrige dag. Tryk på Enter eller Return for at vælge en dato.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Værdien er kopieret til udklipsholderen",
-        "EDIT_ASPECTS": "Rediger aspekt"
+        "EDIT_ASPECTS": "Rediger aspekt",
+        "SECTION": "{{ sectionName }} sektion"
       }
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "Slå resultater til/fra mellem stigende og faldende rækkefølge",
-      "SORT_BY": "Sortér efter"
+      "SORT_BY": "Sortér efter",
+      "BUTTON": {
+        "TOOLTIP": "Søg",
+        "ARIA-LABEL": "Søgeknap"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "Søgeinput"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "Luk"
+        }
+      }
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "Overstyringer af feature flag",
+      "FILTER_OR_ADD_NEW": "Filtrer eller tilføj ny(t)",
+      "FILTER": "Filter",
+      "ADD_NEW": "Tilføj ny(t) feature flag (Shift + Enter)"
     }
   },
   "COMMENTS": {
+    "PROFILE_IMAGE": "Profilbillede",
     "NONE": "Ingen kommentarer",
     "ADD": "Tilføj",
     "HEADER": "Kommentarer ({{ count }})",
     "CREATED_BY_HEADER": "Oprettet af",
     "MESSAGE_HEADER": "Meddelelse",
+    "EMPTY_ERROR": "Kommentar kan ikke være tom",
     "DIALOG": {
       "TITLE": "Ny kommentar",
       "LABELS": {
@@ -254,7 +360,7 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco, make business flow",
+    "LOGO": "Alfresco, skab forretningsflow",
     "LABEL": {
       "LOGIN": "Log ind",
       "USERNAME": "Brugernavn",
@@ -296,12 +402,15 @@
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "Indholdshandlinger"
+      "TOOLTIP": "Indholdshandlinger",
+      "SELECT_COLUMNS": "Vælg kolonner"
     },
     "ACCESSIBILITY": {
       "ACTIONS": "Handlinger",
       "SELECT_ALL": "Vælg alle",
       "SELECT_FILE": "Vælg fil",
+      "SELECTED": "Valgt",
+      "ROW_SELECTION": "Tryk på mellemrum for at skifte rækkevalg",
       "SORT_ASCENDING": "Stigende",
       "SORT_DESCENDING": "Faldende",
       "SORT_NONE": "Ingen",
@@ -311,7 +420,11 @@
       "ICON_TEXT": "Elementtype {{ type }}",
       "ICON_DISABLED": "Deaktiveret",
       "ROW_OPTION_BUTTON": "Handlinger",
-      "EMPTY_HEADER": "Tom toptekst"
+      "DRAG": "Trækknap",
+      "DRAGGABLE": "Trækbar",
+      "EMPTY_HEADER": "Tom toptekst",
+      "RESIZE_COLUMN": "Tilpas størrelsen på kolonnen {{ column }}. Brug piletasterne til at justere bredden, Shift for større trin.",
+      "COLUMN_WIDTH_CHANGED": "{{ column }} kolonnebredde: {{ width }} pixels"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -332,7 +445,8 @@
     "COLUMNS_SELECTOR": {
       "COLUMNS": "Kolonner",
       "SEARCH": "Søg",
-      "APPLY": "Anvend"
+      "APPLY": "Anvend",
+      "COLUMNS_VISIBILITY": "Vælg kolonner, der skal vises"
     }
   },
   "USER_PROFILE": {
@@ -366,6 +480,7 @@
       "WAIT": "Vent"
     },
     "ARIA": {
+      "MIME_TYPE_ICON": "Filtypeikon",
       "PREVIOUS_PAGE": "Forrige side",
       "NEXT_PAGE": "Næste side",
       "ZOOM_IN": "Zoom ind",
@@ -377,7 +492,9 @@
       "CANCEL": "Annuller",
       "RESET": "Nulstil",
       "THUMBNAILS": "Dokumentminiaturer",
-      "THUMBNAILS_PANLEL_CLOSE": "Luk miniaturepanel"
+      "THUMBNAILS_PANLEL_CLOSE": "Luk miniaturepanel",
+      "LOADING": "Dokumentet indlæses",
+      "NOTE_ANNOTATION_IMG": "Note-annotation"
     },
     "PAGE_LABEL": {
       "SHOWING": "Viser",
@@ -389,10 +506,6 @@
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Side {{ pageNum }}"
-      },
-      "METADATA": {
-        "MORE_INFORMATION": "Flere oplysninger",
-        "LESS_INFORMATION": "Færre oplysninger"
       }
     },
     "PDF_DIALOG": {
@@ -487,26 +600,6 @@
       "PROCESS_SERVICE_HOST": "URL-adresse til Alfresco-procestjenester: {{ value }}"
     },
     "REPOSITORY": "Opbevaringssted",
-    "VERSIONS": {
-      "TITLE": "Produktversioner",
-      "CONTENT_SERVICE": "Content Services",
-      "PROCESS_SERVICE": "Process Services",
-      "MODELING_SERVICE": "Modelleringstjenester",
-      "DEPLOYMENT_SERVICE": "Udrulningstjenester",
-      "QUERY_SERVICE": "Udrulningstjenester",
-      "RB": "Kørselstidspunkt",
-      "LABELS": {
-        "EDITION": "Version",
-        "VERSION": "Version",
-        "LICENSE": "Licens",
-        "STATUS": "Status",
-        "MODULES": "Moduler"
-      }
-    },
-    "SOURCE_CODE": {
-      "TITLE": "Kildekode",
-      "DESCRIPTION": "Du kører projektet på baggrund af følgende bekræftelse:"
-    },
     "PACKAGES": {
       "TITLE": "Pakker",
       "NAME": "Navn",
@@ -527,7 +620,9 @@
     "LICENSE": {
       "TITLE": "Licens",
       "PROPERTY": "Egenskab",
-      "VALUE": "Værdi"
+      "VALUE": "Værdi",
+      "ENABLED": "Aktiveret",
+      "DISABLED": "Deaktiveret"
     },
     "STATUS": {
       "TITLE": "Status",
@@ -562,10 +657,23 @@
     "LOADING": "Indlæser...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} kombiboks {{selectedOption}}"
   },
+  "INFO_DRAWER": {
+    "ICON": "Nodeikon"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "Indlæs flere",
+    "DELETE": "Fjern {{ name }}"
+  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Bekræft",
     "ACTION": "Vil du fortsætte?",
     "YES_LABEL": "Ja",
     "NO_LABEL": "Nej"
+  },
+  "SESSION_TIMEOUT": {
+    "TITLE": "Arbejder du stadig?",
+    "MESSAGE": "Din session slutter om {{seconds}} sekunder, fordi der ikke har været nogen aktivitet.",
+    "LOG_OUT": "Log ud",
+    "CONTINUE_WORKING": "Fortsæt arbejdet"
   }
 }

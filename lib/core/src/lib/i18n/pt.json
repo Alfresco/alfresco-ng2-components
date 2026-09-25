@@ -2,28 +2,28 @@
   "ADF": {
     "LANGUAGE": "Idioma",
     "ROLES": {
-      "ALL": "Tudo",
-      "CONTRIBUTOR": "Contribuinte",
+      "ALL": "Todos",
+      "CONTRIBUTOR": "Contribuidor",
       "COLLABORATOR": "Colaborador",
       "COORDINATOR": "Coordenador",
       "EDITOR": "Editor",
       "CONSUMER": "Consumidor",
-      "SITECOLLABORATOR": "Colaborador do sítio",
-      "SITECONSUMER": "Consumidor do sítio",
-      "SITECONTRIBUTOR": "Contribuinte do sítio",
-      "SITEMANAGER": "Gestor do sítio"
+      "SITECOLLABORATOR": "Colaborador de site",
+      "SITECONSUMER": "Consumidor de site",
+      "SITECONTRIBUTOR": "Contribuidor de site",
+      "SITEMANAGER": "Gerente de site"
     }
   },
-  "SAVE": "GUARDAR",
-  "COMPLETE": "CONCLUÍDO",
+  "SAVE": "SALVAR",
+  "COMPLETE": "CONCLUIR",
   "CANCEL": "CANCELAR",
-  "CLAIM": "RECLAMAÇÃO",
-  "UNCLAIM": "LANÇAR",
+  "CLAIM": "ASSUMIR",
+  "UNCLAIM": "LIBERAR",
   "START PROCESS": "INICIAR PROCESSO",
-  "DATA_LOADING": "Os dados estão a ser carregados",
+  "DATA_LOADING": "Os dados estão sendo carregados",
   "CLOSE": "FECHAR",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "De momento, não tem notificações.",
+    "NO_MESSAGE": "No momento, você não tem notificações.",
     "UNREAD_MESSAGES": "Você tem notificações não lidas.",
     "TITLE": "Notificações",
     "MARK_AS_READ": "Marcar todas como lidas",
@@ -33,43 +33,43 @@
   },
   "FORM": {
     "START_FORM": {
-      "TITLE": "Formulário de início"
+      "TITLE": "Formulário inicial"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Pré-visualização não disponível",
+      "IMAGE_NOT_AVAILABLE": "Visualização não disponível",
       "ATTACH_FILE_WIDGET": {
-        "ON_ATTACH_FILE_CLICK": "No modo de pré-visualização não é possível anexar um ficheiro"
+        "ON_ATTACH_FILE_CLICK": "No modo de visualização, você não pode anexar um arquivo"
       }
     },
     "FIELD": {
       "LOCALSTORAGE": "Armazenamento local",
-      "SOURCE": "Selecionar fonte de ",
+      "SOURCE": "Selecionar origem de ",
       "VIEW_FILE": "Visualizar",
-      "DOWNLOAD_FILE": "Fazer o download",
+      "DOWNLOAD_FILE": "Baixar",
       "REMOVE_FILE": "Remover",
       "UPLOAD": "CARREGAR",
-      "REQUIRED": "Este é um campo obrigatório",
-      "REST_API_FAILED": "O servidor `{{ hostname }}` não pode ser acedido",
-      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Problema ao carregar elementos suspensos. Entre em contacto com o administrador.",
-      "DATA_TABLE_LOAD_FAILED": "Problema ao carregar os elementos da tabela. Entre em contacto com o administrador.",
-      "DATA_TABLE_EMPTY_CONTENT": "Não foram encontrados dados",
-      "EXTERNAL_PROPERTY_LOAD_FAILED": "Houve um problema ao carregar a propriedade externa. Entre em contacto com o administrador.",
-      "FILE_NAME": "Nome do ficheiro",
+      "REQUIRED": "Este campo é obrigatório",
+      "REST_API_FAILED": "Não é possível acessar o servidor `{{ hostname }}`",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Houve um problema ao carregar os elementos da lista suspensa. Entre em contato com o administrador.",
+      "DATA_TABLE_LOAD_FAILED": "Houve um problema ao carregar os elementos da tabela. Entre em contato com o administrador.",
+      "DATA_TABLE_EMPTY_CONTENT": "Nenhum dado encontrado",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "Houve um problema ao carregar a propriedade externa. Entre em contato com o administrador.",
+      "FILE_NAME": "Nome do arquivo",
       "TITLE": "Título",
-      "NO_FILE_ATTACHED": "Nenhum ficheiro anexado",
+      "NO_FILE_ATTACHED": "Nenhum arquivo anexado",
       "VALIDATOR": {
-        "INVALID_NUMBER": "Utilizar um formato numérico diferente",
-        "INVALID_DECIMAL_NUMBER": "Utilizar um formato de número decimal",
-        "INVALID_DECIMAL_PRECISION": "Valor decimal incorreto, deve haver um máximo de {{precision}} dígitos após o ponto decimal.",
-        "INVALID_DATE": "Utilizar um formato de data diferente",
+        "INVALID_NUMBER": "Use um formato de número diferente",
+        "INVALID_DECIMAL_NUMBER": "Use um formato de número decimal",
+        "INVALID_DECIMAL_PRECISION": "Valor decimal incorreto, deve haver no máximo {{precision}} dígitos após o separador decimal.",
+        "INVALID_DATE": "Use um formato de data diferente",
         "INVALID_DATE_FORMAT": "Formato de data inválido.",
-        "INVALID_VALUE": "Introduzir um valor diferente",
+        "INVALID_VALUE": "Insira um valor diferente",
         "NOT_GREATER_THAN": "Não pode ser maior do que {{ maxValue }}",
-        "NOT_LESS_THAN": "Não pode ser inferior a {{ minValue }}",
-        "AT_LEAST_LONG": "Introduzir pelo menos {{ minLength }} caracteres",
-        "NO_LONGER_THAN": "Não introduzir mais de {{ maxLength }} caracteres"
+        "NOT_LESS_THAN": "Não pode ser menor do que {{ minValue }}",
+        "AT_LEAST_LONG": "Insira no mínimo {{ minLength }} caracteres",
+        "NO_LONGER_THAN": "Insira no máximo {{ maxLength }} caracteres"
       },
-      "FILE_ALREADY_UPLOADED": "Já foi carregado um ficheiro com o mesmo nome.",
+      "FILE_ALREADY_UPLOADED": "Um arquivo com o mesmo nome já foi carregado.",
       "ATTACH": "Anexar",
       "REPEATABLE_SECTION": {
         "ADD_ROW": "adicionar",
@@ -81,22 +81,22 @@
       "ROW_LABEL": "Linha {{ number }}",
       "DELETE_ROW": "Excluir linha",
       "REMOVE_ROW_DIALOG": {
-        "TITLE": "Excluir linha",
-        "MESSAGE": "Tem certeza que deseja excluir esta linha?",
+        "TITLE": "Excluir a linha",
+        "MESSAGE": "Tem certeza de que deseja excluir esta linha?",
         "YES_LABEL": "Excluir linha",
         "NO_LABEL": "Cancelar"
       }
     },
     "BUTTON": {
       "PREVIOUS_TAB": "Anterior",
-      "PREVIOUS_TAB_TITLE": "Ir para o separador anterior",
-      "NEXT_TAB": "Próxima",
-      "NEXT_TAB_TITLE": "Ir para o separador seguinte"
+      "PREVIOUS_TAB_TITLE": "Navegar para a guia anterior",
+      "NEXT_TAB": "Próximo",
+      "NEXT_TAB_TITLE": "Navegar para a próxima guia"
     },
     "FIELD_STYLE": {
-      "FONT_SIZE": "Tamanho do tipo de letra",
-      "FONT_WEIGHT": "Tamanho da letra",
-      "FONT_COLOR": "Cor da letra",
+      "FONT_SIZE": "Tamanho da fonte",
+      "FONT_WEIGHT": "Espessura da fonte",
+      "FONT_COLOR": "Cor da fonte",
       "FONT_WEIGHTS": {
         "REGULAR": "regular",
         "BOLD": "negrito"
@@ -126,16 +126,16 @@
           "STRONG": "forte",
           "HEADING": "cabeçalho",
           "TITLE": "título",
-          "ANNOTATION": "anterior"
+          "ANNOTATION": "anotação"
         }
       }
     }
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Logótipo da empresa",
+      "LOGO_ARIA": "Logotipo da empresa",
       "ACCESSIBILITY": {
-        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Alternar Menu"
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Alternar menu"
       }
     },
     "FILE_SIZE": {
@@ -153,10 +153,10 @@
       "ARIA": {
         "ITEMS_PER_PAGE": "Seletor de tamanho de página",
         "CURRENT_PAGE": "Seletor de página atual",
-        "PREVIOUS_PAGE": "Botão página anterior",
-        "NEXT_PAGE": "Botão de página seguinte"
+        "PREVIOUS_PAGE": "Botão Página anterior",
+        "NEXT_PAGE": "Botão Próxima página"
       },
-      "ITEMS_RANGE": "Mostrar {{ range }} de {{ total }}",
+      "ITEMS_RANGE": "Mostrando {{ range }} de {{ total }}",
       "ITEMS_PER_PAGE": "Itens por página",
       "CURRENT_PAGE": "Página {{ number }}",
       "TOTAL_PAGES": "de {{ total }}"
@@ -166,8 +166,8 @@
         "ACTIONS": {
           "CANCEL": "Cancelar"
         },
-        "TITLE": "Adicionar ficheiros ao zip, isto pode demorar alguns minutos",
-        "COMPLETE": "concluir"
+        "TITLE": "Adicionando arquivos ao ZIP, isso pode levar alguns minutos",
+        "COMPLETE": "concluído"
       },
       "EDIT_JSON": {
         "CLOSE": "Fechar",
@@ -176,22 +176,22 @@
         "COPIED": "Copiado para a área de transferência"
       },
       "UNSAVED_CHANGES": {
-        "TITLE": "Alterações não guardadas",
-        "DESCRIPTION": "Tem alterações não guardadas neste ecrã. Tem a certeza de que pretende sair sem guardar as alterações?",
-        "DISCARD_CHANGES_BUTTON": "Rejeitar alterações"
+        "TITLE": "Alterações não salvas",
+        "DESCRIPTION": "Você tem alterações não salvas nesta tela. Tem certeza de que deseja sair sem salvar as alterações?",
+        "DISCARD_CHANGES_BUTTON": "Descartar alterações"
       }
     },
     "BREADCRUMBS": {
-      "TITLE": "Breadcrumbs",
+      "TITLE": "Trilha de navegação",
       "SHOWALL": "Mostrar tudo"
     },
     "FILE_DIALOG": {
-      "FILE_LOCK": "Bloquear ficheiro",
-      "ALLOW_OTHERS_CHECKBOX": "Permitir que o proprietário modifique este ficheiro",
-      "FILE_LOCK_CHECKBOX": "Bloquear ficheiro",
-      "TIME_LOCK_CHECKBOX": "Bloqueio de tempo",
+      "FILE_LOCK": "Bloquear arquivo",
+      "ALLOW_OTHERS_CHECKBOX": "Permitir que o proprietário modifique este arquivo",
+      "FILE_LOCK_CHECKBOX": "Bloquear arquivo",
+      "TIME_LOCK_CHECKBOX": "Tempo de bloqueio",
       "SAVE_BUTTON": {
-        "LABEL": "Guardar"
+        "LABEL": "Salvar"
       },
       "CANCEL_BUTTON": {
         "LABEL": "Cancelar"
@@ -203,9 +203,9 @@
       "FOLDER_NAME": {
         "LABEL": "Nome",
         "ERRORS": {
-          "REQUIRED": "Nome da pasta é obrigatório",
+          "REQUIRED": "O nome da pasta é obrigatório",
           "SPECIAL_CHARACTERS": "O nome da pasta não pode conter estes caracteres * \" < > \\ / ? : |",
-          "ENDING_DOT": "O nome da pasta não pode terminar com um ponto final .",
+          "ENDING_DOT": "O nome da pasta não pode terminar com ponto .",
           "ONLY_SPACES": "O nome da pasta não pode conter apenas espaços"
         }
       },
@@ -229,26 +229,26 @@
     },
     "MESSAGES": {
       "ERRORS": {
-        "GENERIC": "A ação não teve êxito. Tente novamente ou entre em contato com sua equipa de TI.",
-        "EXISTENT_FOLDER": "Já existe uma pasta com este nome. Tente um nome diferente."
+        "GENERIC": "A ação não foi bem-sucedida. Tente novamente ou entre em contato com a equipe de TI.",
+        "EXISTENT_FOLDER": "Já existe uma pasta com este nome. Tente outro nome."
       }
     },
     "RESTORE_NODE": {
       "VIEW": "Visualizar",
-      "PARTIAL_PLURAL": "{{ number }} itens não restaurados devido a problemas com a localização do restauro",
-      "NODE_EXISTS": "Não é possível restaurar, item {{ name }} já existe",
-      "LOCATION_MISSING": "Não é possível restaurar item{{ name }}a localização original já não existe",
-      "GENERIC": "Ocorreu um problema ao restaurar {{ name }} item",
-      "PLURAL": "Restauro bem-sucedido",
-      "SINGULAR": "{{ name }} item restaurado"
+      "PARTIAL_PLURAL": "{{ number }} itens não restaurados devido a problemas com o local de restauração",
+      "NODE_EXISTS": "Não é possível restaurar, o item {{ name }} já existe",
+      "LOCATION_MISSING": "Não é possível restaurar o item {{ name }}, o local original não existe mais",
+      "GENERIC": "Houve um problema ao restaurar o item {{ name }}",
+      "PLURAL": "Restauração bem-sucedida",
+      "SINGULAR": "Item {{ name }} restaurado"
     },
     "DELETE_NODE": {
-      "SINGULAR": "{{ name }} eliminado",
-      "PLURAL": "{{ number }} itens eliminados",
-      "PARTIAL_SINGULAR": "Eliminado {{ success }} item, {{ failed }} não pôde ser eliminado",
-      "PARTIAL_PLURAL": "Eliminados {{ success }} itens, {{ failed }} não puderam ser eliminados",
-      "ERROR_SINGULAR": "Não foi possível eliminar {{ name }}",
-      "ERROR_PLURAL": "Não foi possível eliminar {{ number }} itens"
+      "SINGULAR": "{{ name }} excluído",
+      "PLURAL": "{{ number }} itens excluídos",
+      "PARTIAL_SINGULAR": "{{ success }} item excluído, não foi possível excluir {{ failed }}",
+      "PARTIAL_PLURAL": "{{ success }} itens excluídos, não foi possível excluir {{ failed }}",
+      "ERROR_SINGULAR": "Não foi possível excluir {{ name }}",
+      "ERROR_PLURAL": "Não foi possível excluir {{ number }} itens"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -260,13 +260,13 @@
       "SELECTED_VALUES": "Valores selecionados",
       "REMOVE": "Remover {{ value }}",
       "VALIDATORS": {
-        "FLOAT_VALIDATION_ERROR": "Utilizar um formato numérico",
-        "INT_VALIDATION_ERROR": "Utilizar um formato inteiro",
-        "LONG_VALIDATION_ERROR": "Utilizar um formato longo",
-        "LENGTH_VALIDATION_ERROR": "O valor deve ter entre {{ minLength }} e {{ maxLength }} de comprimento",
+        "FLOAT_VALIDATION_ERROR": "Use um formato de número",
+        "INT_VALIDATION_ERROR": "Use um formato de número inteiro",
+        "LONG_VALIDATION_ERROR": "Use um formato de número inteiro longo",
+        "LENGTH_VALIDATION_ERROR": "O comprimento do valor deve estar entre {{ minLength }} e {{ maxLength }}",
         "MATCH_VALIDATION_ERROR": "O valor não corresponde ao padrão: {{ expression }}",
         "MINMAX_VALIDATION_ERROR": "O valor deve estar entre {{ minValue }} e {{ maxValue }}",
-        "ONLY_POSITIVE_NUMBER": "Só é permitido um valor positivo"
+        "ONLY_POSITIVE_NUMBER": "Somente valores positivos são permitidos"
       },
       "MORE": "Mais"
     },
@@ -277,7 +277,7 @@
         "TITLE": "Título",
         "DESCRIPTION": "Descrição",
         "AUTHOR": "Autor",
-        "MIMETYPE": "Tipo Mime",
+        "MIMETYPE": "Tipo MIME",
         "SIZE": "Tamanho",
         "CREATOR": "Criador",
         "CREATED_DATE": "Data de criação",
@@ -288,11 +288,11 @@
       "CONTENT_TYPE": {
         "DIALOG": {
           "TITLE": "Alterar tipo de conteúdo",
-          "DESCRIPTION": "Ao efetuar esta alteração ao tipo de conteúdo, irá adicionar permanentemente algumas propriedades e metadados armazenados ao documento.",
-          "CONFIRM": "Tem a certeza de que pretende alterar o tipo de conteúdo",
+          "DESCRIPTION": "Fazer esta alteração no tipo de conteúdo adicionará permanentemente algumas propriedades e metadados armazenados ao documento.",
+          "CONFIRM": "Tem certeza de que deseja alterar o tipo de conteúdo?",
           "CANCEL": "CANCELAR",
-          "APPLY": "Guardar alterações",
-          "VIEW_DETAILS": "Ver detalhes",
+          "APPLY": "Salvar alterações",
+          "VIEW_DETAILS": "Exibir detalhes",
           "PROPERTY": {
             "NAME": "Nome",
             "DESCRIPTION": "Descrição",
@@ -302,30 +302,30 @@
       },
       "ACTIONS": {
         "EDIT": "Editar",
-        "SAVE": "Guardar",
+        "SAVE": "Salvar",
         "CANCEL": "Cancelar",
         "CLEAR": "Limpar",
         "TOGGLE": "Alternar valor",
         "COPY_TO_CLIPBOARD": "Clique duas vezes para copiar o valor",
-        "EDIT_ASPECTS": "Editar aspeto"
+        "EDIT_ASPECTS": "Editar aspecto"
       },
       "ACCESSIBILITY": {
         "EDIT": "Editar {{ sectionName }}",
-        "DATEPICKER": "Utilize as teclas de setas para navegar entre datas. Para cima e para baixo passam para a semana seguinte ou anterior, mas no mesmo dia. A esquerda e a direita deslocam-se para o dia seguinte ou anterior.",
+        "DATEPICKER": "Navegue entre as datas usando as teclas de seta. As setas para cima e para baixo movem para a próxima semana ou para a semana anterior, no mesmo dia. As setas para a esquerda e para a direita movem para o próximo dia ou para o dia anterior. Pressione Enter ou Return para selecionar uma data.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Valor copiado para a área de transferência",
-        "EDIT_ASPECTS": "Editar aspeto",
+        "EDIT_ASPECTS": "Editar aspecto",
         "SECTION": "Seção {{ sectionName }}"
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "Alternar resultados entre ordem crescente e decrescente",
-      "SORT_BY": "Ordenar por:",
+      "TOGGLE_ASC_DESC_ORDER": "Alternar os resultados entre ordem crescente e decrescente",
+      "SORT_BY": "Classificar por",
       "BUTTON": {
         "TOOLTIP": "Pesquisar",
         "ARIA-LABEL": "Botão Pesquisar"
       },
       "INPUT": {
-        "ARIA-LABEL": "Entrada de pesquisa"
+        "ARIA-LABEL": "Campo de pesquisa"
       },
       "FILTER": {
         "BUTTONS": {
@@ -334,14 +334,14 @@
       }
     },
     "FEATURE-FLAGS": {
-      "OVERRIDES": "Substituições do sinalizador de caraterística",
+      "OVERRIDES": "Substituições de feature flags",
       "FILTER_OR_ADD_NEW": "Filtrar ou adicionar novo",
       "FILTER": "Filtro",
-      "ADD_NEW": "Adicionar novo sinalizador de recurso (Shift + Enter)"
+      "ADD_NEW": "Adicionar nova feature flag (Shift + Enter)"
     }
   },
   "COMMENTS": {
-    "PROFILE_IMAGE": "Imagem de perfil",
+    "PROFILE_IMAGE": "Imagem do perfil",
     "NONE": "Sem comentários",
     "ADD": "Adicionar",
     "HEADER": "Comentários ({{ count }})",
@@ -360,45 +360,45 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco, faça o negócio fluir",
+    "LOGO": "Alfresco, faz o negócio fluir",
     "LABEL": {
-      "LOGIN": "Iniciar sessão",
-      "USERNAME": "Nome do utilizador",
-      "PASSWORD": "Palavra-passe",
+      "LOGIN": "Entrar",
+      "USERNAME": "Nome de usuário",
+      "PASSWORD": "Senha",
       "REMEMBER": "Lembrar-me"
     },
     "ARIA-LABEL": {
-      "SHOW-PASSWORD": "Mostrar palavra-passe",
-      "HIDE-PASSWORD": "Ocultar palavra-passe"
+      "SHOW-PASSWORD": "Mostrar senha",
+      "HIDE-PASSWORD": "Ocultar senha"
     },
     "MESSAGES": {
-      "USERNAME-REQUIRED": "Desejado",
-      "USERNAME-MIN": "O seu nome de utilizador tem de ter pelo menos {{ minLength }} caracter",
-      "PASSWORD-REQUIRED": "Introduza a sua palavra-passe para iniciar sessão",
-      "LOGIN-ERROR-CREDENTIALS": "Introduziu um nome de utilizador ou uma palavra-passe desconhecidos",
-      "LOGIN-ERROR-PROVIDERS": "Os fornecedores não podem ser indefinidos",
-      "LOGIN-ERROR-CORS": "Exceção CORS, verifique a configuração do seu servidor",
-      "LOGIN-ERROR-CSRF": "Exceção CSRF, defina \"disableCSRF\": true em app.config.json",
-      "LOGIN-ECM-LICENSE": "O repositório dos Serviços de conteúdo Alfresco está em modo só de leitura",
+      "USERNAME-REQUIRED": "Obrigatório",
+      "USERNAME-MIN": "Seu nome de usuário deve ter no mínimo {{ minLength }} caracteres.",
+      "PASSWORD-REQUIRED": "Insira sua senha para entrar",
+      "LOGIN-ERROR-CREDENTIALS": "Você inseriu um nome de usuário ou senha desconhecidos",
+      "LOGIN-ERROR-PROVIDERS": "Os provedores não podem ficar indefinidos",
+      "LOGIN-ERROR-CORS": "Exceção CORS, verifique a configuração do servidor",
+      "LOGIN-ERROR-CSRF": "Exceção CSRF, defina \"disableCSRF\": true no app.config.json",
+      "LOGIN-ECM-LICENSE": "O repositório do Alfresco Content Services está em modo somente leitura",
       "SSO-WRONG-CONFIGURATION": "Servidor de autenticação SSO inacessível"
     },
     "BUTTON": {
       "LOGIN": "ENTRAR",
-      "CHECKING": "VERIFICAR",
+      "CHECKING": "VERIFICANDO",
       "WELCOME": "BEM-VINDO",
-      "SSO": "INICIAR SESSÃO SSO"
+      "SSO": "ENTRAR COM SSO"
     },
     "ACTION": {
       "HELP": "PRECISA DE AJUDA?",
-      "REGISTER": "REGISTAR"
+      "REGISTER": "REGISTRAR"
     }
   },
   "ADF-DATATABLE": {
     "EMPTY": {
       "HEADER": "Esta lista está vazia",
       "DRAG-AND-DROP": {
-        "TITLE": "Arrastar e largar",
-        "SUBTITLE": "para carregar ficheiros"
+        "TITLE": "Arraste e solte",
+        "SUBTITLE": "para carregar arquivos"
       }
     },
     "CONTENT-ACTIONS": {
@@ -408,101 +408,101 @@
     "ACCESSIBILITY": {
       "ACTIONS": "Ações",
       "SELECT_ALL": "Selecionar tudo",
-      "SELECT_FILE": "Selecionar ficheiro",
+      "SELECT_FILE": "Selecionar arquivo",
       "SELECTED": "Selecionado",
-      "ROW_SELECTION": "Pressione Espaço para alternar a seleção de linha",
+      "ROW_SELECTION": "Pressione Espaço para alternar a seleção da linha",
       "SORT_ASCENDING": "Crescente",
       "SORT_DESCENDING": "Decrescente",
       "SORT_NONE": "Nenhum",
       "SORT_DEFAULT": "Classificável",
-      "SORT_ASCENDING_BY": "Ascendente por {{ string }}",
+      "SORT_ASCENDING_BY": "Crescente por {{ string }}",
       "SORT_DESCENDING_BY": "Decrescente por {{ string }}",
       "ICON_TEXT": "Tipo de item {{ type }}",
       "ICON_DISABLED": "Desativado",
       "ROW_OPTION_BUTTON": "Ações",
-      "DRAG": "Botão Arrastar",
+      "DRAG": "Botão de arrastar",
       "DRAGGABLE": "Arrastável",
       "EMPTY_HEADER": "Cabeçalho vazio",
-      "RESIZE_COLUMN": "Redimensione a coluna {{ column }} Use as teclas de seta para ajustar a largura e Shift para passos maiores.",
-      "COLUMN_WIDTH_CHANGED": "{{ column }} Largura da coluna: {{ width }} pixels"
+      "RESIZE_COLUMN": "Redimensionar a coluna {{ column }}. Use as teclas de seta para ajustar a largura e Shift para intervalos maiores.",
+      "COLUMN_WIDTH_CHANGED": "Largura da coluna {{ column }}: {{ width }} pixels"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Documento",
       "FOLDER": "Pasta",
       "PDF": "PDF",
       "IMAGE": "Imagem",
-      "EXCEL": "Folha de cálculo Excel",
-      "WORD": "Documento Word",
-      "POWERPOINT": "Apresentação em Powerpoint",
+      "EXCEL": "Planilha do Excel",
+      "WORD": "Documento do Word",
+      "POWERPOINT": "Apresentação do PowerPoint",
       "VIDEO": "Vídeo",
       "AUDIO": "Áudio",
-      "WEBSITE": "Sítio Web",
-      "ARCHIVE": "Arquivo",
+      "WEBSITE": "Site",
+      "ARCHIVE": "Arquivo compactado",
       "PRESENTATION": "Apresentação",
-      "SPREADSHEET": "Folha de cálculo",
+      "SPREADSHEET": "Planilha",
       "MISCELLANEOUS": "Diversos"
     },
     "COLUMNS_SELECTOR": {
       "COLUMNS": "Escolher colunas visíveis",
       "SEARCH": "Pesquisar",
       "APPLY": "Aplicar",
-      "COLUMNS_VISIBILITY": "Selecione colunas para exibir"
+      "COLUMNS_VISIBILITY": "Selecionar colunas para exibir"
     }
   },
   "USER_PROFILE": {
     "LABELS": {
       "ECM": {
-        "JOB_TITLE": "Título da tarefa"
+        "JOB_TITLE": "Cargo"
       },
       "BPM": {
-        "TENANT": "Locatário"
+        "TENANT": "Tenant"
       },
-      "MY_PROFILE": "O meu perfil"
+      "MY_PROFILE": "Meu perfil"
     },
     "TAB": {
-      "CS": "Serviços de conteúdo",
-      "PS": "Serviços de processamento"
+      "CS": "Content Services",
+      "PS": "Process Services"
     }
   },
   "ADF_VIEWER": {
     "ACTIONS": {
       "BACK": "Voltar",
       "OPEN_WITH": "Abrir com",
-      "DOWNLOAD": "Fazer o download",
+      "DOWNLOAD": "Baixar",
       "PRINT": "Imprimir",
-      "SHARE": "Partilhar",
+      "SHARE": "Compartilhar",
       "MORE_ACTIONS": "Mais ações",
-      "INFO": "Informação",
-      "FULLSCREEN": "Ativar o modo de ecrã inteiro",
+      "INFO": "Informações",
+      "FULLSCREEN": "Ativar modo de tela cheia",
       "CLOSE": "Fechar",
-      "NEXT_FILE": "Ficheiro seguinte",
-      "PREV_FILE": "Ficheiro anterior",
-      "WAIT": "Esperar"
+      "NEXT_FILE": "Próximo arquivo",
+      "PREV_FILE": "Arquivo anterior",
+      "WAIT": "Aguarde"
     },
     "ARIA": {
-      "MIME_TYPE_ICON": "Ícone do tipo de ficheiro",
+      "MIME_TYPE_ICON": "Ícone de tipo de arquivo",
       "PREVIOUS_PAGE": "Página anterior",
-      "NEXT_PAGE": "Página seguinte",
+      "NEXT_PAGE": "Próxima página",
       "ZOOM_IN": "Ampliar",
       "ZOOM_OUT": "Reduzir",
       "FIT_PAGE": "Ajustar página",
-      "ROTATE": "Rodar",
-      "CROP": "Cortar",
-      "SAVE": "Guardar rotação ou corte",
-      "CANCEL": "Cancelar rotação ou corte",
+      "ROTATE": "Girar",
+      "CROP": "Recortar",
+      "SAVE": "Salvar rotação ou recorte",
+      "CANCEL": "Cancelar rotação ou recorte",
       "RESET": "Redefinir",
       "THUMBNAILS": "Miniaturas do documento",
       "THUMBNAILS_PANLEL_CLOSE": "Fechar painel de miniaturas",
-      "LOADING": "O documento está sendo carregado",
+      "LOADING": "O documento está carregando",
       "NOTE_ANNOTATION_IMG": "Anotação de nota"
     },
     "PAGE_LABEL": {
-      "SHOWING": "A mostrar",
+      "SHOWING": "Mostrando",
       "OF": "de",
-      "PAGE_SELECTOR_LABEL": "Seletor de páginas"
+      "PAGE_SELECTOR_LABEL": "Seletor de página"
     },
-    "LOADING": "A carregar",
-    "UNKNOWN_FORMAT": "Não foi possível carregar a pré-visualização. Tipo de ficheiro não suportado ou erro de carregamento. Tente atualizar a página.",
+    "LOADING": "Carregando",
+    "UNKNOWN_FORMAT": "Não foi possível carregar a visualização. Tipo de arquivo não suportado ou erro de carregamento. Tente atualizar a página.",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Página {{ pageNum }}"
@@ -511,93 +511,93 @@
     "PDF_DIALOG": {
       "SUBMIT": "Enviar",
       "CLOSE": "Fechar",
-      "PLACEHOLDER": "Palavra-passe",
-      "ERROR": "A palavra-passe está errada"
+      "PLACEHOLDER": "Senha",
+      "ERROR": "A senha está incorreta"
     },
     "SUBTITLES": "Legendas",
     "NON_RESPONSIVE_DIALOG": {
-      "HEADER": "Atraso no carregamento da pré-visualização",
-      "LABEL": "Pode continuar a aguardar ou descarregar o documento."
+      "HEADER": "Carregamento da visualização atrasado",
+      "LABEL": "Você pode continuar aguardando ou baixar o documento."
     }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "Encontrámos um problema.",
-      "DESCRIPTION": "Parece que algo correu mal.",
+      "TITLE": "Encontramos um problema.",
+      "DESCRIPTION": "Parece que algo deu errado.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Voltar à página inicial"
+        "TEXT": "Voltar para a página inicial"
       }
     },
     "403": {
-      "TITLE": "Não tem permissão para aceder a este servidor.",
-      "DESCRIPTION": "Não tem permissão para aceder a este recurso no servidor.",
+      "TITLE": "Você não tem permissão para acessar este servidor.",
+      "DESCRIPTION": "Você não tem permissão para acessar este recurso no servidor.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Comunicar problema"
+        "TEXT": "Relatar problema"
       },
       "RETURN_BUTTON": {
-        "TEXT": "Voltar à página inicial"
+        "TEXT": "Voltar para a página inicial"
       }
     },
     "404": {
       "TITLE": "Ocorreu um erro.",
-      "DESCRIPTION": "Não foi possível encontrar a página que procurava.",
+      "DESCRIPTION": "Não foi possível encontrar a página que você estava procurando.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Voltar à página inicial"
+        "TEXT": "Voltar para a página inicial"
       }
     },
     "500": {
       "TITLE": "Ocorreu um erro.",
-      "DESCRIPTION": "Erro interno do servidor, tente novamente ou contacte o apoio informático \\[500].",
+      "DESCRIPTION": "Erro interno do servidor, tente novamente ou entre em contato com o suporte de TI [500].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Voltar à página inicial"
+        "TEXT": "Voltar para a página inicial"
       }
     },
     "502": {
       "TITLE": "Ocorreu um erro.",
-      "DESCRIPTION": "Bad Gateway, tente novamente ou contacte o suporte de TI \\[502].",
+      "DESCRIPTION": "Gateway inválido, tente novamente ou entre em contato com o suporte de TI [502].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Voltar à página inicial"
+        "TEXT": "Voltar para a página inicial"
       }
     },
     "503": {
       "TITLE": "Ocorreu um erro.",
-      "DESCRIPTION": "Serviço temporariamente indisponível \\[503].",
+      "DESCRIPTION": "Serviço temporariamente indisponível [503].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Voltar à página inicial"
+        "TEXT": "Voltar para a página inicial"
       }
     },
     "504": {
       "TITLE": "Ocorreu um erro.",
-      "DESCRIPTION": "O servidor atingiu o tempo limite, tente novamente ou contacte o suporte de TI \\[504].",
+      "DESCRIPTION": "O servidor atingiu o tempo limite, tente novamente ou entre em contato com o suporte de TI [504].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Voltar à página inicial"
+        "TEXT": "Voltar para a página inicial"
       }
     }
   },
   "ABOUT": {
     "VERSION": "Versão",
     "SERVER_SETTINGS": {
-      "TITLE": "Definições do site",
-      "CONTENT_SERVICE_HOST": "URL dos Serviços de Conteúdos Alfresco: {{ value }}",
-      "PROCESS_SERVICE_HOST": "URL dos serviços de processos Alfresco: {{ value }}"
+      "TITLE": "Configurações do servidor",
+      "CONTENT_SERVICE_HOST": "URL do Alfresco Content Services: {{ value }}",
+      "PROCESS_SERVICE_HOST": "URL do Alfresco Process Services: {{ value }}"
     },
     "REPOSITORY": "Repositório",
     "PACKAGES": {
@@ -606,7 +606,7 @@
       "VERSION": "Versão"
     },
     "EXTENSIONS": {
-      "TITLE": "Plug-ins",
+      "TITLE": "Plugins",
       "TABLE_HEADERS": {
         "ID": "ID",
         "NAME": "Nome",
@@ -621,11 +621,11 @@
       "TITLE": "Licença",
       "PROPERTY": "Propriedade",
       "VALUE": "Valor",
-      "ENABLED": "Ativo",
+      "ENABLED": "Ativado",
       "DISABLED": "Desativado"
     },
     "STATUS": {
-      "TITLE": "Estado",
+      "TITLE": "Status",
       "PROPERTY": "Propriedade",
       "VALUE": "Valor"
     },
@@ -635,7 +635,7 @@
       "VERSION": "Versão"
     },
     "PLUGINS": {
-      "TITLE": "Plug-ins",
+      "TITLE": "Plugins",
       "NAME": "Nome",
       "VERSION": "Versão"
     }
@@ -654,8 +654,8 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "A carregar...",
-    "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
+    "LOADING": "Carregando...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} caixa de combinação {{selectedOption}}"
   },
   "INFO_DRAWER": {
     "ICON": "Ícone de nó"
@@ -666,14 +666,14 @@
   },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Confirmar",
-    "ACTION": "Pretende prosseguir?",
+    "ACTION": "Deseja continuar?",
     "YES_LABEL": "Sim",
     "NO_LABEL": "Não"
   },
   "SESSION_TIMEOUT": {
-    "TITLE": "Ainda está a trabalhar?",
-    "MESSAGE": "A sua sessão terminará dentro de {{seconds}} segundos devido à inatividade.",
-    "LOG_OUT": "Terminar sessão",
-    "CONTINUE_WORKING": "Continuar a trabalhar"
+    "TITLE": "Você ainda está trabalhando?",
+    "MESSAGE": "Sua sessão terminará em {{seconds}} segundos porque não houve atividade.",
+    "LOG_OUT": "Sair",
+    "CONTINUE_WORKING": "Continuar trabalhando"
   }
 }

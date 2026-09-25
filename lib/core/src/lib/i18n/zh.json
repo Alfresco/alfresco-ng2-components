@@ -1,0 +1,679 @@
+{
+  "ADF": {
+    "LANGUAGE": "语言",
+    "ROLES": {
+      "ALL": "全部",
+      "CONTRIBUTOR": "贡献者",
+      "COLLABORATOR": "合作者",
+      "COORDINATOR": "协调者",
+      "EDITOR": "编辑者",
+      "CONSUMER": "使用者",
+      "SITECOLLABORATOR": "站点合作者",
+      "SITECONSUMER": "站点使用者",
+      "SITECONTRIBUTOR": "站点贡献者",
+      "SITEMANAGER": "站点管理员"
+    }
+  },
+  "SAVE": "保存",
+  "COMPLETE": "完成",
+  "CANCEL": "取消",
+  "CLAIM": "申领",
+  "UNCLAIM": "释放",
+  "START PROCESS": "启动流程",
+  "DATA_LOADING": "数据正在加载",
+  "CLOSE": "关闭",
+  "NOTIFICATIONS": {
+    "NO_MESSAGE": "您目前没有通知。",
+    "UNREAD_MESSAGES": "您有未读通知。",
+    "TITLE": "通知",
+    "MARK_AS_READ": "全部标记为已读",
+    "SYSTEM": "系统",
+    "LOAD_MORE": "加载更多",
+    "OPEN_HISTORY": "打开通知历史记录"
+  },
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "启动表单"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "预览不可用",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "在预览模式下,您无法附加文件"
+      }
+    },
+    "FIELD": {
+      "LOCALSTORAGE": "本地存储",
+      "SOURCE": "来源选自 ",
+      "VIEW_FILE": "查看",
+      "DOWNLOAD_FILE": "下载",
+      "REMOVE_FILE": "删除",
+      "UPLOAD": "上传",
+      "REQUIRED": "必填字段",
+      "REST_API_FAILED": "无法访问服务器 '{{ hostname }}'",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "加载下拉列表元素时出现问题。请联系管理员。",
+      "DATA_TABLE_LOAD_FAILED": "加载表格元素时出现问题。请联系管理员。",
+      "DATA_TABLE_EMPTY_CONTENT": "未找到数据",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "加载外部属性时出现问题。请联系管理员。",
+      "FILE_NAME": "文件名",
+      "TITLE": "标题",
+      "NO_FILE_ATTACHED": "无附加文件",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "使用其他数字格式",
+        "INVALID_DECIMAL_NUMBER": "使用小数格式",
+        "INVALID_DECIMAL_PRECISION": "小数值不正确,小数点后最多应为 {{precision}} 位数字。",
+        "INVALID_DATE": "使用其他日期格式",
+        "INVALID_DATE_FORMAT": "日期格式无效。",
+        "INVALID_VALUE": "使用其他值",
+        "NOT_GREATER_THAN": "不能大于 {{ maxValue }}",
+        "NOT_LESS_THAN": "不能小于 {{ minValue }}",
+        "AT_LEAST_LONG": "至少输入 {{ minLength }} 个字符",
+        "NO_LONGER_THAN": "输入不超过 {{ maxLength }} 个字符"
+      },
+      "FILE_ALREADY_UPLOADED": "已上传使用相同名称的文件。",
+      "ATTACH": "附加",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "添加",
+        "ROW_LIMIT_REACHED": "已达到行数限制({{ limit }})。"
+      }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "无名称的任务",
+      "ROW_LABEL": "第 {{ number }} 行",
+      "DELETE_ROW": "删除行",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "删除行",
+        "MESSAGE": "是否确定要删除此行?",
+        "YES_LABEL": "删除行",
+        "NO_LABEL": "取消"
+      }
+    },
+    "BUTTON": {
+      "PREVIOUS_TAB": "上一个",
+      "PREVIOUS_TAB_TITLE": "导航到上一个标签",
+      "NEXT_TAB": "下一个",
+      "NEXT_TAB_TITLE": "导航到下一个标签"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "字体大小",
+      "FONT_WEIGHT": "字体粗细",
+      "FONT_COLOR": "字体颜色",
+      "FONT_WEIGHTS": {
+        "REGULAR": "常规",
+        "BOLD": "粗体"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "系统颜色",
+        "BLACK": "黑色",
+        "GREY": "灰色",
+        "RED": "红色",
+        "GREEN": "绿色",
+        "BLUE": "蓝色",
+        "YELLOW": "黄色"
+      },
+      "PREDEFINED": {
+        "HEADER": {
+          "NORMAL": "正常",
+          "HEADING": "标题",
+          "TITLE": "标题"
+        },
+        "RADIO_BUTTONS": {
+          "NORMAL": "正常",
+          "STRONG": "加粗",
+          "HEADING": "标题"
+        },
+        "READONLY_TEXT": {
+          "NORMAL": "正常",
+          "STRONG": "加粗",
+          "HEADING": "标题",
+          "TITLE": "标题",
+          "ANNOTATION": "注释"
+        }
+      }
+    }
+  },
+  "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "公司徽标",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "切换菜单"
+      }
+    },
+    "FILE_SIZE": {
+      "BYTES": "字节",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
+    "PAGINATION": {
+      "ARIA": {
+        "ITEMS_PER_PAGE": "页面大小选择器",
+        "CURRENT_PAGE": "当前页面选择器",
+        "PREVIOUS_PAGE": "上一页按钮",
+        "NEXT_PAGE": "下一页按钮"
+      },
+      "ITEMS_RANGE": "显示 {{range}}/{{total}}",
+      "ITEMS_PER_PAGE": "每页的项目",
+      "CURRENT_PAGE": "第 {{ number }}页",
+      "TOTAL_PAGES": "/共 {{ total }} 页"
+    },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "取消"
+        },
+        "TITLE": "添加文件至 zip，此操作需要数分钟时间",
+        "COMPLETE": "完成"
+      },
+      "EDIT_JSON": {
+        "CLOSE": "关闭",
+        "UPDATE": "更新",
+        "COPY": "复制",
+        "COPIED": "已复制到剪贴板"
+      },
+      "UNSAVED_CHANGES": {
+        "TITLE": "未保存的更改",
+        "DESCRIPTION": "您在此屏幕上有未保存的更改。是否确定要在不保存更改的情况下离开?",
+        "DISCARD_CHANGES_BUTTON": "放弃更改"
+      }
+    },
+    "BREADCRUMBS": {
+      "TITLE": "面包屑",
+      "SHOWALL": "查看全部"
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "锁定文件",
+      "ALLOW_OTHERS_CHECKBOX": "允许所有者修改此文件",
+      "FILE_LOCK_CHECKBOX": "锁定文件",
+      "TIME_LOCK_CHECKBOX": "锁定时间",
+      "SAVE_BUTTON": {
+        "LABEL": "保存"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "取消"
+      }
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "新建文件夹",
+      "EDIT_FOLDER_TITLE": "编辑文件夹",
+      "FOLDER_NAME": {
+        "LABEL": "名称",
+        "ERRORS": {
+          "REQUIRED": "需要文件夹名称",
+          "SPECIAL_CHARACTERS": "文件夹名称不能包含 * \" < > \\ / ? : | 字符",
+          "ENDING_DOT": "文件夹名称不能以句点结尾 。",
+          "ONLY_SPACES": "文件夹名称不能只包含空格"
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "说明"
+      },
+      "FOLDER_TITLE": {
+        "LABEL": "标题"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "创建"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "更新"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "取消"
+      },
+      "FOLDER_CREATED_SUCCESS": "文件夹“{{ name }}”创建成功",
+      "FOLDER_UPDATED_SUCCESS": "文件夹“{{ name }}”更新成功"
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "此操作未成功，请重试或联系您的 IT 团队。",
+        "EXISTENT_FOLDER": "存在使用此名称的文件夹。请尝试使用其他名称。"
+      }
+    },
+    "RESTORE_NODE": {
+      "VIEW": "查看",
+      "PARTIAL_PLURAL": "{{ number }} 个项目无法恢复，因为恢复位置存在问题",
+      "NODE_EXISTS": "无法恢复，{{ name }} 项目已存在",
+      "LOCATION_MISSING": "无法恢复 {{ name }} 项目，原位置不存在",
+      "GENERIC": "恢复 {{ name }} 项目时出现问题",
+      "PLURAL": "成功恢复",
+      "SINGULAR": "{{ name }} 项目已恢复"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "{{ name }} 已删除",
+      "PLURAL": "{{ number }} 个项目已删除",
+      "PARTIAL_SINGULAR": "已删除 {{ success }} 项目，{{ failed }} 无法删除",
+      "PARTIAL_PLURAL": "已删除 {{ success }} 项目，{{ failed }} 无法删除",
+      "ERROR_SINGULAR": "{{ name }} 无法删除",
+      "ERROR_PLURAL": "{{ number }} 个项目无法删除"
+    },
+    "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "新增",
+        "NAME": "名称",
+        "VALUE": "值"
+      },
+      "NONE": "无",
+      "SELECTED_VALUES": "已选值",
+      "REMOVE": "删除 {{ value }}",
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "使用数字格式",
+        "INT_VALIDATION_ERROR": "使用整数格式",
+        "LONG_VALIDATION_ERROR": "使用长格式",
+        "LENGTH_VALIDATION_ERROR": "值的长度应该在 {{ minLength }} 和 {{ maxLength }} 之间",
+        "MATCH_VALIDATION_ERROR": "数值与模式不匹配：{{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "值应该在 {{ minValue }} 和 {{ maxValue }} 之间",
+        "ONLY_POSITIVE_NUMBER": "仅允许正值"
+      },
+      "MORE": "更多"
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "属性",
+        "NAME": "名称",
+        "TITLE": "标题",
+        "DESCRIPTION": "说明",
+        "AUTHOR": "作者",
+        "MIMETYPE": "MIME 类型",
+        "SIZE": "尺寸",
+        "CREATOR": "创建者",
+        "CREATED_DATE": "创建日期",
+        "MODIFIER": "修改者",
+        "MODIFIED_DATE": "修改日期",
+        "CONTENT_TYPE": "内容类型"
+      },
+      "CONTENT_TYPE": {
+        "DIALOG": {
+          "TITLE": "更改内容类型",
+          "DESCRIPTION": "对内容类型进行此更改将永久性地在文档中添加一些属性和存储的元数据.",
+          "CONFIRM": "确定要更改内容类型吗？",
+          "CANCEL": "取消",
+          "APPLY": "保存更改",
+          "VIEW_DETAILS": "查看详细信息",
+          "PROPERTY": {
+            "NAME": "名称",
+            "DESCRIPTION": "说明",
+            "DATA_TYPE": "数据类型"
+          }
+        }
+      },
+      "ACTIONS": {
+        "EDIT": "编辑",
+        "SAVE": "保存",
+        "CANCEL": "取消",
+        "CLEAR": "清除",
+        "TOGGLE": "切换值",
+        "COPY_TO_CLIPBOARD": "双击以复制值",
+        "EDIT_ASPECTS": "编辑纵横比"
+      },
+      "ACCESSIBILITY": {
+        "EDIT": "编辑按钮",
+        "DATEPICKER": "使用箭头键在日期之间进行浏览。上下移动至同一天的下一周或上一周。左右移动到第二天或前一天。按 Enter（回车） 或 Return（返回） 键选择一个日期。",
+        "COPY_TO_CLIPBOARD_MESSAGE": "值已复制到剪贴板",
+        "EDIT_ASPECTS": "编辑纵横比",
+        "SECTION": "{{ sectionName }} 部分"
+      }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "在升序和降序之间切换结果",
+      "SORT_BY": "排序方式",
+      "BUTTON": {
+        "TOOLTIP": "搜索",
+        "ARIA-LABEL": "搜索按钮"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "搜索输入"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "关闭"
+        }
+      }
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "功能标志覆盖",
+      "FILTER_OR_ADD_NEW": "筛选或新增",
+      "FILTER": "筛选",
+      "ADD_NEW": "新增功能标志(Shift + Enter)"
+    }
+  },
+  "COMMENTS": {
+    "PROFILE_IMAGE": "个人资料图像",
+    "NONE": "无注释",
+    "ADD": "添加",
+    "HEADER": "评论 ({{ count }})",
+    "CREATED_BY_HEADER": "创建者",
+    "MESSAGE_HEADER": "消息",
+    "EMPTY_ERROR": "注释不能为空",
+    "DIALOG": {
+      "TITLE": "新增评论",
+      "LABELS": {
+        "MESSAGE": "消息"
+      },
+      "BUTTON": {
+        "ADD": "添加注释",
+        "CANCEL": "取消"
+      }
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco,让业务畅行",
+    "LABEL": {
+      "LOGIN": "登录",
+      "USERNAME": "用户名",
+      "PASSWORD": "密码",
+      "REMEMBER": "记住用户名和密码"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "显示密码",
+      "HIDE-PASSWORD": "隐藏密码"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "必需",
+      "USERNAME-MIN": "您的用户名需要至少 {{ minLength }} 个字符。",
+      "PASSWORD-REQUIRED": "输入登录密码",
+      "LOGIN-ERROR-CREDENTIALS": "您已输入未知用户名或密码",
+      "LOGIN-ERROR-PROVIDERS": "提供商未定义",
+      "LOGIN-ERROR-CORS": "CORS 异常，检查您的服务器配置",
+      "LOGIN-ERROR-CSRF": "CSRF 异常，在 app.config.json 中设置 \"disableCSRF\": true",
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services 存储库为只读模式",
+      "SSO-WRONG-CONFIGURATION": "SSO 身份验证服务器无法连接"
+    },
+    "BUTTON": {
+      "LOGIN": "登录",
+      "CHECKING": "正在检验",
+      "WELCOME": "欢迎使用",
+      "SSO": "登录 SSO"
+    },
+    "ACTION": {
+      "HELP": "是否需要帮助？",
+      "REGISTER": "注册"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "此列表为空",
+      "DRAG-AND-DROP": {
+        "TITLE": "拖放",
+        "SUBTITLE": "要上传文件"
+      }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "内容操作",
+      "SELECT_COLUMNS": "选择列"
+    },
+    "ACCESSIBILITY": {
+      "ACTIONS": "操作",
+      "SELECT_ALL": "全选",
+      "SELECT_FILE": "选择文件",
+      "SELECTED": "已选择",
+      "ROW_SELECTION": "按空格键可切换行选择状态",
+      "SORT_ASCENDING": "升序",
+      "SORT_DESCENDING": "降序",
+      "SORT_NONE": "无",
+      "SORT_DEFAULT": "可排序的",
+      "SORT_ASCENDING_BY": "按 {{ string }} 升序排列",
+      "SORT_DESCENDING_BY": "按 {{ string }} 降序排列",
+      "ICON_TEXT": "项目类型 {{ type }}",
+      "ICON_DISABLED": "已禁用",
+      "ROW_OPTION_BUTTON": "操作",
+      "DRAG": "拖动按钮",
+      "DRAGGABLE": "可拖动",
+      "EMPTY_HEADER": "空白标题",
+      "RESIZE_COLUMN": "调整 {{ column }} 列大小。使用箭头键调整宽度,按 Shift 键可加大调整幅度。",
+      "COLUMN_WIDTH_CHANGED": "{{ column }} 列宽:{{ width }} 像素"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "文档",
+      "FOLDER": "文件夹",
+      "PDF": "PDF",
+      "IMAGE": "图像",
+      "EXCEL": "Excel 电子表格",
+      "WORD": "Word 文档",
+      "POWERPOINT": "PowerPoint 演示文稿",
+      "VIDEO": "视频",
+      "AUDIO": "音频",
+      "WEBSITE": "网站",
+      "ARCHIVE": "存档",
+      "PRESENTATION": "演示文稿",
+      "SPREADSHEET": "电子表格",
+      "MISCELLANEOUS": "其他"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "列",
+      "SEARCH": "搜索",
+      "APPLY": "应用",
+      "COLUMNS_VISIBILITY": "选择要显示的列"
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "作业标题"
+      },
+      "BPM": {
+        "TENANT": "租户"
+      },
+      "MY_PROFILE": "我的个人档案"
+    },
+    "TAB": {
+      "CS": "内容服务",
+      "PS": "流程服务"
+    }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "返回",
+      "OPEN_WITH": "打开方式",
+      "DOWNLOAD": "下载",
+      "PRINT": "打印",
+      "SHARE": "共享",
+      "MORE_ACTIONS": "更多操作",
+      "INFO": "信息",
+      "FULLSCREEN": "激活全屏模式",
+      "CLOSE": "关闭",
+      "NEXT_FILE": "下一个文件",
+      "PREV_FILE": "上一个文件",
+      "WAIT": "等待"
+    },
+    "ARIA": {
+      "MIME_TYPE_ICON": "文件类型图标",
+      "PREVIOUS_PAGE": "上一页",
+      "NEXT_PAGE": "下一页",
+      "ZOOM_IN": "放大",
+      "ZOOM_OUT": "缩小",
+      "FIT_PAGE": "符合页面",
+      "ROTATE": "旋转",
+      "CROP": "剪切",
+      "SAVE": "保存",
+      "CANCEL": "取消",
+      "RESET": "重置",
+      "THUMBNAILS": "文档缩略图",
+      "THUMBNAILS_PANLEL_CLOSE": "关闭“缩略图”面板",
+      "LOADING": "文档正在加载",
+      "NOTE_ANNOTATION_IMG": "注释标注"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "正在显示",
+      "OF": "/",
+      "PAGE_SELECTOR_LABEL": "页面选择器"
+    },
+    "LOADING": "正在加载",
+    "UNKNOWN_FORMAT": "无法加载预览。未知格式。",
+    "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "第 {{ pageNum }} 页"
+      }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "提交",
+      "CLOSE": "关闭",
+      "PLACEHOLDER": "密码",
+      "ERROR": "密码错误"
+    },
+    "SUBTITLES": "字幕",
+    "NON_RESPONSIVE_DIALOG": {
+      "HEADER": "预览加载延迟",
+      "LABEL": "您可以继续等待，也可以下载文档。"
+    }
+  },
+  "ERROR_CONTENT": {
+    "UNKNOWN": {
+      "TITLE": "我们遇到一个问题。",
+      "DESCRIPTION": "看似发生错误。",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "返回到主页"
+      }
+    },
+    "403": {
+      "TITLE": "您没有访问此服务器的权限。",
+      "DESCRIPTION": "不允许您访问服务器上的此资源。",
+      "SECONDARY_BUTTON": {
+        "TEXT": "报告问题"
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "返回到主页"
+      }
+    },
+    "404": {
+      "TITLE": "出现错误。",
+      "DESCRIPTION": "我们无法找到您正在查找的页面。",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "返回到主页"
+      }
+    },
+    "500": {
+      "TITLE": "出现错误。",
+      "DESCRIPTION": "内部服务器错误，请重试或联系 IT 支持 [500]。",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "返回到主页"
+      }
+    },
+    "502": {
+      "TITLE": "出现错误。",
+      "DESCRIPTION": "错误分支，请重试或联系 IT 支持 [502]。",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "返回到主页"
+      }
+    },
+    "503": {
+      "TITLE": "出现错误。",
+      "DESCRIPTION": "服务暂时不可用 [503]。",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "返回到主页"
+      }
+    },
+    "504": {
+      "TITLE": "出现错误。",
+      "DESCRIPTION": "服务器超时，请重试或联系 IT 支持 [504]。",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "返回到主页"
+      }
+    }
+  },
+  "ABOUT": {
+    "VERSION": "版本",
+    "SERVER_SETTINGS": {
+      "TITLE": "服务器设置",
+      "CONTENT_SERVICE_HOST": "Alfresco Content Services URL：{{ value }}",
+      "PROCESS_SERVICE_HOST": "Alfresco Process Services URL：{{ value }}"
+    },
+    "REPOSITORY": "存储库",
+    "PACKAGES": {
+      "TITLE": "软件包",
+      "NAME": "名称",
+      "VERSION": "版本"
+    },
+    "EXTENSIONS": {
+      "TITLE": "插件",
+      "TABLE_HEADERS": {
+        "ID": "ID",
+        "NAME": "名称",
+        "VERSION": "版本",
+        "VENDOR": "供应商",
+        "LICENSE": "许可证",
+        "RUNTIME": "运行时",
+        "DESCRIPTION": "说明"
+      }
+    },
+    "LICENSE": {
+      "TITLE": "许可证",
+      "PROPERTY": "属性",
+      "VALUE": "值",
+      "ENABLED": "已启用",
+      "DISABLED": "已禁用"
+    },
+    "STATUS": {
+      "TITLE": "状态",
+      "PROPERTY": "属性",
+      "VALUE": "值"
+    },
+    "MODULES": {
+      "TITLE": "模块",
+      "NAME": "名称",
+      "VERSION": "版本"
+    },
+    "PLUGINS": {
+      "TITLE": "插件",
+      "NAME": "名称",
+      "VERSION": "版本"
+    }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "单击以复制",
+    "SUCCESS_COPY": "复制到剪贴板上的文本"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "搜索",
+      "ARIA_LABEL": "搜索选项"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "清除"
+    }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "加载...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} 组合框 {{selectedOption}}"
+  },
+  "INFO_DRAWER": {
+    "ICON": "节点图标"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "加载更多",
+    "DELETE": "删除 {{ name }}"
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "确认",
+    "ACTION": "是否要继续？",
+    "YES_LABEL": "是",
+    "NO_LABEL": "否"
+  },
+  "SESSION_TIMEOUT": {
+    "TITLE": "您还在工作吗?",
+    "MESSAGE": "由于没有任何活动,您的会话将在 {{seconds}} 秒后结束。",
+    "LOG_OUT": "注销",
+    "CONTINUE_WORKING": "继续工作"
+  }
+}

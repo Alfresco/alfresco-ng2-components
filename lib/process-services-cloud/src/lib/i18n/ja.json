@@ -7,7 +7,7 @@
     },
     "PROPERTIES": {
       "NAME": "プロセス名",
-      "CREATED": "作成日",
+      "CREATED": "作成済み",
       "STATUS": "ステータス",
       "START_DATE": "開始日",
       "COMPLETED_DATE": "完了日",
@@ -50,7 +50,8 @@
         "MAXIMUM_LENGTH": "長すぎます。{{characters}} 文字以内で入力してください。",
         "SPACE_VALIDATOR": "先頭または末尾にスペースを使用することはできません。"
       }
-    }
+    },
+    "LOADING": "読み込み中"
   },
   "ADF_CLOUD_TASK_LIST": {
     "START_TASK": {
@@ -80,7 +81,7 @@
       "CREATED_DATE": "作成日",
       "LAST_MODIFIED": "最終更新日時",
       "DUE_DATE": "期限",
-      "CREATED": "作成日",
+      "CREATED": "作成済み",
       "JSON_CELL": "JSON",
       "COMPLETED_BY": "完了者",
       "PRIORITY_VALUES": {
@@ -97,7 +98,8 @@
         "SUBTITLE": "後で簡単に見つけられるよう、新しいタスクを作成してください",
         "NONE": "タスクリストが見つかりません"
       }
-    }
+    },
+    "LOADING": "読み込み中"
   },
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {
@@ -115,7 +117,7 @@
     "COMPLETED_TASKS": "完了済みタスク",
     "STATUS": {
       "ALL": "すべて",
-      "CREATED": "作成日",
+      "CREATED": "作成済み",
       "ASSIGNED": "割り当て済み",
       "SUSPENDED": "中断",
       "CANCELLED": "キャンセル",
@@ -174,13 +176,13 @@
       "APP_NAME": "アプリケーション名",
       "TASK_ID": "タスク ID",
       "PROCESS_DEF_NAME": "プロセス定義名",
-      "PROCESS_DEF_ID": "プロセス定義 ID",
+      "PROCESS_DEF_ID": "ProcessDefinitionId",
       "STATUS": "ステータス",
       "ASSIGNMENT": "担当者",
       "DIRECTION": "昇順/降順",
-      "PROCESS_INSTANCE_ID": "プロセスインスタンス ID",
+      "PROCESS_INSTANCE_ID": "ProcessInstanceId",
       "TASK_NAME": "タスク名",
-      "PARENT_TASK_ID": "親タスク ID",
+      "PARENT_TASK_ID": "ParentTaskId",
       "PRIORITY": "優先度",
       "STAND_ALONE": "単独",
       "LAST_MODIFIED_FROM": "最終変更日 - 開始",
@@ -203,12 +205,12 @@
   "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
     "LABEL": {
       "APP_NAME": "アプリケーション名",
-      "SERVICE_TASK_ID": "サービスタスク ID",
+      "SERVICE_TASK_ID": "ServiceTaskId",
       "SERVICE_NAME": "サービス名",
       "ELEMENT_ID": "要素 Id",
       "PROCESS_DEF_NAME": "プロセス定義名",
-      "PROCESS_DEF_ID": "プロセス定義 ID",
-      "PROCESS_INSTANCE_ID": "プロセスインスタンス ID",
+      "PROCESS_DEF_ID": "ProcessDefinitionId",
+      "PROCESS_INSTANCE_ID": "ProcessInstanceId",
       "STATUS": "ステータス",
       "DIRECTION": "昇順/降順",
       "ACTIVITY_NAME": "アクティビティ名",
@@ -223,13 +225,13 @@
     "FILTER_NAME": "フィルタの名前",
     "LABEL": {
       "APP_NAME": "アプリケーション名",
-      "PROCESS_INS_ID": "プロセスインスタンス ID",
+      "PROCESS_INS_ID": "ProcessInstanceId",
       "STATUS": "ステータス",
       "INITIATOR": "開始者",
       "ASSIGNMENT": "担当者",
       "SORT": "表示順",
       "DIRECTION": "昇順/降順",
-      "PROCESS_DEF_ID": "プロセス定義 ID",
+      "PROCESS_DEF_ID": "ProcessDefinitionId",
       "PROCESS_DEF_NAME": "プロセス定義名",
       "PROCESS_DEF_KEY": "プロセス定義キー",
       "LAST_MODIFIED": "最終更新日時",
@@ -241,6 +243,7 @@
       "SUSPENDED_DATE": "保留日",
       "STARTED_BY": "開始者",
       "COMPLETED_DATE": "完了日",
+      "MAIN_PROCESS_ID": "メインプロセスID",
       "DATE_RANGE": {
         "NO_DATE": "日付なし",
         "TODAY": "今日",
@@ -318,7 +321,7 @@
       "PARENT_NAME": "親名",
       "PARENT_NAME_DEFAULT": "親なし",
       "CREATED_BY": "作成者",
-      "CREATED": "作成日",
+      "CREATED": "作成済み",
       "END_DATE": "終了日",
       "ID": "ID",
       "PROCESS_INSTANCE_ID": "プロセスインスタンス ID",

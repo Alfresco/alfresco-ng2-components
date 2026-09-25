@@ -24,6 +24,7 @@
   "CLOSE": "إغلاق",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "ليس لديك إعلامات في هذا الوقت.",
+    "UNREAD_MESSAGES": "لديك إعلامات غير مقروءة.",
     "TITLE": "إعلامات",
     "MARK_AS_READ": "وضع علامة على الكل كغير مقروءة",
     "SYSTEM": "النظام",
@@ -35,7 +36,10 @@
       "TITLE": "نموذج البدء"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "المعاينة غير متاحة"
+      "IMAGE_NOT_AVAILABLE": "المعاينة غير متاحة",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "في وضع المعاينة، لا يمكنك إرفاق ملف"
+      }
     },
     "FIELD": {
       "LOCALSTORAGE": "التخزين المحلي",
@@ -46,11 +50,19 @@
       "UPLOAD": "تحميل",
       "REQUIRED": "حقل مطلوب",
       "REST_API_FAILED": "الخادم '{{hostname}}' لا يمكن الوصول إليه",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "حدثت مشكلة في تحميل عناصر القائمة المنسدلة. يرجى الاتصال بالمسؤول.",
+      "DATA_TABLE_LOAD_FAILED": "حدثت مشكلة في تحميل عناصر الجدول. يرجى الاتصال بالمسؤول.",
+      "DATA_TABLE_EMPTY_CONTENT": "لم يتم العثور على بيانات",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "حدثت مشكلة في تحميل الخاصية الخارجية. يرجى الاتصال بالمسؤول.",
       "FILE_NAME": "اسم الملف",
+      "TITLE": "العنوان",
       "NO_FILE_ATTACHED": "لا ملف مرفق",
       "VALIDATOR": {
         "INVALID_NUMBER": "استخدم تنسيق رقم مختلفًا",
+        "INVALID_DECIMAL_NUMBER": "استخدم تنسيق رقم عشري",
+        "INVALID_DECIMAL_PRECISION": "قيمة عشرية غير صحيحة، يجب ألا يزيد عدد الأرقام بعد العلامة العشرية عن {{precision}}.",
         "INVALID_DATE": "استخدم تنسيق تاريخ مختلفًا",
+        "INVALID_DATE_FORMAT": "تنسيق تاريخ غير صالح.",
         "INVALID_VALUE": "أدخل قيمة مختلفة",
         "NOT_GREATER_THAN": "لا يمكن أن يكون أكبر من {{ maxValue }}",
         "NOT_LESS_THAN": "لا يمكن أن يكون أقل من {{ minValue }}",
@@ -58,10 +70,65 @@
         "NO_LONGER_THAN": "أدخل {{ maxLength }} حرف (حرفًا) كحد أقصى"
       },
       "FILE_ALREADY_UPLOADED": "تم تحميل ملف بالاسم نفسه بالفعل.",
-      "ATTACH": "إرفاق"
+      "ATTACH": "إرفاق",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "إضافة",
+        "ROW_LIMIT_REACHED": "تم الوصول إلى الحد الأقصى للصفوف ({{ limit }})."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "مهمة بدون اسم"
+      "NAMELESS_TASK": "مهمة بدون اسم",
+      "ROW_LABEL": "الصف {{ number }}",
+      "DELETE_ROW": "حذف الصف",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "حذف الصف",
+        "MESSAGE": "هل أنت متأكد من أنك تريد حذف هذا الصف؟",
+        "YES_LABEL": "حذف الصف",
+        "NO_LABEL": "إلغاء"
+      }
+    },
+    "BUTTON": {
+      "PREVIOUS_TAB": "السابق",
+      "PREVIOUS_TAB_TITLE": "انتقل إلى علامة التبويب السابقة",
+      "NEXT_TAB": "التالي",
+      "NEXT_TAB_TITLE": "انتقل إلى علامة التبويب التالية"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "حجم الخط",
+      "FONT_WEIGHT": "وزن الخط",
+      "FONT_COLOR": "لون الخط",
+      "FONT_WEIGHTS": {
+        "REGULAR": "عادي",
+        "BOLD": "عريض"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "لون النظام",
+        "BLACK": "أسود",
+        "GREY": "رمادي",
+        "RED": "أحمر",
+        "GREEN": "أخضر",
+        "BLUE": "أزرق",
+        "YELLOW": "أصفر"
+      },
+      "PREDEFINED": {
+        "HEADER": {
+          "NORMAL": "متوسطة",
+          "HEADING": "عنوان",
+          "TITLE": "العنوان"
+        },
+        "RADIO_BUTTONS": {
+          "NORMAL": "متوسطة",
+          "STRONG": "قوي",
+          "HEADING": "عنوان"
+        },
+        "READONLY_TEXT": {
+          "NORMAL": "متوسطة",
+          "STRONG": "قوي",
+          "HEADING": "عنوان",
+          "TITLE": "العنوان",
+          "ANNOTATION": "تعليق توضيحي"
+        }
+      }
     }
   },
   "CORE": {
@@ -99,12 +166,24 @@
         "ACTIONS": {
           "CANCEL": "إلغاء"
         },
-        "TITLE": "إضافة الملفات إلى الضغط، قد يستغرق هذا بضع دقائق"
+        "TITLE": "إضافة الملفات إلى الضغط، قد يستغرق هذا بضع دقائق",
+        "COMPLETE": "تم"
       },
       "EDIT_JSON": {
         "CLOSE": "إغلاق",
-        "UPDATE": "تحديث"
+        "UPDATE": "تحديث",
+        "COPY": "نسخ",
+        "COPIED": "تم النسخ إلى الحافظة"
+      },
+      "UNSAVED_CHANGES": {
+        "TITLE": "تغييرات غير محفوظة",
+        "DESCRIPTION": "لديك تغييرات غير محفوظة في هذه الشاشة. هل أنت متأكد من أنك تريد المغادرة دون حفظ التغييرات؟",
+        "DISCARD_CHANGES_BUTTON": "تجاهل التغييرات"
       }
+    },
+    "BREADCRUMBS": {
+      "TITLE": "مسارات التنقل",
+      "SHOWALL": "عرض الكل"
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "تأمين ملف",
@@ -144,7 +223,9 @@
       },
       "CANCEL_BUTTON": {
         "LABEL": "إلغاء"
-      }
+      },
+      "FOLDER_CREATED_SUCCESS": "تم إنشاء المجلد '{{ name }}' بنجاح",
+      "FOLDER_UPDATED_SUCCESS": "تم تحديث المجلد '{{ name }}' بنجاح"
     },
     "MESSAGES": {
       "ERRORS": {
@@ -176,12 +257,16 @@
         "VALUE": "القيمة"
       },
       "NONE": "بلا",
+      "SELECTED_VALUES": "القيم المحددة",
+      "REMOVE": "إزالة {{ value }}",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "استخدام تنسيق رقم",
         "INT_VALIDATION_ERROR": "استخدام تنسيق عدد صحيح",
+        "LONG_VALIDATION_ERROR": "استخدم تنسيقًا طويلاً",
         "LENGTH_VALIDATION_ERROR": "ينبغي أن تكون القيمة بطول بين {{ minLength }} كحد أدنى و{{ maxLength }} كحد أقصى",
         "MATCH_VALIDATION_ERROR": "القيمة لا تطابق النمط: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "ينبغي أن تكون القيمة بين {{ minValue }} و{{ maxValue }}"
+        "MINMAX_VALIDATION_ERROR": "ينبغي أن تكون القيمة بين {{ minValue }} و{{ maxValue }}",
+        "ONLY_POSITIVE_NUMBER": "يُسمح فقط بقيمة إيجابية"
       },
       "MORE": "المزيد"
     },
@@ -228,20 +313,41 @@
         "EDIT": "الزر تحرير",
         "DATEPICKER": "استخدم مفاتيح الأسهم للتنقل بين التواريخ. السهمان لأعلى ولأسفل ينتقلان إلى الأسبوع التالي أو السابق لكن في اليوم نفسه. السهمان الأيسر والأيمن ينتقلان إلى اليوم التالي أو السابق. اضغط على مفتاح الإدخال لتحديد تاريخ.",
         "COPY_TO_CLIPBOARD_MESSAGE": "تم نسخ القيمة إلى الحافظة",
-        "EDIT_ASPECTS": "تحرير الجانب"
+        "EDIT_ASPECTS": "تحرير الجانب",
+        "SECTION": "قسم {{ sectionName }}"
       }
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "تبديل النتائج بين الترتيب الصاعدي والتنازلي",
-      "SORT_BY": "صنف حسب"
+      "SORT_BY": "صنف حسب",
+      "BUTTON": {
+        "TOOLTIP": "بحث",
+        "ARIA-LABEL": "زر البحث"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "إدخال البحث"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "إغلاق"
+        }
+      }
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "تجاوزات علم الميزة",
+      "FILTER_OR_ADD_NEW": "تصفية أو إضافة جديد",
+      "FILTER": "عامل التصفية",
+      "ADD_NEW": "إضافة علم ميزة جديد (Shift + Enter)"
     }
   },
   "COMMENTS": {
+    "PROFILE_IMAGE": "صورة الملف الشخصي",
     "NONE": "لا تعليقات",
     "ADD": "إضافة",
     "HEADER": "التعليقات ({{ count }})",
     "CREATED_BY_HEADER": "تم الإنشاء بواسطة",
     "MESSAGE_HEADER": "رسالة",
+    "EMPTY_ERROR": "لا يمكن أن يكون التعليق فارغًا",
     "DIALOG": {
       "TITLE": "تعليق جديد",
       "LABELS": {
@@ -254,7 +360,7 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco, make business flow",
+    "LOGO": "ألفريسكو، اصنع تدفق الأعمال",
     "LABEL": {
       "LOGIN": "تسجيل دخول",
       "USERNAME": "اسم المستخدم",
@@ -296,12 +402,15 @@
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "إجراءات المحتوى"
+      "TOOLTIP": "إجراءات المحتوى",
+      "SELECT_COLUMNS": "حدد الأعمدة"
     },
     "ACCESSIBILITY": {
       "ACTIONS": "إجراءات",
       "SELECT_ALL": "حدد الكل",
       "SELECT_FILE": "حدد ملف",
+      "SELECTED": "المحدد",
+      "ROW_SELECTION": "اضغط على مسطرة المسافة لتبديل تحديد الصف",
       "SORT_ASCENDING": "تصاعدي",
       "SORT_DESCENDING": "تنازلي",
       "SORT_NONE": "بلا",
@@ -311,7 +420,11 @@
       "ICON_TEXT": "نوع العنصر {{ type }}",
       "ICON_DISABLED": "معطّل",
       "ROW_OPTION_BUTTON": "إجراءات",
-      "EMPTY_HEADER": "الرأس فارغ"
+      "DRAG": "زر السحب",
+      "DRAGGABLE": "قابل للسحب",
+      "EMPTY_HEADER": "الرأس فارغ",
+      "RESIZE_COLUMN": "غيّر حجم العمود {{ column }}. استخدم مفاتيح الأسهم لضبط العرض، واستخدم Shift للخطوات الأكبر.",
+      "COLUMN_WIDTH_CHANGED": "عرض العمود {{ column }}: {{ width }} بكسل"
     },
     "FILE_TYPE": {
       "DOCUMENT": "مستند",
@@ -332,7 +445,8 @@
     "COLUMNS_SELECTOR": {
       "COLUMNS": "الأعمدة",
       "SEARCH": "بحث",
-      "APPLY": "تطبيق"
+      "APPLY": "تطبيق",
+      "COLUMNS_VISIBILITY": "حدد الأعمدة المطلوب عرضها"
     }
   },
   "USER_PROFILE": {
@@ -346,8 +460,8 @@
       "MY_PROFILE": "ملف التعريف الخاص بي"
     },
     "TAB": {
-      "CS": "Content Services",
-      "PS": "Process Services"
+      "CS": "خدمات المحتوى",
+      "PS": "خدمات العمليات"
     }
   },
   "ADF_VIEWER": {
@@ -366,6 +480,7 @@
       "WAIT": "انتظر"
     },
     "ARIA": {
+      "MIME_TYPE_ICON": "أيقونة نوع الملف",
       "PREVIOUS_PAGE": "الصفحة السابقة",
       "NEXT_PAGE": "الصفحة التالية",
       "ZOOM_IN": "تكبير",
@@ -377,7 +492,9 @@
       "CANCEL": "إلغاء",
       "RESET": "إعادة تعيين",
       "THUMBNAILS": "الصور المصغرة للمستندات",
-      "THUMBNAILS_PANLEL_CLOSE": "إغلاق لوحة الصور المصغرة"
+      "THUMBNAILS_PANLEL_CLOSE": "إغلاق لوحة الصور المصغرة",
+      "LOADING": "المستند قيد التحميل",
+      "NOTE_ANNOTATION_IMG": "ملاحظة توضيحية"
     },
     "PAGE_LABEL": {
       "SHOWING": "إظهار",
@@ -389,10 +506,6 @@
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "الصفحة{{ pageNum }}"
-      },
-      "METADATA": {
-        "MORE_INFORMATION": "معلومات أكثر",
-        "LESS_INFORMATION": "معلومات أقل"
       }
     },
     "PDF_DIALOG": {
@@ -487,26 +600,6 @@
       "PROCESS_SERVICE_HOST": "عنوان URL الخاص بـ Alfresco Process Services: {{ value }}"
     },
     "REPOSITORY": "مخزن",
-    "VERSIONS": {
-      "TITLE": "إصدارات المنتج",
-      "CONTENT_SERVICE": "Content Services",
-      "PROCESS_SERVICE": "Process Services",
-      "MODELING_SERVICE": "خدمات التصميم",
-      "DEPLOYMENT_SERVICE": "خدمات النشر",
-      "QUERY_SERVICE": "خدمات النشر",
-      "RB": "وقت التشغيل",
-      "LABELS": {
-        "EDITION": "الإصدار",
-        "VERSION": "الإصدار",
-        "LICENSE": "الترخيص",
-        "STATUS": "الحالة",
-        "MODULES": "وحدات"
-      }
-    },
-    "SOURCE_CODE": {
-      "TITLE": "رمز المصدر",
-      "DESCRIPTION": "أنت تقوم بتشغيل المشروع استنادًا إلى الالتزام التالي:"
-    },
     "PACKAGES": {
       "TITLE": "حزم",
       "NAME": "الاسم",
@@ -527,7 +620,9 @@
     "LICENSE": {
       "TITLE": "الترخيص",
       "PROPERTY": "الملكية",
-      "VALUE": "القيمة"
+      "VALUE": "القيمة",
+      "ENABLED": "‫مُمكَّن",
+      "DISABLED": "معطّل"
     },
     "STATUS": {
       "TITLE": "الحالة",
@@ -562,10 +657,23 @@
     "LOADING": "جار التحميل...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} مربع تحرير وسرد {{selectedOption}}"
   },
+  "INFO_DRAWER": {
+    "ICON": "أيقونة العقدة"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "تحميل المزيد",
+    "DELETE": "إزالة {{ name }}"
+  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "تأكيد",
     "ACTION": "هل تريد المتابعة؟",
     "YES_LABEL": "نعم",
     "NO_LABEL": "لا"
+  },
+  "SESSION_TIMEOUT": {
+    "TITLE": "هل ما زلت تعمل؟",
+    "MESSAGE": "ستنتهي جلستك خلال {{seconds}} ثانية بسبب عدم وجود أي نشاط.",
+    "LOG_OUT": "تسجيل الخروج",
+    "CONTINUE_WORKING": "متابعة العمل"
   }
 }
