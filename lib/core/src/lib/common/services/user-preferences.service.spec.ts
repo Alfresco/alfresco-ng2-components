@@ -16,6 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
+import { firstValueFrom } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { StorageService } from '../../common/services/storage.service';
@@ -235,6 +236,54 @@ describe('UserPreferencesService', () => {
             expect(spySet).toHaveBeenCalledWith(UserPreferenceValues.PaginationSize, 15);
             expect(spySet).toHaveBeenCalledWith(UserPreferenceValues.SupportedPageSizes, JSON.stringify([5, 15]));
             expect(storage.getItem('GUEST__paginationSize')).toBe('15');
+        });
+    });
+
+    describe('supportedPageSizes$', () => {
+        it('should emit the default array when subscribed before any value is set', async () => {
+            const value = await firstValueFrom(preferences.supportedPageSizes$);
+
+            expect(value).toEqual(supportedPaginationSize);
+        });
+
+        it('should parse and emit an array when a JSON string value is set', async () => {
+            preferences.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify([5, 15]));
+
+            const value = await firstValueFrom(preferences.supportedPageSizes$);
+
+            expect(value).toEqual([5, 15]);
+        });
+
+        it('should emit the default array when an empty string value is set', async () => {
+            preferences.set(UserPreferenceValues.SupportedPageSizes, '');
+
+            const value = await firstValueFrom(preferences.supportedPageSizes$);
+
+            expect(value).toEqual(supportedPaginationSize);
+        });
+
+        it('should emit the array as-is when a non-string array value is set', async () => {
+            preferences.set(UserPreferenceValues.SupportedPageSizes, [1, 2, 3]);
+
+            const value = await firstValueFrom(preferences.supportedPageSizes$);
+
+            expect(value).toEqual([1, 2, 3]);
+        });
+
+        it('should emit the default array when a null value is set', async () => {
+            preferences.set(UserPreferenceValues.SupportedPageSizes, null);
+
+            const value = await firstValueFrom(preferences.supportedPageSizes$);
+
+            expect(value).toEqual(supportedPaginationSize);
+        });
+
+        it('should update supportedPageSizesSignal when a new value is set', () => {
+            expect(preferences.supportedPageSizesSignal()).toEqual(supportedPaginationSize);
+
+            preferences.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify([1, 2]));
+
+            expect(preferences.supportedPageSizesSignal()).toEqual([1, 2]);
         });
     });
 
