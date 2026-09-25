@@ -2,9 +2,9 @@
   "extends": ["stylelint-config-standard-scss"],
   "rules": {
     "custom-property-pattern": [
-      "^(mat-sys|mdc|adf-(form-label|readonly-text|header|radio-buttons))-",
+      "^(mat-sys|mdc)",
       {
-        "message": "Use only Angular Material system variables (--mat-sys-*, --mdc-*) or supported ADF form theme variables (--adf-form-label-*, --adf-readonly-text-*, --adf-header-*, --adf-radio-buttons-*)"
+        "message": "Use only Angular Material system variables (--mat-sys-*, --mdc-*)"
       }
     ],
     "color-function-notation": "legacy",
