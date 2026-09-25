@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { inject, Injectable, RendererFactory2, Signal } from '@angular/core';
+import { inject, Injectable, RendererFactory2 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
@@ -36,6 +36,13 @@ export const UserPreferenceValues = {
 
 export type UserPreferenceValues = (typeof UserPreferenceValues)[keyof typeof UserPreferenceValues];
 
+interface UserPreferencesConfiguration {
+    [UserPreferenceValues.PaginationSize]: number;
+    [UserPreferenceValues.SupportedPageSizes]: number[];
+    [UserPreferenceValues.Locale]: string;
+    [UserPreferenceValues.ExpandedSideNavStatus]: boolean;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -48,16 +55,16 @@ export class UserPreferencesService {
     private readonly rendererFactory = inject(RendererFactory2);
     private readonly directionality = inject(Directionality);
 
-    defaults = {
-        paginationSize: 25,
-        supportedPageSizes: [5, 10, 15, 20],
-        locale: 'en',
-        expandedSidenav: true
+    defaults: UserPreferencesConfiguration = {
+        [UserPreferenceValues.PaginationSize]: 25,
+        [UserPreferenceValues.SupportedPageSizes]: [5, 10, 15, 20],
+        [UserPreferenceValues.Locale]: 'en',
+        [UserPreferenceValues.ExpandedSideNavStatus]: true
     };
 
-    private userPreferenceStatus: any = { ...this.defaults };
-    private readonly onChangeSubject: BehaviorSubject<any>;
-    onChange: Observable<any>;
+    private userPreferenceStatus: UserPreferencesConfiguration = { ...this.defaults };
+    private readonly onChangeSubject: BehaviorSubject<UserPreferencesConfiguration> = new BehaviorSubject(this.userPreferenceStatus);
+    onChange: Observable<UserPreferencesConfiguration> = this.onChangeSubject.asObservable();
 
     /**
      * Observable that emits the current locale whenever it changes.
@@ -82,51 +89,38 @@ export class UserPreferencesService {
      * }
      * ```
      */
-    readonly locale$: Observable<string>;
+    readonly locale$: Observable<string> = this.select<string>(UserPreferenceValues.Locale);
 
     /**
      * Signal that provides the current locale value.
      * Automatically handles cleanup - no need for takeUntilDestroyed or manual unsubscription.
      * This is the recommended way to access locale in components.
      */
-    readonly localeSignal: Signal<string>;
+    readonly localeSignal = toSignal(this.locale$, { initialValue: this.defaults.locale });
 
     /**
      * Observable that emits the current pagination size whenever it changes.
      */
-    readonly paginationSize$: Observable<number>;
+    readonly paginationSize$: Observable<number> = this.select<number>(UserPreferenceValues.PaginationSize);
 
     /**
      * Signal that provides the current pagination size value.
      */
-    readonly paginationSizeSignal: Signal<number>;
+    readonly paginationSizeSignal = toSignal(this.paginationSize$, { initialValue: this.defaults.paginationSize });
 
     /**
      * Observable that emits the supported page sizes whenever they change.
      */
-    readonly supportedPageSizes$: Observable<number[]>;
+    readonly supportedPageSizes$: Observable<number[]> = this.select<string>(UserPreferenceValues.SupportedPageSizes).pipe(
+        map((value) => (value ? JSON.parse(value) : this.defaults.supportedPageSizes))
+    );
 
     /**
      * Signal that provides the supported page sizes array.
      */
-    readonly supportedPageSizesSignal: Signal<number[]>;
+    readonly supportedPageSizesSignal = toSignal(this.supportedPageSizes$, { initialValue: this.defaults.supportedPageSizes });
 
     constructor() {
-        this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
-        this.onChange = this.onChangeSubject.asObservable();
-
-        // Initialize convenience observables
-        this.locale$ = this.select<string>(UserPreferenceValues.Locale);
-        this.paginationSize$ = this.select<number>(UserPreferenceValues.PaginationSize);
-        this.supportedPageSizes$ = this.select<string>(UserPreferenceValues.SupportedPageSizes).pipe(
-            map((value) => (value ? JSON.parse(value) : this.defaults.supportedPageSizes))
-        );
-
-        // Initialize convenience signals (automatically handle cleanup)
-        this.localeSignal = toSignal(this.locale$, { initialValue: this.defaults.locale });
-        this.paginationSizeSignal = toSignal(this.paginationSize$, { initialValue: this.defaults.paginationSize });
-        this.supportedPageSizesSignal = toSignal(this.supportedPageSizes$, { initialValue: this.defaults.supportedPageSizes });
-
         this.appConfig.onLoad.subscribe(() => {
             this.initUserPreferenceStatus();
         });
