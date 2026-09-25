@@ -74,7 +74,7 @@ export class DataTableRowComponent implements FocusableOption {
     }
 
     @HostListener('keydown.space', ['$event'])
-    onKeyDown(event: KeyboardEvent) {
+    onKeyDown(event: Event) {
         if ((event.target as Element).tagName === this.element.nativeElement.tagName) {
             event.preventDefault();
             this.select.emit(event);

@@ -59,14 +59,14 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
 
     @HostListener('input', ['$event'])
     @HostListener('keyup', ['$event'])
-    onTextInput(event: KeyboardEvent) {
+    onTextInput(event: Event) {
         if (this.inputMask?.mask) {
             this.maskValue(
                 this.el.nativeElement.value,
                 this.el.nativeElement.selectionStart,
                 this.inputMask.mask,
                 this.inputMask.isReversed,
-                event.keyCode
+                (event as KeyboardEvent).keyCode
             );
         } else {
             this._onChange(this.el.nativeElement.value);
