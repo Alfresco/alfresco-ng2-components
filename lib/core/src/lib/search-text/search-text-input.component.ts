@@ -33,7 +33,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule, MatIconButton } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -157,7 +157,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     searchInput!: ElementRef;
 
     @ViewChild('searchButton')
-    private readonly searchButton!: MatIconButton;
+    private readonly searchButton!: ElementRef<HTMLButtonElement>;
 
     private keyboardInteraction = false;
 
@@ -205,7 +205,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
                     }
                     if (this.keyboardInteraction) {
                         this.changeDetectorRef.detectChanges();
-                        this.searchButton?.focus();
+                        this.searchButton.nativeElement.focus();
                     }
                 } else if (this.subscriptAnimationState.value === 'active' && this.isDefaultStateCollapsed()) {
                     setTimeout(() => this.searchInput.nativeElement.focus(), 0);
