@@ -18,6 +18,7 @@
 import { Direction } from '@angular/cdk/bidi';
 import { NgClass, NgStyle } from '@angular/common';
 import {
+    ChangeDetectorRef,
     Component,
     DestroyRef,
     ElementRef,
@@ -190,6 +191,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     toggle$ = this.toggleSearch.asObservable();
 
     private readonly destroyRef = inject(DestroyRef);
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
     constructor() {
         this.toggle$.pipe(debounceTime(200), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
@@ -202,7 +204,8 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
                         this.searchInput.nativeElement.blur();
                     }
                     if (this.keyboardInteraction) {
-                        setTimeout(() => this.searchButton?.focus(), 0);
+                        this.changeDetectorRef.detectChanges();
+                        this.searchButton?.focus();
                     }
                 } else if (this.subscriptAnimationState.value === 'active' && this.isDefaultStateCollapsed()) {
                     setTimeout(() => this.searchInput.nativeElement.focus(), 0);
