@@ -22,6 +22,7 @@ import {
     DestroyRef,
     ElementRef,
     EventEmitter,
+    HostListener,
     inject,
     Input,
     OnInit,
@@ -31,7 +32,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -154,6 +155,21 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     @ViewChild('searchInput', { static: true })
     searchInput!: ElementRef;
 
+    @ViewChild('searchButton')
+    private readonly searchButton!: MatIconButton;
+
+    private keyboardInteraction = false;
+
+    @HostListener('keydown')
+    onKeyDown() {
+        this.keyboardInteraction = true;
+    }
+
+    @HostListener('mousedown')
+    onMouseDown() {
+        this.keyboardInteraction = false;
+    }
+
     animationStates: SearchAnimationDirection = {
         ltr: {
             active: { value: 'active', params: { 'margin-left': '13px' } },
@@ -184,6 +200,9 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
                     this.reset.emit(true);
                     if (document.activeElement?.id === this.searchInput.nativeElement.id) {
                         this.searchInput.nativeElement.blur();
+                    }
+                    if (this.keyboardInteraction) {
+                        setTimeout(() => this.searchButton?.focus(), 0);
                     }
                 } else if (this.subscriptAnimationState.value === 'active' && this.isDefaultStateCollapsed()) {
                     setTimeout(() => this.searchInput.nativeElement.focus(), 0);
