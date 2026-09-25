@@ -37,6 +37,7 @@ export const UserPreferenceValues = {
 export type UserPreferenceValues = (typeof UserPreferenceValues)[keyof typeof UserPreferenceValues];
 
 interface UserPreferencesConfiguration {
+    [key: string]: unknown;
     [UserPreferenceValues.PaginationSize]: number;
     [UserPreferenceValues.SupportedPageSizes]: number[];
     [UserPreferenceValues.Locale]: string;
