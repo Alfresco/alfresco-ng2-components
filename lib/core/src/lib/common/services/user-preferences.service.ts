@@ -112,8 +112,8 @@ export class UserPreferencesService {
     /**
      * Observable that emits the supported page sizes whenever they change.
      */
-    readonly supportedPageSizes$: Observable<number[]> = this.select<string>(UserPreferenceValues.SupportedPageSizes).pipe(
-        map((value) => (value ? JSON.parse(value) : this.defaults.supportedPageSizes))
+    readonly supportedPageSizes$: Observable<number[]> = this.select<string | number[]>(UserPreferenceValues.SupportedPageSizes).pipe(
+        map((value) => (typeof value === 'string' ? JSON.parse(value) : (value ?? this.defaults.supportedPageSizes)))
     );
 
     /**
