@@ -61,7 +61,7 @@ export class ClipboardDirective {
 
     @HostListener('keydown.enter', ['$event'])
     @HostListener('click', ['$event'])
-    copyToClipboard(event: KeyboardEvent | MouseEvent): void {
+    copyToClipboard(event: Event): void {
         event.preventDefault();
         event.stopPropagation();
 
