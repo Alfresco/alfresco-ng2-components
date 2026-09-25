@@ -78,6 +78,18 @@ describe('UserPreferencesService', () => {
             expect(supportedPages).toEqual(supportedPaginationSize);
         });
 
+        it('should return the default array from the getter when the stored value is malformed JSON', () => {
+            preferences.set(UserPreferenceValues.SupportedPageSizes, '{not-valid-json');
+
+            expect(preferences.supportedPageSizes).toEqual(supportedPaginationSize);
+        });
+
+        it('should return the default array from the getter when the parsed JSON is valid but not an array', () => {
+            preferences.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify({ foo: 'bar' }));
+
+            expect(preferences.supportedPageSizes).toEqual(supportedPaginationSize);
+        });
+
         it('should use [GUEST] as default storage prefix', () => {
             preferences.setStoragePrefix(null);
             expect(preferences.getStoragePrefix()).toBe('GUEST');

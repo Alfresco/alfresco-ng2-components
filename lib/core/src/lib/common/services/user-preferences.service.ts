@@ -312,7 +312,7 @@ export class UserPreferencesService {
         const supportedPageSizes = this.get(UserPreferenceValues.SupportedPageSizes);
 
         if (supportedPageSizes) {
-            return JSON.parse(supportedPageSizes);
+            return this.parseSupportedPageSizes(supportedPageSizes);
         } else {
             return this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
         }
