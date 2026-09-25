@@ -37,7 +37,7 @@ export const UserPreferenceValues = {
 export type UserPreferenceValues = (typeof UserPreferenceValues)[keyof typeof UserPreferenceValues];
 
 interface UserPreferencesConfiguration {
-    [key: string]: unknown;
+    [key: string]: any;
     [UserPreferenceValues.PaginationSize]: number;
     [UserPreferenceValues.SupportedPageSizes]: number[];
     [UserPreferenceValues.Locale]: string;
@@ -192,7 +192,7 @@ export class UserPreferencesService {
      */
     select<T = any>(property: string): Observable<T> {
         return this.onChange.pipe(
-            map((userPreferenceStatus) => userPreferenceStatus[property]),
+            map((userPreferenceStatus: UserPreferencesConfiguration) => userPreferenceStatus[property]),
             distinctUntilChanged()
         );
     }
