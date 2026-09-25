@@ -113,9 +113,7 @@ export class UserPreferencesService {
      * Observable that emits the supported page sizes whenever they change.
      */
     readonly supportedPageSizes$: Observable<number[]> = this.select<string | number[]>(UserPreferenceValues.SupportedPageSizes).pipe(
-        map((value) =>
-            typeof value === 'string' ? (value ? JSON.parse(value) : this.defaults.supportedPageSizes) : (value ?? this.defaults.supportedPageSizes)
-        )
+        map((value) => this.parseSupportedPageSizes(value))
     );
 
     /**
@@ -164,6 +162,25 @@ export class UserPreferencesService {
             const supportedPageSizes = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
             this.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify(supportedPageSizes));
         }
+    }
+
+    private parseSupportedPageSizes(value: string | number[]): number[] {
+        if (Array.isArray(value)) {
+            return value;
+        }
+
+        if (typeof value === 'string' && value) {
+            try {
+                const parsed = JSON.parse(value);
+                if (Array.isArray(parsed)) {
+                    return parsed;
+                }
+            } catch {
+                return this.defaults.supportedPageSizes;
+            }
+        }
+
+        return this.defaults.supportedPageSizes;
     }
 
     private initUserLanguage() {

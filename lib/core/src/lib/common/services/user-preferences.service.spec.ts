@@ -278,6 +278,42 @@ describe('UserPreferencesService', () => {
             expect(value).toEqual(supportedPaginationSize);
         });
 
+        it('should emit the default array when the stored string is malformed JSON', async () => {
+            preferences.set(UserPreferenceValues.SupportedPageSizes, '{not-valid-json');
+
+            const value = await firstValueFrom(preferences.supportedPageSizes$);
+
+            expect(value).toEqual(supportedPaginationSize);
+        });
+
+        it('should emit the default array when the parsed JSON is valid but not an array', async () => {
+            preferences.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify({ foo: 'bar' }));
+
+            const value = await firstValueFrom(preferences.supportedPageSizes$);
+
+            expect(value).toEqual(supportedPaginationSize);
+        });
+
+        it('should emit the default array when the stored string parses to null', async () => {
+            preferences.set(UserPreferenceValues.SupportedPageSizes, 'null');
+
+            const value = await firstValueFrom(preferences.supportedPageSizes$);
+
+            expect(value).toEqual(supportedPaginationSize);
+        });
+
+        it('should not throw when the stored string is malformed JSON', async () => {
+            preferences.set(UserPreferenceValues.SupportedPageSizes, '{not-valid-json');
+
+            await expectAsync(firstValueFrom(preferences.supportedPageSizes$)).toBeResolved();
+        });
+
+        it('should update supportedPageSizesSignal to the default array when malformed JSON is set', () => {
+            preferences.set(UserPreferenceValues.SupportedPageSizes, '{not-valid-json');
+
+            expect(preferences.supportedPageSizesSignal()).toEqual(supportedPaginationSize);
+        });
+
         it('should update supportedPageSizesSignal when a new value is set', () => {
             expect(preferences.supportedPageSizesSignal()).toEqual(supportedPaginationSize);
 
