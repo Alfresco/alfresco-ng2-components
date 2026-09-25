@@ -14,7 +14,7 @@
       "COMPLETED_BY": "Suorittaja",
       "ID": "Tunnus",
       "INITIATOR": "Käynnistäjä",
-      "STARTED_BY": "Aloittaja:",
+      "STARTED_BY": "Aloittaja",
       "APP_NAME": "Sovelluksen nimi",
       "BUSINESS_KEY": "Liiketoiminta-avain",
       "DESCRIPTION": "Kuvaus",
@@ -50,7 +50,8 @@
         "MAXIMUM_LENGTH": "Liian pitkä: voit käyttää enintään {{characters}} merkkiä.",
         "SPACE_VALIDATOR": "Ei voi alkaa välilyönnillä tai päättyä siihen."
       }
-    }
+    },
+    "LOADING": "Ladataan"
   },
   "ADF_CLOUD_TASK_LIST": {
     "START_TASK": {
@@ -97,7 +98,8 @@
         "SUBTITLE": "Luo uusi tehtävä, jonka löydät helposti myöhemmin",
         "NONE": "Yhtään tehtäväluetteloa ei löydy"
       }
-    }
+    },
+    "LOADING": "Ladataan"
   },
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {
@@ -173,12 +175,12 @@
     "LABEL": {
       "APP_NAME": "Sovelluksen nimi",
       "TASK_ID": "Tehtävätunnus",
-      "PROCESS_DEF_NAME": "Prosessimääritelmän nimi",
-      "PROCESS_DEF_ID": "Prosessimääritelmätunnus",
+      "PROCESS_DEF_NAME": "ProcessDefinitionName",
+      "PROCESS_DEF_ID": "ProcessDefinitionId",
       "STATUS": "Tila",
       "ASSIGNMENT": "Vastuuhenkilö",
       "DIRECTION": "Suunta",
-      "PROCESS_INSTANCE_ID": "Prosessiesiintymätunnus",
+      "PROCESS_INSTANCE_ID": "ProcessInstanceId",
       "TASK_NAME": "Tehtävän nimi",
       "PARENT_TASK_ID": "Ylätason tehtävän tunnus",
       "PRIORITY": "Prioriteetti",
@@ -188,11 +190,11 @@
       "OWNER": "Omistaja",
       "DUE_DATE": "Määräpäivä",
       "SORT": "Lajittele",
-      "START_DATE": "Alkamispäivä",
+      "START_DATE": "StartDate",
       "COMPLETED_BY": "Suorittaja",
-      "COMPLETED_DATE": "Suorituspäivä",
-      "CREATED_DATE": "Luontipäivämäärä",
-      "CANDIDATE_GROUPS": "Kandidaattiryhmät"
+      "COMPLETED_DATE": "CompletedDate",
+      "CREATED_DATE": "CreatedDate",
+      "CANDIDATE_GROUPS": "CandidateGroups"
     },
     "DIALOG": {
       "TITLE": "Tallenna suodatin nimellä",
@@ -203,19 +205,19 @@
   "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
     "LABEL": {
       "APP_NAME": "Sovelluksen nimi",
-      "SERVICE_TASK_ID": "Palvelutehtävän tunnus",
+      "SERVICE_TASK_ID": "ServiceTaskId",
       "SERVICE_NAME": "Palvelun nimi",
       "ELEMENT_ID": "Elementin tunnus",
-      "PROCESS_DEF_NAME": "Prosessimääritelmän nimi",
-      "PROCESS_DEF_ID": "Prosessimääritelmätunnus",
-      "PROCESS_INSTANCE_ID": "Prosessiesiintymätunnus",
+      "PROCESS_DEF_NAME": "ProcessDefinitionName",
+      "PROCESS_DEF_ID": "ProcessDefinitionId",
+      "PROCESS_INSTANCE_ID": "ProcessInstanceId",
       "STATUS": "Tila",
       "DIRECTION": "Suunta",
       "ACTIVITY_NAME": "Toiminnon nimi",
       "ACTIVITY_TYPE": "Toiminnon tyyppi",
       "SORT": "Lajittele",
-      "STARTED_DATE": "Alkamispäivä",
-      "COMPLETED_DATE": "Suorituspäivä"
+      "STARTED_DATE": "StartedDate",
+      "COMPLETED_DATE": "CompletedDate"
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
@@ -223,24 +225,25 @@
     "FILTER_NAME": "Suodattimen nimi",
     "LABEL": {
       "APP_NAME": "Sovelluksen nimi",
-      "PROCESS_INS_ID": "Prosessiesiintymätunnus",
+      "PROCESS_INS_ID": "ProcessInstanceId",
       "STATUS": "Tila",
       "INITIATOR": "Käynnistäjä",
       "ASSIGNMENT": "Vastuuhenkilö",
       "SORT": "Lajittele",
       "DIRECTION": "Suunta",
-      "PROCESS_DEF_ID": "Prosessimääritelmätunnus",
-      "PROCESS_DEF_NAME": "Prosessimääritelmän nimi",
-      "PROCESS_DEF_KEY": "Prosessimääritelmäavain",
+      "PROCESS_DEF_ID": "ProcessDefinitionId",
+      "PROCESS_DEF_NAME": "ProcessDefinitionName",
+      "PROCESS_DEF_KEY": "ProcessDefinitionKey",
       "LAST_MODIFIED": "Muokattu viimeksi",
       "LAST_MODIFIED_DATE_FORM": "Muokattu viimeksi kohteesta",
       "LAST_MODIFIED_TO": "Muokattu viimeksi kohteeseen",
       "PROCESS_NAME": "Prosessin nimi",
-      "APP_VERSION": "Sovellusversio",
+      "APP_VERSION": "AppVersion",
       "STARTED_DATE": "Alkamispäivä",
       "SUSPENDED_DATE": "Keskeytyspäivä",
       "STARTED_BY": "Aloittaja:",
       "COMPLETED_DATE": "Suorituspäivä",
+      "MAIN_PROCESS_ID": "Pääprosessin tunnus",
       "DATE_RANGE": {
         "NO_DATE": "Ei päivämäärää",
         "TODAY": "Tänään",
@@ -365,7 +368,7 @@
     },
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "Virheellinen kohdekansion polku",
-      "DESTINATION_FOLDER_PATH_ERROR": "Kohdepolku on virheellinen tai se ei ole olemassa. Palaa -omat-sijaintiin."
+      "DESTINATION_FOLDER_PATH_ERROR": "Kohdepolku on virheellinen tai se ei ole olemassa. Palaa -omat-sijaintiin"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {

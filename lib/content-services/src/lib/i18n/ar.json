@@ -1,7 +1,9 @@
 {
   "COMMON": {
     "APPLY": "تطبيق",
-    "CANCEL": "إلغاء"
+    "CANCEL": "إلغاء",
+    "NAME": "الاسم",
+    "CLEAR": "مسح"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
@@ -16,7 +18,8 @@
         "MINOR": "تغييرات صغيرة ({{version}})",
         "COMMENT": "ترك تعليق",
         "ADD": "إضافة إصدار جديد",
-        "CANCEL": "إلغاء"
+        "CANCEL": "إلغاء",
+        "VERSION_TYPE_LABEL": "حدد نوع الإصدار"
       }
     },
     "CONFIRM_DELETE": {
@@ -99,6 +102,7 @@
     "ATTACH": "إرفاق",
     "CHOOSE_ITEM": "حدد محتوى لإرفاقه من '{{ name }}'",
     "COPY": "نسخ",
+    "LINK": "إنشاء ارتباط",
     "COPY_ITEM": "نسخ '{{ name }}' إلى...",
     "LOCATION": "مكان",
     "MOVE": "نقل",
@@ -146,18 +150,17 @@
       "NO_EXISTING_TAGS": "ليس هناك علامات موجودة",
       "TITLE": "إنشاء العلامات",
       "CREATE_TAG": "إنشاء: {{tag}}",
-      "NAME": "الاسم",
+      "TAG_SEARCH_PLACEHOLDER": "البحث عن علامات",
       "ERRORS": {
         "EXISTING_TAG": "العلامة موجودة بالفعل",
         "ALREADY_ADDED_TAG": "تمت إضافة العلامة بالفعل",
         "EMPTY_TAG": "لا يمكن أن يحتوي اسم العلامة على مسافات فقط",
-        "REQUIRED": "اسم العلامة مطلوب",
         "FETCH_TAGS": "خطأ أثناء إحضار العلامات",
-        "CREATE_TAGS": "خطأ أثناء إنشاء العلامات"
+        "CREATE_TAGS": "خطأ أثناء إنشاء العلامات",
+        "SPECIAL_CHARACTERS": "لا يمكن أن يحتوي اسم العلامة على رموز ممنوعة"
       },
       "TOOLTIPS": {
-        "DELETE_TAG": "حذف العلامة",
-        "HIDE_INPUT": "إخفاء الإدخال"
+        "DELETE_TAG": "حذف العلامة"
       },
       "TAGS_LOADING": "تحميل العلامات",
       "CREATE_TAGS_SUCCESS": "تم إنشاء العلامات بنجاح"
@@ -167,7 +170,6 @@
     "CATEGORIES_TITLE": "فئات",
     "NO_CATEGORIES_CREATED": "لم يتم إنشاء فئات",
     "NO_CATEGORIES_ASSIGNED": "لم يتم تعيين فئات",
-    "ASSIGN_CATEGORIES": "تعيين الفئات",
     "UNASSIGN_CATEGORY": "إلغاء تعيين الفئة",
     "DELETE_CATEGORY": "حذف الفئة",
     "EXISTING_CATEGORIES": "الفئات الموجودة:",
@@ -176,7 +178,7 @@
     "GENERIC_CREATE": "إنشاء: {{name}}",
     "NAME": "اسم التصنيف",
     "LOADING": "تحميل",
-    "HIDE_INPUT": "إخفاء الإدخال",
+    "NO_CATEGORIES_ADDED": "لا توجد فئات مضافة حاليًا",
     "ERRORS": {
       "NOT_FOUND": "لم يتم العثور على الفئات",
       "REQUIRED": "مطلوب اسم الفئة",
@@ -184,8 +186,11 @@
       "ALREADY_EXISTS": "الفئة موجودة بالفعل",
       "DUPLICATED_CATEGORY": "تمت إضافة الفئة بالفعل",
       "CREATE_CATEGORIES": "خطأ أثناء إنشاء الفئات",
-      "EXISTING_CATEGORIES": "بعض الفئات موجودة بالفعل"
-    }
+      "EXISTING_CATEGORIES": "بعض الفئات موجودة بالفعل",
+      "SPECIAL_CHARACTERS": "لا يمكن أن يحتوي اسم الفئة على رموز ممنوعة",
+      "ENDS_WITH_DOT": "لا يمكن أن ينتهي اسم الفئة بنقطة"
+    },
+    "CATEGORIES_SEARCH_PLACEHOLDER": "البحث عن فئات"
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
@@ -273,12 +278,15 @@
       "ARIA-LABEL": "زر البحث"
     },
     "INPUT": {
+      "LABEL": "بحث",
+      "PLACEHOLDER": "استعلام البحث",
       "ARIA-LABEL": "إدخال البحث"
     },
     "RESULTS": {
       "SUMMARY": "تم العثور على نتيجة {{numResults}} ل{{searchTerm}}",
       "NONE": "لم يتم العثور على نتائج ل{{searchTerm}}",
       "ERROR": "نواجه مشكلة أثناء البحث - حاول مرة أخرى.",
+      "WILL_CONTAIN": "ستتضمن النتائج '{{searchTerm}}'",
       "COLUMNS": {
         "NAME": "اسم العرض",
         "MODIFIED_BY": "تم التعديل بواسطة",
@@ -313,9 +321,7 @@
         "FROM": "من",
         "TO": "إلى",
         "FROM-DATE": "من",
-        "TO-DATE": "إلى",
-        "SELECT-FROM-DATE": "حدد من التاريخ",
-        "SELECT-TO-DATE": "حدد إلى التاريخ"
+        "TO-DATE": "إلى"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "القيمة المطلوبة",
@@ -330,7 +336,12 @@
         "SEARCH_FILTER": "قائمة تصفية البحث",
         "OPTIONS-SELECTION": "اختيار الخيارات"
       },
-      "ANY": "أي"
+      "ANY": "أي",
+      "PEOPLE": "الأشخاص"
+    },
+    "FACET_FIELDS": {
+      "MODIFIER_LABEL": "تم التعديل بواسطة",
+      "CREATOR_LABEL": "تم الإنشاء بواسطة"
     },
     "ICONS": {
       "ft_ic_raster_image": "ملف صورة",
@@ -371,6 +382,7 @@
       "TITLE": "عامل التصفية",
       "TYPE": "النوع",
       "FILTER_BY": "تصفية حسب {{ category }}",
+      "ACTIVE_FILTER": "عامل التصفية النشط",
       "CLEAR": "مسح",
       "APPLY": "تطبيق",
       "FILTERS": {
@@ -396,15 +408,76 @@
       }
     },
     "LOGICAL_SEARCH": {
-      "SEARCH_CHIP_INPUT": {
-        "ADD_PHRASE": "إضافة عبارة ..."
-      },
       "MATCH_ALL": "الكل",
       "MATCH_ALL_LABEL": "تطابق كل هذه العبارات",
+      "MATCH_ALL_HINT": "ستطابق النتائج جميع الكلمات المدخلة هنا",
       "MATCH_ANY": "أي",
       "MATCH_ANY_LABEL": "تطابق أي من هذه العبارات",
+      "MATCH_ANY_HINT": "ستطابق النتائج أي كلمات مدخلة هنا",
+      "MATCH_EXACT": "دقيق",
+      "MATCH_EXACT_LABEL": "مطابقة هذه العبارة الدقيقة",
+      "MATCH_EXACT_HINT": "ستطابق النتائج هذه العبارة بالكامل",
       "EXCLUDE": "استثناء",
-      "EXCLUDE_LABEL": "استبعد هذه العبارات"
+      "EXCLUDE_LABEL": "استبعد هذه العبارات",
+      "EXCLUDE_HINT": "ستستثني النتائج التطابقات مع هذه الكلمات"
+    },
+    "DATE_RANGE_ADVANCED": {
+      "OPTIONS": {
+        "ANYTIME": "أي وقت",
+        "IN_LAST": "في آخر",
+        "BETWEEN": "بين"
+      },
+      "IN_LAST_LABELS": {
+        "DAYS": "أيام",
+        "WEEKS": "أسابيع",
+        "MONTHS": "أشهر",
+        "QUANTITY": "الكمية"
+      },
+      "IN_LAST_DISPLAY_LABELS": {
+        "DAYS": "في آخر {{value}} أيام",
+        "WEEKS": "في آخر {{value}} أسابيع",
+        "MONTHS": "في آخر {{value}} أشهر"
+      },
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "تاريخ البدء",
+        "END_DATE": "تاريخ الانتهاء",
+        "DATE_RANGE": "نطاق التاريخ"
+      },
+      "ERROR": {
+        "IN_LAST": "القيمة مطلوبة",
+        "START_DATE": {
+          "REQUIRED": "تاريخ البدء مطلوب",
+          "INVALID_FORMAT": "تاريخ البدء غير صالح. يجب أن يكون التاريخ بالتنسيق '{{ requiredFormat }}'"
+        },
+        "END_DATE": {
+          "REQUIRED": "تاريخ الانتهاء مطلوب",
+          "INVALID_FORMAT": "تاريخ الانتهاء غير صالح. يجب أن يكون التاريخ بالتنسيق '{{ requiredFormat }}'"
+        }
+      },
+      "ARIA_LABEL": {
+        "NUMBER_INPUT": "إدخال رقم"
+      }
+    },
+    "SEARCH_PROPERTIES": {
+      "FILE_SIZE": "حجم الملف",
+      "FILE_SIZE_PLACEHOLDER": "أدخل حجم الملف",
+      "FILE_SIZE_OPERATOR": {
+        "AT_LEAST": "على الأقل",
+        "AT_MOST": "على الأكثر",
+        "EXACTLY": "بالضبط"
+      },
+      "FILE_SIZE_UNIT_ABBREVIATION": {
+        "KB": "كيلوبايت",
+        "MB": "ميجابايت",
+        "GB": "جيجابايت"
+      },
+      "FILE_TYPE": "نوع الملف",
+      "FILE_TYPE_PLACEHOLDER": "إضافة نوع ملف",
+      "ACCESSIBILITY": {
+        "CONDITION": "الشرط",
+        "SIZE_VALUE": "قيمة حجم الملف",
+        "UNIT": "الوحدة"
+      }
     }
   },
   "PERMISSION": {
@@ -425,7 +498,9 @@
       "MODIFIED_DATE": "تاريخ التعديل",
       "CONTENT_TYPE": "نوع المحتوى",
       "TAGS": "علامات",
-      "ADD_TAG_TOOLTIP": "إضافة علامة"
+      "NO_TAGS_ADDED": "لا توجد علامات مضافة حاليًا",
+      "NO_ITEMS_MESSAGE": "لا توجد {{ groupTitle }} مضافة حاليًا",
+      "SAVE_OR_DISCARD_CHANGES": "احفظ أو تجاهل التغييرات للمتابعة"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
@@ -471,7 +546,8 @@
       "REMOVE": "إزالة"
     },
     "UNSHARE_ERROR": "خطأ في إلغاء مشاركة هذا الملف",
-    "UNSHARE_PERMISSION_ERROR": "ليس لديك إذن لإلغاء مشاركة هذا الملف"
+    "UNSHARE_PERMISSION_ERROR": "ليس لديك إذن لإلغاء مشاركة هذا الملف",
+    "INVALID_DATE_ERROR": "تاريخ غير صالح"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
@@ -490,8 +566,10 @@
       "ADD-ACTION": "إضافة",
       "CLOSE-ACTION": "إلغاء",
       "BASE-DIALOG-TITLE": "بحث عن مجموعة أو أشخاص لإضافتهم...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "إضافة إذن مستخدم أو مجموعة",
       "EVERYONE": "كل شخص",
-      "USER-GROUP-LIST": "قائمة المستخدم أو المجموعة"
+      "USER-GROUP-LIST": "قائمة المستخدم أو المجموعة",
+      "REMOVE_USER_GROUP": "إزالة"
     },
     "COLUMN": {
       "NAME": "المستخدمون والمجموعات ({{count}})",
@@ -535,6 +613,10 @@
       "NOT-ALLOWED": "غير مسموح لك بتغيير الأذونات"
     }
   },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "أيقونة المجموعة",
+    "GROUP_USER_SELECTED_ALT": "أيقونة المجموعة أو المستخدم المحدد"
+  },
   "ADF-TREE-VIEW": {
     "MISSING-ID": "معرف العقدة غير متوفر!",
     "ACCESSIBILITY": {
@@ -542,7 +624,14 @@
     }
   },
   "ADF-TREE": {
-    "LOAD-MORE-BUTTON": "تحميل المزيد من {{ name }}"
+    "LOAD-MORE-BUTTON": "تحميل المزيد من {{ name }}",
+    "ACTIONS": {
+      "TOOLTIP": "فتح قائمة الإجراءات"
+    },
+    "ARIA": {
+      "SELECTED": "تم تحديد {{ name }}",
+      "DESELECTED": "تم إلغاء تحديد {{ name }}"
+    }
   },
   "LIBRARY": {
     "DIALOG": {
@@ -583,7 +672,9 @@
       "TITLE_TOO_SHORT": "يجب أن يكون طول العنوان حرفين على الأقل",
       "ILLEGAL_CHARACTERS": "استخدم الأرقام والحروف فقط",
       "ONLY_SPACES": "لا يمكن أن يحتوي اسم المكتبة على أية مسافات",
-      "LIBRARY_UPDATE_ERROR": "حدث خطأ أثناء تحديث خصائص المكتبة"
+      "LIBRARY_UPDATE_ERROR": "حدث خطأ أثناء تحديث خصائص المكتبة",
+      "NAME_REQUIRED": "اسم المكتبة مطلوب",
+      "ID_REQUIRED": "معرف المكتبة مطلوب"
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "تم تحديث خصائص المكتبة"
@@ -593,6 +684,9 @@
     "ARIA-LABEL": {
       "BREADCRUMB": "مسار التنقل",
       "DROPDOWN": "القائمة المنسدلة"
+    },
+    "HEADER": {
+      "SELECTED": "({{ count }}) محدد"
     }
   },
   "NAME_COLUMN_LINK": {
@@ -633,6 +727,14 @@
       "JOINED": "تم الانضمام للمكتبة",
       "JOIN_CANCELED": "تم إلغاء الطلب للانضمام للمكتبة",
       "JOIN_REQUESTED": "تم إرسال الطلب للانضمام للمكتبة"
+    }
+  },
+  "NODE_FAVORITE_DIRECTIVE": {
+    "MESSAGES": {
+      "NODE_ADDED": "تمت الإضافة {{ name }} إلى المفضلة",
+      "NODES_ADDED": "تمت إضافة {{ number }} العناصر إلى المفضلة",
+      "NODE_REMOVED": "تمت الإزالة {{ name }} من المفضلة",
+      "NODES_REMOVED": "امت إزالة {{ number }} عناصر من المفضلة"
     }
   }
 }

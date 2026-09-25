@@ -1,0 +1,740 @@
+{
+  "COMMON": {
+    "APPLY": "Bruk",
+    "CANCEL": "Avbryt",
+    "NAME": "Navn",
+    "CLEAR": "Tøm"
+  },
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "Gjenopprett",
+      "DELETE": "Slett",
+      "DOWNLOAD": "Last ned",
+      "VIEW": "Vis",
+      "UPLOAD": {
+        "TITLE": "Last opp ny versjon",
+        "TOOLTIP": "Begrensning: Du må laste opp en fil med samme navn for å opprette en ny versjon av den",
+        "MAJOR": "større endringer ({{version}})",
+        "MINOR": "mindre endringer ({{version}})",
+        "COMMENT": "Gi en kommentar",
+        "ADD": "Legg til ny versjon",
+        "CANCEL": "Avbryt",
+        "VERSION_TYPE_LABEL": "Velg versjonstype"
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "Slett versjon",
+      "MESSAGE": "Slettede filversjoner kan ikke gjenopprettes. Vil du fortsette?",
+      "YES_LABEL": "Ja",
+      "NO_LABEL": "Nei"
+    },
+    "MANAGE_VERSION_OPTIONS": "Administrer versjonsalternativer"
+  },
+  "ADF-NEW-VERSION-UPLOADER": {
+    "DIALOG_LIST": {
+      "TITLE": "Administrer versjoner",
+      "CLOSE": "Lukk"
+    },
+    "DIALOG_UPLOAD": {
+      "TITLE": "Last opp ny versjon",
+      "CANCEL": "Avbryt",
+      "UPLOAD": "Last opp"
+    }
+  },
+  "ADF_VERSION_COMPARISON": {
+    "CURRENT_VERSION": "Gjeldende",
+    "NEW_VERSION": "Ny",
+    "ACCESSIBILITY": {
+      "ICON_TEXT": "Elementtype {{ type }}",
+      "ARROW_ICON": "Høyrepil-ikon"
+    }
+  },
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "Denne mappen er tom"
+    },
+    "NO_PERMISSION": "Du har ikke tillatelse til å se denne filen eller mappen.",
+    "LAYOUT": {
+      "CREATED": "Opprettet",
+      "CREATED_BY": "Opprettet av",
+      "THUMBNAIL": "Miniatyrbilde",
+      "NAME": "Navn",
+      "LOCATION": "Lokalisering",
+      "SIZE": "Størrelse",
+      "DELETED_ON": "Slettet",
+      "DELETED_BY": "Slettet av",
+      "STATUS": "Status",
+      "MODIFIED_ON": "Endret",
+      "MODIFIED_BY": "Endret av",
+      "SHARED_BY": "Delt av",
+      "LOAD_MORE": "Last ned mer"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "Vis",
+      "REMOVE": "Fjern",
+      "DOWNLOAD": "Last ned"
+    },
+    "LOADER_LABEL": "Lasting av dokumentliste",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "Lasting av forhåndsvisning svarer ikke",
+      "LABEL": "Last ned for å vise dette dokumentet, eller avbryt for å fortsette uten forhåndsvisning.",
+      "ACTIONS": {
+        "CANCEL": "Avbryt",
+        "DOWNLOAD": "Last ned"
+      }
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Opprett...",
+      "ACTION_NEW_FOLDER": "Ny mappe",
+      "CREATE": "Opprett",
+      "CANCEL": "Avbryt"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Områdeliste",
+    "MY_FILES_OPTION": "Mine filer"
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Avbryt",
+    "CHOOSE": "Velg",
+    "ATTACH": "Legg ved",
+    "CHOOSE_ITEM": "Velg innhold du vil legge ved fra '{{ name }}'",
+    "COPY": "Kopier",
+    "LINK": "Opprett kobling",
+    "COPY_ITEM": "Kopier «{{ name }}» til...",
+    "LOCATION": "Lokalisering",
+    "MOVE": "Flytt",
+    "MOVE_ITEM": "Flytt «{{ name }}» til...",
+    "NO_RESULTS": "Ingen resultater funnet",
+    "SEARCH": "Søk",
+    "SEARCH_RESULTS": "Søkeresultater",
+    "SELECT_LIBRARY": "Velg et bibliotek",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Du kan ikke laste opp en fil mens et søk fremdeles pågår",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Brukeren har ikke tillatelse til å laste opp innhold til mappen",
+    "REPOSITORY": "Arkiv",
+    "UPLOAD_FROM_DEVICE": "Last opp fra enheten din"
+  },
+  "OPERATION": {
+    "SUCCESS": {
+      "CONTENT": {
+        "COPY": "Er nå kopiert",
+        "MOVE": "Er nå flyttet"
+      },
+      "FOLDER": {
+        "COPY": "Er nå kopiert",
+        "MOVE": "Er nå flyttet"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "Dette navnet er allerede i bruk. Prøv et annet navn.",
+      "UNKNOWN": "Handlingen mislyktes. Prøv igjen eller kontakt IT-teamet ditt.",
+      "PERMISSION": "Du har ikke tilgang til dette."
+    }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Ny tagg"
+    },
+    "MESSAGES": {
+      "EXIST": "Tagg finnes allerede"
+    },
+    "BUTTON": {
+      "ADD": "Legg til tagg"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "Eksisterende tagger:",
+      "EXISTING_TAGS_SELECTION": "Velg en eksisterende tagg:",
+      "NO_TAGS_CREATED": "Ingen tagger opprettet",
+      "NO_EXISTING_TAGS": "Ingen eksisterende tagger",
+      "TITLE": "Opprett tagger",
+      "CREATE_TAG": "Opprett: {{tag}}",
+      "TAG_SEARCH_PLACEHOLDER": "Søk i tagger",
+      "ERRORS": {
+        "EXISTING_TAG": "Tagg finnes allerede",
+        "ALREADY_ADDED_TAG": "Tagg er allerede lagt til",
+        "EMPTY_TAG": "Navnet kan ikke kun bestå av mellomrom",
+        "FETCH_TAGS": "Feil under henting av tags",
+        "CREATE_TAGS": "Feil under oppretting av taggene",
+        "SPECIAL_CHARACTERS": "Tagnavn kan ikke inneholde forbudte tegn"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "Slett tagg"
+      },
+      "TAGS_LOADING": "Tagger laster",
+      "CREATE_TAGS_SUCCESS": "Tagger ble opprettet"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "Kategorier",
+    "NO_CATEGORIES_CREATED": "Ingen kategorier opprettet",
+    "NO_CATEGORIES_ASSIGNED": "Ingen kategorier tilordnet",
+    "UNASSIGN_CATEGORY": "Fjern tilordning av kategorier",
+    "DELETE_CATEGORY": "Slett kategori",
+    "EXISTING_CATEGORIES": "Eksisterende kategorier:",
+    "SELECT_EXISTING_CATEGORY": "Velg en eksisterende kategori:",
+    "NO_EXISTING_CATEGORIES": "Ingen eksisterende kategorier",
+    "GENERIC_CREATE": "Opprett: {{name}}",
+    "NAME": "Kategorinavn",
+    "LOADING": "Laster",
+    "NO_CATEGORIES_ADDED": "Det er for øyeblikket ingen kategorier lagt til",
+    "ERRORS": {
+      "NOT_FOUND": "Kategorier ikke funnet",
+      "REQUIRED": "Kategorinavn er påkrevd",
+      "EMPTY_CATEGORY": "Kategorinavn kan ikke kun inneholde mellomrom",
+      "ALREADY_EXISTS": "Kategori eksisterer allerede",
+      "DUPLICATED_CATEGORY": "Kategori er allerede lagt til",
+      "CREATE_CATEGORIES": "Feil under oppretting av kategorier",
+      "EXISTING_CATEGORIES": "Noen kategorier eksisterer allerede",
+      "SPECIAL_CHARACTERS": "Kategorinavn kan ikke inneholde forbudte tegn",
+      "ENDS_WITH_DOT": "Kategorinavn kan ikke slutte med et punktum"
+    },
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Søk i kategorier"
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Minimer",
+      "MAXIMIZE": "Maksimer",
+      "CLOSE": "Lukk",
+      "STOP_ALL": "Stopp opplastinger",
+      "STOP_FILE": "Stopp opplasting",
+      "UPLOAD_SUCCESSFUL": "Vellykket opplasting"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Avbrutt",
+      "FILE_DONE_STATUS": "Opplastet"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Ja",
+        "CONTINUE": "Nei"
+      },
+      "MESSAGE": {
+        "TITLE": "Stopp opplasting",
+        "TEXT": "Stopp og avbryt alle pågående og ventende opplastinger."
+      }
+    },
+    "ARIA-LABEL": {
+      "VERSION": "Filversjon {{ version }}",
+      "DIALOG": "Last opp liste",
+      "DIALOG_MAXIMIZE": "Maksimer opplastingsdialog",
+      "DIALOG_MINIMIZE": "Minimer opplastingsdialog",
+      "DIALOG_CLOSE": "Lukk opplastingsdialog",
+      "STOP_ALL": "Stopp opplastinger",
+      "UPLOAD_SUCCESSFUL": "Fil lastet opp {{ file }}",
+      "STOP_FILE": "Stopp fil {{ file }}",
+      "STOP_FILE_UPLOAD": "Stopp filopplasting {{ file }}",
+      "UPLOAD_FILE_ERROR": "Opplastingsfeil {{ error }}",
+      "CONFIRMATION": {
+        "CANCEL": "Bekreft avbrudd",
+        "CONTINUE": "Fortsett opplasting"
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Last opp fil",
+      "UPLOAD_FOLDER": "Last opp mappe",
+      "PERMISSION_CHECK_ERROR": "Feil ved kontroll av tillatelse."
+    },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "Merk at innstillingen for \"acceptedFilesType\" ikke har innvirkning på nye versjonsopplastinger. Filtypen vil være den samme som for den originale filen.",
+        "INCOMPATIBLE_VERSION": "Bare en fil av samme type kan lastes opp som en ny versjon."
+      }
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Opplasting avbrutt",
+      "UPLOAD_PROGRESS": "Opplastet {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "{{ total }} mislykket opplasting",
+      "UPLOAD_ERRORS": "{{ total }} mislykkede opplastinger",
+      "PROGRESS": "Opplasting pågår...",
+      "FOLDER_ALREADY_EXIST": "Mappen {0} finnes allerede",
+      "FOLDER_NOT_SUPPORTED": "Denne nettleseren støtter ikke mappeopplasting, prøv en annen nettleser",
+      "REMOVE_FILE_ERROR": "{{ fileName }} kan ikke fjernes, prøv på nytt, eller sjekk med IT-teamet.",
+      "REMOVE_FILES_ERROR": "{{ total }} filer kan ikke fjernes, prøv igjen, eller sjekk med IT-teamet.",
+      "EXCEED_MAX_FILE_SIZE": "Filen {{ fileName }} er større enn den tillatte filstørrelsen"
+    },
+    "ACTION": {
+      "UNDO": "Angre"
+    },
+    "ERRORS": {
+      "GENERIC": "Opplastingen mislyktes. Kontakt IT hvis dette problemet vedvarer",
+      "500": "Intern serverfeil, prøv igjen eller kontakt IT-støtte [500]",
+      "504": "Serveren ble tidsavbrutt, prøv igjen eller kontakt IT-støtte [504]",
+      "403": "Utilstrekkelige tillatelser til å laste opp til denne plasseringen [403]",
+      "404": "Plasseringen for opplasting eksisterer ikke lenger [404]",
+      "409": "En fil med samme navn finnes allerede [409]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "Opplastingsfeil"
+    }
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "BUTTON": {
+      "TOOLTIP": "Søk",
+      "ARIA-LABEL": "Søkeknapp"
+    },
+    "INPUT": {
+      "LABEL": "Søk",
+      "PLACEHOLDER": "Søkeforespørsel",
+      "ARIA-LABEL": "Søkeinndata"
+    },
+    "RESULTS": {
+      "SUMMARY": "{{numResults}} resultater funnet for {{searchTerm}}",
+      "NONE": "Ingen resultater funnet for {{searchTerm}}",
+      "ERROR": "Vi støtte på et problem under søket, prøv på nytt.",
+      "WILL_CONTAIN": "Resultatene vil inneholde '{{searchTerm}}'",
+      "COLUMNS": {
+        "NAME": "Vis navn",
+        "MODIFIED_BY": "Endret av",
+        "MODIFIED_AT": "Endret"
+      }
+    },
+    "FILTER": {
+      "ACTIONS": {
+        "SEARCH": "Søk",
+        "CLEAR": "Tøm",
+        "APPLY": "Bruk",
+        "CLEAR-ALL": "Fjern alle",
+        "SHOW-MORE": "Vis flere",
+        "SHOW-LESS": "Vis mindre",
+        "ADD_OPTION": "Legg til alternativ..."
+      },
+      "BUTTONS": {
+        "CLOSE": "Lukk",
+        "CLEAR": "Tøm",
+        "REMOVE": "Fjern",
+        "APPLY": "Bruk",
+        "CLEAR-ALL": {
+          "LABEL": "Fjern alle",
+          "TOOLTIP": "Dette vil fjerne alle valg"
+        },
+        "RESET-ALL": {
+          "LABEL": "Tilbakestill alle",
+          "TOOLTIP": "Dette vil tilbakestille alle valg og alle filtre"
+        }
+      },
+      "RANGE": {
+        "FROM": "Fra",
+        "TO": "Til",
+        "FROM-DATE": "Fra",
+        "TO-DATE": "Til"
+      },
+      "VALIDATION": {
+        "REQUIRED-VALUE": "Påkrevd verdi",
+        "NO-DAYS": "Ingen dager valgt.",
+        "INVALID-FORMAT": "Ugyldig format",
+        "INVALID-DATE": "Ugyldig dato. Datoen må være i formatet '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATE": "Datoen er utover maksimumsdato.",
+        "INVALID-DATETIME": "Ugyldig dato/klokkeslett. Dato/klokkeslett må være i formatet '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATETIME": "Dato/klokkeslett overgår maksimum dato/klokkeslett."
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "Søkefilter-liste",
+        "OPTIONS-SELECTION": "Valg av alternativer"
+      },
+      "ANY": "Enhver",
+      "PEOPLE": "Personer"
+    },
+    "FACET_FIELDS": {
+      "MODIFIER_LABEL": "Endret av",
+      "CREATOR_LABEL": "Opprettet av"
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "Bildefil",
+      "ft_ic_pdf": "PDF-dokument",
+      "ft_ic_ms_excel": "Microsoft Excel-fil",
+      "ft_ic_ms_word": "Microsoft Word-dokument",
+      "ft_ic_ms_powerpoint": "Microsoft PowerPoint-fil",
+      "ft_ic_video": "Videofil",
+      "ft_ic_document": "Dokumentfil",
+      "ft_ic_website": "Webressurs",
+      "ft_ic_archive": "Arkiver fil",
+      "ft_ic_presentation": "Presentasjonsfil",
+      "ft_ic_spreadsheet": "Regnarkfil"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Vis navn",
+        "CREATED_BY": "Opprettet av",
+        "CREATED_ON": "Opprettet"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Slett",
+          "MOVE": "Flytt",
+          "COPY": "Kopier"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "Last ned",
+          "DELETE": "Slett",
+          "MOVE": "Flytt",
+          "COPY": "Kopier",
+          "PROCESS_ACTION": "Start prosess"
+        }
+      }
+    },
+    "UNKNOWN_CONFIGURATION": "Ukjent konfigurasjon",
+    "SEARCH_HEADER": {
+      "TITLE": "Filter",
+      "TYPE": "Type",
+      "FILTER_BY": "Filtrer etter {{ category }}",
+      "ACTIVE_FILTER": "Aktivt filter",
+      "CLEAR": "Tøm",
+      "APPLY": "Bruk",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "Navn",
+          "PLACEHOLDER": "Skriv inn navnet"
+        },
+        "TYPE": {
+          "TITLE": "Kontroller type",
+          "FOLDER": "Mappe",
+          "DOCUMENT": "Dokument"
+        },
+        "SIZE": {
+          "TITLE": "Innholdsstørrelse (område)",
+          "SMALL": "Liten",
+          "MEDIUM": "Mellomstor",
+          "LARGE": "Stor",
+          "HUGE": "Enorm"
+        },
+        "DATE": {
+          "TITLE": "Opprettet dato (område)"
+        }
+      }
+    },
+    "LOGICAL_SEARCH": {
+      "MATCH_ALL": "ALLE",
+      "MATCH_ALL_LABEL": "Match ALLE disse frasene",
+      "MATCH_ALL_HINT": "Resultatene vil samsvare med alle ord skrevet inn her",
+      "MATCH_ANY": "ENHVER",
+      "MATCH_ANY_LABEL": "Match ENHVER av disse frasene",
+      "MATCH_ANY_HINT": "Resultatene vil samsvare med et av ordene skrevet inn her",
+      "MATCH_EXACT": "NØYAKTIG",
+      "MATCH_EXACT_LABEL": "Samsvar med denne NØYAKTIGE FRASEN",
+      "MATCH_EXACT_HINT": "Resultatene vil samsvare med hele denne frasen",
+      "EXCLUDE": "EKSKLUDER",
+      "EXCLUDE_LABEL": "EKSKLUDER disse frasene",
+      "EXCLUDE_HINT": "Resultatene vil utelate treff med disse ordene"
+    },
+    "DATE_RANGE_ADVANCED": {
+      "OPTIONS": {
+        "ANYTIME": "Når som helst",
+        "IN_LAST": "I de siste",
+        "BETWEEN": "Mellom"
+      },
+      "IN_LAST_LABELS": {
+        "DAYS": "Dager",
+        "WEEKS": "Uker",
+        "MONTHS": "Måneder",
+        "QUANTITY": "Mengde"
+      },
+      "IN_LAST_DISPLAY_LABELS": {
+        "DAYS": "I de siste {{value}} dagene",
+        "WEEKS": "I de siste {{value}} ukene",
+        "MONTHS": "I de siste {{value}} månedene"
+      },
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "Startdato",
+        "END_DATE": "Sluttdato",
+        "DATE_RANGE": "Datointervall"
+      },
+      "ERROR": {
+        "IN_LAST": "Verdi kreves",
+        "START_DATE": {
+          "REQUIRED": "Startdato kreves",
+          "INVALID_FORMAT": "Startdato ugyldig. Datoen må være i formatet '{{ requiredFormat }}'"
+        },
+        "END_DATE": {
+          "REQUIRED": "Sluttdato kreves",
+          "INVALID_FORMAT": "Sluttdato ugyldig. Datoen må være i formatet '{{ requiredFormat }}'"
+        }
+      },
+      "ARIA_LABEL": {
+        "NUMBER_INPUT": "Tallinndata"
+      }
+    },
+    "SEARCH_PROPERTIES": {
+      "FILE_SIZE": "Filstørrelse",
+      "FILE_SIZE_PLACEHOLDER": "Angi filstørrelse",
+      "FILE_SIZE_OPERATOR": {
+        "AT_LEAST": "Minst",
+        "AT_MOST": "Høyst",
+        "EXACTLY": "Nøyaktig"
+      },
+      "FILE_SIZE_UNIT_ABBREVIATION": {
+        "KB": "KB",
+        "MB": "MB",
+        "GB": "GB"
+      },
+      "FILE_TYPE": "Filtype",
+      "FILE_TYPE_PLACEHOLDER": "Legg til filtype",
+      "ACCESSIBILITY": {
+        "CONDITION": "Betingelse",
+        "SIZE_VALUE": "Filstørrelsesverdi",
+        "UNIT": "Enhet"
+      }
+    }
+  },
+  "PERMISSION": {
+    "LACKOF": "Du har ikke {{permission}} tillatelsen til å {{action}} {{type}}"
+  },
+  "METADATA": {
+    "BASIC": {
+      "HEADER": "Egenskaper",
+      "NAME": "Navn",
+      "TITLE": "Tittel",
+      "DESCRIPTION": "Beskrivelse",
+      "AUTHOR": "Forfatter",
+      "MIMETYPE": "Mimetype",
+      "SIZE": "Størrelse",
+      "CREATOR": "Oppretter",
+      "CREATED_DATE": "Opprettelsesdato",
+      "MODIFIER": "Modifikator",
+      "MODIFIED_DATE": "Endringsdato",
+      "CONTENT_TYPE": "Innholdstype",
+      "TAGS": "Tagger",
+      "NO_TAGS_ADDED": "Det er for øyeblikket ingen tagger lagt til",
+      "NO_ITEMS_MESSAGE": "Det er for øyeblikket ingen {{ groupTitle }} lagt til",
+      "SAVE_OR_DISCARD_CHANGES": "Lagre eller forkast endringer for å fortsette"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "Endre innholdstype",
+        "DESCRIPTION": "Ved å foreta denne endringen i innholdstypen legges visse egenskaper og lagrede metadata permanent til i dokumentet.",
+        "CONFIRM": "Er du sikker på at du vil endre innholdstypen?",
+        "CANCEL": "AVBRYT",
+        "APPLY": "Lagre endringer",
+        "VIEW_DETAILS": "Vis detaljer",
+        "PROPERTY": {
+          "NAME": "Navn",
+          "DESCRIPTION": "Beskrivelse",
+          "DATA_TYPE": "Datatype"
+        }
+      }
+    },
+    "ERRORS": {
+      "GENERIC": "Feil ved oppdatering av egenskap",
+      "409": "Duplisert navn på underordnet objekt er ikke tillatt [409]",
+      "422": "Ugyldig egenskapsverdi"
+    }
+  },
+  "SHARE": {
+    "PUBLIC-LINK": "Offentlig lenke",
+    "DIALOG-TITLE": "Del",
+    "DESCRIPTION": "Klikk på koblingen nedenfor for å kopiere den til utklippstavlen.",
+    "TITLE": "Kobling som skal deles",
+    "SHARE-LINK": "Dele lenke",
+    "SHARABLE-LINK-CREATED": "Delbar lenke er opprettet",
+    "PUBLIC-CONTENT": "Dette innholdet er offentlig tilgjengelig for alle med denne lenken",
+    "LINK-WITH-EXPIRY-SETTINGS": "Ny lenke er opprettet med utløpsinnstillinger",
+    "EXPIRES": "Utløper den",
+    "LINK-EXPIRY-DATE": "Utløpsdato for lenke",
+    "EXPIRATION-LABEL": "Utløpsdato",
+    "EXPIRATION-PLACEHOLDER": "DD/MM/ÅÅÅÅ",
+    "CLIPBOARD-MESSAGE": "Kobling kopiert til utklippstavlen",
+    "CLOSE": "Lukk",
+    "COPY_BUTTON_LABEL": "Kopier lenke",
+    "CONFIRMATION": {
+      "DIALOG-TITLE": "Fjern denne delte koblingen",
+      "MESSAGE": "Denne koblingen vil bli slettet, og en ny kobling vil bli opprettet neste gang denne filen deles",
+      "CANCEL": "Avbryt",
+      "REMOVE": "Fjern"
+    },
+    "UNSHARE_ERROR": "Feil ved oppheving av deling av filen",
+    "UNSHARE_PERMISSION_ERROR": "Du har ikke tillatelse til å oppheve deling av denne filen",
+    "INVALID_DATE_ERROR": "Ugyldig dato"
+  },
+  "PERMISSION_MANAGER": {
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "Arvet",
+      "AUTHORITY_ID": "Autoritets-ID",
+      "ROLE": "Rolle",
+      "LOCALLY_SET": "Angitt lokalt",
+      "NO_PERMISSIONS": "Ingen tillatelser"
+    },
+    "ADD-PERMISSION": {
+      "SEARCH": "Søk etter brukere eller grupper å legge til",
+      "TITLE": "Legg til tillatelse",
+      "TYPE-MESSAGE": "Skriv inn tekst for å starte søk etter grupper eller personer",
+      "NO-RESULT": "Ingen resultater funnet for dette søket",
+      "SELECT-ACTION": "VELG",
+      "ADD-ACTION": "Legg til",
+      "CLOSE-ACTION": "AVBRYT",
+      "BASE-DIALOG-TITLE": "Søk etter en gruppe eller personer å legge til...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "Legg til tillatelse for bruker eller gruppe",
+      "EVERYONE": "Alle",
+      "USER-GROUP-LIST": "Bruker- eller gruppeliste",
+      "REMOVE_USER_GROUP": "Fjern"
+    },
+    "COLUMN": {
+      "NAME": "Brukere og grupper ({{ count }})",
+      "LOCATION": "Lokalisering",
+      "BULK-ROLE": "Angi alle roller til"
+    },
+    "LABELS": {
+      "HIDE": "Skjul",
+      "SHOW": "Vis",
+      "ON": "På",
+      "OFF": "Av",
+      "DIRECT-PERMISSIONS": "Direkte brukt tillatelse",
+      "INHERITED-PERMISSIONS": "Arvet tillatelse",
+      "INHERITED-SUBTITLE": "{{count}} brukere eller grupper arver tillatelse fra en overordnet mappe",
+      "SELECT-ROLE": "Velg rolle",
+      "INHERITED_PERMISSION_TOGGLE": "Veksle arvet tillatelse"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "Ingen brukere/grupper",
+      "EMPTY-SUBTITLE": "Legg til bruker/gruppe for å administrere tillatelser.",
+      "NO-MEMBERS": "Legg til grupper eller personer for å administrere roller",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "Oppdaterte {{user}} bruker(e) {{group}} gruppe(r)",
+      "PERMISSION-UPDATE-SUCCESS": "Bruker/gruppe oppdatert",
+      "PERMISSION-UPDATE-FAIL": "Kunne ikke oppdatere bruker/gruppe",
+      "PERMISSION-BULK-DELETE-SUCCESS": "Slettet {{user}} bruker(e) {{group}} gruppe(r)",
+      "PERMISSION-DELETE-SUCCESS": "Bruker/gruppe slettet",
+      "PERMISSION-DELETE-FAIL": "Kunne ikke slette bruker/gruppe",
+      "PERMISSION-ADD-SUCCESS": "La til {{user}} bruker(e) {{group}} gruppe(r)",
+      "PERMISSION-ADD-FAIL": "Kunne ikke legge til bruker/gruppe",
+      "INHERIT-ENABLE-SUCCESS": "Aktiverte arvet tillatelse",
+      "INHERIT-DISABLE-SUCCESS": "Deaktiverte arvet tillatelse",
+      "TOGGLE-PERMISSION-FAILED": "Kunne ikke aktivere/deaktivere arvet tillatelse"
+    },
+    "ACTION": {
+      "DELETE": "Slett",
+      "ADD-PERMISSION": "Legg til bruker eller gruppe"
+    },
+    "ERROR": {
+      "NOT-FOUND": "Dette elementet eksisterer ikke lenger, eller du har ikke tillatelse til å vise det.",
+      "DUPLICATE-PERMISSION": "Én eller flere av tillatelsene du har angitt, er allerede til stede: {{list}}",
+      "NOT-ALLOWED": "Du har ikke lov til å endre tillatelser"
+    }
+  },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "Gruppeikon",
+    "GROUP_USER_SELECTED_ALT": "Valgt gruppe- eller brukerikon"
+  },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "Ingen node-ID oppgitt!",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Bytt {{ name }}"
+    }
+  },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Last inn flere {{ name }}",
+    "ACTIONS": {
+      "TOOLTIP": "Åpne handlingsmeny"
+    },
+    "ARIA": {
+      "SELECTED": "{{ name }} er valgt",
+      "DESELECTED": "{{ name }} valgt bort"
+    }
+  },
+  "LIBRARY": {
+    "DIALOG": {
+      "CREATE_TITLE": "Opprett bibliotek",
+      "CREATE": "Opprett",
+      "UPDATE": "Oppdater",
+      "EDIT": "Rediger",
+      "CANCEL": "Avbryt",
+      "FORM": {
+        "DESCRIPTION": "Beskrivelse",
+        "SITE_ID": "Bibliotek-ID",
+        "NAME": "Navn",
+        "VISIBILITY": "Synlighet"
+      }
+    },
+    "ROLE": {
+      "MANAGER": "Administrator",
+      "COLLABORATOR": "Medarbeider",
+      "CONTRIBUTOR": "Bidragsyter",
+      "CONSUMER": "Forbruker",
+      "NONE": "Ikke medlem"
+    },
+    "VISIBILITY": {
+      "PRIVATE": "Privat",
+      "PUBLIC": "Offentlig",
+      "MODERATED": "Moderert"
+    },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "Biblioteknavnet er allerede i bruk"
+    },
+    "ERRORS": {
+      "GENERIC": "Vi har støtt på et problem",
+      "EXISTENT_SITE": "Denne bibliotek-ID-en er ikke tilgjengelig. Prøv en annen bibliotek-ID.",
+      "CONFLICT": "Denne bibliotek-ID-en er allerede i bruk. Sjekk papirkurven.",
+      "ID_TOO_LONG": "Bruk 72 tegn eller mindre for URL-navnet",
+      "DESCRIPTION_TOO_LONG": "Bruk 512 tegn eller mindre for beskrivelse",
+      "TITLE_TOO_LONG": "Bruk 256 tegn eller mindre for tittel",
+      "TITLE_TOO_SHORT": "Titttelen må bestå av minst 2 tegn",
+      "ILLEGAL_CHARACTERS": "Bruk kun tall og bokstaver",
+      "ONLY_SPACES": "Biblioteknavnet kan ikke bare bestå av mellomrom",
+      "LIBRARY_UPDATE_ERROR": "Det oppsto en feil under oppdatering av bibliotekets egenskaper",
+      "NAME_REQUIRED": "Biblioteknavn er nødvendig",
+      "ID_REQUIRED": "Bibliotek-ID er nødvendig"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "Bibliotekets egenskaper er oppdatert"
+    }
+  },
+  "BREADCRUMB": {
+    "ARIA-LABEL": {
+      "BREADCRUMB": "Søkebane",
+      "DROPDOWN": "Åpne brødsmulemeny for {{folderName}}"
+    },
+    "HEADER": {
+      "SELECTED": "Valgt ({{ count }})"
+    }
+  },
+  "NAME_COLUMN_LINK": {
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Åpne {{ name }}"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "Egenskapsnavn",
+    "DESCRIPTION": "Beskrivelse",
+    "DATA_TYPE": "Datatype",
+    "DIALOG": {
+      "TITLE": "Tilpass egenskaper",
+      "DESCRIPTION": "Administrer egenskapene knyttet til valgte fil(er). Velg fra egenskapsaspektene opplistet nedenfor, for å vise og aktivere ytterligere metadata og funksjonalitet",
+      "RESET": "Tilbakestill",
+      "CLEAR": "Tøm",
+      "CANCEL": "Avbryt",
+      "APPLY": "Bruk",
+      "OVER-TABLE-MESSAGE": "Select property aspects",
+      "SELECTED": "Valgt"
+    }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "{{ count }} valgt"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "Vis {{ count }} til"
+  },
+  "swsdp": "Eksempel: Prosjekt for nettsteddesign",
+  "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
+    "ERRORS": {
+      "INVALID_RECEIVER_EMAIL": "Mottakeres e-postadresse er ikke gyldig – kontakt IT.",
+      "INVALID_SENDER_EMAIL": "E-postadressen din må være gyldig før du ber om tilslutning.",
+      "JOIN_CANCEL_FAILED": "Kan ikke avbryte forespørselen din om tilslutning",
+      "JOIN_REQUEST_FAILED": "Kan ikke slutte deg til biblioteket"
+    },
+    "INFO": {
+      "JOINED": "Bibliotek tilsluttet",
+      "JOIN_CANCELED": "Forespørselen om tilslutning til biblioteket er avbrutt",
+      "JOIN_REQUESTED": "Forespørsel sendt om tilslutning til dette biblioteket"
+    }
+  },
+  "NODE_FAVORITE_DIRECTIVE": {
+    "MESSAGES": {
+      "NODE_ADDED": "Lagt {{ name }} til favoritter",
+      "NODES_ADDED": "Lagt til {{ number }} elementer i favoritter",
+      "NODE_REMOVED": "Fjernet {{ name }} fra favoritter",
+      "NODES_REMOVED": "Fjernet {{ number }} elementer fra favoritter"
+    }
+  }
+}

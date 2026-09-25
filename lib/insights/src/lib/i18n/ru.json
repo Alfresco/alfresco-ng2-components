@@ -1,12 +1,12 @@
 {
   "ANALYTICS": {
-    "TITLE": "Анализ данных",
+    "TITLE": "АНАЛИТИКА",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "Неизвестный тип виджета",
+      "UNKNOWN-WIDGET-TYPE": "НЕИЗВЕСТНЫЙ ТИП ВИДЖЕТА",
       "FILL-PARAMETER": "Выберите из параметров отчета",
       "NO-DATA-FOUND": "Данные не найдены",
-      "ZERO-DATA-FOUND": "Есть только нулевые значения",
-      "ICON-SETTING": "Параметры",
+      "ZERO-DATA-FOUND": "Присутствуют только нулевые значения",
+      "ICON-SETTING": "Настройки",
       "ICON-SAVE": "Сохранить",
       "ICON-DELETE": "Удалить",
       "ICON-EXPORT-CSV": "Экспорт"
@@ -15,22 +15,22 @@
   "__KEY_REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-DEFINITION-OVERVIEW": {
-        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Общее количество определений процесса",
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Общее количество определений процессов",
         "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Общее количество экземпляров процесса",
         "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Общее количество активных экземпляров процесса",
-        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Общее количество завершенных экземпляров процесса"
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Общее количество выполненных экземпляров процесса"
       }
     }
   },
   "REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "Включите прохождение таких шагов, как стартовые события и шлюзы"
+        "TYPE-FILTERING": "Включить промежуточные шаги, такие как начальные события и переходы"
       },
       "PROCESS-INSTANCES-OVERVIEW": {
         "PROCESS-DEFINITION": "Определение процесса",
         "DATE-RANGE": "Диапазон дат",
-        "SLOW-PROC-INST-NUMBER": "Сколько самых медленных экземпляров процесса должно отображаться?"
+        "SLOW-PROC-INST-NUMBER": "Сколько самых медленных экземпляров процесса следует отображать?"
       },
       "TASK-OVERVIEW": {
         "PROCESS-DEFINITION": "Определение процесса",
@@ -41,7 +41,7 @@
         "TASK": "Задача",
         "PROCESS-DEFINITION": "Определение процесса",
         "DATE-RANGE": "Диапазон дат",
-        "SLA-DURATION": "Время завершения, требуемое соглашением об уровне обслуживания"
+        "SLA-DURATION": "Требуемое время выполнения по SLA"
       }
     },
     "PROCESS-STATUS": "Статус процесса",

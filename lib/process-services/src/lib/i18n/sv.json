@@ -15,7 +15,7 @@
     "APPS": {
       "TITLE": "Inga program hittades",
       "SUBTITLE": "Skapa ett nytt program som du enkelt hittar senare",
-      "TASK_APP_NAME": "Uppgiftsapp"
+      "TASK_APP_NAME": "Task App"
     },
     "LIST": {
       "MESSAGES": {
@@ -181,7 +181,7 @@
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "Inget processinstansfilter valt"
+        "NONE": "Inget processinstansfilter valt."
       }
     },
     "PROPERTIES": {
@@ -278,11 +278,11 @@
       "NO_START_FORM": "Inget startformulär",
       "NO_PROCESS_DEF_SELECTED": "Ingen processdefinition vald",
       "FORM": {
-        "TITLE": "Starta process",
         "LABEL": {
           "SELECT_APPLICATION": "Välj program",
           "TYPE": "Välj process",
-          "NAME": "Processnamn"
+          "NAME": "Processnamn",
+          "SELECTED_PEOPLE": "Valda personer"
         },
         "TYPE_PLACEHOLDER": "Välj en...",
         "ACTION": {

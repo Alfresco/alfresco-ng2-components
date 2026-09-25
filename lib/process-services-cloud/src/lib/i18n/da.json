@@ -50,7 +50,8 @@
         "MAXIMUM_LENGTH": "Længden er overskredet, maks. {{characters}} tegn.",
         "SPACE_VALIDATOR": "Må ikke starte eller slutte med et mellemrum."
       }
-    }
+    },
+    "LOADING": "Indlæser"
   },
   "ADF_CLOUD_TASK_LIST": {
     "START_TASK": {
@@ -97,7 +98,8 @@
         "SUBTITLE": "Opret en ny opgave, som skal være nem at finde senere",
         "NONE": "Der blev ikke fundet nogen opgavelister"
       }
-    }
+    },
+    "LOADING": "Indlæser"
   },
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {
@@ -122,8 +124,8 @@
       "COMPLETED": "Fuldført"
     },
     "DIRECTION": {
-      "ASCENDING": "Stigende",
-      "DESCENDING": "Faldende"
+      "ASCENDING": "Stigende rækkefølge",
+      "DESCENDING": "Faldende rækkefølge"
     }
   },
   "ADF_CLOUD_SERVICE_TASK_FILTERS": {
@@ -150,8 +152,8 @@
       "COMPLETED": "Fuldført"
     },
     "DIRECTION": {
-      "ASCENDING": "Stigende",
-      "DESCENDING": "Faldende"
+      "ASCENDING": "Stigende rækkefølge",
+      "DESCENDING": "Faldende rækkefølge"
     }
   },
   "ADF_CLOUD_START_TASK": {
@@ -241,6 +243,7 @@
       "SUSPENDED_DATE": "Suspensionsdato",
       "STARTED_BY": "Startet af",
       "COMPLETED_DATE": "Fuldførelsesdato",
+      "MAIN_PROCESS_ID": "Hovedproces-id",
       "DATE_RANGE": {
         "NO_DATE": "Ingen dato",
         "TODAY": "I dag",

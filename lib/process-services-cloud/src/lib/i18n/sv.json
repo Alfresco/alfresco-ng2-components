@@ -3,7 +3,7 @@
     "MESSAGES": {
       "TITLE": "Inga processer hittades",
       "SUBTITLE": "Skapa en ny process som du enkelt hittar senare",
-      "NONE": "Inget processinstansfilter valt"
+      "NONE": "Inget processinstansfilter valt."
     },
     "PROPERTIES": {
       "NAME": "Processnamn",
@@ -50,7 +50,8 @@
         "MAXIMUM_LENGTH": "Längd överskriden, {{characters}} tecken max.",
         "SPACE_VALIDATOR": "Får inte börja eller sluta med ett mellanslag."
       }
-    }
+    },
+    "LOADING": "Läser in"
   },
   "ADF_CLOUD_TASK_LIST": {
     "START_TASK": {
@@ -97,7 +98,8 @@
         "SUBTITLE": "Skapa en ny uppgift som du enkelt hittar senare",
         "NONE": "Inga uppgiftslistor hittades"
       }
-    }
+    },
+    "LOADING": "Läser in"
   },
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {
@@ -174,13 +176,13 @@
       "APP_NAME": "Programnamn",
       "TASK_ID": "Uppgifts-ID",
       "PROCESS_DEF_NAME": "Processdefinitionsnamn",
-      "PROCESS_DEF_ID": "Processdefinitions-ID",
+      "PROCESS_DEF_ID": "ProcessDefinitionId",
       "STATUS": "Status",
       "ASSIGNMENT": "Tilldelad användare",
       "DIRECTION": "Riktning",
-      "PROCESS_INSTANCE_ID": "Processinstans-ID",
+      "PROCESS_INSTANCE_ID": "ProcessInstanceId",
       "TASK_NAME": "Uppgiftsnamn",
-      "PARENT_TASK_ID": "Överordnad uppgift ID",
+      "PARENT_TASK_ID": "ParentTaskId",
       "PRIORITY": "Prioritet",
       "STAND_ALONE": "Stand-alone",
       "LAST_MODIFIED_FROM": "Senast ändrad från",
@@ -190,7 +192,7 @@
       "SORT": "Sortera",
       "START_DATE": "Startdatum",
       "COMPLETED_BY": "Slutförd av",
-      "COMPLETED_DATE": "Slutförandedatum",
+      "COMPLETED_DATE": "CompletedDate",
       "CREATED_DATE": "Skapandedatum",
       "CANDIDATE_GROUPS": "Kandidatgrupper"
     },
@@ -203,19 +205,19 @@
   "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
     "LABEL": {
       "APP_NAME": "Programnamn",
-      "SERVICE_TASK_ID": "ServiceuppgiftId",
+      "SERVICE_TASK_ID": "ServiceTaskId",
       "SERVICE_NAME": "Servicenamn",
       "ELEMENT_ID": "ElementId",
       "PROCESS_DEF_NAME": "Processdefinitionsnamn",
-      "PROCESS_DEF_ID": "Processdefinitions-ID",
-      "PROCESS_INSTANCE_ID": "Processinstans-ID",
+      "PROCESS_DEF_ID": "ProcessDefinitionId",
+      "PROCESS_INSTANCE_ID": "ProcessInstanceId",
       "STATUS": "Status",
       "DIRECTION": "Riktning",
       "ACTIVITY_NAME": "Aktivitetsnamn",
       "ACTIVITY_TYPE": "Aktivitetstyp",
       "SORT": "Sortera",
       "STARTED_DATE": "Startdatum",
-      "COMPLETED_DATE": "Slutförandedatum"
+      "COMPLETED_DATE": "CompletedDate"
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
@@ -223,13 +225,13 @@
     "FILTER_NAME": "Filternamn",
     "LABEL": {
       "APP_NAME": "Programnamn",
-      "PROCESS_INS_ID": "Processinstans-ID",
+      "PROCESS_INS_ID": "ProcessInstanceId",
       "STATUS": "Status",
       "INITIATOR": "Initerare",
       "ASSIGNMENT": "Tilldelad användare",
       "SORT": "Sortera",
       "DIRECTION": "Riktning",
-      "PROCESS_DEF_ID": "Processdefinitions-ID",
+      "PROCESS_DEF_ID": "ProcessDefinitionId",
       "PROCESS_DEF_NAME": "Processdefinitionsnamn",
       "PROCESS_DEF_KEY": "Processdefinitionsnyckel",
       "LAST_MODIFIED": "Senast ändrad",
@@ -241,6 +243,7 @@
       "SUSPENDED_DATE": "Avstängd datum",
       "STARTED_BY": "Startad av",
       "COMPLETED_DATE": "Datum slutförd",
+      "MAIN_PROCESS_ID": "Huvudprocess-ID",
       "DATE_RANGE": {
         "NO_DATE": "Inget datum",
         "TODAY": "I dag",

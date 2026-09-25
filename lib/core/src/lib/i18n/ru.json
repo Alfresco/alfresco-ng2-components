@@ -24,6 +24,7 @@
   "CLOSE": "Закрыть",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "В настоящее время у вас нет уведомлений.",
+    "UNREAD_MESSAGES": "У вас есть непрочитанные оповещения.",
     "TITLE": "Оповещения",
     "MARK_AS_READ": "Отметить все как прочитанное",
     "SYSTEM": "Система",
@@ -35,7 +36,10 @@
       "TITLE": "Запустить форму"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Предварительный просмотр недоступен"
+      "IMAGE_NOT_AVAILABLE": "Предварительный просмотр недоступен",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "В режиме предварительного просмотра нельзя прикрепить файл"
+      }
     },
     "FIELD": {
       "LOCALSTORAGE": "Локальное хранение",
@@ -46,11 +50,19 @@
       "UPLOAD": "Загрузить",
       "REQUIRED": "Обязательное поле",
       "REST_API_FAILED": "Сервер '{{ hostname }}' недоступен",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Возникла проблема при загрузке элементов выпадающего списка. Обратитесь к администратору.",
+      "DATA_TABLE_LOAD_FAILED": "Возникла проблема при загрузке элементов таблицы. Обратитесь к администратору.",
+      "DATA_TABLE_EMPTY_CONTENT": "Данные не найдены",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "Возникла проблема при загрузке внешнего свойства. Обратитесь к администратору.",
       "FILE_NAME": "Имя файла",
+      "TITLE": "Заголовок",
       "NO_FILE_ATTACHED": "Вложенные файлы отсутствуют",
       "VALIDATOR": {
         "INVALID_NUMBER": "Используйте другой формат числа",
+        "INVALID_DECIMAL_NUMBER": "Используйте формат десятичного числа",
+        "INVALID_DECIMAL_PRECISION": "Неверное десятичное значение, после запятой должно быть не более {{precision}} цифр.",
         "INVALID_DATE": "Используйте другой формат даты",
+        "INVALID_DATE_FORMAT": "Недействительный формат даты.",
         "INVALID_VALUE": "Введите другое значение",
         "NOT_GREATER_THAN": "Не может превышать {{ maxValue }}",
         "NOT_LESS_THAN": "Не может быть меньше {{ minValue }}",
@@ -58,10 +70,65 @@
         "NO_LONGER_THAN": "Введите не более {{ maxLength }} символов"
       },
       "FILE_ALREADY_UPLOADED": "Файл с таким названием уже загружен.",
-      "ATTACH": "Прикрепить"
+      "ATTACH": "Прикрепить",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "добавить",
+        "ROW_LIMIT_REACHED": "Достигнут предел строк ({{ limit }})."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Задача без имени"
+      "NAMELESS_TASK": "Задача без имени",
+      "ROW_LABEL": "Строка {{ number }}",
+      "DELETE_ROW": "Удалить строку",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Удалить строку",
+        "MESSAGE": "Вы действительно хотите удалить эту строку?",
+        "YES_LABEL": "Удалить строку",
+        "NO_LABEL": "Отмена"
+      }
+    },
+    "BUTTON": {
+      "PREVIOUS_TAB": "Назад",
+      "PREVIOUS_TAB_TITLE": "Перейти к предыдущей вкладке",
+      "NEXT_TAB": "Далее",
+      "NEXT_TAB_TITLE": "Перейти к следующей вкладке"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "Размер шрифта",
+      "FONT_WEIGHT": "Насыщенность шрифта",
+      "FONT_COLOR": "Цвет шрифта",
+      "FONT_WEIGHTS": {
+        "REGULAR": "обычный",
+        "BOLD": "жирный"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "системный цвет",
+        "BLACK": "черный",
+        "GREY": "серый",
+        "RED": "красный",
+        "GREEN": "зеленый",
+        "BLUE": "синий",
+        "YELLOW": "желтый"
+      },
+      "PREDEFINED": {
+        "HEADER": {
+          "NORMAL": "обычный",
+          "HEADING": "надпись",
+          "TITLE": "заголовок"
+        },
+        "RADIO_BUTTONS": {
+          "NORMAL": "обычный",
+          "STRONG": "выделенный",
+          "HEADING": "надпись"
+        },
+        "READONLY_TEXT": {
+          "NORMAL": "обычный",
+          "STRONG": "выделенный",
+          "HEADING": "надпись",
+          "TITLE": "заголовок",
+          "ANNOTATION": "аннотация"
+        }
+      }
     }
   },
   "CORE": {
@@ -99,12 +166,24 @@
         "ACTIONS": {
           "CANCEL": "Отмена"
         },
-        "TITLE": "Добавление файлов в архив, это может занять несколько минут"
+        "TITLE": "Добавление файлов в архив, это может занять несколько минут",
+        "COMPLETE": "завершить"
       },
       "EDIT_JSON": {
         "CLOSE": "Закрыть",
-        "UPDATE": "Обновить"
+        "UPDATE": "Обновить",
+        "COPY": "Копировать",
+        "COPIED": "Скопировано в буфер обмена"
+      },
+      "UNSAVED_CHANGES": {
+        "TITLE": "Несохраненные изменения",
+        "DESCRIPTION": "У вас есть несохраненные изменения на этом экране. Вы действительно хотите покинуть его без сохранения изменений?",
+        "DISCARD_CHANGES_BUTTON": "Отменить изменения"
       }
+    },
+    "BREADCRUMBS": {
+      "TITLE": "Иерархия",
+      "SHOWALL": "Просмотреть все"
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "Заблокировать файл",
@@ -144,7 +223,9 @@
       },
       "CANCEL_BUTTON": {
         "LABEL": "Отмена"
-      }
+      },
+      "FOLDER_CREATED_SUCCESS": "Папка «{{ name }}» успешно создана",
+      "FOLDER_UPDATED_SUCCESS": "Папка «{{ name }}» успешно обновлена"
     },
     "MESSAGES": {
       "ERRORS": {
@@ -176,12 +257,16 @@
         "VALUE": "Значение"
       },
       "NONE": "Нет",
+      "SELECTED_VALUES": "Выбранные значения",
+      "REMOVE": "Удалить {{ value }}",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Использовать формат числа",
         "INT_VALIDATION_ERROR": "Использовать формат целого числа",
+        "LONG_VALIDATION_ERROR": "Используйте длинный формат",
         "LENGTH_VALIDATION_ERROR": "Значение должно находиться в пределах от {{ minLength }} до {{ maxLength }} по длине",
         "MATCH_VALIDATION_ERROR": "Значение не совпадает с шаблоном: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Значение должно находиться в пределах от {{ minValue }} до {{ maxValue }}"
+        "MINMAX_VALIDATION_ERROR": "Значение должно находиться в пределах от {{ minValue }} до {{ maxValue }}",
+        "ONLY_POSITIVE_NUMBER": "Разрешено только положительное значение"
       },
       "MORE": "Больше"
     },
@@ -225,23 +310,44 @@
         "EDIT_ASPECTS": "Изменить аспект"
       },
       "ACCESSIBILITY": {
-        "EDIT": "Редактировать кнопку",
+        "EDIT": "Редактировать {{ sectionName }}",
         "DATEPICKER": "Используйте клавиши со стрелками для перехода между датами. Стрелки вверх и вниз перемещают к следующей или предыдущей неделе, без изменения дня. Стрелки влево и вправо перемещают к следующему или предыдущему дню. Нажмите кнопку выхода или возврата для выбора даты.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Значение скопировано в буфер обмена",
-        "EDIT_ASPECTS": "Изменить аспект"
+        "EDIT_ASPECTS": "Изменить аспект",
+        "SECTION": "Раздел {{ sectionName }}"
       }
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "Переключать между результатами с упорядочением по возрастанию и по убыванию",
-      "SORT_BY": "Сортировать по"
+      "SORT_BY": "Сортировать по",
+      "BUTTON": {
+        "TOOLTIP": "Поиск",
+        "ARIA-LABEL": "Кнопка поиска"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "Данные для поиска"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "Закрыть"
+        }
+      }
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "Переопределения флагов функций",
+      "FILTER_OR_ADD_NEW": "Фильтр или добавить новый",
+      "FILTER": "Фильтр",
+      "ADD_NEW": "Добавить новый флаг функции (Shift + Enter)"
     }
   },
   "COMMENTS": {
+    "PROFILE_IMAGE": "Изображение профиля",
     "NONE": "Нет комментариев",
     "ADD": "Добавить",
     "HEADER": "Комментарии ({{ count }})",
     "CREATED_BY_HEADER": "Создано пользователем",
     "MESSAGE_HEADER": "Сообщение",
+    "EMPTY_ERROR": "Комментарий не может быть пустым",
     "DIALOG": {
       "TITLE": "Новый комментарий",
       "LABELS": {
@@ -254,7 +360,7 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco, make business flow",
+    "LOGO": "Alfresco, создание бизнес-процессов",
     "LABEL": {
       "LOGIN": "Войти",
       "USERNAME": "Имя пользователя",
@@ -296,12 +402,15 @@
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "Действия с содержимым"
+      "TOOLTIP": "Действия с содержимым",
+      "SELECT_COLUMNS": "Выбрать столбцы"
     },
     "ACCESSIBILITY": {
       "ACTIONS": "Действия",
       "SELECT_ALL": "Выбрать все",
       "SELECT_FILE": "Выбрать файл",
+      "SELECTED": "Выбрано",
+      "ROW_SELECTION": "Нажмите пробел для переключения выбора строки",
       "SORT_ASCENDING": "По возрастанию",
       "SORT_DESCENDING": "По убыванию",
       "SORT_NONE": "Нет",
@@ -311,7 +420,11 @@
       "ICON_TEXT": "Тип элемента {{ type }}",
       "ICON_DISABLED": "Отключено",
       "ROW_OPTION_BUTTON": "Действия",
-      "EMPTY_HEADER": "Пустой заголовок"
+      "DRAG": "Кнопка перетаскивания",
+      "DRAGGABLE": "Перемещаемый",
+      "EMPTY_HEADER": "Пустой заголовок",
+      "RESIZE_COLUMN": "Изменение размера столбца {{ column }}. Используйте клавиши со стрелками для настройки ширины, Shift — для больших шагов.",
+      "COLUMN_WIDTH_CHANGED": "Ширина столбца {{ column }}: {{ width }} пикселей"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Документ",
@@ -332,7 +445,8 @@
     "COLUMNS_SELECTOR": {
       "COLUMNS": "Столбцы",
       "SEARCH": "Поиск",
-      "APPLY": "Применить"
+      "APPLY": "Применить",
+      "COLUMNS_VISIBILITY": "Выберите столбцы для отображения"
     }
   },
   "USER_PROFILE": {
@@ -366,6 +480,7 @@
       "WAIT": "Подождать"
     },
     "ARIA": {
+      "MIME_TYPE_ICON": "Значок типа файла",
       "PREVIOUS_PAGE": "Предыдущая страница",
       "NEXT_PAGE": "Следующая страница",
       "ZOOM_IN": "Увеличить",
@@ -377,7 +492,9 @@
       "CANCEL": "Отмена",
       "RESET": "Сброс",
       "THUMBNAILS": "Миниатюры документов",
-      "THUMBNAILS_PANLEL_CLOSE": "Закрыть панель эскизов"
+      "THUMBNAILS_PANLEL_CLOSE": "Закрыть панель эскизов",
+      "LOADING": "Документ загружается",
+      "NOTE_ANNOTATION_IMG": "Аннотация примечания"
     },
     "PAGE_LABEL": {
       "SHOWING": "Отображается",
@@ -389,10 +506,6 @@
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Страница {{ pageNum }}"
-      },
-      "METADATA": {
-        "MORE_INFORMATION": "Дополнительные сведения",
-        "LESS_INFORMATION": "Краткие сведения"
       }
     },
     "PDF_DIALOG": {
@@ -487,26 +600,6 @@
       "PROCESS_SERVICE_HOST": "URL-адрес Alfresco Process Services: {{ value }}"
     },
     "REPOSITORY": "Репозиторий",
-    "VERSIONS": {
-      "TITLE": "Версии продукта",
-      "CONTENT_SERVICE": "Content Services",
-      "PROCESS_SERVICE": "Process Services",
-      "MODELING_SERVICE": "Сервисы моделирования",
-      "DEPLOYMENT_SERVICE": "Сервисы развертывания",
-      "QUERY_SERVICE": "Сервисы развертывания",
-      "RB": "Среда выполнения",
-      "LABELS": {
-        "EDITION": "Издание",
-        "VERSION": "Версия",
-        "LICENSE": "Лицензия",
-        "STATUS": "Статус",
-        "MODULES": "Модули"
-      }
-    },
-    "SOURCE_CODE": {
-      "TITLE": "Исходный код",
-      "DESCRIPTION": "Проект исполняется на основании следующего коммита:"
-    },
     "PACKAGES": {
       "TITLE": "Пакеты",
       "NAME": "Имя",
@@ -527,7 +620,9 @@
     "LICENSE": {
       "TITLE": "Лицензия",
       "PROPERTY": "Свойство",
-      "VALUE": "Значение"
+      "VALUE": "Значение",
+      "ENABLED": "Включено",
+      "DISABLED": "Отключено"
     },
     "STATUS": {
       "TITLE": "Статус",
@@ -562,10 +657,23 @@
     "LOADING": "Загрузка...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} выпадающий список {{selectedOption}}"
   },
+  "INFO_DRAWER": {
+    "ICON": "Значок узла"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "Загрузить еще",
+    "DELETE": "Удалить {{ name }}"
+  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Подтвердить",
     "ACTION": "Хотите продолжить?",
     "YES_LABEL": "Да",
     "NO_LABEL": "Нет"
+  },
+  "SESSION_TIMEOUT": {
+    "TITLE": "Вы еще работаете?",
+    "MESSAGE": "Ваша сессия завершится через {{seconds}} секунд из-за отсутствия активности.",
+    "LOG_OUT": "Выйти",
+    "CONTINUE_WORKING": "Продолжить работу"
   }
 }

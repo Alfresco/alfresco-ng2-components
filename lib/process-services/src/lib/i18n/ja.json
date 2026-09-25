@@ -41,7 +41,7 @@
       "PARENT_NAME": "親名",
       "PARENT_NAME_DEFAULT": "親なし",
       "CREATED_BY": "作成者",
-      "CREATED": "作成日",
+      "CREATED": "作成済み",
       "END_DATE": "終了日",
       "ID": "ID",
       "DESCRIPTION": "説明",
@@ -195,7 +195,7 @@
       "CATEGORY_DEFAULT": "カテゴリなし",
       "CREATED_BY": "作成者",
       "CREATED_BY_DEFAULT": "担当者なし",
-      "CREATED": "作成日",
+      "CREATED": "作成済み",
       "BUSINESS_KEY": "ビジネスキー",
       "BUSINESS_KEY_DEFAULT": "なし",
       "DESCRIPTION": "説明",
@@ -278,11 +278,11 @@
       "NO_START_FORM": "開始フォームがありません",
       "NO_PROCESS_DEF_SELECTED": "プロセス定義が選択されていません",
       "FORM": {
-        "TITLE": "プロセスの開始",
         "LABEL": {
           "SELECT_APPLICATION": "アプリケーションの選択",
           "TYPE": "プロセスの選択",
-          "NAME": "プロセス名"
+          "NAME": "プロセス名",
+          "SELECTED_PEOPLE": "選択済みの担当者"
         },
         "TYPE_PLACEHOLDER": "1 つ選択してください...",
         "ACTION": {
