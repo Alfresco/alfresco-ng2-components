@@ -15,11 +15,4 @@
  * limitations under the License.
  */
 
-export * from './form.event';
-export * from './form-error.event';
-export * from './form-field.event';
-export * from './validate-form-field.event';
-export * from './validate-form.event';
-export * from './form-rules.event';
-export * from './form-spinner.event';
-export * from './form-outcome-request.event';
+export * from './form-outcome-not-found.error';

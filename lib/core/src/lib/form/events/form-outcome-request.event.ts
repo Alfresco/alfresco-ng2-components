@@ -15,11 +15,14 @@
  * limitations under the License.
  */
 
-export * from './form.event';
-export * from './form-error.event';
-export * from './form-field.event';
-export * from './validate-form-field.event';
-export * from './validate-form.event';
-export * from './form-rules.event';
-export * from './form-spinner.event';
-export * from './form-outcome-request.event';
+import { FormModel } from '../components/widgets/core/form.model';
+import { FormEvent } from './form.event';
+
+export class FormOutcomeRequestEvent extends FormEvent {
+    constructor(
+        form: FormModel,
+        public readonly outcomeId: string
+    ) {
+        super(form);
+    }
+}

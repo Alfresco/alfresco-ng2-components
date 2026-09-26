@@ -411,6 +411,18 @@ describe('StartFormComponent', () => {
             expect(component.isOutcomeButtonVisible(outcome, component.form.readOnly)).toBeTruthy();
         });
 
+        it('should hide the start-process outcome when its visibility rule is not satisfied', () => {
+            const formModel = new FormModel();
+            component.form = formModel;
+            const outcome = new FormOutcomeModel(formModel, {
+                id: FormModel.START_PROCESS_OUTCOME,
+                name: FormOutcomeModel.START_PROCESS_ACTION
+            });
+            outcome.isVisible = false;
+
+            expect(component.isOutcomeButtonVisible(outcome, component.form.readOnly)).toBeFalse();
+        });
+
         it('should allow controlling [complete] button visibility', () => {
             const formModel = new FormModel();
             component.form = formModel;

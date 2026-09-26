@@ -17,7 +17,17 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { ADF_DISPLAY_TEXT_SETTINGS, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
+import {
+    ADF_DISPLAY_TEXT_SETTINGS,
+    FormFieldTypes,
+    FormModel,
+    FormOutcomeNotFoundError,
+    FormOutcomeEvent,
+    FormOutcomeModel,
+    FormOutcomeRequestEvent,
+    FormEvent,
+    FormService
+} from '@alfresco/adf-core';
 import { Subject, of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormCloudService } from '../../../form/services/form-cloud.service';
@@ -418,6 +428,72 @@ describe('StartProcessCloudComponent', () => {
             const startBtn = fixture.nativeElement.querySelector('#button-start');
             expect(component.formCloud.isValid).toBe(true);
             expect(startBtn.disabled).toBe(false);
+        });
+
+        it('should start a process when a form rule requests an outcome', async () => {
+            formDefinitionSpy.and.returnValue(of(fakeStartFormWithOutcomes));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
+            typeValueInto('#processDefinitionName', 'processwithform');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const startForm = fixture.debugElement.query(By.directive(FormCloudComponent)).componentInstance as FormCloudComponent;
+            const requestedOutcome = startForm.form.outcomes.find((outcome) => !outcome.isSystem);
+            startForm['formService'].outcomeRequested.next(new FormOutcomeRequestEvent(startForm.form, requestedOutcome.id));
+
+            expect(startProcessWithFormSpy).toHaveBeenCalledTimes(1);
+            expect(startProcessWithFormSpy).toHaveBeenCalledWith(
+                component.appName,
+                component.processDefinitionCurrent.formKey,
+                component.processDefinitionCurrent.version,
+                jasmine.objectContaining({ outcome: requestedOutcome.name })
+            );
+        });
+
+        it('should replace the default start button when an outcome becomes visible', async () => {
+            formDefinitionSpy.and.returnValue(of(fakeStartFormWithOutcomes));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
+            typeValueInto('#processDefinitionName', 'processwithform');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const startForm = fixture.debugElement.query(By.directive(FormCloudComponent)).componentInstance as FormCloudComponent;
+            startForm.form.outcomes.forEach((outcome) => (outcome.isVisible = false));
+            TestBed.inject(FormService).formVisibilityRefreshed.next(new FormEvent(startForm.form));
+            fixture.detectChanges();
+
+            expect(fixture.nativeElement.querySelector('#button-start')).not.toBeNull();
+
+            const requestedOutcome = startForm.form.outcomes.find((outcome) => !outcome.isSystem);
+            requestedOutcome.isVisible = true;
+            TestBed.inject(FormService).formVisibilityRefreshed.next(new FormEvent(startForm.form));
+            fixture.detectChanges();
+
+            expect(fixture.nativeElement.querySelector('#button-start')).toBeNull();
+            expect(fixture.nativeElement.querySelectorAll('.adf-cloud-form-custom-outcome-button').length).toBe(1);
+        });
+
+        it('should surface form outcome request errors', async () => {
+            formDefinitionSpy.and.returnValue(of(fakeStartFormWithOutcomes));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
+            typeValueInto('#processDefinitionName', 'processwithform');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+            const errorSpy = spyOn(component.error, 'emit');
+            const error = new FormOutcomeNotFoundError('deleted');
+
+            const startForm = fixture.debugElement.query(By.directive(FormCloudComponent)).componentInstance as FormCloudComponent;
+            startForm.error.emit(error);
+            fixture.detectChanges();
+
+            expect(component.errorMessageId).toBe(error.message);
+            expect(errorSpy).toHaveBeenCalledOnceWith(error);
         });
 
         it('should keep the start action unavailable while the form definition is loading', async () => {
@@ -1235,6 +1311,38 @@ describe('StartProcessCloudComponent', () => {
             expect(startProcessSpy).not.toHaveBeenCalled();
         });
 
+        it('should ignore repeated starts while confirmation is pending', () => {
+            const matDialog = TestBed.inject(MatDialog);
+            const confirmationResult = new Subject<boolean>();
+            const openDialogSpy = spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => confirmationResult } as never);
+            component.formCloud = new FormModel({ confirmMessage: { show: true } });
+
+            component.startProcess();
+            component.startProcess();
+
+            expect(openDialogSpy).toHaveBeenCalledTimes(1);
+            expect(component.isProcessStarting).toBeTrue();
+            expect(startProcessSpy).not.toHaveBeenCalled();
+
+            confirmationResult.next(true);
+
+            expect(startProcessSpy).toHaveBeenCalledTimes(1);
+        });
+
+        it('should allow another start when confirmation is rejected', () => {
+            const matDialog = TestBed.inject(MatDialog);
+            const confirmationResult = new Subject<boolean>();
+            const openDialogSpy = spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => confirmationResult } as never);
+            component.formCloud = new FormModel({ confirmMessage: { show: true } });
+
+            component.startProcess();
+            confirmationResult.next(false);
+            component.startProcess();
+
+            expect(openDialogSpy).toHaveBeenCalledTimes(2);
+            expect(startProcessSpy).not.toHaveBeenCalled();
+        });
+
         it('should emit error when process name field is empty', () => {
             fixture.detectChanges();
             const processInstanceName = component.processForm.controls['processInstanceName'];
@@ -1502,9 +1610,52 @@ describe('StartProcessCloudComponent', () => {
         await fixture.whenStable();
 
         expect(customOutcomeSelectedSpy).toHaveBeenCalledWith(customOutcome.id);
+        expect(customOutcomeSelectedSpy).toHaveBeenCalledTimes(1);
         expect(successSpy).toHaveBeenCalledWith(fakeProcessInstance);
+        expect(successSpy).toHaveBeenCalledTimes(1);
         expect(startProcessWithFormSpy).toHaveBeenCalledTimes(1);
         expect(component.customOutcomeName).toBe(customOutcome.name);
         expect(component.customOutcomeId).toBe(customOutcome.id);
+        expect(component.formCloud.selectedOutcome).toBe(customOutcome.name);
+        expect(component.formCloud.selectedOutcomeId).toBe(customOutcome.id);
+    });
+
+    it('should preserve the previous outcome when starting a process fails', () => {
+        const error = new Error('Process start failed');
+        startProcessWithFormSpy.and.returnValue(throwError(() => error));
+        component.formCloud = new FormModel();
+        component.formCloud.selectedOutcome = 'Previous outcome';
+        component.formCloud.selectedOutcomeId = 'previous-outcome-id';
+        component.processDefinitionCurrent = fakeProcessDefinitions[2];
+        component.processPayloadCloud.processDefinitionKey = fakeProcessDefinitions[2].key;
+        component.processInstanceName.setValue('My Process 1');
+        component.appName = 'test app name';
+        const customOutcome = {
+            id: 'custom_outcome_id',
+            name: 'custom_outcome'
+        };
+        const event = new FormOutcomeEvent(new FormOutcomeModel(null, customOutcome));
+
+        component.onCustomOutcomeClicked(event);
+
+        expect(startProcessWithFormSpy).toHaveBeenCalledTimes(1);
+        expect(component.formCloud.selectedOutcome).toBe('Previous outcome');
+        expect(component.formCloud.selectedOutcomeId).toBe('previous-outcome-id');
+    });
+
+    it('should ignore a custom outcome while a process is starting', () => {
+        component.isProcessStarting = true;
+        const event = new FormOutcomeEvent(
+            new FormOutcomeModel(null, {
+                id: 'custom_outcome_id',
+                name: 'custom_outcome'
+            })
+        );
+
+        component.onCustomOutcomeClicked(event);
+
+        expect(startProcessWithFormSpy).not.toHaveBeenCalled();
+        expect(component.customOutcomeName).toBeUndefined();
+        expect(component.customOutcomeId).toBeUndefined();
     });
 });

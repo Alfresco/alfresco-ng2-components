@@ -45,7 +45,7 @@ import {
     WidgetVisibilityService
 } from '@alfresco/adf-core';
 import { from, Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 import { EcmModelService } from './services/ecm-model.service';
 import { ModelService } from './services/model.service';
 import { EditorService } from './services/editor.service';
@@ -135,6 +135,13 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnChange
     }
 
     ngOnInit() {
+        this.formService.outcomeRequested
+            .pipe(
+                filter((request) => request.form === this.form),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe((request) => this.onOutcomeRequested(request.outcomeId));
+
         this.formService.formContentClicked.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((content) => this.formContentClicked.emit(content));
 
         this.formService.validateForm.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((validateFormEvent) => {
