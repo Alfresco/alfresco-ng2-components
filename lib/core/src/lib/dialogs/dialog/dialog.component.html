@@ -64,7 +64,7 @@
         <div class="adf-main-actions-container">
             <button
                 *ngIf="!isCancelButtonHidden"
-                mat-stroked-button
+                mat-button
                 mat-dialog-close
                 data-automation-id="adf-dialog-actions-cancel"
             >
@@ -72,7 +72,8 @@
             </button>
 
             <button
-                mat-flat-button
+                mat-button
+                class="adf-dialog-actions-confirm-btn"
                 data-automation-id="adf-dialog-actions-confirm"
                 [disabled]="isConfirmButtonDisabled$ | async"
                 (click)="onConfirm()"
