@@ -1,0 +1,66 @@
+//devcontainer.json
+{
+  "name": "alfresco-ng2-components",
+
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
+
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+
+  "remoteUser": "node",
+  "containerUser": "node",
+  "updateRemoteUserUID": true,
+  "overrideCommand": true,
+  "init": true,
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "dev.containers.copyGitConfig": true,
+        "stylelint.enable": true,
+        "css.validate": false,
+        "scss.validate": false,
+        "stylelint.configFile": "${workspaceFolder}/.stylelintrc.json",
+        "stylelint.configBasedir": "${workspaceFolder}",
+        "stylelint.validate": ["css", "less", "postcss", "scss"],
+        "nxConsole.enableNxMcpServer": false,
+        "editor.guides.indentation": true
+      },
+      "extensions": [
+        "streetsidesoftware.code-spell-checker",
+        "dbaeumer.vscode-eslint",
+        "angular.ng-template",
+        "esbenp.prettier-vscode",
+        "nrwl.angular-console",
+        "editorconfig.editorconfig",
+        "stylelint.vscode-stylelint"
+      ]
+    }
+  },
+
+  "containerEnv": {
+    "NX_DAEMON": "true",
+    "NODE_ENV": "development",
+    "NO_UPDATE_NOTIFIER": "1",
+    "PNPM_STORE_DIR": "/home/node/.pnpm-store",
+    "CHROME_BIN": "/usr/bin/chromium"
+  },
+
+  "mounts": [
+    "source=workspace-pnpm-store,target=/home/node/.pnpm-store,type=volume",
+    "source=workspace-bashhistory,target=/commandhistory,type=volume",
+    "source=${localEnv:HOME}/.gnupg/pubring.kbx,target=/home/node/.gnupg/pubring.kbx,type=bind,consistency=cached,readonly"
+  ],
+
+  "postCreateCommand": ".devcontainer/post-create.sh",
+
+  "postStartCommand": ".devcontainer/post-start.sh",
+
+  "runArgs": ["--cap-drop=ALL", "--security-opt=no-new-privileges:true", "--pids-limit=512"]
+}
