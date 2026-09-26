@@ -19,29 +19,44 @@ on:
         type: boolean
         default: false
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, milestoned]
     branches:
       - develop
       - master
       - develop-patch*
       - master-patch*
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 env:
   GH_COMMIT: ${{ github.sha }}
   NODE_OPTIONS: "--max-old-space-size=5120"
+  PR_BASE_REF: ${{ github.event.pull_request.base.ref || github.base_ref || 'develop' }}
+  PR_CHECKOUT_REF: ${{ github.event_name == 'pull_request' && github.sha || github.event.pull_request.head.sha || github.sha }}
 
 jobs:
   pre-checks:
+    if: ${{ github.event_name != 'pull_request_review' || (github.event.review.state == 'approved' && (github.event.pull_request.base.ref == 'develop' || github.event.pull_request.base.ref == 'master' || startsWith(github.event.pull_request.base.ref, 'develop-patch') || startsWith(github.event.pull_request.base.ref, 'master-patch'))) }}
     runs-on: ubuntu-latest
     outputs:
       code-changed: ${{ steps.path-filter.outputs.code-changed }}
     steps:
+      - name: Require secrets access
+        uses: Alfresco/alfresco-build-tools/.github/actions/github-require-secrets@f1bae5a4bdb3b12030a350e52b8f661dbcb2f849 # v18.28.3
+
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.PR_CHECKOUT_REF }}
 
       - name: Ensure SHA pinned actions
         uses: hyland/github-actions-ensure-sha-pinned-actions@7957efb76aba0eec7580a9c0392d3e5bec381359 # v2.0.1
@@ -95,6 +110,7 @@ jobs:
           echo "Code changed: $CODE_CHANGED"
 
   check-if-pr-is-approved:
+    if: ${{ github.event_name != 'pull_request_review' || (github.event.review.state == 'approved' && (github.event.pull_request.base.ref == 'develop' || github.event.pull_request.base.ref == 'master' || startsWith(github.event.pull_request.base.ref, 'develop-patch') || startsWith(github.event.pull_request.base.ref, 'master-patch'))) }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -108,6 +124,8 @@ jobs:
         id: skip-check
         env:
           EVENT_NAME: ${{ github.event_name }}
+          EVENT_ACTION: ${{ github.event.action }}
+          REVIEW_STATE: ${{ github.event.review.state }}
           ACTOR: ${{ github.actor }}
           DEVEL_FLAG: ${{ inputs.devel }}
           PR_TITLE: ${{ github.event.pull_request.title }}
@@ -124,6 +142,12 @@ jobs:
 
           if [ "$EVENT_NAME" == "schedule" ] || [ "$EVENT_NAME" == "workflow_dispatch" ]; then
             echo -e "\033[32mSchedule/dispatch event — skipping approval check\033[0m"
+            skip="true"
+          elif [ "$EVENT_NAME" == "pull_request" ] && [ "$EVENT_ACTION" == "milestoned" ]; then
+            echo -e "\033[32mPR milestoned by $ACTOR — skipping approval check\033[0m"
+            skip="true"
+          elif [ "$EVENT_NAME" == "pull_request_review" ] && [ "$REVIEW_STATE" == "approved" ]; then
+            echo -e "\033[32mPR approved by $ACTOR — skipping approval check\033[0m"
             skip="true"
           elif [ "$ACTOR" == "dependabot[bot]" ] || [ "$ACTOR" == "alfresco-build" ]; then
             echo -e "\033[32mCommit by $ACTOR — skipping approval check\033[0m"
@@ -179,6 +203,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ env.PR_CHECKOUT_REF }}
           fetch-depth: 0
       - name: Setup environment
         id: setup-env
@@ -204,6 +229,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ env.PR_CHECKOUT_REF }}
           fetch-depth: 0
       - name: Setup environment
         id: setup-env
@@ -213,7 +239,7 @@ jobs:
           full-setup: 'false'
       - name: Run lint
         env:
-          BASE_REF: ${{ github.base_ref || 'develop' }}
+          BASE_REF: ${{ env.PR_BASE_REF }}
         run: pnpm nx affected --target=lint --base="origin/$BASE_REF" --head=HEAD
       - name: Save nx cache
         if: ${{ success() }}
@@ -226,7 +252,8 @@ jobs:
     needs: [setup]
     uses: ./.github/workflows/build-lib-workflow.yml
     with:
-      base_ref: ${{ github.base_ref || 'develop' }}
+      base_ref: ${{ github.event.pull_request.base.ref || github.base_ref || 'develop' }}
+      checkout_ref: ${{ github.event_name == 'pull_request' && github.sha || github.event.pull_request.head.sha || github.sha }}
 
   build-storybook:
     timeout-minutes: 30
@@ -237,6 +264,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ env.PR_CHECKOUT_REF }}
           fetch-depth: 0
       - name: Setup environment
         id: setup-env
@@ -246,7 +274,7 @@ jobs:
           full-setup: 'false'
       - name: Build Storybook
         env:
-          BASE_REF: ${{ github.base_ref || 'develop' }}
+          BASE_REF: ${{ env.PR_BASE_REF }}
         run: |
           pnpm nx affected --target=build-storybook --base="origin/$BASE_REF" --head=HEAD --configuration=ci
       - name: Save nx cache
@@ -262,7 +290,8 @@ jobs:
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     with:
-      base_ref: ${{ github.base_ref || 'develop' }}
+      base_ref: ${{ github.event.pull_request.base.ref || github.base_ref || 'develop' }}
+      checkout_ref: ${{ github.event_name == 'pull_request' && github.sha || github.event.pull_request.head.sha || github.sha }}
 
   PR-size-check:
     if: ${{ github.event_name == 'pull_request' }}
@@ -309,7 +338,7 @@ jobs:
             }
 
   PR-forbidden-labels:
-    if: ${{ inputs.cron-run == '' || inputs.cron-run == 'false' }}
+    if: ${{ (inputs.cron-run == '' || inputs.cron-run == 'false') && (github.event_name != 'pull_request_review' || (github.event.review.state == 'approved' && (github.event.pull_request.base.ref == 'develop' || github.event.pull_request.base.ref == 'master' || startsWith(github.event.pull_request.base.ref, 'develop-patch') || startsWith(github.event.pull_request.base.ref, 'master-patch')))) }}
     runs-on: ubuntu-latest
     steps:
       - name: Check for forbidden labels
@@ -329,7 +358,7 @@ jobs:
             }
 
   finalize:
-    if: ${{ always() }}
+    if: ${{ always() && (github.event_name != 'pull_request_review' || (github.event.review.state == 'approved' && (github.event.pull_request.base.ref == 'develop' || github.event.pull_request.base.ref == 'master' || startsWith(github.event.pull_request.base.ref, 'develop-patch') || startsWith(github.event.pull_request.base.ref, 'master-patch')))) }}
     runs-on: ubuntu-latest
     name: Final Results
     needs:

@@ -8,6 +8,11 @@ on:
         required: false
         type: string
         default: 'develop'
+      checkout_ref:
+        description: 'Git ref or SHA to check out for affected calculation'
+        required: false
+        type: string
+        default: ''
 
 env:
   NODE_OPTIONS: "--max-old-space-size=5120"
@@ -21,6 +26,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ inputs.checkout_ref || github.sha }}
           fetch-depth: 0
       - name: Setup environment
         id: setup-env
