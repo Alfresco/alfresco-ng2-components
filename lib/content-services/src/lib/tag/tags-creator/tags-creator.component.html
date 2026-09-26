@@ -46,6 +46,19 @@
         {{ (isOnlyCreateMode() ? 'TAG.TAGS_CREATOR.EXISTING_TAGS' : 'TAG.TAGS_CREATOR.EXISTING_TAGS_SELECTION') | translate }}
     </p>
     <div class="adf-tags-list">
+        <output class="cdk-visually-hidden" role="status">
+            @if (!spinnerVisible && existingTags) {
+                @if (existingTags?.length > 0) {
+                    @if (existingTags?.length === 1) {
+                        {{ 'TAG.TAGS_CREATOR.ONE_EXISTING_TAG_AVAILABLE' | translate }}
+                    } @else {
+                        {{ 'TAG.TAGS_CREATOR.EXISTING_TAGS_AVAILABLE' | translate : { tagsCount: existingTags?.length } }}
+                    }
+                } @else {
+                    {{ 'TAG.TAGS_CREATOR.NO_EXISTING_TAGS' | translate }}
+                }
+            }
+        </output>
         <mat-list *ngIf="!spinnerVisible && existingTags" [disabled]="isOnlyCreateMode()">
             <mat-list-item *ngFor="let tagRow of existingTags" class="adf-tag"
                            (click)="addExistingTagToTagsToAssign(tagRow)">

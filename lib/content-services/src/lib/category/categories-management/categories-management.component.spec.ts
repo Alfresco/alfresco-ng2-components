@@ -28,12 +28,14 @@ import { CategoriesManagementComponent } from './categories-management.component
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { UnitTestingUtils } from '@alfresco/adf-core';
 
 describe('CategoriesManagementComponent', () => {
     let loader: HarnessLoader;
     let component: CategoriesManagementComponent;
     let fixture: ComponentFixture<CategoriesManagementComponent>;
     let categoryService: CategoryService;
+    let unitTestingUtils: UnitTestingUtils;
     const classifiableChangedSubject = new Subject<void>();
     const category1 = new Category({ id: 'test', name: 'testCat' });
     const category2 = new Category({ id: 'test2', name: 'testCat2' });
@@ -63,6 +65,7 @@ describe('CategoriesManagementComponent', () => {
         component = fixture.componentInstance;
         categoryService = TestBed.inject(CategoryService);
         loader = TestbedHarnessEnvironment.loader(fixture);
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     /**
@@ -175,6 +178,15 @@ describe('CategoriesManagementComponent', () => {
 
         tick(timeout);
         fixture.detectChanges();
+    }
+
+    /**
+     * Get status text of the category management component
+     *
+     * @returns status text of the categories found
+     */
+    function getStatusText(): string {
+        return unitTestingUtils.getByCSS('output').nativeElement.textContent.trim();
     }
 
     describe('Shared tests', () => {
@@ -463,6 +475,28 @@ describe('CategoriesManagementComponent', () => {
             expect(component.categories[1].name).toBe('testCat4');
             expect(categoriesChangeSpy).toHaveBeenCalledOnceWith(component.categories);
         }));
+
+        describe('Accessibility', () => {
+            it('should announce the status of categories available', fakeAsync(() => {
+                const category = 'testCat';
+
+                typeCategory(category);
+                component.categoryNameControl.markAsTouched();
+                fixture.detectChanges();
+
+                expect(getStatusText()).toBe('CATEGORIES_MANAGEMENT.EXISTING_CATEGORIES_AVAILABLE');
+            }));
+
+            it('should announce the status of no existing categories available', fakeAsync(() => {
+                const category = 'nonExistingCategory';
+
+                typeCategory(category);
+                component.categoryNameControl.markAsTouched();
+                fixture.detectChanges();
+
+                expect(getStatusText()).toBe('CATEGORIES_MANAGEMENT.NO_EXISTING_CATEGORIES');
+            }));
+        });
 
         describe('Errors', () => {
             it('should display validation error when searching for empty category', fakeAsync(() => {

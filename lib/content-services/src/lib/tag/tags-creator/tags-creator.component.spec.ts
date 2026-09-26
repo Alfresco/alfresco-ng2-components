@@ -157,6 +157,15 @@ describe('TagsCreatorComponent', () => {
         return testingUtils.getByCSS('.adf-existing-tags-label').nativeElement.textContent.trim();
     }
 
+    /**
+     * Get the status of tags found
+     *
+     * @returns status text of the tags found
+     */
+    function getStatusText(): string {
+        return testingUtils.getByCSS('output').nativeElement.textContent.trim();
+    }
+
     describe('Created tags list', () => {
         it('should display no tags created message after initialization', () => {
             const message = testingUtils.getByCSS('.adf-no-tags-message').nativeElement.textContent.trim();
@@ -610,6 +619,26 @@ describe('TagsCreatorComponent', () => {
                 expect(getExistingTags()).toEqual([tag1, tag2]);
             }));
 
+            it('should announce the status of tags available', fakeAsync(() => {
+                const tag1 = 'Tag 1';
+                const tag2 = 'Tag 2';
+
+                spyOn(tagService, 'searchTags').and.returnValue(
+                    of({
+                        list: {
+                            entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
+                            pagination: {}
+                        }
+                    })
+                );
+
+                typeTag('Tag');
+                component.tagNameControl.markAsTouched();
+                fixture.detectChanges();
+
+                expect(getStatusText()).toBe('TAG.TAGS_CREATOR.EXISTING_TAGS_AVAILABLE');
+            }));
+
             it('should exclude tags passed through tags input from loaded existing tags', fakeAsync(() => {
                 const tag1 = 'Tag 1';
                 const tag2 = 'Tag 2';
@@ -637,6 +666,23 @@ describe('TagsCreatorComponent', () => {
 
                 expect(getExistingTags()).toEqual([]);
                 expect(notificationService.showError).toHaveBeenCalledWith('TAG.TAGS_CREATOR.ERRORS.FETCH_TAGS');
+            }));
+
+            it('should not announce the status of tags if no existing tags are available', fakeAsync(() => {
+                spyOn(tagService, 'searchTags').and.returnValue(
+                    of({
+                        list: {
+                            entries: [],
+                            pagination: {}
+                        }
+                    })
+                );
+
+                typeTag('Tag');
+                component.tagNameControl.markAsTouched();
+                fixture.detectChanges();
+
+                expect(getStatusText()).toBe('TAG.TAGS_CREATOR.NO_EXISTING_TAGS');
             }));
 
             it('should display exact tag', fakeAsync(() => {
