@@ -2,6 +2,7 @@
     <div class="adf-search-container-transition" [class.adf-search-active]="isSearchBarActive()" [class.adf-search-no-animation]="disableAnimations">
         @if (expandable && !isSearchBarActive()) {
             <button
+                #searchButton
                 mat-icon-button
                 id="adf-search-button"
                 class="adf-search-button"
