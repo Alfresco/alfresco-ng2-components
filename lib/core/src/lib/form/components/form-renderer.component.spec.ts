@@ -1397,3 +1397,60 @@ describe('Form Renderer Component form rule ordering', () => {
         expect(form.isValid).toBe(true, 'the rule-driven hide must be reflected in form validity');
     });
 });
+
+class HideOnFormLoadedRulesManager extends FormRulesManager<{ targetFieldId: string }> {
+    protected getRules(): { targetFieldId: string } {
+        return { targetFieldId: 'requiredText' };
+    }
+
+    protected handleRuleEvent(event: FormRulesEvent, rules: { targetFieldId: string }): void {
+        if (event.type === 'formLoaded') {
+            this.formModel.changeFieldVisibility(rules.targetFieldId, false);
+        }
+    }
+}
+
+describe('Form Renderer Component formLoaded rule ordering', () => {
+    let fixture: ComponentFixture<FormRendererComponent<any>>;
+    let formService: FormService;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [FormRendererComponent],
+            providers: [
+                {
+                    provide: FORM_RULES_MANAGER,
+                    useFactory: (service: FormService) => new HideOnFormLoadedRulesManager(service),
+                    deps: [FormService]
+                }
+            ]
+        });
+        fixture = TestBed.createComponent(FormRendererComponent<any>);
+        formService = TestBed.inject(FormService);
+    });
+
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    it('should revalidate when a formLoaded rule hides an empty required field with no user interaction', () => {
+        const form = new FormModel(
+            {
+                id: 'form-loaded-ordering-form',
+                fields: [{ id: 'requiredText', type: 'text', name: 'Required text', required: true }]
+            },
+            undefined,
+            false,
+            formService
+        );
+
+        fixture.componentInstance.formDefinition = form;
+        fixture.detectChanges();
+
+        expect(form.getFormFields().find((field) => field.id === 'requiredText').isVisible).toBe(
+            false,
+            'sanity check: the formLoaded rule should have hidden the field'
+        );
+        expect(form.isValid).toBe(true, 'form.isValid must reflect the formLoaded-driven hide with no user interaction');
+    });
+});

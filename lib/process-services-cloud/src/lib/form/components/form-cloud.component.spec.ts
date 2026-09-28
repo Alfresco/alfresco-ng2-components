@@ -238,8 +238,10 @@ describe('FormCloudComponent', () => {
     });
 
     it('should show a error icon in case showValidationIcon is true and form invalid', () => {
-        const formModel = new FormModel();
-        formModel.isValid = false;
+        const formModel = new FormModel({
+            id: 'id',
+            fields: [{ id: 'field1', type: 'text', name: 'Field 1', required: true }]
+        });
         formComponent.form = formModel;
 
         expect(formComponent.showValidationIcon).toBeTruthy();
