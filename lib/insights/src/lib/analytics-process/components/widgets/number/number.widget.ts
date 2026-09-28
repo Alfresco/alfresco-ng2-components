@@ -30,9 +30,6 @@ import { MatInputModule } from '@angular/material/input';
     imports: [CommonModule, TranslatePipe, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
     templateUrl: './number.widget.html',
     styleUrls: ['./number.widget.scss'],
-    host: {
-        '(click)': 'event($event)'
-    },
     encapsulation: ViewEncapsulation.None
 })
 export class NumberWidgetAnalyticsComponent extends WidgetComponent implements OnInit {
