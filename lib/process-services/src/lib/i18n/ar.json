@@ -119,7 +119,7 @@
       "FORM": {
         "TITLE": "بدء مهمة",
         "LABEL": {
-          "NONE": "بلا",
+          "NONE": "لا يوجد",
           "NAME": "الاسم",
           "DESCRIPTION": "الوصف",
           "ATTACHFORM": "إرفاق نموذج",
@@ -197,7 +197,7 @@
       "CREATED_BY_DEFAULT": "لا يوجد معين له",
       "CREATED": "تم الإنشاء",
       "BUSINESS_KEY": "مفتاح أعمال",
-      "BUSINESS_KEY_DEFAULT": "بلا",
+      "BUSINESS_KEY_DEFAULT": "لا يوجد",
       "DESCRIPTION": "الوصف",
       "DESCRIPTION_DEFAULT": "لا يوجد وصف",
       "ID": "المعرف"
@@ -278,11 +278,11 @@
       "NO_START_FORM": "لا نموذج بدء",
       "NO_PROCESS_DEF_SELECTED": "لم يتم تحديد تعريف عملية",
       "FORM": {
-        "TITLE": "بدء العملية",
         "LABEL": {
           "SELECT_APPLICATION": "حدد التطبيق",
           "TYPE": "حدد عملية",
-          "NAME": "اسم العملية"
+          "NAME": "اسم العملية",
+          "SELECTED_PEOPLE": "الأشخاص المحددون"
         },
         "TYPE_PLACEHOLDER": "اختر واحدة...",
         "ACTION": {

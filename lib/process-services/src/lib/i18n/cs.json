@@ -278,11 +278,11 @@
       "NO_START_FORM": "Žádný formulář zahájení",
       "NO_PROCESS_DEF_SELECTED": "Není vybrána žádná definice procesu",
       "FORM": {
-        "TITLE": "Zahájit proces",
         "LABEL": {
           "SELECT_APPLICATION": "Vybrat aplikaci",
           "TYPE": "Vybrat proces",
-          "NAME": "Název procesu"
+          "NAME": "Název procesu",
+          "SELECTED_PEOPLE": "Vybraní lidé"
         },
         "TYPE_PLACEHOLDER": "Vyberte...",
         "ACTION": {

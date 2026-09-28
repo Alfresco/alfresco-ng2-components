@@ -1,7 +1,9 @@
 {
   "COMMON": {
     "APPLY": "Anvend",
-    "CANCEL": "Annuller"
+    "CANCEL": "Annuller",
+    "NAME": "Navn",
+    "CLEAR": "Ryd"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
@@ -16,7 +18,8 @@
         "MINOR": "mindre ændringer ({{version}})",
         "COMMENT": "Skriv en kommentar",
         "ADD": "Tilføj ny version",
-        "CANCEL": "Annuller"
+        "CANCEL": "Annuller",
+        "VERSION_TYPE_LABEL": "Vælg versionstype"
       }
     },
     "CONFIRM_DELETE": {
@@ -99,6 +102,7 @@
     "ATTACH": "Vedhæft",
     "CHOOSE_ITEM": "Vælg indhold der skal  vedhæftes fra '{{ name }}'",
     "COPY": "Kopiér",
+    "LINK": "Opret link",
     "COPY_ITEM": "Kopiér '{{ name }}' til...",
     "LOCATION": "Placering",
     "MOVE": "Flyt",
@@ -146,18 +150,17 @@
       "NO_EXISTING_TAGS": "Ingen eksisterende tags",
       "TITLE": "Opret tags",
       "CREATE_TAG": "Opret: {{tag}}",
-      "NAME": "Navn",
+      "TAG_SEARCH_PLACEHOLDER": "Søg mærker",
       "ERRORS": {
         "EXISTING_TAG": "Denne tag findes allerede",
         "ALREADY_ADDED_TAG": "Tag er allerede tilføjet",
         "EMPTY_TAG": "Tag-navn kan ikke kun indeholde mellemrum",
-        "REQUIRED": "Tag-navn er påkrævet",
         "FETCH_TAGS": "Fejl under hentning af tags",
-        "CREATE_TAGS": "Fejl, mens tags oprettes"
+        "CREATE_TAGS": "Fejl, mens tags oprettes",
+        "SPECIAL_CHARACTERS": "Tag-navn kan ikke indeholde forbudte tegn"
       },
       "TOOLTIPS": {
-        "DELETE_TAG": "Slet tag",
-        "HIDE_INPUT": "Skjul input"
+        "DELETE_TAG": "Slet tag"
       },
       "TAGS_LOADING": "Indlæsning af tags",
       "CREATE_TAGS_SUCCESS": "Tags oprettet"
@@ -167,7 +170,6 @@
     "CATEGORIES_TITLE": "Kategorier",
     "NO_CATEGORIES_CREATED": "Ingen kategorier oprettet",
     "NO_CATEGORIES_ASSIGNED": "Ingen kategorier tildelt",
-    "ASSIGN_CATEGORIES": "Tildel kategorier",
     "UNASSIGN_CATEGORY": "Fjern tildeling af kategori",
     "DELETE_CATEGORY": "Slet kategori",
     "EXISTING_CATEGORIES": "Eksisterende kategorier:",
@@ -176,7 +178,7 @@
     "GENERIC_CREATE": "Opret: {{name}}",
     "NAME": "Kategorinavn",
     "LOADING": "Indlæser",
-    "HIDE_INPUT": "Skjul input",
+    "NO_CATEGORIES_ADDED": "Der er i øjeblikket ingen kategorier tilføjet",
     "ERRORS": {
       "NOT_FOUND": "Kategorier ikke fundet",
       "REQUIRED": "Kategorinavn er påkrævet",
@@ -184,8 +186,11 @@
       "ALREADY_EXISTS": "Kategorien findes allerede",
       "DUPLICATED_CATEGORY": "Kategorien er allerede tilføjet",
       "CREATE_CATEGORIES": "Fejl, mens kategorier oprettes",
-      "EXISTING_CATEGORIES": "Nogle kategorier findes allerede"
-    }
+      "EXISTING_CATEGORIES": "Nogle kategorier findes allerede",
+      "SPECIAL_CHARACTERS": "Kategorinavn kan ikke indeholde forbudte tegn",
+      "ENDS_WITH_DOT": "Kategorinavn kan ikke slutte med et punktum"
+    },
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Søg kategorier"
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
@@ -273,12 +278,15 @@
       "ARIA-LABEL": "Søgeknap"
     },
     "INPUT": {
+      "LABEL": "Søg",
+      "PLACEHOLDER": "Søgeforespørgsel",
       "ARIA-LABEL": "Søgeinput"
     },
     "RESULTS": {
       "SUMMARY": "{{numResults}} resultater fundet for {{searchTerm}}",
       "NONE": "Der blev ikke fundet nogen resultater for {{searchTerm}}",
       "ERROR": "Vi stødte på et problem under søgningen – prøv igen.",
+      "WILL_CONTAIN": "Resultater vil indeholde '{{searchTerm}}'",
       "COLUMNS": {
         "NAME": "Visningsnavn",
         "MODIFIED_BY": "Ændret af",
@@ -313,9 +321,7 @@
         "FROM": "Fra",
         "TO": "Til",
         "FROM-DATE": "Fra",
-        "TO-DATE": "Til",
-        "SELECT-FROM-DATE": "Vælg fra dato",
-        "SELECT-TO-DATE": "Vælg indtil dato"
+        "TO-DATE": "Til"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Påkrævet værdi",
@@ -330,7 +336,12 @@
         "SEARCH_FILTER": "Søgefilterliste",
         "OPTIONS-SELECTION": "Udvalg af valgmuligheder"
       },
-      "ANY": "Enhver"
+      "ANY": "Enhver",
+      "PEOPLE": "Personer"
+    },
+    "FACET_FIELDS": {
+      "MODIFIER_LABEL": "Ændret af",
+      "CREATOR_LABEL": "Oprettet af"
     },
     "ICONS": {
       "ft_ic_raster_image": "Billedfil",
@@ -371,6 +382,7 @@
       "TITLE": "Filter",
       "TYPE": "Type",
       "FILTER_BY": "Sorter efter {{ category }}",
+      "ACTIVE_FILTER": "Aktivt filter",
       "CLEAR": "Ryd",
       "APPLY": "Anvend",
       "FILTERS": {
@@ -386,7 +398,7 @@
         "SIZE": {
           "TITLE": "Indholdsstørrelse (interval)",
           "SMALL": "Lille",
-          "MEDIUM": "Medium",
+          "MEDIUM": "Mellem",
           "LARGE": "Stor",
           "HUGE": "Meget stor"
         },
@@ -396,15 +408,76 @@
       }
     },
     "LOGICAL_SEARCH": {
-      "SEARCH_CHIP_INPUT": {
-        "ADD_PHRASE": "Tilføj sætning..."
-      },
       "MATCH_ALL": "ALLE",
       "MATCH_ALL_LABEL": "Match ALLE for disse sætninger",
+      "MATCH_ALL_HINT": "Resultater vil matche alle ord indtastet her",
       "MATCH_ANY": "ENHVER",
       "MATCH_ANY_LABEL": "Match ENHVER af disse sætninger",
+      "MATCH_ANY_HINT": "Resultater vil matche enhver ord indtastet her",
+      "MATCH_EXACT": "PRÆCIS",
+      "MATCH_EXACT_LABEL": "Match denne PRÆCISE SÆTNING",
+      "MATCH_EXACT_HINT": "Resultater vil matche denne hele sætning",
       "EXCLUDE": "UDELAD",
-      "EXCLUDE_LABEL": "UDELAD disse sætninger"
+      "EXCLUDE_LABEL": "UDELAD disse sætninger",
+      "EXCLUDE_HINT": "Resultater vil udelade matches med disse ord"
+    },
+    "DATE_RANGE_ADVANCED": {
+      "OPTIONS": {
+        "ANYTIME": "Når som helst",
+        "IN_LAST": "I den sidste",
+        "BETWEEN": "Mellem"
+      },
+      "IN_LAST_LABELS": {
+        "DAYS": "Dage",
+        "WEEKS": "Uger",
+        "MONTHS": "Måneder",
+        "QUANTITY": "Mængde"
+      },
+      "IN_LAST_DISPLAY_LABELS": {
+        "DAYS": "I de sidste {{value}} dage",
+        "WEEKS": "I de sidste {{value}} uger",
+        "MONTHS": "I de sidste {{value}} måneder"
+      },
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "Startdato",
+        "END_DATE": "Slutdato",
+        "DATE_RANGE": "Datointerval"
+      },
+      "ERROR": {
+        "IN_LAST": "Værdi påkrævet",
+        "START_DATE": {
+          "REQUIRED": "Startdato påkrævet",
+          "INVALID_FORMAT": "Startdato ugyldig. Datoen skal være i formatet '{{ requiredFormat }}'"
+        },
+        "END_DATE": {
+          "REQUIRED": "Slutdato påkrævet",
+          "INVALID_FORMAT": "Slutdato ugyldig. Datoen skal være i formatet '{{ requiredFormat }}'"
+        }
+      },
+      "ARIA_LABEL": {
+        "NUMBER_INPUT": "Talindtastning"
+      }
+    },
+    "SEARCH_PROPERTIES": {
+      "FILE_SIZE": "Filstørrelse",
+      "FILE_SIZE_PLACEHOLDER": "Indtast filstørrelse",
+      "FILE_SIZE_OPERATOR": {
+        "AT_LEAST": "Mindst",
+        "AT_MOST": "Højst",
+        "EXACTLY": "Præcis"
+      },
+      "FILE_SIZE_UNIT_ABBREVIATION": {
+        "KB": "KB",
+        "MB": "MB",
+        "GB": "GB"
+      },
+      "FILE_TYPE": "Filtype",
+      "FILE_TYPE_PLACEHOLDER": "Tilføj filtype",
+      "ACCESSIBILITY": {
+        "CONDITION": "Betingelse",
+        "SIZE_VALUE": "Værdi for filstørrelse",
+        "UNIT": "Enhed"
+      }
     }
   },
   "PERMISSION": {
@@ -424,8 +497,10 @@
       "MODIFIER": "Ændret af",
       "MODIFIED_DATE": "Ændringsdato",
       "CONTENT_TYPE": "Indholdstype",
-      "TAGS": "Tags",
-      "ADD_TAG_TOOLTIP": "Tilføj tag"
+      "TAGS": "Mærker",
+      "NO_TAGS_ADDED": "Der er i øjeblikket ingen mærker tilføjet",
+      "NO_ITEMS_MESSAGE": "Der er i øjeblikket ingen {{ groupTitle }} tilføjet",
+      "SAVE_OR_DISCARD_CHANGES": "Gem eller kassér ændringerne for at fortsætte"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
@@ -471,7 +546,8 @@
       "REMOVE": "Fjern"
     },
     "UNSHARE_ERROR": "Der opstod fejl under stop af deling af denne fil",
-    "UNSHARE_PERMISSION_ERROR": "Du har ikke tilladelse til at ophæve delingen af denne fil"
+    "UNSHARE_PERMISSION_ERROR": "Du har ikke tilladelse til at ophæve delingen af denne fil",
+    "INVALID_DATE_ERROR": "Ugyldig dato"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
@@ -490,8 +566,10 @@
       "ADD-ACTION": "Tilføj",
       "CLOSE-ACTION": "Annuller",
       "BASE-DIALOG-TITLE": "Søg efter en gruppe eller personer, du vil tilføje...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "Tilføj bruger- eller gruppetilladelse",
       "EVERYONE": "Alle",
-      "USER-GROUP-LIST": "Bruger eller gruppeliste"
+      "USER-GROUP-LIST": "Bruger eller gruppeliste",
+      "REMOVE_USER_GROUP": "Fjern"
     },
     "COLUMN": {
       "NAME": "Brugere og grupper ({{ count }})",
@@ -501,8 +579,8 @@
     "LABELS": {
       "HIDE": "Skjul",
       "SHOW": "Vis",
-      "ON": "On",
-      "OFF": "Off",
+      "ON": "Til",
+      "OFF": "Fra",
       "DIRECT-PERMISSIONS": "Direkte tilføjet tilladelse",
       "INHERITED-PERMISSIONS": "Nedarvet tilladelse",
       "INHERITED-SUBTITLE": "{{count}} brugere eller grupper arver tilladelse fra overordnet mappe",
@@ -535,6 +613,10 @@
       "NOT-ALLOWED": "Du har ikke tilladelse til at ændre tilladelserne"
     }
   },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "Gruppeikon",
+    "GROUP_USER_SELECTED_ALT": "Valgt gruppe- eller brugerikon"
+  },
   "ADF-TREE-VIEW": {
     "MISSING-ID": "Der er ikke angivet et node-id!",
     "ACCESSIBILITY": {
@@ -542,7 +624,14 @@
     }
   },
   "ADF-TREE": {
-    "LOAD-MORE-BUTTON": "Indlæs flere {{ name }}"
+    "LOAD-MORE-BUTTON": "Indlæs flere {{ name }}",
+    "ACTIONS": {
+      "TOOLTIP": "Åbn handlingsmenu"
+    },
+    "ARIA": {
+      "SELECTED": "{{ name }} valgt",
+      "DESELECTED": "{{ name }} fravalgt"
+    }
   },
   "LIBRARY": {
     "DIALOG": {
@@ -583,7 +672,9 @@
       "TITLE_TOO_SHORT": "Titlen skal være på mindst 2 tegn",
       "ILLEGAL_CHARACTERS": "Brug kun tal og bogstaver",
       "ONLY_SPACES": "Biblioteksnavnet skal indeholde andet end mellemrum",
-      "LIBRARY_UPDATE_ERROR": "Der opstod fejl under opdatering af egenskaberne for biblioteket"
+      "LIBRARY_UPDATE_ERROR": "Der opstod fejl under opdatering af egenskaberne for biblioteket",
+      "NAME_REQUIRED": "Biblioteksnavn er påkrævet",
+      "ID_REQUIRED": "Biblioteks-id er påkrævet"
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Egenskaberne for biblioteket er blevet opdateret"
@@ -593,6 +684,9 @@
     "ARIA-LABEL": {
       "BREADCRUMB": "Brødkrumme",
       "DROPDOWN": "Rullemenu"
+    },
+    "HEADER": {
+      "SELECTED": "Valgt ({{ count }})"
     }
   },
   "NAME_COLUMN_LINK": {
@@ -633,6 +727,14 @@
       "JOINED": "Du er nu tilmeldt biblioteket",
       "JOIN_CANCELED": "Anmodningen om at blive tilmeldt biblioteket er blevet annulleret",
       "JOIN_REQUESTED": "Anmodningen om at blive tilmeldt biblioteket er blevet sendt"
+    }
+  },
+  "NODE_FAVORITE_DIRECTIVE": {
+    "MESSAGES": {
+      "NODE_ADDED": "Tilføjet {{ name }} til favoritter",
+      "NODES_ADDED": "Tilføjede {{ number }} dele til favoritter",
+      "NODE_REMOVED": "Fjernet {{ name }} fra favoritter",
+      "NODES_REMOVED": "Fjernede {{ number }} dele fra favoritter"
     }
   }
 }

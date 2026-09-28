@@ -278,11 +278,11 @@
       "NO_START_FORM": "Ingen startform",
       "NO_PROCESS_DEF_SELECTED": "Ingen proces er valgt",
       "FORM": {
-        "TITLE": "Start proces",
         "LABEL": {
           "SELECT_APPLICATION": "Vælg applikation",
           "TYPE": "Vælg proces",
-          "NAME": "Procesnavn"
+          "NAME": "Procesnavn",
+          "SELECTED_PEOPLE": "Valgte personer"
         },
         "TYPE_PLACEHOLDER": "Vælg en...",
         "ACTION": {
