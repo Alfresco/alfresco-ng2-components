@@ -247,8 +247,7 @@ describe('SearchControlComponent', () => {
                 fixture.detectChanges();
                 let resultElement = element.querySelector<HTMLElement>('#result_option_0');
                 expect(resultElement).not.toBeNull();
-                const escapeEvent: any = new Event('ESCAPE');
-                escapeEvent.keyCode = 27;
+                const escapeEvent = new KeyboardEvent('keydown', { key: 'Escape' });
                 inputDebugElement.triggerEventHandler('keydown', escapeEvent);
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -272,8 +271,7 @@ describe('SearchControlComponent', () => {
                 fixture.detectChanges();
                 let resultElement = element.querySelector<HTMLElement>('#result_option_0');
                 expect(resultElement).not.toBeNull();
-                const escapeEvent: any = new Event('ENTER');
-                escapeEvent.keyCode = 13;
+                const escapeEvent = new KeyboardEvent('keydown', { key: 'Enter' });
                 inputDebugElement.triggerEventHandler('keydown', escapeEvent);
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
