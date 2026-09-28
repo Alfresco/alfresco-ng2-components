@@ -1,7 +1,9 @@
 {
   "COMMON": {
     "APPLY": "Применить",
-    "CANCEL": "Отмена"
+    "CANCEL": "Отмена",
+    "NAME": "Имя",
+    "CLEAR": "Очистить"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
@@ -16,7 +18,8 @@
         "MINOR": "незначительные изменения ({{version}})",
         "COMMENT": "Оставить комментарий",
         "ADD": "Добавить новую версию",
-        "CANCEL": "Отмена"
+        "CANCEL": "Отмена",
+        "VERSION_TYPE_LABEL": "Выберите тип версии"
       }
     },
     "CONFIRM_DELETE": {
@@ -99,6 +102,7 @@
     "ATTACH": "Прикрепить",
     "CHOOSE_ITEM": "Выберите содержимое, чтобы прикрепить из '{{ name }}'",
     "COPY": "Копировать",
+    "LINK": "Создать ссылку",
     "COPY_ITEM": "Копировать '{{ name }}' в...",
     "LOCATION": "Местоположение",
     "MOVE": "Переместить",
@@ -146,18 +150,17 @@
       "NO_EXISTING_TAGS": "Существующих меток нет",
       "TITLE": "Создать метки",
       "CREATE_TAG": "Создать: {{tag}}",
-      "NAME": "Имя",
+      "TAG_SEARCH_PLACEHOLDER": "Поиск меток",
       "ERRORS": {
         "EXISTING_TAG": "Метка уже существует",
         "ALREADY_ADDED_TAG": "Метка уже добавлена",
         "EMPTY_TAG": "Имя метки не может содержать только пробелы",
-        "REQUIRED": "Необходимо указать имя метки",
         "FETCH_TAGS": "Ошибка при получении меток",
-        "CREATE_TAGS": "Ошибка при создании меток"
+        "CREATE_TAGS": "Ошибка при создании меток",
+        "SPECIAL_CHARACTERS": "Имя метки не может содержать запрещенные символы"
       },
       "TOOLTIPS": {
-        "DELETE_TAG": "Удалить метку",
-        "HIDE_INPUT": "Скрыть ввод"
+        "DELETE_TAG": "Удалить метку"
       },
       "TAGS_LOADING": "Загрузка меток",
       "CREATE_TAGS_SUCCESS": "Метки успешно созданы"
@@ -167,7 +170,6 @@
     "CATEGORIES_TITLE": "Категории",
     "NO_CATEGORIES_CREATED": "Категории не созданы",
     "NO_CATEGORIES_ASSIGNED": "Категории не назначены",
-    "ASSIGN_CATEGORIES": "Назначить категории",
     "UNASSIGN_CATEGORY": "Отменить назначение категории",
     "DELETE_CATEGORY": "Удалить категорию",
     "EXISTING_CATEGORIES": "Существующие категории:",
@@ -176,7 +178,7 @@
     "GENERIC_CREATE": "Создать: {{name}}",
     "NAME": "Имя категории",
     "LOADING": "Загружается",
-    "HIDE_INPUT": "Скрыть ввод",
+    "NO_CATEGORIES_ADDED": "На данный момент категории не добавлены",
     "ERRORS": {
       "NOT_FOUND": "Категории не найдены",
       "REQUIRED": "Необходимо указать имя категории",
@@ -184,8 +186,11 @@
       "ALREADY_EXISTS": "Категория уже существует",
       "DUPLICATED_CATEGORY": "Категория уже добавлена",
       "CREATE_CATEGORIES": "Ошибка при создании категорий",
-      "EXISTING_CATEGORIES": "Некоторые категории уже существуют"
-    }
+      "EXISTING_CATEGORIES": "Некоторые категории уже существуют",
+      "SPECIAL_CHARACTERS": "Имя категории не может содержать запрещенные символы",
+      "ENDS_WITH_DOT": "Имя категории не может заканчиваться точкой"
+    },
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Поиск категорий"
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
@@ -255,7 +260,7 @@
       "UNDO": "Отменить"
     },
     "ERRORS": {
-      "GENERIC": "Не удалось отправить. Обратитесь в службу поддержки, если проблему не удастся устранить.",
+      "GENERIC": "Не удалось отправить. Обратитесь в службу поддержки, если проблему не удастся устранить",
       "500": "Внутренняя ошибка сервера. Повторите попытку или обратитесь в службу поддержки [500]",
       "504": "Время сеанса сервера истекло. Повторите попытку или обратитесь в службу поддержки [504]",
       "403": "Недостаточно разрешений для отправки в это местоположение [403]",
@@ -273,12 +278,15 @@
       "ARIA-LABEL": "Кнопка поиска"
     },
     "INPUT": {
+      "LABEL": "Поиск",
+      "PLACEHOLDER": "Поисковый запрос",
       "ARIA-LABEL": "Данные для поиска"
     },
     "RESULTS": {
       "SUMMARY": "Найдено результатов по поисковому запросу {{searchTerm}}: {{numResults}}",
       "NONE": "Не найдено результатов по поисковому запросу {{searchTerm}}",
       "ERROR": "Возникла проблема во время поиска — повторите попытку.",
+      "WILL_CONTAIN": "Результаты будут содержать '{{searchTerm}}'",
       "COLUMNS": {
         "NAME": "Отображаемое имя",
         "MODIFIED_BY": "Изменено пользователем",
@@ -313,9 +321,7 @@
         "FROM": "От",
         "TO": "До",
         "FROM-DATE": "От",
-        "TO-DATE": "До",
-        "SELECT-FROM-DATE": "Выбрать с даты",
-        "SELECT-TO-DATE": "Выбрать по дату"
+        "TO-DATE": "До"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Обязательное значение",
@@ -330,7 +336,12 @@
         "SEARCH_FILTER": "Список фильтров поиска",
         "OPTIONS-SELECTION": "Выбор вариантов"
       },
-      "ANY": "Любой"
+      "ANY": "Любой",
+      "PEOPLE": "Люди"
+    },
+    "FACET_FIELDS": {
+      "MODIFIER_LABEL": "Изменено пользователем",
+      "CREATOR_LABEL": "Создано пользователем"
     },
     "ICONS": {
       "ft_ic_raster_image": "Файл изображения",
@@ -371,6 +382,7 @@
       "TITLE": "Фильтр",
       "TYPE": "Тип",
       "FILTER_BY": "Фильтровать по {{ category }}",
+      "ACTIVE_FILTER": "Активный фильтр",
       "CLEAR": "Очистить",
       "APPLY": "Применить",
       "FILTERS": {
@@ -396,15 +408,76 @@
       }
     },
     "LOGICAL_SEARCH": {
-      "SEARCH_CHIP_INPUT": {
-        "ADD_PHRASE": "Добавить фразу..."
-      },
       "MATCH_ALL": "ВСЕ",
       "MATCH_ALL_LABEL": "Совпадение со ВСЕМИ этими фразами",
+      "MATCH_ALL_HINT": "Результаты будут соответствовать всем введенным здесь словам",
       "MATCH_ANY": "ЛЮБАЯ",
       "MATCH_ANY_LABEL": "Совпадение с ЛЮБОЙ из этих фраз",
+      "MATCH_ANY_HINT": "Результаты будут соответствовать любому из введенных здесь слов",
+      "MATCH_EXACT": "ТОЧНО",
+      "MATCH_EXACT_LABEL": "Соответствие этой ТОЧНОЙ ФРАЗЕ",
+      "MATCH_EXACT_HINT": "Результаты будут соответствовать этой фразе целиком",
       "EXCLUDE": "ИСКЛЮЧИТЬ",
-      "EXCLUDE_LABEL": "ИСКЛЮЧИТЬ эти фразы"
+      "EXCLUDE_LABEL": "ИСКЛЮЧИТЬ эти фразы",
+      "EXCLUDE_HINT": "Результаты будут исключать совпадения с этими словами"
+    },
+    "DATE_RANGE_ADVANCED": {
+      "OPTIONS": {
+        "ANYTIME": "В любое время",
+        "IN_LAST": "В последние",
+        "BETWEEN": "Между"
+      },
+      "IN_LAST_LABELS": {
+        "DAYS": "Дни",
+        "WEEKS": "Недели",
+        "MONTHS": "Месяцы",
+        "QUANTITY": "Количество"
+      },
+      "IN_LAST_DISPLAY_LABELS": {
+        "DAYS": "В последние {{value}} дней",
+        "WEEKS": "В последние {{value}} недель",
+        "MONTHS": "В последние {{value}} месяцев"
+      },
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "Дата начала",
+        "END_DATE": "Дата окончания",
+        "DATE_RANGE": "Диапазон дат"
+      },
+      "ERROR": {
+        "IN_LAST": "Необходимо указать значение",
+        "START_DATE": {
+          "REQUIRED": "Необходимо указать дату начала",
+          "INVALID_FORMAT": "Недействительная дата начала. Дата должна быть указана в формате '{{ requiredFormat }}'"
+        },
+        "END_DATE": {
+          "REQUIRED": "Необходимо указать дату окончания",
+          "INVALID_FORMAT": "Недействительная дата окончания. Дата должна быть указана в формате '{{ requiredFormat }}'"
+        }
+      },
+      "ARIA_LABEL": {
+        "NUMBER_INPUT": "Числовое поле"
+      }
+    },
+    "SEARCH_PROPERTIES": {
+      "FILE_SIZE": "Размер файла",
+      "FILE_SIZE_PLACEHOLDER": "Введите размер файла",
+      "FILE_SIZE_OPERATOR": {
+        "AT_LEAST": "Не менее",
+        "AT_MOST": "Не более",
+        "EXACTLY": "Точно"
+      },
+      "FILE_SIZE_UNIT_ABBREVIATION": {
+        "KB": "КБ",
+        "MB": "МБ",
+        "GB": "ГБ"
+      },
+      "FILE_TYPE": "Тип файла",
+      "FILE_TYPE_PLACEHOLDER": "Добавить тип файла",
+      "ACCESSIBILITY": {
+        "CONDITION": "Условие",
+        "SIZE_VALUE": "Значение размера файла",
+        "UNIT": "Единица измерения"
+      }
     }
   },
   "PERMISSION": {
@@ -425,7 +498,9 @@
       "MODIFIED_DATE": "Дата изменения",
       "CONTENT_TYPE": "Тип содержимого",
       "TAGS": "Метки",
-      "ADD_TAG_TOOLTIP": "Добавить метку"
+      "NO_TAGS_ADDED": "На данный момент метки не добавлены",
+      "NO_ITEMS_MESSAGE": "На данный момент {{ groupTitle }} не добавлены",
+      "SAVE_OR_DISCARD_CHANGES": "Сохраните или отмените изменения, чтобы продолжить"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
@@ -471,7 +546,8 @@
       "REMOVE": "Удалить"
     },
     "UNSHARE_ERROR": "Ошибка снятия этого файла с публикации",
-    "UNSHARE_PERMISSION_ERROR": "У вас нет разрешения на снятие этого файла с публикации"
+    "UNSHARE_PERMISSION_ERROR": "У вас нет разрешения на снятие этого файла с публикации",
+    "INVALID_DATE_ERROR": "Недействительная дата"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
@@ -490,13 +566,15 @@
       "ADD-ACTION": "Добавить",
       "CLOSE-ACTION": "Отмена",
       "BASE-DIALOG-TITLE": "Искать группу или людей для добавления...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "Добавить разрешение для пользователя или группы",
       "EVERYONE": "Вcе",
-      "USER-GROUP-LIST": "Пользователь или список групп"
+      "USER-GROUP-LIST": "Пользователь или список групп",
+      "REMOVE_USER_GROUP": "Удалить"
     },
     "COLUMN": {
       "NAME": "Пользователи и группы ({{ count }})",
       "LOCATION": "Местоположение",
-      "BULK-ROLE": "Установить все роли:"
+      "BULK-ROLE": "Установить все роли"
     },
     "LABELS": {
       "HIDE": "Спрятать",
@@ -535,6 +613,10 @@
       "NOT-ALLOWED": "У вас нет прав на изменение разрешений"
     }
   },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "Значок группы",
+    "GROUP_USER_SELECTED_ALT": "Значок выбранной группы или пользователя"
+  },
   "ADF-TREE-VIEW": {
     "MISSING-ID": "Не указан идентификатор узла!",
     "ACCESSIBILITY": {
@@ -542,7 +624,14 @@
     }
   },
   "ADF-TREE": {
-    "LOAD-MORE-BUTTON": "Загрузить еще {{ name }}"
+    "LOAD-MORE-BUTTON": "Загрузить еще {{ name }}",
+    "ACTIONS": {
+      "TOOLTIP": "Открыть меню действий"
+    },
+    "ARIA": {
+      "SELECTED": "Выбрано {{ name }}",
+      "DESELECTED": "Выделение снято с {{ name }}"
+    }
   },
   "LIBRARY": {
     "DIALOG": {
@@ -583,7 +672,9 @@
       "TITLE_TOO_SHORT": "Длина заголовка должна быть не менее 2 символов",
       "ILLEGAL_CHARACTERS": "Используйте только буквы и цифры",
       "ONLY_SPACES": "Имя библиотеки не может состоять только из пробелов",
-      "LIBRARY_UPDATE_ERROR": "Произошла ошибка при обновлении свойств библиотеки"
+      "LIBRARY_UPDATE_ERROR": "Произошла ошибка при обновлении свойств библиотеки",
+      "NAME_REQUIRED": "Необходимо указать имя библиотеки",
+      "ID_REQUIRED": "Необходимо указать идентификатор библиотеки"
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Свойства библиотеки обновлены"
@@ -593,6 +684,9 @@
     "ARIA-LABEL": {
       "BREADCRUMB": "Иерархия",
       "DROPDOWN": "Выпадающий список"
+    },
+    "HEADER": {
+      "SELECTED": "Выбранные ({{ count }})"
     }
   },
   "NAME_COLUMN_LINK": {
@@ -633,6 +727,14 @@
       "JOINED": "Библиотека присоединена",
       "JOIN_CANCELED": "Запрос на присоединение к этой библиотеке отменен",
       "JOIN_REQUESTED": "Отправлен запрос на присоединение к этой библиотеке"
+    }
+  },
+  "NODE_FAVORITE_DIRECTIVE": {
+    "MESSAGES": {
+      "NODE_ADDED": "Добавлено в избранное: {{ name }}",
+      "NODES_ADDED": "Добавлено элементов в избранное: {{ number }}",
+      "NODE_REMOVED": "Удалено из избранного: {{ name }}",
+      "NODES_REMOVED": "Удалено элементов из избранного: {{ number }}"
     }
   }
 }
