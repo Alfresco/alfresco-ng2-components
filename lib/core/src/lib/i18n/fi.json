@@ -24,7 +24,6 @@
   "CLOSE": "Sulje",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Sinulla ei ole ilmoituksia.",
-    "UNREAD_MESSAGES": "Sinulla on lukemattomia ilmoituksia.",
     "TITLE": "Ilmoitukset",
     "MARK_AS_READ": "Merkitse kaikki luetuiksi",
     "SYSTEM": "Järjestelmä",
@@ -36,10 +35,7 @@
       "TITLE": "Aloita lomake"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Esikatselu ei ole käytettävissä",
-      "ATTACH_FILE_WIDGET": {
-        "ON_ATTACH_FILE_CLICK": "Esikatselutilassa et voi liittää tiedostoa"
-      }
+      "IMAGE_NOT_AVAILABLE": "Esikatselu ei ole käytettävissä"
     },
     "FIELD": {
       "LOCALSTORAGE": "Paikallinen tallennustila",
@@ -50,19 +46,11 @@
       "UPLOAD": "Lataa",
       "REQUIRED": "Pakollinen kenttä",
       "REST_API_FAILED": "Palvelin '{{ hostname }}' ei ole tavoitettavissa",
-      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Pudotusvalikon elementtien lataamisessa tapahtui virhe. Ota yhteyttä järjestelmänvalvojaan.",
-      "DATA_TABLE_LOAD_FAILED": "Taulukon elementtien lataamisessa tapahtui virhe. Ota yhteyttä järjestelmänvalvojaan.",
-      "DATA_TABLE_EMPTY_CONTENT": "Tietoja ei löytynyt",
-      "EXTERNAL_PROPERTY_LOAD_FAILED": "Ulkoisen ominaisuuden lataamisessa tapahtui virhe. Ota yhteyttä järjestelmänvalvojaan.",
       "FILE_NAME": "Tiedostonimi",
-      "TITLE": "Otsikko",
       "NO_FILE_ATTACHED": "Ei liitettyä tiedostoa",
       "VALIDATOR": {
         "INVALID_NUMBER": "Käytä toista numeromuotoa",
-        "INVALID_DECIMAL_NUMBER": "Käytä desimaalilukumuotoa",
-        "INVALID_DECIMAL_PRECISION": "Virheellinen desimaaliarvo, desimaalipilkun jälkeen tulisi olla enintään {{precision}} numeroa.",
         "INVALID_DATE": "Käytä toista päivämäärämuotoa",
-        "INVALID_DATE_FORMAT": "Virheellinen päivämäärämuoto.",
         "INVALID_VALUE": "Anna toinen arvo",
         "NOT_GREATER_THAN": "Ei voi olla suurempi kuin {{ maxValue }}",
         "NOT_LESS_THAN": "Ei voi olla pienempi kuin {{ minValue }}",
@@ -70,65 +58,10 @@
         "NO_LONGER_THAN": "Anna enintään {{ maxLength }} merkkiä"
       },
       "FILE_ALREADY_UPLOADED": "Samanniminen tiedosto on jo ladattu.",
-      "ATTACH": "Liitä",
-      "REPEATABLE_SECTION": {
-        "ADD_ROW": "lisää",
-        "ROW_LIMIT_REACHED": "Rivien enimmäismäärä ({{ limit }}) on saavutettu."
-      }
+      "ATTACH": "Liitä"
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Nimetön tehtävä",
-      "ROW_LABEL": "Rivi {{ number }}",
-      "DELETE_ROW": "Poista rivi",
-      "REMOVE_ROW_DIALOG": {
-        "TITLE": "Poista rivi",
-        "MESSAGE": "Haluatko varmasti poistaa tämän rivin?",
-        "YES_LABEL": "Poista rivi",
-        "NO_LABEL": "Peruuta"
-      }
-    },
-    "BUTTON": {
-      "PREVIOUS_TAB": "Edellinen",
-      "PREVIOUS_TAB_TITLE": "Siirry edelliseen välilehteen",
-      "NEXT_TAB": "Seuraava",
-      "NEXT_TAB_TITLE": "Siirry seuraavaan välilehteen"
-    },
-    "FIELD_STYLE": {
-      "FONT_SIZE": "Fontin koko",
-      "FONT_WEIGHT": "Fontin paino",
-      "FONT_COLOR": "Fontin väri",
-      "FONT_WEIGHTS": {
-        "REGULAR": "tavallinen",
-        "BOLD": "lihavoitu"
-      },
-      "COLORS": {
-        "SYSTEM_COLOR": "järjestelmän väri",
-        "BLACK": "musta",
-        "GREY": "harmaa",
-        "RED": "punainen",
-        "GREEN": "vihreä",
-        "BLUE": "sininen",
-        "YELLOW": "keltainen"
-      },
-      "PREDEFINED": {
-        "HEADER": {
-          "NORMAL": "normaali",
-          "HEADING": "otsake",
-          "TITLE": "otsikko"
-        },
-        "RADIO_BUTTONS": {
-          "NORMAL": "normaali",
-          "STRONG": "vahva",
-          "HEADING": "otsake"
-        },
-        "READONLY_TEXT": {
-          "NORMAL": "normaali",
-          "STRONG": "vahva",
-          "HEADING": "otsake",
-          "TITLE": "otsikko",
-          "ANNOTATION": "merkintä"
-        }
-      }
+      "NAMELESS_TASK": "Nimetön tehtävä"
     }
   },
   "CORE": {
@@ -166,24 +99,12 @@
         "ACTIONS": {
           "CANCEL": "Peruuta"
         },
-        "TITLE": "Tiedostoja lisätään zip-kansioon. Tämä voi kestää muutaman minuutin.",
-        "COMPLETE": "valmis"
+        "TITLE": "Tiedostoja lisätään zip-kansioon. Tämä voi kestää muutaman minuutin."
       },
       "EDIT_JSON": {
         "CLOSE": "Sulje",
-        "UPDATE": "Päivitä",
-        "COPY": "Kopioi",
-        "COPIED": "Kopioitu leikepöydälle"
-      },
-      "UNSAVED_CHANGES": {
-        "TITLE": "Tallentamattomat muutokset",
-        "DESCRIPTION": "Tällä näytöllä on tallentamattomia muutoksia. Haluatko varmasti poistua tallentamatta muutoksia?",
-        "DISCARD_CHANGES_BUTTON": "Hylkää muutokset"
+        "UPDATE": "Päivitä"
       }
-    },
-    "BREADCRUMBS": {
-      "TITLE": "Siirtymispolku",
-      "SHOWALL": "Näytä kaikki"
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "Lukitse tiedosto",
@@ -223,9 +144,7 @@
       },
       "CANCEL_BUTTON": {
         "LABEL": "Peruuta"
-      },
-      "FOLDER_CREATED_SUCCESS": "Kansio '{{ name }}' luotiin onnistuneesti",
-      "FOLDER_UPDATED_SUCCESS": "Kansio '{{ name }}' päivitettiin onnistuneesti"
+      }
     },
     "MESSAGES": {
       "ERRORS": {
@@ -257,16 +176,12 @@
         "VALUE": "Arvo"
       },
       "NONE": "Ei mitään",
-      "SELECTED_VALUES": "Valitut arvot",
-      "REMOVE": "Poista {{ value }}",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Käytä numeromuotoa",
         "INT_VALIDATION_ERROR": "Käytä kokonaislukumuotoa",
-        "LONG_VALIDATION_ERROR": "Käytä pitkää muotoa",
         "LENGTH_VALIDATION_ERROR": "Arvon tulee olla pituudeltaan {{ minLength }} ja {{ maxLength }} välillä",
         "MATCH_VALIDATION_ERROR": "Arvo ei vastaa kaavaa: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Arvon tulee olla {{ minValue }} ja {{ maxValue }} välillä",
-        "ONLY_POSITIVE_NUMBER": "Vain positiivinen arvo on sallittu"
+        "MINMAX_VALIDATION_ERROR": "Arvon tulee olla {{ minValue }} ja {{ maxValue }} välillä"
       },
       "MORE": "Lisää"
     },
@@ -313,41 +228,20 @@
         "EDIT": "Muokkaa-painike",
         "DATEPICKER": "Navigoi päivämäärien välillä nuolinäppäinten avulla. Nuolet ylös ja alas siirtävät seuraavaan tai edelliseen viikkoon, mutta samaan viikonpäivään. Nuolet vasemmalle ja oikealle siirtävät seuraavan tai edelliseen päivään. Valitse päivämäärä Enter-näppäimellä.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Arvo kopioitu leikepöydälle",
-        "EDIT_ASPECTS": "Muokkaa ominaisuusjoukkoja",
-        "SECTION": "{{ sectionName }}-osio"
+        "EDIT_ASPECTS": "Muokkaa ominaisuusjoukkoja"
       }
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "Tarkastele tulosnäkymää nousevassa tai laskevassa järjestyksessä",
-      "SORT_BY": "Lajittele",
-      "BUTTON": {
-        "TOOLTIP": "Hae",
-        "ARIA-LABEL": "Hakupainike"
-      },
-      "INPUT": {
-        "ARIA-LABEL": "Hakusanat"
-      },
-      "FILTER": {
-        "BUTTONS": {
-          "CLOSE": "Sulje"
-        }
-      }
-    },
-    "FEATURE-FLAGS": {
-      "OVERRIDES": "Ominaisuuslippujen ohitukset",
-      "FILTER_OR_ADD_NEW": "Suodata tai lisää uusi",
-      "FILTER": "Suodatin",
-      "ADD_NEW": "Lisää uusi ominaisuuslippu (Shift + Enter)"
+      "SORT_BY": "Lajittele"
     }
   },
   "COMMENTS": {
-    "PROFILE_IMAGE": "Profiilikuva",
     "NONE": "Ei kommentteja",
     "ADD": "Lisää",
     "HEADER": "Kommentit ({{ count }})",
     "CREATED_BY_HEADER": "Tekijä:",
     "MESSAGE_HEADER": "Viesti",
-    "EMPTY_ERROR": "Kommentti ei voi olla tyhjä",
     "DIALOG": {
       "TITLE": "Uusi kommentti",
       "LABELS": {
@@ -360,7 +254,7 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco, tee liiketoiminnasta sujuvaa",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "Kirjaudu sisään",
       "USERNAME": "Käyttäjänimi",
@@ -402,15 +296,12 @@
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "Sisältötoiminnot",
-      "SELECT_COLUMNS": "Valitse sarakkeet"
+      "TOOLTIP": "Sisältötoiminnot"
     },
     "ACCESSIBILITY": {
       "ACTIONS": "Toiminnot",
       "SELECT_ALL": "Valitse kaikki",
       "SELECT_FILE": "Valitse tiedosto",
-      "SELECTED": "Valitut",
-      "ROW_SELECTION": "Paina välilyöntiä vaihtaaksesi rivin valinnan",
       "SORT_ASCENDING": "Nouseva",
       "SORT_DESCENDING": "Laskeva",
       "SORT_NONE": "Ei mitään",
@@ -420,11 +311,7 @@
       "ICON_TEXT": "Kohteen tyyppi {{ type }}",
       "ICON_DISABLED": "Poistettu käytöstä",
       "ROW_OPTION_BUTTON": "Toiminnot",
-      "DRAG": "Vedä-painike",
-      "DRAGGABLE": "Vedettävä",
-      "EMPTY_HEADER": "Tyhjä otsikko",
-      "RESIZE_COLUMN": "Muuta sarakkeen {{ column }} kokoa. Käytä nuolinäppäimiä leveyden säätämiseen, Shift suurempiin askeliin.",
-      "COLUMN_WIDTH_CHANGED": "Sarakkeen {{ column }} leveys: {{ width }} pikseliä"
+      "EMPTY_HEADER": "Tyhjä otsikko"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Asiakirja",
@@ -445,8 +332,7 @@
     "COLUMNS_SELECTOR": {
       "COLUMNS": "Sarakkeet",
       "SEARCH": "Hae",
-      "APPLY": "Käytä",
-      "COLUMNS_VISIBILITY": "Valitse näytettävät sarakkeet"
+      "APPLY": "Käytä"
     }
   },
   "USER_PROFILE": {
@@ -480,7 +366,6 @@
       "WAIT": "Odota"
     },
     "ARIA": {
-      "MIME_TYPE_ICON": "Tiedostotyypin kuvake",
       "PREVIOUS_PAGE": "Edellinen sivu",
       "NEXT_PAGE": "Seuraava sivu",
       "ZOOM_IN": "Lähennä",
@@ -492,9 +377,7 @@
       "CANCEL": "Peruuta",
       "RESET": "Nollaa",
       "THUMBNAILS": "Asiakirjojen esikatselukuvakkeet",
-      "THUMBNAILS_PANLEL_CLOSE": "Sulje pikkukuvapaneeli",
-      "LOADING": "Asiakirjaa ladataan",
-      "NOTE_ANNOTATION_IMG": "Muistiinpanomerkintä"
+      "THUMBNAILS_PANLEL_CLOSE": "Sulje pikkukuvapaneeli"
     },
     "PAGE_LABEL": {
       "SHOWING": "Näytetään",
@@ -506,6 +389,10 @@
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Sivu {{ pageNum }}"
+      },
+      "METADATA": {
+        "MORE_INFORMATION": "Lisää tietoja",
+        "LESS_INFORMATION": "Vähemmän tietoja"
       }
     },
     "PDF_DIALOG": {
@@ -600,6 +487,26 @@
       "PROCESS_SERVICE_HOST": "Alfresco Process Servicesin URL-osoite: {{ value }}"
     },
     "REPOSITORY": "Säilö",
+    "VERSIONS": {
+      "TITLE": "Tuoteversiot",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "Mallinnuspalvelu",
+      "DEPLOYMENT_SERVICE": "Käyttöönottopalvelu",
+      "QUERY_SERVICE": "Käyttöönottopalvelu",
+      "RB": "Suorituspalvelu",
+      "LABELS": {
+        "EDITION": "Versio",
+        "VERSION": "Versio",
+        "LICENSE": "Käyttöoikeus",
+        "STATUS": "Tila",
+        "MODULES": "Moduulit"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "Lähdekoodi",
+      "DESCRIPTION": "Suoritat projektin seuraavan vahvistuksen perusteella:"
+    },
     "PACKAGES": {
       "TITLE": "Paketit",
       "NAME": "Nimi",
@@ -620,9 +527,7 @@
     "LICENSE": {
       "TITLE": "Käyttöoikeus",
       "PROPERTY": "Ominaisuus",
-      "VALUE": "Arvo",
-      "ENABLED": "Käytössä",
-      "DISABLED": "Poistettu käytöstä"
+      "VALUE": "Arvo"
     },
     "STATUS": {
       "TITLE": "Tila",
@@ -657,23 +562,10 @@
     "LOADING": "Ladataan...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} yhdistelmäruutu {{selectedOption}}"
   },
-  "INFO_DRAWER": {
-    "ICON": "Solmukuvake"
-  },
-  "DYNAMIC_CHIP_LIST": {
-    "LOAD_MORE": "Lataa lisää",
-    "DELETE": "Poista {{ name }}"
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Vahvista",
     "ACTION": "Haluatko jatkaa?",
     "YES_LABEL": "Kyllä",
     "NO_LABEL": "Ei"
-  },
-  "SESSION_TIMEOUT": {
-    "TITLE": "Työskenteletkö yhä?",
-    "MESSAGE": "Istuntosi päättyy {{seconds}} sekunnin kuluttua, koska toimintaa ei ole havaittu.",
-    "LOG_OUT": "Kirjaudu ulos",
-    "CONTINUE_WORKING": "Jatka työskentelyä"
   }
 }

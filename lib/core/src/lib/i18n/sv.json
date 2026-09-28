@@ -24,7 +24,6 @@
   "CLOSE": "Stäng",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Du har inga aviseringar just nu.",
-    "UNREAD_MESSAGES": "Du har olästa aviseringar.",
     "TITLE": "Aviseringar",
     "MARK_AS_READ": "Markera allt som läst",
     "SYSTEM": "System",
@@ -36,10 +35,7 @@
       "TITLE": "Startformulär"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Förhandgranskning inte tillgänglig",
-      "ATTACH_FILE_WIDGET": {
-        "ON_ATTACH_FILE_CLICK": "I förhandsgranskningsläge kan du inte bifoga en fil"
-      }
+      "IMAGE_NOT_AVAILABLE": "Förhandgranskning inte tillgänglig"
     },
     "FIELD": {
       "LOCALSTORAGE": "Lokal lagring",
@@ -50,19 +46,11 @@
       "UPLOAD": "Ladda upp",
       "REQUIRED": "Fält obligatoriskt",
       "REST_API_FAILED": "Servern '{{ hostname }}' kan inte nås",
-      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Det uppstod ett problem vid inläsning av rullgardinsmenyelement. Kontakta administratören.",
-      "DATA_TABLE_LOAD_FAILED": "Det uppstod ett problem vid inläsning av tabellelement. Kontakta administratören.",
-      "DATA_TABLE_EMPTY_CONTENT": "Inga data hittades",
-      "EXTERNAL_PROPERTY_LOAD_FAILED": "Det uppstod ett problem vid inläsning av extern egenskap. Kontakta administratören.",
       "FILE_NAME": "Filnamn",
-      "TITLE": "Titel",
       "NO_FILE_ATTACHED": "Ingen fil bifogad",
       "VALIDATOR": {
         "INVALID_NUMBER": "Använd ett annat nummerformat",
-        "INVALID_DECIMAL_NUMBER": "Använd ett decimalt nummerformat",
-        "INVALID_DECIMAL_PRECISION": "Felaktigt decimalvärde, det ska finnas högst {{precision}} siffror efter decimalpunkten.",
         "INVALID_DATE": "Använd ett annat datumformat",
-        "INVALID_DATE_FORMAT": "Ogiltigt datumformat.",
         "INVALID_VALUE": "Ange ett annat värde",
         "NOT_GREATER_THAN": "Kan inte vara större än {{ maxValue }}",
         "NOT_LESS_THAN": "Kan inte vara mindre än {{ minValue }}",
@@ -70,65 +58,10 @@
         "NO_LONGER_THAN": "Ange inte fler än {{ maxLength }} tecken"
       },
       "FILE_ALREADY_UPLOADED": "En fil med samma namn finns redan uppladdad.",
-      "ATTACH": "Bifoga",
-      "REPEATABLE_SECTION": {
-        "ADD_ROW": "lägg till",
-        "ROW_LIMIT_REACHED": "Radgränsen ({{ limit }}) har uppnåtts."
-      }
+      "ATTACH": "Bifoga"
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Namnlös uppgift",
-      "ROW_LABEL": "Rad {{ number }}",
-      "DELETE_ROW": "Radera rad",
-      "REMOVE_ROW_DIALOG": {
-        "TITLE": "Radera raden",
-        "MESSAGE": "Vill du verkligen radera den här raden?",
-        "YES_LABEL": "Radera rad",
-        "NO_LABEL": "Avbryt"
-      }
-    },
-    "BUTTON": {
-      "PREVIOUS_TAB": "Tidigare",
-      "PREVIOUS_TAB_TITLE": "Navigera till tidigare flik",
-      "NEXT_TAB": "Nästa",
-      "NEXT_TAB_TITLE": "Navigera till nästa flik"
-    },
-    "FIELD_STYLE": {
-      "FONT_SIZE": "Teckenstorlek",
-      "FONT_WEIGHT": "Teckentjocklek",
-      "FONT_COLOR": "Teckenfärg",
-      "FONT_WEIGHTS": {
-        "REGULAR": "vanlig",
-        "BOLD": "fet"
-      },
-      "COLORS": {
-        "SYSTEM_COLOR": "systemfärg",
-        "BLACK": "svart",
-        "GREY": "grå",
-        "RED": "röd",
-        "GREEN": "grön",
-        "BLUE": "blå",
-        "YELLOW": "gul"
-      },
-      "PREDEFINED": {
-        "HEADER": {
-          "NORMAL": "normal",
-          "HEADING": "rubrik",
-          "TITLE": "titel"
-        },
-        "RADIO_BUTTONS": {
-          "NORMAL": "normal",
-          "STRONG": "stark",
-          "HEADING": "rubrik"
-        },
-        "READONLY_TEXT": {
-          "NORMAL": "normal",
-          "STRONG": "stark",
-          "HEADING": "rubrik",
-          "TITLE": "titel",
-          "ANNOTATION": "anteckning"
-        }
-      }
+      "NAMELESS_TASK": "Namnlös uppgift"
     }
   },
   "CORE": {
@@ -166,24 +99,12 @@
         "ACTIONS": {
           "CANCEL": "Avbryt"
         },
-        "TITLE": "Lägg till filer till zip, det här kan ta några minuter",
-        "COMPLETE": "slutförd"
+        "TITLE": "Lägg till filer till zip, det här kan ta några minuter"
       },
       "EDIT_JSON": {
         "CLOSE": "Stäng",
-        "UPDATE": "Uppdatera",
-        "COPY": "Kopiera",
-        "COPIED": "Kopierat till urklipp"
-      },
-      "UNSAVED_CHANGES": {
-        "TITLE": "Osparade ändringar",
-        "DESCRIPTION": "Du har osparade ändringar på den här skärmen. Är du säker på att du vill lämna utan att spara ändringarna?",
-        "DISCARD_CHANGES_BUTTON": "Släng ändringar"
+        "UPDATE": "Uppdatera"
       }
-    },
-    "BREADCRUMBS": {
-      "TITLE": "Synlig sökväg",
-      "SHOWALL": "Visa alla"
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "Lås fil",
@@ -223,14 +144,12 @@
       },
       "CANCEL_BUTTON": {
         "LABEL": "Avbryt"
-      },
-      "FOLDER_CREATED_SUCCESS": "Mappen '{{ name }}' har skapats",
-      "FOLDER_UPDATED_SUCCESS": "Mappen '{{ name }}' har uppdaterats"
+      }
     },
     "MESSAGES": {
       "ERRORS": {
         "GENERIC": "Åtgärden lyckades inte. Försök igen eller kontakta din IT-avdelning.",
-        "EXISTENT_FOLDER": "Det finns redan en mapp med det här namnet. Testa ett annat namn."
+        "EXISTENT_FOLDER": "Det finns redan en mapp med det här namnet. Testa ett annat namn"
       }
     },
     "RESTORE_NODE": {
@@ -257,16 +176,12 @@
         "VALUE": "Värde"
       },
       "NONE": "Ingen",
-      "SELECTED_VALUES": "Valda värden",
-      "REMOVE": "Ta bort {{ value }}",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Använd ett nummerformat",
         "INT_VALIDATION_ERROR": "Använd ett heltalsformat",
-        "LONG_VALIDATION_ERROR": "Använd ett långt format",
         "LENGTH_VALIDATION_ERROR": "Värdet ska vara mellan {{ minLength }} och {{ maxLength }} i längd",
         "MATCH_VALIDATION_ERROR": "Värdet matchar inte mönstret: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Värdet ska vara mellan {{ minValue }} och {{ maxValue }}",
-        "ONLY_POSITIVE_NUMBER": "Endast positivt värde är godkänt"
+        "MINMAX_VALIDATION_ERROR": "Värdet ska vara mellan {{ minValue }} och {{ maxValue }}"
       },
       "MORE": "Mer"
     },
@@ -310,44 +225,23 @@
         "EDIT_ASPECTS": "Redigera aspekt"
       },
       "ACCESSIBILITY": {
-        "EDIT": "Redigera {{ sectionName }}",
+        "EDIT": "Redigeringsknapp",
         "DATEPICKER": "Använd piltangenterna för att navigera mellan datumen. Upp och ner flyttar till nästa eller föregående vecka men på samma dag. Vänster och höger flyttar till nästa eller föregående dag. Tryck på Retur för att välja ett datum.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Värde kopierat till urklipp",
-        "EDIT_ASPECTS": "Redigera aspekt",
-        "SECTION": "{{ sectionName }} avsnitt"
+        "EDIT_ASPECTS": "Redigera aspekt"
       }
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "Växla mellan att visa resultaten i stigande eller sjunkande ordning",
-      "SORT_BY": "Sortera efter",
-      "BUTTON": {
-        "TOOLTIP": "Sök",
-        "ARIA-LABEL": "Sökknapp"
-      },
-      "INPUT": {
-        "ARIA-LABEL": "Sökindata"
-      },
-      "FILTER": {
-        "BUTTONS": {
-          "CLOSE": "Stäng"
-        }
-      }
-    },
-    "FEATURE-FLAGS": {
-      "OVERRIDES": "Åsidosättningar för funktionsflagga",
-      "FILTER_OR_ADD_NEW": "Filtrera eller lägg till ny",
-      "FILTER": "Filter",
-      "ADD_NEW": "Lägg till ny funktionsflagga (Shift + Enter)"
+      "SORT_BY": "Sortera efter"
     }
   },
   "COMMENTS": {
-    "PROFILE_IMAGE": "Profilbild",
     "NONE": "Inga kommentarer",
     "ADD": "Lägg till",
     "HEADER": "Kommentarer ({{ count }})",
     "CREATED_BY_HEADER": "Skapad av",
     "MESSAGE_HEADER": "Meddelande",
-    "EMPTY_ERROR": "Kommentaren kan inte vara tom",
     "DIALOG": {
       "TITLE": "Ny kommentar",
       "LABELS": {
@@ -360,7 +254,7 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco, skapa affärsflöde",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "Logga in",
       "USERNAME": "Användarnamn",
@@ -402,15 +296,12 @@
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "Innehållsåtgärder",
-      "SELECT_COLUMNS": "Välj kolumner"
+      "TOOLTIP": "Innehållsåtgärder"
     },
     "ACCESSIBILITY": {
       "ACTIONS": "Åtgärder",
       "SELECT_ALL": "Välj alla",
       "SELECT_FILE": "Välj fil",
-      "SELECTED": "Vald",
-      "ROW_SELECTION": "Tryck på blanksteg för att växla radmarkering",
       "SORT_ASCENDING": "Stigande",
       "SORT_DESCENDING": "Sjunkande",
       "SORT_NONE": "Ingen",
@@ -420,11 +311,7 @@
       "ICON_TEXT": "Artikeltyp {{ type }}",
       "ICON_DISABLED": "Avaktiverad",
       "ROW_OPTION_BUTTON": "Åtgärder",
-      "DRAG": "Dragknapp",
-      "DRAGGABLE": "Dragbar",
-      "EMPTY_HEADER": "Tomt sidhuvud",
-      "RESIZE_COLUMN": "Ändra storlek på kolumnen {{ column }}. Använd piltangenterna för att justera bredden, Shift för större steg.",
-      "COLUMN_WIDTH_CHANGED": "{{ column }} kolumnbredd: {{ width }} pixlar"
+      "EMPTY_HEADER": "Tomt sidhuvud"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -445,8 +332,7 @@
     "COLUMNS_SELECTOR": {
       "COLUMNS": "Kolonner",
       "SEARCH": "Sök",
-      "APPLY": "Tillämpa",
-      "COLUMNS_VISIBILITY": "Välj kolumner att visa"
+      "APPLY": "Tillämpa"
     }
   },
   "USER_PROFILE": {
@@ -460,8 +346,8 @@
       "MY_PROFILE": "Min profil"
     },
     "TAB": {
-      "CS": "Innehållstjänster",
-      "PS": "Processtjänster"
+      "CS": "Content Services",
+      "PS": "Process Services"
     }
   },
   "ADF_VIEWER": {
@@ -472,7 +358,7 @@
       "PRINT": "Skriv ut",
       "SHARE": "Dela",
       "MORE_ACTIONS": "Fler åtgärder",
-      "INFO": "Information",
+      "INFO": "Info",
       "FULLSCREEN": "Aktivera helskärmsläge",
       "CLOSE": "Stäng",
       "NEXT_FILE": "Nästa fil",
@@ -480,7 +366,6 @@
       "WAIT": "Vänta"
     },
     "ARIA": {
-      "MIME_TYPE_ICON": "Ikon för filtyp",
       "PREVIOUS_PAGE": "Föregående sida",
       "NEXT_PAGE": "Nästa sida",
       "ZOOM_IN": "Zooma in",
@@ -492,9 +377,7 @@
       "CANCEL": "Avbryt",
       "RESET": "Återställ",
       "THUMBNAILS": "Dokumentminiatyrbilder",
-      "THUMBNAILS_PANLEL_CLOSE": "Stäng panel för miniatyrbilder",
-      "LOADING": "Dokumentet läses in",
-      "NOTE_ANNOTATION_IMG": "Anteckning"
+      "THUMBNAILS_PANLEL_CLOSE": "Stäng panel för miniatyrbilder"
     },
     "PAGE_LABEL": {
       "SHOWING": "Visar",
@@ -506,6 +389,10 @@
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Sida {{ pageNum }}"
+      },
+      "METADATA": {
+        "MORE_INFORMATION": "Mer information",
+        "LESS_INFORMATION": "Mindre information"
       }
     },
     "PDF_DIALOG": {
@@ -596,17 +483,37 @@
     "VERSION": "Version",
     "SERVER_SETTINGS": {
       "TITLE": "Serverinställningar",
-      "CONTENT_SERVICE_HOST": "Alfresco Innehållstjänster URL: {{ value }}",
-      "PROCESS_SERVICE_HOST": "Alfresco Processtjänster URL: {{ value }}"
+      "CONTENT_SERVICE_HOST": "Alfresco Content Services URL: {{ value }}",
+      "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
     },
     "REPOSITORY": "Arkiv",
+    "VERSIONS": {
+      "TITLE": "Produktversioner",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "Modelleringstjänster",
+      "DEPLOYMENT_SERVICE": "Distribueringstjänster",
+      "QUERY_SERVICE": "Distribueringstjänster",
+      "RB": "Runtime",
+      "LABELS": {
+        "EDITION": "Version",
+        "VERSION": "Version",
+        "LICENSE": "Licens",
+        "STATUS": "Status",
+        "MODULES": "Moduler"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "Källkod",
+      "DESCRIPTION": "Du driver projektet baserat på följande åtaganden:"
+    },
     "PACKAGES": {
       "TITLE": "Paket",
       "NAME": "Namn",
       "VERSION": "Version"
     },
     "EXTENSIONS": {
-      "TITLE": "Insticksprogram",
+      "TITLE": "Plugins",
       "TABLE_HEADERS": {
         "ID": "ID",
         "NAME": "Namn",
@@ -620,9 +527,7 @@
     "LICENSE": {
       "TITLE": "Licens",
       "PROPERTY": "Egenskap",
-      "VALUE": "Värde",
-      "ENABLED": "Aktiverad",
-      "DISABLED": "Avaktiverad"
+      "VALUE": "Värde"
     },
     "STATUS": {
       "TITLE": "Status",
@@ -635,7 +540,7 @@
       "VERSION": "Version"
     },
     "PLUGINS": {
-      "TITLE": "Insticksprogram",
+      "TITLE": "Plugins",
       "NAME": "Namn",
       "VERSION": "Version"
     }
@@ -657,23 +562,10 @@
     "LOADING": "Läser in...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} kombinationsrutan {{selectedOption}}"
   },
-  "INFO_DRAWER": {
-    "ICON": "Nodikon"
-  },
-  "DYNAMIC_CHIP_LIST": {
-    "LOAD_MORE": "Läs in mer",
-    "DELETE": "Ta bort {{ name }}"
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Bekräfta",
     "ACTION": "Vill du fortsätta?",
     "YES_LABEL": "Ja",
     "NO_LABEL": "Nej"
-  },
-  "SESSION_TIMEOUT": {
-    "TITLE": "Arbetar du fortfarande?",
-    "MESSAGE": "Din session kommer att avslutas om {{seconds}} sekunder eftersom det inte har förekommit någon aktivitet.",
-    "LOG_OUT": "Logga ut",
-    "CONTINUE_WORKING": "Fortsätt arbeta"
   }
 }
