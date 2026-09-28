@@ -1,0 +1,740 @@
+{
+  "COMMON": {
+    "APPLY": "应用",
+    "CANCEL": "取消",
+    "NAME": "名称",
+    "CLEAR": "清除"
+  },
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "恢复",
+      "DELETE": "删除",
+      "DOWNLOAD": "下载",
+      "VIEW": "查看",
+      "UPLOAD": {
+        "TITLE": "上传新版本",
+        "TOOLTIP": "限制：您必须上传同名文件才能创建该文件的新版本",
+        "MAJOR": "主要更改 ({{version}})",
+        "MINOR": "次要更改 ({{version}})",
+        "COMMENT": "发表评论",
+        "ADD": "添加新版本",
+        "CANCEL": "取消",
+        "VERSION_TYPE_LABEL": "选择版本类型"
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "删除版本",
+      "MESSAGE": "已删除的文件版本无法恢复。是否继续？",
+      "YES_LABEL": "是",
+      "NO_LABEL": "否"
+    },
+    "MANAGE_VERSION_OPTIONS": "管理版本选项"
+  },
+  "ADF-NEW-VERSION-UPLOADER": {
+    "DIALOG_LIST": {
+      "TITLE": "管理版本",
+      "CLOSE": "关闭"
+    },
+    "DIALOG_UPLOAD": {
+      "TITLE": "上传新版本",
+      "CANCEL": "取消",
+      "UPLOAD": "上传"
+    }
+  },
+  "ADF_VERSION_COMPARISON": {
+    "CURRENT_VERSION": "当前",
+    "NEW_VERSION": "新建",
+    "ACCESSIBILITY": {
+      "ICON_TEXT": "项目类型 {{ type }}",
+      "ARROW_ICON": "右箭头图标"
+    }
+  },
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "此文件夹为空"
+    },
+    "NO_PERMISSION": "您没有查看该文件或文件夹的权限。",
+    "LAYOUT": {
+      "CREATED": "已创建",
+      "CREATED_BY": "创建者",
+      "THUMBNAIL": "缩略图",
+      "NAME": "名称",
+      "LOCATION": "位置",
+      "SIZE": "尺寸",
+      "DELETED_ON": "已删除",
+      "DELETED_BY": "删除人",
+      "STATUS": "状态",
+      "MODIFIED_ON": "已修改",
+      "MODIFIED_BY": "修改人",
+      "SHARED_BY": "分享人",
+      "LOAD_MORE": "加载更多"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "查看",
+      "REMOVE": "删除",
+      "DOWNLOAD": "下载"
+    },
+    "LOADER_LABEL": "文档列表加载器",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "预览加载无响应",
+      "LABEL": "下载以查看此文档，或取消以继续而不预览。",
+      "ACTIONS": {
+        "CANCEL": "取消",
+        "DOWNLOAD": "下载"
+      }
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "创建...",
+      "ACTION_NEW_FOLDER": "新建文件夹",
+      "CREATE": "创建",
+      "CANCEL": "取消"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "网站列表",
+    "MY_FILES_OPTION": "我的文件"
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "取消",
+    "CHOOSE": "选择",
+    "ATTACH": "附加",
+    "CHOOSE_ITEM": "从 '{{ name }}'中选择要附加的内容",
+    "COPY": "复制",
+    "LINK": "创建链接",
+    "COPY_ITEM": "将 '{{ name }}' 复制到...",
+    "LOCATION": "位置",
+    "MOVE": "移动",
+    "MOVE_ITEM": "将 '{{ name }}' 移动到...",
+    "NO_RESULTS": "未找到结果",
+    "SEARCH": "搜索",
+    "SEARCH_RESULTS": "搜索结果",
+    "SELECT_LIBRARY": "选择一个库",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "当搜索仍在运行时，您不能上传文件",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "用户没有向文件夹上传内容的权限",
+    "REPOSITORY": "存储库",
+    "UPLOAD_FROM_DEVICE": "从设备上载"
+  },
+  "OPERATION": {
+    "SUCCESS": {
+      "CONTENT": {
+        "COPY": "复制成功",
+        "MOVE": "移动成功"
+      },
+      "FOLDER": {
+        "COPY": "复制成功",
+        "MOVE": "移动成功"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "此名称已使用，请尝试其他名称。",
+      "UNKNOWN": "此操作未成功，请重试或联系您的 IT 团队。",
+      "PERMISSION": "您没有执行此操作的访问权。"
+    }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "新建标记"
+    },
+    "MESSAGES": {
+      "EXIST": "标记已存在"
+    },
+    "BUTTON": {
+      "ADD": "添加标题"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "现有标签:",
+      "EXISTING_TAGS_SELECTION": "选择一个现有标记:",
+      "NO_TAGS_CREATED": "未创建标记",
+      "NO_EXISTING_TAGS": "没有现有标记",
+      "TITLE": "创建标记",
+      "CREATE_TAG": "创建: {{tag}}",
+      "TAG_SEARCH_PLACEHOLDER": "搜索标记",
+      "ERRORS": {
+        "EXISTING_TAG": "标记已存在",
+        "ALREADY_ADDED_TAG": "已添加标记",
+        "EMPTY_TAG": "标记名称不能只包含空格",
+        "FETCH_TAGS": "获取标记时出错",
+        "CREATE_TAGS": "创建标记时出错",
+        "SPECIAL_CHARACTERS": "标记名称不能包含禁止的字符"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "删除标记"
+      },
+      "TAGS_LOADING": "标记加载",
+      "CREATE_TAGS_SUCCESS": "标记创建成功"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "类别",
+    "NO_CATEGORIES_CREATED": "未创建类别",
+    "NO_CATEGORIES_ASSIGNED": "未指派类别",
+    "UNASSIGN_CATEGORY": "未指派类别",
+    "DELETE_CATEGORY": "删除类别",
+    "EXISTING_CATEGORIES": "现有类别:",
+    "SELECT_EXISTING_CATEGORY": "选择一个现有类别:",
+    "NO_EXISTING_CATEGORIES": "没有现有类别",
+    "GENERIC_CREATE": "创建: {{name}}",
+    "NAME": "类别名称",
+    "LOADING": "正在加载",
+    "NO_CATEGORIES_ADDED": "目前没有添加类别",
+    "ERRORS": {
+      "NOT_FOUND": "未找到类别",
+      "REQUIRED": "类别名称是必需的",
+      "EMPTY_CATEGORY": "类别名称不能只包含空格",
+      "ALREADY_EXISTS": "类别已存在",
+      "DUPLICATED_CATEGORY": "已添加类别",
+      "CREATE_CATEGORIES": "创建类别时出错",
+      "EXISTING_CATEGORIES": "某些类别已存在",
+      "SPECIAL_CHARACTERS": "类别名称不能包含禁止的字符",
+      "ENDS_WITH_DOT": "类别名称不能以点结尾"
+    },
+    "CATEGORIES_SEARCH_PLACEHOLDER": "搜索类别"
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "最小化(&M)",
+      "MAXIMIZE": "最大化",
+      "CLOSE": "关闭",
+      "STOP_ALL": "停止上传",
+      "STOP_FILE": "停止上传",
+      "UPLOAD_SUCCESSFUL": "上传成功"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "已取消",
+      "FILE_DONE_STATUS": "已上传"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "是",
+        "CONTINUE": "否"
+      },
+      "MESSAGE": {
+        "TITLE": "停止上传",
+        "TEXT": "停止上传并取消正在执行和等待执行的上传。"
+      }
+    },
+    "ARIA-LABEL": {
+      "VERSION": "文件版本 {{ version }}",
+      "DIALOG": "上传列表",
+      "DIALOG_MAXIMIZE": "最大化上传对话框",
+      "DIALOG_MINIMIZE": "最小化上传对话框",
+      "DIALOG_CLOSE": "关闭上传对话框",
+      "STOP_ALL": "停止上传",
+      "UPLOAD_SUCCESSFUL": "成功上传文件 {{ file }}",
+      "STOP_FILE": "停止文件 {{ file }}",
+      "STOP_FILE_UPLOAD": "停止文件上传 {{ file }}",
+      "UPLOAD_FILE_ERROR": "上传错误 {{ error }}",
+      "CONFIRMATION": {
+        "CANCEL": "确认取消",
+        "CONTINUE": "继续上传"
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "上传文件",
+      "UPLOAD_FOLDER": "上传文件夹",
+      "PERMISSION_CHECK_ERROR": "检查权限出错"
+    },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "请注意，\"acceptedFilesType\"的设置对于新版本上传没有影响。文件类型将与原始文件的类型相同。",
+        "INCOMPATIBLE_VERSION": "只有同一类型的文件可以作为新版本上传。"
+      }
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "取消上传",
+      "UPLOAD_PROGRESS": "已上传 {{ completed }} 个/共 {{ total }} 个",
+      "UPLOAD_ERROR": "{{ total }} 个未成功上传",
+      "UPLOAD_ERRORS": "{{ total }}个未成功上传",
+      "PROGRESS": "正在上传...",
+      "FOLDER_ALREADY_EXIST": "文件夹 {0} 已存在",
+      "FOLDER_NOT_SUPPORTED": "您的浏览器不支持文件夹上传，请使用其他浏览器",
+      "REMOVE_FILE_ERROR": "{{ fileName }} 无法移除，请重试或联系您的 IT 团队。",
+      "REMOVE_FILES_ERROR": "{{ total }}个文件无法移除，请重试或联系您的 IT 团队。",
+      "EXCEED_MAX_FILE_SIZE": "文件 {{ fileName }} 超出允许的文件大小"
+    },
+    "ACTION": {
+      "UNDO": "撤消"
+    },
+    "ERRORS": {
+      "GENERIC": "上传不成功。如果此问题仍然存在，请联系 IT 人员",
+      "500": "内部服务器错误，请重试或联系 IT 支持人员 [500]",
+      "504": "服务器超时，请重试或联系 IT 支持人员 [504]",
+      "403": "权限不足，无法在此位置中进行上传 [403]",
+      "404": "上传位置不再存在 [404]",
+      "409": "已存在同名文件 [409]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "上传错误"
+    }
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "BUTTON": {
+      "TOOLTIP": "搜索",
+      "ARIA-LABEL": "搜索按钮"
+    },
+    "INPUT": {
+      "LABEL": "搜索",
+      "PLACEHOLDER": "搜索查询",
+      "ARIA-LABEL": "搜索输入"
+    },
+    "RESULTS": {
+      "SUMMARY": "已找到 {{numResults}} 个 {{searchTerm}} 的结果",
+      "NONE": "未找到 {{searchTerm}} 的结果",
+      "ERROR": "搜索过程中遇到问题，请重试。",
+      "WILL_CONTAIN": "结果将包含 '{{searchTerm}}'",
+      "COLUMNS": {
+        "NAME": "显示名称",
+        "MODIFIED_BY": "修改人",
+        "MODIFIED_AT": "修改时间"
+      }
+    },
+    "FILTER": {
+      "ACTIONS": {
+        "SEARCH": "搜索",
+        "CLEAR": "清除",
+        "APPLY": "应用",
+        "CLEAR-ALL": "全部清除",
+        "SHOW-MORE": "显示更多",
+        "SHOW-LESS": "显示更少",
+        "ADD_OPTION": "添加选项..."
+      },
+      "BUTTONS": {
+        "CLOSE": "关闭",
+        "CLEAR": "清除",
+        "REMOVE": "删除",
+        "APPLY": "应用",
+        "CLEAR-ALL": {
+          "LABEL": "全部清除",
+          "TOOLTIP": "这将删除所有选择"
+        },
+        "RESET-ALL": {
+          "LABEL": "全部重置",
+          "TOOLTIP": "这将重置所有选择和筛选器"
+        }
+      },
+      "RANGE": {
+        "FROM": "从",
+        "TO": "到",
+        "FROM-DATE": "从",
+        "TO-DATE": "到"
+      },
+      "VALIDATION": {
+        "REQUIRED-VALUE": "必需值",
+        "NO-DAYS": "未选择天数。",
+        "INVALID-FORMAT": "格式无效",
+        "INVALID-DATE": "日期无效。日期的格式必须为 '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATE": "日期超过最大日期。",
+        "INVALID-DATETIME": "无效的日期时间。日期时间的格式必须为“{{requiredFormat}}”",
+        "BEYOND-MAX-DATETIME": "日期时间超过了最大日期时间。"
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "搜索筛选器列表",
+        "OPTIONS-SELECTION": "选项选择"
+      },
+      "ANY": "任意",
+      "PEOPLE": "人员"
+    },
+    "FACET_FIELDS": {
+      "MODIFIER_LABEL": "修改人",
+      "CREATOR_LABEL": "创建者"
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "图像文件",
+      "ft_ic_pdf": "PDF 文档",
+      "ft_ic_ms_excel": "Microsoft Excel 文件",
+      "ft_ic_ms_word": "Microsoft Word 文档",
+      "ft_ic_ms_powerpoint": "Microsoft PowerPoint 文件",
+      "ft_ic_video": "视频文件",
+      "ft_ic_document": "文档文件",
+      "ft_ic_website": "网站资源",
+      "ft_ic_archive": "存档文件",
+      "ft_ic_presentation": "描述文件",
+      "ft_ic_spreadsheet": "电子表格文件"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "显示名称",
+        "CREATED_BY": "创建者",
+        "CREATED_ON": "已创建"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "删除",
+          "MOVE": "移动",
+          "COPY": "复制"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "下载",
+          "DELETE": "删除",
+          "MOVE": "移动",
+          "COPY": "复制",
+          "PROCESS_ACTION": "启动流程"
+        }
+      }
+    },
+    "UNKNOWN_CONFIGURATION": "未知配置",
+    "SEARCH_HEADER": {
+      "TITLE": "筛选",
+      "TYPE": "类型",
+      "FILTER_BY": "根据 {{ category }} 筛选",
+      "ACTIVE_FILTER": "活动筛选器",
+      "CLEAR": "清除",
+      "APPLY": "应用",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "名称",
+          "PLACEHOLDER": "输入名称"
+        },
+        "TYPE": {
+          "TITLE": "勾选类型",
+          "FOLDER": "文件夹",
+          "DOCUMENT": "文档"
+        },
+        "SIZE": {
+          "TITLE": "内容大小（范围）",
+          "SMALL": "小",
+          "MEDIUM": "中",
+          "LARGE": "大",
+          "HUGE": "特大"
+        },
+        "DATE": {
+          "TITLE": "创建日期（范围）"
+        }
+      }
+    },
+    "LOGICAL_SEARCH": {
+      "MATCH_ALL": "全部",
+      "MATCH_ALL_LABEL": "匹配所有这些短语",
+      "MATCH_ALL_HINT": "结果将匹配此处输入的所有单词",
+      "MATCH_ANY": "任何",
+      "MATCH_ANY_LABEL": "匹配任何这些短语",
+      "MATCH_ANY_HINT": "结果将匹配此处输入的任何单词",
+      "MATCH_EXACT": "精确",
+      "MATCH_EXACT_LABEL": "匹配此精确短语",
+      "MATCH_EXACT_HINT": "结果将匹配整个短语",
+      "EXCLUDE": "排除",
+      "EXCLUDE_LABEL": "排除这些短语",
+      "EXCLUDE_HINT": "结果将排除包含这些词的匹配项"
+    },
+    "DATE_RANGE_ADVANCED": {
+      "OPTIONS": {
+        "ANYTIME": "任何时间",
+        "IN_LAST": "在其内",
+        "BETWEEN": "之间"
+      },
+      "IN_LAST_LABELS": {
+        "DAYS": "天",
+        "WEEKS": "周",
+        "MONTHS": "月",
+        "QUANTITY": "数量"
+      },
+      "IN_LAST_DISPLAY_LABELS": {
+        "DAYS": "在最近 {{value}} 天内",
+        "WEEKS": "在最近 {{value}} 周内",
+        "MONTHS": "在最近 {{value}} 个月内"
+      },
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "开始日期",
+        "END_DATE": "结束日期",
+        "DATE_RANGE": "日期范围"
+      },
+      "ERROR": {
+        "IN_LAST": "值为必填项",
+        "START_DATE": {
+          "REQUIRED": "开始日期为必填项",
+          "INVALID_FORMAT": "开始日期无效。日期的格式必须为 '{{ requiredFormat }}'"
+        },
+        "END_DATE": {
+          "REQUIRED": "结束日期为必填项",
+          "INVALID_FORMAT": "结束日期无效。日期的格式必须为 '{{ requiredFormat }}'"
+        }
+      },
+      "ARIA_LABEL": {
+        "NUMBER_INPUT": "数字输入"
+      }
+    },
+    "SEARCH_PROPERTIES": {
+      "FILE_SIZE": "文件大小",
+      "FILE_SIZE_PLACEHOLDER": "输入文件大小",
+      "FILE_SIZE_OPERATOR": {
+        "AT_LEAST": "至少",
+        "AT_MOST": "至多",
+        "EXACTLY": "恰好"
+      },
+      "FILE_SIZE_UNIT_ABBREVIATION": {
+        "KB": "KB",
+        "MB": "MB",
+        "GB": "GB"
+      },
+      "FILE_TYPE": "文件类型",
+      "FILE_TYPE_PLACEHOLDER": "添加文件类型",
+      "ACCESSIBILITY": {
+        "CONDITION": "条件",
+        "SIZE_VALUE": "文件大小值",
+        "UNIT": "单位"
+      }
+    }
+  },
+  "PERMISSION": {
+    "LACKOF": "您没有 {{action}} {{type}} 的 {{permission}} 权限"
+  },
+  "METADATA": {
+    "BASIC": {
+      "HEADER": "属性",
+      "NAME": "名称",
+      "TITLE": "标题",
+      "DESCRIPTION": "说明",
+      "AUTHOR": "作者",
+      "MIMETYPE": "MIME 类型",
+      "SIZE": "尺寸",
+      "CREATOR": "创建者",
+      "CREATED_DATE": "创建日期",
+      "MODIFIER": "修改者",
+      "MODIFIED_DATE": "修改日期",
+      "CONTENT_TYPE": "内容类型",
+      "TAGS": "标记",
+      "NO_TAGS_ADDED": "目前没有添加标记",
+      "NO_ITEMS_MESSAGE": "目前没有添加 {{ groupTitle }}",
+      "SAVE_OR_DISCARD_CHANGES": "保存或放弃更改以继续"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "更改内容类型",
+        "DESCRIPTION": "对内容类型进行此更改将永久性地在文档中添加一些属性和存储的元数据.",
+        "CONFIRM": "确定要更改内容类型吗？",
+        "CANCEL": "取消",
+        "APPLY": "保存更改",
+        "VIEW_DETAILS": "查看详细信息",
+        "PROPERTY": {
+          "NAME": "名称",
+          "DESCRIPTION": "说明",
+          "DATA_TYPE": "数据类型"
+        }
+      }
+    },
+    "ERRORS": {
+      "GENERIC": "更新属性时出错",
+      "409": "不允许存在重复的子名称 [409]",
+      "422": "属性值无效"
+    }
+  },
+  "SHARE": {
+    "PUBLIC-LINK": "公共链接",
+    "DIALOG-TITLE": "共享",
+    "DESCRIPTION": "单击下面的链接以将其复制到剪贴板。",
+    "TITLE": "要共享的链接",
+    "SHARE-LINK": "共享链接",
+    "SHARABLE-LINK-CREATED": "共享链接已创建",
+    "PUBLIC-CONTENT": "此内容对任何知道此链接的人公开",
+    "LINK-WITH-EXPIRY-SETTINGS": "已生成具有到期设置的新链接",
+    "EXPIRES": "到期日期",
+    "LINK-EXPIRY-DATE": "链接到期日期",
+    "EXPIRATION-LABEL": "截止日期",
+    "EXPIRATION-PLACEHOLDER": "YYYY/MM/DD",
+    "CLIPBOARD-MESSAGE": "已复制到剪贴板的链接",
+    "CLOSE": "关闭",
+    "COPY_BUTTON_LABEL": "复制链接",
+    "CONFIRMATION": {
+      "DIALOG-TITLE": "删除此共享链接",
+      "MESSAGE": "此链接将被删除，下次共享此文件时将会创建新链接",
+      "CANCEL": "取消",
+      "REMOVE": "删除"
+    },
+    "UNSHARE_ERROR": "取消共享此文件时出错",
+    "UNSHARE_PERMISSION_ERROR": "你没有权限取消这个文件的共享",
+    "INVALID_DATE_ERROR": "无效日期"
+  },
+  "PERMISSION_MANAGER": {
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "已继承",
+      "AUTHORITY_ID": "权限 ID",
+      "ROLE": "角色",
+      "LOCALLY_SET": "本地设置",
+      "NO_PERMISSIONS": "无权限"
+    },
+    "ADD-PERMISSION": {
+      "SEARCH": "搜索要添加的用户或组",
+      "TITLE": "添加权限",
+      "TYPE-MESSAGE": "输入内容以开始搜索组或人员",
+      "NO-RESULT": "找不到此搜索的结果",
+      "SELECT-ACTION": "选择",
+      "ADD-ACTION": "添加",
+      "CLOSE-ACTION": "取消",
+      "BASE-DIALOG-TITLE": "搜索要添加的组或人员...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "添加用户或组权限",
+      "EVERYONE": "任何人",
+      "USER-GROUP-LIST": "用户或组列表",
+      "REMOVE_USER_GROUP": "删除"
+    },
+    "COLUMN": {
+      "NAME": "用户和组 ({{ count }})",
+      "LOCATION": "位置",
+      "BULK-ROLE": "将所有角色设置为"
+    },
+    "LABELS": {
+      "HIDE": "隐藏",
+      "SHOW": "显示",
+      "ON": "开启",
+      "OFF": "关闭",
+      "DIRECT-PERMISSIONS": "直接应用权限",
+      "INHERITED-PERMISSIONS": "继承的权限",
+      "INHERITED-SUBTITLE": "{{count}} 用户或组正在从父文件夹继承权限",
+      "SELECT-ROLE": "选择角色",
+      "INHERITED_PERMISSION_TOGGLE": "切换继承的权限"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "无用户/组",
+      "EMPTY-SUBTITLE": "添加用户/组以管理权限。",
+      "NO-MEMBERS": "添加组或人员以管理角色",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "已更新 {{user}} 用户 {{group}} 组",
+      "PERMISSION-UPDATE-SUCCESS": "用户/组已更新",
+      "PERMISSION-UPDATE-FAIL": "无法更新用户/组",
+      "PERMISSION-BULK-DELETE-SUCCESS": "已删除 {{user}} 用户 {{group}} 组",
+      "PERMISSION-DELETE-SUCCESS": "用户/组已删除",
+      "PERMISSION-DELETE-FAIL": "无法删除用户/组",
+      "PERMISSION-ADD-SUCCESS": "已添加 {{user}} 用户 {{group}} 组",
+      "PERMISSION-ADD-FAIL": "无法添加用户/组",
+      "INHERIT-ENABLE-SUCCESS": "已启用继承权限",
+      "INHERIT-DISABLE-SUCCESS": "已禁用继承权限",
+      "TOGGLE-PERMISSION-FAILED": "无法切换继承权限"
+    },
+    "ACTION": {
+      "DELETE": "删除",
+      "ADD-PERMISSION": "添加用户或组"
+    },
+    "ERROR": {
+      "NOT-FOUND": "此项目不再存在，或者您无权对其进行查看。",
+      "DUPLICATE-PERMISSION": "您所设置的一个或多个权限已经存在：{{list}}",
+      "NOT-ALLOWED": "不允许更改权限"
+    }
+  },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "组图标",
+    "GROUP_USER_SELECTED_ALT": "选定的组或用户图标"
+  },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "未提供节点 ID！",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "切换 {{ name }}"
+    }
+  },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "加载更多 {{ name }}",
+    "ACTIONS": {
+      "TOOLTIP": "打开操作菜单"
+    },
+    "ARIA": {
+      "SELECTED": "已选择 {{ name }}",
+      "DESELECTED": "已取消选择 {{ name }}"
+    }
+  },
+  "LIBRARY": {
+    "DIALOG": {
+      "CREATE_TITLE": "创建库",
+      "CREATE": "创建",
+      "UPDATE": "更新",
+      "EDIT": "编辑",
+      "CANCEL": "取消",
+      "FORM": {
+        "DESCRIPTION": "说明",
+        "SITE_ID": "库 ID",
+        "NAME": "名称",
+        "VISIBILITY": "可见性"
+      }
+    },
+    "ROLE": {
+      "MANAGER": "管理员",
+      "COLLABORATOR": "合作者",
+      "CONTRIBUTOR": "贡献者",
+      "CONSUMER": "使用者",
+      "NONE": "不是成员"
+    },
+    "VISIBILITY": {
+      "PRIVATE": "私有",
+      "PUBLIC": "公共",
+      "MODERATED": "适中"
+    },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "库名已在使用中"
+    },
+    "ERRORS": {
+      "GENERIC": "我们遇到一个问题",
+      "EXISTENT_SITE": "此库 ID 不可用。请尝试使用其他库 ID。",
+      "CONFLICT": "此库 ID 已被使用。请检查垃圾桶。",
+      "ID_TOO_LONG": "对 URL 名称使用 72 个字符或更少字符",
+      "DESCRIPTION_TOO_LONG": "对描述使用 512 个字符或更少字符",
+      "TITLE_TOO_LONG": "对标题使用 256 个字符或更少字符",
+      "TITLE_TOO_SHORT": "标题长度必须至少为 2 个字符",
+      "ILLEGAL_CHARACTERS": "仅使用数字和字母",
+      "ONLY_SPACES": "文档库名称不能只包含空格",
+      "LIBRARY_UPDATE_ERROR": "更新库属性时发生错误",
+      "NAME_REQUIRED": "库名称为必填项",
+      "ID_REQUIRED": "库 ID 为必填项"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "已更新库属性"
+    }
+  },
+  "BREADCRUMB": {
+    "ARIA-LABEL": {
+      "BREADCRUMB": "面包屑",
+      "DROPDOWN": "下拉列表"
+    },
+    "HEADER": {
+      "SELECTED": "已选择 ({{ count }})"
+    }
+  },
+  "NAME_COLUMN_LINK": {
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "打开 {{ name }}"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "属性名",
+    "DESCRIPTION": "说明",
+    "DATA_TYPE": "数据类型",
+    "DIALOG": {
+      "TITLE": "自定义属性",
+      "DESCRIPTION": "管理与选定文件关联的属性。从下面列出的属性方面进行选择，以公开和应用其他元数据和功能",
+      "RESET": "重置",
+      "CLEAR": "清除",
+      "CANCEL": "取消",
+      "APPLY": "应用",
+      "OVER-TABLE-MESSAGE": "选择属性方面",
+      "SELECTED": "已选择"
+    }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "已选择 {{ count }} 个"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "查看 {{ count }} 更多"
+  },
+  "swsdp": "示例: 网站设计项目",
+  "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
+    "ERRORS": {
+      "INVALID_RECEIVER_EMAIL": "收件人电子邮件地址无效，请联系 IT 人员。",
+      "INVALID_SENDER_EMAIL": "在请求加入之前，您的电子邮件地址必须有效。",
+      "JOIN_CANCEL_FAILED": "无法取消加入请求",
+      "JOIN_REQUEST_FAILED": "无法加入库"
+    },
+    "INFO": {
+      "JOINED": "已加入库",
+      "JOIN_CANCELED": "已取消加入该库的请求",
+      "JOIN_REQUESTED": "已发送加入该库的请求"
+    }
+  },
+  "NODE_FAVORITE_DIRECTIVE": {
+    "MESSAGES": {
+      "NODE_ADDED": "已将 {{ name }} 添加至收藏夹",
+      "NODES_ADDED": "已将 {{ number }} 个项目添加至收藏夹",
+      "NODE_REMOVED": "已从收藏夹中移除 {{ name }}",
+      "NODES_REMOVED": "已从收藏夹中移除 {{ number }} 个项目"
+    }
+  }
+}

@@ -1,7 +1,9 @@
 {
   "COMMON": {
     "APPLY": "Použít",
-    "CANCEL": "Zrušit"
+    "CANCEL": "Zrušit",
+    "NAME": "Název",
+    "CLEAR": "Vymazat"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
@@ -16,7 +18,8 @@
         "MINOR": "vedlejší změny ({{version}})",
         "COMMENT": "Vložit komentář",
         "ADD": "Přidat novou verzi",
-        "CANCEL": "Zrušit"
+        "CANCEL": "Zrušit",
+        "VERSION_TYPE_LABEL": "Vyberte typ verze"
       }
     },
     "CONFIRM_DELETE": {
@@ -99,6 +102,7 @@
     "ATTACH": "Připojit",
     "CHOOSE_ITEM": "Vybrat obsah pro připojení z '{{ name }}'",
     "COPY": "Kopírovat",
+    "LINK": "Vytvořit odkaz",
     "COPY_ITEM": "Zkopírovat položku '{{ name }}' do...",
     "LOCATION": "Umístění",
     "MOVE": "Přesunout",
@@ -146,18 +150,17 @@
       "NO_EXISTING_TAGS": "Žádné existující tagy",
       "TITLE": "Vytvořit tagy",
       "CREATE_TAG": "Vytvořit: {{tag}}",
-      "NAME": "Název",
+      "TAG_SEARCH_PLACEHOLDER": "Hledat tagy",
       "ERRORS": {
         "EXISTING_TAG": "Tag již existuje",
         "ALREADY_ADDED_TAG": "Tag je již přidán",
         "EMPTY_TAG": "Název tagu nemůže obsahovat pouze mezery",
-        "REQUIRED": "Název tagu je povinný",
         "FETCH_TAGS": "Chyba při načítání úloh",
-        "CREATE_TAGS": "Vyskytla se chyba při vytváření tagů"
+        "CREATE_TAGS": "Vyskytla se chyba při vytváření tagů",
+        "SPECIAL_CHARACTERS": "Název tagu nesmí obsahovat zakázané znaky"
       },
       "TOOLTIPS": {
-        "DELETE_TAG": "Odstranit tag",
-        "HIDE_INPUT": "Skrýt vstup"
+        "DELETE_TAG": "Odstranit tag"
       },
       "TAGS_LOADING": "Tagy se načítají",
       "CREATE_TAGS_SUCCESS": "Tagy byly úspěšně vytvořeny"
@@ -167,7 +170,6 @@
     "CATEGORIES_TITLE": "Kategorie",
     "NO_CATEGORIES_CREATED": "Nejsou vytvořeny žádné kategorie",
     "NO_CATEGORIES_ASSIGNED": "Nejsou přiřazeny žádné kategorie",
-    "ASSIGN_CATEGORIES": "Přiřadit kategorie",
     "UNASSIGN_CATEGORY": "Zrušit přiřazení kategorie",
     "DELETE_CATEGORY": "Odstranit kategorii",
     "EXISTING_CATEGORIES": "Existující kategorie:",
@@ -176,7 +178,7 @@
     "GENERIC_CREATE": "Vytvořit: {{name}}",
     "NAME": "Název kategorie",
     "LOADING": "Načítání",
-    "HIDE_INPUT": "Skrýt vstup",
+    "NO_CATEGORIES_ADDED": "Momentálně nejsou přidány žádné kategorie",
     "ERRORS": {
       "NOT_FOUND": "Kategorie nebyly nalezeny",
       "REQUIRED": "Název kategorie je povinný",
@@ -184,8 +186,11 @@
       "ALREADY_EXISTS": "Kategorie již existuje",
       "DUPLICATED_CATEGORY": "Kategorie je již přidána",
       "CREATE_CATEGORIES": "Vyskytla se chyba při vytváření kategorií",
-      "EXISTING_CATEGORIES": "Některé kategorie již existují"
-    }
+      "EXISTING_CATEGORIES": "Některé kategorie již existují",
+      "SPECIAL_CHARACTERS": "Název kategorie nesmí obsahovat zakázané znaky",
+      "ENDS_WITH_DOT": "Název kategorie nesmí končit na tečku"
+    },
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Hledat kategorie"
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
@@ -273,12 +278,15 @@
       "ARIA-LABEL": "Tlačítko Hledat"
     },
     "INPUT": {
+      "LABEL": "Hledat",
+      "PLACEHOLDER": "Vyhledávací dotaz",
       "ARIA-LABEL": "Zadání hledaného výrazu"
     },
     "RESULTS": {
       "SUMMARY": "Nalezeno několik výsledků ({{numResults}}) pro hledaný výraz „{{searchTerm}}“",
       "NONE": "Nenalezeny žádné výsledky pro hledaný výraz „{{searchTerm}}“",
       "ERROR": "Během hledání došlo k problému. Zkuste to znovu.",
+      "WILL_CONTAIN": "Výsledky budou obsahovat '{{searchTerm}}'",
       "COLUMNS": {
         "NAME": "Zobrazované jméno",
         "MODIFIED_BY": "Změnil(a)",
@@ -313,9 +321,7 @@
         "FROM": "Od",
         "TO": "Do",
         "FROM-DATE": "Od",
-        "TO-DATE": "Do",
-        "SELECT-FROM-DATE": "Vybrat od Data",
-        "SELECT-TO-DATE": "Vybrat do Data"
+        "TO-DATE": "Do"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Požadovaná hodnota",
@@ -330,7 +336,12 @@
         "SEARCH_FILTER": "Seznam filtrů vyhledávání",
         "OPTIONS-SELECTION": "Výběr možností"
       },
-      "ANY": "Jakákoli"
+      "ANY": "Jakákoli",
+      "PEOPLE": "Osoby"
+    },
+    "FACET_FIELDS": {
+      "MODIFIER_LABEL": "Změnil(a)",
+      "CREATOR_LABEL": "Vytvořil(a)"
     },
     "ICONS": {
       "ft_ic_raster_image": "Soubor s obrázkem",
@@ -371,6 +382,7 @@
       "TITLE": "Filtr",
       "TYPE": "Typ",
       "FILTER_BY": "Filtrovat podle {{ category }}",
+      "ACTIVE_FILTER": "Aktivní filtr",
       "CLEAR": "Vymazat",
       "APPLY": "Použít",
       "FILTERS": {
@@ -396,15 +408,76 @@
       }
     },
     "LOGICAL_SEARCH": {
-      "SEARCH_CHIP_INPUT": {
-        "ADD_PHRASE": "Přidat frázi..."
-      },
       "MATCH_ALL": "VŠECHNY",
       "MATCH_ALL_LABEL": "Odpovídá VŠEM těmto frázím",
+      "MATCH_ALL_HINT": "Výsledky budou odpovídat všem zde zadaným slovům",
       "MATCH_ANY": "LIBOVOLNÉ",
       "MATCH_ANY_LABEL": "Odpovídá LIBOVOLNÝM z těchto frází",
+      "MATCH_ANY_HINT": "Výsledky budou odpovídat libovolným zde zadaným slovům",
+      "MATCH_EXACT": "PŘESNĚ",
+      "MATCH_EXACT_LABEL": "Odpovídá této PŘESNÉ FRÁZI",
+      "MATCH_EXACT_HINT": "Výsledky budou odpovídat celé této frázi",
       "EXCLUDE": "VYLOUČIT",
-      "EXCLUDE_LABEL": "VYLOUČIT tyto fráze"
+      "EXCLUDE_LABEL": "VYLOUČIT tyto fráze",
+      "EXCLUDE_HINT": "Výsledky vyloučí shody s těmito slovy"
+    },
+    "DATE_RANGE_ADVANCED": {
+      "OPTIONS": {
+        "ANYTIME": "Kdykoli",
+        "IN_LAST": "V posledních",
+        "BETWEEN": "Mezi"
+      },
+      "IN_LAST_LABELS": {
+        "DAYS": "Dny",
+        "WEEKS": "Týdny",
+        "MONTHS": "Měsíce",
+        "QUANTITY": "Množství"
+      },
+      "IN_LAST_DISPLAY_LABELS": {
+        "DAYS": "V posledních {{value}} dnech",
+        "WEEKS": "V posledních {{value}} týdnech",
+        "MONTHS": "V posledních {{value}} měsících"
+      },
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "Datum zahájení",
+        "END_DATE": "Datum ukončení",
+        "DATE_RANGE": "Rozsah dat"
+      },
+      "ERROR": {
+        "IN_LAST": "Hodnota je povinná",
+        "START_DATE": {
+          "REQUIRED": "Datum zahájení je povinné",
+          "INVALID_FORMAT": "Datum zahájení je neplatné. Datum musí být ve formátu '{{ requiredFormat }}'"
+        },
+        "END_DATE": {
+          "REQUIRED": "Datum ukončení je povinné",
+          "INVALID_FORMAT": "Datum ukončení je neplatné. Datum musí být ve formátu '{{ requiredFormat }}'"
+        }
+      },
+      "ARIA_LABEL": {
+        "NUMBER_INPUT": "Číselné pole"
+      }
+    },
+    "SEARCH_PROPERTIES": {
+      "FILE_SIZE": "Velikost souboru",
+      "FILE_SIZE_PLACEHOLDER": "Zadejte velikost souboru",
+      "FILE_SIZE_OPERATOR": {
+        "AT_LEAST": "Nejméně",
+        "AT_MOST": "Nejvíce",
+        "EXACTLY": "Přesně"
+      },
+      "FILE_SIZE_UNIT_ABBREVIATION": {
+        "KB": "kB",
+        "MB": "MB",
+        "GB": "GB"
+      },
+      "FILE_TYPE": "Typ souboru",
+      "FILE_TYPE_PLACEHOLDER": "Přidat typ souboru",
+      "ACCESSIBILITY": {
+        "CONDITION": "Podmínka",
+        "SIZE_VALUE": "Hodnota velikosti souboru",
+        "UNIT": "Jednotka"
+      }
     }
   },
   "PERMISSION": {
@@ -425,7 +498,9 @@
       "MODIFIED_DATE": "Datum úpravy",
       "CONTENT_TYPE": "Typ obsahu",
       "TAGS": "Tag",
-      "ADD_TAG_TOOLTIP": "Přidat tag"
+      "NO_TAGS_ADDED": "Momentálně nejsou přidány žádné tagy",
+      "NO_ITEMS_MESSAGE": "Momentálně nejsou přidány žádné {{ groupTitle }}",
+      "SAVE_OR_DISCARD_CHANGES": "Uložte nebo zrušte změny pro pokračování"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
@@ -471,7 +546,8 @@
       "REMOVE": "Odstranit"
     },
     "UNSHARE_ERROR": "Chyba při rušení sdílení tohoto souboru",
-    "UNSHARE_PERMISSION_ERROR": "Nemáte potřebná oprávnění pro zrušení sdílení tohoto souboru"
+    "UNSHARE_PERMISSION_ERROR": "Nemáte potřebná oprávnění pro zrušení sdílení tohoto souboru",
+    "INVALID_DATE_ERROR": "Neplatné datum"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
@@ -490,8 +566,10 @@
       "ADD-ACTION": "Přidat",
       "CLOSE-ACTION": "Zrušit",
       "BASE-DIALOG-TITLE": "Vyhledejte skupinu nebo osoby, které chcete přidat...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "Přidat oprávnění uživatele nebo skupiny",
       "EVERYONE": "Každý",
-      "USER-GROUP-LIST": "Seznam uživatelů nebo skupin"
+      "USER-GROUP-LIST": "Seznam uživatelů nebo skupin",
+      "REMOVE_USER_GROUP": "Odstranit"
     },
     "COLUMN": {
       "NAME": "Uživatelé a skupiny ({{ count }})",
@@ -535,6 +613,10 @@
       "NOT-ALLOWED": "Nemáte oprávnění měnit oprávnění"
     }
   },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "Ikona skupiny",
+    "GROUP_USER_SELECTED_ALT": "Ikona vybrané skupiny nebo uživatele"
+  },
   "ADF-TREE-VIEW": {
     "MISSING-ID": "Nebylo zadáno ID uzlu!",
     "ACCESSIBILITY": {
@@ -542,7 +624,14 @@
     }
   },
   "ADF-TREE": {
-    "LOAD-MORE-BUTTON": "Načíst další {{ name }}"
+    "LOAD-MORE-BUTTON": "Načíst další {{ name }}",
+    "ACTIONS": {
+      "TOOLTIP": "Otevřít nabídku akcí"
+    },
+    "ARIA": {
+      "SELECTED": "{{ name }} vybráno",
+      "DESELECTED": "{{ name }} odznačeno"
+    }
   },
   "LIBRARY": {
     "DIALOG": {
@@ -574,7 +663,7 @@
       "SITE_TITLE_EXISTS": "Název knihovny se již používá"
     },
     "ERRORS": {
-      "GENERIC": "Došlo k problému",
+      "GENERIC": "Vyskytl se problém",
       "EXISTENT_SITE": "Toto ID knihovny není dostupné. Použijte jiné ID.",
       "CONFLICT": "ID knihovny se již používá. Prohlédněte si obsah koše.",
       "ID_TOO_LONG": "Název URL může obsahovat maximálně 72 znaků",
@@ -583,7 +672,9 @@
       "TITLE_TOO_SHORT": "Označení musí obsahovat alespoň 2 znaky",
       "ILLEGAL_CHARACTERS": "Používejte pouze písmena a čísla",
       "ONLY_SPACES": "Název knihovny nemůže obsahovat pouze mezery",
-      "LIBRARY_UPDATE_ERROR": "Při pokusu upravit vlastnosti knihovny došlo k chybě"
+      "LIBRARY_UPDATE_ERROR": "Při pokusu upravit vlastnosti knihovny došlo k chybě",
+      "NAME_REQUIRED": "Název knihovny je povinný",
+      "ID_REQUIRED": "ID knihovny je povinné"
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Vlastnosti knihovny byly upraveny"
@@ -593,6 +684,9 @@
     "ARIA-LABEL": {
       "BREADCRUMB": "Popis cesty",
       "DROPDOWN": "Rozevírací seznam"
+    },
+    "HEADER": {
+      "SELECTED": "Vybrané ({{ count }})"
     }
   },
   "NAME_COLUMN_LINK": {
@@ -607,7 +701,7 @@
     "DIALOG": {
       "TITLE": "Přizpůsobit vlastnosti",
       "DESCRIPTION": "Můžete spravovat vlastnosti spojené s vybranými soubory. Pokud chcete zpřístupnit a používat další metadata a funkce, vybírejte z aspektů vlastností uvedených níže.",
-      "RESET": "Reset",
+      "RESET": "Resetovat",
       "CLEAR": "Vymazat",
       "CANCEL": "Zrušit",
       "APPLY": "Použít",
@@ -633,6 +727,14 @@
       "JOINED": "Připojeno ke knihovně",
       "JOIN_CANCELED": "Zrušena žádost o připojení ke knihovně",
       "JOIN_REQUESTED": "Odeslána žádost o připojení k této knihovně"
+    }
+  },
+  "NODE_FAVORITE_DIRECTIVE": {
+    "MESSAGES": {
+      "NODE_ADDED": "Došlo k přidání {{ name }} do oblíbených",
+      "NODES_ADDED": "Došlo k přidání následujícího počtu položek do oblíbených: {{ number }}",
+      "NODE_REMOVED": "Došlo k odebrání {{ name }} z oblíbených",
+      "NODES_REMOVED": "Došlo k odebrání následujícího počtu položek z oblíbených: {{ number }}"
     }
   }
 }
