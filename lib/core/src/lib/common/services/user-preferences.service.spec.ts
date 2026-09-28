@@ -232,7 +232,7 @@ describe('UserPreferencesService', () => {
             expect(preferences.paginationSize).toBe(50);
             expect(preferences.supportedPageSizes).toEqual([10, 20, 50]);
             expect(spySetWithoutStore).toHaveBeenCalledWith(UserPreferenceValues.PaginationSize, 50);
-            expect(spySetWithoutStore).toHaveBeenCalledWith(UserPreferenceValues.SupportedPageSizes, JSON.stringify([10, 20, 50]));
+            expect(spySetWithoutStore).toHaveBeenCalledWith(UserPreferenceValues.SupportedPageSizes, [10, 20, 50]);
             expect(spySet).not.toHaveBeenCalledWith(UserPreferenceValues.PaginationSize, jasmine.any(Number));
             expect(spySet).not.toHaveBeenCalledWith(UserPreferenceValues.SupportedPageSizes, jasmine.any(String));
         });
@@ -246,8 +246,9 @@ describe('UserPreferencesService', () => {
 
             expect(preferences.paginationSize).toBe(15);
             expect(spySet).toHaveBeenCalledWith(UserPreferenceValues.PaginationSize, 15);
-            expect(spySet).toHaveBeenCalledWith(UserPreferenceValues.SupportedPageSizes, JSON.stringify([5, 15]));
+            expect(spySet).toHaveBeenCalledWith(UserPreferenceValues.SupportedPageSizes, [5, 15]);
             expect(storage.getItem('GUEST__paginationSize')).toBe('15');
+            expect(storage.getItem('GUEST__supportedPageSizes')).toBe(JSON.stringify([5, 15]));
         });
     });
 

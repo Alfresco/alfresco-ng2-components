@@ -156,11 +156,11 @@ export class UserPreferencesService {
 
         if (storedSupportedPageSizes) {
             // Already in storage - just update in-memory state
-            this.setWithoutStore(UserPreferenceValues.SupportedPageSizes, storedSupportedPageSizes);
+            this.setWithoutStore(UserPreferenceValues.SupportedPageSizes, this.parseSupportedPageSizes(storedSupportedPageSizes));
         } else {
             // Not in storage - get from config and save
             const supportedPageSizes = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
-            this.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify(supportedPageSizes));
+            this.set(UserPreferenceValues.SupportedPageSizes, supportedPageSizes);
         }
     }
 
@@ -242,7 +242,8 @@ export class UserPreferencesService {
         if (!property) {
             return;
         }
-        this.storage.setItem(this.getPropertyKey(property), value);
+        const storageValue = typeof value === 'string' ? value : JSON.stringify(value);
+        this.storage.setItem(this.getPropertyKey(property), storageValue);
         this.userPreferenceStatus[property] = value;
         this.onChangeSubject.next(this.userPreferenceStatus);
     }
@@ -319,7 +320,7 @@ export class UserPreferencesService {
     }
 
     set supportedPageSizes(value: number[]) {
-        this.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify(value));
+        this.set(UserPreferenceValues.SupportedPageSizes, value);
     }
 
     /** Pagination size. */
