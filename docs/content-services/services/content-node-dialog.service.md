@@ -46,6 +46,11 @@ Displays and manages dialogs for selecting content to open, copy or upload.
     Opens a lock node dialog.
     -   _contentEntry:_ `Node`  - Node to lock
     -   **Returns** [`Subject`](http://reactivex.io/documentation/subject.html)`<string>` - Error/status message (if any)
+-   **openNodeSelectionDialog**(parentFolderId: `string`, title: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node[]>`<br/>
+    Opens a dialog to select a single node, with the browsing root restricted to the given folder.
+    -   _parentFolderId:_ `string`  - ID of the folder used as the root of the selector
+    -   _title:_ `string`  - Title shown in the dialog
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<Node[]>` - Information about the selected node(s)
 -   **openUploadFileDialog**(action: `NodeAction`, contentEntry: `Node`, showFilesInResult: `boolean` = `false`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node[]>`<br/>
     Opens a dialog to choose a file to upload.
     -   _action:_ `NodeAction`  - Name of the action to show in the title

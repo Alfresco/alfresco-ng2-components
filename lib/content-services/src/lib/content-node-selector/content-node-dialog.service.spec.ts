@@ -119,6 +119,26 @@ describe('ContentNodeDialogService', () => {
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
 
+    it('should open the node selection dialog with the given folder as root and the provided title', () => {
+        service.openNodeSelectionDialog('template-folder-id', 'Select template');
+
+        expect(spyOnDialogOpen).toHaveBeenCalled();
+        const data = spyOnDialogOpen.calls.mostRecent().args[1].data;
+        expect(data.title).toBe('Select template');
+        expect(data.currentFolderId).toBe('template-folder-id');
+        expect(data.selectionMode).toBe('single');
+        expect(data.restrictRootToCurrentFolderId).toBeTrue();
+    });
+
+    it('should complete the selection subject when the node selection dialog is closed', (done) => {
+        service.openNodeSelectionDialog('template-folder-id', 'Select template').subscribe({
+            complete: () => {
+                expect(spyOnDialogOpen).toHaveBeenCalled();
+                done();
+            }
+        });
+    });
+
     it('should be able to open the dialog for files using the first user site', fakeAsync(() => {
         spyOn(sitesService, 'getSites').and.returnValue(of(fakeSiteList));
         spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeEntry));

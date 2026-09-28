@@ -51,6 +51,7 @@ The default mapping is shown below:
 | 'datetime' | [`CardViewDateItemComponent`](../../../lib/core/src/lib/card-view/components/card-view-dateitem/card-view-dateitem.component.ts) |
 | 'bool' | [`CardViewBoolItemComponent`](../../../lib/core/src/lib/card-view/components/card-view-boolitem/card-view-boolitem.component.ts) |
 | 'map' | [`CardViewMapItemComponent`](../../../lib/core/src/lib/card-view/components/card-view-mapitem/card-view-mapitem.component.ts) |
+| 'smartFolderTemplate' | [`CardViewSelectNodeItemComponent`](../../../lib/core/src/lib/card-view/components/card-view-select-node-item/card-view-select-node-item.component.ts) |
 
 ### Adding new type mappings
 
