@@ -325,7 +325,7 @@ describe('AmountWidgetComponent - rendering', () => {
         expect(inputField).toBeTruthy();
         expect(await field.getPrefixText()).toBe('$');
 
-        const widgetLabel = testingUtils.getByCSS('.adf-label').nativeElement;
+        const widgetLabel = testingUtils.getByDataAutomationId('adf-amount-widget-label').nativeElement;
         expect(widgetLabel.textContent.trim()).toBe('Test Amount');
         expect(widget.field.isValid).toBe(false);
 
@@ -362,7 +362,7 @@ describe('AmountWidgetComponent - rendering', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const widgetLabel = testingUtils.getByCSS('.adf-label').nativeElement;
+        const widgetLabel = testingUtils.getByDataAutomationId('adf-amount-widget-label').nativeElement;
         expect(widgetLabel.textContent.trim()).toBe('Test Amount');
 
         const field = await testingUtils.formField.get();

@@ -262,7 +262,9 @@
                         [class.adf-datatable-row__dragging]="isDraggingRow"
                         [attr.data-automation-id]="'datatable-row-' + idx"
                         (contextmenu)="markRowAsContextMenuSource(row)"
-                        [disabled]="!(enableDragRows || multiselect)"
+                        (focus)="onRowFocus(idx)"
+                        [disabled]="!isRowKeyboardNavigable()"
+                        [active]="isRowActive(idx)"
                         [attr.aria-description]="
                             (multiselect ? ('ADF-DATATABLE.ACCESSIBILITY.ROW_SELECTION' | translate) : '') +
                             (multiselect && enableDragRows ? '. ' : '') +

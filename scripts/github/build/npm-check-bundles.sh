@@ -34,6 +34,26 @@ error_out() {
     # bg: 40 black, 41 red, 44 blue, 45 purple
 }
 
+# Retry to absorb npm registry propagation delay right after publish.
+NPM_RETRIES=24
+NPM_RETRY_DELAY=20
+
+npm_pack_version() {
+    local spec=$1
+    local attempt
+    for attempt in $(seq 1 "$NPM_RETRIES"); do
+        echo "📦 npm pack attempt $attempt/$NPM_RETRIES: $spec"
+        if npm pack "$spec"; then
+            return 0
+        fi
+        if [ "$attempt" -lt "$NPM_RETRIES" ]; then
+            echo "⏳ Attempt $attempt/$NPM_RETRIES failed, retrying in ${NPM_RETRY_DELAY}s..."
+            sleep "$NPM_RETRY_DELAY"
+        fi
+    done
+    return 1
+}
+
 rm -rf temp
 mkdir temp
 cd temp
@@ -42,12 +62,14 @@ for PACKAGE in ${projects[@]}
 do
     mkdir $PACKAGE
     cd $PACKAGE
+    PKG_VERSION=""
 
     # Handle js-api differently - increase major version by 1
     if [ $PACKAGE == 'js-api' ]; then
         if [ $VERSION == 'alpha' ] || [ $VERSION == 'beta' ] || [ $VERSION == 'latest' ]; then
             # For tag versions, we need to get the current version and increment
             CURRENT_VERSION=$(npm view @alfresco/$PACKAGE@$VERSION version)
+            FALLBACK_VERSION=$CURRENT_VERSION
             MAJOR_VERSION=$(echo $CURRENT_VERSION | cut -d'.' -f1)
             NEXT_MAJOR=$((MAJOR_VERSION + 1))
             # Keep the rest of the version string
@@ -55,6 +77,7 @@ do
             PACKAGE_VERSION="${NEXT_MAJOR}.${REST_VERSION}"
         else
             # For specific versions, just increment the major number
+            FALLBACK_VERSION=$VERSION
             MAJOR_VERSION=$(echo $VERSION | cut -d'.' -f1)
             NEXT_MAJOR=$((MAJOR_VERSION + 1))
             REST_VERSION=$(echo $VERSION | cut -d'.' -f2-)
@@ -65,13 +88,17 @@ do
     fi
 
     # Try the calculated package version first
-    PKG_VERSION=$(npm view @alfresco/$PACKAGE@$PACKAGE_VERSION version 2>/dev/null)
-
-    # If that fails for js-api, try the original version
-    if [ -z "$PKG_VERSION" ] && [ $PACKAGE == 'js-api' ]; then
-        echo "Warning: js-api@$PACKAGE_VERSION not found, trying @$VERSION"
-        PACKAGE_VERSION=$VERSION
-        PKG_VERSION=$(npm view @alfresco/$PACKAGE@$PACKAGE_VERSION version 2>/dev/null)
+    if npm_pack_version '@alfresco/'$PACKAGE@$PACKAGE_VERSION; then
+        PKG_VERSION=$PACKAGE_VERSION
+    elif [ $PACKAGE == 'js-api' ]; then
+        # If that fails, try the original (already resolved) version.
+        # FALLBACK_VERSION, not $VERSION directly, since npm pack writes the
+        # tarball under the resolved version, not the tag it was requested with.
+        echo "Warning: js-api@$PACKAGE_VERSION not found, trying @$FALLBACK_VERSION"
+        PACKAGE_VERSION=$FALLBACK_VERSION
+        if [ -n "$PACKAGE_VERSION" ] && npm_pack_version '@alfresco/'$PACKAGE@$PACKAGE_VERSION; then
+            PKG_VERSION=$PACKAGE_VERSION
+        fi
     fi
 
     # If still no version found, exit with error
@@ -82,7 +109,6 @@ do
 
     echo "Inspecting: $PACKAGE@$PKG_VERSION"
 
-    npm pack '@alfresco/'$PACKAGE@$PACKAGE_VERSION
     tar zxf 'alfresco-'$PACKAGE-$PKG_VERSION.tgz
 
     if [ $PACKAGE == 'js-api' ]; then

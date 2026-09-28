@@ -87,10 +87,24 @@ describe('DataTableRowComponent', () => {
         expect(fixture.debugElement.nativeElement.getAttribute('tabindex')).toBeNull();
     });
 
-    it('should not set tabindex when row is disabled', () => {
+    it('should set tabindex as focusable only with the arrow keys when row is enabled but not active', () => {
         component.disabled = false;
         fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.getAttribute('tabindex')).toBe('-1');
+    });
+
+    it('should set tabindex as focusable with the Tab key when row is enabled and active', () => {
+        component.disabled = false;
+        component.active = true;
+        fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.getAttribute('tabindex')).toBe('0');
+    });
+
+    it('should not set tabindex when row is disabled even if it is active', () => {
+        component.disabled = true;
+        component.active = true;
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.getAttribute('tabindex')).toBeNull();
     });
 
     it('should focus element', () => {

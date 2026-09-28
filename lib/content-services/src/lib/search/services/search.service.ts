@@ -76,14 +76,21 @@ export class SearchService {
      * Performs a search with its parameters supplied by a request object.
      *
      * @param queryBody Object containing the search parameters
+     * @param shouldEmit Should emit dataLoaded event
      * @returns List of search results
      */
-    searchByQueryBody(queryBody: SearchRequest): Observable<ResultSetPaging> {
+    searchByQueryBody(queryBody: SearchRequest, shouldEmit = true): Observable<ResultSetPaging> {
         const promise = this.searchApi.search(queryBody);
 
-        promise.then((nodePaging) => {
-            this.dataLoaded.next(nodePaging);
-        });
+        if (shouldEmit) {
+            promise
+                .then((nodePaging) => {
+                    this.dataLoaded.next(nodePaging);
+                })
+                .catch(() => {
+                    /* error is surfaced to subscribers through the returned Observable */
+                });
+        }
 
         return from(promise);
     }

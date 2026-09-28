@@ -578,6 +578,24 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     /**
+     * Rotate the currently displayed page 90 degrees counter-clockwise.
+     *
+     * Only the current page is affected; every other page keeps its own rotation.
+     * The angle wraps around, so four consecutive calls return the page to its
+     * original orientation (0 → 270 → 180 → 90 → 0). The document overflow state
+     * is recomputed afterwards, since rotation swaps the page width and height.
+     */
+    rotatePage() {
+        if (this.pdfViewer) {
+            const pageView = this.pdfViewer._pages[this.pdfViewer._currentPageNumber - 1];
+            if (pageView) {
+                pageView.update({ rotation: (pageView.rotation + 270) % 360 });
+                this.setDocumentOverflow();
+            }
+        }
+    }
+
+    /**
      * load the previous page
      */
     previousPage() {

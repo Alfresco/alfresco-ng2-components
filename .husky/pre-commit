@@ -2,4 +2,10 @@
 
 export NODE_OPTIONS=--max_old_space_size=8192
 
-lint-staged
+lint-staged || exit 1
+
+if command -v pre-commit >/dev/null 2>&1; then
+  pre-commit run
+else
+  echo "pre-commit not found on PATH - skipping workflow lint locally (CI enforces it). Install: https://pre-commit.com/#install"
+fi

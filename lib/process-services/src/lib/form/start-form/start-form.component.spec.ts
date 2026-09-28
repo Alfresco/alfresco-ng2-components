@@ -191,7 +191,7 @@ describe('StartFormComponent', () => {
             const formFields = component.form.getFormFields();
             const labelField = formFields.find((field) => field.id === 'mocktext');
             const textWidget = fixture.debugElement.nativeElement.querySelector('text-widget');
-            const textWidgetLabel = fixture.debugElement.nativeElement.querySelector('.adf-label');
+            const textWidgetLabel = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-text-widget-label"]');
 
             expect(labelField.type).toBe('text');
             expect(textWidget).toBeTruthy();
@@ -262,7 +262,7 @@ describe('StartFormComponent', () => {
             const formFields = component.form.getFormFields();
             const dropdownField = formFields.find((field) => field.id === 'mockTypeDropDown');
             const dropdownWidget = fixture.debugElement.nativeElement.querySelector('dropdown-widget');
-            const dropdownLabel = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget .adf-label');
+            const dropdownLabel = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-dropdown-widget-label"]');
             const selectElement = await loader.getHarness(MatSelectHarness);
             await selectElement.open();
 
@@ -287,7 +287,7 @@ describe('StartFormComponent', () => {
             const formFields = component.form.getFormFields();
             const labelField = formFields.find((field) => field.id === 'date');
             const dateWidget = fixture.debugElement.nativeElement.querySelector('date-widget');
-            const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .adf-label');
+            const dateLabelElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-date-widget-label"]');
 
             expect(dateWidget).toBeTruthy();
             expect(labelField.type).toBe('date');
@@ -320,11 +320,11 @@ describe('StartFormComponent', () => {
 
             const formFieldsWidget = fixture.debugElement.nativeElement.querySelector('form-field');
             const inputElement = fixture.debugElement.nativeElement.querySelector('.adf-input');
-            const inputLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-label');
+            const inputLabelElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-text-widget-label"]');
             const dateElement = fixture.debugElement.nativeElement.querySelector('#billdate');
-            const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .adf-label');
+            const dateLabelElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-date-widget-label"]');
             const selectElement = fixture.debugElement.nativeElement.querySelector('#claimtype');
-            const selectLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget > .adf-label');
+            const selectLabelElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-dropdown-widget-label"]');
 
             expect(formFieldsWidget).toBeDefined();
             expect(inputElement).toBeDefined();
@@ -348,7 +348,7 @@ describe('StartFormComponent', () => {
 
             /* cspell:disable-next-line */
             const selectElement = fixture.debugElement.nativeElement.querySelector('#claimtype');
-            const selectLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget > .adf-label');
+            const selectLabelElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-dropdown-widget-label"]');
             expect(refreshElement).toBeDefined();
             expect(selectElement).toBeDefined();
             expect(translate.instant(selectLabelElement.innerText)).toBe('ClaimType');

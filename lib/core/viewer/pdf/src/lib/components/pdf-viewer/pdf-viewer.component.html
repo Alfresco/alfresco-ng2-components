@@ -106,6 +106,14 @@
             <mat-icon adf-icon="zoom_out" />
         </button>
 
+        <button id="viewer-rotate-page-button"
+                title="{{ 'ADF_VIEWER.ARIA.ROTATE' | translate }}"
+                attr.aria-label="{{ 'ADF_VIEWER.ARIA.ROTATE' | translate }}"
+                mat-icon-button
+                (click)="rotatePage()">
+            <mat-icon adf-icon="rotate_left" />
+        </button>
+
         <button id="viewer-scale-page-button"
                 role="button" aria-pressed="true"
                 title="{{ 'ADF_VIEWER.ARIA.FIT_PAGE' | translate }}"
@@ -114,6 +122,5 @@
                 (click)="pageFit()">
             <mat-icon adf-icon="zoom_out_map" />
         </button>
-
     </adf-toolbar>
 </div>

@@ -766,7 +766,7 @@ describe('DataTable', () => {
     it('should initialize default adapter', () => {
         const table = TestBed.createComponent(DataTableComponent).componentInstance;
         expect(table.data).toBeUndefined();
-        table.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        table.ngOnChanges({ data: new SimpleChange(null, {}, true) });
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
     });
 
@@ -1023,7 +1023,7 @@ describe('DataTable', () => {
 
     it('should allow "select all" calls with no rows', () => {
         dataTable.multiselect = true;
-        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange(null, {}, true) });
 
         dataTable.onSelectAllClick({ checked: true } as MatCheckboxChange);
         expect(dataTable.isSelectAllChecked).toBe(true);
@@ -1053,7 +1053,7 @@ describe('DataTable', () => {
         const rows = data.getRows();
 
         dataTable.multiselect = true;
-        dataTable.ngOnChanges({ data: new SimpleChange('123', data, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange(null, data, true) });
 
         expect(rows[0].isSelected).toBe(false);
         expect(rows[1].isSelected).toBe(false);
@@ -1181,13 +1181,13 @@ describe('DataTable', () => {
     });
 
     it('should require adapter sorting to evaluate sorting state', () => {
-        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange(null, {}, true) });
         spyOn(dataTable.data, 'getSorting').and.returnValue(null);
         expect(dataTable.isColumnSorted({} as DataColumn, 'asc')).toBeFalsy();
     });
 
     it('should evaluate column sorting state', () => {
-        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange(null, {}, true) });
         spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'asc'));
         expect(dataTable.isColumnSorted({ key: 'column_1' } as DataColumn, 'asc')).toBeTruthy();
         expect(dataTable.isColumnSorted({ key: 'column_2' } as DataColumn, 'desc')).toBeFalsy();
@@ -1267,7 +1267,7 @@ describe('DataTable', () => {
         };
 
         dataTable.getRowActions(row, column);
-        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange(null, {}, true) });
         dataTable.getRowActions(row, column);
 
         expect(emitted).toBe(2);
@@ -1881,10 +1881,10 @@ describe('Accessibility', () => {
 
         const getBodyRows = (): DebugElement[] => testingUtils.getAllByCSS(rowSelector);
 
-        const expectRowsTabindex = (expected: string | null): void => {
+        const expectRowsTabindex = (expected: (string | null)[]): void => {
             const rowElements = getBodyRows();
-            expect(rowElements.length).toBeGreaterThan(0);
-            expect(rowElements.every((row) => row.nativeElement.getAttribute('tabindex') === expected)).toBeTrue();
+            expect(rowElements.length).toBe(expected.length);
+            expect(rowElements.map((row) => row.nativeElement.getAttribute('tabindex'))).toEqual(expected);
         };
 
         const activateRow = (rowIndex: number): void => {
@@ -1907,24 +1907,42 @@ describe('Accessibility', () => {
             dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
         });
 
-        it('should set tabindex to null (disabled === true) on datatable-body rows when neither multiselect nor enableDragRows is enabled', () => {
+        it('should set tabindex to null (disabled === true) on datatable-body rows when rows cannot be selected nor dragged', () => {
+            dataTable.selectionMode = 'none';
             setRows();
 
-            expectRowsTabindex(null);
+            expectRowsTabindex([null, null]);
         });
 
-        it('should set tabindex to 0 (disabled === false) on datatable-body rows when multiselect is enabled', () => {
+        it('should make only the first row reachable with the Tab key when rows are selectable', () => {
+            setRows();
+
+            expectRowsTabindex(['0', '-1']);
+        });
+
+        it('should make only the first row reachable with the Tab key when multiselect is enabled', () => {
             dataTable.multiselect = true;
             setRows();
 
-            expectRowsTabindex('0');
+            expectRowsTabindex(['0', '-1']);
         });
 
-        it('should set tabindex to 0 (disabled === false) on datatable-body rows when enableDragRows is enabled', () => {
+        it('should make only the first row reachable with the Tab key when enableDragRows is enabled', () => {
             dataTable.enableDragRows = true;
             setRows();
 
-            expectRowsTabindex('0');
+            expectRowsTabindex(['0', '-1']);
+        });
+
+        it('should move the tabindex to the active row', () => {
+            setRows();
+            dataTable.ngAfterViewInit();
+
+            activateRow(1);
+            testingUtils.setDebugElement(fixture.debugElement);
+            fixture.detectChanges();
+
+            expectRowsTabindex(['-1', '0']);
         });
 
         it('should focus next row on ArrowDown event', () => {
@@ -1946,6 +1964,17 @@ describe('Accessibility', () => {
 
         it('should focus previous row on ArrowUp event', () => {
             dataTable.multiselect = true;
+            setRows();
+            dataTable.ngAfterViewInit();
+
+            activateRow(1);
+            dispatchKeyUp(event);
+
+            expect(document.activeElement?.getAttribute('data-automation-id')).toBe('datatable-row-0');
+        });
+
+        it('should navigate between rows with the arrow keys in single selection mode', () => {
+            dataTable.selectionMode = 'single';
             setRows();
             dataTable.ngAfterViewInit();
 

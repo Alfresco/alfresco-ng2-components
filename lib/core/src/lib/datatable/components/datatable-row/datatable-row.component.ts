@@ -35,6 +35,8 @@ export class DataTableRowComponent implements FocusableOption {
 
     @Input() disabled = true;
 
+    @Input() active = false;
+
     @Output()
     select: EventEmitter<any> = new EventEmitter<any>();
 
@@ -65,7 +67,10 @@ export class DataTableRowComponent implements FocusableOption {
 
     @HostBinding('attr.tabindex')
     get tabindex(): number | null {
-        return this.disabled ? null : 0;
+        if (this.disabled) {
+            return null;
+        }
+        return this.active ? 0 : -1;
     }
 
     @HostListener('keydown.space', ['$event'])

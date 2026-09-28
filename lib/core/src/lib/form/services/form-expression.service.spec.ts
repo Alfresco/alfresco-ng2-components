@@ -440,6 +440,39 @@ describe('FormExpressionService', () => {
         });
     });
 
+    describe('hasExpressions', () => {
+        [
+            { scenario: 'a field expression', content: 'Hello ${field.name}' },
+            { scenario: 'a variable expression', content: 'Status: ${variable.status}' },
+            { scenario: 'several expressions', content: '${field.name} and ${variable.status}' }
+        ].forEach(({ scenario, content }) => {
+            it(`should detect ${scenario} in the content`, () => {
+                expect(service.hasExpressions(content)).toBeTrue();
+            });
+        });
+
+        [
+            { scenario: 'plain text', content: 'plain text without expressions' },
+            { scenario: 'a placeholder without a variable name', content: '${}' },
+            { scenario: 'an unclosed placeholder', content: 'Hello ${field.name' },
+            { scenario: 'empty content', content: '' }
+        ].forEach(({ scenario, content }) => {
+            it(`should not detect any expression in ${scenario}`, () => {
+                expect(service.hasExpressions(content)).toBeFalse();
+            });
+        });
+
+        it('should detect expressions consistently when the same content is checked repeatedly', () => {
+            const content = 'Hello ${field.name}';
+
+            const firstCheck = service.hasExpressions(content);
+            const secondCheck = service.hasExpressions(content);
+
+            expect(firstCheck).toBeTrue();
+            expect(secondCheck).toBeTrue();
+        });
+    });
+
     describe('getFieldDependencies', () => {
         it('should return empty array for string without expressions', () => {
             const input = 'plain text without expressions';

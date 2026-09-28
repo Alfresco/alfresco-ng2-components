@@ -19,10 +19,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { LogicalSearchCondition, LogicalSearchFields, SearchLogicalFilterComponent } from './search-logical-filter.component';
 import { ReplaySubject } from 'rxjs';
+import { UnitTestingUtils } from '@alfresco/adf-core';
 
 describe('SearchLogicalFilterComponent', () => {
     let component: SearchLogicalFilterComponent;
     let fixture: ComponentFixture<SearchLogicalFilterComponent>;
+    let unitTestingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -41,6 +43,7 @@ describe('SearchLogicalFilterComponent', () => {
             execute: jasmine.createSpy('execute')
         } as any;
         component.settings = { field: 'field1,field2', allowUpdateOnChange: true, hideDefaultAction: false };
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
     });
 
@@ -203,5 +206,18 @@ describe('SearchLogicalFilterComponent', () => {
         expect(component.context.filterRawParams[component.id]).toEqual({ matchAll: 'test', matchAny: 'test2', matchExact: '', exclude: '' });
         expect(component.searchCondition).toEqual({ matchAll: 'test', matchAny: 'test2', matchExact: '', exclude: '' });
         expect(component.context.filterLoaded.next).toHaveBeenCalled();
+    });
+
+    describe('Accessibility', () => {
+        it('should use aria-labelledby attribute for input fields', () => {
+            const inputs = getInputs();
+            const fieldset = unitTestingUtils.getAllByDataAutomationId('adf-search-input-label');
+
+            inputs.forEach((input, index) => {
+                const fieldsetId = fieldset[index].nativeElement.getAttribute('id');
+                expect(input.getAttribute('aria-labelledby')).toBe(fieldsetId);
+                expect(input.hasAttribute('aria-label')).toBe(false);
+            });
+        });
     });
 });

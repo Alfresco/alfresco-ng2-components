@@ -31,6 +31,8 @@ export interface SearchWidgetSettings {
     allowOnlyPredefinedValues?: boolean;
     /* allow the user to predefine autocomplete options */
     autocompleteOptions?: AutocompleteOption[];
+    /* label that will be displayed for autocomplete input */
+    label?: string;
 
     [indexer: string]: any;
 }

@@ -1089,6 +1089,10 @@ describe('DropdownCloudWidgetComponent', () => {
                 }
             });
 
+        const processValue = { list: [{ id: 'process', name: 'Process option' }] };
+        const formValue = { list: [{ id: 'default', name: 'Default option' }] };
+        const updatedValue = { list: [{ id: 'runtime', name: 'Runtime option' }] };
+
         const checkDropdownVariableOptionsFailed = async () => {
             const formField = await loader.getHarness(MatFormFieldHarness);
             const errors = await formField.getTextErrors();
@@ -1356,6 +1360,14 @@ describe('DropdownCloudWidgetComponent', () => {
             await checkDropdownVariableOptionsFailed();
         });
 
+        it('should return empty array and display error when the variable value is null', async () => {
+            const processVariables = [new TaskVariableCloud({ name: 'variables.json-variable', value: null, type: 'json' })];
+            widget.field = getVariableDropdownWidget('json-variable', 'response.people.players', 'playerId', 'playerFullName', processVariables, []);
+            fixture.detectChanges();
+
+            await checkDropdownVariableOptionsFailed();
+        });
+
         it('should return empty array and display error if there are NO process and form variables', async () => {
             widget.field = getVariableDropdownWidget('variables.json-variable', 'response.people.players', 'playerId', 'playerFullName', [], []);
             fixture.detectChanges();
@@ -1412,6 +1424,177 @@ describe('DropdownCloudWidgetComponent', () => {
             const allOptions = await dropdown.getOptions();
             expect(await allOptions[0].getText()).toEqual('New Country');
             expect(allOptions.length).toEqual(1);
+        });
+
+        it('should prefer a runtime-updated form variable over a mapped process variable', async () => {
+            const processVariables = [new TaskVariableCloud({ name: 'variables.accountList', value: processValue, type: 'json' })];
+            const variables = [new TaskVariableCloud({ id: 'account-var', name: 'accountList', type: 'json', value: formValue })];
+
+            const field = getVariableDropdownWidget('accountList', 'list', 'id', 'name', processVariables, variables);
+
+            widget.field = field;
+            fixture.detectChanges();
+
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
+            let allOptions = await dropdown.getOptions();
+            expect(await allOptions[0].getText()).toEqual('Process option');
+
+            field.form.changeVariableValue('accountList', updatedValue);
+            formService.onFormVariableChanged.next({ field });
+            fixture.detectChanges();
+
+            await dropdown.open();
+            allOptions = await dropdown.getOptions();
+            expect(allOptions.length).toEqual(1);
+            expect(await allOptions[0].getText()).toEqual('Runtime option');
+        });
+
+        const repeatableSectionFormJson = () => ({
+            variables: [{ id: 'account-var', name: 'accountList', type: 'json', value: formValue }],
+            processVariables: [{ name: 'variables.accountList', value: processValue, type: 'json' }],
+            fields: [
+                {
+                    id: 'repeatableSection',
+                    type: 'repeatable-section',
+                    params: { initialNumberOfRows: 2, allowInitialRowsDelete: true },
+                    numberOfColumns: 1,
+                    fields: {
+                        '1': [
+                            {
+                                id: 'sectionId',
+                                type: 'section',
+                                numberOfColumns: 1,
+                                fields: {
+                                    '1': [
+                                        {
+                                            id: 'AccountNumber',
+                                            type: 'dropdown',
+                                            optionType: 'variable',
+                                            variableConfig: {
+                                                variableName: 'accountList',
+                                                optionsPath: 'list',
+                                                optionsId: 'id',
+                                                optionsLabel: 'name'
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        });
+
+        const getVariableDropdownFields = (form: FormModel): FormFieldModel[] =>
+            form
+                .getFormFields([], true)
+                .filter((field) => field.type === FormFieldTypes.DROPDOWN && field.variableConfig?.variableName === 'accountList');
+
+        it('should update repeatable section dropdown options when the backing variable changes in another row', async () => {
+            const form = new FormModel(repeatableSectionFormJson());
+            const dropdownFields = getVariableDropdownFields(form);
+
+            expect(dropdownFields.length).toBe(2);
+
+            widget.field = dropdownFields[1];
+            fixture.detectChanges();
+
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
+            expect(await (await dropdown.getOptions())[0].getText()).toEqual('Process option');
+
+            form.changeVariableValue('account-var', updatedValue);
+            formService.onFormVariableChanged.next({ field: dropdownFields[0] });
+            fixture.detectChanges();
+
+            await dropdown.open();
+            const allOptions = await dropdown.getOptions();
+            expect(allOptions.length).toEqual(1);
+            expect(await allOptions[0].getText()).toEqual('Runtime option');
+        });
+
+        /*
+            Row scoped field ids embed a row id that is regenerated on every parse, so the same field
+            carries a different id once the form is re-parsed, for example on a task data refresh.
+            Matching the changed field by id alone would never reach the widgets inside repeatable sections.
+        */
+        it('should update repeatable section dropdown options when the changed field comes from a re-parsed form', async () => {
+            const renderedForm = new FormModel(repeatableSectionFormJson());
+            const reparsedForm = new FormModel(repeatableSectionFormJson());
+
+            const renderedFields = getVariableDropdownFields(renderedForm);
+            const reparsedFields = getVariableDropdownFields(reparsedForm);
+
+            expect(renderedFields[0].id).not.toEqual(reparsedFields[0].id);
+
+            widget.field = renderedFields[0];
+            fixture.detectChanges();
+
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
+            expect(await (await dropdown.getOptions())[0].getText()).toEqual('Process option');
+
+            renderedForm.changeVariableValue('account-var', updatedValue);
+            formService.onFormVariableChanged.next({ field: reparsedFields[0] });
+            fixture.detectChanges();
+
+            await dropdown.open();
+            const allOptions = await dropdown.getOptions();
+            expect(allOptions.length).toEqual(1);
+            expect(await allOptions[0].getText()).toEqual('Runtime option');
+        });
+
+        it('should raise a single value change event per selection after repeated variable changes', () => {
+            const form = new FormModel(repeatableSectionFormJson());
+            const dropdownFields = getVariableDropdownFields(form);
+            widget.field = dropdownFields[0];
+            fixture.detectChanges();
+
+            for (let i = 0; i < 3; i++) {
+                formService.onFormVariableChanged.next({ field: dropdownFields[1] });
+            }
+            fixture.detectChanges();
+
+            const formFieldValueChangedSpy = spyOn(formService.formFieldValueChanged, 'next');
+            widget.dropdownControl.setValue({ id: 'process', name: 'Process option' });
+
+            expect(formFieldValueChangedSpy).toHaveBeenCalledTimes(1);
+        });
+
+        it('should push a single filtered list per search after repeated variable changes', () => {
+            const form = new FormModel(repeatableSectionFormJson());
+            const dropdownFields = getVariableDropdownFields(form);
+            widget.field = dropdownFields[0];
+            fixture.detectChanges();
+
+            for (let i = 0; i < 3; i++) {
+                formService.onFormVariableChanged.next({ field: dropdownFields[1] });
+            }
+            fixture.detectChanges();
+
+            let listEmissions = 0;
+            const listSubscription = widget.list$.subscribe(() => listEmissions++);
+            listEmissions = 0;
+
+            widget.filter$.next('Process');
+            listSubscription.unsubscribe();
+
+            expect(listEmissions).toBe(1);
+        });
+
+        it('should stop reacting to form variable changes once the widget is destroyed', () => {
+            const form = new FormModel(repeatableSectionFormJson());
+            widget.field = getVariableDropdownFields(form)[0];
+            fixture.detectChanges();
+
+            const setupDropdownSpy = spyOn<any>(widget, 'setupDropdown');
+            fixture.destroy();
+
+            formService.onFormVariableChanged.next({ field: getVariableDropdownFields(form)[1] });
+
+            expect(setupDropdownSpy).not.toHaveBeenCalled();
         });
     });
 

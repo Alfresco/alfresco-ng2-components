@@ -17,7 +17,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UnitTestingUtils } from '../../testing';
-import { FormRulesManager } from '../models/form-rules.model';
+import { FORM_RULES_MANAGER, FormRulesManager } from '../models/form-rules.model';
+import { FormRulesEvent } from '../events/form-rules.event';
 import { FormRenderingService } from '../services/form-rendering.service';
 import { FormService } from '../services/form.service';
 import { FormRendererComponent } from './form-renderer.component';
@@ -52,6 +53,7 @@ import {
 import { FormFieldModel, FormModel, TextWidgetComponent } from './widgets';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { WidgetVisibilityService } from '../services/widget-visibility.service';
 
 const typeIntoInput = (testingUtils: UnitTestingUtils, selector: string, message: string) => {
@@ -137,6 +139,38 @@ describe('Form Renderer Component', () => {
     });
 
     describe('visibility refresh on form rules', () => {
+        const buildFormWithRequiredField = (startVisible: boolean = true): FormModel => {
+            const form = new FormModel(
+                {
+                    id: 'required-field-form',
+                    fields: [
+                        {
+                            id: 'container',
+                            type: 'container',
+                            numberOfColumns: 1,
+                            fields: { 1: [{ id: 'requiredText', type: 'text', name: 'Required text', required: true }] }
+                        }
+                    ]
+                },
+                undefined,
+                false,
+                formService
+            );
+
+            if (!startVisible) {
+                form.changeFieldVisibility('requiredText', false);
+                form.validateForm();
+            }
+
+            return form;
+        };
+
+        const hideFieldOnFieldValueChanged = (form: FormModel, fieldId: string, visible: boolean): void => {
+            formService.formRulesEvent
+                .pipe(filter((event) => event?.type === 'fieldValueChanged' && event.form?.id === form.id))
+                .subscribe(() => form.changeFieldVisibility(fieldId, visible));
+        };
+
         it('should refresh visibility when a fieldValueChanged rule event fires for the same form', () => {
             const form = formService.parseForm(textWidgetVisibility.formRepresentation);
             formRendererComponent.formDefinition = form;
@@ -175,6 +209,80 @@ describe('Form Renderer Component', () => {
             formService.formRulesEvent.next({ type: 'formLoaded', form } as any);
 
             expect(refreshVisibilitySpy).not.toHaveBeenCalled();
+        });
+
+        it('should revalidate the form when a rule hides an empty required field', () => {
+            const form = buildFormWithRequiredField();
+            formRendererComponent.formDefinition = form;
+            hideFieldOnFieldValueChanged(form, 'requiredText', false);
+            fixture.detectChanges();
+
+            expect(form.isValid).toBe(false, 'form should start invalid with a visible empty required field');
+
+            formService.formRulesEvent.next({ type: 'fieldValueChanged', form } as any);
+
+            expect(form.isValid).toBe(true, 'hiding the required field should re-enable the outcome');
+        });
+
+        it('should revalidate the form when a rule reveals an empty required field', () => {
+            const form = buildFormWithRequiredField(false);
+            formRendererComponent.formDefinition = form;
+            hideFieldOnFieldValueChanged(form, 'requiredText', true);
+            fixture.detectChanges();
+
+            expect(form.isValid).toBe(true, 'form should start valid while the required field is hidden');
+
+            formService.formRulesEvent.next({ type: 'fieldValueChanged', form } as any);
+
+            expect(form.isValid).toBe(false, 'revealing the empty required field should disable the outcome');
+        });
+
+        it('should revalidate the form when a rule hides a group containing an empty required field', () => {
+            const form = new FormModel(
+                {
+                    id: 'required-group-form',
+                    fields: [
+                        {
+                            id: 'requiredGroup',
+                            type: 'group',
+                            params: {},
+                            numberOfColumns: 1,
+                            fields: { 1: [{ id: 'textInGroup', type: 'text', name: 'Text', required: true }] }
+                        }
+                    ]
+                },
+                undefined,
+                false,
+                formService
+            );
+            form.enableParentVisibilityCheck = true;
+            form.getFormFields().forEach((field) => (field.checkParentVisibilityForValidation = true));
+            form.validateForm();
+
+            formRendererComponent.formDefinition = form;
+            hideFieldOnFieldValueChanged(form, 'requiredGroup', false);
+            fixture.detectChanges();
+
+            expect(form.isValid).toBe(false, 'form should start invalid while the group is visible');
+
+            formService.formRulesEvent.next({ type: 'fieldValueChanged', form } as any);
+
+            expect(form.isValid).toBe(true, 'hiding the group should exempt its required child');
+        });
+
+        it('should revalidate the form for rule events other than fieldValueChanged', () => {
+            const form = buildFormWithRequiredField();
+            formRendererComponent.formDefinition = form;
+            formService.formRulesEvent
+                .pipe(filter((event) => event?.type === 'onRowCountChanged' && event.form?.id === form.id))
+                .subscribe(() => form.changeFieldVisibility('requiredText', false));
+            fixture.detectChanges();
+
+            expect(form.isValid).toBe(false, 'form should start invalid with a visible empty required field');
+
+            formService.formRulesEvent.next({ type: 'onRowCountChanged', form } as any);
+
+            expect(form.isValid).toBe(true, 'row-count driven rules should also recompute validity');
         });
     });
 
@@ -1223,5 +1331,69 @@ describe('Form Renderer Component', () => {
                 expect(getRenderedLabels()).toEqual(['Approver', 'Approver']);
             });
         });
+    });
+});
+
+class HideOnFieldValueChangedRulesManager extends FormRulesManager<{ targetFieldId: string }> {
+    protected getRules(): { targetFieldId: string } {
+        return { targetFieldId: 'requiredText' };
+    }
+
+    protected handleRuleEvent(event: FormRulesEvent, rules: { targetFieldId: string }): void {
+        if (event.type === 'fieldValueChanged') {
+            this.formModel.changeFieldVisibility(rules.targetFieldId, false);
+        }
+    }
+}
+
+describe('Form Renderer Component form rule ordering', () => {
+    let fixture: ComponentFixture<FormRendererComponent<any>>;
+    let formService: FormService;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [FormRendererComponent],
+            providers: [
+                {
+                    provide: FORM_RULES_MANAGER,
+                    useFactory: (service: FormService) => new HideOnFieldValueChangedRulesManager(service),
+                    deps: [FormService]
+                }
+            ]
+        });
+        fixture = TestBed.createComponent(FormRendererComponent<any>);
+        formService = TestBed.inject(FormService);
+    });
+
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    it('should revalidate after a real rules manager hides an empty required field', () => {
+        const form = new FormModel(
+            {
+                id: 'rule-ordering-form',
+                fields: [
+                    {
+                        id: 'container',
+                        type: 'container',
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'requiredText', type: 'text', name: 'Required text', required: true }] }
+                    }
+                ]
+            },
+            undefined,
+            false,
+            formService
+        );
+
+        fixture.componentInstance.formDefinition = form;
+        fixture.detectChanges();
+
+        expect(form.isValid).toBe(false, 'form should start invalid with a visible empty required field');
+
+        formService.formRulesEvent.next({ type: 'fieldValueChanged', form } as any);
+
+        expect(form.isValid).toBe(true, 'the rule-driven hide must be reflected in form validity');
     });
 });

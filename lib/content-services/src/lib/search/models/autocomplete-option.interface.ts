@@ -25,7 +25,8 @@ export interface AutocompleteOption {
 export const AutocompleteField = {
     TAG: 'TAG',
     CATEGORIES: 'cm:categories',
-    LOCATION: 'SITE'
+    LOCATION: 'SITE',
+    PARENT_FOLDER: 'ANCESTOR'
 } as const;
 
 export type AutocompleteField = (typeof AutocompleteField)[keyof typeof AutocompleteField];

@@ -143,6 +143,10 @@ export class FormExpressionService {
         return null;
     }
 
+    hasExpressions(expression: string): boolean {
+        return !!expression?.match(this.GLOBAL_EXPRESSION_REGEX);
+    }
+
     getFieldDependencies(expression: string): string[] {
         const dependencies: string[] = [];
         const matches = expression.match(this.GLOBAL_EXPRESSION_REGEX);
