@@ -216,8 +216,8 @@ describe('ProcessHeaderCloudComponent', () => {
             const lastModifiedElement = fixture.debugElement.query(By.css('[data-automation-id="card-date-value-lastModified"]'));
 
             expect(component.dateFormat).toEqual('full');
-            expect(startedDateElement.nativeElement.innerText.trim()).toBe('Saturday, March 9, 2019 at 12:00:00 AM GMT+00:00');
-            expect(lastModifiedElement.nativeElement.innerText.trim()).toBe('Saturday, March 9, 2019 at 12:00:00 AM GMT+00:00');
+            expect(startedDateElement.nativeElement.innerText.trim()).toBe('Saturday, March 9, 2019, 12:00:00 AM GMT+00:00');
+            expect(lastModifiedElement.nativeElement.innerText.trim()).toBe('Saturday, March 9, 2019, 12:00:00 AM GMT+00:00');
         });
     });
 });

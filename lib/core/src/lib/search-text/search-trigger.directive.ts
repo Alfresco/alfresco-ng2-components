@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { ChangeDetectorRef, DestroyRef, Directive, ElementRef, forwardRef, inject, Input, NgZone, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
@@ -127,19 +126,21 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         this.onTouched = fn;
     }
 
-    handleKeydown(event: KeyboardEvent): void {
-        const keyCode = event.keyCode;
+    handleKeydown(event: Event): void {
+        if (event instanceof KeyboardEvent) {
+            const key = event.key;
 
-        if (keyCode === ESCAPE && this.panelOpen) {
-            this.escapeEventStream.next();
-            event.stopPropagation();
-        } else if (keyCode === ENTER) {
-            this.escapeEventStream.next();
-            event.preventDefault();
+            if (key === 'Escape' && this.panelOpen) {
+                this.escapeEventStream.next();
+                event.stopPropagation();
+            } else if (key === 'Enter') {
+                this.escapeEventStream.next();
+                event.preventDefault();
+            }
         }
     }
 
-    handleInput(event: KeyboardEvent): void {
+    handleInput(event: Event): void {
         if (document.activeElement === event.target) {
             const inputValue: string = (event.target as HTMLInputElement).value;
             this.onChange(inputValue);

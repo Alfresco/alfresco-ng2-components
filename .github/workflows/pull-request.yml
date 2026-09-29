@@ -47,7 +47,7 @@ jobs:
         uses: hyland/github-actions-ensure-sha-pinned-actions@7957efb76aba0eec7580a9c0392d3e5bec381359 # v2.0.1
 
       - name: Run pre-commit
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@fc4065c710a43db66b19d449fa35705548516515 # v18.28.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@0fa2704957dfff688af2371cc7a935de53d26610 # v19.1.0
         with:
           skip_checkout: true
 

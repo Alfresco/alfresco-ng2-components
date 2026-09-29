@@ -1,7 +1,9 @@
 {
   "COMMON": {
     "APPLY": "Käytä",
-    "CANCEL": "Peruuta"
+    "CANCEL": "Peruuta",
+    "NAME": "Nimi",
+    "CLEAR": "Tyhjennä"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
@@ -16,7 +18,8 @@
         "MINOR": "vähäisiä muutoksia ({{version}})",
         "COMMENT": "Jätä kommentti",
         "ADD": "Lisää uusi versio",
-        "CANCEL": "Peruuta"
+        "CANCEL": "Peruuta",
+        "VERSION_TYPE_LABEL": "Valitse versiotyyppi"
       }
     },
     "CONFIRM_DELETE": {
@@ -99,6 +102,7 @@
     "ATTACH": "Liitä",
     "CHOOSE_ITEM": "Valitse liitettävä sisältö kohteesta '{{ name }}'",
     "COPY": "Kopioi",
+    "LINK": "Luo linkki",
     "COPY_ITEM": "Kopioi '{{ name }}' kohteeseen...",
     "LOCATION": "Sijainti",
     "MOVE": "Siirrä",
@@ -146,18 +150,17 @@
       "NO_EXISTING_TAGS": "Ei olemassa olevia tunnisteita",
       "TITLE": "Luo merkkejä",
       "CREATE_TAG": "Luo: {{tag}}",
-      "NAME": "Nimi",
+      "TAG_SEARCH_PLACEHOLDER": "Hae tunnisteita",
       "ERRORS": {
         "EXISTING_TAG": "Tunniste on jo olemassa",
         "ALREADY_ADDED_TAG": "Tunniste on jo lisätty",
         "EMPTY_TAG": "Tunnisteen nimi ei voi koostua vain välilyönneistä",
-        "REQUIRED": "Tunnisteen nimi on pakollinen",
         "FETCH_TAGS": "Virhe tunnisteita noudettaessa",
-        "CREATE_TAGS": "Virhe merkkejä luodessa"
+        "CREATE_TAGS": "Virhe merkkejä luodessa",
+        "SPECIAL_CHARACTERS": "Tunnisteen nimi ei voi sisältää kiellettyjä merkkejä"
       },
       "TOOLTIPS": {
-        "DELETE_TAG": "Poista merkki",
-        "HIDE_INPUT": "Piilota syöte"
+        "DELETE_TAG": "Poista merkki"
       },
       "TAGS_LOADING": "Tunnisteita ladataan",
       "CREATE_TAGS_SUCCESS": "Merkkien luonti onnistui"
@@ -167,7 +170,6 @@
     "CATEGORIES_TITLE": "Luokat",
     "NO_CATEGORIES_CREATED": "Ei luotuja luokkia",
     "NO_CATEGORIES_ASSIGNED": "Ei määrättyjä luokkia",
-    "ASSIGN_CATEGORIES": "Määrää luokkia",
     "UNASSIGN_CATEGORY": "Poista luokan määräys",
     "DELETE_CATEGORY": "Poista luokka",
     "EXISTING_CATEGORIES": "Olemassa olevat luokat:",
@@ -176,7 +178,7 @@
     "GENERIC_CREATE": "Luo: {{name}}",
     "NAME": "Luokan nimi",
     "LOADING": "Ladataan",
-    "HIDE_INPUT": "Piilota syöte",
+    "NO_CATEGORIES_ADDED": "Luokkia ei ole tällä hetkellä lisätty",
     "ERRORS": {
       "NOT_FOUND": "Luokkia ei löytynyt",
       "REQUIRED": "Luokan nimi on pakollinen",
@@ -184,8 +186,11 @@
       "ALREADY_EXISTS": "Luokka on jo olemassa",
       "DUPLICATED_CATEGORY": "Luokka on jo lisätty",
       "CREATE_CATEGORIES": "Virhe luokkia luodessa",
-      "EXISTING_CATEGORIES": "Osa luokista on jo olemassa"
-    }
+      "EXISTING_CATEGORIES": "Osa luokista on jo olemassa",
+      "SPECIAL_CHARACTERS": "Luokan nimi ei voi sisältää kiellettyjä merkkejä",
+      "ENDS_WITH_DOT": "Luokan nimi ei voi loppua pisteeseen"
+    },
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Hae luokkia"
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
@@ -273,12 +278,15 @@
       "ARIA-LABEL": "Hakupainike"
     },
     "INPUT": {
+      "LABEL": "Hae",
+      "PLACEHOLDER": "Hakukysely",
       "ARIA-LABEL": "Hakusanat"
     },
     "RESULTS": {
       "SUMMARY": "Haulla {{searchTerm}} löytyi {{numResults}} tulos",
       "NONE": "Haulla {{searchTerm}} ei löydy yhtään tulosta",
       "ERROR": "Haussa ilmeni ongelma. Yritä uudelleen.",
+      "WILL_CONTAIN": "Tulokset sisältävät '{{searchTerm}}'",
       "COLUMNS": {
         "NAME": "Näyttönimi",
         "MODIFIED_BY": "Muokkaaja:",
@@ -313,9 +321,7 @@
         "FROM": "Alku",
         "TO": "Loppu",
         "FROM-DATE": "Alku",
-        "TO-DATE": "Loppu",
-        "SELECT-FROM-DATE": "Valitse alkamispäivä",
-        "SELECT-TO-DATE": "Valitse päättymispäivä"
+        "TO-DATE": "Loppu"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Pakollinen arvo",
@@ -330,7 +336,12 @@
         "SEARCH_FILTER": "Hakusuodatinluettelo",
         "OPTIONS-SELECTION": "Vaihtoehtojen valinta"
       },
-      "ANY": "Mikä tahansa"
+      "ANY": "Mikä tahansa",
+      "PEOPLE": "Henkilöt"
+    },
+    "FACET_FIELDS": {
+      "MODIFIER_LABEL": "Muokkaaja:",
+      "CREATOR_LABEL": "Tekijä:"
     },
     "ICONS": {
       "ft_ic_raster_image": "Kuvatiedosto",
@@ -371,6 +382,7 @@
       "TITLE": "Suodatin",
       "TYPE": "Tyyppi",
       "FILTER_BY": "Suodata {{ category }}-luokan perusteella",
+      "ACTIVE_FILTER": "Aktiivinen suodatin",
       "CLEAR": "Tyhjennä",
       "APPLY": "Käytä",
       "FILTERS": {
@@ -396,15 +408,76 @@
       }
     },
     "LOGICAL_SEARCH": {
-      "SEARCH_CHIP_INPUT": {
-        "ADD_PHRASE": "Lisää lause..."
-      },
       "MATCH_ALL": "KAIKKI",
       "MATCH_ALL_LABEL": "Yhdistä KAIKKI nämä lauseet",
+      "MATCH_ALL_HINT": "Tulokset vastaavat kaikkia tähän syötettyjä sanoja",
       "MATCH_ANY": "MIKÄ TAHANSA",
       "MATCH_ANY_LABEL": "Yhdistä MIKÄ TAHANSA näistä lauseista",
+      "MATCH_ANY_HINT": "Tulokset vastaavat mitä tahansa tähän syötetyistä sanoista",
+      "MATCH_EXACT": "TARKKA",
+      "MATCH_EXACT_LABEL": "Vastaa tätä TARKKAA LAUSETTA",
+      "MATCH_EXACT_HINT": "Tulokset vastaavat koko tätä lausetta",
       "EXCLUDE": "POISSULJE",
-      "EXCLUDE_LABEL": "POISSULJE nämä lauseet"
+      "EXCLUDE_LABEL": "POISSULJE nämä lauseet",
+      "EXCLUDE_HINT": "Tulokset poissulkevat osumat, joissa on näitä sanoja"
+    },
+    "DATE_RANGE_ADVANCED": {
+      "OPTIONS": {
+        "ANYTIME": "Milloin tahansa",
+        "IN_LAST": "Viimeisen",
+        "BETWEEN": "Välillä"
+      },
+      "IN_LAST_LABELS": {
+        "DAYS": "Päivää",
+        "WEEKS": "Viikkoa",
+        "MONTHS": "Kuukautta",
+        "QUANTITY": "Määrä"
+      },
+      "IN_LAST_DISPLAY_LABELS": {
+        "DAYS": "Viimeisen {{value}} päivän aikana",
+        "WEEKS": "Viimeisen {{value}} viikon aikana",
+        "MONTHS": "Viimeisen {{value}} kuukauden aikana"
+      },
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "Alkamispäivä",
+        "END_DATE": "Päättymispäivä",
+        "DATE_RANGE": "Päivämääräväli"
+      },
+      "ERROR": {
+        "IN_LAST": "Arvo on pakollinen",
+        "START_DATE": {
+          "REQUIRED": "Alkamispäivä on pakollinen",
+          "INVALID_FORMAT": "Alkamispäivä on virheellinen. Päivämäärän täytyy olla muodossa '{{ requiredFormat }}'"
+        },
+        "END_DATE": {
+          "REQUIRED": "Päättymispäivä on pakollinen",
+          "INVALID_FORMAT": "Päättymispäivä on virheellinen. Päivämäärän täytyy olla muodossa '{{ requiredFormat }}'"
+        }
+      },
+      "ARIA_LABEL": {
+        "NUMBER_INPUT": "Numerosyöte"
+      }
+    },
+    "SEARCH_PROPERTIES": {
+      "FILE_SIZE": "Tiedoston koko",
+      "FILE_SIZE_PLACEHOLDER": "Syötä tiedoston koko",
+      "FILE_SIZE_OPERATOR": {
+        "AT_LEAST": "Vähintään",
+        "AT_MOST": "Enintään",
+        "EXACTLY": "Täsmälleen"
+      },
+      "FILE_SIZE_UNIT_ABBREVIATION": {
+        "KB": "kt",
+        "MB": "Mt",
+        "GB": "Gt"
+      },
+      "FILE_TYPE": "Tiedostotyyppi",
+      "FILE_TYPE_PLACEHOLDER": "Lisää tiedostotyyppi",
+      "ACCESSIBILITY": {
+        "CONDITION": "Ehto",
+        "SIZE_VALUE": "Tiedoston koon arvo",
+        "UNIT": "Yksikkö"
+      }
     }
   },
   "PERMISSION": {
@@ -425,7 +498,9 @@
       "MODIFIED_DATE": "Muokkauspäivämäärä",
       "CONTENT_TYPE": "Sisältötyyppi",
       "TAGS": "Tunnisteet",
-      "ADD_TAG_TOOLTIP": "Lisää tunniste"
+      "NO_TAGS_ADDED": "Tunnisteita ei ole tällä hetkellä lisätty",
+      "NO_ITEMS_MESSAGE": "{{ groupTitle }} ei ole tällä hetkellä lisätty",
+      "SAVE_OR_DISCARD_CHANGES": "Tallenna tai hylkää muutokset jatkaaksesi"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
@@ -471,7 +546,8 @@
       "REMOVE": "Poista"
     },
     "UNSHARE_ERROR": "Tämän tiedoston jakamisen peruuttamisessa tapahtui virhe",
-    "UNSHARE_PERMISSION_ERROR": "Sinulla ei ole oikeuksia peruuttaa tämän tiedoston jakamista"
+    "UNSHARE_PERMISSION_ERROR": "Sinulla ei ole oikeuksia peruuttaa tämän tiedoston jakamista",
+    "INVALID_DATE_ERROR": "Virheellinen päivämäärä"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
@@ -490,8 +566,10 @@
       "ADD-ACTION": "Lisää",
       "CLOSE-ACTION": "Peruuta",
       "BASE-DIALOG-TITLE": "Hae lisättävää ryhmää tai ihmistä...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "Lisää käyttäjän tai ryhmän oikeus",
       "EVERYONE": "Kaikki",
-      "USER-GROUP-LIST": "Käyttäjä- tai ryhmäluettelo"
+      "USER-GROUP-LIST": "Käyttäjä- tai ryhmäluettelo",
+      "REMOVE_USER_GROUP": "Poista"
     },
     "COLUMN": {
       "NAME": "Käyttäjät ja ryhmät ({{ count }})",
@@ -535,6 +613,10 @@
       "NOT-ALLOWED": "Et voi muokata oikeuksia"
     }
   },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "Ryhmän kuvake",
+    "GROUP_USER_SELECTED_ALT": "Valitun ryhmän tai käyttäjän kuvake"
+  },
   "ADF-TREE-VIEW": {
     "MISSING-ID": "Solmutunnusta ei ole annettu!",
     "ACCESSIBILITY": {
@@ -542,7 +624,14 @@
     }
   },
   "ADF-TREE": {
-    "LOAD-MORE-BUTTON": "Lataa lisää {{ name }}"
+    "LOAD-MORE-BUTTON": "Lataa lisää {{ name }}",
+    "ACTIONS": {
+      "TOOLTIP": "Avaa toimintovalikko"
+    },
+    "ARIA": {
+      "SELECTED": "{{ name }} valittiin",
+      "DESELECTED": "{{ name }} poistettiin valinnasta"
+    }
   },
   "LIBRARY": {
     "DIALOG": {
@@ -583,7 +672,9 @@
       "TITLE_TOO_SHORT": "Nimessä pitää olla vähintään kaksi merkkiä",
       "ILLEGAL_CHARACTERS": "Käytä vain kirjaimia ja numeroita",
       "ONLY_SPACES": "Kirjaston nimi ei voi sisältää pelkkiä välilyöntejä",
-      "LIBRARY_UPDATE_ERROR": "Kirjaston ominaisuuksien päivittämisessä tapahtui virhe"
+      "LIBRARY_UPDATE_ERROR": "Kirjaston ominaisuuksien päivittämisessä tapahtui virhe",
+      "NAME_REQUIRED": "Kirjaston nimi on pakollinen",
+      "ID_REQUIRED": "Kirjastotunnus on pakollinen"
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Kirjaston ominaisuudet päivitettiin"
@@ -593,6 +684,9 @@
     "ARIA-LABEL": {
       "BREADCRUMB": "Siirtymispolku",
       "DROPDOWN": "Pudotusvalikko"
+    },
+    "HEADER": {
+      "SELECTED": "Valittu ({{ count }})"
     }
   },
   "NAME_COLUMN_LINK": {
@@ -633,6 +727,14 @@
       "JOINED": "Kirjastoon liityttiin",
       "JOIN_CANCELED": "Tämän kirjaston liittymispyyntö peruutettiin",
       "JOIN_REQUESTED": "Tämän kirjaston liittymispyyntö lähetettiin"
+    }
+  },
+  "NODE_FAVORITE_DIRECTIVE": {
+    "MESSAGES": {
+      "NODE_ADDED": "{{ name }} lisätty suosikkeihin",
+      "NODES_ADDED": "{{ number }} kohdetta lisätty suosikkeihin",
+      "NODE_REMOVED": "{{ name }} poistettu suosikeista",
+      "NODES_REMOVED": "{{ number }} kohdetta poistettu suosikeista"
     }
   }
 }

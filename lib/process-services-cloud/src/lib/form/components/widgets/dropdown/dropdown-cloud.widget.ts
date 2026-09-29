@@ -41,7 +41,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BehaviorSubject, isObservable, Subject } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
-import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { FormUtilsService } from '../../../services/form-utils.service';
 import { defaultValueValidator } from './validators';
@@ -163,11 +162,28 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
         this.setupDropdown();
 
-        this.formService.onFormVariableChanged.subscribe(({ field }) => {
-            if (field.id === this.field.id) {
+        /*
+            Wired once: both read `this.field` when they emit, so they survive every later setup run.
+            Re-wiring them on each setup would stack subscriptions and duplicate the events they raise.
+        */
+        this.subscribeToInputChanges();
+        this.initFilter();
+
+        this.formService.onFormVariableChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(({ field }) => {
+            if (this.isDependentOnChangedVariable(field)) {
                 this.setupDropdown();
             }
         });
+    }
+
+    private isDependentOnChangedVariable(field: FormFieldModel): boolean {
+        const variableName = this.field?.variableConfig?.variableName;
+
+        if (field.id === this.field.id) {
+            return true;
+        }
+
+        return this.isVariableOptionType && !!variableName && field?.variableConfig?.variableName === variableName;
     }
 
     private computeReadOnlyDisplayValue(): string | undefined {
@@ -223,8 +239,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
         this.setFormControlValue();
         this.updateFormControlState();
-        this.subscribeToInputChanges();
-        this.initFilter();
         this.handleErrors();
     }
 
@@ -323,12 +337,10 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     private persistFieldOptionsFromVariable(): void {
         const optionsPath = this.field?.variableConfig?.optionsPath ?? this.defaultVariableOptionPath;
         const variableName = this.field?.variableConfig?.variableName;
-        const processVariables = this.field?.form?.processVariables;
-        const formVariables = this.field?.form?.variables;
 
-        const dropdownOptions = this.getOptionsFromVariable(processVariables, formVariables, variableName);
+        const dropdownOptions = this.field?.form?.resolveVariableValue(variableName);
 
-        if (dropdownOptions) {
+        if (dropdownOptions != null) {
             const formVariableOptions: FormFieldOption[] = this.getOptionsFromPath(dropdownOptions, optionsPath);
             this.updateOptions(formVariableOptions);
             this.resetInvalidValue();
@@ -387,22 +399,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         }
 
         return option;
-    }
-
-    private getOptionsFromVariable(
-        processVariables: TaskVariableCloud[],
-        formVariables: TaskVariableCloud[],
-        variableName: string
-    ): TaskVariableCloud {
-        const processVariableDropdownOptions: TaskVariableCloud = this.getVariableValueByName(processVariables, variableName);
-        const formVariableDropdownOptions: TaskVariableCloud = this.getVariableValueByName(formVariables, variableName);
-
-        return processVariableDropdownOptions ?? formVariableDropdownOptions;
-    }
-
-    private getVariableValueByName(variables: TaskVariableCloud[], variableName: string): any {
-        return variables?.find((variable: TaskVariableCloud) => variable?.name === `variables.${variableName}` || variable?.name === variableName)
-            ?.value;
     }
 
     private persistFieldOptionsFromRestApi() {

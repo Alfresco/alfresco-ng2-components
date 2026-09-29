@@ -17,7 +17,8 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
     WidgetComponent,
     FormBaseModule,
@@ -25,11 +26,11 @@ import {
     DataColumn,
     DataTableComponent,
     NoContentTemplateDirective,
-    EmptyContentComponent
+    EmptyContentComponent,
+    FormFieldModel
 } from '@alfresco/adf-core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormCloudService } from '../../../services/form-cloud.service';
-import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { WidgetDataTableAdapter } from './data-table-adapter.widget';
 import { DataTablePathParserHelper } from './helpers/data-table-path-parser.helper';
 
@@ -63,15 +64,22 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     private readonly defaultResponseProperty = 'data';
     private readonly pathParserHelper = new DataTablePathParserHelper();
     private readonly formCloudService = inject(FormCloudService);
+    private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit(): void {
         this.init();
 
-        this.formService.onFormVariableChanged.subscribe(({ field }) => {
-            if (field.id === this.field.id) {
+        this.formService.onFormVariableChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(({ field }) => {
+            if (this.isDependentOnChangedVariable(field)) {
                 this.init();
             }
         });
+    }
+
+    private isDependentOnChangedVariable(field: FormFieldModel): boolean {
+        const variableName = this.field?.variableConfig?.variableName;
+
+        return field.id === this.field.id || (!!variableName && field?.variableConfig?.variableName === variableName);
     }
 
     private init(): void {
@@ -127,18 +135,7 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     private getDataFromVariable(): any {
-        const processVariables = this.field?.form?.processVariables;
-        const formVariables = this.field?.form?.variables;
-
-        const processVariableData = this.getVariableValueByName(processVariables, this.variableName);
-        const formVariableData = this.getVariableValueByName(formVariables, this.variableName);
-
-        return processVariableData ?? formVariableData;
-    }
-
-    private getVariableValueByName(variables: TaskVariableCloud[], variableName: string): any {
-        return variables?.find((variable: TaskVariableCloud) => variable?.name === `variables.${variableName}` || variable?.name === variableName)
-            ?.value;
+        return this.field?.form?.resolveVariableValue(this.variableName);
     }
 
     private setPreviewState(): void {

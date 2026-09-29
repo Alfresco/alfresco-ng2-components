@@ -152,6 +152,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
         this.runMiddlewareServices();
         if (!this.readOnly) {
             this.formRulesManager.initialize(this.formDefinition);
+            this.formDefinition?.validateForm();
         }
 
         this.formService.formRulesEvent
