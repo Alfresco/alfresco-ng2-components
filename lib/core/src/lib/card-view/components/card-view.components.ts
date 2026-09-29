@@ -26,3 +26,4 @@ export * from './card-view-selectitem/card-view-selectitem.component';
 export * from './card-view-selectitem/select-filter-input/select-filter-input.component';
 export * from './card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component';
 export * from './card-view-arrayitem/card-view-arrayitem.component';
+export * from './card-view-select-node-item/card-view-select-node-item.component';

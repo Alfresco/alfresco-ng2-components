@@ -26,6 +26,7 @@ import {
     CardViewBoolItemModel,
     CardViewDatetimeItemModel,
     CardViewSelectItemModel,
+    CardViewSelectNodeItemModel,
     LogService,
     CardViewLongItemModel
 } from '@alfresco/adf-core';
@@ -473,6 +474,40 @@ describe('PropertyGroupTranslatorService', () => {
             const cardViewProperty = cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewLongItemModel).toBeTruthy();
             expect(cardViewProperty.value).toBe(0);
+        });
+    });
+
+    describe('Smart folder templates', () => {
+        beforeEach(() => {
+            property = {
+                name: 'smf:system-template-location',
+                title: 'Template location',
+                dataType: 'd:noderef',
+                defaultValue: '',
+                mandatory: false,
+                multiValued: false
+            };
+        });
+
+        it('should translate properties of the system smart folder aspect group to a select node model', () => {
+            propertyGroup = { name: 'smf:systemConfigSmartFolder', title: 'System Smart Folder', properties: [property] };
+            propertyGroups.push(propertyGroup);
+
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, {}, null)[0];
+
+            expect(cardViewGroup.properties[0] instanceof CardViewSelectNodeItemModel).toBeTruthy();
+            expect(cardViewGroup.properties[0].type).toBe('smartFolderTemplate');
+        });
+
+        it('should NOT use the select node model for groups without a smart folder aspect', () => {
+            property.dataType = 'd:text';
+            propertyGroup = { name: 'cm:titled', title: 'Titled', properties: [property] };
+            propertyGroups.push(propertyGroup);
+
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, {}, null)[0];
+
+            expect(cardViewGroup.properties[0] instanceof CardViewSelectNodeItemModel).toBeFalsy();
+            expect(cardViewGroup.properties[0] instanceof CardViewTextItemModel).toBeTruthy();
         });
     });
 });

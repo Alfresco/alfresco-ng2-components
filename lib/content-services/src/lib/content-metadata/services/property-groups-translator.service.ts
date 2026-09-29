@@ -27,6 +27,7 @@ import {
     CardViewItemProperties,
     CardViewLongItemModel,
     CardViewSelectItemModel,
+    CardViewSelectNodeItemModel,
     CardViewTextItemModel,
     DecimalNumberPipe,
     LogService
@@ -45,6 +46,7 @@ const D_LONG = 'd:long';
 const D_FLOAT = 'd:float';
 const D_DOUBLE = 'd:double';
 const D_BOOLEAN = 'd:boolean';
+const SYSTEM_SMART_FOLDER_ASPECT = 'smf:systemConfigSmartFolder';
 
 export const RECOGNISED_ECM_TYPES = [D_TEXT, D_MLTEXT, D_DATE, D_DATETIME, D_INT, D_LONG, D_FLOAT, D_DOUBLE, D_BOOLEAN];
 
@@ -66,7 +68,8 @@ export class PropertyGroupTranslatorService {
     public translateToCardViewGroups(propertyGroups: OrganisedPropertyGroup[], propertyValues, definition: Definition): CardViewGroup[] {
         return propertyGroups.map((propertyGroup) => {
             const translatedPropertyGroup: any = Object.assign({}, propertyGroup);
-            translatedPropertyGroup.properties = this.translateArray(propertyGroup.properties, propertyValues, definition);
+            const isSmartFolder = this.isSmartFolderGroup(propertyGroup.name);
+            translatedPropertyGroup.properties = this.translateArray(propertyGroup.properties, propertyValues, definition, isSmartFolder);
             translatedPropertyGroup.editable = translatedPropertyGroup.properties.some((property) => property.editable);
             return translatedPropertyGroup;
         });
@@ -89,11 +92,7 @@ export class PropertyGroupTranslatorService {
         return this.transform(propertyDefinition, property.dataType, property.isMultiValued);
     }
 
-    private translateArray(properties: Property[], propertyValues: any, definition: Definition): CardViewItem[] {
-        return properties.map((property) => this.translate(property, propertyValues, this.getPropertyConstraints(property.name, definition)));
-    }
-
-    private translate(property: Property, propertyValues: any, constraints: Constraint[]): CardViewItem {
+    private translate(property: Property, propertyValues: any, constraints: Constraint[], isSmartFolder = false): CardViewItem {
         let propertyValue: any;
         if (propertyValues && !this.isEmpty(propertyValues[property.name])) {
             propertyValue = propertyValues[property.name];
@@ -112,13 +111,15 @@ export class PropertyGroupTranslatorService {
             constraints
         };
 
-        return this.transform(propertyDefinition, property.dataType, property.multiValued);
+        return this.transform(propertyDefinition, property.dataType, property.multiValued, isSmartFolder);
     }
 
-    private transform(propertyDefinition: CardViewItemProperties, dataType: string, isMultiValued: boolean): CardViewItem {
+    private transform(propertyDefinition: CardViewItemProperties, dataType: string, isMultiValued: boolean, isSmartFolder = false): CardViewItem {
         let cardViewItemProperty: CardViewItem;
 
-        if (this.isListOfValues(propertyDefinition.constraints)) {
+        if (isSmartFolder) {
+            cardViewItemProperty = new CardViewSelectNodeItemModel(propertyDefinition);
+        } else if (this.isListOfValues(propertyDefinition.constraints)) {
             const options = propertyDefinition.constraints[0].parameters.allowedValues.map((value) => ({ key: value, label: value }));
             const properties = Object.assign(propertyDefinition, { options$: of(options), multivalued: isMultiValued });
 
@@ -222,5 +223,15 @@ export class PropertyGroupTranslatorService {
             decimalNumberPipe = new DecimalNumberPipe();
         });
         return decimalNumberPipe;
+    }
+
+    private isSmartFolderGroup(groupName: string): boolean {
+        return groupName === SYSTEM_SMART_FOLDER_ASPECT;
+    }
+
+    private translateArray(properties: Property[], propertyValues: any, definition: Definition, isSmartFolder = false): CardViewItem[] {
+        return properties.map((property) =>
+            this.translate(property, propertyValues, this.getPropertyConstraints(property.name, definition), isSmartFolder)
+        );
     }
 }
