@@ -37,6 +37,12 @@ describe('FormFieldModel', () => {
         expect(model.json).toBe(json);
     });
 
+    it('should default colspan and rowspan to 1 when omitted from json', () => {
+        const model = new FormFieldModel(new FormModel(), { id: 'text1', type: FormFieldTypes.TEXT, name: 'Text' });
+        expect(model.colspan).toBe(1);
+        expect(model.rowspan).toBe(1);
+    });
+
     it('should return an isolated authored value snapshot', () => {
         const authoredValue = { blocks: [{ data: { text: '${field.name}' } }] };
         const model = new FormFieldModel(new FormModel(), { id: 'richText', type: FormFieldTypes.DISPLAY_RICH_TEXT, value: authoredValue });
