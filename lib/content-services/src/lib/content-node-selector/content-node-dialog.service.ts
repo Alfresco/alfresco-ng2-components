@@ -239,9 +239,10 @@ export class ContentNodeDialogService {
      *
      * @param parentFolderId ID of the folder used as the root of the selector
      * @param title Title shown in the dialog
+     * @param isSelectionValid Optional predicate that decides whether the currently highlighted node can be selected
      * @returns Information about the selected node(s)
      */
-    openNodeSelectionDialog(parentFolderId: string, title: string): Observable<Node[]> {
+    openNodeSelectionDialog(parentFolderId: string, title: string, isSelectionValid?: (entry: Node) => boolean): Observable<Node[]> {
         const select = new Subject<Node[]>();
 
         const data: ContentNodeSelectorComponentData = {
@@ -251,7 +252,8 @@ export class ContentNodeDialogService {
             select,
             showFilesInResult: true,
             showDropdownSiteList: false,
-            restrictRootToCurrentFolderId: true
+            restrictRootToCurrentFolderId: true,
+            isSelectionValid
         };
 
         const dialogRef = this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');

@@ -20,11 +20,13 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewSelectNodeItemComponent } from './card-view-select-node-item.component';
 import { CardViewSelectNodeItemModel } from '../../models/card-view-select-node-item.model';
 import { NoopTranslateModule } from '../../../testing/noop-translate.module';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('CardViewSelectNodeItemComponent', () => {
     let fixture: ComponentFixture<CardViewSelectNodeItemComponent>;
     let component: CardViewSelectNodeItemComponent;
     let cardViewUpdateService: CardViewUpdateService;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -34,6 +36,7 @@ describe('CardViewSelectNodeItemComponent', () => {
         fixture = TestBed.createComponent(CardViewSelectNodeItemComponent);
         component = fixture.componentInstance;
         cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
 
         component.property = new CardViewSelectNodeItemModel({
             label: 'Template',
@@ -59,25 +62,41 @@ describe('CardViewSelectNodeItemComponent', () => {
     it('should render an input when the property is editable', () => {
         fixture.detectChanges();
 
-        const input = fixture.nativeElement.querySelector(`input[data-automation-id="card-select-node-${component.property.key}"]`);
-        expect(input).not.toBeNull();
+        expect(testingUtils.getByDataAutomationId(`card-select-node-${component.property.key}`)).not.toBeNull();
     });
 
-    it('should NOT render an input when the property is not editable', () => {
+    it('should NOT render an input when the property is not editable and has no value', () => {
         component.editable = false;
         component.property.editable = false;
         fixture.detectChanges();
 
-        const input = fixture.nativeElement.querySelector('input');
-        expect(input).toBeNull();
+        expect(testingUtils.getByCSS('input')).toBeNull();
+    });
+
+    it('should render the value in read-only mode when the property is not editable but has a value', () => {
+        component.editable = false;
+        component.property.editable = false;
+        component.property.value = 'workspace://SpacesStore/template-id';
+        fixture.detectChanges();
+
+        expect(testingUtils.getByCSS('input')).not.toBeNull();
+    });
+
+    it('should NOT notify listeners when clicked while not editable', () => {
+        component.editable = false;
+        component.property.editable = false;
+        const clickedSpy = spyOn(cardViewUpdateService, 'clicked');
+
+        component.onClick();
+
+        expect(clickedSpy).not.toHaveBeenCalled();
     });
 
     it('should trigger onClick when the form field is clicked', () => {
         const onClickSpy = spyOn(component, 'onClick');
         fixture.detectChanges();
 
-        const input = fixture.nativeElement.querySelector('input');
-        input.click();
+        testingUtils.clickByCSS('.adf-property-field');
 
         expect(onClickSpy).toHaveBeenCalled();
     });
@@ -86,8 +105,7 @@ describe('CardViewSelectNodeItemComponent', () => {
         const onClickSpy = spyOn(component, 'onClick');
         fixture.detectChanges();
 
-        const input = fixture.nativeElement.querySelector('input');
-        input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+        testingUtils.keyBoardEventByCSS('input', 'keydown', 'Enter', 'Enter');
 
         expect(onClickSpy).toHaveBeenCalled();
     });
@@ -96,8 +114,7 @@ describe('CardViewSelectNodeItemComponent', () => {
         const onClickSpy = spyOn(component, 'onClick');
         fixture.detectChanges();
 
-        const input = fixture.nativeElement.querySelector('input');
-        input.dispatchEvent(new KeyboardEvent('keydown', { key: 'a' }));
+        testingUtils.keyBoardEventByCSS('input', 'keydown', 'KeyA', 'a');
 
         expect(onClickSpy).not.toHaveBeenCalled();
     });

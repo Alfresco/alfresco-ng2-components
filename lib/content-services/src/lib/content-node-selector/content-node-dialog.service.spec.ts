@@ -139,6 +139,17 @@ describe('ContentNodeDialogService', () => {
         });
     });
 
+    it('should forward the isSelectionValid predicate to the node selection dialog data', () => {
+        const isSelectionValid = (entry: Node) => entry.isFile;
+
+        service.openNodeSelectionDialog('template-folder-id', 'Select template', isSelectionValid);
+
+        const data = spyOnDialogOpen.calls.mostRecent().args[1].data;
+        expect(data.isSelectionValid).toBe(isSelectionValid);
+        expect(data.isSelectionValid({ isFile: true } as Node)).toBeTrue();
+        expect(data.isSelectionValid({ isFile: false } as Node)).toBeFalse();
+    });
+
     it('should be able to open the dialog for files using the first user site', fakeAsync(() => {
         spyOn(sitesService, 'getSites').and.returnValue(of(fakeSiteList));
         spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeEntry));

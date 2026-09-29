@@ -1,4 +1,4 @@
-@if (isEditable) {
+@if (isEditable || !property.isEmpty()) {
     <mat-form-field class="adf-property-field" (click)="onClick()">
         <mat-label>{{ property.label | translate }}</mat-label>
         <input

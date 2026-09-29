@@ -1927,7 +1927,7 @@ describe('ContentMetadataComponent', () => {
             expect(openDialogSpy).not.toHaveBeenCalled();
         });
 
-        it('should open the selector rooted at the templates folder and store the selected node', () => {
+        it('should open the selector rooted at the templates folder and store the selected node as a node reference', () => {
             spyOn(nodesApiService, 'getNode').and.returnValue(of({ id: 'templates-folder-id' } as Node));
             const openDialogSpy = spyOn(contentNodeDialogService, 'openNodeSelectionDialog').and.returnValue(
                 of([{ id: 'template-id', name: 'My Template' } as Node])
@@ -1938,10 +1938,21 @@ describe('ContentMetadataComponent', () => {
             cardViewUpdateService.clicked(target);
 
             expect(nodesApiService.getNode).toHaveBeenCalledWith('-root-', templatesRelativePath);
-            expect(openDialogSpy).toHaveBeenCalledWith('templates-folder-id', jasmine.any(String));
-            expect(target.value).toBe('template-id');
+            expect(openDialogSpy).toHaveBeenCalledWith('templates-folder-id', jasmine.any(String), jasmine.any(Function));
+            expect(target.value).toBe('workspace://SpacesStore/template-id');
             expect(target.displayName).toBe('My Template');
-            expect(updateSpy).toHaveBeenCalledWith(target, 'template-id');
+            expect(updateSpy).toHaveBeenCalledWith(target, 'workspace://SpacesStore/template-id');
+        });
+
+        it('should only allow files to be selected in the templates dialog', () => {
+            spyOn(nodesApiService, 'getNode').and.returnValue(of({ id: 'templates-folder-id' } as Node));
+            const openDialogSpy = spyOn(contentNodeDialogService, 'openNodeSelectionDialog').and.returnValue(of([]));
+
+            cardViewUpdateService.clicked(createTemplateItem());
+
+            const isSelectionValid = openDialogSpy.calls.mostRecent().args[2] as (entry: Node) => boolean;
+            expect(isSelectionValid({ isFile: true } as Node)).toBeTrue();
+            expect(isSelectionValid({ isFile: false } as Node)).toBeFalse();
         });
 
         it('should show an error and not open the dialog when the templates folder is missing', () => {

@@ -34,6 +34,8 @@ export class CardViewSelectNodeItemComponent extends BaseCardView<CardViewSelect
     declare editable: boolean;
 
     onClick(): void {
-        this.cardViewUpdateService.clicked(this.property);
+        if (this.isEditable) {
+            this.cardViewUpdateService.clicked(this.property);
+        }
     }
 }

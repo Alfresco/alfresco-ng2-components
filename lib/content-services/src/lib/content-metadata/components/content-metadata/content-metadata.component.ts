@@ -60,6 +60,7 @@ import { CategoriesManagementComponent } from '../../../category/categories-mana
 const DEFAULT_SEPARATOR = ', ';
 const SMART_FOLDER_TEMPLATE_TYPE = 'smartFolderTemplate';
 const SMART_FOLDER_TEMPLATES_RELATIVE_PATH = 'Data Dictionary/Smart Folder Templates';
+const NODE_REF_PREFIX = 'workspace://SpacesStore/';
 
 const DefaultPanels = {
     PROPERTIES: 'Properties',
@@ -240,16 +241,21 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
 
         this.findSmartFolderTemplatesFolderId()
             .pipe(
-                switchMap((folderId) => (folderId ? this.contentNodeDialogService.openNodeSelectionDialog(folderId, dialogTitle) : of<Node[]>([]))),
+                switchMap((folderId) =>
+                    folderId
+                        ? this.contentNodeDialogService.openNodeSelectionDialog(folderId, dialogTitle, (entry: Node) => entry.isFile)
+                        : of<Node[]>([])
+                ),
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((selections: Node[]) => {
                 const selectedNode = selections?.[0];
                 if (selectedNode) {
                     const smartFolderTarget = target as CardViewSelectNodeItemModel;
+                    const nodeReference = `${NODE_REF_PREFIX}${selectedNode.id}`;
                     smartFolderTarget.displayName = selectedNode.name;
-                    smartFolderTarget.value = selectedNode.id;
-                    this.cardViewContentUpdateService.update(smartFolderTarget, selectedNode.id);
+                    smartFolderTarget.value = nodeReference;
+                    this.cardViewContentUpdateService.update(smartFolderTarget, nodeReference);
                 }
             });
     }
