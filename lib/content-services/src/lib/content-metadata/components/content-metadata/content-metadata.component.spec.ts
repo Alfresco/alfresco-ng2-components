@@ -1971,7 +1971,7 @@ describe('ContentMetadataComponent', () => {
             getGroupedPropertiesSpy.and.returnValue(of([{ properties: [templateItem] }]));
             spyOn(nodesApiService, 'getNode').and.returnValue(of({ id: 'template-id', name: 'Resolved Template' } as Node));
 
-            component['loadProperties'](node);
+            component.ngOnChanges({ node: new SimpleChange(null, node, false) });
             component.groupedProperties$.subscribe();
 
             expect(nodesApiService.getNode).toHaveBeenCalledWith('template-id');
@@ -1984,7 +1984,7 @@ describe('ContentMetadataComponent', () => {
             getGroupedPropertiesSpy.and.returnValue(of([{ properties: [firstItem, secondItem] }]));
             const getNodeSpy = spyOn(nodesApiService, 'getNode').and.callFake((nodeId: string) => of({ id: nodeId, name: `Name ${nodeId}` } as Node));
 
-            component['loadProperties'](node);
+            component.ngOnChanges({ node: new SimpleChange(null, node, false) });
             component.groupedProperties$.subscribe();
 
             expect(getNodeSpy).toHaveBeenCalledTimes(2);
@@ -1997,7 +1997,7 @@ describe('ContentMetadataComponent', () => {
             getGroupedPropertiesSpy.and.returnValue(of([{ properties: [templateItem] }]));
             spyOn(nodesApiService, 'getNode').and.returnValue(throwError(() => new Error('not found')));
 
-            component['loadProperties'](node);
+            component.ngOnChanges({ node: new SimpleChange(null, node, false) });
             component.groupedProperties$.subscribe();
 
             expect(templateItem.displayName).toBeUndefined();
