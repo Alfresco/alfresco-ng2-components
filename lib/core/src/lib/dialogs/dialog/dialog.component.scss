@@ -197,7 +197,7 @@ $dialog-padding: 24px;
         .adf-dialog-actions-confirm-btn {
             @include mat.button-overrides(
                 (
-                    text-label-text-color: var(--theme-primary-color)
+                    text-label-text-color: var(--mat-sys-primary)
                 )
             );
         }

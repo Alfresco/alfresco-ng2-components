@@ -10,7 +10,7 @@ adf-select-apps-dialog {
         .adf-select-apps-dialog-start-btn {
             @include mat.button-overrides(
                 (
-                    text-label-text-color: var(--theme-primary-color)
+                    text-label-text-color: var(--mat-sys-primary)
                 )
             );
         }

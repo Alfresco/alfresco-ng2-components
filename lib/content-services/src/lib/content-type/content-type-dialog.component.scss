@@ -23,7 +23,7 @@
     &-content-type-dialog-apply-button {
         @include mat.button-overrides(
             (
-                text-label-text-color: var(--theme-primary-color)
+                text-label-text-color: var(--mat-sys-primary)
             )
         );
     }
