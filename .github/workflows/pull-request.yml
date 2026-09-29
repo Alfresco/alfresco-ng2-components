@@ -25,9 +25,16 @@ on:
       - master
       - develop-patch*
       - master-patch*
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ (github.event_name != 'pull_request_review' || (github.event.review.state == 'approved' && github.event.review.commit_id == github.event.pull_request.head.sha && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.review.author_association) && (github.event.pull_request.base.ref == 'develop' || github.event.pull_request.base.ref == 'master' || startsWith(github.event.pull_request.base.ref, 'develop-patch') || startsWith(github.event.pull_request.base.ref, 'master-patch')))) && github.ref || github.run_id }}
   cancel-in-progress: true
 
 env:
@@ -35,7 +42,20 @@ env:
   NODE_OPTIONS: "--max-old-space-size=5120"
 
 jobs:
+  review-gate:
+    runs-on: ubuntu-latest
+    outputs:
+      should-run: ${{ steps.check.outputs.should-run }}
+    steps:
+      - name: Check whether CI should run
+        id: check
+        env:
+          SHOULD_RUN: ${{ github.event_name != 'pull_request_review' || (github.event.review.state == 'approved' && github.event.review.commit_id == github.event.pull_request.head.sha && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.review.author_association) && (github.event.pull_request.base.ref == 'develop' || github.event.pull_request.base.ref == 'master' || startsWith(github.event.pull_request.base.ref, 'develop-patch') || startsWith(github.event.pull_request.base.ref, 'master-patch'))) }}
+        run: echo "should-run=$SHOULD_RUN" >> "$GITHUB_OUTPUT"
+
   pre-checks:
+    needs: [review-gate]
+    if: ${{ needs.review-gate.outputs.should-run == 'true' }}
     runs-on: ubuntu-latest
     outputs:
       code-changed: ${{ steps.path-filter.outputs.code-changed }}
@@ -71,8 +91,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if [ "${{ github.event_name }}" != "pull_request" ]; then
-            echo "Not a PR event — assuming code changed"
+          if [ "${{ github.event_name }}" != "pull_request" ] && [ "${{ github.event_name }}" != "pull_request_review" ]; then
+            echo "Not a PR or PR review event — assuming code changed"
             echo "code-changed=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -95,6 +115,8 @@ jobs:
           echo "Code changed: $CODE_CHANGED"
 
   check-if-pr-is-approved:
+    needs: [review-gate]
+    if: ${{ needs.review-gate.outputs.should-run == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -124,6 +146,9 @@ jobs:
 
           if [ "$EVENT_NAME" == "schedule" ] || [ "$EVENT_NAME" == "workflow_dispatch" ]; then
             echo -e "\033[32mSchedule/dispatch event — skipping approval check\033[0m"
+            skip="true"
+          elif [ "$EVENT_NAME" == "pull_request_review" ]; then
+            echo -e "\033[32mApproved review validated by review gate — skipping duplicate approval check\033[0m"
             skip="true"
           elif [ "$ACTOR" == "dependabot[bot]" ] || [ "$ACTOR" == "alfresco-build" ]; then
             echo -e "\033[32mCommit by $ACTOR — skipping approval check\033[0m"
@@ -159,10 +184,22 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ steps.pr-number.outputs.pr_number }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           echo "Checking approval for PR: $PR_NUMBER"
-          checkApproval=$(gh api "/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/reviews" | jq '.[] | select(.state == "APPROVED") | .user.login')
-          if [[ $checkApproval ]]; then
+          if [ -z "$PR_HEAD_SHA" ]; then
+            PR_HEAD_SHA=$(gh api "/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '.head.sha')
+          fi
+          if gh api --paginate --slurp "/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/reviews?per_page=100" | jq -e --arg head_sha "$PR_HEAD_SHA" '
+            flatten
+            | group_by(.user.login)
+            | map(max_by(.submitted_at))
+            | any(
+                .state == "APPROVED"
+                and .commit_id == $head_sha
+                and (.author_association == "OWNER" or .author_association == "MEMBER" or .author_association == "COLLABORATOR")
+              )
+          ' > /dev/null; then
             echo -e "\033[32mPR approved\033[0m"
           else
             echo -e "\033[31mPR NOT approved\033[0m"
@@ -213,7 +250,7 @@ jobs:
           full-setup: 'false'
       - name: Run lint
         env:
-          BASE_REF: ${{ github.base_ref || 'develop' }}
+          BASE_REF: ${{ github.event.pull_request.base.ref || github.base_ref || 'develop' }}
         run: pnpm nx affected --target=lint --base="origin/$BASE_REF" --head=HEAD
       - name: Save nx cache
         if: ${{ success() }}
@@ -226,7 +263,7 @@ jobs:
     needs: [setup]
     uses: ./.github/workflows/build-lib-workflow.yml
     with:
-      base_ref: ${{ github.base_ref || 'develop' }}
+      base_ref: ${{ github.event.pull_request.base.ref || github.base_ref || 'develop' }}
 
   build-storybook:
     timeout-minutes: 30
@@ -246,7 +283,7 @@ jobs:
           full-setup: 'false'
       - name: Build Storybook
         env:
-          BASE_REF: ${{ github.base_ref || 'develop' }}
+          BASE_REF: ${{ github.event.pull_request.base.ref || github.base_ref || 'develop' }}
         run: |
           pnpm nx affected --target=build-storybook --base="origin/$BASE_REF" --head=HEAD --configuration=ci
       - name: Save nx cache
@@ -262,7 +299,7 @@ jobs:
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     with:
-      base_ref: ${{ github.base_ref || 'develop' }}
+      base_ref: ${{ github.event.pull_request.base.ref || github.base_ref || 'develop' }}
 
   PR-size-check:
     if: ${{ github.event_name == 'pull_request' }}
@@ -309,7 +346,8 @@ jobs:
             }
 
   PR-forbidden-labels:
-    if: ${{ inputs.cron-run == '' || inputs.cron-run == 'false' }}
+    needs: [review-gate]
+    if: ${{ needs.review-gate.outputs.should-run == 'true' && (inputs.cron-run == '' || inputs.cron-run == 'false') }}
     runs-on: ubuntu-latest
     steps:
       - name: Check for forbidden labels
@@ -329,11 +367,12 @@ jobs:
             }
 
   finalize:
-    if: ${{ always() }}
+    if: ${{ always() && needs.review-gate.outputs.should-run == 'true' }}
     runs-on: ubuntu-latest
     name: Final Results
     needs:
       [
+        review-gate,
         check-if-pr-is-approved,
         pre-checks,
         setup,
