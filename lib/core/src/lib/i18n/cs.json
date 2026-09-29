@@ -307,7 +307,8 @@
         "CLEAR": "Vymazat",
         "TOGGLE": "Přepnout hodnotu",
         "COPY_TO_CLIPBOARD": "Dvojím kliknutím zkopírovat hodnotu",
-        "EDIT_ASPECTS": "Úprava aspektů"
+        "EDIT_ASPECTS": "Úprava aspektů",
+        "SELECT_TEMPLATE": "Click to select the template"
       },
       "ACCESSIBILITY": {
         "EDIT": "Tlačítko Upravit",

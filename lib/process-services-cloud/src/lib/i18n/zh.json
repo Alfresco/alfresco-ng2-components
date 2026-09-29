@@ -45,6 +45,7 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "无法加载流程定义，请确定您是否有访问权限。",
         "START": "无法启动新流程实例，请确定您是否有访问权限。",
+        "OUTCOME_NOT_FOUND": "The requested form action is no longer available.",
         "PROCESS_NAME_REQUIRED": "流程名称必填",
         "PROCESS_DEFINITION_REQUIRED": "流程定义必填",
         "MAXIMUM_LENGTH": "超出长度，最多 {{characters}} 字符",

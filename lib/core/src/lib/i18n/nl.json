@@ -307,7 +307,8 @@
         "CLEAR": "Wissen",
         "TOGGLE": "Waarde in-/uitschakelen",
         "COPY_TO_CLIPBOARD": "Dubbelklikken om waarde te kopiëren",
-        "EDIT_ASPECTS": "Aspect bewerken"
+        "EDIT_ASPECTS": "Aspect bewerken",
+        "SELECT_TEMPLATE": "Click to select the template"
       },
       "ACCESSIBILITY": {
         "EDIT": "Knop Bewerken",

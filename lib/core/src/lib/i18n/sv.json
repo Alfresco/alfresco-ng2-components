@@ -307,7 +307,8 @@
         "CLEAR": "Rensa",
         "TOGGLE": "Växla värde",
         "COPY_TO_CLIPBOARD": "Dubbelklicka för att kopiera värde",
-        "EDIT_ASPECTS": "Redigera aspekt"
+        "EDIT_ASPECTS": "Redigera aspekt",
+        "SELECT_TEMPLATE": "Click to select the template"
       },
       "ACCESSIBILITY": {
         "EDIT": "Redigera {{ sectionName }}",

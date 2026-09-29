@@ -502,6 +502,10 @@
       "NO_ITEMS_MESSAGE": "Aucun {{ groupTitle }} n’est actuellement ajouté",
       "SAVE_OR_DISCARD_CHANGES": "Enregistrer ou rejeter les modifications pour continuer"
     },
+    "SMART_FOLDER": {
+      "SELECT_TEMPLATE_DIALOG_TITLE": "Select smart folder template",
+      "TEMPLATES_FOLDER_NOT_FOUND": "Smart Folder Templates directory wasn't found"
+    },
     "CONTENT_TYPE": {
       "DIALOG": {
         "TITLE": "Modifier le type de contenu",

@@ -307,7 +307,8 @@
         "CLEAR": "Borrar",
         "TOGGLE": "Cambiar valor",
         "COPY_TO_CLIPBOARD": "Haga doble clic para copiar el valor",
-        "EDIT_ASPECTS": "Editar aspecto"
+        "EDIT_ASPECTS": "Editar aspecto",
+        "SELECT_TEMPLATE": "Click to select the template"
       },
       "ACCESSIBILITY": {
         "EDIT": "Editar {{ sectionName }}",

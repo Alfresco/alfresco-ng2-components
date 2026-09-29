@@ -45,6 +45,7 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Не удалось загрузить определения процесса, проверьте, есть ли у вас доступ.",
         "START": "Не удалось начать новый экземпляр процесса, проверьте, есть ли у вас доступ.",
+        "OUTCOME_NOT_FOUND": "The requested form action is no longer available.",
         "PROCESS_NAME_REQUIRED": "Требуется имя процесса",
         "PROCESS_DEFINITION_REQUIRED": "Требуется определение процесса",
         "MAXIMUM_LENGTH": "Превышение длины, макс. символов: {{characters}}.",
