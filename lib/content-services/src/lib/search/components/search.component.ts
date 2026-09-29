@@ -119,14 +119,17 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
 
         this.searchRequestStream
             .pipe(
-                switchMap((searchTerm) =>
-                    this.searchService.search(searchTerm, this.maxResults, this.skipResults).pipe(
+                switchMap((searchTerm) => {
+                    if (!searchTerm) {
+                        return EMPTY;
+                    }
+                    return this.searchService.search(searchTerm, this.maxResults, this.skipResults).pipe(
                         catchError((error) => {
                             this.onSearchDataError(error);
                             return EMPTY;
                         })
-                    )
-                ),
+                    );
+                }),
                 takeUntilDestroyed()
             )
             .subscribe((result) => this.onSearchDataLoaded(result));
@@ -137,13 +140,14 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.searchTerm?.currentValue) {
+        if (changes.searchTerm) {
             this.loadSearchResults(changes.searchTerm.currentValue);
         }
     }
     resetResults() {
         this.cleanResults();
         this.setVisibility();
+        this.searchRequestStream.next('');
     }
 
     reload() {
@@ -160,8 +164,6 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
         this.resetResults();
         if (searchTerm) {
             this.searchRequestStream.next(searchTerm);
-        } else {
-            this.cleanResults();
         }
     }
 

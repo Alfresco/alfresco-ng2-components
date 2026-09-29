@@ -144,6 +144,27 @@ describe('SearchComponent', () => {
             expect(element.querySelectorAll('#autocomplete-search-result-list > li').length).toBe(1);
             expect(element.querySelector('#result_option_0').textContent.trim()).toBe('TEST_DOC');
         });
+
+        it('should discard a pending request when the search is cleared before it resolves', () => {
+            const pendingResponse = new Subject<ResultSetPaging>();
+            spyOn(searchService, 'search').and.returnValue(pendingResponse.asObservable());
+
+            component.setSearchWordTo('searchTerm');
+            fixture.detectChanges();
+
+            expect(pendingResponse.observed).toBeTrue();
+
+            component.setSearchWordTo('');
+            fixture.detectChanges();
+
+            expect(pendingResponse.observed).toBeFalse();
+
+            pendingResponse.next(result);
+            pendingResponse.complete();
+            fixture.detectChanges();
+
+            expect(element.querySelector('#result_option_0')).toBeNull();
+        });
     });
 
     describe('search node', () => {
