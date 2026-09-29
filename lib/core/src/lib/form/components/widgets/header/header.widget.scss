@@ -1,6 +1,7 @@
 .adf-container-widget-header .adf-container-widget-header__text {
     border-bottom: 1px solid var(--mat-sys-outline-variant);
     padding-bottom: 10px;
+    margin-block-end: 12px;
     cursor: default;
     user-select: none;
     font-size: var(--adf-header-font-size, var(--mat-sys-headline-small-size));
