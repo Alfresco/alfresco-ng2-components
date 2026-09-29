@@ -1120,14 +1120,16 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should call service with the correct parameters when formCloud is defined and custom outcome is clicked', async () => {
-            formDefinitionSpy.and.returnValue(of(fakeFormModelJson));
+            formDefinitionSpy.and.returnValue(of({ formRepresentation: { formDefinition: fakeFormModelJson } }));
             component.ngOnChanges({ appName: firstChange });
             component.processForm.controls['processInstanceName'].setValue('My Process 1');
             component.appName = 'test app name';
-            component.formCloud = new FormModel(JSON.stringify(fakeFormModelJson));
-            component.formCloud.values = { dropdown: { id: '1', name: 'label 2' } };
             component.processDefinitionCurrent = fakeProcessDefinitions[2];
             component.processPayloadCloud.processDefinitionKey = fakeProcessDefinitions[2].key;
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            component.formCloud.values = { dropdown: { id: '1', name: 'label 2' } };
 
             const payload: ProcessWithFormPayloadCloud = new ProcessWithFormPayloadCloud({
                 processName: component.processInstanceName.value,
@@ -1139,8 +1141,6 @@ describe('StartProcessCloudComponent', () => {
 
             const formOutcomeModel = new FormOutcomeModel(null, fakeFormModelJson.outcomes[0]);
             const event = new FormOutcomeEvent(formOutcomeModel);
-
-            fixture.detectChanges();
 
             component.onCustomOutcomeClicked(event);
 
@@ -1585,16 +1585,18 @@ describe('StartProcessCloudComponent', () => {
         const successSpy = spyOn(component.success, 'emit');
 
         getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
-        formDefinitionSpy.and.returnValue(of(fakeFormModelJson));
+        formDefinitionSpy.and.returnValue(of({ formRepresentation: { formDefinition: fakeFormModelJson } }));
         startProcessWithFormSpy.and.returnValue(of(fakeProcessInstance));
 
         component.ngOnChanges({ appName: firstChange });
         component.processForm.controls['processInstanceName'].setValue('My Process 1');
         component.appName = 'test app name';
-        component.formCloud = new FormModel(JSON.stringify(fakeFormModelJson));
-        component.formCloud.values = { dropdown: { id: '1', name: 'label 2' } };
         component.processDefinitionCurrent = fakeProcessDefinitions[2];
         component.processPayloadCloud.processDefinitionKey = fakeProcessDefinitions[2].key;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        component.formCloud.values = { dropdown: { id: '1', name: 'label 2' } };
 
         const customOutcome = {
             id: 'custom_outcome_id',
@@ -1602,8 +1604,6 @@ describe('StartProcessCloudComponent', () => {
         };
         const formOutcomeModel = new FormOutcomeModel(null, customOutcome);
         const event = new FormOutcomeEvent(formOutcomeModel);
-
-        fixture.detectChanges();
 
         component.onCustomOutcomeClicked(event);
 
