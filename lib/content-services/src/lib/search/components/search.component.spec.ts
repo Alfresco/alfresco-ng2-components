@@ -18,7 +18,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchService } from '../services/search.service';
 import { differentResult, result, SimpleSearchTestComponent } from '../../mock';
-import { of, throwError } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
+import { ResultSetPaging } from '@alfresco/js-api';
 
 describe('SearchComponent', () => {
     let fixture: ComponentFixture<SimpleSearchTestComponent>;
@@ -100,6 +101,48 @@ describe('SearchComponent', () => {
                     done();
                 });
             });
+        });
+    });
+
+    describe('request cancellation', () => {
+        it('should cancel a still in-flight request when a new search term is entered', () => {
+            const firstResponse = new Subject<ResultSetPaging>();
+            const secondResponse = new Subject<ResultSetPaging>();
+            spyOn(searchService, 'search').and.returnValues(firstResponse.asObservable(), secondResponse.asObservable());
+
+            component.setSearchWordTo('searchTerm');
+            fixture.detectChanges();
+
+            component.setSearchWordTo('searchTerm2');
+            fixture.detectChanges();
+
+            expect(firstResponse.observed).toBeFalse();
+            expect(secondResponse.observed).toBeTrue();
+        });
+
+        it('should discard a stale response and keep the latest result when responses arrive out of order', () => {
+            const firstResponse = new Subject<ResultSetPaging>();
+            const secondResponse = new Subject<ResultSetPaging>();
+            spyOn(searchService, 'search').and.returnValues(firstResponse.asObservable(), secondResponse.asObservable());
+
+            component.setSearchWordTo('searchTerm');
+            fixture.detectChanges();
+
+            component.setSearchWordTo('searchTerm2');
+            fixture.detectChanges();
+
+            firstResponse.next(result);
+            firstResponse.complete();
+            fixture.detectChanges();
+
+            expect(element.querySelector('#result_option_0')).toBeNull();
+
+            secondResponse.next(differentResult);
+            secondResponse.complete();
+            fixture.detectChanges();
+
+            expect(element.querySelectorAll('#autocomplete-search-result-list > li').length).toBe(1);
+            expect(element.querySelector('#result_option_0').textContent.trim()).toBe('TEST_DOC');
         });
     });
 
