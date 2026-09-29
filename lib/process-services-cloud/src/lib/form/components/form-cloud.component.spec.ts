@@ -2229,45 +2229,189 @@ describe('retrieve metadata on submit', () => {
         expect(formComponent.form.selectedOutcomeId).toBe('previous-outcome-id');
     });
 
-    it('should emit the outcome owned by each overlapping completion request', () => {
+    it('should not send a second completion while the first is pending', () => {
         const firstCompletion = new Subject<TaskDetailsCloudModel>();
-        const secondCompletion = new Subject<TaskDetailsCloudModel>();
-        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValues(firstCompletion, secondCompletion);
+        const completeTaskFormSpy = spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(firstCompletion);
         formComponent.form = new FormModel();
         formComponent.taskId = 'task-123';
         formComponent.appName = 'test-app';
-        const emittedOutcomes: string[] = [];
         const emittedOutcomeIds: string[] = [];
-        formComponent.formCompleted.subscribe((form) => {
-            emittedOutcomes.push(form.selectedOutcome);
-            emittedOutcomeIds.push(form.selectedOutcomeId);
-        });
+        formComponent.formCompleted.subscribe((form) => emittedOutcomeIds.push(form.selectedOutcomeId));
 
         formComponent.completeTaskForm('Approve', 'approve-id');
         formComponent.completeTaskForm('Reject', 'reject-id');
         firstCompletion.next({} as TaskDetailsCloudModel);
-        secondCompletion.next({} as TaskDetailsCloudModel);
 
-        expect(emittedOutcomes).toEqual(['Approve', 'Reject']);
-        expect(emittedOutcomeIds).toEqual(['approve-id', 'reject-id']);
+        expect(completeTaskFormSpy).toHaveBeenCalledTimes(1);
+        expect(emittedOutcomeIds).toEqual(['approve-id']);
     });
 
-    it('should not restore stale outcome state when an older completion fails', () => {
-        const firstCompletion = new Subject<TaskDetailsCloudModel>();
-        const secondCompletion = new Subject<TaskDetailsCloudModel>();
-        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValues(firstCompletion, secondCompletion);
-        formComponent.form = new FormModel({ selectedOutcome: 'Previous outcome' });
-        formComponent.form.selectedOutcomeId = 'previous-id';
+    it('should not send another completion after the task was completed', () => {
+        const completeTaskFormSpy = spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(of({} as TaskDetailsCloudModel));
+        formComponent.form = new FormModel();
         formComponent.taskId = 'task-123';
         formComponent.appName = 'test-app';
 
         formComponent.completeTaskForm('Approve', 'approve-id');
         formComponent.completeTaskForm('Reject', 'reject-id');
-        secondCompletion.next({} as TaskDetailsCloudModel);
-        firstCompletion.error(new Error('First completion failed'));
 
-        expect(formComponent.form.selectedOutcome).toBe('Reject');
+        expect(completeTaskFormSpy).toHaveBeenCalledTimes(1);
+        expect(formComponent.form.selectedOutcomeId).toBe('approve-id');
+    });
+
+    it('should allow completing again after a failed completion', () => {
+        const completeTaskFormSpy = spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValues(
+            throwError(() => new Error('Task completion failed')),
+            of({} as TaskDetailsCloudModel)
+        );
+        formComponent.form = new FormModel();
+        formComponent.taskId = 'task-123';
+        formComponent.appName = 'test-app';
+
+        formComponent.completeTaskForm('Approve', 'approve-id');
+        formComponent.completeTaskForm('Reject', 'reject-id');
+
+        expect(completeTaskFormSpy).toHaveBeenCalledTimes(2);
         expect(formComponent.form.selectedOutcomeId).toBe('reject-id');
+    });
+
+    it('should allow completing again after the confirmation dialog is rejected', () => {
+        spyOn(TestBed.inject(MatDialog), 'open').and.returnValues({ afterClosed: () => of(false) } as any, { afterClosed: () => of(true) } as any);
+        const completeTaskFormSpy = spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(of({} as TaskDetailsCloudModel));
+        formComponent.form = new FormModel({ confirmMessage: { show: true, message: 'Are you sure?' } });
+        formComponent.taskId = 'task-123';
+        formComponent.appName = 'test-app';
+
+        formComponent.completeTaskForm('Approve', 'approve-id');
+        formComponent.completeTaskForm('Approve', 'approve-id');
+
+        expect(completeTaskFormSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should disable outcome buttons while a completion is pending', () => {
+        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(new Subject<TaskDetailsCloudModel>());
+        const formModel = new FormModel({ id: 'form', fields: [], outcomes: [{ id: 'approve', name: 'Approve' }] });
+        formComponent.form = formModel;
+        formComponent.taskId = 'task-123';
+        formComponent.appName = 'test-app';
+        const outcome = formModel.outcomes.find((candidate) => candidate.id === 'approve');
+
+        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeTrue();
+
+        formComponent.completeTaskForm('Approve', 'approve');
+
+        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeFalse();
+    });
+
+    it('should ignore an outcome request while a completion is pending', () => {
+        const completeTaskFormSpy = spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(
+            new Subject<TaskDetailsCloudModel>()
+        );
+        const formModel = new FormModel({ id: 'form', fields: [], outcomes: [{ id: 'approve', name: 'Approve' }] });
+        formComponent.form = formModel;
+        formComponent.taskId = 'task-123';
+        formComponent.appName = 'test-app';
+
+        formComponent['formService'].outcomeRequested.next(new FormOutcomeRequestEvent(formModel, 'approve'));
+        formComponent['formService'].outcomeRequested.next(new FormOutcomeRequestEvent(formModel, 'approve'));
+
+        expect(completeTaskFormSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should allow completing a new task after the previous one was completed', () => {
+        const completeTaskFormSpy = spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(of({} as TaskDetailsCloudModel));
+        formComponent.form = new FormModel();
+        formComponent.taskId = 'task-123';
+        formComponent.appName = 'test-app';
+        formComponent.completeTaskForm('Approve', 'approve-id');
+
+        spyOn(formComponent, 'getFormByTaskId').and.resolveTo(new FormModel());
+        formComponent.taskId = 'task-456';
+        formComponent.ngOnChanges({ taskId: new SimpleChange('task-123', 'task-456', false) });
+        formComponent.completeTaskForm('Approve', 'approve-id');
+
+        expect(completeTaskFormSpy).toHaveBeenCalledTimes(2);
+    });
+
+    it('should keep the current task locked when a previous task completion fails late', () => {
+        const taskACompletion = new Subject<TaskDetailsCloudModel>();
+        const taskBCompletion = new Subject<TaskDetailsCloudModel>();
+        const completeTaskFormSpy = spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValues(
+            taskACompletion,
+            taskBCompletion,
+            of({} as TaskDetailsCloudModel)
+        );
+        spyOn(formComponent, 'getFormByTaskId').and.resolveTo(new FormModel());
+        const outcome = new FormOutcomeModel(new FormModel(), { id: 'approve', name: 'Approve' });
+        formComponent.form = new FormModel();
+        formComponent.appName = 'test-app';
+        formComponent.taskId = 'task-a';
+        formComponent.completeTaskForm('Approve', 'approve');
+
+        formComponent.taskId = 'task-b';
+        formComponent.ngOnChanges({ taskId: new SimpleChange('task-a', 'task-b', false) });
+        formComponent.completeTaskForm('Approve', 'approve');
+        taskACompletion.error(new Error('Task A completion failed'));
+        formComponent.completeTaskForm('Reject', 'reject');
+
+        expect(completeTaskFormSpy).toHaveBeenCalledTimes(2);
+        expect(completeTaskFormSpy.calls.argsFor(1)[1]).toBe('task-b');
+        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeFalse();
+    });
+
+    it('should keep the current task locked when a previous confirmation dialog closes late', () => {
+        const taskADialogClosed = new Subject<boolean>();
+        spyOn(TestBed.inject(MatDialog), 'open').and.returnValues(
+            { afterClosed: () => taskADialogClosed } as any,
+            { afterClosed: () => of(true) } as any
+        );
+        const completeTaskFormSpy = spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(
+            new Subject<TaskDetailsCloudModel>()
+        );
+        spyOn(formComponent, 'getFormByTaskId').and.resolveTo(new FormModel());
+        formComponent.form = new FormModel({ confirmMessage: { show: true, message: 'Are you sure?' } });
+        formComponent.appName = 'test-app';
+        formComponent.taskId = 'task-a';
+        formComponent.completeTaskForm('Approve', 'approve');
+
+        formComponent.taskId = 'task-b';
+        formComponent.ngOnChanges({ taskId: new SimpleChange('task-a', 'task-b', false) });
+        formComponent.completeTaskForm('Approve', 'approve');
+        taskADialogClosed.next(false);
+        formComponent.completeTaskForm('Reject', 'reject');
+
+        expect(completeTaskFormSpy).toHaveBeenCalledTimes(1);
+        expect(completeTaskFormSpy.calls.argsFor(0)[1]).toBe('task-b');
+    });
+
+    it('should not complete the current task when a previous confirmation dialog is accepted late', () => {
+        const taskADialogClosed = new Subject<boolean>();
+        spyOn(TestBed.inject(MatDialog), 'open').and.returnValue({ afterClosed: () => taskADialogClosed } as any);
+        const completeTaskFormSpy = spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(
+            new Subject<TaskDetailsCloudModel>()
+        );
+        spyOn(formComponent, 'getFormByTaskId').and.resolveTo(new FormModel());
+        formComponent.form = new FormModel({ confirmMessage: { show: true, message: 'Are you sure?' } });
+        formComponent.appName = 'test-app';
+        formComponent.taskId = 'task-a';
+        formComponent.completeTaskForm('Approve', 'approve');
+
+        formComponent.taskId = 'task-b';
+        formComponent.ngOnChanges({ taskId: new SimpleChange('task-a', 'task-b', false) });
+        taskADialogClosed.next(true);
+
+        expect(completeTaskFormSpy).not.toHaveBeenCalled();
+    });
+
+    it('should not lock outcomes when there is no task to complete', () => {
+        const formModel = new FormModel({ id: 'form', fields: [], outcomes: [{ id: 'approve', name: 'Approve' }] });
+        formComponent.form = formModel;
+        formComponent.appName = 'test-app';
+        const outcome = formModel.outcomes.find((candidate) => candidate.id === 'approve');
+
+        formComponent.completeTaskForm('Approve', 'approve');
+
+        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeTrue();
     });
 
     it('should set form values before calling onTaskCompleted', () => {

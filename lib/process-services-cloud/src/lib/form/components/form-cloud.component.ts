@@ -200,6 +200,12 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     /** Pre-computed list of outcome buttons to render, filtered by visibility rules. */
     visibleOutcomes: FormOutcomeModel[] = [];
 
+    /**
+     * Held by the task completion that is pending or has succeeded, so the same task is not completed twice.
+     * Each request owns its own lock, so a late response for a previous task cannot release the current one.
+     */
+    private taskCompletionLock: { taskId: string } | null = null;
+
     override get form(): FormModel {
         return super.form;
     }
@@ -329,6 +335,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        if (changes['taskId']) {
+            this.taskCompletionLock = null;
+        }
+
         const appName = changes['appName'];
 
         if (appName?.currentValue) {
@@ -525,7 +535,18 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
     }
 
+    override isOutcomeButtonEnabled(outcome?: FormOutcomeModel): boolean {
+        return !this.taskCompletionLock && super.isOutcomeButtonEnabled(outcome);
+    }
+
     completeTaskForm(outcome?: string, outcomeId?: string) {
+        if (this.taskCompletionLock) {
+            return;
+        }
+
+        const lock = this.form && this.appName && this.taskId ? { taskId: this.taskId } : null;
+        this.taskCompletionLock = lock;
+
         if (this.form?.confirmMessage?.show === true) {
             const dialogRef = this.dialog.open(ConfirmDialogComponent, {
                 data: {
@@ -538,20 +559,25 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 .afterClosed()
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((result) => {
+                    if (this.taskCompletionLock !== lock) {
+                        return;
+                    }
+
                     if (result === true) {
-                        this.completeForm(outcome, outcomeId);
+                        this.completeForm(outcome, outcomeId, lock);
                     } else {
+                        this.taskCompletionLock = null;
                         this.disableSaveButton = false;
                         this.disableCompleteButton = false;
                     }
                 });
         } else {
-            this.completeForm(outcome, outcomeId);
+            this.completeForm(outcome, outcomeId, lock);
         }
         this.displayModeService.onCompleteTask(this.id, this.displayMode, this.displayModeConfigurations);
     }
 
-    private completeForm(outcome?: string, outcomeId?: string) {
+    private completeForm(outcome: string | undefined, outcomeId: string | undefined, lock: { taskId: string } | null) {
         if (this.form && this.appName && this.taskId) {
             const form = this.form;
             this.formCloudService
@@ -571,8 +597,17 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                         form.selectedOutcomeId = outcomeId;
                         this.onTaskCompleted(form);
                     },
-                    error: (error) => this.onTaskCompletedError(error)
+                    error: (error) => {
+                        this.releaseTaskCompletionLock(lock);
+                        this.onTaskCompletedError(error);
+                    }
                 });
+        }
+    }
+
+    private releaseTaskCompletionLock(lock: { taskId: string } | null): void {
+        if (this.taskCompletionLock === lock) {
+            this.taskCompletionLock = null;
         }
     }
 

@@ -492,8 +492,37 @@ describe('StartProcessCloudComponent', () => {
             startForm.error.emit(error);
             fixture.detectChanges();
 
-            expect(component.errorMessageId).toBe(error.message);
+            expect(component.errorMessageId).toBe('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.OUTCOME_NOT_FOUND');
             expect(errorSpy).toHaveBeenCalledOnceWith(error);
+        });
+
+        it('should show a translated message instead of the raw text for generic form errors', () => {
+            const error = new Error('Cannot read properties of undefined');
+
+            component.onFormError(error);
+
+            expect(component.errorMessageId).toBe('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START');
+        });
+
+        it('should clear a previous form error when another process definition is selected', () => {
+            component.filteredProcesses = fakeProcessDefinitions;
+            component.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.OUTCOME_NOT_FOUND';
+
+            component.setProcessDefinitionOnForm(fakeProcessDefinitions[0].name);
+
+            expect(component.errorMessageId).toBe('');
+        });
+
+        it('should clear a previous form error when the process is started', () => {
+            component.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.OUTCOME_NOT_FOUND';
+            component.processDefinitionCurrent = fakeProcessDefinitions[0];
+            component.processPayloadCloud.processDefinitionKey = fakeProcessDefinitions[0].key;
+            component.processInstanceName.setValue('My Process 1');
+            component.appName = 'test app name';
+
+            component.startProcessWithoutConfirmation();
+
+            expect(component.errorMessageId).toBe('');
         });
 
         it('should keep the start action unavailable while the form definition is loading', async () => {

@@ -45,6 +45,7 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
         "START": "Couldn't start new process instance, check you have access.",
+        "OUTCOME_NOT_FOUND": "The requested form action is no longer available.",
         "PROCESS_NAME_REQUIRED": "Process Name is required",
         "PROCESS_DEFINITION_REQUIRED": "Process Definition is required",
         "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",

@@ -38,6 +38,7 @@ import {
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel,
+    FormOutcomeNotFoundError,
     FormValues,
     IconModule,
     InplaceFormInputComponent,
@@ -349,7 +350,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     onFormError(error: Error): void {
-        this.errorMessageId = error?.message || 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START';
+        this.errorMessageId =
+            error instanceof FormOutcomeNotFoundError
+                ? 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.OUTCOME_NOT_FOUND'
+                : 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START';
         this.error.emit(error);
     }
 
@@ -375,6 +379,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     setProcessDefinitionOnForm(selectedProcessDefinitionName: string) {
+        this.resetErrorMessage();
         this.isFormCloudLoading = true;
         const processDefinitionCurrent = this.filteredProcesses.find(
             (process: ProcessDefinitionCloud) => process.name === selectedProcessDefinitionName || process.key === selectedProcessDefinitionName
@@ -561,6 +566,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     private executeProcessStart(): void {
+        this.resetErrorMessage();
         let submissionValues = this.screenSubmitPayload;
         if (this.hasForm) {
             if (!this.formCloud) {
