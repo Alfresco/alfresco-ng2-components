@@ -45,6 +45,7 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Kan procesdefinities niet laden, controleer of u over toegang beschikt.",
         "START": "Kan geen nieuwe procesinstance starten, controleer of u over toegang beschikt.",
+        "OUTCOME_NOT_FOUND": "The requested form action is no longer available.",
         "PROCESS_NAME_REQUIRED": "Procesnaam is vereist",
         "PROCESS_DEFINITION_REQUIRED": "Procesdefinitie is vereist",
         "MAXIMUM_LENGTH": "Lengte overschreden, max. {{characters}} tekens.",

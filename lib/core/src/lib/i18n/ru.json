@@ -307,7 +307,8 @@
         "CLEAR": "Очистить",
         "TOGGLE": "Переключить значение",
         "COPY_TO_CLIPBOARD": "Нажмите дважды, чтобы скопировать значение",
-        "EDIT_ASPECTS": "Изменить аспект"
+        "EDIT_ASPECTS": "Изменить аспект",
+        "SELECT_TEMPLATE": "Click to select the template"
       },
       "ACCESSIBILITY": {
         "EDIT": "Редактировать {{ sectionName }}",

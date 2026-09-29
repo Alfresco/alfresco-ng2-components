@@ -307,7 +307,8 @@
         "CLEAR": "清除",
         "TOGGLE": "切换值",
         "COPY_TO_CLIPBOARD": "双击以复制值",
-        "EDIT_ASPECTS": "编辑纵横比"
+        "EDIT_ASPECTS": "编辑纵横比",
+        "SELECT_TEMPLATE": "Click to select the template"
       },
       "ACCESSIBILITY": {
         "EDIT": "编辑按钮",

@@ -502,6 +502,10 @@
       "NO_ITEMS_MESSAGE": "Momentálně nejsou přidány žádné {{ groupTitle }}",
       "SAVE_OR_DISCARD_CHANGES": "Uložte nebo zrušte změny pro pokračování"
     },
+    "SMART_FOLDER": {
+      "SELECT_TEMPLATE_DIALOG_TITLE": "Select smart folder template",
+      "TEMPLATES_FOLDER_NOT_FOUND": "Smart Folder Templates directory wasn't found"
+    },
     "CONTENT_TYPE": {
       "DIALOG": {
         "TITLE": "Změnit typ obsahu",

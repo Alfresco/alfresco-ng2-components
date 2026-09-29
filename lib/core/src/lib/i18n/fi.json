@@ -307,7 +307,8 @@
         "CLEAR": "Tyhjennä",
         "TOGGLE": "Vaihda arvoa",
         "COPY_TO_CLIPBOARD": "Kopioi arvo kaksoisnapsauttamalla",
-        "EDIT_ASPECTS": "Muokkaa ominaisuusjoukkoja"
+        "EDIT_ASPECTS": "Muokkaa ominaisuusjoukkoja",
+        "SELECT_TEMPLATE": "Click to select the template"
       },
       "ACCESSIBILITY": {
         "EDIT": "Muokkaa-painike",

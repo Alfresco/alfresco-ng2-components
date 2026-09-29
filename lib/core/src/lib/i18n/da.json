@@ -307,7 +307,8 @@
         "CLEAR": "Ryd",
         "TOGGLE": "Slå værdi til/fra",
         "COPY_TO_CLIPBOARD": "Dobbeltklik for at kopiere værdien",
-        "EDIT_ASPECTS": "Rediger aspekt"
+        "EDIT_ASPECTS": "Rediger aspekt",
+        "SELECT_TEMPLATE": "Click to select the template"
       },
       "ACCESSIBILITY": {
         "EDIT": "Redigér knap",

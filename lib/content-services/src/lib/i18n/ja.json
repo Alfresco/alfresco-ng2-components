@@ -502,6 +502,10 @@
       "NO_ITEMS_MESSAGE": "現在追加されている {{ groupTitle }} はありません",
       "SAVE_OR_DISCARD_CHANGES": "続行するには変更を保存または破棄してください"
     },
+    "SMART_FOLDER": {
+      "SELECT_TEMPLATE_DIALOG_TITLE": "Select smart folder template",
+      "TEMPLATES_FOLDER_NOT_FOUND": "Smart Folder Templates directory wasn't found"
+    },
     "CONTENT_TYPE": {
       "DIALOG": {
         "TITLE": "コンテンツタイプを変更",

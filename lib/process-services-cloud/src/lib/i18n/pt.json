@@ -45,6 +45,7 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Não foi possível carregar as definições de processo, verifique se você tem acesso.",
         "START": "Não foi possível iniciar uma nova instância de processo, verifique se você tem acesso.",
+        "OUTCOME_NOT_FOUND": "The requested form action is no longer available.",
         "PROCESS_NAME_REQUIRED": "O nome do processo é obrigatório",
         "PROCESS_DEFINITION_REQUIRED": "A definição de processo é obrigatória",
         "MAXIMUM_LENGTH": "Comprimento excedido, {{characters}} caracteres no máximo.",

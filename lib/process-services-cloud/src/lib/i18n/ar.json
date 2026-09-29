@@ -45,6 +45,7 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "تعذر تحميل تعريفات العملية، تأكد أن لديك حق الوصول.",
         "START": "تعذر بدء مثيل عملية جديد، تأكد أن لديك حق الوصول.",
+        "OUTCOME_NOT_FOUND": "The requested form action is no longer available.",
         "PROCESS_NAME_REQUIRED": "اسم العملية مطلوب",
         "PROCESS_DEFINITION_REQUIRED": "تعريف العملية مطلوب",
         "MAXIMUM_LENGTH": "تم تجاوز الطول، {{characters}} من الحد الأقصى للحروف.",
