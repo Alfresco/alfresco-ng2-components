@@ -54,7 +54,7 @@ describe('CardViewSelectNodeItemComponent', () => {
     it('should notify listeners with the property when clicked', () => {
         const clickedSpy = spyOn(cardViewUpdateService, 'clicked');
 
-        component.onClick();
+        component.selectNode();
 
         expect(clickedSpy).toHaveBeenCalledWith(component.property);
     });
@@ -87,35 +87,35 @@ describe('CardViewSelectNodeItemComponent', () => {
         component.property.editable = false;
         const clickedSpy = spyOn(cardViewUpdateService, 'clicked');
 
-        component.onClick();
+        component.selectNode();
 
         expect(clickedSpy).not.toHaveBeenCalled();
     });
 
-    it('should trigger onClick when the form field is clicked', () => {
-        const onClickSpy = spyOn(component, 'onClick');
+    it('should trigger selectNode when the form field is clicked', () => {
+        const selectNodeSpy = spyOn(component, 'selectNode');
         fixture.detectChanges();
 
         testingUtils.clickByCSS('.adf-property-field');
 
-        expect(onClickSpy).toHaveBeenCalled();
+        expect(selectNodeSpy).toHaveBeenCalled();
     });
 
-    it('should trigger onClick when Enter is pressed on the input', () => {
-        const onClickSpy = spyOn(component, 'onClick');
+    it('should trigger selectNode when Enter is pressed on the input', () => {
+        const selectNodeSpy = spyOn(component, 'selectNode');
         fixture.detectChanges();
 
         testingUtils.keyBoardEventByCSS('input', 'keydown', 'Enter', 'Enter');
 
-        expect(onClickSpy).toHaveBeenCalled();
+        expect(selectNodeSpy).toHaveBeenCalled();
     });
 
-    it('should NOT trigger onClick for other keys on the input', () => {
-        const onClickSpy = spyOn(component, 'onClick');
+    it('should NOT trigger selectNode for other keys on the input', () => {
+        const selectNodeSpy = spyOn(component, 'selectNode');
         fixture.detectChanges();
 
         testingUtils.keyBoardEventByCSS('input', 'keydown', 'KeyA', 'a');
 
-        expect(onClickSpy).not.toHaveBeenCalled();
+        expect(selectNodeSpy).not.toHaveBeenCalled();
     });
 });

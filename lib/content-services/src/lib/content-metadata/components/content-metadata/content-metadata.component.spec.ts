@@ -1968,7 +1968,7 @@ describe('ContentMetadataComponent', () => {
 
         it('should resolve the display name for saved template items when properties load', () => {
             const templateItem = createTemplateItem('workspace://SpacesStore/template-id');
-            getGroupedPropertiesSpy.and.returnValue(of([{ properties: [templateItem] } as any]));
+            getGroupedPropertiesSpy.and.returnValue(of([{ properties: [templateItem] }]));
             spyOn(nodesApiService, 'getNode').and.returnValue(of({ id: 'template-id', name: 'Resolved Template' } as Node));
 
             component['loadProperties'](node);
@@ -1976,6 +1976,31 @@ describe('ContentMetadataComponent', () => {
 
             expect(nodesApiService.getNode).toHaveBeenCalledWith('template-id');
             expect(templateItem.displayName).toBe('Resolved Template');
+        });
+
+        it('should resolve display names for multiple saved template items in a single batch', () => {
+            const firstItem = createTemplateItem('workspace://SpacesStore/first-id');
+            const secondItem = createTemplateItem('workspace://SpacesStore/second-id');
+            getGroupedPropertiesSpy.and.returnValue(of([{ properties: [firstItem, secondItem] }]));
+            const getNodeSpy = spyOn(nodesApiService, 'getNode').and.callFake((nodeId: string) => of({ id: nodeId, name: `Name ${nodeId}` } as Node));
+
+            component['loadProperties'](node);
+            component.groupedProperties$.subscribe();
+
+            expect(getNodeSpy).toHaveBeenCalledTimes(2);
+            expect(firstItem.displayName).toBe('Name first-id');
+            expect(secondItem.displayName).toBe('Name second-id');
+        });
+
+        it('should keep the display name unresolved when a saved template node cannot be loaded', () => {
+            const templateItem = createTemplateItem('workspace://SpacesStore/missing-id');
+            getGroupedPropertiesSpy.and.returnValue(of([{ properties: [templateItem] }]));
+            spyOn(nodesApiService, 'getNode').and.returnValue(throwError(() => new Error('not found')));
+
+            component['loadProperties'](node);
+            component.groupedProperties$.subscribe();
+
+            expect(templateItem.displayName).toBeUndefined();
         });
     });
 });

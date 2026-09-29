@@ -262,24 +262,28 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
 
     private resolveSmartFolderTemplateNames(groups: CardViewGroup[]): void {
         const templateItems = (groups || [])
-            .reduce((all, group) => all.concat(group.properties || []), [] as CardViewItem[])
+            .flatMap((group) => group.properties || [])
             .filter((item): item is CardViewSelectNodeItemModel => item?.type === SMART_FOLDER_TEMPLATE_TYPE)
             .filter((item) => item.value && !item.displayName);
 
-        templateItems.forEach((item) => {
+        if (!templateItems.length) {
+            return;
+        }
+
+        const templateNodes$ = templateItems.map((item) => {
             const nodeId = String(item.value).split('/').pop();
-            this.nodesApiService
-                .getNode(nodeId)
-                .pipe(
-                    catchError(() => of(null)),
-                    takeUntilDestroyed(this.destroyRef)
-                )
-                .subscribe((templateNode: Node) => {
+            return this.nodesApiService.getNode(nodeId).pipe(catchError(() => of(null)));
+        });
+
+        forkJoin(templateNodes$)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((templateNodes: Node[]) => {
+                templateNodes.forEach((templateNode, index) => {
                     if (templateNode) {
-                        item.displayName = templateNode.name;
+                        templateItems[index].displayName = templateNode.name;
                     }
                 });
-        });
+            });
     }
 
     private findSmartFolderTemplatesFolderId(): Observable<string> {

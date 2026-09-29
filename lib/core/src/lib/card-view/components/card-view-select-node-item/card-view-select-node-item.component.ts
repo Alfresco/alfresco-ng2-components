@@ -16,7 +16,6 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -26,14 +25,14 @@ import { BaseCardView } from '../base-card-view';
 
 @Component({
     selector: 'adf-card-view-select-node-item',
-    imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, TranslatePipe],
+    imports: [FormsModule, MatFormFieldModule, MatInputModule, TranslatePipe],
     templateUrl: './card-view-select-node-item.component.html'
 })
 export class CardViewSelectNodeItemComponent extends BaseCardView<CardViewSelectNodeItemModel> {
     @Input()
     declare editable: boolean;
 
-    onClick(): void {
+    selectNode(): void {
         if (this.isEditable) {
             this.cardViewUpdateService.clicked(this.property);
         }
