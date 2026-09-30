@@ -208,8 +208,7 @@ describe('Breadcrumb', () => {
         fixture.detectChanges();
 
         const titleElement = unitTestingUtils.getByCSS('.adf-breadcrumb-item-current');
-        expect(titleElement.nativeElement.getAttribute('role')).toBe('heading');
-        expect(titleElement.nativeElement.getAttribute('aria-level')).toBe('1');
+        expect(titleElement.nativeElement.tagName).toBe('H1');
     });
 
     it('should not parse the route when node not provided', () => {
