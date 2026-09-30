@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApolloLink, gql } from '@apollo/client/core';
+import { type ApolloLink, gql } from '@apollo/client/core';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { WebSocketService } from './web-socket.service';
