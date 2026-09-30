@@ -180,11 +180,6 @@ describe('CategoriesManagementComponent', () => {
         fixture.detectChanges();
     }
 
-    /**
-     * Get status text of the category management component
-     *
-     * @returns status text of the categories found
-     */
     function getStatusText(): string {
         return unitTestingUtils.getByCSS('output').nativeElement.textContent.trim();
     }

@@ -27,6 +27,7 @@ import { EMPTY, of, throwError } from 'rxjs';
 import { TagsCreatorComponent } from './tags-creator.component';
 import { TagService } from '../services/tag.service';
 import { TagsCreatorMode } from './tags-creator-mode';
+import { TagPaging } from '@alfresco/js-api';
 
 describe('TagsCreatorComponent', () => {
     let fixture: ComponentFixture<TagsCreatorComponent>;
@@ -157,11 +158,6 @@ describe('TagsCreatorComponent', () => {
         return testingUtils.getByCSS('.adf-existing-tags-label').nativeElement.textContent.trim();
     }
 
-    /**
-     * Get the status of tags found
-     *
-     * @returns status text of the tags found
-     */
     function getStatusText(): string {
         return testingUtils.getByCSS('output').nativeElement.textContent.trim();
     }
@@ -606,10 +602,10 @@ describe('TagsCreatorComponent', () => {
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
                         list: {
-                            entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
+                            entries: [{ entry: { tag: tag1 } }, { entry: { tag: tag2 } }],
                             pagination: {}
                         }
-                    })
+                    } as TagPaging)
                 );
 
                 typeTag('Tag');
@@ -626,10 +622,10 @@ describe('TagsCreatorComponent', () => {
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
                         list: {
-                            entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
+                            entries: [{ entry: { tag: tag1 } }, { entry: { tag: tag2 } }],
                             pagination: {}
                         }
-                    })
+                    } as TagPaging)
                 );
 
                 typeTag('Tag');
@@ -647,10 +643,10 @@ describe('TagsCreatorComponent', () => {
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
                         list: {
-                            entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
+                            entries: [{ entry: { tag: tag1 } }, { entry: { tag: tag2 } }],
                             pagination: {}
                         }
-                    })
+                    } as TagPaging)
                 );
 
                 typeTag('Tag');
@@ -744,10 +740,10 @@ describe('TagsCreatorComponent', () => {
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
                         list: {
-                            entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
+                            entries: [{ entry: { tag: tag1 } }, { entry: { tag: tag2 } }],
                             pagination: {}
                         }
-                    })
+                    } as TagPaging)
                 );
                 typeTag(tag);
 
@@ -771,10 +767,10 @@ describe('TagsCreatorComponent', () => {
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
                         list: {
-                            entries: [selectedTag, { entry: { tag: leftTag } as any }],
+                            entries: [selectedTag, { entry: { tag: leftTag } }],
                             pagination: {}
                         }
-                    })
+                    } as TagPaging)
                 );
 
                 typeTag('Tag');

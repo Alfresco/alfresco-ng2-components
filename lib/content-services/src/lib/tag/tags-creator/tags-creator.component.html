@@ -48,8 +48,8 @@
     <div class="adf-tags-list">
         <output class="cdk-visually-hidden" role="status">
             @if (!spinnerVisible && existingTags) {
-                @if (existingTags?.length > 0) {
-                    @if (existingTags?.length === 1) {
+                @if (existingTags.length > 0) {
+                    @if (existingTags.length === 1) {
                         {{ 'TAG.TAGS_CREATOR.ONE_EXISTING_TAG_AVAILABLE' | translate }}
                     } @else {
                         {{ 'TAG.TAGS_CREATOR.EXISTING_TAGS_AVAILABLE' | translate : { tagsCount: existingTags?.length } }}
