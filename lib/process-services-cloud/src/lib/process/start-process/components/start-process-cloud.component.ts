@@ -37,6 +37,8 @@ import {
     FormExpressionService,
     FormModel,
     FormOutcomeEvent,
+    FormOutcomeModel,
+    FormOutcomeNotFoundError,
     FormValues,
     IconModule,
     InplaceFormInputComponent,
@@ -332,14 +334,27 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.isFormCloudLoaded = true;
         this.formCloud = form;
 
-        const anyOutcomeVisible = form?.outcomes?.some((outcome) =>
-            isOutcomeButtonVisible(outcome, {
-                isFormReadOnly: form.readOnly,
-                showCompleteButton: this.showCompleteButton,
-                showSaveButton: this.showSaveButton
-            })
-        );
-        this.hasVisibleOutcomesSubject.next(anyOutcomeVisible);
+        const visibleOutcomes =
+            form?.outcomes?.filter((outcome) =>
+                isOutcomeButtonVisible(outcome, {
+                    isFormReadOnly: form.readOnly,
+                    showCompleteButton: this.showCompleteButton,
+                    showSaveButton: this.showSaveButton
+                })
+            ) ?? [];
+        this.onVisibleOutcomesChanged(visibleOutcomes);
+    }
+
+    onVisibleOutcomesChanged(visibleOutcomes: FormOutcomeModel[]): void {
+        this.hasVisibleOutcomesSubject.next(visibleOutcomes.length > 0);
+    }
+
+    onFormError(error: Error): void {
+        this.errorMessageId =
+            error instanceof FormOutcomeNotFoundError
+                ? 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.OUTCOME_NOT_FOUND'
+                : 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START';
+        this.error.emit(error);
     }
 
     onDisableStartProcessButtonForScreen(disable: boolean): void {
@@ -364,6 +379,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     setProcessDefinitionOnForm(selectedProcessDefinitionName: string) {
+        this.resetErrorMessage();
         this.isFormCloudLoading = true;
         const processDefinitionCurrent = this.filteredProcesses.find(
             (process: ProcessDefinitionCloud) => process.name === selectedProcessDefinitionName || process.key === selectedProcessDefinitionName
@@ -458,6 +474,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                             this.filteredProcesses = this.getProcessDefinitionListByNameOrKey(processDefinition.name);
                             this.setProcessDefinitionOnForm(processDefinition.name);
                             this.processDefinitionSelectionChanged(processDefinition);
+                        } else {
+                            this.isFormCloudLoading = false;
                         }
                     } else {
                         this.isFormCloudLoading = false;
@@ -467,7 +485,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                 },
                 error: () => {
                     this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
+                    this.error.emit('ERROR_LOAD_PROCESS_DEFINITIONS');
                     this.isFormCloudLoading = false;
+                    this.processDefinitionLoaded = true;
                 }
             });
     }
@@ -496,21 +516,69 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     onCustomOutcomeClicked(outcome: FormOutcomeEvent) {
+        if (this.isProcessStarting) {
+            return;
+        }
+
         this.customOutcomeName = outcome.outcome.name;
         this.customOutcomeId = outcome.outcome.id;
         this.startProcess();
     }
 
     startProcessWithoutConfirmation() {
+        if (this.isProcessStarting) {
+            return;
+        }
+
+        this.isProcessStarting = true;
+        this.executeProcessStart();
+    }
+
+    startProcess() {
+        if (!this.formCloud?.confirmMessage?.show) {
+            this.startProcessWithoutConfirmation();
+            return;
+        }
+
+        if (this.isProcessStarting) {
+            return;
+        }
+
+        this.isProcessStarting = true;
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+            data: {
+                message: this.formCloud.confirmMessage.message
+            },
+            minWidth: '450px'
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                this.executeProcessStart();
+            } else {
+                this.isProcessStarting = false;
+            }
+        });
+    }
+
+    cancelStartProcess() {
+        this.cancel.emit();
+    }
+
+    private executeProcessStart(): void {
+        this.resetErrorMessage();
         let submissionValues = this.screenSubmitPayload;
         if (this.hasForm) {
             if (!this.formCloud) {
+                this.isProcessStarting = false;
                 return;
             }
             submissionValues = this.getFormSubmissionValues(this.formCloud);
         }
 
-        this.isProcessStarting = true;
+        const submittedForm = this.formCloud;
+        const requestedOutcome = this.customOutcomeName;
+        const requestedOutcomeId = this.customOutcomeId;
 
         let action: Observable<ProcessInstanceCloud>;
 
@@ -524,7 +592,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                     processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
                     variables: this.variables ?? {},
                     values: submissionValues,
-                    outcome: this.customOutcomeName
+                    outcome: requestedOutcome
                 })
             );
         } else {
@@ -540,7 +608,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
         action.subscribe({
             next: (res) => {
-                this.customOutcomeSelected.emit(this.customOutcomeId);
+                if (submittedForm && requestedOutcomeId) {
+                    submittedForm.selectedOutcome = requestedOutcome;
+                    submittedForm.selectedOutcomeId = requestedOutcomeId;
+                }
+                this.customOutcomeSelected.emit(requestedOutcomeId);
                 this.success.emit(res);
                 this.isProcessStarting = false;
             },
@@ -554,29 +626,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     private getFormSubmissionValues(form: FormModel): FormValues {
         return materializeSubmissionValues(form, { enableExpressionEvaluation: this.enableExpressionEvaluation }, this.expressions);
-    }
-
-    startProcess() {
-        if (!this.formCloud?.confirmMessage?.show) {
-            this.startProcessWithoutConfirmation();
-        } else {
-            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-                data: {
-                    message: this.formCloud.confirmMessage.message
-                },
-                minWidth: '450px'
-            });
-
-            dialogRef.afterClosed().subscribe((result) => {
-                if (result) {
-                    this.startProcessWithoutConfirmation();
-                }
-            });
-        }
-    }
-
-    cancelStartProcess() {
-        this.cancel.emit();
     }
 
     private resetErrorMessage() {

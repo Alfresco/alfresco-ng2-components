@@ -271,22 +271,7 @@ export class WidgetVisibilityService {
     }
 
     public getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[] = []): any {
-        if (form.isVariableSetAtRuntime(name)) {
-            return form.getDefaultFormVariableValue(name);
-        }
-
-        const processVariableValue = this.getProcessVariableValue(name, processVarList);
-
-        return processVariableValue === undefined ? form.getProcessVariableValue(name) : processVariableValue;
-    }
-
-    private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]): any {
-        const processVariable = processVarList.find((variable) => variable.id === name || variable.id === `variables.${name}`);
-
-        if (processVariable) {
-            return processVariable.value;
-        }
-        return undefined;
+        return form.resolveVariableValue(name, processVarList);
     }
 
     public evaluateCondition(leftValue: any, rightValue: any, operator: string): boolean | undefined {

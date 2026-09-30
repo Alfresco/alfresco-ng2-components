@@ -1,0 +1,51 @@
+{
+  "ANALYTICS": {
+    "TITLE": "ANALYSE",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "UKJENT WIDGET-TYPE",
+      "FILL-PARAMETER": "Velg fra rapportalternativene",
+      "NO-DATA-FOUND": "Ingen data funnet",
+      "ZERO-DATA-FOUND": "Det finnes bare nullverdier",
+      "ICON-SETTING": "Innstillinger",
+      "ICON-SAVE": "Lagre",
+      "ICON-DELETE": "Slett",
+      "ICON-EXPORT-CSV": "Eksporter"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Totalt antall prosessdefinisjoner",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Totalt antall prosesshendelser",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Totalt antall aktive prosesshendelser",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Totalt antall fullførte prosesshendelser"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Inkluder gjennomgangssteg som start-hendelser og gateways"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Prosessdefinisjon",
+        "DATE-RANGE": "Datoområde",
+        "SLOW-PROC-INST-NUMBER": "Hvor mange av de tregeste prosesshendelsene skal vises?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Prosessdefinisjon",
+        "DATE-RANGE": "Datoområde",
+        "DATE-RANGE-INTERVAL": "Grupper datoer etter"
+      },
+      "TASK-SLA": {
+        "TASK": "Oppgave",
+        "PROCESS-DEFINITION": "Prosessdefinisjon",
+        "DATE-RANGE": "Datoområde",
+        "SLA-DURATION": "SLA-krevd fullføringstid"
+      }
+    },
+    "PROCESS-STATUS": "Prosessstatus",
+    "TASK-STATUS": "Oppgavestatus"
+  },
+  "DIAGRAMS": "Diagrammer"
+}

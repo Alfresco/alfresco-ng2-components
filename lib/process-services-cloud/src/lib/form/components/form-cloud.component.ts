@@ -80,6 +80,11 @@ interface FormFieldRuntimeState {
     visibilityCondition: any;
 }
 
+interface FormVariableRuntimeState {
+    value: any;
+    runtimeSet: boolean;
+}
+
 export const FORM_CLOUD_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldValidator[]>('FORM_CLOUD_FIELD_VALIDATORS_TOKEN');
 export const ADF_FORM_TAB_NAV_ENABLED = new InjectionToken<Observable<boolean> | boolean>('ADF_FORM_TAB_NAV_ENABLED');
 
@@ -171,6 +176,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Output()
     formDataRefreshed = new EventEmitter<FormModel>();
 
+    /** Emitted when the outcomes rendered by the form change. */
+    @Output()
+    visibleOutcomesChanged = new EventEmitter<FormOutcomeModel[]>();
+
     /** Emitted when form content is clicked. */
     @Output()
     formContentClicked = new EventEmitter<ContentLinkModel>();
@@ -190,6 +199,12 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     /** Pre-computed list of outcome buttons to render, filtered by visibility rules. */
     visibleOutcomes: FormOutcomeModel[] = [];
+
+    /**
+     * Held by the task completion that is pending or has succeeded, so the same task is not completed twice.
+     * Each request owns its own lock, so a late response for a previous task cannot release the current one.
+     */
+    private taskCompletionLock: { taskId: string } | null = null;
 
     override get form(): FormModel {
         return super.form;
@@ -320,6 +335,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        if (changes['taskId']) {
+            this.taskCompletionLock = null;
+        }
+
         const appName = changes['appName'];
 
         if (appName?.currentValue) {
@@ -369,6 +388,13 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     ngOnInit(): void {
+        this.formService.outcomeRequested
+            .pipe(
+                filter((request) => request.form === this.form),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe((request) => this.onOutcomeRequested(request.outcomeId));
+
         DisplayModeService.displayMode$
             .pipe(
                 filter((change) => change.id === this.id),
@@ -509,7 +535,18 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
     }
 
+    override isOutcomeButtonEnabled(outcome?: FormOutcomeModel): boolean {
+        return !this.taskCompletionLock && super.isOutcomeButtonEnabled(outcome);
+    }
+
     completeTaskForm(outcome?: string, outcomeId?: string) {
+        if (this.taskCompletionLock) {
+            return;
+        }
+
+        const lock = this.form && this.appName && this.taskId ? { taskId: this.taskId } : null;
+        this.taskCompletionLock = lock;
+
         if (this.form?.confirmMessage?.show === true) {
             const dialogRef = this.dialog.open(ConfirmDialogComponent, {
                 data: {
@@ -522,45 +559,60 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 .afterClosed()
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((result) => {
+                    if (this.taskCompletionLock !== lock) {
+                        return;
+                    }
+
                     if (result === true) {
-                        this.completeForm(outcome, outcomeId);
+                        this.completeForm(outcome, outcomeId, lock);
                     } else {
+                        this.taskCompletionLock = null;
                         this.disableSaveButton = false;
                         this.disableCompleteButton = false;
                     }
                 });
         } else {
-            this.completeForm(outcome, outcomeId);
+            this.completeForm(outcome, outcomeId, lock);
         }
         this.displayModeService.onCompleteTask(this.id, this.displayMode, this.displayModeConfigurations);
     }
 
-    private completeForm(outcome?: string, outcomeId?: string) {
+    private completeForm(outcome: string | undefined, outcomeId: string | undefined, lock: { taskId: string } | null) {
         if (this.form && this.appName && this.taskId) {
+            const form = this.form;
             this.formCloudService
                 .completeTaskForm(
                     this.appName,
                     this.taskId,
                     this.processInstanceId,
-                    `${this.form.id}`,
-                    this.getSubmissionValues(),
+                    `${form.id}`,
+                    this.getSubmissionValues(form),
                     outcome,
                     this.appVersion
                 )
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe({
                     next: () => {
-                        this.form.selectedOutcome = outcome;
-                        this.form.selectedOutcomeId = outcomeId;
-                        this.onTaskCompleted(this.form);
+                        form.selectedOutcome = outcome;
+                        form.selectedOutcomeId = outcomeId;
+                        this.onTaskCompleted(form);
                     },
-                    error: (error) => this.onTaskCompletedError(error)
+                    error: (error) => {
+                        this.releaseTaskCompletionLock(lock);
+                        this.onTaskCompletedError(error);
+                    }
                 });
         }
     }
 
-    private getSubmissionValues(): FormValues {
-        return materializeSubmissionValues(this.form, { enableExpressionEvaluation: this.enableExpressionEvaluation }, this.expressions);
+    private releaseTaskCompletionLock(lock: { taskId: string } | null): void {
+        if (this.taskCompletionLock === lock) {
+            this.taskCompletionLock = null;
+        }
+    }
+
+    private getSubmissionValues(form: FormModel = this.form): FormValues {
+        return materializeSubmissionValues(form, { enableExpressionEvaluation: this.enableExpressionEvaluation }, this.expressions);
     }
 
     parseForm(formCloudRepresentationJSON?: any): FormModel | null {
@@ -600,6 +652,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     private refreshFormData(previousData: TaskVariableCloud[] = []) {
         const snapshot = this.snapshotRuntimeState();
+        const variableSnapshot = this.snapshotVariablesRuntimeState();
 
         this.mergeProcessVariables(this.data ?? []);
 
@@ -610,6 +663,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
         const changedFieldIds = this.getChangedFieldIds(previousData, this.data ?? []);
         this.restoreRuntimeState(this.form, snapshot, changedFieldIds);
+        this.restoreVariablesRuntimeState(this.form, variableSnapshot, changedFieldIds, this.data ?? []);
 
         this.setCheckParentVisibilityForValidationOnFields();
         this.visibilityService.refreshVisibility(this.form, this.data);
@@ -635,7 +689,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
         for (const variable of [...existing, ...updates]) {
             if (variable?.name) {
-                byName.set(variable.name, variable);
+                const name = variable.name.startsWith('variables.') ? variable.name.slice('variables.'.length) : variable.name;
+                byName.set(name, variable);
             }
         }
 
@@ -696,14 +751,68 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
     }
 
+    private snapshotVariablesRuntimeState(): Map<string, FormVariableRuntimeState> {
+        const snapshot = new Map<string, FormVariableRuntimeState>();
+        if (!this.form?.variables?.length) {
+            return snapshot;
+        }
+
+        for (const variable of this.form.variables) {
+            snapshot.set(variable.id, {
+                value: variable.value,
+                runtimeSet: variable.runtimeSet
+            });
+        }
+
+        return snapshot;
+    }
+
+    private restoreVariablesRuntimeState(
+        form: FormModel,
+        snapshot: Map<string, FormVariableRuntimeState>,
+        changedVariableNames: Set<string>,
+        updates: TaskVariableCloud[]
+    ): void {
+        if (!form?.variables?.length || !snapshot.size) {
+            return;
+        }
+
+        for (const variable of form.variables) {
+            const prior = snapshot.get(variable.id);
+            if (!prior?.runtimeSet) {
+                continue;
+            }
+
+            const identifiers = [variable.id, variable.name, `variables.${variable.name}`];
+            const changedIdentifier = identifiers.find((identifier) => changedVariableNames.has(identifier));
+
+            /*
+                Form variables are shared with the stored representation, so a value set at runtime survives
+                the re-parse on its own. It has to be cleared explicitly once the refresh brings a newer value,
+                otherwise the runtime value would mask every later update from the server.
+            */
+            if (changedIdentifier) {
+                const refreshed = updates.find((update) => update?.name === changedIdentifier);
+                variable.value = refreshed ? refreshed.value : variable.value;
+                variable.runtimeSet = false;
+                continue;
+            }
+
+            variable.value = prior.value;
+            variable.runtimeSet = true;
+        }
+    }
+
     private recomputeVisibleOutcomes(): void {
         const outcomes = this.form?.outcomes;
         if (!outcomes) {
             this.visibleOutcomes = [];
+            this.visibleOutcomesChanged.emit(this.visibleOutcomes);
             return;
         }
 
         this.visibleOutcomes = outcomes.filter((outcome) => outcome.isVisible && this.isOutcomeButtonVisible(outcome, this.form.readOnly));
+        this.visibleOutcomesChanged.emit(this.visibleOutcomes);
     }
 
     /**

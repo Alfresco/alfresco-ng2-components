@@ -28,6 +28,7 @@ import {
     DynamicComponentResolver
 } from '../../common/services/dynamic-component-mapper.service';
 import { CardViewArrayItemComponent } from '../components/card-view-arrayitem/card-view-arrayitem.component';
+import { CardViewSelectNodeItemComponent } from '../components/card-view-select-node-item/card-view-select-node-item.component';
 
 @Injectable({
     providedIn: 'root'
@@ -46,6 +47,7 @@ export class CardItemTypeService extends DynamicComponentMapper {
         bool: DynamicComponentResolver.fromType(CardViewBoolItemComponent),
         map: DynamicComponentResolver.fromType(CardViewMapItemComponent),
         keyvaluepairs: DynamicComponentResolver.fromType(CardViewKeyValuePairsItemComponent),
-        array: DynamicComponentResolver.fromType(CardViewArrayItemComponent)
+        array: DynamicComponentResolver.fromType(CardViewArrayItemComponent),
+        smartFolderTemplate: DynamicComponentResolver.fromType(CardViewSelectNodeItemComponent)
     };
 }

@@ -89,6 +89,8 @@ export class CardViewItemDispatcherComponent implements OnChanges {
             this.componentReference.instance[changeName] = change.currentValue;
         });
 
+        this.componentReference.changeDetectorRef.markForCheck();
+
         this.proxy('ngOnChanges', changes);
     }
 

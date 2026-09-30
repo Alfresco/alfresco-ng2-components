@@ -22,6 +22,8 @@ import {
     AppConfigService,
     CardViewBaseItemModel,
     CardViewComponent,
+    CardViewSelectNodeItemModel,
+    CardViewUpdateService,
     NotificationService,
     UpdateNotification,
     UnitTestingUtils,
@@ -41,6 +43,7 @@ import { PropertyDescriptorsService } from '../../services/property-descriptors.
 import { TagService } from '../../../tag/services/tag.service';
 import { CategoryService } from '../../../category/services/category.service';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
+import { ContentNodeDialogService } from '../../../content-node-selector/content-node-dialog.service';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { DebugElement, SimpleChange } from '@angular/core';
 
@@ -1894,6 +1897,110 @@ describe('ContentMetadataComponent', () => {
             const customComponent = testingUtils.getByCSS('adf-dynamic-component').nativeElement;
             expect(panelTitle.innerText).toEqual('testTitle');
             expect(customComponent).toBeDefined();
+        });
+    });
+
+    describe('Smart folder template', () => {
+        let cardViewUpdateService: CardViewUpdateService;
+        let contentNodeDialogService: ContentNodeDialogService;
+
+        const templatesRelativePath = { relativePath: 'Data Dictionary/Smart Folder Templates' };
+
+        const createTemplateItem = (value?: string): CardViewSelectNodeItemModel =>
+            new CardViewSelectNodeItemModel({
+                label: 'Template',
+                value,
+                key: 'properties.smf:system-template-location',
+                editable: true
+            });
+
+        beforeEach(() => {
+            cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+            contentNodeDialogService = TestBed.inject(ContentNodeDialogService);
+        });
+
+        it('should ignore clicks that are not smart folder template items', () => {
+            const openDialogSpy = spyOn(contentNodeDialogService, 'openNodeSelectionDialog');
+
+            cardViewUpdateService.clicked({ type: 'text' } as CardViewBaseItemModel);
+
+            expect(openDialogSpy).not.toHaveBeenCalled();
+        });
+
+        it('should open the selector rooted at the templates folder and store the selected node as a node reference', () => {
+            spyOn(nodesApiService, 'getNode').and.returnValue(of({ id: 'templates-folder-id' } as Node));
+            const openDialogSpy = spyOn(contentNodeDialogService, 'openNodeSelectionDialog').and.returnValue(
+                of([{ id: 'template-id', name: 'My Template' } as Node])
+            );
+            const updateSpy = spyOn(updateService, 'update');
+            const target = createTemplateItem();
+
+            cardViewUpdateService.clicked(target);
+
+            expect(nodesApiService.getNode).toHaveBeenCalledWith('-root-', templatesRelativePath);
+            expect(openDialogSpy).toHaveBeenCalledWith('templates-folder-id', jasmine.any(String), jasmine.any(Function));
+            expect(target.value).toBe('workspace://SpacesStore/template-id');
+            expect(target.displayName).toBe('My Template');
+            expect(updateSpy).toHaveBeenCalledWith(target, 'workspace://SpacesStore/template-id');
+        });
+
+        it('should only allow files to be selected in the templates dialog', () => {
+            spyOn(nodesApiService, 'getNode').and.returnValue(of({ id: 'templates-folder-id' } as Node));
+            const openDialogSpy = spyOn(contentNodeDialogService, 'openNodeSelectionDialog').and.returnValue(of([]));
+
+            cardViewUpdateService.clicked(createTemplateItem());
+
+            const isSelectionValid = openDialogSpy.calls.mostRecent().args[2] as (entry: Node) => boolean;
+            expect(isSelectionValid({ isFile: true } as Node)).toBeTrue();
+            expect(isSelectionValid({ isFile: false } as Node)).toBeFalse();
+        });
+
+        it('should show an error and not open the dialog when the templates folder is missing', () => {
+            spyOn(nodesApiService, 'getNode').and.returnValue(throwError(() => new Error('not found')));
+            const openDialogSpy = spyOn(contentNodeDialogService, 'openNodeSelectionDialog');
+            const showErrorSpy = spyOn(notificationService, 'showError');
+
+            cardViewUpdateService.clicked(createTemplateItem());
+
+            expect(showErrorSpy).toHaveBeenCalledWith('METADATA.SMART_FOLDER.TEMPLATES_FOLDER_NOT_FOUND');
+            expect(openDialogSpy).not.toHaveBeenCalled();
+        });
+
+        it('should resolve the display name for saved template items when properties load', () => {
+            const templateItem = createTemplateItem('workspace://SpacesStore/template-id');
+            getGroupedPropertiesSpy.and.returnValue(of([{ properties: [templateItem] }]));
+            spyOn(nodesApiService, 'getNode').and.returnValue(of({ id: 'template-id', name: 'Resolved Template' } as Node));
+
+            component.ngOnChanges({ node: new SimpleChange(null, node, false) });
+            component.groupedProperties$.subscribe();
+
+            expect(nodesApiService.getNode).toHaveBeenCalledWith('template-id');
+            expect(templateItem.displayName).toBe('Resolved Template');
+        });
+
+        it('should resolve display names for multiple saved template items in a single batch', () => {
+            const firstItem = createTemplateItem('workspace://SpacesStore/first-id');
+            const secondItem = createTemplateItem('workspace://SpacesStore/second-id');
+            getGroupedPropertiesSpy.and.returnValue(of([{ properties: [firstItem, secondItem] }]));
+            const getNodeSpy = spyOn(nodesApiService, 'getNode').and.callFake((nodeId: string) => of({ id: nodeId, name: `Name ${nodeId}` } as Node));
+
+            component.ngOnChanges({ node: new SimpleChange(null, node, false) });
+            component.groupedProperties$.subscribe();
+
+            expect(getNodeSpy).toHaveBeenCalledTimes(2);
+            expect(firstItem.displayName).toBe('Name first-id');
+            expect(secondItem.displayName).toBe('Name second-id');
+        });
+
+        it('should keep the display name unresolved when a saved template node cannot be loaded', () => {
+            const templateItem = createTemplateItem('workspace://SpacesStore/missing-id');
+            getGroupedPropertiesSpy.and.returnValue(of([{ properties: [templateItem] }]));
+            spyOn(nodesApiService, 'getNode').and.returnValue(throwError(() => new Error('not found')));
+
+            component.ngOnChanges({ node: new SimpleChange(null, node, false) });
+            component.groupedProperties$.subscribe();
+
+            expect(templateItem.displayName).toBeUndefined();
         });
     });
 });

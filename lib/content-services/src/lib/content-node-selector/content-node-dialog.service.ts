@@ -234,6 +234,34 @@ export class ContentNodeDialogService {
         return select;
     }
 
+    /**
+     * Opens a dialog to select a single node, with the browsing root restricted to the given folder.
+     *
+     * @param parentFolderId ID of the folder used as the root of the selector
+     * @param title Title shown in the dialog
+     * @param isSelectionValid Optional predicate that decides whether the currently highlighted node can be selected
+     * @returns Information about the selected node(s)
+     */
+    openNodeSelectionDialog(parentFolderId: string, title: string, isSelectionValid?: (entry: Node) => boolean): Observable<Node[]> {
+        const select = new Subject<Node[]>();
+
+        const data: ContentNodeSelectorComponentData = {
+            title,
+            selectionMode: 'single',
+            currentFolderId: parentFolderId,
+            select,
+            showFilesInResult: true,
+            showDropdownSiteList: false,
+            restrictRootToCurrentFolderId: true,
+            isSelectionValid
+        };
+
+        const dialogRef = this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
+        dialogRef.afterClosed().subscribe({ next: () => select.complete() });
+
+        return select;
+    }
+
     private openContentNodeDialog(
         data: ContentNodeSelectorComponentData,
         panelClass: string,

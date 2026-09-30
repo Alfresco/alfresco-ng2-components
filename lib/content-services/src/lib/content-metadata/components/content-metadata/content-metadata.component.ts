@@ -23,7 +23,10 @@ import {
     CardViewBaseItemModel,
     CardViewComponent,
     CardViewItem,
+    CardViewSelectNodeItemModel,
+    CardViewUpdateService,
     Chip,
+    ClickNotification,
     DynamicChipListComponent,
     IconModule,
     NotificationService,
@@ -32,7 +35,7 @@ import {
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup, ContentMetadataCustomPanel, ContentMetadataPanel, PresetConfig } from '../../interfaces/content-metadata.interfaces';
-import { catchError, debounceTime, map } from 'rxjs/operators';
+import { catchError, debounceTime, map, switchMap, tap } from 'rxjs/operators';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { TagsCreatorMode } from '../../../tag/tags-creator/tags-creator-mode';
@@ -41,6 +44,7 @@ import { CategoryService } from '../../../category/services/category.service';
 import { CategoriesManagementMode } from '../../../category/categories-management/categories-management-mode';
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 import { ContentService } from '../../../common/services/content.service';
+import { ContentNodeDialogService } from '../../../content-node-selector/content-node-dialog.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
@@ -54,6 +58,9 @@ import { ContentMetadataHeaderComponent } from './content-metadata-header.compon
 import { CategoriesManagementComponent } from '../../../category/categories-management/categories-management.component';
 
 const DEFAULT_SEPARATOR = ', ';
+const SMART_FOLDER_TEMPLATE_TYPE = 'smartFolderTemplate';
+const SMART_FOLDER_TEMPLATES_RELATIVE_PATH = 'Data Dictionary/Smart Folder Templates';
+const NODE_REF_PREFIX = 'workspace://SpacesStore/';
 
 const DefaultPanels = {
     PROPERTIES: 'Properties',
@@ -95,6 +102,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     private readonly categoryService = inject(CategoryService);
     private readonly contentService = inject(ContentService);
     private readonly notificationService = inject(NotificationService);
+    private readonly cardViewUpdateService = inject(CardViewUpdateService);
+    private readonly contentNodeDialogService = inject(ContentNodeDialogService);
 
     /** (required) The node entity to fetch metadata about */
     @Input({ required: true })
@@ -210,11 +219,81 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
             this.loadProperties(node);
         });
 
+        this.cardViewUpdateService.itemClicked$
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((notification: ClickNotification) => this.onCardItemClicked(notification));
+
         this.loadProperties(this.node);
         this.verifyAllowableOperations();
 
         this.currentPanel.panelTitle = this.displayAspect && this.displayAspect !== '' ? this.displayAspect : this.DefaultPanels.PROPERTIES;
         this.currentPanel.expanded = true;
+    }
+
+    private onCardItemClicked(notification: ClickNotification): void {
+        const target = notification?.target as CardViewBaseItemModel;
+
+        if (target?.type !== SMART_FOLDER_TEMPLATE_TYPE) {
+            return;
+        }
+
+        const dialogTitle = this.translationService.instant('METADATA.SMART_FOLDER.SELECT_TEMPLATE_DIALOG_TITLE');
+
+        this.findSmartFolderTemplatesFolderId()
+            .pipe(
+                switchMap((folderId) =>
+                    folderId
+                        ? this.contentNodeDialogService.openNodeSelectionDialog(folderId, dialogTitle, (entry: Node) => entry.isFile)
+                        : of<Node[]>([])
+                ),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe((selections: Node[]) => {
+                const selectedNode = selections?.[0];
+                if (selectedNode) {
+                    const smartFolderTarget = target as CardViewSelectNodeItemModel;
+                    const nodeReference = `${NODE_REF_PREFIX}${selectedNode.id}`;
+                    smartFolderTarget.displayName = selectedNode.name;
+                    smartFolderTarget.value = nodeReference;
+                    this.cardViewContentUpdateService.update(smartFolderTarget, nodeReference);
+                }
+            });
+    }
+
+    private resolveSmartFolderTemplateNames(groups: CardViewGroup[]): void {
+        const templateItems = (groups || [])
+            .flatMap((group) => group.properties || [])
+            .filter((item): item is CardViewSelectNodeItemModel => item?.type === SMART_FOLDER_TEMPLATE_TYPE)
+            .filter((item) => item.value && !item.displayName);
+
+        if (!templateItems.length) {
+            return;
+        }
+
+        const templateNodes$ = templateItems.map((item) => {
+            const nodeId = String(item.value).split('/').pop();
+            return this.nodesApiService.getNode(nodeId).pipe(catchError(() => of(null)));
+        });
+
+        forkJoin(templateNodes$)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((templateNodes: Node[]) => {
+                templateNodes.forEach((templateNode, index) => {
+                    if (templateNode) {
+                        templateItems[index].displayName = templateNode.name;
+                    }
+                });
+            });
+    }
+
+    private findSmartFolderTemplatesFolderId(): Observable<string> {
+        return this.nodesApiService.getNode('-root-', { relativePath: SMART_FOLDER_TEMPLATES_RELATIVE_PATH }).pipe(
+            map((node: Node) => node?.id),
+            catchError(() => {
+                this.notificationService.showError('METADATA.SMART_FOLDER.TEMPLATES_FOLDER_NOT_FOUND');
+                return of(undefined);
+            })
+        );
     }
 
     private verifyAllowableOperations() {
@@ -458,7 +537,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
                 this.basicProperties$ = this.getProperties(node);
             }
             if (loadGroupedProps) {
-                this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
+                const groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
+                this.groupedProperties$ = groupedProperties$?.pipe(tap((groups) => this.resolveSmartFolderTemplateNames(groups)));
             }
 
             if (this.displayTags && loadTags) {

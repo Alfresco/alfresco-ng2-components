@@ -24,6 +24,7 @@ export {
     CardViewSelectItemComponent,
     CardViewKeyValuePairsItemComponent,
     CardViewArrayItemComponent,
+    CardViewSelectNodeItemComponent,
     SelectFilterInputComponent
 } from './components/card-view.components';
 
