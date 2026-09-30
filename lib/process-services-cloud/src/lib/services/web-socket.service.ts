@@ -18,22 +18,13 @@
 import { Client, ClientOptions, createClient } from 'graphql-ws';
 import { inject, Injectable } from '@angular/core';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
-import {
-    DefaultContext,
-    FetchResult,
-    from,
-    InMemoryCache,
-    InMemoryCacheConfig,
-    NextLink,
-    Operation,
-    split,
-    SubscriptionOptions
-} from '@apollo/client/core';
+import { ApolloClient, ApolloLink, DefaultContext, InMemoryCache, InMemoryCacheConfig } from '@apollo/client/core';
 import { Observable } from 'rxjs';
 import { Apollo } from 'apollo-angular';
 import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
 import { Kind, OperationTypeNode } from 'graphql';
-import { onError } from '@apollo/client/link/error';
+import { ErrorLink } from '@apollo/client/link/error';
+import { CombinedGraphQLErrors, CombinedProtocolErrors } from '@apollo/client/errors';
 import { RetryLink } from '@apollo/client/link/retry';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { take } from 'rxjs/operators';
@@ -43,7 +34,7 @@ interface serviceOptions {
     apolloClientName: string;
     wsUrl: string;
     httpUrl?: string;
-    subscriptionOptions: SubscriptionOptions;
+    subscriptionOptions: ApolloClient.SubscribeOptions;
 }
 
 @Injectable({
@@ -58,7 +49,7 @@ export class WebSocketService {
     private wsLink!: GraphQLWsLink;
     private httpLinkHandler: HttpLinkHandler | undefined;
 
-    public getSubscription<T>(options: serviceOptions): Observable<FetchResult<T>> {
+    public getSubscription<T>(options: serviceOptions): Observable<ApolloLink.Result<T>> {
         const { apolloClientName, subscriptionOptions } = options;
         this.authService.onLogout.pipe(take(1)).subscribe(() => {
             if (this.apollo.use(apolloClientName)) {
@@ -95,7 +86,7 @@ export class WebSocketService {
 
         this.createHttpLinkHandler(options);
 
-        const link = split(
+        const link = ApolloLink.split(
             ({ query }) => {
                 const definition = getMainDefinition(query);
                 return definition.kind === Kind.OPERATION_DEFINITION && definition.operation === OperationTypeNode.SUBSCRIPTION;
@@ -104,7 +95,7 @@ export class WebSocketService {
             this.httpLinkHandler
         );
 
-        const authLink = (operation: Operation, forward: NextLink) => {
+        const authLink = (operation: ApolloLink.Operation, forward: ApolloLink.ForwardFunction) => {
             operation.setContext(({ headers }: DefaultContext) => ({
                 headers: {
                     ...headers,
@@ -114,17 +105,20 @@ export class WebSocketService {
             return forward(operation);
         };
 
-        const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
-            if (graphQLErrors) {
-                for (const error of graphQLErrors) {
-                    if (error.extensions?.['code'] === 'UNAUTHENTICATED') {
+        const errorLink = new ErrorLink(({ error, operation, forward }) => {
+            if (CombinedGraphQLErrors.is(error)) {
+                for (const { message, locations, path, extensions } of error.errors) {
+                    console.error(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
+                    if (extensions?.['code'] === 'UNAUTHENTICATED') {
                         return authLink(operation, forward);
                     }
                 }
-            }
-
-            if (networkError) {
-                console.error(`[Network error]: ${networkError}`);
+            } else if (CombinedProtocolErrors.is(error)) {
+                error.errors.forEach(({ message, extensions }) =>
+                    console.error(`[Protocol error]: Message: ${message}, Extensions: ${JSON.stringify(extensions)}`)
+                );
+            } else {
+                console.error(`[Network error]: ${error}`);
             }
 
             return undefined;
@@ -143,10 +137,7 @@ export class WebSocketService {
         });
 
         this.apollo.createNamed(options.apolloClientName, {
-            headers: {
-                Authorization: `Bearer ${this.authService.getToken()}`
-            },
-            link: from([authLink, retryLink, errorLink, link]),
+            link: ApolloLink.from([new ApolloLink(authLink), retryLink, errorLink, link]),
             cache: new InMemoryCache({ merge: true } as InMemoryCacheConfig)
         });
     }
