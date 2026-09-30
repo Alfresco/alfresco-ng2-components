@@ -27,3 +27,4 @@ export * from './card-view-textitem.model';
 export * from './card-view-keyvaluepairs.model';
 export * from './card-view-selectitem.model';
 export * from './card-view-arrayitem.model';
+export * from './card-view-select-node-item.model';

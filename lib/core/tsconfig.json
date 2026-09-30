@@ -21,7 +21,6 @@
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
     "enableResourceInlining": true,
-    "typeCheckHostBindings": false,
     "strictTemplates": true
   }
 }

@@ -1,0 +1,13 @@
+@if (isEditable || !property.isEmpty()) {
+    <mat-form-field class="adf-property-field" (click)="selectNode()">
+        <mat-label>{{ property.label | translate }}</mat-label>
+        <input
+            matInput
+            readonly
+            [attr.data-automation-id]="'card-select-node-' + property.key"
+            [placeholder]="'CORE.METADATA.ACTIONS.SELECT_TEMPLATE' | translate"
+            [ngModel]="property.displayValue"
+            (keydown.enter)="selectNode()"
+        />
+    </mat-form-field>
+}

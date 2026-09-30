@@ -32,8 +32,8 @@ import {
     inject
 } from '@angular/core';
 import { NodePaging, ResultSetPaging } from '@alfresco/js-api';
-import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { EMPTY, Subject } from 'rxjs';
+import { catchError, debounceTime, switchMap } from 'rxjs/operators';
 import { SearchComponentInterface } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -52,6 +52,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class SearchComponent implements SearchComponentInterface, AfterContentInit, OnChanges {
     private readonly searchService = inject(SearchService);
     private readonly _elementRef = inject(ElementRef);
+    private readonly searchRequestStream = new Subject<string>();
 
     @ViewChild('panel', { static: true })
     panel: ElementRef;
@@ -110,17 +111,28 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
     _isOpen: boolean = false;
     keyPressedStream = new Subject<string>();
     _classList: { [key: string]: boolean } = {};
-    constructor() {
-        const searchService = this.searchService;
 
+    constructor() {
         this.keyPressedStream.pipe(debounceTime(200), takeUntilDestroyed()).subscribe((searchedWord) => {
             this.loadSearchResults(searchedWord);
         });
 
-        searchService.dataLoaded.pipe(takeUntilDestroyed()).subscribe(
-            (nodePaging) => this.onSearchDataLoaded(nodePaging),
-            (error) => this.onSearchDataError(error)
-        );
+        this.searchRequestStream
+            .pipe(
+                switchMap((searchTerm) => {
+                    if (!searchTerm) {
+                        return EMPTY;
+                    }
+                    return this.searchService.search(searchTerm, this.maxResults, this.skipResults).pipe(
+                        catchError((error) => {
+                            this.onSearchDataError(error);
+                            return EMPTY;
+                        })
+                    );
+                }),
+                takeUntilDestroyed()
+            )
+            .subscribe((result) => this.onSearchDataLoaded(result));
     }
 
     ngAfterContentInit() {
@@ -128,13 +140,14 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.searchTerm?.currentValue) {
+        if (changes.searchTerm) {
             this.loadSearchResults(changes.searchTerm.currentValue);
         }
     }
     resetResults() {
         this.cleanResults();
         this.setVisibility();
+        this.searchRequestStream.next('');
     }
 
     reload() {
@@ -150,12 +163,7 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
     private loadSearchResults(searchTerm?: string) {
         this.resetResults();
         if (searchTerm) {
-            this.searchService.search(searchTerm, this.maxResults, this.skipResults).subscribe(
-                (result) => this.onSearchDataLoaded(result),
-                (err) => this.onSearchDataError(err)
-            );
-        } else {
-            this.cleanResults();
+            this.searchRequestStream.next(searchTerm);
         }
     }
 

@@ -307,7 +307,8 @@
         "CLEAR": "Löschen",
         "TOGGLE": "Umschaltwert",
         "COPY_TO_CLIPBOARD": "Doppelklicken, um den Wert zu kopieren",
-        "EDIT_ASPECTS": "Aspekt bearbeiten"
+        "EDIT_ASPECTS": "Aspekt bearbeiten",
+        "SELECT_TEMPLATE": "Click to select the template"
       },
       "ACCESSIBILITY": {
         "EDIT": "{{ sectionName }} bearbeiten",
