@@ -39,6 +39,7 @@ A few other pages of information are also available:
 -   The [Breaking changes](breaking-changes/breaking-change-2.6.0-3.0.0.md) section lists
     all breaking changes between major versions, such as removal of deprecated items.
 -   The [Upgrade guide](upgrade-guide/README.md) explains how to upgrade your project from an earlier version of ADF to the current version.
+-   The [Dev Containers guide](dev-containers.md) explains the containerized developer workflow and Git/security options.
 
 ## Contents
 
