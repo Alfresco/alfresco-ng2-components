@@ -153,6 +153,20 @@ export class ProcessFilterService {
     }
 
     /**
+     * Updates a process filter.
+     *
+     * @param filterId existing filter id
+     * @param updatedFilter updated filter body
+     * @returns The updated filter
+     */
+    updateProcessFilter(
+        filterId: number,
+        updatedFilter: UserProcessInstanceFilterRepresentation
+    ): Observable<UserProcessInstanceFilterRepresentation> {
+        return from(this.userFiltersApi.updateUserProcessInstanceFilter(filterId, updatedFilter));
+    }
+
+    /**
      * Calls `getUserProcessInstanceFilters` from the Alfresco JS API.
      *
      * @param appId ID of the target app

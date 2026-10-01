@@ -30,6 +30,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { forkJoin, Observable } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 
+const LEGACY_DEFAULT_TASK_FILTER_TRANSLATION_KEYS: Record<string, string> = {
+    'My Tasks': 'ADF_TASK_LIST.FILTERS.DEFAULT.MY_TASKS',
+    'Overdue Tasks': 'ADF_TASK_LIST.FILTERS.DEFAULT.OVERDUE_TASKS',
+    'Unassigned Tasks': 'ADF_TASK_LIST.FILTERS.DEFAULT.UNASSIGNED_TASKS',
+    'Completed Tasks': 'ADF_TASK_LIST.FILTERS.DEFAULT.COMPLETED_TASKS'
+};
+
 @Component({
     selector: 'adf-task-filters',
     imports: [CommonModule, TranslatePipe, MatButtonModule, MatIconModule],
@@ -273,7 +280,9 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     }
 
     /**
-     * Migrate "Involved" and "Queued" filters to "Overdue" and "Unassigned" filters
+     * Migrate obsolete and legacy default filters:
+     * - "Involved" and "Queued" filters become "Overdue" and "Unassigned" filters
+     * - default filters still stored with their legacy plain-string name are renamed to the matching translation key
      *
      * @param filters - list of filters to migrate
      * @returns list of observables for each migrated filter
@@ -295,8 +304,18 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
                         )
                     );
                     break;
-                default:
+                default: {
+                    const translationKey = LEGACY_DEFAULT_TASK_FILTER_TRANSLATION_KEYS[filterToMigrate.name];
+                    if (translationKey) {
+                        migratedFilters.push(
+                            this.taskFilterService.updateTaskFilter(
+                                filterToMigrate.id,
+                                new UserTaskFilterRepresentation({ ...filterToMigrate, name: translationKey })
+                            )
+                        );
+                    }
                     break;
+                }
             }
         });
         return migratedFilters;
