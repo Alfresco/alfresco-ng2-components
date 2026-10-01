@@ -503,8 +503,8 @@
       "SAVE_OR_DISCARD_CHANGES": "Salve ou descarte as alterações para continuar"
     },
     "SMART_FOLDER": {
-      "SELECT_TEMPLATE_DIALOG_TITLE": "Select smart folder template",
-      "TEMPLATES_FOLDER_NOT_FOUND": "Smart Folder Templates directory wasn't found"
+      "SELECT_TEMPLATE_DIALOG_TITLE": "Selecionar modelo de pasta inteligente",
+      "TEMPLATES_FOLDER_NOT_FOUND": "O diretório de modelos de pasta inteligente não foi encontrado"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

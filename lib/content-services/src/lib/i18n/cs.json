@@ -503,8 +503,8 @@
       "SAVE_OR_DISCARD_CHANGES": "Uložte nebo zrušte změny pro pokračování"
     },
     "SMART_FOLDER": {
-      "SELECT_TEMPLATE_DIALOG_TITLE": "Select smart folder template",
-      "TEMPLATES_FOLDER_NOT_FOUND": "Smart Folder Templates directory wasn't found"
+      "SELECT_TEMPLATE_DIALOG_TITLE": "Výběr šablony chytré složky",
+      "TEMPLATES_FOLDER_NOT_FOUND": "Adresář šablon chytrých složek nebyl nalezen"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

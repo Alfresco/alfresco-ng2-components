@@ -45,7 +45,7 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Definice procesu se nepodařilo načíst. Zkontrolujte svá přístupová oprávnění.",
         "START": "Nepodařilo se spustit novou instanci procesu. Zkontrolujte svá přístupová oprávnění.",
-        "OUTCOME_NOT_FOUND": "The requested form action is no longer available.",
+        "OUTCOME_NOT_FOUND": "Požadovaná akce formuláře již není k dispozici.",
         "PROCESS_NAME_REQUIRED": "Název procesu je povinný",
         "PROCESS_DEFINITION_REQUIRED": "Definice procesu je povinná",
         "MAXIMUM_LENGTH": "Přesáhli jste délku (maximálně lze zadat {{characters}} znaků).",
