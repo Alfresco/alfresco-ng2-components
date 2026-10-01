@@ -133,7 +133,7 @@ export class ProcessFilterService {
      */
     getRunningFilterInstance(appId: number, index?: number): UserProcessInstanceFilterRepresentation {
         return {
-            name: 'Running',
+            name: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.RUNNING',
             appId,
             recent: true,
             icon: 'glyphicon-random',
@@ -168,7 +168,7 @@ export class ProcessFilterService {
 
     getCompletedFilterInstance(appId: number, index?: number): UserProcessInstanceFilterRepresentation {
         return {
-            name: 'Completed',
+            name: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.COMPLETED',
             appId,
             recent: false,
             icon: 'glyphicon-ok-sign',
@@ -179,7 +179,7 @@ export class ProcessFilterService {
 
     getAllFilterInstance(appId: number, index?: number): UserProcessInstanceFilterRepresentation {
         return {
-            name: 'All',
+            name: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.ALL',
             appId,
             recent: true,
             icon: 'glyphicon-th',

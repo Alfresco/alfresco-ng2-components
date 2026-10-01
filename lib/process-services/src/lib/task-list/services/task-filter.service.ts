@@ -193,7 +193,7 @@ export class TaskFilterService {
      */
     getMyTasksFilterInstance(appId: number, index?: number): UserTaskFilterRepresentation {
         return new UserTaskFilterRepresentation({
-            name: 'My Tasks',
+            name: 'ADF_TASK_LIST.FILTERS.DEFAULT.MY_TASKS',
             appId,
             recent: false,
             icon: 'glyphicon-inbox',
@@ -216,7 +216,7 @@ export class TaskFilterService {
      */
     getOverdueTasksFilterInstance(appId: number, index?: number): UserTaskFilterRepresentation {
         return new UserTaskFilterRepresentation({
-            name: 'Overdue Tasks',
+            name: 'ADF_TASK_LIST.FILTERS.DEFAULT.OVERDUE_TASKS',
             appId,
             recent: false,
             icon: 'glyphicon-align-left',
@@ -234,7 +234,7 @@ export class TaskFilterService {
      */
     getUnassignedTasksFilterInstance(appId: number, index?: number): UserTaskFilterRepresentation {
         return new UserTaskFilterRepresentation({
-            name: 'Unassigned Tasks',
+            name: 'ADF_TASK_LIST.FILTERS.DEFAULT.UNASSIGNED_TASKS',
             appId,
             recent: false,
             icon: 'glyphicon-record',
@@ -252,7 +252,7 @@ export class TaskFilterService {
      */
     getCompletedTasksFilterInstance(appId: number, index?: number): UserTaskFilterRepresentation {
         return new UserTaskFilterRepresentation({
-            name: 'Completed Tasks',
+            name: 'ADF_TASK_LIST.FILTERS.DEFAULT.COMPLETED_TASKS',
             appId,
             recent: true,
             icon: 'glyphicon-ok-sign',

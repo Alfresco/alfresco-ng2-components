@@ -37,7 +37,7 @@ describe('TaskListService', () => {
 
     it('should provide my tasks filter instance', () => {
         const myTasksFilter = service.getMyTasksFilterInstance(1, 11);
-        expect(myTasksFilter.name).toBe('My Tasks');
+        expect(myTasksFilter.name).toBe('ADF_TASK_LIST.FILTERS.DEFAULT.MY_TASKS');
         expect(myTasksFilter.appId).toBe(1);
         expect(myTasksFilter.recent).toBe(false);
         expect(myTasksFilter.icon).toBe('glyphicon-inbox');
@@ -50,7 +50,7 @@ describe('TaskListService', () => {
 
     it('should provide overdue tasks filter instance', () => {
         const overdueTasksFilter = service.getOverdueTasksFilterInstance(1, 11);
-        expect(overdueTasksFilter.name).toBe('Overdue Tasks');
+        expect(overdueTasksFilter.name).toBe('ADF_TASK_LIST.FILTERS.DEFAULT.OVERDUE_TASKS');
         expect(overdueTasksFilter.appId).toBe(1);
         expect(overdueTasksFilter.recent).toBe(false);
         expect(overdueTasksFilter.icon).toBe('glyphicon-align-left');
@@ -63,7 +63,7 @@ describe('TaskListService', () => {
 
     it('should provide unassigned tasks filter instance', () => {
         const unassignedTasksFilter = service.getUnassignedTasksFilterInstance(1, 11);
-        expect(unassignedTasksFilter.name).toBe('Unassigned Tasks');
+        expect(unassignedTasksFilter.name).toBe('ADF_TASK_LIST.FILTERS.DEFAULT.UNASSIGNED_TASKS');
         expect(unassignedTasksFilter.appId).toBe(1);
         expect(unassignedTasksFilter.recent).toBe(false);
         expect(unassignedTasksFilter.icon).toBe('glyphicon-record');
@@ -76,7 +76,7 @@ describe('TaskListService', () => {
 
     it('should provide completed tasks filter instance', () => {
         const completedTasksFilter = service.getCompletedTasksFilterInstance(1, 11);
-        expect(completedTasksFilter.name).toBe('Completed Tasks');
+        expect(completedTasksFilter.name).toBe('ADF_TASK_LIST.FILTERS.DEFAULT.COMPLETED_TASKS');
         expect(completedTasksFilter.appId).toBe(1);
         expect(completedTasksFilter.recent).toBe(true);
         expect(completedTasksFilter.icon).toBe('glyphicon-ok-sign');
