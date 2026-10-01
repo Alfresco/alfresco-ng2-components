@@ -45,7 +45,7 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Der kunne ikke indlæses nogen procesdefinitioner. Kontrollér, om du har adgang til dem.",
         "START": "Der kunne ikke startes en ny procesforekomst. Kontrollér, om du har adgang.",
-        "OUTCOME_NOT_FOUND": "The requested form action is no longer available.",
+        "OUTCOME_NOT_FOUND": "Den anmodede formularhandling er ikke længere tilgængelig.",
         "PROCESS_NAME_REQUIRED": "Procesnavn er påkrævet",
         "PROCESS_DEFINITION_REQUIRED": "Procesdefinition er påkrævet",
         "MAXIMUM_LENGTH": "Længden er overskredet, maks. {{characters}} tegn.",

@@ -503,8 +503,8 @@
       "SAVE_OR_DISCARD_CHANGES": "保存或放弃更改以继续"
     },
     "SMART_FOLDER": {
-      "SELECT_TEMPLATE_DIALOG_TITLE": "Select smart folder template",
-      "TEMPLATES_FOLDER_NOT_FOUND": "Smart Folder Templates directory wasn't found"
+      "SELECT_TEMPLATE_DIALOG_TITLE": "选择智能文件夹模板",
+      "TEMPLATES_FOLDER_NOT_FOUND": "未找到智能文件夹模板目录"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

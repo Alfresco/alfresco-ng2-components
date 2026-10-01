@@ -308,7 +308,7 @@
         "TOGGLE": "Umschaltwert",
         "COPY_TO_CLIPBOARD": "Doppelklicken, um den Wert zu kopieren",
         "EDIT_ASPECTS": "Aspekt bearbeiten",
-        "SELECT_TEMPLATE": "Click to select the template"
+        "SELECT_TEMPLATE": "Klicken, um die Vorlage auszuwählen"
       },
       "ACCESSIBILITY": {
         "EDIT": "{{ sectionName }} bearbeiten",

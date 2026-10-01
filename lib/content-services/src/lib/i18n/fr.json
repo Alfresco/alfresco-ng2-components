@@ -503,7 +503,7 @@
       "SAVE_OR_DISCARD_CHANGES": "Enregistrer ou rejeter les modifications pour continuer"
     },
     "SMART_FOLDER": {
-      "SELECT_TEMPLATE_DIALOG_TITLE": "Select smart folder template",
+      "SELECT_TEMPLATE_DIALOG_TITLE": "Sélectionner un modèle de dossier intelligent",
       "TEMPLATES_FOLDER_NOT_FOUND": "Smart Folder Templates directory wasn't found"
     },
     "CONTENT_TYPE": {
