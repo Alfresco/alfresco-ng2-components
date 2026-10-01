@@ -43,7 +43,7 @@ const fakeProcessFilters: UserProcessInstanceFilterRepresentation[] = [
     },
     {
         id: 30,
-        name: 'Running',
+        name: 'FakeRunning',
         icon: 'glyphicon-ok-sign',
         filter: { state: 'open', assignment: 'fake-running' }
     }
@@ -106,7 +106,59 @@ describe('ProcessFiltersComponent', () => {
         expect(filterList.filters.length).toEqual(3);
         expect(filterList.filters[0].name).toEqual('FakeCompleted');
         expect(filterList.filters[1].name).toEqual('FakeAll');
-        expect(filterList.filters[2].name).toEqual('Running');
+        expect(filterList.filters[2].name).toEqual('FakeRunning');
+    });
+
+    it('should migrate legacy default filters to their translation keys', async () => {
+        const runningFilter: UserProcessInstanceFilterRepresentation = {
+            id: 10,
+            index: 0,
+            name: 'Running',
+            icon: 'glyphicon-random',
+            filter: { sort: 'created-desc', name: '', state: 'running' }
+        };
+        const completedFilter: UserProcessInstanceFilterRepresentation = {
+            id: 11,
+            index: 1,
+            name: 'Completed',
+            icon: 'glyphicon-ok-sign',
+            filter: { sort: 'created-desc', name: '', state: 'completed' }
+        };
+        const allFilter: UserProcessInstanceFilterRepresentation = {
+            id: 12,
+            index: 2,
+            name: 'All',
+            icon: 'glyphicon-th',
+            filter: { sort: 'created-desc', name: '', state: 'all' }
+        };
+        getProcessFiltersSpy.and.returnValue(of([runningFilter, completedFilter, allFilter]));
+        const updateProcessFilterSpy = spyOn(processFilterService, 'updateProcessFilter').and.callFake((_id, filterModel) => of(filterModel));
+
+        filterList.ngOnChanges({ appId: new SimpleChange(null, '1', true) });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(updateProcessFilterSpy).toHaveBeenCalledTimes(3);
+        expect(updateProcessFilterSpy).toHaveBeenCalledWith(10, { ...runningFilter, name: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.RUNNING' });
+        expect(updateProcessFilterSpy).toHaveBeenCalledWith(11, { ...completedFilter, name: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.COMPLETED' });
+        expect(updateProcessFilterSpy).toHaveBeenCalledWith(12, { ...allFilter, name: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.ALL' });
+    });
+
+    it('should not migrate custom filters', async () => {
+        const customFilter: UserProcessInstanceFilterRepresentation = {
+            id: 10,
+            name: 'My Custom Filter',
+            icon: 'glyphicon-random',
+            filter: { sort: 'created-desc', name: '', state: 'running' }
+        };
+        getProcessFiltersSpy.and.returnValue(of([customFilter]));
+        const updateProcessFilterSpy = spyOn(processFilterService, 'updateProcessFilter').and.callFake((_id, filterModel) => of(filterModel));
+
+        filterList.ngOnChanges({ appId: new SimpleChange(null, '1', true) });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(updateProcessFilterSpy).not.toHaveBeenCalled();
     });
 
     it('should emit the selected filter based on the filterParam input', async () => {
