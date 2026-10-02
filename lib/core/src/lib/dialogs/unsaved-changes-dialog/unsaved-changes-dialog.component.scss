@@ -36,19 +36,16 @@
             margin-left: 40px;
             padding: 0;
             align-items: flex-end;
+            flex-wrap: nowrap;
 
             &-cancel-button {
                 margin-right: 4px;
             }
 
             &-discard-changes-button {
-                color: var(--mat-sys-on-error);
-                background-color: var(--mat-sys-error);
-
                 @include mat.button-overrides(
                     (
-                        filled-label-text-color: var(--mat-sys-on-error),
-                        filled-container-color: var(--mat-sys-error)
+                        text-label-text-color: var(--mat-sys-primary)
                     )
                 );
             }
@@ -58,6 +55,7 @@
                 height: 32px;
                 display: flex;
                 align-items: center;
+                white-space: nowrap;
             }
         }
     }
