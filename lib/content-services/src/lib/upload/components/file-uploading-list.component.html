@@ -1,7 +1,9 @@
-<div class="upload-list">
+<ul class="adf-upload-list">
   @for (file of files; track file.id) {
-    <ng-template
-      [ngTemplateOutlet]="template"
-      [ngTemplateOutletContext]="{ $implicit: file }" />
+    <li class="adf-upload-list-item">
+      <ng-template
+        [ngTemplateOutlet]="template"
+        [ngTemplateOutletContext]="{ $implicit: file }" />
+    </li>
   }
-</div>
+</ul>
