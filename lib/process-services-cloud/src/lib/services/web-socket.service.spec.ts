@@ -20,7 +20,7 @@ import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { lastValueFrom, of, Subject } from 'rxjs';
 import { WebSocketService } from './web-socket.service';
-import { ApolloLink, execute, FetchResult, Observable as ApolloObservable, SubscriptionOptions } from '@apollo/client/core';
+import { ApolloClient, ApolloLink, InMemoryCache, Observable as ApolloObservable } from '@apollo/client/core';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AuthenticationService, AppConfigService } from '@alfresco/adf-core';
 import { Client, ClientOptions, Sink, SubscribePayload } from 'graphql-ws';
@@ -94,7 +94,7 @@ describe('WebSocketService', () => {
 
     it('should not create a new Apollo client if it is already in use', async () => {
         const apolloClientName = 'testClient';
-        const subscriptionOptions: SubscriptionOptions = { query: gql(`subscription {testQuery}`) };
+        const subscriptionOptions: ApolloClient.SubscribeOptions = { query: gql(`subscription {testQuery}`) };
         const wsOptions = { apolloClientName, wsUrl: 'testUrl', subscriptionOptions };
 
         apolloMock.use.and.returnValues(true, { subscribe: () => of({}) });
@@ -109,7 +109,7 @@ describe('WebSocketService', () => {
     it('should subscribe to Apollo client if not already in use', async () => {
         const apolloClientName = 'testClient';
         const expectedApolloClientName = 'testClient';
-        const subscriptionOptions: SubscriptionOptions = { query: gql(`subscription {testQuery}`) };
+        const subscriptionOptions: ApolloClient.SubscribeOptions = { query: gql(`subscription {testQuery}`) };
         const wsOptions = { apolloClientName, wsUrl: 'testUrl', subscriptionOptions };
 
         await lastValueFrom(service.getSubscription(wsOptions));
@@ -121,25 +121,46 @@ describe('WebSocketService', () => {
     });
 
     it('should create named client with the right authentication token when FF is on', async () => {
-        let headers = {};
         const expectedHeaders = { Authorization: 'Bearer testToken' };
         const apolloClientName = 'testClient';
-        const subscriptionOptions: SubscriptionOptions = { query: gql(`subscription {testQuery}`) };
-        const wsOptions = { apolloClientName, wsUrl: 'testUrl', subscriptionOptions };
-        apolloMock.createNamed.and.callFake((_: any, options: { headers: {} }) => {
-            headers = options.headers;
+        const subscriptionOptions: ApolloClient.SubscribeOptions = { query: gql(`subscription {testQuery}`) };
+        const wsOptions = { apolloClientName, wsUrl: 'testUrl', httpUrl: 'testHttpUrl', subscriptionOptions };
+        let capturedHeaders: unknown;
+
+        httpLinkMock.create.and.returnValue(
+            new ApolloLink(
+                (operation) =>
+                    new ApolloObservable<ApolloLink.Result>((observer) => {
+                        capturedHeaders = operation.getContext().headers;
+                        observer.next({ data: { testQuery: true } });
+                        observer.complete();
+                    })
+            )
+        );
+
+        let createdLink: ApolloLink | undefined;
+        apolloMock.createNamed.and.callFake((_: any, options: { link: ApolloLink }) => {
+            createdLink = options.link;
         });
 
         await lastValueFrom(service.getSubscription(wsOptions));
 
+        if (!createdLink) {
+            fail('Expected Apollo link to be created');
+            return;
+        }
+
+        const testClient = new ApolloClient({ link: createdLink, cache: new InMemoryCache() });
+        await testClient.query({ query: gql(`query { testQuery }`), fetchPolicy: 'no-cache' });
+
         expect(apolloMock.use).toHaveBeenCalledTimes(2);
         expect(apolloMock.createNamed).toHaveBeenCalled();
-        expect(headers).toEqual(expectedHeaders);
+        expect(capturedHeaders).toEqual(expectedHeaders);
     });
 
     it('should recreate the subscription client when the websocket connection errors', async () => {
         const apolloClientName = 'testClient';
-        const subscriptionOptions: SubscriptionOptions = { query: gql(`subscription {testQuery}`) };
+        const subscriptionOptions: ApolloClient.SubscribeOptions = { query: gql(`subscription {testQuery}`) };
         const wsOptions = { apolloClientName, wsUrl: 'testUrl', subscriptionOptions };
 
         await lastValueFrom(service.getSubscription(wsOptions));
@@ -160,17 +181,18 @@ describe('WebSocketService', () => {
     });
 
     it('should retry the operation when a GraphQL error is unauthenticated', async () => {
+        const consoleErrorSpy = spyOn(console, 'error');
         const apolloClientName = 'testClient';
-        const subscriptionOptions: SubscriptionOptions = { query: gql(`subscription {testQuery}`) };
+        const subscriptionOptions: ApolloClient.SubscribeOptions = { query: gql(`subscription {testQuery}`) };
         const wsOptions = { apolloClientName, wsUrl: 'testUrl', httpUrl: 'testHttpUrl', subscriptionOptions };
-        const expectedResult: FetchResult = { data: { retried: true } };
+        const expectedResult: ApolloLink.Result = { data: { retried: true } };
         let createdLink: ApolloLink | undefined;
         let requestCount = 0;
 
         httpLinkMock.create.and.returnValue(
             new ApolloLink(
                 () =>
-                    new ApolloObservable<FetchResult>((observer) => {
+                    new ApolloObservable<ApolloLink.Result>((observer) => {
                         requestCount++;
 
                         if (requestCount === 1) {
@@ -196,14 +218,11 @@ describe('WebSocketService', () => {
             return;
         }
 
-        const result = await new Promise<FetchResult>((resolve, reject) => {
-            execute(createdLink!, { query: gql(`query { testQuery }`) }).subscribe({
-                next: resolve,
-                error: reject
-            });
-        });
+        const testClient = new ApolloClient({ link: createdLink, cache: new InMemoryCache() });
+        const result = await testClient.query({ query: gql(`query { testQuery }`), fetchPolicy: 'no-cache' });
 
         expect(requestCount).toBe(2);
-        expect(result).toEqual(expectedResult);
+        expect(result.data).toEqual(expectedResult.data);
+        expect(consoleErrorSpy).toHaveBeenCalledWith('[GraphQL error]: Message: Unauthorized, Location: undefined, Path: undefined');
     });
 });
