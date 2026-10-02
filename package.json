@@ -50,7 +50,7 @@
     "@angular/material-date-fns-adapter": "21.2.14",
     "@angular/platform-browser": "21.2.22",
     "@angular/platform-browser-dynamic": "21.2.22",
-    "@angular/router": "21.2.22",
+    "@angular/router": "21.2.24",
     "@apollo/client": "3.13.1",
     "@cspell/eslint-plugin": "10.0.1",
     "@mat-datetimepicker/core": "16.0.1",
