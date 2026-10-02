@@ -1,11 +1,11 @@
 <adf-search-filter-tabbed>
-    <ng-container *ngFor="let field of tabbedFacet.fields">
-        <adf-search-chip-autocomplete-input
-            *adf-search-filter-tab="tabbedFacet.facets[field]?.label"
-            [autocompleteOptions]="autocompleteOptions[field]"
-            [onReset$]="reset$"
-            [allowOnlyPredefinedValues]="true"
-            [compareOption]="optionComparator"
-            (optionsChanged)="onOptionsChange($event, field)" />
-    </ng-container>
+  @for (field of tabbedFacet.fields; track field) {
+    <adf-search-chip-autocomplete-input
+      *adf-search-filter-tab="tabbedFacet.facets[field]?.label"
+      [autocompleteOptions]="autocompleteOptions[field]"
+      [onReset$]="reset$"
+      [allowOnlyPredefinedValues]="true"
+      [compareOption]="optionComparator"
+      (optionsChanged)="onOptionsChange($event, field)" />
+  }
 </adf-search-filter-tabbed>
