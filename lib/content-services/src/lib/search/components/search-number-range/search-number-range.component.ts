@@ -23,7 +23,7 @@ import { SearchQueryBuilderService } from '../../services/search-query-builder.s
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import { ReplaySubject } from 'rxjs';
 import { first, map } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -31,7 +31,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-search-number-range',
-    imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, TranslatePipe, MatButtonModule],
+    imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, TranslatePipe, MatButtonModule],
     templateUrl: './search-number-range.component.html',
     styleUrls: ['./search-number-range.component.scss'],
     encapsulation: ViewEncapsulation.None,
