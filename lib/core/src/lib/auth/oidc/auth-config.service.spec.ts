@@ -167,6 +167,38 @@ describe('AuthConfigService', () => {
             spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigSubfolder2RedirectUri);
             expect(service.loadAppConfig().silentRefreshRedirectUri).toBe(expectedUri);
         });
+
+        it('should rebase the silentRefreshRedirectUri onto the current window origin when the configured domain differs', () => {
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue({
+                ...mockAuthConfigImplicitFlow,
+                redirectSilentIframeUri: 'https://different-domain.com/assets/silent-refresh.html'
+            });
+            expect(service.loadAppConfig().silentRefreshRedirectUri).toBe('http://localhost:3000/assets/silent-refresh.html');
+        });
+
+        it('should preserve the subfolder path while rebasing onto the current window origin', () => {
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue({
+                ...mockAuthConfigImplicitFlow,
+                redirectSilentIframeUri: 'https://different-domain.com/subfolder/assets/silent-refresh.html'
+            });
+            expect(service.loadAppConfig().silentRefreshRedirectUri).toBe('http://localhost:3000/subfolder/assets/silent-refresh.html');
+        });
+
+        it('should resolve a relative silentRefreshRedirectUri against the current window origin', () => {
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue({
+                ...mockAuthConfigImplicitFlow,
+                redirectSilentIframeUri: '/assets/silent-refresh.html'
+            });
+            expect(service.loadAppConfig().silentRefreshRedirectUri).toBe('http://localhost:3000/assets/silent-refresh.html');
+        });
+
+        it('should return the configured value unchanged when redirectSilentIframeUri is not set', () => {
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue({
+                ...mockAuthConfigImplicitFlow,
+                redirectSilentIframeUri: undefined
+            });
+            expect(service.loadAppConfig().silentRefreshRedirectUri).toBeUndefined();
+        });
     });
 
     describe('postLogoutRedirectUri', () => {
