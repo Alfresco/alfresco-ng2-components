@@ -21,8 +21,8 @@ import { ProcessFilterService } from '../../services/process-filter.service';
 import { AppsProcessService } from '../../../services/apps-process.service';
 import { IconModel } from '../../../app-list/icon.model';
 import { NavigationStart, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { forkJoin, Observable } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
+import { forkJoin, Observable, of } from 'rxjs';
 import { CommonModule, Location } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -133,35 +133,22 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
      * @param appId - optional
      */
     getFiltersByAppId(appId?: number) {
-        this.processFilterService.getProcessFilters(appId).subscribe(
-            (res) => {
-                if (res.length === 0 && this.isFilterListEmpty()) {
-                    this.processFilterService.createDefaultFilters(appId).subscribe(
-                        (resDefault) => {
-                            this.resetFilter();
-                            this.filters = resDefault;
-                            this.selectProcessFilter(this.filterParam);
-                            this.success.emit(resDefault);
-                        },
-                        (errDefault) => {
-                            this.error.emit(errDefault);
-                        }
-                    );
-                } else {
-                    const migratedFilters = this.migrateDefaultFilters(res);
-                    if (migratedFilters.length > 0) {
-                        forkJoin(migratedFilters).subscribe(() => {
-                            this.setProcessFilters(res);
-                        });
-                    } else {
-                        this.setProcessFilters(res);
+        this.processFilterService
+            .getProcessFilters(appId)
+            .pipe(
+                switchMap((res) => {
+                    if (res.length === 0 && this.isFilterListEmpty()) {
+                        return this.processFilterService.createDefaultFilters(appId);
                     }
-                }
-            },
-            (err) => {
-                this.error.emit(err);
-            }
-        );
+                    const migratedFilters = this.migrateDefaultFilters(res);
+                    return migratedFilters.length > 0 ? forkJoin(migratedFilters).pipe(map(() => res)) : of(res);
+                }),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe({
+                next: (filters) => this.setProcessFilters(filters),
+                error: (err) => this.error.emit(err)
+            });
     }
 
     /**
