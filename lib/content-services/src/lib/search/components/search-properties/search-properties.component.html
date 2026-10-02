@@ -1,66 +1,68 @@
 <form [formGroup]="form" class="adf-search-properties-form">
-    <fieldset aria-labelledby="file-size-label">
-        <legend id="file-size-label" class="adf-search-properties-file-size-label">
-            {{ 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE' | translate }}
-        </legend>
-        <div class="adf-search-properties-file-size-container">
-            <mat-form-field
-                class="adf-search-properties-form-field"
-                [style.flex]="'0 0 ' + fileSizeOperatorsMaxWidth + 'px'"
-                data-automation-id="adf-search-properties-file-size-operator">
-                <mat-label>{{ 'SEARCH.SEARCH_PROPERTIES.ACCESSIBILITY.CONDITION' | translate }}</mat-label>
-                <mat-select
-                    data-automation-id="adf-search-properties-file-size-operator-select"
-                    [formControl]="form.controls.fileSizeOperator"
-                    #fileSizeOperatorSelect>
-                    <mat-option
-                        *ngFor="let fileSizeOperator of fileSizeOperators"
-                        [value]="fileSizeOperator">
-                        {{ fileSizeOperator | translate }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field class="adf-search-properties-form-field">
-                <mat-label>{{ 'SEARCH.SEARCH_PROPERTIES.ACCESSIBILITY.SIZE_VALUE' | translate }}</mat-label>
-                <input
-                    matInput
-                    [formControl]="form.controls.fileSize"
-                    type="number"
-                    min="0"
-                    step="any"
-                    (input)="narrowDownAllowedCharacters($event)"
-                    (keydown)="preventIncorrectNumberCharacters($event)"
-                    id="adf-search-properties-file-size"
-                    [placeholder]="'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_PLACEHOLDER' | translate"
-                    (blur)="clearNumberFieldWhenInvalid($event)"
-                    data-automation-id="adf-search-properties-file-size-input"/>
-            </mat-form-field>
-            <mat-form-field
-                class="adf-search-properties-form-field"
-                data-automation-id="adf-search-properties-file-size-unit">
-                <mat-label>{{ 'SEARCH.SEARCH_PROPERTIES.ACCESSIBILITY.UNIT' | translate }}</mat-label>
-                <mat-select
-                    [attr.aria-label]="'SEARCH.SEARCH_PROPERTIES.ACCESSIBILITY.UNIT' | translate"
-                    [formControl]="form.controls.fileSizeUnit"
-                    data-automation-id="adf-search-properties-file-size-unit-select">
-                    <mat-option
-                        *ngFor="let fileSizeUnit of fileSizeUnits"
-                        [value]="fileSizeUnit">
-                        {{ fileSizeUnit.abbreviation | translate }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-    </fieldset>
-    <p class="adf-search-properties-file-type-label">{{ 'SEARCH.SEARCH_PROPERTIES.FILE_TYPE' | translate }}</p>
-    <adf-search-chip-autocomplete-input
-        [autocompleteOptions]="autocompleteOptions"
-        [preselectedOptions]="preselectedOptions"
-        (optionsChanged)="selectedExtensions = $event"
-        [onReset$]="reset$"
-        [allowOnlyPredefinedValues]="false"
-        [compareOption]="compareFileExtensions"
-        [formatChipValue]="getExtensionWithoutDot"
-        [filter]="filterExtensions"
-        placeholder="SEARCH.SEARCH_PROPERTIES.FILE_TYPE"/>
+  <fieldset aria-labelledby="file-size-label">
+    <legend id="file-size-label" class="adf-search-properties-file-size-label">
+      {{ 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE' | translate }}
+    </legend>
+    <div class="adf-search-properties-file-size-container">
+      <mat-form-field
+        class="adf-search-properties-form-field"
+        [style.flex]="'0 0 ' + fileSizeOperatorsMaxWidth + 'px'"
+        data-automation-id="adf-search-properties-file-size-operator">
+        <mat-label>{{ 'SEARCH.SEARCH_PROPERTIES.ACCESSIBILITY.CONDITION' | translate }}</mat-label>
+        <mat-select
+          data-automation-id="adf-search-properties-file-size-operator-select"
+          [formControl]="form.controls.fileSizeOperator"
+          #fileSizeOperatorSelect>
+          @for (fileSizeOperator of fileSizeOperators; track fileSizeOperator) {
+            <mat-option
+              [value]="fileSizeOperator">
+              {{ fileSizeOperator | translate }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="adf-search-properties-form-field">
+        <mat-label>{{ 'SEARCH.SEARCH_PROPERTIES.ACCESSIBILITY.SIZE_VALUE' | translate }}</mat-label>
+        <input
+          matInput
+          [formControl]="form.controls.fileSize"
+          type="number"
+          min="0"
+          step="any"
+          (input)="narrowDownAllowedCharacters($event)"
+          (keydown)="preventIncorrectNumberCharacters($event)"
+          id="adf-search-properties-file-size"
+          [placeholder]="'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_PLACEHOLDER' | translate"
+          (blur)="clearNumberFieldWhenInvalid($event)"
+          data-automation-id="adf-search-properties-file-size-input"/>
+      </mat-form-field>
+      <mat-form-field
+        class="adf-search-properties-form-field"
+        data-automation-id="adf-search-properties-file-size-unit">
+        <mat-label>{{ 'SEARCH.SEARCH_PROPERTIES.ACCESSIBILITY.UNIT' | translate }}</mat-label>
+        <mat-select
+          [attr.aria-label]="'SEARCH.SEARCH_PROPERTIES.ACCESSIBILITY.UNIT' | translate"
+          [formControl]="form.controls.fileSizeUnit"
+          data-automation-id="adf-search-properties-file-size-unit-select">
+          @for (fileSizeUnit of fileSizeUnits; track fileSizeUnit) {
+            <mat-option
+              [value]="fileSizeUnit">
+              {{ fileSizeUnit.abbreviation | translate }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </fieldset>
+  <p class="adf-search-properties-file-type-label">{{ 'SEARCH.SEARCH_PROPERTIES.FILE_TYPE' | translate }}</p>
+  <adf-search-chip-autocomplete-input
+    [autocompleteOptions]="autocompleteOptions"
+    [preselectedOptions]="preselectedOptions"
+    (optionsChanged)="selectedExtensions = $event"
+    [onReset$]="reset$"
+    [allowOnlyPredefinedValues]="false"
+    [compareOption]="compareFileExtensions"
+    [formatChipValue]="getExtensionWithoutDot"
+    [filter]="filterExtensions"
+    placeholder="SEARCH.SEARCH_PROPERTIES.FILE_TYPE"/>
 </form>

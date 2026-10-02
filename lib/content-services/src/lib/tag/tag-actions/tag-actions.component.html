@@ -1,43 +1,45 @@
 <mat-list>
-    <mat-list-item *ngFor="let currentEntry of tagsEntries; let idx = index">
-        <div
-            class="adf-tag-actions-container"
-            id="tag_delete_{{ currentEntry.entry.tag }}"
-            tabindex="0"
-            role="button"
-            (keyup.enter)="removeTag(currentEntry.entry.id)"
-            (click)="removeTag(currentEntry.entry.id)"
+  @for (currentEntry of tagsEntries; track currentEntry; let idx = $index) {
+    <mat-list-item>
+      <div
+        class="adf-tag-actions-container"
+        id="tag_delete_{{ currentEntry.entry.tag }}"
+        tabindex="0"
+        role="button"
+        (keyup.enter)="removeTag(currentEntry.entry.id)"
+        (click)="removeTag(currentEntry.entry.id)"
         >
-            <div class="adf-tag-actions-delete-text" id="tag_name_{{ currentEntry.entry.tag }}">{{ currentEntry.entry.tag }}</div>
-            <mat-icon class="adf-tag-actions-delete-icon" adf-icon="delete" />
-        </div>
+        <div class="adf-tag-actions-delete-text" id="tag_name_{{ currentEntry.entry.tag }}">{{ currentEntry.entry.tag }}</div>
+        <mat-icon class="adf-tag-actions-delete-icon" adf-icon="delete" />
+      </div>
     </mat-list-item>
+  }
 </mat-list>
 <table class="adf-full-width" cellspacing="0">
-    <tr>
-        <td>
-            <mat-form-field class="adf-full-width">
-                <input
-                    id="new-tag-text"
-                    matInput
-                    placeholder="{{ 'TAG.LABEL.NEWTAG' | translate }}"
-                    type="text"
-                    (keypress)="cleanErrorMsg()"
-                    [(ngModel)]="newTagName"
-                    [errorStateMatcher]="tagErrorStateMatcher"
-                />
-                @if (errorMsg) {
-                    <mat-error data-automation-id="errorMessage">
-                        <mat-icon class="adf-error-icon">error_outline</mat-icon>
-                        <span class="adf-error-text">{{ errorMsg }}</span>
-                    </mat-error>
-                }
-            </mat-form-field>
-        </td>
-        <td>
-            <button id="add-tag" class="adf-full-width" (click)="addTag()" [disabled]="disableAddTag" mat-raised-button>
-                {{ 'TAG.BUTTON.ADD' | translate }}
-            </button>
-        </td>
-    </tr>
+  <tr>
+    <td>
+      <mat-form-field class="adf-full-width">
+        <input
+          id="new-tag-text"
+          matInput
+          placeholder="{{ 'TAG.LABEL.NEWTAG' | translate }}"
+          type="text"
+          (keypress)="cleanErrorMsg()"
+          [(ngModel)]="newTagName"
+          [errorStateMatcher]="tagErrorStateMatcher"
+          />
+        @if (errorMsg) {
+          <mat-error data-automation-id="errorMessage">
+            <mat-icon class="adf-error-icon">error_outline</mat-icon>
+            <span class="adf-error-text">{{ errorMsg }}</span>
+          </mat-error>
+        }
+      </mat-form-field>
+    </td>
+    <td>
+      <button id="add-tag" class="adf-full-width" (click)="addTag()" [disabled]="disableAddTag" mat-raised-button>
+        {{ 'TAG.BUTTON.ADD' | translate }}
+      </button>
+    </td>
+  </tr>
 </table>

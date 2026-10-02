@@ -29,9 +29,11 @@ import { CommonModule } from '@angular/common';
         <div class="adf-ellipsis-cell" [attr.data-automation-id]="displayText$ | async">
             <span class="adf-user-name-column" title="{{ displayText$ | async }}"> {{ displayText$ | async }}</span>
             <br />
-            <span class="adf-user-email-column" title="{{ subTitleText$ | async }}" *ngIf="subTitleText$ | async">
-                {{ subTitleText$ | async }}
-            </span>
+            @if (subTitleText$ | async) {
+                <span class="adf-user-email-column" title="{{ subTitleText$ | async }}">
+                    {{ subTitleText$ | async }}
+                </span>
+            }
         </div>
     `,
     styleUrls: ['./user-name-column.component.scss'],
