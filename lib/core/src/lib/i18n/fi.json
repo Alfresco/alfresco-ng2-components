@@ -308,7 +308,7 @@
         "TOGGLE": "Vaihda arvoa",
         "COPY_TO_CLIPBOARD": "Kopioi arvo kaksoisnapsauttamalla",
         "EDIT_ASPECTS": "Muokkaa ominaisuusjoukkoja",
-        "SELECT_TEMPLATE": "Click to select the template"
+        "SELECT_TEMPLATE": "Valitse malli napsauttamalla"
       },
       "ACCESSIBILITY": {
         "EDIT": "Muokkaa-painike",

@@ -45,7 +45,7 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Kunde inte läsa in processdefinitioner, kontrollera att du har åtkomst.",
         "START": "Kunde inte starta ny processinstans, kontrollera att du har åtkomst.",
-        "OUTCOME_NOT_FOUND": "The requested form action is no longer available.",
+        "OUTCOME_NOT_FOUND": "Den begärda formuläråtgärden är inte längre tillgänglig.",
         "PROCESS_NAME_REQUIRED": "Processnamn krävs",
         "PROCESS_DEFINITION_REQUIRED": "Processdefinition krävs",
         "MAXIMUM_LENGTH": "Längd överskriden, {{characters}} tecken max.",

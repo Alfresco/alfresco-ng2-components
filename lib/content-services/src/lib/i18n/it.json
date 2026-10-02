@@ -504,7 +504,7 @@
     },
     "SMART_FOLDER": {
       "SELECT_TEMPLATE_DIALOG_TITLE": "Seleziona modello di cartella intelligente",
-      "TEMPLATES_FOLDER_NOT_FOUND": "Smart Folder Templates directory wasn't found"
+      "TEMPLATES_FOLDER_NOT_FOUND": "La directory dei modelli di cartella intelligente non è stata trovata"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
