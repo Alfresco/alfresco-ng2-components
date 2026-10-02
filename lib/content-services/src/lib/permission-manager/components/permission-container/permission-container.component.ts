@@ -19,7 +19,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } 
 import { Node } from '@alfresco/js-api';
 import { PermissionDisplayModel } from '../../models/permission.model';
 import { RoleModel } from '../../models/role.model';
-import { CommonModule } from '@angular/common';
+
 import {
     DataColumnComponent,
     DataColumnListComponent,
@@ -39,7 +39,6 @@ import { UserRoleColumnComponent } from '../user-role-column/user-role-column.co
 @Component({
     selector: 'adf-permission-container',
     imports: [
-        CommonModule,
         DataTableComponent,
         DataColumnListComponent,
         DataColumnComponent,

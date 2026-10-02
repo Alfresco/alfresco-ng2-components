@@ -19,7 +19,7 @@ import { Node } from '@alfresco/js-api';
 import { Component, EventEmitter, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { NewVersionUploaderDialogData, NewVersionUploaderData, NewVersionUploaderDataAction } from './models';
-import { CommonModule } from '@angular/common';
+
 import { VersionComparisonComponent } from '../version-manager/version-comparison.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,15 +28,7 @@ import { VersionListComponent } from '../version-manager/version-list.component'
 
 @Component({
     selector: 'adf-new-version-uploader-dialog',
-    imports: [
-        CommonModule,
-        MatDialogModule,
-        TranslatePipe,
-        MatButtonModule,
-        VersionComparisonComponent,
-        VersionUploadComponent,
-        VersionListComponent
-    ],
+    imports: [MatDialogModule, TranslatePipe, MatButtonModule, VersionComparisonComponent, VersionUploadComponent, VersionListComponent],
     templateUrl: './new-version-uploader.dialog.html',
     styleUrls: ['./new-version-uploader.dialog.scss'],
     encapsulation: ViewEncapsulation.None,
