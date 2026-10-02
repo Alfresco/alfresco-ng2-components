@@ -21,7 +21,7 @@ import { TreeBaseNode } from '../models/tree-view.model';
 import { TreeViewDataSource } from '../data/tree-view-datasource';
 import { TreeViewService } from '../services/tree-view.service';
 import { NodeEntry } from '@alfresco/js-api';
-import { CommonModule } from '@angular/common';
+
 import { MatTreeModule } from '@angular/material/tree';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -29,7 +29,7 @@ import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-tree-view-list',
-    imports: [CommonModule, MatTreeModule, MatButtonModule, IconModule, TranslatePipe],
+    imports: [MatTreeModule, MatButtonModule, IconModule, TranslatePipe],
     templateUrl: './tree-view.component.html',
     styleUrls: ['./tree-view.component.scss']
 })

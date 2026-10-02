@@ -34,13 +34,13 @@ import { Subject } from 'rxjs';
 import { SearchComponent } from './search.component';
 import { MatListItem, MatListModule } from '@angular/material/list';
 import { EmptySearchResultComponent } from './empty-search-result.component';
-import { CommonModule } from '@angular/common';
+
 import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-search-control',
-    imports: [CommonModule, SearchTextInputComponent, SearchComponent, MatListModule, MatIconModule, HighlightPipe, TranslatePipe],
+    imports: [SearchTextInputComponent, SearchComponent, MatListModule, MatIconModule, HighlightPipe, TranslatePipe],
     templateUrl: './search-control.component.html',
     styleUrls: ['./search-control.component.scss'],
     encapsulation: ViewEncapsulation.None,

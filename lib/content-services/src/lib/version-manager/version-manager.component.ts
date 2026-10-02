@@ -21,7 +21,7 @@ import { VersionListComponent } from './version-list.component';
 import { ContentService } from '../common/services/content.service';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { FileUploadErrorEvent } from '../common/events/file.event';
-import { CommonModule } from '@angular/common';
+
 import { VersionComparisonComponent } from './version-comparison.component';
 import { VersionUploadComponent } from './version-upload.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,7 +29,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-version-manager',
-    imports: [CommonModule, VersionComparisonComponent, VersionUploadComponent, MatButtonModule, TranslatePipe, VersionListComponent],
+    imports: [VersionComparisonComponent, VersionUploadComponent, MatButtonModule, TranslatePipe, VersionListComponent],
     templateUrl: './version-manager.component.html',
     styleUrls: ['./version-manager.component.scss'],
     encapsulation: ViewEncapsulation.None
