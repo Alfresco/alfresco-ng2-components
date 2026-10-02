@@ -45,7 +45,7 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Kan ikke laste prosessdefinisjoner, kontroller om du har tilgang.",
         "START": "Kan ikke start nytt prosesstilfelle, kontroller om du har tilgang.",
-        "OUTCOME_NOT_FOUND": "The requested form action is no longer available.",
+        "OUTCOME_NOT_FOUND": "Den forespurte skjemaaktiviteten er ikke lenger tilgjengelig.",
         "PROCESS_NAME_REQUIRED": "Prosessnavn er påkrevd",
         "PROCESS_DEFINITION_REQUIRED": "Prosessdefinisjon er påkrevd",
         "MAXIMUM_LENGTH": "Lengde overskredet, maks {{characters}} tegn.",

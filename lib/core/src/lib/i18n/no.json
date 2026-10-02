@@ -308,7 +308,7 @@
         "TOGGLE": "Bytt verdi",
         "COPY_TO_CLIPBOARD": "Dobbeltkllikk for å kopiere verdi",
         "EDIT_ASPECTS": "Rediger aspekt",
-        "SELECT_TEMPLATE": "Click to select the template"
+        "SELECT_TEMPLATE": "Klikk for å velge malen"
       },
       "ACCESSIBILITY": {
         "EDIT": "Redigeringsknapp",
