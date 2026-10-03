@@ -56,12 +56,6 @@ const DEFAULT_VARIABLE_OPTION_ID = 'id';
 const DEFAULT_VARIABLE_OPTION_LABEL = 'name';
 const DEFAULT_VARIABLE_OPTION_PATH = 'data';
 
-/**
- * Converts a dropdown field value to the value the dropdown widget holds in its form control.
- *
- * @param value Field value
- * @returns Form control value
- */
 export const toDropdownCloudControlValue = (value: any): FormFieldOption | FormFieldOption[] | null => {
     if (Array.isArray(value)) {
         return value;
@@ -75,13 +69,6 @@ export const toDropdownCloudControlValue = (value: any): FormFieldOption | FormF
     return { id: value, name: '' };
 };
 
-/**
- * Checks whether a dropdown field value, or every selected value, is one of the options.
- *
- * @param value Field value
- * @param options Available options
- * @returns `true` when the value matches the options
- */
 export const isDropdownCloudValueInOptions = (value: any, options: FormFieldOption[]): boolean => {
     const optionIds = new Set(options.map((option) => option.id));
     if (Array.isArray(value)) {
@@ -93,39 +80,13 @@ export const isDropdownCloudValueInOptions = (value: any, options: FormFieldOpti
     return optionIds.has(value);
 };
 
-/**
- * Checks whether a dropdown field value is set and is one of the options. The widget resets any other value.
- *
- * @param value Field value
- * @param options Available options
- * @returns `true` when the value is kept
- */
 export const isDropdownCloudValidValue = (value: any, options: FormFieldOption[]): boolean =>
     !!value && isDropdownCloudValueInOptions(value, options);
 
-/**
- * Checks whether a dropdown field loads its options from a REST endpoint.
- *
- * @param field Dropdown form field
- * @returns `true` when the field has a REST option source
- */
 export const isDropdownCloudRestField = (field: FormFieldModel): boolean => field?.optionType === 'rest' && !!field?.restUrl;
 
-/**
- * Checks whether a dropdown field takes its options from the field it is linked to.
- *
- * @param field Dropdown form field
- * @returns `true` when the field is linked to another field
- */
 export const isDropdownCloudLinkedField = (field: FormFieldModel): boolean => !!field?.rule?.ruleOn;
 
-/**
- * Returns the required validators of the dropdown widget, which also reject the empty option when the field has one.
- *
- * @param field Dropdown form field
- * @param options Options to check the value against, when they differ from the field options
- * @returns Validator functions
- */
 export const getDropdownCloudRequiredValidators = (field: FormFieldModel, options?: FormFieldOption[]): ValidatorFn[] => {
     if (!field.hasEmptyValue) {
         return [Validators.required];
@@ -152,13 +113,6 @@ const getOptionsFromPath = (data: any, path: string, id: string, label: string):
     return getOptionsFromPath(nestedData, properties.join('.'), id, label);
 };
 
-/**
- * Resolves the options of a dropdown whose options come from a form variable.
- *
- * @param field Dropdown form field
- * @param variableConfig Variable options configuration of the field
- * @returns Options and resolution errors, or `null` when the variable is not found
- */
 export const resolveDropdownCloudVariableOptions = (
     field: FormFieldModel,
     variableConfig: VariableConfig | undefined = field?.variableConfig

@@ -20,10 +20,6 @@ import { FormControl } from '@angular/forms';
 import { dropdownRequiredValidator, getDropdownOptionValue, isDropdownRestField } from './dropdown.widget';
 import { hasDropdownRestOptionsLoaded } from './dropdown-rest-options';
 
-/**
- * Validates that the value of a required APS dropdown resolves to one of its options, by id or name, as the widget resolves it.
- * A REST dropdown is not checked against its options until its request has finished; an empty or failed response then reports required.
- */
 export class ProcessDropdownFieldValidator implements FormFieldValidator {
     isSupported(field: FormFieldModel): boolean {
         return field?.type === FormFieldTypes.DROPDOWN && field.required;
@@ -44,13 +40,11 @@ export class ProcessDropdownFieldValidator implements FormFieldValidator {
     }
 
     private hasPendingOptions(field: FormFieldModel): boolean {
+        // a REST dropdown is not checked against its options until its request has finished
         return (
             isDropdownRestField(field) && !hasDropdownRestOptionsLoaded(field) && !field.options.some((option) => option.id !== field.emptyOption?.id)
         );
     }
 }
 
-/**
- * Field validators for the rules of the APS widgets, added to the core `FORM_FIELD_VALIDATORS` by `FormComponent`.
- */
 export const PROCESS_FORM_FIELD_VALIDATORS: FormFieldValidator[] = [new ProcessDropdownFieldValidator()];

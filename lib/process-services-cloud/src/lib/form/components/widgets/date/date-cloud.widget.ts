@@ -42,13 +42,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-/**
- * Returns the minimum and maximum dates the cloud date widget applies to a field, including dynamic date ranges.
- *
- * @param field Date form field
- * @param today Date the dynamic range counts from
- * @returns Minimum and maximum dates; `null` for a dynamic range without that bound, `undefined` when not configured
- */
 export const getDateCloudWidgetRange = (field: FormFieldModel, today: Date): { min?: Date | null; max?: Date | null } =>
     field?.dynamicDateRangeSelection ? getDynamicDateFieldRange(field, today) : getDateFieldRange(field);
 

@@ -19,19 +19,8 @@ import { FormFieldModel } from '@alfresco/adf-core';
 
 const fieldsWithLoadedRestOptions = new WeakSet<FormFieldModel>();
 
-/**
- * Records that the REST request for the options of a dropdown field has finished, with or without options.
- *
- * @param field Dropdown form field
- */
 export const setDropdownRestOptionsLoaded = (field: FormFieldModel): void => {
     fieldsWithLoadedRestOptions.add(field);
 };
 
-/**
- * Checks whether the REST request for the options of a dropdown field has finished.
- *
- * @param field Dropdown form field
- * @returns `true` once the request has returned options or failed
- */
 export const hasDropdownRestOptionsLoaded = (field: FormFieldModel): boolean => fieldsWithLoadedRestOptions.has(field);

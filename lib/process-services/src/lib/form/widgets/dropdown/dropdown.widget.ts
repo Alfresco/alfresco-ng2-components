@@ -32,14 +32,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { setDropdownRestOptionsLoaded } from './dropdown-rest-options';
 
-/**
- * Returns the value the dropdown widget holds in its form control for a field value, resolving a string by option id or name.
- *
- * @param field Dropdown form field
- * @param value Field value
- * @param readOnly Whether the widget is read-only
- * @returns Form control value
- */
 export const getDropdownOptionValue = (
     field: FormFieldModel,
     value?: string | FormFieldOption,
@@ -56,20 +48,8 @@ export const getDropdownOptionValue = (
     return value as FormFieldOption | undefined;
 };
 
-/**
- * Checks whether a dropdown field loads its options from a REST endpoint.
- *
- * @param field Dropdown form field
- * @returns `true` when the field has a REST option source
- */
 export const isDropdownRestField = (field: FormFieldModel): boolean => field?.optionType === 'rest' && !!field?.restUrl;
 
-/**
- * Creates the required validator of the dropdown widget, which also treats the empty option as no value.
- *
- * @param field Dropdown form field
- * @returns Validator function
- */
 export const dropdownRequiredValidator =
     (field: FormFieldModel): ValidatorFn =>
     (control: AbstractControl): ValidationErrors | null => {
