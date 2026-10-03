@@ -19,7 +19,6 @@ import { FormFieldValidator } from '@alfresco/adf-core';
 import { DropdownCloudFieldValidator } from './widgets/dropdown/dropdown-cloud.field-validator';
 
 /**
- * Field validators for the rules of the cloud widgets, added to the core `FORM_FIELD_VALIDATORS` by the cloud form builders.
- * Pass them to a `FormModel` you build yourself to validate cloud forms the same way.
+ * Field validators for the rules of the cloud widgets. Pass them to a `FormModel` you build yourself.
  */
 export const CLOUD_FORM_FIELD_VALIDATORS: FormFieldValidator[] = [new DropdownCloudFieldValidator()];

@@ -320,12 +320,6 @@ export class DecimalFieldValidator implements FormFieldValidator {
     }
 }
 
-/**
- * Returns the minimum and maximum dates of a date field, as the date widget passes them to its datepicker.
- *
- * @param field Date form field
- * @returns Range dates, `undefined` when not set
- */
 export const getDateFieldRange = (field: FormFieldModel): { min?: Date; max?: Date } => ({
     min: field?.minValue ? parseISO(field.minValue) : undefined,
     max: field?.maxValue ? parseISO(field.maxValue) : undefined
@@ -334,11 +328,10 @@ export const getDateFieldRange = (field: FormFieldModel): { min?: Date; max?: Da
 const dynamicRangeReferenceDates = new WeakMap<FormFieldModel, Date>();
 
 /**
- * Returns the minimum and maximum dates of a date field with a dynamic date range, in days from today (`minDateRangeValue`, `maxDateRangeValue`).
- * The date the range counts from is kept per field, so the picker and the validators use the same bounds while the form stays open.
+ * Returns the range of a dynamic date field in days from today. The date it counts from is kept per field.
  *
- * @param field Date form field with `dynamicDateRangeSelection`
- * @param today Date to count from, kept for the next calls; when omitted, the date kept for the field, or the current date the first time
+ * @param field Date form field
+ * @param today Date to count from, kept for the next calls
  * @returns Range dates, `null` for a bound that is not set
  */
 export const getDynamicDateFieldRange = (field: FormFieldModel, today?: Date): { min: Date | null; max: Date | null } => {
@@ -353,23 +346,11 @@ export const getDynamicDateFieldRange = (field: FormFieldModel, today?: Date): {
     };
 };
 
-/**
- * Returns the minimum and maximum dates of a datetime field, as the datetime widget passes them to its picker.
- *
- * @param field Datetime form field
- * @returns Range dates, `undefined` when not set
- */
 export const getDateTimeFieldRange = (field: FormFieldModel): { min?: Date; max?: Date } => ({
     min: field?.minValue ? DateFnsUtils.getDate(field.minValue) : undefined,
     max: field?.maxValue ? DateFnsUtils.getDate(field.maxValue) : undefined
 });
 
-/**
- * Checks whether a value is empty the way `Validators.required` checks a form control value.
- *
- * @param value Field value
- * @returns `true` for `null`, `undefined`, an empty string and an empty array
- */
 export const isEmptyFieldValue = (value: unknown): boolean =>
     value === null || value === undefined || ((typeof value === 'string' || Array.isArray(value)) && value.length === 0);
 
@@ -399,10 +380,6 @@ const compareDateTimes = (first: Date, second: Date): number =>
 
 type DateFieldError = 'required' | 'parse' | 'min' | 'max';
 
-/**
- * Validates date and datetime fields with the rules of their datepicker: required, unparseable text, minimum and maximum date.
- * Values are read the way the picker reads them, so a field on an unopened tab gets the result its widget would show.
- */
 export abstract class PickerFieldValidator implements FormFieldValidator {
     protected abstract readonly supportedType: string;
     protected abstract readonly errorPriority: DateFieldError[];
@@ -507,13 +484,6 @@ export class DateTimePickerFieldValidator extends PickerFieldValidator {
     }
 }
 
-/**
- * Checks whether a dropdown value counts as no selection: empty, an empty multiple selection, or the field's empty option.
- *
- * @param field Dropdown form field
- * @param value Field value
- * @returns `true` when nothing is selected
- */
 export const isDropdownValueEmpty = (field: FormFieldModel, value: any): boolean => {
     if (field.hasMultipleValues) {
         return !Array.isArray(value) || value.length === 0;
@@ -532,9 +502,6 @@ export const isDropdownValueEmpty = (field: FormFieldModel, value: any): boolean
     return !Array.isArray(value) && value?.id === emptyOption.id && value?.name === emptyOption.name;
 };
 
-/**
- * Validates that a required dropdown has a selection. Cloud and APS forms add their option rules on top.
- */
 export class DropdownFieldValidator implements FormFieldValidator {
     isSupported(field: FormFieldModel): boolean {
         return field?.type === FormFieldTypes.DROPDOWN && field.required;

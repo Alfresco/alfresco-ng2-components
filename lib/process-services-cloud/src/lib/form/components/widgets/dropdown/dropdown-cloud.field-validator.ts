@@ -27,11 +27,6 @@ import {
     toDropdownCloudControlValue
 } from './dropdown-cloud.widget';
 
-/**
- * Validates the option rules of a required cloud dropdown: with an empty option the value must be one of the other options,
- * and a value that is not among the variable options counts as no selection, as the widget resets it.
- * REST and linked dropdowns load their options at runtime, so only an empty selection is reported for them.
- */
 export class DropdownCloudFieldValidator implements FormFieldValidator {
     isSupported(field: FormFieldModel): boolean {
         return field?.type === FormFieldTypes.DROPDOWN && field.required;
@@ -51,6 +46,7 @@ export class DropdownCloudFieldValidator implements FormFieldValidator {
     }
 
     private hasMissingSelection(field: FormFieldModel): boolean {
+        // REST and linked options load at runtime, so only an empty selection is reported
         if (isDropdownCloudRestField(field) || isDropdownCloudLinkedField(field)) {
             const controlValue = toDropdownCloudControlValue(field.value);
             return !controlValue || (!Array.isArray(controlValue) && controlValue.id === DEFAULT_OPTION.id);

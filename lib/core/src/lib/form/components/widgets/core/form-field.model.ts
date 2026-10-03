@@ -136,9 +136,9 @@ export class FormFieldModel extends FormWidgetModel {
     // util members
     emptyOption: FormFieldOption;
     validationSummary: ErrorMessageModel = new ErrorMessageModel();
-    /** Errors in input that the widget could not turn into a value, such as date text that does not parse. Read by the field validators. */
+    /** Errors in the widget input that did not become a value, such as date text that does not parse. */
     inputErrors: ValidationErrors | null = null;
-    /** Whether the widget disabled its input through its own `readOnly` input. The field validators skip such a field, as they skip a read-only one. */
+    /** Whether the widget disabled its input through its own `readOnly` input. */
     inputDisabled = false;
     private modelValidationSummary: ErrorMessageModel = this.validationSummary;
     private modelValidationMessage = '';
@@ -207,12 +207,7 @@ export class FormFieldModel extends FormWidgetModel {
         return this.selectionType === 'multiple' || this.params.multiple;
     }
 
-    /**
-     * A date, datetime or dropdown widget that sets its own `validationSummary` (for example a replacement widget) reports the result
-     * of that field. An active summary it set is kept until the widget clears it.
-     *
-     * @returns `true` when a widget set an active summary, or an active message, that `validate()` did not produce
-     */
+    // a date, datetime or dropdown widget that set its own validation summary owns the result until it clears it
     private hasWidgetReportedError(): boolean {
         return (
             FormFieldTypes.isReactiveType(this.type) &&

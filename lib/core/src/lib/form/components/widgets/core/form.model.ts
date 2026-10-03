@@ -217,8 +217,7 @@ export class FormModel implements ProcessFormModel {
     }
 
     /**
-     * Marks a field and the form as invalid, so the field's tab reports it, until the next form validation.
-     * A field that cannot block the form (hidden, or outside every tab of a tabbed form) is only marked itself.
+     * Marks a field and the form as invalid and flags the field's tab until the next form validation.
      *
      * @param field Form field that was rejected.
      */

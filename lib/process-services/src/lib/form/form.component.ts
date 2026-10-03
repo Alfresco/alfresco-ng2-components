@@ -66,9 +66,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PROCESS_FORM_FIELD_VALIDATORS } from './widgets/dropdown/dropdown.field-validator';
 
-/**
- * Validators of the date, datetime and dropdown widgets. They stay in place when `fieldValidators` replaces the other rules.
- */
+// the date, datetime and dropdown rules stay when `fieldValidators` replaces the other rules
 const WIDGET_FIELD_VALIDATORS: FormFieldValidator[] = [
     ...FORM_FIELD_VALIDATORS.filter(
         (validator) =>
