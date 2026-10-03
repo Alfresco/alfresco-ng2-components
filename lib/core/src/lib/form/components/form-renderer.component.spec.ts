@@ -50,11 +50,31 @@ import {
     radioWidgetVisibilityForm,
     textWidgetVisibility
 } from './mock/form-renderer.component.mock';
-import { FormFieldModel, FormModel, TextWidgetComponent } from './widgets';
+import { ErrorMessageModel, FormFieldModel, FormModel, TextWidgetComponent, WidgetComponent } from './widgets';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { WidgetVisibilityService } from '../services/widget-visibility.service';
+import { ENTER, RIGHT_ARROW } from '@angular/cdk/keycodes';
+import { MatTooltip } from '@angular/material/tooltip';
+import { By } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
+
+@Component({
+    selector: 'adf-test-reporting-date-widget',
+    template: ''
+})
+class ReportingDateWidgetComponent extends WidgetComponent implements OnInit {
+    ngOnInit(): void {
+        this.field.validationSummary = new ErrorMessageModel({ message: 'CUSTOM.DATE_ERROR' });
+        this.field.markAsInvalid();
+    }
+
+    updateReactiveFormControl(): void {
+        this.field.validationSummary = new ErrorMessageModel({ message: 'CUSTOM.DATE_ERROR' });
+    }
+}
 
 const typeIntoInput = (testingUtils: UnitTestingUtils, selector: string, message: string) => {
     testingUtils.fillInputByCSS(selector, message);
@@ -1452,5 +1472,357 @@ describe('Form Renderer Component formLoaded rule ordering', () => {
             'sanity check: the formLoaded rule should have hidden the field'
         );
         expect(form.isValid).toBe(true, 'form.isValid must reflect the formLoaded-driven hide with no user interaction');
+    });
+});
+
+describe('Form Renderer Component multi-tab validation indicators', () => {
+    let fixture: ComponentFixture<FormRendererComponent<any>>;
+    let form: FormModel;
+
+    const buildInvalidTabbedForm = (): FormModel => {
+        const tabs = [
+            { id: 'tab-0', title: 'Tab 0', visibilityCondition: null },
+            { id: 'tab-1', title: 'Tab 1', visibilityCondition: null },
+            {
+                id: 'tab-2',
+                title: 'Tab 2',
+                visibilityCondition: {
+                    leftType: 'field',
+                    leftValue: 'text-tab-0',
+                    operator: '==',
+                    rightValue: 'showtab',
+                    rightType: 'value',
+                    nextConditionOperator: '',
+                    nextCondition: null
+                }
+            }
+        ];
+        const fields = [
+            {
+                id: 'container-tab-0',
+                type: 'container',
+                tab: 'tab-0',
+                numberOfColumns: 1,
+                fields: { 1: [{ id: 'text-tab-0', type: 'text', name: 'Text in Tab 0', required: false }] }
+            },
+            {
+                id: 'container-tab-1',
+                type: 'container',
+                tab: 'tab-1',
+                numberOfColumns: 1,
+                fields: { 1: [{ id: 'text-tab-1', type: 'text', name: 'Text in Tab 1', required: true }] }
+            },
+            {
+                id: 'container-tab-2',
+                type: 'container',
+                tab: 'tab-2',
+                numberOfColumns: 1,
+                fields: { 1: [{ id: 'text-tab-2', type: 'text', name: 'Text in Tab 2', required: true }] }
+            }
+        ];
+
+        const tabbedForm = new FormModel({ tabs, fields });
+        TestBed.inject(WidgetVisibilityService).refreshVisibility(tabbedForm);
+        tabbedForm.validateForm();
+
+        return tabbedForm;
+    };
+
+    const setUp = (): void => {
+        TestBed.configureTestingModule({
+            imports: [FormRendererComponent]
+        });
+        const translateService = TestBed.inject(TranslateService);
+        translateService.use('en').subscribe();
+        translateService.setTranslation('en', {
+            FORM: {
+                FORM_RENDERER: {
+                    TAB_VALIDATION_ERRORS_LABEL: '{{ tabTitle }} needs attention',
+                    TAB_VALIDATION_ERRORS_TOOLTIP: 'Tab needs attention'
+                }
+            }
+        });
+
+        fixture = TestBed.createComponent(FormRendererComponent<any>);
+        form = buildInvalidTabbedForm();
+        fixture.componentRef.setInput('formDefinition', form);
+        fixture.detectChanges();
+    };
+
+    const getTabHeaders = (): HTMLElement[] => Array.from(fixture.nativeElement.querySelectorAll('[role="tab"]'));
+
+    const getIndicator = (tabHeader: HTMLElement): HTMLElement | null => tabHeader.querySelector('.adf-form-tab-validation-indicator');
+
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    describe('when a visible tab has validation errors', () => {
+        beforeEach(() => {
+            setUp();
+        });
+
+        it('should render the indicator only on the visible invalid tab', () => {
+            const tabHeaders = getTabHeaders();
+
+            expect(tabHeaders.length).toBe(2);
+            expect(tabHeaders.map((tabHeader) => tabHeader.textContent)).not.toContain(jasmine.stringContaining('Tab 2'));
+            expect(getIndicator(tabHeaders[0])).toBeNull();
+            expect(getIndicator(tabHeaders[1])).not.toBeNull();
+        });
+
+        it('should remove the indicator when the invalid field is corrected through the field change path', () => {
+            const invalidField = form.getFieldById('text-tab-1');
+
+            invalidField.value = 'corrected';
+            form.onFormFieldChanged(invalidField);
+            fixture.detectChanges();
+
+            expect(getIndicator(getTabHeaders()[1])).toBeNull();
+            expect(getTabHeaders()[1].getAttribute('aria-label')).toBeNull();
+        });
+
+        it('should keep the tab width unchanged when the indicator is removed', () => {
+            const markedTabWidth = getTabHeaders()[1].getBoundingClientRect().width;
+            const markedLabelWidth = getTabHeaders()[1].querySelector('.adf-form-tab-label').getBoundingClientRect().width;
+            const invalidField = form.getFieldById('text-tab-1');
+
+            invalidField.value = 'corrected';
+            form.onFormFieldChanged(invalidField);
+            fixture.detectChanges();
+
+            expect(getTabHeaders()[1].getBoundingClientRect().width).toBe(markedTabWidth);
+            expect(getTabHeaders()[1].querySelector('.adf-form-tab-label').getBoundingClientRect().width).toBe(markedLabelWidth);
+        });
+
+        it('should keep Previous and Next navigation unchanged when a tab is marked', () => {
+            const renderer = fixture.componentInstance;
+
+            expect(renderer.visibleTabCount).toBe(2);
+            expect(renderer.canNavigatePrevious).toBeFalse();
+            expect(renderer.canNavigateNext).toBeTrue();
+        });
+
+        it('should expose the tab title and error state in the accessible name of the marked tab only', () => {
+            const [validTab, invalidTab] = getTabHeaders();
+
+            expect(invalidTab.getAttribute('aria-label')).toBe('Tab 1 needs attention');
+            expect(validTab.getAttribute('aria-label')).toBeNull();
+        });
+
+        it('should render a decorative non-color cue with a tooltip that adds no tab stop', () => {
+            const indicator = getIndicator(getTabHeaders()[1]);
+            const tooltip = fixture.debugElement.query(By.css('.adf-form-tab-validation-indicator')).injector.get(MatTooltip);
+
+            expect(indicator.textContent.trim()).toBe('*');
+            expect(indicator.getAttribute('aria-hidden')).toBe('true');
+            expect(indicator.hasAttribute('tabindex')).toBeFalse();
+            expect(tooltip.message).toBe('Tab needs attention');
+        });
+
+        it('should keep Material tab roles, selection and keyboard activation when a tab is marked', async () => {
+            const [validTab, invalidTab] = getTabHeaders();
+
+            expect(validTab.getAttribute('aria-selected')).toBe('true');
+            expect(invalidTab.getAttribute('aria-selected')).toBe('false');
+            expect(validTab.getAttribute('tabindex')).toBe('0');
+            expect(invalidTab.getAttribute('tabindex')).toBe('-1');
+
+            validTab.focus();
+            validTab.dispatchEvent(new KeyboardEvent('keydown', { keyCode: RIGHT_ARROW, bubbles: true }));
+            fixture.detectChanges();
+
+            expect(document.activeElement).toBe(invalidTab);
+
+            invalidTab.dispatchEvent(new KeyboardEvent('keydown', { keyCode: ENTER, bubbles: true }));
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(fixture.componentInstance.tabGroup.selectedIndex).toBe(1);
+            expect(invalidTab.getAttribute('aria-selected')).toBe('true');
+            expect(getIndicator(invalidTab)).not.toBeNull();
+        });
+    });
+
+    describe('when a tab holds only widget-validated fields', () => {
+        const buildDateTabForm = (dateField: Record<string, unknown>): FormModel =>
+            new FormModel(
+                {
+                    tabs: [
+                        { id: 'details', title: 'Details' },
+                        { id: 'coverage', title: 'Coverage' }
+                    ],
+                    fields: [
+                        {
+                            id: 'details-root',
+                            type: 'container',
+                            tab: 'details',
+                            numberOfColumns: 1,
+                            fields: { 1: [{ id: 'email', type: 'text', name: 'Email' }] }
+                        },
+                        {
+                            id: 'coverage-root',
+                            type: 'container',
+                            tab: 'coverage',
+                            numberOfColumns: 1,
+                            fields: { 1: [{ id: 'dob', type: 'date', name: 'Date of birth', ...dateField }] }
+                        }
+                    ]
+                },
+                null,
+                false,
+                TestBed.inject(FormService)
+            );
+
+        const renderForm = (dateField: Record<string, unknown>): void => {
+            setUp();
+            form = buildDateTabForm(dateField);
+            fixture.componentRef.setInput('formDefinition', form);
+            fixture.detectChanges();
+        };
+
+        const openCoverageTab = async (): Promise<void> => {
+            fixture.autoDetectChanges();
+            fixture.componentInstance.tabGroup.selectedIndex = 1;
+            await fixture.whenStable();
+        };
+
+        const getDateWidget = (): HTMLElement | null => fixture.nativeElement.querySelector('date-widget');
+
+        it('should mark an unopened tab with an empty required date and make the form invalid without rendering its widget', () => {
+            renderForm({ required: true });
+
+            expect(getDateWidget()).toBeNull();
+            expect(form.isValid).toBeFalse();
+            expect(getIndicator(getTabHeaders()[1])).not.toBeNull();
+        });
+
+        it('should mark an unopened tab with a date outside its range', () => {
+            renderForm({ minValue: '2024-03-01', value: '2024-01-01' });
+
+            expect(getDateWidget()).toBeNull();
+            expect(form.isValid).toBeFalse();
+            expect(getIndicator(getTabHeaders()[1])).not.toBeNull();
+        });
+
+        it('should not mark an unopened tab whose date is valid', () => {
+            renderForm({ required: true, minValue: '2024-03-01', value: '2024-05-10' });
+
+            expect(form.isValid).toBeTrue();
+            expect(getIndicator(getTabHeaders()[1])).toBeNull();
+        });
+
+        it('should keep the tab marked once the tab is opened', async () => {
+            renderForm({ required: true });
+
+            await openCoverageTab();
+
+            expect(getDateWidget()).not.toBeNull();
+            expect(form.isValid).toBeFalse();
+            expect(getIndicator(getTabHeaders()[1])).not.toBeNull();
+        });
+
+        it('should mark an unopened tab with an empty required datetime and keep it marked once the tab is opened', async () => {
+            renderForm({ type: 'datetime', required: true });
+
+            expect(form.isValid).toBeFalse();
+            expect(getIndicator(getTabHeaders()[1])).not.toBeNull();
+
+            await openCoverageTab();
+
+            expect(fixture.nativeElement.querySelector('date-time-widget')).not.toBeNull();
+            expect(form.isValid).toBeFalse();
+            expect(getIndicator(getTabHeaders()[1])).not.toBeNull();
+        });
+
+        it('should keep reporting a prefilled out-of-range date once its tab is opened', async () => {
+            renderForm({ minValue: '2024-03-01', value: '2024-01-01' });
+
+            await openCoverageTab();
+
+            expect(form.getFieldById('dob').validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
+            expect(form.isValid).toBeFalse();
+            expect(getIndicator(getTabHeaders()[1])).not.toBeNull();
+        });
+
+        it('should clear the mark when an unopened field is corrected through the model', () => {
+            renderForm({ required: true });
+            const dateField = form.getFieldById('dob');
+
+            dateField.value = '2024-05-10';
+            form.validateForm();
+            fixture.detectChanges();
+
+            expect(getIndicator(getTabHeaders()[1])).toBeNull();
+        });
+
+        it('should keep validating a required date whose widget type has been replaced', () => {
+            setUp();
+            TestBed.inject(FormRenderingService).setComponentTypeResolver('date', () => TextWidgetComponent, true);
+            form = buildDateTabForm({ required: true });
+            fixture.componentRef.setInput('formDefinition', form);
+            fixture.detectChanges();
+
+            expect(form.isValid).toBeFalse();
+            expect(getIndicator(getTabHeaders()[1])).not.toBeNull();
+        });
+
+        it('should keep an error that a replacement date widget reports once its tab is opened', async () => {
+            setUp();
+            TestBed.inject(FormRenderingService).setComponentTypeResolver('date', () => ReportingDateWidgetComponent, true);
+            form = buildDateTabForm({ value: '2024-05-10' });
+            fixture.componentRef.setInput('formDefinition', form);
+            fixture.detectChanges();
+
+            expect(form.isValid).toBeTrue();
+
+            await openCoverageTab();
+            form.validateForm();
+            fixture.detectChanges();
+
+            expect(form.getFieldById('dob').validationSummary.message).toBe('CUSTOM.DATE_ERROR');
+            expect(form.isValid).toBeFalse();
+            expect(getIndicator(getTabHeaders()[1])).not.toBeNull();
+        });
+
+        it('should mark the tab when text that does not parse is typed into an opened date field', async () => {
+            renderForm({});
+            await openCoverageTab();
+            const input: HTMLInputElement = fixture.nativeElement.querySelector('date-widget input');
+
+            input.value = 'not a date';
+            input.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            expect(form.getFieldById('dob').validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT');
+            expect(form.isValid).toBeFalse();
+            expect(getIndicator(getTabHeaders()[1])).not.toBeNull();
+        });
+
+        it('should make a form without tabs invalid when a collapsed group holds an empty required date', () => {
+            setUp();
+            form = new FormModel(
+                {
+                    fields: [
+                        {
+                            id: 'coverage-group',
+                            type: 'group',
+                            name: 'Coverage',
+                            params: { allowCollapse: true, collapseByDefault: true },
+                            numberOfColumns: 1,
+                            fields: { 1: [{ id: 'dob', type: 'date', name: 'Date of birth', required: true }] }
+                        }
+                    ]
+                },
+                null,
+                false,
+                TestBed.inject(FormService)
+            );
+            fixture.componentRef.setInput('formDefinition', form);
+            fixture.detectChanges();
+
+            expect(getDateWidget()).toBeNull();
+            expect(form.isValid).toBeFalse();
+        });
     });
 });

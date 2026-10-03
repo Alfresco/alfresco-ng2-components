@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { addDays, isDate, isValid, parseISO } from 'date-fns';
+import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
 import { FormFieldTypes } from './form-field-types';
 import { isNumberValue } from './form-field-utils';
 import { FormFieldModel } from './form-field.model';
@@ -318,6 +320,207 @@ export class DecimalFieldValidator implements FormFieldValidator {
     }
 }
 
+export const getDateFieldRange = (field: FormFieldModel): { min?: Date; max?: Date } => ({
+    min: field?.minValue ? parseISO(field.minValue) : undefined,
+    max: field?.maxValue ? parseISO(field.maxValue) : undefined
+});
+
+const dynamicRangeReferenceDates = new WeakMap<FormFieldModel, Date>();
+
+/**
+ * Returns the range of a dynamic date field in days from today. The date it counts from is kept per field.
+ *
+ * @param field Date form field
+ * @param today Date to count from, kept for the next calls
+ * @returns Range dates, `null` for a bound that is not set
+ */
+export const getDynamicDateFieldRange = (field: FormFieldModel, today?: Date): { min: Date | null; max: Date | null } => {
+    if (today || !dynamicRangeReferenceDates.has(field)) {
+        dynamicRangeReferenceDates.set(field, today ?? new Date());
+    }
+    const referenceDate = dynamicRangeReferenceDates.get(field);
+
+    return {
+        min: field.minDateRangeValue === null ? null : addDays(referenceDate, field.minDateRangeValue),
+        max: field.maxDateRangeValue === null ? null : addDays(referenceDate, field.maxDateRangeValue)
+    };
+};
+
+export const getDateTimeFieldRange = (field: FormFieldModel): { min?: Date; max?: Date } => ({
+    min: field?.minValue ? DateFnsUtils.getDate(field.minValue) : undefined,
+    max: field?.maxValue ? DateFnsUtils.getDate(field.maxValue) : undefined
+});
+
+export const isEmptyFieldValue = (value: unknown): boolean =>
+    value === null || value === undefined || ((typeof value === 'string' || Array.isArray(value)) && value.length === 0);
+
+const toPickerDate = (value: unknown): Date | null => {
+    if (typeof value === 'string') {
+        if (!value) {
+            return null;
+        }
+        const date = parseISO(value);
+        if (isValid(date)) {
+            return date;
+        }
+    }
+    if (value === null || value === undefined || (isDate(value) && isValid(value))) {
+        return (value as Date) ?? null;
+    }
+    return new Date(NaN);
+};
+
+const getValidDateOrNull = (value: unknown): Date | null => (isDate(value) && isValid(value) ? (value as Date) : null);
+
+const compareDates = (first: Date, second: Date): number =>
+    first.getFullYear() - second.getFullYear() || first.getMonth() - second.getMonth() || first.getDate() - second.getDate();
+
+const compareDateTimes = (first: Date, second: Date): number =>
+    compareDates(first, second) || first.getHours() - second.getHours() || first.getMinutes() - second.getMinutes();
+
+type DateFieldError = 'required' | 'parse' | 'min' | 'max';
+
+export abstract class PickerFieldValidator implements FormFieldValidator {
+    protected abstract readonly supportedType: string;
+    protected abstract readonly errorPriority: DateFieldError[];
+
+    isSupported(field: FormFieldModel): boolean {
+        return field?.type === this.supportedType;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        if (!this.isSupported(field) || field.readOnly || field.inputDisabled || field.form?.isFieldOrParentHidden(field)) {
+            return true;
+        }
+
+        const errors = this.getErrors(field);
+        const error = this.errorPriority.find((candidate) => errors.has(candidate));
+        if (!error) {
+            return true;
+        }
+
+        this.setValidationSummary(field, error);
+        return false;
+    }
+
+    protected abstract getRange(field: FormFieldModel): { min?: Date | null; max?: Date | null };
+
+    protected abstract compare(first: Date, second: Date): number;
+
+    private getErrors(field: FormFieldModel): Set<DateFieldError> {
+        const errors = new Set<DateFieldError>();
+        const value = toPickerDate(field.value);
+        const date = getValidDateOrNull(value);
+        const { min, max } = this.getValidRange(field);
+
+        if (field.required && isEmptyFieldValue(field.value)) {
+            errors.add('required');
+        }
+        if (field.inputErrors?.matDatepickerParse || (value && !isValid(value))) {
+            errors.add('parse');
+        }
+        if (min && date && this.compare(min, date) > 0) {
+            errors.add('min');
+        }
+        if (max && date && this.compare(max, date) < 0) {
+            errors.add('max');
+        }
+
+        return errors;
+    }
+
+    private getValidRange(field: FormFieldModel): { min: Date | null; max: Date | null } {
+        const { min, max } = this.getRange(field);
+        return { min: getValidDateOrNull(toPickerDate(min)), max: getValidDateOrNull(toPickerDate(max)) };
+    }
+
+    private setValidationSummary(field: FormFieldModel, error: DateFieldError): void {
+        const { min, max } = this.getValidRange(field);
+        switch (error) {
+            case 'required':
+                field.validationSummary.message = 'FORM.FIELD.REQUIRED';
+                break;
+            case 'parse':
+                field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT';
+                field.validationSummary.attributes.set('format', field.dateDisplayFormat || field.defaultDateTimeFormat);
+                break;
+            case 'min':
+                field.validationSummary.message = 'FORM.FIELD.VALIDATOR.NOT_LESS_THAN';
+                field.validationSummary.attributes.set('minValue', DateFnsUtils.formatDate(min, field.dateDisplayFormat).toLocaleUpperCase());
+                break;
+            case 'max':
+                field.validationSummary.message = 'FORM.FIELD.VALIDATOR.NOT_GREATER_THAN';
+                field.validationSummary.attributes.set('maxValue', DateFnsUtils.formatDate(max, field.dateDisplayFormat).toLocaleUpperCase());
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+export class DatePickerFieldValidator extends PickerFieldValidator {
+    protected readonly supportedType = FormFieldTypes.DATE;
+    protected readonly errorPriority: DateFieldError[] = ['parse', 'required', 'min', 'max'];
+
+    protected getRange(field: FormFieldModel): { min?: Date | null; max?: Date | null } {
+        return field.dynamicDateRangeSelection ? getDynamicDateFieldRange(field) : getDateFieldRange(field);
+    }
+
+    protected compare(first: Date, second: Date): number {
+        return compareDates(first, second);
+    }
+}
+
+export class DateTimePickerFieldValidator extends PickerFieldValidator {
+    protected readonly supportedType = FormFieldTypes.DATETIME;
+    protected readonly errorPriority: DateFieldError[] = ['parse', 'required', 'min', 'max'];
+
+    protected getRange(field: FormFieldModel): { min?: Date | null; max?: Date | null } {
+        return getDateTimeFieldRange(field);
+    }
+
+    protected compare(first: Date, second: Date): number {
+        return compareDateTimes(first, second);
+    }
+}
+
+export const isDropdownValueEmpty = (field: FormFieldModel, value: any): boolean => {
+    if (field.hasMultipleValues) {
+        return !Array.isArray(value) || value.length === 0;
+    }
+    if (isEmptyFieldValue(value)) {
+        return true;
+    }
+
+    const emptyOption = field.hasEmptyValue ? field.emptyOption : undefined;
+    if (!emptyOption) {
+        return false;
+    }
+    if (typeof value === 'string') {
+        return value === emptyOption.id || value === emptyOption.name;
+    }
+    return !Array.isArray(value) && value?.id === emptyOption.id && value?.name === emptyOption.name;
+};
+
+export class DropdownFieldValidator implements FormFieldValidator {
+    isSupported(field: FormFieldModel): boolean {
+        return field?.type === FormFieldTypes.DROPDOWN && field.required;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        if (!this.isSupported(field) || field.readOnly || field.inputDisabled || field.form?.isFieldOrParentHidden(field)) {
+            return true;
+        }
+
+        if (isDropdownValueEmpty(field, field.value)) {
+            field.validationSummary.message = 'FORM.FIELD.REQUIRED';
+            return false;
+        }
+
+        return true;
+    }
+}
+
 export const FORM_FIELD_VALIDATORS = [
     new RequiredFieldValidator(),
     new NumberFieldValidator(),
@@ -329,5 +532,8 @@ export const FORM_FIELD_VALIDATORS = [
     new MaxValueFieldValidator(),
     new RegExFieldValidator(),
     new FixedValueFieldValidator(),
-    new DecimalFieldValidator()
+    new DecimalFieldValidator(),
+    new DatePickerFieldValidator(),
+    new DateTimePickerFieldValidator(),
+    new DropdownFieldValidator()
 ];

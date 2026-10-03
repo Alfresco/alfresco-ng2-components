@@ -1,6 +1,6 @@
 <div
     class="adf-dropdown-widget {{field.className}}"
-    [class.adf-invalid]="dropdownControl.invalid && dropdownControl.touched"
+    [class.adf-invalid]="hasValidationError() && dropdownControl.touched"
     [class.adf-readonly]="field.readOnly"
     [class.adf-left-label-input-container]="field.leftLabels"
 >
@@ -48,11 +48,11 @@
                     </mat-option>
                 }
             </mat-select>
-            @if ((dropdownControl.hasError('required') && !isRestApiFailed && !variableOptionsFailed) || (!previewState && !field.readOnly && (isRestApiFailed || variableOptionsFailed))) {
+            @if ((hasValidationError() && !isRestApiFailed && !variableOptionsFailed) || (!previewState && !field.readOnly && (isRestApiFailed || variableOptionsFailed))) {
                 <mat-error class="adf-form-field-status-slot">
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
                     <span class="adf-error-text"
-                        >@if (dropdownControl.hasError('required') && !isRestApiFailed && !variableOptionsFailed) {{{ 'FORM.FIELD.REQUIRED' | translate }}} @else if (isRestApiFailed) {{{ 'FORM.FIELD.REST_API_FAILED' | translate: { hostname: restApiHostName } }}} @else if (variableOptionsFailed) {{{ 'FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED' | translate }}}</span>
+                        >@if (hasValidationError() && !isRestApiFailed && !variableOptionsFailed) {{{ field.validationSummary.message | translate }}} @else if (isRestApiFailed) {{{ 'FORM.FIELD.REST_API_FAILED' | translate: { hostname: restApiHostName } }}} @else if (variableOptionsFailed) {{{ 'FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED' | translate }}}</span>
                 </mat-error>
             }
             <mat-hint class="adf-form-field-status-slot" aria-hidden="true" />

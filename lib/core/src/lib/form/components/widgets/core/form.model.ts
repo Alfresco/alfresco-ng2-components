@@ -100,6 +100,9 @@ export class FormModel implements ProcessFormModel {
     variables: FormVariableModel[] = [];
     enableParentVisibilityCheck: boolean = false;
 
+    private blockingFields: FormFieldModel[] = [];
+    private readonly rejectedFields = new Set<FormFieldModel>();
+
     constructor(
         json?: any,
         formValues?: FormValues,
@@ -165,16 +168,14 @@ export class FormModel implements ProcessFormModel {
      */
     validateForm(): void {
         const validateFormEvent: any = new ValidateFormEvent(this);
+        const fieldTabs = this.getFieldTabs();
 
-        const errorsField: FormFieldModel[] = this.fieldsCache.filter((field) => {
-            if (!FormFieldTypes.isReactiveType(field.type)) {
-                return !field.validate();
-            } else {
-                return field.validationSummary.isActive();
-            }
-        });
+        this.rejectedFields.clear();
+        const errorsField: FormFieldModel[] = this.fieldsCache.filter((field) => !field.validate() && this.isBlockingCandidate(field, fieldTabs));
 
+        this.blockingFields = errorsField;
         this.isValid = errorsField.length <= 0;
+        this.updateTabsValidationState(errorsField, fieldTabs);
 
         if (this.formService) {
             validateFormEvent.isValid = this.isValid;
@@ -200,7 +201,7 @@ export class FormModel implements ProcessFormModel {
         }
 
         if (!validateFieldEvent.isValid) {
-            this.markAsInvalid();
+            this.rejectField(field);
             return;
         }
 
@@ -208,11 +209,65 @@ export class FormModel implements ProcessFormModel {
             return;
         }
 
-        if (!FormFieldTypes.isReactiveType(field.type) && !field.validate()) {
+        if (!field.validate()) {
             this.markAsInvalid();
         }
 
         this.validateForm();
+    }
+
+    /**
+     * Marks a field and the form as invalid and flags the field's tab until the next form validation.
+     *
+     * @param field Form field that was rejected.
+     */
+    markFieldAsInvalid(field: FormFieldModel): void {
+        field.markAsInvalid();
+        this.rejectField(field);
+    }
+
+    private rejectField(field: FormFieldModel): void {
+        const fieldTabs = this.getFieldTabs();
+        if (!this.isBlockingCandidate(field, fieldTabs)) {
+            return;
+        }
+
+        this.rejectedFields.add(field);
+        this.markAsInvalid();
+        const invalidFields = [...this.blockingFields, ...this.rejectedFields].filter((invalidField) =>
+            this.isBlockingCandidate(invalidField, fieldTabs)
+        );
+        this.updateTabsValidationState(invalidFields, fieldTabs);
+    }
+
+    private isBlockingCandidate(field: FormFieldModel, fieldTabs: Map<FormFieldModel, TabModel>): boolean {
+        if (this.isFieldOrParentHidden(field)) {
+            return false;
+        }
+        if (!this.hasTabs()) {
+            return true;
+        }
+        return !!fieldTabs.get(field)?.isVisible;
+    }
+
+    private getFieldTabs(): Map<FormFieldModel, TabModel> {
+        const fieldTabs = new Map<FormFieldModel, TabModel>();
+
+        this.tabs.forEach((tab) => {
+            const tabFields: FormFieldModel[] = [];
+            this.processFields(tab.fields as (ContainerModel | FormFieldModel)[], tabFields);
+            tabFields.forEach((field) => fieldTabs.set(field, tab));
+        });
+
+        return fieldTabs;
+    }
+
+    private updateTabsValidationState(errorsField: FormFieldModel[], fieldTabs: Map<FormFieldModel, TabModel>): void {
+        const invalidTabs = new Set(errorsField.map((field) => fieldTabs.get(field)));
+
+        this.tabs.forEach((tab) => {
+            tab.hasValidationErrors = tab.isVisible && invalidTabs.has(tab);
+        });
     }
 
     // Activiti supports 4 types of root fields: container|group|dynamic-table|section

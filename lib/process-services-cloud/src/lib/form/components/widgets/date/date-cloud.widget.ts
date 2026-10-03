@@ -18,26 +18,32 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation, DestroyRef, inject } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { DateAdapter, ErrorStateMatcher, MAT_DATE_FORMATS } from '@angular/material/core';
 import {
     ADF_DATE_FORMATS,
     AdfDateFnsAdapter,
     DateFnsUtils,
     DEFAULT_DATE_FORMAT,
-    ErrorMessageModel,
+    FormFieldModel,
     FormService,
+    getDateFieldRange,
+    getDynamicDateFieldRange,
+    isEmptyFieldValue,
+    getValidationSummaryTranslationParameters,
     WidgetComponent,
     ReactiveFormWidget
 } from '@alfresco/adf-core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { addDays, parseISO } from 'date-fns';
-import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+export const getDateCloudWidgetRange = (field: FormFieldModel, today: Date): { min?: Date | null; max?: Date | null } =>
+    field?.dynamicDateRangeSelection ? getDynamicDateFieldRange(field, today) : getDateFieldRange(field);
 
 @Component({
     selector: 'date-widget',
@@ -69,6 +75,11 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
     startAt: Date = null;
 
     dateInputControl: FormControl<Date> = new FormControl<Date>(null);
+    translateParameters: Record<string, string> = {};
+
+    readonly errorStateMatcher: ErrorStateMatcher = {
+        isErrorState: (control) => !!control?.touched && this.hasValidationError()
+    };
 
     public readonly formService = inject(FormService);
 
@@ -100,16 +111,22 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
         }
     }
 
+    hasValidationError(): boolean {
+        return !this.field.isValid && this.field.validationSummary.isActive();
+    }
+
+    hasRequiredError(): boolean {
+        return !!this.field.required && isEmptyFieldValue(this.field.value);
+    }
+
     private updateFormControlState(): void {
-        if (this.isRequired() && this.field?.isVisible) {
-            this.dateInputControl.addValidators(Validators.required);
-        } else {
-            this.dateInputControl.removeValidators(Validators.required);
-        }
         this.field?.readOnly || this.readOnly
             ? this.dateInputControl.disable({ emitEvent: false })
             : this.dateInputControl.enable({ emitEvent: false });
 
+        if (this.field) {
+            this.field.inputDisabled = this.readOnly;
+        }
         this.dateInputControl.updateValueAndValidity({ emitEvent: false });
     }
 
@@ -136,50 +153,9 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
     }
 
     private validateField(): void {
-        if (this.dateInputControl.invalid) {
-            this.handleErrors(this.dateInputControl.errors);
-            this.field.markAsInvalid();
-        } else {
-            this.resetErrors();
-            this.field.markAsValid();
-        }
-    }
-
-    private handleErrors(errors: ValidationErrors): void {
-        const errorAttributes = new Map<string, string>();
-        switch (true) {
-            case !!errors.matDatepickerParse: {
-                const format = this.field.dateDisplayFormat || this.field.defaultDateTimeFormat;
-                errorAttributes.set('format', format);
-                this.updateValidationSummary('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT', errorAttributes);
-                break;
-            }
-            case !!errors.required:
-                this.updateValidationSummary('FORM.FIELD.REQUIRED');
-                break;
-            case !!errors.matDatepickerMin: {
-                const minValue = DateFnsUtils.formatDate(errors.matDatepickerMin.min, this.field.dateDisplayFormat).toLocaleUpperCase();
-                errorAttributes.set('minValue', minValue);
-                this.updateValidationSummary('FORM.FIELD.VALIDATOR.NOT_LESS_THAN', errorAttributes);
-                break;
-            }
-            case !!errors.matDatepickerMax: {
-                const maxValue = DateFnsUtils.formatDate(errors.matDatepickerMax.max, this.field.dateDisplayFormat).toLocaleUpperCase();
-                errorAttributes.set('maxValue', maxValue);
-                this.updateValidationSummary('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN', errorAttributes);
-                break;
-            }
-            default:
-                break;
-        }
-    }
-
-    private updateValidationSummary(message: string, attributes?: Map<string, string>): void {
-        this.field.validationSummary = new ErrorMessageModel({ message, attributes });
-    }
-
-    private resetErrors(): void {
-        this.updateValidationSummary('');
+        this.field.inputErrors = this.dateInputControl.hasError('matDatepickerParse') ? { matDatepickerParse: true } : null;
+        this.field.validate();
+        this.translateParameters = getValidationSummaryTranslationParameters(this.field.validationSummary);
     }
 
     private initDateAdapter(): void {
@@ -196,37 +172,13 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
     }
 
     private initRangeSelection(): void {
+        const { min, max } = getDateCloudWidgetRange(this.field, this.dateAdapter.today());
+        this.minDate = min;
+        this.maxDate = max;
+
         if (this.field?.dynamicDateRangeSelection) {
-            this.setDynamicRangeSelection();
-        } else {
-            this.setStaticRangeSelection();
-        }
-    }
-
-    private setDynamicRangeSelection(): void {
-        if (this.field.minDateRangeValue === null) {
-            this.minDate = null;
-            this.field.minValue = null;
-        } else {
-            this.minDate = addDays(this.dateAdapter.today(), this.field.minDateRangeValue);
-            this.field.minValue = DateFnsUtils.formatDate(this.minDate, DEFAULT_DATE_FORMAT);
-        }
-        if (this.field.maxDateRangeValue === null) {
-            this.maxDate = null;
-            this.field.maxValue = null;
-        } else {
-            this.maxDate = addDays(this.dateAdapter.today(), this.field.maxDateRangeValue);
-            this.field.maxValue = DateFnsUtils.formatDate(this.maxDate, DEFAULT_DATE_FORMAT);
-        }
-    }
-
-    private setStaticRangeSelection(): void {
-        if (this.field?.minValue) {
-            this.minDate = parseISO(this.field.minValue);
-        }
-
-        if (this.field?.maxValue) {
-            this.maxDate = parseISO(this.field.maxValue);
+            this.field.minValue = min === null ? null : DateFnsUtils.formatDate(min, DEFAULT_DATE_FORMAT);
+            this.field.maxValue = max === null ? null : DateFnsUtils.formatDate(max, DEFAULT_DATE_FORMAT);
         }
     }
 }

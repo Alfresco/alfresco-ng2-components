@@ -35,6 +35,7 @@ export * from './radio-buttons/radio-buttons.widget';
 export * from './functional-group/functional-group.widget';
 export * from './typeahead/typeahead.widget';
 export * from './dropdown/dropdown.widget';
+export * from './dropdown/dropdown.field-validator';
 export * from './file-viewer/file-viewer.widget';
 export * from './dynamic-table/index';
 export * from './upload/upload.widget';

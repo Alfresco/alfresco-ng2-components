@@ -69,4 +69,9 @@ describe('TabModel', () => {
         const model = new TabModel(null, json);
         expect(model.json).toBe(json);
     });
+
+    it('should not report validation errors when the tab is created', () => {
+        const model = new TabModel(null, { id: '<id>', title: '<title>' });
+        expect(model.hasValidationErrors).toBe(false);
+    });
 });
