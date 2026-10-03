@@ -1,7 +1,7 @@
 <div
     class="{{field.className}}"
     id="data-widget"
-    [class.adf-invalid]="dateInputControl.invalid && dateInputControl.touched"
+    [class.adf-invalid]="hasValidationError() && dateInputControl.touched"
     [class.adf-readonly]="field.readOnly"
     [class.adf-left-label-input-container]="field.leftLabels"
 >
@@ -31,6 +31,7 @@
                 [matDatepicker]="datePicker"
                 [id]="field.id"
                 [formControl]="dateInputControl"
+                [errorStateMatcher]="errorStateMatcher"
                 [placeholder]="field.placeholder"
                 [required]="field.required && field.isVisible"
                 [min]="minDate"
@@ -39,11 +40,10 @@
             />
             <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly" />
             <mat-datepicker #datePicker [startAt]="startAt" [disabled]="field.readOnly" />
-            @if (dateInputControl.invalid && dateInputControl.touched) {
+            @if (hasValidationError() && dateInputControl.touched) {
                 <mat-error class="adf-form-field-status-slot">
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
-                    <span class="adf-error-text"
-                        >@if (dateInputControl.hasError('required')) {{{ 'FORM.FIELD.REQUIRED' | translate }}} @else if (dateInputControl.hasError('matDatepickerParse')) {{{ 'FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT' | translate: { format: field.dateDisplayFormat || field.defaultDateTimeFormat } }}} @else if (dateInputControl.hasError('matDatepickerMin')) {{{ 'FORM.FIELD.VALIDATOR.NOT_LESS_THAN' | translate: { minValue: formattedMinDate } }}} @else if (dateInputControl.hasError('matDatepickerMax')) {{{ 'FORM.FIELD.VALIDATOR.NOT_GREATER_THAN' | translate: { maxValue: formattedMaxDate } }}}</span>
+                    <span class="adf-error-text">@if (hasRequiredError()) {{{ 'FORM.FIELD.REQUIRED' | translate }}} @else {{{ field.validationSummary.message | translate: translateParameters }}}</span>
                 </mat-error>
             }
             <mat-hint class="adf-form-field-status-slot" aria-hidden="true" />

@@ -30,11 +30,16 @@ import {
 } from '@angular/core';
 import {
     ContentLinkModel,
+    DatePickerFieldValidator,
+    DateTimePickerFieldValidator,
+    DropdownFieldValidator,
+    FORM_FIELD_VALIDATORS,
     FormatSpacePipe,
     FormBaseComponent,
     FormErrorEvent,
     FormEvent,
     FormFieldModel,
+    FormFieldValidator,
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel,
@@ -59,6 +64,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { PROCESS_FORM_FIELD_VALIDATORS } from './widgets/dropdown/dropdown.field-validator';
+
+/**
+ * Validators of the date, datetime and dropdown widgets. They stay in place when `fieldValidators` replaces the other rules.
+ */
+const WIDGET_FIELD_VALIDATORS: FormFieldValidator[] = [
+    ...FORM_FIELD_VALIDATORS.filter(
+        (validator) =>
+            validator instanceof DatePickerFieldValidator ||
+            validator instanceof DateTimePickerFieldValidator ||
+            validator instanceof DropdownFieldValidator
+    ),
+    ...PROCESS_FORM_FIELD_VALIDATORS
+];
 
 @Component({
     selector: 'adf-form',
@@ -311,12 +330,19 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnChange
 
     parseForm(formRepresentationJSON: any): FormModel {
         if (formRepresentationJSON) {
-            const form = new FormModel(formRepresentationJSON, this.data, this.readOnly, this.formService, this.enableFixedSpacedForm);
+            const form = new FormModel(
+                formRepresentationJSON,
+                this.data,
+                this.readOnly,
+                this.formService,
+                this.enableFixedSpacedForm,
+                PROCESS_FORM_FIELD_VALIDATORS
+            );
             if (!formRepresentationJSON.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
             if (this.fieldValidators?.length > 0) {
-                form.fieldValidators = this.fieldValidators;
+                form.fieldValidators = [...new Set([...this.fieldValidators, ...WIDGET_FIELD_VALIDATORS])];
             }
             return form;
         }

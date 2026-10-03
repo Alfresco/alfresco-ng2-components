@@ -18,17 +18,70 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService, FormFieldOption, WidgetComponent, ErrorMessageModel, FormFieldModel, ReactiveFormWidget } from '@alfresco/adf-core';
+import { FormService, FormFieldOption, WidgetComponent, FormFieldModel, ReactiveFormWidget } from '@alfresco/adf-core';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { TaskFormService } from '../../services/task-form.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { AbstractControl, FormControl, ReactiveFormsModule, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { setDropdownRestOptionsLoaded } from './dropdown-rest-options';
+
+/**
+ * Returns the value the dropdown widget holds in its form control for a field value, resolving a string by option id or name.
+ *
+ * @param field Dropdown form field
+ * @param value Field value
+ * @param readOnly Whether the widget is read-only
+ * @returns Form control value
+ */
+export const getDropdownOptionValue = (
+    field: FormFieldModel,
+    value?: string | FormFieldOption,
+    readOnly = false
+): FormFieldOption | string | undefined => {
+    if (field?.readOnly || readOnly) {
+        return value;
+    }
+
+    if (typeof value === 'string') {
+        return field.options.find((option) => option.id === value || option.name === value);
+    }
+
+    return value as FormFieldOption | undefined;
+};
+
+/**
+ * Checks whether a dropdown field loads its options from a REST endpoint.
+ *
+ * @param field Dropdown form field
+ * @returns `true` when the field has a REST option source
+ */
+export const isDropdownRestField = (field: FormFieldModel): boolean => field?.optionType === 'rest' && !!field?.restUrl;
+
+/**
+ * Creates the required validator of the dropdown widget, which also treats the empty option as no value.
+ *
+ * @param field Dropdown form field
+ * @returns Validator function
+ */
+export const dropdownRequiredValidator =
+    (field: FormFieldModel): ValidatorFn =>
+    (control: AbstractControl): ValidationErrors | null => {
+        const isEmptyInputValue = (value: any) => value == null || ((typeof value === 'string' || Array.isArray(value)) && value.length === 0);
+        const isEqualToEmptyValue = (value: any) =>
+            field.hasEmptyValue &&
+            (value === field.emptyOption.id ||
+                value === field.emptyOption.name ||
+                (value.id === field.emptyOption.id && value.name === field.emptyOption.name));
+
+        return isEmptyInputValue(control.value) || isEqualToEmptyValue(control.value) ? { required: true } : null;
+    };
 
 @Component({
     selector: 'dropdown-widget',
@@ -56,6 +109,10 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
 
     dropdownControl = new FormControl<FormFieldOption | string>(undefined);
 
+    readonly errorStateMatcher: ErrorStateMatcher = {
+        isErrorState: (control) => !!control?.touched && this.hasValidationError()
+    };
+
     get isReadOnlyType(): boolean {
         return this.field.type === 'readonly';
     }
@@ -64,16 +121,8 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
         return this.field.readOnly;
     }
 
-    private get isRestType(): boolean {
-        return this.field?.optionType === 'rest';
-    }
-
-    private get hasRestUrl(): boolean {
-        return !!this.field?.restUrl;
-    }
-
     private get isValidRestConfig(): boolean {
-        return this.isRestType && this.hasRestUrl;
+        return isDropdownRestField(this.field);
     }
 
     ngOnInit() {
@@ -88,7 +137,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
         this.setFormControlValue();
         this.updateFormControlState();
         this.subscribeToInputChanges();
-        this.handleErrors();
+        this.validateField();
     }
 
     updateReactiveFormControl(): void {
@@ -96,31 +145,45 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
         if (this.field?.form?.showAllValidationErrors) {
             this.dropdownControl.markAsTouched();
         }
-        this.handleErrors();
+        this.validateField();
     }
 
     getValuesByTaskId() {
-        this.taskFormService.getRestFieldValues(this.field.form.taskId, this.field.id).subscribe((formFieldOption) => {
-            const options = [];
-            if (this.field.emptyOption) {
-                options.push(this.field.emptyOption);
-            }
-            this.field.options = options.concat(formFieldOption || []);
-            this.field.updateForm();
-        });
-    }
-
-    getValuesByProcessDefinitionId() {
-        this.processDefinitionService
-            .getRestFieldValuesByProcessId(this.field.form.processDefinitionId, this.field.id)
+        this.taskFormService
+            .getRestFieldValues(this.field.form.taskId, this.field.id)
+            .pipe(tap({ error: () => this.onRestOptionsFailed() }))
             .subscribe((formFieldOption) => {
                 const options = [];
                 if (this.field.emptyOption) {
                     options.push(this.field.emptyOption);
                 }
                 this.field.options = options.concat(formFieldOption || []);
+                setDropdownRestOptionsLoaded(this.field);
+                this.setFormControlValue();
                 this.field.updateForm();
             });
+    }
+
+    getValuesByProcessDefinitionId() {
+        this.processDefinitionService
+            .getRestFieldValuesByProcessId(this.field.form.processDefinitionId, this.field.id)
+            .pipe(tap({ error: () => this.onRestOptionsFailed() }))
+            .subscribe((formFieldOption) => {
+                const options = [];
+                if (this.field.emptyOption) {
+                    options.push(this.field.emptyOption);
+                }
+                this.field.options = options.concat(formFieldOption || []);
+                setDropdownRestOptionsLoaded(this.field);
+                this.setFormControlValue();
+                this.field.updateForm();
+            });
+    }
+
+    private onRestOptionsFailed(): void {
+        setDropdownRestOptionsLoaded(this.field);
+        this.validateField();
+        this.field.form?.validateForm();
     }
 
     private isReadOnlyForm(): boolean {
@@ -135,39 +198,32 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
             )
             .subscribe((value) => {
                 this.setOptionValue(value, this.field);
-                this.handleErrors();
+                this.validateField();
                 this.onFieldChanged(this.field);
             });
     }
 
     private setFormControlValue(): void {
-        this.dropdownControl.setValue(this.getOptionValue(this.field?.value), { emitEvent: false });
+        this.dropdownControl.setValue(getDropdownOptionValue(this.field, this.field?.value, this.readOnly), { emitEvent: false });
+    }
+
+    hasValidationError(): boolean {
+        return !this.field.isValid && this.field.validationSummary.isActive();
     }
 
     private updateFormControlState(): void {
-        this.dropdownControl.setValidators(this.isRequired() && this.field?.isVisible ? [this.customRequiredValidator(this.field)] : []);
         this.field?.readOnly || this.readOnly
             ? this.dropdownControl.disable({ emitEvent: false })
             : this.dropdownControl.enable({ emitEvent: false });
 
+        if (this.field) {
+            this.field.inputDisabled = this.readOnly;
+        }
         this.dropdownControl.updateValueAndValidity({ emitEvent: false });
     }
 
-    private handleErrors() {
-        if (!this.field) {
-            return;
-        }
-
-        if (this.dropdownControl.valid) {
-            this.field.validationSummary = new ErrorMessageModel('');
-            this.field.markAsValid();
-            return;
-        }
-
-        if (this.dropdownControl.invalid && this.dropdownControl.errors.required) {
-            this.field.validationSummary = new ErrorMessageModel({ message: 'FORM.FIELD.REQUIRED' });
-            this.field.markAsInvalid();
-        }
+    private validateField(): void {
+        this.field?.validate();
     }
 
     private setOptionValue(option: string | FormFieldOption, field: FormFieldModel) {
@@ -181,30 +237,5 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
         }
 
         field.value = option.name;
-    }
-
-    private getOptionValue(value?: string | FormFieldOption) {
-        if (this.field?.readOnly || this.readOnly) {
-            return value;
-        }
-
-        if (typeof value === 'string') {
-            return this.field.options.find((option) => option.id === value || option.name === value);
-        }
-
-        return value as FormFieldOption | undefined;
-    }
-
-    private customRequiredValidator(field: FormFieldModel): ValidatorFn {
-        return (control: AbstractControl): ValidationErrors | null => {
-            const isEmptyInputValue = (value: any) => value == null || ((typeof value === 'string' || Array.isArray(value)) && value.length === 0);
-            const isEqualToEmptyValue = (value: any) =>
-                field.hasEmptyValue &&
-                (value === field.emptyOption.id ||
-                    value === field.emptyOption.name ||
-                    (value.id === field.emptyOption.id && value.name === field.emptyOption.name));
-
-            return isEmptyInputValue(control.value) || isEqualToEmptyValue(control.value) ? { required: true } : null;
-        };
     }
 }

@@ -71,6 +71,34 @@ describe('PeopleCloudWidgetComponent', () => {
         });
     });
 
+    it('should make the form invalid and mark the tab when the people search is invalid', () => {
+        const form = new FormModel({
+            tabs: [
+                { id: 'details', title: 'Details' },
+                { id: 'assignment', title: 'Assignment' }
+            ],
+            fields: [
+                { id: 'details-root', type: 'container', tab: 'details', numberOfColumns: 1, fields: { 1: [{ id: 'text', type: 'text' }] } },
+                {
+                    id: 'assignment-root',
+                    type: 'container',
+                    tab: 'assignment',
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'assignee', type: FormFieldTypes.PEOPLE, value: [] }] }
+                }
+            ]
+        });
+        widget.field = form.getFieldById('assignee');
+        fixture.detectChanges();
+        expect(form.isValid).toBe(true);
+        expect(form.tabs.map((tab) => tab.hasValidationErrors)).toEqual([false, false]);
+
+        widget.search.setErrors({ invalid: true });
+
+        expect(widget.field.isValid).toBe(false);
+        expect(form.isValid).toBe(false);
+        expect(form.tabs.map((tab) => tab.hasValidationErrors)).toEqual([false, true]);
+    });
     it('should preselect the current user', () => {
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.PEOPLE,

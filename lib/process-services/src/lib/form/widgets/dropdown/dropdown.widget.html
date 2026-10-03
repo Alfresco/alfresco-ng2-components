@@ -1,6 +1,6 @@
 <div
     class="adf-dropdown-widget {{field.className}}"
-    [class.adf-invalid]="dropdownControl.invalid && dropdownControl.touched"
+    [class.adf-invalid]="hasValidationError() && dropdownControl.touched"
     [class.adf-readonly]="field.readOnly"
 >
     <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic">
@@ -10,16 +10,16 @@
             data-automation-id="adf-dropdown-widget-select"
             [id]="field.id"
             [formControl]="dropdownControl"
+            [errorStateMatcher]="errorStateMatcher"
             [required]="isRequired() && field.isVisible"
         >
             <mat-option *ngFor="let opt of field.options" [value]="opt" [id]="opt.id">{{opt.name}}</mat-option>
             <mat-option id="readonlyOption" *ngIf="dropdownControl.disabled" [value]="field.value">{{field.value}}</mat-option>
         </mat-select>
-        @if (!isReadOnlyField && dropdownControl.touched && (field.validationSummary?.message || dropdownControl.hasError('required'))) {
+        @if (!isReadOnlyField && dropdownControl.touched && hasValidationError()) {
             <mat-error class="adf-form-field-status-slot" data-automation-id="adf-dropdown-error">
                 <mat-icon class="adf-error-icon">error_outline</mat-icon>
-                <span class="adf-error-text"
-                    >@if (field.validationSummary?.message) {{{ field.validationSummary.message | translate }}} @else {{{ 'FORM.FIELD.REQUIRED' | translate }}}</span>
+                <span class="adf-error-text">{{ field.validationSummary.message | translate }}</span>
             </mat-error>
         }
         <mat-hint class="adf-form-field-status-slot" aria-hidden="true" />

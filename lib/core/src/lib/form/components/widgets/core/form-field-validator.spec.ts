@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { addDays, format } from 'date-fns';
 import { ContainerModel } from './container.model';
 import { ErrorMessageModel } from './error-message.model';
 import { FormFieldTypes } from './form-field-types';
@@ -28,7 +29,11 @@ import {
     NumberFieldValidator,
     RegExFieldValidator,
     RequiredFieldValidator,
-    DecimalFieldValidator
+    DecimalFieldValidator,
+    DatePickerFieldValidator,
+    DateTimePickerFieldValidator,
+    DropdownFieldValidator,
+    getDynamicDateFieldRange
 } from './form-field-validator';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
@@ -1759,6 +1764,226 @@ describe('FormFieldValidator', () => {
             });
             field.isVisible = true;
             expect(decimalValidator.validate(field)).toBe(false);
+        });
+    });
+
+    describe('DatePickerFieldValidator', () => {
+        let validator: DatePickerFieldValidator;
+
+        const createField = (json: Record<string, unknown>): FormFieldModel =>
+            new FormFieldModel(new FormModel(), { id: 'date', type: FormFieldTypes.DATE, dateDisplayFormat: 'yyyy-MM-dd', ...json });
+
+        const isoDaysFromToday = (days: number): string => format(addDays(new Date(), days), 'yyyy-MM-dd');
+
+        const createDynamicField = (json: Record<string, unknown>): FormFieldModel =>
+            createField({ dynamicDateRangeSelection: true, minDateRangeValue: null, maxDateRangeValue: null, ...json });
+
+        beforeEach(() => {
+            validator = new DatePickerFieldValidator();
+        });
+
+        it('should report required when a required date is empty', () => {
+            const field = createField({ required: true, value: null });
+
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
+        });
+
+        it('should accept a required date with a value', () => {
+            expect(validator.validate(createField({ required: true, value: '2024-05-10' }))).toBe(true);
+        });
+
+        it('should report the display format when the value does not parse', () => {
+            const field = createField({ value: '31-31-2024' });
+
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT');
+            expect(field.validationSummary.attributes.get('format')).toBe('yyyy-MM-dd');
+        });
+
+        it('should report the display format when the widget reports text that does not parse', () => {
+            const field = createField({ value: null });
+            field.inputErrors = { matDatepickerParse: true };
+
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT');
+        });
+
+        it('should report a parse error before required in the validation summary', () => {
+            const field = createField({ required: true, value: null });
+            field.inputErrors = { matDatepickerParse: true };
+
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT');
+        });
+
+        it('should report the minimum when the date is before it', () => {
+            const field = createField({ minValue: '2024-03-01', value: '2024-02-29' });
+
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
+            expect(field.validationSummary.attributes.get('minValue')).toBe('2024-03-01');
+        });
+
+        it('should accept a date on its minimum', () => {
+            expect(validator.validate(createField({ minValue: '2024-03-01', value: '2024-03-01' }))).toBe(true);
+        });
+
+        it('should report the maximum when the date is after it', () => {
+            const field = createField({ maxValue: '2024-03-01', value: '2024-03-02' });
+
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN');
+            expect(field.validationSummary.attributes.get('maxValue')).toBe('2024-03-01');
+        });
+
+        it('should check a date the widget has written as a Date', () => {
+            const field = createField({ minValue: '2024-03-01' });
+            field.value = new Date(2024, 1, 29);
+
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
+        });
+
+        it('should skip a read-only date', () => {
+            expect(validator.validate(createField({ required: true, readOnly: true, value: null }))).toBe(true);
+        });
+
+        it('should skip a hidden date', () => {
+            const field = createField({ required: true, value: null });
+            field.isVisible = false;
+
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should skip a date whose widget disabled its input', () => {
+            const field = createField({ required: true, value: null });
+            field.inputDisabled = true;
+
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should report the minimum when the date is before its dynamic minimum', () => {
+            const field = createDynamicField({ minDateRangeValue: 0, value: isoDaysFromToday(-1) });
+
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
+        });
+
+        it('should accept a date on the dynamic minimum', () => {
+            expect(validator.validate(createDynamicField({ minDateRangeValue: 0, value: isoDaysFromToday(0) }))).toBe(true);
+        });
+
+        it('should report the maximum when the date is after the dynamic maximum', () => {
+            const field = createDynamicField({ maxDateRangeValue: 5, value: isoDaysFromToday(6) });
+
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN');
+        });
+
+        it('should not check the static minimum of a field with a dynamic range', () => {
+            expect(validator.validate(createDynamicField({ minValue: '2030-01-01', value: '2024-01-01' }))).toBe(true);
+        });
+
+        it('should keep the dynamic range from the first time it is read for the field', () => {
+            const field = createDynamicField({ minDateRangeValue: 0, value: '2022-02-22' });
+            getDynamicDateFieldRange(field, new Date(2022, 1, 22));
+
+            expect(validator.validate(field)).toBe(true);
+        });
+    });
+
+    describe('DateTimePickerFieldValidator', () => {
+        let validator: DateTimePickerFieldValidator;
+
+        const createField = (json: Record<string, unknown>): FormFieldModel =>
+            new FormFieldModel(new FormModel(), { id: 'datetime', type: FormFieldTypes.DATETIME, dateDisplayFormat: 'yyyy-MM-dd HH:mm', ...json });
+
+        beforeEach(() => {
+            validator = new DateTimePickerFieldValidator();
+        });
+
+        it('should report required when a required datetime is empty', () => {
+            const field = createField({ required: true, value: null });
+
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
+        });
+
+        it('should report a parse error before required, as the datetime widget shows it', () => {
+            const field = createField({ required: true, value: null });
+            field.inputErrors = { matDatepickerParse: true };
+
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT');
+        });
+
+        it('should report the minimum when the datetime is one minute before it', () => {
+            const field = createField({ minValue: '2024-03-01T10:00:00.000Z', value: '2024-03-01T09:59:00.000Z' });
+
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
+        });
+
+        it('should accept a datetime within the minute of its minimum', () => {
+            expect(validator.validate(createField({ minValue: '2024-03-01T10:00:00.000Z', value: '2024-03-01T10:00:30.000Z' }))).toBe(true);
+        });
+
+        it('should report the maximum when the datetime is after it', () => {
+            const field = createField({ maxValue: '2026-12-31T23:59:00.000Z', value: '2027-06-01T10:00:00.000Z' });
+
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN');
+        });
+    });
+
+    describe('DropdownFieldValidator', () => {
+        let validator: DropdownFieldValidator;
+
+        const options = [
+            { id: 'empty', name: 'Choose one...' },
+            { id: 'gold', name: 'Gold' }
+        ];
+
+        const createField = (json: Record<string, unknown>): FormFieldModel =>
+            new FormFieldModel(new FormModel(), { id: 'dropdown', type: FormFieldTypes.DROPDOWN, required: true, ...json });
+
+        beforeEach(() => {
+            validator = new DropdownFieldValidator();
+        });
+
+        it('should report required when nothing is selected', () => {
+            const field = createField({ value: null });
+
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
+        });
+
+        it('should report required when the empty option is selected', () => {
+            expect(validator.validate(createField({ options, value: 'empty' }))).toBe(false);
+        });
+
+        it('should report required when a multiple selection is empty', () => {
+            expect(validator.validate(createField({ selectionType: 'multiple', value: [] }))).toBe(false);
+        });
+
+        it('should accept a selected option', () => {
+            expect(validator.validate(createField({ options, value: 'gold' }))).toBe(true);
+        });
+
+        it('should skip an optional dropdown', () => {
+            expect(validator.validate(createField({ required: false, value: null }))).toBe(true);
+        });
+
+        it('should skip a read-only dropdown', () => {
+            expect(validator.validate(createField({ readOnly: true, value: null }))).toBe(true);
+        });
+
+        it('should skip a dropdown whose widget disabled its input', () => {
+            const field = createField({ value: null });
+            field.inputDisabled = true;
+
+            expect(validator.validate(field)).toBe(true);
         });
     });
 });

@@ -21,6 +21,8 @@ export * from './components/spinner/form-spinner.component';
 export * from './components/form-cloud-custom-outcomes.component';
 export * from './components/form-cloud.component';
 export * from './components/cloud-form-rendering.service';
+export * from './components/cloud-form-field-validators';
+export * from './components/widgets/dropdown/dropdown-cloud.field-validator';
 
 export * from './components/widgets/attach-file/attach-file-cloud-widget.component';
 export * from './components/widgets/attach-file/file-properties-table/file-properties-table-cloud.component';
