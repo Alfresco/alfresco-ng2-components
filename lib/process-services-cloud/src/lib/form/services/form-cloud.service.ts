@@ -25,6 +25,7 @@ import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { FormContent } from '../../services/form-fields.interfaces';
 import { FormCloudServiceInterface } from './form-cloud.service.interface';
+import { CLOUD_FORM_FIELD_VALIDATORS } from '../components/cloud-form-field-validators';
 import { ADF_TASK_RUNTIME_BUNDLE_FALLBACK_ENABLED, resolveTaskRuntimeBundleFallback$ } from '../../services/task-runtime-bundle-fallback.token';
 
 export const FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldValidator[]>('FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN');
@@ -33,7 +34,10 @@ export const FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN = new InjectionToken<Form
     providedIn: 'root'
 })
 export class FormCloudService extends BaseCloudService implements FormCloudServiceInterface {
-    private readonly fieldValidators: FormFieldValidator[] = inject(FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, { optional: true }) ?? [];
+    private readonly fieldValidators: FormFieldValidator[] = [
+        ...CLOUD_FORM_FIELD_VALIDATORS,
+        ...(inject(FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, { optional: true }) ?? [])
+    ];
     private readonly formService = inject(FormService);
     private readonly runtimeBundleFallbackEnabled$ = resolveTaskRuntimeBundleFallback$(
         inject(ADF_TASK_RUNTIME_BUNDLE_FALLBACK_ENABLED, { optional: true })

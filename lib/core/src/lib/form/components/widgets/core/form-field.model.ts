@@ -29,6 +29,7 @@ import { VariableConfig } from './form-field-variable-options';
 import { DataColumn } from '../../../../datatable/data/data-column.model';
 import { DateFnsUtils } from '../../../../common';
 import { isValid as isValidDate } from 'date-fns';
+import { ValidationErrors } from '@angular/forms';
 import { Observable, ReplaySubject } from 'rxjs';
 import { ContainerRowModel } from './container-row.model';
 import { RepeatableSectionModel, ROW_ID_PREFIX, TEMPLATE_ROW_ID } from './repeatable-section.model';
@@ -135,6 +136,12 @@ export class FormFieldModel extends FormWidgetModel {
     // util members
     emptyOption: FormFieldOption;
     validationSummary: ErrorMessageModel = new ErrorMessageModel();
+    /** Errors in input that the widget could not turn into a value, such as date text that does not parse. Read by the field validators. */
+    inputErrors: ValidationErrors | null = null;
+    /** Whether the widget disabled its input through its own `readOnly` input. The field validators skip such a field, as they skip a read-only one. */
+    inputDisabled = false;
+    private modelValidationSummary: ErrorMessageModel = this.validationSummary;
+    private modelValidationMessage = '';
 
     get validationSummaryChanges$(): Observable<ErrorMessageModel> {
         const existingState = validationSummaryChangesByField.get(this);
@@ -200,6 +207,25 @@ export class FormFieldModel extends FormWidgetModel {
         return this.selectionType === 'multiple' || this.params.multiple;
     }
 
+    /**
+     * A date, datetime or dropdown widget that sets its own `validationSummary` (for example a replacement widget) reports the result
+     * of that field. An active summary it set is kept until the widget clears it.
+     *
+     * @returns `true` when a widget set an active summary, or an active message, that `validate()` did not produce
+     */
+    private hasWidgetReportedError(): boolean {
+        return (
+            FormFieldTypes.isReactiveType(this.type) &&
+            !!this.validationSummary?.isActive() &&
+            (this.validationSummary !== this.modelValidationSummary || this.validationSummary.message !== this.modelValidationMessage)
+        );
+    }
+
+    private recordModelValidationSummary(): void {
+        this.modelValidationSummary = this.validationSummary;
+        this.modelValidationMessage = this.validationSummary?.message;
+    }
+
     markAsInvalid() {
         this._isValid = false;
     }
@@ -209,18 +235,26 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     validate(): boolean {
+        if (this.hasWidgetReportedError()) {
+            this._isValid = false;
+            validationSummaryChangesByField.get(this)?.subject.next(this.validationSummary);
+            return this._isValid;
+        }
+
         this.validationSummary = new ErrorMessageModel();
 
         const validators = this.form?.fieldValidators || [];
         for (const validator of validators) {
             if (!validator.validate(this)) {
                 this._isValid = false;
+                this.recordModelValidationSummary();
                 validationSummaryChangesByField.get(this)?.subject.next(this.validationSummary);
                 return this._isValid;
             }
         }
 
         this._isValid = true;
+        this.recordModelValidationSummary();
         validationSummaryChangesByField.get(this)?.subject.next(this.validationSummary);
         return this._isValid;
     }

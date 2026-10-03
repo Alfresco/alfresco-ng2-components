@@ -27,6 +27,9 @@ import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
 import { fakeMetadataForm, mockDisplayExternalPropertyForm, mockFormWithSections, fakeValidatorMock } from '../../mock/form.mock';
 import { TestBed } from '@angular/core/testing';
+import { ValidateFormEvent } from '../../../events/validate-form.event';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { tabInvalidFormVisibility } from '../../../../mock/form/widget-visibility.service.mock';
 
 describe('FormModel', () => {
     let formService: FormService;
@@ -287,6 +290,8 @@ describe('FormModel', () => {
 
     it('should skip field validation when default behaviour prevented', (done) => {
         const form = new FormModel({}, null, false, formService);
+        const field = new FormFieldModel(form, { id: 'field', type: 'text' });
+        spyOn(field, 'validate');
 
         let prevented = false;
 
@@ -297,7 +302,6 @@ describe('FormModel', () => {
             done();
         });
 
-        const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
         form.validateField(field);
 
         expect(prevented).toBeTruthy();
@@ -443,6 +447,330 @@ describe('FormModel', () => {
         const defaultLength = FORM_FIELD_VALIDATORS.length;
 
         expect(form.fieldValidators.length).toBe(defaultLength + 1);
+    });
+
+    describe('tab validation state', () => {
+        const buildNestedTabsForm = (requiredFieldIds: string[]): FormModel => {
+            const tabs = [
+                { id: 'details', title: 'Details' },
+                { id: 'review', title: 'Review' }
+            ];
+            const fields = [
+                {
+                    id: 'details-root',
+                    type: 'container',
+                    tab: 'details',
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'email', type: 'text', name: 'Email', required: requiredFieldIds.includes('email') }] }
+                },
+                {
+                    id: 'review-root',
+                    type: 'container',
+                    tab: 'review',
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'notes', type: 'text', name: 'Notes', required: requiredFieldIds.includes('notes') }] }
+                }
+            ];
+
+            return new FormModel({ tabs, fields }, null, false, formService);
+        };
+
+        const getTab = (form: FormModel, tabId: string): TabModel => form.tabs.find((tab) => tab.id === tabId);
+
+        it('should mark only the tab whose root container holds an invalid nested field when the form is validated', () => {
+            const form = buildNestedTabsForm(['email']);
+
+            form.validateForm();
+
+            expect(form.getFieldById('email').json.tab).toBeUndefined();
+            expect(getTab(form, 'details').hasValidationErrors).toBeTrue();
+            expect(getTab(form, 'review').hasValidationErrors).toBeFalse();
+        });
+
+        it('should mark every visible tab that holds an invalid field when errors span several tabs', () => {
+            const form = buildNestedTabsForm(['email', 'notes']);
+
+            form.validateForm();
+
+            expect(getTab(form, 'details').hasValidationErrors).toBeTrue();
+            expect(getTab(form, 'review').hasValidationErrors).toBeTrue();
+        });
+
+        it('should clear the tab state when the invalid field is corrected through the field change path', () => {
+            const form = buildNestedTabsForm(['email']);
+            const email = form.getFieldById('email');
+
+            email.value = 'user@example.com';
+            form.onFormFieldChanged(email);
+
+            expect(form.isValid).toBeTrue();
+            expect(getTab(form, 'details').hasValidationErrors).toBeFalse();
+        });
+
+        it('should not mark a tab when it is hidden and the form is revalidated', () => {
+            const form = buildNestedTabsForm(['email']);
+
+            getTab(form, 'details').isVisible = false;
+            form.validateForm();
+
+            expect(getTab(form, 'details').hasValidationErrors).toBeFalse();
+        });
+
+        it('should derive the same tab state when validation is repeated without changes', () => {
+            const form = buildNestedTabsForm(['email']);
+
+            form.validateForm();
+            const firstState = form.tabs.map((tab) => tab.hasValidationErrors);
+            form.validateForm();
+
+            expect(form.tabs.map((tab) => tab.hasValidationErrors)).toEqual(firstState);
+        });
+
+        it('should keep the validate form event payload unchanged when tab state is derived', () => {
+            const form = buildNestedTabsForm(['email']);
+            let emittedEvent: ValidateFormEvent;
+            let detailsStateOnEmit: boolean;
+
+            formService.validateForm.subscribe((event: ValidateFormEvent) => {
+                emittedEvent = event;
+                detailsStateOnEmit = getTab(form, 'details').hasValidationErrors;
+            });
+            form.validateForm();
+
+            expect(emittedEvent.isValid).toBeFalse();
+            expect(emittedEvent.errorsField).toEqual([form.getFieldById('email')]);
+            expect(detailsStateOnEmit).toBeTrue();
+        });
+
+        it('should keep the tab marked when a field validation subscriber rejects the corrected field', () => {
+            const form = buildNestedTabsForm(['email']);
+            const email = form.getFieldById('email');
+            formService.validateFormField.subscribe((event: ValidateFormFieldEvent) => {
+                event.isValid = false;
+            });
+
+            email.value = 'user@example.com';
+            form.validateField(email);
+
+            expect(form.isValid).toBeFalse();
+            expect(getTab(form, 'details').hasValidationErrors).toBeTrue();
+        });
+
+        it('should keep the tab marked when a field validation subscriber skips validation', () => {
+            const form = buildNestedTabsForm(['email']);
+            const email = form.getFieldById('email');
+            formService.validateFormField.subscribe((event: ValidateFormFieldEvent) => {
+                event.preventDefault();
+            });
+
+            email.value = 'user@example.com';
+            form.validateField(email);
+
+            expect(getTab(form, 'details').hasValidationErrors).toBeTrue();
+        });
+
+        it('should clear the tab state when a visibility refresh hides a tab with an invalid nested field', () => {
+            const visibilityService = TestBed.inject(WidgetVisibilityService);
+            const form = new FormModel(tabInvalidFormVisibility, null, false, formService);
+            const [conditionalTab] = form.tabs;
+            form.getFieldById('Number1').value = 'invalidField';
+            form.getFieldById('Text1').value = 'showtab';
+
+            visibilityService.refreshVisibility(form);
+            form.validateForm();
+
+            expect(conditionalTab.hasValidationErrors).toBeTrue();
+
+            form.getFieldById('Text1').value = 'hidetab';
+            visibilityService.refreshVisibility(form);
+            form.validateForm();
+
+            expect(conditionalTab.isVisible).toBeFalse();
+            expect(conditionalTab.hasValidationErrors).toBeFalse();
+        });
+    });
+
+    describe('validity of unrendered and rejected fields', () => {
+        const getTab = (form: FormModel, tabId: string): TabModel => form.tabs.find((tab) => tab.id === tabId);
+
+        const hiddenCondition = {
+            leftType: 'field',
+            leftValue: 'email',
+            operator: '==',
+            rightValue: 'show',
+            rightType: 'value',
+            nextConditionOperator: '',
+            nextCondition: null
+        };
+
+        const buildReactiveTabForm = (options: { dateValue?: string; coverageVisibility?: any; extraRootField?: any } = {}): FormModel =>
+            new FormModel(
+                {
+                    tabs: [
+                        { id: 'details', title: 'Details' },
+                        { id: 'coverage', title: 'Coverage', visibilityCondition: options.coverageVisibility ?? null }
+                    ],
+                    fields: [
+                        {
+                            id: 'details-root',
+                            type: 'container',
+                            tab: 'details',
+                            numberOfColumns: 1,
+                            fields: { 1: [{ id: 'email', type: 'text', name: 'Email' }] }
+                        },
+                        {
+                            id: 'coverage-root',
+                            type: 'container',
+                            tab: 'coverage',
+                            numberOfColumns: 1,
+                            fields: { 1: [{ id: 'dob', type: 'date', name: 'Date of birth', required: true, value: options.dateValue ?? null }] }
+                        },
+                        ...(options.extraRootField ? [options.extraRootField] : [])
+                    ]
+                },
+                null,
+                false,
+                formService
+            );
+
+        const expectTabsToMatchForm = (form: FormModel) => {
+            expect(form.isValid).toBe(!form.tabs.some((tab) => tab.hasValidationErrors));
+        };
+
+        it('should be invalid and mark the tab when an unrendered required date is empty', () => {
+            const form = buildReactiveTabForm();
+
+            expect(form.isValid).toBeFalse();
+            expect(getTab(form, 'coverage').hasValidationErrors).toBeTrue();
+            expect(getTab(form, 'details').hasValidationErrors).toBeFalse();
+        });
+
+        it('should report an unrendered invalid date as a form error and on the field itself', () => {
+            let validateFormEvent: ValidateFormEvent;
+            const form = buildReactiveTabForm();
+            formService.validateForm.subscribe((event) => (validateFormEvent = event));
+
+            form.validateForm();
+
+            const dateField = form.getFieldById('dob');
+            expect(validateFormEvent.isValid).toBeFalse();
+            expect(validateFormEvent.errorsField).toEqual([dateField]);
+            expect(dateField.isValid).toBeFalse();
+            expect(dateField.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
+        });
+
+        it('should stay valid when an unrendered required date has a value', () => {
+            const form = buildReactiveTabForm({ dateValue: '2024-05-10' });
+
+            expect(form.isValid).toBeTrue();
+            expect(getTab(form, 'coverage').hasValidationErrors).toBeFalse();
+        });
+
+        it('should be invalid and mark the tab when the date input reports text that does not parse', () => {
+            const form = buildReactiveTabForm({ dateValue: '2024-05-10' });
+            const dateField = form.getFieldById('dob');
+
+            dateField.inputErrors = { matDatepickerParse: true };
+            form.validateForm();
+
+            expect(form.isValid).toBeFalse();
+            expect(getTab(form, 'coverage').hasValidationErrors).toBeTrue();
+            expect(dateField.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT');
+        });
+
+        it('should stay valid when the invalid field is hidden', () => {
+            const form = buildReactiveTabForm();
+
+            form.getFieldById('dob').isVisible = false;
+            form.validateForm();
+
+            expect(form.isValid).toBeTrue();
+            expectTabsToMatchForm(form);
+        });
+
+        it('should stay valid when the invalid field is on a hidden tab', () => {
+            const form = buildReactiveTabForm({ coverageVisibility: hiddenCondition });
+            TestBed.inject(WidgetVisibilityService).refreshVisibility(form);
+
+            form.validateForm();
+
+            expect(getTab(form, 'coverage').isVisible).toBeFalse();
+            expect(form.isValid).toBeTrue();
+            expectTabsToMatchForm(form);
+        });
+
+        it('should stay valid when the invalid field belongs to no tab', () => {
+            const form = buildReactiveTabForm({
+                dateValue: '2024-05-10',
+                extraRootField: {
+                    id: 'orphan-root',
+                    type: 'container',
+                    tab: 'missing',
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'orphan', type: 'text', name: 'Orphan', required: true }] }
+                }
+            });
+
+            form.validateForm();
+
+            expect(form.getFieldById('orphan').isValid).toBeFalse();
+            expect(form.isValid).toBeTrue();
+            expectTabsToMatchForm(form);
+        });
+
+        it('should be invalid and mark the tab when a field is rejected, until the next validation', () => {
+            const form = buildReactiveTabForm({ dateValue: '2024-05-10' });
+            const validateFormSpy = spyOn(formService.validateForm, 'next');
+
+            form.markFieldAsInvalid(form.getFieldById('email'));
+
+            expect(validateFormSpy).not.toHaveBeenCalled();
+            expect(form.getFieldById('email').isValid).toBeFalse();
+            expect(form.isValid).toBeFalse();
+            expect(getTab(form, 'details').hasValidationErrors).toBeTrue();
+
+            form.validateForm();
+
+            expect(form.isValid).toBeTrue();
+            expect(getTab(form, 'details').hasValidationErrors).toBeFalse();
+        });
+
+        it('should mark the tab when a field validation subscriber rejects the field', () => {
+            const form = buildReactiveTabForm({ dateValue: '2024-05-10' });
+            formService.validateFormField.subscribe((event: ValidateFormFieldEvent) => {
+                event.isValid = false;
+            });
+
+            form.validateField(form.getFieldById('email'));
+
+            expect(form.isValid).toBeFalse();
+            expect(getTab(form, 'details').hasValidationErrors).toBeTrue();
+            expect(getTab(form, 'coverage').hasValidationErrors).toBeFalse();
+        });
+
+        it('should not keep marking the tab of a field hidden since the last validation when another field is rejected', () => {
+            const form = buildReactiveTabForm();
+            expect(getTab(form, 'coverage').hasValidationErrors).toBeTrue();
+            form.getFieldById('dob').isVisible = false;
+
+            form.markFieldAsInvalid(form.getFieldById('email'));
+
+            expect(form.isValid).toBeFalse();
+            expect(getTab(form, 'details').hasValidationErrors).toBeTrue();
+            expect(getTab(form, 'coverage').hasValidationErrors).toBeFalse();
+        });
+
+        it('should stay valid when the rejected field is hidden', () => {
+            const form = buildReactiveTabForm({ dateValue: '2024-05-10' });
+            const email = form.getFieldById('email');
+            email.isVisible = false;
+
+            form.markFieldAsInvalid(email);
+
+            expect(email.isValid).toBeFalse();
+            expect(form.isValid).toBeTrue();
+            expectTabsToMatchForm(form);
+        });
     });
 
     describe('variables', () => {

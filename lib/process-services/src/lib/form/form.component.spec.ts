@@ -30,7 +30,9 @@ import {
     FormService,
     WidgetVisibilityService,
     ContainerModel,
-    NoopAuthModule
+    NoopAuthModule,
+    FormRenderingService,
+    FormFieldValidator
 } from '@alfresco/adf-core';
 import { fakeForm } from './form.component.mock';
 import { NodeMetadata, NodesApiService } from '@alfresco/adf-content-services';
@@ -362,7 +364,7 @@ describe('FormComponent', () => {
 
     it('should reject an invalid outcome request without completing the form', () => {
         const formModel = new FormModel({ fields: [], outcomes: [{ id: 'approve', name: 'Approve' }] });
-        formModel.fieldsCache = [jasmine.createSpyObj('FormFieldModel', { validate: false })];
+        formModel.fieldsCache = [jasmine.createSpyObj('FormFieldModel', { validate: false }, { isVisible: true })];
         spyOn(formComponent, 'completeTaskForm').and.stub();
         formComponent.form = formModel;
         formComponent.ngOnInit();
@@ -700,6 +702,35 @@ describe('FormComponent', () => {
         expect(form.id).toBe(1);
         expect(form.fields.length).toBe(1);
         expect(form.fields[0].id).toBe('field1');
+    });
+
+    it('should parse an invalid form when an unopened tab holds an empty required date', () => {
+        const form = formComponent.parseForm({
+            id: 1,
+            tabs: [
+                { id: 'details', title: 'Details' },
+                { id: 'coverage', title: 'Coverage' }
+            ],
+            fields: [
+                {
+                    id: 'details-root',
+                    type: FormFieldTypes.CONTAINER,
+                    tab: 'details',
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'text', type: 'text' }] }
+                },
+                {
+                    id: 'coverage-root',
+                    type: FormFieldTypes.CONTAINER,
+                    tab: 'coverage',
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'dob', type: FormFieldTypes.DATE, required: true }] }
+                }
+            ]
+        });
+
+        expect(form.isValid).toBe(false);
+        expect(form.tabs.map((tab) => tab.hasValidationErrors)).toEqual([false, true]);
     });
 
     it('should provide outcomes for form definition', () => {
@@ -1080,5 +1111,108 @@ describe('FormWithCustomOutComesComponent', () => {
         expect(onCustomButtonOneSpy).toHaveBeenCalled();
         expect(buttonOneBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-1');
         expect(buttonTwoBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-2');
+    });
+});
+
+describe('FormComponent with the process form rendering service', () => {
+    let formComponent: FormComponent;
+
+    const parseDropdownTabForm = (dropdown: Record<string, unknown>): FormModel =>
+        formComponent.parseForm({
+            id: 1,
+            tabs: [
+                { id: 'details', title: 'Details' },
+                { id: 'assignment', title: 'Assignment' }
+            ],
+            fields: [
+                {
+                    id: 'details-root',
+                    type: FormFieldTypes.CONTAINER,
+                    tab: 'details',
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'text', type: 'text' }] }
+                },
+                {
+                    id: 'assignment-root',
+                    type: FormFieldTypes.CONTAINER,
+                    tab: 'assignment',
+                    numberOfColumns: 1,
+                    fields: {
+                        1: [
+                            {
+                                id: 'priority',
+                                type: FormFieldTypes.DROPDOWN,
+                                required: true,
+                                options: [
+                                    { id: 'low', name: 'Low' },
+                                    { id: 'high', name: 'High' }
+                                ],
+                                ...dropdown
+                            }
+                        ]
+                    }
+                }
+            ]
+        });
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule],
+            providers: [{ provide: FormRenderingService, useClass: ProcessFormRenderingService }]
+        });
+        formComponent = TestBed.createComponent(FormComponent).componentInstance;
+    });
+
+    it('should parse an invalid form when an unopened tab holds an empty required dropdown', () => {
+        const form = parseDropdownTabForm({});
+
+        expect(form.isValid).toBe(false);
+        expect(form.tabs.map((tab) => tab.hasValidationErrors)).toEqual([false, true]);
+    });
+
+    it('should parse a valid form when an unopened tab holds a required dropdown with a selected option', () => {
+        const form = parseDropdownTabForm({ value: 'high' });
+
+        expect(form.isValid).toBe(true);
+        expect(form.tabs.map((tab) => tab.hasValidationErrors)).toEqual([false, false]);
+    });
+
+    it('should parse an invalid form when an unopened tab holds a required dropdown whose value matches no option', () => {
+        const form = parseDropdownTabForm({ value: 'removed' });
+
+        expect(form.isValid).toBe(false);
+        expect(form.tabs.map((tab) => tab.hasValidationErrors)).toEqual([false, true]);
+    });
+
+    it('should keep the dropdown rules when field validators replace the default rules', () => {
+        formComponent.fieldValidators = [{ isSupported: () => false, validate: () => true }];
+
+        const emptyForm = parseDropdownTabForm({});
+        emptyForm.validateForm();
+        const removedValueForm = parseDropdownTabForm({ value: 'removed' });
+        removedValueForm.validateForm();
+
+        expect(emptyForm.isValid).toBe(false);
+        expect(removedValueForm.isValid).toBe(false);
+    });
+
+    it('should apply field validators next to the dropdown rules', () => {
+        const textValidator: FormFieldValidator = {
+            isSupported: (field) => field.type === 'text',
+            validate: (field) => {
+                if (field.type !== 'text') {
+                    return true;
+                }
+                field.validationSummary.message = 'TEST.TEXT_ERROR';
+                return false;
+            }
+        };
+        formComponent.fieldValidators = [textValidator];
+
+        const form = parseDropdownTabForm({ value: 'high' });
+        form.validateForm();
+
+        expect(form.isValid).toBe(false);
+        expect(form.tabs.map((tab) => tab.hasValidationErrors)).toEqual([true, false]);
     });
 });

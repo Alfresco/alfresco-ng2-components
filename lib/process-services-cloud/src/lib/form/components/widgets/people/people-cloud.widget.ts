@@ -94,8 +94,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(() => {
-                this.field.markAsInvalid();
-                this.field.form.markAsInvalid();
+                this.field.form.markFieldAsInvalid(this.field);
             });
 
         this.search.statusChanges

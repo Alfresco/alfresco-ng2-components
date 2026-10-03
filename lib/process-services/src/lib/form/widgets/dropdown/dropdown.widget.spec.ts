@@ -15,10 +15,19 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable, of } from 'rxjs';
-import { WidgetVisibilityService, FormFieldOption, FormFieldModel, FormModel, FormFieldTypes, ErrorMessageModel } from '@alfresco/adf-core';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { config, Observable, of, Subject } from 'rxjs';
+import {
+    WidgetVisibilityService,
+    FormFieldOption,
+    FormFieldModel,
+    FormModel,
+    FormFieldTypes,
+    FormFieldValidator,
+    ErrorMessageModel
+} from '@alfresco/adf-core';
 import { DropdownWidgetComponent } from './dropdown.widget';
+import { PROCESS_FORM_FIELD_VALIDATORS } from './dropdown.field-validator';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -207,6 +216,178 @@ describe('DropdownWidgetComponent', () => {
             expect(widget.dropdownControl.valid).toBeFalse();
             expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
         });
+    });
+
+    describe('when REST options load', () => {
+        let options$: Subject<FormFieldOption[]>;
+
+        const createForm = (json: Record<string, unknown>): FormModel =>
+            new FormModel(
+                {
+                    ...json,
+                    fields: [
+                        {
+                            id: 'container',
+                            type: 'container',
+                            numberOfColumns: 1,
+                            fields: {
+                                1: [
+                                    {
+                                        id: 'rest-dropdown',
+                                        type: FormFieldTypes.DROPDOWN,
+                                        required: true,
+                                        optionType: 'rest',
+                                        restUrl: '<url>',
+                                        value: 'removed'
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                undefined,
+                false,
+                undefined,
+                undefined,
+                PROCESS_FORM_FIELD_VALIDATORS
+            );
+
+        beforeEach(() => {
+            options$ = new Subject<FormFieldOption[]>();
+        });
+
+        it('should revalidate the form when options loaded by task id do not contain the value', () => {
+            spyOn(taskFormService, 'getRestFieldValues').and.returnValue(options$);
+            const form = createForm({ taskId: '<task-id>' });
+            widget.field = form.getFieldById('rest-dropdown');
+            widget.ngOnInit();
+
+            expect(form.isValid).toBeTrue();
+
+            options$.next(fakeOptionList);
+
+            expect(form.isValid).toBeFalse();
+            expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
+        });
+
+        it('should revalidate the form when the options loaded by task id are empty', () => {
+            spyOn(taskFormService, 'getRestFieldValues').and.returnValue(options$);
+            const form = createForm({ taskId: '<task-id>' });
+            widget.field = form.getFieldById('rest-dropdown');
+            widget.ngOnInit();
+
+            options$.next([]);
+
+            expect(form.isValid).toBeFalse();
+            expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
+        });
+
+        it('should revalidate the form and still report the error when the options request fails', fakeAsync(() => {
+            const onUnhandledError = config.onUnhandledError;
+            const unhandledErrorSpy = jasmine.createSpy('onUnhandledError');
+            config.onUnhandledError = unhandledErrorSpy;
+            spyOn(taskFormService, 'getRestFieldValues').and.returnValue(options$);
+            const form = createForm({ taskId: '<task-id>' });
+            widget.field = form.getFieldById('rest-dropdown');
+            widget.ngOnInit();
+
+            expect(form.isValid).toBeTrue();
+
+            options$.error(new Error('options request failed'));
+            tick();
+            config.onUnhandledError = onUnhandledError;
+
+            expect(form.isValid).toBeFalse();
+            expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
+            expect(unhandledErrorSpy).toHaveBeenCalledWith(jasmine.objectContaining({ message: 'options request failed' }));
+        }));
+
+        it('should revalidate the form when options loaded by process definition id do not contain the value', () => {
+            spyOn(processDefinitionService, 'getRestFieldValuesByProcessId').and.returnValue(options$);
+            const form = createForm({ processDefinitionId: '<process-definition-id>' });
+            widget.field = form.getFieldById('rest-dropdown');
+            widget.ngOnInit();
+
+            expect(form.isValid).toBeTrue();
+
+            options$.next(fakeOptionList);
+
+            expect(form.isValid).toBeFalse();
+            expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
+        });
+    });
+
+    it('should show the error of the form model while its control is valid', async () => {
+        let modelError = true;
+        const modelValidator: FormFieldValidator = {
+            isSupported: () => true,
+            validate: (field) => {
+                field.validationSummary.message = modelError ? 'TEST.MODEL_ERROR' : '';
+                return !modelError;
+            }
+        };
+        widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, undefined, false, undefined, undefined, [modelValidator]), {
+            id: 'dropdown-id',
+            type: FormFieldTypes.DROPDOWN,
+            options: fakeOptionList,
+            value: fakeOptionList[0].id
+        });
+        fixture.detectChanges();
+
+        const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '#dropdown-id' }));
+        await dropdown.focus();
+        await dropdown.blur();
+        fixture.detectChanges();
+
+        expect(widget.dropdownControl.valid).toBeTrue();
+        expect(element.querySelector('.adf-invalid')).toBeTruthy();
+        expect(element.querySelector('#dropdown-id').getAttribute('aria-invalid')).toBe('true');
+        expect(element.querySelector('.adf-error-text').textContent.trim()).toBe('TEST.MODEL_ERROR');
+
+        modelError = false;
+        widget.updateReactiveFormControl();
+        fixture.detectChanges();
+
+        expect(element.querySelector('.adf-invalid')).toBeNull();
+        expect(element.querySelector('#dropdown-id').getAttribute('aria-invalid')).toBe('false');
+        expect(element.querySelector('.adf-error-text')).toBeNull();
+    });
+
+    it('should not show the error of its control while the form model is valid', async () => {
+        const form = new FormModel({ taskId: '<id>' });
+        form.fieldValidators = [];
+        widget.field = new FormFieldModel(form, {
+            id: 'dropdown-id',
+            type: FormFieldTypes.DROPDOWN,
+            required: true,
+            options: fakeOptionList
+        });
+        fixture.detectChanges();
+
+        const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '#dropdown-id' }));
+        await dropdown.focus();
+        await dropdown.blur();
+        fixture.detectChanges();
+
+        expect(widget.dropdownControl.invalid).toBeTrue();
+        expect(element.querySelector('.adf-invalid')).toBeNull();
+        expect(element.querySelector('#dropdown-id').getAttribute('aria-invalid')).toBe('false');
+        expect(element.querySelector('.adf-error-text')).toBeNull();
+    });
+
+    it('should not block the form while its readOnly input disables it', () => {
+        widget.readOnly = true;
+        widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+            id: 'dropdown-id',
+            type: FormFieldTypes.DROPDOWN,
+            required: true,
+            options: fakeOptionList
+        });
+        fixture.detectChanges();
+
+        expect(widget.dropdownControl.disabled).toBeTrue();
+        expect(widget.field.inputDisabled).toBeTrue();
+        expect(widget.field.validate()).toBeTrue();
     });
 
     describe('when template is ready', () => {

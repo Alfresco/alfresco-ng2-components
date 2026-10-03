@@ -17,7 +17,6 @@
 
 import {
     AppConfigService,
-    ErrorMessageModel,
     FormFieldEvent,
     FormFieldModel,
     FormFieldOption,
@@ -28,12 +27,13 @@ import {
     ReactiveFormWidget,
     RuleEntry,
     SelectFilterInputComponent,
+    VariableConfig,
     WidgetComponent
 } from '@alfresco/adf-core';
 import { AsyncPipe } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -51,6 +51,131 @@ export const DEFAULT_OPTION = {
 };
 export const HIDE_FILTER_LIMIT = 5;
 export const DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE = 100;
+
+const DEFAULT_VARIABLE_OPTION_ID = 'id';
+const DEFAULT_VARIABLE_OPTION_LABEL = 'name';
+const DEFAULT_VARIABLE_OPTION_PATH = 'data';
+
+/**
+ * Converts a dropdown field value to the value the dropdown widget holds in its form control.
+ *
+ * @param value Field value
+ * @returns Form control value
+ */
+export const toDropdownCloudControlValue = (value: any): FormFieldOption | FormFieldOption[] | null => {
+    if (Array.isArray(value)) {
+        return value;
+    }
+    if (value && typeof value === 'object') {
+        return { id: value.id, name: value.name };
+    }
+    if (value === null || value === undefined || value === '') {
+        return null;
+    }
+    return { id: value, name: '' };
+};
+
+/**
+ * Checks whether a dropdown field value, or every selected value, is one of the options.
+ *
+ * @param value Field value
+ * @param options Available options
+ * @returns `true` when the value matches the options
+ */
+export const isDropdownCloudValueInOptions = (value: any, options: FormFieldOption[]): boolean => {
+    const optionIds = new Set(options.map((option) => option.id));
+    if (Array.isArray(value)) {
+        return value.every((valueOption) => optionIds.has(valueOption.id));
+    }
+    if (value && typeof value === 'object') {
+        return optionIds.has(value.id);
+    }
+    return optionIds.has(value);
+};
+
+/**
+ * Checks whether a dropdown field value is set and is one of the options. The widget resets any other value.
+ *
+ * @param value Field value
+ * @param options Available options
+ * @returns `true` when the value is kept
+ */
+export const isDropdownCloudValidValue = (value: any, options: FormFieldOption[]): boolean =>
+    !!value && isDropdownCloudValueInOptions(value, options);
+
+/**
+ * Checks whether a dropdown field loads its options from a REST endpoint.
+ *
+ * @param field Dropdown form field
+ * @returns `true` when the field has a REST option source
+ */
+export const isDropdownCloudRestField = (field: FormFieldModel): boolean => field?.optionType === 'rest' && !!field?.restUrl;
+
+/**
+ * Checks whether a dropdown field takes its options from the field it is linked to.
+ *
+ * @param field Dropdown form field
+ * @returns `true` when the field is linked to another field
+ */
+export const isDropdownCloudLinkedField = (field: FormFieldModel): boolean => !!field?.rule?.ruleOn;
+
+/**
+ * Returns the required validators of the dropdown widget, which also reject the empty option when the field has one.
+ *
+ * @param field Dropdown form field
+ * @param options Options to check the value against, when they differ from the field options
+ * @returns Validator functions
+ */
+export const getDropdownCloudRequiredValidators = (field: FormFieldModel, options?: FormFieldOption[]): ValidatorFn[] => {
+    if (!field.hasEmptyValue) {
+        return [Validators.required];
+    }
+    return [Validators.required, defaultValueValidator(options ? ({ options } as FormFieldModel) : field)];
+};
+
+const getOptionsFromPath = (data: any, path: string, id: string, label: string): { options: FormFieldOption[]; errors: string[] } => {
+    const properties = path.split('.');
+    const currentProperty = properties.shift();
+
+    if (data === null || typeof data !== 'object' || !Object.prototype.hasOwnProperty.call(data, currentProperty)) {
+        return { options: [], errors: [`${currentProperty} not found in ${JSON.stringify(data)}`] };
+    }
+
+    const nestedData = data[currentProperty];
+
+    if (Array.isArray(nestedData)) {
+        const options: FormFieldOption[] = nestedData.map((item) => ({ id: item?.[id], name: item?.[label] }));
+        const invalidOptionErrors = options.filter((option) => !option.id || !option.name).map(() => `'id' or 'label' is not properly defined`);
+        return invalidOptionErrors.length ? { options: [], errors: invalidOptionErrors } : { options, errors: [] };
+    }
+
+    return getOptionsFromPath(nestedData, properties.join('.'), id, label);
+};
+
+/**
+ * Resolves the options of a dropdown whose options come from a form variable.
+ *
+ * @param field Dropdown form field
+ * @param variableConfig Variable options configuration of the field
+ * @returns Options and resolution errors, or `null` when the variable is not found
+ */
+export const resolveDropdownCloudVariableOptions = (
+    field: FormFieldModel,
+    variableConfig: VariableConfig | undefined = field?.variableConfig
+): { options: FormFieldOption[]; errors: string[] } | null => {
+    const data = field?.form?.resolveVariableValue(variableConfig?.variableName);
+
+    if (data == null) {
+        return null;
+    }
+
+    return getOptionsFromPath(
+        data,
+        variableConfig?.optionsPath ?? DEFAULT_VARIABLE_OPTION_PATH,
+        variableConfig?.optionsId ?? DEFAULT_VARIABLE_OPTION_ID,
+        variableConfig?.optionsLabel ?? DEFAULT_VARIABLE_OPTION_LABEL
+    );
+};
 
 /* eslint-disable @angular-eslint/component-selector */
 
@@ -85,15 +210,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     dropdownErrorStateMatcher: ErrorStateMatcher = {
         isErrorState: (control) =>
-            (control?.touched && control?.invalid) || (!this.previewState && (this.isRestApiFailed || this.variableOptionsFailed))
+            (control?.touched && this.hasValidationError()) || (!this.previewState && (this.isRestApiFailed || this.variableOptionsFailed))
     };
 
     list$ = new BehaviorSubject<FormFieldOption[]>([]);
     filter$ = new BehaviorSubject<string>('');
-
-    private readonly defaultVariableOptionId = 'id';
-    private readonly defaultVariableOptionLabel = 'name';
-    private readonly defaultVariableOptionPath = 'data';
 
     private readonly debounceSetValue = new Subject<void>();
 
@@ -102,7 +223,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private get isLinkedWidget(): boolean {
-        return !!this.linkedWidgetId;
+        return isDropdownCloudLinkedField(this.field);
     }
 
     private get linkedWidgetId(): string {
@@ -113,16 +234,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return !!this.field?.form?.readOnly;
     }
 
-    private get hasRestUrl(): boolean {
-        return !!this.field?.restUrl;
-    }
-
     private get isValidRestConfig(): boolean {
-        return this.isRestOptionType && this.hasRestUrl;
-    }
-
-    private get isRestOptionType(): boolean {
-        return this.field?.optionType === 'rest';
+        return isDropdownCloudRestField(this.field);
     }
 
     private get isVariableOptionType(): boolean {
@@ -145,19 +258,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             e.g. every time if we focusin/focusout etc. we are calling a setValue.
         */
         this.debounceSetValue.pipe(debounceTime(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-            let value: Array<FormFieldOption> | FormFieldOption | null | undefined;
-
-            if (Array.isArray(this.field.value)) {
-                value = this.field?.value;
-            } else if (this.field?.value && typeof this.field?.value === 'object') {
-                value = { id: this.field?.value.id, name: this.field?.value.name };
-            } else if (this.field.value === null || this.field.value === undefined || this.field.value === '') {
-                value = null;
-            } else {
-                value = { id: this.field?.value, name: '' };
-            }
-
-            this.dropdownControl.setValue(value, { emitEvent: false });
+            this.applyFieldValueToControl();
         });
 
         this.setupDropdown();
@@ -202,7 +303,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         if (this.field?.form?.showAllValidationErrors) {
             this.dropdownControl.markAsTouched();
         }
-        this.handleErrors();
+        this.validateField();
     }
 
     compareDropdownValues(opt1: FormFieldOption | string, opt2: FormFieldOption | string): boolean {
@@ -237,9 +338,9 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         this.checkFieldOptionsSource();
         this.updateOptions();
 
-        this.setFormControlValue();
+        this.applyFieldValueToControl();
         this.updateFormControlState();
-        this.handleErrors();
+        this.validateField();
     }
 
     private subscribeToInputChanges(): void {
@@ -250,7 +351,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             )
             .subscribe((value) => {
                 this.setOptionValue(value, this.field);
-                this.handleErrors();
+                this.validateField();
                 this.selectionChangedForField(this.field);
             });
     }
@@ -259,25 +360,20 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         this.debounceSetValue.next();
     }
 
-    private updateFormControlState(): void {
-        this.updateDropdownValidationRules();
-        this.updateDropdownReadonlyRules();
-        this.dropdownControl.updateValueAndValidity({ emitEvent: false });
+    private applyFieldValueToControl(): void {
+        this.dropdownControl.setValue(toDropdownCloudControlValue(this.field.value), { emitEvent: false });
     }
 
-    private updateDropdownValidationRules() {
-        this.dropdownControl.setValidators([]);
+    hasValidationError(): boolean {
+        return !this.field?.isValid && !!this.field?.validationSummary?.isActive();
+    }
 
-        if (!this.field?.isVisible) {
-            return;
+    private updateFormControlState(): void {
+        this.updateDropdownReadonlyRules();
+        if (this.field) {
+            this.field.inputDisabled = this.readOnly;
         }
-
-        if (this.isRequired()) {
-            this.dropdownControl.addValidators([Validators.required]);
-            if (this.field.hasEmptyValue) {
-                this.dropdownControl.addValidators([defaultValueValidator(this.field)]);
-            }
-        }
+        this.dropdownControl.updateValueAndValidity({ emitEvent: false });
     }
 
     private updateDropdownReadonlyRules() {
@@ -288,17 +384,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         }
     }
 
-    private handleErrors(): void {
-        if (this.dropdownControl.valid) {
-            this.field.validationSummary = new ErrorMessageModel('');
-            this.field.markAsValid();
-            return;
-        }
-
-        if (this.dropdownControl.invalid && this.dropdownControl.errors.required) {
-            this.field.validationSummary = new ErrorMessageModel({ message: 'FORM.FIELD.REQUIRED' });
-            this.field.markAsInvalid();
-        }
+    private validateField(): void {
+        this.field.validate();
     }
 
     private initFilter(): void {
@@ -335,70 +422,19 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private persistFieldOptionsFromVariable(): void {
-        const optionsPath = this.field?.variableConfig?.optionsPath ?? this.defaultVariableOptionPath;
-        const variableName = this.field?.variableConfig?.variableName;
+        const variableOptions = resolveDropdownCloudVariableOptions(this.field);
 
-        const dropdownOptions = this.field?.form?.resolveVariableValue(variableName);
-
-        if (dropdownOptions != null) {
-            const formVariableOptions: FormFieldOption[] = this.getOptionsFromPath(dropdownOptions, optionsPath);
-            this.updateOptions(formVariableOptions);
+        if (variableOptions) {
+            variableOptions.errors.forEach((error) => this.handleError(error));
+            this.variableOptionsFailed = variableOptions.errors.length > 0;
+            this.updateOptions(variableOptions.options);
             this.resetInvalidValue();
             this.field.updateForm();
         } else {
-            this.handleError(`${variableName} not found`);
+            this.handleError(`${this.field?.variableConfig?.variableName} not found`);
             this.resetOptions();
             this.variableOptionsFailed = true;
         }
-    }
-
-    private getOptionsFromPath(data: any, path: string): FormFieldOption[] {
-        const optionsId = this.field?.variableConfig?.optionsId ?? this.defaultVariableOptionId;
-        const optionsLabel = this.field?.variableConfig?.optionsLabel ?? this.defaultVariableOptionLabel;
-
-        const properties = path.split('.');
-        const currentProperty = properties.shift();
-
-        if (!Object.prototype.hasOwnProperty.call(data, currentProperty)) {
-            this.handleError(`${currentProperty} not found in ${JSON.stringify(data)}`);
-            this.variableOptionsFailed = true;
-            return [];
-        }
-
-        const nestedData = data[currentProperty];
-
-        if (Array.isArray(nestedData)) {
-            return this.getOptionsFromArray(nestedData, optionsId, optionsLabel);
-        }
-
-        return this.getOptionsFromPath(nestedData, properties.join('.'));
-    }
-
-    private getOptionsFromArray(nestedData: any[], id: string, label: string): FormFieldOption[] {
-        const options = nestedData.map((item) => this.createOption(item, id, label));
-        const hasInvalidOption = options.some((option) => !option);
-
-        if (hasInvalidOption) {
-            this.variableOptionsFailed = true;
-            return [];
-        }
-
-        this.variableOptionsFailed = false;
-        return options;
-    }
-
-    private createOption(item: any, id: string, label: string): FormFieldOption {
-        const option: FormFieldOption = {
-            id: item[id],
-            name: item[label]
-        };
-
-        if (!option.id || !option.name) {
-            this.handleError(`'id' or 'label' is not properly defined`);
-            return undefined;
-        }
-
-        return option;
     }
 
     private persistFieldOptionsFromRestApi() {
@@ -503,21 +539,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private isValidValue(): boolean {
-        return this.field.value && this.isSelectedValueInOptions();
-    }
-
-    private isSelectedValueInOptions(): boolean {
-        if (Array.isArray(this.field.value)) {
-            const optionIdList = [...this.field.options].map((option) => option.id);
-            const fieldValueIds = this.field.value.map((valueOption) => valueOption.id);
-            return fieldValueIds.every((valueOptionId) => optionIdList.includes(valueOptionId));
-        } else {
-            if (this.field?.value && typeof this.field?.value === 'object') {
-                return [...this.field.options].map((option) => option.id).includes(this.field.value.id);
-            } else {
-                return [...this.field.options].map((option) => option.id).includes(this.field.value);
-            }
-        }
+        return isDropdownCloudValidValue(this.field.value, this.field.options);
     }
 
     private hasRuleEntries(): boolean {

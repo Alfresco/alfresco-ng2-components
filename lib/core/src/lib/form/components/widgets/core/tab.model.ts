@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { signal } from '@angular/core';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { FormWidgetModel } from './form-widget.model';
 
@@ -22,6 +23,16 @@ export class TabModel extends FormWidgetModel {
     title: string;
     isVisible: boolean = true;
     visibilityCondition: WidgetVisibilityModel;
+
+    private readonly validationErrors = signal(false);
+
+    get hasValidationErrors(): boolean {
+        return this.validationErrors();
+    }
+
+    set hasValidationErrors(hasValidationErrors: boolean) {
+        this.validationErrors.set(hasValidationErrors);
+    }
 
     fields: FormWidgetModel[] = [];
 

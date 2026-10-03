@@ -71,6 +71,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { A11yModule } from '@angular/cdk/a11y';
 import { getExpressionEvaluationEnabled$, materializeSubmissionValues } from '../services/form-cloud-submission-values';
+import { CLOUD_FORM_FIELD_VALIDATORS } from './cloud-form-field-validators';
 
 interface FormFieldRuntimeState {
     value: any;
@@ -622,7 +623,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 formValues[variable.name] = variable.value;
             });
 
-            const form = new FormModel(formCloudRepresentationJSON, formValues, this.readOnly, this.formService, undefined, this.fieldValidators);
+            const form = new FormModel(formCloudRepresentationJSON, formValues, this.readOnly, this.formService, undefined, [
+                ...CLOUD_FORM_FIELD_VALIDATORS,
+                ...(this.fieldValidators ?? [])
+            ]);
 
             if (this.taskId) {
                 form.outcomes = (form.outcomes ?? []).filter((outcome) => outcome.id !== FormModel.START_PROCESS_OUTCOME);
