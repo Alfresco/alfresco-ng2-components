@@ -1,7 +1,8 @@
 name: Pull Translations from Crowdin
 on:
   schedule:
-    - cron: "0 7-17 * * 1-5"
+    # Run every day at midnight UTC (1:00 AM CET / 2:00 AM CEST)
+    - cron: "0 0 * * *"
   workflow_dispatch:
   workflow_call:
     secrets:
