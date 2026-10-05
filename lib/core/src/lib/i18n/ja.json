@@ -308,7 +308,7 @@
         "TOGGLE": "値の切り替え",
         "COPY_TO_CLIPBOARD": "ダブルクリックして値をコピーします",
         "EDIT_ASPECTS": "アスペクトを編集",
-        "SELECT_TEMPLATE": "Click to select the template"
+        "SELECT_TEMPLATE": "クリックしてテンプレートを選択"
       },
       "ACCESSIBILITY": {
         "EDIT": "{{ sectionName }} を編集",

@@ -45,7 +45,7 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Impossibile caricare le definizioni di processo, verifica di disporre dell'accesso.",
         "START": "Impossibile avviare nuova istanza di processo, verifica di disporre dell'accesso.",
-        "OUTCOME_NOT_FOUND": "The requested form action is no longer available.",
+        "OUTCOME_NOT_FOUND": "L'azione del modulo richiesta non è più disponibile.",
         "PROCESS_NAME_REQUIRED": "Nome processo obbligatorio",
         "PROCESS_DEFINITION_REQUIRED": "Definizione processo obbligatoria",
         "MAXIMUM_LENGTH": "Lunghezza superata, massimo {{characters}} caratteri.",

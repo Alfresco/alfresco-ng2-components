@@ -308,7 +308,7 @@
         "TOGGLE": "切换值",
         "COPY_TO_CLIPBOARD": "双击以复制值",
         "EDIT_ASPECTS": "编辑纵横比",
-        "SELECT_TEMPLATE": "Click to select the template"
+        "SELECT_TEMPLATE": "单击以选择模板"
       },
       "ACCESSIBILITY": {
         "EDIT": "编辑按钮",

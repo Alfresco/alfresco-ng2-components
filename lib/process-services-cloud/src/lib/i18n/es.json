@@ -45,7 +45,7 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "No se han podido cargar las definiciones de procesos; compruebe que tiene acceso.",
         "START": "No se ha podido iniciar una nueva instancia de proceso; compruebe que tiene acceso.",
-        "OUTCOME_NOT_FOUND": "The requested form action is no longer available.",
+        "OUTCOME_NOT_FOUND": "La acción de formulario solicitada ya no está disponible.",
         "PROCESS_NAME_REQUIRED": "Se requiere el nombre del proceso",
         "PROCESS_DEFINITION_REQUIRED": "Se requiere la definición del proceso",
         "MAXIMUM_LENGTH": "Longitud excedida, {{characters}} caracteres como máx.",
