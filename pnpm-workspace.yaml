@@ -15,7 +15,7 @@ overrides:
   uuid: '>=11.1.1'
   undici: 8.10.2
   smol-toml: 1.8.0
-  piscina: '5.3.2'
+  piscina: 5.3.2
 
 allowBuilds:
   '@parcel/watcher': true
