@@ -308,7 +308,7 @@
         "TOGGLE": "Przełącz wartość",
         "COPY_TO_CLIPBOARD": "Kliknij dwa razy, aby skopiować wartość",
         "EDIT_ASPECTS": "Edycja aspektu",
-        "SELECT_TEMPLATE": "Click to select the template"
+        "SELECT_TEMPLATE": "Kliknij, aby wybrać szablon"
       },
       "ACCESSIBILITY": {
         "EDIT": "Edytuj {{ sectionName }}",
