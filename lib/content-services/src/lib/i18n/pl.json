@@ -504,7 +504,7 @@
     },
     "SMART_FOLDER": {
       "SELECT_TEMPLATE_DIALOG_TITLE": "Wybierz szablon inteligentnego folderu",
-      "TEMPLATES_FOLDER_NOT_FOUND": "Smart Folder Templates directory wasn't found"
+      "TEMPLATES_FOLDER_NOT_FOUND": "Nie znaleziono katalogu szablonów inteligentnych folderów"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

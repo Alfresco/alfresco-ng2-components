@@ -308,7 +308,7 @@
         "TOGGLE": "Växla värde",
         "COPY_TO_CLIPBOARD": "Dubbelklicka för att kopiera värde",
         "EDIT_ASPECTS": "Redigera aspekt",
-        "SELECT_TEMPLATE": "Click to select the template"
+        "SELECT_TEMPLATE": "Klicka för att välja mallen"
       },
       "ACCESSIBILITY": {
         "EDIT": "Redigera {{ sectionName }}",

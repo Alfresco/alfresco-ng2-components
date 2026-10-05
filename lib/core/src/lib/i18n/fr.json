@@ -308,7 +308,7 @@
         "TOGGLE": "Basculer la valeur",
         "COPY_TO_CLIPBOARD": "Faites un double clic pour copier la valeur",
         "EDIT_ASPECTS": "Modifier aspect",
-        "SELECT_TEMPLATE": "Click to select the template"
+        "SELECT_TEMPLATE": "Cliquer pour sélectionner le modèle"
       },
       "ACCESSIBILITY": {
         "EDIT": "Modifier {{ sectionName }}",
