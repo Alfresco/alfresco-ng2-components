@@ -1,18 +1,33 @@
-name: Pull Translations from Crowdin
+name: Crowdin Sync (Push & Pull Translations)
 on:
   schedule:
-    - cron: "0 7-17 * * 1-5"
+    # Run every day at midnight UTC (1:00 AM CET / 2:00 AM CEST)
+    - cron: "0 0 * * *"
   workflow_dispatch:
-  workflow_call:
-    secrets:
-      GH_APP_ENGINEERING_CONTRIB_PRIVATE_KEY:
-        required: true
-      CROWDIN_TRANSLATIONS_TOKEN:
-        required: true
-      HXPS_GIT_COMMIT_SIGNING_PRIVATE_KEY:
-        required: true
 jobs:
+  push-to-crowdin:
+    name: Push translation keys to Crowdin
+    if: github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      actions: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Push Source Files to Crowdin
+        uses: crowdin/github-action@9c23991700c0ec5256fd41089b9d9d7d540e424e # v3.3.0
+        with:
+          upload_sources: true
+          upload_sources_args: --delete-obsolete
+        env:
+          CROWDIN_TOKEN: ${{ secrets.CROWDIN_TRANSLATIONS_TOKEN }}
+
   pull-from-crowdin:
+    name: Pull translations from Crowdin
+    needs: push-to-crowdin
     runs-on: ubuntu-latest
     steps:
       - name: Generate app token
