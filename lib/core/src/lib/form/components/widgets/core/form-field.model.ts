@@ -242,8 +242,8 @@ export class FormFieldModel extends FormWidgetModel {
             this.restResponsePath = json.restResponsePath;
             this.restIdProperty = json.restIdProperty;
             this.restLabelProperty = json.restLabelProperty;
-            this.colspan = json.colspan;
-            this.rowspan = json.rowspan;
+            this.colspan = json.colspan ?? 1;
+            this.rowspan = json.rowspan ?? 1;
             this.minLength = json.minLength || 0;
             this.maxLength = json.maxLength || 0;
             this.minValue = json.minValue;
