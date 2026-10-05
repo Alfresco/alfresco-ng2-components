@@ -503,8 +503,8 @@
       "SAVE_OR_DISCARD_CHANGES": "Sla wijzigingen op of negeer ze om door te gaan"
     },
     "SMART_FOLDER": {
-      "SELECT_TEMPLATE_DIALOG_TITLE": "Select smart folder template",
-      "TEMPLATES_FOLDER_NOT_FOUND": "Smart Folder Templates directory wasn't found"
+      "SELECT_TEMPLATE_DIALOG_TITLE": "Slim mapsjabloon selecteren",
+      "TEMPLATES_FOLDER_NOT_FOUND": "De map Slimme mapsjablonen is niet gevonden"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

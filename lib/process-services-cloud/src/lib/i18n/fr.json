@@ -45,7 +45,7 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Impossible de charger les définitions de processus ; vérifiez que vous avez les droits d'accès.",
         "START": "Impossible de démarrer la nouvelle instance de processus ; vérifiez que vous avez les droits d'accès.",
-        "OUTCOME_NOT_FOUND": "The requested form action is no longer available.",
+        "OUTCOME_NOT_FOUND": "L’action de formulaire demandée n’est plus disponible.",
         "PROCESS_NAME_REQUIRED": "Le nom du processus est obligatoire",
         "PROCESS_DEFINITION_REQUIRED": "La définition du processus est obligatoire",
         "MAXIMUM_LENGTH": "Longueur dépassée, {{characters}} caractères max.",

@@ -504,7 +504,7 @@
     },
     "SMART_FOLDER": {
       "SELECT_TEMPLATE_DIALOG_TITLE": "Välj mall för smart mapp",
-      "TEMPLATES_FOLDER_NOT_FOUND": "Smart Folder Templates directory wasn't found"
+      "TEMPLATES_FOLDER_NOT_FOUND": "Katalogen för mallar för smarta mappar hittades inte"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

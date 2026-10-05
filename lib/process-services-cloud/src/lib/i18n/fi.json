@@ -45,7 +45,7 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Prosessimääritelmien lataaminen ei onnistu. Tarkista, että sinulla on tarvittavat oikeudet.",
         "START": "Uuden prosessiesiintymän käynnistäminen ei onnistu. Tarkista, että sinulla on tarvittavat oikeudet.",
-        "OUTCOME_NOT_FOUND": "The requested form action is no longer available.",
+        "OUTCOME_NOT_FOUND": "Pyydetty lomaketoiminto ei ole enää käytettävissä.",
         "PROCESS_NAME_REQUIRED": "Prosessin nimi on pakollinen",
         "PROCESS_DEFINITION_REQUIRED": "Prosessimääritelmä on pakollinen",
         "MAXIMUM_LENGTH": "Liian pitkä: voit käyttää enintään {{characters}} merkkiä.",
