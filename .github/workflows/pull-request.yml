@@ -43,14 +43,49 @@ env:
 
 jobs:
   approval-gate:
-    if: ${{ github.event_name != 'pull_request_review' || github.event.review.state == 'approved' }}
     runs-on: ubuntu-latest
+    outputs:
+      eligible: ${{ steps.validate.outputs.eligible }}
     steps:
-      - run: echo "Approval gate passed"
+      - name: Validate approval eligibility
+        id: validate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REVIEW_ID: ${{ github.event.review.id }}
+          REVIEWER: ${{ github.event.review.user.login }}
+        run: |
+          if [ "$EVENT_NAME" != "pull_request_review" ]; then
+            echo "eligible=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          set -euo pipefail
+          pr=$(gh api "/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER")
+          head_sha=$(jq -r '.head.sha' <<< "$pr")
+          base_ref=$(jq -r '.base.ref' <<< "$pr")
+          reviews=$(gh api --paginate --slurp "/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/reviews?per_page=100")
+          eligible=false
+
+          if [[ "$base_ref" == "develop" || "$base_ref" == "master" || ( "$base_ref" == develop-patch* && "$base_ref" != */* ) || ( "$base_ref" == master-patch* && "$base_ref" != */* ) ]] &&
+            jq -e --arg review_id "$REVIEW_ID" --arg reviewer "$REVIEWER" --arg head_sha "$head_sha" '
+              flatten
+              | map(select(.user.login == $reviewer and (.state == "APPROVED" or .state == "CHANGES_REQUESTED" or .state == "DISMISSED")))
+              | max_by(.submitted_at) as $latest
+              | (($latest.id | tostring) == $review_id
+                and $latest.state == "APPROVED"
+                and $latest.commit_id == $head_sha
+                and ($latest.author_association == "OWNER" or $latest.author_association == "MEMBER" or $latest.author_association == "COLLABORATOR"))
+            ' <<< "$reviews" > /dev/null; then
+            eligible=true
+          fi
+
+          echo "eligible=$eligible" >> "$GITHUB_OUTPUT"
 
   pre-checks:
     needs: [approval-gate]
-    if: ${{ needs.approval-gate.result == 'success' }}
+    if: ${{ needs.approval-gate.outputs.eligible == 'true' }}
     runs-on: ubuntu-latest
     outputs:
       code-changed: ${{ steps.path-filter.outputs.code-changed }}
@@ -111,7 +146,7 @@ jobs:
 
   check-if-pr-is-approved:
     needs: [approval-gate]
-    if: ${{ needs.approval-gate.result == 'success' }}
+    if: ${{ needs.approval-gate.outputs.eligible == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -327,7 +362,7 @@ jobs:
 
   PR-forbidden-labels:
     needs: [approval-gate]
-    if: ${{ needs.approval-gate.result == 'success' && (inputs.cron-run == '' || inputs.cron-run == 'false') }}
+    if: ${{ needs.approval-gate.outputs.eligible == 'true' && (inputs.cron-run == '' || inputs.cron-run == 'false') }}
     runs-on: ubuntu-latest
     steps:
       - name: Check for forbidden labels
@@ -347,7 +382,7 @@ jobs:
             }
 
   finalize:
-    if: ${{ always() && (github.event_name != 'pull_request_review' || github.event.review.state == 'approved') }}
+    if: ${{ always() && needs.approval-gate.outputs.eligible == 'true' }}
     runs-on: ubuntu-latest
     name: Final Results
     needs:
