@@ -114,9 +114,9 @@ export class WebSocketService {
                     }
                 }
             } else if (CombinedProtocolErrors.is(error)) {
-                error.errors.forEach(({ message, extensions }) =>
-                    console.error(`[Protocol error]: Message: ${message}, Extensions: ${JSON.stringify(extensions)}`)
-                );
+                for (const { message, extensions } of error.errors) {
+                    console.error(`[Protocol error]: Message: ${message}, Extensions: ${JSON.stringify(extensions)}`);
+                }
             } else {
                 console.error(`[Network error]: ${error}`);
             }
