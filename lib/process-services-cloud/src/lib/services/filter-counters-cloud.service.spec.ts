@@ -35,9 +35,9 @@ import {
     FilterCountersResult
 } from '../models/filter-counters-cloud.model';
 import { TaskCloudEngineEvent } from '../models/engine-event-cloud.model';
-import { FetchResult } from '@apollo/client/core';
+import type { ApolloLink } from '@apollo/client/core';
 
-type EngineEventsResult = FetchResult<{ engineEvents?: TaskCloudEngineEvent[] }>;
+type EngineEventsResult = ApolloLink.Result<{ engineEvents?: TaskCloudEngineEvent[] }>;
 
 interface CountEndpoint {
     post: (url: string, request: FilterCountersRequest) => Observable<FilterCounters>;
