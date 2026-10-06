@@ -27,6 +27,7 @@ import { EMPTY, of, throwError } from 'rxjs';
 import { TagsCreatorComponent } from './tags-creator.component';
 import { TagService } from '../services/tag.service';
 import { TagsCreatorMode } from './tags-creator-mode';
+import { TagPaging } from '@alfresco/js-api';
 
 describe('TagsCreatorComponent', () => {
     let fixture: ComponentFixture<TagsCreatorComponent>;
@@ -155,6 +156,10 @@ describe('TagsCreatorComponent', () => {
      */
     function getExistingTagsLabel(): string {
         return testingUtils.getByCSS('.adf-existing-tags-label').nativeElement.textContent.trim();
+    }
+
+    function getStatusText(): string {
+        return testingUtils.getByCSS('output').nativeElement.textContent.trim();
     }
 
     describe('Created tags list', () => {
@@ -597,10 +602,10 @@ describe('TagsCreatorComponent', () => {
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
                         list: {
-                            entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
+                            entries: [{ entry: { tag: tag1 } }, { entry: { tag: tag2 } }],
                             pagination: {}
                         }
-                    })
+                    } as TagPaging)
                 );
 
                 typeTag('Tag');
@@ -608,6 +613,26 @@ describe('TagsCreatorComponent', () => {
                 fixture.detectChanges();
 
                 expect(getExistingTags()).toEqual([tag1, tag2]);
+            }));
+
+            it('should announce the status of tags available', fakeAsync(() => {
+                const tag1 = 'Tag 1';
+                const tag2 = 'Tag 2';
+
+                spyOn(tagService, 'searchTags').and.returnValue(
+                    of({
+                        list: {
+                            entries: [{ entry: { tag: tag1 } }, { entry: { tag: tag2 } }],
+                            pagination: {}
+                        }
+                    } as TagPaging)
+                );
+
+                typeTag('Tag');
+                component.tagNameControl.markAsTouched();
+                fixture.detectChanges();
+
+                expect(getStatusText()).toBe('TAG.TAGS_CREATOR.EXISTING_TAGS_AVAILABLE');
             }));
 
             it('should exclude tags passed through tags input from loaded existing tags', fakeAsync(() => {
@@ -618,10 +643,10 @@ describe('TagsCreatorComponent', () => {
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
                         list: {
-                            entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
+                            entries: [{ entry: { tag: tag1 } }, { entry: { tag: tag2 } }],
                             pagination: {}
                         }
-                    })
+                    } as TagPaging)
                 );
 
                 typeTag('Tag');
@@ -637,6 +662,23 @@ describe('TagsCreatorComponent', () => {
 
                 expect(getExistingTags()).toEqual([]);
                 expect(notificationService.showError).toHaveBeenCalledWith('TAG.TAGS_CREATOR.ERRORS.FETCH_TAGS');
+            }));
+
+            it('should not announce the status of tags if no existing tags are available', fakeAsync(() => {
+                spyOn(tagService, 'searchTags').and.returnValue(
+                    of({
+                        list: {
+                            entries: [],
+                            pagination: {}
+                        }
+                    })
+                );
+
+                typeTag('Tag');
+                component.tagNameControl.markAsTouched();
+                fixture.detectChanges();
+
+                expect(getStatusText()).toBe('TAG.TAGS_CREATOR.NO_EXISTING_TAGS');
             }));
 
             it('should display exact tag', fakeAsync(() => {
@@ -698,10 +740,10 @@ describe('TagsCreatorComponent', () => {
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
                         list: {
-                            entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
+                            entries: [{ entry: { tag: tag1 } }, { entry: { tag: tag2 } }],
                             pagination: {}
                         }
-                    })
+                    } as TagPaging)
                 );
                 typeTag(tag);
 
@@ -725,10 +767,10 @@ describe('TagsCreatorComponent', () => {
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
                         list: {
-                            entries: [selectedTag, { entry: { tag: leftTag } as any }],
+                            entries: [selectedTag, { entry: { tag: leftTag } }],
                             pagination: {}
                         }
-                    })
+                    } as TagPaging)
                 );
 
                 typeTag('Tag');
