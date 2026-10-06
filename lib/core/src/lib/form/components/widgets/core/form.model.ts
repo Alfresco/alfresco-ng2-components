@@ -170,7 +170,7 @@ export class FormModel implements ProcessFormModel {
             if (!FormFieldTypes.isReactiveType(field.type)) {
                 return !field.validate();
             } else {
-                return field.validationSummary.isActive();
+                return field.validationSummary.isActive() && !this.isFieldOrParentHidden(field);
             }
         });
 

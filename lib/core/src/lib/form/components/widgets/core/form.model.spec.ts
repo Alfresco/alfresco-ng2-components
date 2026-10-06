@@ -18,6 +18,7 @@
 import { ValidateFormFieldEvent } from '../../../events/validate-form-field.event';
 import { FormService } from '../../../services/form.service';
 import { ContainerModel } from './container.model';
+import { ErrorMessageModel } from './error-message.model';
 import { FormFieldTypes } from './form-field-types';
 import { FORM_FIELD_VALIDATORS, FormFieldValidator } from './form-field-validator';
 import { FormFieldModel } from './form-field.model';
@@ -1270,6 +1271,137 @@ describe('FormModel', () => {
             testForm.validateForm();
 
             expect(testForm.isValid).toBe(false);
+        });
+
+        describe('reactive fields in a hidden parent', () => {
+            const sectionInGroupFormJson = (type: string, checkParentVisibilityForValidation: boolean) => ({
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'section1',
+                                    type: FormFieldTypes.SECTION,
+                                    numberOfColumns: 1,
+                                    fields: { 1: [{ id: 'field1', type, required: true, checkParentVisibilityForValidation }] }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            });
+
+            const createFormWithInvalidReactiveField = (type: string, checkParentVisibilityForValidation: boolean): FormModel => {
+                const testForm = new FormModel(sectionInGroupFormJson(type, checkParentVisibilityForValidation));
+                testForm.getFieldById('field1').validationSummary = new ErrorMessageModel({ message: 'FORM.FIELD.REQUIRED' });
+                return testForm;
+            };
+
+            [FormFieldTypes.DROPDOWN, FormFieldTypes.DATE, FormFieldTypes.DATETIME].forEach((type) => {
+                it(`should exclude an invalid ${type} field in a section of a hidden group from validation when opt-in is enabled`, () => {
+                    const testForm = createFormWithInvalidReactiveField(type, true);
+                    testForm.enableParentVisibilityCheck = true;
+                    (testForm.fields[0] as ContainerModel).field.isVisible = false;
+
+                    testForm.validateForm();
+
+                    expect(testForm.isValid).toBe(true);
+                });
+
+                it(`should keep an invalid ${type} field in a section of a visible group in validation when opt-in is enabled`, () => {
+                    const testForm = createFormWithInvalidReactiveField(type, true);
+                    testForm.enableParentVisibilityCheck = true;
+
+                    testForm.validateForm();
+
+                    expect(testForm.isValid).toBe(false);
+                });
+
+                it(`should keep an invalid ${type} field in a hidden group in validation when opt-in is disabled - backward compatible`, () => {
+                    const testForm = createFormWithInvalidReactiveField(type, false);
+                    (testForm.fields[0] as ContainerModel).field.isVisible = false;
+
+                    testForm.validateForm();
+
+                    expect(testForm.isValid).toBe(false);
+                });
+
+                it(`should keep an invalid ${type} field in a hidden group in validation when only the form opt-in is enabled`, () => {
+                    const testForm = createFormWithInvalidReactiveField(type, false);
+                    testForm.enableParentVisibilityCheck = true;
+                    (testForm.fields[0] as ContainerModel).field.isVisible = false;
+
+                    testForm.validateForm();
+
+                    expect(testForm.isValid).toBe(false);
+                });
+
+                it(`should exclude an invalid ${type} field in a hidden section of a visible group from validation when opt-in is enabled`, () => {
+                    const testForm = createFormWithInvalidReactiveField(type, true);
+                    testForm.enableParentVisibilityCheck = true;
+                    testForm.getFieldById('section1').isVisible = false;
+
+                    testForm.validateForm();
+
+                    expect(testForm.isValid).toBe(true);
+                });
+
+                it(`should exclude an invalid ${type} field from validation when the field itself is hidden and opt-in is disabled`, () => {
+                    const testForm = createFormWithInvalidReactiveField(type, false);
+                    testForm.getFieldById('field1').isVisible = false;
+
+                    testForm.validateForm();
+
+                    expect(testForm.isValid).toBe(true);
+                });
+            });
+
+            it('should exclude an invalid dropdown field in a hidden repeatable section from validation when opt-in is enabled', () => {
+                const testForm = new FormModel({
+                    id: 'test-form',
+                    name: 'Test Form',
+                    fields: [
+                        {
+                            id: 'repeatableSection1',
+                            type: FormFieldTypes.REPEATABLE_SECTION,
+                            numberOfColumns: 1,
+                            params: { initialNumberOfRows: 2 },
+                            fields: {
+                                1: [{ id: 'field1', type: FormFieldTypes.DROPDOWN, required: true, checkParentVisibilityForValidation: true }]
+                            }
+                        }
+                    ]
+                });
+                testForm.enableParentVisibilityCheck = true;
+                const repeatableSection = testForm.fields[0] as ContainerModel;
+                getRepeatableSectionField(repeatableSection, 0).validationSummary = new ErrorMessageModel({ message: 'FORM.FIELD.REQUIRED' });
+                getRepeatableSectionField(repeatableSection, 1).validationSummary = new ErrorMessageModel({ message: 'FORM.FIELD.REQUIRED' });
+                testForm.validateForm();
+                expect(testForm.isValid).toBe(false);
+
+                repeatableSection.field.isVisible = false;
+                testForm.validateForm();
+
+                expect(testForm.isValid).toBe(true);
+            });
+
+            it('should not report a reactive field in a hidden parent in the validate form event errors', () => {
+                const testForm = new FormModel(sectionInGroupFormJson(FormFieldTypes.DROPDOWN, true), null, false, formService);
+                testForm.getFieldById('field1').validationSummary = new ErrorMessageModel({ message: 'FORM.FIELD.REQUIRED' });
+                testForm.enableParentVisibilityCheck = true;
+                (testForm.fields[0] as ContainerModel).field.isVisible = false;
+                let errorsField: FormFieldModel[] = [];
+                formService.validateForm.subscribe((event) => (errorsField = event.errorsField));
+
+                testForm.validateForm();
+
+                expect(errorsField).toEqual([]);
+            });
         });
 
         it('should return false for visible field with visible parents - ContainerModel', () => {
