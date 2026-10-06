@@ -1404,6 +1404,243 @@ describe('FormModel', () => {
             });
         });
 
+        describe('invalid fields of every validatable type in a hidden parent', () => {
+            interface InvalidFieldDefinition {
+                description: string;
+                json: { type: string; [key: string]: unknown };
+            }
+
+            interface HiddenParent {
+                description: string;
+                parentId: string;
+            }
+
+            interface ParentLayout {
+                description: string;
+                build: (field: object) => object[];
+                hiddenParents: HiddenParent[];
+            }
+
+            const requiredFieldTypes = [
+                FormFieldTypes.TEXT,
+                FormFieldTypes.MULTILINE_TEXT,
+                FormFieldTypes.NUMBER,
+                FormFieldTypes.DECIMAL,
+                FormFieldTypes.AMOUNT,
+                FormFieldTypes.BOOLEAN,
+                FormFieldTypes.PEOPLE,
+                FormFieldTypes.FUNCTIONAL_GROUP,
+                FormFieldTypes.RADIO_BUTTONS,
+                FormFieldTypes.TYPEAHEAD,
+                FormFieldTypes.UPLOAD,
+                FormFieldTypes.ATTACH_FOLDER,
+                FormFieldTypes.DYNAMIC_TABLE,
+                FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
+                FormFieldTypes.ALFRESCO_FILE_VIEWER,
+                FormFieldTypes.PROPERTIES_VIEWER,
+                FormFieldTypes.DATE,
+                FormFieldTypes.DATETIME,
+                FormFieldTypes.DROPDOWN
+            ];
+
+            const invalidFieldDefinitions: InvalidFieldDefinition[] = [
+                ...requiredFieldTypes.map((type) => ({
+                    description: `a required ${type} field`,
+                    json: { type, required: true, options: [{ id: 'option1', name: 'Option 1' }] }
+                })),
+                { description: 'a text field shorter than its minimum length', json: { type: FormFieldTypes.TEXT, minLength: 5, value: 'abc' } },
+                {
+                    description: 'a text field not matching its pattern',
+                    json: { type: FormFieldTypes.TEXT, regexPattern: 'valid', value: 'invalid' }
+                },
+                {
+                    description: 'a multi-line text field longer than its maximum length',
+                    json: { type: FormFieldTypes.MULTILINE_TEXT, maxLength: 3, value: 'abcd' }
+                },
+                { description: 'an integer field with a non-numeric value', json: { type: FormFieldTypes.NUMBER, value: 'abc' } },
+                { description: 'an integer field below its minimum value', json: { type: FormFieldTypes.NUMBER, minValue: '10', value: 5 } },
+                { description: 'an amount field above its maximum value', json: { type: FormFieldTypes.AMOUNT, maxValue: '10', value: 20 } },
+                { description: 'a decimal field exceeding its precision', json: { type: FormFieldTypes.DECIMAL, precision: 1, value: '1.25' } },
+                {
+                    description: 'a typeahead field with a value not in its options',
+                    json: { type: FormFieldTypes.TYPEAHEAD, options: [{ id: 'option1', name: 'Option 1' }], value: 'unknown' }
+                }
+            ];
+
+            const groupJson = (id: string, fields: object[]) => ({ id, type: FormFieldTypes.GROUP, numberOfColumns: 1, fields: { 1: fields } });
+
+            const sectionJson = (id: string, fields: object[]) => ({ id, type: FormFieldTypes.SECTION, numberOfColumns: 1, fields: { 1: fields } });
+
+            const repeatableSectionJson = (id: string, fields: object[]) => ({
+                id,
+                type: FormFieldTypes.REPEATABLE_SECTION,
+                numberOfColumns: 1,
+                params: { initialNumberOfRows: 2 },
+                fields: { 1: fields }
+            });
+
+            const parentLayouts: ParentLayout[] = [
+                {
+                    description: 'a group',
+                    build: (field) => [groupJson('group1', [field])],
+                    hiddenParents: [{ description: 'a hidden group', parentId: 'group1' }]
+                },
+                {
+                    description: 'a section',
+                    build: (field) => [sectionJson('section1', [field])],
+                    hiddenParents: [{ description: 'a hidden section', parentId: 'section1' }]
+                },
+                {
+                    description: 'a section of a group',
+                    build: (field) => [groupJson('group1', [sectionJson('section1', [field])])],
+                    hiddenParents: [
+                        { description: 'a section of a hidden group', parentId: 'group1' },
+                        { description: 'a hidden section of a visible group', parentId: 'section1' }
+                    ]
+                },
+                {
+                    description: 'every row of a repeatable section',
+                    build: (field) => [repeatableSectionJson('repeatableSection1', [field])],
+                    hiddenParents: [{ description: 'every row of a hidden repeatable section', parentId: 'repeatableSection1' }]
+                },
+                {
+                    description: 'a section in every row of a repeatable section',
+                    build: (field) => [repeatableSectionJson('repeatableSection1', [sectionJson('section1', [field])])],
+                    hiddenParents: [
+                        { description: 'a section in every row of a hidden repeatable section', parentId: 'repeatableSection1' },
+                        { description: 'a hidden section in every row of a visible repeatable section', parentId: 'section1' }
+                    ]
+                }
+            ];
+
+            const getFieldsByJsonId = (testForm: FormModel, id: string): FormFieldModel[] =>
+                testForm.fieldsCache.filter((field) => field.json.id === id);
+
+            const setVisibility = (testForm: FormModel, id: string, isVisible: boolean) =>
+                getFieldsByJsonId(testForm, id).forEach((field) => (field.isVisible = isVisible));
+
+            const createForm = (
+                definition: InvalidFieldDefinition,
+                layout: ParentLayout,
+                checkParentVisibilityForValidation: boolean,
+                enableParentVisibilityCheck: boolean,
+                tabId?: string
+            ): FormModel => {
+                const field = { id: 'field1', ...definition.json, checkParentVisibilityForValidation };
+                const fields = layout.build(field).map((rootElement) => (tabId ? { ...rootElement, tab: tabId } : rootElement));
+                const tabs = tabId ? [{ id: tabId, title: 'Tab 1' }] : [];
+                const testForm = new FormModel({ id: 'test-form', name: 'Test Form', tabs, fields }, null, false, formService);
+                testForm.enableParentVisibilityCheck = enableParentVisibilityCheck;
+                if (FormFieldTypes.isReactiveType(definition.json.type)) {
+                    getFieldsByJsonId(testForm, 'field1').forEach(
+                        (invalidField) => (invalidField.validationSummary = new ErrorMessageModel({ message: 'FORM.FIELD.REQUIRED' }))
+                    );
+                }
+                return testForm;
+            };
+
+            const validateAndGetErrors = (testForm: FormModel): FormFieldModel[] => {
+                let errorsField: FormFieldModel[] = [];
+                const subscription = formService.validateForm.subscribe((event) => (errorsField = event.errorsField));
+                testForm.validateForm();
+                subscription.unsubscribe();
+                return errorsField;
+            };
+
+            invalidFieldDefinitions.forEach((definition) => {
+                parentLayouts.forEach((layout) => {
+                    layout.hiddenParents.forEach(({ description, parentId }) => {
+                        it(`should exclude ${definition.description} in ${description} from validation when opt-ins are enabled`, () => {
+                            const testForm = createForm(definition, layout, true, true);
+                            setVisibility(testForm, parentId, false);
+
+                            expect(validateAndGetErrors(testForm)).toEqual([]);
+                            expect(testForm.isValid).toBe(true);
+                        });
+
+                        it(`should validate ${definition.description} in ${description} again when the parent is shown`, () => {
+                            const testForm = createForm(definition, layout, true, true);
+                            const invalidFields = getFieldsByJsonId(testForm, 'field1');
+
+                            expect(validateAndGetErrors(testForm)).toEqual(invalidFields);
+                            expect(testForm.isValid).toBe(false);
+
+                            setVisibility(testForm, parentId, false);
+                            testForm.validateForm();
+                            expect(testForm.isValid).toBe(true);
+
+                            setVisibility(testForm, parentId, true);
+                            expect(validateAndGetErrors(testForm)).toEqual(invalidFields);
+                            expect(testForm.isValid).toBe(false);
+                        });
+
+                        it(`should keep ${definition.description} in ${description} in validation when the field opt-in is disabled`, () => {
+                            const testForm = createForm(definition, layout, false, true);
+                            setVisibility(testForm, parentId, false);
+
+                            expect(validateAndGetErrors(testForm)).toEqual(getFieldsByJsonId(testForm, 'field1'));
+                            expect(testForm.isValid).toBe(false);
+                        });
+
+                        it(`should keep ${definition.description} in ${description} in validation when the form opt-in is disabled`, () => {
+                            const testForm = createForm(definition, layout, true, false);
+                            setVisibility(testForm, parentId, false);
+
+                            expect(validateAndGetErrors(testForm)).toEqual(getFieldsByJsonId(testForm, 'field1'));
+                            expect(testForm.isValid).toBe(false);
+                        });
+                    });
+
+                    it(`should exclude ${definition.description} in ${layout.description} on a hidden tab from validation when opt-ins are enabled`, () => {
+                        const testForm = createForm(definition, layout, true, true, 'tab1');
+                        testForm.tabs[0].isVisible = false;
+
+                        expect(validateAndGetErrors(testForm)).toEqual([]);
+                        expect(testForm.isValid).toBe(true);
+                    });
+
+                    it(`should validate ${definition.description} in ${layout.description} on a tab again when the tab is shown`, () => {
+                        const testForm = createForm(definition, layout, true, true, 'tab1');
+                        const invalidFields = getFieldsByJsonId(testForm, 'field1');
+
+                        expect(validateAndGetErrors(testForm)).toEqual(invalidFields);
+                        expect(testForm.isValid).toBe(false);
+
+                        testForm.tabs[0].isVisible = false;
+                        testForm.validateForm();
+                        expect(testForm.isValid).toBe(true);
+
+                        testForm.tabs[0].isVisible = true;
+                        expect(validateAndGetErrors(testForm)).toEqual(invalidFields);
+                        expect(testForm.isValid).toBe(false);
+                    });
+
+                    [
+                        { optIn: 'field', checkParentVisibilityForValidation: false, enableParentVisibilityCheck: true },
+                        { optIn: 'form', checkParentVisibilityForValidation: true, enableParentVisibilityCheck: false }
+                    ].forEach(({ optIn, checkParentVisibilityForValidation, enableParentVisibilityCheck }) => {
+                        it(`should keep ${definition.description} in ${layout.description} on a hidden tab in validation when the ${optIn} opt-in is disabled`, () => {
+                            const testForm = createForm(definition, layout, checkParentVisibilityForValidation, enableParentVisibilityCheck, 'tab1');
+                            testForm.tabs[0].isVisible = false;
+
+                            expect(validateAndGetErrors(testForm)).toEqual(getFieldsByJsonId(testForm, 'field1'));
+                            expect(testForm.isValid).toBe(false);
+                        });
+                    });
+
+                    [true, false].forEach((isOptInEnabled) => {
+                        it(`should exclude ${definition.description} in ${layout.description} from validation when the field itself is hidden and opt-ins are ${isOptInEnabled ? 'enabled' : 'disabled'}`, () => {
+                            const testForm = createForm(definition, layout, isOptInEnabled, isOptInEnabled);
+                            setVisibility(testForm, 'field1', false);
+
+                            expect(validateAndGetErrors(testForm)).toEqual([]);
+                            expect(testForm.isValid).toBe(true);
+                        });
+                    });
+                });
+            });
+        });
+
         it('should return false for visible field with visible parents - ContainerModel', () => {
             const formJson = {
                 id: 'test-form',
