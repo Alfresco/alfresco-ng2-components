@@ -8,6 +8,8 @@ minimumReleaseAgeStrict: true
 overrides:
   # Security fixes
   "minimatch@10.2.5": "10.2.6"
+  "brace-expansion@1": "1.1.21"
+  "brace-expansion@5": "5.0.12"
   serialize-javascript: '>=7.0.5'
   picomatch: '>=4.0.4'
   postcss: '>=8.5.25'
