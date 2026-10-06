@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { FormFieldModel } from '@alfresco/adf-core';
-import { ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
-import { DEFAULT_OPTION } from './dropdown-cloud.widget';
+import { FormFieldModel, FormFieldOption } from '@alfresco/adf-core';
+import { ValidatorFn, AbstractControl, ValidationErrors, Validators } from '@angular/forms';
+import { DEFAULT_OPTION } from './dropdown-cloud.utils';
 
 export const defaultValueValidator =
     (filed: FormFieldModel): ValidatorFn =>
@@ -36,3 +36,10 @@ export const defaultValueValidator =
 
         return isSomeOptionSelected ? null : { required: true };
     };
+
+export const getDropdownCloudRequiredValidators = (field: FormFieldModel, options?: FormFieldOption[]): ValidatorFn[] => {
+    if (!field.hasEmptyValue) {
+        return [Validators.required];
+    }
+    return [Validators.required, defaultValueValidator(options ? ({ options } as FormFieldModel) : field)];
+};

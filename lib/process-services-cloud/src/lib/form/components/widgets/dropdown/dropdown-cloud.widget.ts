@@ -27,13 +27,12 @@ import {
     ReactiveFormWidget,
     RuleEntry,
     SelectFilterInputComponent,
-    VariableConfig,
     WidgetComponent
 } from '@alfresco/adf-core';
 import { AsyncPipe } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormControl, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -43,93 +42,19 @@ import { BehaviorSubject, isObservable, Subject } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { FormUtilsService } from '../../../services/form-utils.service';
-import { defaultValueValidator } from './validators';
+import {
+    DEFAULT_OPTION,
+    isDropdownCloudLinkedField,
+    isDropdownCloudRestField,
+    isDropdownCloudValidValue,
+    resolveDropdownCloudVariableOptions,
+    toDropdownCloudControlValue
+} from './dropdown-cloud.utils';
 
-export const DEFAULT_OPTION = {
-    id: 'empty',
-    name: 'Choose one...'
-};
+export { DEFAULT_OPTION } from './dropdown-cloud.utils';
+
 export const HIDE_FILTER_LIMIT = 5;
 export const DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE = 100;
-
-const DEFAULT_VARIABLE_OPTION_ID = 'id';
-const DEFAULT_VARIABLE_OPTION_LABEL = 'name';
-const DEFAULT_VARIABLE_OPTION_PATH = 'data';
-
-export const toDropdownCloudControlValue = (value: any): FormFieldOption | FormFieldOption[] | null => {
-    if (Array.isArray(value)) {
-        return value;
-    }
-    if (value && typeof value === 'object') {
-        return { id: value.id, name: value.name };
-    }
-    if (value === null || value === undefined || value === '') {
-        return null;
-    }
-    return { id: value, name: '' };
-};
-
-export const isDropdownCloudValueInOptions = (value: any, options: FormFieldOption[]): boolean => {
-    const optionIds = new Set(options.map((option) => option.id));
-    if (Array.isArray(value)) {
-        return value.every((valueOption) => optionIds.has(valueOption.id));
-    }
-    if (value && typeof value === 'object') {
-        return optionIds.has(value.id);
-    }
-    return optionIds.has(value);
-};
-
-export const isDropdownCloudValidValue = (value: any, options: FormFieldOption[]): boolean =>
-    !!value && isDropdownCloudValueInOptions(value, options);
-
-export const isDropdownCloudRestField = (field: FormFieldModel): boolean => field?.optionType === 'rest' && !!field?.restUrl;
-
-export const isDropdownCloudLinkedField = (field: FormFieldModel): boolean => !!field?.rule?.ruleOn;
-
-export const getDropdownCloudRequiredValidators = (field: FormFieldModel, options?: FormFieldOption[]): ValidatorFn[] => {
-    if (!field.hasEmptyValue) {
-        return [Validators.required];
-    }
-    return [Validators.required, defaultValueValidator(options ? ({ options } as FormFieldModel) : field)];
-};
-
-const getOptionsFromPath = (data: any, path: string, id: string, label: string): { options: FormFieldOption[]; errors: string[] } => {
-    const properties = path.split('.');
-    const currentProperty = properties.shift();
-
-    if (data === null || typeof data !== 'object' || !Object.prototype.hasOwnProperty.call(data, currentProperty)) {
-        return { options: [], errors: [`${currentProperty} not found in ${JSON.stringify(data)}`] };
-    }
-
-    const nestedData = data[currentProperty];
-
-    if (Array.isArray(nestedData)) {
-        const options: FormFieldOption[] = nestedData.map((item) => ({ id: item?.[id], name: item?.[label] }));
-        const invalidOptionErrors = options.filter((option) => !option.id || !option.name).map(() => `'id' or 'label' is not properly defined`);
-        return invalidOptionErrors.length ? { options: [], errors: invalidOptionErrors } : { options, errors: [] };
-    }
-
-    return getOptionsFromPath(nestedData, properties.join('.'), id, label);
-};
-
-export const resolveDropdownCloudVariableOptions = (
-    field: FormFieldModel,
-    variableConfig: VariableConfig | undefined = field?.variableConfig
-): { options: FormFieldOption[]; errors: string[] } | null => {
-    const data = field?.form?.resolveVariableValue(variableConfig?.variableName);
-
-    if (data == null) {
-        return null;
-    }
-
-    return getOptionsFromPath(
-        data,
-        variableConfig?.optionsPath ?? DEFAULT_VARIABLE_OPTION_PATH,
-        variableConfig?.optionsId ?? DEFAULT_VARIABLE_OPTION_ID,
-        variableConfig?.optionsLabel ?? DEFAULT_VARIABLE_OPTION_LABEL
-    );
-};
 
 /* eslint-disable @angular-eslint/component-selector */
 

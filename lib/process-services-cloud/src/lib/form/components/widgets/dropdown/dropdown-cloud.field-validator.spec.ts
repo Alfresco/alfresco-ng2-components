@@ -72,6 +72,18 @@ describe('DropdownCloudFieldValidator', () => {
         expect(validator.validate(createField({ optionType: 'rest', restUrl: 'https://example.com/options', value: 'any-id' }))).toBe(true);
     });
 
+    it('should report required when a REST multiple selection dropdown has nothing selected', () => {
+        const field = createField({ optionType: 'rest', restUrl: 'https://example.com/options', multiple: true, value: [] });
+
+        expect(validator.validate(field)).toBe(false);
+    });
+
+    it('should accept a stored value that is not an option when the dropdown has no empty option', () => {
+        const field = createField({ options: [{ id: 'gold', name: 'Gold' }], value: 'platinum' });
+
+        expect(validator.validate(field)).toBe(true);
+    });
+
     it('should report required when a linked dropdown has the empty option selected', () => {
         expect(validator.validate(createField({ rule: { ruleOn: 'country', entries: [] }, value: 'empty' }))).toBe(false);
     });

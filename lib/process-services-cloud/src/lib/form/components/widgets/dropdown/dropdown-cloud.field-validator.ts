@@ -19,13 +19,13 @@ import { FormFieldModel, FormFieldTypes, FormFieldValidator } from '@alfresco/ad
 import { FormControl } from '@angular/forms';
 import {
     DEFAULT_OPTION,
-    getDropdownCloudRequiredValidators,
     isDropdownCloudLinkedField,
     isDropdownCloudRestField,
     isDropdownCloudValidValue,
     resolveDropdownCloudVariableOptions,
     toDropdownCloudControlValue
-} from './dropdown-cloud.widget';
+} from './dropdown-cloud.utils';
+import { getDropdownCloudRequiredValidators } from './validators';
 
 export class DropdownCloudFieldValidator implements FormFieldValidator {
     isSupported(field: FormFieldModel): boolean {
@@ -49,11 +49,10 @@ export class DropdownCloudFieldValidator implements FormFieldValidator {
         // REST and linked options load at runtime, so only an empty selection is reported
         if (isDropdownCloudRestField(field) || isDropdownCloudLinkedField(field)) {
             const controlValue = toDropdownCloudControlValue(field.value);
-            return !controlValue || (!Array.isArray(controlValue) && controlValue.id === DEFAULT_OPTION.id);
+            return !controlValue || (Array.isArray(controlValue) ? !controlValue.length : controlValue.id === DEFAULT_OPTION.id);
         }
 
-        let options = field.options;
-        let value = field.value;
+        let { options, value } = field;
         if (field.optionType === 'variable') {
             const variableOptions = resolveDropdownCloudVariableOptions(field);
             options = variableOptions?.options ?? [];
