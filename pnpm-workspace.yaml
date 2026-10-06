@@ -16,6 +16,7 @@ overrides:
   undici: 8.10.2
   smol-toml: 1.8.0
   piscina: 5.3.2
+  proxy-addr: 2.0.8
 
 allowBuilds:
   '@parcel/watcher': true
