@@ -170,7 +170,7 @@ export class FormModel implements ProcessFormModel {
             if (!FormFieldTypes.isReactiveType(field.type)) {
                 return !field.validate();
             } else {
-                return field.validationSummary.isActive();
+                return field.validationSummary.isActive() && !this.isFieldOrParentHidden(field);
             }
         });
 
@@ -568,8 +568,8 @@ export class FormModel implements ProcessFormModel {
     }
 
     /**
-     * Checks if a field or any of its parent containers/groups/sections is hidden.
-     * Returns true if the field should skip validation (field or parent is hidden).
+     * Checks if a field, any of its parent containers/groups/sections or its tab is hidden.
+     * Returns true if the field should skip validation (field, parent or tab is hidden).
      *
      * Parent visibility is only checked if:
      * - `enableParentVisibilityCheck` is true
@@ -595,10 +595,10 @@ export class FormModel implements ProcessFormModel {
     }
 
     /**
-     * Checks if the given field has a hidden parent container/group/section.
+     * Checks if the given field has a hidden parent container/group/section or belongs to a hidden tab.
      *
      * @param targetField The form field to check
-     * @returns true if field has a hidden parent, false otherwise
+     * @returns true if field has a hidden parent or tab, false otherwise
      */
     private hasHiddenParent(targetField: FormFieldModel): boolean {
         if (!targetField || !this.fields || this.fields.length === 0) {
@@ -607,12 +607,16 @@ export class FormModel implements ProcessFormModel {
 
         for (const rootElement of this.fields) {
             const parent = this.findParentInElement(rootElement, targetField);
-            if (parent && !parent.isVisible) {
+            if (parent && (!parent.isVisible || this.isInHiddenTab(rootElement))) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    private isInHiddenTab(rootElement: ContainerModel | FormFieldModel): boolean {
+        return !!rootElement.tab && this.tabs.some((tab) => tab.id === rootElement.tab && !tab.isVisible);
     }
 
     /**
