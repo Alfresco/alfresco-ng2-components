@@ -203,6 +203,27 @@ The Document List by default supports 2 types of pagination:  [Pagination compon
 </adf-infinite-pagination>
 ```
 
+#### Setting the page programmatically
+
+Use `updatePagination` to change the page and **immediately reload** the current folder:
+
+```ts
+documentList.updatePagination({ maxItems: 25, skipCount: 25 });
+```
+
+Use `setPagination` to change the pagination used for the next folder load **without** triggering a
+reload. This is useful to seed the page (`skipCount`) before `currentFolderId` changes, so the folder
+is loaded directly on the requested page in a single request instead of loading the first page first
+and then re-fetching the requested one:
+
+```ts
+// seed the remembered page, then let the folder load use it
+documentList.setPagination({ maxItems: 25, skipCount: 25 });
+documentList.currentFolderId = nodeId;
+```
+
+Only the fields provided in the pagination model are updated; omitted fields keep their current value.
+
 ### Data Sources
 
 You can use any of the following options to set the folder that the Document List will display:

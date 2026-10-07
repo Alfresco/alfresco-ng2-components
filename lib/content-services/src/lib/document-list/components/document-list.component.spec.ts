@@ -1552,6 +1552,27 @@ describe('DocumentList', () => {
         expect(documentList.reload).toHaveBeenCalled();
     });
 
+    it('should set pagination without triggering a reload', () => {
+        spyOn(documentList, 'reload').and.stub();
+
+        documentList.setPagination({ maxItems: 10, skipCount: 10 });
+
+        expect(documentList.reload).not.toHaveBeenCalled();
+    });
+
+    it('should load the folder using the pagination set via setPagination', () => {
+        const loadFolderSpy = spyOn(documentListService, 'loadFolderByNodeId').and.returnValue(
+            of(new DocumentLoaderNode(null, { list: { pagination: {}, entries: [] } }))
+        );
+        documentList.currentFolderId = 'some-folder-id';
+
+        documentList.setPagination({ maxItems: 25, skipCount: 50 });
+        documentList.loadFolder();
+
+        expect(loadFolderSpy.calls.mostRecent().args[0]).toBe('some-folder-id');
+        expect(loadFolderSpy.calls.mostRecent().args[1]).toEqual(jasmine.objectContaining({ skipCount: 50, maxItems: 25 }));
+    });
+
     it('should not show loading state if pagination is updated with merge setting as true', () => {
         spyFolderNode = spyOn(documentListService, 'loadFolderByNodeId').and.callFake(() =>
             of(
