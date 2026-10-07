@@ -80,7 +80,7 @@
       "NAMELESS_TASK": "Nameless task",
       "ROW_LABEL": "Row {{ number }}",
       "DELETE_ROW": "Delete row",
-      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }}, contains validation errors",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
       "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Delete the row",
