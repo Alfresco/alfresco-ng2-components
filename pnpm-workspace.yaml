@@ -20,6 +20,7 @@ overrides:
   piscina: 5.3.2
   proxy-addr: 2.0.8
   '@storybook/builder-webpack5>webpack-dev-middleware': 7.4.5
+  fast-uri: 3.1.8
   shell-quote: 1.11.0
 
 allowBuilds:
