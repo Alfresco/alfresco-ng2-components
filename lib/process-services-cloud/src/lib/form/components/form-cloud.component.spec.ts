@@ -18,6 +18,7 @@
 import { VersionCompatibilityService, AlfrescoApiService } from '@alfresco/adf-content-services';
 import {
     ADF_DISPLAY_TEXT_SETTINGS,
+    ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED,
     ContentLinkModel,
     CoreModule,
     FormFieldModel,
@@ -2608,7 +2609,8 @@ describe('FormCloudComponent - multi-tab validation indicators', () => {
             imports: [NoopTranslateModule, NoopAuthModule, FormCloudComponent],
             providers: [
                 { provide: VersionCompatibilityService, useValue: {} },
-                { provide: FormRenderingService, useClass: CloudFormRenderingService }
+                { provide: FormRenderingService, useClass: CloudFormRenderingService },
+                { provide: ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED, useValue: true }
             ]
         });
         const apiService = TestBed.inject(AlfrescoApiService);

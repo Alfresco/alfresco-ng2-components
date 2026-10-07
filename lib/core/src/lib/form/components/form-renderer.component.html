@@ -7,11 +7,11 @@
                 @for (tab of visibleTabs(); track tab.id) {
                     <mat-tab
                         [label]="tab.title | translate "
-                        [aria-label]="tab.hasValidationErrors ? ('FORM.FORM_RENDERER.TAB_VALIDATION_ERRORS_LABEL' | translate: { tabTitle: (tab.title | translate) }) : null">
+                        [aria-label]="tabValidationIndicatorsEnabled() && tab.hasValidationErrors ? ('FORM.FORM_RENDERER.TAB_VALIDATION_ERRORS_LABEL' | translate: { tabTitle: (tab.title | translate) }) : null">
                     <ng-template mat-tab-label>
                         <span class="adf-form-tab-label">
                             {{ tab.title | translate }}
-                            @if (tab.hasValidationErrors) {
+                            @if (tabValidationIndicatorsEnabled() && tab.hasValidationErrors) {
                                 <span
                                     class="adf-form-tab-validation-indicator"
                                     aria-hidden="true"

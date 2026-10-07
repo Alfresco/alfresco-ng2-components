@@ -21,7 +21,7 @@ import { FORM_RULES_MANAGER, FormRulesManager } from '../models/form-rules.model
 import { FormRulesEvent } from '../events/form-rules.event';
 import { FormRenderingService } from '../services/form-rendering.service';
 import { FormService } from '../services/form.service';
-import { FormRendererComponent } from './form-renderer.component';
+import { ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED, FormRendererComponent } from './form-renderer.component';
 import {
     amountWidgetFormVisibilityMock,
     checkboxWidgetFormVisibilityMock,
@@ -51,9 +51,9 @@ import {
     textWidgetVisibility
 } from './mock/form-renderer.component.mock';
 import { ErrorMessageModel, FormFieldModel, FormModel, TextWidgetComponent, WidgetComponent } from './widgets';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Provider } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { WidgetVisibilityService } from '../services/widget-visibility.service';
 import { ENTER, RIGHT_ARROW } from '@angular/cdk/keycodes';
@@ -1528,9 +1528,10 @@ describe('Form Renderer Component multi-tab validation indicators', () => {
         return tabbedForm;
     };
 
-    const setUp = (): void => {
+    const setUp = (providers: Provider[] = [{ provide: ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED, useValue: true }]): void => {
         TestBed.configureTestingModule({
-            imports: [FormRendererComponent]
+            imports: [FormRendererComponent],
+            providers
         });
         const translateService = TestBed.inject(TranslateService);
         translateService.use('en').subscribe();
@@ -1641,6 +1642,53 @@ describe('Form Renderer Component multi-tab validation indicators', () => {
             expect(fixture.componentInstance.tabGroup.selectedIndex).toBe(1);
             expect(invalidTab.getAttribute('aria-selected')).toBe('true');
             expect(getIndicator(invalidTab)).not.toBeNull();
+        });
+    });
+
+    describe('ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED token', () => {
+        const expectNoIndicators = (): void => {
+            getTabHeaders().forEach((tabHeader) => {
+                expect(getIndicator(tabHeader)).toBeNull();
+                expect(tabHeader.getAttribute('aria-label')).toBeNull();
+            });
+        };
+
+        it('should not render the indicator when the token is not provided', () => {
+            setUp([]);
+
+            expect(form.tabs[1].hasValidationErrors).toBeTrue();
+            expectNoIndicators();
+        });
+
+        it('should not render the indicator when the token is false', () => {
+            setUp([{ provide: ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED, useValue: false }]);
+
+            expect(form.tabs[1].hasValidationErrors).toBeTrue();
+            expectNoIndicators();
+        });
+
+        it('should follow the token observable when it toggles', () => {
+            const indicatorsEnabled$ = new BehaviorSubject<boolean>(false);
+            setUp([{ provide: ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED, useValue: indicatorsEnabled$ }]);
+
+            expectNoIndicators();
+
+            indicatorsEnabled$.next(true);
+            fixture.detectChanges();
+
+            expect(getIndicator(getTabHeaders()[1])).not.toBeNull();
+            expect(getTabHeaders()[1].getAttribute('aria-label')).toBe('Tab 1 needs attention');
+
+            indicatorsEnabled$.next(false);
+            fixture.detectChanges();
+
+            expectNoIndicators();
+        });
+
+        it('should keep the form invalid when the indicator is disabled', () => {
+            setUp([{ provide: ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED, useValue: false }]);
+
+            expect(form.isValid).toBeFalse();
         });
     });
 

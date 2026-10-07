@@ -21,6 +21,7 @@ import {
     Component,
     DestroyRef,
     inject,
+    InjectionToken,
     Injector,
     Input,
     OnDestroy,
@@ -30,7 +31,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { filter, Subscription } from 'rxjs';
+import { filter, isObservable, Observable, Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
@@ -50,6 +51,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { IconModule } from '../../icon/icon.module';
 import { FormLayoutColumn, getFormLayoutColumnWidth } from './helpers/column-width';
 import { RepeatableRowLabelPipe } from '../pipes/repeatable-row-label.pipe';
+
+export const ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED = new InjectionToken<Observable<boolean> | boolean>(
+    'ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED'
+);
 
 @Component({
     selector: 'adf-form-renderer',
@@ -123,6 +128,8 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
         return this._tabGroup as MatTabGroup;
     }
 
+    readonly tabValidationIndicatorsEnabled = signal(false);
+
     private readonly currentTabIndex = signal(0);
     private _formDefinition: FormModel;
     private _tabGroup?: MatTabGroup;
@@ -147,6 +154,20 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     debugMode: boolean;
 
     fields: FormFieldModel[];
+
+    constructor() {
+        const tabValidationIndicatorsToken = inject(ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED, { optional: true });
+
+        if (tabValidationIndicatorsToken != null) {
+            if (isObservable(tabValidationIndicatorsToken)) {
+                tabValidationIndicatorsToken.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((enabled) => {
+                    this.tabValidationIndicatorsEnabled.set(enabled ?? false);
+                });
+            } else {
+                this.tabValidationIndicatorsEnabled.set(tabValidationIndicatorsToken);
+            }
+        }
+    }
 
     ngOnInit(): void {
         this.runMiddlewareServices();
