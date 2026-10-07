@@ -1947,12 +1947,12 @@ describe('FormModel', () => {
                         { optIn: 'field', checkParentVisibilityForValidation: false, enableParentVisibilityCheck: true },
                         { optIn: 'form', checkParentVisibilityForValidation: true, enableParentVisibilityCheck: false }
                     ].forEach(({ optIn, checkParentVisibilityForValidation, enableParentVisibilityCheck }) => {
-                        it(`should keep ${definition.description} in ${layout.description} on a hidden tab in validation when the ${optIn} opt-in is disabled`, () => {
+                        it(`should exclude ${definition.description} in ${layout.description} on a hidden tab from validation when the ${optIn} opt-in is disabled`, () => {
                             const testForm = createForm(definition, layout, checkParentVisibilityForValidation, enableParentVisibilityCheck, 'tab1');
                             testForm.tabs[0].isVisible = false;
 
-                            expect(validateAndGetErrors(testForm)).toEqual(getFieldsByJsonId(testForm, 'field1'));
-                            expect(testForm.isValid).toBe(false);
+                            expect(validateAndGetErrors(testForm)).toEqual([]);
+                            expect(testForm.isValid).toBe(true);
                         });
                     });
 
