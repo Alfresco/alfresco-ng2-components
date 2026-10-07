@@ -104,6 +104,10 @@ export class TaskFormCloudComponent {
     @Input()
     readOnly = false;
 
+    /** When false, Claim/Release (self-service) buttons are hidden regardless of task state. */
+    @Input()
+    allowSelfService: boolean = true;
+
     /**
      * The available display configurations for the form
      */
@@ -192,11 +196,11 @@ export class TaskFormCloudComponent {
     }
 
     canClaimTask(): boolean {
-        return !this.readOnly && this.taskCloudService.canClaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
+        return this.allowSelfService && !this.readOnly && this.taskCloudService.canClaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
     }
 
     canUnclaimTask(): boolean {
-        return !this.readOnly && this.taskCloudService.canUnclaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
+        return this.allowSelfService && !this.readOnly && this.taskCloudService.canUnclaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
     }
 
     hasCandidateUsers(): boolean {

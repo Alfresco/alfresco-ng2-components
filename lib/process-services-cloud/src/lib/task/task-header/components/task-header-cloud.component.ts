@@ -71,6 +71,10 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
     @Input()
     processInstanceId?: string;
 
+    /** When false, the assignee property is not clickable (self-service reassignment disabled). */
+    @Input()
+    allowSelfService: boolean = true;
+
     /** Emitted when the task is claimed. */
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
@@ -344,7 +348,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
      * @returns `true` if assignee property is clickable, otherwise `false`
      */
     isAssigneePropertyClickable(): boolean {
-        return this.taskCloudService.isAssigneePropertyClickable(this.taskDetails, this.candidateUsers, []);
+        return this.allowSelfService && this.taskCloudService.isAssigneePropertyClickable(this.taskDetails, this.candidateUsers, []);
     }
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
