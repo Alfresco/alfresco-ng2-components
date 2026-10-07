@@ -384,7 +384,7 @@ jobs:
   finalize:
     if: ${{ always() && needs.approval-gate.outputs.eligible == 'true' }}
     runs-on: ubuntu-latest
-    name: Final Results
+    name: ${{ github.event_name == 'pull_request_review' && needs.approval-gate.outputs.eligible != 'true' && 'Ignored Review' || 'Final Results' }}
     needs:
       [
         approval-gate,
