@@ -389,7 +389,7 @@ export abstract class PickerFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (!this.isSupported(field) || field.readOnly || field.inputDisabled || field.form?.isFieldOrParentHidden(field)) {
+        if (!this.isSupported(field) || field.form?.isFieldOrParentHidden(field)) {
             return true;
         }
 
@@ -508,7 +508,7 @@ export class DropdownFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (!this.isSupported(field) || field.readOnly || field.inputDisabled || field.form?.isFieldOrParentHidden(field)) {
+        if (!this.isSupported(field) || field.form?.isFieldOrParentHidden(field)) {
             return true;
         }
 

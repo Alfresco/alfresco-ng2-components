@@ -620,7 +620,7 @@ describe('DropdownCloudWidgetComponent', () => {
         expect(element.querySelector('.adf-error-text')).toBeNull();
     });
 
-    it('should not block the form while its readOnly input disables it', () => {
+    it('should block the form when a required field has no value while its readOnly input disables it', () => {
         widget.readOnly = true;
         widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
             id: 'dropdown-id',
@@ -631,8 +631,7 @@ describe('DropdownCloudWidgetComponent', () => {
         fixture.detectChanges();
 
         expect(widget.dropdownControl.disabled).toBeTrue();
-        expect(widget.field.inputDisabled).toBeTrue();
-        expect(widget.field.validate()).toBeTrue();
+        expect(widget.field.validate()).toBeFalse();
     });
 
     describe('filter', () => {

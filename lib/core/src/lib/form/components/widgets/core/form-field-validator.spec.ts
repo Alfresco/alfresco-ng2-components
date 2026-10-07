@@ -1845,20 +1845,13 @@ describe('FormFieldValidator', () => {
             expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
         });
 
-        it('should skip a read-only date', () => {
-            expect(validator.validate(createField({ required: true, readOnly: true, value: null }))).toBe(true);
+        it('should report required when a read-only date has no value', () => {
+            expect(validator.validate(createField({ required: true, readOnly: true, value: null }))).toBe(false);
         });
 
         it('should skip a hidden date', () => {
             const field = createField({ required: true, value: null });
             field.isVisible = false;
-
-            expect(validator.validate(field)).toBe(true);
-        });
-
-        it('should skip a date whose widget disabled its input', () => {
-            const field = createField({ required: true, value: null });
-            field.inputDisabled = true;
 
             expect(validator.validate(field)).toBe(true);
         });
@@ -1975,15 +1968,8 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(createField({ required: false, value: null }))).toBe(true);
         });
 
-        it('should skip a read-only dropdown', () => {
-            expect(validator.validate(createField({ readOnly: true, value: null }))).toBe(true);
-        });
-
-        it('should skip a dropdown whose widget disabled its input', () => {
-            const field = createField({ value: null });
-            field.inputDisabled = true;
-
-            expect(validator.validate(field)).toBe(true);
+        it('should report required when a read-only dropdown has no value', () => {
+            expect(validator.validate(createField({ readOnly: true, value: null }))).toBe(false);
         });
     });
 });

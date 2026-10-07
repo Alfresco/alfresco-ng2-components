@@ -138,8 +138,6 @@ export class FormFieldModel extends FormWidgetModel {
     validationSummary: ErrorMessageModel = new ErrorMessageModel();
     /** Errors in the widget input that did not become a value, such as date text that does not parse. */
     inputErrors: ValidationErrors | null = null;
-    /** Whether the widget disabled its input through its own `readOnly` input. */
-    inputDisabled = false;
     private modelValidationSummary: ErrorMessageModel = this.validationSummary;
     private modelValidationMessage = '';
 

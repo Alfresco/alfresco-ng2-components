@@ -68,14 +68,7 @@ describe('ProcessDropdownFieldValidator', () => {
         expect(validator.validate(field)).toBe(false);
     });
 
-    it('should skip a read-only dropdown', () => {
-        expect(validator.validate(createField({ options, readOnly: true, value: 'removed' }))).toBe(true);
-    });
-
-    it('should skip a dropdown whose widget disabled its input', () => {
-        const field = createField({ options, value: 'removed' });
-        field.inputDisabled = true;
-
-        expect(validator.validate(field)).toBe(true);
+    it('should report required when a read-only dropdown has no value', () => {
+        expect(validator.validate(createField({ options, readOnly: true, value: null }))).toBe(false);
     });
 });

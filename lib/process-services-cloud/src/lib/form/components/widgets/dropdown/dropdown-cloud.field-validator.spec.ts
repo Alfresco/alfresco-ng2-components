@@ -88,14 +88,7 @@ describe('DropdownCloudFieldValidator', () => {
         expect(validator.validate(createField({ rule: { ruleOn: 'country', entries: [] }, value: 'empty' }))).toBe(false);
     });
 
-    it('should skip a read-only dropdown', () => {
-        expect(validator.validate(createField({ options, readOnly: true, value: 'platinum' }))).toBe(true);
-    });
-
-    it('should skip a dropdown whose widget disabled its input', () => {
-        const field = createField({ options, value: 'platinum' });
-        field.inputDisabled = true;
-
-        expect(validator.validate(field)).toBe(true);
+    it('should report required when a read-only dropdown holds a value that is not one of the options', () => {
+        expect(validator.validate(createField({ options, readOnly: true, value: 'platinum' }))).toBe(false);
     });
 });

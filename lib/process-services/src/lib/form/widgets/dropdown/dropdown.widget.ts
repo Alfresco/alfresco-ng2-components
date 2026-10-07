@@ -196,9 +196,6 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
             ? this.dropdownControl.disable({ emitEvent: false })
             : this.dropdownControl.enable({ emitEvent: false });
 
-        if (this.field) {
-            this.field.inputDisabled = this.readOnly;
-        }
         this.dropdownControl.updateValueAndValidity({ emitEvent: false });
     }
 

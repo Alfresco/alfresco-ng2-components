@@ -98,9 +98,6 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
             ? this.datetimeInputControl.disable({ emitEvent: false })
             : this.datetimeInputControl.enable({ emitEvent: false });
 
-        if (this.field) {
-            this.field.inputDisabled = this.readOnly;
-        }
         this.datetimeInputControl.updateValueAndValidity({ emitEvent: false });
     }
 

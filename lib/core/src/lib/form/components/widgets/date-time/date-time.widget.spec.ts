@@ -408,7 +408,7 @@ describe('DateTimeWidgetComponent', () => {
         expect(testingUtils.getByCSS('.adf-error-text')).toBeNull();
     });
 
-    it('should not block the form while its readOnly input disables it', () => {
+    it('should block the form when a required field has no value while its readOnly input disables it', () => {
         widget.readOnly = true;
         widget.field = new FormFieldModel(form, {
             id: 'date-field-id',
@@ -418,8 +418,7 @@ describe('DateTimeWidgetComponent', () => {
         fixture.detectChanges();
 
         expect(widget.datetimeInputControl.disabled).toBeTrue();
-        expect(widget.field.inputDisabled).toBeTrue();
-        expect(widget.field.validate()).toBeTrue();
+        expect(widget.field.validate()).toBeFalse();
     });
 
     describe('when tooltip is set', () => {

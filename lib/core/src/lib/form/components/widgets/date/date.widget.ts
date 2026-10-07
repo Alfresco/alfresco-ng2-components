@@ -110,9 +110,6 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, Reac
             ? this.dateInputControl.disable({ emitEvent: false })
             : this.dateInputControl.enable({ emitEvent: false });
 
-        if (this.field) {
-            this.field.inputDisabled = this.readOnly;
-        }
         this.dateInputControl.updateValueAndValidity({ emitEvent: false });
     }
 
