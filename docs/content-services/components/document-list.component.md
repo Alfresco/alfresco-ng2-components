@@ -220,6 +220,7 @@ and then re-fetching the requested one:
 // seed the remembered page, then let the folder load use it
 documentList.setPagination({ maxItems: 25, skipCount: 25 });
 documentList.currentFolderId = nodeId;
+documentList.loadFolder();
 ```
 
 Only the fields provided in the pagination model are updated; omitted fields keep their current value.
