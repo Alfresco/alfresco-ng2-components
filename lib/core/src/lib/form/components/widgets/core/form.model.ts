@@ -241,13 +241,7 @@ export class FormModel implements ProcessFormModel {
     }
 
     private isBlockingCandidate(field: FormFieldModel, fieldTabs: Map<FormFieldModel, TabModel>): boolean {
-        if (this.isFieldOrParentHidden(field)) {
-            return false;
-        }
-        if (!this.hasTabs()) {
-            return true;
-        }
-        return !!fieldTabs.get(field)?.isVisible;
+        return !this.isFieldOrParentHidden(field) && fieldTabs.get(field)?.isVisible !== false;
     }
 
     private getFieldTabs(): Map<FormFieldModel, TabModel> {

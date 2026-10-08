@@ -699,7 +699,7 @@ describe('FormModel', () => {
             expectTabsToMatchForm(form);
         });
 
-        it('should stay valid when the invalid field belongs to no tab', () => {
+        it('should be invalid without marking a tab when the invalid field belongs to no tab', () => {
             const form = buildReactiveTabForm({
                 dateValue: '2024-05-10',
                 extraRootField: {
@@ -714,8 +714,8 @@ describe('FormModel', () => {
             form.validateForm();
 
             expect(form.getFieldById('orphan').isValid).toBeFalse();
-            expect(form.isValid).toBeTrue();
-            expectTabsToMatchForm(form);
+            expect(form.isValid).toBeFalse();
+            expect(form.tabs.every((tab) => !tab.hasValidationErrors)).toBeTrue();
         });
 
         it('should be invalid and mark the tab when a field is rejected, until the next validation', () => {
@@ -1867,6 +1867,13 @@ describe('FormModel', () => {
                 return testForm;
             };
 
+            const createFormWithoutReportedErrors = (definition: InvalidFieldDefinition, layout: ParentLayout, readOnlyForm = false): FormModel => {
+                const fields = layout.build({ id: 'field1', ...definition.json });
+                const testForm = new FormModel({ id: 'test-form', name: 'Test Form', tabs: [], fields }, null, readOnlyForm, formService);
+                testForm.enableParentVisibilityCheck = true;
+                return testForm;
+            };
+
             const validateAndGetErrors = (testForm: FormModel): FormFieldModel[] => {
                 let errorsField: FormFieldModel[] = [];
                 const subscription = formService.validateForm.subscribe((event) => (errorsField = event.errorsField));
@@ -1963,6 +1970,26 @@ describe('FormModel', () => {
 
                             expect(validateAndGetErrors(testForm)).toEqual([]);
                             expect(testForm.isValid).toBe(true);
+                        });
+                    });
+
+                    [
+                        { state: 'read-only', readOnlyForm: false, restrict: (_form: FormModel, field: FormFieldModel) => (field.readOnly = true) },
+                        {
+                            state: 'disabled by a form rule',
+                            readOnlyForm: false,
+                            restrict: (testForm: FormModel, field: FormFieldModel) => testForm.changeFieldDisabled(field.id, true)
+                        },
+                        { state: 'in a read-only form', readOnlyForm: true, restrict: () => undefined }
+                    ].forEach(({ state, readOnlyForm, restrict }) => {
+                        it(`should keep ${definition.description} in ${layout.description} in validation when the field is ${state}`, () => {
+                            const testForm = createFormWithoutReportedErrors(definition, layout, readOnlyForm);
+                            const invalidFields = getFieldsByJsonId(testForm, 'field1');
+                            invalidFields.forEach((invalidField) => restrict(testForm, invalidField));
+
+                            expect(invalidFields.every((invalidField) => invalidField.readOnly)).toBe(true);
+                            expect(validateAndGetErrors(testForm)).toEqual(invalidFields);
+                            expect(testForm.isValid).toBe(false);
                         });
                     });
                 });

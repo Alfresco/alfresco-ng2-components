@@ -393,9 +393,9 @@ describe('StartFormComponent', () => {
             expect(await actionButtons[0].getText()).toBe('SAVE');
             expect(await actionButtons[0].isDisabled()).toBeFalsy();
             expect(await actionButtons[1].getText()).toBe('APPROVE');
-            expect(await actionButtons[1].isDisabled()).toBe(false);
+            expect(await actionButtons[1].isDisabled()).toBeTruthy();
             expect(await actionButtons[2].getText()).toBe('COMPLETE');
-            expect(await actionButtons[2].isDisabled()).toBe(false);
+            expect(await actionButtons[2].isDisabled()).toBeTruthy();
         });
     });
 
