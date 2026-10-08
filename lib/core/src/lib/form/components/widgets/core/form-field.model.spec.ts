@@ -1332,6 +1332,80 @@ describe('FormFieldModel', () => {
         });
     });
 
+    describe('errors reported by a widget', () => {
+        const createDateField = (): FormFieldModel =>
+            new FormFieldModel(new FormModel(), { id: 'date', type: FormFieldTypes.DATE, value: '2024-05-10' });
+
+        it('should keep an error that a date widget set in its validation summary', () => {
+            const field = createDateField();
+            field.validationSummary = new ErrorMessageModel({ message: 'CUSTOM.DATE_ERROR' });
+
+            expect(field.validate()).toBe(false);
+            expect(field.isValid).toBe(false);
+            expect(field.validationSummary.message).toBe('CUSTOM.DATE_ERROR');
+        });
+
+        it('should validate a date field again once its widget clears the reported error', () => {
+            const field = createDateField();
+            field.validationSummary = new ErrorMessageModel({ message: 'CUSTOM.DATE_ERROR' });
+            field.validate();
+
+            field.validationSummary = new ErrorMessageModel('');
+
+            expect(field.validate()).toBe(true);
+        });
+
+        it('should replace an error set in the validation summary of a text field', () => {
+            const field = new FormFieldModel(new FormModel(), { id: 'text', type: FormFieldTypes.TEXT, value: 'text' });
+            field.validationSummary = new ErrorMessageModel({ message: 'CUSTOM.TEXT_ERROR' });
+
+            expect(field.validate()).toBe(true);
+            expect(field.validationSummary.isActive()).toBe(false);
+        });
+
+        it('should keep an error that a date widget set on the message of its existing validation summary', () => {
+            const field = createDateField();
+            field.validate();
+
+            field.validationSummary.message = 'CUSTOM.DATE_ERROR';
+
+            expect(field.validate()).toBe(false);
+            expect(field.validationSummary.message).toBe('CUSTOM.DATE_ERROR');
+        });
+
+        it('should run a validator that replaces the validation summary of a dropdown field again on the next validation', () => {
+            let isValueAccepted = false;
+            const form = new FormModel();
+            form.fieldValidators = [
+                {
+                    isSupported: () => true,
+                    validate: (field) => {
+                        field.validationSummary = new ErrorMessageModel({ message: isValueAccepted ? 'CUSTOM.ACCEPTED' : 'CUSTOM.REJECTED' });
+                        return isValueAccepted;
+                    }
+                }
+            ];
+            const field = new FormFieldModel(form, { id: 'dropdown', type: FormFieldTypes.DROPDOWN, value: 'gold' });
+
+            expect(field.validate()).toBe(false);
+
+            isValueAccepted = true;
+
+            expect(field.validate()).toBe(true);
+            expect(field.validationSummary.message).toBe('CUSTOM.ACCEPTED');
+            expect(field.validate()).toBe(true);
+        });
+
+        it('should replace an error that a previous validation produced for a date field', () => {
+            const field = new FormFieldModel(new FormModel(), { id: 'date', type: FormFieldTypes.DATE, required: true, value: null });
+            field.validate();
+
+            field.value = '2024-05-10';
+
+            expect(field.validate()).toBe(true);
+        });
+    });
+
     it('should fail validation for readOnly required display-external-property field with null value', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {

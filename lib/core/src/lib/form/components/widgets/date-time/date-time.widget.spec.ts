@@ -20,6 +20,7 @@ import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { DateTimeWidgetComponent } from './date-time.widget';
 import { FormFieldTypes } from '../core/form-field-types';
+import { FormFieldValidator } from '../core/form-field-validator';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { addMinutes } from 'date-fns';
@@ -328,26 +329,96 @@ describe('DateTimeWidgetComponent', () => {
         expect(field.validationSummary.message).toBe('');
     });
 
-    describe('addValidators idempotency', () => {
-        it('should not stack required validators on repeated updateReactiveFormControl calls', () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.DATETIME,
-                required: true
-            });
-            widget.field.isVisible = true;
-
-            fixture.detectChanges();
-
-            widget.updateReactiveFormControl();
-            widget.updateReactiveFormControl();
-            widget.updateReactiveFormControl();
-
-            widget.datetimeInputControl.setValue(new Date('2025-06-15T10:30:00.000Z'));
-            fixture.detectChanges();
-
-            expect(widget.field.isValid).toBeTrue();
-            expect(widget.datetimeInputControl.valid).toBeTrue();
+    it('should report typed text that does not parse to the form model and show its message', async () => {
+        const field = new FormFieldModel(form, {
+            id: 'date-field-id',
+            name: 'date-name',
+            type: FormFieldTypes.DATETIME
         });
+
+        widget.field = field;
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        await testingUtils.input.fill('invalid-text');
+        testingUtils.blurByCSS('input');
+        fixture.detectChanges();
+
+        expect(field.inputErrors).toEqual({ matDatepickerParse: true });
+        expect(testingUtils.getByCSS('.adf-error-text').nativeElement.textContent.trim()).toBe('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT');
+
+        await testingUtils.input.fill('');
+        fixture.detectChanges();
+
+        expect(field.inputErrors).toBeNull();
+        expect(testingUtils.getByCSS('.adf-error-text')).toBeNull();
+    });
+
+    it('should show the error of the form model while its control is valid', () => {
+        let modelError = true;
+        const modelValidator: FormFieldValidator = {
+            isSupported: () => true,
+            validate: (field) => {
+                field.validationSummary.message = modelError ? 'TEST.MODEL_ERROR' : '';
+                return !modelError;
+            }
+        };
+        widget.field = new FormFieldModel(new FormModel({}, undefined, false, undefined, undefined, [modelValidator]), {
+            id: 'date-field-id',
+            name: 'date-name',
+            type: FormFieldTypes.DATETIME,
+            value: '9999-09-12T09:00:00.000Z'
+        });
+        fixture.detectChanges();
+
+        testingUtils.blurByCSS('input');
+        fixture.detectChanges();
+
+        expect(widget.datetimeInputControl.valid).toBeTrue();
+        expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
+        expect(testingUtils.getByCSS('#date-field-id').nativeElement.getAttribute('aria-invalid')).toBe('true');
+        expect(testingUtils.getByCSS('.adf-error-text').nativeElement.textContent.trim()).toBe('TEST.MODEL_ERROR');
+
+        modelError = false;
+        widget.updateReactiveFormControl();
+        fixture.detectChanges();
+
+        expect(testingUtils.getByCSS('.adf-invalid')).toBeNull();
+        expect(testingUtils.getByCSS('#date-field-id').nativeElement.getAttribute('aria-invalid')).toBe('false');
+        expect(testingUtils.getByCSS('.adf-error-text')).toBeNull();
+    });
+
+    it('should not show the error of its control while the form model is valid', () => {
+        form.fieldValidators = [];
+        widget.field = new FormFieldModel(form, {
+            id: 'date-field-id',
+            name: 'date-name',
+            type: FormFieldTypes.DATETIME,
+            minValue: '2025-03-01T10:00:00.000Z',
+            value: '2025-01-01T10:00:00.000Z'
+        });
+        fixture.detectChanges();
+
+        testingUtils.blurByCSS('input');
+        fixture.detectChanges();
+
+        expect(widget.datetimeInputControl.invalid).toBeTrue();
+        expect(testingUtils.getByCSS('.adf-invalid')).toBeNull();
+        expect(testingUtils.getByCSS('#date-field-id').nativeElement.getAttribute('aria-invalid')).toBe('false');
+        expect(testingUtils.getByCSS('.adf-error-text')).toBeNull();
+    });
+
+    it('should block the form when a required field has no value while its readOnly input disables it', () => {
+        widget.readOnly = true;
+        widget.field = new FormFieldModel(form, {
+            id: 'date-field-id',
+            type: FormFieldTypes.DATETIME,
+            required: true
+        });
+        fixture.detectChanges();
+
+        expect(widget.datetimeInputControl.disabled).toBeTrue();
+        expect(widget.field.validate()).toBeFalse();
     });
 
     describe('when tooltip is set', () => {

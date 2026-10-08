@@ -150,6 +150,34 @@ describe('FunctionalGroupWidgetComponent', () => {
         expect(getWorkflowGroupsSpy).not.toHaveBeenCalled();
     });
 
+    it('should make the form invalid and mark the tab when the typed group is not valid', () => {
+        const form = new FormModel({
+            tabs: [
+                { id: 'details', title: 'Details' },
+                { id: 'assignment', title: 'Assignment' }
+            ],
+            fields: [
+                { id: 'details-root', type: 'container', tab: 'details', numberOfColumns: 1, fields: { 1: [{ id: 'text', type: 'text' }] } },
+                {
+                    id: 'assignment-root',
+                    type: 'container',
+                    tab: 'assignment',
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'assignee', type: FormFieldTypes.FUNCTIONAL_GROUP }] }
+                }
+            ]
+        });
+        component.field = form.getFieldById('assignee');
+        expect(form.isValid).toBe(true);
+        expect(form.tabs.map((tab) => tab.hasValidationErrors)).toEqual([false, false]);
+
+        component.validateGroup(false, false);
+
+        expect(component.field.isValid).toBe(false);
+        expect(form.isValid).toBe(false);
+        expect(form.tabs.map((tab) => tab.hasValidationErrors)).toEqual([false, true]);
+    });
+
     describe('when is required', () => {
         beforeEach(() => {
             component.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {

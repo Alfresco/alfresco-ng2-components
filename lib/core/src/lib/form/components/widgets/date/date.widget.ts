@@ -18,8 +18,8 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { DateAdapter, ErrorStateMatcher, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,8 +28,8 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter, DateFnsUtils, DEFAULT_DATE_FORMAT } from '../../../../common';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
-import { ErrorMessageModel } from '../core/error-message.model';
-import { parseISO } from 'date-fns';
+import { getValidationSummaryTranslationParameters } from '../core/error-message.model';
+import { getDateFieldRange, isEmptyFieldValue } from '../core/form-field-validator';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormWidget } from '../reactive-widget.interface';
 
@@ -61,6 +61,11 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, Reac
     startAt: Date;
 
     dateInputControl: FormControl<Date> = new FormControl<Date>(null);
+    translateParameters: Record<string, string> = {};
+
+    readonly errorStateMatcher: ErrorStateMatcher = {
+        isErrorState: (control) => !!control?.touched && this.hasValidationError()
+    };
 
     public readonly formService = inject(FormService);
 
@@ -92,12 +97,15 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, Reac
         }
     }
 
+    hasValidationError(): boolean {
+        return !this.field.isValid && this.field.validationSummary.isActive();
+    }
+
+    hasRequiredError(): boolean {
+        return !!this.field.required && isEmptyFieldValue(this.field.value);
+    }
+
     private updateFormControlState(): void {
-        if (this.isRequired() && this.field?.isVisible) {
-            this.dateInputControl.addValidators(Validators.required);
-        } else {
-            this.dateInputControl.removeValidators(Validators.required);
-        }
         this.field?.readOnly || this.readOnly
             ? this.dateInputControl.disable({ emitEvent: false })
             : this.dateInputControl.enable({ emitEvent: false });
@@ -128,50 +136,9 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, Reac
     }
 
     private validateField(): void {
-        if (this.dateInputControl.invalid) {
-            this.handleErrors(this.dateInputControl.errors);
-            this.field.markAsInvalid();
-        } else {
-            this.resetErrors();
-            this.field.markAsValid();
-        }
-    }
-
-    private handleErrors(errors: ValidationErrors): void {
-        const errorAttributes = new Map<string, string>();
-        switch (true) {
-            case !!errors.matDatepickerParse: {
-                const format = this.field.dateDisplayFormat || this.field.defaultDateTimeFormat;
-                errorAttributes.set('format', format);
-                this.updateValidationSummary('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT', errorAttributes);
-                break;
-            }
-            case !!errors.required:
-                this.updateValidationSummary('FORM.FIELD.REQUIRED');
-                break;
-            case !!errors.matDatepickerMin: {
-                const minValue = DateFnsUtils.formatDate(errors.matDatepickerMin.min, this.field.dateDisplayFormat).toLocaleUpperCase();
-                errorAttributes.set('minValue', minValue);
-                this.updateValidationSummary('FORM.FIELD.VALIDATOR.NOT_LESS_THAN', errorAttributes);
-                break;
-            }
-            case !!errors.matDatepickerMax: {
-                const maxValue = DateFnsUtils.formatDate(errors.matDatepickerMax.max, this.field.dateDisplayFormat).toLocaleUpperCase();
-                errorAttributes.set('maxValue', maxValue);
-                this.updateValidationSummary('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN', errorAttributes);
-                break;
-            }
-            default:
-                break;
-        }
-    }
-
-    private updateValidationSummary(message: string, attributes?: Map<string, string>): void {
-        this.field.validationSummary = new ErrorMessageModel({ message, attributes });
-    }
-
-    private resetErrors(): void {
-        this.updateValidationSummary('');
+        this.field.inputErrors = this.dateInputControl.hasError('matDatepickerParse') ? { matDatepickerParse: true } : null;
+        this.field.validate();
+        this.translateParameters = getValidationSummaryTranslationParameters(this.field.validationSummary);
     }
 
     private initDateAdapter(): void {
@@ -182,13 +149,9 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, Reac
     }
 
     private initDateRange(): void {
-        if (this.field?.minValue) {
-            this.minDate = parseISO(this.field.minValue);
-        }
-
-        if (this.field?.maxValue) {
-            this.maxDate = parseISO(this.field.maxValue);
-        }
+        const { min, max } = getDateFieldRange(this.field);
+        this.minDate = min;
+        this.maxDate = max;
     }
 
     private initStartAt(): void {

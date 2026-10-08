@@ -1,6 +1,6 @@
 <div class="{{ field.className }}"
      id="data-time-widget"
-     [class.adf-invalid]="datetimeInputControl.invalid && datetimeInputControl.touched"
+     [class.adf-invalid]="hasValidationError() && datetimeInputControl.touched"
      [class.adf-readonly]="field.readOnly"
      [class.adf-left-label-input-container]="field.leftLabels">
     <div *ngIf="field.leftLabels">
@@ -25,6 +25,7 @@
                    [required]="field.required && field.isVisible"
                    [id]="field.id"
                    [formControl]="datetimeInputControl"
+                   [errorStateMatcher]="errorStateMatcher"
                    (keydown.enter)="datetimePicker.open()"
                    [placeholder]="field.placeholder"
                    [title]="field.tooltip"
@@ -38,7 +39,7 @@
                 [touchUi]="true"
                 [timeInterval]="5"
                 [disabled]="field.readOnly" />
-            @if (datetimeInputControl.invalid && datetimeInputControl.touched && field.validationSummary?.message) {
+            @if (hasValidationError() && datetimeInputControl.touched) {
                 <mat-error class="adf-form-field-status-slot">
                     <mat-icon class="adf-error-icon">error_outline</mat-icon>
                     <span class="adf-error-text">{{ field.validationSummary.message | translate:translateParameters }}</span>

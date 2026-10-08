@@ -25,12 +25,14 @@ import {
     FormService,
     FormFieldEvent,
     FormFieldTypes,
+    FormFieldValidator,
     UnitTestingUtils,
     FormFieldComponent,
     FormRenderingService,
     ADF_TYPED_VALUE_FORMATTING_ENABLED
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
+import { CLOUD_FORM_FIELD_VALIDATORS } from '../../cloud-form-field-validators';
 import {
     fakeOptionList,
     filterOptionList,
@@ -271,6 +273,18 @@ describe('DropdownCloudWidgetComponent', () => {
                 expect(errors.length).toBeGreaterThan(0);
             });
 
+            it('should report required for a stored value when REST API failed', () => {
+                widget.field.readOnly = false;
+                widget.field.required = true;
+                widget.field.value = fakeOptionList[0].id;
+
+                widget.ngOnInit();
+
+                expect(widget.field.value).toBe('');
+                expect(widget.field.isValid).toBeFalse();
+                expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
+            });
+
             it('should NOT show error message when widget is readonly', async () => {
                 widget.field.readOnly = true;
 
@@ -311,6 +325,16 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.field.required = true;
                 widget.field.value = '';
                 widget.field.isVisible = true;
+            });
+
+            it('should report required for a stored value that is not among the loaded options', () => {
+                widget.field.value = 'removed';
+
+                widget.ngOnInit();
+
+                expect(widget.field.value).toBe('');
+                expect(widget.field.isValid).toBeFalse();
+                expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
             });
 
             it('should show required message for rest type when required and value is empty after touch', async () => {
@@ -443,10 +467,13 @@ describe('DropdownCloudWidgetComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>', leftLabels: true }), {
-                type: FormFieldTypes.DROPDOWN,
-                required: true
-            });
+            widget.field = new FormFieldModel(
+                new FormModel({ taskId: '<id>', leftLabels: true }, undefined, false, undefined, undefined, CLOUD_FORM_FIELD_VALIDATORS),
+                {
+                    type: FormFieldTypes.DROPDOWN,
+                    required: true
+                }
+            );
         });
 
         it('should be able to display label with asterisk when left-label is present', async () => {
@@ -498,7 +525,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
 
                 expect(widget.field.isValid).toBeFalse();
-                expect(widget.dropdownControl.valid).toBeFalse();
+                expect(widget.hasValidationError()).toBeTrue();
                 expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
             });
 
@@ -508,7 +535,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
 
                 expect(widget.field.isValid).toBeFalse();
-                expect(widget.dropdownControl.valid).toBeFalse();
+                expect(widget.hasValidationError()).toBeTrue();
                 expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
             });
         });
@@ -523,7 +550,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
 
                 expect(widget.field.isValid).toBeTrue();
-                expect(widget.dropdownControl.valid).toBeTrue();
+                expect(widget.hasValidationError()).toBeFalse();
                 expect(widget.field.validationSummary.message).toBe('');
             });
 
@@ -533,10 +560,78 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
 
                 expect(widget.field.isValid).toBeTrue();
-                expect(widget.dropdownControl.valid).toBeTrue();
+                expect(widget.hasValidationError()).toBeFalse();
                 expect(widget.field.validationSummary.message).toBe('');
             });
         });
+    });
+
+    it('should show the error of the form model while its control is valid', () => {
+        let modelError = true;
+        const modelValidator: FormFieldValidator = {
+            isSupported: () => true,
+            validate: (field) => {
+                field.validationSummary.message = modelError ? 'TEST.MODEL_ERROR' : '';
+                return !modelError;
+            }
+        };
+        widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, undefined, false, undefined, undefined, [modelValidator]), {
+            id: 'dropdown-id',
+            type: FormFieldTypes.DROPDOWN,
+            options: fakeOptionList,
+            value: fakeOptionList[0].id
+        });
+        fixture.detectChanges();
+
+        element.querySelector('.adf-select').dispatchEvent(new Event('blur'));
+        fixture.detectChanges();
+
+        expect(widget.dropdownControl.valid).toBeTrue();
+        expect(element.querySelector('.adf-invalid')).toBeTruthy();
+        expect(element.querySelector('#dropdown-id').getAttribute('aria-invalid')).toBe('true');
+        expect(element.querySelector('.adf-error-text').textContent.trim()).toBe('TEST.MODEL_ERROR');
+
+        modelError = false;
+        widget.updateReactiveFormControl();
+        fixture.detectChanges();
+
+        expect(element.querySelector('.adf-invalid')).toBeNull();
+        expect(element.querySelector('#dropdown-id').getAttribute('aria-invalid')).toBe('false');
+        expect(element.querySelector('.adf-error-text')).toBeNull();
+    });
+
+    it('should not show the error of its control while the form model is valid', () => {
+        const form = new FormModel({ taskId: '<id>' });
+        form.fieldValidators = [];
+        widget.field = new FormFieldModel(form, {
+            id: 'dropdown-id',
+            type: FormFieldTypes.DROPDOWN,
+            required: true,
+            options: fakeOptionList
+        });
+        fixture.detectChanges();
+
+        element.querySelector('.adf-select').dispatchEvent(new Event('blur'));
+        fixture.detectChanges();
+
+        expect(widget.dropdownControl.invalid).toBeTrue();
+        expect(element.querySelector('.adf-invalid')).toBeNull();
+        expect(element.querySelector('#dropdown-id').getAttribute('aria-invalid')).toBe('false');
+        expect(element.querySelector('.adf-error-text')).toBeNull();
+    });
+
+    it('should block the form when a required field has no value while its readOnly input disables it', () => {
+        widget.readOnly = true;
+        widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+            id: 'dropdown-id',
+            type: FormFieldTypes.DROPDOWN,
+            required: true,
+            options: fakeOptionList
+        });
+        fixture.detectChanges();
+
+        expect(widget.dropdownControl.disabled).toBeTrue();
+        expect(widget.field.validate()).toBeFalse();
     });
 
     describe('filter', () => {
@@ -719,12 +814,12 @@ describe('DropdownCloudWidgetComponent', () => {
                 ]
             });
 
-            const validateBeforeUnselect = widget.dropdownControl.valid;
+            const validateBeforeUnselect = widget.field.isValid;
 
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
             await dropdown.clickOptions({ selector: '[id="id_cat"]' });
 
-            const validateAfterUnselect = widget.dropdownControl.valid;
+            const validateAfterUnselect = widget.field.isValid;
 
             expect(validateBeforeUnselect).toBe(true);
             expect(validateAfterUnselect).toBe(false);
@@ -741,7 +836,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
             widget.ngOnInit();
 
-            expect(widget.dropdownControl.valid).toBe(false);
+            expect(widget.field.isValid).toBe(false);
         });
 
         it('should fail (display error) for dropdown with empty object', () => {
@@ -755,7 +850,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
             widget.ngOnInit();
 
-            expect(widget.dropdownControl.valid).toBe(false);
+            expect(widget.field.isValid).toBe(false);
         });
     });
 
@@ -1106,7 +1201,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 value: 'testValue',
                 options: [],
                 isVisible: true,
-                markAsValid: () => {}
+                validate: () => true
             } as any; // Mock field
 
             fixture.detectChanges();
@@ -1125,7 +1220,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 value: { id: 'Id_1', name: 'Label 1' },
                 options: [],
                 isVisible: true,
-                markAsValid: () => {}
+                validate: () => true
             } as FormFieldModel;
 
             fixture.detectChanges();
@@ -1145,7 +1240,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 value: { id: 'testValueObj', name: 'testValueObjName' },
                 options: [],
                 isVisible: true,
-                markAsValid: () => {}
+                validate: () => true
             } as FormFieldModel;
 
             fixture.detectChanges();
@@ -1165,7 +1260,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 value: undefined,
                 options: [],
                 isVisible: true,
-                markAsValid: () => {}
+                validate: () => true
             } as FormFieldModel;
 
             fixture.detectChanges();
@@ -1181,7 +1276,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 value: '',
                 options: [],
                 isVisible: true,
-                markAsValid: () => {}
+                validate: () => true
             } as FormFieldModel;
 
             fixture.detectChanges();
@@ -1197,7 +1292,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 value: null,
                 options: [],
                 isVisible: true,
-                markAsValid: () => {}
+                validate: () => true
             } as FormFieldModel;
 
             fixture.detectChanges();
@@ -1270,6 +1365,15 @@ describe('DropdownCloudWidgetComponent', () => {
                 'playerFullName',
                 mockProcessVariablesWithJson
             );
+            fixture.detectChanges();
+
+            await checkDropdownVariableOptionsFailed();
+        });
+
+        it('should display error when the variable holds null on the options path', async () => {
+            widget.field = getVariableDropdownWidget('variables.json-null-variable', 'response.players', 'playerId', 'playerFullName', [
+                new TaskVariableCloud({ name: 'variables.json-null-variable', value: { response: null }, type: 'json', id: 'fake-id-3' })
+            ]);
             fixture.detectChanges();
 
             await checkDropdownVariableOptionsFailed();

@@ -87,8 +87,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(() => {
-                this.field.markAsInvalid();
-                this.field.form.markAsInvalid();
+                this.field.form.markFieldAsInvalid(this.field);
             });
 
         this.search.statusChanges

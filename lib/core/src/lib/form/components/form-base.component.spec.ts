@@ -49,6 +49,7 @@ describe('FormBaseComponent', () => {
         const field = {
             required: false,
             value: '',
+            isVisible: true,
             validate: () => !field.required || !!field.value
         } as FormFieldModel;
         component.form.fieldsCache = [field];
@@ -79,14 +80,14 @@ describe('FormBaseComponent', () => {
     });
 
     it('should not execute a target outcome when the form is invalid', () => {
-        component.form.fieldsCache = [jasmine.createSpyObj('FormFieldModel', { validate: false })];
+        component.form.fieldsCache = [jasmine.createSpyObj('FormFieldModel', { validate: false }, { isVisible: true })];
 
         expect(component.onOutcomeRequested('approve')).toBeFalse();
         expect(component.completeTaskForm).not.toHaveBeenCalled();
     });
 
     it('should show validation errors when the requested outcome requires a valid form', () => {
-        component.form.fieldsCache = [jasmine.createSpyObj('FormFieldModel', { validate: false })];
+        component.form.fieldsCache = [jasmine.createSpyObj('FormFieldModel', { validate: false }, { isVisible: true })];
 
         component.onOutcomeRequested('approve');
 

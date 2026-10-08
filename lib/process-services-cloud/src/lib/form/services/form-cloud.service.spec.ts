@@ -22,6 +22,7 @@ import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { FORM_FIELD_VALIDATORS, FormFieldValidator, NoopAuthModule } from '@alfresco/adf-core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ADF_TASK_RUNTIME_BUNDLE_FALLBACK_ENABLED } from '../../services/task-runtime-bundle-fallback.token';
+import { CLOUD_FORM_FIELD_VALIDATORS } from '../components/cloud-form-field-validators';
 
 const mockTaskResponseBody = {
     entry: { id: 'id', name: 'name', formKey: 'form-key' }
@@ -86,7 +87,107 @@ describe('Form Cloud service', () => {
             const json = { formRepresentation: { id: formId, name: 'task-form', taskId: 'task-id', formDefinition: {} } };
             const result = service.parseForm(json, undefined, undefined);
             expect(result).toBeDefined();
-            expect(result.fieldValidators).toEqual([...FORM_FIELD_VALIDATORS, fakeValidator]);
+            expect(result.fieldValidators).toEqual([...FORM_FIELD_VALIDATORS, ...CLOUD_FORM_FIELD_VALIDATORS, fakeValidator]);
+        });
+
+        it('should apply the cloud dropdown rules to a field on an unopened tab', () => {
+            const json = {
+                formRepresentation: {
+                    id: 'form-id',
+                    formDefinition: {
+                        tabs: [
+                            { id: 'details', title: 'Details' },
+                            { id: 'plan', title: 'Plan' }
+                        ],
+                        fields: [
+                            {
+                                id: 'details-root',
+                                type: 'container',
+                                tab: 'details',
+                                numberOfColumns: 1,
+                                fields: { 1: [{ id: 'text', type: 'text' }] }
+                            },
+                            {
+                                id: 'plan-root',
+                                type: 'container',
+                                tab: 'plan',
+                                numberOfColumns: 1,
+                                fields: {
+                                    1: [
+                                        {
+                                            id: 'tier',
+                                            type: 'dropdown',
+                                            required: true,
+                                            value: 'platinum',
+                                            options: [
+                                                { id: 'empty', name: 'Choose one...' },
+                                                { id: 'gold', name: 'Gold' }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            };
+
+            const result = service.parseForm(json);
+
+            expect(result.isValid).toBe(false);
+            expect(result.tabs.map((tab) => tab.hasValidationErrors)).toEqual([false, true]);
+        });
+
+        it('should mark the unopened tab when the variable of a required dropdown holds null on the options path', () => {
+            const json = {
+                formRepresentation: {
+                    id: 'form-id',
+                    formDefinition: {
+                        tabs: [
+                            { id: 'details', title: 'Details' },
+                            { id: 'plan', title: 'Plan' }
+                        ],
+                        variables: [{ id: 'plan-options', name: 'planOptions', type: 'json', value: { list: null } }],
+                        fields: [
+                            {
+                                id: 'details-root',
+                                type: 'container',
+                                tab: 'details',
+                                numberOfColumns: 1,
+                                fields: { 1: [{ id: 'text', type: 'text' }] }
+                            },
+                            {
+                                id: 'plan-root',
+                                type: 'container',
+                                tab: 'plan',
+                                numberOfColumns: 1,
+                                fields: {
+                                    1: [
+                                        {
+                                            id: 'tier',
+                                            type: 'dropdown',
+                                            required: true,
+                                            value: 'plus',
+                                            optionType: 'variable',
+                                            variableConfig: {
+                                                variableName: 'planOptions',
+                                                optionsPath: 'list',
+                                                optionsId: 'id',
+                                                optionsLabel: 'name'
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            };
+
+            const result = service.parseForm(json);
+
+            expect(result.isValid).toBe(false);
+            expect(result.tabs.map((tab) => tab.hasValidationErrors)).toEqual([false, true]);
         });
     });
 

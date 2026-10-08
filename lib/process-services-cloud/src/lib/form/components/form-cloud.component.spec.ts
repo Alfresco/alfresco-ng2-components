@@ -18,6 +18,7 @@
 import { VersionCompatibilityService, AlfrescoApiService } from '@alfresco/adf-content-services';
 import {
     ADF_DISPLAY_TEXT_SETTINGS,
+    ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED,
     ContentLinkModel,
     CoreModule,
     FormFieldModel,
@@ -37,7 +38,8 @@ import {
     FormRulesEvent,
     NoopTranslateModule,
     NoopAuthModule,
-    FORM_FIELD_VALIDATORS
+    FORM_FIELD_VALIDATORS,
+    FormFieldValidator
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
@@ -66,6 +68,7 @@ import { ADF_FORM_TAB_NAV_ENABLED, FORM_CLOUD_FIELD_VALIDATORS_TOKEN, FormCloudC
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
+import { CLOUD_FORM_FIELD_VALIDATORS } from './cloud-form-field-validators';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { TaskDetailsCloudModel } from '../../task/models/task-details-cloud.model';
 
@@ -624,7 +627,7 @@ describe('FormCloudComponent', () => {
 
     it('should reject an invalid button outcome request without completing the task', () => {
         const formModel = new FormModel({ id: 'form', fields: [], outcomes: [{ id: 'approve', name: 'Approve' }] });
-        formModel.fieldsCache = [jasmine.createSpyObj('FormFieldModel', { validate: false })];
+        formModel.fieldsCache = [jasmine.createSpyObj('FormFieldModel', { validate: false }, { isVisible: true })];
         formComponent.form = formModel;
         spyOn(formComponent, 'completeTaskForm').and.stub();
 
@@ -1518,11 +1521,29 @@ describe('FormCloudComponent', () => {
         expect(formComponent.disableSaveButton).toBeTrue();
     });
 
+    it('should parse a form with the cloud rules when field validators are null', () => {
+        formComponent.fieldValidators = null;
+
+        const form = formComponent.parseForm(new FormCloudRepresentation(JSON.parse(JSON.stringify(cloudFormMock))));
+
+        expect(form.fieldValidators).toEqual([...FORM_FIELD_VALIDATORS, ...CLOUD_FORM_FIELD_VALIDATORS]);
+    });
+
+    it('should parse a form with the cloud rules when field validators are undefined', () => {
+        formComponent.fieldValidators = undefined;
+
+        const form = formComponent.parseForm(new FormCloudRepresentation(JSON.parse(JSON.stringify(cloudFormMock))));
+
+        expect(form.fieldValidators).toEqual([...FORM_FIELD_VALIDATORS, ...CLOUD_FORM_FIELD_VALIDATORS]);
+    });
+
     it('should set field validators with injected validators', () => {
         formComponent.formCloudRepresentationJSON = new FormCloudRepresentation(JSON.parse(JSON.stringify(cloudFormMock)));
         const form = formComponent.parseForm(formComponent.formCloudRepresentationJSON);
         expect(formComponent.fieldValidators.length).toBe(1);
-        expect(form.fieldValidators.length).toBe(FORM_FIELD_VALIDATORS.length + formComponent.fieldValidators.length);
+        expect(form.fieldValidators.length).toBe(
+            FORM_FIELD_VALIDATORS.length + CLOUD_FORM_FIELD_VALIDATORS.length + formComponent.fieldValidators.length
+        );
     });
 
     describe('form validations', () => {
@@ -2547,6 +2568,153 @@ describe('FormCloudComponent - ADF_FORM_TAB_NAV_ENABLED token', () => {
         fixture.detectChanges();
 
         expect(formComponent.shouldShowTabNavigation).toBeFalse();
+    });
+});
+
+describe('FormCloudComponent - multi-tab validation indicators', () => {
+    let formComponent: FormCloudComponent;
+    let fixture: ComponentFixture<FormCloudComponent>;
+    let form: FormModel;
+
+    const tabbedFormJson = {
+        id: 'tabbed-form',
+        name: 'TabbedForm',
+        tabs: [
+            { id: 'tab1', title: 'Tab 1' },
+            { id: 'tab2', title: 'Tab 2' }
+        ],
+        fields: [
+            {
+                id: 'container1',
+                type: 'container',
+                tab: 'tab1',
+                numberOfColumns: 1,
+                fields: { 1: [{ id: 'text1', type: 'text', name: 'Text 1' }] }
+            },
+            {
+                id: 'container2',
+                type: 'container',
+                tab: 'tab2',
+                numberOfColumns: 1,
+                fields: { 1: [{ id: 'text2', type: 'text', name: 'Text 2', required: true }] }
+            }
+        ],
+        outcomes: [],
+        showBottomTabNavButtons: true
+    };
+
+    const setUp = (formJson: any = tabbedFormJson, fieldValidators?: FormFieldValidator[]) => {
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+            imports: [NoopTranslateModule, NoopAuthModule, FormCloudComponent],
+            providers: [
+                { provide: VersionCompatibilityService, useValue: {} },
+                { provide: FormRenderingService, useClass: CloudFormRenderingService },
+                { provide: ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED, useValue: true }
+            ]
+        });
+        const apiService = TestBed.inject(AlfrescoApiService);
+        spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
+        fixture = TestBed.createComponent(FormCloudComponent);
+        formComponent = fixture.componentInstance;
+        if (fieldValidators) {
+            formComponent.fieldValidators = fieldValidators;
+        }
+
+        form = formComponent.parseForm(formJson);
+        formComponent.form = form;
+        fixture.detectChanges();
+    };
+
+    const getIndicators = () => fixture.debugElement.queryAll(By.css('.adf-form-tab-validation-indicator'));
+
+    const withSecondTabField = (field: Record<string, unknown>) => ({
+        ...tabbedFormJson,
+        fields: [tabbedFormJson.fields[0], { id: 'container2', type: 'container', tab: 'tab2', numberOfColumns: 1, fields: { 1: [field] } }]
+    });
+
+    const staleDropdown = {
+        id: 'planTier',
+        type: 'dropdown',
+        name: 'Plan tier',
+        required: true,
+        optionType: 'manual',
+        value: 'platinum',
+        options: [
+            { id: 'empty', name: 'Choose one...' },
+            { id: 'gold', name: 'Gold' }
+        ]
+    };
+
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    it('should pass the same form model to the renderer and keep form-level feedback alongside the tab indicator', () => {
+        setUp();
+
+        const tabHeaders = fixture.debugElement.queryAll(By.css('[role="tab"]'));
+
+        expect(formComponent.formRenderer.formDefinition).toBe(form);
+        expect(tabHeaders[0].query(By.css('.adf-form-tab-validation-indicator'))).toBeNull();
+        expect(tabHeaders[1].query(By.css('.adf-form-tab-validation-indicator'))).not.toBeNull();
+        expect(fixture.debugElement.query(By.css('#adf-invalid-form-icon'))).not.toBeNull();
+        expect(formComponent.shouldShowTabNavigation).toBeTrue();
+    });
+
+    it('should remove the tab indicator and show the valid form icon when the invalid field is corrected', () => {
+        setUp();
+
+        const field = form.getFieldById('text2');
+        field.value = 'corrected';
+        form.onFormFieldChanged(field);
+        fixture.detectChanges();
+
+        expect(getIndicators().length).toBe(0);
+        expect(fixture.debugElement.query(By.css('#adf-valid-form-icon'))).not.toBeNull();
+        expect(fixture.debugElement.query(By.css('#adf-invalid-form-icon'))).toBeNull();
+    });
+
+    it('should mark the unopened tab and show the form as invalid when its required cloud dropdown holds a value that is not an option', () => {
+        setUp(withSecondTabField(staleDropdown));
+
+        const tabHeaders = fixture.debugElement.queryAll(By.css('[role="tab"]'));
+
+        expect(fixture.debugElement.query(By.css('dropdown-cloud-widget'))).toBeNull();
+        expect(tabHeaders[1].query(By.css('.adf-form-tab-validation-indicator'))).not.toBeNull();
+        expect(form.isValid).toBe(false);
+        expect(fixture.debugElement.query(By.css('#adf-invalid-form-icon'))).not.toBeNull();
+    });
+
+    it('should mark the unopened tab and show the form as invalid when its date is before its dynamic minimum', () => {
+        setUp(
+            withSecondTabField({
+                id: 'startDate',
+                type: 'date',
+                name: 'Start date',
+                value: '2020-01-01',
+                dateDisplayFormat: 'yyyy-MM-dd',
+                dynamicDateRangeSelection: true,
+                minDateRangeValue: 0,
+                maxDateRangeValue: null
+            })
+        );
+
+        const tabHeaders = fixture.debugElement.queryAll(By.css('[role="tab"]'));
+
+        expect(fixture.debugElement.query(By.css('date-widget'))).toBeNull();
+        expect(tabHeaders[1].query(By.css('.adf-form-tab-validation-indicator'))).not.toBeNull();
+        expect(form.isValid).toBe(false);
+        expect(fixture.debugElement.query(By.css('#adf-invalid-form-icon'))).not.toBeNull();
+    });
+
+    it('should keep the cloud dropdown rules when field validators are set', () => {
+        const customValidator: FormFieldValidator = { isSupported: () => false, validate: () => true };
+        setUp(withSecondTabField(staleDropdown), [customValidator]);
+
+        expect(form.fieldValidators).toContain(customValidator);
+        expect(form.isValid).toBe(false);
+        expect(getIndicators().length).toBe(1);
     });
 });
 

@@ -122,8 +122,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
             this.field.form.validateForm();
         } else {
             this.field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
-            this.field.markAsInvalid();
-            this.field.form.markAsInvalid();
+            this.field.form.markFieldAsInvalid(this.field);
         }
     }
 
