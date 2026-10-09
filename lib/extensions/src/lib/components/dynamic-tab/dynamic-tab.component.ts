@@ -62,7 +62,7 @@ export class DynamicTabComponent implements OnInit, OnChanges, OnDestroy {
 
     private updateInstance() {
         if (this.componentRef?.instance) {
-            this.componentRef.instance.node = this.node;
+            this.componentRef.setInput('node', this.node);
         }
     }
 }
