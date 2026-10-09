@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, Type } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ExtensionService } from '../../services/extension.service';
@@ -41,13 +41,26 @@ class TestDynamicColumnComponent implements OnChanges, OnDestroy {
     }
 }
 
+@Component({
+    selector: 'test-legacy-dynamic-column',
+    template: ''
+})
+class LegacyDynamicColumnComponent implements OnDestroy {
+    context: any;
+    destroyed = false;
+
+    ngOnDestroy() {
+        this.destroyed = true;
+    }
+}
+
 describe('DynamicColumnComponent', () => {
     let fixture: ComponentFixture<DynamicColumnComponent>;
-    const extensionService = {
-        getComponentById: () => TestDynamicColumnComponent
-    };
+    let registeredComponent: Type<any> = TestDynamicColumnComponent;
+    const extensionService = { getComponentById: () => registeredComponent };
 
     beforeEach(() => {
+        registeredComponent = TestDynamicColumnComponent;
         TestBed.configureTestingModule({
             imports: [DynamicColumnComponent, TestDynamicColumnComponent],
             providers: [{ provide: ExtensionService, useValue: extensionService }]
@@ -81,5 +94,14 @@ describe('DynamicColumnComponent', () => {
         fixture.destroy();
 
         expect(child.destroyed).toBe(true);
+    });
+
+    it('should update legacy dynamic components with a plain context property', () => {
+        registeredComponent = LegacyDynamicColumnComponent;
+        fixture.componentRef.setInput('context', { id: 'legacy' });
+        fixture.detectChanges();
+
+        const child = fixture.debugElement.query(By.directive(LegacyDynamicColumnComponent)).componentInstance as LegacyDynamicColumnComponent;
+        expect(child.context).toEqual({ id: 'legacy' });
     });
 });
