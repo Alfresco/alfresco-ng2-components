@@ -97,21 +97,21 @@ describe('Process filter', () => {
                 const runningFilterResponse = {
                     appId: 1001,
                     id: 111,
-                    name: 'Running',
+                    name: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.RUNNING',
                     icon: 'fake-icon',
                     recent: false
                 };
                 const completedFilterResponse = {
                     appId: 1001,
                     id: 222,
-                    name: 'Completed',
+                    name: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.COMPLETED',
                     icon: 'fake-icon',
                     recent: false
                 };
                 const allFilterResponse = {
                     appId: 1001,
                     id: 333,
-                    name: 'All',
+                    name: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.ALL',
                     icon: 'fake-icon',
                     recent: false
                 };
@@ -121,11 +121,11 @@ describe('Process filter', () => {
                 service.createDefaultFilters(1234).subscribe((res) => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(3);
-                    expect(res[0].name).toEqual('Running');
+                    expect(res[0].name).toEqual('ADF_PROCESS_LIST.FILTERS.DEFAULT.RUNNING');
                     expect(res[0].id).toEqual(111);
-                    expect(res[1].name).toEqual('Completed');
+                    expect(res[1].name).toEqual('ADF_PROCESS_LIST.FILTERS.DEFAULT.COMPLETED');
                     expect(res[1].id).toEqual(222);
-                    expect(res[2].name).toEqual('All');
+                    expect(res[2].name).toEqual('ADF_PROCESS_LIST.FILTERS.DEFAULT.ALL');
                     expect(res[2].id).toEqual(333);
                     done();
                 });
@@ -135,21 +135,21 @@ describe('Process filter', () => {
                 const runningFilterResponse = {
                     appId: 1001,
                     id: 111,
-                    name: 'Running',
+                    name: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.RUNNING',
                     icon: 'fake-icon',
                     recent: false
                 };
                 const completedFilterResponse = {
                     appId: 1001,
                     id: 222,
-                    name: 'Completed',
+                    name: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.COMPLETED',
                     icon: 'fake-icon',
                     recent: false
                 };
                 const allFilterResponse = {
                     appId: 1001,
                     id: 333,
-                    name: 'All',
+                    name: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.ALL',
                     icon: 'fake-icon',
                     recent: false
                 };
@@ -159,15 +159,15 @@ describe('Process filter', () => {
                 service.createDefaultFilters(1234).subscribe((res) => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(3);
-                    expect(res[0].name).toEqual('Running');
+                    expect(res[0].name).toEqual('ADF_PROCESS_LIST.FILTERS.DEFAULT.RUNNING');
                     expect(res[0].filter.sort).toEqual('created-desc');
                     expect(res[0].filter.state).toEqual('running');
 
-                    expect(res[1].name).toEqual('Completed');
+                    expect(res[1].name).toEqual('ADF_PROCESS_LIST.FILTERS.DEFAULT.COMPLETED');
                     expect(res[1].filter.sort).toEqual('created-desc');
                     expect(res[1].filter.state).toEqual('completed');
 
-                    expect(res[2].name).toEqual('All');
+                    expect(res[2].name).toEqual('ADF_PROCESS_LIST.FILTERS.DEFAULT.ALL');
                     expect(res[2].filter.sort).toEqual('created-desc');
                     expect(res[2].filter.state).toEqual('all');
                     done();
