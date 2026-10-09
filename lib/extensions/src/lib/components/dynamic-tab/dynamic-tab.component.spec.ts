@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, Type } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Node } from '@alfresco/js-api';
@@ -42,13 +42,26 @@ class TestDynamicTabComponent implements OnChanges, OnDestroy {
     }
 }
 
+@Component({
+    selector: 'test-legacy-dynamic-tab',
+    template: ''
+})
+class LegacyDynamicTabComponent implements OnDestroy {
+    node!: Node;
+    destroyed = false;
+
+    ngOnDestroy() {
+        this.destroyed = true;
+    }
+}
+
 describe('DynamicTabComponent', () => {
     let fixture: ComponentFixture<DynamicTabComponent>;
-    const extensionService = {
-        getComponentById: () => TestDynamicTabComponent
-    };
+    let registeredComponent: Type<any> = TestDynamicTabComponent;
+    const extensionService = { getComponentById: () => registeredComponent };
 
     beforeEach(() => {
+        registeredComponent = TestDynamicTabComponent;
         TestBed.configureTestingModule({
             imports: [DynamicTabComponent, TestDynamicTabComponent],
             providers: [{ provide: ExtensionService, useValue: extensionService }]
@@ -82,5 +95,15 @@ describe('DynamicTabComponent', () => {
         fixture.destroy();
 
         expect(child.destroyed).toBe(true);
+    });
+
+    it('should update legacy dynamic components with a plain node property', () => {
+        registeredComponent = LegacyDynamicTabComponent;
+        const node = { id: 'legacy' } as Node;
+        fixture.componentRef.setInput('node', node);
+        fixture.detectChanges();
+
+        const child = fixture.debugElement.query(By.directive(LegacyDynamicTabComponent)).componentInstance as LegacyDynamicTabComponent;
+        expect(child.node).toBe(node);
     });
 });
