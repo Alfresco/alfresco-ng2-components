@@ -66,8 +66,8 @@ applyTo: "**/*.ts"
 
 This repo is migrating to Angular's `provideZonelessChangeDetection()`. New or modified code must not introduce further zone.js-dependent change detection, so the backlog doesn't grow while the migration is in progress:
 
-* Explicitly set `changeDetection: ChangeDetectionStrategy.OnPush` on every new component — never rely on
-  the implicit default strategy, which silently stops updating the view once zone.js is removed.
+* Explicitly set `changeDetection: ChangeDetectionStrategy.OnPush` on every new component as a migration policy.
+  `OnPush` does not by itself make a component zoneless-safe; template updates still require an Angular notification such as a signal write, input update, event, or `markForCheck()`.
 * Drive template state with `signal()`, `toSignal()`, or the `async` pipe instead of assigning to a plain
   class field inside `.subscribe()`. A plain field mutation does nothing for an OnPush component without
   zone.js triggering a global change detection pass.
