@@ -21,12 +21,19 @@ import { ProcessFilterService } from '../../services/process-filter.service';
 import { AppsProcessService } from '../../../services/apps-process.service';
 import { IconModel } from '../../../app-list/icon.model';
 import { NavigationStart, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
+import { forkJoin, Observable, of } from 'rxjs';
 import { CommonModule, Location } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
+
+const LEGACY_DEFAULT_PROCESS_FILTER_TRANSLATION_KEYS: Record<string, string> = {
+    Running: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.RUNNING',
+    Completed: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.COMPLETED',
+    All: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.ALL'
+};
 
 @Component({
     selector: 'adf-process-instance-filters',
@@ -126,31 +133,22 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
      * @param appId - optional
      */
     getFiltersByAppId(appId?: number) {
-        this.processFilterService.getProcessFilters(appId).subscribe(
-            (res) => {
-                if (res.length === 0 && this.isFilterListEmpty()) {
-                    this.processFilterService.createDefaultFilters(appId).subscribe(
-                        (resDefault) => {
-                            this.resetFilter();
-                            this.filters = resDefault;
-                            this.selectProcessFilter(this.filterParam);
-                            this.success.emit(resDefault);
-                        },
-                        (errDefault) => {
-                            this.error.emit(errDefault);
-                        }
-                    );
-                } else {
-                    this.resetFilter();
-                    this.filters = res;
-                    this.selectProcessFilter(this.filterParam);
-                    this.success.emit(res);
-                }
-            },
-            (err) => {
-                this.error.emit(err);
-            }
-        );
+        this.processFilterService
+            .getProcessFilters(appId)
+            .pipe(
+                switchMap((res) => {
+                    if (res.length === 0 && this.isFilterListEmpty()) {
+                        return this.processFilterService.createDefaultFilters(appId);
+                    }
+                    const migratedFilters = this.migrateDefaultFilters(res);
+                    return migratedFilters.length > 0 ? forkJoin(migratedFilters).pipe(map(() => res)) : of(res);
+                }),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe({
+                next: (filters) => this.setProcessFilters(filters),
+                error: (err) => this.error.emit(err)
+            });
     }
 
     /**
@@ -245,5 +243,34 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     private resetFilter() {
         this.filters = [];
         this.currentFilter = undefined;
+    }
+
+    /**
+     * Reset the current selection and display the given filters, selecting the one matching filterParam.
+     *
+     * @param filters - list of filters to display
+     */
+    private setProcessFilters(filters: UserProcessInstanceFilterRepresentation[]): void {
+        this.resetFilter();
+        this.filters = filters;
+        this.selectProcessFilter(this.filterParam);
+        this.success.emit(filters);
+    }
+
+    /**
+     * Rename default filters still stored with their legacy plain-string name to the matching translation key.
+     *
+     * @param filters - list of filters to migrate
+     * @returns list of observables for each migrated filter
+     */
+    private migrateDefaultFilters(filters: UserProcessInstanceFilterRepresentation[]): Observable<UserProcessInstanceFilterRepresentation>[] {
+        const migratedFilters: Observable<UserProcessInstanceFilterRepresentation>[] = [];
+        filters.forEach((filterToMigrate) => {
+            const translationKey = LEGACY_DEFAULT_PROCESS_FILTER_TRANSLATION_KEYS[filterToMigrate.name];
+            if (translationKey) {
+                migratedFilters.push(this.processFilterService.updateProcessFilter(filterToMigrate.id, { ...filterToMigrate, name: translationKey }));
+            }
+        });
+        return migratedFilters;
     }
 }

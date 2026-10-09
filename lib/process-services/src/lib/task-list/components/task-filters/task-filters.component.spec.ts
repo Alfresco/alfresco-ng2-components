@@ -143,20 +143,73 @@ describe('TaskFiltersComponent', () => {
         expect(taskFilterService.updateTaskFilter).toHaveBeenCalledWith(11, taskFilterService.getUnassignedTasksFilterInstance(undefined));
     });
 
-    it('should not migrate other filters', () => {
+    it('should migrate legacy default filters to their translation keys', () => {
         const myTasksFilter = new UserTaskFilterRepresentation({
             name: 'My Tasks',
-            icon: 'glyphicon-align-left',
+            icon: 'glyphicon-inbox',
             id: 10,
+            index: 0,
             filter: { state: 'open', assignment: 'assignee' }
+        });
+        const overdueFilter = new UserTaskFilterRepresentation({
+            name: 'Overdue Tasks',
+            icon: 'glyphicon-align-left',
+            id: 11,
+            index: 1,
+            filter: { state: 'open', assignment: 'assignee' }
+        });
+        const unassignedFilter = new UserTaskFilterRepresentation({
+            name: 'Unassigned Tasks',
+            icon: 'glyphicon-record',
+            id: 12,
+            index: 2,
+            filter: { state: 'open', assignment: 'candidate' }
         });
         const completedFilter = new UserTaskFilterRepresentation({
             name: 'Completed Tasks',
             icon: 'glyphicon-ok-sign',
+            id: 13,
+            index: 3,
+            filter: { state: 'completed', assignment: 'involved' }
+        });
+        const taskFilters = [myTasksFilter, overdueFilter, unassignedFilter, completedFilter];
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(taskFilters));
+        spyOn(taskFilterService, 'updateTaskFilter').and.returnValue(of({}));
+        component.getFiltersByAppId(1);
+        fixture.detectChanges();
+        expect(taskFilterService.updateTaskFilter).toHaveBeenCalledTimes(4);
+        expect(taskFilterService.updateTaskFilter).toHaveBeenCalledWith(
+            10,
+            new UserTaskFilterRepresentation({ ...myTasksFilter, name: 'ADF_TASK_LIST.FILTERS.DEFAULT.MY_TASKS' })
+        );
+        expect(taskFilterService.updateTaskFilter).toHaveBeenCalledWith(
+            11,
+            new UserTaskFilterRepresentation({ ...overdueFilter, name: 'ADF_TASK_LIST.FILTERS.DEFAULT.OVERDUE_TASKS' })
+        );
+        expect(taskFilterService.updateTaskFilter).toHaveBeenCalledWith(
+            12,
+            new UserTaskFilterRepresentation({ ...unassignedFilter, name: 'ADF_TASK_LIST.FILTERS.DEFAULT.UNASSIGNED_TASKS' })
+        );
+        expect(taskFilterService.updateTaskFilter).toHaveBeenCalledWith(
+            13,
+            new UserTaskFilterRepresentation({ ...completedFilter, name: 'ADF_TASK_LIST.FILTERS.DEFAULT.COMPLETED_TASKS' })
+        );
+    });
+
+    it('should not migrate custom filters', () => {
+        const customFilter = new UserTaskFilterRepresentation({
+            name: 'My Custom Filter',
+            icon: 'glyphicon-align-left',
+            id: 10,
+            filter: { state: 'open', assignment: 'assignee' }
+        });
+        const anotherCustomFilter = new UserTaskFilterRepresentation({
+            name: 'Another Filter',
+            icon: 'glyphicon-ok-sign',
             id: 11,
             filter: { state: 'completed', assignment: 'involved' }
         });
-        const taskFilters = [myTasksFilter, completedFilter];
+        const taskFilters = [customFilter, anotherCustomFilter];
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(taskFilters));
         spyOn(taskFilterService, 'updateTaskFilter').and.returnValue(of({}));
         component.getFiltersByAppId(1);
