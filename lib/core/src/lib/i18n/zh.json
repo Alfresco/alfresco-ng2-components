@@ -80,6 +80,8 @@
       "NAMELESS_TASK": "无名称的任务",
       "ROW_LABEL": "第 {{ number }} 行",
       "DELETE_ROW": "删除行",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
+      "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "删除行",
         "MESSAGE": "是否确定要删除此行?",

@@ -80,6 +80,8 @@
       "NAMELESS_TASK": "Задача без имени",
       "ROW_LABEL": "Строка {{ number }}",
       "DELETE_ROW": "Удалить строку",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
+      "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Удалить строку",
         "MESSAGE": "Вы действительно хотите удалить эту строку?",

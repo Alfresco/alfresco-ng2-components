@@ -80,6 +80,8 @@
       "NAMELESS_TASK": "Tâche sans nom",
       "ROW_LABEL": "Ligne {{ number }}",
       "DELETE_ROW": "Supprimer la ligne",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
+      "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Supprimer la ligne",
         "MESSAGE": "Voulez-vous vraiment supprimer cette ligne ?",

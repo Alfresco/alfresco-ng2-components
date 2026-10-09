@@ -80,6 +80,8 @@
       "NAMELESS_TASK": "Navnløs oppgave",
       "ROW_LABEL": "Rad {{ number }}",
       "DELETE_ROW": "Slett rad",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
+      "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Slett raden",
         "MESSAGE": "Er du sikker på at du vil slette denne raden?",
