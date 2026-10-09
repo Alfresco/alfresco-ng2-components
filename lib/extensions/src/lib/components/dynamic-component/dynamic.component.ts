@@ -48,14 +48,16 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
     @Input() data: any;
 
     /** Provides the menu item of dynamically-loaded component instance. */
-    menuItem: MatMenuItem;
+    menuItem: MatMenuItem | undefined;
 
     private componentRef: ComponentRef<ExtensionComponent>;
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.id) {
+            this.menuItem = undefined;
             this.destroyComponent();
             this.loadComponent();
+            this.updateMenuItem();
         }
 
         if (changes.data) {
@@ -70,7 +72,7 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
     }
 
     ngAfterViewInit() {
-        this.menuItem = this.componentRef?.instance?.menuItem;
+        this.updateMenuItem();
     }
 
     private loadComponent() {
@@ -85,6 +87,10 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
         if (this.componentCreated()) {
             this.componentRef.setInput('data', this.data);
         }
+    }
+
+    private updateMenuItem() {
+        this.menuItem = this.componentRef?.instance?.menuItem;
     }
 
     private destroyComponent() {

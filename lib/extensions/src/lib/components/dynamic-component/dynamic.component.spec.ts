@@ -49,6 +49,7 @@ export class TestComponent implements OnChanges, OnDestroy {
 })
 export class AlternateTestComponent {
     @Input() data: any;
+    menuItem = 'alternateMenuTestData';
 }
 
 describe('DynamicExtensionComponent', () => {
@@ -117,6 +118,7 @@ describe('DynamicExtensionComponent', () => {
             const alternateComponent = fixture.debugElement.query(By.css('test-alternate-component')).componentInstance as AlternateTestComponent;
             expect(testComponent.destroyed).toBe(true);
             expect(alternateComponent.data).toBe(component.data);
+            expect(component.menuItem).toEqual('alternateMenuTestData' as any);
             expect(fixture.debugElement.query(By.css('test-component'))).toBeNull();
         });
 
@@ -127,6 +129,7 @@ describe('DynamicExtensionComponent', () => {
             fixture.detectChanges();
 
             expect(testComponent.destroyed).toBe(true);
+            expect(component.menuItem).toBeUndefined();
             expect(fixture.debugElement.query(By.css('test-component'))).toBeNull();
         });
     });
