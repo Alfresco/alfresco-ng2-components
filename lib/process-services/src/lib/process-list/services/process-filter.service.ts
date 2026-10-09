@@ -133,7 +133,7 @@ export class ProcessFilterService {
      */
     getRunningFilterInstance(appId: number, index?: number): UserProcessInstanceFilterRepresentation {
         return {
-            name: 'Running',
+            name: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.RUNNING',
             appId,
             recent: true,
             icon: 'glyphicon-random',
@@ -153,6 +153,20 @@ export class ProcessFilterService {
     }
 
     /**
+     * Updates a process filter.
+     *
+     * @param filterId existing filter id
+     * @param updatedFilter updated filter body
+     * @returns The updated filter
+     */
+    updateProcessFilter(
+        filterId: number,
+        updatedFilter: UserProcessInstanceFilterRepresentation
+    ): Observable<UserProcessInstanceFilterRepresentation> {
+        return from(this.userFiltersApi.updateUserProcessInstanceFilter(filterId, updatedFilter));
+    }
+
+    /**
      * Calls `getUserProcessInstanceFilters` from the Alfresco JS API.
      *
      * @param appId ID of the target app
@@ -168,7 +182,7 @@ export class ProcessFilterService {
 
     getCompletedFilterInstance(appId: number, index?: number): UserProcessInstanceFilterRepresentation {
         return {
-            name: 'Completed',
+            name: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.COMPLETED',
             appId,
             recent: false,
             icon: 'glyphicon-ok-sign',
@@ -179,7 +193,7 @@ export class ProcessFilterService {
 
     getAllFilterInstance(appId: number, index?: number): UserProcessInstanceFilterRepresentation {
         return {
-            name: 'All',
+            name: 'ADF_PROCESS_LIST.FILTERS.DEFAULT.ALL',
             appId,
             recent: true,
             icon: 'glyphicon-th',

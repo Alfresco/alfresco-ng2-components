@@ -1066,6 +1066,15 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         this._pagination.maxItems = this.maxItems;
     }
 
+    setPagination(pagination: RequestPaginationModel) {
+        if (pagination.maxItems !== undefined) {
+            this._pagination.maxItems = pagination.maxItems;
+        }
+        if (pagination.skipCount !== undefined) {
+            this._pagination.skipCount = pagination.skipCount;
+        }
+    }
+
     private handleError(err: any) {
         if (err.message) {
             try {

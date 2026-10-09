@@ -21,14 +21,21 @@ import { TaskFilterService } from '../../services/task-filter.service';
 import { TaskListService } from '../../services/tasklist.service';
 import { IconModel } from '../../../app-list/icon.model';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { UserTaskFilterRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
+
+const LEGACY_DEFAULT_TASK_FILTER_TRANSLATION_KEYS: Record<string, string> = {
+    'My Tasks': 'ADF_TASK_LIST.FILTERS.DEFAULT.MY_TASKS',
+    'Overdue Tasks': 'ADF_TASK_LIST.FILTERS.DEFAULT.OVERDUE_TASKS',
+    'Unassigned Tasks': 'ADF_TASK_LIST.FILTERS.DEFAULT.UNASSIGNED_TASKS',
+    'Completed Tasks': 'ADF_TASK_LIST.FILTERS.DEFAULT.COMPLETED_TASKS'
+};
 
 @Component({
     selector: 'adf-task-filters',
@@ -129,25 +136,22 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
      * @param appId - optional
      */
     getFiltersByAppId(appId?: number) {
-        this.taskFilterService.getTaskListFilters(appId).subscribe(
-            (res) => {
-                if (res.length === 0 && this.isFilterListEmpty()) {
-                    this.createFiltersByAppId(appId);
-                } else {
-                    const migratedFilters = this.migrateObsoleteFilters(res);
-                    if (migratedFilters.length > 0) {
-                        forkJoin(migratedFilters).subscribe(() => {
-                            this.setTaskFilters(res);
-                        });
-                    } else {
-                        this.setTaskFilters(res);
+        this.taskFilterService
+            .getTaskListFilters(appId)
+            .pipe(
+                switchMap((res) => {
+                    if (res.length === 0 && this.isFilterListEmpty()) {
+                        return this.taskFilterService.createDefaultFilters(appId);
                     }
-                }
-            },
-            (err: any) => {
-                this.error.emit(err);
-            }
-        );
+                    const migratedFilters = this.migrateObsoleteFilters(res);
+                    return migratedFilters.length > 0 ? forkJoin(migratedFilters).pipe(map(() => res)) : of(res);
+                }),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe({
+                next: (filters) => this.setTaskFilters(filters),
+                error: (err) => this.error.emit(err)
+            });
     }
 
     /**
@@ -162,22 +166,6 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
             },
             (err) => {
                 this.error.emit(err);
-            }
-        );
-    }
-
-    /**
-     * Create default filters by appId
-     *
-     * @param appId application id
-     */
-    private createFiltersByAppId(appId?: number): void {
-        this.taskFilterService.createDefaultFilters(appId).subscribe(
-            (resDefault) => {
-                this.setTaskFilters(resDefault);
-            },
-            (errDefault: any) => {
-                this.error.emit(errDefault);
             }
         );
     }
@@ -273,7 +261,9 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     }
 
     /**
-     * Migrate "Involved" and "Queued" filters to "Overdue" and "Unassigned" filters
+     * Migrate obsolete and legacy default filters:
+     * - "Involved" and "Queued" filters become "Overdue" and "Unassigned" filters
+     * - default filters still stored with their legacy plain-string name are renamed to the matching translation key
      *
      * @param filters - list of filters to migrate
      * @returns list of observables for each migrated filter
@@ -295,8 +285,18 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
                         )
                     );
                     break;
-                default:
+                default: {
+                    const translationKey = LEGACY_DEFAULT_TASK_FILTER_TRANSLATION_KEYS[filterToMigrate.name];
+                    if (translationKey) {
+                        migratedFilters.push(
+                            this.taskFilterService.updateTaskFilter(
+                                filterToMigrate.id,
+                                new UserTaskFilterRepresentation({ ...filterToMigrate, name: translationKey })
+                            )
+                        );
+                    }
                     break;
+                }
             }
         });
         return migratedFilters;
