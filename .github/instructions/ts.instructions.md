@@ -71,9 +71,10 @@ This repo is migrating to Angular's `provideZonelessChangeDetection()`. New or m
 * Drive template state with `signal()`, `toSignal()`, or the `async` pipe instead of assigning to a plain
   class field inside `.subscribe()`. A plain field mutation does nothing for an OnPush component without
   zone.js triggering a global change detection pass.
-* Never inject `NgZone` or call `.run()` / `.runOutsideAngular()` / `.onStable` / `.onMicrotaskEmpty` in new
-  code — these APIs have no effect once zoneless CD is enabled. Use `afterNextRender()`,
-  `afterEveryRender()`, or `ApplicationRef.whenStable()` instead for stability-dependent logic.
+* Do not use `NgZone` APIs to rely on zone callbacks for change-detection scheduling in new code.
+  `runOutsideAngular()` can still be appropriate for performance, and these APIs are not generally
+  no-ops when `provideZonelessChangeDetection()` is enabled. Use `afterNextRender()`,
+  `afterEveryRender()`, or `ApplicationRef.whenStable()` for stability-dependent logic.
 * Any state mutated from `setTimeout`, `setInterval`, `requestAnimationFrame`, a raw `addEventListener`
   callback, or `Promise.resolve().then()` must be a signal write, or must be followed by an explicit
   `ChangeDetectorRef.markForCheck()` call — this includes drag-and-drop, resize/intersection observers, and
