@@ -23,6 +23,7 @@ import { UserPreferencesService } from '../common/services/user-preferences.serv
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
 import { NoopTranslateModule } from '../testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 describe('SearchTextInputComponent', () => {
     let fixture: ComponentFixture<SearchTextInputComponent>;
@@ -38,7 +39,7 @@ describe('SearchTextInputComponent', () => {
         fixture = TestBed.createComponent(SearchTextInputComponent);
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
-        testingUtils = new UnitTestingUtils(debugElement);
+        testingUtils = new UnitTestingUtils(debugElement, TestbedHarnessEnvironment.loader(fixture));
         userPreferencesService = TestBed.inject(UserPreferencesService);
         component.focusListener = new Subject();
     });
@@ -273,6 +274,34 @@ describe('SearchTextInputComponent', () => {
             }));
 
             const getClearSearchButton = (): HTMLButtonElement => testingUtils.getByDataAutomationId('adf-clear-search-button')?.nativeElement;
+            const getSearchButton = (): HTMLButtonElement => testingUtils.getByCSS('#adf-search-button')?.nativeElement;
+
+            it('should return focus to search button when clear button is clicked via keyboard', fakeAsync(() => {
+                component.showClearButton = true;
+                fixture.detectChanges();
+
+                fixture.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+                getClearSearchButton().click();
+                tick(200);
+                fixture.detectChanges();
+
+                expect(component.isSearchBarActive()).toBeFalse();
+                expect(component.expandable).toBeTrue();
+                expect(document.activeElement).toBe(getSearchButton());
+            }));
+
+            it('should not return focus to search button when clear button is clickec via mouse', fakeAsync(() => {
+                component.showClearButton = true;
+                fixture.detectChanges();
+
+                fixture.nativeElement.dispatchEvent(new MouseEvent('click'));
+                getClearSearchButton().click();
+                tick(200);
+                fixture.detectChanges();
+
+                expect(component.isSearchBarActive()).toBeFalse();
+                expect(document.activeElement).not.toBe(getSearchButton());
+            }));
 
             it('should clear button be visible when showClearButton is set to true', async () => {
                 component.showClearButton = true;

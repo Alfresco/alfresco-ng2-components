@@ -18,10 +18,12 @@
 import { Direction } from '@angular/cdk/bidi';
 import { NgClass, NgStyle } from '@angular/common';
 import {
+    ChangeDetectorRef,
     Component,
     DestroyRef,
     ElementRef,
     EventEmitter,
+    HostListener,
     inject,
     Input,
     OnInit,
@@ -154,6 +156,21 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     @ViewChild('searchInput', { static: true })
     searchInput!: ElementRef;
 
+    @ViewChild('searchButton')
+    private readonly searchButton!: ElementRef<HTMLButtonElement>;
+
+    private keyboardInteraction = false;
+
+    @HostListener('keydown')
+    onKeyDown() {
+        this.keyboardInteraction = true;
+    }
+
+    @HostListener('mousedown')
+    onMouseDown() {
+        this.keyboardInteraction = false;
+    }
+
     animationStates: SearchAnimationDirection = {
         ltr: {
             active: { value: 'active', params: { 'margin-left': '13px' } },
@@ -174,6 +191,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     toggle$ = this.toggleSearch.asObservable();
 
     private readonly destroyRef = inject(DestroyRef);
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
     constructor() {
         this.toggle$.pipe(debounceTime(200), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
@@ -184,6 +202,10 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
                     this.reset.emit(true);
                     if (document.activeElement?.id === this.searchInput.nativeElement.id) {
                         this.searchInput.nativeElement.blur();
+                    }
+                    if (this.keyboardInteraction) {
+                        this.changeDetectorRef.detectChanges();
+                        this.searchButton.nativeElement.focus();
                     }
                 } else if (this.subscriptAnimationState.value === 'active' && this.isDefaultStateCollapsed()) {
                     setTimeout(() => this.searchInput.nativeElement.focus(), 0);
