@@ -62,6 +62,25 @@ applyTo: "**/*.ts"
   14. **Public methods**: Functions available to everyone.
   15. **Private methods**: Functions used only inside the component.
 
+## Zoneless Change Detection Migration
+
+This repo is migrating to Angular's `provideZonelessChangeDetection()`. New or modified code must not introduce further zone.js-dependent change detection, so the backlog doesn't grow while the migration is in progress:
+
+* Explicitly set `changeDetection: ChangeDetectionStrategy.OnPush` on every new component — never rely on
+  the implicit default strategy, which silently stops updating the view once zone.js is removed.
+* Drive template state with `signal()`, `toSignal()`, or the `async` pipe instead of assigning to a plain
+  class field inside `.subscribe()`. A plain field mutation does nothing for an OnPush component without
+  zone.js triggering a global change detection pass.
+* Never inject `NgZone` or call `.run()` / `.runOutsideAngular()` / `.onStable` / `.onMicrotaskEmpty` in new
+  code — these APIs have no effect once zoneless CD is enabled. Use `afterNextRender()`,
+  `afterEveryRender()`, or `ApplicationRef.whenStable()` instead for stability-dependent logic.
+* Any state mutated from `setTimeout`, `setInterval`, `requestAnimationFrame`, a raw `addEventListener`
+  callback, or `Promise.resolve().then()` must be a signal write, or must be followed by an explicit
+  `ChangeDetectorRef.markForCheck()` call — this includes drag-and-drop, resize/intersection observers, and
+  any DOM event wired up outside an Angular `(event)` binding.
+* In new specs, prefer `async`/`await` with `await fixture.whenStable()` over `fakeAsync`/`tick()`, which
+  rely on zone.js patching timers.
+
 ## Components
 
 * Single Responsibility: Keep components small, focused, and responsible for a single piece of functionality.
