@@ -80,6 +80,8 @@
       "NAMELESS_TASK": "مهمة بدون اسم",
       "ROW_LABEL": "الصف {{ number }}",
       "DELETE_ROW": "حذف الصف",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
+      "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "حذف الصف",
         "MESSAGE": "هل أنت متأكد من أنك تريد حذف هذا الصف؟",

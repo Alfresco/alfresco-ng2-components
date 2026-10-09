@@ -80,6 +80,8 @@
       "NAMELESS_TASK": "Úloha bez názvu",
       "ROW_LABEL": "Řádek {{ number }}",
       "DELETE_ROW": "Odstranit řádek",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
+      "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Odstranit řádek",
         "MESSAGE": "Opravdu chcete odstranit tento řádek?",

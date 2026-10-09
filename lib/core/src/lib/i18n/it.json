@@ -80,6 +80,8 @@
       "NAMELESS_TASK": "Compito senza nome",
       "ROW_LABEL": "Riga {{ number }}",
       "DELETE_ROW": "Elimina riga",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
+      "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Elimina la riga",
         "MESSAGE": "Sei sicuro di voler eliminare questa riga?",

@@ -80,6 +80,8 @@
       "NAMELESS_TASK": "Opgave uden navn",
       "ROW_LABEL": "Række {{ number }}",
       "DELETE_ROW": "Slet række",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
+      "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Slet rækken",
         "MESSAGE": "Er du sikker på, at du vil slette denne række?",

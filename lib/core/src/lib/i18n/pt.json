@@ -80,6 +80,8 @@
       "NAMELESS_TASK": "Tarefa sem nome",
       "ROW_LABEL": "Linha {{ number }}",
       "DELETE_ROW": "Excluir linha",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
+      "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Excluir a linha",
         "MESSAGE": "Tem certeza de que deseja excluir esta linha?",
@@ -308,7 +310,7 @@
         "TOGGLE": "Alternar valor",
         "COPY_TO_CLIPBOARD": "Clique duas vezes para copiar o valor",
         "EDIT_ASPECTS": "Editar aspecto",
-        "SELECT_TEMPLATE": "Click to select the template"
+        "SELECT_TEMPLATE": "Clique para selecionar o modelo"
       },
       "ACCESSIBILITY": {
         "EDIT": "Editar {{ sectionName }}",
