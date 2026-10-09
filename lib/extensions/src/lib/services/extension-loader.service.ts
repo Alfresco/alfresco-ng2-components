@@ -16,7 +16,8 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { ActionRef, ContentActionRef, ContentActionType } from '../config/action.extensions';
 import { ExtensionElement } from '../config/extension-element';
 import { filterEnabled, getValue, mergeObjects, sortByOrder } from '../config/extension-utils';
@@ -29,6 +30,7 @@ import { RuleRef } from '../config/rule.extensions';
 })
 export class ExtensionLoaderService {
     private readonly http = inject(HttpClient);
+    private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
     load(configPath: string, pluginsPath: string, extensions?: string[], extensionValues?: ExtensionConfig[]): Promise<ExtensionConfig> {
         return new Promise<any>((resolve) => {
@@ -36,7 +38,7 @@ export class ExtensionLoaderService {
                 if (result) {
                     let config = result.config;
 
-                    const override = sessionStorage.getItem('app.extension.config');
+                    const override = this.isBrowser ? sessionStorage.getItem('app.extension.config') : null;
                     if (override) {
                         config = JSON.parse(override);
                     }

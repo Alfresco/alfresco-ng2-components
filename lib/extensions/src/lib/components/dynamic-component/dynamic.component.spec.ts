@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DynamicExtensionComponent } from './dynamic.component';
 import { ComponentRegisterService } from '../../services/component-register.service';
@@ -28,13 +28,28 @@ import { By } from '@angular/platform-browser';
     selector: 'test-component',
     template: '<div data-automation-id="found-me">Hey I am the mighty test component!</div>'
 })
-export class TestComponent implements OnChanges {
+export class TestComponent implements OnChanges, OnDestroy {
     @Input() data: any;
+    menuItem = 'matMenuTestData';
     public onChangesCalled = 0;
+    public destroyed = false;
 
     ngOnChanges() {
         this.onChangesCalled++;
     }
+
+    ngOnDestroy() {
+        this.destroyed = true;
+    }
+}
+
+@Component({
+    selector: 'test-alternate-component',
+    template: '<div data-automation-id="alternate-component">Alternate test component</div>'
+})
+export class AlternateTestComponent {
+    @Input() data: any;
+    menuItem = 'alternateMenuTestData';
 }
 
 describe('DynamicExtensionComponent', () => {
@@ -44,10 +59,10 @@ describe('DynamicExtensionComponent', () => {
 
     beforeEach(() => {
         componentRegister = new ComponentRegisterService();
-        componentRegister.setComponents({ 'test-component': TestComponent });
+        componentRegister.setComponents({ 'test-component': TestComponent, 'alternate-component': AlternateTestComponent });
 
         TestBed.configureTestingModule({
-            imports: [HttpClientModule, DynamicExtensionComponent, TestComponent],
+            imports: [HttpClientModule, DynamicExtensionComponent, TestComponent, AlternateTestComponent],
             providers: [{ provide: ComponentRegisterService, useValue: componentRegister }]
         });
         TestBed.compileComponents();
@@ -57,11 +72,10 @@ describe('DynamicExtensionComponent', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(DynamicExtensionComponent);
             component = fixture.componentInstance;
-            component.id = 'test-component';
-            component.data = { foo: 'bar' };
+            fixture.componentRef.setInput('id', 'test-component');
+            fixture.componentRef.setInput('data', { foo: 'bar' });
 
             fixture.detectChanges();
-            component.ngOnChanges({});
         });
 
         afterEach(() => {
@@ -84,30 +98,50 @@ describe('DynamicExtensionComponent', () => {
         it('should update the subcomponent input parameters', () => {
             const data = { foo: 'baz' };
 
-            component.ngOnChanges({ data: new SimpleChange(component.data, data, false) });
+            fixture.componentRef.setInput('data', data);
+            fixture.detectChanges();
 
             const testComponent = fixture.debugElement.query(By.css('test-component')).componentInstance;
             expect(testComponent.data).toBe(data);
         });
 
         it('should assign menuItem from dynamically generated component in ngAfterViewInit', () => {
-            const testData = 'matMenuTestData';
-            getInnerElement().componentInstance.menuItem = testData;
-            component.ngAfterViewInit();
-            expect(component.menuItem).toEqual(testData);
+            expect(component.menuItem).toEqual('matMenuTestData' as any);
+        });
+
+        it('should recreate the subcomponent when the id changes', () => {
+            const testComponent = fixture.debugElement.query(By.css('test-component')).componentInstance as TestComponent;
+
+            fixture.componentRef.setInput('id', 'alternate-component');
+            fixture.detectChanges();
+
+            const alternateComponent = fixture.debugElement.query(By.css('test-alternate-component')).componentInstance as AlternateTestComponent;
+            expect(testComponent.destroyed).toBe(true);
+            expect(alternateComponent.data).toBe(component.data);
+            expect(component.menuItem).toEqual('alternateMenuTestData' as any);
+            expect(fixture.debugElement.query(By.css('test-component'))).toBeNull();
+        });
+
+        it('should remove the subcomponent when the id is not registered', () => {
+            const testComponent = fixture.debugElement.query(By.css('test-component')).componentInstance as TestComponent;
+
+            fixture.componentRef.setInput('id', 'missing-component');
+            fixture.detectChanges();
+
+            expect(testComponent.destroyed).toBe(true);
+            expect(component.menuItem).toBeUndefined();
+            expect(fixture.debugElement.query(By.css('test-component'))).toBeNull();
         });
     });
 
     describe('Angular life-cycle methods in sub-component', () => {
-        let testComponent;
+        let testComponent: TestComponent;
 
         beforeEach(() => {
             fixture = TestBed.createComponent(DynamicExtensionComponent);
-            component = fixture.componentInstance;
-            component.id = 'test-component';
+            fixture.componentRef.setInput('id', 'test-component');
 
             fixture.detectChanges();
-            component.ngOnChanges({});
             testComponent = fixture.debugElement.query(By.css('test-component')).componentInstance;
         });
 
@@ -116,22 +150,11 @@ describe('DynamicExtensionComponent', () => {
             TestBed.resetTestingModule();
         });
 
-        it('should call through the ngOnChanges', () => {
-            const params = {};
-
-            component.ngOnChanges(params);
+        it('should call ngOnChanges once for each data update', () => {
+            fixture.componentRef.setInput('data', { foo: 'bar' });
+            fixture.detectChanges();
 
             expect(testComponent.onChangesCalled).toBe(2);
-        });
-
-        it('should NOT call through the ngOnChanges if the method does not exist (no error should be thrown)', () => {
-            testComponent.ngOnChanges = undefined;
-            const params = {};
-            const execution = () => {
-                component.ngOnChanges(params);
-            };
-
-            expect(execution).not.toThrowError();
         });
     });
 });

@@ -16,6 +16,7 @@
  */
 
 import { TestBed, fakeAsync, flushMicrotasks, tick } from '@angular/core/testing';
+import { PLATFORM_ID } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ExtensionConfig } from '../config/extension.config';
@@ -54,7 +55,37 @@ describe('ExtensionLoaderService', () => {
     });
 
     afterEach(() => {
+        sessionStorage.removeItem('app.extension.config');
         httpMock.verify();
+    });
+
+    it('should use the session storage config override in the browser', async () => {
+        const overrideConfig: ExtensionConfig = {
+            ...appExtensionsConfig,
+            $name: 'overridden.config'
+        };
+        sessionStorage.setItem('app.extension.config', JSON.stringify(overrideConfig));
+
+        const configPromise = extensionLoaderService.load('assets/app.extensions.json', 'assets/plugins');
+        httpMock.expectOne('assets/app.extensions.json').flush(appExtensionsConfig);
+
+        await expectAsync(configPromise).toBeResolvedTo(overrideConfig);
+    });
+
+    it('should not access session storage on the server', async () => {
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+            providers: [ExtensionLoaderService, provideHttpClient(), provideHttpClientTesting(), { provide: PLATFORM_ID, useValue: 'server' }]
+        });
+        extensionLoaderService = TestBed.inject(ExtensionLoaderService);
+        httpMock = TestBed.inject(HttpTestingController);
+        const getItemSpy = spyOn(sessionStorage, 'getItem');
+
+        const configPromise = extensionLoaderService.load('assets/app.extensions.json', 'assets/plugins');
+        httpMock.expectOne('assets/app.extensions.json').flush(appExtensionsConfig);
+
+        await expectAsync(configPromise).toBeResolvedTo(appExtensionsConfig);
+        expect(getItemSpy).not.toHaveBeenCalled();
     });
 
     it('should load default registered app extensions when no custom $references defined', fakeAsync(() => {

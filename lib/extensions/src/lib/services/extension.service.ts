@@ -47,6 +47,11 @@ export const EXTENSION_JSON_VALUES = new InjectionToken<string[][]>('extension-j
     factory: extensionJsonsFactory
 });
 
+export const EXTENSION_CONFIG_BASE_URL = new InjectionToken<string | null>('extension-config-base-url', {
+    providedIn: 'root',
+    factory: () => null
+});
+
 /**
  * Provides the extension json values for the angular modules
  *
@@ -84,6 +89,7 @@ export class ExtensionService {
     protected ruleService = inject(RuleService);
     protected extensionJsons = inject(EXTENSION_JSONS);
     protected extensionJsonValues = inject(EXTENSION_JSON_VALUES);
+    protected configBaseUrl = inject(EXTENSION_CONFIG_BASE_URL);
 
     configPath = 'assets/app.extensions.json';
     pluginsPath = 'assets/plugins';
@@ -108,7 +114,9 @@ export class ExtensionService {
      * @returns The loaded config data
      */
     async load(): Promise<ExtensionConfig> {
-        const config = await this.loader.load(this.configPath, this.pluginsPath, this.extensionJsons.flat(), this.extensionJsonValues.flat() as any);
+        const configPath = this.resolveConfigUrl(this.configPath);
+        const pluginsPath = this.resolveConfigUrl(this.pluginsPath);
+        const config = await this.loader.load(configPath, pluginsPath, this.extensionJsons.flat(), this.extensionJsonValues.flat() as any);
 
         this.setup(config);
         return config;
@@ -139,6 +147,15 @@ export class ExtensionService {
 
         this.ruleService.setup(config);
         this.onSetup$.next(config);
+    }
+
+    private resolveConfigUrl(path: string): string {
+        if (!this.configBaseUrl) {
+            return path;
+        }
+
+        const baseUrl = this.configBaseUrl.endsWith('/') ? this.configBaseUrl : `${this.configBaseUrl}/`;
+        return new URL(path, baseUrl).toString();
     }
 
     /**
