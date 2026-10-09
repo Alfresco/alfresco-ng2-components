@@ -20,7 +20,7 @@ import { Node, Version } from '@alfresco/js-api';
 import { ContentService } from '../common/services/content.service';
 import { UploadService } from '../common/services/upload.service';
 import { FileUploadErrorEvent, FileUploadEvent } from '../common/events/file.event';
-import { CommonModule } from '@angular/common';
+
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -32,16 +32,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-version-upload',
-    imports: [
-        CommonModule,
-        MatRadioModule,
-        FormsModule,
-        TranslatePipe,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        UploadVersionButtonComponent
-    ],
+    imports: [MatRadioModule, FormsModule, TranslatePipe, MatFormFieldModule, MatInputModule, MatButtonModule, UploadVersionButtonComponent],
     templateUrl: './version-upload.component.html',
     styleUrls: ['./version-upload.component.scss'],
     encapsulation: ViewEncapsulation.None,
