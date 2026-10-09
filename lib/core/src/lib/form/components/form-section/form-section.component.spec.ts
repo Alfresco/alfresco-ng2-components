@@ -151,5 +151,28 @@ describe('FormSectionComponent', () => {
             const width = component.getSectionColumnWidth(numberOfColumns, columns, 0);
             expect(width).toBe('100');
         });
+
+        it('should render collapsed designer shape with colspan-2 in first column and field in last column', () => {
+            const numberOfColumns = 4;
+            const columns = [{ fields: [{ colspan: 2 } as FormFieldModel] }, { fields: [] }, { fields: [{ colspan: 1 } as FormFieldModel] }];
+
+            const widths = columns.map((_, index) => component.getSectionColumnWidth(numberOfColumns, columns, index));
+
+            expect(widths).toEqual(['50', '25', '25']);
+        });
+
+        it('should render expanded shape with covered empty column placeholders', () => {
+            const numberOfColumns = 4;
+            const columns = [
+                { fields: [{ colspan: 2 } as FormFieldModel] },
+                { fields: [] },
+                { fields: [] },
+                { fields: [{ colspan: 1 } as FormFieldModel] }
+            ];
+
+            const widths = columns.map((_, index) => component.getSectionColumnWidth(numberOfColumns, columns, index));
+
+            expect(widths).toEqual(['50', '0', '25', '25']);
+        });
     });
 });

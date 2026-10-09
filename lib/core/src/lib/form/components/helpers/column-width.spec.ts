@@ -79,4 +79,31 @@ describe('getFormLayoutColumnWidth', () => {
 
         expect(width).toBe('25');
     });
+
+    it('should render collapsed designer shape with colspan-2 in first column and field in last column', () => {
+        const NUMBER_OF_COLUMNS = 4;
+        const columns: FormLayoutColumn[] = [{ fields: [{ colspan: 2 }] }, { fields: [] }, { fields: [{ colspan: 1 }] }];
+
+        const widths = columns.map((_, index) => getFormLayoutColumnWidth(NUMBER_OF_COLUMNS, columns, index));
+
+        expect(widths).toEqual(['50', '25', '25']);
+    });
+
+    it('should render expanded shape with covered empty column placeholders', () => {
+        const NUMBER_OF_COLUMNS = 4;
+        const columns: FormLayoutColumn[] = [{ fields: [{ colspan: 2 }] }, { fields: [] }, { fields: [] }, { fields: [{ colspan: 1 }] }];
+
+        const widths = columns.map((_, index) => getFormLayoutColumnWidth(NUMBER_OF_COLUMNS, columns, index));
+
+        expect(widths).toEqual(['50', '0', '25', '25']);
+    });
+
+    it('should give default width to trailing empty column in collapsed shape', () => {
+        const NUMBER_OF_COLUMNS = 4;
+        const columns: FormLayoutColumn[] = [{ fields: [{ colspan: 1 }] }, { fields: [{ colspan: 2 }] }, { fields: [] }];
+
+        const widths = columns.map((_, index) => getFormLayoutColumnWidth(NUMBER_OF_COLUMNS, columns, index));
+
+        expect(widths).toEqual(['25', '50', '25']);
+    });
 });
