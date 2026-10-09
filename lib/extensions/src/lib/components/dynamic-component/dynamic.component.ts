@@ -31,7 +31,6 @@ import { ExtensionService } from '../../services/extension.service';
 import { ExtensionComponent } from '../../services/component-register.service';
 import { MatMenuItem } from '@angular/material/menu';
 
-// cSpell:words lifecycle
 @Component({
     selector: 'adf-dynamic-component',
     template: `<div #content></div>`
@@ -52,12 +51,11 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
     menuItem: MatMenuItem;
 
     private componentRef: ComponentRef<ExtensionComponent>;
-    private loaded: boolean = false;
 
     ngOnChanges(changes: SimpleChanges) {
-        if (!this.loaded) {
+        if (changes.id) {
+            this.destroyComponent();
             this.loadComponent();
-            this.loaded = true;
         }
 
         if (changes.data) {
@@ -65,14 +63,10 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
         }
 
         this.updateInstance();
-        this.proxy('ngOnChanges', changes);
     }
 
     ngOnDestroy() {
-        if (this.componentCreated()) {
-            this.componentRef.destroy();
-            this.componentRef = null;
-        }
+        this.destroyComponent();
     }
 
     ngAfterViewInit() {
@@ -89,21 +83,18 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
 
     private updateInstance() {
         if (this.componentCreated()) {
-            this.componentRef.instance.data = this.data;
+            this.componentRef.setInput('data', this.data);
         }
     }
 
-    private proxy(lifecycleMethod: string, ...args: any[]) {
-        if (this.componentCreated() && this.lifecycleHookIsImplemented(lifecycleMethod)) {
-            this.componentRef.instance[lifecycleMethod].apply(this.componentRef.instance, args);
+    private destroyComponent() {
+        if (this.componentCreated()) {
+            this.componentRef.destroy();
+            this.componentRef = null;
         }
     }
 
     private componentCreated(): boolean {
         return !!this.componentRef && !!this.componentRef.instance;
-    }
-
-    private lifecycleHookIsImplemented(lifecycleMethod: string): boolean {
-        return !!this.componentRef.instance[lifecycleMethod];
     }
 }
