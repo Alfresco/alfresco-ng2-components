@@ -1274,6 +1274,29 @@ describe('Form Renderer Component', () => {
             expect(repeatableSectionField.removeRow).not.toHaveBeenCalled();
         });
 
+        it('should keep the last field in its grid column for collapsed designer shape with colspan 2', () => {
+            const mock = JSON.parse(JSON.stringify(mockRepeatableSectionForm01));
+            const sectionDefinition = mock.formRepresentation.formDefinition.fields[0];
+            sectionDefinition.numberOfColumns = 4;
+            sectionDefinition.fields = {
+                '1': [{ ...sectionDefinition.fields['1'][0], colspan: 2 }],
+                '2': [],
+                '3': sectionDefinition.fields['2']
+            };
+            fixture.componentInstance.formDefinition = new FormModel(mock.formRepresentation);
+            fixture.detectChanges();
+
+            const firstRowColumns = testingUtils
+                .getByCSS('#field-RepeatableSection0tbw2y-container .adf-grid-list-container')
+                .queryAll(By.css('.adf-grid-list-single-column'))
+                .map((element) => element.nativeElement as HTMLElement);
+
+            expect(firstRowColumns.length).toBe(3);
+            expect(firstRowColumns[0].style['width']).toBe('50%');
+            expect(firstRowColumns[1].style['width']).toBe('25%');
+            expect(firstRowColumns[2].style['width']).toBe('25%');
+        });
+
         it('should display the correct number of initial rows', () => {
             const rows = testingUtils.getAllByCSS('#field-RepeatableSection0tbw2y-container .adf-grid-list-container');
 
