@@ -307,6 +307,19 @@ describe('TaskHeaderCloudComponent', () => {
             expect(value.nativeElement.innerText).toBe('create');
         });
 
+        it('should not render the clickable assignee edit icon when allowSelfService is false', async () => {
+            component.allowSelfService = false;
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const editIcon = fixture.debugElement.query(
+                By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`)
+            );
+            expect(editIcon).toBeNull();
+            expect(component.isAssigneePropertyClickable()).toBe(false);
+        });
+
         it('should not render defined edit icon for assignee property if the task in created state and shared among condidate users', async () => {
             getTaskByIdSpy.and.returnValue(of(createdTaskDetailsCloudMock));
 

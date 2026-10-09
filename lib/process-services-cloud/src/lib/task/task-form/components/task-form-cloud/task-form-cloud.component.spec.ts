@@ -172,6 +172,40 @@ describe('TaskFormCloudComponent', () => {
         });
     });
 
+    describe('allowSelfService', () => {
+        beforeEach(() => {
+            spyOn(component, 'hasCandidateUsersOrGroups').and.returnValue(true);
+        });
+
+        it('should block claiming when allowSelfService is false', () => {
+            spyOn(taskCloudService, 'canClaimTask').and.returnValue(true);
+            component.allowSelfService = false;
+
+            expect(component.canClaimTask()).toBe(false);
+        });
+
+        it('should allow claiming when allowSelfService is true and the task is claimable', () => {
+            spyOn(taskCloudService, 'canClaimTask').and.returnValue(true);
+            component.allowSelfService = true;
+
+            expect(component.canClaimTask()).toBe(true);
+        });
+
+        it('should block releasing when allowSelfService is false', () => {
+            spyOn(taskCloudService, 'canUnclaimTask').and.returnValue(true);
+            component.allowSelfService = false;
+
+            expect(component.canUnclaimTask()).toBe(false);
+        });
+
+        it('should allow releasing when allowSelfService is true and the task is releasable', () => {
+            spyOn(taskCloudService, 'canUnclaimTask').and.returnValue(true);
+            component.allowSelfService = true;
+
+            expect(component.canUnclaimTask()).toBe(true);
+        });
+    });
+
     describe('Inputs', () => {
         beforeEach(() => {
             fixture.componentRef.setInput('taskDetails', taskDetails);

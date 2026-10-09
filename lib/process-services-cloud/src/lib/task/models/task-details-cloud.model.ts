@@ -46,6 +46,7 @@ export interface TaskDetailsCloudModel {
     memberOfCandidateGroup?: boolean;
     memberOfCandidateUsers?: boolean;
     processDefinitionDeploymentId?: string;
+    allowSelfService?: boolean;
 }
 
 export interface TaskDetailsCloudModelRuntimeBundle {
