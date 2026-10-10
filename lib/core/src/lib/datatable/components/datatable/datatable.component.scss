@@ -128,15 +128,15 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         }
 
         &:focus {
-            outline-offset: -1px;
-            outline: 1px solid var(--mat-sys-primary);
+            outline-offset: -2px;
+            outline: 2px solid var(--mat-sys-primary);
         }
 
         .adf-cell-value,
         .adf-datatable-cell-header {
             &:focus {
-                outline-offset: -1px;
-                outline: 1px solid var(--mat-sys-primary);
+                outline-offset: -2px;
+                outline: 2px solid var(--mat-sys-primary);
             }
         }
     }
