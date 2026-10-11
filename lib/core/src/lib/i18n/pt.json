@@ -80,8 +80,8 @@
       "NAMELESS_TASK": "Tarefa sem nome",
       "ROW_LABEL": "Linha {{ number }}",
       "DELETE_ROW": "Excluir linha",
-      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
-      "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contém erros de validação",
+      "TAB_VALIDATION_ERRORS_TOOLTIP": "Esta aba contém erros de validação",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Excluir a linha",
         "MESSAGE": "Tem certeza de que deseja excluir esta linha?",

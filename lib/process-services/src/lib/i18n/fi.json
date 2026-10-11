@@ -111,6 +111,12 @@
     "FILTERS": {
       "MESSAGES": {
         "NONE": "Ei valittua tehtäväsuodatinta"
+      },
+      "DEFAULT": {
+        "MY_TASKS": "My Tasks",
+        "OVERDUE_TASKS": "Overdue Tasks",
+        "UNASSIGNED_TASKS": "Unassigned Tasks",
+        "COMPLETED_TASKS": "Completed Tasks"
       }
     },
     "START_TASK": {
@@ -182,6 +188,11 @@
     "FILTERS": {
       "MESSAGES": {
         "NONE": "Prosessiesiintymäsuodatinta ei ole valittu."
+      },
+      "DEFAULT": {
+        "RUNNING": "Running",
+        "COMPLETED": "Completed",
+        "ALL": "All"
       }
     },
     "PROPERTIES": {

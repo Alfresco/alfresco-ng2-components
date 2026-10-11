@@ -80,8 +80,8 @@
       "NAMELESS_TASK": "Nimetön tehtävä",
       "ROW_LABEL": "Rivi {{ number }}",
       "DELETE_ROW": "Poista rivi",
-      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
-      "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} sisältää validointivirheitä",
+      "TAB_VALIDATION_ERRORS_TOOLTIP": "Tämä välilehti sisältää validointivirheitä",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Poista rivi",
         "MESSAGE": "Haluatko varmasti poistaa tämän rivin?",
