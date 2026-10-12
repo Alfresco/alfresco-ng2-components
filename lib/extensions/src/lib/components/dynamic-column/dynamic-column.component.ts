@@ -52,15 +52,15 @@ export class DynamicColumnComponent implements OnInit, OnChanges, OnDestroy {
     private readonly extensions = inject(ExtensionService);
 
     @ViewChild('content', { read: ViewContainerRef, static: true })
-    content: ViewContainerRef;
+    content!: ViewContainerRef;
 
     @Input()
-    id: string;
+    id!: string;
 
     @Input()
     context: any;
 
-    private componentRef: ComponentRef<any>;
+    private componentRef: ComponentRef<any> | null = null;
 
     ngOnInit() {
         const componentType = this.extensions.getComponentById(this.id);

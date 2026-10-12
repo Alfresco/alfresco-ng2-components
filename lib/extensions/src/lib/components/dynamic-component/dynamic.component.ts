@@ -39,10 +39,10 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
     private readonly extensions = inject(ExtensionService);
 
     @ViewChild('content', { read: ViewContainerRef, static: true })
-    content: ViewContainerRef;
+    content!: ViewContainerRef;
 
     /** Unique ID string for the component to show. */
-    @Input() id: string;
+    @Input() id!: string;
 
     /** Data for the dynamically-loaded component instance. */
     @Input() data: any;
@@ -50,7 +50,7 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
     /** Provides the menu item of dynamically-loaded component instance. */
     menuItem: MatMenuItem | undefined;
 
-    private componentRef: ComponentRef<ExtensionComponent>;
+    private componentRef: ComponentRef<ExtensionComponent> | null = null;
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.id) {
@@ -84,7 +84,7 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
     }
 
     private updateInstance() {
-        if (this.componentCreated()) {
+        if (this.componentRef) {
             this.componentRef.setInput('data', this.data);
         }
     }
@@ -94,13 +94,9 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
     }
 
     private destroyComponent() {
-        if (this.componentCreated()) {
+        if (this.componentRef) {
             this.componentRef.destroy();
             this.componentRef = null;
         }
-    }
-
-    private componentCreated(): boolean {
-        return !!this.componentRef && !!this.componentRef.instance;
     }
 }

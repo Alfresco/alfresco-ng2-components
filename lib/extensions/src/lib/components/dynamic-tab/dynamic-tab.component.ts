@@ -39,16 +39,16 @@ export class DynamicTabComponent implements OnInit, OnChanges, OnDestroy {
     private readonly extensions = inject(ExtensionService);
 
     @ViewChild('content', { read: ViewContainerRef, static: true })
-    content: ViewContainerRef;
+    content!: ViewContainerRef;
 
     /** Unique ID string for the component to show. */
     @Input()
-    id: string;
+    id!: string;
 
     @Input()
-    node: Node;
+    node!: Node;
 
-    private componentRef: ComponentRef<any>;
+    private componentRef: ComponentRef<any> | null = null;
 
     ngOnInit() {
         const componentType = this.extensions.getComponentById(this.id);
