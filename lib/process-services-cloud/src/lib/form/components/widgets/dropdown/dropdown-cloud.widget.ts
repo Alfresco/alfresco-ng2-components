@@ -16,13 +16,13 @@
  */
 
 import {
+    ADF_TYPED_VALUE_FORMATTING_ENABLED,
     AppConfigService,
     FormFieldEvent,
     FormFieldModel,
     FormFieldOption,
     FormFieldTypes,
     FormFieldValueFormatterService,
-    ADF_TYPED_VALUE_FORMATTING_ENABLED,
     FormService,
     ReactiveFormWidget,
     RuleEntry,
@@ -38,8 +38,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslatePipe } from '@ngx-translate/core';
-import { BehaviorSubject, isObservable, Subject } from 'rxjs';
-import { debounceTime, filter, map } from 'rxjs/operators';
+import { BehaviorSubject, isObservable, of, Subject, timer } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { FormUtilsService } from '../../../services/form-utils.service';
 import {
@@ -136,7 +136,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             We can have a lot of 'control.setValue' caused by form rules events
             e.g. every time if we focusin/focusout etc. we are calling a setValue.
         */
-        this.debounceSetValue.pipe(debounceTime(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+        this.debounceSetValue.pipe(
+                map((value, index) => [value, index]),
+                switchMap(([value, index]) => (index === 0 ? of(value) : timer(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE).pipe(map(() => value)))),
+                takeUntilDestroyed(this.destroyRef)
+            ).subscribe(() => {
             this.applyFieldValueToControl();
         });
 

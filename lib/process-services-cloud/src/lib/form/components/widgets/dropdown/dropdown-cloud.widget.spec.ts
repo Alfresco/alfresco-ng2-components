@@ -1769,7 +1769,7 @@ describe('DropdownCloudWidgetComponent instantiated by FormFieldComponent wrappe
         This may result in setting wrong value in component
         e.g. FormFieldComponent.updateReactiveFormControlOnFormRulesEvent
      */
-    it('should set dropdown controller value only once', async () => {
+    it('should set dropdown controller value twice, on init and after debounce time', async () => {
         formFieldComponent.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false, id: 'form-id' }), {
             id: 'multiselect-id',
             name: 'multiselect',
@@ -1804,7 +1804,7 @@ describe('DropdownCloudWidgetComponent instantiated by FormFieldComponent wrappe
         const selectedOption = await dropdown.getValueText();
 
         expect(selectedOption).toEqual('option1');
-        expect(setValueSpy).toHaveBeenCalledTimes(1);
+        expect(setValueSpy).toHaveBeenCalledTimes(2);
     });
 
     describe('typed value formatting (readOnlyDisplayValue)', () => {
