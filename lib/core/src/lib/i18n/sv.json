@@ -80,8 +80,8 @@
       "NAMELESS_TASK": "Namnlös uppgift",
       "ROW_LABEL": "Rad {{ number }}",
       "DELETE_ROW": "Radera rad",
-      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
-      "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} innehåller valideringsfel",
+      "TAB_VALIDATION_ERRORS_TOOLTIP": "Denna flik innehåller valideringsfel",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Radera raden",
         "MESSAGE": "Vill du verkligen radera den här raden?",

@@ -111,6 +111,12 @@
     "FILTERS": {
       "MESSAGES": {
         "NONE": "No task filter selected"
+      },
+      "DEFAULT": {
+        "MY_TASKS": "My Tasks",
+        "OVERDUE_TASKS": "Overdue Tasks",
+        "UNASSIGNED_TASKS": "Unassigned Tasks",
+        "COMPLETED_TASKS": "Completed Tasks"
       }
     },
     "START_TASK": {
@@ -182,6 +188,11 @@
     "FILTERS": {
       "MESSAGES": {
         "NONE": "No process instance filter selected."
+      },
+      "DEFAULT": {
+        "RUNNING": "Running",
+        "COMPLETED": "Completed",
+        "ALL": "All"
       }
     },
     "PROPERTIES": {

@@ -80,8 +80,8 @@
       "NAMELESS_TASK": "Zadanie bez nazwy",
       "ROW_LABEL": "Wiersz {{ number }}",
       "DELETE_ROW": "Usuń wiersz",
-      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
-      "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} zawiera błędy weryfikacji",
+      "TAB_VALIDATION_ERRORS_TOOLTIP": "Ta karta zawiera błędy weryfikacji",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Usuń wiersz",
         "MESSAGE": "Czy na pewno chcesz usunąć ten wiersz?",

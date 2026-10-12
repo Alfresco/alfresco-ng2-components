@@ -80,8 +80,8 @@
       "NAMELESS_TASK": "Namenlose Aufgabe",
       "ROW_LABEL": "Seite {{ number }}",
       "DELETE_ROW": "Zeile löschen",
-      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
-      "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} enthält Validierungsfehler",
+      "TAB_VALIDATION_ERRORS_TOOLTIP": "Dieser Tab enthält Validierungsfehler",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Zeile löschen",
         "MESSAGE": "Sind Sie sicher, dass Sie diese Zeile löschen möchten?",
