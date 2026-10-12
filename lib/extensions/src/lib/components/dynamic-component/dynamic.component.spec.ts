@@ -52,6 +52,14 @@ export class AlternateTestComponent {
     menuItem = 'alternateMenuTestData';
 }
 
+@Component({
+    selector: 'test-legacy-component',
+    template: ''
+})
+export class LegacyTestComponent {
+    data: any;
+}
+
 describe('DynamicExtensionComponent', () => {
     let fixture: ComponentFixture<DynamicExtensionComponent>;
     let componentRegister: ComponentRegisterService;
@@ -59,10 +67,14 @@ describe('DynamicExtensionComponent', () => {
 
     beforeEach(() => {
         componentRegister = new ComponentRegisterService();
-        componentRegister.setComponents({ 'test-component': TestComponent, 'alternate-component': AlternateTestComponent });
+        componentRegister.setComponents({
+            'test-component': TestComponent,
+            'alternate-component': AlternateTestComponent,
+            'legacy-component': LegacyTestComponent
+        });
 
         TestBed.configureTestingModule({
-            imports: [HttpClientModule, DynamicExtensionComponent, TestComponent, AlternateTestComponent],
+            imports: [HttpClientModule, DynamicExtensionComponent, TestComponent, AlternateTestComponent, LegacyTestComponent],
             providers: [{ provide: ComponentRegisterService, useValue: componentRegister }]
         });
         TestBed.compileComponents();
@@ -131,6 +143,20 @@ describe('DynamicExtensionComponent', () => {
             expect(testComponent.destroyed).toBe(true);
             expect(component.menuItem).toBeUndefined();
             expect(fixture.debugElement.query(By.css('test-component'))).toBeNull();
+        });
+
+        it('should update legacy dynamic components with a plain data property', () => {
+            fixture.componentRef.setInput('id', 'legacy-component');
+            fixture.detectChanges();
+            const legacyComponent = fixture.debugElement.query(By.directive(LegacyTestComponent)).componentInstance as LegacyTestComponent;
+
+            expect(legacyComponent.data).toBe(component.data);
+
+            const updatedData = { foo: 'legacy' };
+            fixture.componentRef.setInput('data', updatedData);
+            fixture.detectChanges();
+
+            expect(legacyComponent.data).toBe(updatedData);
         });
     });
 

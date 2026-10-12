@@ -25,6 +25,7 @@ import {
     OnChanges,
     SimpleChanges,
     AfterViewInit,
+    reflectComponentType,
     inject
 } from '@angular/core';
 import { ExtensionService } from '../../services/extension.service';
@@ -85,7 +86,15 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
 
     private updateInstance() {
         if (this.componentRef) {
-            this.componentRef.setInput('data', this.data);
+            const dataInput = reflectComponentType(this.componentRef.componentType)?.inputs.find(
+                (input) => input.propName === 'data' || input.templateName === 'data'
+            );
+
+            if (dataInput) {
+                this.componentRef.setInput(dataInput.templateName, this.data);
+            } else {
+                this.componentRef.instance.data = this.data;
+            }
         }
     }
 
