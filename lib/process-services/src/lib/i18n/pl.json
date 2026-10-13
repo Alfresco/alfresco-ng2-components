@@ -111,6 +111,12 @@
     "FILTERS": {
       "MESSAGES": {
         "NONE": "Nie wybrano filtra zadań."
+      },
+      "DEFAULT": {
+        "MY_TASKS": "Moje zadania",
+        "OVERDUE_TASKS": "Zaległe zadania",
+        "UNASSIGNED_TASKS": "Nieprzypisane zadania",
+        "COMPLETED_TASKS": "Ukończone zadania"
       }
     },
     "START_TASK": {
@@ -182,6 +188,11 @@
     "FILTERS": {
       "MESSAGES": {
         "NONE": "Nie wybrano filtra wystąpień procesu."
+      },
+      "DEFAULT": {
+        "RUNNING": "Uruchomione",
+        "COMPLETED": "Ukończono",
+        "ALL": "Wszystkie"
       }
     },
     "PROPERTIES": {

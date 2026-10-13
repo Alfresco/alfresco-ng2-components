@@ -111,6 +111,12 @@
     "FILTERS": {
       "MESSAGES": {
         "NONE": "Kein Aufgabenfilter ausgewählt"
+      },
+      "DEFAULT": {
+        "MY_TASKS": "Meine Aufgaben",
+        "OVERDUE_TASKS": "Überfällige Aufgaben",
+        "UNASSIGNED_TASKS": "Nicht zugewiesene Aufgaben",
+        "COMPLETED_TASKS": "Abgeschlossene Aufgaben"
       }
     },
     "START_TASK": {
@@ -182,6 +188,11 @@
     "FILTERS": {
       "MESSAGES": {
         "NONE": "Kein Prozessinstanzfilter ausgewählt."
+      },
+      "DEFAULT": {
+        "RUNNING": "Wird ausgeführt",
+        "COMPLETED": "Abgeschlossen",
+        "ALL": "Alle"
       }
     },
     "PROPERTIES": {

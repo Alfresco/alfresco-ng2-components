@@ -80,8 +80,8 @@
       "NAMELESS_TASK": "Tarea sin nombre",
       "ROW_LABEL": "Fila {{ number }}",
       "DELETE_ROW": "Eliminar fila",
-      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
-      "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contiene errores de validación",
+      "TAB_VALIDATION_ERRORS_TOOLTIP": "Esta pestaña contiene errores de validación",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Eliminar la fila",
         "MESSAGE": "¿Está seguro de que desea eliminar esta fila?",

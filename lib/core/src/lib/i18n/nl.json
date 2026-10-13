@@ -80,8 +80,8 @@
       "NAMELESS_TASK": "Naamloze taak",
       "ROW_LABEL": "Rij {{ number }}",
       "DELETE_ROW": "Rij verwijderen",
-      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} contains validation errors",
-      "TAB_VALIDATION_ERRORS_TOOLTIP": "This tab contains validation errors",
+      "TAB_VALIDATION_ERRORS_LABEL": "{{ tabTitle }} bevat validatiefouten",
+      "TAB_VALIDATION_ERRORS_TOOLTIP": "Dit tabblad bevat validatiefouten",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "De rij verwijderen",
         "MESSAGE": "Weet u zeker dat u deze rij wilt verwijderen?",

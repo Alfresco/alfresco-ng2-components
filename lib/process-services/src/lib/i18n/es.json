@@ -111,6 +111,12 @@
     "FILTERS": {
       "MESSAGES": {
         "NONE": "No se ha seleccionado ningún filtro de tareas"
+      },
+      "DEFAULT": {
+        "MY_TASKS": "Mis tareas",
+        "OVERDUE_TASKS": "Tareas vencidas",
+        "UNASSIGNED_TASKS": "Tareas sin asignar",
+        "COMPLETED_TASKS": "Tareas completadas"
       }
     },
     "START_TASK": {
@@ -182,6 +188,11 @@
     "FILTERS": {
       "MESSAGES": {
         "NONE": "No se ha seleccionado ningún filtro de instancias."
+      },
+      "DEFAULT": {
+        "RUNNING": "Ejecutándose",
+        "COMPLETED": "Completado",
+        "ALL": "Todos"
       }
     },
     "PROPERTIES": {

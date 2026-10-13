@@ -111,6 +111,12 @@
     "FILTERS": {
       "MESSAGES": {
         "NONE": "タスクのフィルタが選択されていません"
+      },
+      "DEFAULT": {
+        "MY_TASKS": "マイタスク",
+        "OVERDUE_TASKS": "期限切れタスク",
+        "UNASSIGNED_TASKS": "未割当タスク",
+        "COMPLETED_TASKS": "完了済みタスク"
       }
     },
     "START_TASK": {
@@ -182,6 +188,11 @@
     "FILTERS": {
       "MESSAGES": {
         "NONE": "プロセスインスタンスのフィルタが選択されていません。"
+      },
+      "DEFAULT": {
+        "RUNNING": "実行中",
+        "COMPLETED": "完了",
+        "ALL": "すべて"
       }
     },
     "PROPERTIES": {
