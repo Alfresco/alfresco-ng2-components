@@ -113,10 +113,10 @@
         "NONE": "Фильтр задач не выбран"
       },
       "DEFAULT": {
-        "MY_TASKS": "My Tasks",
-        "OVERDUE_TASKS": "Overdue Tasks",
-        "UNASSIGNED_TASKS": "Unassigned Tasks",
-        "COMPLETED_TASKS": "Completed Tasks"
+        "MY_TASKS": "Мои задачи",
+        "OVERDUE_TASKS": "Просроченные задачи",
+        "UNASSIGNED_TASKS": "Неназначенные задачи",
+        "COMPLETED_TASKS": "Завершенные задачи"
       }
     },
     "START_TASK": {
@@ -190,9 +190,9 @@
         "NONE": "Фильтр экземпляров процессов не найден."
       },
       "DEFAULT": {
-        "RUNNING": "Running",
-        "COMPLETED": "Completed",
-        "ALL": "All"
+        "RUNNING": "Выполняются",
+        "COMPLETED": "Завершенные",
+        "ALL": "Все"
       }
     },
     "PROPERTIES": {

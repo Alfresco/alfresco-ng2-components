@@ -113,10 +113,10 @@
         "NONE": "未选择任务筛选器"
       },
       "DEFAULT": {
-        "MY_TASKS": "My Tasks",
-        "OVERDUE_TASKS": "Overdue Tasks",
-        "UNASSIGNED_TASKS": "Unassigned Tasks",
-        "COMPLETED_TASKS": "Completed Tasks"
+        "MY_TASKS": "我的任务",
+        "OVERDUE_TASKS": "逾期任务",
+        "UNASSIGNED_TASKS": "未分配任务",
+        "COMPLETED_TASKS": "完成的任务"
       }
     },
     "START_TASK": {
@@ -190,9 +190,9 @@
         "NONE": "未选择进程实例筛选器。"
       },
       "DEFAULT": {
-        "RUNNING": "Running",
-        "COMPLETED": "Completed",
-        "ALL": "All"
+        "RUNNING": "运行",
+        "COMPLETED": "已完成",
+        "ALL": "全部"
       }
     },
     "PROPERTIES": {

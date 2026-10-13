@@ -113,10 +113,10 @@
         "NONE": "Der er ikke valgt noget opgavefilter"
       },
       "DEFAULT": {
-        "MY_TASKS": "My Tasks",
-        "OVERDUE_TASKS": "Overdue Tasks",
-        "UNASSIGNED_TASKS": "Unassigned Tasks",
-        "COMPLETED_TASKS": "Completed Tasks"
+        "MY_TASKS": "Mine opgaver",
+        "OVERDUE_TASKS": "Forfaldne opgaver",
+        "UNASSIGNED_TASKS": "Ikke tildelte opgaver",
+        "COMPLETED_TASKS": "Fuldførte opgaver"
       }
     },
     "START_TASK": {
@@ -190,9 +190,9 @@
         "NONE": "Der er ikke valgt et filter for procesforekomster."
       },
       "DEFAULT": {
-        "RUNNING": "Running",
-        "COMPLETED": "Completed",
-        "ALL": "All"
+        "RUNNING": "Kører",
+        "COMPLETED": "Fuldført",
+        "ALL": "Alle"
       }
     },
     "PROPERTIES": {

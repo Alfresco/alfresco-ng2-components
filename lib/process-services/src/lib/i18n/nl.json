@@ -113,10 +113,10 @@
         "NONE": "Geen taakfilter geselecteerd"
       },
       "DEFAULT": {
-        "MY_TASKS": "My Tasks",
-        "OVERDUE_TASKS": "Overdue Tasks",
-        "UNASSIGNED_TASKS": "Unassigned Tasks",
-        "COMPLETED_TASKS": "Completed Tasks"
+        "MY_TASKS": "Mijn taken",
+        "OVERDUE_TASKS": "Taken met achterstallige termijn",
+        "UNASSIGNED_TASKS": "Niet toegewezen taken",
+        "COMPLETED_TASKS": "Voltooide taken"
       }
     },
     "START_TASK": {
@@ -190,9 +190,9 @@
         "NONE": "Geen procesinstancefilter geselecteerd."
       },
       "DEFAULT": {
-        "RUNNING": "Running",
-        "COMPLETED": "Completed",
-        "ALL": "All"
+        "RUNNING": "Wordt uitgevoerd",
+        "COMPLETED": "Voltooid",
+        "ALL": "Alle"
       }
     },
     "PROPERTIES": {

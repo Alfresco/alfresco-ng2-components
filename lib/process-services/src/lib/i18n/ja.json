@@ -113,10 +113,10 @@
         "NONE": "タスクのフィルタが選択されていません"
       },
       "DEFAULT": {
-        "MY_TASKS": "My Tasks",
-        "OVERDUE_TASKS": "Overdue Tasks",
-        "UNASSIGNED_TASKS": "Unassigned Tasks",
-        "COMPLETED_TASKS": "Completed Tasks"
+        "MY_TASKS": "マイタスク",
+        "OVERDUE_TASKS": "期限切れタスク",
+        "UNASSIGNED_TASKS": "未割当タスク",
+        "COMPLETED_TASKS": "完了済みタスク"
       }
     },
     "START_TASK": {
@@ -190,9 +190,9 @@
         "NONE": "プロセスインスタンスのフィルタが選択されていません。"
       },
       "DEFAULT": {
-        "RUNNING": "Running",
-        "COMPLETED": "Completed",
-        "ALL": "All"
+        "RUNNING": "実行中",
+        "COMPLETED": "完了",
+        "ALL": "すべて"
       }
     },
     "PROPERTIES": {

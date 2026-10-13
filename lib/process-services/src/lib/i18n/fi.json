@@ -113,10 +113,10 @@
         "NONE": "Ei valittua tehtäväsuodatinta"
       },
       "DEFAULT": {
-        "MY_TASKS": "My Tasks",
-        "OVERDUE_TASKS": "Overdue Tasks",
-        "UNASSIGNED_TASKS": "Unassigned Tasks",
-        "COMPLETED_TASKS": "Completed Tasks"
+        "MY_TASKS": "Omat tehtävät",
+        "OVERDUE_TASKS": "Myöhässä olevat tehtävät",
+        "UNASSIGNED_TASKS": "Osoittamattomat tehtävät",
+        "COMPLETED_TASKS": "Suoritetut tehtävät"
       }
     },
     "START_TASK": {
@@ -190,9 +190,9 @@
         "NONE": "Prosessiesiintymäsuodatinta ei ole valittu."
       },
       "DEFAULT": {
-        "RUNNING": "Running",
-        "COMPLETED": "Completed",
-        "ALL": "All"
+        "RUNNING": "Käynnissä",
+        "COMPLETED": "Suoritetut",
+        "ALL": "Kaikki"
       }
     },
     "PROPERTIES": {
