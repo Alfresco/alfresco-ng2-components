@@ -52,14 +52,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     @Input()
     searchApiMethod: 'GET' | 'POST' = 'GET';
 
-    /**
-     * (optional) Resolves the counters of the task and the process filters with a single call to
-     * `POST /query/v1/count`. Both filter components have to
-     * ask for it, otherwise the counters are resolved one filter at a time.
-     */
-    @Input()
-    useBatchedCounters = false;
-
     /** (optional) The filter to be selected by default */
     @Input()
     filterParam: FilterParamsModel;
@@ -99,7 +91,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     private filtersLoadedFor?: string;
     private countersSubscription?: Subscription;
     private countersFilters$?: Observable<ProcessFilterCloudModel[]>;
-    private batchedCounters = true;
 
     private readonly destroyRef = inject(DestroyRef);
     private readonly processFilterCloudService = inject(ProcessFilterCloudService);
@@ -127,8 +118,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
             this.getFilters(appName.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectFilterAndEmit(filter.currentValue);
-        } else if (changes['useBatchedCounters'] && !changes['useBatchedCounters'].firstChange && this.filtersLoadedFor) {
-            this.loadFilterCounters(this.filtersLoadedFor);
         }
     }
 
@@ -224,7 +213,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         if (filter) {
             this.selectFilter(filter);
             this.filterClicked.emit(this.currentFilter);
-            this.refreshFilterCounter(this.currentFilter);
+            this.refreshFilterCounter();
             this.updatedFiltersSet.delete(filter.key);
         } else {
             this.currentFilter = undefined;
@@ -351,16 +340,11 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         this.countersSubscription?.unsubscribe();
         this.countersSubscription = combineLatest([
             this.countersFilters$.pipe(catchError(() => of([]))),
-            this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.PROCESS_INSTANCE, this.useBatchedCounters)
+            this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.PROCESS_INSTANCE)
         ])
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(([, { counters, batched }]) => {
-                this.batchedCounters = batched;
-                if (batched) {
-                    this.applyFilterCounters(counters);
-                } else {
-                    this.updateFilterCounters();
-                }
+            .subscribe(([, { counters }]) => {
+                this.applyFilterCounters(counters);
             });
     }
 
@@ -382,12 +366,8 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         });
     }
 
-    private refreshFilterCounter(filter?: ProcessFilterCloudModel): void {
-        if (this.batchedCounters) {
-            this.filterCountersCloudService.refreshFilterCounters(this.appName);
-        } else if (filter) {
-            this.updateFilterCounter(filter);
-        }
+    private refreshFilterCounter(): void {
+        this.filterCountersCloudService.refreshFilterCounters(this.appName);
     }
 
     private fetchProcessFilterCounter(filter: ProcessFilterCloudModel): Observable<number> {

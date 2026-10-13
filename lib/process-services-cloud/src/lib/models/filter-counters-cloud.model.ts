@@ -51,5 +51,4 @@ export type FilterCounters = {
 
 export interface FilterCountersResult {
     counters: { [filterKey: string]: number };
-    batched: boolean;
 }

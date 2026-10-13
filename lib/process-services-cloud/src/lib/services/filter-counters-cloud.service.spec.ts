@@ -85,15 +85,14 @@ describe('FilterCountersCloudService', () => {
     const emitTaskEvent = (eventType = 'TASK_CREATED') => taskEvents$.next(engineEvents(eventType));
     const emitProcessEvent = (eventType = 'PROCESS_STARTED') => processEvents$.next(engineEvents(eventType));
 
-    const counters = (entityType: FilterCounterEntityType, appName = 'mock-app') =>
-        firstValueFrom(service.getFilterCounters(appName, entityType, true));
+    const counters = (entityType: FilterCounterEntityType, appName = 'mock-app') => firstValueFrom(service.getFilterCounters(appName, entityType));
     const taskCounters = (appName = 'mock-app') => counters(FilterCounterEntityType.TASK, appName);
     const processCounters = (appName = 'mock-app') => counters(FilterCounterEntityType.PROCESS_INSTANCE, appName);
     const bothCounters = (appName = 'mock-app') =>
         firstValueFrom(
             combineLatest([
-                service.getFilterCounters(appName, FilterCounterEntityType.TASK, true),
-                service.getFilterCounters(appName, FilterCounterEntityType.PROCESS_INSTANCE, true)
+                service.getFilterCounters(appName, FilterCounterEntityType.TASK),
+                service.getFilterCounters(appName, FilterCounterEntityType.PROCESS_INSTANCE)
             ])
         );
 
@@ -168,10 +167,7 @@ describe('FilterCountersCloudService', () => {
         });
 
         it('should resolve the counters of both entity types with a single request', async () => {
-            expect(await bothCounters()).toEqual([
-                { counters: { 'my-tasks': 5, 'queued-tasks': 0 }, batched: true },
-                { counters: { 'running-processes': 5 }, batched: true }
-            ]);
+            expect(await bothCounters()).toEqual([{ counters: { 'my-tasks': 5, 'queued-tasks': 0 } }, { counters: { 'running-processes': 5 } }]);
 
             expect(postSpy).toHaveBeenCalledTimes(1);
         });
@@ -235,7 +231,7 @@ describe('FilterCountersCloudService', () => {
         it('should leave out a filter without a key, since it holds no request id', async () => {
             getProcessFiltersSpy.and.returnValue(of([processFilter({ key: null, status: 'RUNNING', showCounter: true })]));
 
-            expect(await processCounters()).toEqual({ counters: {}, batched: true });
+            expect(await processCounters()).toEqual({ counters: {} });
             expect(postSpy).not.toHaveBeenCalled();
         });
 
@@ -252,87 +248,18 @@ describe('FilterCountersCloudService', () => {
             getTaskListFiltersSpy.and.returnValue(of([]));
             getProcessFiltersSpy.and.returnValue(of([]));
 
-            expect(await taskCounters()).toEqual({ counters: {}, batched: true });
+            expect(await taskCounters()).toEqual({ counters: {} });
             expect(postSpy).not.toHaveBeenCalled();
         });
 
-        describe('when the batched count endpoint is not available', () => {
-            it('should report the counters as not batched', async () => {
-                postSpy.and.returnValue(throwError(() => ({ status: 404 })));
+        it('should resolve no counter when the endpoint fails, and keep calling it on later attempts', async () => {
+            postSpy.and.returnValue(throwError(() => new Error('endpoint unavailable')));
+            expect(await taskCounters()).toEqual({ counters: {} });
 
-                expect(await taskCounters()).toEqual({ counters: {}, batched: false });
-            });
-
-            it('should not call the endpoint again for the same app', async () => {
-                postSpy.and.returnValue(throwError(() => ({ status: 404 })));
-
-                await taskCounters();
-                expect(await processCounters()).toEqual({ counters: {}, batched: false });
-
-                expect(postSpy).toHaveBeenCalledTimes(1);
-            });
-
-            it('should keep calling the endpoint of the apps that do hold it', async () => {
-                postSpy.and.returnValue(throwError(() => ({ status: 404 })));
-                await taskCounters();
-
-                postSpy.and.returnValue(of(countersMock));
-                expect(await taskCounters('other-app')).toEqual({ counters: { 'my-tasks': 5, 'queued-tasks': 0 }, batched: true });
-            });
-
-            it('should keep calling the endpoint after a transient failure', async () => {
-                postSpy.and.returnValue(throwError(() => ({ status: 500 })));
-                expect(await taskCounters()).toEqual({ counters: {}, batched: false });
-
-                postSpy.and.returnValue(of(countersMock));
-                expect(await taskCounters()).toEqual({ counters: { 'my-tasks': 5, 'queued-tasks': 0 }, batched: true });
-                expect(postSpy).toHaveBeenCalledTimes(2);
-            });
+            postSpy.and.returnValue(of(countersMock));
+            expect(await taskCounters()).toEqual({ counters: { 'my-tasks': 5, 'queued-tasks': 0 } });
+            expect(postSpy).toHaveBeenCalledTimes(2);
         });
-    });
-
-    describe('batched counters opted in by the filter components', () => {
-        it('should not call the batched count endpoint when it was not asked for', async () => {
-            const result = await firstValueFrom(service.getFilterCounters('mock-app', FilterCounterEntityType.TASK));
-
-            expect(result).toEqual({ counters: {}, batched: false });
-            expect(postSpy).not.toHaveBeenCalled();
-        });
-
-        it('should not load the filters when the batched count endpoint was not asked for', async () => {
-            await firstValueFrom(service.getFilterCounters('mock-app', FilterCounterEntityType.TASK));
-
-            expect(getTaskListFiltersSpy).not.toHaveBeenCalled();
-        });
-
-        it('should call the batched count endpoint when every entity type on screen asked for it', async () => {
-            await bothCounters();
-
-            expect(postSpy).toHaveBeenCalledTimes(1);
-        });
-
-        it('should not call the batched count endpoint when one entity type on screen did not ask for it', fakeAsync(() => {
-            const results: FilterCountersResult[] = [];
-            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe((result) => results.push(result));
-            service.getFilterCounters('mock-app', FilterCounterEntityType.PROCESS_INSTANCE, false).subscribe();
-            tick(0);
-
-            expect(postSpy).not.toHaveBeenCalled();
-            expect(results).toEqual([{ counters: {}, batched: false }]);
-        }));
-
-        it('should call the batched count endpoint once the entity type that opted out leaves the screen', fakeAsync(() => {
-            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe();
-            const processSubscription = service.getFilterCounters('mock-app', FilterCounterEntityType.PROCESS_INSTANCE, false).subscribe();
-            tick(0);
-
-            processSubscription.unsubscribe();
-            service.refreshFilterCounters('mock-app');
-            tick(0);
-
-            expect(postSpy).toHaveBeenCalledTimes(1);
-            expect(Object.keys(countRequest())).toEqual([FilterCounterEntityType.TASK]);
-        }));
     });
 
     describe('counters scoped to the entity types on screen', () => {
@@ -356,12 +283,12 @@ describe('FilterCountersCloudService', () => {
         });
 
         it('should resolve the counters again when an entity type joins the ones on screen', fakeAsync(() => {
-            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
             tick(0);
 
             expect(Object.keys(countRequest())).toEqual([FilterCounterEntityType.TASK]);
 
-            service.getFilterCounters('mock-app', FilterCounterEntityType.PROCESS_INSTANCE, true).subscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.PROCESS_INSTANCE).subscribe();
             tick(0);
 
             expect(postSpy).toHaveBeenCalledTimes(2);
@@ -369,8 +296,8 @@ describe('FilterCountersCloudService', () => {
         }));
 
         it('should stop covering an entity type once its counters hold no subscriber', fakeAsync(() => {
-            const taskSubscription = service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe();
-            service.getFilterCounters('mock-app', FilterCounterEntityType.PROCESS_INSTANCE, true).subscribe();
+            const taskSubscription = service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.PROCESS_INSTANCE).subscribe();
             tick(0);
 
             taskSubscription.unsubscribe();
@@ -383,20 +310,20 @@ describe('FilterCountersCloudService', () => {
 
     describe('teardown', () => {
         it('should close the engine event subscription once the counters hold no subscriber', fakeAsync(() => {
-            const subscription = service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe();
+            const subscription = service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
             tick(0);
             expect(makeGQLQuerySpy).toHaveBeenCalledTimes(1);
 
             subscription.unsubscribe();
-            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
             tick(0);
 
             expect(makeGQLQuerySpy).toHaveBeenCalledTimes(2);
         }));
 
         it('should keep the engine event subscription while another subscriber holds the same entity type', fakeAsync(() => {
-            const subscription = service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe();
-            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe();
+            const subscription = service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
             tick(0);
 
             subscription.unsubscribe();
@@ -413,7 +340,7 @@ describe('FilterCountersCloudService', () => {
 
             const subscriptions = [
                 service.getTaskFilters('mock-app').subscribe(),
-                service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe()
+                service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe()
             ];
             tick(0);
             expect(filters$.observed).toBeTrue();
@@ -424,11 +351,11 @@ describe('FilterCountersCloudService', () => {
         }));
 
         it('should resolve the counters again for a subscriber that comes after a full teardown', fakeAsync(() => {
-            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe().unsubscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe().unsubscribe();
             tick(0);
             postSpy.calls.reset();
 
-            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
             tick(0);
 
             expect(postSpy).toHaveBeenCalledTimes(1);
@@ -438,8 +365,8 @@ describe('FilterCountersCloudService', () => {
     describe('refreshFilterCounters', () => {
         it('should resolve the counters again with a single request', fakeAsync(() => {
             const results: FilterCountersResult[] = [];
-            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe((result) => results.push(result));
-            service.getFilterCounters('mock-app', FilterCounterEntityType.PROCESS_INSTANCE, true).subscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe((result) => results.push(result));
+            service.getFilterCounters('mock-app', FilterCounterEntityType.PROCESS_INSTANCE).subscribe();
             tick(0);
 
             service.refreshFilterCounters('mock-app');
@@ -477,15 +404,15 @@ describe('FilterCountersCloudService', () => {
         it('should resolve the counters of the wired family', async () => {
             const tasksOnlyService = configureTasksOnly();
 
-            const result = await firstValueFrom(tasksOnlyService.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true));
+            const result = await firstValueFrom(tasksOnlyService.getFilterCounters('mock-app', FilterCounterEntityType.TASK));
 
-            expect(result).toEqual({ counters: { 'my-tasks': 5, 'queued-tasks': 0 }, batched: true });
+            expect(result).toEqual({ counters: { 'my-tasks': 5, 'queued-tasks': 0 } });
         });
 
         it('should leave the filters of the family that is not wired out of the request', async () => {
             const tasksOnlyService = configureTasksOnly();
 
-            await firstValueFrom(tasksOnlyService.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true));
+            await firstValueFrom(tasksOnlyService.getFilterCounters('mock-app', FilterCounterEntityType.TASK));
 
             expect(countRequestIds(FilterCounterEntityType.TASK)).toEqual(['my-tasks', 'queued-tasks']);
             expect(countRequest().PROCESS_INSTANCE).toBeUndefined();
@@ -567,8 +494,8 @@ describe('FilterCountersCloudService', () => {
 
     describe('counters driven by the engine events', () => {
         it('should make a single count request for a batch of events of both entity types', fakeAsync(() => {
-            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe();
-            service.getFilterCounters('mock-app', FilterCounterEntityType.PROCESS_INSTANCE, true).subscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.PROCESS_INSTANCE).subscribe();
             tick(0);
             postSpy.calls.reset();
 
@@ -580,8 +507,8 @@ describe('FilterCountersCloudService', () => {
         }));
 
         it('should make a single count request for the events of both entity types arriving apart', fakeAsync(() => {
-            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe();
-            service.getFilterCounters('mock-app', FilterCounterEntityType.PROCESS_INSTANCE, true).subscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.PROCESS_INSTANCE).subscribe();
             tick(0);
             postSpy.calls.reset();
 
@@ -595,7 +522,7 @@ describe('FilterCountersCloudService', () => {
 
         it('should emit the counters resolved for the batch of events', fakeAsync(() => {
             const results: FilterCountersResult[] = [];
-            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe((result) => results.push(result));
+            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe((result) => results.push(result));
             tick(0);
 
             postSpy.and.returnValue(of({ TASK: { 'my-tasks': 9 } }));
@@ -603,11 +530,11 @@ describe('FilterCountersCloudService', () => {
             tick(3000);
 
             expect(results.length).toBe(2);
-            expect(results[1]).toEqual({ counters: { 'my-tasks': 9 }, batched: true });
+            expect(results[1]).toEqual({ counters: { 'my-tasks': 9 } });
         }));
 
         it('should not subscribe to the events of an entity type that is not on screen', fakeAsync(() => {
-            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
             tick(0);
 
             expect(makeGQLQuerySpy).toHaveBeenCalledTimes(1);
@@ -615,7 +542,7 @@ describe('FilterCountersCloudService', () => {
         }));
 
         it('should not resolve the counters again on the events of an entity type that is not on screen', fakeAsync(() => {
-            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
             tick(0);
             postSpy.calls.reset();
 
@@ -626,8 +553,8 @@ describe('FilterCountersCloudService', () => {
         }));
 
         it('should stop resolving the counters on the events of an entity type that left the screen', fakeAsync(() => {
-            const taskSubscription = service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe();
-            service.getFilterCounters('mock-app', FilterCounterEntityType.PROCESS_INSTANCE, true).subscribe();
+            const taskSubscription = service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.PROCESS_INSTANCE).subscribe();
             tick(0);
 
             taskSubscription.unsubscribe();
@@ -641,7 +568,7 @@ describe('FilterCountersCloudService', () => {
         it('should not subscribe to the engine events when notifications are disabled', fakeAsync(() => {
             appConfigService.config.notifications = false;
 
-            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK, true).subscribe();
+            service.getFilterCounters('mock-app', FilterCounterEntityType.TASK).subscribe();
             tick(3000);
 
             expect(makeGQLQuerySpy).not.toHaveBeenCalled();
