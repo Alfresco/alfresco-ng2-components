@@ -113,10 +113,10 @@
         "NONE": "Nessun filtro compito selezionato"
       },
       "DEFAULT": {
-        "MY_TASKS": "My Tasks",
-        "OVERDUE_TASKS": "Overdue Tasks",
-        "UNASSIGNED_TASKS": "Unassigned Tasks",
-        "COMPLETED_TASKS": "Completed Tasks"
+        "MY_TASKS": "I miei compiti",
+        "OVERDUE_TASKS": "Compiti in ritardo",
+        "UNASSIGNED_TASKS": "Compiti non assegnati",
+        "COMPLETED_TASKS": "Compiti completati"
       }
     },
     "START_TASK": {
@@ -190,9 +190,9 @@
         "NONE": "Nessun filtro di istanze di processo selezionato."
       },
       "DEFAULT": {
-        "RUNNING": "Running",
-        "COMPLETED": "Completed",
-        "ALL": "All"
+        "RUNNING": "In esecuzione",
+        "COMPLETED": "Completato",
+        "ALL": "Tutti"
       }
     },
     "PROPERTIES": {

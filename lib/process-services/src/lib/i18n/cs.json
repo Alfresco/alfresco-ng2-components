@@ -113,10 +113,10 @@
         "NONE": "Nebyl vybrán žádný filtr úkolů"
       },
       "DEFAULT": {
-        "MY_TASKS": "My Tasks",
-        "OVERDUE_TASKS": "Overdue Tasks",
-        "UNASSIGNED_TASKS": "Unassigned Tasks",
-        "COMPLETED_TASKS": "Completed Tasks"
+        "MY_TASKS": "Moje úkoly",
+        "OVERDUE_TASKS": "Zpožděné úkoly",
+        "UNASSIGNED_TASKS": "Nepřiřazené úkoly",
+        "COMPLETED_TASKS": "Dokončené úkoly"
       }
     },
     "START_TASK": {
@@ -190,9 +190,9 @@
         "NONE": "Nebyl zvolen žádný filtr instancí."
       },
       "DEFAULT": {
-        "RUNNING": "Running",
-        "COMPLETED": "Completed",
-        "ALL": "All"
+        "RUNNING": "Spuštěno",
+        "COMPLETED": "Dokončeno",
+        "ALL": "Vše"
       }
     },
     "PROPERTIES": {

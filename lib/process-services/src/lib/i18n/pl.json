@@ -113,10 +113,10 @@
         "NONE": "Nie wybrano filtra zadań."
       },
       "DEFAULT": {
-        "MY_TASKS": "My Tasks",
-        "OVERDUE_TASKS": "Overdue Tasks",
-        "UNASSIGNED_TASKS": "Unassigned Tasks",
-        "COMPLETED_TASKS": "Completed Tasks"
+        "MY_TASKS": "Moje zadania",
+        "OVERDUE_TASKS": "Zaległe zadania",
+        "UNASSIGNED_TASKS": "Nieprzypisane zadania",
+        "COMPLETED_TASKS": "Ukończone zadania"
       }
     },
     "START_TASK": {
@@ -190,9 +190,9 @@
         "NONE": "Nie wybrano filtra wystąpień procesu."
       },
       "DEFAULT": {
-        "RUNNING": "Running",
-        "COMPLETED": "Completed",
-        "ALL": "All"
+        "RUNNING": "Uruchomione",
+        "COMPLETED": "Ukończono",
+        "ALL": "Wszystkie"
       }
     },
     "PROPERTIES": {
