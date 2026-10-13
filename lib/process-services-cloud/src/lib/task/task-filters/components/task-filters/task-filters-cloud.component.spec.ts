@@ -88,9 +88,7 @@ describe('TaskFiltersCloudComponent', () => {
         getTaskListCountSpy = spyOn(taskListService, 'getTaskListCount').and.returnValue(of(11));
         getEngineEventsSpy = spyOn(filterCountersService, 'getEngineEvents').and.returnValue(of(taskNotifications));
         getTaskListFiltersSpy = spyOn(filterCountersService, 'getTaskFilters').and.returnValue(of(fakeGlobalFilter));
-        getFilterCountersSpy = spyOn(filterCountersService, 'getFilterCounters').and.returnValue(
-            of({ counters: { 'fake-involved-tasks': 11 }, batched: true })
-        );
+        getFilterCountersSpy = spyOn(filterCountersService, 'getFilterCounters').and.returnValue(of({ counters: { 'fake-involved-tasks': 11 } }));
         refreshFilterCountersSpy = spyOn(filterCountersService, 'refreshFilterCounters');
 
         appConfigService = TestBed.inject(AppConfigService);
@@ -464,8 +462,8 @@ describe('TaskFiltersCloudComponent', () => {
             expect(refreshFilterCountersSpy).toHaveBeenCalledWith('my-app-1');
         });
 
-        it('should resolve the counters with the POST method when the batched endpoint is not available', async () => {
-            getFilterCountersSpy.and.returnValue(of({ counters: {}, batched: false }));
+        it('should resolve the counter with the POST method when the batch left it out', async () => {
+            getFilterCountersSpy.and.returnValue(of({ counters: {} }));
 
             await bindAppName();
 
@@ -705,7 +703,7 @@ describe('TaskFiltersCloudComponent', () => {
             it('should hold the counters until the filters they belong to arrive', async () => {
                 const filters$ = new Subject<TaskFilterCloudModel[]>();
                 getTaskListFiltersSpy.and.returnValue(filters$.asObservable());
-                getFilterCountersSpy.and.returnValue(of({ counters: { 'fake-involved-tasks': 9 }, batched: true }));
+                getFilterCountersSpy.and.returnValue(of({ counters: { 'fake-involved-tasks': 9 } }));
 
                 await bindAppName();
                 expect(component.counters['fake-involved-tasks']).toBeUndefined();
@@ -723,7 +721,7 @@ describe('TaskFiltersCloudComponent', () => {
             });
 
             it('should hold the counters resolved by the batched count request', async () => {
-                getFilterCountersSpy.and.returnValue(of({ counters: { 'fake-involved-tasks': 9 }, batched: true }));
+                getFilterCountersSpy.and.returnValue(of({ counters: { 'fake-involved-tasks': 9 } }));
 
                 await bindAppName();
 
@@ -731,7 +729,7 @@ describe('TaskFiltersCloudComponent', () => {
             });
 
             it('should emit the filters whose counter changed', async () => {
-                getFilterCountersSpy.and.returnValue(of({ counters: { 'fake-involved-tasks': 9 }, batched: true }));
+                getFilterCountersSpy.and.returnValue(of({ counters: { 'fake-involved-tasks': 9 } }));
                 const updatedFilterSpy = spyOn(component.updatedFilter, 'emit');
 
                 await bindAppName();
@@ -740,7 +738,7 @@ describe('TaskFiltersCloudComponent', () => {
             });
 
             it('should resolve the counter of a filter the batch left out on its own', async () => {
-                getFilterCountersSpy.and.returnValue(of({ counters: {}, batched: true }));
+                getFilterCountersSpy.and.returnValue(of({ counters: {} }));
 
                 await bindAppName();
 
@@ -750,7 +748,7 @@ describe('TaskFiltersCloudComponent', () => {
 
             it('should keep the counters of the other filters when one counter cannot be resolved', async () => {
                 getTaskListFiltersSpy.and.returnValue(of([fakeGlobalFilter[0], { ...fakeGlobalFilter[1], showCounter: true }]));
-                getFilterCountersSpy.and.returnValue(of({ counters: { 'fake-involved-tasks': 4 }, batched: true }));
+                getFilterCountersSpy.and.returnValue(of({ counters: { 'fake-involved-tasks': 4 } }));
                 getTaskFilterCounterSpy.and.throwError('the query of the filter cannot be built');
 
                 await bindAppName();
@@ -759,8 +757,8 @@ describe('TaskFiltersCloudComponent', () => {
                 expect(component.counters['fake-my-task1']).toBe(0);
             });
 
-            it('should resolve the counters one filter at a time when the batched endpoint is not available', async () => {
-                getFilterCountersSpy.and.returnValue(of({ counters: {}, batched: false }));
+            it('should resolve the counters one filter at a time when the batch left them out', async () => {
+                getFilterCountersSpy.and.returnValue(of({ counters: {} }));
 
                 await bindAppName();
 
@@ -774,17 +772,6 @@ describe('TaskFiltersCloudComponent', () => {
                 component.onFilterClick(fakeGlobalFilter[0]);
 
                 expect(refreshFilterCountersSpy).toHaveBeenCalledWith('my-app-1');
-            });
-
-            it('should refresh the counter of the clicked filter alone when the batched endpoint is not available', async () => {
-                getFilterCountersSpy.and.returnValue(of({ counters: {}, batched: false }));
-                await bindAppName();
-                getTaskFilterCounterSpy.calls.reset();
-
-                component.onFilterClick(fakeGlobalFilter[0]);
-
-                expect(refreshFilterCountersSpy).not.toHaveBeenCalled();
-                expect(getTaskFilterCounterSpy).toHaveBeenCalledTimes(1);
             });
         });
 

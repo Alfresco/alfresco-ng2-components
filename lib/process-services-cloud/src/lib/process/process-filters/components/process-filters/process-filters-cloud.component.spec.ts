@@ -94,7 +94,7 @@ describe('ProcessFiltersCloudComponent', () => {
         router = TestBed.inject(Router);
         await RouterTestingHarness.create();
         getProcessFiltersSpy = spyOn(filterCountersService, 'getProcessFilters').and.returnValue(of(mockProcessFilters));
-        getFilterCountersSpy = spyOn(filterCountersService, 'getFilterCounters').and.returnValue(of({ counters: {}, batched: true }));
+        getFilterCountersSpy = spyOn(filterCountersService, 'getFilterCounters').and.returnValue(of({ counters: {} }));
         refreshFilterCountersSpy = spyOn(filterCountersService, 'refreshFilterCounters');
         getProcessCounterSpy = spyOn(processListService, 'getProcessCounter').and.returnValue(of(10));
         spyOn(processListService, 'getProcessListCount').and.returnValue(of(10));
@@ -494,7 +494,7 @@ describe('ProcessFiltersCloudComponent', () => {
             });
 
             it('should hold the counters resolved by the batched count request', async () => {
-                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 }, batched: true }));
+                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 } }));
 
                 await bindAppName('mock-app-name');
 
@@ -502,7 +502,7 @@ describe('ProcessFiltersCloudComponent', () => {
             });
 
             it('should emit the filters whose counter changed', async () => {
-                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 }, batched: true }));
+                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 } }));
                 const updatedFilterSpy = spyOn(component.updatedFilter, 'emit');
 
                 await bindAppName('mock-app-name');
@@ -510,8 +510,8 @@ describe('ProcessFiltersCloudComponent', () => {
                 expect(updatedFilterSpy).toHaveBeenCalledWith('FakeRunningProcesses');
             });
 
-            it('should resolve the counters one filter at a time when the batched endpoint is not available', async () => {
-                getFilterCountersSpy.and.returnValue(of({ counters: {}, batched: false }));
+            it('should resolve the counters one filter at a time when the batch left them out', async () => {
+                getFilterCountersSpy.and.returnValue(of({ counters: {} }));
 
                 await bindAppName('mock-app-name');
 
@@ -520,7 +520,7 @@ describe('ProcessFiltersCloudComponent', () => {
             });
 
             it('should resolve the counters of the filters the batch left out on their own', async () => {
-                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 }, batched: true }));
+                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 } }));
 
                 await bindAppName('mock-app-name');
 
@@ -529,7 +529,7 @@ describe('ProcessFiltersCloudComponent', () => {
             });
 
             it('should keep the counters of the other filters when one counter cannot be resolved', async () => {
-                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 }, batched: true }));
+                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 } }));
                 getProcessCounterSpy.and.throwError('the query of the filter cannot be built');
 
                 await bindAppName('mock-app-name');
@@ -586,7 +586,7 @@ describe('ProcessFiltersCloudComponent', () => {
                 fixture.detectChanges();
                 component.filters = mockProcessFilters.map((filter) => new ProcessFilterCloudModel({ ...filter, showCounter: true }));
 
-                counters$.next({ counters: { FakeRunningProcesses: 7 }, batched: true });
+                counters$.next({ counters: { FakeRunningProcesses: 7 } });
 
                 expect(component.counters['FakeRunningProcesses']).toBe(7);
                 flush();
@@ -873,7 +873,7 @@ describe('ProcessFiltersCloudComponent', () => {
             });
 
             it('should hold the counters resolved by the batched count request', async () => {
-                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 }, batched: true }));
+                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 } }));
 
                 await bindAppName('mock-app-name');
 
@@ -881,7 +881,7 @@ describe('ProcessFiltersCloudComponent', () => {
             });
 
             it('should emit the filters whose counter changed', async () => {
-                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 }, batched: true }));
+                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 } }));
                 const updatedFilterSpy = spyOn(component.updatedFilter, 'emit');
 
                 await bindAppName('mock-app-name');
@@ -889,8 +889,8 @@ describe('ProcessFiltersCloudComponent', () => {
                 expect(updatedFilterSpy).toHaveBeenCalledWith('FakeRunningProcesses');
             });
 
-            it('should resolve the counters one filter at a time when the batched endpoint is not available', async () => {
-                getFilterCountersSpy.and.returnValue(of({ counters: {}, batched: false }));
+            it('should resolve the counters one filter at a time when the batch left them out', async () => {
+                getFilterCountersSpy.and.returnValue(of({ counters: {} }));
 
                 await bindAppName('mock-app-name');
 
@@ -899,7 +899,7 @@ describe('ProcessFiltersCloudComponent', () => {
             });
 
             it('should resolve the counters of the filters the batch left out on their own', async () => {
-                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 }, batched: true }));
+                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 } }));
 
                 await bindAppName('mock-app-name');
 
@@ -908,7 +908,7 @@ describe('ProcessFiltersCloudComponent', () => {
             });
 
             it('should keep the counters of the other filters when one counter cannot be resolved', async () => {
-                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 }, batched: true }));
+                getFilterCountersSpy.and.returnValue(of({ counters: { FakeRunningProcesses: 9 } }));
                 getProcessCounterSpy.and.throwError('the query of the filter cannot be built');
 
                 await bindAppName('mock-app-name');
@@ -965,13 +965,13 @@ describe('ProcessFiltersCloudComponent', () => {
                 fixture.detectChanges();
                 component.filters = mockProcessFilters.map((filter) => new ProcessFilterCloudModel({ ...filter, showCounter: true }));
 
-                counters$.next({ counters: { FakeRunningProcesses: 7 }, batched: true });
+                counters$.next({ counters: { FakeRunningProcesses: 7 } });
 
                 expect(component.counters['FakeRunningProcesses']).toBe(7);
                 flush();
             }));
 
-            it('should resolve the counters one filter at a time when the batched endpoint is not available', fakeAsync(() => {
+            it('should resolve the counters one filter at a time when the batch left them out', fakeAsync(() => {
                 const counters$ = new Subject<FilterCountersResult>();
                 getFilterCountersSpy.and.returnValue(counters$.asObservable());
                 component.appName = 'mock-app-name';
@@ -980,7 +980,7 @@ describe('ProcessFiltersCloudComponent', () => {
                 component.filters = mockProcessFilters.map((filter) => new ProcessFilterCloudModel({ ...filter, showCounter: true }));
                 getProcessCounterSpy.calls.reset();
 
-                counters$.next({ counters: {}, batched: false });
+                counters$.next({ counters: {} });
 
                 expect(getProcessCounterSpy).toHaveBeenCalledTimes(3);
                 flush();

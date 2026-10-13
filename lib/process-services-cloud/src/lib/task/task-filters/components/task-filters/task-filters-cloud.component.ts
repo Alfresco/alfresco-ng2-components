@@ -76,7 +76,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     private filtersLoadedFor?: string;
     private countersSubscription?: Subscription;
     private countersFilters$?: Observable<TaskFilterCloudModel[]>;
-    private batchedCounters = true;
 
     private readonly taskFilterCloudService = inject(TaskFilterCloudService);
     private readonly taskListCloudService = inject(TaskListCloudService);
@@ -244,7 +243,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     onFilterClick(filter: FilterParamsModel) {
         if (filter) {
             this.selectFilter(filter);
-            this.refreshFilterCounter(this.currentFilter);
+            this.refreshFilterCounter();
             this.filterClicked.emit(this.currentFilter);
             this.updatedCountersSet.delete(filter.key);
         } else {
@@ -300,13 +299,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.TASK)
         ])
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(([, { counters, batched }]) => {
-                this.batchedCounters = batched;
-                if (batched) {
-                    this.applyFilterCounters(counters);
-                } else {
-                    this.updateFilterCounters();
-                }
+            .subscribe(([, { counters }]) => {
+                this.applyFilterCounters(counters);
             });
     }
 
@@ -342,11 +336,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         this.currentFilter = undefined;
     }
 
-    private refreshFilterCounter(filter: TaskFilterCloudModel): void {
-        if (this.batchedCounters) {
-            this.filterCountersCloudService.refreshFilterCounters(this.appName);
-        } else {
-            this.updateFilterCounter(filter);
-        }
+    private refreshFilterCounter(): void {
+        this.filterCountersCloudService.refreshFilterCounters(this.appName);
     }
 }

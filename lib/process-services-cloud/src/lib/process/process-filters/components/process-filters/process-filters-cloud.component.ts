@@ -91,7 +91,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     private filtersLoadedFor?: string;
     private countersSubscription?: Subscription;
     private countersFilters$?: Observable<ProcessFilterCloudModel[]>;
-    private batchedCounters = true;
 
     private readonly destroyRef = inject(DestroyRef);
     private readonly processFilterCloudService = inject(ProcessFilterCloudService);
@@ -214,7 +213,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         if (filter) {
             this.selectFilter(filter);
             this.filterClicked.emit(this.currentFilter);
-            this.refreshFilterCounter(this.currentFilter);
+            this.refreshFilterCounter();
             this.updatedFiltersSet.delete(filter.key);
         } else {
             this.currentFilter = undefined;
@@ -344,13 +343,8 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
             this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.PROCESS_INSTANCE)
         ])
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(([, { counters, batched }]) => {
-                this.batchedCounters = batched;
-                if (batched) {
-                    this.applyFilterCounters(counters);
-                } else {
-                    this.updateFilterCounters();
-                }
+            .subscribe(([, { counters }]) => {
+                this.applyFilterCounters(counters);
             });
     }
 
@@ -372,12 +366,8 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         });
     }
 
-    private refreshFilterCounter(filter?: ProcessFilterCloudModel): void {
-        if (this.batchedCounters) {
-            this.filterCountersCloudService.refreshFilterCounters(this.appName);
-        } else if (filter) {
-            this.updateFilterCounter(filter);
-        }
+    private refreshFilterCounter(): void {
+        this.filterCountersCloudService.refreshFilterCounters(this.appName);
     }
 
     private fetchProcessFilterCounter(filter: ProcessFilterCloudModel): Observable<number> {
