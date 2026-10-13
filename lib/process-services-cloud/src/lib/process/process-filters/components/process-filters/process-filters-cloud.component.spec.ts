@@ -490,22 +490,7 @@ describe('ProcessFiltersCloudComponent', () => {
             it('should read the counters of the process filters of the bound app', async () => {
                 await bindAppName('mock-app-name');
 
-                expect(getFilterCountersSpy).toHaveBeenCalledWith('mock-app-name', FilterCounterEntityType.PROCESS_INSTANCE, false);
-            });
-
-            it('should not ask for the batched count endpoint by default', async () => {
-                await bindAppName('mock-app-name');
-
-                expect(component.useBatchedCounters).toBeFalse();
-                expect(getFilterCountersSpy).toHaveBeenCalledWith('mock-app-name', FilterCounterEntityType.PROCESS_INSTANCE, false);
-            });
-
-            it('should ask for the batched count endpoint when the input is set', async () => {
-                fixture.componentRef.setInput('useBatchedCounters', true);
-
-                await bindAppName('mock-app-name');
-
-                expect(getFilterCountersSpy).toHaveBeenCalledWith('mock-app-name', FilterCounterEntityType.PROCESS_INSTANCE, true);
+                expect(getFilterCountersSpy).toHaveBeenCalledWith('mock-app-name', FilterCounterEntityType.PROCESS_INSTANCE);
             });
 
             it('should hold the counters resolved by the batched count request', async () => {
@@ -884,22 +869,7 @@ describe('ProcessFiltersCloudComponent', () => {
             it('should read the counters of the process filters of the bound app', async () => {
                 await bindAppName('mock-app-name');
 
-                expect(getFilterCountersSpy).toHaveBeenCalledWith('mock-app-name', FilterCounterEntityType.PROCESS_INSTANCE, false);
-            });
-
-            it('should not ask for the batched count endpoint by default', async () => {
-                await bindAppName('mock-app-name');
-
-                expect(component.useBatchedCounters).toBeFalse();
-                expect(getFilterCountersSpy).toHaveBeenCalledWith('mock-app-name', FilterCounterEntityType.PROCESS_INSTANCE, false);
-            });
-
-            it('should ask for the batched count endpoint when the input is set', async () => {
-                fixture.componentRef.setInput('useBatchedCounters', true);
-
-                await bindAppName('mock-app-name');
-
-                expect(getFilterCountersSpy).toHaveBeenCalledWith('mock-app-name', FilterCounterEntityType.PROCESS_INSTANCE, true);
+                expect(getFilterCountersSpy).toHaveBeenCalledWith('mock-app-name', FilterCounterEntityType.PROCESS_INSTANCE);
             });
 
             it('should hold the counters resolved by the batched count request', async () => {
@@ -1022,7 +992,7 @@ describe('ProcessFiltersCloudComponent', () => {
                 component.enableNotifications = true;
                 await bindAppName('mock-app-name');
 
-                expect(getFilterCountersSpy).toHaveBeenCalledWith('mock-app-name', FilterCounterEntityType.PROCESS_INSTANCE, false);
+                expect(getFilterCountersSpy).toHaveBeenCalledWith('mock-app-name', FilterCounterEntityType.PROCESS_INSTANCE);
             });
 
             it('should emit filter key when filter counter is set for first time', () => {

@@ -51,14 +51,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     @Input()
     searchApiMethod: 'GET' | 'POST' = 'GET';
 
-    /**
-     * (optional) Resolves the counters of the task and the process filters with a single call to
-     * `POST /query/v1/count`. Both filter components have to
-     * ask for it, otherwise the counters are resolved one filter at a time.
-     */
-    @Input()
-    useBatchedCounters = false;
-
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<TaskFilterCloudModel>();
@@ -112,8 +104,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             this.getFilters(appName.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectFilterAndEmit(filter.currentValue);
-        } else if (changes['useBatchedCounters'] && !changes['useBatchedCounters'].firstChange && this.filtersLoadedFor) {
-            this.loadFilterCounters(this.filtersLoadedFor);
         }
     }
 
@@ -307,7 +297,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         this.countersSubscription?.unsubscribe();
         this.countersSubscription = combineLatest([
             this.countersFilters$.pipe(catchError(() => of([]))),
-            this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.TASK, this.useBatchedCounters)
+            this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.TASK)
         ])
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(([, { counters, batched }]) => {
