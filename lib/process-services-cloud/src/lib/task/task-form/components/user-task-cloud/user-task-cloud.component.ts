@@ -78,6 +78,10 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     @Input()
     readOnly = false;
 
+    /** When false, Claim/Release (self-service) buttons are hidden regardless of task state. */
+    @Input()
+    allowSelfService: boolean = true;
+
     /** Toggle rendering of the `Cancel` button. */
     @Input()
     showCancelButton = true;
@@ -213,7 +217,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     }
 
     canClaimTask(): boolean {
-        return !this.readOnly && this.taskCloudService.canClaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
+        return this.allowSelfService && !this.readOnly && this.taskCloudService.canClaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
     }
 
     canCompleteTask(): boolean {
@@ -221,7 +225,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     }
 
     canUnclaimTask(): boolean {
-        return !this.readOnly && this.taskCloudService.canUnclaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
+        return this.allowSelfService && !this.readOnly && this.taskCloudService.canUnclaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
     }
 
     getTaskType(): void {
