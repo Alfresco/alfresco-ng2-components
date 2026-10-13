@@ -37,7 +37,6 @@ import {
     FilterCountersRequest,
     FilterCountersResult
 } from '../models/filter-counters-cloud.model';
-const BATCHED_COUNTERS_UNAVAILABLE_STATUSES = [404, 501];
 
 interface FilterCountersFilters {
     [FilterCounterEntityType.TASK]: TaskFilterCloudModel[];
@@ -94,12 +93,10 @@ export class FilterCountersCloudService extends BaseCloudService {
     private readonly eventRecountPerApp = new Map<string, Subject<void>>();
     private readonly activeEntityTypesPerApp = new Map<string, Set<FilterCounterEntityType>>();
     private readonly subscribersPerEntityType = new Map<string, number>();
-    private readonly batchedCountersPerEntityType = new Map<string, boolean>();
     private readonly eventSubscriptionsPerEntityType = new Map<string, Subscription>();
-    private readonly appsWithoutBatchedCounters = new Set<string>();
     private readonly taskFiltersPerApp = new Map<string, Observable<TaskFilterCloudModel[]>>();
     private readonly processFiltersPerApp = new Map<string, Observable<ProcessFilterCloudModel[]>>();
-    private readonly countersPerApp = new Map<string, Observable<{ counters: FilterCounters; batched: boolean }>>();
+    private readonly countersPerApp = new Map<string, Observable<FilterCounters>>();
 
     get notificationDebounceTime(): number {
         return this.appConfigService.get('notificationDebounceTime', 3000);
@@ -113,17 +110,17 @@ export class FilterCountersCloudService extends BaseCloudService {
         return this.shareFilters(this.processFiltersPerApp, appName, () => this.injector.get(ProcessFilterCloudService).getProcessFilters(appName));
     }
 
-    getFilterCounters(appName: string, entityType: FilterCounterEntityType, batchedCounters = false): Observable<FilterCountersResult> {
+    getFilterCounters(appName: string, entityType: FilterCounterEntityType): Observable<FilterCountersResult> {
         if (!appName) {
             return EMPTY;
         }
 
         return defer(() => {
-            this.activateEntityType(appName, entityType, batchedCounters);
+            this.activateEntityType(appName, entityType);
 
             return this.getCounters(appName);
         }).pipe(
-            map(({ counters, batched }) => ({ counters: counters[entityType] ?? {}, batched })),
+            map((counters) => ({ counters: counters[entityType] ?? {} })),
             finalize(() => this.deactivateEntityType(appName, entityType))
         );
     }
@@ -171,7 +168,7 @@ export class FilterCountersCloudService extends BaseCloudService {
         return this.appConfigService.get('notifications', true);
     }
 
-    private activateEntityType(appName: string, entityType: FilterCounterEntityType, batchedCounters: boolean): void {
+    private activateEntityType(appName: string, entityType: FilterCounterEntityType): void {
         const key = this.entityTypeKey(appName, entityType);
         const subscribers = (this.subscribersPerEntityType.get(key) ?? 0) + 1;
         this.subscribersPerEntityType.set(key, subscribers);
@@ -179,8 +176,6 @@ export class FilterCountersCloudService extends BaseCloudService {
         if (subscribers > 1) {
             return;
         }
-
-        this.batchedCountersPerEntityType.set(key, batchedCounters);
 
         const activeEntityTypes = this.activeEntityTypes(appName);
         const joinsResolvedCounters = activeEntityTypes.size > 0;
@@ -208,7 +203,6 @@ export class FilterCountersCloudService extends BaseCloudService {
         }
 
         this.subscribersPerEntityType.delete(key);
-        this.batchedCountersPerEntityType.delete(key);
         this.activeEntityTypes(appName).delete(entityType);
         this.eventSubscriptionsPerEntityType.get(key)?.unsubscribe();
         this.eventSubscriptionsPerEntityType.delete(key);
@@ -255,7 +249,7 @@ export class FilterCountersCloudService extends BaseCloudService {
         return filters$;
     }
 
-    private getCounters(appName: string): Observable<{ counters: FilterCounters; batched: boolean }> {
+    private getCounters(appName: string): Observable<FilterCounters> {
         let counters$ = this.countersPerApp.get(appName);
         if (!counters$) {
             counters$ = this.recounts(appName).pipe(
@@ -268,31 +262,15 @@ export class FilterCountersCloudService extends BaseCloudService {
         return counters$;
     }
 
-    private resolveCounters(appName: string): Observable<{ counters: FilterCounters; batched: boolean }> {
-        if (!this.batchedCountersEnabled(appName) || this.appsWithoutBatchedCounters.has(appName)) {
-            return of({ counters: {}, batched: false });
+    private resolveCounters(appName: string): Observable<FilterCounters> {
+        if (this.activeEntityTypes(appName).size === 0) {
+            return of({});
         }
 
         return this.getFiltersForCounters(appName).pipe(
             take(1),
             switchMap((filters) => this.fetchFilterCounters(appName, this.buildRequest(filters))),
-            map((counters) => ({ counters, batched: true })),
-            catchError((error) => {
-                if (BATCHED_COUNTERS_UNAVAILABLE_STATUSES.includes(error?.status)) {
-                    this.appsWithoutBatchedCounters.add(appName);
-                }
-
-                return of({ counters: {}, batched: false });
-            })
-        );
-    }
-
-    private batchedCountersEnabled(appName: string): boolean {
-        const activeEntityTypes = [...this.activeEntityTypes(appName)];
-
-        return (
-            activeEntityTypes.length > 0 &&
-            activeEntityTypes.every((entityType) => this.batchedCountersPerEntityType.get(this.entityTypeKey(appName, entityType)))
+            catchError(() => of({}))
         );
     }
 
