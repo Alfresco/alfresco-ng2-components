@@ -113,10 +113,10 @@
         "NONE": "Aucun filtre de tâches sélectionné"
       },
       "DEFAULT": {
-        "MY_TASKS": "My Tasks",
-        "OVERDUE_TASKS": "Overdue Tasks",
-        "UNASSIGNED_TASKS": "Unassigned Tasks",
-        "COMPLETED_TASKS": "Completed Tasks"
+        "MY_TASKS": "Mes tâches",
+        "OVERDUE_TASKS": "Tâches en retard",
+        "UNASSIGNED_TASKS": "Tâches non affectées",
+        "COMPLETED_TASKS": "Tâches terminées"
       }
     },
     "START_TASK": {
@@ -190,9 +190,9 @@
         "NONE": "Aucun filtre d'instances de processus sélectionné."
       },
       "DEFAULT": {
-        "RUNNING": "Running",
-        "COMPLETED": "Completed",
-        "ALL": "All"
+        "RUNNING": "En cours",
+        "COMPLETED": "Achevé",
+        "ALL": "Tout"
       }
     },
     "PROPERTIES": {

@@ -113,10 +113,10 @@
         "NONE": "Ingen oppgavefilter valgt"
       },
       "DEFAULT": {
-        "MY_TASKS": "My Tasks",
-        "OVERDUE_TASKS": "Overdue Tasks",
-        "UNASSIGNED_TASKS": "Unassigned Tasks",
-        "COMPLETED_TASKS": "Completed Tasks"
+        "MY_TASKS": "Mine oppgaver",
+        "OVERDUE_TASKS": "Forfalte oppgaver",
+        "UNASSIGNED_TASKS": "Ikke tilordnede oppgaver",
+        "COMPLETED_TASKS": "Fullførte oppgaver"
       }
     },
     "START_TASK": {
@@ -190,9 +190,9 @@
         "NONE": "Ingen prosesstilfellefilter valgt."
       },
       "DEFAULT": {
-        "RUNNING": "Running",
-        "COMPLETED": "Completed",
-        "ALL": "All"
+        "RUNNING": "Kjører",
+        "COMPLETED": "Fullført",
+        "ALL": "Alle"
       }
     },
     "PROPERTIES": {

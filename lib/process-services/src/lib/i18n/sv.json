@@ -113,10 +113,10 @@
         "NONE": "Inget uppgiftsfilter valt"
       },
       "DEFAULT": {
-        "MY_TASKS": "My Tasks",
-        "OVERDUE_TASKS": "Overdue Tasks",
-        "UNASSIGNED_TASKS": "Unassigned Tasks",
-        "COMPLETED_TASKS": "Completed Tasks"
+        "MY_TASKS": "Mina uppgifter",
+        "OVERDUE_TASKS": "Försenade uppgifter",
+        "UNASSIGNED_TASKS": "Ej tilldelade uppgifter",
+        "COMPLETED_TASKS": "Slutförda uppgifter"
       }
     },
     "START_TASK": {
@@ -190,9 +190,9 @@
         "NONE": "Inget processinstansfilter valt."
       },
       "DEFAULT": {
-        "RUNNING": "Running",
-        "COMPLETED": "Completed",
-        "ALL": "All"
+        "RUNNING": "Kör",
+        "COMPLETED": "Slutförd",
+        "ALL": "Alla"
       }
     },
     "PROPERTIES": {

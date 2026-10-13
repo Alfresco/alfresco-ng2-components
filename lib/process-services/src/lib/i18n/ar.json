@@ -113,10 +113,10 @@
         "NONE": "لم يتم تحديد عامل تصفية للمهمة"
       },
       "DEFAULT": {
-        "MY_TASKS": "My Tasks",
-        "OVERDUE_TASKS": "Overdue Tasks",
-        "UNASSIGNED_TASKS": "Unassigned Tasks",
-        "COMPLETED_TASKS": "Completed Tasks"
+        "MY_TASKS": "مهامي",
+        "OVERDUE_TASKS": "المهام المتأخرة",
+        "UNASSIGNED_TASKS": "المهام غير المخصصة",
+        "COMPLETED_TASKS": "مهام مكتملة"
       }
     },
     "START_TASK": {
@@ -190,9 +190,9 @@
         "NONE": "لم يتم تحديد عامل تصفية مثيل العملية."
       },
       "DEFAULT": {
-        "RUNNING": "Running",
-        "COMPLETED": "Completed",
-        "ALL": "All"
+        "RUNNING": "قيد التشغيل",
+        "COMPLETED": "المكتملة",
+        "ALL": "الكل"
       }
     },
     "PROPERTIES": {
