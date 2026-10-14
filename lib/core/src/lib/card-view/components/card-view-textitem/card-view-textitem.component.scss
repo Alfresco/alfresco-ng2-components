@@ -58,6 +58,18 @@
         pointer-events: none;
     }
 
+    .adf-textitem-clickable #{ms.$mat-text-field-disabled} {
+        .adf-property-label {
+            color: var(--mat-sys-on-surface-variant);
+        }
+
+        #{ms.$mat-notched-outline-leading},
+        #{ms.$mat-notched-outline-notch},
+        #{ms.$mat-notched-outline-trailing} {
+            border-color: var(--mat-sys-outline);
+        }
+    }
+
     .adf-property-value-has-icon-suffix {
         box-sizing: border-box;
         padding-right: 34px;
