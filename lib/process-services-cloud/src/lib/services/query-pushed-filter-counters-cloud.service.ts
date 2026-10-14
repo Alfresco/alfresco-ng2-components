@@ -41,7 +41,13 @@ import {
 
 interface PushedCounterValue {
     count: number;
-    asOf?: number;
+    asOf?: string;
+}
+
+interface PushedCounterUpdate {
+    filterKey: string;
+    count: number;
+    asOf?: string;
 }
 
 interface WebSocketCounterSubscription {
@@ -68,9 +74,20 @@ interface PushedCounterEvent {
     source: 'webSocketPush';
     filterKey: string;
     count: number;
+    asOf?: string;
 }
 
 type CounterUpdateEvent = InitialCountersEvent | PushedCounterEvent;
+
+interface CounterEntry {
+    count: number;
+    asOf?: string;
+    source: CounterUpdateEvent['source'];
+}
+
+interface CounterEntries {
+    [filterKey: string]: CounterEntry;
+}
 
 const PUSHED_COUNTER_SUBSCRIPTIONS_BY_ENTITY_TYPE: Record<FilterCounterEntityType, WebSocketCounterSubscription[]> = {
     [FilterCounterEntityType.TASK]: [
@@ -173,19 +190,17 @@ export class QueryPushedFilterCountersCloudService extends BaseCloudService impl
             );
 
             const pushedCounterEvents$: Observable<CounterUpdateEvent> = this.pushedCounterUpdates(appName, entityType).pipe(
-                map(({ filterKey, count }): PushedCounterEvent => ({
+                map(({ filterKey, count, asOf }): PushedCounterEvent => ({
                     source: 'webSocketPush',
                     filterKey,
-                    count
+                    count,
+                    asOf
                 }))
             );
 
             entityTypeCounters$ = merge(initialCountersEvents$, pushedCounterEvents$).pipe(
-                scan(
-                    (counters: EntityTypeCounters, event: CounterUpdateEvent): EntityTypeCounters =>
-                        event.source === 'initialFetch' ? { ...event.counters } : { ...counters, [event.filterKey]: event.count },
-                    {} as EntityTypeCounters
-                ),
+                scan(this.applyCounterUpdate, {} as CounterEntries),
+                map((entries: CounterEntries): EntityTypeCounters => this.toEntityTypeCounters(entries)),
                 shareReplay({ bufferSize: 1, refCount: true })
             );
             this.entityTypeCountersPerApp.set(key, entityTypeCounters$);
@@ -249,21 +264,52 @@ export class QueryPushedFilterCountersCloudService extends BaseCloudService impl
         return initialCounters$;
     }
 
-    private pushedCounterUpdates(appName: string, entityType: FilterCounterEntityType): Observable<{ filterKey: string; count: number }> {
+    private pushedCounterUpdates(appName: string, entityType: FilterCounterEntityType): Observable<PushedCounterUpdate> {
         return merge(
             ...PUSHED_COUNTER_SUBSCRIPTIONS_BY_ENTITY_TYPE[entityType].map((subscription) => this.pushedCounterUpdate(appName, subscription))
         );
     }
 
-    private pushedCounterUpdate(appName: string, subscription: WebSocketCounterSubscription): Observable<{ filterKey: string; count: number }> {
+    private pushedCounterUpdate(appName: string, subscription: WebSocketCounterSubscription): Observable<PushedCounterUpdate> {
         return defer(() =>
             this.notificationCloudService.makeGQLQuery<{ [graphQlFieldName: string]: PushedCounterValue }>(appName, subscription.subscriptionQuery)
         ).pipe(
-            map((result): number | undefined => result.data?.[subscription.graphQlFieldName]?.count),
-            filter((count): count is number => count !== undefined),
-            map((count: number): { filterKey: string; count: number } => ({ filterKey: subscription.filterKey, count })),
+            map((result): PushedCounterValue | undefined => result.data?.[subscription.graphQlFieldName]),
+            filter((value): value is PushedCounterValue => value?.count !== undefined),
+            map((value: PushedCounterValue): PushedCounterUpdate => ({ filterKey: subscription.filterKey, count: value.count, asOf: value.asOf })),
             catchError(() => EMPTY)
         );
+    }
+
+    private readonly applyCounterUpdate = (entries: CounterEntries, event: CounterUpdateEvent): CounterEntries => {
+        if (event.source === 'initialFetch') {
+            const mergedEntries = { ...entries };
+            Object.entries(event.counters).forEach(([filterKey, count]) => {
+                if (mergedEntries[filterKey]?.source === 'webSocketPush') {
+                    return;
+                }
+                mergedEntries[filterKey] = { count, source: 'initialFetch' };
+            });
+
+            return mergedEntries;
+        }
+
+        const existingEntry = entries[event.filterKey];
+        const isOutOfOrderPush =
+            existingEntry?.source === 'webSocketPush' &&
+            existingEntry.asOf !== undefined &&
+            event.asOf !== undefined &&
+            event.asOf < existingEntry.asOf;
+
+        if (isOutOfOrderPush) {
+            return entries;
+        }
+
+        return { ...entries, [event.filterKey]: { count: event.count, asOf: event.asOf, source: 'webSocketPush' } };
+    };
+
+    private toEntityTypeCounters(entries: CounterEntries): EntityTypeCounters {
+        return Object.fromEntries(Object.entries(entries).map(([filterKey, entry]) => [filterKey, entry.count]));
     }
 
     private fetchActiveEntityTypesCounters(appName: string): Observable<FilterCounters> {
