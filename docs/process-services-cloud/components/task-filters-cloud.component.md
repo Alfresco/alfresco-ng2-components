@@ -36,6 +36,7 @@ Shows all available filters.
 | appName     | `string`            | ""            | Display filters available to the current user for the application with the specified name.                                         |
 | filterParam | `FilterParamsModel` |               | Parameters to use for the task filter cloud. If there is no match then the default filter (the first one in the list) is selected. |
 | showIcons   | `boolean`           | false         | Toggles display of the filter's icons.                                                                                             |
+| queryPushedCounter | `boolean` | false | Resolve the initial filter counters with one call to `POST /query/v1/count`, then keep them in sync with the counts pushed by the engine over the web socket, without any further call to the count endpoint. Turn it on for both filter components. |
 
 ### Events
 

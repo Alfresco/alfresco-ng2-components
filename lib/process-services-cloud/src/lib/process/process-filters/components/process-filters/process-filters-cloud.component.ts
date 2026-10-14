@@ -25,6 +25,8 @@ import { catchError, map } from 'rxjs/operators';
 import { ProcessListCloudService } from '../../../process-list/services/process-list-cloud.service';
 import { ProcessFilterCloudAdapter } from '../../../process-list/models/process-cloud-query-request.model';
 import { FilterCountersCloudService } from '../../../../services/filter-counters-cloud.service';
+import { QueryPushedFilterCountersCloudService } from '../../../../services/query-pushed-filter-counters-cloud.service';
+import { FilterCountersCloudServiceInterface } from '../../../../services/filter-counters-cloud.service.interface';
 import { FilterCounterEntityType } from '../../../../models/filter-counters-cloud.model';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -51,6 +53,15 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
      */
     @Input()
     searchApiMethod: 'GET' | 'POST' = 'GET';
+
+    /**
+     * (optional) Resolves the initial counters of the filters with a single call to
+     * `POST /query/v1/count`, then keeps the counter of the `running-processes` filter in sync
+     * with the counts pushed by the engine over the web socket, without any further call to the
+     * count endpoint. Both filter components have to use the same value.
+     */
+    @Input()
+    queryPushedCounter = false;
 
     /** (optional) The filter to be selected by default */
     @Input()
@@ -98,8 +109,13 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     private readonly appConfigService = inject(AppConfigService);
     private readonly processListCloudService = inject(ProcessListCloudService);
     private readonly filterCountersCloudService = inject(FilterCountersCloudService);
+    private readonly queryPushedFilterCountersCloudService = inject(QueryPushedFilterCountersCloudService);
     private readonly activatedRoute = inject(ActivatedRoute);
     protected readonly currentRouteFilterId = toSignal(this.activatedRoute.queryParamMap.pipe(map((params) => params.get('filterId'))));
+
+    private get filterCountersService(): FilterCountersCloudServiceInterface {
+        return this.queryPushedCounter ? this.queryPushedFilterCountersCloudService : this.filterCountersCloudService;
+    }
 
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
@@ -118,6 +134,8 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
             this.getFilters(appName.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectFilterAndEmit(filter.currentValue);
+        } else if (changes['queryPushedCounter'] && !changes['queryPushedCounter'].firstChange && this.filtersLoadedFor) {
+            this.loadFilterCounters(this.filtersLoadedFor);
         }
     }
 
@@ -128,7 +146,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
      */
     getFilters(appName: string): void {
         this.filtersLoadedFor = appName;
-        const filters$ = this.filterCountersCloudService.getProcessFilters(appName);
+        const filters$ = this.filterCountersService.getProcessFilters(appName);
         this.filters$ = filters$.pipe(catchError(() => of([])));
 
         filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
@@ -340,7 +358,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         this.countersSubscription?.unsubscribe();
         this.countersSubscription = combineLatest([
             this.countersFilters$.pipe(catchError(() => of([]))),
-            this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.PROCESS_INSTANCE)
+            this.filterCountersService.getFilterCounters(appName, FilterCounterEntityType.PROCESS_INSTANCE)
         ])
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(([, { counters }]) => {
@@ -367,7 +385,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     }
 
     private refreshFilterCounter(): void {
-        this.filterCountersCloudService.refreshFilterCounters(this.appName);
+        this.filterCountersService.refreshFilterCounters(this.appName);
     }
 
     private fetchProcessFilterCounter(filter: ProcessFilterCloudModel): Observable<number> {

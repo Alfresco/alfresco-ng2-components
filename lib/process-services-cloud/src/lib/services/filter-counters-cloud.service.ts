@@ -20,6 +20,7 @@ import { asapScheduler, combineLatest, defer, EMPTY, merge, Observable, of, Subj
 import { catchError, debounceTime, finalize, map, shareReplay, switchMap, take } from 'rxjs/operators';
 import { BaseCloudService } from './base-cloud.service';
 import { NotificationCloudService } from './notification-cloud.service';
+import { FilterCountersCloudServiceInterface } from './filter-counters-cloud.service.interface';
 import { TaskCloudEngineEvent } from '../models/engine-event-cloud.model';
 import { TaskFilterCloudService } from '../task/task-filters/services/task-filter-cloud.service';
 import { ProcessFilterCloudService } from '../process/process-filters/services/process-filter-cloud.service';
@@ -81,7 +82,7 @@ const ENGINE_EVENTS_SUBSCRIPTION_QUERIES: Record<FilterCounterEntityType, string
 };
 
 @Injectable({ providedIn: 'root' })
-export class FilterCountersCloudService extends BaseCloudService {
+export class FilterCountersCloudService extends BaseCloudService implements FilterCountersCloudServiceInterface {
     private readonly notificationCloudService = inject(NotificationCloudService);
     private readonly taskListCloudService = inject(TaskListCloudService);
     private readonly processListCloudService = inject(ProcessListCloudService);
