@@ -44,7 +44,7 @@ Shows all available filters.
 |----------------------|--------------------------------------|-------------------------------------------------------------------------|
 | error                | `EventEmitter<any>`                  | Emitted when an error occurs during loading.                            |
 | filterClicked        | `EventEmitter<TaskFilterCloudModel>` | Emitted when a filter is being clicked from the UI.                     |
-| filterCounterUpdated | `EventEmitter<TaskCloudEngineEvent>` | Emitted when filter counters are updated.                               |
+| filterCounterUpdated | `EventEmitter<TaskCloudEngineEvent>` | Emitted when filter counters are updated. Not emitted when `queryPushedCounter` is enabled, since counters are updated directly from the pushed counts rather than from engine events. |
 | filterSelected       | `EventEmitter<TaskFilterCloudModel>` | Emitted when a filter is being selected based on the filterParam input. |
 | success              | `EventEmitter<any>`                  | Emitted when the list is loaded.                                        |
 
@@ -86,6 +86,8 @@ If you want to disable notification bubbles as task filters change you can chang
 ```
 
 ![](../../docassets/images/update-filter-bubble.png)
+
+This update bubble, along with the `filterCounterUpdated` event, relies on engine events and is not shown when `queryPushedCounter` is enabled.
 
 ## See also
 
