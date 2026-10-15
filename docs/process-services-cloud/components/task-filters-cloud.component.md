@@ -36,6 +36,7 @@ Shows all available filters.
 | appName     | `string`            | ""            | Display filters available to the current user for the application with the specified name.                                         |
 | filterParam | `FilterParamsModel` |               | Parameters to use for the task filter cloud. If there is no match then the default filter (the first one in the list) is selected. |
 | showIcons   | `boolean`           | false         | Toggles display of the filter's icons.                                                                                             |
+| queryPushedCounter | `boolean` | false | Resolve the initial filter counters with one call to `POST /query/v1/count`, then keep them in sync with the counts pushed by the engine over the web socket, without any further call to the count endpoint. Turn it on for both filter components. |
 
 ### Events
 
@@ -43,7 +44,7 @@ Shows all available filters.
 |----------------------|--------------------------------------|-------------------------------------------------------------------------|
 | error                | `EventEmitter<any>`                  | Emitted when an error occurs during loading.                            |
 | filterClicked        | `EventEmitter<TaskFilterCloudModel>` | Emitted when a filter is being clicked from the UI.                     |
-| filterCounterUpdated | `EventEmitter<TaskCloudEngineEvent>` | Emitted when filter counters are updated.                               |
+| filterCounterUpdated | `EventEmitter<TaskCloudEngineEvent>` | Emitted when filter counters are updated. Not emitted when `queryPushedCounter` is enabled, since counters are updated directly from the pushed counts rather than from engine events. |
 | filterSelected       | `EventEmitter<TaskFilterCloudModel>` | Emitted when a filter is being selected based on the filterParam input. |
 | success              | `EventEmitter<any>`                  | Emitted when the list is loaded.                                        |
 
@@ -85,6 +86,8 @@ If you want to disable notification bubbles as task filters change you can chang
 ```
 
 ![](../../docassets/images/update-filter-bubble.png)
+
+This update bubble, along with the `filterCounterUpdated` event, relies on engine events and is not shown when `queryPushedCounter` is enabled.
 
 ## See also
 

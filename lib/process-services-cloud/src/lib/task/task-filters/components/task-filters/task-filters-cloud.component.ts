@@ -27,6 +27,8 @@ import { TaskCloudEngineEvent } from '../../../../models/engine-event-cloud.mode
 import { TaskListCloudService } from '../../../task-list/services/task-list-cloud.service';
 import { TaskFilterCloudAdapter } from '../../../../models/filter-cloud-model';
 import { FilterCountersCloudService } from '../../../../services/filter-counters-cloud.service';
+import { QueryPushedFilterCountersCloudService } from '../../../../services/query-pushed-filter-counters-cloud.service';
+import { FilterCountersCloudServiceInterface } from '../../../../services/filter-counters-cloud.service.interface';
 import { FilterCounterEntityType } from '../../../../models/filter-counters-cloud.model';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -50,6 +52,15 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
      */
     @Input()
     searchApiMethod: 'GET' | 'POST' = 'GET';
+
+    /**
+     * (optional) Resolves the initial counters of the filters with a single call to
+     * `POST /query/v1/count`, then keeps the counters of the `my-tasks` and `queued-tasks`
+     * filters in sync with the counts pushed by the engine over the web socket, without any
+     * further call to the count endpoint. Both filter components have to use the same value.
+     */
+    @Input()
+    queryPushedCounter = false;
 
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
@@ -76,14 +87,20 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     private filtersLoadedFor?: string;
     private countersSubscription?: Subscription;
     private countersFilters$?: Observable<TaskFilterCloudModel[]>;
+    private notificationsSubscription?: Subscription;
 
     private readonly taskFilterCloudService = inject(TaskFilterCloudService);
     private readonly taskListCloudService = inject(TaskListCloudService);
     private readonly filterCountersCloudService = inject(FilterCountersCloudService);
+    private readonly queryPushedFilterCountersCloudService = inject(QueryPushedFilterCountersCloudService);
     private readonly translationService = inject(TranslationService);
     private readonly appConfigService = inject(AppConfigService);
     private readonly activatedRoute = inject(ActivatedRoute);
     readonly currentRouteFilterId = toSignal(this.activatedRoute.queryParamMap.pipe(map((params) => params.get('filterId'))));
+
+    private get filterCountersService(): FilterCountersCloudServiceInterface {
+        return this.queryPushedCounter ? this.queryPushedFilterCountersCloudService : this.filterCountersCloudService;
+    }
 
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
@@ -103,6 +120,9 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             this.getFilters(appName.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectFilterAndEmit(filter.currentValue);
+        } else if (changes['queryPushedCounter'] && !changes['queryPushedCounter'].firstChange && this.filtersLoadedFor) {
+            this.initFilterCounterNotifications();
+            this.loadFilterCounters(this.filtersLoadedFor);
         }
     }
 
@@ -113,7 +133,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
      */
     getFilters(appName: string): void {
         this.filtersLoadedFor = appName;
-        const filters$ = this.filterCountersCloudService.getTaskFilters(appName);
+        const filters$ = this.filterCountersService.getTaskFilters(appName);
         this.filters$ = filters$.pipe(catchError(() => of([])));
 
         filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
@@ -176,8 +196,10 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             return;
         }
 
+        this.notificationsSubscription?.unsubscribe();
+
         if (this.enableNotifications) {
-            this.filterCountersCloudService
+            this.notificationsSubscription = this.filterCountersService
                 .getEngineEvents(this.appName, FilterCounterEntityType.TASK)
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((events) => {
@@ -296,7 +318,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         this.countersSubscription?.unsubscribe();
         this.countersSubscription = combineLatest([
             this.countersFilters$.pipe(catchError(() => of([]))),
-            this.filterCountersCloudService.getFilterCounters(appName, FilterCounterEntityType.TASK)
+            this.filterCountersService.getFilterCounters(appName, FilterCounterEntityType.TASK)
         ])
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(([, { counters }]) => {
@@ -337,6 +359,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     private refreshFilterCounter(): void {
-        this.filterCountersCloudService.refreshFilterCounters(this.appName);
+        this.filterCountersService.refreshFilterCounters(this.appName);
     }
 }
