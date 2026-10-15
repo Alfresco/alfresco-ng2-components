@@ -348,8 +348,6 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     private addBasicAuth(requestUrl: string, header: HttpHeaders): HttpHeaders {
         if (this.isKerberosEnabled()) {
-            // By default ADW doesn't send the header when Kerberos is configured (MNT-24682)
-            // Therefore, the Authorization header needs to be sent for OOI service requests (ACS-13149)
             if (!this.isOoiServiceUrl(requestUrl) || !this.contentAuth.ticket) {
                 return header;
             }
