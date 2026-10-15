@@ -216,6 +216,46 @@ describe('AuthConfigService', () => {
         });
     });
 
+    describe('customQueryParams', () => {
+        it('should pass configured customQueryParams to the AuthConfig', () => {
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue({
+                ...mockAuthConfigImplicitFlow,
+                customQueryParams: { tenant_hint: 'alfresco' }
+            } as OauthConfigModel);
+
+            expect(service.loadAppConfig().customQueryParams).toEqual({ tenant_hint: 'alfresco' });
+        });
+
+        it('should merge configured customQueryParams with the audience', () => {
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue({
+                ...mockAuthConfigImplicitFlow,
+                audience: 'https://api.example.com',
+                customQueryParams: { tenant_hint: 'alfresco' }
+            } as OauthConfigModel);
+
+            expect(service.loadAppConfig().customQueryParams).toEqual({
+                tenant_hint: 'alfresco',
+                audience: 'https://api.example.com'
+            });
+        });
+
+        it('should keep the audience authoritative when customQueryParams also defines it', () => {
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue({
+                ...mockAuthConfigImplicitFlow,
+                audience: 'https://api.example.com',
+                customQueryParams: { audience: 'should-be-overridden' }
+            } as OauthConfigModel);
+
+            expect(service.loadAppConfig().customQueryParams).toEqual({ audience: 'https://api.example.com' });
+        });
+
+        it('should return an empty object when neither customQueryParams nor audience are set', () => {
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigImplicitFlow);
+
+            expect(service.loadAppConfig().customQueryParams).toEqual({});
+        });
+    });
+
     describe('clockSkewInSec', () => {
         it('should return clockSkewInSec equal to 0', () => {
             const expectedClockSkewInSec = 0;
