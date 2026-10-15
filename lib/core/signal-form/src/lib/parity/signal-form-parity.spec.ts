@@ -629,6 +629,29 @@ describe('SignalForm parity with the current engine', () => {
                 steps: [],
                 observe: (snapshot) => snapshot.valid
             },
+            'string-fields-validated-as-text': {
+                definition: {
+                    formRepresentation: {
+                        id: 'string-field',
+                        name: 'string-field',
+                        formDefinition: {
+                            tabs: [],
+                            fields: [
+                                {
+                                    id: 'string-root',
+                                    type: 'container',
+                                    numberOfColumns: 1,
+                                    fields: { 1: [{ id: 'nickname', type: 'string', required: true }] }
+                                }
+                            ],
+                            outcomes: [],
+                            variables: []
+                        }
+                    }
+                },
+                steps: [],
+                observe: (snapshot) => snapshot.valid
+            },
             'read-only-fields-not-validated': {
                 definition: withField(approvalForm(), 'locked', { required: true }),
                 steps: [setValue('reason', 'because')],

@@ -1,7 +1,22 @@
 @if (form().definition.tabs.length) {
-    <mat-tab-group class="adf-signal-form-tabs" [preserveContent]="true">
-        @for (tab of visibleTabs(); track tab.id) {
-            <mat-tab [label]="tab.title ?? '' | translate">
+    <mat-tab-group class="adf-signal-form-tabs" [preserveContent]="true" [(selectedIndex)]="selectedTabIndex">
+        @for (tab of form().visibleTabs(); track tab.id) {
+            @let tabTitle = tab.title ?? '' | translate;
+            @let tabErrors = tabErrorsShown() && form().hasTabErrors(tab.id);
+            <mat-tab [aria-label]="tabErrors ? ('FORM.FORM_RENDERER.TAB_VALIDATION_ERRORS_LABEL' | translate: { tabTitle }) : null">
+                <ng-template mat-tab-label>
+                    <span class="adf-form-tab-label">
+                        {{ tabTitle }}
+                        @if (tabErrors) {
+                            <span
+                                class="adf-form-tab-validation-indicator"
+                                aria-hidden="true"
+                                [matTooltip]="'FORM.FORM_RENDERER.TAB_VALIDATION_ERRORS_TOOLTIP' | translate"
+                                >*</span
+                            >
+                        }
+                    </span>
+                </ng-template>
                 <ng-template matTabContent>
                     <div class="adf-form-tab-content" [attr.data-automation-id]="'adf-signal-form-tab-' + tab.id">
                         @for (root of rootsOf(tab.id); track $index) {

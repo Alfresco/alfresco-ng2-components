@@ -1,5 +1,16 @@
-.adf-signal-form {
+.adf-signal-form-renderer {
     display: block;
+
+    .adf-form-tab-label {
+        position: relative;
+    }
+
+    .adf-form-tab-validation-indicator {
+        position: absolute;
+        inset-inline-start: 100%;
+        margin-inline-start: 0.25em;
+        color: var(--mat-sys-error);
+    }
 
     .adf-signal-form-container {
         margin-bottom: 16px;

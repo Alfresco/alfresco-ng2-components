@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injector, Type } from '@angular/core';
+import { Injector } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopTranslateModule } from '../../../../../src/lib/testing/noop-translate.module';
 import { mockRepeatableSectionForm01, textWidgetVisibility } from '../../../../../src/lib/form/components/mock/form-renderer.component.mock';
@@ -29,19 +29,17 @@ import { MatInputHarness } from '@angular/material/input/testing';
 import { MatRadioGroupHarness } from '@angular/material/radio/testing';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { of } from 'rxjs';
+import {
+    ADF_DISPLAY_TEXT_SETTINGS,
+    ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED,
+    ADF_TYPED_VALUE_FORMATTING_ENABLED,
+    EditJsonDialogComponent
+} from '@alfresco/adf-core';
 import { readFormDefinition } from '../../definition/read-form-definition';
 import { SignalForm } from '../../state/signal-form';
-import { FormFieldType } from '../../definition/form-definition.model';
-import { BUILT_IN_FORM_WIDGETS } from '../../widgets/built-in-form-widgets';
 import { FormWidgetRegistry, provideFormWidgets } from '../../widgets/form-widget-registry';
-import { SignalAmountWidgetComponent } from '../widgets/amount/amount-widget.component';
-import { SignalCheckboxWidgetComponent } from '../widgets/checkbox/checkbox-widget.component';
-import { SignalDateWidgetComponent } from '../widgets/date/date-widget.component';
-import { SignalDateTimeWidgetComponent } from '../widgets/date-time/date-time-widget.component';
-import { SignalDropdownWidgetComponent } from '../widgets/dropdown/dropdown-widget.component';
-import { SignalMultilineTextWidgetComponent } from '../widgets/multiline-text/multiline-text-widget.component';
-import { SignalRadioWidgetComponent } from '../widgets/radio/radio-widget.component';
-import { SignalDecimalWidgetComponent, SignalIntegerWidgetComponent, SignalTextWidgetComponent } from '../widgets/text/text-widget.component';
+import { SignalTextWidgetComponent } from '../widgets/text/text-widget.component';
+import { BUILT_IN_WIDGETS_LOADED_DIRECTLY, settleFixture } from '../testing/signal-form-testing.mock';
 import { SignalFormRendererComponent } from './signal-form-renderer.component';
 
 describe('SignalFormRendererComponent', () => {
@@ -62,17 +60,7 @@ describe('SignalFormRendererComponent', () => {
 
     const loading = (): HTMLElement | null => fixture.nativeElement.querySelector('[data-automation-id="adf-signal-form-field-loading"]');
 
-    const settle = async (untilLoaded = true): Promise<void> => {
-        for (let pass = 0; pass < 50; pass++) {
-            fixture.detectChanges();
-            await fixture.whenStable();
-            await new Promise((resolve) => setTimeout(resolve, 10));
-            if (pass >= 2 && (!untilLoaded || !loading())) {
-                break;
-            }
-        }
-        fixture.detectChanges();
-    };
+    const settle = (untilLoaded = true): Promise<void> => settleFixture(fixture, untilLoaded);
 
     const element = (selector: string): HTMLElement | null => fixture.nativeElement.querySelector(selector);
     const input = (fieldId: string): HTMLInputElement | null => element(`#${fieldId}`) as HTMLInputElement | null;
@@ -86,29 +74,13 @@ describe('SignalFormRendererComponent', () => {
     };
 
     let confirmRemoval: boolean;
-    const directComponents: Record<string, Type<unknown>> = {
-        [FormFieldType.Text]: SignalTextWidgetComponent,
-        [FormFieldType.MultilineText]: SignalMultilineTextWidgetComponent,
-        [FormFieldType.Integer]: SignalIntegerWidgetComponent,
-        [FormFieldType.Amount]: SignalAmountWidgetComponent,
-        [FormFieldType.Decimal]: SignalDecimalWidgetComponent,
-        [FormFieldType.Boolean]: SignalCheckboxWidgetComponent,
-        [FormFieldType.Dropdown]: SignalDropdownWidgetComponent,
-        [FormFieldType.RadioButtons]: SignalRadioWidgetComponent,
-        [FormFieldType.Date]: SignalDateWidgetComponent,
-        [FormFieldType.DateTime]: SignalDateTimeWidgetComponent
-    };
-    const builtInsLoadedDirectly = BUILT_IN_FORM_WIDGETS.filter((definition) => directComponents[definition.type]).map((definition) => ({
-        ...definition,
-        component: () => Promise.resolve(directComponents[definition.type])
-    }));
 
     beforeEach(() => {
         confirmRemoval = true;
         TestBed.configureTestingModule({
             imports: [NoopTranslateModule],
             providers: [
-                provideFormWidgets(...builtInsLoadedDirectly),
+                provideFormWidgets(...BUILT_IN_WIDGETS_LOADED_DIRECTLY),
                 { provide: MatDialog, useValue: { open: () => ({ beforeClosed: () => of(confirmRemoval) }) } }
             ]
         });
@@ -213,6 +185,32 @@ describe('SignalFormRendererComponent', () => {
         };
         const tabLabels = (): string[] =>
             Array.from(fixture.nativeElement.querySelectorAll('[role="tab"]')).map((tab: Element) => tab.textContent.trim());
+
+        const requiredOnExtra = () => {
+            const definition = structuredClone(tabForm);
+            definition.formDefinition.fields[1].fields[1][0] = { id: 'extraText', type: 'text', required: true } as never;
+            return definition;
+        };
+        const tabMarkers = (): string[] =>
+            Array.from(fixture.nativeElement.querySelectorAll('[role="tab"]'))
+                .filter((tab: Element) => tab.querySelector('.adf-form-tab-validation-indicator'))
+                .map((tab: Element) => tab.getAttribute('aria-label'));
+
+        it('should mark a visible tab holding an invalid field, when tab indicators are enabled', async () => {
+            TestBed.configureTestingModule({ providers: [{ provide: ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED, useValue: true }] });
+            await render(requiredOnExtra());
+            expect(tabMarkers()).withContext('the invalid tab is hidden').toEqual([]);
+
+            await type('showExtra', 'yes');
+            expect(tabMarkers()).toEqual(['FORM.FORM_RENDERER.TAB_VALIDATION_ERRORS_LABEL']);
+        });
+
+        it('should not mark tabs while tab indicators are off', async () => {
+            await render(requiredOnExtra());
+            await type('showExtra', 'yes');
+
+            expect(tabMarkers()).toEqual([]);
+        });
 
         it('should show only the visible tabs, and a tab once its condition is met', async () => {
             await render(tabForm);
@@ -419,6 +417,94 @@ describe('SignalFormRendererComponent', () => {
 
             expect(input('meeting').value).toBe('15-03-2024');
             expect(input('meeting-time').value).toBe('10:30');
+        });
+    });
+
+    describe('display widgets', () => {
+        it('should link to the value, adding the scheme it misses, and show the display text', async () => {
+            await render(
+                fieldsForm([
+                    { id: 'site', name: 'Site', type: 'hyperlink', hyperlinkUrl: 'hyland.com', displayText: 'Hyland' },
+                    { id: 'secure', type: 'hyperlink', value: 'https://example.org' },
+                    { id: 'nowhere', type: 'hyperlink' }
+                ])
+            );
+
+            const link = element('#site') as HTMLAnchorElement;
+            expect(link.getAttribute('href')).toBe('http://hyland.com');
+            expect(link.textContent.trim()).toBe('Hyland');
+            expect(link.target).toBe('_blank');
+            expect(element('#secure').getAttribute('href')).toBe('https://example.org');
+            expect(element('#secure').textContent.trim()).toBe('https://example.org');
+            expect(element('#nowhere').getAttribute('href')).toBe('#');
+        });
+
+        it('should show a read-only text as written while expression evaluation is off', async () => {
+            await render(
+                fieldsForm([
+                    { id: 'greeting', type: 'readonly-text', value: 'Hello ${field.name}' },
+                    { id: 'name', type: 'text' }
+                ])
+            );
+
+            expect(element('#greeting').textContent.trim()).toBe('Hello ${field.name}');
+        });
+
+        it('should resolve read-only text expressions as the values they use change, with typed values by name', async () => {
+            TestBed.configureTestingModule({
+                providers: [
+                    { provide: ADF_DISPLAY_TEXT_SETTINGS, useValue: of({ enableExpressionEvaluation: true }) },
+                    { provide: ADF_TYPED_VALUE_FORMATTING_ENABLED, useValue: true }
+                ]
+            });
+            await render(
+                fieldsForm([
+                    { id: 'greeting', type: 'readonly-text', value: 'Hello ${field.name}, shipping to ${field.country}' },
+                    { id: 'name', type: 'text' },
+                    { id: 'country', type: 'dropdown', options: [{ id: 'it', name: 'Italy' }], value: 'it' }
+                ])
+            );
+
+            expect(element('#greeting').textContent.trim()).toBe('Hello , shipping to Italy');
+
+            await type('name', 'Vito');
+
+            expect(element('#greeting').textContent.trim()).toBe('Hello Vito, shipping to Italy');
+        });
+
+        it('should show a JSON value in the read-only JSON dialog', async () => {
+            const open = spyOn(TestBed.inject(MatDialog), 'open');
+            await render(fieldsForm([{ id: 'payload', name: 'Payload', type: 'json', value: { a: 1 } }]));
+
+            element('#payload').click();
+
+            expect(open).toHaveBeenCalledWith(EditJsonDialogComponent, {
+                data: { title: 'Payload', editable: false, value: JSON.stringify({ a: 1 }, null, 2) },
+                minWidth: '50%',
+                minHeight: '50%'
+            });
+        });
+
+        it('should show a display value read-only, taken from the process field it shows', async () => {
+            await render({
+                ...fieldsForm([{ id: 'shownName', type: 'readonly', params: { field: { id: 'name', name: 'name', type: 'text' } } }]),
+                processVariables: [{ name: 'name', type: 'string', value: 'Vito' }]
+            });
+
+            expect(input('shownName').value).toBe('Vito');
+            expect(input('shownName').disabled).toBeTrue();
+        });
+
+        it('should render a string field as text, validated like one', async () => {
+            await render(fieldsForm([{ id: 'nickname', type: 'string', required: true, maxLength: 3 }]));
+            expect(form.valid()).toBeFalse();
+
+            await type('nickname', 'Vito');
+            expect(form.valid()).withContext('longer than the maximum').toBeFalse();
+
+            await type('nickname', 'Vi');
+            expect(form.valid()).toBeTrue();
+            expect(form.submissionValues()['nickname']).toBe('Vi');
         });
     });
 });

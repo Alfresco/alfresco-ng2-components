@@ -16,16 +16,17 @@
  */
 
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, model, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ConfirmDialogComponent, RepeatableRowLabelPipe } from '@alfresco/adf-core';
+import { ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED, ConfirmDialogComponent, RepeatableRowLabelPipe } from '@alfresco/adf-core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LayoutNode, LayoutRoot, SectionRowOptions } from '../../definition/form-definition.model';
 import { RowAddress, SignalForm } from '../../state/signal-form';
+import { injectSetting } from '../inject-setting';
 import { SignalFormFieldComponent } from '../field/signal-form-field.component';
 
 /**
@@ -33,7 +34,7 @@ import { SignalFormFieldComponent } from '../field/signal-form-field.component';
  * rows, and every field through the widget the registry resolves for it.
  */
 @Component({
-    selector: 'adf-signal-form',
+    selector: 'adf-signal-form-renderer',
     templateUrl: './signal-form-renderer.component.html',
     styleUrl: './signal-form-renderer.component.scss',
     encapsulation: ViewEncapsulation.None,
@@ -48,14 +49,17 @@ import { SignalFormFieldComponent } from '../field/signal-form-field.component';
         TranslatePipe,
         SignalFormFieldComponent
     ],
-    host: { class: 'adf-signal-form' }
+    host: { class: 'adf-signal-form-renderer' }
 })
 export class SignalFormRendererComponent {
     private readonly dialog = inject(MatDialog);
 
     readonly form = input.required<SignalForm>();
 
-    protected readonly visibleTabs = computed(() => this.form().definition.tabs.filter((tab) => this.form().isTabVisible(tab.id)));
+    /** The index of the selected tab among the visible ones. */
+    readonly selectedTabIndex = model(0);
+
+    protected readonly tabErrorsShown = injectSetting(ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED, (enabled) => enabled ?? false);
 
     protected rootsOf(tabId: string): LayoutRoot[] {
         return this.form().definition.layout.filter((root) => root.tabId === tabId);

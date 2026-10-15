@@ -19,15 +19,17 @@ import { computed, Directive, input } from '@angular/core';
 import { FieldTree } from '@angular/forms/signals';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { FieldDefinition } from '../../definition/form-definition.model';
+import type { SignalForm } from '../../state/signal-form';
 import { FieldErrorMessage, fieldErrorMessage } from './field-error-message';
 
 /**
- * The contract every form widget implements. The field outlet gives it the field's Signal Forms node and its
- * definition; the widget binds `[formField]` on its own input, which also applies the field's read-only and disabled
+ * The contract every form widget implements. The field outlet gives it the form, the field's Signal Forms node
+ * and its definition; the widget binds `[formField]` on its own input, which also applies the field's read-only and disabled
  * state, and shows the field's first error once the field is touched.
  */
 @Directive()
 export abstract class SignalFormWidget<TValue = unknown> {
+    readonly form = input.required<SignalForm>();
     readonly field = input.required<FieldTree<TValue>>();
     readonly definition = input.required<FieldDefinition>();
     readonly elementId = input<string>();

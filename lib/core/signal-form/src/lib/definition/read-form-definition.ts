@@ -17,6 +17,8 @@
 
 import { BUILT_IN_FORM_WIDGET_RESOLVER } from '../widgets/built-in-form-widgets';
 import type { FormWidgetResolver } from '../widgets/form-widget-definition';
+import { LABEL_SUFFIX } from '../expressions/condition-values';
+import { resolveVariableValue } from '../expressions/form-variables';
 import { readInitialValue, readOptions } from './field-initial-values';
 import type { FieldJson, FormDefinitionJson, FormRepresentationJson, OutcomeJson } from './form-definition.json';
 import {
@@ -30,6 +32,7 @@ import {
     LayoutNode,
     LayoutRoot,
     OutcomeDefinition,
+    READ_ONLY_FIELD_TYPES,
     SectionDefinition,
     SystemOutcomeName,
     TabDefinition
@@ -55,13 +58,21 @@ export const readFormDefinition = (json: FormDefinitionJson, widgets: FormWidget
     const representation = json.formRepresentation ?? json;
     const content = { ...representation, ...representation.formDefinition };
     const roots = structuredClone(content.fields ?? []);
+    const variables = readVariables(content);
+    const withSourceValue = (field: FieldDefinition) => withSourceFieldValue(field, variables);
 
     return {
-        fields: roots.flatMap((root) => collectFields([root], [], widgets, root.tab ?? undefined)),
-        sections: roots.filter((root) => root.type === FormFieldType.RepeatableSection).map((section) => toSectionDefinition(section, widgets)),
+        name: content.name ?? null,
+        theme: content.theme ? structuredClone(content.theme) : null,
+        showTabNavigation: content.showBottomTabNavButtons === true,
+        fields: roots.flatMap((root) => collectFields([root], [], widgets, root.tab ?? undefined)).map(withSourceValue),
+        sections: roots
+            .filter((root) => root.type === FormFieldType.RepeatableSection)
+            .map((section) => toSectionDefinition(section, widgets))
+            .map((section) => ({ ...section, fields: section.fields.map(withSourceValue) })),
         tabs: (content.tabs ?? []).map(({ id, title, visibilityCondition }): TabDefinition => ({ id, title, visibilityCondition })),
         outcomes: readOutcomes(content.outcomes ?? [], content.selectedOutcome),
-        variables: readVariables(content),
+        variables,
         layout: roots.map((root): LayoutRoot => ({ tabId: root.tab ?? undefined, node: toLayoutNode(root) }))
     };
 };
@@ -99,6 +110,7 @@ const readVariables = (content: FormRepresentationJson): FormVariables => ({
 
 const toSectionDefinition = (section: FieldJson, widgets: FormWidgetResolver): SectionDefinition => {
     const ancestors = [toLayoutDefinition(section)];
+    const tabId = section.tab ?? undefined;
     return {
         id: section.id,
         initialRows: section.params?.initialNumberOfRows ?? 1,
@@ -109,7 +121,8 @@ const toSectionDefinition = (section: FieldJson, widgets: FormWidgetResolver): S
             rowLabelText: section.params?.rowLabelText,
             appendRowNumber: section.params?.appendRowNumber
         },
-        fields: Object.values(section.fields ?? {}).flatMap((column) => collectFields(column, ancestors, widgets))
+        tabId,
+        fields: Object.values(section.fields ?? {}).flatMap((column) => collectFields(column, ancestors, widgets, tabId))
     };
 };
 
@@ -163,15 +176,42 @@ const toFieldDefinition = (
         hasEmptyValue: field.hasEmptyValue ?? !!emptyOption,
         emptyOption,
         multiple: field.selectionType === 'multiple' || !!field.params?.multiple,
-        dateDisplayFormat: field.dateDisplayFormat || (field.type === FormFieldType.DateTime ? DEFAULT_DATETIME_FORMAT : DEFAULT_DATE_FORMAT),
+        dateDisplayFormat: field.dateDisplayFormat || defaultDateFormat(field),
         enableFractions: !!field.enableFractions,
         currency: field.currency,
         precision: field.precision,
         dynamicDateRangeSelection: !!field.dynamicDateRangeSelection,
         minDateRangeValue: field.minDateRangeValue,
         maxDateRangeValue: field.maxDateRangeValue,
+        hyperlinkUrl: field.hyperlinkUrl,
+        displayText: field.displayText,
+        sourceField: READ_ONLY_FIELD_TYPES.has(field.type) ? (field.params?.field ?? undefined) : undefined,
         initialValue: null
     };
     definition.initialValue = readInitialValue(field, definition, widgets);
     return definition;
+};
+
+const defaultDateFormat = (field: FieldJson): string => {
+    const shownType = READ_ONLY_FIELD_TYPES.has(field.type) ? (field.params?.field?.type ?? field.type) : field.type;
+    return shownType === FormFieldType.DateTime ? DEFAULT_DATETIME_FORMAT : DEFAULT_DATE_FORMAT;
+};
+
+const TYPEAHEAD = 'typeahead';
+
+/**
+ * Gives a read-only field showing a process field the value of that field's process variable, when it has one.
+ *
+ * @param field the field definition
+ * @param variables the form and process variables
+ * @returns the field, with its initial value taken from the process variable when there is one
+ */
+const withSourceFieldValue = (field: FieldDefinition, variables: FormVariables): FieldDefinition => {
+    const source = field.sourceField;
+    if (!source) {
+        return field;
+    }
+    const variableName = source.type === TYPEAHEAD ? `${source.id}${LABEL_SUFFIX}` : source.name;
+    const value = resolveVariableValue(variableName, variables);
+    return value ? { ...field, initialValue: value } : field;
 };

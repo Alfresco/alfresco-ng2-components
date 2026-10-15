@@ -47,6 +47,8 @@ import {
     patternValidator,
     requiredValidator
 } from '../validation/field-validation';
+import { groupDisplayValue, optionDisplayValue, peopleDisplayValue } from '../display/field-display-value';
+import { borrowedDefinition } from './field-widget';
 import { FormWidgetDefinition, FormWidgetResolver } from './form-widget-definition';
 
 const TEXT_VALIDATORS = [requiredValidator, minLengthValidator, maxLengthValidator, patternValidator];
@@ -60,6 +62,10 @@ const radioWidget = () => import('../ui/widgets/radio/radio-widget.component').t
 const dropdownWidget = () => import('../ui/widgets/dropdown/dropdown-widget.component').then((widgets) => widgets.SignalDropdownWidgetComponent);
 const dateWidget = () => import('../ui/widgets/date/date-widget.component').then((widgets) => widgets.SignalDateWidgetComponent);
 const dateTimeWidget = () => import('../ui/widgets/date-time/date-time-widget.component').then((widgets) => widgets.SignalDateTimeWidgetComponent);
+const hyperlinkWidget = () => import('../ui/widgets/hyperlink/hyperlink-widget.component').then((widgets) => widgets.SignalHyperlinkWidgetComponent);
+const displayTextWidget = () =>
+    import('../ui/widgets/display-text/display-text-widget.component').then((widgets) => widgets.SignalDisplayTextWidgetComponent);
+const jsonWidget = () => import('../ui/widgets/json/json-widget.component').then((widgets) => widgets.SignalJsonWidgetComponent);
 const multilineTextWidget = () =>
     import('../ui/widgets/multiline-text/multiline-text-widget.component').then((widgets) => widgets.SignalMultilineTextWidgetComponent);
 
@@ -67,8 +73,11 @@ const multilineTextWidget = () =>
  * The field types the current engine supports, with today's value handling and validation. Components are added per
  * widget as the widgets are written.
  */
+const TEXT_DEFINITION: FormWidgetDefinition = { type: FormFieldType.Text, component: textWidget, validators: TEXT_VALIDATORS };
+
 export const BUILT_IN_FORM_WIDGETS: readonly FormWidgetDefinition[] = [
-    { type: FormFieldType.Text, component: textWidget, validators: TEXT_VALIDATORS },
+    TEXT_DEFINITION,
+    borrowedDefinition(TEXT_DEFINITION, FormFieldType.String),
     { type: FormFieldType.MultilineText, component: multilineTextWidget, validators: TEXT_VALIDATORS },
     {
         type: FormFieldType.Integer,
@@ -100,14 +109,16 @@ export const BUILT_IN_FORM_WIDGETS: readonly FormWidgetDefinition[] = [
         component: dropdownWidget,
         initialValue: dropdownInitialValue,
         submittedValue: dropdownSubmittedValue,
-        validators: [dropdownValidator]
+        validators: [dropdownValidator],
+        displayValue: optionDisplayValue
     },
     {
         type: FormFieldType.RadioButtons,
         component: radioWidget,
         initialValue: radioInitialValue,
         submittedValue: radioSubmittedValue,
-        validators: [requiredValidator]
+        validators: [requiredValidator],
+        displayValue: optionDisplayValue
     },
     {
         type: FormFieldType.Date,
@@ -124,17 +135,22 @@ export const BUILT_IN_FORM_WIDGETS: readonly FormWidgetDefinition[] = [
         validators: [dateValidator]
     },
     { type: FormFieldType.Upload, submittedValue: uploadSubmittedValue, validators: [requiredValidator] },
-    { type: FormFieldType.People, submittedValue: peopleSubmittedValue, validators: [requiredValidator] },
-    { type: FormFieldType.FunctionalGroup, submittedValue: peopleSubmittedValue, validators: [requiredValidator] },
+    { type: FormFieldType.People, submittedValue: peopleSubmittedValue, validators: [requiredValidator], displayValue: peopleDisplayValue },
+    {
+        type: FormFieldType.FunctionalGroup,
+        submittedValue: peopleSubmittedValue,
+        validators: [requiredValidator],
+        displayValue: groupDisplayValue
+    },
     { type: FormFieldType.DisplayExternalProperty, validators: [requiredValidator] },
     { type: FormFieldType.FileViewer, validators: [requiredValidator] },
     { type: FormFieldType.PropertiesViewer, validators: [requiredValidator] },
-    { type: FormFieldType.Hyperlink, submittedValue: noSubmittedValue },
-    { type: FormFieldType.DisplayValue, submittedValue: noSubmittedValue },
-    { type: FormFieldType.ReadonlyText, submittedValue: noSubmittedValue },
+    { type: FormFieldType.Hyperlink, component: hyperlinkWidget, submittedValue: noSubmittedValue },
+    { type: FormFieldType.DisplayValue, component: textWidget, submittedValue: noSubmittedValue },
+    { type: FormFieldType.ReadonlyText, component: displayTextWidget, submittedValue: noSubmittedValue },
     { type: FormFieldType.DisplayRichText },
     { type: FormFieldType.DataTable },
-    { type: FormFieldType.Json },
+    { type: FormFieldType.Json, component: jsonWidget },
     { type: FormFieldType.Button },
     { type: FormFieldType.BaseViewer }
 ];

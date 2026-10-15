@@ -1,0 +1,6 @@
+<div class="adf-hyperlink-widget">
+    <span class="adf-label">{{ definition().name | translate }}</span>
+    <div [title]="definition().tooltip ?? ''">
+        <a [id]="inputId()" [href]="url()" target="_blank" rel="nofollow noopener">{{ text() }}</a>
+    </div>
+</div>

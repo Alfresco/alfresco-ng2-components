@@ -81,4 +81,49 @@ describe('SignalForm', () => {
         expect(form.fieldNode('tags')[0]).toBeDefined();
         (definition.fields[0].initialValue as object[]).forEach((item) => expect(Object.getOwnPropertySymbols(item)).toEqual([]));
     });
+
+    it('should not validate a repeatable section on a hidden tab, and report it once the tab is visible', () => {
+        const definition = readFormDefinition({
+            formDefinition: {
+                tabs: [
+                    { id: 'main', title: 'Main' },
+                    {
+                        id: 'items',
+                        title: 'Items',
+                        visibilityCondition: {
+                            leftType: 'field',
+                            leftValue: 'withItems',
+                            operator: '==',
+                            rightValue: 'yes',
+                            rightType: 'value',
+                            nextConditionOperator: ''
+                        }
+                    }
+                ],
+                fields: [
+                    { id: 'main-root', type: 'container', tab: 'main', numberOfColumns: 1, fields: { 1: [{ id: 'withItems', type: 'text' }] } },
+                    {
+                        id: 'lines',
+                        type: 'repeatable-section',
+                        tab: 'items',
+                        numberOfColumns: 1,
+                        params: { initialNumberOfRows: 1 },
+                        fields: { 1: [{ id: 'item', type: 'text', required: true }] }
+                    }
+                ],
+                outcomes: [],
+                variables: []
+            }
+        });
+        const form = new SignalForm(definition, {}, TestBed.inject(Injector));
+
+        expect(form.valid()).toBeTrue();
+        expect(form.hasTabErrors('items')).toBeFalse();
+
+        form.setValue('withItems', 'yes');
+
+        expect(form.valid()).toBeFalse();
+        expect(form.hasTabErrors('items')).toBeTrue();
+        expect(form.hasTabErrors('main')).toBeFalse();
+    });
 });

@@ -30,15 +30,22 @@ export type FieldValidator = (field: FieldDefinition, value: any) => string | nu
  */
 export type InitialValueReader = (field: FieldJson, definition: FieldDefinition) => unknown;
 
-export interface SubmittedValueInput {
+export interface FieldValueInput {
     definition: FieldDefinition;
     value: any;
 }
+
+export type SubmittedValueInput = FieldValueInput;
 
 /**
  * Converts a field value into the value submitted to the backend; `undefined` means the field submits nothing.
  */
 export type SubmittedValueWriter = (input: SubmittedValueInput) => unknown;
+
+/**
+ * Turns a field value, never `null`, into the text shown for it, for example by an expression in a read-only text.
+ */
+export type DisplayValueFormatter = (input: FieldValueInput) => string;
 
 /**
  * Everything the form needs to know about one field type. Registering a definition is the only step needed to add a
@@ -50,6 +57,7 @@ export interface FormWidgetDefinition {
     initialValue?: InitialValueReader;
     submittedValue?: SubmittedValueWriter;
     validators?: FieldValidator[];
+    displayValue?: DisplayValueFormatter;
 }
 
 export interface FormWidgetResolver {

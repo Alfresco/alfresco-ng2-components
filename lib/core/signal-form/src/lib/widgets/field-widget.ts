@@ -69,14 +69,15 @@ export const fieldWidget = (widgets: FormWidgetResolver, field: WidgetField): Fi
  * @param type the custom field type
  * @returns the definition for the custom field type
  */
-const borrowedDefinition = (borrowed: FormWidgetDefinition, type: string): FormWidgetDefinition => {
+export const borrowedDefinition = (borrowed: FormWidgetDefinition, type: string): FormWidgetDefinition => {
     const asBorrowedType = <T extends { type: string }>(field: T): T => ({ ...field, type: borrowed.type });
-    const { initialValue, submittedValue, validators } = borrowed;
+    const { initialValue, submittedValue, validators, displayValue } = borrowed;
     return {
         ...borrowed,
         type,
         initialValue: initialValue && ((json, definition) => initialValue(json, asBorrowedType(definition))),
         submittedValue: submittedValue && (({ definition, value }) => submittedValue({ definition: asBorrowedType(definition), value })),
-        validators: validators?.map((validator) => (definition, value) => validator(asBorrowedType(definition), value))
+        validators: validators?.map((validator) => (definition, value) => validator(asBorrowedType(definition), value)),
+        displayValue: displayValue && (({ definition, value }) => displayValue({ definition: asBorrowedType(definition), value }))
     };
 };

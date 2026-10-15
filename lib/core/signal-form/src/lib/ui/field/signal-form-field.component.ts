@@ -47,6 +47,7 @@ export class SignalFormFieldComponent {
     protected readonly component = signal<Type<unknown> | undefined>(undefined);
     protected readonly loadFailed = signal(false);
     protected readonly inputs = computed(() => ({
+        form: this.form(),
         field: this.form().fieldNode(this.field().id, this.row()),
         definition: this.field(),
         elementId: this.row() ? `${this.field().id}-Row${this.row().index}` : this.field().id

@@ -1,0 +1,59 @@
+<div class="adf-signal-form-container" data-automation-id="adf-signal-form-container" [style]="formStyle()">
+    @if (showValidationIcon() || (showTitle() && displayedTitle())) {
+        <h4 class="adf-signal-form-header">
+            @if (showValidationIcon()) {
+                @if (form().valid()) {
+                    <mat-icon id="adf-valid-form-icon" class="adf-signal-form-valid-icon">check_circle</mat-icon>
+                } @else {
+                    <mat-icon id="adf-invalid-form-icon" class="adf-signal-form-invalid-icon">error</mat-icon>
+                }
+            }
+            @if (showTitle() && displayedTitle(); as formTitle) {
+                <span class="adf-signal-form-title" [title]="formTitle">{{ formTitle }}</span>
+            }
+        </h4>
+    }
+    <adf-signal-form-renderer [form]="form()" [(selectedTabIndex)]="selectedTab" />
+    @if (outcomeButtons().length || tabNavigationShown()) {
+        <div class="adf-signal-form-actions">
+            @if (tabNavigationShown()) {
+                <div class="adf-tab-navigation-buttons">
+                    <button
+                        mat-button
+                        data-automation-id="tab-nav-previous-button"
+                        [title]="'FORM.BUTTON.PREVIOUS_TAB_TITLE' | translate"
+                        [disabled]="!canGoToPreviousTab()"
+                        (click)="previousTab()"
+                    >
+                        <mat-icon>keyboard_arrow_left</mat-icon>
+                        {{ 'FORM.BUTTON.PREVIOUS_TAB' | translate }}
+                    </button>
+                    <button
+                        mat-button
+                        data-automation-id="tab-nav-next-button"
+                        [title]="'FORM.BUTTON.NEXT_TAB_TITLE' | translate"
+                        [disabled]="!canGoToNextTab()"
+                        (click)="nextTab()"
+                    >
+                        {{ 'FORM.BUTTON.NEXT_TAB' | translate }}
+                        <mat-icon iconPositionEnd>keyboard_arrow_right</mat-icon>
+                    </button>
+                </div>
+            }
+            <div class="adf-signal-form-outcomes">
+                <ng-content select="adf-form-custom-outcomes" />
+                @for (button of outcomeButtons(); track button.outcome.id) {
+                    <button
+                        mat-button
+                        class="adf-signal-form-outcome-button"
+                        [id]="'adf-form-' + button.outcome.name | formatSpace"
+                        [disabled]="!button.enabled"
+                        (click)="execute(button.outcome)"
+                    >
+                        {{ button.outcome.name | translate | uppercase }}
+                    </button>
+                }
+            </div>
+        </div>
+    }
+</div>

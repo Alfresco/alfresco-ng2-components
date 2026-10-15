@@ -25,6 +25,8 @@ export * from './lib/widgets/form-widget-definition';
 export * from './lib/widgets/built-in-form-widgets';
 export * from './lib/widgets/form-widget-registry';
 export * from './lib/widgets/field-widget';
+export * from './lib/ui/host/signal-form.component';
+export * from './lib/ui/host/signal-form-outcome-event';
 export * from './lib/ui/renderer/signal-form-renderer.component';
 export * from './lib/ui/field/signal-form-field.component';
 export * from './lib/ui/widgets/signal-form-widget';

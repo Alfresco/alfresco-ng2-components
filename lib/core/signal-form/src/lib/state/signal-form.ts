@@ -40,7 +40,9 @@ import {
 } from '../definition/form-definition.model';
 import { conditionValueOf, referencedFieldId } from '../expressions/condition-values';
 import { findVariable, resolveVariableValue } from '../expressions/form-variables';
+import { resolveTextExpressions } from '../expressions/text-expressions';
 import { evaluateVisibilityCondition } from '../expressions/visibility-condition';
+import { displayFieldValue } from '../display/field-display-value';
 import { FieldValues, FormValuesModel, toSubmissionValues } from '../submission/submission-values';
 import { firstValidationError } from '../validation/field-validation';
 import { BUILT_IN_FORM_WIDGET_RESOLVER } from '../widgets/built-in-form-widgets';
@@ -70,6 +72,7 @@ interface RuleOverrides {
 export class SignalForm {
     readonly fieldTree: FieldTree<FormValuesModel>;
     readonly valid: Signal<boolean>;
+    readonly visibleTabs: Signal<TabDefinition[]>;
     readonly submissionValues: Signal<FieldValues>;
 
     private readonly fields: Map<string, FieldDefinition>;
@@ -101,6 +104,7 @@ export class SignalForm {
         this.submissionValues = computed(() => toSubmissionValues(this.fields, this.sections, this.values(), this.widgets));
         this.fieldTree = form(this.values, (root) => this.applyRules(root), { injector });
         this.valid = computed(() => this.fieldTree().valid());
+        this.visibleTabs = computed(() => definition.tabs.filter((tab) => this.isTabVisible(tab.id)));
     }
 
     get readOnly(): boolean {
@@ -136,8 +140,49 @@ export class SignalForm {
         return !!this.options.readOnly || (this.overrides().disabled[field.id] ?? field.readOnly);
     }
 
+    /**
+     * Resolves the `${field.<id>}` and `${variable.<name>}` expressions in a text with the current values. Read inside
+     * a computed or a template, the result follows the values it depends on.
+     *
+     * @param text the text
+     * @param options how the values are shown
+     * @param options.formatValues whether typed values (options, people, groups…) are formatted as text
+     * @param options.escapeHtml whether the values are HTML-escaped
+     * @returns the resolved text
+     */
+    resolveText(text: string, options: { formatValues?: boolean; escapeHtml?: boolean } = {}): string {
+        return resolveTextExpressions(
+            text,
+            {
+                field: (fieldId) => {
+                    const definition = this.fields.get(fieldId);
+                    return definition && { definition, value: this.values().fields[fieldId] };
+                },
+                variableValue: (identifier) => this.variableValue(identifier)
+            },
+            {
+                escapeHtml: options.escapeHtml,
+                formatFieldValue: options.formatValues ? (definition, value) => displayFieldValue(this.widgets, definition, value) : undefined
+            }
+        );
+    }
+
     isOutcomeConditionMet(outcome: OutcomeDefinition): boolean {
         return this.isConditionMet(outcome.visibilityCondition);
+    }
+
+    /**
+     * Whether a visible tab holds a field, or a repeatable section row, that fails validation.
+     *
+     * @param tabId the tab
+     * @returns `true` when the tab is visible and has an invalid field
+     */
+    hasTabErrors(tabId: string): boolean {
+        return (
+            this.isTabVisible(tabId) &&
+            (this.definition.fields.some((field) => field.tabId === tabId && !this.isFieldValid(field.id)) ||
+                this.definition.sections.some((section) => section.tabId === tabId && !this.fieldTree.sections[section.id]().valid()))
+        );
     }
 
     isFieldValid(fieldId: string, row?: RowAddress): boolean {
@@ -233,8 +278,12 @@ export class SignalForm {
     private isConditionMet(condition: VisibilityCondition | null | undefined): boolean {
         return evaluateVisibilityCondition(condition, {
             fieldValue: (reference) => this.conditionValue(reference),
-            variableValue: (identifier) => resolveVariableValue(identifier, this.definition.variables, this.runtimeVariables())
+            variableValue: (identifier) => this.variableValue(identifier)
         });
+    }
+
+    private variableValue(identifier: string): unknown {
+        return resolveVariableValue(identifier, this.definition.variables, this.runtimeVariables());
     }
 
     private conditionValue(reference: string): unknown {

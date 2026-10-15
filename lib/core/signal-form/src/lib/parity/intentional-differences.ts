@@ -17,7 +17,14 @@
 
 import { Injectable } from '@angular/core';
 import { format, isValid, parse } from 'date-fns';
-import { FormFieldModel, FormFieldValidator, FormModel, FormOutcomeModel, WidgetVisibilityService } from '../../../../src/lib/form/public-api';
+import {
+    FORM_FIELD_VALIDATORS,
+    FormFieldModel,
+    FormFieldValidator,
+    FormModel,
+    FormOutcomeModel,
+    WidgetVisibilityService
+} from '../../../../src/lib/form/public-api';
 import { WidgetVisibilityModel } from '../../../../src/lib/form/models/widget-visibility.model';
 import { FormSnapshot } from './form-engine-driver';
 
@@ -61,6 +68,14 @@ const requiredCustomWidgetValidator = fieldValidator(
     (field) => field.value !== null && field.value !== undefined && `${field.value}`.trim() !== ''
 );
 
+const stringAsTextValidator = fieldValidator(
+    (field) => field.type === 'string',
+    (field) => {
+        const asText: FormFieldModel = Object.create(field, { type: { value: 'text' } });
+        return FORM_FIELD_VALIDATORS.every((validator) => !validator.isSupported(asText) || validator.validate(asText));
+    }
+);
+
 export const INTENTIONAL_DIFFERENCES: IntentionalDifference[] = [
     {
         id: 'hidden-fields-not-validated',
@@ -82,6 +97,12 @@ export const INTENTIONAL_DIFFERENCES: IntentionalDifference[] = [
         group: 'decision',
         description: 'A Studio custom widget with no implementation is validated and submitted as its value type.',
         configure: (form) => form.fieldValidators.push(requiredCustomWidgetValidator)
+    },
+    {
+        id: 'string-fields-validated-as-text',
+        group: 'widget fix',
+        description: 'A string field, shown with the text widget, is also validated as a text field.',
+        configure: (form) => form.fieldValidators.push(stringAsTextValidator)
     },
     {
         id: 'read-only-fields-not-validated',

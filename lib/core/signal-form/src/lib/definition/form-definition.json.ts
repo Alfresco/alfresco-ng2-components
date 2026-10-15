@@ -15,14 +15,20 @@
  * limitations under the License.
  */
 
-import type { FormVariable, SectionRowOptions, TabDefinition, VisibilityCondition } from './form-definition.model';
+import type { ThemeModel } from '@alfresco/adf-core';
+import type { FormVariable, SectionRowOptions, SourceFieldReference, TabDefinition, VisibilityCondition } from './form-definition.model';
 
 export interface FieldJson {
     id: string;
     type: string;
     tab?: string | null;
     fields?: Record<string, FieldJson[]>;
-    params?: { initialNumberOfRows?: number; maxNumberOfRows?: number | null; multiple?: boolean } & SectionRowOptions;
+    params?: {
+        initialNumberOfRows?: number;
+        maxNumberOfRows?: number | null;
+        multiple?: boolean;
+        field?: SourceFieldReference | null;
+    } & SectionRowOptions;
     visibilityCondition?: VisibilityCondition | null;
     [property: string]: any;
 }
@@ -35,6 +41,9 @@ export interface OutcomeJson {
 }
 
 export interface FormDefinitionContentJson {
+    name?: string;
+    theme?: ThemeModel;
+    showBottomTabNavButtons?: boolean;
     fields?: FieldJson[];
     variables?: FormVariable[];
     tabs?: TabDefinition[];

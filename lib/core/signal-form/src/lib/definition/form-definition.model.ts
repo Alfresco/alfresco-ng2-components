@@ -15,8 +15,11 @@
  * limitations under the License.
  */
 
+import type { ThemeModel } from '@alfresco/adf-core';
+
 export const FormFieldType = {
     Text: 'text',
+    String: 'string',
     MultilineText: 'multi-line-text',
     Integer: 'integer',
     Amount: 'amount',
@@ -54,6 +57,9 @@ export const LAYOUT_FIELD_TYPES: ReadonlySet<string> = new Set([
     FormFieldType.Section,
     FormFieldType.RepeatableSection
 ]);
+
+/** The field types that only show a value, which they can take from a process field (`params.field`). */
+export const READ_ONLY_FIELD_TYPES: ReadonlySet<string> = new Set([FormFieldType.Hyperlink, FormFieldType.DisplayValue, FormFieldType.ReadonlyText]);
 
 export const SystemOutcomeName = {
     Save: 'SAVE',
@@ -127,7 +133,19 @@ export interface FieldDefinition {
     dynamicDateRangeSelection: boolean;
     minDateRangeValue?: number | null;
     maxDateRangeValue?: number | null;
+    hyperlinkUrl?: string;
+    displayText?: string;
+    sourceField?: SourceFieldReference;
     initialValue: unknown;
+}
+
+/**
+ * The process field a read-only field shows (`params.field`), whose value it takes from the process variables.
+ */
+export interface SourceFieldReference {
+    id?: string;
+    name?: string;
+    type?: string;
 }
 
 export interface SectionRowOptions {
@@ -142,6 +160,7 @@ export interface SectionDefinition {
     initialRows: number;
     maxRows: number | null;
     rowOptions: SectionRowOptions;
+    tabId?: string;
     fields: FieldDefinition[];
 }
 
@@ -199,6 +218,10 @@ export interface LayoutRoot {
  * A form definition JSON read once into an immutable model.
  */
 export interface FormDefinition {
+    name: string | null;
+    theme: ThemeModel | null;
+    /** Whether the form shows previous and next buttons to move between its tabs. */
+    showTabNavigation: boolean;
     fields: FieldDefinition[];
     sections: SectionDefinition[];
     tabs: TabDefinition[];
