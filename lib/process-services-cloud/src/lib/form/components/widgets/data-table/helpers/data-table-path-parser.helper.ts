@@ -27,6 +27,10 @@ export class DataTablePathParserHelper {
         }
 
         const properties = this.splitPathIntoProperties(path);
+        if (properties.length === 0) {
+            return undefined;
+        }
+
         const currentProperty = properties.shift();
         const propertyIndexReferences = this.getIndexReferencesFromProperty(currentProperty);
         const purePropertyName = this.extractPurePropertyName(currentProperty);

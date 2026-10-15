@@ -1375,6 +1375,21 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(await allOptions[0].getText()).toEqual('Lionel Messi');
         });
 
+        it('should return empty array and display error when path contains only whitespace', async () => {
+            const processVariables = [
+                new TaskVariableCloud({
+                    name: 'variables.json-variable',
+                    value: { '': [{ playerId: 'unexpected', playerFullName: 'Unexpected option' }] },
+                    type: 'json',
+                    id: 'fake-id-1'
+                })
+            ];
+            widget.field = getVariableDropdownWidget('variables.json-variable', '   ', 'playerId', 'playerFullName', processVariables);
+            fixture.detectChanges();
+
+            await checkDropdownVariableOptionsFailed();
+        });
+
         it('should return empty array and display error when path is incorrect', async () => {
             widget.field = getVariableDropdownWidget(
                 'variables.json-variable',

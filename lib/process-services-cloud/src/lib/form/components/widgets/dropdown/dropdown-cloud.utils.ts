@@ -86,9 +86,15 @@ export const resolveDropdownCloudVariableOptions = (
         return null;
     }
 
+    const optionsPath = variableConfig?.optionsPath ?? DEFAULT_VARIABLE_OPTION_PATH;
+
+    if (!optionsPath.trim()) {
+        return { options: [], errors: ['Options path is empty'] };
+    }
+
     return getOptionsFromPath(
         data,
-        variableConfig?.optionsPath ?? DEFAULT_VARIABLE_OPTION_PATH,
+        optionsPath,
         variableConfig?.optionsId ?? DEFAULT_VARIABLE_OPTION_ID,
         variableConfig?.optionsLabel ?? DEFAULT_VARIABLE_OPTION_LABEL
     );

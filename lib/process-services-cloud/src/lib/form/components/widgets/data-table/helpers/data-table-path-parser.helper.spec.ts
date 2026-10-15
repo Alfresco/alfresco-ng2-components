@@ -192,9 +192,15 @@ describe('DataTablePathParserHelper', () => {
             },
             {
                 description: 'with whitespace only',
-                data: { pets: ['cat', 'dog'] },
+                data: { '': ['unexpected'] },
                 path: '   ',
                 expected: undefined
+            },
+            {
+                description: 'with empty property name in brackets',
+                data: { '': ['cat', 'dog'] },
+                path: '[]',
+                expected: ['cat', 'dog']
             },
             {
                 description: 'with whitespace inside brackets preserved as part of the property name',
