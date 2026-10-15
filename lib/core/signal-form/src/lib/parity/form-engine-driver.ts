@@ -18,18 +18,35 @@
 export interface FieldSnapshot {
     visible: boolean;
     valid: boolean;
+    readOnly: boolean;
+}
+
+export interface OutcomeSnapshot {
+    visible: boolean;
+    enabled: boolean;
 }
 
 export interface FormSnapshot {
     valid: boolean;
     fields: Record<string, FieldSnapshot>;
+    outcomes: Record<string, OutcomeSnapshot>;
     values: Record<string, unknown>;
 }
 
-export interface RowAddress {
-    sectionId: string;
-    index: number;
+/**
+ * Inputs the host component gives the form, with the cloud form's defaults.
+ */
+export interface LoadOptions {
+    readOnly?: boolean;
+    showSaveButton?: boolean;
+    showCompleteButton?: boolean;
 }
+
+export const DEFAULT_LOAD_OPTIONS: Required<LoadOptions> = { readOnly: false, showSaveButton: true, showCompleteButton: false };
+
+import type { RowAddress } from '../state/signal-form';
+
+export type { RowAddress } from '../state/signal-form';
 
 export interface SetValueInteraction {
     kind: 'setValue';
@@ -49,15 +66,25 @@ export interface RemoveRowInteraction {
     index: number;
 }
 
-export type FormInteraction = SetValueInteraction | AddRowInteraction | RemoveRowInteraction;
+export interface RuleFieldInteraction {
+    kind: 'setVisibility' | 'setDisabled' | 'setRequired';
+    fieldId: string;
+    enabled: boolean;
+}
+
+export interface RuleVariableInteraction {
+    kind: 'setVariable';
+    variableId: string;
+    value: unknown;
+}
+
+export type FormInteraction = SetValueInteraction | AddRowInteraction | RemoveRowInteraction | RuleFieldInteraction | RuleVariableInteraction;
 
 export interface FormEngineDriver {
-    load(definition: object): void;
+    load(definition: object, options?: LoadOptions): void;
     apply(interaction: FormInteraction): void;
     snapshot(): FormSnapshot;
 }
-
-export const LAYOUT_FIELD_TYPES: ReadonlySet<string> = new Set(['container', 'group', 'section', 'repeatable-section']);
 
 export const toSubmittedValues = (values: object): Record<string, unknown> => JSON.parse(JSON.stringify(values));
 

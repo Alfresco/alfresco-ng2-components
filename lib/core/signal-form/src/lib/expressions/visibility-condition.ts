@@ -16,9 +16,9 @@
  */
 
 import { format, isValid, parse } from 'date-fns';
-import { VisibilityConditionJson } from './spike-definition';
+import { VisibilityCondition } from '../definition/form-definition.model';
 
-export interface VisibilityValueSource {
+export interface ConditionValueSource {
     fieldValue(fieldId: string): unknown;
     variableValue(identifier: string): unknown;
 }
@@ -33,7 +33,7 @@ interface EvaluatedCondition {
     nextOperator: string;
 }
 
-export const isVisible = (condition: VisibilityConditionJson | null | undefined, source: VisibilityValueSource): boolean => {
+export const evaluateVisibilityCondition = (condition: VisibilityCondition | null | undefined, source: ConditionValueSource): boolean => {
     const left = leftOperand(condition);
     if (!condition || !(left.type || left.value) || left.value === 'null') {
         return true;
@@ -41,9 +41,9 @@ export const isVisible = (condition: VisibilityConditionJson | null | undefined,
     return combine(evaluateChain(condition, source));
 };
 
-const evaluateChain = (condition: VisibilityConditionJson, source: VisibilityValueSource): EvaluatedCondition[] => {
+const evaluateChain = (condition: VisibilityCondition, source: ConditionValueSource): EvaluatedCondition[] => {
     const evaluated: EvaluatedCondition[] = [];
-    let current: VisibilityConditionJson | null | undefined = condition;
+    let current: VisibilityCondition | null | undefined = condition;
 
     while (current) {
         const result = evaluateOperator(leftValue(current, source), rightValue(current, source), current.operator);
@@ -79,7 +79,7 @@ const combine = (conditions: EvaluatedCondition[]): boolean => {
     return orTerms.some(Boolean);
 };
 
-const leftOperand = (condition: VisibilityConditionJson | null | undefined): ConditionOperand => {
+const leftOperand = (condition: VisibilityCondition | null | undefined): ConditionOperand => {
     if (!condition) {
         return { type: null, value: null };
     }
@@ -88,7 +88,7 @@ const leftOperand = (condition: VisibilityConditionJson | null | undefined): Con
     return { type, value };
 };
 
-const rightOperand = (condition: VisibilityConditionJson): ConditionOperand => {
+const rightOperand = (condition: VisibilityCondition): ConditionOperand => {
     const type = condition.rightType
         ? condition.rightType
         : condition.rightValue
@@ -102,7 +102,7 @@ const rightOperand = (condition: VisibilityConditionJson): ConditionOperand => {
     return { type, value };
 };
 
-const leftValue = (condition: VisibilityConditionJson, source: VisibilityValueSource): unknown => {
+const leftValue = (condition: VisibilityCondition, source: ConditionValueSource): unknown => {
     const left = leftOperand(condition);
 
     if (left.type === 'variable') {
@@ -121,7 +121,7 @@ const leftValue = (condition: VisibilityConditionJson, source: VisibilityValueSo
     return variable !== undefined && variable !== null ? variable : value;
 };
 
-const rightValue = (condition: VisibilityConditionJson, source: VisibilityValueSource): unknown => {
+const rightValue = (condition: VisibilityCondition, source: ConditionValueSource): unknown => {
     const right = rightOperand(condition);
 
     if (right.type === 'field') {

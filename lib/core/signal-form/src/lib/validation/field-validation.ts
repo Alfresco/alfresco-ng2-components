@@ -16,20 +16,21 @@
  */
 
 import { addDays, isDate, isValid, parseISO } from 'date-fns';
-import { DateFnsUtils } from '../../../../src/lib/common/utils/date-fns-utils';
-import { SpikeFieldDefinition } from './spike-definition';
+import { DateFnsUtils, isNumberValue } from '@alfresco/adf-core';
+import { FieldDefinition, FormFieldType } from '../definition/form-definition.model';
+import type { FieldValidator } from '../widgets/form-widget-definition';
 
-const TEXT = 'text';
-const MULTILINE_TEXT = 'multi-line-text';
-const INTEGER = 'integer';
-const AMOUNT = 'amount';
-const DECIMAL = 'bigdecimal';
-const BOOLEAN = 'boolean';
-const RADIO_BUTTONS = 'radio-buttons';
-const UPLOAD = 'upload';
-const DATE = 'date';
-const DATETIME = 'datetime';
-const DROPDOWN = 'dropdown';
+const TEXT = FormFieldType.Text;
+const MULTILINE_TEXT = FormFieldType.MultilineText;
+const INTEGER = FormFieldType.Integer;
+const AMOUNT = FormFieldType.Amount;
+const DECIMAL = FormFieldType.Decimal;
+const BOOLEAN = FormFieldType.Boolean;
+const RADIO_BUTTONS = FormFieldType.RadioButtons;
+const UPLOAD = FormFieldType.Upload;
+const DATE = FormFieldType.Date;
+const DATETIME = FormFieldType.DateTime;
+const DROPDOWN = FormFieldType.Dropdown;
 const DEFAULT_TEXT_MAX_LENGTH = 1024;
 const DEFAULT_INTEGER_MAX_LENGTH = 10;
 const REQUIRED_TYPES: ReadonlySet<string> = new Set([
@@ -37,27 +38,25 @@ const REQUIRED_TYPES: ReadonlySet<string> = new Set([
     MULTILINE_TEXT,
     INTEGER,
     BOOLEAN,
-    'people',
-    'functional-group',
+    FormFieldType.People,
+    FormFieldType.FunctionalGroup,
     RADIO_BUTTONS,
     UPLOAD,
     AMOUNT,
     DECIMAL,
-    'display-external-property',
-    'file-viewer',
-    'properties-viewer'
+    FormFieldType.DisplayExternalProperty,
+    FormFieldType.FileViewer,
+    FormFieldType.PropertiesViewer
 ]);
-const PEOPLE_TYPES: ReadonlySet<string> = new Set(['people', 'functional-group']);
+const PEOPLE_TYPES: ReadonlySet<string> = new Set([FormFieldType.People, FormFieldType.FunctionalGroup]);
 const NUMBER_TYPES: ReadonlySet<string> = new Set([INTEGER, AMOUNT]);
 const RANGE_TYPES: ReadonlySet<string> = new Set([INTEGER, DECIMAL, AMOUNT]);
 const LENGTH_TYPES: ReadonlySet<string> = new Set([TEXT, MULTILINE_TEXT]);
 
-export type SpikeValidationErrorKind =
+export type FieldErrorKind =
     'required' | 'number' | 'minLength' | 'maxLength' | 'minValue' | 'maxValue' | 'pattern' | 'decimal' | 'precision' | 'date' | 'dropdown';
 
-type Validator = (field: SpikeFieldDefinition, value: any) => SpikeValidationErrorKind | null;
-
-const required: Validator = (field, value) => {
+export const requiredValidator: FieldValidator = (field, value) => {
     if (!field.required || !REQUIRED_TYPES.has(field.type)) {
         return null;
     }
@@ -76,7 +75,7 @@ const required: Validator = (field, value) => {
     return isBlank(value) || (typeof value === 'string' && value.trim().length === 0) ? 'required' : null;
 };
 
-const number: Validator = (field, value) => {
+export const numberValidator: FieldValidator = (field, value) => {
     if (!NUMBER_TYPES.has(field.type) || isBlank(value)) {
         return null;
     }
@@ -84,37 +83,37 @@ const number: Validator = (field, value) => {
     return allowed.test(`${value}`) ? null : 'number';
 };
 
-const minLength: Validator = (field, value) =>
+export const minLengthValidator: FieldValidator = (field, value) =>
     value && LENGTH_TYPES.has(field.type) && field.minLength > 0 && value.length < field.minLength ? 'minLength' : null;
 
-const maxLength: Validator = (field, value) => {
+export const maxLengthValidator: FieldValidator = (field, value) => {
     const limit = maxLengthOf(field);
     return value && limit > 0 && value.toString().length > limit ? 'maxLength' : null;
 };
 
-const minValue: Validator = (field, value) =>
-    value && RANGE_TYPES.has(field.type) && isNumeric(field.minValue) && !(+value >= +field.minValue) ? 'minValue' : null;
+export const minValueValidator: FieldValidator = (field, value) =>
+    value && RANGE_TYPES.has(field.type) && isNumberValue(field.minValue) && !(+value >= +field.minValue) ? 'minValue' : null;
 
-const maxValue: Validator = (field, value) =>
-    value && RANGE_TYPES.has(field.type) && isNumeric(field.maxValue) && !(+value <= +field.maxValue) ? 'maxValue' : null;
+export const maxValueValidator: FieldValidator = (field, value) =>
+    value && RANGE_TYPES.has(field.type) && isNumberValue(field.maxValue) && !(+value <= +field.maxValue) ? 'maxValue' : null;
 
-const pattern: Validator = (field, value) =>
+export const patternValidator: FieldValidator = (field, value) =>
     value && LENGTH_TYPES.has(field.type) && field.regexPattern && !(value.length > 0 && new RegExp(`^${field.regexPattern}$`).test(value))
         ? 'pattern'
         : null;
 
-const decimal: Validator = (field, value) => {
+export const decimalValidator: FieldValidator = (field, value) => {
     if (field.type !== DECIMAL || !value) {
         return null;
     }
-    if (!isNumeric(value)) {
+    if (!isNumberValue(value)) {
         return 'decimal';
     }
     const decimalPart = `${value}`.split('.')[1];
     return decimalPart !== undefined && decimalPart.length > field.precision ? 'precision' : null;
 };
 
-const date: Validator = (field, value) => {
+export const dateValidator: FieldValidator = (field, value) => {
     if (field.type !== DATE && field.type !== DATETIME) {
         return null;
     }
@@ -131,12 +130,11 @@ const date: Validator = (field, value) => {
     return failed ? 'date' : null;
 };
 
-const dropdown: Validator = (field, value) => (field.type === DROPDOWN && field.required && isDropdownValueEmpty(field, value) ? 'dropdown' : null);
+export const dropdownValidator: FieldValidator = (field, value) =>
+    field.type === DROPDOWN && field.required && isDropdownValueEmpty(field, value) ? 'dropdown' : null;
 
-const VALIDATORS: Validator[] = [required, number, minLength, maxLength, minValue, maxValue, pattern, decimal, date, dropdown];
-
-export const firstValidationError = (field: SpikeFieldDefinition, value: any): SpikeValidationErrorKind | null => {
-    for (const validator of VALIDATORS) {
+export const firstValidationError = (field: FieldDefinition, value: unknown, validators: readonly FieldValidator[]): string | null => {
+    for (const validator of validators) {
         const error = validator(field, value);
         if (error) {
             return error;
@@ -145,7 +143,7 @@ export const firstValidationError = (field: SpikeFieldDefinition, value: any): S
     return null;
 };
 
-const maxLengthOf = (field: SpikeFieldDefinition): number => {
+const maxLengthOf = (field: FieldDefinition): number => {
     if (field.type === INTEGER) {
         return DEFAULT_INTEGER_MAX_LENGTH;
     }
@@ -155,7 +153,7 @@ const maxLengthOf = (field: SpikeFieldDefinition): number => {
     return field.type === MULTILINE_TEXT ? field.maxLength : 0;
 };
 
-const dateRange = (field: SpikeFieldDefinition): { min: Date | null; max: Date | null } => {
+const dateRange = (field: FieldDefinition): { min: Date | null; max: Date | null } => {
     if (field.dynamicDateRangeSelection) {
         const today = new Date();
         return {
@@ -169,7 +167,7 @@ const dateRange = (field: SpikeFieldDefinition): { min: Date | null; max: Date |
     };
 };
 
-const dateTimeRange = (field: SpikeFieldDefinition): { min: Date | null; max: Date | null } => ({
+const dateTimeRange = (field: FieldDefinition): { min: Date | null; max: Date | null } => ({
     min: validDateOrNull(field.minValue ? DateFnsUtils.getDate(`${field.minValue}`) : null),
     max: validDateOrNull(field.maxValue ? DateFnsUtils.getDate(`${field.maxValue}`) : null)
 });
@@ -198,7 +196,7 @@ const compareDates = (first: Date, second: Date): number =>
 const compareDateTimes = (first: Date, second: Date): number =>
     compareDates(first, second) || first.getHours() - second.getHours() || first.getMinutes() - second.getMinutes();
 
-const isDropdownValueEmpty = (field: SpikeFieldDefinition, value: any): boolean => {
+const isDropdownValueEmpty = (field: FieldDefinition, value: any): boolean => {
     if (field.multiple) {
         return !Array.isArray(value) || value.length === 0;
     }
@@ -219,5 +217,3 @@ const isEmptyFieldValue = (value: unknown): boolean =>
     value === null || value === undefined || ((typeof value === 'string' || Array.isArray(value)) && value.length === 0);
 
 const isBlank = (value: unknown): boolean => value === null || value === undefined || value === '';
-
-const isNumeric = (value: unknown): boolean => !isBlank(value) && !isNaN(+value);

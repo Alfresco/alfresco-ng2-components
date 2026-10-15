@@ -38,10 +38,28 @@ export interface IntentionalDifference {
 
 const PEOPLE_TYPES: ReadonlySet<string> = new Set(['people', 'functional-group']);
 
-const emptyPeopleListValidator: FormFieldValidator = {
-    isSupported: (field: FormFieldModel) => PEOPLE_TYPES.has(field.type) && field.required,
-    validate: (field: FormFieldModel) => field.form?.isFieldOrParentHidden(field) || !Array.isArray(field.value) || field.value.length > 0
-};
+/**
+ * Builds a validator the way the current engine expects: `FormFieldModel.validate()` calls `validate` on every field,
+ * so `validate` checks support itself and skips hidden fields.
+ *
+ * @param isSupported whether the validator applies to the field
+ * @param isValid the check for a supported, visible field
+ * @returns the validator
+ */
+const fieldValidator = (isSupported: (field: FormFieldModel) => boolean, isValid: (field: FormFieldModel) => boolean): FormFieldValidator => ({
+    isSupported,
+    validate: (field: FormFieldModel) => !isSupported(field) || field.form?.isFieldOrParentHidden(field) || isValid(field)
+});
+
+const emptyPeopleListValidator = fieldValidator(
+    (field) => PEOPLE_TYPES.has(field.type) && field.required,
+    (field) => !Array.isArray(field.value) || field.value.length > 0
+);
+
+const requiredCustomWidgetValidator = fieldValidator(
+    (field) => !!field.json?.isCustomType && !!field.json?.valueType && field.required,
+    (field) => field.value !== null && field.value !== undefined && `${field.value}`.trim() !== ''
+);
 
 export const INTENTIONAL_DIFFERENCES: IntentionalDifference[] = [
     {
@@ -58,6 +76,12 @@ export const INTENTIONAL_DIFFERENCES: IntentionalDifference[] = [
         group: 'widget fix',
         description: 'A required people or group field with an empty list is invalid.',
         configure: (form) => form.fieldValidators.push(emptyPeopleListValidator)
+    },
+    {
+        id: 'custom-widgets-handled-by-value-type',
+        group: 'decision',
+        description: 'A Studio custom widget with no implementation is validated and submitted as its value type.',
+        configure: (form) => form.fieldValidators.push(requiredCustomWidgetValidator)
     },
     {
         id: 'condition-dates-parsed-as-dates',

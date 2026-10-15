@@ -20,20 +20,25 @@ import {
     ContainerModel,
     FormFieldModel,
     FormModel,
+    FormOutcomeModel,
     FormService,
+    isOutcomeButtonVisible,
     WidgetVisibilityService
 } from '../../../../src/lib/form/public-api';
 import {
+    DEFAULT_LOAD_OPTIONS,
     FieldSnapshot,
     FormEngineDriver,
     FormInteraction,
     FormSnapshot,
-    LAYOUT_FIELD_TYPES,
+    LoadOptions,
+    OutcomeSnapshot,
     RowAddress,
     rowFieldKey,
     SetValueInteraction,
     toSubmittedValues
 } from './form-engine-driver';
+import { LAYOUT_FIELD_TYPES } from '../definition/form-definition.model';
 import { IntentionalDifference, INTENTIONAL_DIFFERENCES } from './intentional-differences';
 
 const ROW_ID_SEPARATOR = '-Row';
@@ -50,6 +55,7 @@ const SECTION = 'section';
  */
 export class LegacyFormEngineDriver implements FormEngineDriver {
     private form: FormModel;
+    private options: Required<LoadOptions> = DEFAULT_LOAD_OPTIONS;
 
     constructor(
         private readonly formService: FormService,
@@ -57,21 +63,43 @@ export class LegacyFormEngineDriver implements FormEngineDriver {
         private readonly differences: IntentionalDifference[] = INTENTIONAL_DIFFERENCES
     ) {}
 
-    load(definition: RepresentationJson & { formRepresentation?: RepresentationJson }): void {
-        const representation: RepresentationJson = definition.formRepresentation ?? definition;
-        this.form = this.formService.parseForm({ ...representation, ...representation.formDefinition });
+    load(definition: RepresentationJson & { formRepresentation?: RepresentationJson }, options: LoadOptions = {}): void {
+        const representation: RepresentationJson = structuredClone(definition.formRepresentation ?? definition);
+        this.options = { ...DEFAULT_LOAD_OPTIONS, ...options };
+        this.form = this.formService.parseForm({ ...representation, ...representation.formDefinition }, undefined, this.options.readOnly);
         this.differences.forEach((difference) => difference.configure?.(this.form));
         this.refresh();
     }
 
     apply(interaction: FormInteraction): void {
-        if (interaction.kind === 'setValue') {
-            this.findField(interaction).value = interaction.value;
-        } else if (interaction.kind === 'addRow') {
-            const section = this.form.getFieldById(interaction.sectionId);
-            section.addRow(section.json.fields, this.form);
-        } else {
-            this.form.getFieldById(interaction.sectionId).removeRow(interaction.index);
+        switch (interaction.kind) {
+            case 'setValue':
+                this.findField(interaction).value = interaction.value;
+                break;
+            case 'addRow': {
+                const section = this.form.getFieldById(interaction.sectionId);
+                section.addRow(section.json.fields, this.form);
+                break;
+            }
+            case 'removeRow':
+                this.form.getFieldById(interaction.sectionId).removeRow(interaction.index);
+                break;
+            case 'setVisibility':
+                this.form.changeFieldVisibility(interaction.fieldId, interaction.enabled);
+                break;
+            case 'setDisabled':
+                this.form.changeFieldDisabled(interaction.fieldId, interaction.enabled);
+                break;
+            case 'setRequired':
+                this.form.changeFieldRequired(interaction.fieldId, interaction.enabled);
+                break;
+            case 'setVariable':
+                this.form.changeVariableValue(interaction.variableId, interaction.value);
+                break;
+            default: {
+                const unsupported: never = interaction;
+                throw new Error(`Unsupported interaction: ${JSON.stringify(unsupported)}`);
+            }
         }
         this.refresh();
     }
@@ -82,13 +110,34 @@ export class LegacyFormEngineDriver implements FormEngineDriver {
 
         for (const field of this.form.getFormFields()) {
             if (!LAYOUT_FIELD_TYPES.has(field.type)) {
-                fields[this.snapshotKey(field)] = { visible: field.isVisible && !hiddenByLayout.has(field), valid: field.isValid };
+                fields[this.snapshotKey(field)] = {
+                    visible: field.isVisible && !hiddenByLayout.has(field),
+                    valid: field.isValid,
+                    readOnly: field.readOnly
+                };
             }
         }
 
-        const snapshot = { valid: this.form.isValid, fields, values: toSubmittedValues(this.form.values) };
+        const outcomes: Record<string, OutcomeSnapshot> = {};
+        for (const outcome of this.form.outcomes) {
+            outcomes[outcome.id] = { visible: outcome.isVisible && this.isOutcomeVisible(outcome), enabled: this.isOutcomeEnabled(outcome) };
+        }
+
+        const snapshot = { valid: this.form.isValid, fields, outcomes, values: toSubmittedValues(this.form.values) };
         this.differences.forEach((difference) => difference.adjust?.(this.form, snapshot));
         return snapshot;
+    }
+
+    private isOutcomeVisible(outcome: FormOutcomeModel): boolean {
+        const { readOnly, showCompleteButton, showSaveButton } = this.options;
+        return isOutcomeButtonVisible(outcome, { isFormReadOnly: readOnly, showCompleteButton, showSaveButton });
+    }
+
+    private isOutcomeEnabled(outcome: FormOutcomeModel): boolean {
+        if (this.form.readOnly) {
+            return false;
+        }
+        return outcome.name === FormOutcomeModel.SAVE_ACTION || outcome.skipValidation || this.form.isValid;
     }
 
     private findField({ fieldId, row }: SetValueInteraction): FormFieldModel {

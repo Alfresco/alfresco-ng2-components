@@ -27,9 +27,9 @@ import {
     numberWidgetVisibilityForm,
     textWidgetVisibility
 } from '../../../../src/lib/form/components/mock/form-renderer.component.mock';
-import { FormEngineDriver, FormInteraction, FormSnapshot } from '../parity/form-engine-driver';
-import { CorrectedWidgetVisibilityService, IntentionalDifference, INTENTIONAL_DIFFERENCES } from '../parity/intentional-differences';
-import { LegacyFormEngineDriver } from '../parity/legacy-form-engine.driver';
+import { FormEngineDriver, FormInteraction, FormSnapshot, LoadOptions } from './form-engine-driver';
+import { CorrectedWidgetVisibilityService, IntentionalDifference, INTENTIONAL_DIFFERENCES } from './intentional-differences';
+import { LegacyFormEngineDriver } from './legacy-form-engine.driver';
 import { SignalFormEngineDriver } from './signal-form-engine.driver';
 
 interface ParityCase {
@@ -37,9 +37,10 @@ interface ParityCase {
     definition: object;
     steps: FormInteraction[];
     exercises: Array<'hiddenField' | 'invalidField'>;
+    options?: LoadOptions;
 }
 
-describe('SignalFormEngineDriver', () => {
+describe('SignalForm parity with the current engine', () => {
     const setValue = (fieldId: string, value: unknown): FormInteraction => ({ kind: 'setValue', fieldId, value });
     const withProcessVariables = (definition: { formRepresentation: object }, processVariables: object[]): object => ({
         formRepresentation: { ...structuredClone(definition.formRepresentation), processVariables }
@@ -205,6 +206,44 @@ describe('SignalFormEngineDriver', () => {
             }
         }
     };
+    const approvalForm = (selectedOutcome?: string) => ({
+        formRepresentation: {
+            id: 'approval',
+            name: 'approval',
+            formDefinition: {
+                tabs: [],
+                selectedOutcome,
+                fields: [
+                    {
+                        id: 'approval-root',
+                        type: 'container',
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [
+                                { id: 'reason', type: 'text', required: true },
+                                { id: 'decision', type: 'text' },
+                                { id: 'locked', type: 'text', readOnly: true }
+                            ]
+                        }
+                    }
+                ],
+                outcomes: [
+                    { id: 'approve', name: 'Approve' },
+                    { id: 'reject', name: 'Reject', skipValidation: true },
+                    { id: 'escalate', name: 'Escalate', visibilityCondition: shownWhen('decision', 'escalate') }
+                ],
+                variables: []
+            }
+        }
+    });
+    const approvalSteps = [setValue('reason', 'because'), setValue('decision', 'escalate'), setValue('reason', ''), setValue('decision', 'no')];
+    const ruleOn = (kind: 'setVisibility' | 'setDisabled' | 'setRequired', fieldId: string, enabled: boolean): FormInteraction => ({
+        kind,
+        fieldId,
+        enabled
+    });
+    const ruleSetsVariable = (variableId: string, value: unknown): FormInteraction => ({ kind: 'setVariable', variableId, value });
+    const sectionId = '48e6bfed-b477-4641-86cb-bfa70229a31e';
     const allFieldTypesSteps = [
         setValue('country', { id: 'fr', name: 'France' }),
         setValue('country', 'it'),
@@ -347,6 +386,76 @@ describe('SignalFormEngineDriver', () => {
             exercises: ['hiddenField', 'invalidField']
         },
         {
+            name: 'custom outcomes enabled by form validity, skipping validation, and shown by a condition',
+            definition: approvalForm(),
+            steps: approvalSteps,
+            exercises: ['invalidField']
+        },
+        {
+            name: 'a required read-only field that blocks the outcomes needing a valid form',
+            definition: withField(approvalForm(), 'locked', { required: true }),
+            steps: approvalSteps,
+            exercises: ['invalidField']
+        },
+        {
+            name: 'a read-only form showing only its selected outcome',
+            definition: approvalForm('Approve'),
+            steps: approvalSteps,
+            exercises: ['invalidField'],
+            options: { readOnly: true }
+        },
+        {
+            name: 'the default outcomes with the complete button shown',
+            definition: textWidgetVisibility,
+            steps: [setValue('textOne', 'Test')],
+            exercises: [],
+            options: { showCompleteButton: true }
+        },
+        {
+            name: 'rules hiding, disabling and requiring fields',
+            definition: approvalForm(),
+            steps: [
+                ruleOn('setVisibility', 'decision', false),
+                ruleOn('setRequired', 'decision', true),
+                ruleOn('setVisibility', 'decision', true),
+                setValue('decision', 'escalate'),
+                ruleOn('setDisabled', 'reason', true),
+                ruleOn('setDisabled', 'locked', false),
+                ruleOn('setRequired', 'reason', false),
+                setValue('decision', '')
+            ],
+            exercises: ['hiddenField', 'invalidField']
+        },
+        {
+            name: 'rules hiding and showing a whole section',
+            definition: requiredInSection(),
+            steps: [
+                setValue('Text0n9o62', 'section'),
+                setValue('Text0nu6os', 'section text'),
+                ruleOn('setVisibility', sectionId, false),
+                ruleOn('setVisibility', sectionId, true),
+                ruleOn('setVisibility', 'Text0t23xu', false)
+            ],
+            exercises: ['hiddenField', 'invalidField']
+        },
+        {
+            name: 'rules setting a form variable by name and by id',
+            definition: formRequiredNumberWidget,
+            steps: [
+                setValue('Number1', '6'),
+                ruleSetsVariable('integerVariable', 6),
+                ruleSetsVariable('f9f6d1ae-374a-49f9-b664-5286c558abaa', 7),
+                setValue('Number1', '7')
+            ],
+            exercises: ['hiddenField']
+        },
+        {
+            name: 'a variable set by a rule taking precedence over a process variable',
+            definition: withProcessVariables(formRequiredNumberWidget, [{ name: 'integerVariable', type: 'integer', value: 6 }]),
+            steps: [setValue('Number1', '6'), ruleSetsVariable('integerVariable', 5), setValue('Number1', '5')],
+            exercises: ['hiddenField']
+        },
+        {
             name: 'every cloud field type, with fields shown by dropdown, radio, checkbox and date values',
             definition: allFieldTypesForm,
             steps: allFieldTypesSteps,
@@ -362,11 +471,11 @@ describe('SignalFormEngineDriver', () => {
     };
     const createDrivers = (): FormEngineDriver[] => [legacyDriver(), new SignalFormEngineDriver(TestBed.inject(Injector))];
 
-    corpus.forEach(({ name, definition, steps, exercises }) => {
+    corpus.forEach(({ name, definition, steps, exercises, options }) => {
         it(`should match the current engine for ${name}`, () => {
             const [legacy, candidate] = createDrivers();
-            legacy.load(definition);
-            candidate.load(definition);
+            legacy.load(definition, options);
+            candidate.load(definition, options);
             const legacySnapshots = [legacy.snapshot()];
 
             expect(candidate.snapshot()).withContext('after loading').toEqual(legacySnapshots[0]);
@@ -497,6 +606,29 @@ describe('SignalFormEngineDriver', () => {
                 steps: [setValue('owner', [])],
                 observe: (snapshot) => snapshot.fields['owner'].valid
             },
+            'custom-widgets-handled-by-value-type': {
+                definition: {
+                    formRepresentation: {
+                        id: 'custom-widget',
+                        name: 'custom-widget',
+                        formDefinition: {
+                            tabs: [],
+                            fields: [
+                                {
+                                    id: 'custom-root',
+                                    type: 'container',
+                                    numberOfColumns: 1,
+                                    fields: { 1: [{ id: 'score', type: 'my-widget-emulm', isCustomType: true, valueType: 'string', required: true }] }
+                                }
+                            ],
+                            outcomes: [],
+                            variables: []
+                        }
+                    }
+                },
+                steps: [],
+                observe: (snapshot) => snapshot.valid
+            },
             'condition-dates-parsed-as-dates': {
                 definition: textEqualTo('2024-13-01'),
                 steps: [setValue('typed', '2024-13-01')],
@@ -529,6 +661,56 @@ describe('SignalFormEngineDriver', () => {
                     .toEqual(fixed);
             });
         });
+    });
+
+    it('should enable and show outcomes the way the cloud form does', () => {
+        createDrivers().forEach((driver) => {
+            const engine = driver.constructor.name;
+            const outcomes = () => driver.snapshot().outcomes;
+
+            driver.load(approvalForm());
+            expect(outcomes()['approve']).withContext(`${engine}: needs a valid form`).toEqual({ visible: true, enabled: false });
+            expect(outcomes()['reject']).withContext(`${engine}: skips validation`).toEqual({ visible: true, enabled: true });
+            expect(outcomes()['escalate'].visible).withContext(`${engine}: hidden by its condition`).toBeFalse();
+
+            driver.apply(setValue('reason', 'because'));
+            driver.apply(setValue('decision', 'escalate'));
+            expect(outcomes()['approve'].enabled).withContext(engine).toBeTrue();
+            expect(outcomes()['escalate']).withContext(engine).toEqual({ visible: true, enabled: true });
+
+            driver.load(withField(approvalForm(), 'locked', { required: true }));
+            driver.apply(setValue('reason', 'because'));
+            expect(outcomes()['approve'].enabled).withContext(`${engine}: a required read-only field still blocks the form`).toBeFalse();
+            expect(driver.snapshot().fields['locked']).withContext(engine).toEqual({ visible: true, valid: false, readOnly: true });
+
+            driver.load(approvalForm('Approve'), { readOnly: true });
+            expect(outcomes()['approve']).withContext(`${engine}: read-only shows the selected outcome`).toEqual({ visible: true, enabled: false });
+            expect(outcomes()['reject'].visible).withContext(engine).toBeFalse();
+            expect(driver.snapshot().fields['reason'].readOnly).withContext(engine).toBeTrue();
+        });
+    });
+
+    it('should keep a field hidden by a rule even when its own condition is met later', () => {
+        createDrivers().forEach((driver) => {
+            driver.load(textWidgetVisibility);
+            driver.apply(ruleOn('setVisibility', 'textTwo', false));
+            driver.apply(setValue('textOne', 'Test'));
+
+            expect(driver.snapshot().fields['textTwo'].visible).withContext(driver.constructor.name).toBeFalse();
+        });
+    });
+
+    it('should leave the definition it was given untouched, unlike the current engine', () => {
+        const definition = structuredClone(formRequiredNumberWidget);
+        const original = structuredClone(definition);
+        const driver = new SignalFormEngineDriver(TestBed.inject(Injector));
+
+        driver.load(definition);
+        driver.apply(ruleSetsVariable('integerVariable', 6));
+        driver.apply(ruleOn('setVisibility', 'Number2', false));
+        driver.apply(setValue('Number1', '6'));
+
+        expect(definition).toEqual(original);
     });
 
     it('should need a value for every field, because Signal Forms creates no field for an undefined key', () => {

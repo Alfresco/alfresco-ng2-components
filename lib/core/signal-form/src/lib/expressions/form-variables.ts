@@ -15,23 +15,31 @@
  * limitations under the License.
  */
 
-import { SpikeVariable, SpikeVariables } from './spike-definition';
+import { FormVariable, FormVariables } from '../definition/form-definition.model';
 
 const PROCESS_VARIABLE_PREFIX = 'variables.';
 
-export const resolveVariableValue = (identifier: string, { formVariables, processVariables }: SpikeVariables): unknown => {
+export const findVariable = (identifier: string, { formVariables }: FormVariables): FormVariable | undefined =>
+    identifier ? formVariables.find((variable) => variable.name === identifier || variable.id === identifier) : undefined;
+
+export const resolveVariableValue = (identifier: string, variables: FormVariables, runtimeValues: Record<string, unknown> = {}): unknown => {
+    const formVariable = findVariable(identifier, variables);
+    const runtimeKey = formVariable ? (formVariable.id ?? formVariable.name) : undefined;
+    if (runtimeKey !== undefined && Object.prototype.hasOwnProperty.call(runtimeValues, runtimeKey)) {
+        return parseVariableValue({ ...formVariable, value: runtimeValues[runtimeKey] });
+    }
+
     const names = [`${PROCESS_VARIABLE_PREFIX}${identifier}`, identifier];
-    const processVariable = processVariables.find((variable) => names.includes(variable.name));
+    const processVariable = variables.processVariables.find((variable) => names.includes(variable.name));
 
     if (processVariable) {
         return parseVariableValue(processVariable);
     }
 
-    const formVariable = identifier ? formVariables.find((variable) => variable.name === identifier || variable.id === identifier) : undefined;
     return formVariable && Object.prototype.hasOwnProperty.call(formVariable, 'value') ? parseVariableValue(formVariable) : undefined;
 };
 
-const parseVariableValue = ({ type, value }: SpikeVariable): unknown => {
+const parseVariableValue = ({ type, value }: FormVariable): unknown => {
     if (!type || !value) {
         return value;
     }
