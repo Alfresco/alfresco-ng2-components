@@ -171,6 +171,36 @@ describe('DataTablePathParserHelper', () => {
                 propertyName: 'users',
                 path: 'response.users[100]',
                 expected: undefined
+            },
+            {
+                description: 'with trailing whitespace',
+                data: { pets: ['cat', 'dog'] },
+                path: 'pets ',
+                expected: ['cat', 'dog']
+            },
+            {
+                description: 'with whitespace around the separators',
+                data: { level1: { level2: ['parrot', 'fish'] } },
+                path: ' level1 . level2 ',
+                expected: ['parrot', 'fish']
+            },
+            {
+                description: 'with trailing whitespace after an index reference',
+                propertyName: 'users',
+                path: 'response.users[1] ',
+                expected: [mockResultData[1]]
+            },
+            {
+                description: 'with whitespace only',
+                data: { pets: ['cat', 'dog'] },
+                path: '   ',
+                expected: undefined
+            },
+            {
+                description: 'with whitespace inside brackets preserved as part of the property name',
+                data: { 'my pets ': ['cat', 'dog'] },
+                path: '[my pets ] ',
+                expected: ['cat', 'dog']
             }
         ];
 
@@ -193,6 +223,9 @@ describe('DataTablePathParserHelper', () => {
             { path: 'response.[persons:Array][0]', expected: ['response', '[persons:Array][0]'] },
             { path: 'response.persons[0][1]', expected: ['response', 'persons[0][1]'] },
             { path: 'response.persons[0].file.data[4]', expected: ['response', 'persons[0]', 'file', 'data[4]'] },
+            { path: ' response . persons[0] ', expected: ['response', 'persons[0]'] },
+            { path: 'response.[my persons ] ', expected: ['response', '[my persons ]'] },
+            { path: '   ', expected: [] },
             { path: '', expected: [] },
             { path: null, expected: [] },
             { path: undefined, expected: [] }

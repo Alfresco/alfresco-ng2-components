@@ -66,7 +66,7 @@ export class DataTablePathParserHelper {
             switch (char) {
                 case separator:
                     if (isPropertySeparatorOutsideBrackets()) {
-                        properties.push(currentPropertyBuffer);
+                        properties.push(currentPropertyBuffer.trim());
                         currentPropertyBuffer = '';
                     } else {
                         currentPropertyBuffer += char;
@@ -86,8 +86,9 @@ export class DataTablePathParserHelper {
             }
         }
 
-        if (currentPropertyBuffer) {
-            properties.push(currentPropertyBuffer);
+        const lastProperty = currentPropertyBuffer.trim();
+        if (lastProperty) {
+            properties.push(lastProperty);
         }
 
         return properties;

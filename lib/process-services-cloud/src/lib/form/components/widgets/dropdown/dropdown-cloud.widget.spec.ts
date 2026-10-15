@@ -1357,6 +1357,24 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(await allOptions[2].getText()).toEqual('Parrot');
         });
 
+        it('should ignore whitespace around the options path properties', async () => {
+            widget.field = getVariableDropdownWidget(
+                'variables.json-variable',
+                ' response . people.players ',
+                'playerId',
+                'playerFullName',
+                mockProcessVariablesWithJson
+            );
+            fixture.detectChanges();
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
+            const allOptions = await dropdown.getOptions();
+
+            expect(widget.field.options.length).toEqual(3);
+            expect(await (await allOptions[0].host()).getAttribute('id')).toEqual('player-1');
+            expect(await allOptions[0].getText()).toEqual('Lionel Messi');
+        });
+
         it('should return empty array and display error when path is incorrect', async () => {
             widget.field = getVariableDropdownWidget(
                 'variables.json-variable',
