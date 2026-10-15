@@ -27,6 +27,7 @@ Lists all available process filters and allows to select a filter.
 | appName     | `string`                       | ""            | (required) The application name                               |
 | filterParam | `UserTaskFilterRepresentation` |               | (optional) The filter to be selected by default               |
 | showIcons   | `boolean`                      | false         | (optional) Toggles showing an icon by the side of each filter |
+| queryPushedCounter | `boolean` | false | Resolve the initial filter counters with one call to `POST /query/v1/count`, then keep them in sync with the counts pushed by the engine over the web socket, without any further call to the count endpoint. Turn it on for both filter components. |
 
 ### Events
 
