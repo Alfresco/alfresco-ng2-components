@@ -58,7 +58,7 @@ export const isDropdownCloudRestField = (field: FormFieldModel): boolean => fiel
 export const isDropdownCloudLinkedField = (field: FormFieldModel): boolean => !!field?.rule?.ruleOn;
 
 const getOptionsFromPath = (data: any, path: string, id: string, label: string): { options: FormFieldOption[]; errors: string[] } => {
-    const properties = path.split('.');
+    const properties = path.split('.').map((property) => property.trim());
     const currentProperty = properties.shift();
 
     if (data === null || typeof data !== 'object' || !Object.hasOwn(data, currentProperty)) {
@@ -86,9 +86,15 @@ export const resolveDropdownCloudVariableOptions = (
         return null;
     }
 
+    const optionsPath = variableConfig?.optionsPath ?? DEFAULT_VARIABLE_OPTION_PATH;
+
+    if (!optionsPath.trim()) {
+        return { options: [], errors: ['Options path is empty'] };
+    }
+
     return getOptionsFromPath(
         data,
-        variableConfig?.optionsPath ?? DEFAULT_VARIABLE_OPTION_PATH,
+        optionsPath,
         variableConfig?.optionsId ?? DEFAULT_VARIABLE_OPTION_ID,
         variableConfig?.optionsLabel ?? DEFAULT_VARIABLE_OPTION_LABEL
     );
