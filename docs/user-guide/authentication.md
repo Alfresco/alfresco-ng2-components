@@ -101,6 +101,8 @@ OAuth2 is a protocol that allows the application to authorize operations without
 
     audience: Identifies the recipients of the token.
 
+    customQueryParams: Static query parameters appended to the OIDC authorization request, provided as an object of key/value pairs (for example { "tenant_hint": "alfresco" }). Each entry is added to every login/authorize redirect, letting you send provider-specific hints to the identity provider without code changes. The audience parameter, when set, always takes precedence over a key of the same name.
+
 # Examples
 ## Keycloak Configuration
 ```json 
@@ -118,7 +120,8 @@ OAuth2 is a protocol that allows the application to authorize operations without
     "redirectUri": "/",
     "redirectUriLogout": "/",
     "skipIssuerCheck": true,
-    "strictDiscoveryDocumentValidation": false
+    "strictDiscoveryDocumentValidation": false,
+    "customQueryParams": { "tenant_hint": "alfresco" }
     }
 }
 ```
