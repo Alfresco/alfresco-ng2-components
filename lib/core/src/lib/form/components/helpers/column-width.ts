@@ -33,11 +33,26 @@ export const getFormLayoutColumnWidth = (
     const columnFields = columns?.[columnIndex]?.fields ?? [];
 
     if (columnFields.length === 0) {
-        return isColumnCoveredByPreviousField(columns, columnIndex) ? '0' : `${defaultColumnWidth}`;
+        const useCoveredColumnRule =
+            hasCoveredColumnPlaceholders(normalizedColumnCount, columns) && isColumnCoveredByPreviousField(columns, columnIndex);
+        return useCoveredColumnRule ? '0' : `${defaultColumnWidth}`;
     }
 
-    const maxColspan = Math.max(...columnFields.map((field) => field.colspan || 1));
+    const maxColspan = getFieldsSpan(columnFields);
     return `${Math.min(100, defaultColumnWidth * maxColspan)}`;
+};
+
+const getFieldsSpan = (fields: FormLayoutField[]): number => Math.max(1, ...fields.map((field) => field.colspan || 1));
+
+const getColumnSpan = (column: FormLayoutColumn | null | undefined): number => getFieldsSpan(column?.fields ?? []);
+
+const hasCoveredColumnPlaceholders = (numberOfColumns: number, columns: FormLayoutColumn[] | null | undefined): boolean => {
+    if (!columns?.length) {
+        return false;
+    }
+
+    const totalSpan = columns.reduce((sum, column) => sum + getColumnSpan(column), 0);
+    return totalSpan > numberOfColumns;
 };
 
 const isColumnCoveredByPreviousField = (columns: FormLayoutColumn[] | null | undefined, columnIndex: number): boolean => {
@@ -46,13 +61,8 @@ const isColumnCoveredByPreviousField = (columns: FormLayoutColumn[] | null | und
     }
 
     for (let previousColumnIndex = 0; previousColumnIndex < columnIndex; previousColumnIndex++) {
-        const previousFields = columns[previousColumnIndex]?.fields ?? [];
+        const previousColumnSpan = getColumnSpan(columns[previousColumnIndex]);
 
-        if (previousFields.length === 0) {
-            continue;
-        }
-
-        const previousColumnSpan = Math.max(...previousFields.map((field) => field.colspan || 1));
         if (previousColumnIndex + previousColumnSpan > columnIndex) {
             return true;
         }
