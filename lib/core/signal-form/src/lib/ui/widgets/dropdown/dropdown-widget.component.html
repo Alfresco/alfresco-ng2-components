@@ -1,0 +1,26 @@
+<div class="adf-dropdown-widget" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
+    <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic">
+        @if (definition().name || definition().required) {
+            <mat-label class="adf-label">{{ definition().name | translate }}</mat-label>
+        }
+        <mat-select
+            class="adf-select"
+            [id]="inputId()"
+            [formField]="field()"
+            [multiple]="definition().multiple"
+            [compareWith]="sameOption"
+            [errorStateMatcher]="errorStateMatcher"
+        >
+            @for (option of options(); track option.id) {
+                <mat-option [value]="option" [attr.data-automation-id]="'adf-dropdown-widget-option-' + option.id">{{
+                    option.name | translate
+                }}</mat-option>
+            }
+        </mat-select>
+        @if (showError() && error(); as message) {
+            <mat-error class="adf-form-field-status-slot">
+                <span class="adf-error-text">{{ message.key | translate: message.params }}</span>
+            </mat-error>
+        }
+    </mat-form-field>
+</div>

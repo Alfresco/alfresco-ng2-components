@@ -1,0 +1,28 @@
+.adf-signal-form {
+    display: block;
+
+    .adf-signal-form-container {
+        margin-bottom: 16px;
+    }
+
+    .adf-signal-form-container-header {
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+
+    .adf-signal-form-columns {
+        display: grid;
+        gap: 0 16px;
+    }
+
+    .adf-signal-form-column {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    .adf-signal-form-field-placeholder {
+        padding: 8px 0;
+        font-style: italic;
+    }
+}

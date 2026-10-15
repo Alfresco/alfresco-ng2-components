@@ -16,10 +16,23 @@
  */
 
 import { computed, Injector, Signal, signal, WritableSignal } from '@angular/core';
-import { applyEach, FieldTree, form, hidden, PathKind, SchemaPath, SchemaPathRules, SchemaPathTree, validate } from '@angular/forms/signals';
+import {
+    applyEach,
+    disabled,
+    FieldTree,
+    form,
+    hidden,
+    PathKind,
+    readonly,
+    SchemaPath,
+    SchemaPathRules,
+    SchemaPathTree,
+    validate
+} from '@angular/forms/signals';
 import {
     FieldDefinition,
     FormDefinition,
+    LayoutDefinition,
     OutcomeDefinition,
     SectionDefinition,
     TabDefinition,
@@ -65,6 +78,7 @@ export class SignalForm {
     private readonly values: WritableSignal<FormValuesModel>;
     private readonly overrides = signal<RuleOverrides>({ visible: {}, disabled: {}, required: {} });
     private readonly runtimeVariables = signal<Record<string, unknown>>({});
+    private readonly initialRows: WritableSignal<Record<string, boolean[]>>;
 
     constructor(
         readonly definition: FormDefinition,
@@ -76,14 +90,38 @@ export class SignalForm {
         this.sections = new Map(definition.sections.map((section) => [section.id, section]));
         this.tabs = new Map(definition.tabs.map((tab) => [tab.id, tab]));
         this.values = signal({
-            fields: Object.fromEntries(definition.fields.map((field) => [field.id, field.initialValue ?? null])),
+            fields: Object.fromEntries(definition.fields.map((field) => [field.id, structuredClone(field.initialValue ?? null)])),
             sections: Object.fromEntries(
                 definition.sections.map((section) => [section.id, Array.from({ length: section.initialRows }, () => this.emptyRow(section))])
             )
         });
+        this.initialRows = signal(
+            Object.fromEntries(definition.sections.map((section) => [section.id, Array.from({ length: section.initialRows }, () => true)]))
+        );
         this.submissionValues = computed(() => toSubmissionValues(this.fields, this.sections, this.values(), this.widgets));
         this.fieldTree = form(this.values, (root) => this.applyRules(root), { injector });
         this.valid = computed(() => this.fieldTree().valid());
+    }
+
+    get readOnly(): boolean {
+        return !!this.options.readOnly;
+    }
+
+    fieldDefinition(fieldId: string, sectionId?: string): FieldDefinition | undefined {
+        return sectionId ? this.sections.get(sectionId)?.fields.find((field) => field.id === fieldId) : this.fields.get(fieldId);
+    }
+
+    fieldNode(fieldId: string, row?: RowAddress): FieldTree<unknown> {
+        return row ? this.fieldTree.sections[row.sectionId][row.index][fieldId] : this.fieldTree.fields[fieldId];
+    }
+
+    isLayoutElementVisible(element: LayoutDefinition): boolean {
+        return this.isElementVisible(element.id, element.visibilityCondition);
+    }
+
+    isTabVisible(tabId: string | undefined): boolean {
+        const tab = tabId ? this.tabs.get(tabId) : undefined;
+        return !tab || this.isConditionMet(tab.visibilityCondition);
     }
 
     isOnScreen(field: FieldDefinition): boolean {
@@ -118,21 +156,36 @@ export class SignalForm {
         this.updateRows(row.sectionId, (rows) => rows.map((current, index) => (index === row.index ? { ...current, [fieldId]: value } : current)));
     }
 
+    canAddRow(sectionId: string): boolean {
+        const { maxRows } = this.sections.get(sectionId);
+        return !maxRows || this.rowCount(sectionId) < maxRows;
+    }
+
+    canRemoveRow(sectionId: string, index: number): boolean {
+        return !this.initialRows()[sectionId][index] || !!this.sections.get(sectionId).rowOptions.allowInitialRowsDelete;
+    }
+
     addRow(sectionId: string): void {
+        if (!this.canAddRow(sectionId)) {
+            return;
+        }
         const section = this.sections.get(sectionId);
-        this.updateRows(sectionId, (rows) => (!section.maxRows || rows.length < section.maxRows ? [...rows, this.emptyRow(section)] : rows));
+        this.updateRows(sectionId, (rows) => [...rows, this.emptyRow(section)]);
+        this.initialRows.update((current) => ({ ...current, [sectionId]: [...current[sectionId], false] }));
     }
 
     removeRow(sectionId: string, index: number): void {
-        this.updateRows(sectionId, (rows) => [...rows.slice(0, index), ...rows.slice(index + 1)]);
+        const withoutRow = <T>(items: T[]): T[] => [...items.slice(0, index), ...items.slice(index + 1)];
+        this.updateRows(sectionId, withoutRow);
+        this.initialRows.update((current) => ({ ...current, [sectionId]: withoutRow(current[sectionId]) }));
     }
 
     setVisibility(fieldId: string, visible: boolean): void {
         this.setOverride('visible', fieldId, visible);
     }
 
-    setDisabled(fieldId: string, disabled: boolean): void {
-        this.setOverride('disabled', fieldId, disabled);
+    setDisabled(fieldId: string, isDisabled: boolean): void {
+        this.setOverride('disabled', fieldId, isDisabled);
     }
 
     setRequired(fieldId: string, required: boolean): void {
@@ -159,6 +212,8 @@ export class SignalForm {
         definitionOf: (id: string) => FieldDefinition
     ): void {
         hidden(field, (context) => !this.isOnScreen(definitionOf(context.key())));
+        readonly(field, (context) => this.isReadOnly(definitionOf(context.key())));
+        disabled(field, (context) => this.isReadOnly(definitionOf(context.key())));
         validate(field, (context) => {
             const definition = this.withRequiredOverride(definitionOf(context.key()));
             const kind = firstValidationError(definition, context.value(), fieldWidget(this.widgets, definition)?.definition.validators ?? []);
@@ -173,11 +228,6 @@ export class SignalForm {
 
     private isElementVisible(id: string, condition: VisibilityCondition | null | undefined): boolean {
         return this.overrides().visible[id] ?? this.isConditionMet(condition);
-    }
-
-    private isTabVisible(tabId: string | undefined): boolean {
-        const tab = tabId ? this.tabs.get(tabId) : undefined;
-        return !tab || this.isConditionMet(tab.visibilityCondition);
     }
 
     private isConditionMet(condition: VisibilityCondition | null | undefined): boolean {
@@ -201,7 +251,7 @@ export class SignalForm {
     }
 
     private emptyRow(section: SectionDefinition): FieldValues {
-        return Object.fromEntries(section.fields.map((field) => [field.id, field.initialValue ?? null]));
+        return Object.fromEntries(section.fields.map((field) => [field.id, structuredClone(field.initialValue ?? null)]));
     }
 
     private updateRows(sectionId: string, update: (rows: FieldValues[]) => FieldValues[]): void {

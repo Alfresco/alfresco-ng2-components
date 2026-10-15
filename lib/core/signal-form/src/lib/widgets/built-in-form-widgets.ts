@@ -51,33 +51,78 @@ import { FormWidgetDefinition, FormWidgetResolver } from './form-widget-definiti
 
 const TEXT_VALIDATORS = [requiredValidator, minLengthValidator, maxLengthValidator, patternValidator];
 
+const textWidget = () => import('../ui/widgets/text/text-widget.component').then((widgets) => widgets.SignalTextWidgetComponent);
+const integerWidget = () => import('../ui/widgets/text/text-widget.component').then((widgets) => widgets.SignalIntegerWidgetComponent);
+const decimalWidget = () => import('../ui/widgets/text/text-widget.component').then((widgets) => widgets.SignalDecimalWidgetComponent);
+const amountWidget = () => import('../ui/widgets/amount/amount-widget.component').then((widgets) => widgets.SignalAmountWidgetComponent);
+const checkboxWidget = () => import('../ui/widgets/checkbox/checkbox-widget.component').then((widgets) => widgets.SignalCheckboxWidgetComponent);
+const radioWidget = () => import('../ui/widgets/radio/radio-widget.component').then((widgets) => widgets.SignalRadioWidgetComponent);
+const dropdownWidget = () => import('../ui/widgets/dropdown/dropdown-widget.component').then((widgets) => widgets.SignalDropdownWidgetComponent);
+const dateWidget = () => import('../ui/widgets/date/date-widget.component').then((widgets) => widgets.SignalDateWidgetComponent);
+const dateTimeWidget = () => import('../ui/widgets/date-time/date-time-widget.component').then((widgets) => widgets.SignalDateTimeWidgetComponent);
+const multilineTextWidget = () =>
+    import('../ui/widgets/multiline-text/multiline-text-widget.component').then((widgets) => widgets.SignalMultilineTextWidgetComponent);
+
 /**
  * The field types the current engine supports, with today's value handling and validation. Components are added per
  * widget as the widgets are written.
  */
 export const BUILT_IN_FORM_WIDGETS: readonly FormWidgetDefinition[] = [
-    { type: FormFieldType.Text, validators: TEXT_VALIDATORS },
-    { type: FormFieldType.MultilineText, validators: TEXT_VALIDATORS },
+    { type: FormFieldType.Text, component: textWidget, validators: TEXT_VALIDATORS },
+    { type: FormFieldType.MultilineText, component: multilineTextWidget, validators: TEXT_VALIDATORS },
     {
         type: FormFieldType.Integer,
+        component: integerWidget,
         submittedValue: numberSubmittedValue,
         validators: [requiredValidator, numberValidator, maxLengthValidator, minValueValidator, maxValueValidator]
     },
     {
         type: FormFieldType.Amount,
+        component: amountWidget,
         submittedValue: numberSubmittedValue,
         validators: [requiredValidator, numberValidator, minValueValidator, maxValueValidator]
     },
     {
         type: FormFieldType.Decimal,
+        component: decimalWidget,
         submittedValue: decimalSubmittedValue,
         validators: [requiredValidator, minValueValidator, maxValueValidator, decimalValidator]
     },
-    { type: FormFieldType.Boolean, initialValue: booleanInitialValue, submittedValue: booleanSubmittedValue, validators: [requiredValidator] },
-    { type: FormFieldType.Dropdown, initialValue: dropdownInitialValue, submittedValue: dropdownSubmittedValue, validators: [dropdownValidator] },
-    { type: FormFieldType.RadioButtons, initialValue: radioInitialValue, submittedValue: radioSubmittedValue, validators: [requiredValidator] },
-    { type: FormFieldType.Date, initialValue: dateInitialValue, submittedValue: dateSubmittedValue, validators: [dateValidator] },
-    { type: FormFieldType.DateTime, initialValue: dateTimeInitialValue, submittedValue: dateTimeSubmittedValue, validators: [dateValidator] },
+    {
+        type: FormFieldType.Boolean,
+        component: checkboxWidget,
+        initialValue: booleanInitialValue,
+        submittedValue: booleanSubmittedValue,
+        validators: [requiredValidator]
+    },
+    {
+        type: FormFieldType.Dropdown,
+        component: dropdownWidget,
+        initialValue: dropdownInitialValue,
+        submittedValue: dropdownSubmittedValue,
+        validators: [dropdownValidator]
+    },
+    {
+        type: FormFieldType.RadioButtons,
+        component: radioWidget,
+        initialValue: radioInitialValue,
+        submittedValue: radioSubmittedValue,
+        validators: [requiredValidator]
+    },
+    {
+        type: FormFieldType.Date,
+        component: dateWidget,
+        initialValue: dateInitialValue,
+        submittedValue: dateSubmittedValue,
+        validators: [dateValidator]
+    },
+    {
+        type: FormFieldType.DateTime,
+        component: dateTimeWidget,
+        initialValue: dateTimeInitialValue,
+        submittedValue: dateTimeSubmittedValue,
+        validators: [dateValidator]
+    },
     { type: FormFieldType.Upload, submittedValue: uploadSubmittedValue, validators: [requiredValidator] },
     { type: FormFieldType.People, submittedValue: peopleSubmittedValue, validators: [requiredValidator] },
     { type: FormFieldType.FunctionalGroup, submittedValue: peopleSubmittedValue, validators: [requiredValidator] },

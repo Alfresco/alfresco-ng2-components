@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { format, isValid, parse } from 'date-fns';
-import { FormFieldModel, FormFieldValidator, FormModel, WidgetVisibilityService } from '../../../../src/lib/form/public-api';
+import { FormFieldModel, FormFieldValidator, FormModel, FormOutcomeModel, WidgetVisibilityService } from '../../../../src/lib/form/public-api';
 import { WidgetVisibilityModel } from '../../../../src/lib/form/models/widget-visibility.model';
 import { FormSnapshot } from './form-engine-driver';
 
@@ -43,12 +43,12 @@ const PEOPLE_TYPES: ReadonlySet<string> = new Set(['people', 'functional-group']
  * so `validate` checks support itself and skips hidden fields.
  *
  * @param isSupported whether the validator applies to the field
- * @param isValid the check for a supported, visible field
+ * @param passes the check for a supported, visible field
  * @returns the validator
  */
-const fieldValidator = (isSupported: (field: FormFieldModel) => boolean, isValid: (field: FormFieldModel) => boolean): FormFieldValidator => ({
+const fieldValidator = (isSupported: (field: FormFieldModel) => boolean, passes: (field: FormFieldModel) => boolean): FormFieldValidator => ({
     isSupported,
-    validate: (field: FormFieldModel) => !isSupported(field) || field.form?.isFieldOrParentHidden(field) || isValid(field)
+    validate: (field: FormFieldModel) => !isSupported(field) || field.form?.isFieldOrParentHidden(field) || passes(field)
 });
 
 const emptyPeopleListValidator = fieldValidator(
@@ -82,6 +82,21 @@ export const INTENTIONAL_DIFFERENCES: IntentionalDifference[] = [
         group: 'decision',
         description: 'A Studio custom widget with no implementation is validated and submitted as its value type.',
         configure: (form) => form.fieldValidators.push(requiredCustomWidgetValidator)
+    },
+    {
+        id: 'read-only-fields-not-validated',
+        group: 'decision',
+        description: 'A read-only field is never validated (Signal Forms semantics), so it never blocks the form.',
+        adjust: (form, snapshot) => {
+            Object.values(snapshot.fields)
+                .filter((field) => field.readOnly)
+                .forEach((field) => (field.valid = true));
+            snapshot.valid = Object.values(snapshot.fields).every((field) => field.valid);
+            for (const outcome of form.outcomes) {
+                snapshot.outcomes[outcome.id].enabled =
+                    !form.readOnly && (outcome.name === FormOutcomeModel.SAVE_ACTION || outcome.skipValidation || snapshot.valid);
+            }
+        }
     },
     {
         id: 'condition-dates-parsed-as-dates',

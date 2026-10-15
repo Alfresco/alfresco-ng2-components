@@ -392,16 +392,16 @@ describe('SignalForm parity with the current engine', () => {
             exercises: ['invalidField']
         },
         {
-            name: 'a required read-only field that blocks the outcomes needing a valid form',
+            name: 'a required read-only field, which is not validated',
             definition: withField(approvalForm(), 'locked', { required: true }),
             steps: approvalSteps,
             exercises: ['invalidField']
         },
         {
-            name: 'a read-only form showing only its selected outcome',
+            name: 'a read-only form showing only its selected outcome, with nothing validated',
             definition: approvalForm('Approve'),
             steps: approvalSteps,
-            exercises: ['invalidField'],
+            exercises: [],
             options: { readOnly: true }
         },
         {
@@ -629,6 +629,11 @@ describe('SignalForm parity with the current engine', () => {
                 steps: [],
                 observe: (snapshot) => snapshot.valid
             },
+            'read-only-fields-not-validated': {
+                definition: withField(approvalForm(), 'locked', { required: true }),
+                steps: [setValue('reason', 'because')],
+                observe: (snapshot) => snapshot.valid
+            },
             'condition-dates-parsed-as-dates': {
                 definition: textEqualTo('2024-13-01'),
                 steps: [setValue('typed', '2024-13-01')],
@@ -680,8 +685,8 @@ describe('SignalForm parity with the current engine', () => {
 
             driver.load(withField(approvalForm(), 'locked', { required: true }));
             driver.apply(setValue('reason', 'because'));
-            expect(outcomes()['approve'].enabled).withContext(`${engine}: a required read-only field still blocks the form`).toBeFalse();
-            expect(driver.snapshot().fields['locked']).withContext(engine).toEqual({ visible: true, valid: false, readOnly: true });
+            expect(outcomes()['approve'].enabled).withContext(`${engine}: a required read-only field doesn't block the form`).toBeTrue();
+            expect(driver.snapshot().fields['locked']).withContext(engine).toEqual({ visible: true, valid: true, readOnly: true });
 
             driver.load(approvalForm('Approve'), { readOnly: true });
             expect(outcomes()['approve']).withContext(`${engine}: read-only shows the selected outcome`).toEqual({ visible: true, enabled: false });

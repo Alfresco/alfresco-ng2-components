@@ -32,6 +32,11 @@
     "OPEN_HISTORY": "Open notification history"
   },
   "FORM": {
+    "SIGNAL_FORM": {
+      "WIDGET_LOADING": "Loading…",
+      "WIDGET_UNSUPPORTED": "This field can't be shown: the field type {{ type }} isn't available.",
+      "WIDGET_LOAD_FAILED": "This field can't be shown: the field type {{ type }} failed to load."
+    },
     "START_FORM": {
       "TITLE": "Start Form"
     },

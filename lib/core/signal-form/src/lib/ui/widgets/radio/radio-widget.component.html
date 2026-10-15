@@ -1,0 +1,20 @@
+<div class="adf-radio-buttons-widget" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
+    <label class="adf-label" [attr.for]="inputId()">
+        {{ definition().name | translate }}
+        @if (definition().required) {
+            <span class="adf-asterisk">*</span>
+        }
+    </label>
+    <mat-radio-group class="adf-radio-group" [id]="inputId()" [formField]="field()">
+        @for (option of definition().options; track option.id) {
+            <mat-radio-button class="adf-radio-button" [value]="option.id" [attr.data-automation-id]="'adf-radio-widget-option-' + option.id">
+                {{ option.name | translate }}
+            </mat-radio-button>
+        }
+    </mat-radio-group>
+    @if (showError() && error(); as message) {
+        <div class="adf-error-messages-container">
+            <span class="adf-error-text">{{ message.key | translate: message.params }}</span>
+        </div>
+    }
+</div>

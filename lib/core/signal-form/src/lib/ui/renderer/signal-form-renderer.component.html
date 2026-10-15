@@ -1,0 +1,105 @@
+@if (form().definition.tabs.length) {
+    <mat-tab-group class="adf-signal-form-tabs" [preserveContent]="true">
+        @for (tab of visibleTabs(); track tab.id) {
+            <mat-tab [label]="tab.title ?? '' | translate">
+                <ng-template matTabContent>
+                    <div class="adf-form-tab-content" [attr.data-automation-id]="'adf-signal-form-tab-' + tab.id">
+                        @for (root of rootsOf(tab.id); track $index) {
+                            <ng-container *ngTemplateOutlet="layoutNode; context: { $implicit: root.node }" />
+                        }
+                    </div>
+                </ng-template>
+            </mat-tab>
+        }
+    </mat-tab-group>
+} @else {
+    @for (root of form().definition.layout; track $index) {
+        <ng-container *ngTemplateOutlet="layoutNode; context: { $implicit: root.node }" />
+    }
+}
+
+<ng-template #layoutNode let-node let-row="row">
+    @if (isShown(node)) {
+        @switch (node.kind) {
+            @case ('field') {
+                @if (form().fieldDefinition(node.fieldId, row?.sectionId); as field) {
+                    <adf-signal-form-field [form]="form()" [field]="field" [row]="row" />
+                }
+            }
+            @case ('container') {
+                <div
+                    class="adf-signal-form-container adf-signal-form-{{ node.element.type }}"
+                    [attr.data-automation-id]="'adf-signal-form-container-' + node.element.id"
+                >
+                    @if (node.element.type === 'group' && node.name) {
+                        <div class="adf-signal-form-container-header">{{ node.name | translate }}</div>
+                    }
+                    <ng-container *ngTemplateOutlet="columns; context: { $implicit: node, row: row }" />
+                </div>
+            }
+            @case ('repeatable') {
+                <div class="adf-signal-form-repeatable" [attr.data-automation-id]="'adf-signal-form-repeatable-' + node.sectionId">
+                    @if (node.name) {
+                        <h4 class="adf-signal-form-repeatable-title">{{ node.name | translate }}</h4>
+                    }
+                    @for (index of rowIndexes(node.sectionId); track index) {
+                        @let rowAddress = rowOf(node.sectionId, index);
+                        @let options = rowOptionsOf(node.sectionId);
+                        <div class="adf-signal-form-repeatable-row" [attr.data-automation-id]="'adf-signal-form-row-' + index">
+                            <div class="adf-signal-form-repeatable-row-header">
+                                @if (options?.displayRowLabels !== false) {
+                                    <span class="adf-signal-form-repeatable-row-label">
+                                        {{
+                                            (options | adfRepeatableRowLabel: index) ??
+                                                ('FORM.FORM_RENDERER.ROW_LABEL' | translate: { number: index + 1 })
+                                        }}
+                                    </span>
+                                }
+                                @if (form().canRemoveRow(node.sectionId, index)) {
+                                    <button
+                                        mat-icon-button
+                                        class="adf-signal-form-repeatable-row-remove"
+                                        data-automation-id="adf-signal-form-row-remove"
+                                        [disabled]="form().readOnly"
+                                        [matTooltip]="'FORM.FORM_RENDERER.DELETE_ROW' | translate"
+                                        (click)="confirmRemoveRow(node.sectionId, index)"
+                                    >
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                }
+                            </div>
+                            <ng-container *ngTemplateOutlet="columns; context: { $implicit: node, row: rowAddress }" />
+                        </div>
+                    }
+                    @if (form().canAddRow(node.sectionId)) {
+                        <button
+                            mat-flat-button
+                            class="adf-signal-form-repeatable-add"
+                            data-automation-id="adf-signal-form-row-add"
+                            [disabled]="form().readOnly"
+                            (click)="form().addRow(node.sectionId)"
+                        >
+                            <mat-icon>add</mat-icon> {{ 'FORM.FIELD.REPEATABLE_SECTION.ADD_ROW' | translate }}
+                        </button>
+                    } @else {
+                        <span class="adf-signal-form-repeatable-limit">
+                            {{ 'FORM.FIELD.REPEATABLE_SECTION.ROW_LIMIT_REACHED' | translate: { limit: form().rowCount(node.sectionId) } }}
+                        </span>
+                    }
+                </div>
+            }
+        }
+    }
+</ng-template>
+
+<ng-template #columns let-node let-row="row">
+    <div class="adf-signal-form-columns" [style.grid-template-columns]="columnTemplate(node.numberOfColumns)">
+        @for (column of node.columns; track $index) {
+            <div class="adf-signal-form-column">
+                @for (child of column; track $index) {
+                    <ng-container *ngTemplateOutlet="layoutNode; context: { $implicit: child, row: row }" />
+                }
+            </div>
+        }
+    </div>
+</ng-template>

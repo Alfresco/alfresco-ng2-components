@@ -47,17 +47,34 @@ export const toSubmissionValues = (
     const submission: FieldValues = {};
 
     for (const [id, value] of Object.entries(model.fields)) {
-        submission[id] = submittedValue(fields.get(id), value, widgets);
+        submission[id] = withoutSymbolKeys(submittedValue(fields.get(id), value, widgets));
     }
 
     for (const [sectionId, rows] of Object.entries(model.sections)) {
         const sectionFields = sections.get(sectionId).fields;
         submission[sectionId] = rows.map((row) =>
-            Object.fromEntries(sectionFields.map((field) => [field.id, submittedValue(field, row[field.id], widgets)]))
+            Object.fromEntries(sectionFields.map((field) => [field.id, withoutSymbolKeys(submittedValue(field, row[field.id], widgets))]))
         );
     }
 
     return submission;
+};
+
+/**
+ * Copies a submitted value without symbol keys. Signal Forms stamps object items in arrays with a symbol to track
+ * their identity, and that bookkeeping must not reach the submission.
+ *
+ * @param value the submitted value
+ * @returns the value without symbol keys
+ */
+const withoutSymbolKeys = (value: unknown): unknown => {
+    if (Array.isArray(value)) {
+        return value.map(withoutSymbolKeys);
+    }
+    if (value && typeof value === 'object' && Object.getPrototypeOf(value) === Object.prototype) {
+        return Object.fromEntries(Object.entries(value).map(([key, entry]) => [key, withoutSymbolKeys(entry)]));
+    }
+    return value;
 };
 
 /**

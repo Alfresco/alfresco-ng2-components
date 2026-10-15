@@ -27,6 +27,8 @@ import {
     FormVariables,
     LAYOUT_FIELD_TYPES,
     LayoutDefinition,
+    LayoutNode,
+    LayoutRoot,
     OutcomeDefinition,
     SectionDefinition,
     SystemOutcomeName,
@@ -57,10 +59,26 @@ export const readFormDefinition = (json: FormDefinitionJson, widgets: FormWidget
     return {
         fields: roots.flatMap((root) => collectFields([root], [], widgets, root.tab ?? undefined)),
         sections: roots.filter((root) => root.type === FormFieldType.RepeatableSection).map((section) => toSectionDefinition(section, widgets)),
-        tabs: (content.tabs ?? []).map(({ id, visibilityCondition }): TabDefinition => ({ id, visibilityCondition })),
+        tabs: (content.tabs ?? []).map(({ id, title, visibilityCondition }): TabDefinition => ({ id, title, visibilityCondition })),
         outcomes: readOutcomes(content.outcomes ?? [], content.selectedOutcome),
-        variables: readVariables(content)
+        variables: readVariables(content),
+        layout: roots.map((root): LayoutRoot => ({ tabId: root.tab ?? undefined, node: toLayoutNode(root) }))
     };
+};
+
+const toLayoutNode = (field: FieldJson): LayoutNode => {
+    if (!LAYOUT_FIELD_TYPES.has(field.type)) {
+        return { kind: 'field', fieldId: field.id, colspan: field.colspan ?? 1 };
+    }
+    const container = {
+        element: toLayoutDefinition(field),
+        name: field.name,
+        numberOfColumns: field.numberOfColumns ?? 1,
+        columns: Object.values(field.fields ?? {}).map((column) => column.map(toLayoutNode))
+    };
+    return field.type === FormFieldType.RepeatableSection
+        ? { kind: 'repeatable', sectionId: field.id, ...container }
+        : { kind: 'container', ...container };
 };
 
 const readOutcomes = (outcomes: OutcomeJson[], selectedOutcome: string | undefined): OutcomeDefinition[] => {
@@ -85,6 +103,12 @@ const toSectionDefinition = (section: FieldJson, widgets: FormWidgetResolver): S
         id: section.id,
         initialRows: section.params?.initialNumberOfRows ?? 1,
         maxRows: section.params?.maxNumberOfRows ?? null,
+        rowOptions: {
+            allowInitialRowsDelete: section.params?.allowInitialRowsDelete,
+            displayRowLabels: section.params?.displayRowLabels,
+            rowLabelText: section.params?.rowLabelText,
+            appendRowNumber: section.params?.appendRowNumber
+        },
         fields: Object.values(section.fields ?? {}).flatMap((column) => collectFields(column, ancestors, widgets))
     };
 };
@@ -120,6 +144,10 @@ const toFieldDefinition = (
         type: field.type,
         isCustomType: !!field.isCustomType,
         valueType: field.valueType,
+        name: field.name,
+        placeholder: field.placeholder && field.placeholder !== 'null' ? field.placeholder : undefined,
+        tooltip: field.tooltip || undefined,
+        colspan: field.colspan ?? 1,
         ancestors,
         tabId,
         required: !!field.required,
@@ -137,6 +165,7 @@ const toFieldDefinition = (
         multiple: field.selectionType === 'multiple' || !!field.params?.multiple,
         dateDisplayFormat: field.dateDisplayFormat || (field.type === FormFieldType.DateTime ? DEFAULT_DATETIME_FORMAT : DEFAULT_DATE_FORMAT),
         enableFractions: !!field.enableFractions,
+        currency: field.currency,
         precision: field.precision,
         dynamicDateRangeSelection: !!field.dynamicDateRangeSelection,
         minDateRangeValue: field.minDateRangeValue,

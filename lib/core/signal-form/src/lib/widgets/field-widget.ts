@@ -56,5 +56,27 @@ export const fieldWidget = (widgets: FormWidgetResolver, field: WidgetField): Fi
         return undefined;
     }
     const valueTypeDefinition = widgets.definitionFor(VALUE_TYPE_WIDGETS[field.valueType]);
-    return valueTypeDefinition ? { definition: { ...valueTypeDefinition, type: field.type }, derivedFromValueType: field.valueType } : undefined;
+    return valueTypeDefinition
+        ? { definition: borrowedDefinition(valueTypeDefinition, field.type), derivedFromValueType: field.valueType }
+        : undefined;
+};
+
+/**
+ * Lends a built-in definition to a custom field type. The borrowed readers, writers and validators see the field as
+ * the built-in type, since built-in validators check the type they apply to.
+ *
+ * @param borrowed the built-in definition
+ * @param type the custom field type
+ * @returns the definition for the custom field type
+ */
+const borrowedDefinition = (borrowed: FormWidgetDefinition, type: string): FormWidgetDefinition => {
+    const asBorrowedType = <T extends { type: string }>(field: T): T => ({ ...field, type: borrowed.type });
+    const { initialValue, submittedValue, validators } = borrowed;
+    return {
+        ...borrowed,
+        type,
+        initialValue: initialValue && ((json, definition) => initialValue(json, asBorrowedType(definition))),
+        submittedValue: submittedValue && (({ definition, value }) => submittedValue({ definition: asBorrowedType(definition), value })),
+        validators: validators?.map((validator) => (definition, value) => validator(asBorrowedType(definition), value))
+    };
 };

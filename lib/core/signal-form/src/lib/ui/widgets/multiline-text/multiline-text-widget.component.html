@@ -1,0 +1,28 @@
+<div class="adf-multiline-text-widget" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
+    <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic" [floatLabel]="definition().placeholder ? 'always' : 'auto'">
+        @if (definition().name || definition().required) {
+            <mat-label class="adf-label adf-multiline-text-widget-label" data-automation-id="adf-multiline-text-widget-label">
+                {{ definition().name | translate }}
+            </mat-label>
+        }
+        <textarea
+            matInput
+            class="adf-input"
+            rows="3"
+            [cdkTextareaAutosize]="true"
+            [id]="inputId()"
+            [formField]="field()"
+            [placeholder]="definition().placeholder ?? ''"
+            [title]="definition().tooltip ?? ''"
+            [errorStateMatcher]="errorStateMatcher"
+        ></textarea>
+        @if (definition().maxLength > 0) {
+            <mat-hint class="adf-multiline-counter-block" align="end">{{ length() }}/{{ definition().maxLength }}</mat-hint>
+        }
+        @if (showError() && error(); as message) {
+            <mat-error class="adf-form-field-status-slot">
+                <span class="adf-error-text">{{ message.key | translate: message.params }}</span>
+            </mat-error>
+        }
+    </mat-form-field>
+</div>

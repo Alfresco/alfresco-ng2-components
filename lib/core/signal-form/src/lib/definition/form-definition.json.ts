@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import type { FormVariable, TabDefinition, VisibilityCondition } from './form-definition.model';
+import type { FormVariable, SectionRowOptions, TabDefinition, VisibilityCondition } from './form-definition.model';
 
 export interface FieldJson {
     id: string;
     type: string;
     tab?: string | null;
     fields?: Record<string, FieldJson[]>;
-    params?: { initialNumberOfRows?: number; maxNumberOfRows?: number | null; multiple?: boolean };
+    params?: { initialNumberOfRows?: number; maxNumberOfRows?: number | null; multiple?: boolean } & SectionRowOptions;
     visibilityCondition?: VisibilityCondition | null;
     [property: string]: any;
 }

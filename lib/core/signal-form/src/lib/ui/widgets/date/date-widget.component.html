@@ -1,0 +1,33 @@
+<div class="adf-date-widget-container" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
+    <mat-form-field
+        class="adf-date-widget adf-form-field-input"
+        subscriptSizing="dynamic"
+        [floatLabel]="definition().placeholder ? 'always' : 'auto'"
+    >
+        <mat-label class="adf-label" data-automation-id="adf-date-widget-label">
+            {{ definition().name | translate }} ({{ definition().dateDisplayFormat }})
+        </mat-label>
+        <input
+            #dateText
+            matInput
+            [matDatepicker]="datePicker"
+            [id]="inputId()"
+            [min]="range().min"
+            [max]="range().max"
+            [disabled]="readOnly()"
+            [placeholder]="definition().placeholder ?? ''"
+            [title]="definition().tooltip ?? ''"
+            [errorStateMatcher]="errorStateMatcher"
+            (input)="typed(dateText.value)"
+            (dateChange)="picked($event.value, dateText.value)"
+            (blur)="touched()"
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="datePicker" />
+        <mat-datepicker #datePicker (closed)="touched()" />
+        @if (showError() && error(); as message) {
+            <mat-error class="adf-form-field-status-slot">
+                <span class="adf-error-text">{{ message.key | translate: message.params }}</span>
+            </mat-error>
+        }
+    </mat-form-field>
+</div>

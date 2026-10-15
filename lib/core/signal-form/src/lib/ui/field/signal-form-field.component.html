@@ -1,0 +1,25 @@
+@if (form().isOnScreen(field())) {
+    <div class="adf-signal-form-field" [attr.data-automation-id]="'adf-signal-form-field-' + field().id">
+        @if (state() === widgetState.Registered && component(); as type) {
+            @if (widget()?.derivedFromValueType) {
+                <div class="adf-signal-custom-widget" [attr.data-automation-id]="'adf-signal-custom-widget-' + field().type">
+                    <ng-container *ngComponentOutlet="type; inputs: inputs()" />
+                </div>
+            } @else {
+                <ng-container *ngComponentOutlet="type; inputs: inputs()" />
+            }
+        } @else if (loadFailed()) {
+            <div class="adf-signal-form-field-placeholder" data-automation-id="adf-signal-form-field-load-failed">
+                {{ 'FORM.SIGNAL_FORM.WIDGET_LOAD_FAILED' | translate: { type: field().type } }}
+            </div>
+        } @else if (state() === widgetState.Unknown || (state() === widgetState.Registered && !widget()?.definition.component)) {
+            <div class="adf-signal-form-field-placeholder" data-automation-id="adf-signal-form-field-unsupported">
+                {{ 'FORM.SIGNAL_FORM.WIDGET_UNSUPPORTED' | translate: { type: field().type } }}
+            </div>
+        } @else {
+            <div class="adf-signal-form-field-placeholder" data-automation-id="adf-signal-form-field-loading">
+                {{ 'FORM.SIGNAL_FORM.WIDGET_LOADING' | translate }}
+            </div>
+        }
+    </div>
+}

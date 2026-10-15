@@ -92,6 +92,7 @@ export interface LayoutDefinition {
 
 export interface TabDefinition {
     id: string;
+    title?: string;
     visibilityCondition?: VisibilityCondition | null;
 }
 
@@ -100,6 +101,10 @@ export interface FieldDefinition {
     type: string;
     isCustomType: boolean;
     valueType?: string;
+    name?: string;
+    placeholder?: string;
+    tooltip?: string;
+    colspan: number;
     ancestors: LayoutDefinition[];
     tabId?: string;
     required: boolean;
@@ -117,6 +122,7 @@ export interface FieldDefinition {
     multiple: boolean;
     dateDisplayFormat: string;
     enableFractions: boolean;
+    currency?: string;
     precision?: number;
     dynamicDateRangeSelection: boolean;
     minDateRangeValue?: number | null;
@@ -124,10 +130,18 @@ export interface FieldDefinition {
     initialValue: unknown;
 }
 
+export interface SectionRowOptions {
+    allowInitialRowsDelete?: boolean;
+    displayRowLabels?: boolean;
+    rowLabelText?: string;
+    appendRowNumber?: boolean;
+}
+
 export interface SectionDefinition {
     id: string;
     initialRows: number;
     maxRows: number | null;
+    rowOptions: SectionRowOptions;
     fields: FieldDefinition[];
 }
 
@@ -151,6 +165,36 @@ export interface FormVariables {
     processVariables: FormVariable[];
 }
 
+export interface FieldLayoutNode {
+    kind: 'field';
+    fieldId: string;
+    colspan: number;
+}
+
+export interface ContainerLayoutNode {
+    kind: 'container';
+    element: LayoutDefinition;
+    name?: string;
+    numberOfColumns: number;
+    columns: LayoutNode[][];
+}
+
+export interface RepeatableLayoutNode {
+    kind: 'repeatable';
+    sectionId: string;
+    element: LayoutDefinition;
+    name?: string;
+    numberOfColumns: number;
+    columns: LayoutNode[][];
+}
+
+export type LayoutNode = FieldLayoutNode | ContainerLayoutNode | RepeatableLayoutNode;
+
+export interface LayoutRoot {
+    tabId?: string;
+    node: LayoutNode;
+}
+
 /**
  * A form definition JSON read once into an immutable model.
  */
@@ -160,4 +204,5 @@ export interface FormDefinition {
     tabs: TabDefinition[];
     outcomes: OutcomeDefinition[];
     variables: FormVariables;
+    layout: LayoutRoot[];
 }

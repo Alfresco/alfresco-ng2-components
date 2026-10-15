@@ -119,7 +119,7 @@ export const dateValidator: FieldValidator = (field, value) => {
     }
     const parsed = toPickerDate(value);
     const valid = validDateOrNull(parsed);
-    const { min, max } = field.type === DATE ? dateRange(field) : dateTimeRange(field);
+    const { min, max } = dateFieldRange(field);
     const compare = field.type === DATE ? compareDates : compareDateTimes;
 
     const failed =
@@ -171,6 +171,15 @@ const dateTimeRange = (field: FieldDefinition): { min: Date | null; max: Date | 
     min: validDateOrNull(field.minValue ? DateFnsUtils.getDate(`${field.minValue}`) : null),
     max: validDateOrNull(field.maxValue ? DateFnsUtils.getDate(`${field.maxValue}`) : null)
 });
+
+/**
+ * Returns the earliest and latest value a date or datetime field accepts, from its fixed or dynamic range.
+ *
+ * @param field the date or datetime field
+ * @returns the range, each end `null` when open
+ */
+export const dateFieldRange = (field: FieldDefinition): { min: Date | null; max: Date | null } =>
+    field.type === DATE ? dateRange(field) : dateTimeRange(field);
 
 const toPickerDate = (value: unknown): Date | null => {
     if (typeof value === 'string') {
