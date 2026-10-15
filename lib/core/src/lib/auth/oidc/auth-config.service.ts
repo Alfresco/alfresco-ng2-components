@@ -54,7 +54,7 @@ export class AuthConfigService {
         const origin = this.getLocationOrigin();
         const redirectUri = this.getRedirectUri();
         const customQueryParams = {
-            ...oauth2.customQueryParams,
+            ...(oauth2.customQueryParams ?? {}),
             ...(oauth2.audience ? { audience: oauth2.audience } : {})
         };
         const clockSkewInSec = this.getClockSkewInSec(oauth2);
