@@ -32,4 +32,5 @@ export interface OauthConfigModel {
     publicUrls: string[];
     clockSkewInSec?: number;
     sessionChecksEnabled?: boolean;
+    customQueryParams?: { [key: string]: string | number | boolean };
 }

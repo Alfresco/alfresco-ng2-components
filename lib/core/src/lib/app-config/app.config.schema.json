@@ -1601,7 +1601,14 @@
         },
         "audience": {
           "type": "string",
-          "description": "The URL where users are redirected after logging out, for example, https://your-auth.auth0.com/v2/logout. It defines the post-logout navigation flow."
+          "description": "Identifies the intended recipients of the token, typically the URI of the targeted API. This ensures the token is used only for accessing the specified resources."
+        },
+        "customQueryParams": {
+          "type": "object",
+          "description": "Static query parameters appended to the OIDC authorization request, enabling provider-specific hints (for example 'tenant_hint') to be sent to the identity provider without code changes. Each entry is added to every login/authorize redirect.",
+          "additionalProperties": {
+            "type": ["string", "number", "boolean"]
+          }
         }
       }
     },
