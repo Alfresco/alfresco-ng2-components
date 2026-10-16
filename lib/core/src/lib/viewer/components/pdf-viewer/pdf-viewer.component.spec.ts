@@ -463,8 +463,8 @@ describe('Test PdfViewer - User interaction', () => {
         fixture.destroy();
     });
 
-    it('should init the viewer with annotation mode disabled', () => {
-        expect(pdfViewerSpy).toHaveBeenCalledWith(jasmine.objectContaining({ annotationMode: 0 }));
+    it('should init the viewer with annotation mode enabled', () => {
+        expect(pdfViewerSpy).toHaveBeenCalledWith(jasmine.objectContaining({ annotationMode: 1 }));
     });
 
     it('should Total number of pages be loaded', () => {
