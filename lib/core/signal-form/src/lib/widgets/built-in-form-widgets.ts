@@ -19,6 +19,7 @@ import {
     booleanInitialValue,
     dateInitialValue,
     dateTimeInitialValue,
+    decimalInitialValue,
     dropdownInitialValue,
     radioInitialValue
 } from '../definition/field-initial-values';
@@ -94,6 +95,7 @@ export const BUILT_IN_FORM_WIDGETS: readonly FormWidgetDefinition[] = [
     {
         type: FormFieldType.Decimal,
         component: decimalWidget,
+        initialValue: decimalInitialValue,
         submittedValue: decimalSubmittedValue,
         validators: [requiredValidator, minValueValidator, maxValueValidator, decimalValidator]
     },

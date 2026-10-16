@@ -67,4 +67,80 @@ describe('readFormDefinition', () => {
 
         expect(field(definition, 'shownWhen').dateDisplayFormat).toBe('D-M-YYYY hh:mm A');
     });
+
+    it('should read a datetime set to now, or saved as an ISO string, as a date', () => {
+        const before = Date.now();
+        const definition = readFormDefinition(
+            formWith([
+                { id: 'started', type: 'datetime', value: 'now' },
+                { id: 'meeting', type: 'datetime', value: '2024-03-15T10:30:00.000Z' }
+            ])
+        );
+
+        const started = field(definition, 'started').initialValue as Date;
+        expect(started instanceof Date && started.getTime() >= before).toBeTrue();
+        expect((field(definition, 'meeting').initialValue as Date).toISOString()).toBe('2024-03-15T10:30:00.000Z');
+    });
+
+    it('should round a decimal to its precision only when it has more digits', () => {
+        const definition = readFormDefinition(
+            formWith([
+                { id: 'rounded', type: 'bigdecimal', precision: 3, value: 10.1035 },
+                { id: 'kept', type: 'bigdecimal', precision: 3, value: 10.1 },
+                { id: 'free', type: 'bigdecimal', value: 10.123456 }
+            ])
+        );
+
+        expect(field(definition, 'rounded').initialValue).toBe('10.104');
+        expect(field(definition, 'kept').initialValue).toBe(10.1);
+        expect(field(definition, 'free').initialValue).toBe(10.123456);
+    });
+
+    it('should take saved values by field id or variable name, read like JSON values, except for constant types', () => {
+        const definition = readFormDefinition(
+            formWith([
+                { id: 'title', type: 'text', value: 'default' },
+                { id: 'owner', name: 'ownerName', type: 'text' },
+                { id: 'due', type: 'date' },
+                { id: 'external', type: 'display-external-property', value: 'from the API' },
+                { id: 'untouched', type: 'text', value: 'kept' }
+            ]),
+            undefined,
+            { title: 'saved', 'variables.ownerName': 'Vito', due: '2024-03-15', external: 'saved' }
+        );
+
+        expect(field(definition, 'title').initialValue).toBe('saved');
+        expect(field(definition, 'owner').initialValue).toBe('Vito');
+        expect(field(definition, 'due').initialValue instanceof Date)
+            .withContext('read like a JSON date')
+            .toBeTrue();
+        expect(field(definition, 'external').initialValue).toBe('from the API');
+        expect(field(definition, 'untouched').initialValue).toBe('kept');
+    });
+
+    it('should take the saved rows of a repeatable section from the saved values', () => {
+        const definition = readFormDefinition(
+            {
+                formDefinition: {
+                    fields: [
+                        {
+                            id: 'lines',
+                            type: 'repeatable-section',
+                            numberOfColumns: 1,
+                            params: { initialNumberOfRows: 1 },
+                            fields: { 1: [{ id: 'due', type: 'date' }] }
+                        }
+                    ],
+                    outcomes: [],
+                    variables: []
+                }
+            } as FormDefinitionJson,
+            undefined,
+            { lines: [{ due: '2024-03-15' }, { due: null }] }
+        );
+
+        const [first, second] = definition.sections[0].savedRows;
+        expect(first['due'] instanceof Date).toBeTrue();
+        expect(second).toEqual({});
+    });
 });

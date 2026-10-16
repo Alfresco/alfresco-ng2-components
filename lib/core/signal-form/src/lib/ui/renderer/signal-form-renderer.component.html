@@ -2,7 +2,7 @@
     <mat-tab-group class="adf-signal-form-tabs" [preserveContent]="true" [(selectedIndex)]="selectedTabIndex">
         @for (tab of form().visibleTabs(); track tab.id) {
             @let tabTitle = tab.title ?? '' | translate;
-            @let tabErrors = tabErrorsShown() && form().hasTabErrors(tab.id);
+            @let tabErrors = form().isFeatureOn('tabErrorIndicators') && form().hasTabErrors(tab.id);
             <mat-tab [aria-label]="tabErrors ? ('FORM.FORM_RENDERER.TAB_VALIDATION_ERRORS_LABEL' | translate: { tabTitle }) : null">
                 <ng-template mat-tab-label>
                     <span class="adf-form-tab-label">
@@ -34,7 +34,7 @@
 }
 
 <ng-template #layoutNode let-node let-row="row">
-    @if (isShown(node)) {
+    @if (isShown(node, row)) {
         @switch (node.kind) {
             @case ('field') {
                 @if (form().fieldDefinition(node.fieldId, row?.sectionId); as field) {
@@ -57,7 +57,7 @@
                     @if (node.name) {
                         <h4 class="adf-signal-form-repeatable-title">{{ node.name | translate }}</h4>
                     }
-                    @for (index of rowIndexes(node.sectionId); track index) {
+                    @for (rowKey of form().rowKeys(node.sectionId); track rowKey; let index = $index) {
                         @let rowAddress = rowOf(node.sectionId, index);
                         @let options = rowOptionsOf(node.sectionId);
                         <div class="adf-signal-form-repeatable-row" [attr.data-automation-id]="'adf-signal-form-row-' + index">

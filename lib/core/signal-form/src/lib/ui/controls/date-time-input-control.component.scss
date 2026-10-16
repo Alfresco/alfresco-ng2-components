@@ -1,0 +1,12 @@
+.adf-date-time-widget-inputs {
+    display: flex;
+    gap: 8px;
+
+    .adf-date-time-widget {
+        flex: 2;
+    }
+
+    .adf-date-time-widget-time {
+        flex: 1;
+    }
+}

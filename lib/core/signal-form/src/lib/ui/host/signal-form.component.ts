@@ -57,15 +57,11 @@ export class SignalFormComponent {
     readonly disableSaveButton = input(false, { transform: booleanAttribute });
     /** Shows the `Complete` outcome disabled, for example while a completion is in progress. */
     readonly disableCompleteButton = input(false, { transform: booleanAttribute });
-    /** Allows the previous and next tab buttons of forms that ask for them; the cloud host maps `ADF_FORM_TAB_NAV_ENABLED` here. */
-    readonly showTabNavigation = input(true, { transform: booleanAttribute });
 
     readonly executeOutcome = output<SignalFormOutcomeEvent>();
 
     protected readonly selectedTab = signal(0);
-    protected readonly tabNavigationShown = computed(
-        () => this.showTabNavigation() && this.form().definition.showTabNavigation && this.form().visibleTabs().length > 1
-    );
+    protected readonly tabNavigationShown = computed(() => this.form().definition.showTabNavigation && this.form().visibleTabs().length > 1);
     protected readonly canGoToPreviousTab = computed(() => this.selectedTab() > 0);
     protected readonly canGoToNextTab = computed(() => this.selectedTab() < this.form().visibleTabs().length - 1);
 

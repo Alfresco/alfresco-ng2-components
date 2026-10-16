@@ -17,15 +17,13 @@
 
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ADF_DISPLAY_TEXT_SETTINGS, ADF_TYPED_VALUE_FORMATTING_ENABLED } from '@alfresco/adf-core';
 import { stringifyValue } from '../../../display/field-display-value';
-import { injectSetting } from '../../inject-setting';
+import { TYPED_VALUE_FORMATTING } from '../../../state/field-metadata';
 import { SignalFormWidget } from '../signal-form-widget';
 
 /**
- * Shows a read-only text. With `ADF_DISPLAY_TEXT_SETTINGS.enableExpressionEvaluation`, its `${field.<id>}` and
- * `${variable.<name>}` expressions follow the current values; with `ADF_TYPED_VALUE_FORMATTING_ENABLED`, options,
- * people and groups are shown by name.
+ * Shows a read-only text whose `${field.<id>}` and `${variable.<name>}` expressions follow the current values. With
+ * the field's `TYPED_VALUE_FORMATTING`, options, people and groups are shown by name.
  */
 @Component({
     selector: 'adf-signal-display-text-widget',
@@ -34,13 +32,11 @@ import { SignalFormWidget } from '../signal-form-widget';
     imports: [TranslatePipe]
 })
 export class SignalDisplayTextWidgetComponent extends SignalFormWidget<unknown> {
-    private readonly expressionsEnabled = injectSetting(ADF_DISPLAY_TEXT_SETTINGS, (settings) => settings?.enableExpressionEvaluation ?? false);
-    private readonly formattingEnabled = injectSetting(ADF_TYPED_VALUE_FORMATTING_ENABLED, (enabled) => enabled ?? false);
-
     protected readonly text = computed(() => {
-        const value = this.field()().value();
-        if (this.expressionsEnabled() && typeof value === 'string') {
-            return this.form().resolveText(value, { formatValues: this.formattingEnabled() });
+        const state = this.field()();
+        const value = state.value();
+        if (typeof value === 'string') {
+            return this.form().resolveText(value, { formatValues: state.metadata(TYPED_VALUE_FORMATTING)?.() ?? false });
         }
         return stringifyValue(value);
     });

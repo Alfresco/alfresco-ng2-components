@@ -22,8 +22,10 @@ import {
     FieldTree,
     form,
     hidden,
+    metadata,
     PathKind,
     readonly,
+    REQUIRED,
     SchemaPath,
     SchemaPathRules,
     SchemaPathTree,
@@ -48,9 +50,24 @@ import { firstValidationError } from '../validation/field-validation';
 import { BUILT_IN_FORM_WIDGET_RESOLVER } from '../widgets/built-in-form-widgets';
 import { fieldWidget } from '../widgets/field-widget';
 import type { FormWidgetResolver } from '../widgets/form-widget-definition';
+import { LOCALE_AMOUNTS, TYPED_VALUE_FORMATTING } from './field-metadata';
+
+/**
+ * Behaviours being rolled out, off by default. Each is a value or a signal (for example a feature flag), and is
+ * removed once its behaviour becomes the default.
+ */
+export interface SignalFormFeatures {
+    /** Shows typed values (options, people, groups…) by name in read-only texts. */
+    typedValueFormatting?: boolean | Signal<boolean>;
+    /** Marks the visible tabs that hold an invalid field. */
+    tabErrorIndicators?: boolean | Signal<boolean>;
+    /** Shows amounts formatted for the user's locale while they aren't being edited. */
+    localeAmounts?: boolean | Signal<boolean>;
+}
 
 export interface SignalFormOptions {
     readOnly?: boolean;
+    features?: SignalFormFeatures;
 }
 
 export interface RowAddress {
@@ -82,6 +99,9 @@ export class SignalForm {
     private readonly overrides = signal<RuleOverrides>({ visible: {}, disabled: {}, required: {} });
     private readonly runtimeVariables = signal<Record<string, unknown>>({});
     private readonly initialRows: WritableSignal<Record<string, boolean[]>>;
+    private readonly rowCounts: Map<string, Signal<number>>;
+    private readonly keys: WritableSignal<Record<string, number[]>>;
+    private nextRowKey = 0;
 
     constructor(
         readonly definition: FormDefinition,
@@ -94,13 +114,20 @@ export class SignalForm {
         this.tabs = new Map(definition.tabs.map((tab) => [tab.id, tab]));
         this.values = signal({
             fields: Object.fromEntries(definition.fields.map((field) => [field.id, structuredClone(field.initialValue ?? null)])),
-            sections: Object.fromEntries(
-                definition.sections.map((section) => [section.id, Array.from({ length: section.initialRows }, () => this.emptyRow(section))])
-            )
+            sections: Object.fromEntries(definition.sections.map((section) => [section.id, this.startingRows(section)]))
         });
         this.initialRows = signal(
-            Object.fromEntries(definition.sections.map((section) => [section.id, Array.from({ length: section.initialRows }, () => true)]))
+            Object.fromEntries(
+                definition.sections.map((section) => [
+                    section.id,
+                    [...Array(section.savedRows.length || section.initialRows).keys()].map((index) => index < section.initialRows)
+                ])
+            )
         );
+        this.keys = signal(
+            Object.fromEntries(definition.sections.map((section) => [section.id, this.newRowKeys(this.values().sections[section.id].length)]))
+        );
+        this.rowCounts = new Map(definition.sections.map((section) => [section.id, computed(() => this.values().sections[section.id].length)]));
         this.submissionValues = computed(() => toSubmissionValues(this.fields, this.sections, this.values(), this.widgets));
         this.fieldTree = form(this.values, (root) => this.applyRules(root), { injector });
         this.valid = computed(() => this.fieldTree().valid());
@@ -111,16 +138,40 @@ export class SignalForm {
         return !!this.options.readOnly;
     }
 
+    /**
+     * Whether a feature being rolled out is on for this form. Read inside a computed or a template, it follows a
+     * feature given as a signal.
+     *
+     * @param feature the feature
+     * @returns `true` when the feature is on
+     */
+    isFeatureOn(feature: keyof SignalFormFeatures): boolean {
+        const setting = this.options.features?.[feature];
+        return typeof setting === 'function' ? setting() : !!setting;
+    }
+
     fieldDefinition(fieldId: string, sectionId?: string): FieldDefinition | undefined {
         return sectionId ? this.sections.get(sectionId)?.fields.find((field) => field.id === fieldId) : this.fields.get(fieldId);
     }
 
-    fieldNode(fieldId: string, row?: RowAddress): FieldTree<unknown> {
-        return row ? this.fieldTree.sections[row.sectionId][row.index][fieldId] : this.fieldTree.fields[fieldId];
+    /**
+     * Returns a field's Signal Forms node. A row field's node changes when rows are added or removed, so read inside a
+     * computed or a template, it follows the row it addresses.
+     *
+     * @param fieldId the field
+     * @param row the repeatable section row, for a field of a repeatable section
+     * @returns the field's node, `undefined` for a row that no longer exists
+     */
+    fieldNode(fieldId: string, row?: RowAddress): FieldTree<unknown> | undefined {
+        if (!row) {
+            return this.fieldTree.fields[fieldId];
+        }
+        this.rowCount(row.sectionId);
+        return this.fieldTree.sections[row.sectionId][row.index]?.[fieldId];
     }
 
-    isLayoutElementVisible(element: LayoutDefinition): boolean {
-        return this.isElementVisible(element.id, element.visibilityCondition);
+    isLayoutElementVisible(element: LayoutDefinition, row?: RowAddress): boolean {
+        return this.isElementVisible(element.id, element.visibilityCondition, row);
     }
 
     isTabVisible(tabId: string | undefined): boolean {
@@ -128,11 +179,19 @@ export class SignalForm {
         return !tab || this.isConditionMet(tab.visibilityCondition);
     }
 
-    isOnScreen(field: FieldDefinition): boolean {
+    /**
+     * Whether a field is shown: its own condition, its tab and every layout element around it. In a repeatable
+     * section row, conditions read the row's own fields first.
+     *
+     * @param field the field
+     * @param row the repeatable section row the field is in, if any
+     * @returns `true` when the field is shown
+     */
+    isOnScreen(field: FieldDefinition, row?: RowAddress): boolean {
         return (
-            this.isElementVisible(field.id, field.visibilityCondition) &&
+            this.isElementVisible(field.id, field.visibilityCondition, row) &&
             this.isTabVisible(field.tabId) &&
-            field.ancestors.every((ancestor) => this.isElementVisible(ancestor.id, ancestor.visibilityCondition))
+            field.ancestors.every((ancestor) => this.isElementVisible(ancestor.id, ancestor.visibilityCondition, row))
         );
     }
 
@@ -189,8 +248,19 @@ export class SignalForm {
         return row ? this.fieldTree.sections[row.sectionId][row.index][fieldId]().valid() : this.fieldTree.fields[fieldId]().valid();
     }
 
+    /**
+     * Returns a stable key per row of a repeatable section, kept while the row exists, to track rows when rendering
+     * them: removing a row then removes only that row's views.
+     *
+     * @param sectionId the repeatable section
+     * @returns the row keys, in row order
+     */
+    rowKeys(sectionId: string): number[] {
+        return this.keys()[sectionId];
+    }
+
     rowCount(sectionId: string): number {
-        return this.values().sections[sectionId].length;
+        return this.rowCounts.get(sectionId)();
     }
 
     setValue(fieldId: string, value: unknown, row?: RowAddress): void {
@@ -217,12 +287,14 @@ export class SignalForm {
         const section = this.sections.get(sectionId);
         this.updateRows(sectionId, (rows) => [...rows, this.emptyRow(section)]);
         this.initialRows.update((current) => ({ ...current, [sectionId]: [...current[sectionId], false] }));
+        this.keys.update((current) => ({ ...current, [sectionId]: [...current[sectionId], ...this.newRowKeys(1)] }));
     }
 
     removeRow(sectionId: string, index: number): void {
         const withoutRow = <T>(items: T[]): T[] => [...items.slice(0, index), ...items.slice(index + 1)];
         this.updateRows(sectionId, withoutRow);
         this.initialRows.update((current) => ({ ...current, [sectionId]: withoutRow(current[sectionId]) }));
+        this.keys.update((current) => ({ ...current, [sectionId]: withoutRow(current[sectionId]) }));
     }
 
     setVisibility(fieldId: string, visible: boolean): void {
@@ -256,13 +328,16 @@ export class SignalForm {
         field: SchemaPath<unknown, SchemaPathRules.Supported, PathKind.Child>,
         definitionOf: (id: string) => FieldDefinition
     ): void {
-        hidden(field, (context) => !this.isOnScreen(definitionOf(context.key())));
+        hidden(field, (context) => !this.isOnScreen(definitionOf(context.key()), rowOf(context.pathKeys())));
         readonly(field, (context) => this.isReadOnly(definitionOf(context.key())));
         disabled(field, (context) => this.isReadOnly(definitionOf(context.key())));
+        metadata(field, REQUIRED, (context) => this.withRequiredOverride(definitionOf(context.key())).required);
+        metadata(field, TYPED_VALUE_FORMATTING, () => this.isFeatureOn('typedValueFormatting'));
+        metadata(field, LOCALE_AMOUNTS, () => this.isFeatureOn('localeAmounts'));
         validate(field, (context) => {
             const definition = this.withRequiredOverride(definitionOf(context.key()));
             const kind = firstValidationError(definition, context.value(), fieldWidget(this.widgets, definition)?.definition.validators ?? []);
-            return kind ? { kind } : null;
+            return kind ? validationError(kind, definition) : null;
         });
     }
 
@@ -271,13 +346,16 @@ export class SignalForm {
         return required === undefined ? field : { ...field, required };
     }
 
-    private isElementVisible(id: string, condition: VisibilityCondition | null | undefined): boolean {
-        return this.overrides().visible[id] ?? this.isConditionMet(condition);
+    private isElementVisible(id: string, condition: VisibilityCondition | null | undefined, row?: RowAddress): boolean {
+        return this.overrides().visible[id] ?? this.isConditionMet(condition, row);
     }
 
-    private isConditionMet(condition: VisibilityCondition | null | undefined): boolean {
+    private isConditionMet(condition: VisibilityCondition | null | undefined, row?: RowAddress): boolean {
         return evaluateVisibilityCondition(condition, {
-            fieldValue: (reference) => this.conditionValue(reference),
+            fieldValue: (reference) => {
+                const inRow = row && this.rowConditionValue(reference, row);
+                return inRow ? inRow.value : this.conditionValue(reference);
+            },
             variableValue: (identifier) => this.variableValue(identifier)
         });
     }
@@ -287,16 +365,53 @@ export class SignalForm {
     }
 
     private conditionValue(reference: string): unknown {
-        const wanted = referencedFieldId(reference).toUpperCase();
-        const id = [...this.fields.keys()].find((candidate) => candidate.toUpperCase() === wanted);
+        const id = matchingId(reference, this.fields.keys());
         if (!id || !this.isFieldValid(id)) {
             return undefined;
         }
         return conditionValueOf(this.fields.get(id), reference, this.submissionValues()[id], this.values().fields[id]);
     }
 
+    /**
+     * The value a condition in a repeatable section row reads for a field of that same section: the row's own value.
+     * Returns `undefined` when the reference isn't a field of the section, so the condition reads the form's field.
+     *
+     * @param reference the field reference in the condition
+     * @param row the row the condition is evaluated in
+     * @returns a holder with the row's value, or `undefined`
+     */
+    private rowConditionValue(reference: string, row: RowAddress): { value: unknown } | undefined {
+        const section = this.sections.get(row.sectionId);
+        const id =
+            section &&
+            matchingId(
+                reference,
+                section.fields.map((field) => field.id)
+            );
+        if (!id) {
+            return undefined;
+        }
+        const rowValues = this.values().sections[row.sectionId]?.[row.index];
+        if (!rowValues || !this.isFieldValid(id, row)) {
+            return { value: undefined };
+        }
+        const submittedRow = (this.submissionValues()[row.sectionId] as FieldValues[] | undefined)?.[row.index];
+        const definition = section.fields.find((field) => field.id === id);
+        return { value: conditionValueOf(definition, reference, submittedRow?.[id], rowValues[id]) };
+    }
+
     private setOverride(kind: keyof RuleOverrides, fieldId: string, enabled: boolean): void {
         this.overrides.update((current) => ({ ...current, [kind]: { ...current[kind], [fieldId]: enabled } }));
+    }
+
+    private newRowKeys(count: number): number[] {
+        return [...Array(count).keys()].map(() => this.nextRowKey++);
+    }
+
+    private startingRows(section: SectionDefinition): FieldValues[] {
+        return section.savedRows.length
+            ? section.savedRows.map((saved) => ({ ...this.emptyRow(section), ...structuredClone(saved) }))
+            : Array.from({ length: section.initialRows }, () => this.emptyRow(section));
     }
 
     private emptyRow(section: SectionDefinition): FieldValues {
@@ -307,3 +422,38 @@ export class SignalForm {
         this.values.update((model) => ({ ...model, sections: { ...model.sections, [sectionId]: update(model.sections[sectionId]) } }));
     }
 }
+
+const PATTERN_ERROR = 'pattern';
+
+/**
+ * Builds a field's validation error. A pattern error carries the field's own message when the form author wrote one.
+ *
+ * @param kind the error kind
+ * @param definition the field
+ * @returns the error
+ */
+const validationError = (kind: string, definition: FieldDefinition): { kind: string; message?: string } =>
+    kind === PATTERN_ERROR && definition.customValidationMessage ? { kind, message: definition.customValidationMessage } : { kind };
+
+const SECTIONS_KEY = 'sections';
+
+/**
+ * Finds the id a condition reference points at, ignoring case and the `_LABEL` suffix, as today's engine does.
+ *
+ * @param reference the field reference in the condition
+ * @param ids the candidate field ids
+ * @returns the matching id, or `undefined`
+ */
+const matchingId = (reference: string, ids: Iterable<string>): string | undefined => {
+    const wanted = referencedFieldId(reference).toUpperCase();
+    return [...ids].find((candidate) => candidate.toUpperCase() === wanted);
+};
+
+/**
+ * Returns the repeatable section row a field's path is in, if any.
+ *
+ * @param pathKeys the field's path in the values model, for example `['sections', 'lines', '0', 'item']`
+ * @returns the row address, or `undefined` for a field outside repeatable sections
+ */
+const rowOf = (pathKeys: readonly string[]): RowAddress | undefined =>
+    pathKeys[0] === SECTIONS_KEY ? { sectionId: pathKeys[1], index: Number(pathKeys[2]) } : undefined;

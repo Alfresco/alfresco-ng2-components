@@ -221,12 +221,9 @@ describe('SignalFormComponent', () => {
         const next = () => element('[data-automation-id="tab-nav-next-button"]') as HTMLButtonElement | null;
         const shownTab = () => element('[role="tab"][aria-selected="true"]')?.textContent.trim();
 
-        it('should show the tab buttons only when the form asks for them and the host allows them', async () => {
+        it('should show the tab buttons only when the form asks for them', async () => {
             await render(tabbedForm());
             expect(next()).withContext('not asked by the form').toBeNull();
-
-            await render(tabbedForm(true), { showTabNavigation: false });
-            expect(next()).withContext('not allowed by the host').toBeNull();
 
             await render(tabbedForm(true));
             expect(next()).not.toBeNull();

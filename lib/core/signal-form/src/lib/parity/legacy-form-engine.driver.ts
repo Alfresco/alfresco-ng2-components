@@ -38,10 +38,13 @@ import {
     SetValueInteraction,
     toSubmittedValues
 } from './form-engine-driver';
+import { DecimalRenderMiddlewareService } from '../../../../src/lib/form/components/middlewares/decimal-middleware.service';
 import { LAYOUT_FIELD_TYPES } from '../definition/form-definition.model';
 import { IntentionalDifference, INTENTIONAL_DIFFERENCES } from './intentional-differences';
 
 const ROW_ID_SEPARATOR = '-Row';
+/** The renderer rounds decimals to their precision before the form is shown, so the harness does too. */
+const DECIMAL_MIDDLEWARE = new DecimalRenderMiddlewareService();
 
 interface RepresentationJson {
     formDefinition?: object;
@@ -67,6 +70,7 @@ export class LegacyFormEngineDriver implements FormEngineDriver {
         const representation: RepresentationJson = structuredClone(definition.formRepresentation ?? definition);
         this.options = { ...DEFAULT_LOAD_OPTIONS, ...options };
         this.form = this.formService.parseForm({ ...representation, ...representation.formDefinition }, undefined, this.options.readOnly);
+        this.form.getFormFields([DECIMAL_MIDDLEWARE.type]).forEach((field) => DECIMAL_MIDDLEWARE.getParsedField(field));
         this.differences.forEach((difference) => difference.configure?.(this.form));
         this.refresh();
     }

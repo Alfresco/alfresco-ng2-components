@@ -126,4 +126,40 @@ describe('SignalForm', () => {
         expect(form.hasTabErrors('items')).toBeTrue();
         expect(form.hasTabErrors('main')).toBeFalse();
     });
+
+    it('should start a repeatable section with every saved row, beyond its maximum, dates read and submitted as dates', () => {
+        const form = new SignalForm(
+            readFormDefinition({
+                formDefinition: {
+                    fields: [
+                        {
+                            id: 'lines',
+                            type: 'repeatable-section',
+                            numberOfColumns: 1,
+                            params: { initialNumberOfRows: 1, maxNumberOfRows: 2 },
+                            fields: {
+                                1: [
+                                    { id: 'kind', type: 'text' },
+                                    { id: 'due', type: 'date' }
+                                ]
+                            },
+                            value: [{ kind: 'first', due: '2024-03-15' }, { kind: 'second' }, { kind: 'third' }]
+                        }
+                    ],
+                    outcomes: [],
+                    variables: []
+                }
+            }),
+            {},
+            TestBed.inject(Injector)
+        );
+
+        expect(form.rowCount('lines')).toBe(3);
+        expect(form.canAddRow('lines')).toBeFalse();
+        expect(form.submissionValues()['lines']).toEqual([
+            { kind: 'first', due: '2024-03-15T00:00:00.000Z' },
+            { kind: 'second', due: null },
+            { kind: 'third', due: null }
+        ]);
+    });
 });

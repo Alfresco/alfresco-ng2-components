@@ -28,6 +28,9 @@ export interface FieldJson {
         maxNumberOfRows?: number | null;
         multiple?: boolean;
         field?: SourceFieldReference | null;
+        inputMask?: string;
+        inputMaskReversed?: boolean;
+        inputMaskPlaceholder?: string;
     } & SectionRowOptions;
     visibilityCondition?: VisibilityCondition | null;
     [property: string]: any;

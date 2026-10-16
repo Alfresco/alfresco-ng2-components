@@ -15,69 +15,22 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatTimepickerModule } from '@angular/material/timepicker';
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
+import { FormField } from '@angular/forms/signals';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '@alfresco/adf-core';
-import { combinedDateTime } from '../date/picker-values';
-import { SignalPickerWidget } from '../date/signal-picker-widget';
-
-const TIME_FORMAT = 'HH:mm';
-
-const DATE_TIME_PICKER_FORMATS: MatDateFormats = {
-    parse: { ...ADF_DATE_FORMATS.parse, timeInput: TIME_FORMAT },
-    display: { ...ADF_DATE_FORMATS.display, timeInput: TIME_FORMAT, timeOptionLabel: TIME_FORMAT }
-};
+import { dateFieldRange } from '../../../validation/field-validation';
+import { SignalDateTimeInputControlComponent } from '../../controls/date-time-input-control.component';
+import { SignalFormWidget } from '../signal-form-widget';
 
 /**
- * Edits a datetime field with Material's datepicker for the day and timepicker for the time, combined into one value.
+ * Edits a datetime field, day and time, within its range.
  */
 @Component({
     selector: 'adf-signal-date-time-widget',
     templateUrl: './date-time-widget.component.html',
-    styleUrl: './date-time-widget.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        { provide: MAT_DATE_FORMATS, useValue: DATE_TIME_PICKER_FORMATS },
-        { provide: DateAdapter, useClass: AdfDateFnsAdapter }
-    ],
-    imports: [MatDatepickerModule, MatTimepickerModule, MatFormFieldModule, MatInputModule, TranslatePipe]
+    imports: [FormField, TranslatePipe, SignalDateTimeInputControlComponent]
 })
-export class SignalDateTimeWidgetComponent extends SignalPickerWidget {
-    private readonly day = signal<Date | null>(null);
-
-    protected readonly time = signal<Date | null>(null);
-    protected readonly timeInputId = computed(() => `${this.inputId()}-time`);
-
-    protected typed(text: string): void {
-        this.day.set(this.typedDay(text));
-        this.writeDateTime();
-    }
-
-    protected picked(value: Date | null, text: string): void {
-        this.day.set(value ?? this.typedDay(text));
-        this.writeDateTime();
-    }
-
-    protected changedTime(value: Date | null): void {
-        this.time.set(value);
-        this.writeDateTime();
-    }
-
-    protected displayFormat(): string | null {
-        return null;
-    }
-
-    protected shown(value: Date | null): void {
-        this.day.set(value);
-        this.time.set(value);
-    }
-
-    private writeDateTime(): void {
-        this.write(combinedDateTime(this.day(), this.time()));
-    }
+export class SignalDateTimeWidgetComponent extends SignalFormWidget<Date | null> {
+    protected readonly range = computed(() => dateFieldRange(this.definition()));
 }

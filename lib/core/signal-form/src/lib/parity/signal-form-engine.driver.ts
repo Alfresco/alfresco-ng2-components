@@ -92,7 +92,7 @@ export class SignalFormEngineDriver implements FormEngineDriver {
                 const row = { sectionId: section.id, index };
                 for (const field of section.fields) {
                     fields[rowFieldKey(row, field.id)] = {
-                        visible: this.form.isOnScreen(field),
+                        visible: this.form.isOnScreen(field, row),
                         valid: this.form.isFieldValid(field.id, row),
                         readOnly: this.form.isReadOnly(field)
                     };

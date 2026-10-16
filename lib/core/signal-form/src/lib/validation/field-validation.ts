@@ -54,7 +54,19 @@ const RANGE_TYPES: ReadonlySet<string> = new Set([INTEGER, DECIMAL, AMOUNT]);
 const LENGTH_TYPES: ReadonlySet<string> = new Set([TEXT, MULTILINE_TEXT]);
 
 export type FieldErrorKind =
-    'required' | 'number' | 'minLength' | 'maxLength' | 'minValue' | 'maxValue' | 'pattern' | 'decimal' | 'precision' | 'date' | 'dropdown';
+    | 'required'
+    | 'number'
+    | 'minLength'
+    | 'maxLength'
+    | 'minValue'
+    | 'maxValue'
+    | 'pattern'
+    | 'decimal'
+    | 'precision'
+    | 'dateFormat'
+    | 'dateMin'
+    | 'dateMax'
+    | 'dropdown';
 
 export const requiredValidator: FieldValidator = (field, value) => {
     if (!field.required || !REQUIRED_TYPES.has(field.type)) {
@@ -122,12 +134,16 @@ export const dateValidator: FieldValidator = (field, value) => {
     const { min, max } = dateFieldRange(field);
     const compare = field.type === DATE ? compareDates : compareDateTimes;
 
-    const failed =
-        (parsed && !isValid(parsed)) ||
-        (field.required && isEmptyFieldValue(value)) ||
-        (min && valid && compare(min, valid) > 0) ||
-        (max && valid && compare(max, valid) < 0);
-    return failed ? 'date' : null;
+    if (parsed && !isValid(parsed)) {
+        return 'dateFormat';
+    }
+    if (field.required && isEmptyFieldValue(value)) {
+        return 'required';
+    }
+    if (min && valid && compare(min, valid) > 0) {
+        return 'dateMin';
+    }
+    return max && valid && compare(max, valid) < 0 ? 'dateMax' : null;
 };
 
 export const dropdownValidator: FieldValidator = (field, value) =>
@@ -143,7 +159,13 @@ export const firstValidationError = (field: FieldDefinition, value: unknown, val
     return null;
 };
 
-const maxLengthOf = (field: FieldDefinition): number => {
+/**
+ * Returns the maximum length a text or integer field is checked against: its own, or the default limit.
+ *
+ * @param field the field
+ * @returns the maximum length
+ */
+export const maxLengthOf = (field: FieldDefinition): number => {
     if (field.type === INTEGER) {
         return DEFAULT_INTEGER_MAX_LENGTH;
     }

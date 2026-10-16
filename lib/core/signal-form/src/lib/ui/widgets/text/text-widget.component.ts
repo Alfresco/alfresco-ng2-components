@@ -15,29 +15,36 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { FormField } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SignalFormWidget } from '../signal-form-widget';
+import { SignalMaskedTextInputControlComponent } from '../../controls/masked-text-input-control.component';
 
+/**
+ * Edits a text, through the masked text control when the field has an input mask.
+ */
 @Component({
     selector: 'adf-signal-text-widget',
     templateUrl: './text-widget.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormField, MatFormFieldModule, MatInputModule, TranslatePipe]
+    imports: [FormField, MatFormFieldModule, MatInputModule, TranslatePipe, SignalMaskedTextInputControlComponent]
 })
 export class SignalTextWidgetComponent extends SignalFormWidget<string> {
     protected readonly widgetClass: string = 'adf-text-widget';
     protected readonly labelAutomationId: string = 'adf-text-widget-label';
+
+    protected readonly inputMask = computed(() => this.definition().inputMask ?? null);
+    protected readonly placeholder = computed(() => this.inputMask()?.placeholder || (this.definition().placeholder ?? ''));
 }
 
 @Component({
     selector: 'adf-signal-integer-widget',
     templateUrl: './text-widget.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormField, MatFormFieldModule, MatInputModule, TranslatePipe]
+    imports: [FormField, MatFormFieldModule, MatInputModule, TranslatePipe, SignalMaskedTextInputControlComponent]
 })
 export class SignalIntegerWidgetComponent extends SignalTextWidgetComponent {
     protected override readonly widgetClass: string = 'adf-number-widget';
@@ -48,7 +55,7 @@ export class SignalIntegerWidgetComponent extends SignalTextWidgetComponent {
     selector: 'adf-signal-decimal-widget',
     templateUrl: './text-widget.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormField, MatFormFieldModule, MatInputModule, TranslatePipe]
+    imports: [FormField, MatFormFieldModule, MatInputModule, TranslatePipe, SignalMaskedTextInputControlComponent]
 })
 export class SignalDecimalWidgetComponent extends SignalTextWidgetComponent {
     protected override readonly widgetClass: string = 'adf-decimal-widget';

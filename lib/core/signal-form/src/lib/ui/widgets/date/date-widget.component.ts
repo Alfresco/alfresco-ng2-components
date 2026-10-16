@@ -15,38 +15,22 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
+import { FormField } from '@angular/forms/signals';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '@alfresco/adf-core';
-import { SignalPickerWidget } from './signal-picker-widget';
+import { dateFieldRange } from '../../../validation/field-validation';
+import { SignalDateInputControlComponent } from '../../controls/date-input-control.component';
+import { SignalFormWidget } from '../signal-form-widget';
 
 /**
- * Edits a date field with Material's datepicker, in the field's display format.
+ * Edits a date field in its display format, within its fixed or dynamic range.
  */
 @Component({
     selector: 'adf-signal-date-widget',
     templateUrl: './date-widget.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
-        { provide: DateAdapter, useClass: AdfDateFnsAdapter }
-    ],
-    imports: [MatDatepickerModule, MatFormFieldModule, MatInputModule, TranslatePipe]
+    imports: [FormField, TranslatePipe, SignalDateInputControlComponent]
 })
-export class SignalDateWidgetComponent extends SignalPickerWidget {
-    protected typed(text: string): void {
-        this.write(this.typedDay(text));
-    }
-
-    protected picked(value: Date | null, text: string): void {
-        this.write(value ?? this.typedDay(text));
-    }
-
-    protected displayFormat(): string | null {
-        return this.definition().dateDisplayFormat;
-    }
+export class SignalDateWidgetComponent extends SignalFormWidget<Date | null> {
+    protected readonly range = computed(() => dateFieldRange(this.definition()));
 }

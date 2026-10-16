@@ -290,6 +290,52 @@ describe('SignalForm parity with the current engine', () => {
         setValue('Number1', '')
     ];
 
+    const rowCondition = (rightValue: string) => ({
+        leftType: 'field',
+        leftValue: 'kind',
+        operator: '==',
+        rightValue,
+        rightType: 'value',
+        nextConditionOperator: ''
+    });
+    const singleSectionForm = (section: object, rootFields: object[] = []) => ({
+        formRepresentation: {
+            id: 'rows',
+            name: 'rows',
+            formDefinition: {
+                tabs: [],
+                fields: [
+                    ...(rootFields.length ? [{ id: 'rows-root', type: 'container', numberOfColumns: 1, fields: { 1: rootFields } }] : []),
+                    { id: 'lines', type: 'repeatable-section', numberOfColumns: 2, ...section }
+                ],
+                outcomes: [],
+                variables: []
+            }
+        }
+    });
+    const lineFields = {
+        1: [{ id: 'kind', type: 'text' }],
+        2: [{ id: 'detail', type: 'text', required: true, visibilityCondition: rowCondition('other') }]
+    };
+    const inLine = (index: number, fieldId: string, value: unknown): FormInteraction => ({
+        kind: 'setValue',
+        fieldId,
+        value,
+        row: { sectionId: 'lines', index }
+    });
+    const singleFieldForm = (field: object) => ({
+        formRepresentation: {
+            id: 'single',
+            name: 'single',
+            formDefinition: {
+                tabs: [],
+                fields: [{ id: 'single-root', type: 'container', numberOfColumns: 1, fields: { 1: [field] } }],
+                outcomes: [],
+                variables: []
+            }
+        }
+    });
+
     const corpus: ParityCase[] = [
         {
             name: 'text visibility conditions chained with and / or, in the legacy condition shape',
@@ -460,6 +506,44 @@ describe('SignalForm parity with the current engine', () => {
             definition: allFieldTypesForm,
             steps: allFieldTypesSteps,
             exercises: ['hiddenField', 'invalidField']
+        },
+        {
+            name: 'conditions in repeatable section rows reading a field of the same row',
+            definition: singleSectionForm({ params: { initialNumberOfRows: 2, maxNumberOfRows: 3 }, fields: lineFields }),
+            steps: [inLine(0, 'kind', 'other'), inLine(0, 'detail', 'why'), inLine(1, 'kind', 'other'), inLine(0, 'kind', 'same')],
+            exercises: ['hiddenField', 'invalidField']
+        },
+        {
+            name: 'saved repeatable section rows',
+            definition: singleSectionForm({
+                params: { initialNumberOfRows: 1, maxNumberOfRows: 3 },
+                fields: { 1: [{ id: 'kind', type: 'text' }], 2: [{ id: 'note', type: 'text' }] },
+                value: [
+                    { kind: 'first', note: 'a' },
+                    { kind: 'second', note: null },
+                    { kind: 'third', note: 'c' }
+                ]
+            }),
+            steps: [inLine(1, 'kind', 'changed')],
+            exercises: []
+        },
+        {
+            name: 'an empty repeatable section, which submits nothing',
+            definition: singleSectionForm({ params: { initialNumberOfRows: 0 }, fields: lineFields }, [{ id: 'note', type: 'text' }]),
+            steps: [setValue('note', 'x')],
+            exercises: []
+        },
+        {
+            name: 'a decimal with more digits than its precision, rounded when the form loads',
+            definition: singleFieldForm({ id: 'ratio', type: 'bigdecimal', precision: 3, required: true, value: 10.1039999 }),
+            steps: [setValue('ratio', '2.5')],
+            exercises: []
+        },
+        {
+            name: 'a datetime saved as an ISO string',
+            definition: singleFieldForm({ id: 'meeting', type: 'datetime', value: '2024-03-15T10:30:00.000Z' }),
+            steps: [],
+            exercises: []
         }
     ];
 

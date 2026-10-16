@@ -17,19 +17,20 @@
 
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { FormField } from '@angular/forms/signals';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
+import { LOCALE_AMOUNTS } from '../../../state/field-metadata';
+import { SignalAmountInputControlComponent } from '../../controls/amount-input-control.component';
 import { SignalFormWidget } from '../signal-form-widget';
 
-const DEFAULT_CURRENCY = '$';
-
+/**
+ * Edits an amount, shown for the user's locale when the field's `LOCALE_AMOUNTS` is on.
+ */
 @Component({
     selector: 'adf-signal-amount-widget',
     templateUrl: './amount-widget.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormField, MatFormFieldModule, MatInputModule, TranslatePipe]
+    imports: [FormField, TranslatePipe, SignalAmountInputControlComponent]
 })
-export class SignalAmountWidgetComponent extends SignalFormWidget<string> {
-    protected readonly currency = computed(() => this.definition().currency || DEFAULT_CURRENCY);
+export class SignalAmountWidgetComponent extends SignalFormWidget<string | number | null> {
+    protected readonly localeAmounts = computed(() => this.field()().metadata(LOCALE_AMOUNTS)?.() ?? false);
 }

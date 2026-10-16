@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { isValid } from 'date-fns';
+import { isValid, parseISO } from 'date-fns';
 import { DateFnsUtils, isNumberValue } from '@alfresco/adf-core';
 import type { FieldJson } from './form-definition.json';
 import { fieldWidget } from '../widgets/field-widget';
@@ -23,6 +23,7 @@ import type { FormWidgetResolver, InitialValueReader } from '../widgets/form-wid
 import { DEFAULT_EMPTY_OPTION, FieldDefinition, FieldOption } from './form-definition.model';
 
 const TODAY = 'today';
+const NOW = 'now';
 
 export const readOptions = (field: FieldJson): FieldOption[] => (field.optionType === 'rest' ? [] : validOptions(field.options));
 
@@ -41,7 +42,23 @@ export const dateInitialValue: InitialValueReader = (field) => {
     return value === TODAY ? new Date() : initialDateValue(value, false);
 };
 
-export const dateTimeInitialValue: InitialValueReader = (field) => initialDateValue(jsonValue(field), true);
+export const dateTimeInitialValue: InitialValueReader = (field) => {
+    const value = jsonValue(field);
+    return value === NOW ? new Date() : initialDateValue(value, true);
+};
+
+/**
+ * Rounds a decimal with more fraction digits than the field's precision, as today's form does when it renders.
+ *
+ * @param field the field JSON
+ * @param definition the field definition
+ * @returns the value, rounded to the precision when it has more digits
+ */
+export const decimalInitialValue: InitialValueReader = (field, definition) => {
+    const value = jsonValue(field);
+    const fractionDigits = `${value}`.split('.')[1]?.length ?? 0;
+    return definition.precision !== undefined && fractionDigits > definition.precision ? parseFloat(`${value}`).toFixed(definition.precision) : value;
+};
 
 export const booleanInitialValue: InitialValueReader = (field) => field.value === 'true' || field.value === true;
 
@@ -97,8 +114,11 @@ const initialDateValue = (value: any, withTime: boolean): unknown => {
     if (isNumberValue(value)) {
         return validDateOr(new Date(value), value);
     }
-    const parsed = withTime ? DateFnsUtils.parseDate(value, 'YYYY-MM-DD hh:mm A') : DateFnsUtils.parseDate(value.split('T')[0], 'YYYY-M-D');
-    return validDateOr(parsed, value);
+    if (!withTime) {
+        return validDateOr(DateFnsUtils.parseDate(value.split('T')[0], 'YYYY-M-D'), value);
+    }
+    const typed = DateFnsUtils.parseDate(value, 'YYYY-MM-DD hh:mm A');
+    return isValid(typed) ? typed : validDateOr(parseISO(`${value}`), value);
 };
 
 const validDateOr = (date: Date, fallback: unknown): unknown => (isValid(date) ? date : fallback);

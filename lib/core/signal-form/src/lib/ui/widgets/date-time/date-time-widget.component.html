@@ -1,46 +1,13 @@
 <div class="adf-date-time-widget-container" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
-    <mat-form-field
-        class="adf-date-time-widget adf-form-field-input"
-        subscriptSizing="dynamic"
-        [floatLabel]="definition().placeholder ? 'always' : 'auto'"
-    >
-        <mat-label class="adf-label" data-automation-id="adf-date-time-widget-label">{{ definition().name | translate }}</mat-label>
-        <input
-            #dayText
-            matInput
-            [matDatepicker]="datePicker"
-            [id]="inputId()"
-            [min]="range().min"
-            [max]="range().max"
-            [disabled]="readOnly()"
-            [placeholder]="definition().placeholder ?? ''"
-            [title]="definition().tooltip ?? ''"
-            [errorStateMatcher]="errorStateMatcher"
-            (input)="typed(dayText.value)"
-            (dateChange)="picked($event.value, dayText.value)"
-            (blur)="touched()"
-        />
-        <mat-datepicker-toggle matIconSuffix [for]="datePicker" />
-        <mat-datepicker #datePicker (closed)="touched()" />
-        @if (showError() && error(); as message) {
-            <mat-error class="adf-form-field-status-slot">
-                <span class="adf-error-text">{{ message.key | translate: message.params }}</span>
-            </mat-error>
-        }
-    </mat-form-field>
-    <mat-form-field class="adf-date-time-widget-time adf-form-field-input" subscriptSizing="dynamic">
-        <input
-            matInput
-            placeholder="HH:mm"
-            [matTimepicker]="timePicker"
-            [id]="timeInputId()"
-            [value]="time()"
-            [disabled]="readOnly()"
-            [errorStateMatcher]="errorStateMatcher"
-            (valueChange)="changedTime($event)"
-            (blur)="touched()"
-        />
-        <mat-timepicker-toggle matIconSuffix [for]="timePicker" />
-        <mat-timepicker #timePicker />
-    </mat-form-field>
+    <adf-signal-date-time-input
+        labelAutomationId="adf-date-time-widget-label"
+        [formField]="field()"
+        [inputId]="inputId()"
+        [label]="definition().name | translate"
+        [placeholder]="definition().placeholder ?? ''"
+        [tooltip]="definition().tooltip ?? ''"
+        [minDate]="range().min"
+        [maxDate]="range().max"
+        [error]="shownError()"
+    />
 </div>

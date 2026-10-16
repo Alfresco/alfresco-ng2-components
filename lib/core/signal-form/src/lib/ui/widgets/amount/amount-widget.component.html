@@ -1,27 +1,14 @@
 <div class="adf-amount-widget__container adf-amount-widget" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
-    <mat-form-field
-        class="adf-amount-widget__input adf-form-field-input"
-        subscriptSizing="dynamic"
-        [floatLabel]="definition().placeholder ? 'always' : 'auto'"
-    >
-        @if (definition().name || definition().required) {
-            <mat-label class="adf-label" data-automation-id="adf-amount-widget-label">{{ definition().name | translate }}</mat-label>
-        }
-        <span matTextPrefix class="adf-amount-widget__prefix-spacing">{{ currency() }}&nbsp;</span>
-        <input
-            matInput
-            class="adf-input"
-            type="text"
-            [id]="inputId()"
-            [formField]="field()"
-            [placeholder]="definition().placeholder ?? ''"
-            [title]="definition().tooltip ?? ''"
-            [errorStateMatcher]="errorStateMatcher"
-        />
-        @if (showError() && error(); as message) {
-            <mat-error class="adf-form-field-status-slot">
-                <span class="adf-error-text">{{ message.key | translate: message.params }}</span>
-            </mat-error>
-        }
-    </mat-form-field>
+    <adf-signal-amount-input
+        labelAutomationId="adf-amount-widget-label"
+        [formField]="field()"
+        [inputId]="inputId()"
+        [label]="definition().name || definition().required ? (definition().name ?? '' | translate) : undefined"
+        [placeholder]="definition().placeholder ?? ''"
+        [tooltip]="definition().tooltip ?? ''"
+        [currency]="definition().currency"
+        [enableFractions]="definition().enableFractions"
+        [localeAmounts]="localeAmounts()"
+        [error]="shownError()"
+    />
 </div>

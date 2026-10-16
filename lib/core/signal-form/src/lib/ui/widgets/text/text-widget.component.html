@@ -1,22 +1,38 @@
-<div class="adf-textfield {{ widgetClass }}" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
-    <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic" [floatLabel]="definition().placeholder ? 'always' : 'auto'">
-        @if (definition().name || definition().required) {
-            <mat-label class="adf-label" [attr.data-automation-id]="labelAutomationId">{{ definition().name | translate }}</mat-label>
-        }
-        <input
-            matInput
-            class="adf-input"
-            type="text"
-            [id]="inputId()"
+@if (inputMask(); as mask) {
+    <div class="adf-textfield {{ widgetClass }}" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
+        <adf-signal-masked-text-input
+            [labelAutomationId]="labelAutomationId"
             [formField]="field()"
-            [placeholder]="definition().placeholder ?? ''"
-            [title]="definition().tooltip ?? ''"
-            [errorStateMatcher]="errorStateMatcher"
+            [inputId]="inputId()"
+            [label]="definition().name || definition().required ? (definition().name ?? '' | translate) : undefined"
+            [placeholder]="placeholder()"
+            [tooltip]="definition().tooltip ?? ''"
+            [mask]="mask.mask"
+            [reversed]="mask.reversed"
+            [error]="shownError()"
         />
-        @if (showError() && error(); as message) {
-            <mat-error class="adf-form-field-status-slot">
-                <span class="adf-error-text">{{ message.key | translate: message.params }}</span>
-            </mat-error>
-        }
-    </mat-form-field>
-</div>
+    </div>
+} @else {
+    <div class="adf-textfield {{ widgetClass }}" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
+        <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic" [floatLabel]="placeholder() ? 'always' : 'auto'">
+            @if (definition().name || definition().required) {
+                <mat-label class="adf-label" [attr.data-automation-id]="labelAutomationId">{{ definition().name | translate }}</mat-label>
+            }
+            <input
+                matInput
+                class="adf-input"
+                type="text"
+                [id]="inputId()"
+                [formField]="field()"
+                [placeholder]="placeholder()"
+                [title]="definition().tooltip ?? ''"
+                [errorStateMatcher]="errorStateMatcher"
+            />
+            @if (showError() && error(); as message) {
+                <mat-error class="adf-form-field-status-slot">
+                    <span class="adf-error-text">{{ message.key | translate: message.params }}</span>
+                </mat-error>
+            }
+        </mat-form-field>
+    </div>
+}

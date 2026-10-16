@@ -33,7 +33,6 @@ export abstract class SignalFormWidget<TValue = unknown> {
     readonly field = input.required<FieldTree<TValue>>();
     readonly definition = input.required<FieldDefinition>();
     readonly elementId = input<string>();
-
     protected readonly inputId = computed(() => this.elementId() ?? this.definition().id);
 
     protected readonly readOnly = computed(() => this.field()().readonly());
@@ -45,8 +44,14 @@ export abstract class SignalFormWidget<TValue = unknown> {
 
     protected readonly error = computed((): FieldErrorMessage | null => {
         const [first] = this.field()().errors();
-        return first ? fieldErrorMessage(first.kind, this.definition()) : null;
+        if (!first) {
+            return null;
+        }
+        return first.message ? { key: first.message } : fieldErrorMessage(first.kind, this.definition());
     });
+
+    /** The error to show, `null` while none is shown: what the input controls take. */
+    protected readonly shownError = computed(() => (this.showError() ? this.error() : null));
 
     protected readonly errorStateMatcher: ErrorStateMatcher = { isErrorState: () => this.showError() };
 }

@@ -27,6 +27,7 @@ import {
     FormDefinition,
     FormFieldType,
     FormVariables,
+    CONSTANT_VALUE_FIELD_TYPES,
     LAYOUT_FIELD_TYPES,
     LayoutDefinition,
     LayoutNode,
@@ -52,12 +53,21 @@ const DEFAULT_OUTCOMES: OutcomeJson[] = [
  *
  * @param json the form definition as the backend or the designer provides it
  * @param widgets the field type definitions, the built-in ones by default
+ * @param values saved form values (for example a task's data), keyed by field id or `variables.<name>`; they replace
+ * the fields' own values, and a repeatable section's value gives its rows
  * @returns the form definition model
  */
-export const readFormDefinition = (json: FormDefinitionJson, widgets: FormWidgetResolver = BUILT_IN_FORM_WIDGET_RESOLVER): FormDefinition => {
+export const readFormDefinition = (
+    json: FormDefinitionJson,
+    widgets: FormWidgetResolver = BUILT_IN_FORM_WIDGET_RESOLVER,
+    values?: Record<string, unknown>
+): FormDefinition => {
     const representation = json.formRepresentation ?? json;
     const content = { ...representation, ...representation.formDefinition };
     const roots = structuredClone(content.fields ?? []);
+    if (values) {
+        applySavedValues(roots, values);
+    }
     const variables = readVariables(content);
     const withSourceValue = (field: FieldDefinition) => withSourceFieldValue(field, variables);
 
@@ -111,6 +121,7 @@ const readVariables = (content: FormRepresentationJson): FormVariables => ({
 const toSectionDefinition = (section: FieldJson, widgets: FormWidgetResolver): SectionDefinition => {
     const ancestors = [toLayoutDefinition(section)];
     const tabId = section.tab ?? undefined;
+    const fields = Object.values(section.fields ?? {}).flatMap((column) => collectFields(column, ancestors, widgets, tabId));
     return {
         id: section.id,
         initialRows: section.params?.initialNumberOfRows ?? 1,
@@ -122,9 +133,58 @@ const toSectionDefinition = (section: FieldJson, widgets: FormWidgetResolver): S
             appendRowNumber: section.params?.appendRowNumber
         },
         tabId,
-        fields: Object.values(section.fields ?? {}).flatMap((column) => collectFields(column, ancestors, widgets, tabId))
+        fields,
+        savedRows: readSavedRows(section, fields, widgets)
     };
 };
+
+/**
+ * Reads a repeatable section's saved rows, each field value read like the field's own JSON value. Every saved row is
+ * kept, even beyond the section maximum: today's form submits them all, so none is dropped.
+ *
+ * @param section the section JSON
+ * @param fields the section's field definitions
+ * @param widgets the field type definitions
+ * @returns the saved rows
+ */
+const readSavedRows = (section: FieldJson, fields: FieldDefinition[], widgets: FormWidgetResolver): Record<string, unknown>[] => {
+    const saved: Record<string, unknown>[] = Array.isArray(section.value) ? section.value : [];
+    const jsonById = new Map(leafFields(Object.values(section.fields ?? {}).flat()).map((field) => [field.id, field]));
+    return saved.map((row) =>
+        Object.fromEntries(
+            fields
+                .filter((field) => row?.[field.id] !== undefined && row[field.id] !== null)
+                .map((field) => [field.id, readInitialValue({ ...jsonById.get(field.id), value: row[field.id] }, field, widgets)])
+        )
+    );
+};
+
+/**
+ * Puts saved form values into the field JSON, as today's form does: a field takes the value saved for
+ * `variables.<name>` or for its id, except the types whose value is constant.
+ *
+ * @param fields the field JSON, modified in place (a copy of the definition)
+ * @param values the saved values
+ */
+const applySavedValues = (fields: FieldJson[], values: Record<string, unknown>): void => {
+    for (const field of fields) {
+        if (LAYOUT_FIELD_TYPES.has(field.type) && field.type !== FormFieldType.RepeatableSection) {
+            Object.values(field.fields ?? {}).forEach((column) => applySavedValues(column, values));
+        } else if (!CONSTANT_VALUE_FIELD_TYPES.has(field.type)) {
+            const saved = values[`variables.${field.name}`] || values[field.id];
+            if (saved !== undefined && saved !== null) {
+                field.value = saved;
+            }
+        }
+    }
+};
+
+const leafFields = (fields: FieldJson[]): FieldJson[] =>
+    fields.flatMap((field) =>
+        LAYOUT_FIELD_TYPES.has(field.type) && field.type !== FormFieldType.RepeatableSection
+            ? leafFields(Object.values(field.fields ?? {}).flat())
+            : [field]
+    );
 
 const collectFields = (fields: FieldJson[], ancestors: LayoutDefinition[], widgets: FormWidgetResolver, tabId?: string): FieldDefinition[] =>
     fields.flatMap((field) => {
@@ -170,6 +230,14 @@ const toFieldDefinition = (
         minValue: field.minValue,
         maxValue: field.maxValue,
         regexPattern: field.regexPattern,
+        customValidationMessage: field.customValidationMessage || undefined,
+        inputMask: field.params?.inputMask
+            ? {
+                  mask: field.params.inputMask,
+                  reversed: !!field.params.inputMaskReversed,
+                  placeholder: field.params.inputMaskPlaceholder || undefined
+              }
+            : undefined,
         visibilityCondition: field.visibilityCondition,
         options,
         optionType: field.optionType,

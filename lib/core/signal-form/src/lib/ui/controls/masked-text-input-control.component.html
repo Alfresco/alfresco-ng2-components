@@ -1,0 +1,25 @@
+<mat-form-field class="adf-form-field-input" subscriptSizing="dynamic" [floatLabel]="placeholder() ? 'always' : 'auto'">
+    @if (label()) {
+        <mat-label class="adf-label" [attr.data-automation-id]="labelAutomationId()">{{ label() }}</mat-label>
+    }
+    <input
+        #maskedText
+        matInput
+        class="adf-input"
+        type="text"
+        [id]="inputId()"
+        [value]="text()"
+        [disabled]="locked()"
+        [required]="required()"
+        [placeholder]="placeholder()"
+        [title]="tooltip()"
+        [errorStateMatcher]="errorStateMatcher"
+        (input)="typed(maskedText)"
+        (blur)="markTouched()"
+    />
+    @if (error(); as message) {
+        <mat-error class="adf-form-field-status-slot">
+            <span class="adf-error-text">{{ message.key | translate: message.params }}</span>
+        </mat-error>
+    }
+</mat-form-field>

@@ -22,11 +22,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED, ConfirmDialogComponent, RepeatableRowLabelPipe } from '@alfresco/adf-core';
+import { ConfirmDialogComponent, RepeatableRowLabelPipe } from '@alfresco/adf-core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LayoutNode, LayoutRoot, SectionRowOptions } from '../../definition/form-definition.model';
 import { RowAddress, SignalForm } from '../../state/signal-form';
-import { injectSetting } from '../inject-setting';
 import { SignalFormFieldComponent } from '../field/signal-form-field.component';
 
 /**
@@ -59,14 +58,8 @@ export class SignalFormRendererComponent {
     /** The index of the selected tab among the visible ones. */
     readonly selectedTabIndex = model(0);
 
-    protected readonly tabErrorsShown = injectSetting(ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED, (enabled) => enabled ?? false);
-
     protected rootsOf(tabId: string): LayoutRoot[] {
         return this.form().definition.layout.filter((root) => root.tabId === tabId);
-    }
-
-    protected rowIndexes(sectionId: string): number[] {
-        return [...Array(this.form().rowCount(sectionId)).keys()];
     }
 
     protected rowOptionsOf(sectionId: string): SectionRowOptions | undefined {
@@ -81,8 +74,8 @@ export class SignalFormRendererComponent {
         return `repeat(${numberOfColumns}, minmax(0, 1fr))`;
     }
 
-    protected isShown(node: LayoutNode): boolean {
-        return node.kind === 'field' || this.form().isLayoutElementVisible(node.element);
+    protected isShown(node: LayoutNode, row?: RowAddress): boolean {
+        return node.kind === 'field' || this.form().isLayoutElementVisible(node.element, row);
     }
 
     protected confirmRemoveRow(sectionId: string, index: number): void {

@@ -1,0 +1,29 @@
+<mat-form-field class="adf-amount-widget__input adf-form-field-input" subscriptSizing="dynamic" [floatLabel]="shownPlaceholder() ? 'always' : 'auto'">
+    @if (label()) {
+        <mat-label class="adf-label" [attr.data-automation-id]="labelAutomationId()">{{ label() }}</mat-label>
+    }
+    @if (!localeAmounts()) {
+        <span matTextPrefix class="adf-amount-widget__prefix-spacing">{{ shownCurrency() }}&nbsp;</span>
+    }
+    <input
+        #amountText
+        matInput
+        class="adf-input"
+        type="text"
+        [id]="inputId()"
+        [value]="text()"
+        [disabled]="locked()"
+        [required]="required()"
+        [placeholder]="shownPlaceholder()"
+        [title]="tooltip()"
+        [errorStateMatcher]="errorStateMatcher"
+        (input)="typed(amountText.value)"
+        (focus)="startEditing()"
+        (blur)="stopEditing()"
+    />
+    @if (error(); as message) {
+        <mat-error class="adf-form-field-status-slot">
+            <span class="adf-error-text">{{ message.key | translate: message.params }}</span>
+        </mat-error>
+    }
+</mat-form-field>

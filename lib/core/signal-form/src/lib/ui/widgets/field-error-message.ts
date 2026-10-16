@@ -15,25 +15,34 @@
  * limitations under the License.
  */
 
+import { DateFnsUtils } from '@alfresco/adf-core';
 import { FieldDefinition } from '../../definition/form-definition.model';
+import { dateFieldRange, maxLengthOf } from '../../validation/field-validation';
 
 export interface FieldErrorMessage {
     key: string;
     params?: Record<string, unknown>;
 }
 
+const localized = (limit: unknown): string => (typeof limit === 'number' ? limit.toLocaleString() : `${limit}`);
+
+const shownDate = (date: Date | null, field: FieldDefinition): string =>
+    date ? DateFnsUtils.formatDate(date, field.dateDisplayFormat).toLocaleUpperCase() : '';
+
 const MESSAGES: Readonly<Record<string, (field: FieldDefinition) => FieldErrorMessage>> = {
     required: () => ({ key: 'FORM.FIELD.REQUIRED' }),
     dropdown: () => ({ key: 'FORM.FIELD.REQUIRED' }),
     number: () => ({ key: 'FORM.FIELD.VALIDATOR.INVALID_NUMBER' }),
-    minLength: ({ minLength }) => ({ key: 'FORM.FIELD.VALIDATOR.AT_LEAST_LONG', params: { minLength } }),
-    maxLength: ({ maxLength }) => ({ key: 'FORM.FIELD.VALIDATOR.NO_LONGER_THAN', params: { maxLength } }),
-    minValue: ({ minValue }) => ({ key: 'FORM.FIELD.VALIDATOR.NOT_LESS_THAN', params: { minValue } }),
-    maxValue: ({ maxValue }) => ({ key: 'FORM.FIELD.VALIDATOR.NOT_GREATER_THAN', params: { maxValue } }),
+    minLength: ({ minLength }) => ({ key: 'FORM.FIELD.VALIDATOR.AT_LEAST_LONG', params: { minLength: localized(minLength) } }),
+    maxLength: (field) => ({ key: 'FORM.FIELD.VALIDATOR.NO_LONGER_THAN', params: { maxLength: localized(maxLengthOf(field)) } }),
+    minValue: ({ minValue }) => ({ key: 'FORM.FIELD.VALIDATOR.NOT_LESS_THAN', params: { minValue: localized(minValue) } }),
+    maxValue: ({ maxValue }) => ({ key: 'FORM.FIELD.VALIDATOR.NOT_GREATER_THAN', params: { maxValue: localized(maxValue) } }),
     pattern: () => ({ key: 'FORM.FIELD.VALIDATOR.INVALID_VALUE' }),
     decimal: () => ({ key: 'FORM.FIELD.VALIDATOR.INVALID_DECIMAL_NUMBER' }),
     precision: ({ precision }) => ({ key: 'FORM.FIELD.VALIDATOR.INVALID_DECIMAL_PRECISION', params: { precision } }),
-    date: () => ({ key: 'FORM.FIELD.VALIDATOR.INVALID_DATE' })
+    dateFormat: ({ dateDisplayFormat }) => ({ key: 'FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT', params: { format: dateDisplayFormat } }),
+    dateMin: (field) => ({ key: 'FORM.FIELD.VALIDATOR.NOT_LESS_THAN', params: { minValue: shownDate(dateFieldRange(field).min, field) } }),
+    dateMax: (field) => ({ key: 'FORM.FIELD.VALIDATOR.NOT_GREATER_THAN', params: { maxValue: shownDate(dateFieldRange(field).max, field) } })
 };
 
 /**

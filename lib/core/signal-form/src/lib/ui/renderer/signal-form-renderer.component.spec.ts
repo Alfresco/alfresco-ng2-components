@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injector } from '@angular/core';
+import { ErrorHandler, Injector, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopTranslateModule } from '../../../../../src/lib/testing/noop-translate.module';
 import { mockRepeatableSectionForm01, textWidgetVisibility } from '../../../../../src/lib/form/components/mock/form-renderer.component.mock';
@@ -29,14 +29,9 @@ import { MatInputHarness } from '@angular/material/input/testing';
 import { MatRadioGroupHarness } from '@angular/material/radio/testing';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { of } from 'rxjs';
-import {
-    ADF_DISPLAY_TEXT_SETTINGS,
-    ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED,
-    ADF_TYPED_VALUE_FORMATTING_ENABLED,
-    EditJsonDialogComponent
-} from '@alfresco/adf-core';
+import { EditJsonDialogComponent } from '@alfresco/adf-core';
 import { readFormDefinition } from '../../definition/read-form-definition';
-import { SignalForm } from '../../state/signal-form';
+import { SignalForm, SignalFormOptions } from '../../state/signal-form';
 import { FormWidgetRegistry, provideFormWidgets } from '../../widgets/form-widget-registry';
 import { SignalTextWidgetComponent } from '../widgets/text/text-widget.component';
 import { BUILT_IN_WIDGETS_LOADED_DIRECTLY, settleFixture } from '../testing/signal-form-testing.mock';
@@ -50,9 +45,9 @@ describe('SignalFormRendererComponent', () => {
         formDefinition: { fields: [{ id: 'root', type: 'container', numberOfColumns: 2, fields: { 1: fields } }], outcomes: [], variables: [] }
     });
 
-    const render = async (definition: object, untilLoaded = true): Promise<void> => {
+    const render = async (definition: object, untilLoaded = true, options: SignalFormOptions = {}): Promise<void> => {
         const registry = TestBed.inject(FormWidgetRegistry);
-        form = new SignalForm(readFormDefinition(definition, registry), {}, TestBed.inject(Injector), registry);
+        form = new SignalForm(readFormDefinition(definition, registry), options, TestBed.inject(Injector), registry);
         fixture = TestBed.createComponent(SignalFormRendererComponent);
         fixture.componentRef.setInput('form', form);
         await settle(untilLoaded);
@@ -196,16 +191,15 @@ describe('SignalFormRendererComponent', () => {
                 .filter((tab: Element) => tab.querySelector('.adf-form-tab-validation-indicator'))
                 .map((tab: Element) => tab.getAttribute('aria-label'));
 
-        it('should mark a visible tab holding an invalid field, when tab indicators are enabled', async () => {
-            TestBed.configureTestingModule({ providers: [{ provide: ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED, useValue: true }] });
-            await render(requiredOnExtra());
+        it('should mark a visible tab holding an invalid field, when the form has tab indicators on', async () => {
+            await render(requiredOnExtra(), true, { features: { tabErrorIndicators: true } });
             expect(tabMarkers()).withContext('the invalid tab is hidden').toEqual([]);
 
             await type('showExtra', 'yes');
             expect(tabMarkers()).toEqual(['FORM.FORM_RENDERER.TAB_VALIDATION_ERRORS_LABEL']);
         });
 
-        it('should not mark tabs while tab indicators are off', async () => {
+        it('should not mark tabs while the form has tab indicators off', async () => {
             await render(requiredOnExtra());
             await type('showExtra', 'yes');
 
@@ -256,7 +250,38 @@ describe('SignalFormRendererComponent', () => {
             expect(element('.adf-signal-form-repeatable-limit')?.textContent).toContain('FORM.FIELD.REPEATABLE_SECTION.ROW_LIMIT_REACHED');
         });
 
+        it('should remove a row holding hand-bound widgets without reading the removed row', async () => {
+            const handleError = spyOn(TestBed.inject(ErrorHandler), 'handleError');
+            await render({
+                formDefinition: {
+                    fields: [
+                        {
+                            id: 'lines',
+                            type: 'repeatable-section',
+                            numberOfColumns: 3,
+                            params: { initialNumberOfRows: 2, maxNumberOfRows: 3, allowInitialRowsDelete: true },
+                            fields: {
+                                1: [{ id: 'due', type: 'date' }],
+                                2: [{ id: 'price', type: 'amount' }],
+                                3: [{ id: 'code', type: 'text', params: { inputMask: '000' } }]
+                            }
+                        }
+                    ],
+                    outcomes: [],
+                    variables: []
+                }
+            });
+            await type('code-Row1', '42');
+
+            await click('[data-automation-id="adf-signal-form-row-remove"]');
+
+            expect(rows().length).toBe(1);
+            expect(input('code-Row0').value).withContext('the remaining row moved up').toBe('42');
+            expect(handleError).not.toHaveBeenCalled();
+        });
+
         it('should remove a row only once the removal is confirmed', async () => {
+            const handleError = spyOn(TestBed.inject(ErrorHandler), 'handleError');
             await render(mockRepeatableSectionForm01);
 
             confirmRemoval = false;
@@ -266,6 +291,7 @@ describe('SignalFormRendererComponent', () => {
             confirmRemoval = true;
             await click('[data-automation-id="adf-signal-form-row-remove"]');
             expect(rows().length).toBe(1);
+            expect(handleError).withContext('nothing reads the removed row').not.toHaveBeenCalled();
         });
     });
 
@@ -345,7 +371,7 @@ describe('SignalFormRendererComponent', () => {
 
             expect(input('due').value).toBe('not a date');
             expect(form.valid()).toBeFalse();
-            expect(element('.adf-error-text')?.textContent).toContain('FORM.FIELD.VALIDATOR.INVALID_DATE');
+            expect(element('.adf-error-text')?.textContent.trim()).toBe('FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT');
             expect(form.submissionValues()['due']).toBeNull();
         });
 
@@ -370,6 +396,16 @@ describe('SignalFormRendererComponent', () => {
 
             expect(form.submissionValues()['due']).toBe('2024-03-20T00:00:00.000Z');
             expect(input('due').value).toBe('20-3-2024');
+        });
+
+        it('should report an empty required date as required, and a date out of range against its bound', async () => {
+            await render(fieldsForm([{ id: 'due', name: 'Due', type: 'date', required: true, minValue: '2024-03-15' }]));
+
+            await type('due', '');
+            expect(element('.adf-error-text')?.textContent.trim()).toBe('FORM.FIELD.REQUIRED');
+
+            await type('due', '1-1-2024');
+            expect(element('.adf-error-text')?.textContent.trim()).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
         });
 
         it('should disable a read-only date', async () => {
@@ -420,6 +456,35 @@ describe('SignalFormRendererComponent', () => {
         });
     });
 
+    describe('required fields', () => {
+        it('should mark required fields as required, following rules that change it', async () => {
+            await render(
+                fieldsForm([
+                    { id: 'name', type: 'text', required: true },
+                    { id: 'due', type: 'date', required: true },
+                    { id: 'country', type: 'dropdown', required: true, options: [{ id: 'it', name: 'Italy' }] },
+                    { id: 'note', type: 'text' }
+                ])
+            );
+            const loader = TestbedHarnessEnvironment.loader(fixture);
+            const textInput = (selector: string) => loader.getHarness(MatInputHarness.with({ selector }));
+
+            expect(await (await textInput('#name')).isRequired()).toBeTrue();
+            expect(await (await textInput('#due')).isRequired())
+                .withContext('a hand-bound input')
+                .toBeTrue();
+            expect(await (await loader.getHarness(MatSelectHarness.with({ selector: '#country' }))).isRequired()).toBeTrue();
+            expect(await (await textInput('#note')).isRequired()).toBeFalse();
+
+            form.setRequired('name', false);
+            form.setRequired('note', true);
+            await settle();
+
+            expect(await (await textInput('#name')).isRequired()).toBeFalse();
+            expect(await (await textInput('#note')).isRequired()).toBeTrue();
+        });
+    });
+
     describe('display widgets', () => {
         it('should link to the value, adding the scheme it misses, and show the display text', async () => {
             await render(
@@ -439,37 +504,79 @@ describe('SignalFormRendererComponent', () => {
             expect(element('#nowhere').getAttribute('href')).toBe('#');
         });
 
-        it('should show a read-only text as written while expression evaluation is off', async () => {
-            await render(
-                fieldsForm([
-                    { id: 'greeting', type: 'readonly-text', value: 'Hello ${field.name}' },
-                    { id: 'name', type: 'text' }
-                ])
-            );
+        const shippingForm = fieldsForm([
+            { id: 'greeting', type: 'readonly-text', value: 'Hello ${field.name}, shipping to ${field.country}' },
+            { id: 'name', type: 'text' },
+            { id: 'country', type: 'dropdown', options: [{ id: 'it', name: 'Italy' }], value: 'it' }
+        ]);
+        const greeting = () => element('#greeting').textContent.trim();
 
-            expect(element('#greeting').textContent.trim()).toBe('Hello ${field.name}');
-        });
-
-        it('should resolve read-only text expressions as the values they use change, with typed values by name', async () => {
-            TestBed.configureTestingModule({
-                providers: [
-                    { provide: ADF_DISPLAY_TEXT_SETTINGS, useValue: of({ enableExpressionEvaluation: true }) },
-                    { provide: ADF_TYPED_VALUE_FORMATTING_ENABLED, useValue: true }
-                ]
-            });
-            await render(
-                fieldsForm([
-                    { id: 'greeting', type: 'readonly-text', value: 'Hello ${field.name}, shipping to ${field.country}' },
-                    { id: 'name', type: 'text' },
-                    { id: 'country', type: 'dropdown', options: [{ id: 'it', name: 'Italy' }], value: 'it' }
-                ])
-            );
-
-            expect(element('#greeting').textContent.trim()).toBe('Hello , shipping to Italy');
+        it('should resolve read-only text expressions as the values they use change', async () => {
+            await render(shippingForm);
+            expect(greeting()).toBe('Hello , shipping to it');
 
             await type('name', 'Vito');
 
-            expect(element('#greeting').textContent.trim()).toBe('Hello Vito, shipping to Italy');
+            expect(greeting()).toBe('Hello Vito, shipping to it');
+        });
+
+        it('should show typed values by name while the form has typed value formatting on, following the feature', async () => {
+            const typedValueFormatting = signal(true);
+            await render(shippingForm, true, { features: { typedValueFormatting } });
+            expect(greeting()).toBe('Hello , shipping to Italy');
+
+            typedValueFormatting.set(false);
+            await settle();
+
+            expect(greeting()).toBe('Hello , shipping to it');
+        });
+
+        it('should mask a text as it is typed, show the mask placeholder and submit the masked text', async () => {
+            await render(fieldsForm([{ id: 'phone', type: 'text', params: { inputMask: '##-##0,00%', inputMaskPlaceholder: 'Rate: __-___,__%' } }]));
+            expect(input('phone').placeholder).toBe('Rate: __-___,__%');
+
+            await type('phone', 'F');
+            expect(input('phone').value).withContext('rejected character removed').toBe('');
+
+            await type('phone', '12345678');
+
+            expect(input('phone').value).toBe('12-345,67%');
+            expect(form.submissionValues()['phone']).toBe('12-345,67%');
+        });
+
+        it("should show a field's own message when its pattern fails", async () => {
+            await render(
+                fieldsForm([
+                    { id: 'code', type: 'text', regexPattern: '[A-Z]{3}', customValidationMessage: 'Use three capital letters' },
+                    { id: 'other', type: 'text', regexPattern: '[A-Z]{3}' }
+                ])
+            );
+
+            await type('code', 'abc');
+            await type('other', 'abc');
+
+            const messages = Array.from(fixture.nativeElement.querySelectorAll('.adf-error-text')).map((message: Element) =>
+                message.textContent.trim()
+            );
+            expect(messages).toEqual(['Use three capital letters', 'FORM.FIELD.VALIDATOR.INVALID_VALUE']);
+        });
+
+        it('should show an amount for the locale while not edited, and as typed while edited, when the form has locale amounts on', async () => {
+            await render(fieldsForm([{ id: 'price', name: 'Price', type: 'amount', enableFractions: true, placeholder: '1000' }]), true, {
+                features: { localeAmounts: true }
+            });
+            expect(input('price').placeholder).toBe('1,000.00');
+            expect(element('.adf-amount-widget__prefix-spacing')).withContext('the locale format brings its own symbol').toBeNull();
+
+            input('price').dispatchEvent(new Event('focus'));
+            await type('price', '1234.5');
+
+            expect(input('price').value).withContext('formatted once the user leaves the field').toBe('1,234.50');
+            expect(form.submissionValues()['price']).toBe(1234.5);
+
+            input('price').dispatchEvent(new Event('focus'));
+            await settle();
+            expect(input('price').value).toBe('1234.5');
         });
 
         it('should show a JSON value in the read-only JSON dialog', async () => {

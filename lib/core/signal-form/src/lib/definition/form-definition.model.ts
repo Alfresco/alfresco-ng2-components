@@ -58,6 +58,9 @@ export const LAYOUT_FIELD_TYPES: ReadonlySet<string> = new Set([
     FormFieldType.RepeatableSection
 ]);
 
+/** The field types whose value never comes from saved form values. */
+export const CONSTANT_VALUE_FIELD_TYPES: ReadonlySet<string> = new Set([FormFieldType.DisplayExternalProperty]);
+
 /** The field types that only show a value, which they can take from a process field (`params.field`). */
 export const READ_ONLY_FIELD_TYPES: ReadonlySet<string> = new Set([FormFieldType.Hyperlink, FormFieldType.DisplayValue, FormFieldType.ReadonlyText]);
 
@@ -120,6 +123,8 @@ export interface FieldDefinition {
     minValue?: unknown;
     maxValue?: unknown;
     regexPattern?: string | null;
+    customValidationMessage?: string;
+    inputMask?: InputMask;
     visibilityCondition?: VisibilityCondition | null;
     options: FieldOption[];
     optionType?: string;
@@ -137,6 +142,16 @@ export interface FieldDefinition {
     displayText?: string;
     sourceField?: SourceFieldReference;
     initialValue: unknown;
+}
+
+/**
+ * A text field's input mask (`params.inputMask`): see `applyInputMask` for the mask characters.
+ */
+export interface InputMask {
+    mask: string;
+    reversed: boolean;
+    /** Shown instead of the field placeholder while the field has a mask. */
+    placeholder?: string;
 }
 
 /**
@@ -162,6 +177,8 @@ export interface SectionDefinition {
     rowOptions: SectionRowOptions;
     tabId?: string;
     fields: FieldDefinition[];
+    /** The saved rows (the section's `value`), read like field values; empty for a section never saved. */
+    savedRows: Record<string, unknown>[];
 }
 
 export interface OutcomeDefinition {

@@ -1,0 +1,45 @@
+<div class="adf-date-time-widget-inputs">
+    <mat-form-field class="adf-date-time-widget adf-form-field-input" subscriptSizing="dynamic" [floatLabel]="placeholder() ? 'always' : 'auto'">
+        @if (label()) {
+            <mat-label class="adf-label" [attr.data-automation-id]="labelAutomationId()">{{ label() }}</mat-label>
+        }
+        <input
+            #dayText
+            matInput
+            [matDatepicker]="datePicker"
+            [id]="inputId()"
+            [min]="minDate()"
+            [max]="maxDate()"
+            [disabled]="locked()"
+            [required]="required()"
+            [placeholder]="placeholder()"
+            [title]="tooltip()"
+            [errorStateMatcher]="errorStateMatcher"
+            (input)="typed(dayText.value)"
+            (dateChange)="picked($event.value, dayText.value)"
+            (blur)="markTouched()"
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="datePicker" />
+        <mat-datepicker #datePicker (closed)="markTouched()" />
+        @if (error(); as message) {
+            <mat-error class="adf-form-field-status-slot">
+                <span class="adf-error-text">{{ message.key | translate: message.params }}</span>
+            </mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field class="adf-date-time-widget-time adf-form-field-input" subscriptSizing="dynamic">
+        <input
+            matInput
+            placeholder="HH:mm"
+            [matTimepicker]="timePicker"
+            [id]="timeInputId()"
+            [value]="time()"
+            [disabled]="locked()"
+            [errorStateMatcher]="errorStateMatcher"
+            (valueChange)="changedTime($event)"
+            (blur)="markTouched()"
+        />
+        <mat-timepicker-toggle matIconSuffix [for]="timePicker" />
+        <mat-timepicker #timePicker />
+    </mat-form-field>
+</div>

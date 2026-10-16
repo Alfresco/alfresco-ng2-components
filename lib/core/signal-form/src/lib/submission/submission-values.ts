@@ -50,7 +50,7 @@ export const toSubmissionValues = (
         submission[id] = withoutSymbolKeys(submittedValue(fields.get(id), value, widgets));
     }
 
-    for (const [sectionId, rows] of Object.entries(model.sections)) {
+    for (const [sectionId, rows] of Object.entries(model.sections).filter(([, sectionRows]) => sectionRows.length > 0)) {
         const sectionFields = sections.get(sectionId).fields;
         submission[sectionId] = rows.map((row) =>
             Object.fromEntries(sectionFields.map((field) => [field.id, withoutSymbolKeys(submittedValue(field, row[field.id], widgets))]))

@@ -1,4 +1,4 @@
-@if (form().isOnScreen(field())) {
+@if (form().isOnScreen(field(), row())) {
     <div class="adf-signal-form-field" [attr.data-automation-id]="'adf-signal-form-field-' + field().id">
         @if (state() === widgetState.Registered && component(); as type) {
             @if (widget()?.derivedFromValueType) {

@@ -1,0 +1,46 @@
+/*!
+ * @license
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { TranslatePipe } from '@ngx-translate/core';
+import { applyInputMask } from './input-mask';
+import { SignalInputControl } from './signal-input-control';
+
+/**
+ * A text input with an input mask: the masked text replaces what was typed on every keystroke, so characters the
+ * mask rejects disappear at once.
+ */
+@Component({
+    selector: 'adf-signal-masked-text-input',
+    templateUrl: './masked-text-input-control.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [MatFormFieldModule, MatInputModule, TranslatePipe]
+})
+export class SignalMaskedTextInputControlComponent extends SignalInputControl<string | null> {
+    readonly mask = input.required<string>();
+    readonly reversed = input(false, { transform: booleanAttribute });
+
+    protected readonly text = computed(() => this.value() ?? '');
+
+    protected typed(textInput: HTMLInputElement): void {
+        const masked = applyInputMask(textInput.value, this.mask(), this.reversed());
+        textInput.value = masked;
+        this.value.set(masked);
+    }
+}
