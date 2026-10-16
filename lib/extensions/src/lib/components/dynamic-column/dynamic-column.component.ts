@@ -27,6 +27,7 @@ import {
     SimpleChanges,
     ViewEncapsulation,
     ChangeDetectionStrategy,
+    reflectComponentType,
     inject
 } from '@angular/core';
 import { ExtensionService } from '../../services/extension.service';
@@ -51,15 +52,15 @@ export class DynamicColumnComponent implements OnInit, OnChanges, OnDestroy {
     private readonly extensions = inject(ExtensionService);
 
     @ViewChild('content', { read: ViewContainerRef, static: true })
-    content: ViewContainerRef;
+    content!: ViewContainerRef;
 
     @Input()
-    id: string;
+    id!: string;
 
     @Input()
     context: any;
 
-    private componentRef: ComponentRef<any>;
+    private componentRef: ComponentRef<any> | null = null;
 
     ngOnInit() {
         const componentType = this.extensions.getComponentById(this.id);
@@ -71,7 +72,7 @@ export class DynamicColumnComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.node) {
+        if (changes.context) {
             this.updateInstance();
         }
     }
@@ -85,7 +86,15 @@ export class DynamicColumnComponent implements OnInit, OnChanges, OnDestroy {
 
     private updateInstance() {
         if (this.componentRef?.instance) {
-            this.componentRef.instance.context = this.context;
+            const contextInput = reflectComponentType(this.componentRef.componentType)?.inputs.find(
+                (input) => input.propName === 'context' || input.templateName === 'context'
+            );
+
+            if (contextInput) {
+                this.componentRef.setInput(contextInput.templateName, this.context);
+            } else {
+                this.componentRef.instance.context = this.context;
+            }
         }
     }
 }

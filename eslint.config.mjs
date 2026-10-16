@@ -49,6 +49,7 @@ export default [
             '.nx',
             '.vscode',
             'coverage',
+            '**/coverage/**',
             'dist',
             '**/docs',
             'nxcache',

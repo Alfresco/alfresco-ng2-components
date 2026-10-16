@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ExtensionService, EXTENSION_JSONS, EXTENSION_JSON_VALUES } from './extension.service';
+import { ExtensionService, EXTENSION_CONFIG_BASE_URL, EXTENSION_JSONS, EXTENSION_JSON_VALUES } from './extension.service';
 import { ExtensionLoaderService } from './extension-loader.service';
 import { ExtensionConfig } from '../config/extension.config';
 import { RuleRef } from '../config/rule.extensions';
@@ -67,6 +67,53 @@ describe('ExtensionService', () => {
         expect(loader.load).toHaveBeenCalled();
         expect(loader.load).toHaveBeenCalledWith('assets/app.extensions.json', 'assets/plugins', [], []);
         expect(service.setup).toHaveBeenCalledWith(blankConfig);
+    });
+
+    it('should preserve app-supplied absolute config paths', async () => {
+        spyOn(loader, 'load').and.resolveTo(blankConfig);
+        service.configPath = 'https://cdn.example.com/app.extensions.json';
+        service.pluginsPath = 'https://cdn.example.com/plugins';
+
+        await service.load();
+
+        expect(loader.load).toHaveBeenCalledWith('https://cdn.example.com/app.extensions.json', 'https://cdn.example.com/plugins', [], []);
+    });
+
+    it('should resolve relative config paths against the injected base URL', async () => {
+        TestBed.resetTestingModule();
+        const originLoader = jasmine.createSpyObj<ExtensionLoaderService>('ExtensionLoaderService', [
+            'load',
+            'getActions',
+            'getRoutes',
+            'getFeatures',
+            'getRules'
+        ]);
+        originLoader.load.and.resolveTo(blankConfig);
+        originLoader.getActions.and.returnValue([]);
+        originLoader.getRoutes.and.returnValue([]);
+        originLoader.getFeatures.and.returnValue([]);
+        originLoader.getRules.and.returnValue([]);
+        TestBed.configureTestingModule({
+            providers: [
+                ExtensionService,
+                ComponentRegisterService,
+                RuleService,
+                { provide: ExtensionLoaderService, useValue: originLoader },
+                { provide: EXTENSION_JSONS, useValue: [] },
+                { provide: EXTENSION_JSON_VALUES, useValue: [] },
+                { provide: EXTENSION_CONFIG_BASE_URL, useValue: 'https://example.com' }
+            ]
+        });
+        const originService = TestBed.inject(ExtensionService);
+
+        await originService.load();
+
+        expect(originLoader.load).toHaveBeenCalledWith(
+            'https://example.com/assets/app.extensions.json',
+            'https://example.com/assets/plugins',
+            [],
+            []
+        );
     });
 
     describe('getFeature', () => {
