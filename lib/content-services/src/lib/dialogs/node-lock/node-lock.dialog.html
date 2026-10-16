@@ -1,47 +1,47 @@
 <h2 mat-dialog-title>
-    {{ 'CORE.FILE_DIALOG.FILE_LOCK' | translate }}
+  {{ 'CORE.FILE_DIALOG.FILE_LOCK' | translate }}
 </h2>
 
 <mat-dialog-content>
+  <br />
+  <form [formGroup]="form" (submit)="submit()">
+    <mat-checkbox  data-automation-id="adf-lock-node-checkbox" class="adf-lock-file-name" [title]="nodeName" [formControlName]="'isLocked'" ngDefaultControl>
+      {{ 'CORE.FILE_DIALOG.FILE_LOCK_CHECKBOX' | translate }} <strong>"{{ nodeName }}"</strong>
+    </mat-checkbox>
+
     <br />
-    <form [formGroup]="form" (submit)="submit()">
-        <mat-checkbox  data-automation-id="adf-lock-node-checkbox" class="adf-lock-file-name" [title]="nodeName" [formControlName]="'isLocked'" ngDefaultControl>
-            {{ 'CORE.FILE_DIALOG.FILE_LOCK_CHECKBOX' | translate }} <strong>"{{ nodeName }}"</strong>
+
+    @if (form.value?.isLocked) {
+      <div>
+        <mat-checkbox class="adf-lock-file-name" [formControlName]="'allowOwner'" ngDefaultControl>
+          {{ 'CORE.FILE_DIALOG.ALLOW_OTHERS_CHECKBOX' | translate }}
         </mat-checkbox>
-
         <br />
-
-        <div *ngIf="form.value?.isLocked">
-            <mat-checkbox class="adf-lock-file-name" [formControlName]="'allowOwner'" ngDefaultControl>
-                {{ 'CORE.FILE_DIALOG.ALLOW_OTHERS_CHECKBOX' | translate }}
-            </mat-checkbox>
-
-            <br />
-
-            <mat-checkbox class="adf-lock-file-name" [formControlName]="'isTimeLock'" ngDefaultControl>
-                {{ 'CORE.FILE_DIALOG.TIME_LOCK_CHECKBOX' | translate }}
-            </mat-checkbox>
-
-            <br />
-
-            <mat-form-field *ngIf="form.value?.isTimeLock">
-                <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix />
-                <mat-datetimepicker #datetimePicker type="datetime" [openOnFocus]="true" [timeInterval]="1" />
-                <input matInput [formControlName]="'time'" [matDatetimepicker]="datetimePicker" required autocomplete="false">
-            </mat-form-field>
-        </div>
-    </form>
-    <br />
+        <mat-checkbox class="adf-lock-file-name" [formControlName]="'isTimeLock'" ngDefaultControl>
+          {{ 'CORE.FILE_DIALOG.TIME_LOCK_CHECKBOX' | translate }}
+        </mat-checkbox>
+        <br />
+        @if (form.value?.isTimeLock) {
+          <mat-form-field>
+            <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix />
+            <mat-datetimepicker #datetimePicker type="datetime" [openOnFocus]="true" [timeInterval]="1" />
+            <input matInput [formControlName]="'time'" [matDatetimepicker]="datetimePicker" required autocomplete="false">
+          </mat-form-field>
+        }
+      </div>
+    }
+  </form>
+  <br />
 </mat-dialog-content>
 
 <mat-dialog-actions class="adf-dialog-buttons">
-    <span class="adf-fill-remaining-space"></span>
+  <span class="adf-fill-remaining-space"></span>
 
-    <button mat-button mat-dialog-close data-automation-id="lock-dialog-btn-cancel">
-        {{ 'CORE.FILE_DIALOG.CANCEL_BUTTON.LABEL' | translate }}
-    </button>
+  <button mat-button mat-dialog-close data-automation-id="lock-dialog-btn-cancel">
+    {{ 'CORE.FILE_DIALOG.CANCEL_BUTTON.LABEL' | translate }}
+  </button>
 
-    <button class="adf-dialog-action-button" mat-button (click)="submit()">
-        {{ 'CORE.FILE_DIALOG.SAVE_BUTTON.LABEL' | translate }}
-    </button>
+  <button class="adf-dialog-action-button" mat-button (click)="submit()">
+    {{ 'CORE.FILE_DIALOG.SAVE_BUTTON.LABEL' | translate }}
+  </button>
 </mat-dialog-actions>

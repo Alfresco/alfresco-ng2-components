@@ -1,8 +1,10 @@
 <mat-tab-group (selectedIndexChange)="onTabIndexChanged($event)">
-    <mat-tab *ngFor="let tabContent of tabsContents; let i = index"
-             [labelClass]='selectedIndex === i ? "adf-search-tab-label-active" : ""'
-             [bodyClass]='selectedIndex === i ? "adf-search-tab-content-active" : ""'
-             label="{{tabContent.name | translate}}">
-        <ng-container *ngTemplateOutlet="tabContent.templateRef" />
+  @for (tabContent of tabsContents; track tabContent; let i = $index) {
+    <mat-tab
+      [labelClass]='selectedIndex === i ? "adf-search-tab-label-active" : ""'
+      [bodyClass]='selectedIndex === i ? "adf-search-tab-content-active" : ""'
+      label="{{tabContent.name | translate}}">
+      <ng-container *ngTemplateOutlet="tabContent.templateRef" />
     </mat-tab>
+  }
 </mat-tab-group>

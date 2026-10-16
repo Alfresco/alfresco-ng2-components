@@ -20,7 +20,7 @@ import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { ReplaySubject } from 'rxjs';
-import { CommonModule } from '@angular/common';
+
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,7 +29,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-slider',
-    imports: [CommonModule, MatSliderModule, FormsModule, MatButtonModule, TranslatePipe],
+    imports: [MatSliderModule, FormsModule, MatButtonModule, TranslatePipe],
     templateUrl: './search-slider.component.html',
     styleUrls: ['./search-slider.component.scss'],
     encapsulation: ViewEncapsulation.None,
