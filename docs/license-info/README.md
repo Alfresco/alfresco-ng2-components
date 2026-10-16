@@ -58,3 +58,6 @@ The pages linked below contain the licenses for all third party dependencies of 
 - [ADF 8.0.0](license-info-8.0.0.md)
 - [ADF 8.0.1](license-info-8.0.1.md)
 - [ADF 8.0.2](license-info-8.0.2.md)
+- [ADF 8.0.3](license-info-8.0.3.md)
+- [ADF 8.0.4](license-info-8.0.4.md)
+- [ADF 8.0.5](license-info-8.0.5.md)
