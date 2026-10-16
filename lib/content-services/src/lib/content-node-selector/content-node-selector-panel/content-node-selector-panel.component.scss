@@ -55,15 +55,13 @@ h2.adf-search-results-label {
         }
     }
 
-    &-breadcrumb {
+    &-content-breadcrumb {
         .adf-dropdown-breadcrumb-trigger {
-            outline: none;
-
             .adf-dropdown-breadcrumb-icon {
                 color: var(--mat-sys-on-secondary-container);
             }
 
-            &:focus .adf-dropdown-breadcrumb-icon {
+            &:focus-visible .adf-dropdown-breadcrumb-icon {
                 color: var(--mat-sys-primary);
             }
         }
