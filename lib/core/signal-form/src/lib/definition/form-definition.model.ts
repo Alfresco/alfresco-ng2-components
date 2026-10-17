@@ -207,12 +207,23 @@ export interface FieldLayoutNode {
     colspan: number;
 }
 
+/**
+ * How a group's header behaves (`params.allowCollapse`, `params.collapseByDefault`, `params.hideHeader`).
+ */
+export interface GroupHeader {
+    collapsible: boolean;
+    collapsedByDefault: boolean;
+    hidden: boolean;
+}
+
 export interface ContainerLayoutNode {
     kind: 'container';
     element: LayoutDefinition;
     name?: string;
     numberOfColumns: number;
     columns: LayoutNode[][];
+    /** Set for a group only: other containers have no header. */
+    groupHeader?: GroupHeader;
 }
 
 export interface RepeatableLayoutNode {

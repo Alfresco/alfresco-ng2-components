@@ -27,6 +27,7 @@ import {
     FormDefinition,
     FormFieldType,
     FormVariables,
+    GroupHeader,
     CONSTANT_VALUE_FIELD_TYPES,
     LAYOUT_FIELD_TYPES,
     LayoutDefinition,
@@ -97,9 +98,17 @@ const toLayoutNode = (field: FieldJson): LayoutNode => {
         numberOfColumns: field.numberOfColumns ?? 1,
         columns: Object.values(field.fields ?? {}).map((column) => column.map(toLayoutNode))
     };
-    return field.type === FormFieldType.RepeatableSection
-        ? { kind: 'repeatable', sectionId: field.id, ...container }
+    if (field.type === FormFieldType.RepeatableSection) {
+        return { kind: 'repeatable', sectionId: field.id, ...container };
+    }
+    return field.type === FormFieldType.Group
+        ? { kind: 'container', ...container, groupHeader: groupHeaderOf(field) }
         : { kind: 'container', ...container };
+};
+
+const groupHeaderOf = (group: FieldJson): GroupHeader => {
+    const collapsible = !!group.params?.allowCollapse;
+    return { collapsible, collapsedByDefault: collapsible && !!group.params?.collapseByDefault, hidden: !!group.params?.hideHeader };
 };
 
 const readOutcomes = (outcomes: OutcomeJson[], selectedOutcome: string | undefined): OutcomeDefinition[] => {

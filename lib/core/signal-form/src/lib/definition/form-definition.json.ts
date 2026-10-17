@@ -31,6 +31,9 @@ export interface FieldJson {
         inputMask?: string;
         inputMaskReversed?: boolean;
         inputMaskPlaceholder?: string;
+        allowCollapse?: boolean;
+        collapseByDefault?: boolean;
+        hideHeader?: boolean;
     } & SectionRowOptions;
     visibilityCondition?: VisibilityCondition | null;
     [property: string]: any;

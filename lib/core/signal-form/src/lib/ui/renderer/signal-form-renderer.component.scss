@@ -18,12 +18,12 @@
 
     .adf-signal-form-container-header {
         font-weight: 500;
-        margin-bottom: 8px;
+        margin: 0 0 8px;
     }
 
     .adf-signal-form-columns {
-        display: grid;
-        gap: 0 16px;
+        display: flex;
+        flex-wrap: wrap;
     }
 
     .adf-signal-form-column {

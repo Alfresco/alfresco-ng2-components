@@ -46,10 +46,49 @@
                     class="adf-signal-form-container adf-signal-form-{{ node.element.type }}"
                     [attr.data-automation-id]="'adf-signal-form-container-' + node.element.id"
                 >
-                    @if (node.element.type === 'group' && node.name) {
-                        <div class="adf-signal-form-container-header">{{ node.name | translate }}</div>
+                    @if (node.groupHeader; as header) {
+                        @let expanded = isExpanded(node, row);
+                        @let contentId = groupContentId(node, row);
+                        @let groupName = node.name ?? '' | translate;
+                        @if (header.collapsible && header.hidden) {
+                            <button
+                                mat-icon-button
+                                class="adf-signal-form-group-toggle"
+                                [attr.aria-expanded]="expanded"
+                                [attr.aria-controls]="contentId"
+                                [attr.aria-label]="
+                                    (expanded ? 'FORM.SIGNAL_FORM.COLLAPSE_GROUP' : 'FORM.SIGNAL_FORM.EXPAND_GROUP') | translate: { name: groupName }
+                                "
+                                [attr.data-automation-id]="'adf-signal-form-group-toggle-' + node.element.id"
+                                (click)="toggleGroup(node, row)"
+                            >
+                                <mat-icon>{{ expanded ? 'expand_more' : 'expand_less' }}</mat-icon>
+                            </button>
+                        } @else if (header.collapsible) {
+                            <h4 class="adf-signal-form-container-header">
+                                <button
+                                    mat-button
+                                    class="adf-signal-form-group-toggle"
+                                    [attr.aria-expanded]="expanded"
+                                    [attr.aria-controls]="contentId"
+                                    [attr.data-automation-id]="'adf-signal-form-group-toggle-' + node.element.id"
+                                    (click)="toggleGroup(node, row)"
+                                >
+                                    <mat-icon>{{ expanded ? 'expand_more' : 'expand_less' }}</mat-icon>
+                                    {{ groupName }}
+                                </button>
+                            </h4>
+                        } @else if (!header.hidden && node.name) {
+                            <h4 class="adf-signal-form-container-header">{{ groupName }}</h4>
+                        }
+                        @if (expanded) {
+                            <div [id]="contentId">
+                                <ng-container *ngTemplateOutlet="columns; context: { $implicit: node, row: row }" />
+                            </div>
+                        }
+                    } @else {
+                        <ng-container *ngTemplateOutlet="columns; context: { $implicit: node, row: row }" />
                     }
-                    <ng-container *ngTemplateOutlet="columns; context: { $implicit: node, row: row }" />
                 </div>
             }
             @case ('repeatable') {
@@ -108,10 +147,10 @@
 </ng-template>
 
 <ng-template #columns let-node let-row="row">
-    <div class="adf-signal-form-columns" [style.grid-template-columns]="columnTemplate(node.numberOfColumns)">
-        @for (column of node.columns; track $index) {
-            <div class="adf-signal-form-column">
-                @for (child of column; track $index) {
+    <div class="adf-signal-form-columns" [style.column-gap.px]="columnGap">
+        @for (placement of columnPlacements(node); track placement.index) {
+            <div class="adf-signal-form-column" [style.flex]="columnFlex(placement.span)">
+                @for (child of placement.column; track $index) {
                     <ng-container *ngTemplateOutlet="layoutNode; context: { $implicit: child, row: row }" />
                 }
             </div>

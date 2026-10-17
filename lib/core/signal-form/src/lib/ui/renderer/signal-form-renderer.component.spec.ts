@@ -456,6 +456,216 @@ describe('SignalFormRendererComponent', () => {
         });
     });
 
+    describe('columns', () => {
+        const fourColumns = {
+            formDefinition: {
+                fields: [
+                    {
+                        id: 'root',
+                        type: 'container',
+                        numberOfColumns: 4,
+                        fields: { 1: [{ id: 'wide', type: 'text', colspan: 2 }], 2: [], 3: [], 4: [{ id: 'narrow', type: 'text' }] }
+                    }
+                ],
+                outcomes: [],
+                variables: []
+            }
+        };
+        const columns = (): HTMLElement[] => Array.from(fixture.nativeElement.querySelectorAll('.adf-signal-form-column'));
+        const renderAtWidth = async (width: number) => {
+            await render(fourColumns, true);
+            (fixture.nativeElement as HTMLElement).style.width = `${width}px`;
+            await settle();
+        };
+        const visibleBoxes = () => {
+            const top = columns()[0].getBoundingClientRect().top;
+            const left = (fixture.nativeElement as HTMLElement).getBoundingClientRect().left;
+            return columns()
+                .filter((column) => column.getClientRects().length > 0)
+                .map((column) => {
+                    const box = column.getBoundingClientRect();
+                    return { x: Math.round(box.left - left), y: Math.round(box.top - top), width: Math.round(box.width) };
+                });
+        };
+        const rowBelow = (index: number) => Math.round(columns()[index].getBoundingClientRect().height);
+        const twoColumns = {
+            formDefinition: {
+                fields: [
+                    {
+                        id: 'pair',
+                        type: 'container',
+                        numberOfColumns: 2,
+                        fields: { 1: [{ id: 'left', type: 'text' }], 2: [{ id: 'right', type: 'text' }] }
+                    }
+                ],
+                outcomes: [],
+                variables: []
+            }
+        };
+
+        const twelveColumns = {
+            formDefinition: {
+                fields: [
+                    {
+                        id: 'many',
+                        type: 'container',
+                        numberOfColumns: 12,
+                        fields: Object.fromEntries(Array.from({ length: 12 }, (_, index) => [index + 1, [{ id: `field${index + 1}`, type: 'text' }]]))
+                    }
+                ],
+                outcomes: [],
+                variables: []
+            }
+        };
+        const renderFormAtWidth = async (definition: object, width: number) => {
+            await render(definition, true);
+            (fixture.nativeElement as HTMLElement).style.width = `${width}px`;
+            await settle();
+        };
+
+        it("should keep the columns side by side in today's proportions while they fit, leaving out a covered column", async () => {
+            await renderAtWidth(1000);
+
+            expect(visibleBoxes()).toEqual([
+                { x: 0, y: 0, width: 496 },
+                { x: 504, y: 0, width: 244 },
+                { x: 756, y: 0, width: 244 }
+            ]);
+            expect(columns()[2].contains(input('narrow'))).toBeTrue();
+        });
+
+        it('should wrap the columns that no longer fit below the others, filling their row', async () => {
+            await renderAtWidth(800);
+
+            expect(visibleBoxes()).toEqual([
+                { x: 0, y: 0, width: 531 },
+                { x: 539, y: 0, width: 261 },
+                { x: 0, y: rowBelow(0), width: 800 }
+            ]);
+        });
+
+        it('should slide to a single column once two single columns no longer fit side by side', async () => {
+            await renderAtWidth(500);
+            expect(visibleBoxes().map(({ x, width }) => ({ x, width }))).toEqual([
+                { x: 0, width: 500 },
+                { x: 0, width: 246 },
+                { x: 254, width: 246 }
+            ]);
+
+            (fixture.nativeElement as HTMLElement).style.width = '460px';
+            await settle();
+
+            const stacked = visibleBoxes();
+            expect(stacked.map(({ x, width }) => ({ x, width }))).toEqual([
+                { x: 0, width: 460 },
+                { x: 0, width: 460 },
+                { x: 0, width: 460 }
+            ]);
+            expect(stacked[2].y).toBeGreaterThan(stacked[0].y);
+        });
+
+        it('should keep a two-column container side by side until its columns get too narrow', async () => {
+            await renderFormAtWidth(twoColumns, 800);
+            expect(visibleBoxes().map(({ x, width }) => ({ x, width }))).toEqual([
+                { x: 0, width: 396 },
+                { x: 404, width: 396 }
+            ]);
+
+            (fixture.nativeElement as HTMLElement).style.width = '480px';
+            await settle();
+            expect(visibleBoxes().map(({ x, width }) => ({ x, width }))).toEqual([
+                { x: 0, width: 480 },
+                { x: 0, width: 480 }
+            ]);
+        });
+
+        it('should fit as many of twelve columns per row as the width allows', async () => {
+            await renderFormAtWidth(twelveColumns, 1000);
+
+            const placed = visibleBoxes();
+            expect(placed.slice(0, 4).map(({ x, width }) => ({ x, width }))).toEqual([
+                { x: 0, width: 244 },
+                { x: 252, width: 244 },
+                { x: 504, width: 244 },
+                { x: 756, width: 244 }
+            ]);
+            expect(new Set(placed.map(({ y }) => y)).size).toBe(3);
+        });
+    });
+
+    describe('groups', () => {
+        const group = (id: string, params: object, field: object) => ({
+            id,
+            name: `${id} group`,
+            type: 'group',
+            numberOfColumns: 1,
+            params,
+            fields: { 1: [field] }
+        });
+        const groupsForm = {
+            formDefinition: {
+                fields: [
+                    group('plain', {}, { id: 'a', type: 'text' }),
+                    group('folding', { allowCollapse: true }, { id: 'b', type: 'text', required: true }),
+                    group('folded', { allowCollapse: true, collapseByDefault: true }, { id: 'c', type: 'text' }),
+                    group('headless', { allowCollapse: true, hideHeader: true }, { id: 'd', type: 'text' }),
+                    group('locked', { collapseByDefault: true }, { id: 'e', type: 'text' })
+                ],
+                outcomes: [],
+                variables: []
+            }
+        };
+        const toggle = (groupId: string) => element(`[data-automation-id="adf-signal-form-group-toggle-${groupId}"]`) as HTMLButtonElement | null;
+        const heading = (groupId: string) => element(`[data-automation-id="adf-signal-form-container-${groupId}"] h4`)?.textContent?.trim() ?? null;
+        const clickToggle = async (groupId: string) => {
+            toggle(groupId).click();
+            await settle();
+        };
+
+        beforeEach(() => render(groupsForm));
+
+        it('should show the name of a group that cannot collapse, without a toggle', () => {
+            expect(heading('plain')).toBe('plain group');
+            expect(toggle('plain')).toBeNull();
+            expect(input('a')).not.toBeNull();
+        });
+
+        it('should collapse and expand a collapsible group, still validating what it hides', async () => {
+            expect(heading('folding')).toContain('folding group');
+            expect(toggle('folding').getAttribute('aria-expanded')).toBe('true');
+            expect(element(`#${toggle('folding').getAttribute('aria-controls')}`)?.contains(input('b'))).toBeTrue();
+
+            await clickToggle('folding');
+
+            expect(input('b')).toBeNull();
+            expect(toggle('folding').getAttribute('aria-expanded')).toBe('false');
+            expect(form.valid()).toBeFalse();
+
+            await clickToggle('folding');
+            expect(input('b')).not.toBeNull();
+        });
+
+        it('should start a group collapsed when asked, until it is opened', async () => {
+            expect(input('c')).toBeNull();
+            expect(toggle('folded').getAttribute('aria-expanded')).toBe('false');
+
+            await clickToggle('folded');
+
+            expect(input('c')).not.toBeNull();
+        });
+
+        it('should keep only a named toggle when the header is hidden', () => {
+            expect(heading('headless')).toBeNull();
+            expect(toggle('headless').getAttribute('aria-label')).toBe('FORM.SIGNAL_FORM.COLLAPSE_GROUP');
+            expect(input('d')).not.toBeNull();
+        });
+
+        it('should not start collapsed a group that cannot be opened', () => {
+            expect(input('e')).not.toBeNull();
+            expect(toggle('locked')).toBeNull();
+        });
+    });
+
     describe('required fields', () => {
         it('should mark required fields as required, following rules that change it', async () => {
             await render(
