@@ -74,8 +74,8 @@ importers:
         specifier: 16.0.1
         version: 16.0.1(@angular/cdk@21.2.14(@angular/common@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(@angular/platform-browser@21.2.22(@angular/animations@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0)))(@angular/common@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0)))(rxjs@7.8.2))(@angular/common@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(@angular/material@21.2.14(cdeab54b06adc0e299ff92abbece36f1))
       '@ngx-translate/core':
-        specifier: 17.0.0
-        version: 17.0.0(@angular/common@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))
+        specifier: 18.0.0
+        version: 18.0.0(@angular/common@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2)
       angular-oauth2-oidc:
         specifier: 19.0.0
         version: 19.0.0(@angular/common@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))
@@ -2642,11 +2642,12 @@ packages:
       typescript: '>=5.9 <6.0'
       webpack: ^5.54.0
 
-  '@ngx-translate/core@17.0.0':
-    resolution: {integrity: sha512-Rft2D5ns2pq4orLZjEtx1uhNuEBerUdpFUG1IcqtGuipj6SavgB8SkxtNQALNDA+EVlvsNCCjC2ewZVtUeN6rg==}
+  '@ngx-translate/core@18.0.0':
+    resolution: {integrity: sha512-Z9u9AXaeuyeHHimivvJQvhal/LJNB+5tlH+FimSU4QQ61FrtRDqgyn6nfFbc6Cb+59NDZdsh4QeTJyPCldFUwA==}
     peerDependencies:
-      '@angular/common': '>=16'
-      '@angular/core': '>=16'
+      '@angular/common': '>=18'
+      '@angular/core': '>=18'
+      rxjs: '>=7'
 
   '@noble/hashes@1.4.0':
     resolution: {integrity: sha512-V1JJ1WTRUqHHrOSh597hURcMqVKVGL/ea3kv0gSnEdsEZ0/+VyPghM1lMNGc00z7CIQorSvbKpuJkxvuHbvdbg==}
@@ -10555,10 +10556,11 @@ snapshots:
       typescript: 5.9.3
       webpack: 5.105.2(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.25))(csso@5.0.5)(esbuild@0.28.1)(html-minifier-terser@6.1.0)(postcss@8.5.25)
 
-  '@ngx-translate/core@17.0.0(@angular/common@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))':
+  '@ngx-translate/core@18.0.0(@angular/common@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2)':
     dependencies:
       '@angular/common': 21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2)
       '@angular/core': 21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0)
+      rxjs: 7.8.2
       tslib: 2.8.1
 
   '@noble/hashes@1.4.0': {}
