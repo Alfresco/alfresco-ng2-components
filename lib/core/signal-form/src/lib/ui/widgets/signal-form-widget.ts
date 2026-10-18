@@ -68,5 +68,5 @@ export abstract class SignalFormWidget<TValue = unknown> {
     /** The error to show, `null` while none is shown: what the input controls take. */
     protected readonly shownError = computed(() => (this.showError() ? this.error() : null));
 
-    protected readonly errorStateMatcher: ErrorStateMatcher = { isErrorState: () => this.showError() };
+    protected readonly errorStateMatcher: ErrorStateMatcher = { isErrorState: () => this.shownError() !== null };
 }

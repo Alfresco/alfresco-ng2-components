@@ -23,12 +23,13 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { FieldOption } from '../../../definition/form-definition.model';
 import { SignalLeftLabelComponent } from '../left-label/left-label.component';
 import { SignalFormWidget } from '../signal-form-widget';
+import { SignalFieldErrorComponent } from '../field-error/field-error.component';
 
 @Component({
     selector: 'adf-signal-dropdown-widget',
     templateUrl: './dropdown-widget.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormField, MatFormFieldModule, MatSelectModule, TranslatePipe, SignalLeftLabelComponent]
+    imports: [FormField, MatFormFieldModule, MatSelectModule, TranslatePipe, SignalLeftLabelComponent, SignalFieldErrorComponent]
 })
 export class SignalDropdownWidgetComponent extends SignalFormWidget {
     protected readonly options = computed(() => this.definition().options.map((option) => ({ ...option })));

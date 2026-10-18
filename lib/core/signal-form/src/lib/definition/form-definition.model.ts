@@ -125,6 +125,10 @@ export interface FieldDefinition {
     regexPattern?: string | null;
     customValidationMessage?: string;
     inputMask?: InputMask;
+    /** CSS classes the form author gave the field (`className`). */
+    className?: string;
+    /** Whether a multi-line text grows with its content (`params.autoGrow`); `false` caps its height. */
+    autoGrow?: boolean;
     /** The name of the theme style the field uses (`style`), from the form theme or ADF's predefined theme. */
     style?: string;
     visibilityCondition?: VisibilityCondition | null;
@@ -138,6 +142,8 @@ export interface FieldDefinition {
     currency?: string;
     precision?: number;
     dynamicDateRangeSelection: boolean;
+    /** The day a dynamic date range counts from: when the form was read, so it stays the same while the form is open. */
+    dateRangeReference?: Date;
     minDateRangeValue?: number | null;
     maxDateRangeValue?: number | null;
     hyperlinkUrl?: string;
@@ -257,6 +263,8 @@ export interface FormDefinition {
     showTabNavigation: boolean;
     /** Whether field labels are shown to the left of the fields instead of inside them. */
     leftLabels: boolean;
+    /** CSS classes the form author gave the form (`className`). */
+    className?: string;
     fields: FieldDefinition[];
     sections: SectionDefinition[];
     tabs: TabDefinition[];

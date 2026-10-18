@@ -177,7 +177,7 @@ export const maxLengthOf = (field: FieldDefinition): number => {
 
 const dateRange = (field: FieldDefinition): { min: Date | null; max: Date | null } => {
     if (field.dynamicDateRangeSelection) {
-        const today = new Date();
+        const today = field.dateRangeReference ?? new Date();
         return {
             min: field.minDateRangeValue === null ? null : validDateOrNull(addDays(today, field.minDateRangeValue)),
             max: field.maxDateRangeValue === null ? null : validDateOrNull(addDays(today, field.maxDateRangeValue))

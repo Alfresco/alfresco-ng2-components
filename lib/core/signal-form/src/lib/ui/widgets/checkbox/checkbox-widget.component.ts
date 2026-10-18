@@ -20,11 +20,12 @@ import { FormField } from '@angular/forms/signals';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SignalFormWidget } from '../signal-form-widget';
+import { SignalFieldErrorComponent } from '../field-error/field-error.component';
 
 @Component({
     selector: 'adf-signal-checkbox-widget',
     templateUrl: './checkbox-widget.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormField, MatCheckboxModule, TranslatePipe]
+    imports: [FormField, MatCheckboxModule, TranslatePipe, SignalFieldErrorComponent]
 })
 export class SignalCheckboxWidgetComponent extends SignalFormWidget<boolean> {}

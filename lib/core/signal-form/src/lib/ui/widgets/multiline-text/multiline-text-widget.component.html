@@ -1,5 +1,6 @@
 <div
     class="adf-multiline-text-widget"
+    [class.adf-multiline-text-widget--capped]="definition().autoGrow === false"
     [class.adf-invalid]="showError()"
     [class.adf-readonly]="readOnly()"
     [class.adf-signal-form-left-label-field]="leftLabel()"
@@ -17,7 +18,7 @@
             matInput
             class="adf-input"
             rows="3"
-            [cdkTextareaAutosize]="true"
+            [cdkTextareaAutosize]="definition().autoGrow !== false"
             [id]="inputId()"
             [formField]="field()"
             [placeholder]="definition().placeholder ?? ''"
@@ -27,9 +28,9 @@
         @if (definition().maxLength > 0) {
             <mat-hint class="adf-multiline-counter-block" align="end">{{ length() }}/{{ definition().maxLength }}</mat-hint>
         }
-        @if (showError() && error(); as message) {
+        @if (shownError(); as message) {
             <mat-error class="adf-form-field-status-slot">
-                <span class="adf-error-text">{{ message.key | translate: message.params }}</span>
+                <adf-signal-field-error [message]="message" />
             </mat-error>
         }
     </mat-form-field>

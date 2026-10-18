@@ -255,9 +255,21 @@ export class SignalForm {
             },
             {
                 escapeHtml: options.escapeHtml,
-                formatFieldValue: options.formatValues ? (definition, value) => displayFieldValue(this.widgets, definition, value) : undefined
+                formatFieldValue: options.formatValues ? (definition, value) => this.displayValue(definition, value) : undefined
             }
         );
+    }
+
+    /**
+     * Returns the text shown for a field value, by the field type's own formatter when it has one (options, people and
+     * groups by name).
+     *
+     * @param definition the field
+     * @param value the value
+     * @returns the text
+     */
+    displayValue(definition: FieldDefinition, value: unknown): string {
+        return displayFieldValue(this.widgets, definition, value);
     }
 
     isOutcomeConditionMet(outcome: OutcomeDefinition): boolean {

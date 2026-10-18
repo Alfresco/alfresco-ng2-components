@@ -25,6 +25,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '@alfresco/adf-core';
 import { combinedDateTime, pickerDate, typedPickerValue } from './picker-values';
 import { SignalInputControl } from './signal-input-control';
+import { SignalFieldErrorComponent } from '../widgets/field-error/field-error.component';
 
 const TIME_FORMAT = 'HH:mm';
 
@@ -46,7 +47,7 @@ const DATE_TIME_PICKER_FORMATS: MatDateFormats = {
         { provide: MAT_DATE_FORMATS, useValue: DATE_TIME_PICKER_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }
     ],
-    imports: [MatDatepickerModule, MatTimepickerModule, MatFormFieldModule, MatInputModule, TranslatePipe]
+    imports: [MatDatepickerModule, MatTimepickerModule, MatFormFieldModule, MatInputModule, TranslatePipe, SignalFieldErrorComponent]
 })
 export class SignalDateTimeInputControlComponent extends SignalInputControl<Date | null> {
     readonly minDate = input<Date | null>(null);

@@ -34,6 +34,7 @@ export interface FieldJson {
         allowCollapse?: boolean;
         collapseByDefault?: boolean;
         hideHeader?: boolean;
+        autoGrow?: boolean;
     } & SectionRowOptions;
     visibilityCondition?: VisibilityCondition | null;
     [property: string]: any;
@@ -51,6 +52,7 @@ export interface FormDefinitionContentJson {
     theme?: ThemeModel;
     showBottomTabNavButtons?: boolean;
     leftLabels?: boolean;
+    className?: string;
     fields?: FieldJson[];
     variables?: FormVariable[];
     tabs?: TabDefinition[];

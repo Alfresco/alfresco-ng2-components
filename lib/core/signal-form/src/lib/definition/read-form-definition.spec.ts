@@ -16,6 +16,7 @@
  */
 
 import { FormDefinitionJson } from './form-definition.json';
+import { dateFieldRange } from '../validation/field-validation';
 import { readFormDefinition } from './read-form-definition';
 
 describe('readFormDefinition', () => {
@@ -142,5 +143,23 @@ describe('readFormDefinition', () => {
         const [first, second] = definition.sections[0].savedRows;
         expect(first['due'] instanceof Date).toBeTrue();
         expect(second).toEqual({});
+    });
+
+    it('should give no outcomes to a definition without fields, as today', () => {
+        expect(readFormDefinition({ formDefinition: { outcomes: [], variables: [] } } as FormDefinitionJson).outcomes).toEqual([]);
+        expect(readFormDefinition(formWith([])).outcomes.map(({ id }) => id)).toEqual(['$save', '$complete', '$startProcess']);
+    });
+
+    it('should count a dynamic date range from the day the form was read, so it does not move while the form is open', () => {
+        const definition = readFormDefinition(
+            formWith([{ id: 'due', type: 'date', dynamicDateRangeSelection: true, minDateRangeValue: 1, maxDateRangeValue: 3 }])
+        );
+        const due = field(definition, 'due');
+        expect(due.dateRangeReference instanceof Date).toBeTrue();
+
+        const { min, max } = dateFieldRange({ ...due, dateRangeReference: new Date(2024, 0, 31) });
+
+        expect(min).toEqual(new Date(2024, 1, 1));
+        expect(max).toEqual(new Date(2024, 1, 3));
     });
 });

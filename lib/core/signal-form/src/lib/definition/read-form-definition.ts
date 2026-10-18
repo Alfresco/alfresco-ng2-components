@@ -77,13 +77,14 @@ export const readFormDefinition = (
         theme: content.theme ? structuredClone(content.theme) : null,
         showTabNavigation: content.showBottomTabNavButtons === true,
         leftLabels: !!content.leftLabels,
+        className: content.className || undefined,
         fields: roots.flatMap((root) => collectFields([root], [], widgets, root.tab ?? undefined)).map(withSourceValue),
         sections: roots
             .filter((root) => root.type === FormFieldType.RepeatableSection)
             .map((section) => toSectionDefinition(section, widgets))
             .map((section) => ({ ...section, fields: section.fields.map(withSourceValue) })),
         tabs: (content.tabs ?? []).map(({ id, title, visibilityCondition }): TabDefinition => ({ id, title, visibilityCondition })),
-        outcomes: readOutcomes(content.outcomes ?? [], content.selectedOutcome),
+        outcomes: content.fields ? readOutcomes(content.outcomes ?? [], content.selectedOutcome) : [],
         variables,
         layout: roots.map((root): LayoutRoot => ({ tabId: root.tab ?? undefined, node: toLayoutNode(root) }))
     };
@@ -228,6 +229,8 @@ const toFieldDefinition = (
         regexPattern: field.regexPattern,
         customValidationMessage: field.customValidationMessage || undefined,
         style: field.style || undefined,
+        autoGrow: field.params?.autoGrow,
+        className: field.className || undefined,
         inputMask: field.params?.inputMask
             ? {
                   mask: field.params.inputMask,
@@ -246,6 +249,7 @@ const toFieldDefinition = (
         currency: field.currency,
         precision: field.precision,
         dynamicDateRangeSelection: !!field.dynamicDateRangeSelection,
+        dateRangeReference: field.dynamicDateRangeSelection ? new Date() : undefined,
         minDateRangeValue: field.minDateRangeValue,
         maxDateRangeValue: field.maxDateRangeValue,
         hyperlinkUrl: field.hyperlinkUrl,

@@ -34,6 +34,7 @@ import { EditJsonDialogComponent } from '@alfresco/adf-core';
 import { readFormDefinition } from '../../definition/read-form-definition';
 import { SignalForm, SignalFormOptions } from '../../state/signal-form';
 import { FormWidgetRegistry, provideFormWidgets } from '../../widgets/form-widget-registry';
+import { SignalDisplayTextWidgetComponent } from '../widgets/display-text/display-text-widget.component';
 import { SignalTextWidgetComponent } from '../widgets/text/text-widget.component';
 import { BUILT_IN_WIDGETS_LOADED_DIRECTLY, settleFixture } from '../testing/signal-form-testing.mock';
 import { SignalFormRendererComponent } from './signal-form-renderer.component';
@@ -110,6 +111,128 @@ describe('SignalFormRendererComponent', () => {
 
         expect(element('.adf-error-text')?.textContent).toContain('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN');
         expect(form.valid()).toBeFalse();
+    });
+
+    describe('widget details', () => {
+        it("should show today's error icon next to an error", async () => {
+            await render(fieldsForm([{ id: 'mandatory', type: 'text', required: true }]));
+            await type('mandatory', '');
+
+            expect(element('.adf-error-icon')?.textContent?.trim()).toBe('error_outline');
+            expect(element('.adf-error-text')?.textContent?.trim()).toBe('FORM.FIELD.REQUIRED');
+        });
+
+        it('should cap the height of a multi-line text that must not grow', async () => {
+            await render(
+                fieldsForm([
+                    { id: 'capped', type: 'multi-line-text', params: { autoGrow: false } },
+                    { id: 'growing', type: 'multi-line-text' }
+                ])
+            );
+
+            expect(element('#field-capped-container .adf-multiline-text-widget--capped')).not.toBeNull();
+            expect(element('#field-growing-container .adf-multiline-text-widget--capped')).toBeNull();
+        });
+
+        it('should open the datetime picker with Enter', async () => {
+            await render(fieldsForm([{ id: 'meeting', type: 'datetime' }]));
+            const picker = await TestbedHarnessEnvironment.loader(fixture).getHarness(MatDatepickerInputHarness.with({ selector: '#meeting' }));
+
+            input('meeting').dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+            await settle();
+
+            expect(await picker.isCalendarOpen()).toBeTrue();
+            expect(element('[data-automation-id="adf-date-time-widget-picker"]')).not.toBeNull();
+        });
+
+        it('should report a required checkbox once it is clicked and cleared', async () => {
+            await render(fieldsForm([{ id: 'agree', name: 'Agree', type: 'boolean', required: true }]));
+            const checkbox = await TestbedHarnessEnvironment.loader(fixture).getHarness(MatCheckboxHarness.with({ selector: '#agree' }));
+
+            await checkbox.check();
+            await checkbox.uncheck();
+            await settle();
+
+            expect(element('.adf-error-text')?.textContent?.trim()).toBe('FORM.FIELD.REQUIRED');
+        });
+
+        it('should keep the typed amount while a rule changes it, and show the new value once the user leaves', async () => {
+            await render(fieldsForm([{ id: 'price', type: 'amount' }]));
+            input('price').dispatchEvent(new Event('focus'));
+            input('price').value = '12';
+            input('price').dispatchEvent(new Event('input'));
+            await settle();
+
+            form.setValue('price', '99');
+            await settle();
+            expect(input('price').value).toBe('12');
+
+            input('price').dispatchEvent(new Event('blur'));
+            await settle();
+            expect(input('price').value).toBe('99');
+        });
+
+        it('should show the value of a type with its own formatter by name, when shown as read-only text with formatting on', async () => {
+            const registry = TestBed.inject(FormWidgetRegistry);
+            registry.register({ ...registry.definitionFor('people'), component: () => Promise.resolve(SignalDisplayTextWidgetComponent) });
+            const definition = fieldsForm([{ id: 'owner', type: 'people', value: [{ firstName: 'Ada', lastName: 'Lovelace' }] }]);
+
+            await render(definition, true, { features: { typedValueFormatting: true } });
+            expect(element('#owner')?.textContent?.trim()).toBe('Ada Lovelace');
+
+            await render(definition, true, { features: { typedValueFormatting: false } });
+            expect(element('#owner')?.textContent?.trim()).toBe('[{"firstName":"Ada","lastName":"Lovelace"}]');
+        });
+
+        it("should apply the form's and the fields' own classes, and mark a read-only form", async () => {
+            await render(
+                { formDefinition: { ...fieldsForm([{ id: 'name', type: 'text', className: 'highlighted' }]).formDefinition, className: 'compact' } },
+                true,
+                {
+                    readOnly: true
+                }
+            );
+
+            expect(fixture.nativeElement.classList).toContain('compact');
+            expect(fixture.nativeElement.classList).toContain('adf-signal-form-renderer');
+            expect(fixture.nativeElement.classList).toContain('adf-readonly-form');
+            expect(element('#field-name-container')?.classList).toContain('highlighted');
+        });
+    });
+
+    describe('pasting', () => {
+        const paste = (fieldId: string, text: string): ClipboardEvent => {
+            const clipboardData = new DataTransfer();
+            clipboardData.setData('text', text);
+            const event = new ClipboardEvent('paste', { clipboardData, cancelable: true, bubbles: true });
+            input(fieldId).dispatchEvent(event);
+            return event;
+        };
+        const errorText = () => element('.adf-error-text')?.textContent?.trim() ?? null;
+
+        beforeEach(() => render(fieldsForm([{ id: 'code', type: 'text', maxLength: 5 }])));
+
+        it('should refuse a paste that makes the text too long, and say so at once', async () => {
+            await type('code', 'abc');
+
+            const refused = paste('code', 'defg');
+            await settle();
+
+            expect(refused.defaultPrevented).toBeTrue();
+            expect(input('code').value).toBe('abc');
+            expect(errorText()).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+        });
+
+        it('should let a paste that fits through, and clear the paste error once the text is edited', async () => {
+            await type('code', 'abc');
+            paste('code', 'defg');
+            await settle();
+
+            expect(paste('code', 'de').defaultPrevented).toBeFalse();
+            await type('code', 'abcd');
+
+            expect(errorText()).toBeNull();
+        });
     });
 
     describe('when errors show', () => {

@@ -18,12 +18,13 @@
             (input)="typed(dayText.value)"
             (dateChange)="picked($event.value, dayText.value)"
             (blur)="markTouched()"
+            (keydown.enter)="datePicker.open()"
         />
-        <mat-datepicker-toggle matIconSuffix [for]="datePicker" />
+        <mat-datepicker-toggle matIconSuffix data-automation-id="adf-date-time-widget-picker" [for]="datePicker" />
         <mat-datepicker #datePicker (closed)="markTouched()" />
         @if (error(); as message) {
             <mat-error class="adf-form-field-status-slot">
-                <span class="adf-error-text">{{ message.key | translate: message.params }}</span>
+                <adf-signal-field-error [message]="message" />
             </mat-error>
         }
     </mat-form-field>

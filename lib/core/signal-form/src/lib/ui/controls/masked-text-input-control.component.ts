@@ -21,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { applyInputMask } from './input-mask';
 import { SignalInputControl } from './signal-input-control';
+import { SignalFieldErrorComponent } from '../widgets/field-error/field-error.component';
 
 /**
  * A text input with an input mask: the masked text replaces what was typed on every keystroke, so characters the
@@ -30,7 +31,7 @@ import { SignalInputControl } from './signal-input-control';
     selector: 'adf-signal-masked-text-input',
     templateUrl: './masked-text-input-control.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatFormFieldModule, MatInputModule, TranslatePipe]
+    imports: [MatFormFieldModule, MatInputModule, TranslatePipe, SignalFieldErrorComponent]
 })
 export class SignalMaskedTextInputControlComponent extends SignalInputControl<string | null> {
     readonly mask = input.required<string>();

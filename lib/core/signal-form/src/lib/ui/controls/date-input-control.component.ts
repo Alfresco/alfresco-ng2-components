@@ -24,6 +24,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '@alfresco/adf-core';
 import { pickerDate, typedPickerValue } from './picker-values';
 import { SignalInputControl } from './signal-input-control';
+import { SignalFieldErrorComponent } from '../widgets/field-error/field-error.component';
 
 /**
  * A date input with Material's datepicker, in a display format. Text that can't be read as a date becomes an invalid
@@ -38,7 +39,7 @@ import { SignalInputControl } from './signal-input-control';
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }
     ],
-    imports: [MatDatepickerModule, MatFormFieldModule, MatInputModule, TranslatePipe]
+    imports: [MatDatepickerModule, MatFormFieldModule, MatInputModule, TranslatePipe, SignalFieldErrorComponent]
 })
 export class SignalDateInputControlComponent extends SignalInputControl<Date | null> {
     readonly displayFormat = input<string | null>(null);

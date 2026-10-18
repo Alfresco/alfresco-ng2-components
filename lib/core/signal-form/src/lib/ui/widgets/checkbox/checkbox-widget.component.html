@@ -1,13 +1,19 @@
 <div class="adf-checkbox-widget-container" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
-    <mat-checkbox class="adf-checkbox" [id]="inputId()" [formField]="field()" [title]="definition().tooltip ?? ''">
+    <mat-checkbox
+        class="adf-checkbox"
+        [id]="inputId()"
+        [formField]="field()"
+        [title]="definition().tooltip ?? ''"
+        (change)="field()().markAsTouched()"
+    >
         {{ definition().name | translate }}
         @if (definition().required) {
             <span class="adf-asterisk">*</span>
         }
     </mat-checkbox>
-    @if (showError() && error(); as message) {
+    @if (shownError(); as message) {
         <div class="adf-error-messages-container">
-            <span class="adf-error-text">{{ message.key | translate: message.params }}</span>
+            <adf-signal-field-error [message]="message" />
         </div>
     }
 </div>

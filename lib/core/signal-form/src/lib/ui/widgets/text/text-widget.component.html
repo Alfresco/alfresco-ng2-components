@@ -39,14 +39,17 @@
                 class="adf-input"
                 type="text"
                 [id]="inputId()"
+                #textInput
                 [formField]="field()"
                 [placeholder]="placeholder()"
                 [title]="definition().tooltip ?? ''"
                 [errorStateMatcher]="errorStateMatcher"
+                (paste)="guardPaste($event, textInput)"
+                (input)="edited($event)"
             />
-            @if (showError() && error(); as message) {
+            @if (shownError(); as message) {
                 <mat-error class="adf-form-field-status-slot">
-                    <span class="adf-error-text">{{ message.key | translate: message.params }}</span>
+                    <adf-signal-field-error [message]="message" />
                 </mat-error>
             }
         </mat-form-field>

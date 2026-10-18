@@ -36,9 +36,10 @@ export class SignalDisplayTextWidgetComponent extends SignalFormWidget<unknown> 
     protected readonly text = computed(() => {
         const state = this.field()();
         const value = state.value();
+        const formatValues = state.metadata(TYPED_VALUE_FORMATTING)?.() ?? false;
         if (typeof value === 'string') {
-            return this.form().resolveText(value, { formatValues: state.metadata(TYPED_VALUE_FORMATTING)?.() ?? false });
+            return this.form().resolveText(value, { formatValues });
         }
-        return stringifyValue(value);
+        return formatValues ? this.form().displayValue(this.definition(), value) : stringifyValue(value);
     });
 }

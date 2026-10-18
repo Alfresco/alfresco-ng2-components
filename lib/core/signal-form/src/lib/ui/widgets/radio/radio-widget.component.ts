@@ -20,12 +20,13 @@ import { FormField } from '@angular/forms/signals';
 import { MatRadioModule } from '@angular/material/radio';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SignalFormWidget } from '../signal-form-widget';
+import { SignalFieldErrorComponent } from '../field-error/field-error.component';
 
 @Component({
     selector: 'adf-signal-radio-widget',
     templateUrl: './radio-widget.component.html',
     styleUrl: './radio-widget.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormField, MatRadioModule, TranslatePipe]
+    imports: [FormField, MatRadioModule, TranslatePipe, SignalFieldErrorComponent]
 })
 export class SignalRadioWidgetComponent extends SignalFormWidget {}

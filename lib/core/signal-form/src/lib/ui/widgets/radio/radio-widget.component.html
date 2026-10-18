@@ -12,9 +12,9 @@
             </mat-radio-button>
         }
     </mat-radio-group>
-    @if (showError() && error(); as message) {
+    @if (shownError(); as message) {
         <div class="adf-error-messages-container">
-            <span class="adf-error-text">{{ message.key | translate: message.params }}</span>
+            <adf-signal-field-error [message]="message" />
         </div>
     }
 </div>

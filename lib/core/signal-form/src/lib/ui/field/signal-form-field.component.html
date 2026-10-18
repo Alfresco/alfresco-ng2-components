@@ -1,7 +1,7 @@
 @if (form().isOnScreen(field(), row())) {
     <div
         #wrapper
-        class="adf-signal-form-field"
+        class="adf-signal-form-field {{ field().className ?? '' }}"
         [id]="'field-' + elementId() + '-container'"
         [class.adf-focus]="focused()"
         [style]="themeStyle()"

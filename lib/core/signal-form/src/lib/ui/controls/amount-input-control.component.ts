@@ -22,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { TranslationService } from '@alfresco/adf-core';
 import { SignalInputControl } from './signal-input-control';
+import { SignalFieldErrorComponent } from '../widgets/field-error/field-error.component';
 
 const DEFAULT_CURRENCY = '$';
 const WITH_FRACTIONS = '1.2-2';
@@ -36,7 +37,7 @@ const WITHOUT_FRACTIONS = '1.0-0';
     templateUrl: './amount-input-control.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [CurrencyPipe],
-    imports: [MatFormFieldModule, MatInputModule, TranslatePipe]
+    imports: [MatFormFieldModule, MatInputModule, TranslatePipe, SignalFieldErrorComponent]
 })
 export class SignalAmountInputControlComponent extends SignalInputControl<string | number | null> {
     readonly currency = input<string>();
@@ -46,22 +47,32 @@ export class SignalAmountInputControlComponent extends SignalInputControl<string
     private readonly currencyPipe = inject(CurrencyPipe);
     private readonly translation = inject(TranslationService);
     private readonly editing = signal(false);
+    private readonly typedText = signal('');
 
     protected readonly shownCurrency = computed(() => this.currency() || DEFAULT_CURRENCY);
 
-    protected readonly text = computed(() => {
+    private readonly valueText = computed(() => {
         const value = this.value();
-        const typed = value === null || value === undefined ? '' : `${value}`;
-        return this.localeAmounts() && !this.editing() ? this.formatted(typed) : typed;
+        return value === null || value === undefined ? '' : `${value}`;
+    });
+
+    /** While the user edits, the text stays as typed, even if a rule changes the value meanwhile, as today. */
+    protected readonly text = computed(() => {
+        if (this.editing()) {
+            return this.typedText();
+        }
+        return this.localeAmounts() ? this.formatted(this.valueText()) : this.valueText();
     });
 
     protected readonly shownPlaceholder = computed(() => (this.localeAmounts() ? this.formatted(this.placeholder()) : this.placeholder()));
 
     protected typed(text: string): void {
+        this.typedText.set(text);
         this.value.set(text);
     }
 
     protected startEditing(): void {
+        this.typedText.set(this.valueText());
         this.editing.set(true);
     }
 

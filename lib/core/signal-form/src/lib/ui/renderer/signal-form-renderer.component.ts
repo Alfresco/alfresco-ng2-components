@@ -60,7 +60,11 @@ interface ColumnPlacement {
         TranslatePipe,
         SignalFormFieldComponent
     ],
-    host: { class: 'adf-signal-form-renderer' }
+    host: {
+        class: 'adf-signal-form-renderer',
+        '[class]': "form().definition.className ?? ''",
+        '[class.adf-readonly-form]': 'form().readOnly'
+    }
 })
 export class SignalFormRendererComponent {
     private readonly dialog = inject(MatDialog);
