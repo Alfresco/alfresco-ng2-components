@@ -27,6 +27,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { ContainerLayoutNode, LayoutNode, LayoutRoot, RepeatableLayoutNode, SectionRowOptions } from '../../definition/form-definition.model';
 import { RowAddress, SignalForm } from '../../state/signal-form';
 import { SignalFormFieldComponent } from '../field/signal-form-field.component';
+import { themedStyle } from '../themed-style';
 
 const FULL_WIDTH = 100;
 /** The narrowest a column of one track gets before it wraps below the others. */
@@ -119,6 +120,10 @@ export class SignalFormRendererComponent {
             this.placements.set(node, placements);
         }
         return placements;
+    }
+
+    protected containerStyle(node: ContainerLayoutNode): string {
+        return themedStyle(this.form().definition.theme, node.element.type, node.style);
     }
 
     /**

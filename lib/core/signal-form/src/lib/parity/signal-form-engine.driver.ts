@@ -68,6 +68,9 @@ export class SignalFormEngineDriver implements FormEngineDriver {
             case 'setVariable':
                 this.form.setVariable(interaction.variableId, interaction.value);
                 break;
+            case 'refreshProcessVariables':
+                this.form.refreshProcessVariables(interaction.processVariables);
+                break;
             default: {
                 const unsupported: never = interaction;
                 throw new Error(`Unsupported interaction: ${JSON.stringify(unsupported)}`);
@@ -94,7 +97,7 @@ export class SignalFormEngineDriver implements FormEngineDriver {
                     fields[rowFieldKey(row, field.id)] = {
                         visible: this.form.isOnScreen(field, row),
                         valid: this.form.isFieldValid(field.id, row),
-                        readOnly: this.form.isReadOnly(field)
+                        readOnly: this.form.isReadOnly(field, row)
                     };
                 }
             }

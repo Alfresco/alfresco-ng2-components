@@ -22,7 +22,23 @@ const PROCESS_VARIABLE_PREFIX = 'variables.';
 export const findVariable = (identifier: string, { formVariables }: FormVariables): FormVariable | undefined =>
     identifier ? formVariables.find((variable) => variable.name === identifier || variable.id === identifier) : undefined;
 
-export const resolveVariableValue = (identifier: string, variables: FormVariables, runtimeValues: Record<string, unknown> = {}): unknown => {
+/**
+ * Resolves a variable's value, as today's form does: a form variable set at runtime, then the process variables the
+ * host refreshed (matched by id or name), then the form's own process variables (by name), then the form variable's
+ * default. Process variables match with or without the `variables.` prefix.
+ *
+ * @param identifier the variable's name or id
+ * @param variables the form and process variables of the definition
+ * @param runtimeValues the form variables set at runtime, by id
+ * @param refreshedProcessVariables the process variables the host refreshed since the form was created
+ * @returns the value, or `undefined` when no variable matches
+ */
+export const resolveVariableValue = (
+    identifier: string,
+    variables: FormVariables,
+    runtimeValues: Record<string, unknown> = {},
+    refreshedProcessVariables: readonly FormVariable[] = []
+): unknown => {
     const formVariable = findVariable(identifier, variables);
     const runtimeKey = formVariable ? (formVariable.id ?? formVariable.name) : undefined;
     if (runtimeKey !== undefined && Object.prototype.hasOwnProperty.call(runtimeValues, runtimeKey)) {
@@ -30,6 +46,10 @@ export const resolveVariableValue = (identifier: string, variables: FormVariable
     }
 
     const names = [`${PROCESS_VARIABLE_PREFIX}${identifier}`, identifier];
+    const refreshed = refreshedProcessVariables.find((variable) => names.includes(variable.id) || names.includes(variable.name));
+    if (refreshed) {
+        return parseVariableValue(refreshed);
+    }
     const processVariable = variables.processVariables.find((variable) => names.includes(variable.name));
 
     if (processVariable) {

@@ -21,13 +21,14 @@ import { FormField } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
+import { SignalLeftLabelComponent } from '../left-label/left-label.component';
 import { SignalFormWidget } from '../signal-form-widget';
 
 @Component({
     selector: 'adf-signal-multiline-text-widget',
     templateUrl: './multiline-text-widget.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormField, MatFormFieldModule, MatInputModule, TextFieldModule, TranslatePipe]
+    imports: [FormField, MatFormFieldModule, MatInputModule, TextFieldModule, TranslatePipe, SignalLeftLabelComponent]
 })
 export class SignalMultilineTextWidgetComponent extends SignalFormWidget<string> {
     protected readonly length = computed(() => `${this.field()().value() ?? ''}`.length);

@@ -28,6 +28,7 @@ import { SignalFormWidget } from '../signal-form-widget';
 @Component({
     selector: 'adf-signal-display-text-widget',
     templateUrl: './display-text-widget.component.html',
+    styleUrl: './display-text-widget.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [TranslatePipe]
 })

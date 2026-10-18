@@ -33,6 +33,54 @@ export const jsonValue = (field: FieldJson): unknown =>
 export const readInitialValue = (field: FieldJson, definition: FieldDefinition, widgets: FormWidgetResolver): unknown =>
     (fieldWidget(widgets, definition)?.definition.initialValue ?? jsonValue)(field, definition);
 
+/**
+ * Reads a value given later (a saved or refreshed value) as the field's own JSON value would be read, by its type.
+ *
+ * @param definition the field
+ * @param value the value
+ * @param widgets the field type definitions
+ * @returns the field value
+ */
+export const readFieldValue = (definition: FieldDefinition, value: unknown, widgets: FormWidgetResolver): unknown =>
+    readInitialValue(
+        { id: definition.id, type: definition.type, options: definition.options, optionType: definition.optionType, value },
+        definition,
+        widgets
+    );
+
+/**
+ * Reads a saved repeatable section row, each field value by its type; fields without a saved value are left out.
+ *
+ * @param fields the section's fields
+ * @param row the saved row
+ * @param widgets the field type definitions
+ * @returns the row values
+ */
+export const readSavedRow = (
+    fields: FieldDefinition[],
+    row: Record<string, unknown> | null | undefined,
+    widgets: FormWidgetResolver
+): Record<string, unknown> =>
+    Object.fromEntries(
+        fields
+            .filter((field) => row?.[field.id] !== undefined && row[field.id] !== null)
+            .map((field) => [field.id, readFieldValue(field, row[field.id], widgets)])
+    );
+
+/**
+ * Returns the value saved for a field, keyed as today's form keys it: by `variables.<name>`, else by the field id.
+ *
+ * @param values the saved values
+ * @param field the field id and name
+ * @param field.id the field id
+ * @param field.name the field name
+ * @returns the saved value, `undefined` when there is none
+ */
+export const savedValueFor = (values: Record<string, unknown>, field: { id: string; name?: string }): unknown => {
+    const saved = values[`variables.${field.name}`] || values[field.id];
+    return saved === null ? undefined : saved;
+};
+
 export const dropdownInitialValue: InitialValueReader = (field, definition) => initialDropdownValue(field, definition, jsonValue(field));
 
 export const radioInitialValue: InitialValueReader = (field, definition) => initialRadioValue(field, definition, jsonValue(field));

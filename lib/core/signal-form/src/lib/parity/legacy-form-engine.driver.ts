@@ -100,6 +100,9 @@ export class LegacyFormEngineDriver implements FormEngineDriver {
             case 'setVariable':
                 this.form.changeVariableValue(interaction.variableId, interaction.value);
                 break;
+            case 'refreshProcessVariables':
+                this.visibilityService.refreshVisibility(this.form, interaction.processVariables as never);
+                break;
             default: {
                 const unsupported: never = interaction;
                 throw new Error(`Unsupported interaction: ${JSON.stringify(unsupported)}`);
@@ -117,7 +120,7 @@ export class LegacyFormEngineDriver implements FormEngineDriver {
                 fields[this.snapshotKey(field)] = {
                     visible: field.isVisible && !hiddenByLayout.has(field),
                     valid: field.isValid,
-                    readOnly: field.readOnly
+                    readOnly: !!field.readOnly
                 };
             }
         }

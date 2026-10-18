@@ -125,6 +125,8 @@ export interface FieldDefinition {
     regexPattern?: string | null;
     customValidationMessage?: string;
     inputMask?: InputMask;
+    /** The name of the theme style the field uses (`style`), from the form theme or ADF's predefined theme. */
+    style?: string;
     visibilityCondition?: VisibilityCondition | null;
     options: FieldOption[];
     optionType?: string;
@@ -175,6 +177,7 @@ export interface SectionDefinition {
     initialRows: number;
     maxRows: number | null;
     rowOptions: SectionRowOptions;
+    readOnly: boolean;
     tabId?: string;
     fields: FieldDefinition[];
     /** The saved rows (the section's `value`), read like field values; empty for a section never saved. */
@@ -224,6 +227,8 @@ export interface ContainerLayoutNode {
     columns: LayoutNode[][];
     /** Set for a group only: other containers have no header. */
     groupHeader?: GroupHeader;
+    /** The name of the theme style the container uses (`style`). */
+    style?: string;
 }
 
 export interface RepeatableLayoutNode {
@@ -250,6 +255,8 @@ export interface FormDefinition {
     theme: ThemeModel | null;
     /** Whether the form shows previous and next buttons to move between its tabs. */
     showTabNavigation: boolean;
+    /** Whether field labels are shown to the left of the fields instead of inside them. */
+    leftLabels: boolean;
     fields: FieldDefinition[];
     sections: SectionDefinition[];
     tabs: TabDefinition[];

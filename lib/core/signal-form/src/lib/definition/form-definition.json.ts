@@ -50,6 +50,7 @@ export interface FormDefinitionContentJson {
     name?: string;
     theme?: ThemeModel;
     showBottomTabNavButtons?: boolean;
+    leftLabels?: boolean;
     fields?: FieldJson[];
     variables?: FormVariable[];
     tabs?: TabDefinition[];

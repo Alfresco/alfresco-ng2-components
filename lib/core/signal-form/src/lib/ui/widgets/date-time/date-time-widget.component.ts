@@ -20,6 +20,7 @@ import { FormField } from '@angular/forms/signals';
 import { TranslatePipe } from '@ngx-translate/core';
 import { dateFieldRange } from '../../../validation/field-validation';
 import { SignalDateTimeInputControlComponent } from '../../controls/date-time-input-control.component';
+import { SignalLeftLabelComponent } from '../left-label/left-label.component';
 import { SignalFormWidget } from '../signal-form-widget';
 
 /**
@@ -29,7 +30,7 @@ import { SignalFormWidget } from '../signal-form-widget';
     selector: 'adf-signal-date-time-widget',
     templateUrl: './date-time-widget.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormField, TranslatePipe, SignalDateTimeInputControlComponent]
+    imports: [FormField, TranslatePipe, SignalDateTimeInputControlComponent, SignalLeftLabelComponent]
 })
 export class SignalDateTimeWidgetComponent extends SignalFormWidget<Date | null> {
     protected readonly range = computed(() => dateFieldRange(this.definition()));

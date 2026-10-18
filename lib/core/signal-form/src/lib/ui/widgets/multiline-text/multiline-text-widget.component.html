@@ -1,6 +1,14 @@
-<div class="adf-multiline-text-widget" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
+<div
+    class="adf-multiline-text-widget"
+    [class.adf-invalid]="showError()"
+    [class.adf-readonly]="readOnly()"
+    [class.adf-signal-form-left-label-field]="leftLabel()"
+>
+    @if (leftLabel()) {
+        <adf-signal-left-label [target]="inputId()" [text]="definition().name ?? '' | translate" [required]="fieldRequired()" />
+    }
     <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic" [floatLabel]="definition().placeholder ? 'always' : 'auto'">
-        @if (definition().name || definition().required) {
+        @if (!leftLabel() && (definition().name || definition().required)) {
             <mat-label class="adf-label adf-multiline-text-widget-label" data-automation-id="adf-multiline-text-widget-label">
                 {{ definition().name | translate }}
             </mat-label>

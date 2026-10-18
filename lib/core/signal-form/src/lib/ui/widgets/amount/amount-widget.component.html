@@ -1,9 +1,17 @@
-<div class="adf-amount-widget__container adf-amount-widget" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
+<div
+    class="adf-amount-widget__container adf-amount-widget"
+    [class.adf-invalid]="showError()"
+    [class.adf-readonly]="readOnly()"
+    [class.adf-signal-form-left-label-field]="leftLabel()"
+>
+    @if (leftLabel()) {
+        <adf-signal-left-label [target]="inputId()" [text]="definition().name ?? '' | translate" [required]="fieldRequired()" />
+    }
     <adf-signal-amount-input
         labelAutomationId="adf-amount-widget-label"
         [formField]="field()"
         [inputId]="inputId()"
-        [label]="definition().name || definition().required ? (definition().name ?? '' | translate) : undefined"
+        [label]="!leftLabel() && (definition().name || definition().required) ? (definition().name ?? '' | translate) : undefined"
         [placeholder]="definition().placeholder ?? ''"
         [tooltip]="definition().tooltip ?? ''"
         [currency]="definition().currency"

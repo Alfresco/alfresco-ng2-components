@@ -20,6 +20,7 @@ import { FormField } from '@angular/forms/signals';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LOCALE_AMOUNTS } from '../../../state/field-metadata';
 import { SignalAmountInputControlComponent } from '../../controls/amount-input-control.component';
+import { SignalLeftLabelComponent } from '../left-label/left-label.component';
 import { SignalFormWidget } from '../signal-form-widget';
 
 /**
@@ -29,7 +30,7 @@ import { SignalFormWidget } from '../signal-form-widget';
     selector: 'adf-signal-amount-widget',
     templateUrl: './amount-widget.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormField, TranslatePipe, SignalAmountInputControlComponent]
+    imports: [FormField, TranslatePipe, SignalAmountInputControlComponent, SignalLeftLabelComponent]
 })
 export class SignalAmountWidgetComponent extends SignalFormWidget<string | number | null> {
     protected readonly localeAmounts = computed(() => this.field()().metadata(LOCALE_AMOUNTS)?.() ?? false);

@@ -43,6 +43,7 @@ export interface IntentionalDifference {
     correctsVisibility?: boolean;
 }
 
+const REPEATABLE_SECTION = 'repeatable-section';
 const PEOPLE_TYPES: ReadonlySet<string> = new Set(['people', 'functional-group']);
 
 /**
@@ -124,6 +125,16 @@ export const INTENTIONAL_DIFFERENCES: IntentionalDifference[] = [
         group: 'bug fix',
         description: 'Literal dates in visibility conditions are parsed as yyyy-MM-dd, not yyyy-mm-dd (minutes).',
         correctsVisibility: true
+    },
+    {
+        id: 'read-only-section-rows-read-only',
+        group: 'bug fix',
+        description: 'A repeatable section read-only by its definition makes its rows read-only, as one made read-only by a rule does.',
+        configure: (form) =>
+            form
+                .getFormFields([REPEATABLE_SECTION])
+                .filter((section) => section.readOnly)
+                .forEach((section) => (section.readOnly = true))
     },
     {
         id: 'unmatched-dropdown-value-submits-null',

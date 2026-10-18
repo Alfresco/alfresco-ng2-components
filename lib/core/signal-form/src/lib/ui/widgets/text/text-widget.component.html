@@ -1,10 +1,18 @@
 @if (inputMask(); as mask) {
-    <div class="adf-textfield {{ widgetClass }}" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
+    <div
+        class="adf-textfield {{ widgetClass }}"
+        [class.adf-invalid]="showError()"
+        [class.adf-readonly]="readOnly()"
+        [class.adf-signal-form-left-label-field]="leftLabel()"
+    >
+        @if (leftLabel()) {
+            <adf-signal-left-label [target]="inputId()" [text]="definition().name ?? '' | translate" [required]="fieldRequired()" />
+        }
         <adf-signal-masked-text-input
             [labelAutomationId]="labelAutomationId"
             [formField]="field()"
             [inputId]="inputId()"
-            [label]="definition().name || definition().required ? (definition().name ?? '' | translate) : undefined"
+            [label]="!leftLabel() && (definition().name || definition().required) ? (definition().name ?? '' | translate) : undefined"
             [placeholder]="placeholder()"
             [tooltip]="definition().tooltip ?? ''"
             [mask]="mask.mask"
@@ -13,9 +21,17 @@
         />
     </div>
 } @else {
-    <div class="adf-textfield {{ widgetClass }}" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
+    <div
+        class="adf-textfield {{ widgetClass }}"
+        [class.adf-invalid]="showError()"
+        [class.adf-readonly]="readOnly()"
+        [class.adf-signal-form-left-label-field]="leftLabel()"
+    >
+        @if (leftLabel()) {
+            <adf-signal-left-label [target]="inputId()" [text]="definition().name ?? '' | translate" [required]="fieldRequired()" />
+        }
         <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic" [floatLabel]="placeholder() ? 'always' : 'auto'">
-            @if (definition().name || definition().required) {
+            @if (!leftLabel() && (definition().name || definition().required)) {
                 <mat-label class="adf-label" [attr.data-automation-id]="labelAutomationId">{{ definition().name | translate }}</mat-label>
             }
             <input

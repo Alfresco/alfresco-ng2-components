@@ -514,6 +514,68 @@ describe('SignalForm parity with the current engine', () => {
             exercises: ['hiddenField', 'invalidField']
         },
         {
+            name: 'process variables refreshed by the host, matched by id or by prefixed name',
+            definition: {
+                formRepresentation: {
+                    id: 'refreshed',
+                    name: 'refreshed',
+                    processVariables: [{ name: 'region', type: 'string', value: 'APAC' }],
+                    formDefinition: {
+                        tabs: [],
+                        fields: [
+                            {
+                                id: 'refreshed-root',
+                                type: 'container',
+                                numberOfColumns: 1,
+                                fields: {
+                                    1: [
+                                        {
+                                            id: 'emeaOnly',
+                                            type: 'text',
+                                            visibilityCondition: {
+                                                leftType: 'variable',
+                                                leftValue: 'region',
+                                                operator: '==',
+                                                rightValue: 'EMEA',
+                                                rightType: 'value',
+                                                nextConditionOperator: ''
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ],
+                        outcomes: [],
+                        variables: [{ id: 'region', name: 'region', type: 'string', value: 'NONE' }]
+                    }
+                }
+            },
+            steps: [
+                { kind: 'refreshProcessVariables', processVariables: [{ id: 'region', type: 'string', value: 'EMEA' }] },
+                { kind: 'refreshProcessVariables', processVariables: [{ name: 'variables.region', type: 'string', value: 'APAC' }] }
+            ],
+            exercises: ['hiddenField']
+        },
+        {
+            name: 'a repeatable section made read-only by a rule and editable again, keeping a field read-only on its own',
+            definition: singleSectionForm({
+                params: { initialNumberOfRows: 2, maxNumberOfRows: 3 },
+                fields: { 1: [{ id: 'kind', type: 'text' }], 2: [{ id: 'note', type: 'text', readOnly: true }] }
+            }),
+            steps: [ruleOn('setDisabled', 'lines', true), ruleOn('setDisabled', 'lines', false)],
+            exercises: []
+        },
+        {
+            name: 'a repeatable section read-only by its definition',
+            definition: singleSectionForm({
+                readOnly: true,
+                params: { initialNumberOfRows: 1, maxNumberOfRows: 3 },
+                fields: { 1: [{ id: 'kind', type: 'text' }] }
+            }),
+            steps: [],
+            exercises: []
+        },
+        {
             name: 'saved repeatable section rows',
             definition: singleSectionForm({
                 params: { initialNumberOfRows: 1, maxNumberOfRows: 3 },
@@ -745,6 +807,15 @@ describe('SignalForm parity with the current engine', () => {
                 definition: textEqualTo('2024-13-01'),
                 steps: [setValue('typed', '2024-13-01')],
                 observe: (snapshot) => snapshot.fields['shown'].visible
+            },
+            'read-only-section-rows-read-only': {
+                definition: singleSectionForm({
+                    readOnly: true,
+                    params: { initialNumberOfRows: 1, maxNumberOfRows: 3 },
+                    fields: { 1: [{ id: 'kind', type: 'text' }] }
+                }),
+                steps: [],
+                observe: (snapshot) => snapshot.fields['lines[0].kind'].readOnly
             },
             'unmatched-dropdown-value-submits-null': {
                 definition: allFieldTypesForm,

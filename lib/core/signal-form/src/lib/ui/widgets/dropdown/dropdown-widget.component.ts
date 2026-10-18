@@ -21,13 +21,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FieldOption } from '../../../definition/form-definition.model';
+import { SignalLeftLabelComponent } from '../left-label/left-label.component';
 import { SignalFormWidget } from '../signal-form-widget';
 
 @Component({
     selector: 'adf-signal-dropdown-widget',
     templateUrl: './dropdown-widget.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormField, MatFormFieldModule, MatSelectModule, TranslatePipe]
+    imports: [FormField, MatFormFieldModule, MatSelectModule, TranslatePipe, SignalLeftLabelComponent]
 })
 export class SignalDropdownWidgetComponent extends SignalFormWidget {
     protected readonly options = computed(() => this.definition().options.map((option) => ({ ...option })));

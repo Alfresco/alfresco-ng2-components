@@ -1,9 +1,18 @@
-<div class="adf-date-time-widget-container" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
+<div
+    id="data-time-widget"
+    class="adf-date-time-widget-container"
+    [class.adf-invalid]="showError()"
+    [class.adf-readonly]="readOnly()"
+    [class.adf-signal-form-left-label-field]="leftLabel()"
+>
+    @if (leftLabel()) {
+        <adf-signal-left-label [target]="inputId()" [text]="definition().name ?? '' | translate" [required]="fieldRequired()" />
+    }
     <adf-signal-date-time-input
         labelAutomationId="adf-date-time-widget-label"
         [formField]="field()"
         [inputId]="inputId()"
-        [label]="definition().name | translate"
+        [label]="leftLabel() ? undefined : (definition().name | translate)"
         [placeholder]="definition().placeholder ?? ''"
         [tooltip]="definition().tooltip ?? ''"
         [minDate]="range().min"

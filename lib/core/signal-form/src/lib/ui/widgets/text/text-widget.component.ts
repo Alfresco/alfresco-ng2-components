@@ -20,6 +20,7 @@ import { FormField } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
+import { SignalLeftLabelComponent } from '../left-label/left-label.component';
 import { SignalFormWidget } from '../signal-form-widget';
 import { SignalMaskedTextInputControlComponent } from '../../controls/masked-text-input-control.component';
 
@@ -30,7 +31,7 @@ import { SignalMaskedTextInputControlComponent } from '../../controls/masked-tex
     selector: 'adf-signal-text-widget',
     templateUrl: './text-widget.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormField, MatFormFieldModule, MatInputModule, TranslatePipe, SignalMaskedTextInputControlComponent]
+    imports: [FormField, MatFormFieldModule, MatInputModule, TranslatePipe, SignalMaskedTextInputControlComponent, SignalLeftLabelComponent]
 })
 export class SignalTextWidgetComponent extends SignalFormWidget<string> {
     protected readonly widgetClass: string = 'adf-text-widget';
@@ -44,7 +45,7 @@ export class SignalTextWidgetComponent extends SignalFormWidget<string> {
     selector: 'adf-signal-integer-widget',
     templateUrl: './text-widget.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormField, MatFormFieldModule, MatInputModule, TranslatePipe, SignalMaskedTextInputControlComponent]
+    imports: [FormField, MatFormFieldModule, MatInputModule, TranslatePipe, SignalMaskedTextInputControlComponent, SignalLeftLabelComponent]
 })
 export class SignalIntegerWidgetComponent extends SignalTextWidgetComponent {
     protected override readonly widgetClass: string = 'adf-number-widget';
@@ -55,7 +56,7 @@ export class SignalIntegerWidgetComponent extends SignalTextWidgetComponent {
     selector: 'adf-signal-decimal-widget',
     templateUrl: './text-widget.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormField, MatFormFieldModule, MatInputModule, TranslatePipe, SignalMaskedTextInputControlComponent]
+    imports: [FormField, MatFormFieldModule, MatInputModule, TranslatePipe, SignalMaskedTextInputControlComponent, SignalLeftLabelComponent]
 })
 export class SignalDecimalWidgetComponent extends SignalTextWidgetComponent {
     protected override readonly widgetClass: string = 'adf-decimal-widget';

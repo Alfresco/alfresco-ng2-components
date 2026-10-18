@@ -1,5 +1,14 @@
 @if (form().isOnScreen(field(), row())) {
-    <div class="adf-signal-form-field" [attr.data-automation-id]="'adf-signal-form-field-' + field().id">
+    <div
+        #wrapper
+        class="adf-signal-form-field"
+        [id]="'field-' + elementId() + '-container'"
+        [class.adf-focus]="focused()"
+        [style]="themeStyle()"
+        [attr.data-automation-id]="'adf-signal-form-field-' + field().id"
+        (focusin)="focused.set(true)"
+        (focusout)="focusLeft(wrapper, $event)"
+    >
         @if (state() === widgetState.Registered && component(); as type) {
             @if (widget()?.derivedFromValueType) {
                 <div class="adf-signal-custom-widget" [attr.data-automation-id]="'adf-signal-custom-widget-' + field().type">

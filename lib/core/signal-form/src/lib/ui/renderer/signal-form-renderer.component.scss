@@ -17,8 +17,10 @@
     }
 
     .adf-signal-form-container-header {
-        font-weight: 500;
         margin: 0 0 8px;
+        font-size: var(--adf-header-font-size, var(--mat-sys-headline-small-size));
+        font-weight: var(--adf-header-font-weight, var(--mat-sys-headline-large-weight));
+        color: var(--adf-header-color, var(--mat-sys-on-surface));
     }
 
     .adf-signal-form-columns {
@@ -30,6 +32,21 @@
         display: flex;
         flex-direction: column;
         min-width: 0;
+    }
+
+    .adf-signal-form-left-label-field {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+
+        > :last-child {
+            flex: 1;
+            min-width: 0;
+        }
+    }
+
+    .adf-signal-form-left-label {
+        line-height: 56px;
     }
 
     .adf-signal-form-field-placeholder {

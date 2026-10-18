@@ -19,7 +19,7 @@ import { BUILT_IN_FORM_WIDGET_RESOLVER } from '../widgets/built-in-form-widgets'
 import type { FormWidgetResolver } from '../widgets/form-widget-definition';
 import { LABEL_SUFFIX } from '../expressions/condition-values';
 import { resolveVariableValue } from '../expressions/form-variables';
-import { readInitialValue, readOptions } from './field-initial-values';
+import { readInitialValue, readOptions, readSavedRow, savedValueFor } from './field-initial-values';
 import type { FieldJson, FormDefinitionJson, FormRepresentationJson, OutcomeJson } from './form-definition.json';
 import {
     EMPTY_OPTION_ID,
@@ -76,6 +76,7 @@ export const readFormDefinition = (
         name: content.name ?? null,
         theme: content.theme ? structuredClone(content.theme) : null,
         showTabNavigation: content.showBottomTabNavButtons === true,
+        leftLabels: !!content.leftLabels,
         fields: roots.flatMap((root) => collectFields([root], [], widgets, root.tab ?? undefined)).map(withSourceValue),
         sections: roots
             .filter((root) => root.type === FormFieldType.RepeatableSection)
@@ -93,6 +94,7 @@ const toLayoutNode = (field: FieldJson): LayoutNode => {
         return { kind: 'field', fieldId: field.id, colspan: field.colspan ?? 1 };
     }
     const container = {
+        style: field.style || undefined,
         element: toLayoutDefinition(field),
         name: field.name,
         numberOfColumns: field.numberOfColumns ?? 1,
@@ -141,6 +143,7 @@ const toSectionDefinition = (section: FieldJson, widgets: FormWidgetResolver): S
             rowLabelText: section.params?.rowLabelText,
             appendRowNumber: section.params?.appendRowNumber
         },
+        readOnly: !!section.readOnly,
         tabId,
         fields,
         savedRows: readSavedRows(section, fields, widgets)
@@ -156,17 +159,8 @@ const toSectionDefinition = (section: FieldJson, widgets: FormWidgetResolver): S
  * @param widgets the field type definitions
  * @returns the saved rows
  */
-const readSavedRows = (section: FieldJson, fields: FieldDefinition[], widgets: FormWidgetResolver): Record<string, unknown>[] => {
-    const saved: Record<string, unknown>[] = Array.isArray(section.value) ? section.value : [];
-    const jsonById = new Map(leafFields(Object.values(section.fields ?? {}).flat()).map((field) => [field.id, field]));
-    return saved.map((row) =>
-        Object.fromEntries(
-            fields
-                .filter((field) => row?.[field.id] !== undefined && row[field.id] !== null)
-                .map((field) => [field.id, readInitialValue({ ...jsonById.get(field.id), value: row[field.id] }, field, widgets)])
-        )
-    );
-};
+const readSavedRows = (section: FieldJson, fields: FieldDefinition[], widgets: FormWidgetResolver): Record<string, unknown>[] =>
+    (Array.isArray(section.value) ? section.value : []).map((row) => readSavedRow(fields, row, widgets));
 
 /**
  * Puts saved form values into the field JSON, as today's form does: a field takes the value saved for
@@ -180,20 +174,13 @@ const applySavedValues = (fields: FieldJson[], values: Record<string, unknown>):
         if (LAYOUT_FIELD_TYPES.has(field.type) && field.type !== FormFieldType.RepeatableSection) {
             Object.values(field.fields ?? {}).forEach((column) => applySavedValues(column, values));
         } else if (!CONSTANT_VALUE_FIELD_TYPES.has(field.type)) {
-            const saved = values[`variables.${field.name}`] || values[field.id];
-            if (saved !== undefined && saved !== null) {
+            const saved = savedValueFor(values, field);
+            if (saved !== undefined) {
                 field.value = saved;
             }
         }
     }
 };
-
-const leafFields = (fields: FieldJson[]): FieldJson[] =>
-    fields.flatMap((field) =>
-        LAYOUT_FIELD_TYPES.has(field.type) && field.type !== FormFieldType.RepeatableSection
-            ? leafFields(Object.values(field.fields ?? {}).flat())
-            : [field]
-    );
 
 const collectFields = (fields: FieldJson[], ancestors: LayoutDefinition[], widgets: FormWidgetResolver, tabId?: string): FieldDefinition[] =>
     fields.flatMap((field) => {
@@ -240,6 +227,7 @@ const toFieldDefinition = (
         maxValue: field.maxValue,
         regexPattern: field.regexPattern,
         customValidationMessage: field.customValidationMessage || undefined,
+        style: field.style || undefined,
         inputMask: field.params?.inputMask
             ? {
                   mask: field.params.inputMask,

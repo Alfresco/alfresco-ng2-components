@@ -22,6 +22,7 @@ import { FieldDefinition } from '../../definition/form-definition.model';
 import { RowAddress, SignalForm } from '../../state/signal-form';
 import { fieldWidget } from '../../widgets/field-widget';
 import { FormWidgetRegistry, FormWidgetState } from '../../widgets/form-widget-registry';
+import { themedStyle } from '../themed-style';
 
 /**
  * Renders one field with the widget the registry resolves for it, loading the widget's component lazily. It follows
@@ -46,12 +47,21 @@ export class SignalFormFieldComponent {
     protected readonly state = computed(() => this.registry.stateOfField(this.field()));
     protected readonly component = signal<Type<unknown> | undefined>(undefined);
     protected readonly loadFailed = signal(false);
+    protected readonly themeStyle = computed(() => themedStyle(this.form().definition.theme, this.field().type, this.field().style));
+    protected readonly elementId = computed(() => (this.row() ? `${this.field().id}-Row${this.row().index}` : this.field().id));
+    /** Whether focus is inside the field, for today's `adf-focus` class. */
+    protected readonly focused = signal(false);
+
     protected readonly inputs = computed(() => ({
         form: this.form(),
         field: this.form().fieldNode(this.field().id, this.row()),
         definition: this.field(),
-        elementId: this.row() ? `${this.field().id}-Row${this.row().index}` : this.field().id
+        elementId: this.elementId()
     }));
+
+    protected focusLeft(wrapper: HTMLElement, event: FocusEvent): void {
+        this.focused.set(wrapper.contains(event.relatedTarget as Node | null));
+    }
 
     constructor() {
         effect((onCleanup) => {

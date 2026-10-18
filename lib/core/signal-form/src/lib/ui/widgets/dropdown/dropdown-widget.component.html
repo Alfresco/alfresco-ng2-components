@@ -1,6 +1,14 @@
-<div class="adf-dropdown-widget" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
+<div
+    class="adf-dropdown-widget"
+    [class.adf-invalid]="showError()"
+    [class.adf-readonly]="readOnly()"
+    [class.adf-signal-form-left-label-field]="leftLabel()"
+>
+    @if (leftLabel()) {
+        <adf-signal-left-label [target]="inputId()" [text]="definition().name ?? '' | translate" [required]="fieldRequired()" />
+    }
     <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic">
-        @if (definition().name || definition().required) {
+        @if (!leftLabel() && (definition().name || definition().required)) {
             <mat-label class="adf-label">{{ definition().name | translate }}</mat-label>
         }
         <mat-select
@@ -9,6 +17,7 @@
             [formField]="field()"
             [multiple]="definition().multiple"
             [compareWith]="sameOption"
+            [aria-labelledby]="leftLabel() ? inputId() + '-label' : null"
             [errorStateMatcher]="errorStateMatcher"
         >
             @for (option of options(); track option.id) {

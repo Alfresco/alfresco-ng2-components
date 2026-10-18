@@ -18,6 +18,7 @@
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { readFormDefinition } from '../definition/read-form-definition';
+import type { FieldValidator } from '../widgets/form-widget-definition';
 import { SignalForm } from './signal-form';
 
 describe('SignalForm', () => {
@@ -161,5 +162,179 @@ describe('SignalForm', () => {
             { kind: 'second', due: null },
             { kind: 'third', due: null }
         ]);
+    });
+
+    describe('application validators', () => {
+        const noTestCodes: FieldValidator = (field, value) =>
+            field.type === 'text' && `${value ?? ''}`.startsWith('TEST') ? 'APP.ERRORS.NO_TEST_CODES' : null;
+        const validatedForm = () =>
+            readFormDefinition({
+                formDefinition: {
+                    fields: [
+                        {
+                            id: 'root',
+                            type: 'container',
+                            numberOfColumns: 1,
+                            fields: {
+                                1: [
+                                    { id: 'code', type: 'text', required: true },
+                                    { id: 'amount', type: 'integer', value: 'TEST' },
+                                    { id: 'switch', type: 'text' },
+                                    {
+                                        id: 'hiddenCode',
+                                        type: 'text',
+                                        value: 'TEST-1',
+                                        visibilityCondition: {
+                                            leftType: 'field',
+                                            leftValue: 'switch',
+                                            operator: '==',
+                                            rightValue: 'show',
+                                            rightType: 'value',
+                                            nextConditionOperator: ''
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    outcomes: [],
+                    variables: []
+                }
+            });
+        const errorKinds = (form: SignalForm, fieldId: string) =>
+            form
+                .fieldNode(fieldId)()
+                .errors()
+                .map(({ kind }) => kind);
+
+        it('should reject the values an application validator refuses, on the fields it applies to', () => {
+            const form = new SignalForm(validatedForm(), { validators: [noTestCodes] }, TestBed.inject(Injector));
+
+            form.setValue('code', 'TEST-42');
+            expect(errorKinds(form, 'code')).toEqual(['APP.ERRORS.NO_TEST_CODES']);
+            expect(errorKinds(form, 'amount')).withContext('not a text field').not.toContain('APP.ERRORS.NO_TEST_CODES');
+
+            form.setValue('code', 'PROD-42');
+            expect(errorKinds(form, 'code')).toEqual([]);
+        });
+
+        it("should report the field type's own error first", () => {
+            const form = new SignalForm(validatedForm(), { validators: [() => 'APP.ERRORS.ALWAYS'] }, TestBed.inject(Injector));
+
+            expect(errorKinds(form, 'code')).toEqual(['required']);
+        });
+
+        it('should not validate a hidden field', () => {
+            const form = new SignalForm(validatedForm(), { validators: [noTestCodes] }, TestBed.inject(Injector));
+            expect(errorKinds(form, 'hiddenCode')).toEqual([]);
+
+            form.setValue('switch', 'show');
+
+            expect(errorKinds(form, 'hiddenCode')).toEqual(['APP.ERRORS.NO_TEST_CODES']);
+        });
+    });
+
+    describe('values refreshed by the host', () => {
+        const refreshedForm = () =>
+            new SignalForm(
+                readFormDefinition({
+                    formDefinition: {
+                        fields: [
+                            {
+                                id: 'root',
+                                type: 'container',
+                                numberOfColumns: 1,
+                                fields: {
+                                    1: [
+                                        { id: 'due', type: 'date' },
+                                        { id: 'owner', name: 'ownerName', type: 'text' },
+                                        { id: 'notes', type: 'text' },
+                                        {
+                                            id: 'country',
+                                            type: 'dropdown',
+                                            hasEmptyValue: true,
+                                            options: [
+                                                { id: 'it', name: 'Italy' },
+                                                { id: 'fr', name: 'France' }
+                                            ]
+                                        },
+                                        { id: 'external', type: 'display-external-property', value: 'from the API' },
+                                        {
+                                            id: 'frenchOnly',
+                                            type: 'text',
+                                            visibilityCondition: {
+                                                leftType: 'field',
+                                                leftValue: 'country',
+                                                operator: '==',
+                                                rightValue: 'fr',
+                                                rightType: 'value',
+                                                nextConditionOperator: ''
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                id: 'lines',
+                                type: 'repeatable-section',
+                                numberOfColumns: 1,
+                                params: { initialNumberOfRows: 1, maxNumberOfRows: 5 },
+                                fields: { 1: [{ id: 'when', type: 'date' }] }
+                            }
+                        ],
+                        outcomes: [],
+                        variables: []
+                    }
+                }),
+                {},
+                TestBed.inject(Injector)
+            );
+
+        it('should read refreshed values by type, keep what was typed elsewhere, and leave constant values alone', () => {
+            const form = refreshedForm();
+            form.setValue('notes', 'typed by the user');
+
+            form.refreshValues({ due: '2024-03-15', 'variables.ownerName': 'Vito', country: 'fr', external: 'refreshed' });
+
+            expect(form.submissionValues()['due']).toBe('2024-03-15T00:00:00.000Z');
+            expect(form.submissionValues()['owner']).toBe('Vito');
+            expect(form.submissionValues()['country']).toEqual({ id: 'fr', name: 'France' });
+            expect(form.submissionValues()['notes']).toBe('typed by the user');
+            expect(form.submissionValues()['external']).toBe('from the API');
+        });
+
+        it('should show and hide fields as refreshed values change their conditions', () => {
+            const form = refreshedForm();
+            const frenchOnly = form.fieldDefinition('frenchOnly');
+            expect(form.isOnScreen(frenchOnly)).toBeFalse();
+
+            form.refreshValues({ country: 'fr' });
+
+            expect(form.isOnScreen(frenchOnly)).toBeTrue();
+        });
+
+        it("should replace a repeatable section's rows with the refreshed ones", () => {
+            const form = refreshedForm();
+
+            form.refreshValues({ lines: [{ when: '2024-03-15' }, { when: null }, { when: '2024-04-01' }] });
+
+            expect(form.rowCount('lines')).toBe(3);
+            expect(form.submissionValues()['lines']).toEqual([
+                { when: '2024-03-15T00:00:00.000Z' },
+                { when: null },
+                { when: '2024-04-01T00:00:00.000Z' }
+            ]);
+        });
+
+        it('should fill only the fields still without a value', () => {
+            const form = refreshedForm();
+            form.setValue('notes', 'typed by the user');
+
+            form.fillMissingValues({ notes: 'filled', due: '2024-03-15', country: 'it' });
+
+            expect(form.submissionValues()['notes']).toBe('typed by the user');
+            expect(form.submissionValues()['due']).toBe('2024-03-15T00:00:00.000Z');
+            expect(form.submissionValues()['country']).withContext('the empty option counts as no value').toEqual({ id: 'it', name: 'Italy' });
+        });
     });
 });

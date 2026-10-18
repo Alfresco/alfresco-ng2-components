@@ -22,6 +22,9 @@ import { FieldDefinition } from '../../definition/form-definition.model';
 import type { SignalForm } from '../../state/signal-form';
 import { FieldErrorMessage, fieldErrorMessage } from './field-error-message';
 
+/** The errors that only show once a field is touched, so an empty form does not start out invalid on screen. */
+const MISSING_VALUE_ERRORS: ReadonlySet<string> = new Set(['required', 'dropdown']);
+
 /**
  * The contract every form widget implements. The field outlet gives it the form, the field's Signal Forms node
  * and its definition; the widget binds `[formField]` on its own input, which also applies the field's read-only and disabled
@@ -37,9 +40,21 @@ export abstract class SignalFormWidget<TValue = unknown> {
 
     protected readonly readOnly = computed(() => this.field()().readonly());
 
+    /** Whether the label is shown to the left of the field, as the form asks. */
+    protected readonly leftLabel = computed(() => this.form().definition.leftLabels);
+
+    protected readonly fieldRequired = computed(() => this.field()().required());
+
+    /**
+     * Whether the field shows its error: once it is touched, or when the form shows all errors. Errors other than a
+     * missing value show at once, as today, so a pre-filled value that breaks its rules is reported straight away.
+     */
     protected readonly showError = computed(() => {
         const state = this.field()();
-        return state.invalid() && state.touched();
+        if (!state.invalid()) {
+            return false;
+        }
+        return state.touched() || this.form().allErrorsShown() || state.errors().some(({ kind }) => !MISSING_VALUE_ERRORS.has(kind));
     });
 
     protected readonly error = computed((): FieldErrorMessage | null => {

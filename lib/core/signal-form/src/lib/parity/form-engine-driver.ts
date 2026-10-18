@@ -78,7 +78,18 @@ export interface RuleVariableInteraction {
     value: unknown;
 }
 
-export type FormInteraction = SetValueInteraction | AddRowInteraction | RemoveRowInteraction | RuleFieldInteraction | RuleVariableInteraction;
+export interface RefreshProcessVariablesInteraction {
+    kind: 'refreshProcessVariables';
+    processVariables: { id?: string; name?: string; type?: string; value?: unknown }[];
+}
+
+export type FormInteraction =
+    | SetValueInteraction
+    | AddRowInteraction
+    | RemoveRowInteraction
+    | RuleFieldInteraction
+    | RuleVariableInteraction
+    | RefreshProcessVariablesInteraction;
 
 export interface FormEngineDriver {
     load(definition: object, options?: LoadOptions): void;

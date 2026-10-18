@@ -44,6 +44,8 @@
             @case ('container') {
                 <div
                     class="adf-signal-form-container adf-signal-form-{{ node.element.type }}"
+                    [id]="'field-' + node.element.id + (row ? '-Row' + row.index : '') + '-container'"
+                    [style]="containerStyle(node)"
                     [attr.data-automation-id]="'adf-signal-form-container-' + node.element.id"
                 >
                     @if (node.groupHeader; as header) {
@@ -92,7 +94,12 @@
                 </div>
             }
             @case ('repeatable') {
-                <div class="adf-signal-form-repeatable" [attr.data-automation-id]="'adf-signal-form-repeatable-' + node.sectionId">
+                <div
+                    class="adf-signal-form-repeatable"
+                    [id]="'field-' + node.sectionId + '-container'"
+                    [class.adf-readonly]="form().isSectionReadOnly(node.sectionId)"
+                    [attr.data-automation-id]="'adf-signal-form-repeatable-' + node.sectionId"
+                >
                     @if (node.name) {
                         <h4 class="adf-signal-form-repeatable-title">{{ node.name | translate }}</h4>
                     }
@@ -114,7 +121,7 @@
                                         mat-icon-button
                                         class="adf-signal-form-repeatable-row-remove"
                                         data-automation-id="adf-signal-form-row-remove"
-                                        [disabled]="form().readOnly"
+                                        [disabled]="form().isSectionReadOnly(node.sectionId)"
                                         [matTooltip]="'FORM.FORM_RENDERER.DELETE_ROW' | translate"
                                         (click)="confirmRemoveRow(node.sectionId, index)"
                                     >
@@ -130,7 +137,7 @@
                             mat-flat-button
                             class="adf-signal-form-repeatable-add"
                             data-automation-id="adf-signal-form-row-add"
-                            [disabled]="form().readOnly"
+                            [disabled]="form().isSectionReadOnly(node.sectionId)"
                             (click)="form().addRow(node.sectionId)"
                         >
                             <mat-icon>add</mat-icon> {{ 'FORM.FIELD.REPEATABLE_SECTION.ADD_ROW' | translate }}

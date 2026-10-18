@@ -32,14 +32,18 @@ import {
     validate
 } from '@angular/forms/signals';
 import {
+    CONSTANT_VALUE_FIELD_TYPES,
+    EMPTY_OPTION_ID,
     FieldDefinition,
     FormDefinition,
+    FormVariable,
     LayoutDefinition,
     OutcomeDefinition,
     SectionDefinition,
     TabDefinition,
     VisibilityCondition
 } from '../definition/form-definition.model';
+import { readFieldValue, readSavedRow, savedValueFor } from '../definition/field-initial-values';
 import { conditionValueOf, referencedFieldId } from '../expressions/condition-values';
 import { findVariable, resolveVariableValue } from '../expressions/form-variables';
 import { resolveTextExpressions } from '../expressions/text-expressions';
@@ -49,7 +53,7 @@ import { FieldValues, FormValuesModel, toSubmissionValues } from '../submission/
 import { firstValidationError } from '../validation/field-validation';
 import { BUILT_IN_FORM_WIDGET_RESOLVER } from '../widgets/built-in-form-widgets';
 import { fieldWidget } from '../widgets/field-widget';
-import type { FormWidgetResolver } from '../widgets/form-widget-definition';
+import type { FieldValidator, FormWidgetResolver } from '../widgets/form-widget-definition';
 import { LOCALE_AMOUNTS, TYPED_VALUE_FORMATTING } from './field-metadata';
 
 /**
@@ -68,6 +72,12 @@ export interface SignalFormFeatures {
 export interface SignalFormOptions {
     readOnly?: boolean;
     features?: SignalFormFeatures;
+    /**
+     * Validators the application adds to every field, run after the field type's own ones. Each decides which fields it
+     * applies to, and returns an error kind: one of ADF's, or a translation key for its own message. Hidden and
+     * read-only fields are not validated.
+     */
+    validators?: readonly FieldValidator[];
 }
 
 export interface RowAddress {
@@ -98,6 +108,8 @@ export class SignalForm {
     private readonly values: WritableSignal<FormValuesModel>;
     private readonly overrides = signal<RuleOverrides>({ visible: {}, disabled: {}, required: {} });
     private readonly runtimeVariables = signal<Record<string, unknown>>({});
+    private readonly allErrorsRequested = signal(false);
+    private readonly refreshedProcessVariables = signal<readonly FormVariable[]>([]);
     private readonly initialRows: WritableSignal<Record<string, boolean[]>>;
     private readonly rowCounts: Map<string, Signal<number>>;
     private readonly keys: WritableSignal<Record<string, number[]>>;
@@ -133,6 +145,9 @@ export class SignalForm {
         this.valid = computed(() => this.fieldTree().valid());
         this.visibleTabs = computed(() => definition.tabs.filter((tab) => this.isTabVisible(tab.id)));
     }
+
+    /** Whether every field shows its errors, touched or not, since `showAllErrors()` was called. */
+    readonly allErrorsShown = this.allErrorsRequested.asReadonly();
 
     get readOnly(): boolean {
         return !!this.options.readOnly;
@@ -195,8 +210,27 @@ export class SignalForm {
         );
     }
 
-    isReadOnly(field: FieldDefinition): boolean {
-        return !!this.options.readOnly || (this.overrides().disabled[field.id] ?? field.readOnly);
+    /**
+     * Whether a field is read-only: the whole form is, the field is (by its definition or a rule), or, for a field of
+     * a repeatable section row, its section is. A section made editable again leaves each field as it is on its own.
+     *
+     * @param field the field
+     * @param row the repeatable section row the field is in, if any
+     * @returns `true` when the field is read-only
+     */
+    isReadOnly(field: FieldDefinition, row?: RowAddress): boolean {
+        return !!this.options.readOnly || (this.overrides().disabled[field.id] ?? field.readOnly) || (!!row && this.isSectionReadOnly(row.sectionId));
+    }
+
+    /**
+     * Whether a repeatable section is read-only, by the form, its definition or a rule: its rows can't be added or
+     * removed, and their fields are read-only.
+     *
+     * @param sectionId the repeatable section
+     * @returns `true` when the section is read-only
+     */
+    isSectionReadOnly(sectionId: string): boolean {
+        return !!this.options.readOnly || (this.overrides().disabled[sectionId] ?? this.sections.get(sectionId).readOnly);
     }
 
     /**
@@ -281,7 +315,7 @@ export class SignalForm {
     }
 
     addRow(sectionId: string): void {
-        if (!this.canAddRow(sectionId)) {
+        if (!this.canAddRow(sectionId) || this.isSectionReadOnly(sectionId)) {
             return;
         }
         const section = this.sections.get(sectionId);
@@ -291,10 +325,69 @@ export class SignalForm {
     }
 
     removeRow(sectionId: string, index: number): void {
+        if (this.isSectionReadOnly(sectionId)) {
+            return;
+        }
         const withoutRow = <T>(items: T[]): T[] => [...items.slice(0, index), ...items.slice(index + 1)];
         this.updateRows(sectionId, withoutRow);
         this.initialRows.update((current) => ({ ...current, [sectionId]: withoutRow(current[sectionId]) }));
         this.keys.update((current) => ({ ...current, [sectionId]: withoutRow(current[sectionId]) }));
+    }
+
+    /**
+     * Sets the values the host refreshed (for example a task's data after an update), keyed as saved values are: by
+     * field id or `variables.<name>`. Each is read by the field's type, as at load; a repeatable section's value gives
+     * its rows. Only the given fields change, so what the user typed elsewhere stays: the host passes the values that
+     * changed. Constant-value types keep their value.
+     *
+     * @param values the refreshed values
+     */
+    refreshValues(values: Record<string, unknown>): void {
+        for (const field of this.refreshableFields()) {
+            const saved = savedValueFor(values, field);
+            if (saved !== undefined) {
+                this.setValue(field.id, readFieldValue(field, saved, this.widgets));
+            }
+        }
+        for (const section of this.sections.values()) {
+            const rows = values[section.id];
+            if (Array.isArray(rows)) {
+                this.replaceRows(section, rows);
+            }
+        }
+    }
+
+    /**
+     * Sets the given values only on fields still without one (an empty dropdown counts as without one), as today's
+     * form does when values are requested only where missing.
+     *
+     * @param values the values, keyed as saved values are
+     */
+    fillMissingValues(values: Record<string, unknown>): void {
+        for (const field of this.refreshableFields()) {
+            const saved = savedValueFor(values, field);
+            if (saved !== undefined && isMissingValue(this.values().fields[field.id])) {
+                this.setValue(field.id, readFieldValue(field, saved, this.widgets));
+            }
+        }
+    }
+
+    /**
+     * Gives the form the process variables the host refreshed (for example a task's variables after an update). They
+     * come before the form's own process variables, matched by id or name; conditions reading them follow.
+     *
+     * @param processVariables the refreshed process variables
+     */
+    refreshProcessVariables(processVariables: readonly FormVariable[]): void {
+        this.refreshedProcessVariables.set(processVariables);
+    }
+
+    /**
+     * Shows the errors of every field, including fields added later (repeatable section rows), as today's form does
+     * when it validates on request (a rule's validate action, an outcome requested on an invalid form).
+     */
+    showAllErrors(): void {
+        this.allErrorsRequested.set(true);
     }
 
     setVisibility(fieldId: string, visible: boolean): void {
@@ -329,14 +422,15 @@ export class SignalForm {
         definitionOf: (id: string) => FieldDefinition
     ): void {
         hidden(field, (context) => !this.isOnScreen(definitionOf(context.key()), rowOf(context.pathKeys())));
-        readonly(field, (context) => this.isReadOnly(definitionOf(context.key())));
-        disabled(field, (context) => this.isReadOnly(definitionOf(context.key())));
+        readonly(field, (context) => this.isReadOnly(definitionOf(context.key()), rowOf(context.pathKeys())));
+        disabled(field, (context) => this.isReadOnly(definitionOf(context.key()), rowOf(context.pathKeys())));
         metadata(field, REQUIRED, (context) => this.withRequiredOverride(definitionOf(context.key())).required);
         metadata(field, TYPED_VALUE_FORMATTING, () => this.isFeatureOn('typedValueFormatting'));
         metadata(field, LOCALE_AMOUNTS, () => this.isFeatureOn('localeAmounts'));
         validate(field, (context) => {
             const definition = this.withRequiredOverride(definitionOf(context.key()));
-            const kind = firstValidationError(definition, context.value(), fieldWidget(this.widgets, definition)?.definition.validators ?? []);
+            const typeValidators = fieldWidget(this.widgets, definition)?.definition.validators ?? [];
+            const kind = firstValidationError(definition, context.value(), [...typeValidators, ...(this.options.validators ?? [])]);
             return kind ? validationError(kind, definition) : null;
         });
     }
@@ -361,7 +455,7 @@ export class SignalForm {
     }
 
     private variableValue(identifier: string): unknown {
-        return resolveVariableValue(identifier, this.definition.variables, this.runtimeVariables());
+        return resolveVariableValue(identifier, this.definition.variables, this.runtimeVariables(), this.refreshedProcessVariables());
     }
 
     private conditionValue(reference: string): unknown {
@@ -414,6 +508,17 @@ export class SignalForm {
             : Array.from({ length: section.initialRows }, () => this.emptyRow(section));
     }
 
+    private refreshableFields(): FieldDefinition[] {
+        return [...this.fields.values()].filter((field) => !CONSTANT_VALUE_FIELD_TYPES.has(field.type));
+    }
+
+    private replaceRows(section: SectionDefinition, savedRows: Record<string, unknown>[]): void {
+        const rows = savedRows.map((saved) => ({ ...this.emptyRow(section), ...readSavedRow(section.fields, saved, this.widgets) }));
+        this.updateRows(section.id, () => rows);
+        this.initialRows.update((current) => ({ ...current, [section.id]: [...rows.keys()].map((index) => index < section.initialRows) }));
+        this.keys.update((current) => ({ ...current, [section.id]: this.newRowKeys(rows.length) }));
+    }
+
     private emptyRow(section: SectionDefinition): FieldValues {
         return Object.fromEntries(section.fields.map((field) => [field.id, structuredClone(field.initialValue ?? null)]));
     }
@@ -457,3 +562,16 @@ const matchingId = (reference: string, ids: Iterable<string>): string | undefine
  */
 const rowOf = (pathKeys: readonly string[]): RowAddress | undefined =>
     pathKeys[0] === SECTIONS_KEY ? { sectionId: pathKeys[1], index: Number(pathKeys[2]) } : undefined;
+
+/**
+ * Whether a field value counts as missing: no value, an empty text or list, or a dropdown's empty option.
+ *
+ * @param value the field value
+ * @returns `true` when the value is missing
+ */
+const isMissingValue = (value: unknown): boolean =>
+    value === null ||
+    value === undefined ||
+    value === '' ||
+    (Array.isArray(value) && value.length === 0) ||
+    (typeof value === 'object' && (value as { id?: string }).id === EMPTY_OPTION_ID);

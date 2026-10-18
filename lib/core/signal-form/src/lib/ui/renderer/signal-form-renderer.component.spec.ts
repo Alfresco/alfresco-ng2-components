@@ -25,6 +25,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatDatepickerInputHarness } from '@angular/material/datepicker/testing';
 import { MatTimepickerInputHarness } from '@angular/material/timepicker/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatRadioGroupHarness } from '@angular/material/radio/testing';
 import { MatSelectHarness } from '@angular/material/select/testing';
@@ -109,6 +110,107 @@ describe('SignalFormRendererComponent', () => {
 
         expect(element('.adf-error-text')?.textContent).toContain('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN');
         expect(form.valid()).toBeFalse();
+    });
+
+    describe('when errors show', () => {
+        const errorOf = (fieldId: string) =>
+            element(`[data-automation-id="adf-signal-form-field-${fieldId}"] .adf-error-text`)?.textContent?.trim() ?? null;
+
+        it('should report a pre-filled value that breaks its rules at once, and a missing value only once touched', async () => {
+            await render(
+                fieldsForm([
+                    { id: 'digits', type: 'text', regexPattern: '[0-9]+', value: 'abc' },
+                    { id: 'mandatory', type: 'text', required: true }
+                ])
+            );
+
+            expect(errorOf('digits')).toBe('FORM.FIELD.VALIDATOR.INVALID_VALUE');
+            expect(errorOf('mandatory')).toBeNull();
+
+            await type('mandatory', '');
+
+            expect(errorOf('mandatory')).toBe('FORM.FIELD.REQUIRED');
+        });
+
+        it('should show every error once the form shows all errors, also in repeatable rows added later', async () => {
+            await render({
+                formDefinition: {
+                    fields: [
+                        { id: 'root', type: 'container', numberOfColumns: 1, fields: { 1: [{ id: 'mandatory', type: 'text', required: true }] } },
+                        {
+                            id: 'lines',
+                            type: 'repeatable-section',
+                            numberOfColumns: 1,
+                            params: { initialNumberOfRows: 1, maxNumberOfRows: 3 },
+                            fields: { 1: [{ id: 'item', type: 'text', required: true }] }
+                        }
+                    ],
+                    outcomes: [],
+                    variables: []
+                }
+            });
+            expect(errorOf('mandatory')).toBeNull();
+
+            form.showAllErrors();
+            await settle();
+
+            expect(errorOf('mandatory')).toBe('FORM.FIELD.REQUIRED');
+            expect(errorOf('item')).toBe('FORM.FIELD.REQUIRED');
+
+            form.addRow('lines');
+            await settle();
+
+            const rowErrors = Array.from(fixture.nativeElement.querySelectorAll('[data-automation-id="adf-signal-form-field-item"] .adf-error-text'));
+            expect(rowErrors.length).toBe(2);
+        });
+    });
+
+    describe('legacy element ids', () => {
+        it("should keep today's container ids for fields, containers, groups and repeatable sections", async () => {
+            await render(mockRepeatableSectionForm01);
+
+            expect(element(`#field-${'RepeatableSection0tbw2y'}-container`)).not.toBeNull();
+            expect(element('#field-Text0wwp7n-Row0-container')?.contains(input('Text0wwp7n-Row0'))).toBeTrue();
+            expect(element('#field-Text0wwp7n-Row1-container')?.contains(input('Text0wwp7n-Row1'))).toBeTrue();
+
+            await render(textWidgetVisibility);
+            expect(element('#field-c5fa3358-c6b6-46b1-81cf-c8909150ed4c-container')).not.toBeNull();
+            expect(element('#field-textOne-container')?.contains(input('textOne'))).toBeTrue();
+        });
+
+        it("should keep today's date widget container ids", async () => {
+            await render(
+                fieldsForm([
+                    { id: 'due', type: 'date' },
+                    { id: 'meeting', type: 'datetime' }
+                ])
+            );
+
+            expect(element('#data-widget')?.contains(input('due'))).toBeTrue();
+            expect(element('#data-time-widget')?.contains(input('meeting'))).toBeTrue();
+        });
+
+        it('should mark a field with adf-focus while focus is inside it', async () => {
+            await render(
+                fieldsForm([
+                    { id: 'meeting', type: 'datetime' },
+                    { id: 'other', type: 'text' }
+                ])
+            );
+            const wrapper = () => element('#field-meeting-container');
+
+            input('meeting').focus();
+            await settle();
+            expect(wrapper().classList).toContain('adf-focus');
+
+            input('meeting-time').focus();
+            await settle();
+            expect(wrapper().classList).withContext('focus moved within the field').toContain('adf-focus');
+
+            input('other').focus();
+            await settle();
+            expect(wrapper().classList).not.toContain('adf-focus');
+        });
     });
 
     it('should render a read-only field as read-only, without validating it', async () => {
@@ -248,6 +350,28 @@ describe('SignalFormRendererComponent', () => {
             expect(rows().length).toBe(5);
             expect(element('[data-automation-id="adf-signal-form-row-add"]')).toBeNull();
             expect(element('.adf-signal-form-repeatable-limit')?.textContent).toContain('FORM.FIELD.REPEATABLE_SECTION.ROW_LIMIT_REACHED');
+        });
+
+        it('should lock the rows and the row buttons of a section made read-only, and unlock them again', async () => {
+            await render(mockRepeatableSectionForm01);
+            const button = (automationId: string) => element(`[data-automation-id="${automationId}"]`) as HTMLButtonElement;
+
+            form.setDisabled(sectionId, true);
+            await settle();
+
+            expect(input('Text0wwp7n-Row0').disabled).toBeTrue();
+            expect(button('adf-signal-form-row-add').disabled).toBeTrue();
+            expect(element(`[data-automation-id="adf-signal-form-repeatable-${sectionId}"]`)?.classList).toContain('adf-readonly');
+            form.addRow(sectionId);
+            form.removeRow(sectionId, 0);
+            await settle();
+            expect(rows().length).withContext('row commands are refused').toBe(2);
+
+            form.setDisabled(sectionId, false);
+            await settle();
+
+            expect(input('Text0wwp7n-Row0').disabled).toBeFalse();
+            expect(button('adf-signal-form-row-add').disabled).toBeFalse();
         });
 
         it('should remove a row holding hand-bound widgets without reading the removed row', async () => {
@@ -666,6 +790,68 @@ describe('SignalFormRendererComponent', () => {
         });
     });
 
+    describe('left labels', () => {
+        const labelledFields = [
+            { id: 'name', name: 'Name', type: 'text', required: true },
+            { id: 'code', name: 'Code', type: 'text', params: { inputMask: '000' } },
+            { id: 'age', name: 'Age', type: 'integer' },
+            { id: 'notes', name: 'Notes', type: 'multi-line-text' },
+            { id: 'price', name: 'Price', type: 'amount' },
+            { id: 'due', name: 'Due', type: 'date' },
+            { id: 'meeting', name: 'Meeting', type: 'datetime' },
+            { id: 'country', name: 'Country', type: 'dropdown', options: [{ id: 'it', name: 'Italy' }] }
+        ];
+        const withLeftLabels = (leftLabels: boolean) => ({
+            formDefinition: {
+                leftLabels,
+                fields: [{ id: 'root', type: 'container', numberOfColumns: 1, fields: { 1: labelledFields } }],
+                outcomes: [],
+                variables: []
+            }
+        });
+        const leftLabel = (fieldId: string) => element(`label.adf-signal-form-left-label[for="${fieldId}"]`);
+        const formFieldLabels = async () =>
+            Promise.all(
+                (await TestbedHarnessEnvironment.loader(fixture).getAllHarnesses(MatFormFieldHarness)).map((formField) => formField.getLabel())
+            );
+
+        it('should show every input label to the left of its field, linked to it, instead of inside the field', async () => {
+            await render(withLeftLabels(true));
+
+            for (const { id, name } of labelledFields) {
+                expect(leftLabel(id)?.textContent).toContain(name);
+            }
+            expect(leftLabel('due')?.textContent).toContain('(D-M-YYYY)');
+            expect(element('#country')?.getAttribute('aria-labelledby')?.split(' ').filter(Boolean)).toEqual(['country-label']);
+            expect((await formFieldLabels()).filter(Boolean)).toEqual([]);
+        });
+
+        it('should mark the required fields on their left label', async () => {
+            await render(withLeftLabels(true));
+
+            expect(leftLabel('name')?.querySelector('.adf-asterisk')).not.toBeNull();
+            expect(leftLabel('age')?.querySelector('.adf-asterisk')).toBeNull();
+        });
+
+        it('should place the label before its field on the same line', async () => {
+            await render(withLeftLabels(true));
+            (fixture.nativeElement as HTMLElement).style.width = '800px';
+            await settle();
+
+            const label = leftLabel('name').getBoundingClientRect();
+            const field = input('name').getBoundingClientRect();
+            expect(label.right).toBeLessThanOrEqual(field.left);
+            expect(label.top).toBeLessThan(field.bottom);
+        });
+
+        it('should keep the labels inside the fields when the form does not ask for left labels', async () => {
+            await render(withLeftLabels(false));
+
+            expect(element('label.adf-signal-form-left-label')).toBeNull();
+            expect((await formFieldLabels()).filter(Boolean).length).toBeGreaterThanOrEqual(labelledFields.length);
+        });
+    });
+
     describe('required fields', () => {
         it('should mark required fields as required, following rules that change it', async () => {
             await render(
@@ -692,6 +878,55 @@ describe('SignalFormRendererComponent', () => {
 
             expect(await (await textInput('#name')).isRequired()).toBeFalse();
             expect(await (await textInput('#note')).isRequired()).toBeTrue();
+        });
+    });
+
+    describe('theme styles', () => {
+        const styledForm = {
+            formDefinition: {
+                theme: {
+                    widgets: {
+                        group: { loud: { name: 'Loud', styles: { '--adf-header-font-size': '28px', '--adf-header-color': 'rgb(200, 0, 0)' } } },
+                        'radio-buttons': { large: { name: 'Large', styles: { '--adf-radio-buttons-font-size': '22px' } } }
+                    }
+                },
+                fields: [
+                    {
+                        id: 'loudGroup',
+                        name: 'Loud group',
+                        type: 'group',
+                        style: 'loud',
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [
+                                { id: 'headline', type: 'readonly-text', value: 'Title', style: 'heading' },
+                                { id: 'size', name: 'Size', type: 'radio-buttons', style: 'large', options: [{ id: 's', name: 'Small' }] }
+                            ]
+                        }
+                    }
+                ],
+                outcomes: [],
+                variables: []
+            }
+        };
+
+        beforeEach(() => render(styledForm));
+
+        it("should render a read-only text in ADF's predefined style", () => {
+            expect(getComputedStyle(element('#headline')).fontSize).toBe('20px');
+        });
+
+        it("should style a group header from the form's theme", () => {
+            const header = getComputedStyle(element('[data-automation-id="adf-signal-form-container-loudGroup"] h4'));
+
+            expect(header.fontSize).toBe('28px');
+            expect(header.color).toBe('rgb(200, 0, 0)');
+        });
+
+        it('should hand the radio style to the radio buttons through their Material label token', () => {
+            const radios = element('.adf-radio-buttons-widget');
+
+            expect(getComputedStyle(radios).getPropertyValue('--mat-radio-label-text-size').trim()).toBe('22px');
         });
     });
 
@@ -752,6 +987,16 @@ describe('SignalFormRendererComponent', () => {
 
             expect(input('phone').value).toBe('12-345,67%');
             expect(form.submissionValues()['phone']).toBe('12-345,67%');
+        });
+
+        it("should show an application validator's error kind as its message", async () => {
+            await render(fieldsForm([{ id: 'code', type: 'text' }]), true, {
+                validators: [(field, value) => (field.type === 'text' && `${value ?? ''}`.startsWith('TEST') ? 'APP.ERRORS.NO_TEST_CODES' : null)]
+            });
+
+            await type('code', 'TEST-1');
+
+            expect(element('.adf-error-text')?.textContent?.trim()).toBe('APP.ERRORS.NO_TEST_CODES');
         });
 
         it("should show a field's own message when its pattern fails", async () => {
