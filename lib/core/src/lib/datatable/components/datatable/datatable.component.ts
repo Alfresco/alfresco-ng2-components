@@ -57,7 +57,7 @@ import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
 import { buffer, debounceTime, filter, map, share } from 'rxjs/operators';
-import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, CdkDragPreview, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ResizeEvent } from '../../directives/resizable/types';
@@ -121,7 +121,8 @@ export type ShowHeaderMode = (typeof ShowHeaderMode)[keyof typeof ShowHeaderMode
         AmountCellComponent,
         NumberCellComponent,
         MatTooltipModule,
-        CdkDragPlaceholder
+        CdkDragPlaceholder,
+        CdkDragPreview
     ],
     templateUrl: './datatable.component.html',
     styleUrls: ['./datatable.component.scss'],
@@ -226,6 +227,26 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     /** Toggles the sticky header mode. */
     @Input()
     stickyHeader: boolean = false;
+
+    /** The connected drop lists for drag and drop functionality. */
+    @Input()
+    dropListConnectedTo: string[] = [];
+
+    /** Selector for boundary element for drag and drop functionality that limits the drag area */
+    @Input()
+    dragBoundary = '.adf-datatable-body';
+
+    /** Flag that decides if drag indicator is visible or not */
+    @Input()
+    showDragIndicator = true;
+
+    /** Flag that decides if drag preview should look like original row or should be limited to name and node type icon */
+    @Input()
+    useWholeRowAsDragPreview = true;
+
+    /** Flag that decides if dragging should change rows order */
+    @Input()
+    rowDropSortingDisabled = false;
 
     /** Emitted when the user clicks a row. */
     @Output()
@@ -1111,10 +1132,12 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     onDragStart(): void {
         this.isDraggingRow = true;
+        document.body.classList.add('adf-is-dragging');
     }
 
     onDragEnd(): void {
         this.isDraggingRow = false;
+        document.body.classList.remove('adf-is-dragging');
     }
 
     private updateColumnsWidths(): void {
