@@ -33,12 +33,13 @@ import { Node, PathElement } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { IconModule } from '@alfresco/adf-core';
+import { DataRow, IconModule } from '@alfresco/adf-core';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'adf-breadcrumb',
-    imports: [IconModule, TranslatePipe, MatSelectModule],
+    imports: [IconModule, TranslatePipe, MatSelectModule, CdkDropList, CdkDropListGroup],
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -112,6 +113,14 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @Output()
     navigate = new EventEmitter<PathElement>();
 
+    /** Emitted when the breadcrumb path elements change. */
+    @Output()
+    breadcrumbPathElementsChange = new EventEmitter<string[]>();
+
+    /** Emitted when dragged item is dropped onto the breadcrumb. Emits drag and drop event. */
+    @Output()
+    dropped = new EventEmitter<CdkDragDrop<PathElement, PathElement, DataRow>>();
+
     ngOnInit() {
         this.transform = this.transform ? this.transform : null;
 
@@ -145,6 +154,11 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             this.lastNodes = this.route;
             this.previousNodes = null;
         }
+        this.breadcrumbPathElementsChange.emit(
+            this.lastNodes
+                .filter((_pathElement, i) => this.breadcrumbItemIsAnchor(i === this.lastNodes.length - 1))
+                .map((pathElement) => pathElement.id)
+        );
     }
 
     open(): void {
@@ -216,6 +230,12 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             if (this.target) {
                 this.target.navigateTo(route.id);
             }
+        }
+    }
+
+    onDrop(event: CdkDragDrop<PathElement, PathElement, DataRow>): void {
+        if (event.isPointerOverContainer) {
+            this.dropped.emit(event);
         }
     }
 }

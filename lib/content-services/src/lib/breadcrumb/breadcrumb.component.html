@@ -4,6 +4,7 @@
         class="adf-breadcrumb-container"
         role="navigation"
         [attr.aria-label]="'BREADCRUMB.ARIA-LABEL.BREADCRUMB' | translate"
+        cdkDropListGroup
     >
         @if (hasPreviousNodes()) {
             <button
@@ -47,6 +48,9 @@
                     [attr.data-automation-id]="'breadcrumb_' + item.name"
                     class="adf-breadcrumb-item-anchor"
                     (click)="onRoutePathClick(item, $event)"
+                    cdkDropList
+                    (cdkDropListDropped)="onDrop($event)"
+                    [id]="item.id"
                 >
                     {{ item.name ?? '' | translate }}
                 </a>
