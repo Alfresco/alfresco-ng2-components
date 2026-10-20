@@ -1,0 +1,13 @@
+<div class="adf-button-widget" [class.adf-readonly]="readOnly()">
+    <button
+        mat-flat-button
+        class="adf-button-widget__button"
+        [id]="inputId()"
+        [matTooltip]="definition().tooltip ?? ''"
+        [matTooltipShowDelay]="tooltipShowDelay"
+        [disabled]="readOnly()"
+        (click)="clicked()"
+    >
+        {{ definition().name | translate }}
+    </button>
+</div>
