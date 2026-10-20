@@ -16,13 +16,11 @@
  */
 
 import { FullNamePipe } from '@alfresco/adf-core';
-import type { FieldDefinition, FieldOption } from '../definition/form-definition.interface';
+import type { ChoiceValue, FieldDefinition, FieldValue, GroupValue, PersonValue } from '../definition/form-definition.interface';
 import type { DisplayValueFormatter, FieldTypeResolver } from '../field-types/field-type-definition.interface';
 import { resolveFieldType } from '../field-types/field-type-resolution';
 
 const fullNamePipe = new FullNamePipe();
-
-type User = Parameters<FullNamePipe['transform']>[0];
 
 /**
  * Turns any value into text: strings as they are, objects as JSON.
@@ -51,7 +49,7 @@ export const stringifyValue = (value: unknown): string => {
  * @param value the field value
  * @returns the text
  */
-export const displayFieldValue = (fieldTypes: FieldTypeResolver, definition: FieldDefinition, value: unknown): string => {
+export const displayFieldValue = (fieldTypes: FieldTypeResolver, definition: FieldDefinition, value: FieldValue): string => {
     if (value === null || value === undefined) {
         return '';
     }
@@ -61,30 +59,16 @@ export const displayFieldValue = (fieldTypes: FieldTypeResolver, definition: Fie
 
 const joinNames = (names: string[]): string => names.filter((name) => !!name).join(', ');
 
-const optionName = (definition: FieldDefinition, option: unknown): string => {
-    if (typeof option === 'string') {
-        return definition.options.find(({ id }) => id === option)?.name ?? option;
-    }
-    return nameOf(option) ?? '';
-};
+const optionName = (definition: FieldDefinition, option: ChoiceValue): string =>
+    typeof option === 'string' ? (definition.options.find(({ id }) => id === option)?.name ?? option) : option.name;
 
-export const optionDisplayValue: DisplayValueFormatter = ({ definition, value }) => {
-    if (Array.isArray(value)) {
-        return joinNames(value.map((option) => optionName(definition, option)));
-    }
-    if (typeof value === 'string') {
-        return optionName(definition, value);
-    }
-    return nameOf(value) ?? JSON.stringify(value);
-};
+export const optionDisplayValue: DisplayValueFormatter<ChoiceValue | ChoiceValue[]> = ({ definition, value }) =>
+    Array.isArray(value) ? joinNames(value.map((option) => optionName(definition, option))) : optionName(definition, value);
 
-export const peopleDisplayValue: DisplayValueFormatter = ({ value }) => joinNames(asList(value).map((user) => fullNamePipe.transform(user as User)));
+export const peopleDisplayValue: DisplayValueFormatter<PersonValue | PersonValue[]> = ({ value }) =>
+    joinNames(asList(value).map((person) => fullNamePipe.transform(person)));
 
-export const groupDisplayValue: DisplayValueFormatter = ({ value }) => joinNames(asList(value).map((group) => nameOf(group) ?? ''));
+export const groupDisplayValue: DisplayValueFormatter<GroupValue | GroupValue[]> = ({ value }) =>
+    joinNames(asList(value).map((group) => group.name ?? ''));
 
-const asList = (value: unknown): unknown[] => (Array.isArray(value) ? value : [value]);
-
-const nameOf = (value: unknown): string | undefined => {
-    const name = typeof value === 'object' && value !== null ? (value as Partial<FieldOption>).name : undefined;
-    return typeof name === 'string' ? name : undefined;
-};
+const asList = <TItem>(value: TItem | TItem[]): TItem[] => (Array.isArray(value) ? value : [value]);

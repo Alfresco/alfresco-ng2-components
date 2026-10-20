@@ -17,12 +17,12 @@
 
 import type { Type } from '@angular/core';
 import type { FieldJson } from '../definition/form-definition-json.interface';
-import type { FieldDefinition, FieldOption } from '../definition/form-definition.interface';
+import type { FieldDefinition, FieldOption, FieldValue, SubmittedValue } from '../definition/form-definition.interface';
 
 /**
  * Returns an error kind when the value is invalid for the field, or `null` when it is valid.
  */
-export type FieldValidator = (field: FieldDefinition, value: unknown) => string | null;
+export type FieldValidator<TValue extends FieldValue = FieldValue> = (field: FieldDefinition, value: TValue) => string | null;
 
 /**
  * Completes the options a field offers, before its value is read: for example a dropdown's empty option, or the
@@ -31,39 +31,40 @@ export type FieldValidator = (field: FieldDefinition, value: unknown) => string 
 export type FieldOptionsReader = (field: FieldJson, options: FieldOption[], hasEmptyValue: boolean) => FieldOption[];
 
 /**
- * Reads a field's initial value from its JSON, with the field's options already complete. It only reads: neither the
- * JSON nor the definition is modified.
+ * Reads a field's initial value from its JSON, with the field's options already complete. This is where a value from
+ * the JSON becomes the type's value, so it checks what the JSON holds. It only reads: neither the JSON nor the
+ * definition is modified.
  */
-export type InitialValueReader = (field: FieldJson, definition: FieldDefinition) => unknown;
+export type InitialValueReader<TValue extends FieldValue = FieldValue> = (field: FieldJson, definition: FieldDefinition) => TValue;
 
-export interface FieldValueInput {
+export interface FieldValueInput<TValue extends FieldValue = FieldValue> {
     definition: FieldDefinition;
-    value: unknown;
+    value: TValue;
 }
 
 /**
  * Converts a field value into the value submitted to the backend; `undefined` means the field submits nothing.
  */
-export type SubmittedValueWriter = (input: FieldValueInput) => unknown;
+export type SubmittedValueWriter<TValue extends FieldValue = FieldValue> = (input: FieldValueInput<TValue>) => SubmittedValue;
 
 /**
  * Turns a field value, never `null`, into the text shown for it, for example by an expression in a read-only text.
  */
-export type DisplayValueFormatter = (input: FieldValueInput) => string;
+export type DisplayValueFormatter<TValue extends FieldValue = FieldValue> = (input: FieldValueInput<TValue>) => string;
 
 /**
  * Everything the form needs to know about one field type: how it reads, validates, submits and shows its value, and
- * the component that shows it. Registering a definition is the only step needed to add a field type, whether it comes
- * from ADF, from an application or from a plugin.
+ * the component that shows it. `TValue` is the value the type holds. Registering a definition is the only step needed
+ * to add a field type, whether it comes from ADF, from an application or from a plugin.
  */
-export interface FieldTypeDefinition {
+export interface FieldTypeDefinition<TValue extends FieldValue = FieldValue> {
     type: string;
     component?: () => Promise<Type<unknown>>;
     options?: FieldOptionsReader;
-    initialValue?: InitialValueReader;
-    submittedValue?: SubmittedValueWriter;
-    validators?: FieldValidator[];
-    displayValue?: DisplayValueFormatter;
+    initialValue?: InitialValueReader<TValue>;
+    submittedValue?: SubmittedValueWriter<TValue>;
+    validators?: FieldValidator<TValue>[];
+    displayValue?: DisplayValueFormatter<TValue>;
 }
 
 /** Finds the definition of a field type. */

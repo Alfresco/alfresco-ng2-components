@@ -17,18 +17,18 @@
 
 import { FormDefinitionJson } from './form-definition-json.interface';
 import { dateFieldRange } from '../validation/field-validators';
-import { readFormDefinition } from './read-form-definition';
+import { parseFormJson } from './form-json-parser';
 
-describe('readFormDefinition', () => {
+describe('parseFormJson', () => {
     const formWith = (fields: object[], processVariables: object[] = [], variables: object[] = []): FormDefinitionJson =>
         ({
             formDefinition: { fields: [{ id: 'root', type: 'container', numberOfColumns: 1, fields: { 1: fields } }], outcomes: [], variables },
             processVariables
         }) as FormDefinitionJson;
-    const field = (definition: ReturnType<typeof readFormDefinition>, fieldId: string) => definition.fields.find(({ id }) => id === fieldId);
+    const field = (definition: ReturnType<typeof parseFormJson>, fieldId: string) => definition.fields.find(({ id }) => id === fieldId);
 
     it('should give a read-only field the value of the process field it shows', () => {
-        const definition = readFormDefinition(
+        const definition = parseFormJson(
             formWith(
                 [
                     { id: 'shownName', type: 'readonly', params: { field: { id: 'name', name: 'name', type: 'text' } } },
@@ -52,7 +52,7 @@ describe('readFormDefinition', () => {
 
     it('should give a read-only field a falsy process value instead of its own value', () => {
         const shown = (id: string, name: string) => ({ id, type: 'readonly', value: 'own', params: { field: { id: name, name, type: 'text' } } });
-        const definition = readFormDefinition(
+        const definition = parseFormJson(
             formWith(
                 [shown('shownCount', 'count'), shown('shownFlag', 'flag'), shown('shownNote', 'note'), shown('shownUnset', 'unset')],
                 [
@@ -71,7 +71,7 @@ describe('readFormDefinition', () => {
     });
 
     it('should not take a process value for a field that is not read-only', () => {
-        const definition = readFormDefinition(
+        const definition = parseFormJson(
             formWith(
                 [{ id: 'editable', type: 'text', params: { field: { id: 'name', name: 'name', type: 'text' } } }],
                 [{ name: 'name', value: 'Vito' }]
@@ -82,7 +82,7 @@ describe('readFormDefinition', () => {
     });
 
     it('should format a read-only field showing a datetime as a datetime', () => {
-        const definition = readFormDefinition(
+        const definition = parseFormJson(
             formWith([{ id: 'shownWhen', type: 'readonly', params: { field: { id: 'when', name: 'when', type: 'datetime' } } }])
         );
 
@@ -91,7 +91,7 @@ describe('readFormDefinition', () => {
 
     it('should read a datetime set to now, or saved as an ISO string, as a date', () => {
         const before = Date.now();
-        const definition = readFormDefinition(
+        const definition = parseFormJson(
             formWith([
                 { id: 'started', type: 'datetime', value: 'now' },
                 { id: 'meeting', type: 'datetime', value: '2024-03-15T10:30:00.000Z' }
@@ -104,7 +104,7 @@ describe('readFormDefinition', () => {
     });
 
     it('should round a decimal to its precision only when it has more digits', () => {
-        const definition = readFormDefinition(
+        const definition = parseFormJson(
             formWith([
                 { id: 'rounded', type: 'bigdecimal', precision: 3, value: 10.1035 },
                 { id: 'kept', type: 'bigdecimal', precision: 3, value: 10.1 },
@@ -118,7 +118,7 @@ describe('readFormDefinition', () => {
     });
 
     it('should take saved values by field id or variable name, read like JSON values, except for constant types', () => {
-        const definition = readFormDefinition(
+        const definition = parseFormJson(
             formWith([
                 { id: 'title', type: 'text', value: 'default' },
                 { id: 'owner', name: 'ownerName', type: 'text' },
@@ -140,7 +140,7 @@ describe('readFormDefinition', () => {
     });
 
     it('should keep a falsy saved value instead of the authored one or the one saved by field id', () => {
-        const definition = readFormDefinition(
+        const definition = parseFormJson(
             formWith([
                 { id: 'agree', name: 'agreeName', type: 'boolean', value: true },
                 { id: 'count', type: 'integer', value: 7 },
@@ -158,7 +158,7 @@ describe('readFormDefinition', () => {
     });
 
     it('should take the saved rows of a repeatable section from the saved values', () => {
-        const definition = readFormDefinition(
+        const definition = parseFormJson(
             {
                 formDefinition: {
                     fields: [
@@ -184,7 +184,7 @@ describe('readFormDefinition', () => {
     });
 
     it("should keep a field's authored JSON for widgets that read settings of their own", () => {
-        const definition = readFormDefinition(
+        const definition = parseFormJson(
             formWith([{ id: 'external', type: 'display-external-property', params: { externalPropertyLabel: 'Account' } }])
         );
 
@@ -192,12 +192,12 @@ describe('readFormDefinition', () => {
     });
 
     it('should read whether the tab bar stays in view, from the form representation', () => {
-        expect(readFormDefinition(formWith([])).stickyTabs).toBeFalse();
-        expect(readFormDefinition({ formRepresentation: { stickyTabs: true, formDefinition: formWith([]).formDefinition } }).stickyTabs).toBeTrue();
+        expect(parseFormJson(formWith([])).stickyTabs).toBeFalse();
+        expect(parseFormJson({ formRepresentation: { stickyTabs: true, formDefinition: formWith([]).formDefinition } }).stickyTabs).toBeTrue();
     });
 
     it('should complete the choice options before reading the value, with the empty option and the saved one', () => {
-        const definition = readFormDefinition(
+        const definition = parseFormJson(
             formWith([
                 {
                     id: 'country',
@@ -218,12 +218,12 @@ describe('readFormDefinition', () => {
     });
 
     it('should give no outcomes to a definition without fields, as today', () => {
-        expect(readFormDefinition({ formDefinition: { outcomes: [], variables: [] } } as FormDefinitionJson).outcomes).toEqual([]);
-        expect(readFormDefinition(formWith([])).outcomes.map(({ id }) => id)).toEqual(['$save', '$complete', '$startProcess']);
+        expect(parseFormJson({ formDefinition: { outcomes: [], variables: [] } } as FormDefinitionJson).outcomes).toEqual([]);
+        expect(parseFormJson(formWith([])).outcomes.map(({ id }) => id)).toEqual(['$save', '$complete', '$startProcess']);
     });
 
     it('should count a dynamic date range from the day the form was read, so it does not move while the form is open', () => {
-        const definition = readFormDefinition(
+        const definition = parseFormJson(
             formWith([{ id: 'due', type: 'date', dynamicDateRangeSelection: true, minDateRangeValue: 1, maxDateRangeValue: 3 }])
         );
         const due = field(definition, 'due');

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import type { FieldDefinition } from '../definition/form-definition.interface';
+import type { FieldDefinition, FieldValue } from '../definition/form-definition.interface';
 import { stringifyValue } from '../display/field-display-value';
 
 const EXPRESSION = /\$\{[a-zA-Z0-9_.]+\}/g;
@@ -25,20 +25,27 @@ const REFERENCE = /^\$\{((?:field|variable)\.[a-zA-Z_$][a-zA-Z0-9_$]*)\}$/;
 const HTML_ENTITIES: Readonly<Record<string, string>> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
 
 export interface TextExpressionSource {
-    field(fieldId: string): { definition: FieldDefinition; value: unknown } | undefined;
+    field(fieldId: string): { definition: FieldDefinition; value: FieldValue } | undefined;
     variableValue(identifier: string): unknown;
 }
 
 export interface TextExpressionOptions {
     /** Formats typed values (options, people, groups…) as text; without it, non-text values are shown as JSON. */
-    formatFieldValue?: (definition: FieldDefinition, value: unknown) => string;
+    formatFieldValue?: (definition: FieldDefinition, value: FieldValue) => string;
     escapeHtml?: boolean;
 }
 
-interface ResolvedReference {
-    value: unknown;
-    definition?: FieldDefinition;
+interface ResolvedFieldReference {
+    value: FieldValue;
+    definition: FieldDefinition;
 }
+
+interface ResolvedTextReference {
+    value: unknown;
+    definition?: undefined;
+}
+
+type ResolvedReference = ResolvedFieldReference | ResolvedTextReference;
 
 /**
  * Replaces the `${field.<id>}` and `${variable.<name>}` expressions in a text with the current values, as today's
@@ -63,16 +70,16 @@ const resolveReference = (expression: string, source: TextExpressionSource): Res
     }
     if (reference.startsWith(FIELD_PREFIX)) {
         const field = source.field(reference.slice(FIELD_PREFIX.length));
-        return { value: field?.value, definition: field?.definition };
+        return field ?? { value: undefined };
     }
     return { value: source.variableValue(reference.slice(VARIABLE_PREFIX.length)) };
 };
 
-const shownValue = ({ value, definition }: ResolvedReference, { formatFieldValue }: TextExpressionOptions): string => {
+const shownValue = (resolved: ResolvedReference, { formatFieldValue }: TextExpressionOptions): string => {
     if (!formatFieldValue) {
-        return typeof value === 'string' ? value : JSON.stringify(value);
+        return typeof resolved.value === 'string' ? resolved.value : JSON.stringify(resolved.value);
     }
-    return definition ? formatFieldValue(definition, value) : stringifyValue(value);
+    return resolved.definition ? formatFieldValue(resolved.definition, resolved.value) : stringifyValue(resolved.value);
 };
 
 const escapeHtml = (value: string): string => value.replace(/[&<>"']/g, (character) => HTML_ENTITIES[character]);

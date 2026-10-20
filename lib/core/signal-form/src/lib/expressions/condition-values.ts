@@ -15,9 +15,13 @@
  * limitations under the License.
  */
 
-import type { FieldDefinition } from '../definition/form-definition.interface';
+import type { FieldDefinition, FieldValue, SubmittedValue } from '../definition/form-definition.interface';
+import { isRecord } from '../form-value-guards';
 
 export const LABEL_SUFFIX = '_LABEL';
+
+/** What a visibility condition compares for a field: its value, or the ids or names of the options it holds. */
+export type ConditionValue = SubmittedValue | Array<string | number | undefined>;
 
 export const isLabelReference = (reference: string): boolean => reference.indexOf(LABEL_SUFFIX) > 0;
 
@@ -33,24 +37,25 @@ export const referencedFieldId = (reference: string): string => (isLabelReferenc
  * @param value the field's raw value
  * @returns the value the condition compares
  */
-export const conditionValueOf = (definition: FieldDefinition, reference: string, submitted: unknown, value: unknown): unknown => {
+export const conditionValueOf = (definition: FieldDefinition, reference: string, submitted: SubmittedValue, value: FieldValue): ConditionValue => {
     const label = isLabelReference(reference);
     const found = label ? namesOf(submitted) : idsOf(submitted);
     return found === undefined || found === null ? searchValue(definition, label, value) : found;
 };
 
-const namesOf = (submitted: unknown): unknown => {
+const namesOf = (submitted: SubmittedValue): ConditionValue => {
     if (!submitted) {
         return undefined;
     }
-    return Array.isArray(submitted) ? submitted.map(nameOf) : nameOf(submitted);
+    return Array.isArray(submitted) ? submitted.map((item) => nameOf(item)) : nameOf(submitted);
 };
 
-const idsOf = (submitted: unknown): unknown => {
-    if (idOf(submitted)) {
-        return idOf(submitted);
+const idsOf = (submitted: SubmittedValue): ConditionValue => {
+    const id = idOf(submitted);
+    if (id) {
+        return id;
     }
-    return Array.isArray(submitted) ? submitted.map(idOf) : submitted;
+    return Array.isArray(submitted) ? submitted.map((item) => idOf(item)) : submitted;
 };
 
 /**
@@ -61,14 +66,27 @@ const idsOf = (submitted: unknown): unknown => {
  * @param value the raw field value
  * @returns the value, an empty text when there is none
  */
-const searchValue = (definition: FieldDefinition, label: boolean, value: unknown): unknown => {
+const searchValue = (definition: FieldDefinition, label: boolean, value: FieldValue): ConditionValue => {
     const option = definition.options.find((candidate) => candidate.id === value);
     const optionValue = option && (label ? option.name : option.id);
     return nameOf(value) || optionValue || idOf(value) || (value ?? '');
 };
 
-const nameOf = (value: unknown): unknown => (isRecord(value) ? value['name'] : undefined);
+/**
+ * Returns the name of an item a field value holds, such as an option or a group; `undefined` for an item without one.
+ *
+ * @param item the item, which can be any value a list holds
+ * @returns the name
+ */
+const nameOf = (item: unknown): string | undefined => (isRecord(item) && typeof item['name'] === 'string' ? item['name'] : undefined);
 
-const idOf = (value: unknown): unknown => (isRecord(value) ? value['id'] : undefined);
-
-const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null;
+/**
+ * Returns the id of an item a field value holds, such as an option or a file; `undefined` for an item without one.
+ *
+ * @param item the item, which can be any value a list holds
+ * @returns the id
+ */
+const idOf = (item: unknown): string | number | undefined => {
+    const id = isRecord(item) ? item['id'] : undefined;
+    return typeof id === 'string' || typeof id === 'number' ? id : undefined;
+};

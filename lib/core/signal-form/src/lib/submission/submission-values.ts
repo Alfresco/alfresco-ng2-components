@@ -17,14 +17,29 @@
 
 import { format, isValid } from 'date-fns';
 import { DateFnsUtils } from '@alfresco/adf-core';
-import type { FieldDefinition, SectionDefinition } from '../definition/form-definition.interface';
+import type {
+    ChoiceValue,
+    FieldDefinition,
+    FieldOption,
+    FieldValue,
+    FileValue,
+    GroupValue,
+    PersonValue,
+    SectionDefinition,
+    SubmittedValue
+} from '../definition/form-definition.interface';
 import { EMPTY_OPTION_ID } from '../definition/form-field-types';
+import { hasLength } from '../form-value-guards';
 import { resolveFieldType } from '../field-types/field-type-resolution';
 import type { FieldTypeResolver, SubmittedValueWriter } from '../field-types/field-type-definition.interface';
 
-export type FieldValues = Record<string, unknown>;
+/** The values of a form or of a repeatable section row, by field id. */
+export type FieldValues = Record<string, FieldValue>;
 
-type FieldEntry = [definition: FieldDefinition, value: unknown];
+/** The values a form submits, by field id; a repeatable section submits its rows. */
+export type SubmittedValues = Record<string, SubmittedValue>;
+
+type FieldEntry = [definition: FieldDefinition, value: FieldValue];
 
 export interface FormValuesModel {
     fields: FieldValues;
@@ -46,7 +61,7 @@ export const toSubmissionValues = (
     sections: Map<string, SectionDefinition>,
     model: FormValuesModel,
     fieldTypes: FieldTypeResolver
-): FieldValues => {
+): SubmittedValues => {
     const submission = submittedRecord(Object.entries(model.fields).map(([id, value]): FieldEntry => [fields.get(id), value]), fieldTypes);
 
     for (const [sectionId, rows] of Object.entries(model.sections).filter(([, sectionRows]) => sectionRows.length > 0)) {
@@ -65,8 +80,8 @@ export const toSubmissionValues = (
  * @param fieldTypes the field type definitions
  * @returns the submitted values, keyed by field id
  */
-const submittedRecord = (entries: FieldEntry[], fieldTypes: FieldTypeResolver): FieldValues => {
-    const record: FieldValues = {};
+const submittedRecord = (entries: FieldEntry[], fieldTypes: FieldTypeResolver): SubmittedValues => {
+    const record: SubmittedValues = {};
     for (const [definition, value] of entries) {
         const submitted = submittedValue(definition, value, fieldTypes);
         if (submitted !== undefined) {
@@ -83,12 +98,12 @@ const submittedRecord = (entries: FieldEntry[], fieldTypes: FieldTypeResolver): 
  * @param value the submitted value
  * @returns the value without symbol keys
  */
-const withoutSymbolKeys = (value: unknown): unknown => {
+const withoutSymbolKeys = <TValue>(value: TValue): TValue => {
     if (Array.isArray(value)) {
-        return value.map(withoutSymbolKeys);
+        return value.map((item) => withoutSymbolKeys(item)) as TValue;
     }
     if (value && typeof value === 'object' && Object.getPrototypeOf(value) === Object.prototype) {
-        return Object.fromEntries(Object.entries(value).map(([key, entry]) => [key, withoutSymbolKeys(entry)]));
+        return Object.fromEntries(Object.entries(value).map(([key, entry]) => [key, withoutSymbolKeys(entry)])) as TValue;
     }
     return value;
 };
@@ -102,37 +117,37 @@ const withoutSymbolKeys = (value: unknown): unknown => {
  * @param fieldTypes the field type definitions
  * @returns the submitted value
  */
-export const submittedValue = (definition: FieldDefinition, value: unknown, fieldTypes: FieldTypeResolver): unknown =>
+export const submittedValue = (definition: FieldDefinition, value: FieldValue, fieldTypes: FieldTypeResolver): SubmittedValue =>
     (resolveFieldType(fieldTypes, definition)?.definition.submittedValue ?? asIs)({ definition, value });
 
 const asIs: SubmittedValueWriter = ({ value }) => value;
 
 export const noSubmittedValue: SubmittedValueWriter = () => undefined;
 
-export const numberSubmittedValue: SubmittedValueWriter = ({ definition, value }) =>
+export const numberSubmittedValue: SubmittedValueWriter<string | number | null> = ({ definition, value }) =>
     definition.enableFractions ? parseFloat(`${value}`) : parseInt(`${value}`, 10);
 
-export const decimalSubmittedValue: SubmittedValueWriter = ({ value }) => parseFloat(`${value}`);
+export const decimalSubmittedValue: SubmittedValueWriter<string | number | null> = ({ value }) => parseFloat(`${value}`);
 
-export const booleanSubmittedValue: SubmittedValueWriter = ({ value }) => (value !== null && value !== undefined ? value : false);
+export const booleanSubmittedValue: SubmittedValueWriter<boolean | null> = ({ value }) => value ?? false;
 
-export const peopleSubmittedValue: SubmittedValueWriter = ({ value }) => (value ? value : null);
+export const peopleSubmittedValue: SubmittedValueWriter<PersonValue[] | GroupValue[] | null> = ({ value }) => value || null;
 
-export const dropdownSubmittedValue: SubmittedValueWriter = ({ definition, value }) => {
+export const dropdownSubmittedValue: SubmittedValueWriter<ChoiceValue | FieldOption[] | null> = ({ definition, value }) => {
     if (!value) {
         return null;
     }
     if (Array.isArray(value)) {
         return value;
     }
-    const id = isRecord(value) ? value['id'] : value;
-    if (typeof id !== 'string' || id === EMPTY_OPTION_ID || id === '') {
+    const id = typeof value === 'string' ? value : value.id;
+    if (id === EMPTY_OPTION_ID || id === '') {
         return null;
     }
     return definition.options.find((option) => option.id === id) ?? null;
 };
 
-export const radioSubmittedValue: SubmittedValueWriter = ({ definition, value }) => {
+export const radioSubmittedValue: SubmittedValueWriter<string | null> = ({ definition, value }) => {
     const option = definition.options.find((candidate) => candidate.id === value);
     if (definition.optionType === 'rest') {
         return option ? { ...option, options: definition.options } : { id: null, name: null, options: definition.options };
@@ -140,26 +155,29 @@ export const radioSubmittedValue: SubmittedValueWriter = ({ definition, value })
     return option ? { ...option } : null;
 };
 
-export const uploadSubmittedValue: SubmittedValueWriter = ({ value }) => {
+export const uploadSubmittedValue: SubmittedValueWriter<FileValue[] | string | null> = ({ value }) => {
     if (!hasLength(value)) {
         return null;
     }
-    return Array.isArray(value) ? value.map((file) => (isRecord(file) ? file['id'] : undefined)).join(',') : [value];
+    return Array.isArray(value) ? value.map((file) => file.id).join(',') : [value];
 };
 
-export const dateSubmittedValue: SubmittedValueWriter = ({ definition, value }) => {
+export const dateSubmittedValue: SubmittedValueWriter<Date | string | null> = ({ definition, value }) => {
     const date = parseDateValue(value, definition.dateDisplayFormat);
     return isValid(date) ? `${format(date, 'yyyy-MM-dd')}T00:00:00.000Z` : null;
 };
 
-export const dateTimeSubmittedValue: SubmittedValueWriter = ({ value }) => {
-    const date = value !== null ? DateFnsUtils.getDate(value as string | number | Date) : null;
+export const dateTimeSubmittedValue: SubmittedValueWriter<Date | string | null> = ({ value }) => {
+    const date = value !== null ? DateFnsUtils.getDate(value) : null;
     return isValid(date) ? date.toISOString() : null;
 };
 
-const parseDateValue = (value: unknown, dateFormat: string): Date => {
+const parseDateValue = (value: Date | string | null, dateFormat: string): Date => {
+    if (value === null) {
+        return new Date(NaN);
+    }
     try {
-        const formatted = typeof value === 'string' ? DateFnsUtils.formatDate(value, dateFormat) : (value as Date);
+        const formatted = typeof value === 'string' ? DateFnsUtils.formatDate(value, dateFormat) : value;
         return DateFnsUtils.parseDate(formatted, dateFormat);
     } catch (invalidDate) {
         if (invalidDate instanceof RangeError) {
@@ -168,7 +186,3 @@ const parseDateValue = (value: unknown, dateFormat: string): Date => {
         throw invalidDate;
     }
 };
-
-const hasLength = (value: unknown): boolean => (Array.isArray(value) || typeof value === 'string') && value.length > 0;
-
-const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null && !Array.isArray(value);

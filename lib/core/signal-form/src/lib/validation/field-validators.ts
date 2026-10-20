@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { addDays, isDate, isValid, parseISO } from 'date-fns';
+import { addDays, isValid, parseISO } from 'date-fns';
 import { DateFnsUtils, isNumberValue } from '@alfresco/adf-core';
-import type { FieldDefinition } from '../definition/form-definition.interface';
+import type { ChoiceValue, FieldDefinition, FieldOption, FieldValue } from '../definition/form-definition.interface';
 import { FormFieldType } from '../definition/form-field-types';
+import { hasLength } from '../form-value-guards';
 import type { FieldValidator } from '../field-types/field-type-definition.interface';
 
 const DEFAULT_TEXT_MAX_LENGTH = 1024;
@@ -115,10 +116,10 @@ export const dateValidator: FieldValidator = (field, value) => {
     return dateRangeError(field, validDateOrNull(parsed));
 };
 
-export const dropdownValidator: FieldValidator = (field, value) =>
+export const dropdownValidator: FieldValidator<ChoiceValue | FieldOption[] | null> = (field, value) =>
     field.type === FormFieldType.Dropdown && field.required && isDropdownValueEmpty(field, value) ? 'dropdown' : null;
 
-export const firstValidationError = (field: FieldDefinition, value: unknown, validators: readonly FieldValidator[]): string | null => {
+export const firstValidationError = (field: FieldDefinition, value: FieldValue, validators: readonly FieldValidator[]): string | null => {
     for (const validator of validators) {
         const error = validator(field, value);
         if (error) {
@@ -136,7 +137,7 @@ export const firstValidationError = (field: FieldDefinition, value: unknown, val
  * @param value the field value
  * @returns `true` when the required field holds a value
  */
-const hasRequiredValue = (field: FieldDefinition, value: unknown): boolean => {
+const hasRequiredValue = (field: FieldDefinition, value: FieldValue): boolean => {
     if (field.type === FormFieldType.RadioButtons) {
         return field.options.some((option) => option.id === value);
     }
@@ -210,23 +211,25 @@ const dateTimeRange = (field: FieldDefinition): { min: Date | null; max: Date | 
 export const dateFieldRange = (field: FieldDefinition): { min: Date | null; max: Date | null } =>
     field.type === FormFieldType.Date ? dateRange(field) : dateTimeRange(field);
 
-const toPickerDate = (value: unknown): Date | null => {
-    if (typeof value === 'string') {
-        if (!value) {
-            return null;
-        }
-        const parsed = parseISO(value);
-        if (isValid(parsed)) {
-            return parsed;
-        }
+/**
+ * Reads a date field's value as the picker holds it: a valid date, no date, or an invalid date for a value that is no
+ * date, such as unreadable typed text.
+ *
+ * @param value the field value
+ * @returns the date, `null` for no value
+ */
+const toPickerDate = (value: FieldValue): Date | null => {
+    if (value === null || value === '') {
+        return null;
     }
-    if (value === null || value === undefined || (isDate(value) && isValid(value))) {
-        return (value as Date) ?? null;
+    if (value instanceof Date) {
+        return isValid(value) ? value : new Date(NaN);
     }
-    return new Date(NaN);
+    const parsed = typeof value === 'string' ? parseISO(value) : new Date(NaN);
+    return isValid(parsed) ? parsed : new Date(NaN);
 };
 
-const validDateOrNull = (value: unknown): Date | null => (isDate(value) && isValid(value) ? (value as Date) : null);
+const validDateOrNull = (value: Date | null): Date | null => (value && isValid(value) ? value : null);
 
 const compareDates = (first: Date, second: Date): number =>
     first.getFullYear() - second.getFullYear() || first.getMonth() - second.getMonth() || first.getDate() - second.getDate();
@@ -234,7 +237,7 @@ const compareDates = (first: Date, second: Date): number =>
 const compareDateTimes = (first: Date, second: Date): number =>
     compareDates(first, second) || first.getHours() - second.getHours() || first.getMinutes() - second.getMinutes();
 
-const isDropdownValueEmpty = (field: FieldDefinition, value: unknown): boolean => {
+const isDropdownValueEmpty = (field: FieldDefinition, value: ChoiceValue | FieldOption[] | null): boolean => {
     if (field.multiple) {
         return !Array.isArray(value) || value.length === 0;
     }
@@ -248,14 +251,10 @@ const isDropdownValueEmpty = (field: FieldDefinition, value: unknown): boolean =
     if (typeof value === 'string') {
         return value === emptyOption.id || value === emptyOption.name;
     }
-    return isRecord(value) && value['id'] === emptyOption.id && value['name'] === emptyOption.name;
+    return !Array.isArray(value) && value.id === emptyOption.id && value.name === emptyOption.name;
 };
 
-const isEmptyFieldValue = (value: unknown): boolean =>
+const isEmptyFieldValue = (value: FieldValue): boolean =>
     value === null || value === undefined || ((typeof value === 'string' || Array.isArray(value)) && value.length === 0);
 
-const isBlank = (value: unknown): boolean => value === null || value === undefined || value === '';
-
-const hasLength = (value: unknown): boolean => (Array.isArray(value) || typeof value === 'string') && value.length > 0;
-
-const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null && !Array.isArray(value);
+const isBlank = (value: FieldValue): boolean => value === null || value === undefined || value === '';

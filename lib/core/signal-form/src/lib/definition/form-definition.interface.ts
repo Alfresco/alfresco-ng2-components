@@ -37,6 +37,45 @@ export interface FieldOption {
     name: string;
 }
 
+/** A person picked in a people field. */
+export interface PersonValue {
+    id?: string;
+    username?: string;
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+}
+
+/** A group picked in a group field. */
+export interface GroupValue {
+    id?: string;
+    name?: string;
+}
+
+/** A file attached to an upload field. */
+export interface FileValue {
+    id?: string | number;
+    name?: string;
+}
+
+/** What a dropdown or radio holds for one choice: the option, or its id. */
+export type ChoiceValue = FieldOption | string;
+
+/** A value with properties a field can hold: a choice, a person, a group, a file, or a JSON object. */
+export type ObjectValue = FieldOption | PersonValue | GroupValue | FileValue | Record<string, unknown>;
+
+/** A value as JSON holds it, for example in a JSON field. */
+export type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+
+/**
+ * Any value a field holds: a text, a number, a checkbox state, a date, an object such as an option or a person, a list
+ * of objects, of choices or of JSON values, or no value.
+ */
+export type FieldValue = string | number | boolean | Date | ObjectValue | ObjectValue[] | ChoiceValue[] | JsonValue[] | null;
+
+/** A value submitted for a field; `undefined` when the field submits nothing. */
+export type SubmittedValue = FieldValue | undefined;
+
 export interface LayoutDefinition {
     id: string;
     type: string;
@@ -64,8 +103,8 @@ export interface FieldDefinition {
     readOnly: boolean;
     minLength: number;
     maxLength: number;
-    minValue?: unknown;
-    maxValue?: unknown;
+    minValue?: string | number | null;
+    maxValue?: string | number | null;
     regexPattern?: string | null;
     customValidationMessage?: string;
     inputMask?: InputMask;
@@ -93,7 +132,7 @@ export interface FieldDefinition {
     hyperlinkUrl?: string;
     displayText?: string;
     sourceField?: SourceFieldReference;
-    initialValue: unknown;
+    initialValue: FieldValue;
     /** The field's JSON as authored, for widgets that read settings of their own, such as an application's widget. */
     json: Readonly<FieldJson>;
 }
@@ -133,7 +172,7 @@ export interface SectionDefinition {
     tabId?: string;
     fields: FieldDefinition[];
     /** The saved rows (the section's `value`), read like field values; empty for a section never saved. */
-    savedRows: Record<string, unknown>[];
+    savedRows: Record<string, FieldValue>[];
 }
 
 export interface OutcomeDefinition {

@@ -19,10 +19,12 @@ import { BUILT_IN_FIELD_TYPE_RESOLVER } from '../field-types/built-in-field-type
 import type { FieldTypeResolver } from '../field-types/field-type-definition.interface';
 import { LABEL_SUFFIX } from '../expressions/condition-values';
 import { resolveVariableValue } from '../expressions/form-variables';
-import { authoredOptions, readInitialValue, readOptions, readSavedRow, savedValueFor } from './field-value-readers';
+import { jsonOptions, readInitialValue, readOptions, readSavedRow, savedValueFor, toFieldValue } from './field-value-readers';
+import { isRecord } from '../form-value-guards';
 import type { FieldJson, FormDefinitionJson, FormRepresentationJson, OutcomeJson } from './form-definition-json.interface';
 import type {
     FieldDefinition,
+    FieldValue,
     FormDefinition,
     FormVariables,
     GroupHeader,
@@ -80,7 +82,7 @@ const DEFAULT_OUTCOMES: OutcomeJson[] = [
  * the fields' own values, and a repeatable section's value gives its rows
  * @returns the form definition model
  */
-export const readFormDefinition = (
+export const parseFormJson = (
     json: FormDefinitionJson,
     fieldTypes: FieldTypeResolver = BUILT_IN_FIELD_TYPE_RESOLVER,
     values?: Record<string, unknown>
@@ -183,14 +185,13 @@ const toSectionDefinition = (section: FieldJson, fieldTypes: FieldTypeResolver):
  * @param fieldTypes the field type definitions
  * @returns the saved rows
  */
-const readSavedRows = (section: FieldJson, fields: FieldDefinition[], fieldTypes: FieldTypeResolver): Record<string, unknown>[] =>
+const readSavedRows = (section: FieldJson, fields: FieldDefinition[], fieldTypes: FieldTypeResolver): Record<string, FieldValue>[] =>
     savedRowsOf(section).map((row) => readSavedRow(fields, row, fieldTypes));
 
 const savedRowsOf = (section: FieldJson): Array<Record<string, unknown> | null> =>
     Array.isArray(section.value) ? section.value.map(asSavedRow) : [];
 
-const asSavedRow = (row: unknown): Record<string, unknown> | null =>
-    typeof row === 'object' && row !== null ? (row as Record<string, unknown>) : null;
+const asSavedRow = (row: unknown): Record<string, unknown> | null => (isRecord(row) ? row : null);
 
 /**
  * Puts saved form values into the field JSON, as today's form does: a field takes the value saved for
@@ -298,7 +299,7 @@ const readInputMask = (field: FieldJson): FieldDefinition['inputMask'] =>
  * @returns the choice settings
  */
 const readChoices = (field: FieldJson, fieldTypes: FieldTypeResolver): FieldChoices => {
-    const hasEmptyValue = field.hasEmptyValue ?? authoredOptions(field).some(({ id }) => id === EMPTY_OPTION_ID);
+    const hasEmptyValue = field.hasEmptyValue ?? jsonOptions(field).some(({ id }) => id === EMPTY_OPTION_ID);
     const options = readOptions(field, hasEmptyValue, fieldTypes);
     return {
         options,
@@ -343,5 +344,5 @@ const withSourceFieldValue = (field: FieldDefinition, variables: FormVariables):
     }
     const variableName = source.type === TYPEAHEAD_FIELD_TYPE ? `${source.id}${LABEL_SUFFIX}` : source.name;
     const value = resolveVariableValue(variableName, variables);
-    return value !== undefined && value !== null ? { ...field, initialValue: value } : field;
+    return value !== undefined && value !== null ? { ...field, initialValue: toFieldValue(value) } : field;
 };

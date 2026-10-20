@@ -52,8 +52,8 @@ export interface FieldJson {
     readOnly?: boolean;
     minLength?: number;
     maxLength?: number;
-    minValue?: unknown;
-    maxValue?: unknown;
+    minValue?: string | number | null;
+    maxValue?: string | number | null;
     regexPattern?: string | null;
     customValidationMessage?: string;
     style?: string;

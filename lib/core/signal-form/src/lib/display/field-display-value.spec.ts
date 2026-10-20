@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import type { FieldDefinition } from '../definition/form-definition.interface';
+import type { FieldDefinition, FieldValue } from '../definition/form-definition.interface';
 import { BUILT_IN_FIELD_TYPE_RESOLVER } from '../field-types/built-in-field-types';
 import { displayFieldValue, stringifyValue } from './field-display-value';
 
 describe('displayFieldValue', () => {
     const field = (type: string, options: FieldDefinition['options'] = []) => ({ id: type, type, options }) as FieldDefinition;
-    const shown = (definition: FieldDefinition, value: unknown) => displayFieldValue(BUILT_IN_FIELD_TYPE_RESOLVER, definition, value);
+    const shown = (definition: FieldDefinition, value: FieldValue) => displayFieldValue(BUILT_IN_FIELD_TYPE_RESOLVER, definition, value);
     const colours = field('dropdown', [
         { id: 'r', name: 'Red' },
         { id: 'g', name: 'Green' }

@@ -18,8 +18,9 @@
 import { isValid, parseISO } from 'date-fns';
 import { DateFnsUtils, isNumberValue } from '@alfresco/adf-core';
 import type { FieldJson } from './form-definition-json.interface';
-import type { FieldDefinition, FieldOption } from './form-definition.interface';
+import type { ChoiceValue, FieldDefinition, FieldOption, FieldValue, JsonValue, ObjectValue } from './form-definition.interface';
 import { DEFAULT_EMPTY_OPTION, EMPTY_OPTION_ID } from './form-field-types';
+import { isRecord } from '../form-value-guards';
 import { resolveFieldType } from '../field-types/field-type-resolution';
 import type { FieldOptionsReader, FieldTypeResolver, InitialValueReader } from '../field-types/field-type-definition.interface';
 
@@ -28,21 +29,37 @@ const NOW = 'now';
 const REST_OPTIONS = 'rest';
 
 /**
- * Returns the options a field's JSON lists, none for options loaded from a REST service.
+ * Returns the options listed in a field's JSON, none for options loaded from a REST service.
  *
  * @param field the field JSON
  * @returns the valid options
  */
-export const authoredOptions = (field: FieldJson): FieldOption[] => (field.optionType === REST_OPTIONS ? [] : validOptions(field.options));
+export const jsonOptions = (field: FieldJson): FieldOption[] => (field.optionType === REST_OPTIONS ? [] : validOptions(field.options));
 
 /**
- * Returns a field's own value as authored, `null` when it has none.
+ * Returns the value set in a field's JSON as a field value, `null` when it has none.
  *
  * @param field the field JSON
  * @returns the value
  */
-export const authoredValue = (field: FieldJson): unknown =>
-    Object.prototype.hasOwnProperty.call(field, 'value') && field.value !== undefined ? field.value : null;
+export const jsonValue = (field: FieldJson): FieldValue => toFieldValue(field.value);
+
+/**
+ * Turns a value read from JSON or saved data into a field value: texts, numbers, checkbox states, dates, objects and
+ * lists as they are. Anything else, such as a function, is no value.
+ *
+ * @param value the value as read
+ * @returns the field value
+ */
+export const toFieldValue = (value: unknown): FieldValue => {
+    if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean' || value instanceof Date) {
+        return value;
+    }
+    if (Array.isArray(value)) {
+        return value.every((item) => isRecord(item)) ? (value as ObjectValue[]) : (value as JsonValue[]);
+    }
+    return isRecord(value) ? value : null;
+};
 
 /**
  * Reads a field's options as its type completes them, from the options its JSON lists.
@@ -53,13 +70,13 @@ export const authoredValue = (field: FieldJson): unknown =>
  * @returns the options
  */
 export const readOptions = (field: FieldJson, hasEmptyValue: boolean, fieldTypes: FieldTypeResolver): FieldOption[] => {
-    const options = authoredOptions(field);
+    const options = jsonOptions(field);
     const completeOptions = resolveFieldType(fieldTypes, field)?.definition.options;
     return completeOptions ? completeOptions(field, options, hasEmptyValue) : options;
 };
 
-export const readInitialValue = (field: FieldJson, definition: FieldDefinition, fieldTypes: FieldTypeResolver): unknown =>
-    (resolveFieldType(fieldTypes, definition)?.definition.initialValue ?? authoredValue)(field, definition);
+export const readInitialValue = (field: FieldJson, definition: FieldDefinition, fieldTypes: FieldTypeResolver): FieldValue =>
+    (resolveFieldType(fieldTypes, definition)?.definition.initialValue ?? jsonValue)(field, definition);
 
 /**
  * Reads a value given later, such as a saved or refreshed value, the way the field's type reads its own JSON value.
@@ -69,7 +86,7 @@ export const readInitialValue = (field: FieldJson, definition: FieldDefinition, 
  * @param fieldTypes the field type definitions
  * @returns the field value
  */
-export const readValueAsType = (definition: FieldDefinition, value: unknown, fieldTypes: FieldTypeResolver): unknown =>
+export const readValueAsType = (definition: FieldDefinition, value: unknown, fieldTypes: FieldTypeResolver): FieldValue =>
     readInitialValue(
         { id: definition.id, type: definition.type, options: definition.options, optionType: definition.optionType, value },
         definition,
@@ -88,7 +105,7 @@ export const readSavedRow = (
     fields: FieldDefinition[],
     row: Record<string, unknown> | null | undefined,
     fieldTypes: FieldTypeResolver
-): Record<string, unknown> =>
+): Record<string, FieldValue> =>
     Object.fromEntries(
         fields
             .filter((field) => row?.[field.id] !== undefined && row[field.id] !== null)
@@ -115,49 +132,55 @@ export const savedValueFor = (values: Record<string, unknown>, field: { id: stri
  * option missing from the list is still offered.
  */
 export const dropdownOptions: FieldOptionsReader = (field, options, hasEmptyValue) => {
-    const value = authoredValue(field);
+    const value = jsonValue(field);
     const held = Array.isArray(value) ? validOptions(value) : validOptions([value]);
     const withEmpty = hasEmptyValue && !options.some(({ id }) => id === EMPTY_OPTION_ID) ? [{ ...DEFAULT_EMPTY_OPTION }, ...options] : options;
     return withOptions(withEmpty, held);
 };
 
 /**
- * Completes a radio's options: the options its value lists replace the authored ones, as today, and an option its
+ * Completes a radio's options: the options its value lists replace the ones in its JSON, as today, and an option its
  * value holds is added when missing.
  */
 export const radioOptions: FieldOptionsReader = (field, options) => {
-    const value = authoredValue(field);
+    const value = jsonValue(field);
     const listed = isRecord(value) && Array.isArray(value['options']) ? validOptions(value['options']) : options;
     return isValidOption(value) && !matchingOption(listed, value) ? withOptions(listed, [value]) : listed;
 };
 
-export const dropdownInitialValue: InitialValueReader = (field, definition) => {
-    const value = authoredValue(field);
+export const dropdownInitialValue: InitialValueReader<ChoiceValue | FieldOption[] | null> = (field, definition) => {
+    const value = jsonValue(field);
     if (definition.hasEmptyValue && definition.emptyOption && isEmptyChoice(value, definition.emptyOption)) {
         return definition.emptyOption;
     }
     if (isValidOption(value)) {
         return value;
     }
-    return definition.multiple ? validOptions(field.value) : value;
+    if (definition.multiple) {
+        return validOptions(field.value);
+    }
+    return typeof value === 'string' ? value : null;
 };
 
-export const radioInitialValue: InitialValueReader = (field, definition) => {
-    const value = authoredValue(field);
+export const radioInitialValue: InitialValueReader<string | null> = (field, definition) => {
+    const value = jsonValue(field);
     const matching = matchingOption(definition.options, value);
     if (matching) {
         return matching.id;
     }
-    return isValidOption(value) ? value.id : value;
+    if (isValidOption(value)) {
+        return value.id;
+    }
+    return typeof value === 'string' ? value : null;
 };
 
-export const dateInitialValue: InitialValueReader = (field) => {
-    const value = authoredValue(field);
+export const dateInitialValue: InitialValueReader<Date | string | null> = (field) => {
+    const value = jsonValue(field);
     return value === TODAY ? new Date() : initialDateValue(value, false);
 };
 
-export const dateTimeInitialValue: InitialValueReader = (field) => {
-    const value = authoredValue(field);
+export const dateTimeInitialValue: InitialValueReader<Date | string | null> = (field) => {
+    const value = jsonValue(field);
     return value === NOW ? new Date() : initialDateValue(value, true);
 };
 
@@ -168,42 +191,59 @@ export const dateTimeInitialValue: InitialValueReader = (field) => {
  * @param definition the field definition
  * @returns the value, rounded to the precision when it has more digits
  */
-export const decimalInitialValue: InitialValueReader = (field, definition) => {
-    const value = authoredValue(field);
+export const decimalInitialValue: InitialValueReader<string | number | null> = (field, definition) => {
+    const value = jsonValue(field);
+    if (typeof value !== 'string' && typeof value !== 'number') {
+        return null;
+    }
     const fractionDigits = `${value}`.split('.')[1]?.length ?? 0;
     return definition.precision !== undefined && fractionDigits > definition.precision ? parseFloat(`${value}`).toFixed(definition.precision) : value;
 };
 
-export const booleanInitialValue: InitialValueReader = (field) => field.value === 'true' || field.value === true;
+export const booleanInitialValue: InitialValueReader<boolean> = (field) => field.value === 'true' || field.value === true;
 
-const isEmptyChoice = (value: unknown, emptyOption: FieldOption): boolean =>
+const isEmptyChoice = (value: FieldValue, emptyOption: FieldOption): boolean =>
     !value || value === emptyOption.id || value === emptyOption.name;
 
-const matchingOption = (options: FieldOption[], value: unknown): FieldOption | undefined =>
+const matchingOption = (options: FieldOption[], value: FieldValue): FieldOption | undefined =>
     options.find(
         (option) => option.id === value || option.name === value || (isRecord(value) && (option.id === value['id'] || option.name === value['name']))
     );
 
-const initialDateValue = (value: unknown, withTime: boolean): unknown => {
-    if (!value || (typeof value !== 'string' && typeof value !== 'number')) {
+/**
+ * Reads a date or datetime value: a date as it is, a timestamp, or a text in the saved format; a text that is no
+ * date stays as it was typed, so the field reports it.
+ *
+ * @param value the value
+ * @param withTime whether the value carries a time
+ * @returns the date, the unreadable text, or no value
+ */
+const initialDateValue = (value: FieldValue, withTime: boolean): Date | string | null => {
+    if (value instanceof Date || value === null) {
+        return value;
+    }
+    if (typeof value === 'number') {
+        return validDateOr(new Date(value), `${value}`);
+    }
+    if (typeof value !== 'string') {
+        return null;
+    }
+    if (!value) {
         return value;
     }
     if (isNumberValue(value)) {
         return validDateOr(new Date(value), value);
     }
-    const text = `${value}`;
     if (!withTime) {
-        return validDateOr(DateFnsUtils.parseDate(text.split('T')[0], 'YYYY-M-D'), value);
+        return validDateOr(DateFnsUtils.parseDate(value.split('T')[0], 'YYYY-M-D'), value);
     }
-    const typed = DateFnsUtils.parseDate(text, 'YYYY-MM-DD hh:mm A');
-    return isValid(typed) ? typed : validDateOr(parseISO(text), value);
+    const typed = DateFnsUtils.parseDate(value, 'YYYY-MM-DD hh:mm A');
+    return isValid(typed) ? typed : validDateOr(parseISO(value), value);
 };
 
-const validDateOr = (date: Date, fallback: unknown): unknown => (isValid(date) ? date : fallback);
+const validDateOr = (date: Date, fallback: string): Date | string => (isValid(date) ? date : fallback);
 
 const validOptions = (options: unknown): FieldOption[] => (Array.isArray(options) ? options.filter(isValidOption) : []);
-
-const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null && !Array.isArray(value);
 
 const isValidOption = (option: unknown): option is FieldOption => isRecord(option) && !!option['id'] && !!option['name'];
 

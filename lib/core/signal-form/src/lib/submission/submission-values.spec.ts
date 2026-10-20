@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { readFormDefinition } from '../definition/read-form-definition';
+import { parseFormJson } from '../definition/form-json-parser';
 import { BUILT_IN_FIELD_TYPE_RESOLVER } from '../field-types/built-in-field-types';
 import { toSubmissionValues } from './submission-values';
 
 describe('toSubmissionValues', () => {
-    const definition = readFormDefinition({
+    const definition = parseFormJson({
         formDefinition: {
             fields: [
                 {

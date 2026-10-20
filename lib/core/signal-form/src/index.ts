@@ -18,7 +18,7 @@
 export * from './lib/definition/form-definition.interface';
 export * from './lib/definition/form-definition-json.interface';
 export * from './lib/definition/form-field-types';
-export * from './lib/definition/read-form-definition';
+export * from './lib/definition/form-json-parser';
 export type { FieldErrorKind } from './lib/validation/field-validators';
 export * from './lib/field-types/field-type-definition.interface';
 export * from './lib/field-types/built-in-field-types';
