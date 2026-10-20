@@ -271,7 +271,8 @@ const defaultDateFormat = (field: FieldJson): string => {
 const TYPEAHEAD = 'typeahead';
 
 /**
- * Gives a read-only field showing a process field the value of that field's process variable, when it has one.
+ * Gives a read-only field showing a process field the value of that field's process variable, when it has one. A
+ * falsy value (`0`, `false`, an empty text) is a value; only a missing or `null` one keeps the field's own value.
  *
  * @param field the field definition
  * @param variables the form and process variables
@@ -284,5 +285,5 @@ const withSourceFieldValue = (field: FieldDefinition, variables: FormVariables):
     }
     const variableName = source.type === TYPEAHEAD ? `${source.id}${LABEL_SUFFIX}` : source.name;
     const value = resolveVariableValue(variableName, variables);
-    return value ? { ...field, initialValue: value } : field;
+    return value !== undefined && value !== null ? { ...field, initialValue: value } : field;
 };

@@ -50,6 +50,26 @@ describe('readFormDefinition', () => {
         expect(field(definition, 'notShown').initialValue).withContext('no variable keeps the own value').toBe('kept');
     });
 
+    it('should give a read-only field a falsy process value instead of its own value', () => {
+        const shown = (id: string, name: string) => ({ id, type: 'readonly', value: 'own', params: { field: { id: name, name, type: 'text' } } });
+        const definition = readFormDefinition(
+            formWith(
+                [shown('shownCount', 'count'), shown('shownFlag', 'flag'), shown('shownNote', 'note'), shown('shownUnset', 'unset')],
+                [
+                    { name: 'count', type: 'integer', value: 0 },
+                    { name: 'flag', type: 'boolean', value: false },
+                    { name: 'note', type: 'string', value: '' },
+                    { name: 'unset', type: 'string', value: null }
+                ]
+            )
+        );
+
+        expect(field(definition, 'shownCount').initialValue).toBe(0);
+        expect(field(definition, 'shownFlag').initialValue).toBeFalse();
+        expect(field(definition, 'shownNote').initialValue).toBe('');
+        expect(field(definition, 'shownUnset').initialValue).withContext('a null value keeps the own value').toBe('own');
+    });
+
     it('should not take a process value for a field that is not read-only', () => {
         const definition = readFormDefinition(
             formWith(
@@ -117,6 +137,24 @@ describe('readFormDefinition', () => {
             .toBeTrue();
         expect(field(definition, 'external').initialValue).toBe('from the API');
         expect(field(definition, 'untouched').initialValue).toBe('kept');
+    });
+
+    it('should keep a falsy saved value instead of the authored one or the one saved by field id', () => {
+        const definition = readFormDefinition(
+            formWith([
+                { id: 'agree', name: 'agreeName', type: 'boolean', value: true },
+                { id: 'count', type: 'integer', value: 7 },
+                { id: 'note', name: 'noteName', type: 'text', value: 'authored' },
+                { id: 'missing', name: 'missingName', type: 'text', value: 'authored' }
+            ]),
+            undefined,
+            { 'variables.agreeName': false, count: 0, 'variables.noteName': '', note: 'by id', 'variables.missingName': null }
+        );
+
+        expect(field(definition, 'agree').initialValue).toBeFalse();
+        expect(field(definition, 'count').initialValue).toBe(0);
+        expect(field(definition, 'note').initialValue).withContext('the variable value comes first, even empty').toBe('');
+        expect(field(definition, 'missing').initialValue).withContext('a null value counts as not saved').toBe('authored');
     });
 
     it('should take the saved rows of a repeatable section from the saved values', () => {

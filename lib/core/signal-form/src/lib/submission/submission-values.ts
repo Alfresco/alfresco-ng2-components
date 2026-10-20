@@ -23,6 +23,8 @@ import type { FormWidgetResolver, SubmittedValueWriter } from '../widgets/form-w
 
 export type FieldValues = Record<string, unknown>;
 
+type FieldEntry = [definition: FieldDefinition, value: unknown];
+
 export interface FormValuesModel {
     fields: FieldValues;
     sections: Record<string, FieldValues[]>;
@@ -44,20 +46,33 @@ export const toSubmissionValues = (
     model: FormValuesModel,
     widgets: FormWidgetResolver
 ): FieldValues => {
-    const submission: FieldValues = {};
-
-    for (const [id, value] of Object.entries(model.fields)) {
-        submission[id] = withoutSymbolKeys(submittedValue(fields.get(id), value, widgets));
-    }
+    const submission = submittedRecord(Object.entries(model.fields).map(([id, value]): FieldEntry => [fields.get(id), value]), widgets);
 
     for (const [sectionId, rows] of Object.entries(model.sections).filter(([, sectionRows]) => sectionRows.length > 0)) {
         const sectionFields = sections.get(sectionId).fields;
-        submission[sectionId] = rows.map((row) =>
-            Object.fromEntries(sectionFields.map((field) => [field.id, withoutSymbolKeys(submittedValue(field, row[field.id], widgets))]))
-        );
+        submission[sectionId] = rows.map((row) => submittedRecord(sectionFields.map((field): FieldEntry => [field, row[field.id]]), widgets));
     }
 
     return submission;
+};
+
+/**
+ * Builds the submitted values of some fields, leaving out the fields that submit nothing (`undefined`), as today's form
+ * does for read-only fields and hyperlinks.
+ *
+ * @param entries each field with its current value
+ * @param widgets the field type definitions
+ * @returns the submitted values, keyed by field id
+ */
+const submittedRecord = (entries: FieldEntry[], widgets: FormWidgetResolver): FieldValues => {
+    const record: FieldValues = {};
+    for (const [definition, value] of entries) {
+        const submitted = submittedValue(definition, value, widgets);
+        if (submitted !== undefined) {
+            record[definition.id] = withoutSymbolKeys(submitted);
+        }
+    }
+    return record;
 };
 
 /**

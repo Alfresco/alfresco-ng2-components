@@ -68,7 +68,8 @@ export const readSavedRow = (
     );
 
 /**
- * Returns the value saved for a field, keyed as today's form keys it: by `variables.<name>`, else by the field id.
+ * Returns the value saved for a field, keyed as today's form keys it: by `variables.<name>`, else by the field id. A
+ * falsy saved value (`false`, `0`, an empty text) counts as saved; only a missing or `null` value doesn't.
  *
  * @param values the saved values
  * @param field the field id and name
@@ -77,7 +78,7 @@ export const readSavedRow = (
  * @returns the saved value, `undefined` when there is none
  */
 export const savedValueFor = (values: Record<string, unknown>, field: { id: string; name?: string }): unknown => {
-    const saved = values[`variables.${field.name}`] || values[field.id];
+    const saved = values[`variables.${field.name}`] ?? values[field.id];
     return saved === null ? undefined : saved;
 };
 
