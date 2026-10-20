@@ -23,6 +23,7 @@ import { FormFieldTypes } from './form-field-types';
 import { MinValueFieldValidator, RequiredFieldValidator } from './form-field-validator';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
+import { repeatableSectionForm } from '../../mock/repeatable-section-form.mock';
 
 describe('FormFieldModel', () => {
     it('should store the form reference', () => {
@@ -1901,6 +1902,204 @@ describe('FormFieldModel', () => {
         });
 
         describe('remove row', () => {
+            const setupNestedForm = ({ required = false } = {}) => {
+                const nestedForm = new FormModel(repeatableSectionForm(required));
+                return { nestedForm, section: nestedForm.fields[0].field };
+            };
+
+            const setupMixedFields = () => {
+                const definition = repeatableSectionForm(false, 3);
+                const repeatDefinition = definition.fields[0];
+                repeatDefinition.fields['1'][0].numberOfColumns = 2;
+                Object.assign(repeatDefinition.fields['1'][0].fields, {
+                    '2': [{ id: 'otherText', type: 'text' }]
+                });
+                repeatDefinition.numberOfColumns = 2;
+                Object.assign(repeatDefinition.fields, { '2': [{ id: 'directText', type: 'text' }] });
+                const initialValues = [0, 1, 2].map((index) => ({
+                    Text0bere0: `nested ${index}`,
+                    otherText: `other ${index}`,
+                    directText: `direct ${index}`
+                }));
+                const nestedForm = new FormModel(definition, { [repeatDefinition.id]: structuredClone(initialValues) });
+                return { nestedForm, section: nestedForm.fields[0].field, initialValues };
+            };
+
+            const editMixedFields = (section: FormFieldModel) => {
+                section.rows.forEach((row, index) => {
+                    const nestedSection = row.columns[0].fields[0];
+                    const children = [nestedSection.columns[0].fields[0], nestedSection.columns[1].fields[0], row.columns[1].fields[0]];
+                    children.forEach((child) => {
+                        child.value = `edited ${child.json.id} ${index}`;
+                    });
+                });
+            };
+
+            const editedMixedValues = [0, 1].map((index) => ({
+                Text0bere0: `edited Text0bere0 ${index}`,
+                otherText: `edited otherText ${index}`,
+                directText: `edited directText ${index}`
+            }));
+
+            it('should write to row zero after deleting the first row with a nested optional Text field', () => {
+                const { nestedForm, section } = setupNestedForm();
+                const survivingSection = section.rows[1].columns[0].fields[0];
+                const survivingText = survivingSection.columns[0].fields[0];
+                const originalTextId = survivingText.id;
+
+                section.removeRow(0);
+
+                expect(section.rows.length).toBe(1);
+                expect(nestedForm.values[section.id]).toEqual([{ Text0bere0: null }]);
+                expect(survivingSection.parent.rowIndex).toBe(0);
+                expect(survivingText.parent.rowIndex).toBe(0);
+                expect(survivingText.id).toBe(originalTextId);
+
+                survivingText.value = 'remaining row';
+
+                expect(nestedForm.values).toEqual({ RepeatableSection0lp64g: [{ Text0bere0: 'remaining row' }] });
+            });
+
+            it('should require a value in the surviving nested Text field after deleting the first row', () => {
+                const { nestedForm, section } = setupNestedForm({ required: true });
+                section.removeRow(0);
+                const survivingText = section.rows[0].columns[0].fields[0].columns[0].fields[0];
+
+                nestedForm.validateForm();
+                expect(nestedForm.isValid).toBeFalse();
+                expect(survivingText.isValid).toBeFalse();
+
+                survivingText.value = 'required value';
+                nestedForm.validateForm();
+
+                expect(survivingText.isValid).toBeTrue();
+                expect(nestedForm.isValid).toBeTrue();
+                expect(nestedForm.values[section.id]).toEqual([{ Text0bere0: 'required value' }]);
+            });
+
+            it('should delete all initial rows and add a new nested optional Text row', () => {
+                const { nestedForm, section } = setupNestedForm();
+                const deletedIds = section.rows.map((row) => row.columns[0].fields[0].columns[0].fields[0].id);
+                section.rows[1].columns[0].fields[0].columns[0].fields[0].value = 'deleted value';
+
+                section.removeRow(0);
+                section.removeRow(0);
+
+                expect(section.rows.length).toBe(0);
+                expect(nestedForm.values[section.id]).toEqual([]);
+                expect(nestedForm.getFormFields().some((child) => deletedIds.includes(child.id))).toBeFalse();
+
+                section.addRow(section.fields, nestedForm);
+
+                const newSection = section.rows[0].columns[0].fields[0];
+                const newText = newSection.columns[0].fields[0];
+                expect(section.rows.length).toBe(1);
+                expect(newSection.parent.rowIndex).toBe(0);
+                expect(newText.parent.rowIndex).toBe(0);
+                expect(deletedIds).not.toContain(newText.id);
+                expect(nestedForm.values[section.id]).toEqual([{ Text0bere0: null }]);
+                nestedForm.validateForm();
+                expect(nestedForm.isValid).toBeTrue();
+
+                newText.value = 'new row';
+                nestedForm.validateForm();
+
+                expect(nestedForm.isValid).toBeTrue();
+                expect(nestedForm.values[section.id]).toEqual([{ Text0bere0: 'new row' }]);
+            });
+
+            [
+                { position: 'first', removedIndex: 0 },
+                { position: 'middle', removedIndex: 1 },
+                { position: 'last', removedIndex: 2 }
+            ].forEach(({ position, removedIndex }) => {
+                it(`should preserve mixed fields and values after deleting the ${position} row and editing survivors`, () => {
+                    const { nestedForm, section, initialValues } = setupMixedFields();
+                    const survivingRows = section.rows.filter((_, index) => index !== removedIndex);
+                    const originalIds = survivingRows.map((row) => row.id);
+
+                    section.removeRow(removedIndex);
+
+                    expect(section.rows).toEqual(survivingRows);
+                    expect(section.rows.map((row) => row.id)).toEqual(originalIds);
+                    expect(nestedForm.values[section.id]).toEqual(initialValues.filter((_, index) => index !== removedIndex));
+                    section.rows.forEach((row, index) => {
+                        const nestedSection = row.columns[0].fields[0];
+                        expect(nestedSection.parent.rowIndex).toBe(index);
+                        expect(nestedSection.columns[0].fields[0].parent.rowIndex).toBe(index);
+                        expect(nestedSection.columns[1].fields[0].parent.rowIndex).toBe(index);
+                        expect(row.columns[1].fields[0].parent.rowIndex).toBe(index);
+                    });
+
+                    editMixedFields(section);
+
+                    expect(nestedForm.values[section.id]).toEqual(editedMixedValues);
+                });
+            });
+
+            it('should reindex descendants through multiple nested Sections', () => {
+                const definition = repeatableSectionForm();
+                const outerSection = definition.fields[0].fields['1'][0];
+                const innerSection = { ...outerSection, id: 'innerSection' };
+                Object.assign(outerSection, { fields: { '1': [innerSection] } });
+                const nestedForm = new FormModel(definition);
+                const section = nestedForm.fields[0].field;
+                const survivingOuter = section.rows[1].columns[0].fields[0];
+                const survivingInner = survivingOuter.columns[0].fields[0];
+                const survivingText = survivingInner.columns[0].fields[0];
+
+                section.removeRow(0);
+                survivingText.value = 'deep value';
+
+                expect(survivingOuter.parent.rowIndex).toBe(0);
+                expect(survivingInner.parent.rowIndex).toBe(0);
+                expect(survivingText.parent.rowIndex).toBe(0);
+                expect(nestedForm.values[section.id].length).toBe(1);
+                expect(nestedForm.values[section.id][0].Text0bere0).toBe('deep value');
+            });
+
+            it('should reindex an added row after repeated deletions', () => {
+                const nestedForm = new FormModel(repeatableSectionForm());
+                const section = nestedForm.fields[0].field;
+                section.addRow(section.fields, nestedForm);
+                const addedText = section.rows[2].columns[0].fields[0].columns[0].fields[0];
+                const addedId = addedText.id;
+                addedText.value = 'added';
+
+                section.removeRow(0);
+                section.removeRow(0);
+                addedText.value = 'edited added row';
+
+                expect(addedText.id).toBe(addedId);
+                expect(addedText.parent.rowIndex).toBe(0);
+                expect(nestedForm.values[section.id]).toEqual([{ Text0bere0: 'edited added row' }]);
+            });
+
+            it('should reindex nested fields and remove values before row-count rules edit a surviving field', () => {
+                const rulesEvent = new Subject<FormRulesEvent>();
+                const formService = {
+                    formRulesEvent: rulesEvent,
+                    formFieldValueChanged: new Subject(),
+                    validateFormField: new Subject(),
+                    validateForm: new Subject()
+                } as any;
+                const nestedForm = new FormModel(repeatableSectionForm(), undefined, false, formService);
+                const section = nestedForm.fields[0].field;
+                const survivingText = section.rows[1].columns[0].fields[0].columns[0].fields[0];
+                const onRule = jasmine.createSpy('onRowCountChanged').and.callFake(() => {
+                    expect(survivingText.parent.rowIndex).toBe(0);
+                    expect(nestedForm.values[section.id]).toEqual([{ Text0bere0: null }]);
+                    nestedForm.changeFieldValue(survivingText.id, 'set by rule');
+                });
+                const subscription = rulesEvent.subscribe(onRule);
+
+                section.removeRow(0);
+
+                expect(onRule).toHaveBeenCalledTimes(1);
+                expect(nestedForm.values[section.id]).toEqual([{ Text0bere0: 'set by rule' }]);
+                subscription.unsubscribe();
+            });
+
             const assignFormRulesEventSubject = (): Subject<FormRulesEvent> => {
                 const formRulesEvent = new Subject<FormRulesEvent>();
                 (field.form as any).formService = {
