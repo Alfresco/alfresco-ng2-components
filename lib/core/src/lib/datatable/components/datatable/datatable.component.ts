@@ -82,6 +82,7 @@ import { NumberCellComponent } from '../number-cell/number-cell.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IconModule } from '../../../icon/icon.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DragDropStateService } from '../../../services/drag-drop-state.service';
 
 export const ShowHeaderMode = {
     Never: 'never',
@@ -130,6 +131,7 @@ export type ShowHeaderMode = (typeof ShowHeaderMode)[keyof typeof ShowHeaderMode
     host: { class: 'adf-datatable' }
 })
 export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
+    private readonly dragDropStateService = inject(DragDropStateService);
     private readonly elementRef = inject(ElementRef);
     private readonly matIconRegistry = inject(MatIconRegistry);
     private readonly sanitizer = inject(DomSanitizer);
@@ -142,6 +144,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     @ViewChild('mainMenuTemplate')
     mainMenuTemplate: ElementRef;
+
+    @ViewChild('datatableBodyDropList')
+    datatableBodyDropList: CdkDropList;
 
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
@@ -230,7 +235,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     /** The connected drop lists for drag and drop functionality. */
     @Input()
-    dropListConnectedTo: string[] = [];
+    dropListConnectedTo: CdkDropList[] = [];
 
     /** Selector for boundary element for drag and drop functionality that limits the drag area */
     @Input()
@@ -476,6 +481,27 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
         if (multiselectChanges?.currentValue === false) {
             this.resetSelection();
+        }
+
+        if (changes['dropListConnectedTo']?.currentValue?.length > 0) {
+            const newDropLists: CdkDropList[] = changes['dropListConnectedTo'].currentValue;
+
+            newDropLists.forEach((dropList) => {
+                // eslint-disable-next-line no-underscore-dangle
+                dropList._dropListRef.connectedTo([this.datatableBodyDropList._dropListRef]);
+                // Newly connected drop lists are added mid-drag (e.g. once the breadcrumb menu opens),
+                // after CDK already cached the drop zone positions at drag start. Without recomputing
+                // their position here, `_canReceive` always fails because `_domRect` is never set.
+                // `_scrollableElements` is only populated by CDK when a drag starts *from* that drop
+                // list (never true for the breadcrumb menu items), so it must be seeded here first,
+                // otherwise `_cacheParentPositions` throws because its own container was never cached.
+                // eslint-disable-next-line no-underscore-dangle
+                dropList._dropListRef.withScrollableParents([]);
+                // eslint-disable-next-line no-underscore-dangle
+                (dropList._dropListRef as any)._cacheParentPositions();
+            });
+            // eslint-disable-next-line no-underscore-dangle
+            this.datatableBodyDropList._dropListRef.connectedTo(newDropLists.map((dropList) => dropList._dropListRef));
         }
     }
 
@@ -1132,11 +1158,13 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     onDragStart(): void {
         this.isDraggingRow = true;
+        this.dragDropStateService.dragging.set(true);
         document.body.classList.add('adf-is-dragging');
     }
 
     onDragEnd(): void {
         this.isDraggingRow = false;
+        this.dragDropStateService.dragging.set(false);
         document.body.classList.remove('adf-is-dragging');
     }
 

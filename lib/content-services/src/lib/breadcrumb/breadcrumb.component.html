@@ -37,23 +37,27 @@
             </mat-select>
         }
 
-        @for (item of lastNodes; track item.id; let last = $last) {
+        @for (item of lastNodes; track item.id; let last = $last; let index = $index) {
             <div
                 [class.adf-active]="last"
                 title="{{ item.name ?? '' | translate }}"
                 class="adf-breadcrumb-item">
             @if (breadcrumbItemIsAnchor(last)) {
-                <a
-                    href="#"
-                    [attr.data-automation-id]="'breadcrumb_' + item.name"
-                    class="adf-breadcrumb-item-anchor"
-                    (click)="onRoutePathClick(item, $event)"
-                    cdkDropList
-                    (cdkDropListDropped)="onDrop($event)"
-                    [id]="item.id"
-                >
-                    {{ item.name ?? '' | translate }}
-                </a>
+                @if (index === 0 || !compactMode) {
+                    <a
+                        href="#"
+                        [attr.data-automation-id]="'breadcrumb_' + item.name"
+                        class="adf-breadcrumb-item-anchor"
+                        (click)="onRoutePathClick(item, $event)"
+                        cdkDropList
+                        (cdkDropListDropped)="onDrop($event)"
+
+                    >
+                        {{ item.name ?? '' | translate }}
+                    </a>
+                } @else if ($index === 1) {
+                    <adf-compact-breadcrumb [nodes]="lastNodes" (breadcrumbDropListsChange)="breadcrumbDropListsChange.emit($event)"/>
+                }
             } @else {
                 <h1 class="adf-breadcrumb-item-current" aria-current="location">
                     {{ (selectedRowItemsCount < 1 ? item.name ?? '' : 'BREADCRUMB.HEADER.SELECTED') | translate: { count: selectedRowItemsCount } }}

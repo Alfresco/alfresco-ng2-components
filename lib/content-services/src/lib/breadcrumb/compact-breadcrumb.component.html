@@ -1,0 +1,28 @@
+<button
+    matButton
+    [matMenuTriggerFor]="menu"
+    (mouseenter)="openMenu()">
+    Ancestors (1)
+</button>
+<mat-menu
+    #menu="matMenu"
+    class="adf-compact-breadcrumb-menu"
+    >
+    <p>Move to an ancestor</p>
+    <p>Dragging 1 file • Release on a destination to move. Full path shown below.</p>
+    <div cdkDropListGroup>
+    @for (node of nodes(); track node.id; let last = $last; let index = $index) {
+        <div
+            mat-menu-item
+            [disabled]="last"
+            cdkDropList
+            (cdkDropListDropped)="onDrop($event)"
+            [id]="node.id">
+            <p>{{ node.name | translate }}</p>
+            @let nodeName = nodes()[index - 1]?.name;
+            <p>{{`Level ${index + 1}${nodeName ? ' • In' + nodeName : ''}`}}</p>
+        </div>
+    }
+    </div>
+    <p>Esc or release outside a target to cancel • No move made</p>
+</mat-menu>

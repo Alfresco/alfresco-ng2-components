@@ -83,6 +83,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CdkDropList } from '@angular/cdk/drag-drop';
 
 const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
 
@@ -390,7 +391,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
     /** The connected drop lists for drag and drop functionality. */
     @Input()
-    dropListConnectedTo: string[] = [];
+    dropListConnectedTo: CdkDropList[] = [];
 
     /** Selector for boundary element for drag and drop functionality that limits the drag area */
     @Input()
