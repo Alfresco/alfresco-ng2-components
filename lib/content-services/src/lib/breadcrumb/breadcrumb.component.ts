@@ -36,10 +36,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DataRow, IconModule } from '@alfresco/adf-core';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
+import { CompactBreadcrumbComponent } from './compact-breadcrumb.component';
 
 @Component({
     selector: 'adf-breadcrumb',
-    imports: [IconModule, TranslatePipe, MatSelectModule, CdkDropList, CdkDropListGroup],
+    imports: [IconModule, TranslatePipe, MatSelectModule, CdkDropList, CdkDropListGroup, CompactBreadcrumbComponent],
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -92,6 +93,9 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @Input()
     selectedRowItemsCount = 0;
 
+    @Input()
+    compactMode = true;
+
     previousNodes: PathElement[];
     lastNodes: PathElement[];
 
@@ -115,7 +119,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
     /** Emitted when the breadcrumb path elements change. */
     @Output()
-    breadcrumbPathElementsChange = new EventEmitter<string[]>();
+    breadcrumbDropListsChange = new EventEmitter<CdkDropList[]>();
 
     /** Emitted when dragged item is dropped onto the breadcrumb. Emits drag and drop event. */
     @Output()
@@ -154,11 +158,11 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             this.lastNodes = this.route;
             this.previousNodes = null;
         }
-        this.breadcrumbPathElementsChange.emit(
+        /*this.breadcrumbPathElementsChange.emit(
             this.lastNodes
                 .filter((_pathElement, i) => this.breadcrumbItemIsAnchor(i === this.lastNodes.length - 1))
                 .map((pathElement) => pathElement.id)
-        );
+        );*/
     }
 
     open(): void {
