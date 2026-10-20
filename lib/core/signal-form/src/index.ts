@@ -23,3 +23,8 @@ export type { FieldErrorKind } from './lib/validation/field-validators';
 export * from './lib/field-types/field-type-definition.interface';
 export * from './lib/field-types/built-in-field-types';
 export * from './lib/field-types/field-type-resolution';
+export * from './lib/field-types/field-type-registry';
+export * from './lib/outcomes/outcome-rules';
+export * from './lib/state/signal-form';
+export * from './lib/state/field-metadata';
+export * from './lib/state/signal-form-event';
