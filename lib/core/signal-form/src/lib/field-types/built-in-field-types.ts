@@ -56,7 +56,11 @@ import type { FieldTypeDefinition, FieldTypeResolver } from './field-type-defini
 
 const TEXT_VALIDATORS = [requiredValidator, minLengthValidator, maxLengthValidator, patternValidator];
 
-const TEXT_FIELD_TYPE: FieldTypeDefinition = { type: FormFieldType.Text, validators: TEXT_VALIDATORS };
+const textWidget = () => import('../ui/widgets/text/text-widget.component').then((widgets) => widgets.SignalTextWidgetComponent);
+const integerWidget = () => import('../ui/widgets/text/text-widget.component').then((widgets) => widgets.SignalIntegerWidgetComponent);
+const decimalWidget = () => import('../ui/widgets/text/text-widget.component').then((widgets) => widgets.SignalDecimalWidgetComponent);
+
+const TEXT_FIELD_TYPE: FieldTypeDefinition = { type: FormFieldType.Text, component: textWidget, validators: TEXT_VALIDATORS };
 
 /**
  * The field types of today's form, with the same value handling and validation. Each type gets its component when its
@@ -68,6 +72,7 @@ export const BUILT_IN_FIELD_TYPES: readonly FieldTypeDefinition[] = [
     { type: FormFieldType.MultilineText, validators: TEXT_VALIDATORS },
     {
         type: FormFieldType.Integer,
+        component: integerWidget,
         submittedValue: numberSubmittedValue,
         validators: [requiredValidator, numberValidator, maxLengthValidator, minValueValidator, maxValueValidator]
     },
@@ -78,6 +83,7 @@ export const BUILT_IN_FIELD_TYPES: readonly FieldTypeDefinition[] = [
     },
     {
         type: FormFieldType.Decimal,
+        component: decimalWidget,
         initialValue: decimalInitialValue,
         submittedValue: decimalSubmittedValue,
         validators: [requiredValidator, minValueValidator, maxValueValidator, decimalValidator]
@@ -128,7 +134,7 @@ export const BUILT_IN_FIELD_TYPES: readonly FieldTypeDefinition[] = [
     { type: FormFieldType.FileViewer, validators: [requiredValidator] },
     { type: FormFieldType.PropertiesViewer, validators: [requiredValidator] },
     { type: FormFieldType.Hyperlink, submittedValue: noSubmittedValue },
-    { type: FormFieldType.DisplayValue, submittedValue: noSubmittedValue },
+    { type: FormFieldType.DisplayValue, component: textWidget, submittedValue: noSubmittedValue },
     { type: FormFieldType.ReadonlyText, submittedValue: noSubmittedValue },
     { type: FormFieldType.DisplayRichText },
     { type: FormFieldType.DataTable },

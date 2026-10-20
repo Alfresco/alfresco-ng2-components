@@ -1,0 +1,60 @@
+/*!
+ * @license
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { computed, Directive, input } from '@angular/core';
+import { FieldTree } from '@angular/forms/signals';
+import { ErrorStateMatcher } from '@angular/material/core';
+import type { FieldDefinition, FieldValue } from '../../definition/form-definition.interface';
+import type { RowAddress, SignalForm } from '../../state/signal-form';
+import { FieldErrorMessage, fieldErrorMessage } from './field-error-message';
+
+const MISSING_VALUE_ERRORS: ReadonlySet<string> = new Set(['required', 'dropdown']);
+
+@Directive()
+export abstract class SignalFormWidget<TValue extends FieldValue = FieldValue> {
+    readonly form = input.required<SignalForm>();
+    readonly field = input.required<FieldTree<TValue>>();
+    readonly definition = input.required<FieldDefinition>();
+    readonly elementId = input<string>();
+    readonly row = input<RowAddress>();
+
+    protected readonly inputId = computed(() => this.elementId() ?? this.definition().id);
+    protected readonly readOnly = computed(() => this.field()().readonly());
+    protected readonly leftLabel = computed(() => this.form().definition.leftLabels);
+    protected readonly fieldRequired = computed(() => this.field()().required());
+    protected readonly showsFloatingLabel = computed(() => !this.leftLabel() && (!!this.definition().name || this.definition().required));
+
+    protected readonly showError = computed(() => {
+        const state = this.field()();
+        if (!state.invalid()) {
+            return false;
+        }
+        return state.touched() || this.form().allErrorsShown() || state.errors().some(({ kind }) => !MISSING_VALUE_ERRORS.has(kind));
+    });
+
+    protected readonly error = computed((): FieldErrorMessage | null => {
+        const [first] = this.field()().errors();
+        if (!first) {
+            return null;
+        }
+        return first.message ? { key: first.message } : fieldErrorMessage(first.kind, this.definition());
+    });
+
+    protected readonly shownError = computed(() => (this.showError() ? this.error() : null));
+
+    protected readonly errorStateMatcher: ErrorStateMatcher = { isErrorState: () => this.shownError() !== null };
+}
