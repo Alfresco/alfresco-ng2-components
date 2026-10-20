@@ -27,8 +27,8 @@ describe('SavedSearchesBaseService', () => {
     let service: MockSavedSearchesService;
 
     const SAVED_SEARCHES_CONTENT: SavedSearch[] = [
-        { name: 'Search 1', description: 'Description 1', encodedUrl: 'url1', order: 0 },
-        { name: 'Search 2', description: 'Description 2', encodedUrl: 'url2', order: 1 }
+        { name: 'Search 1', description: 'Description 1', encodedUrl: 'url1', order: 0, compiledQuery: 'query1' },
+        { name: 'Search 2', description: 'Description 2', encodedUrl: 'url2', order: 1, compiledQuery: 'query2' }
     ];
 
     beforeEach(() => {

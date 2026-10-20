@@ -40,10 +40,10 @@ export interface SavedSearchStrategy {
      * Saves a new search into state and updates state. If there are less than 5 searches,
      * it will be pushed on first place, if more it will be pushed to 6th place.
      *
-     * @param newSaveSearch object { name: string, description: string, encodedUrl: string }
+     * @param newSaveSearch object { name: string, description: string, encodedUrl: string, compiledQuery: string }
      * @returns NodeEntry
      */
-    saveSearch(newSaveSearch: Pick<SavedSearch, 'name' | 'description' | 'encodedUrl'>): Observable<NodeEntry>;
+    saveSearch(newSaveSearch: Pick<SavedSearch, 'name' | 'description' | 'encodedUrl' | 'compiledQuery'>): Observable<NodeEntry>;
 
     /**
      * Replace Save Search with new one and also updates the state.

@@ -100,7 +100,7 @@ describe('SavedSearchesLegacyService', () => {
         spyOn(authService, 'getUsername').and.callFake(() => testUserName);
         const nodeId = 'saved-searches-node-id';
         spyOn(localStorage, 'getItem').and.callFake(() => nodeId);
-        const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3' };
+        const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3', compiledQuery: 'query3' };
         service.init();
 
         service.saveSearch(newSearch).subscribe(() => {
@@ -132,7 +132,7 @@ describe('SavedSearchesLegacyService', () => {
     it('should emit updated saved searches after saving a new search', (done) => {
         spyOn(authService, 'getUsername').and.callFake(() => testUserName);
         spyOn(localStorage, 'getItem').and.callFake(() => testNodeId);
-        const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3' };
+        const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3', compiledQuery: 'query3' };
         service.init();
 
         let emissionCount = 0;
