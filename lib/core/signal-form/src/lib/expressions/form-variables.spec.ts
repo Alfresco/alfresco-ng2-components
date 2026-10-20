@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormVariables } from '../definition/form-definition.model';
+import type { FormVariables } from '../definition/form-definition.interface';
 import { resolveVariableValue } from './form-variables';
 
 describe('resolveVariableValue', () => {

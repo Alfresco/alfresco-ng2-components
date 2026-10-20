@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-export * from './lib/definition/form-definition.model';
-export * from './lib/definition/form-definition.json';
+export * from './lib/definition/form-definition.interface';
+export * from './lib/definition/form-definition-json.interface';
+export * from './lib/definition/form-field-types';
 export * from './lib/definition/read-form-definition';
-export type { FieldErrorKind } from './lib/validation/field-validation';
-export * from './lib/widgets/form-widget-definition';
-export * from './lib/widgets/built-in-form-widgets';
-export * from './lib/widgets/field-widget';
+export type { FieldErrorKind } from './lib/validation/field-validators';
+export * from './lib/field-types/field-type-definition.interface';
+export * from './lib/field-types/built-in-field-types';
+export * from './lib/field-types/field-type-resolution';

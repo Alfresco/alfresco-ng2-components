@@ -16,62 +16,7 @@
  */
 
 import type { ThemeModel } from '@alfresco/adf-core';
-import type { FieldJson } from './form-definition.json';
-
-export const FormFieldType = {
-    Text: 'text',
-    String: 'string',
-    MultilineText: 'multi-line-text',
-    Integer: 'integer',
-    Amount: 'amount',
-    Decimal: 'bigdecimal',
-    Boolean: 'boolean',
-    Dropdown: 'dropdown',
-    RadioButtons: 'radio-buttons',
-    Date: 'date',
-    DateTime: 'datetime',
-    Upload: 'upload',
-    People: 'people',
-    FunctionalGroup: 'functional-group',
-    Hyperlink: 'hyperlink',
-    DisplayValue: 'readonly',
-    ReadonlyText: 'readonly-text',
-    DisplayExternalProperty: 'display-external-property',
-    FileViewer: 'file-viewer',
-    PropertiesViewer: 'properties-viewer',
-    BaseViewer: 'base-viewer',
-    DisplayRichText: 'display-rich-text',
-    DataTable: 'data-table',
-    Json: 'json',
-    Button: 'button',
-    Container: 'container',
-    Group: 'group',
-    Section: 'section',
-    RepeatableSection: 'repeatable-section'
-} as const;
-
-export type FormFieldType = (typeof FormFieldType)[keyof typeof FormFieldType];
-
-export const LAYOUT_FIELD_TYPES: ReadonlySet<string> = new Set([
-    FormFieldType.Container,
-    FormFieldType.Group,
-    FormFieldType.Section,
-    FormFieldType.RepeatableSection
-]);
-
-/** The field types whose value never comes from saved form values. */
-export const CONSTANT_VALUE_FIELD_TYPES: ReadonlySet<string> = new Set([FormFieldType.DisplayExternalProperty]);
-
-/** The field types that only show a value, which they can take from a process field (`params.field`). */
-export const READ_ONLY_FIELD_TYPES: ReadonlySet<string> = new Set([FormFieldType.Hyperlink, FormFieldType.DisplayValue, FormFieldType.ReadonlyText]);
-
-export const SystemOutcomeName = {
-    Save: 'SAVE',
-    Complete: 'COMPLETE',
-    StartProcess: 'START PROCESS'
-} as const;
-
-export const EMPTY_OPTION_ID = 'empty';
+import type { FieldJson } from './form-definition-json.interface';
 
 export interface VisibilityCondition {
     leftType?: string | null;
@@ -91,8 +36,6 @@ export interface FieldOption {
     id: string;
     name: string;
 }
-
-export const DEFAULT_EMPTY_OPTION: Readonly<FieldOption> = { id: EMPTY_OPTION_ID, name: 'Choose one...' };
 
 export interface LayoutDefinition {
     id: string;

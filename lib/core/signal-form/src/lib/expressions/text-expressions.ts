@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FieldDefinition } from '../definition/form-definition.model';
+import type { FieldDefinition } from '../definition/form-definition.interface';
 import { stringifyValue } from '../display/field-display-value';
 
 const EXPRESSION = /\$\{[a-zA-Z0-9_.]+\}/g;

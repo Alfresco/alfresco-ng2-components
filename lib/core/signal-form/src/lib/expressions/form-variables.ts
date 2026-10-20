@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormVariable, FormVariables } from '../definition/form-definition.model';
+import type { FormVariable, FormVariables } from '../definition/form-definition.interface';
 
 const PROCESS_VARIABLE_PREFIX = 'variables.';
 

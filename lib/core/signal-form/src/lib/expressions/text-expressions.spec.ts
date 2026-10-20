@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FieldDefinition } from '../definition/form-definition.model';
+import type { FieldDefinition } from '../definition/form-definition.interface';
 import { resolveTextExpressions, TextExpressionSource } from './text-expressions';
 
 describe('resolveTextExpressions', () => {

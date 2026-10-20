@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { FormFieldType } from '../definition/form-definition.model';
-import type { FormWidgetDefinition, FormWidgetResolver } from './form-widget-definition';
+import { FormFieldType } from '../definition/form-field-types';
+import type { FieldTypeDefinition, FieldTypeResolver } from './field-type-definition.interface';
 
-export interface WidgetField {
+/** What resolving a field's type needs to know about the field. */
+export interface FieldTypeReference {
     type: string;
     isCustomType?: boolean;
     valueType?: string;
@@ -26,12 +27,13 @@ export interface WidgetField {
     sourceField?: { type?: string };
 }
 
-export interface FieldWidget {
-    definition: FormWidgetDefinition;
+export interface ResolvedFieldType {
+    definition: FieldTypeDefinition;
+    /** The value type whose built-in definition handles a Studio custom widget no application implements. */
     derivedFromValueType?: string;
 }
 
-const VALUE_TYPE_WIDGETS: Readonly<Record<string, string>> = {
+const FIELD_TYPE_OF_VALUE_TYPE: Readonly<Record<string, string>> = {
     string: FormFieldType.Text,
     integer: FormFieldType.Integer,
     bigdecimal: FormFieldType.Decimal,
@@ -41,44 +43,45 @@ const VALUE_TYPE_WIDGETS: Readonly<Record<string, string>> = {
     json: FormFieldType.Json
 };
 
+/** The types whose component shows a display value of that type, as today's form does, instead of the value as text. */
+const SHOWN_BY_SOURCE_COMPONENT: ReadonlySet<string> = new Set([FormFieldType.Json]);
+
 /**
  * Finds how a field is handled: by the definition registered for its type, or, for a Studio custom widget nobody has
  * implemented yet, by the built-in definition of its value type. Returns `undefined` for a truly unknown type.
  *
- * @param widgets the field type definitions
+ * @param fieldTypes the field type definitions
  * @param field the field
- * @returns the widget handling the field
+ * @returns the field type handling the field
  */
-export const fieldWidget = (widgets: FormWidgetResolver, field: WidgetField): FieldWidget | undefined => {
-    const own = widgets.definitionFor(field.type);
+export const resolveFieldType = (fieldTypes: FieldTypeResolver, field: FieldTypeReference): ResolvedFieldType | undefined => {
+    const own = fieldTypes.definitionFor(field.type);
     if (own) {
         return { definition: own };
     }
-    if (!field.isCustomType || !field.valueType) {
-        return undefined;
-    }
-    const valueTypeDefinition = widgets.definitionFor(VALUE_TYPE_WIDGETS[field.valueType]);
-    return valueTypeDefinition
-        ? { definition: borrowedDefinition(valueTypeDefinition, field.type), derivedFromValueType: field.valueType }
-        : undefined;
+    const valueTypeDefinition = valueTypeDefinitionOf(fieldTypes, field);
+    return valueTypeDefinition && { definition: borrowedFieldType(valueTypeDefinition, field.type), derivedFromValueType: field.valueType };
 };
 
-/** The types whose widget shows a display value of that type, as today's form does, instead of the value as text. */
-const SHOWN_WITH_SOURCE_WIDGET: ReadonlySet<string> = new Set([FormFieldType.Json]);
+const valueTypeDefinitionOf = (fieldTypes: FieldTypeResolver, field: FieldTypeReference): FieldTypeDefinition | undefined =>
+    field.isCustomType && field.valueType ? fieldTypes.definitionFor(FIELD_TYPE_OF_VALUE_TYPE[field.valueType]) : undefined;
 
 /**
- * Returns the component that shows a field: a display value of a JSON field is shown by the JSON widget, as today;
- * any other field by its own widget. Only the component changes: the field keeps its own value handling.
+ * Returns the component that shows a field: a display value of a JSON field is shown by the JSON component, as
+ * today; any other field by its own type's component. Only the component changes: the field keeps its own value
+ * handling.
  *
- * @param widgets the field type definitions
+ * @param fieldTypes the field type definitions
  * @param field the field
  * @returns the component loader, `undefined` when the field has no component to show
  */
-export const fieldComponent = (widgets: FormWidgetResolver, field: WidgetField): FormWidgetDefinition['component'] => {
-    const sourceType = field.sourceField?.type;
-    const shownBySource = field.type === FormFieldType.DisplayValue && !!sourceType && SHOWN_WITH_SOURCE_WIDGET.has(sourceType);
-    return (shownBySource && widgets.definitionFor(sourceType)?.component) || fieldWidget(widgets, field)?.definition.component;
+export const resolveFieldComponent = (fieldTypes: FieldTypeResolver, field: FieldTypeReference): FieldTypeDefinition['component'] => {
+    const sourceComponent = isShownBySource(field) ? fieldTypes.definitionFor(field.sourceField?.type ?? '')?.component : undefined;
+    return sourceComponent ?? resolveFieldType(fieldTypes, field)?.definition.component;
 };
+
+const isShownBySource = (field: FieldTypeReference): boolean =>
+    field.type === FormFieldType.DisplayValue && SHOWN_BY_SOURCE_COMPONENT.has(field.sourceField?.type ?? '');
 
 /**
  * Lends a built-in definition to a custom field type. The borrowed readers, writers and validators see the field as
@@ -88,7 +91,7 @@ export const fieldComponent = (widgets: FormWidgetResolver, field: WidgetField):
  * @param type the custom field type
  * @returns the definition for the custom field type
  */
-export const borrowedDefinition = (borrowed: FormWidgetDefinition, type: string): FormWidgetDefinition => {
+export const borrowedFieldType = (borrowed: FieldTypeDefinition, type: string): FieldTypeDefinition => {
     const asBorrowedType = <T extends { type: string }>(field: T): T => ({ ...field, type: borrowed.type });
     const { initialValue, submittedValue, validators, displayValue } = borrowed;
     return {

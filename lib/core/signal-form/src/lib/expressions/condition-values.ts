@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FieldDefinition } from '../definition/form-definition.model';
+import type { FieldDefinition } from '../definition/form-definition.interface';
 
 export const LABEL_SUFFIX = '_LABEL';
 
@@ -33,45 +33,42 @@ export const referencedFieldId = (reference: string): string => (isLabelReferenc
  * @param value the field's raw value
  * @returns the value the condition compares
  */
-export const conditionValueOf = (definition: FieldDefinition, reference: string, submitted: any, value: any): unknown => {
+export const conditionValueOf = (definition: FieldDefinition, reference: string, submitted: unknown, value: unknown): unknown => {
     const label = isLabelReference(reference);
-    const found = label ? labelOf(submitted) : idOf(submitted);
+    const found = label ? namesOf(submitted) : idsOf(submitted);
     return found === undefined || found === null ? searchValue(definition, label, value) : found;
 };
 
-const labelOf = (submitted: any): unknown => {
+const namesOf = (submitted: unknown): unknown => {
     if (!submitted) {
         return undefined;
     }
-    return Array.isArray(submitted) ? submitted.map(({ name }) => name) : submitted.name;
+    return Array.isArray(submitted) ? submitted.map(nameOf) : nameOf(submitted);
 };
 
-const idOf = (submitted: any): unknown => {
-    if (submitted?.id) {
-        return submitted.id;
+const idsOf = (submitted: unknown): unknown => {
+    if (idOf(submitted)) {
+        return idOf(submitted);
     }
-    return submitted && Array.isArray(submitted) ? submitted.map(({ id }) => id) : submitted;
+    return Array.isArray(submitted) ? submitted.map(idOf) : submitted;
 };
 
-const searchValue = (definition: FieldDefinition, label: boolean, value: any): unknown => {
-    let found: any = '';
-
-    if (value?.name) {
-        found = value.name;
-    } else if (definition.options.length) {
-        const option = definition.options.find((candidate) => candidate.id === value);
-        if (option) {
-            found = label ? option.name : option.id;
-        }
-    }
-
-    if (!found) {
-        if (value?.id) {
-            found = value.id;
-        } else if (value !== null && value !== undefined) {
-            found = value;
-        }
-    }
-
-    return found;
+/**
+ * Finds the value a condition compares in the raw field value: an option's name or id, else the value itself.
+ *
+ * @param definition the field
+ * @param label whether the condition compares names (`_LABEL`) rather than ids
+ * @param value the raw field value
+ * @returns the value, an empty text when there is none
+ */
+const searchValue = (definition: FieldDefinition, label: boolean, value: unknown): unknown => {
+    const option = definition.options.find((candidate) => candidate.id === value);
+    const optionValue = option && (label ? option.name : option.id);
+    return nameOf(value) || optionValue || idOf(value) || (value ?? '');
 };
+
+const nameOf = (value: unknown): unknown => (isRecord(value) ? value['name'] : undefined);
+
+const idOf = (value: unknown): unknown => (isRecord(value) ? value['id'] : undefined);
+
+const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null;

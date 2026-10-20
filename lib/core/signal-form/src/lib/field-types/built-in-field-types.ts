@@ -21,9 +21,11 @@ import {
     dateTimeInitialValue,
     decimalInitialValue,
     dropdownInitialValue,
-    radioInitialValue
-} from '../definition/field-initial-values';
-import { FormFieldType } from '../definition/form-definition.model';
+    dropdownOptions,
+    radioInitialValue,
+    radioOptions
+} from '../definition/field-value-readers';
+import { FormFieldType } from '../definition/form-field-types';
 import {
     booleanSubmittedValue,
     dateSubmittedValue,
@@ -47,22 +49,22 @@ import {
     numberValidator,
     patternValidator,
     requiredValidator
-} from '../validation/field-validation';
+} from '../validation/field-validators';
 import { groupDisplayValue, optionDisplayValue, peopleDisplayValue } from '../display/field-display-value';
-import { borrowedDefinition } from './field-widget';
-import { FormWidgetDefinition, FormWidgetResolver } from './form-widget-definition';
+import { borrowedFieldType } from './field-type-resolution';
+import type { FieldTypeDefinition, FieldTypeResolver } from './field-type-definition.interface';
 
 const TEXT_VALIDATORS = [requiredValidator, minLengthValidator, maxLengthValidator, patternValidator];
 
-/**
- * The field types the current engine supports, with today's value handling and validation. Components are added per
- * widget as the widgets are written.
- */
-const TEXT_DEFINITION: FormWidgetDefinition = { type: FormFieldType.Text, validators: TEXT_VALIDATORS };
+const TEXT_FIELD_TYPE: FieldTypeDefinition = { type: FormFieldType.Text, validators: TEXT_VALIDATORS };
 
-export const BUILT_IN_FORM_WIDGETS: readonly FormWidgetDefinition[] = [
-    TEXT_DEFINITION,
-    borrowedDefinition(TEXT_DEFINITION, FormFieldType.String),
+/**
+ * The field types of today's form, with the same value handling and validation. Each type gets its component when its
+ * widget is added.
+ */
+export const BUILT_IN_FIELD_TYPES: readonly FieldTypeDefinition[] = [
+    TEXT_FIELD_TYPE,
+    borrowedFieldType(TEXT_FIELD_TYPE, FormFieldType.String),
     { type: FormFieldType.MultilineText, validators: TEXT_VALIDATORS },
     {
         type: FormFieldType.Integer,
@@ -88,6 +90,7 @@ export const BUILT_IN_FORM_WIDGETS: readonly FormWidgetDefinition[] = [
     },
     {
         type: FormFieldType.Dropdown,
+        options: dropdownOptions,
         initialValue: dropdownInitialValue,
         submittedValue: dropdownSubmittedValue,
         validators: [dropdownValidator],
@@ -95,6 +98,7 @@ export const BUILT_IN_FORM_WIDGETS: readonly FormWidgetDefinition[] = [
     },
     {
         type: FormFieldType.RadioButtons,
+        options: radioOptions,
         initialValue: radioInitialValue,
         submittedValue: radioSubmittedValue,
         validators: [requiredValidator],
@@ -139,9 +143,9 @@ export const BUILT_IN_FORM_WIDGETS: readonly FormWidgetDefinition[] = [
  * @param definitions the definitions, in registration order
  * @returns a resolver over them
  */
-export const formWidgetResolver = (definitions: readonly FormWidgetDefinition[]): FormWidgetResolver => {
+export const fieldTypeResolver = (definitions: readonly FieldTypeDefinition[]): FieldTypeResolver => {
     const byType = new Map(definitions.map((definition) => [definition.type, definition]));
     return { definitionFor: (type) => byType.get(type) };
 };
 
-export const BUILT_IN_FORM_WIDGET_RESOLVER: FormWidgetResolver = formWidgetResolver(BUILT_IN_FORM_WIDGETS);
+export const BUILT_IN_FIELD_TYPE_RESOLVER: FieldTypeResolver = fieldTypeResolver(BUILT_IN_FIELD_TYPES);

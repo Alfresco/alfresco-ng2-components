@@ -16,7 +16,7 @@
  */
 
 import { readFormDefinition } from '../definition/read-form-definition';
-import { BUILT_IN_FORM_WIDGET_RESOLVER } from '../widgets/built-in-form-widgets';
+import { BUILT_IN_FIELD_TYPE_RESOLVER } from '../field-types/built-in-field-types';
 import { toSubmissionValues } from './submission-values';
 
 describe('toSubmissionValues', () => {
@@ -59,7 +59,7 @@ describe('toSubmissionValues', () => {
                 fields: { name: 'Ada', age: null, site: 'hyland.com', shown: 'Ada' },
                 sections: { lines: [{ item: 'first', note: 'Read me' }], empty: [] }
             },
-            BUILT_IN_FORM_WIDGET_RESOLVER
+            BUILT_IN_FIELD_TYPE_RESOLVER
         );
 
     it('should leave out the fields that submit nothing, keeping an empty value', () => {

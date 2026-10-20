@@ -16,12 +16,16 @@
  */
 
 import { format, isValid, parse } from 'date-fns';
-import { VisibilityCondition } from '../definition/form-definition.model';
+import type { VisibilityCondition } from '../definition/form-definition.interface';
 
 export interface ConditionValueSource {
     fieldValue(fieldId: string): unknown;
     variableValue(identifier: string): unknown;
 }
+
+const FIELD_OPERAND = 'field';
+const VARIABLE_OPERAND = 'variable';
+const VALUE_OPERAND = 'value';
 
 interface ConditionOperand {
     type: string | null;
@@ -83,32 +87,59 @@ const leftOperand = (condition: VisibilityCondition | null | undefined): Conditi
     if (!condition) {
         return { type: null, value: null };
     }
-    const type = condition.leftFormFieldId ? 'field' : condition.leftRestResponseId ? 'variable' : (condition.leftType ?? null);
     const value = hasText(condition.leftValue) ? condition.leftValue : condition.leftFormFieldId || condition.leftRestResponseId || null;
-    return { type, value };
+    return { type: leftOperandType(condition), value };
+};
+
+/**
+ * Returns what the left side of a condition reads, as today's form decides it: a field or a variable named by the
+ * older id properties, else the condition's own left type.
+ *
+ * @param condition the condition
+ * @returns the left operand type, `null` when the condition names none
+ */
+const leftOperandType = (condition: VisibilityCondition): string | null => {
+    if (condition.leftFormFieldId) {
+        return FIELD_OPERAND;
+    }
+    if (condition.leftRestResponseId) {
+        return VARIABLE_OPERAND;
+    }
+    return condition.leftType ?? null;
 };
 
 const rightOperand = (condition: VisibilityCondition): ConditionOperand => {
-    const type = condition.rightType
-        ? condition.rightType
-        : condition.rightValue
-          ? 'value'
-          : condition.rightRestResponseId
-            ? 'variable'
-            : condition.rightFormFieldId
-              ? 'field'
-              : null;
     const value = hasText(condition.rightValue) ? condition.rightValue : condition.rightFormFieldId || condition.rightRestResponseId || null;
-    return { type, value };
+    return { type: rightOperandType(condition), value };
+};
+
+/**
+ * Returns what the right side of a condition reads, as today's form decides it: the condition's own right type, else a
+ * plain value when it has one, else a variable or a field named by the older id properties.
+ *
+ * @param condition the condition
+ * @returns the right operand type, `null` when the condition names none
+ */
+const rightOperandType = (condition: VisibilityCondition): string | null => {
+    if (condition.rightType) {
+        return condition.rightType;
+    }
+    if (condition.rightValue) {
+        return VALUE_OPERAND;
+    }
+    if (condition.rightRestResponseId) {
+        return VARIABLE_OPERAND;
+    }
+    return condition.rightFormFieldId ? FIELD_OPERAND : null;
 };
 
 const leftValue = (condition: VisibilityCondition, source: ConditionValueSource): unknown => {
     const left = leftOperand(condition);
 
-    if (left.type === 'variable') {
+    if (left.type === VARIABLE_OPERAND) {
         return source.variableValue(`${left.value}`);
     }
-    if (left.type !== 'field') {
+    if (left.type !== FIELD_OPERAND) {
         return '';
     }
 
@@ -124,10 +155,10 @@ const leftValue = (condition: VisibilityCondition, source: ConditionValueSource)
 const rightValue = (condition: VisibilityCondition, source: ConditionValueSource): unknown => {
     const right = rightOperand(condition);
 
-    if (right.type === 'field') {
+    if (right.type === FIELD_OPERAND) {
         return source.fieldValue(`${right.value}`);
     }
-    if (right.type === 'variable') {
+    if (right.type === VARIABLE_OPERAND) {
         return source.variableValue(`${right.value}`);
     }
 
@@ -135,20 +166,20 @@ const rightValue = (condition: VisibilityCondition, source: ConditionValueSource
     return isValid(asDate) ? `${format(asDate, 'yyyy-MM-dd')}T00:00:00.000Z` : right.value;
 };
 
-const evaluateOperator = (left: any, right: any, operator: string | undefined): boolean | undefined => {
+const evaluateOperator = (left: unknown, right: unknown, operator: string | undefined): boolean | undefined => {
     switch (operator) {
         case '==':
-            return left + '' === right + '';
+            return `${left}` === `${right}`;
         case '!=':
-            return left + '' !== right + '';
+            return `${left}` !== `${right}`;
         case '<':
-            return left < right;
+            return ordered(left) < ordered(right);
         case '>':
-            return left > right;
+            return ordered(left) > ordered(right);
         case '>=':
-            return left >= right;
+            return ordered(left) >= ordered(right);
         case '<=':
-            return left <= right;
+            return ordered(left) <= ordered(right);
         case 'empty':
             return left ? left === '' : true;
         case '!empty':
@@ -161,6 +192,15 @@ const evaluateOperator = (left: any, right: any, operator: string | undefined): 
             return undefined;
     }
 };
+
+/**
+ * Lets two condition values be compared as JavaScript compares them, as today's form does: numbers as numbers, texts
+ * (such as ISO dates) as texts.
+ *
+ * @param value the condition value
+ * @returns the value, typed for comparison
+ */
+const ordered = (value: unknown): string | number => value as string | number;
 
 const contains = (left: unknown, right: unknown): boolean =>
     Array.isArray(left) && Array.isArray(right) && right.every((element) => left.includes(element));

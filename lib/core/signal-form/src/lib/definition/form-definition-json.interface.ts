@@ -16,11 +16,16 @@
  */
 
 import type { ThemeModel } from '@alfresco/adf-core';
-import type { FormVariable, SectionRowOptions, SourceFieldReference, TabDefinition, VisibilityCondition } from './form-definition.model';
+import type { FormVariable, SectionRowOptions, SourceFieldReference, TabDefinition, VisibilityCondition } from './form-definition.interface';
 
+/**
+ * A field as the modeler saves it. The properties the form reads are typed; a field type or widget of its own can read
+ * any other one, which it narrows itself.
+ */
 export interface FieldJson {
     id: string;
     type: string;
+    name?: string;
     tab?: string | null;
     fields?: Record<string, FieldJson[]>;
     params?: {
@@ -38,7 +43,37 @@ export interface FieldJson {
         [setting: string]: unknown;
     } & SectionRowOptions;
     visibilityCondition?: VisibilityCondition | null;
-    [property: string]: any;
+    value?: unknown;
+    placeholder?: string | null;
+    tooltip?: string;
+    colspan?: number;
+    numberOfColumns?: number;
+    required?: boolean;
+    readOnly?: boolean;
+    minLength?: number;
+    maxLength?: number;
+    minValue?: unknown;
+    maxValue?: unknown;
+    regexPattern?: string | null;
+    customValidationMessage?: string;
+    style?: string;
+    className?: string;
+    isCustomType?: boolean;
+    valueType?: string;
+    options?: unknown;
+    optionType?: string;
+    hasEmptyValue?: boolean;
+    selectionType?: string;
+    dateDisplayFormat?: string;
+    enableFractions?: boolean;
+    currency?: string;
+    precision?: number;
+    dynamicDateRangeSelection?: boolean;
+    minDateRangeValue?: number | null;
+    maxDateRangeValue?: number | null;
+    hyperlinkUrl?: string;
+    displayText?: string;
+    [property: string]: unknown;
 }
 
 export interface OutcomeJson {

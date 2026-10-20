@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { FormDefinitionJson } from './form-definition.json';
-import { dateFieldRange } from '../validation/field-validation';
+import { FormDefinitionJson } from './form-definition-json.interface';
+import { dateFieldRange } from '../validation/field-validators';
 import { readFormDefinition } from './read-form-definition';
 
 describe('readFormDefinition', () => {
@@ -184,7 +184,9 @@ describe('readFormDefinition', () => {
     });
 
     it("should keep a field's authored JSON for widgets that read settings of their own", () => {
-        const definition = readFormDefinition(formWith([{ id: 'external', type: 'display-external-property', params: { externalPropertyLabel: 'Account' } }]));
+        const definition = readFormDefinition(
+            formWith([{ id: 'external', type: 'display-external-property', params: { externalPropertyLabel: 'Account' } }])
+        );
 
         expect(field(definition, 'external').json.params?.['externalPropertyLabel']).toBe('Account');
     });
@@ -192,6 +194,27 @@ describe('readFormDefinition', () => {
     it('should read whether the tab bar stays in view, from the form representation', () => {
         expect(readFormDefinition(formWith([])).stickyTabs).toBeFalse();
         expect(readFormDefinition({ formRepresentation: { stickyTabs: true, formDefinition: formWith([]).formDefinition } }).stickyTabs).toBeTrue();
+    });
+
+    it('should complete the choice options before reading the value, with the empty option and the saved one', () => {
+        const definition = readFormDefinition(
+            formWith([
+                {
+                    id: 'country',
+                    type: 'dropdown',
+                    hasEmptyValue: true,
+                    options: [{ id: 'it', name: 'Italy' }],
+                    value: { id: 'fr', name: 'France' }
+                },
+                { id: 'size', type: 'radio-buttons', options: [{ id: 's', name: 'Small' }], value: { id: 'l', name: 'Large' } }
+            ])
+        );
+
+        expect(field(definition, 'country').options.map(({ id }) => id)).toEqual(['empty', 'it', 'fr']);
+        expect(field(definition, 'country').emptyOption?.id).toBe('empty');
+        expect(field(definition, 'country').initialValue).toEqual({ id: 'fr', name: 'France' });
+        expect(field(definition, 'size').options.map(({ id }) => id)).toEqual(['s', 'l']);
+        expect(field(definition, 'size').initialValue).toBe('l');
     });
 
     it('should give no outcomes to a definition without fields, as today', () => {

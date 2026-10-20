@@ -17,9 +17,10 @@
 
 import { format, isValid } from 'date-fns';
 import { DateFnsUtils } from '@alfresco/adf-core';
-import { EMPTY_OPTION_ID, FieldDefinition, SectionDefinition } from '../definition/form-definition.model';
-import { fieldWidget } from '../widgets/field-widget';
-import type { FormWidgetResolver, SubmittedValueWriter } from '../widgets/form-widget-definition';
+import type { FieldDefinition, SectionDefinition } from '../definition/form-definition.interface';
+import { EMPTY_OPTION_ID } from '../definition/form-field-types';
+import { resolveFieldType } from '../field-types/field-type-resolution';
+import type { FieldTypeResolver, SubmittedValueWriter } from '../field-types/field-type-definition.interface';
 
 export type FieldValues = Record<string, unknown>;
 
@@ -37,20 +38,20 @@ export interface FormValuesModel {
  * @param fields the top-level field definitions
  * @param sections the repeatable section definitions
  * @param model the current values
- * @param widgets the field type definitions
+ * @param fieldTypes the field type definitions
  * @returns the submitted values
  */
 export const toSubmissionValues = (
     fields: Map<string, FieldDefinition>,
     sections: Map<string, SectionDefinition>,
     model: FormValuesModel,
-    widgets: FormWidgetResolver
+    fieldTypes: FieldTypeResolver
 ): FieldValues => {
-    const submission = submittedRecord(Object.entries(model.fields).map(([id, value]): FieldEntry => [fields.get(id), value]), widgets);
+    const submission = submittedRecord(Object.entries(model.fields).map(([id, value]): FieldEntry => [fields.get(id), value]), fieldTypes);
 
     for (const [sectionId, rows] of Object.entries(model.sections).filter(([, sectionRows]) => sectionRows.length > 0)) {
         const sectionFields = sections.get(sectionId).fields;
-        submission[sectionId] = rows.map((row) => submittedRecord(sectionFields.map((field): FieldEntry => [field, row[field.id]]), widgets));
+        submission[sectionId] = rows.map((row) => submittedRecord(sectionFields.map((field): FieldEntry => [field, row[field.id]]), fieldTypes));
     }
 
     return submission;
@@ -61,13 +62,13 @@ export const toSubmissionValues = (
  * does for read-only fields and hyperlinks.
  *
  * @param entries each field with its current value
- * @param widgets the field type definitions
+ * @param fieldTypes the field type definitions
  * @returns the submitted values, keyed by field id
  */
-const submittedRecord = (entries: FieldEntry[], widgets: FormWidgetResolver): FieldValues => {
+const submittedRecord = (entries: FieldEntry[], fieldTypes: FieldTypeResolver): FieldValues => {
     const record: FieldValues = {};
     for (const [definition, value] of entries) {
-        const submitted = submittedValue(definition, value, widgets);
+        const submitted = submittedValue(definition, value, fieldTypes);
         if (submitted !== undefined) {
             record[definition.id] = withoutSymbolKeys(submitted);
         }
@@ -98,20 +99,20 @@ const withoutSymbolKeys = (value: unknown): unknown => {
  *
  * @param definition the field definition
  * @param value the field value
- * @param widgets the field type definitions
+ * @param fieldTypes the field type definitions
  * @returns the submitted value
  */
-export const submittedValue = (definition: FieldDefinition, value: unknown, widgets: FormWidgetResolver): unknown =>
-    (fieldWidget(widgets, definition)?.definition.submittedValue ?? asIs)({ definition, value });
+export const submittedValue = (definition: FieldDefinition, value: unknown, fieldTypes: FieldTypeResolver): unknown =>
+    (resolveFieldType(fieldTypes, definition)?.definition.submittedValue ?? asIs)({ definition, value });
 
 const asIs: SubmittedValueWriter = ({ value }) => value;
 
 export const noSubmittedValue: SubmittedValueWriter = () => undefined;
 
 export const numberSubmittedValue: SubmittedValueWriter = ({ definition, value }) =>
-    definition.enableFractions ? parseFloat(value) : parseInt(value, 10);
+    definition.enableFractions ? parseFloat(`${value}`) : parseInt(`${value}`, 10);
 
-export const decimalSubmittedValue: SubmittedValueWriter = ({ value }) => parseFloat(value);
+export const decimalSubmittedValue: SubmittedValueWriter = ({ value }) => parseFloat(`${value}`);
 
 export const booleanSubmittedValue: SubmittedValueWriter = ({ value }) => (value !== null && value !== undefined ? value : false);
 
@@ -124,7 +125,7 @@ export const dropdownSubmittedValue: SubmittedValueWriter = ({ definition, value
     if (Array.isArray(value)) {
         return value;
     }
-    const id = typeof value === 'object' ? value.id : value;
+    const id = isRecord(value) ? value['id'] : value;
     if (typeof id !== 'string' || id === EMPTY_OPTION_ID || id === '') {
         return null;
     }
@@ -140,10 +141,10 @@ export const radioSubmittedValue: SubmittedValueWriter = ({ definition, value })
 };
 
 export const uploadSubmittedValue: SubmittedValueWriter = ({ value }) => {
-    if (!(value?.length > 0)) {
+    if (!hasLength(value)) {
         return null;
     }
-    return Array.isArray(value) ? value.map((file) => file.id).join(',') : [value];
+    return Array.isArray(value) ? value.map((file) => (isRecord(file) ? file['id'] : undefined)).join(',') : [value];
 };
 
 export const dateSubmittedValue: SubmittedValueWriter = ({ definition, value }) => {
@@ -152,7 +153,7 @@ export const dateSubmittedValue: SubmittedValueWriter = ({ definition, value }) 
 };
 
 export const dateTimeSubmittedValue: SubmittedValueWriter = ({ value }) => {
-    const date = value !== null ? DateFnsUtils.getDate(value) : null;
+    const date = value !== null ? DateFnsUtils.getDate(value as string | number | Date) : null;
     return isValid(date) ? date.toISOString() : null;
 };
 
@@ -167,3 +168,7 @@ const parseDateValue = (value: unknown, dateFormat: string): Date => {
         throw invalidDate;
     }
 };
+
+const hasLength = (value: unknown): boolean => (Array.isArray(value) || typeof value === 'string') && value.length > 0;
+
+const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null && !Array.isArray(value);

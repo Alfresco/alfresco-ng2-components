@@ -15,30 +15,52 @@
  * limitations under the License.
  */
 
-import { BUILT_IN_FORM_WIDGET_RESOLVER } from '../widgets/built-in-form-widgets';
-import type { FormWidgetResolver } from '../widgets/form-widget-definition';
+import { BUILT_IN_FIELD_TYPE_RESOLVER } from '../field-types/built-in-field-types';
+import type { FieldTypeResolver } from '../field-types/field-type-definition.interface';
 import { LABEL_SUFFIX } from '../expressions/condition-values';
 import { resolveVariableValue } from '../expressions/form-variables';
-import { readInitialValue, readOptions, readSavedRow, savedValueFor } from './field-initial-values';
-import type { FieldJson, FormDefinitionJson, FormRepresentationJson, OutcomeJson } from './form-definition.json';
-import {
-    EMPTY_OPTION_ID,
+import { authoredOptions, readInitialValue, readOptions, readSavedRow, savedValueFor } from './field-value-readers';
+import type { FieldJson, FormDefinitionJson, FormRepresentationJson, OutcomeJson } from './form-definition-json.interface';
+import type {
     FieldDefinition,
     FormDefinition,
-    FormFieldType,
     FormVariables,
     GroupHeader,
-    CONSTANT_VALUE_FIELD_TYPES,
-    LAYOUT_FIELD_TYPES,
     LayoutDefinition,
     LayoutNode,
     LayoutRoot,
     OutcomeDefinition,
-    READ_ONLY_FIELD_TYPES,
     SectionDefinition,
-    SystemOutcomeName,
     TabDefinition
-} from './form-definition.model';
+} from './form-definition.interface';
+import {
+    CONSTANT_VALUE_FIELD_TYPES,
+    EMPTY_OPTION_ID,
+    FormFieldType,
+    LAYOUT_FIELD_TYPES,
+    READ_ONLY_FIELD_TYPES,
+    SystemOutcomeName,
+    TYPEAHEAD_FIELD_TYPE
+} from './form-field-types';
+
+type FieldIdentity = Pick<
+    FieldDefinition,
+    'id' | 'type' | 'isCustomType' | 'valueType' | 'name' | 'placeholder' | 'tooltip' | 'colspan' | 'ancestors' | 'tabId'
+>;
+type FieldValidationSettings = Pick<
+    FieldDefinition,
+    'required' | 'readOnly' | 'minLength' | 'maxLength' | 'minValue' | 'maxValue' | 'regexPattern' | 'customValidationMessage'
+>;
+type FieldDisplaySettings = Pick<
+    FieldDefinition,
+    'style' | 'autoGrow' | 'className' | 'inputMask' | 'visibilityCondition' | 'hyperlinkUrl' | 'displayText' | 'sourceField'
+>;
+type FieldChoices = Pick<FieldDefinition, 'options' | 'optionType' | 'hasEmptyValue' | 'emptyOption' | 'multiple'>;
+type FieldNumberSettings = Pick<FieldDefinition, 'enableFractions' | 'currency' | 'precision'>;
+type FieldDateSettings = Pick<
+    FieldDefinition,
+    'dateDisplayFormat' | 'dynamicDateRangeSelection' | 'dateRangeReference' | 'minDateRangeValue' | 'maxDateRangeValue'
+>;
 
 const DEFAULT_DATE_FORMAT = 'D-M-YYYY';
 const DEFAULT_DATETIME_FORMAT = 'D-M-YYYY hh:mm A';
@@ -53,14 +75,14 @@ const DEFAULT_OUTCOMES: OutcomeJson[] = [
  * never modified.
  *
  * @param json the form definition as the backend or the designer provides it
- * @param widgets the field type definitions, the built-in ones by default
+ * @param fieldTypes the field type definitions, the built-in ones by default
  * @param values saved form values (for example a task's data), keyed by field id or `variables.<name>`; they replace
  * the fields' own values, and a repeatable section's value gives its rows
  * @returns the form definition model
  */
 export const readFormDefinition = (
     json: FormDefinitionJson,
-    widgets: FormWidgetResolver = BUILT_IN_FORM_WIDGET_RESOLVER,
+    fieldTypes: FieldTypeResolver = BUILT_IN_FIELD_TYPE_RESOLVER,
     values?: Record<string, unknown>
 ): FormDefinition => {
     const representation = json.formRepresentation ?? json;
@@ -79,10 +101,10 @@ export const readFormDefinition = (
         stickyTabs: content.stickyTabs === true,
         leftLabels: !!content.leftLabels,
         className: content.className || undefined,
-        fields: roots.flatMap((root) => collectFields([root], [], widgets, root.tab ?? undefined)).map(withSourceValue),
+        fields: roots.flatMap((root) => collectFields([root], [], fieldTypes, root.tab ?? undefined)).map(withSourceValue),
         sections: roots
             .filter((root) => root.type === FormFieldType.RepeatableSection)
-            .map((section) => toSectionDefinition(section, widgets))
+            .map((section) => toSectionDefinition(section, fieldTypes))
             .map((section) => ({ ...section, fields: section.fields.map(withSourceValue) })),
         tabs: (content.tabs ?? []).map(({ id, title, visibilityCondition }): TabDefinition => ({ id, title, visibilityCondition })),
         outcomes: content.fields ? readOutcomes(content.outcomes ?? [], content.selectedOutcome) : [],
@@ -131,10 +153,10 @@ const readVariables = (content: FormRepresentationJson): FormVariables => ({
     processVariables: structuredClone(content.processVariables ?? [])
 });
 
-const toSectionDefinition = (section: FieldJson, widgets: FormWidgetResolver): SectionDefinition => {
+const toSectionDefinition = (section: FieldJson, fieldTypes: FieldTypeResolver): SectionDefinition => {
     const ancestors = [toLayoutDefinition(section)];
     const tabId = section.tab ?? undefined;
-    const fields = Object.values(section.fields ?? {}).flatMap((column) => collectFields(column, ancestors, widgets, tabId));
+    const fields = Object.values(section.fields ?? {}).flatMap((column) => collectFields(column, ancestors, fieldTypes, tabId));
     return {
         id: section.id,
         initialRows: section.params?.initialNumberOfRows ?? 1,
@@ -148,7 +170,7 @@ const toSectionDefinition = (section: FieldJson, widgets: FormWidgetResolver): S
         readOnly: !!section.readOnly,
         tabId,
         fields,
-        savedRows: readSavedRows(section, fields, widgets)
+        savedRows: readSavedRows(section, fields, fieldTypes)
     };
 };
 
@@ -158,11 +180,17 @@ const toSectionDefinition = (section: FieldJson, widgets: FormWidgetResolver): S
  *
  * @param section the section JSON
  * @param fields the section's field definitions
- * @param widgets the field type definitions
+ * @param fieldTypes the field type definitions
  * @returns the saved rows
  */
-const readSavedRows = (section: FieldJson, fields: FieldDefinition[], widgets: FormWidgetResolver): Record<string, unknown>[] =>
-    (Array.isArray(section.value) ? section.value : []).map((row) => readSavedRow(fields, row, widgets));
+const readSavedRows = (section: FieldJson, fields: FieldDefinition[], fieldTypes: FieldTypeResolver): Record<string, unknown>[] =>
+    savedRowsOf(section).map((row) => readSavedRow(fields, row, fieldTypes));
+
+const savedRowsOf = (section: FieldJson): Array<Record<string, unknown> | null> =>
+    Array.isArray(section.value) ? section.value.map(asSavedRow) : [];
+
+const asSavedRow = (row: unknown): Record<string, unknown> | null =>
+    typeof row === 'object' && row !== null ? (row as Record<string, unknown>) : null;
 
 /**
  * Puts saved form values into the field JSON, as today's form does: a field takes the value saved for
@@ -184,16 +212,16 @@ const applySavedValues = (fields: FieldJson[], values: Record<string, unknown>):
     }
 };
 
-const collectFields = (fields: FieldJson[], ancestors: LayoutDefinition[], widgets: FormWidgetResolver, tabId?: string): FieldDefinition[] =>
+const collectFields = (fields: FieldJson[], ancestors: LayoutDefinition[], fieldTypes: FieldTypeResolver, tabId?: string): FieldDefinition[] =>
     fields.flatMap((field) => {
         if (field.type === FormFieldType.RepeatableSection) {
             return [];
         }
         if (LAYOUT_FIELD_TYPES.has(field.type)) {
             const nestedAncestors = [...ancestors, toLayoutDefinition(field)];
-            return Object.values(field.fields ?? {}).flatMap((column) => collectFields(column, nestedAncestors, widgets, tabId));
+            return Object.values(field.fields ?? {}).flatMap((column) => collectFields(column, nestedAncestors, fieldTypes, tabId));
         }
-        return [toFieldDefinition(field, ancestors, widgets, tabId)];
+        return [toFieldDefinition(field, ancestors, fieldTypes, tabId)];
     });
 
 const toLayoutDefinition = (field: FieldJson): LayoutDefinition => ({
@@ -205,70 +233,100 @@ const toLayoutDefinition = (field: FieldJson): LayoutDefinition => ({
 const toFieldDefinition = (
     field: FieldJson,
     ancestors: LayoutDefinition[],
-    widgets: FormWidgetResolver,
+    fieldTypes: FieldTypeResolver,
     tabId: string | undefined
 ): FieldDefinition => {
-    const options = readOptions(field);
-    const emptyOption = options.find((option) => option.id === EMPTY_OPTION_ID);
     const definition: FieldDefinition = {
-        id: field.id,
-        type: field.type,
-        isCustomType: !!field.isCustomType,
-        valueType: field.valueType,
-        name: field.name,
-        placeholder: field.placeholder && field.placeholder !== 'null' ? field.placeholder : undefined,
-        tooltip: field.tooltip || undefined,
-        colspan: field.colspan ?? 1,
-        ancestors,
-        tabId,
-        required: !!field.required,
-        readOnly: !!field.readOnly || field.type === FormFieldType.DisplayValue,
-        minLength: field.minLength || 0,
-        maxLength: field.maxLength || 0,
-        minValue: field.minValue,
-        maxValue: field.maxValue,
-        regexPattern: field.regexPattern,
-        customValidationMessage: field.customValidationMessage || undefined,
-        style: field.style || undefined,
-        autoGrow: field.params?.autoGrow,
-        className: field.className || undefined,
-        inputMask: field.params?.inputMask
-            ? {
-                  mask: field.params.inputMask,
-                  reversed: !!field.params.inputMaskReversed,
-                  placeholder: field.params.inputMaskPlaceholder || undefined
-              }
-            : undefined,
-        visibilityCondition: field.visibilityCondition,
-        options,
-        optionType: field.optionType,
-        hasEmptyValue: field.hasEmptyValue ?? !!emptyOption,
-        emptyOption,
-        multiple: field.selectionType === 'multiple' || !!field.params?.multiple,
-        dateDisplayFormat: field.dateDisplayFormat || defaultDateFormat(field),
-        enableFractions: !!field.enableFractions,
-        currency: field.currency,
-        precision: field.precision,
-        dynamicDateRangeSelection: !!field.dynamicDateRangeSelection,
-        dateRangeReference: field.dynamicDateRangeSelection ? new Date() : undefined,
-        minDateRangeValue: field.minDateRangeValue,
-        maxDateRangeValue: field.maxDateRangeValue,
-        hyperlinkUrl: field.hyperlinkUrl,
-        displayText: field.displayText,
-        sourceField: READ_ONLY_FIELD_TYPES.has(field.type) ? (field.params?.field ?? undefined) : undefined,
+        ...readIdentity(field, ancestors, tabId),
+        ...readValidationSettings(field),
+        ...readDisplaySettings(field),
+        ...readChoices(field, fieldTypes),
+        ...readNumberSettings(field),
+        ...readDateSettings(field),
         initialValue: null,
         json: field
     };
-    definition.initialValue = readInitialValue(field, definition, widgets);
-    return definition;
+    return { ...definition, initialValue: readInitialValue(field, definition, fieldTypes) };
 };
+
+const readIdentity = (field: FieldJson, ancestors: LayoutDefinition[], tabId: string | undefined): FieldIdentity => ({
+    id: field.id,
+    type: field.type,
+    isCustomType: !!field.isCustomType,
+    valueType: field.valueType,
+    name: field.name,
+    placeholder: field.placeholder && field.placeholder !== 'null' ? field.placeholder : undefined,
+    tooltip: field.tooltip || undefined,
+    colspan: field.colspan ?? 1,
+    ancestors,
+    tabId
+});
+
+const readValidationSettings = (field: FieldJson): FieldValidationSettings => ({
+    required: !!field.required,
+    readOnly: !!field.readOnly || field.type === FormFieldType.DisplayValue,
+    minLength: field.minLength || 0,
+    maxLength: field.maxLength || 0,
+    minValue: field.minValue,
+    maxValue: field.maxValue,
+    regexPattern: field.regexPattern,
+    customValidationMessage: field.customValidationMessage || undefined
+});
+
+const readDisplaySettings = (field: FieldJson): FieldDisplaySettings => ({
+    style: field.style || undefined,
+    autoGrow: field.params?.autoGrow,
+    className: field.className || undefined,
+    inputMask: readInputMask(field),
+    visibilityCondition: field.visibilityCondition,
+    hyperlinkUrl: field.hyperlinkUrl,
+    displayText: field.displayText,
+    sourceField: READ_ONLY_FIELD_TYPES.has(field.type) ? (field.params?.field ?? undefined) : undefined
+});
+
+const readInputMask = (field: FieldJson): FieldDefinition['inputMask'] =>
+    field.params?.inputMask
+        ? { mask: field.params.inputMask, reversed: !!field.params.inputMaskReversed, placeholder: field.params.inputMaskPlaceholder || undefined }
+        : undefined;
+
+/**
+ * Reads what a field offers to choose from, complete before its value is read: its options, as its type completes
+ * them, and its empty option.
+ *
+ * @param field the field JSON
+ * @param fieldTypes the field type definitions
+ * @returns the choice settings
+ */
+const readChoices = (field: FieldJson, fieldTypes: FieldTypeResolver): FieldChoices => {
+    const hasEmptyValue = field.hasEmptyValue ?? authoredOptions(field).some(({ id }) => id === EMPTY_OPTION_ID);
+    const options = readOptions(field, hasEmptyValue, fieldTypes);
+    return {
+        options,
+        optionType: field.optionType,
+        hasEmptyValue,
+        emptyOption: options.find(({ id }) => id === EMPTY_OPTION_ID),
+        multiple: field.selectionType === 'multiple' || !!field.params?.multiple
+    };
+};
+
+const readNumberSettings = (field: FieldJson): FieldNumberSettings => ({
+    enableFractions: !!field.enableFractions,
+    currency: field.currency,
+    precision: field.precision
+});
+
+const readDateSettings = (field: FieldJson): FieldDateSettings => ({
+    dateDisplayFormat: field.dateDisplayFormat || defaultDateFormat(field),
+    dynamicDateRangeSelection: !!field.dynamicDateRangeSelection,
+    dateRangeReference: field.dynamicDateRangeSelection ? new Date() : undefined,
+    minDateRangeValue: field.minDateRangeValue,
+    maxDateRangeValue: field.maxDateRangeValue
+});
 
 const defaultDateFormat = (field: FieldJson): string => {
     const shownType = READ_ONLY_FIELD_TYPES.has(field.type) ? (field.params?.field?.type ?? field.type) : field.type;
     return shownType === FormFieldType.DateTime ? DEFAULT_DATETIME_FORMAT : DEFAULT_DATE_FORMAT;
 };
-
-const TYPEAHEAD = 'typeahead';
 
 /**
  * Gives a read-only field showing a process field the value of that field's process variable, when it has one. A
@@ -283,7 +341,7 @@ const withSourceFieldValue = (field: FieldDefinition, variables: FormVariables):
     if (!source) {
         return field;
     }
-    const variableName = source.type === TYPEAHEAD ? `${source.id}${LABEL_SUFFIX}` : source.name;
+    const variableName = source.type === TYPEAHEAD_FIELD_TYPE ? `${source.id}${LABEL_SUFFIX}` : source.name;
     const value = resolveVariableValue(variableName, variables);
     return value !== undefined && value !== null ? { ...field, initialValue: value } : field;
 };

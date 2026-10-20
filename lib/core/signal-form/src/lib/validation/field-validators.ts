@@ -17,41 +17,33 @@
 
 import { addDays, isDate, isValid, parseISO } from 'date-fns';
 import { DateFnsUtils, isNumberValue } from '@alfresco/adf-core';
-import { FieldDefinition, FormFieldType } from '../definition/form-definition.model';
-import type { FieldValidator } from '../widgets/form-widget-definition';
+import type { FieldDefinition } from '../definition/form-definition.interface';
+import { FormFieldType } from '../definition/form-field-types';
+import type { FieldValidator } from '../field-types/field-type-definition.interface';
 
-const TEXT = FormFieldType.Text;
-const MULTILINE_TEXT = FormFieldType.MultilineText;
-const INTEGER = FormFieldType.Integer;
-const AMOUNT = FormFieldType.Amount;
-const DECIMAL = FormFieldType.Decimal;
-const BOOLEAN = FormFieldType.Boolean;
-const RADIO_BUTTONS = FormFieldType.RadioButtons;
-const UPLOAD = FormFieldType.Upload;
-const DATE = FormFieldType.Date;
-const DATETIME = FormFieldType.DateTime;
-const DROPDOWN = FormFieldType.Dropdown;
 const DEFAULT_TEXT_MAX_LENGTH = 1024;
 const DEFAULT_INTEGER_MAX_LENGTH = 10;
 const REQUIRED_TYPES: ReadonlySet<string> = new Set([
-    TEXT,
-    MULTILINE_TEXT,
-    INTEGER,
-    BOOLEAN,
+    FormFieldType.Text,
+    FormFieldType.MultilineText,
+    FormFieldType.Integer,
+    FormFieldType.Boolean,
     FormFieldType.People,
     FormFieldType.FunctionalGroup,
-    RADIO_BUTTONS,
-    UPLOAD,
-    AMOUNT,
-    DECIMAL,
+    FormFieldType.RadioButtons,
+    FormFieldType.Upload,
+    FormFieldType.Amount,
+    FormFieldType.Decimal,
     FormFieldType.DisplayExternalProperty,
     FormFieldType.FileViewer,
     FormFieldType.PropertiesViewer
 ]);
 const PEOPLE_TYPES: ReadonlySet<string> = new Set([FormFieldType.People, FormFieldType.FunctionalGroup]);
-const NUMBER_TYPES: ReadonlySet<string> = new Set([INTEGER, AMOUNT]);
-const RANGE_TYPES: ReadonlySet<string> = new Set([INTEGER, DECIMAL, AMOUNT]);
-const LENGTH_TYPES: ReadonlySet<string> = new Set([TEXT, MULTILINE_TEXT]);
+const NUMBER_TYPES: ReadonlySet<string> = new Set([FormFieldType.Integer, FormFieldType.Amount]);
+const RANGE_TYPES: ReadonlySet<string> = new Set([FormFieldType.Integer, FormFieldType.Decimal, FormFieldType.Amount]);
+const LENGTH_TYPES: ReadonlySet<string> = new Set([FormFieldType.Text, FormFieldType.MultilineText]);
+const WHOLE_NUMBER = /^-?\d+$/;
+const NUMBER_WITH_CENTS = /^-?\d+(\.\d{1,2})?$/;
 
 export type FieldErrorKind =
     | 'required'
@@ -68,54 +60,38 @@ export type FieldErrorKind =
     | 'dateMax'
     | 'dropdown';
 
-export const requiredValidator: FieldValidator = (field, value) => {
-    if (!field.required || !REQUIRED_TYPES.has(field.type)) {
-        return null;
-    }
-    if (field.type === RADIO_BUTTONS) {
-        return field.options.some((option) => option.id === value) ? null : 'required';
-    }
-    if (field.type === UPLOAD) {
-        return !!value && value.length > 0 ? null : 'required';
-    }
-    if (field.type === BOOLEAN) {
-        return value ? null : 'required';
-    }
-    if (PEOPLE_TYPES.has(field.type) && Array.isArray(value)) {
-        return value.length > 0 ? null : 'required';
-    }
-    return isBlank(value) || (typeof value === 'string' && value.trim().length === 0) ? 'required' : null;
-};
+export const requiredValidator: FieldValidator = (field, value) =>
+    field.required && REQUIRED_TYPES.has(field.type) && !hasRequiredValue(field, value) ? 'required' : null;
 
 export const numberValidator: FieldValidator = (field, value) => {
     if (!NUMBER_TYPES.has(field.type) || isBlank(value)) {
         return null;
     }
-    const allowed = field.enableFractions ? /^-?[0-9]+(\.[0-9]{1,2})?$/ : /^-?\d+$/;
+    const allowed = field.enableFractions ? NUMBER_WITH_CENTS : WHOLE_NUMBER;
     return allowed.test(`${value}`) ? null : 'number';
 };
 
 export const minLengthValidator: FieldValidator = (field, value) =>
-    value && LENGTH_TYPES.has(field.type) && field.minLength > 0 && value.length < field.minLength ? 'minLength' : null;
+    typeof value === 'string' && value && LENGTH_TYPES.has(field.type) && field.minLength > 0 && value.length < field.minLength ? 'minLength' : null;
 
 export const maxLengthValidator: FieldValidator = (field, value) => {
     const limit = maxLengthOf(field);
-    return value && limit > 0 && value.toString().length > limit ? 'maxLength' : null;
+    return value && limit > 0 && `${value}`.length > limit ? 'maxLength' : null;
 };
 
 export const minValueValidator: FieldValidator = (field, value) =>
-    value && RANGE_TYPES.has(field.type) && isNumberValue(field.minValue) && !(+value >= +field.minValue) ? 'minValue' : null;
+    value && RANGE_TYPES.has(field.type) && isNumberValue(field.minValue) && !(Number(value) >= Number(field.minValue)) ? 'minValue' : null;
 
 export const maxValueValidator: FieldValidator = (field, value) =>
-    value && RANGE_TYPES.has(field.type) && isNumberValue(field.maxValue) && !(+value <= +field.maxValue) ? 'maxValue' : null;
+    value && RANGE_TYPES.has(field.type) && isNumberValue(field.maxValue) && !(Number(value) <= Number(field.maxValue)) ? 'maxValue' : null;
 
 export const patternValidator: FieldValidator = (field, value) =>
-    value && LENGTH_TYPES.has(field.type) && field.regexPattern && !(value.length > 0 && new RegExp(`^${field.regexPattern}$`).test(value))
+    typeof value === 'string' && value && LENGTH_TYPES.has(field.type) && field.regexPattern && !matchesPattern(value, field.regexPattern)
         ? 'pattern'
         : null;
 
 export const decimalValidator: FieldValidator = (field, value) => {
-    if (field.type !== DECIMAL || !value) {
+    if (field.type !== FormFieldType.Decimal || !value) {
         return null;
     }
     if (!isNumberValue(value)) {
@@ -126,28 +102,21 @@ export const decimalValidator: FieldValidator = (field, value) => {
 };
 
 export const dateValidator: FieldValidator = (field, value) => {
-    if (field.type !== DATE && field.type !== DATETIME) {
+    if (field.type !== FormFieldType.Date && field.type !== FormFieldType.DateTime) {
         return null;
     }
     const parsed = toPickerDate(value);
-    const valid = validDateOrNull(parsed);
-    const { min, max } = dateFieldRange(field);
-    const compare = field.type === DATE ? compareDates : compareDateTimes;
-
     if (parsed && !isValid(parsed)) {
         return 'dateFormat';
     }
     if (field.required && isEmptyFieldValue(value)) {
         return 'required';
     }
-    if (min && valid && compare(min, valid) > 0) {
-        return 'dateMin';
-    }
-    return max && valid && compare(max, valid) < 0 ? 'dateMax' : null;
+    return dateRangeError(field, validDateOrNull(parsed));
 };
 
 export const dropdownValidator: FieldValidator = (field, value) =>
-    field.type === DROPDOWN && field.required && isDropdownValueEmpty(field, value) ? 'dropdown' : null;
+    field.type === FormFieldType.Dropdown && field.required && isDropdownValueEmpty(field, value) ? 'dropdown' : null;
 
 export const firstValidationError = (field: FieldDefinition, value: unknown, validators: readonly FieldValidator[]): string | null => {
     for (const validator of validators) {
@@ -160,19 +129,57 @@ export const firstValidationError = (field: FieldDefinition, value: unknown, val
 };
 
 /**
+ * Whether a required field holds a value, as today's form checks it for the field's type: a radio holds one of its
+ * options, a checkbox is checked, an upload or a people list has an item, and any other field a non-blank value.
+ *
+ * @param field the field
+ * @param value the field value
+ * @returns `true` when the required field holds a value
+ */
+const hasRequiredValue = (field: FieldDefinition, value: unknown): boolean => {
+    if (field.type === FormFieldType.RadioButtons) {
+        return field.options.some((option) => option.id === value);
+    }
+    if (field.type === FormFieldType.Upload) {
+        return hasLength(value);
+    }
+    if (field.type === FormFieldType.Boolean) {
+        return !!value;
+    }
+    if (PEOPLE_TYPES.has(field.type) && Array.isArray(value)) {
+        return value.length > 0;
+    }
+    return !isBlank(value) && !(typeof value === 'string' && value.trim().length === 0);
+};
+
+const matchesPattern = (value: string, regexPattern: string): boolean => value.length > 0 && new RegExp(`^${regexPattern}$`).test(value);
+
+const dateRangeError = (field: FieldDefinition, date: Date | null): string | null => {
+    if (!date) {
+        return null;
+    }
+    const { min, max } = dateFieldRange(field);
+    const compare = field.type === FormFieldType.Date ? compareDates : compareDateTimes;
+    if (min && compare(min, date) > 0) {
+        return 'dateMin';
+    }
+    return max && compare(max, date) < 0 ? 'dateMax' : null;
+};
+
+/**
  * Returns the maximum length a text or integer field is checked against: its own, or the default limit.
  *
  * @param field the field
  * @returns the maximum length
  */
 export const maxLengthOf = (field: FieldDefinition): number => {
-    if (field.type === INTEGER) {
+    if (field.type === FormFieldType.Integer) {
         return DEFAULT_INTEGER_MAX_LENGTH;
     }
-    if (field.type === TEXT) {
+    if (field.type === FormFieldType.Text) {
         return field.maxLength > 0 ? field.maxLength : DEFAULT_TEXT_MAX_LENGTH;
     }
-    return field.type === MULTILINE_TEXT ? field.maxLength : 0;
+    return field.type === FormFieldType.MultilineText ? field.maxLength : 0;
 };
 
 const dateRange = (field: FieldDefinition): { min: Date | null; max: Date | null } => {
@@ -201,7 +208,7 @@ const dateTimeRange = (field: FieldDefinition): { min: Date | null; max: Date | 
  * @returns the range, each end `null` when open
  */
 export const dateFieldRange = (field: FieldDefinition): { min: Date | null; max: Date | null } =>
-    field.type === DATE ? dateRange(field) : dateTimeRange(field);
+    field.type === FormFieldType.Date ? dateRange(field) : dateTimeRange(field);
 
 const toPickerDate = (value: unknown): Date | null => {
     if (typeof value === 'string') {
@@ -227,7 +234,7 @@ const compareDates = (first: Date, second: Date): number =>
 const compareDateTimes = (first: Date, second: Date): number =>
     compareDates(first, second) || first.getHours() - second.getHours() || first.getMinutes() - second.getMinutes();
 
-const isDropdownValueEmpty = (field: FieldDefinition, value: any): boolean => {
+const isDropdownValueEmpty = (field: FieldDefinition, value: unknown): boolean => {
     if (field.multiple) {
         return !Array.isArray(value) || value.length === 0;
     }
@@ -241,10 +248,14 @@ const isDropdownValueEmpty = (field: FieldDefinition, value: any): boolean => {
     if (typeof value === 'string') {
         return value === emptyOption.id || value === emptyOption.name;
     }
-    return !Array.isArray(value) && value?.id === emptyOption.id && value?.name === emptyOption.name;
+    return isRecord(value) && value['id'] === emptyOption.id && value['name'] === emptyOption.name;
 };
 
 const isEmptyFieldValue = (value: unknown): boolean =>
     value === null || value === undefined || ((typeof value === 'string' || Array.isArray(value)) && value.length === 0);
 
 const isBlank = (value: unknown): boolean => value === null || value === undefined || value === '';
+
+const hasLength = (value: unknown): boolean => (Array.isArray(value) || typeof value === 'string') && value.length > 0;
+
+const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null && !Array.isArray(value);
