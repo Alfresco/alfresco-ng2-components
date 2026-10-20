@@ -1,4 +1,3 @@
-
 # Saved Searches Service
 
 Manages operations related to saving and retrieving user-defined searches.
@@ -21,10 +20,10 @@ Fetches the file with list of saved searches either from a locally cached node I
 
 #### saveSearch(newSaveSearch: Pick<SavedSearch, 'name' | 'description' | 'encodedUrl'>): [`Observable`](https://rxjs.dev/api/index/class/Observable)`<NodeEntry>`
 
-Saves a new search and updates the existing list of saved searches stored in file and in service property savedSearches$. 
+Saves a new search and updates the existing list of saved searches stored in file and in service property savedSearches$.
 
 - **Parameters**:
-    - `newSaveSearch`: An object containing the `name`, `description`, and `encodedUrl` of the new search.
+    - `newSaveSearch`: An object containing the `name`, `description`, `encodedUrl`, and `compiledQuery` (the compiled AFTS query string) of the new search.
 
 - **Returns**:
     - [`Observable`](https://rxjs.dev/api/index/class/Observable)`<NodeEntry>` - An observable that emits the response of the node entry after saving.
@@ -46,7 +45,7 @@ this.savedSearchService.getSavedSearches().subscribe((searches: SavedSearch[]) =
 To save a new search:
 
 ```typescript
-const newSearch = { name: 'New Search', description: 'A sample search', encodedUrl: 'url3' };
+const newSearch = { name: 'New Search', description: 'A sample search', encodedUrl: 'url3', compiledQuery: 'cm:name:"report*"' };
 this.savedSearchService.saveSearch(newSearch).subscribe((response) => {
     console.log('Saved new search:', response);
 });
