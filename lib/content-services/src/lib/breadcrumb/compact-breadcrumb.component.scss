@@ -1,38 +1,89 @@
 @use '../mat-selectors.scss' as ms;
+@use '@angular/material' as mat;
 
-.adf-compact-breadcrumb-panel {
+adf-compact-breadcrumb {
+    .adf-compact-breadcrumb-trigger {
+        font-size: 20px;
+    }
+}
+
+.adf-compact-breadcrumb-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    cursor: default;
+    pointer-events: none;
+
+    &-open {
+        pointer-events: auto;
+    }
+}
+
+.adf-compact-breadcrumb-menu {
     position: fixed;
     z-index: 1000;
     width: 592px;
-    max-width: 592px;
-    height: 683px;
-    overflow: auto;
-    background: var(--mat-sys-surface);
-    box-shadow:
-        0 2px 4px -1px rgb(0, 0, 0, 0.2),
-        0 4px 5px 0 rgb(0, 0, 0, 0.14),
-        0 1px 10px 0 rgb(0, 0, 0, 0.12);
-    border-radius: 4px;
+    max-width: 552px;
+    max-height: 683px;
+    box-shadow: var(--mat-sys-level2);
+    border-radius: 8px;
     visibility: hidden;
-    opacity: 0;
     pointer-events: none;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 31px;
+    margin-left: -40px;
+    padding-bottom: 24px;
 
-    &--open {
+    &-open {
         visibility: visible;
-        opacity: 1;
         pointer-events: auto;
+    }
+
+    &-title {
+        font-size: 16px;
+    }
+
+    .adf-compact-breadcrumb-menu-list {
+        max-height: 562px;
+        overflow-y: auto;
+        margin-left: -4px;
+
+        .adf-compact-breadcrumb-menu-list-item {
+            cursor: pointer;
+            padding: 0;
+            border-radius: 4px;
+            border: 2px solid transparent;
+
+            &-disabled {
+                cursor: default;
+
+                .adf-compact-breadcrumb-menu-list-item-anchor {
+                    cursor: default;
+                }
+            }
+
+            &-anchor {
+                text-decoration: none;
+            }
+
+            @include mat.list-overrides(
+                (
+                    list-item-disabled-state-layer-color: var(--mat-sys-surface),
+                    list-item-disabled-state-layer-opacity: 1,
+                    list-item-disabled-label-text-opacity: 0.9,
+                    list-item-disabled-label-text-color: var(--adf-theme-mat-grey-color-a400),
+                    list-item-hover-state-layer-opacity: 0
+                )
+            );
+        }
     }
 
     #{ms.$cdk-drag-placeholder} {
         display: none;
     }
-}
 
-.adf-compact-breadcrumb-item {
-    cursor: pointer;
-
-    &--disabled {
-        cursor: default;
-        opacity: 0.5;
+    .adf-compact-breadcrumb-menu-description {
+        font-size: 12px;
     }
 }

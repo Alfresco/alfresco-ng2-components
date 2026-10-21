@@ -30,74 +30,60 @@ import {
     viewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
 import { PathElement } from '@alfresco/js-api';
 import { MatButton } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DataRow, DragDropStateService } from '@alfresco/adf-core';
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
+import { MatListItem, MatListItemLine, MatListItemTitle, MatNavList } from '@angular/material/list';
 
 @Component({
     selector: 'adf-compact-breadcrumb',
     templateUrl: './compact-breadcrumb.component.html',
     styleUrls: ['./compact-breadcrumb.component.scss'],
-    imports: [MatButton, TranslatePipe, CdkDropList, CdkDropListGroup, CdkDrag],
+    imports: [MatButton, TranslatePipe, CdkDropList, CdkDropListGroup, CdkDrag, MatNavList, MatListItem, MatListItemTitle, MatListItemLine],
     encapsulation: ViewEncapsulation.None
 })
 export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     private readonly dragDropStateService = inject(DragDropStateService);
     private readonly renderer = inject(Renderer2);
-    private readonly document = inject(DOCUMENT);
     private readonly destroyRef = inject(DestroyRef);
 
     readonly nodes = input<PathElement[]>([]);
 
-    readonly breadcrumbDropListsChange = output<CdkDropList[]>();
-
-    private readonly trigger = viewChild.required<unknown, ElementRef<HTMLButtonElement>>('trigger', { read: ElementRef });
-    private readonly panel = viewChild.required<unknown, ElementRef<HTMLDivElement>>('panel', { read: ElementRef });
-
-    readonly isPanelOpen = signal(false);
-
-    private outsideClickTimeoutId: ReturnType<typeof setTimeout> | null = null;
-    private removeOutsideClickListener: (() => void) | null = null;
-
     /** Emitted when dragged item is dropped onto the breadcrumb. Emits drag and drop event. */
     dropped = output<CdkDragDrop<PathElement, PathElement, DataRow>>();
+    navigate = output<PathElement>();
+
+    private readonly trigger = viewChild.required<ElementRef<HTMLButtonElement>, ElementRef<HTMLButtonElement>>('trigger', { read: ElementRef });
+    private readonly panel = viewChild.required<ElementRef<HTMLButtonElement>, ElementRef<HTMLDivElement>>('panel', { read: ElementRef });
+    private readonly backdrop = viewChild.required<ElementRef<HTMLButtonElement>, ElementRef<HTMLDivElement>>('backdrop', { read: ElementRef });
+
+    protected readonly isPanelOpen = signal(false);
+
+    private outsideClickTimeoutId: NodeJS.Timeout;
+    private removeOutsideClickListener: () => void;
 
     protected hoveredItem: PathElement;
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.destroyRef.onDestroy(() => {
-            if (this.outsideClickTimeoutId !== null) {
-                clearTimeout(this.outsideClickTimeoutId);
-            }
+            clearTimeout(this.outsideClickTimeoutId);
             this.removeOutsideClickListener?.();
             this.panel().nativeElement.remove();
+            this.backdrop().nativeElement.remove();
         });
     }
 
     ngAfterViewInit(): void {
-        this.renderer.appendChild(this.document.body, this.panel().nativeElement);
-        this.updatePanelPosition();
-
-        /* eslint-disable */
-        console.log(this.breadcrumbDropListsChange);
-    }
-
-    /** Keeps the panel aligned with the trigger if the page is resized between drags. */
-    @HostListener('window:resize')
-    onWindowResize(): void {
+        this.renderer.appendChild(document.body, this.backdrop().nativeElement);
+        this.renderer.appendChild(document.body, this.panel().nativeElement);
         this.updatePanelPosition();
     }
 
     togglePanel(): void {
-        if (this.isPanelOpen()) {
-            this.closePanel();
-        } else {
-            this.openPanel();
-        }
-        this.panel().nativeElement.classList.toggle('adf-compact-breadcrumb-panel--open', this.isPanelOpen());
+        this.isPanelOpen() ? this.closePanel() : this.openPanel();
+        this.panel().nativeElement.classList.toggle('adf-compact-breadcrumb-menu-open', this.isPanelOpen());
     }
 
     onTriggerMouseEnter(): void {
@@ -106,17 +92,18 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         }
     }
 
-    @HostListener('document:keydown.escape')
-    onEscape(): void {
-        this.closePanel();
-    }
-
     onDrop(event: CdkDragDrop<PathElement, PathElement, DataRow>): void {
         this.closePanel();
-        console.log(this.hoveredItem);
-        console.log(this.nodes().findIndex((node) => node === this.hoveredItem));
-        if (this.nodes().findIndex((node) => node === this.hoveredItem) !== this.nodes().length - 1) {
+        if (this.isRouteActivated()) {
             this.dropped.emit(event);
+        }
+    }
+
+    onRouteClick(node: PathElement, event: MouseEvent): void {
+        if (this.isRouteActivated()) {
+            this.navigate.emit(node);
+        } else {
+            event.preventDefault();
         }
     }
 
@@ -126,34 +113,37 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         this.outsideClickTimeoutId = setTimeout(() => this.listenForOutsideClicks());
     }
 
+    @HostListener('document:keydown.escape')
     private closePanel(): void {
         this.isPanelOpen.set(false);
-        if (this.outsideClickTimeoutId !== null) {
-            clearTimeout(this.outsideClickTimeoutId);
-            this.outsideClickTimeoutId = null;
-        }
+        clearTimeout(this.outsideClickTimeoutId);
+        this.outsideClickTimeoutId = null;
         this.removeOutsideClickListener?.();
         this.removeOutsideClickListener = null;
     }
 
     private listenForOutsideClicks(): void {
         this.removeOutsideClickListener?.();
-        this.removeOutsideClickListener = this.renderer.listen('document', 'click', (event: MouseEvent) => {
-            const target = event.target as Node;
+        const handleOutsideClick = (event: MouseEvent): void => {
+            const target = event.target as HTMLElement;
             if (!this.trigger().nativeElement.contains(target) && !this.panel().nativeElement.contains(target)) {
+                event.stopPropagation();
+                event.preventDefault();
                 this.closePanel();
             }
-        });
+        };
+        document.addEventListener('click', handleOutsideClick, true);
+        this.removeOutsideClickListener = () => document.removeEventListener('click', handleOutsideClick, true);
     }
 
     private updatePanelPosition(): void {
-        if (this.dragDropStateService.dragging()) {
-            return;
-        }
-
         const triggerRect = this.trigger().nativeElement.getBoundingClientRect();
         const panelElement = this.panel().nativeElement;
         panelElement.style.top = `${triggerRect.bottom}px`;
         panelElement.style.left = `${triggerRect.left}px`;
+    }
+
+    private isRouteActivated(): boolean {
+        return this.nodes().findIndex((node) => node === this.hoveredItem) !== this.nodes().length - 1;
     }
 }
