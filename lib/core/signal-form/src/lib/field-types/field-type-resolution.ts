@@ -92,7 +92,7 @@ const isShownBySource = (field: FieldTypeReference): boolean =>
  * @returns the definition for the custom field type
  */
 export const borrowedFieldType = (borrowed: FieldTypeDefinition, type: string): FieldTypeDefinition => {
-    const asBorrowedType = <T extends { type: string }>(field: T): T => ({ ...field, type: borrowed.type });
+    const asBorrowedType = <TField extends { type: string }>(field: TField): TField => ({ ...field, type: borrowed.type });
     const { initialValue, submittedValue, validators, displayValue } = borrowed;
     return {
         ...borrowed,
