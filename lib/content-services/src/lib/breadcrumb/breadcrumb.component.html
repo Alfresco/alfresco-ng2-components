@@ -68,7 +68,8 @@
                                 } @else if (index === 1) {
                                     <adf-compact-breadcrumb
                                         [nodes]="lastNodes"
-                                        (dropped)="dropped.emit($event)"/>
+                                        (dropped)="dropped.emit($event)"
+                                        (navigate)="onRouteClick($event)"/>
                                 }
                             } @else {
                                 <h1 class="adf-breadcrumb-item-current" aria-current="location">

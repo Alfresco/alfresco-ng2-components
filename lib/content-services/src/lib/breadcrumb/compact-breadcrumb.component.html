@@ -7,36 +7,60 @@
     {{'BREADCRUMB.COMPACT_MENU.OPEN_COMPACT_BREADCRUMB_BUTTON' | translate: { ancestorsCounter: 1 } }}
 </button>
 <div
+    #backdrop
+    class="adf-compact-breadcrumb-backdrop"
+    [class.adf-compact-breadcrumb-backdrop-open]="isPanelOpen()">
+</div>
+<div
     #panel
-    class="adf-compact-breadcrumb-panel"
-    [class.adf-compact-breadcrumb-panel--open]="isPanelOpen()"
+    class="adf-compact-breadcrumb-menu"
+    id="adf-compact-breadcrumb-menu"
+    [class.adf-compact-breadcrumb-menu-open]="isPanelOpen()"
     [attr.aria-hidden]="!isPanelOpen()"
     role="menu"
     cdkDropListGroup
     cdkDropList
     cdkDropListSortingDisabled
     [cdkDropListData]="hoveredItem"
-    (cdkDropListDropped)="onDrop($event)"
-    id="adf-compact-breadcrumb-menu">
-    <p>{{'BREADCRUMB.COMPACT_MENU.TITLE' | translate }}</p>
-    <p>{{'BREADCRUMB.COMPACT_MENU.DESCRIPTION' | translate }}</p>
-    @for (node of nodes(); track node.id; let last = $last; let index = $index) {
-        <div
-            class="adf-compact-breadcrumb-item"
-            [class.adf-compact-breadcrumb-item--disabled]="last"
-            role="menuitem"
-            cdkDrag
-            cdkDragDisabled
-            (mouseenter)="hoveredItem = node">
-            <p>{{ node.name | translate }}</p>
-            @let nodeName = nodes()[index - 1]?.name;
-            <p>
-                {{
-                    nodeName ? ('BREADCRUMB.COMPACT_MENU.FIRST_LEVEL' | translate) :
-                        ('BREADCRUMB.COMPACT_MENU.NOT_FIRST_LEVEL' | translate: { level: index + 1, ancestorName: nodeName })
-                }}
-            </p>
-        </div>
-    }
-    <p>{{'BREADCRUMB.COMPACT_MENU.PRESS_ESC_TO_CLOSE_HINT' | translate }}</p>
+    (cdkDropListDropped)="onDrop($event)">
+    <h2 class="adf-compact-breadcrumb-menu-title">{{'BREADCRUMB.COMPACT_MENU.TITLE' | translate }}</h2>
+    <p class="adf-compact-breadcrumb-menu-description">{{'BREADCRUMB.COMPACT_MENU.DESCRIPTION' | translate }}</p>
+    <mat-nav-list class="adf-compact-breadcrumb-menu-list">
+        @for (node of nodes(); track node.id; let last = $last; let index = $index) {
+            <mat-list-item
+                class="adf-compact-breadcrumb-menu-list-item"
+                [class.adf-compact-breadcrumb-menu-list-item-disabled]="last"
+                role="menuitem"
+                cdkDrag
+                cdkDragDisabled
+                [disabled]="last"
+                (mouseenter)="hoveredItem = node">
+                <a
+                    matListItemTitle
+                    href="#"
+                    class="adf-compact-breadcrumb-menu-list-item-anchor"
+                    (click)="onRouteClick(node, $event)"
+                >
+                    {{ node.name | translate }}
+                </a>
+                @let nodeName = nodes()[index - 1]?.name;
+                <p
+                    matListItemLine
+                    class="adf-compact-breadcrumb-menu-description">
+                    {{
+                        nodeName ?
+                            (
+                                'BREADCRUMB.COMPACT_MENU.NOT_FIRST_LEVEL' | translate: {
+                                    level: index + 1,
+                                    ancestorName: nodeName
+                                }
+                            ) :
+                            ('BREADCRUMB.COMPACT_MENU.FIRST_LEVEL' | translate)
+
+                    }}
+                </p>
+            </mat-list-item>
+        }
+    </mat-nav-list>
+    <p class="adf-compact-breadcrumb-menu-description">{{'BREADCRUMB.COMPACT_MENU.PRESS_ESC_TO_CLOSE_HINT' | translate }}</p>
 </div>
