@@ -17,7 +17,7 @@
 
 import { BUILT_IN_FIELD_TYPE_RESOLVER } from '../field-types/built-in-field-types';
 import type { FieldTypeResolver } from '../field-types/field-type-definition.interface';
-import { LABEL_SUFFIX } from '../expressions/condition-values';
+import { LABEL_SUFFIX } from '../expressions/field-operand';
 import { resolveVariableValue } from '../expressions/form-variables';
 import { jsonOptions, readInitialValue, readOptions, readSavedRow, savedValueFor, toFieldValue } from './field-value-readers';
 import { isRecord } from '../form-value-guards';

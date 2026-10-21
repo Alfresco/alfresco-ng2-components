@@ -16,7 +16,7 @@
  */
 
 import { format, isValid, parse } from 'date-fns';
-import type { VisibilityCondition } from '../definition/form-definition.interface';
+import type { ConditionLiteral, VisibilityCondition } from '../definition/form-definition.interface';
 
 export interface ConditionValueSource {
     fieldValue(fieldId: string): unknown;
@@ -29,15 +29,20 @@ const VALUE_OPERAND = 'value';
 
 interface ConditionOperand {
     type: string | null;
-    value: unknown;
+    value: ConditionLiteral | null;
 }
+
+type PrimitiveValue = string | number | boolean | bigint | null | undefined;
+
+/** A condition as a field, tab or outcome may set it, or none. */
+type ConditionOrNone = VisibilityCondition | null | undefined;
 
 interface EvaluatedCondition {
     result: boolean;
     nextOperator: string;
 }
 
-export const evaluateVisibilityCondition = (condition: VisibilityCondition | null | undefined, source: ConditionValueSource): boolean => {
+export const evaluateVisibilityCondition = (condition: ConditionOrNone, source: ConditionValueSource): boolean => {
     const left = leftOperand(condition);
     if (!condition || !(left.type || left.value) || left.value === 'null') {
         return true;
@@ -47,7 +52,7 @@ export const evaluateVisibilityCondition = (condition: VisibilityCondition | nul
 
 const evaluateChain = (condition: VisibilityCondition, source: ConditionValueSource): EvaluatedCondition[] => {
     const evaluated: EvaluatedCondition[] = [];
-    let current: VisibilityCondition | null | undefined = condition;
+    let current: ConditionOrNone = condition;
 
     while (current) {
         const result = evaluateOperator(leftValue(current, source), rightValue(current, source), current.operator);
@@ -83,7 +88,7 @@ const combine = (conditions: EvaluatedCondition[]): boolean => {
     return orTerms.some(Boolean);
 };
 
-const leftOperand = (condition: VisibilityCondition | null | undefined): ConditionOperand => {
+const leftOperand = (condition: ConditionOrNone): ConditionOperand => {
     if (!condition) {
         return { type: null, value: null };
     }
@@ -137,41 +142,40 @@ const leftValue = (condition: VisibilityCondition, source: ConditionValueSource)
     const left = leftOperand(condition);
 
     if (left.type === VARIABLE_OPERAND) {
-        return source.variableValue(`${left.value}`);
+        return source.variableValue(operandName(left));
     }
     if (left.type !== FIELD_OPERAND) {
         return '';
     }
 
-    const value = source.fieldValue(`${left.value}`);
+    const value = source.fieldValue(operandName(left));
     if (value !== undefined && value !== '') {
         return value;
     }
 
-    const variable = source.variableValue(`${left.value}`);
-    return variable !== undefined && variable !== null ? variable : value;
+    return source.variableValue(operandName(left)) ?? value;
 };
 
 const rightValue = (condition: VisibilityCondition, source: ConditionValueSource): unknown => {
     const right = rightOperand(condition);
 
     if (right.type === FIELD_OPERAND) {
-        return source.fieldValue(`${right.value}`);
+        return source.fieldValue(operandName(right));
     }
     if (right.type === VARIABLE_OPERAND) {
-        return source.variableValue(`${right.value}`);
+        return source.variableValue(operandName(right));
     }
 
-    const asDate = parse(`${right.value}`, 'yyyy-MM-dd', new Date());
+    const asDate = parse(operandName(right), 'yyyy-MM-dd', new Date());
     return isValid(asDate) ? `${format(asDate, 'yyyy-MM-dd')}T00:00:00.000Z` : right.value;
 };
 
 const evaluateOperator = (left: unknown, right: unknown, operator: string | undefined): boolean | undefined => {
     switch (operator) {
         case '==':
-            return `${left}` === `${right}`;
+            return comparedText(left) === comparedText(right);
         case '!=':
-            return `${left}` !== `${right}`;
+            return comparedText(left) !== comparedText(right);
         case '<':
             return ordered(left) < ordered(right);
         case '>':
@@ -194,6 +198,39 @@ const evaluateOperator = (left: unknown, right: unknown, operator: string | unde
 };
 
 /**
+ * Returns the field id, variable name or constant an operand names, as text.
+ *
+ * @param operand the operand
+ * @returns the text, `'null'` for an operand that names nothing, as today's form reads it
+ */
+const operandName = (operand: ConditionOperand): string => `${operand.value}`;
+
+/**
+ * Turns a condition value into the text `==` and `!=` compare, as today's form does: a list as its items joined by
+ * commas, so a multiple selection `['a']` equals `'a'`; a date as its text; any other object as JSON.
+ *
+ * @param value the condition value
+ * @returns the text
+ */
+const comparedText = (value: unknown): string => {
+    if (isPrimitive(value)) {
+        return `${value}`;
+    }
+    if (Array.isArray(value)) {
+        return value.map(listItemText).join(',');
+    }
+    if (value instanceof Date) {
+        return value.toString();
+    }
+    return JSON.stringify(value) ?? '';
+};
+
+const listItemText = (item: unknown): string => (item === null || item === undefined ? '' : comparedText(item));
+
+const isPrimitive = (value: unknown): value is PrimitiveValue =>
+    value === null || (typeof value !== 'object' && typeof value !== 'function' && typeof value !== 'symbol');
+
+/**
  * Lets two condition values be compared as JavaScript compares them, as today's form does: numbers as numbers, texts
  * (such as ISO dates) as texts.
  *
@@ -205,4 +242,4 @@ const ordered = (value: unknown): string | number => value as string | number;
 const contains = (left: unknown, right: unknown): boolean =>
     Array.isArray(left) && Array.isArray(right) && right.every((element) => left.includes(element));
 
-const hasText = (value: unknown): boolean => value !== null && value !== undefined && `${value}` !== '';
+const hasText = (value: ConditionLiteral | null | undefined): boolean => value !== null && value !== undefined && `${value}` !== '';

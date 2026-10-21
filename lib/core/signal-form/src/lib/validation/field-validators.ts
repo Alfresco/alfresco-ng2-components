@@ -17,7 +17,7 @@
 
 import { addDays, isValid, parseISO } from 'date-fns';
 import { DateFnsUtils, isNumberValue } from '@alfresco/adf-core';
-import type { ChoiceValue, FieldDefinition, FieldOption, FieldValue } from '../definition/form-definition.interface';
+import type { DropdownFieldValue, FieldDefinition, FieldValue, NumberFieldValue } from '../definition/form-definition.interface';
 import { FormFieldType } from '../definition/form-field-types';
 import { hasLength } from '../form-value-guards';
 import type { FieldValidator } from '../field-types/field-type-definition.interface';
@@ -64,7 +64,7 @@ export type FieldErrorKind =
 export const requiredValidator: FieldValidator = (field, value) =>
     field.required && REQUIRED_TYPES.has(field.type) && !hasRequiredValue(field, value) ? 'required' : null;
 
-export const numberValidator: FieldValidator = (field, value) => {
+export const numberValidator: FieldValidator<NumberFieldValue> = (field, value) => {
     if (!NUMBER_TYPES.has(field.type) || isBlank(value)) {
         return null;
     }
@@ -77,21 +77,21 @@ export const minLengthValidator: FieldValidator = (field, value) =>
 
 export const maxLengthValidator: FieldValidator = (field, value) => {
     const limit = maxLengthOf(field);
-    return value && limit > 0 && `${value}`.length > limit ? 'maxLength' : null;
+    return limit > 0 && typedLength(value) > limit ? 'maxLength' : null;
 };
 
-export const minValueValidator: FieldValidator = (field, value) =>
-    value && RANGE_TYPES.has(field.type) && isNumberValue(field.minValue) && !(Number(value) >= Number(field.minValue)) ? 'minValue' : null;
+export const minValueValidator: FieldValidator<NumberFieldValue> = (field, value) =>
+    value && RANGE_TYPES.has(field.type) && isNumberValue(field.minValue) && isBelow(value, field.minValue) ? 'minValue' : null;
 
-export const maxValueValidator: FieldValidator = (field, value) =>
-    value && RANGE_TYPES.has(field.type) && isNumberValue(field.maxValue) && !(Number(value) <= Number(field.maxValue)) ? 'maxValue' : null;
+export const maxValueValidator: FieldValidator<NumberFieldValue> = (field, value) =>
+    value && RANGE_TYPES.has(field.type) && isNumberValue(field.maxValue) && isAbove(value, field.maxValue) ? 'maxValue' : null;
 
 export const patternValidator: FieldValidator = (field, value) =>
     typeof value === 'string' && value && LENGTH_TYPES.has(field.type) && field.regexPattern && !matchesPattern(value, field.regexPattern)
         ? 'pattern'
         : null;
 
-export const decimalValidator: FieldValidator = (field, value) => {
+export const decimalValidator: FieldValidator<NumberFieldValue> = (field, value) => {
     if (field.type !== FormFieldType.Decimal || !value) {
         return null;
     }
@@ -116,7 +116,7 @@ export const dateValidator: FieldValidator = (field, value) => {
     return dateRangeError(field, validDateOrNull(parsed));
 };
 
-export const dropdownValidator: FieldValidator<ChoiceValue | FieldOption[] | null> = (field, value) =>
+export const dropdownValidator: FieldValidator<DropdownFieldValue> = (field, value) =>
     field.type === FormFieldType.Dropdown && field.required && isDropdownValueEmpty(field, value) ? 'dropdown' : null;
 
 export const firstValidationError = (field: FieldDefinition, value: FieldValue, validators: readonly FieldValidator[]): string | null => {
@@ -237,7 +237,7 @@ const compareDates = (first: Date, second: Date): number =>
 const compareDateTimes = (first: Date, second: Date): number =>
     compareDates(first, second) || first.getHours() - second.getHours() || first.getMinutes() - second.getMinutes();
 
-const isDropdownValueEmpty = (field: FieldDefinition, value: ChoiceValue | FieldOption[] | null): boolean => {
+const isDropdownValueEmpty = (field: FieldDefinition, value: DropdownFieldValue): boolean => {
     if (field.multiple) {
         return !Array.isArray(value) || value.length === 0;
     }
@@ -256,5 +256,21 @@ const isDropdownValueEmpty = (field: FieldDefinition, value: ChoiceValue | Field
 
 const isEmptyFieldValue = (value: FieldValue): boolean =>
     value === null || value === undefined || ((typeof value === 'string' || Array.isArray(value)) && value.length === 0);
+
+/**
+ * Returns how many characters a text or a number is typed with; any other value has none.
+ *
+ * @param value the field value
+ * @returns the length
+ */
+const typedLength = (value: FieldValue): number => (typeof value === 'string' || typeof value === 'number' ? `${value}`.length : 0);
+
+/** Tells whether a value is below a minimum, as today's form checks it: a value that is no number is out of range too. */
+const isBelow = (value: NumberFieldValue, minimum: NumberFieldValue): boolean => isNotANumber(value) || Number(value) < Number(minimum);
+
+/** Tells whether a value is above a maximum, as today's form checks it: a value that is no number is out of range too. */
+const isAbove = (value: NumberFieldValue, maximum: NumberFieldValue): boolean => isNotANumber(value) || Number(value) > Number(maximum);
+
+const isNotANumber = (value: NumberFieldValue): boolean => Number.isNaN(Number(value));
 
 const isBlank = (value: FieldValue): boolean => value === null || value === undefined || value === '';

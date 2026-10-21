@@ -18,7 +18,15 @@
 import { isValid, parseISO } from 'date-fns';
 import { DateFnsUtils, isNumberValue } from '@alfresco/adf-core';
 import type { FieldJson } from './form-definition-json.interface';
-import type { ChoiceValue, FieldDefinition, FieldOption, FieldValue, JsonValue, ObjectValue } from './form-definition.interface';
+import type {
+    DateFieldValue,
+    DropdownFieldValue,
+    FieldDefinition,
+    FieldOption,
+    FieldValue,
+    NumberFieldValue,
+    RadioFieldValue
+} from './form-definition.interface';
 import { DEFAULT_EMPTY_OPTION, EMPTY_OPTION_ID } from './form-field-types';
 import { isRecord } from '../form-value-guards';
 import { resolveFieldType } from '../field-types/field-type-resolution';
@@ -56,7 +64,7 @@ export const toFieldValue = (value: unknown): FieldValue => {
         return value;
     }
     if (Array.isArray(value)) {
-        return value.every((item) => isRecord(item)) ? (value as ObjectValue[]) : (value as JsonValue[]);
+        return value;
     }
     return isRecord(value) ? value : null;
 };
@@ -148,7 +156,7 @@ export const radioOptions: FieldOptionsReader = (field, options) => {
     return isValidOption(value) && !matchingOption(listed, value) ? withOptions(listed, [value]) : listed;
 };
 
-export const dropdownInitialValue: InitialValueReader<ChoiceValue | FieldOption[] | null> = (field, definition) => {
+export const dropdownInitialValue: InitialValueReader<DropdownFieldValue> = (field, definition) => {
     const value = jsonValue(field);
     if (definition.hasEmptyValue && definition.emptyOption && isEmptyChoice(value, definition.emptyOption)) {
         return definition.emptyOption;
@@ -162,7 +170,7 @@ export const dropdownInitialValue: InitialValueReader<ChoiceValue | FieldOption[
     return typeof value === 'string' ? value : null;
 };
 
-export const radioInitialValue: InitialValueReader<string | null> = (field, definition) => {
+export const radioInitialValue: InitialValueReader<RadioFieldValue> = (field, definition) => {
     const value = jsonValue(field);
     const matching = matchingOption(definition.options, value);
     if (matching) {
@@ -174,12 +182,12 @@ export const radioInitialValue: InitialValueReader<string | null> = (field, defi
     return typeof value === 'string' ? value : null;
 };
 
-export const dateInitialValue: InitialValueReader<Date | string | null> = (field) => {
+export const dateInitialValue: InitialValueReader<DateFieldValue> = (field) => {
     const value = jsonValue(field);
     return value === TODAY ? new Date() : initialDateValue(value, false);
 };
 
-export const dateTimeInitialValue: InitialValueReader<Date | string | null> = (field) => {
+export const dateTimeInitialValue: InitialValueReader<DateFieldValue> = (field) => {
     const value = jsonValue(field);
     return value === NOW ? new Date() : initialDateValue(value, true);
 };
@@ -191,7 +199,7 @@ export const dateTimeInitialValue: InitialValueReader<Date | string | null> = (f
  * @param definition the field definition
  * @returns the value, rounded to the precision when it has more digits
  */
-export const decimalInitialValue: InitialValueReader<string | number | null> = (field, definition) => {
+export const decimalInitialValue: InitialValueReader<NumberFieldValue> = (field, definition) => {
     const value = jsonValue(field);
     if (typeof value !== 'string' && typeof value !== 'number') {
         return null;
@@ -218,7 +226,7 @@ const matchingOption = (options: FieldOption[], value: FieldValue): FieldOption 
  * @param withTime whether the value carries a time
  * @returns the date, the unreadable text, or no value
  */
-const initialDateValue = (value: FieldValue, withTime: boolean): Date | string | null => {
+const initialDateValue = (value: FieldValue, withTime: boolean): DateFieldValue => {
     if (value instanceof Date || value === null) {
         return value;
     }

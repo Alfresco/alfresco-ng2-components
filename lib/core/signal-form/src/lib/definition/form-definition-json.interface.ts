@@ -16,7 +16,14 @@
  */
 
 import type { ThemeModel } from '@alfresco/adf-core';
-import type { FormVariable, SectionRowOptions, SourceFieldReference, TabDefinition, VisibilityCondition } from './form-definition.interface';
+import type {
+    FormVariable,
+    NumberFieldValue,
+    SectionRowOptions,
+    SourceFieldReference,
+    TabDefinition,
+    VisibilityCondition
+} from './form-definition.interface';
 
 /**
  * A field as the modeler saves it. The properties the form reads are typed; a field type or widget of its own can read
@@ -52,8 +59,8 @@ export interface FieldJson {
     readOnly?: boolean;
     minLength?: number;
     maxLength?: number;
-    minValue?: string | number | null;
-    maxValue?: string | number | null;
+    minValue?: NumberFieldValue;
+    maxValue?: NumberFieldValue;
     regexPattern?: string | null;
     customValidationMessage?: string;
     style?: string;

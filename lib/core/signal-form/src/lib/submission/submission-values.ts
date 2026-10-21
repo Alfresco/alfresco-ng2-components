@@ -18,15 +18,17 @@
 import { format, isValid } from 'date-fns';
 import { DateFnsUtils } from '@alfresco/adf-core';
 import type {
-    ChoiceValue,
+    BooleanFieldValue,
+    DateFieldValue,
+    DropdownFieldValue,
     FieldDefinition,
-    FieldOption,
     FieldValue,
-    FileValue,
-    GroupValue,
-    PersonValue,
+    IdentityFieldValue,
+    NumberFieldValue,
+    RadioFieldValue,
     SectionDefinition,
-    SubmittedValue
+    SubmittedValue,
+    UploadFieldValue
 } from '../definition/form-definition.interface';
 import { EMPTY_OPTION_ID } from '../definition/form-field-types';
 import { hasLength } from '../form-value-guards';
@@ -124,16 +126,16 @@ const asIs: SubmittedValueWriter = ({ value }) => value;
 
 export const noSubmittedValue: SubmittedValueWriter = () => undefined;
 
-export const numberSubmittedValue: SubmittedValueWriter<string | number | null> = ({ definition, value }) =>
+export const numberSubmittedValue: SubmittedValueWriter<NumberFieldValue> = ({ definition, value }) =>
     definition.enableFractions ? parseFloat(`${value}`) : parseInt(`${value}`, 10);
 
-export const decimalSubmittedValue: SubmittedValueWriter<string | number | null> = ({ value }) => parseFloat(`${value}`);
+export const decimalSubmittedValue: SubmittedValueWriter<NumberFieldValue> = ({ value }) => parseFloat(`${value}`);
 
-export const booleanSubmittedValue: SubmittedValueWriter<boolean | null> = ({ value }) => value ?? false;
+export const booleanSubmittedValue: SubmittedValueWriter<BooleanFieldValue> = ({ value }) => value ?? false;
 
-export const peopleSubmittedValue: SubmittedValueWriter<PersonValue[] | GroupValue[] | null> = ({ value }) => value || null;
+export const peopleSubmittedValue: SubmittedValueWriter<IdentityFieldValue> = ({ value }) => value || null;
 
-export const dropdownSubmittedValue: SubmittedValueWriter<ChoiceValue | FieldOption[] | null> = ({ definition, value }) => {
+export const dropdownSubmittedValue: SubmittedValueWriter<DropdownFieldValue> = ({ definition, value }) => {
     if (!value) {
         return null;
     }
@@ -147,7 +149,7 @@ export const dropdownSubmittedValue: SubmittedValueWriter<ChoiceValue | FieldOpt
     return definition.options.find((option) => option.id === id) ?? null;
 };
 
-export const radioSubmittedValue: SubmittedValueWriter<string | null> = ({ definition, value }) => {
+export const radioSubmittedValue: SubmittedValueWriter<RadioFieldValue> = ({ definition, value }) => {
     const option = definition.options.find((candidate) => candidate.id === value);
     if (definition.optionType === 'rest') {
         return option ? { ...option, options: definition.options } : { id: null, name: null, options: definition.options };
@@ -155,24 +157,24 @@ export const radioSubmittedValue: SubmittedValueWriter<string | null> = ({ defin
     return option ? { ...option } : null;
 };
 
-export const uploadSubmittedValue: SubmittedValueWriter<FileValue[] | string | null> = ({ value }) => {
+export const uploadSubmittedValue: SubmittedValueWriter<UploadFieldValue> = ({ value }) => {
     if (!hasLength(value)) {
         return null;
     }
     return Array.isArray(value) ? value.map((file) => file.id).join(',') : [value];
 };
 
-export const dateSubmittedValue: SubmittedValueWriter<Date | string | null> = ({ definition, value }) => {
+export const dateSubmittedValue: SubmittedValueWriter<DateFieldValue> = ({ definition, value }) => {
     const date = parseDateValue(value, definition.dateDisplayFormat);
     return isValid(date) ? `${format(date, 'yyyy-MM-dd')}T00:00:00.000Z` : null;
 };
 
-export const dateTimeSubmittedValue: SubmittedValueWriter<Date | string | null> = ({ value }) => {
+export const dateTimeSubmittedValue: SubmittedValueWriter<DateFieldValue> = ({ value }) => {
     const date = value !== null ? DateFnsUtils.getDate(value) : null;
     return isValid(date) ? date.toISOString() : null;
 };
 
-const parseDateValue = (value: Date | string | null, dateFormat: string): Date => {
+const parseDateValue = (value: DateFieldValue, dateFormat: string): Date => {
     if (value === null) {
         return new Date(NaN);
     }

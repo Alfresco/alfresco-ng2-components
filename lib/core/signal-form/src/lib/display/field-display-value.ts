@@ -16,29 +16,37 @@
  */
 
 import { FullNamePipe } from '@alfresco/adf-core';
-import type { ChoiceValue, FieldDefinition, FieldValue, GroupValue, PersonValue } from '../definition/form-definition.interface';
+import type {
+    ChoiceSelection,
+    ChoiceValue,
+    FieldDefinition,
+    FieldValue,
+    GroupFieldValue,
+    PeopleFieldValue
+} from '../definition/form-definition.interface';
 import type { DisplayValueFormatter, FieldTypeResolver } from '../field-types/field-type-definition.interface';
 import { resolveFieldType } from '../field-types/field-type-resolution';
 
 const fullNamePipe = new FullNamePipe();
 
 /**
- * Turns any value into text: strings as they are, objects as JSON.
+ * Turns any value into text: strings as they are, numbers, checkbox states and dates as text, other objects as JSON.
+ * Anything else, such as a function, shows nothing.
  *
  * @param value the value
  * @returns the text
  */
 export const stringifyValue = (value: unknown): string => {
-    if (value === null || value === undefined) {
-        return '';
-    }
     if (typeof value === 'string') {
         return value;
     }
-    if (typeof value === 'object' && !(value instanceof Date)) {
-        return JSON.stringify(value);
+    if (typeof value === 'number' || typeof value === 'boolean' || typeof value === 'bigint') {
+        return `${value}`;
     }
-    return String(value);
+    if (value instanceof Date) {
+        return value.toString();
+    }
+    return typeof value === 'object' && value !== null ? JSON.stringify(value) : '';
 };
 
 /**
@@ -62,13 +70,13 @@ const joinNames = (names: string[]): string => names.filter((name) => !!name).jo
 const optionName = (definition: FieldDefinition, option: ChoiceValue): string =>
     typeof option === 'string' ? (definition.options.find(({ id }) => id === option)?.name ?? option) : option.name;
 
-export const optionDisplayValue: DisplayValueFormatter<ChoiceValue | ChoiceValue[]> = ({ definition, value }) =>
+export const optionDisplayValue: DisplayValueFormatter<ChoiceSelection> = ({ definition, value }) =>
     Array.isArray(value) ? joinNames(value.map((option) => optionName(definition, option))) : optionName(definition, value);
 
-export const peopleDisplayValue: DisplayValueFormatter<PersonValue | PersonValue[]> = ({ value }) =>
+export const peopleDisplayValue: DisplayValueFormatter<PeopleFieldValue> = ({ value }) =>
     joinNames(asList(value).map((person) => fullNamePipe.transform(person)));
 
-export const groupDisplayValue: DisplayValueFormatter<GroupValue | GroupValue[]> = ({ value }) =>
+export const groupDisplayValue: DisplayValueFormatter<GroupFieldValue> = ({ value }) =>
     joinNames(asList(value).map((group) => group.name ?? ''));
 
 const asList = <TItem>(value: TItem | TItem[]): TItem[] => (Array.isArray(value) ? value : [value]);

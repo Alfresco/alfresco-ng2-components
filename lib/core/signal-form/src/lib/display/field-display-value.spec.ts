@@ -45,4 +45,16 @@ describe('displayFieldValue', () => {
         expect(shown(field('json'), { a: 1 })).toBe('{"a":1}');
         expect(stringifyValue('as is')).toBe('as is');
     });
+
+    it('should turn each kind of value into text', () => {
+        const date = new Date(2024, 2, 15);
+
+        expect(stringifyValue(undefined)).toBe('');
+        expect(stringifyValue(null)).toBe('');
+        expect(stringifyValue(0)).toBe('0');
+        expect(stringifyValue(false)).toBe('false');
+        expect(stringifyValue(date)).toBe(date.toString());
+        expect(stringifyValue([{ id: 'it' }, 'fr'])).toBe('[{"id":"it"},"fr"]');
+        expect(stringifyValue(() => 'hidden')).toBe('');
+    });
 });

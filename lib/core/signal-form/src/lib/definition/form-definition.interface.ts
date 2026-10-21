@@ -18,14 +18,17 @@
 import type { ThemeModel } from '@alfresco/adf-core';
 import type { FieldJson } from './form-definition-json.interface';
 
+/** A value written in a visibility condition: a field id, a variable name, or a constant to compare with. */
+export type ConditionLiteral = string | number | boolean;
+
 export interface VisibilityCondition {
     leftType?: string | null;
-    leftValue?: unknown;
+    leftValue?: ConditionLiteral | null;
     leftFormFieldId?: string;
     leftRestResponseId?: string;
     operator?: string;
     rightType?: string | null;
-    rightValue?: unknown;
+    rightValue?: ConditionLiteral | null;
     rightFormFieldId?: string;
     rightRestResponseId?: string;
     nextConditionOperator?: string;
@@ -60,6 +63,36 @@ export interface FileValue {
 
 /** What a dropdown or radio holds for one choice: the option, or its id. */
 export type ChoiceValue = FieldOption | string;
+
+/** One choice or several, as a dropdown or radio shows them. */
+export type ChoiceSelection = ChoiceValue | ChoiceValue[];
+
+/** The value of a dropdown: one choice, the options of a multiple selection, or none. */
+export type DropdownFieldValue = ChoiceValue | FieldOption[] | null;
+
+/** The value of a radio: the id of the picked option, or none. */
+export type RadioFieldValue = string | null;
+
+/** The value of an integer, amount or decimal field, and of a number limit: the number, its text, or none. */
+export type NumberFieldValue = string | number | null;
+
+/** The value of a checkbox: checked or not, or none. */
+export type BooleanFieldValue = boolean | null;
+
+/** The value of a date or datetime field: the date, the text typed when it is no date, or none. */
+export type DateFieldValue = Date | string | null;
+
+/** The value of an upload field: the attached files, a file id, or none. */
+export type UploadFieldValue = FileValue[] | string | null;
+
+/** The value of a people field: one person or several. */
+export type PeopleFieldValue = PersonValue | PersonValue[];
+
+/** The value of a group field: one group or several. */
+export type GroupFieldValue = GroupValue | GroupValue[];
+
+/** The value of a people or group field, or none. */
+export type IdentityFieldValue = PeopleFieldValue | GroupFieldValue | null;
 
 /** A value with properties a field can hold: a choice, a person, a group, a file, or a JSON object. */
 export type ObjectValue = FieldOption | PersonValue | GroupValue | FileValue | Record<string, unknown>;
@@ -103,8 +136,8 @@ export interface FieldDefinition {
     readOnly: boolean;
     minLength: number;
     maxLength: number;
-    minValue?: string | number | null;
-    maxValue?: string | number | null;
+    minValue?: NumberFieldValue;
+    maxValue?: NumberFieldValue;
     regexPattern?: string | null;
     customValidationMessage?: string;
     inputMask?: InputMask;

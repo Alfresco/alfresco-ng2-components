@@ -41,7 +41,7 @@ export const resolveVariableValue = (
 ): unknown => {
     const formVariable = findVariable(identifier, variables);
     const runtimeKey = formVariable ? (formVariable.id ?? formVariable.name) : undefined;
-    if (runtimeKey !== undefined && Object.prototype.hasOwnProperty.call(runtimeValues, runtimeKey)) {
+    if (runtimeKey !== undefined && Object.hasOwn(runtimeValues, runtimeKey)) {
         return parseVariableValue({ ...formVariable, value: runtimeValues[runtimeKey] });
     }
 
@@ -56,7 +56,7 @@ export const resolveVariableValue = (
         return parseVariableValue(processVariable);
     }
 
-    return formVariable && Object.prototype.hasOwnProperty.call(formVariable, 'value') ? parseVariableValue(formVariable) : undefined;
+    return formVariable && Object.hasOwn(formVariable, 'value') ? parseVariableValue(formVariable) : undefined;
 };
 
 const parseVariableValue = ({ type, value }: FormVariable): unknown => {
