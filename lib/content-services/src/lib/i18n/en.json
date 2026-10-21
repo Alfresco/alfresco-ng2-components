@@ -697,6 +697,14 @@
     },
     "HEADER": {
       "SELECTED": "Selected ({{ count }})"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "Ancestors {{ ancestorsCounter }}",
+      "TITLE": "Move to an ancestor",
+      "DESCRIPTION": "Dragging 1 file • Release on a destination to move. Full path shown below.",
+      "PRESS_ESC_TO_CLOSE_HINT": "Esc or release outside a target to cancel • No move made",
+      "FIRST_LEVEL": "Level 1",
+      "NOT_FIRST_LEVEL": "Level {{ level }} • In {{ ancestorName }}"
     }
   },
   "NAME_COLUMN_LINK": {

@@ -1,28 +1,42 @@
 <button
+    #trigger
     matButton
-    [matMenuTriggerFor]="menu"
-    (mouseenter)="openMenu()">
-    Ancestors (1)
+    class="adf-compact-breadcrumb-trigger"
+    (click)="togglePanel()"
+    (mouseenter)="onTriggerMouseEnter()">
+    {{'BREADCRUMB.COMPACT_MENU.OPEN_COMPACT_BREADCRUMB_BUTTON' | translate: { ancestorsCounter: 1 } }}
 </button>
-<mat-menu
-    #menu="matMenu"
-    class="adf-compact-breadcrumb-menu"
-    >
-    <p>Move to an ancestor</p>
-    <p>Dragging 1 file • Release on a destination to move. Full path shown below.</p>
-    <div cdkDropListGroup>
+<div
+    #panel
+    class="adf-compact-breadcrumb-panel"
+    [class.adf-compact-breadcrumb-panel--open]="isPanelOpen()"
+    [attr.aria-hidden]="!isPanelOpen()"
+    role="menu"
+    cdkDropListGroup
+    cdkDropList
+    cdkDropListSortingDisabled
+    [cdkDropListData]="hoveredItem"
+    (cdkDropListDropped)="onDrop($event)"
+    id="adf-compact-breadcrumb-menu">
+    <p>{{'BREADCRUMB.COMPACT_MENU.TITLE' | translate }}</p>
+    <p>{{'BREADCRUMB.COMPACT_MENU.DESCRIPTION' | translate }}</p>
     @for (node of nodes(); track node.id; let last = $last; let index = $index) {
         <div
-            mat-menu-item
-            [disabled]="last"
-            cdkDropList
-            (cdkDropListDropped)="onDrop($event)"
-            [id]="node.id">
+            class="adf-compact-breadcrumb-item"
+            [class.adf-compact-breadcrumb-item--disabled]="last"
+            role="menuitem"
+            cdkDrag
+            cdkDragDisabled
+            (mouseenter)="hoveredItem = node">
             <p>{{ node.name | translate }}</p>
             @let nodeName = nodes()[index - 1]?.name;
-            <p>{{`Level ${index + 1}${nodeName ? ' • In' + nodeName : ''}`}}</p>
+            <p>
+                {{
+                    nodeName ? ('BREADCRUMB.COMPACT_MENU.FIRST_LEVEL' | translate) :
+                        ('BREADCRUMB.COMPACT_MENU.NOT_FIRST_LEVEL' | translate: { level: index + 1, ancestorName: nodeName })
+                }}
+            </p>
         </div>
     }
-    </div>
-    <p>Esc or release outside a target to cancel • No move made</p>
-</mat-menu>
+    <p>{{'BREADCRUMB.COMPACT_MENU.PRESS_ESC_TO_CLOSE_HINT' | translate }}</p>
+</div>

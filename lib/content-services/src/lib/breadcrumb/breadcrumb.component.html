@@ -37,38 +37,52 @@
             </mat-select>
         }
 
-        @for (item of lastNodes; track item.id; let last = $last; let index = $index) {
-            <div
-                [class.adf-active]="last"
-                title="{{ item.name ?? '' | translate }}"
-                class="adf-breadcrumb-item">
-            @if (breadcrumbItemIsAnchor(last)) {
-                @if (index === 0 || !compactMode) {
-                    <a
-                        href="#"
-                        [attr.data-automation-id]="'breadcrumb_' + item.name"
-                        class="adf-breadcrumb-item-anchor"
-                        (click)="onRoutePathClick(item, $event)"
-                        cdkDropList
-                        (cdkDropListDropped)="onDrop($event)"
+        <div
+            cdkDropList
+            (cdkDropListDropped)="onDrop($event)"
+            cdkDropListSortingDisabled
+            [cdkDropListData]="hoveredItem"
+            id="adf-breadcrumb-path"
+            class="adf-breadcrumb-container-path">
+                @for (item of lastNodes; track item.id; let last = $last; let index = $index) {
+                    @if (!compactMode || (compactMode && index < 2 || compactMode && last)) {
+                        <div
+                            [class.adf-active]="last"
+                            [class.adf-breadcrumb-item-drop-disabled]="index > 0"
+                            title="{{ item.name ?? '' | translate }}"
+                            class="adf-breadcrumb-item"
+                            cdkDrag
+                            cdkDragDisabled
+                            (mouseenter)="hoveredItem = item"
+                        >
+                            @if (breadcrumbItemIsAnchor(last)) {
+                                @if (index === 0 || !compactMode) {
+                                    <a
+                                        href="#"
+                                        [attr.data-automation-id]="'breadcrumb_' + item.name"
+                                        class="adf-breadcrumb-item-anchor"
+                                        (click)="onRoutePathClick(item, $event)"
+                                    >
+                                        {{ item.name ?? '' | translate }}
+                                    </a>
+                                } @else if (index === 1) {
+                                    <adf-compact-breadcrumb
+                                        [nodes]="lastNodes"
+                                        (dropped)="dropped.emit($event)"/>
+                                }
+                            } @else {
+                                <h1 class="adf-breadcrumb-item-current" aria-current="location">
+                                    {{ (selectedRowItemsCount < 1 ? item.name ?? '' : 'BREADCRUMB.HEADER.SELECTED') | translate: { count: selectedRowItemsCount } }}
+                                </h1>
+                            }
 
-                    >
-                        {{ item.name ?? '' | translate }}
-                    </a>
-                } @else if ($index === 1) {
-                    <adf-compact-breadcrumb [nodes]="lastNodes" (breadcrumbDropListsChange)="breadcrumbDropListsChange.emit($event)"/>
+                            @if (!last) {
+                                <mat-icon class="adf-breadcrumb-item-chevron" adf-icon="chevron_right" />
+                            }
+                        </div>
+                    }
                 }
-            } @else {
-                <h1 class="adf-breadcrumb-item-current" aria-current="location">
-                    {{ (selectedRowItemsCount < 1 ? item.name ?? '' : 'BREADCRUMB.HEADER.SELECTED') | translate: { count: selectedRowItemsCount } }}
-                </h1>
-            }
-
-            @if (!last) {
-                <mat-icon class="adf-breadcrumb-item-chevron" adf-icon="chevron_right" />
-            }
-            </div>
-        }
+        </div>
     </nav>
 
     @if (!folderNode && hasRoot) {
