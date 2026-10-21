@@ -71,6 +71,7 @@ import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { CLOUD_FORM_FIELD_VALIDATORS } from './cloud-form-field-validators';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { TaskDetailsCloudModel } from '../../task/models/task-details-cloud.model';
+import { repeatableSectionForm } from '../mocks/repeatable-section-form.mock';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -994,6 +995,76 @@ describe('FormCloudComponent', () => {
         formComponent.completeTaskForm('complete');
 
         expect(formCloudService.completeTaskForm).not.toHaveBeenCalled();
+    });
+
+    describe('repeatable-section submission', () => {
+        const setupRepeatableTaskForm = () => {
+            const completeSpy = spyOn(formCloudService, 'completeTaskForm').and.returnValue(of(undefined));
+            const form = new FormModel({ ...repeatableSectionForm(), taskId: 'task-123' });
+            const section = form.fields[0].field;
+            section.rows[0].columns[0].fields[0].columns[0].fields[0].value = 'deleted value';
+            formComponent.form = form;
+            formComponent.taskId = form.taskId;
+            formComponent.appName = 'test-app';
+            return { form, section, completeSpy };
+        };
+
+        it('should complete a task with only the surviving nested row after deleting the first row', () => {
+            const { form, section, completeSpy } = setupRepeatableTaskForm();
+
+            section.removeRow(0);
+            section.rows[0].columns[0].fields[0].columns[0].fields[0].value = 'remaining row';
+            formComponent.completeTaskForm('complete');
+
+            expect(completeSpy).toHaveBeenCalledOnceWith(
+                'test-app',
+                form.taskId,
+                undefined,
+                `${form.id}`,
+                { RepeatableSection0lp64g: [{ Text0bere0: 'remaining row' }] },
+                'complete',
+                undefined
+            );
+        });
+
+        it('should complete a task with one new row after deleting all initial rows and adding a row', () => {
+            const { form, section, completeSpy } = setupRepeatableTaskForm();
+
+            section.removeRow(0);
+            section.removeRow(0);
+            section.addRow(section.fields, form);
+            section.rows[0].columns[0].fields[0].columns[0].fields[0].value = 'new row';
+            formComponent.completeTaskForm('complete');
+
+            expect(completeSpy).toHaveBeenCalledOnceWith(
+                'test-app',
+                form.taskId,
+                undefined,
+                `${form.id}`,
+                { RepeatableSection0lp64g: [{ Text0bere0: 'new row' }] },
+                'complete',
+                undefined
+            );
+        });
+
+        it('should preserve a blank optional row in the task-completion payload after deleting the first row', () => {
+            const { form, section, completeSpy } = setupRepeatableTaskForm();
+
+            section.removeRow(0);
+            form.validateForm();
+            formComponent.completeTaskForm('complete');
+
+            expect(form.isValid).toBeTrue();
+            expect(completeSpy).toHaveBeenCalledOnceWith(
+                'test-app',
+                form.taskId,
+                undefined,
+                `${form.id}`,
+                { RepeatableSection0lp64g: [{ Text0bere0: null }] },
+                'complete',
+                undefined
+            );
+        });
     });
 
     it('should complete form and raise corresponding event', () => {

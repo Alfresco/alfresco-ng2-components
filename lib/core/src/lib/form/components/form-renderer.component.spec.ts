@@ -60,6 +60,7 @@ import { ENTER, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { MatTooltip } from '@angular/material/tooltip';
 import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { repeatableSectionForm } from './mock/repeatable-section-form.mock';
 
 @Component({
     selector: 'adf-test-reporting-date-widget',
@@ -1173,6 +1174,120 @@ describe('Form Renderer Component', () => {
     });
 
     describe('Repeatable section', () => {
+        const renderNestedForm = async ({ required = false } = {}) => {
+            const form = new FormModel(repeatableSectionForm(required));
+            fixture.componentInstance.formDefinition = form;
+            spyOn(dialog, 'open').and.returnValue({ beforeClosed: () => of(true) } as any);
+            fixture.detectChanges();
+            await fixture.whenStable();
+            return { form, section: form.fields[0].field };
+        };
+
+        const removeFirstRenderedRow = async () => {
+            testingUtils.clickByCSS('.adf-grid-list-row-remove-button');
+            fixture.detectChanges();
+            await fixture.whenStable();
+        };
+
+        const addRenderedRow = async () => {
+            testingUtils.clickByCSS('button.adf-container-widget-row-action');
+            fixture.detectChanges();
+            await fixture.whenStable();
+        };
+
+        const enterNestedText = async (text: FormFieldModel, value: string) => {
+            testingUtils.fillInputByCSS(`[id="${text.id}"]`, value);
+            fixture.detectChanges();
+            await fixture.whenStable();
+        };
+
+        it('should keep the surviving nested optional Text input and write to row zero after deleting the first row', async () => {
+            const { form, section } = await renderNestedForm();
+            const text = section.rows[1].columns[0].fields[0].columns[0].fields[0];
+            const originalInput = testingUtils.getInputByCSS(`[id="${text.id}"]`);
+
+            await removeFirstRenderedRow();
+
+            expect(testingUtils.getAllByCSS('.adf-grid-list-row-remove-button').length).toBe(1);
+            expect(testingUtils.getInputByCSS(`[id="${text.id}"]`)).toBe(originalInput);
+            expect(text.parent.rowIndex).toBe(0);
+            form.validateForm();
+            expect(form.isValid).toBeTrue();
+
+            await enterNestedText(text, 'visible row');
+            form.validateForm();
+
+            expect(text.value).toBe('visible row');
+            expect(form.isValid).toBeTrue();
+            expect(form.values).toEqual({ RepeatableSection0lp64g: [{ Text0bere0: 'visible row' }] });
+            expect(testingUtils.getInputByCSS(`[id="${text.id}"]`).value).toBe('visible row');
+        });
+
+        it('should add and edit one optional row after deleting all initial rows through the UI', async () => {
+            const { form, section } = await renderNestedForm();
+
+            await removeFirstRenderedRow();
+            await removeFirstRenderedRow();
+
+            expect(testingUtils.getAllByCSS('.adf-grid-list-row-remove-button').length).toBe(0);
+            expect(form.values[section.id]).toEqual([]);
+
+            await addRenderedRow();
+
+            const text = section.rows[0].columns[0].fields[0].columns[0].fields[0];
+            expect(testingUtils.getAllByCSS('.adf-grid-list-row-remove-button').length).toBe(1);
+            expect(text.parent.rowIndex).toBe(0);
+            form.validateForm();
+            expect(form.isValid).toBeTrue();
+
+            await enterNestedText(text, 'new row');
+            form.validateForm();
+
+            expect(text.value).toBe('new row');
+            expect(form.isValid).toBeTrue();
+            expect(form.values).toEqual({ RepeatableSection0lp64g: [{ Text0bere0: 'new row' }] });
+            expect(testingUtils.getInputByCSS(`[id="${text.id}"]`).value).toBe('new row');
+        });
+
+        it('should require a value in the new row after deleting all initial rows and adding a row through the UI', async () => {
+            const { form, section } = await renderNestedForm({ required: true });
+
+            await removeFirstRenderedRow();
+            await removeFirstRenderedRow();
+            await addRenderedRow();
+
+            const text = section.rows[0].columns[0].fields[0].columns[0].fields[0];
+            form.validateForm();
+            expect(text.isValid).toBeFalse();
+            expect(form.isValid).toBeFalse();
+
+            await enterNestedText(text, 'required value');
+            form.validateForm();
+
+            expect(text.isValid).toBeTrue();
+            expect(form.isValid).toBeTrue();
+            expect(form.values).toEqual({ RepeatableSection0lp64g: [{ Text0bere0: 'required value' }] });
+            expect(testingUtils.getAllByCSS('.adf-grid-list-row-remove-button').length).toBe(1);
+        });
+
+        it('should preserve nested rows and their values when deletion is cancelled', () => {
+            const form = new FormModel(repeatableSectionForm());
+            const section = form.fields[0].field;
+            const originalRows = [...section.rows];
+            section.rows[0].columns[0].fields[0].columns[0].fields[0].value = 'keep first';
+            section.rows[1].columns[0].fields[0].columns[0].fields[0].value = 'keep second';
+            fixture.componentInstance.formDefinition = form;
+            spyOn(dialog, 'open').and.returnValue({ beforeClosed: () => of(false) } as any);
+            fixture.detectChanges();
+
+            testingUtils.clickByCSS('.adf-grid-list-row-remove-button');
+            fixture.detectChanges();
+
+            expect(section.rows).toEqual(originalRows);
+            expect(testingUtils.getAllByCSS('.adf-grid-list-row-remove-button').length).toBe(2);
+            expect(form.values[section.id]).toEqual([{ Text0bere0: 'keep first' }, { Text0bere0: 'keep second' }]);
+        });
+
         const repeatableSectionField = new FormFieldModel(new FormModel(), {
             id: 'RepeatableSection0tbw2y',
             name: 'Repeatable Section',

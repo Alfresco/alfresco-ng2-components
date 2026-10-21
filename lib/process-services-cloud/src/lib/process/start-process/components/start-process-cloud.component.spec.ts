@@ -65,6 +65,7 @@ import { StartProcessScreenCloudComponent } from '../../../screen/components/scr
 import { provideScreen } from '../../../screen/services/provide-screen';
 import { StartProcessScreenCloud } from '../../../screen/components/screen-cloud/start-process-event-screen/start-process-screen.model';
 import { MockedTaskScreenCloudComponent } from '../../../testing/start-process-screen-mock.component';
+import { repeatableSectionForm } from '../../../form/mocks/repeatable-section-form.mock';
 
 describe('StartProcessCloudComponent', () => {
     let loader: HarnessLoader;
@@ -121,6 +122,68 @@ describe('StartProcessCloudComponent', () => {
         getStartEventConstantSpy = spyOn(processService, 'getStartEventConstants').and.returnValue(of([]));
         loader = TestbedHarnessEnvironment.loader(fixture);
         documentRootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
+    });
+
+    describe('repeatable-section submission', () => {
+        const setupRepeatableStartForm = () => {
+            const form = new FormModel(repeatableSectionForm());
+            const section = form.fields[0].field;
+            section.rows[0].columns[0].fields[0].columns[0].fields[0].value = 'deleted value';
+            component.formCloud = form;
+            component.appName = 'test-app';
+            component.processDefinitionCurrent = fakeProcessDefinitions[2];
+            component.processPayloadCloud.processDefinitionKey = fakeProcessDefinitions[2].key;
+            component.processForm.controls.processInstanceName.setValue('Repeatable test');
+            return { form, section };
+        };
+
+        it('should start a process with only the surviving nested row after deleting the first row', () => {
+            const { section } = setupRepeatableStartForm();
+
+            section.removeRow(0);
+            section.rows[0].columns[0].fields[0].columns[0].fields[0].value = 'remaining row';
+            component.startProcess();
+
+            expect(startProcessWithFormSpy).toHaveBeenCalledOnceWith(
+                'test-app',
+                fakeProcessDefinitions[2].formKey,
+                fakeProcessDefinitions[2].version,
+                jasmine.objectContaining({ values: { RepeatableSection0lp64g: [{ Text0bere0: 'remaining row' }] } })
+            );
+        });
+
+        it('should start a process with one new row after deleting all initial rows and adding a row', () => {
+            const { form, section } = setupRepeatableStartForm();
+
+            section.removeRow(0);
+            section.removeRow(0);
+            section.addRow(section.fields, form);
+            section.rows[0].columns[0].fields[0].columns[0].fields[0].value = 'new row';
+            component.startProcess();
+
+            expect(startProcessWithFormSpy).toHaveBeenCalledOnceWith(
+                'test-app',
+                fakeProcessDefinitions[2].formKey,
+                fakeProcessDefinitions[2].version,
+                jasmine.objectContaining({ values: { RepeatableSection0lp64g: [{ Text0bere0: 'new row' }] } })
+            );
+        });
+
+        it('should preserve a blank optional row in the process-start payload after deleting the first row', () => {
+            const { form, section } = setupRepeatableStartForm();
+
+            section.removeRow(0);
+            form.validateForm();
+            component.startProcess();
+
+            expect(form.isValid).toBeTrue();
+            expect(startProcessWithFormSpy).toHaveBeenCalledOnceWith(
+                'test-app',
+                fakeProcessDefinitions[2].formKey,
+                fakeProcessDefinitions[2].version,
+                jasmine.objectContaining({ values: { RepeatableSection0lp64g: [{ Text0bere0: null }] } })
+            );
+        });
     });
 
     afterEach(() => {
