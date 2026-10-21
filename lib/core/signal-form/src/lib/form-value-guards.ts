@@ -31,3 +31,11 @@ export const isRecord = (value: unknown): value is Record<string, unknown> => ty
  * @returns `true` for a list or text with at least one item
  */
 export const hasLength = (value: unknown): boolean => (Array.isArray(value) || typeof value === 'string') && value.length > 0;
+
+/**
+ * Whether a field holds no value: none at all, or an empty text.
+ *
+ * @param value the value
+ * @returns `true` for `null`, `undefined` or `''`
+ */
+export const isBlank = (value: unknown): boolean => value === null || value === undefined || value === '';

@@ -19,7 +19,7 @@ import { addDays, isValid, parseISO } from 'date-fns';
 import { DateFnsUtils, isNumberValue } from '@alfresco/adf-core';
 import type { DropdownFieldValue, FieldDefinition, FieldValue, NumberFieldValue } from '../definition/form-definition.interface';
 import { FormFieldType } from '../definition/form-field-types';
-import { hasLength } from '../form-value-guards';
+import { hasLength, isBlank } from '../form-value-guards';
 import type { FieldValidator } from '../field-types/field-type-definition.interface';
 
 const DEFAULT_TEXT_MAX_LENGTH = 1024;
@@ -284,5 +284,3 @@ const isBelow = (value: NumberFieldValue, minimum: NumberFieldValue): boolean =>
 const isAbove = (value: NumberFieldValue, maximum: NumberFieldValue): boolean => isNotANumber(value) || Number(value) > Number(maximum);
 
 const isNotANumber = (value: NumberFieldValue): boolean => Number.isNaN(Number(value));
-
-const isBlank = (value: FieldValue): boolean => value === null || value === undefined || value === '';

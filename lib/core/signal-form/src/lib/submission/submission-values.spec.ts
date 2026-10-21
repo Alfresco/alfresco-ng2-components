@@ -31,6 +31,7 @@ describe('toSubmissionValues', () => {
                         1: [
                             { id: 'name', type: 'text' },
                             { id: 'age', type: 'integer' },
+                            { id: 'price', type: 'bigdecimal' },
                             { id: 'site', type: 'hyperlink', hyperlinkUrl: 'hyland.com' },
                             { id: 'shown', type: 'readonly', params: { field: { id: 'name', name: 'name', type: 'text' } } }
                         ]
@@ -56,7 +57,7 @@ describe('toSubmissionValues', () => {
             fields,
             sections,
             {
-                fields: { name: 'Ada', age: null, site: 'hyland.com', shown: 'Ada' },
+                fields: { name: 'Ada', age: null, price: '', site: 'hyland.com', shown: 'Ada' },
                 sections: { lines: [{ item: 'first', note: 'Read me' }], empty: [] }
             },
             BUILT_IN_FIELD_TYPE_RESOLVER
@@ -65,13 +66,20 @@ describe('toSubmissionValues', () => {
     it('should leave out the fields that submit nothing, keeping an empty value', () => {
         const submitted = submit();
 
-        expect(submitted).toEqual({ name: 'Ada', age: null, lines: [{ item: 'first' }] });
+        expect(submitted).toEqual({ name: 'Ada', age: null, price: null, lines: [{ item: 'first' }] });
         expect(Object.keys(submitted)).not.toContain('site');
         expect(Object.keys(submitted)).not.toContain('shown');
     });
 
     it('should leave out the fields of a repeatable row that submit nothing', () => {
         expect(Object.keys((submit()['lines'] as object[])[0])).toEqual(['item']);
+    });
+
+    it('should submit no value for an empty number field, as today it reaches the backend', () => {
+        const submitted = submit();
+
+        expect(submitted['age']).toBeNull();
+        expect(submitted['price']).toBeNull();
     });
 
     it('should leave out a repeatable section without rows', () => {

@@ -31,7 +31,7 @@ import type {
     UploadFieldValue
 } from '../definition/form-definition.interface';
 import { EMPTY_OPTION_ID } from '../definition/form-field-types';
-import { hasLength } from '../form-value-guards';
+import { hasLength, isBlank } from '../form-value-guards';
 import { resolveFieldType } from '../field-types/field-type-resolution';
 import type { FieldTypeResolver, SubmittedValueWriter } from '../field-types/field-type-definition.interface';
 
@@ -126,10 +126,29 @@ const asIs: SubmittedValueWriter = ({ value }) => value;
 
 export const noSubmittedValue: SubmittedValueWriter = () => undefined;
 
-export const numberSubmittedValue: SubmittedValueWriter<NumberFieldValue> = ({ definition, value }) =>
-    definition.enableFractions ? parseFloat(`${value}`) : parseInt(`${value}`, 10);
+/**
+ * Submits an integer or amount as a number, as today's form does, and no value for an empty field rather than `NaN`.
+ *
+ * @param input the field and its value
+ * @param input.definition the field
+ * @param input.value the value
+ * @returns the number, `null` for an empty field
+ */
+export const numberSubmittedValue: SubmittedValueWriter<NumberFieldValue> = ({ definition, value }) => {
+    if (isBlank(value)) {
+        return null;
+    }
+    return definition.enableFractions ? parseFloat(`${value}`) : parseInt(`${value}`, 10);
+};
 
-export const decimalSubmittedValue: SubmittedValueWriter<NumberFieldValue> = ({ value }) => parseFloat(`${value}`);
+/**
+ * Submits a decimal as a number, as today's form does, and no value for an empty field rather than `NaN`.
+ *
+ * @param input the field and its value
+ * @param input.value the value
+ * @returns the number, `null` for an empty field
+ */
+export const decimalSubmittedValue: SubmittedValueWriter<NumberFieldValue> = ({ value }) => (isBlank(value) ? null : parseFloat(`${value}`));
 
 export const booleanSubmittedValue: SubmittedValueWriter<BooleanFieldValue> = ({ value }) => value ?? false;
 
