@@ -516,12 +516,19 @@ export class FormFieldModel extends FormWidgetModel {
 
     private updateChildrenFieldsRowIndex() {
         this.rows.forEach((row: ContainerRowModel, index: number) => {
-            for (const column of row.columns) {
-                for (const field of column.fields) {
-                    field.parent.rowIndex = index;
+            this.updateFieldsRowIndex(row.columns, index);
+        });
+    }
+
+    private updateFieldsRowIndex(columns: ContainerColumnModel[], index: number): void {
+        for (const column of columns) {
+            for (const field of column.fields) {
+                field.parent.rowIndex = index;
+                if (field.type === FormFieldTypes.SECTION) {
+                    this.updateFieldsRowIndex(field.columns, index);
                 }
             }
-        });
+        }
     }
 
     private createInitialValue(fields: any) {
