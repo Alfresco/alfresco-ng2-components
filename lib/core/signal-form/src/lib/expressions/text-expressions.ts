@@ -42,7 +42,6 @@ interface ResolvedFieldReference {
 
 interface ResolvedTextReference {
     value: unknown;
-    definition?: undefined;
 }
 
 type ResolvedReference = ResolvedFieldReference | ResolvedTextReference;
@@ -79,7 +78,7 @@ const shownValue = (resolved: ResolvedReference, { formatFieldValue }: TextExpre
     if (!formatFieldValue) {
         return typeof resolved.value === 'string' ? resolved.value : JSON.stringify(resolved.value);
     }
-    return resolved.definition ? formatFieldValue(resolved.definition, resolved.value) : stringifyValue(resolved.value);
+    return 'definition' in resolved ? formatFieldValue(resolved.definition, resolved.value) : stringifyValue(resolved.value);
 };
 
 const escapeHtml = (value: string): string => value.replace(/[&<>"']/g, (character) => HTML_ENTITIES[character]);

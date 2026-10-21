@@ -138,6 +138,11 @@ export const savedValueFor = (values: Record<string, unknown>, field: { id: stri
 /**
  * Completes a dropdown's options: its empty option when it offers one, and the options its value holds, so a saved
  * option missing from the list is still offered.
+ *
+ * @param field the field JSON
+ * @param options the options its JSON lists
+ * @param hasEmptyValue whether the field offers an empty option
+ * @returns the complete options
  */
 export const dropdownOptions: FieldOptionsReader = (field, options, hasEmptyValue) => {
     const value = jsonValue(field);
@@ -149,6 +154,10 @@ export const dropdownOptions: FieldOptionsReader = (field, options, hasEmptyValu
 /**
  * Completes a radio's options: the options its value lists replace the ones in its JSON, as today, and an option its
  * value holds is added when missing.
+ *
+ * @param field the field JSON
+ * @param options the options its JSON lists
+ * @returns the complete options
  */
 export const radioOptions: FieldOptionsReader = (field, options) => {
     const value = jsonValue(field);
@@ -227,8 +236,11 @@ const matchingOption = (options: FieldOption[], value: FieldValue): FieldOption 
  * @returns the date, the unreadable text, or no value
  */
 const initialDateValue = (value: FieldValue, withTime: boolean): DateFieldValue => {
-    if (value instanceof Date || value === null) {
+    if (value instanceof Date) {
         return value;
+    }
+    if (value === null) {
+        return null;
     }
     if (typeof value === 'number') {
         return validDateOr(new Date(value), `${value}`);

@@ -265,10 +265,22 @@ const isEmptyFieldValue = (value: FieldValue): boolean =>
  */
 const typedLength = (value: FieldValue): number => (typeof value === 'string' || typeof value === 'number' ? `${value}`.length : 0);
 
-/** Tells whether a value is below a minimum, as today's form checks it: a value that is no number is out of range too. */
+/**
+ * Tells whether a value is below a minimum, as today's form checks it: a value that is no number is out of range too.
+ *
+ * @param value the field value
+ * @param minimum the minimum, a number
+ * @returns whether the value is below the minimum or no number
+ */
 const isBelow = (value: NumberFieldValue, minimum: NumberFieldValue): boolean => isNotANumber(value) || Number(value) < Number(minimum);
 
-/** Tells whether a value is above a maximum, as today's form checks it: a value that is no number is out of range too. */
+/**
+ * Tells whether a value is above a maximum, as today's form checks it: a value that is no number is out of range too.
+ *
+ * @param value the field value
+ * @param maximum the maximum, a number
+ * @returns whether the value is above the maximum or no number
+ */
 const isAbove = (value: NumberFieldValue, maximum: NumberFieldValue): boolean => isNotANumber(value) || Number(value) > Number(maximum);
 
 const isNotANumber = (value: NumberFieldValue): boolean => Number.isNaN(Number(value));
