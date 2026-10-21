@@ -219,8 +219,7 @@ export const decimalInitialValue: InitialValueReader<NumberFieldValue> = (field,
 
 export const booleanInitialValue: InitialValueReader<boolean> = (field) => field.value === 'true' || field.value === true;
 
-const isEmptyChoice = (value: FieldValue, emptyOption: FieldOption): boolean =>
-    !value || value === emptyOption.id || value === emptyOption.name;
+const isEmptyChoice = (value: FieldValue, emptyOption: FieldOption): boolean => !value || value === emptyOption.id || value === emptyOption.name;
 
 const matchingOption = (options: FieldOption[], value: FieldValue): FieldOption | undefined =>
     options.find(
@@ -275,7 +274,4 @@ const isValidOption = (option: unknown): option is FieldOption => isRecord(optio
  * @returns the list with the missing options added
  */
 const withOptions = (options: FieldOption[], added: FieldOption[]): FieldOption[] =>
-    added.reduce(
-        (list, option) => (list.some(({ id }) => id === option.id) ? list : [...list, { id: option.id, name: option.name }]),
-        options
-    );
+    added.reduce((list, option) => (list.some(({ id }) => id === option.id) ? list : [...list, { id: option.id, name: option.name }]), options);

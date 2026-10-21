@@ -51,7 +51,7 @@ import {
     requiredValidator
 } from '../validation/field-validators';
 import { groupDisplayValue, optionDisplayValue, peopleDisplayValue } from '../display/field-display-value';
-import { borrowedFieldType } from './field-type-resolution';
+import { fieldTypeAlias } from './field-type-resolution';
 import type { FieldTypeDefinition, FieldTypeResolver } from './field-type-definition.interface';
 
 const TEXT_VALIDATORS = [requiredValidator, minLengthValidator, maxLengthValidator, patternValidator];
@@ -64,7 +64,7 @@ const TEXT_FIELD_TYPE: FieldTypeDefinition = { type: FormFieldType.Text, validat
  */
 export const BUILT_IN_FIELD_TYPES: readonly FieldTypeDefinition[] = [
     TEXT_FIELD_TYPE,
-    borrowedFieldType(TEXT_FIELD_TYPE, FormFieldType.String),
+    fieldTypeAlias(TEXT_FIELD_TYPE, FormFieldType.String),
     { type: FormFieldType.MultilineText, validators: TEXT_VALIDATORS },
     {
         type: FormFieldType.Integer,

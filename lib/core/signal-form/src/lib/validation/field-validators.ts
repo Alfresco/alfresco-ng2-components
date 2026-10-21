@@ -81,10 +81,10 @@ export const maxLengthValidator: FieldValidator = (field, value) => {
 };
 
 export const minValueValidator: FieldValidator<NumberFieldValue> = (field, value) =>
-    value && RANGE_TYPES.has(field.type) && isNumberValue(field.minValue) && isBelow(value, field.minValue) ? 'minValue' : null;
+    value && RANGE_TYPES.has(field.type) && isNumberValue(field.minValue) && !isAtLeast(value, field.minValue) ? 'minValue' : null;
 
 export const maxValueValidator: FieldValidator<NumberFieldValue> = (field, value) =>
-    value && RANGE_TYPES.has(field.type) && isNumberValue(field.maxValue) && isAbove(value, field.maxValue) ? 'maxValue' : null;
+    value && RANGE_TYPES.has(field.type) && isNumberValue(field.maxValue) && !isAtMost(value, field.maxValue) ? 'maxValue' : null;
 
 export const patternValidator: FieldValidator = (field, value) =>
     typeof value === 'string' && value && LENGTH_TYPES.has(field.type) && field.regexPattern && !matchesPattern(value, field.regexPattern)
@@ -266,21 +266,19 @@ const isEmptyFieldValue = (value: FieldValue): boolean =>
 const typedLength = (value: FieldValue): number => (typeof value === 'string' || typeof value === 'number' ? `${value}`.length : 0);
 
 /**
- * Tells whether a value is below a minimum, as today's form checks it: a value that is no number is out of range too.
+ * Tells whether a value is at least a minimum. A value that is no number is not, so it fails the check, as today.
  *
  * @param value the field value
  * @param minimum the minimum, a number
- * @returns whether the value is below the minimum or no number
+ * @returns whether the value is a number at least the minimum
  */
-const isBelow = (value: NumberFieldValue, minimum: NumberFieldValue): boolean => isNotANumber(value) || Number(value) < Number(minimum);
+const isAtLeast = (value: NumberFieldValue, minimum: NumberFieldValue): boolean => Number(value) >= Number(minimum);
 
 /**
- * Tells whether a value is above a maximum, as today's form checks it: a value that is no number is out of range too.
+ * Tells whether a value is at most a maximum. A value that is no number is not, so it fails the check, as today.
  *
  * @param value the field value
  * @param maximum the maximum, a number
- * @returns whether the value is above the maximum or no number
+ * @returns whether the value is a number at most the maximum
  */
-const isAbove = (value: NumberFieldValue, maximum: NumberFieldValue): boolean => isNotANumber(value) || Number(value) > Number(maximum);
-
-const isNotANumber = (value: NumberFieldValue): boolean => Number.isNaN(Number(value));
+const isAtMost = (value: NumberFieldValue, maximum: NumberFieldValue): boolean => Number(value) <= Number(maximum);

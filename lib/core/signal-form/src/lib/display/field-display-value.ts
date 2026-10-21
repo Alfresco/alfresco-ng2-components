@@ -76,7 +76,6 @@ export const optionDisplayValue: DisplayValueFormatter<ChoiceSelection> = ({ def
 export const peopleDisplayValue: DisplayValueFormatter<PeopleFieldValue> = ({ value }) =>
     joinNames(asList(value).map((person) => fullNamePipe.transform(person)));
 
-export const groupDisplayValue: DisplayValueFormatter<GroupFieldValue> = ({ value }) =>
-    joinNames(asList(value).map((group) => group.name ?? ''));
+export const groupDisplayValue: DisplayValueFormatter<GroupFieldValue> = ({ value }) => joinNames(asList(value).map((group) => group.name ?? ''));
 
 const asList = <TItem>(value: TItem | TItem[]): TItem[] => (Array.isArray(value) ? value : [value]);

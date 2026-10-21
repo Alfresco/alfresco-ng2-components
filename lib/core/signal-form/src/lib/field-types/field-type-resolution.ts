@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import type { FieldDefinition } from '../definition/form-definition.interface';
 import { FormFieldType } from '../definition/form-field-types';
 import type { FieldTypeDefinition, FieldTypeResolver } from './field-type-definition.interface';
 
@@ -60,7 +61,7 @@ export const resolveFieldType = (fieldTypes: FieldTypeResolver, field: FieldType
         return { definition: own };
     }
     const valueTypeDefinition = valueTypeDefinitionOf(fieldTypes, field);
-    return valueTypeDefinition && { definition: borrowedFieldType(valueTypeDefinition, field.type), derivedFromValueType: field.valueType };
+    return valueTypeDefinition && { definition: fieldTypeAlias(valueTypeDefinition, field.type), derivedFromValueType: field.valueType };
 };
 
 const valueTypeDefinitionOf = (fieldTypes: FieldTypeResolver, field: FieldTypeReference): FieldTypeDefinition | undefined =>
@@ -84,22 +85,23 @@ const isShownBySource = (field: FieldTypeReference): boolean =>
     field.type === FormFieldType.DisplayValue && SHOWN_BY_SOURCE_COMPONENT.has(field.sourceField?.type ?? '');
 
 /**
- * Lends a built-in definition to a custom field type. The borrowed readers, writers and validators see the field as
- * the built-in type, since built-in validators check the type they apply to.
+ * Makes a field type an alias of another: a field of the alias type is read, submitted, validated and shown exactly
+ * like a field of the original type. Its readers, writers and validators see the field as the original type, since
+ * built-in validators check the type they apply to.
  *
- * @param borrowed the built-in definition
- * @param type the custom field type
- * @returns the definition for the custom field type
+ * @param original the definition the alias uses
+ * @param aliasType the field type that becomes an alias
+ * @returns the definition of the alias type
  */
-export const borrowedFieldType = (borrowed: FieldTypeDefinition, type: string): FieldTypeDefinition => {
-    const asBorrowedType = <TField extends { type: string }>(field: TField): TField => ({ ...field, type: borrowed.type });
-    const { initialValue, submittedValue, validators, displayValue } = borrowed;
+export const fieldTypeAlias = (original: FieldTypeDefinition, aliasType: string): FieldTypeDefinition => {
+    const asOriginalType = (definition: FieldDefinition): FieldDefinition => ({ ...definition, type: original.type });
+    const { initialValue, submittedValue, validators, displayValue } = original;
     return {
-        ...borrowed,
-        type,
-        initialValue: initialValue && ((json, definition) => initialValue(json, asBorrowedType(definition))),
-        submittedValue: submittedValue && (({ definition, value }) => submittedValue({ definition: asBorrowedType(definition), value })),
-        validators: validators?.map((validator) => (definition, value) => validator(asBorrowedType(definition), value)),
-        displayValue: displayValue && (({ definition, value }) => displayValue({ definition: asBorrowedType(definition), value }))
+        ...original,
+        type: aliasType,
+        initialValue: initialValue && ((json, definition) => initialValue(json, asOriginalType(definition))),
+        submittedValue: submittedValue && (({ definition, value }) => submittedValue({ definition: asOriginalType(definition), value })),
+        validators: validators?.map((validator) => (definition, value) => validator(asOriginalType(definition), value)),
+        displayValue: displayValue && (({ definition, value }) => displayValue({ definition: asOriginalType(definition), value }))
     };
 };

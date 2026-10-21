@@ -18,7 +18,7 @@
 import type { FieldJson } from '../definition/form-definition-json.interface';
 import type { FieldDefinition } from '../definition/form-definition.interface';
 import type { FieldTypeDefinition, FieldTypeResolver } from './field-type-definition.interface';
-import { borrowedFieldType, resolveFieldComponent, resolveFieldType } from './field-type-resolution';
+import { fieldTypeAlias, resolveFieldComponent, resolveFieldType } from './field-type-resolution';
 
 describe('field type resolution', () => {
     const textComponent = jasmine.createSpy('textComponent');
@@ -27,7 +27,7 @@ describe('field type resolution', () => {
     const text: FieldTypeDefinition = {
         type: 'text',
         component: textComponent,
-        initialValue: (jsonField, definition) => definition.type,
+        initialValue: (jsonField, definition) => [jsonField.type, definition.type],
         submittedValue: ({ definition }) => definition.type,
         validators: [(definition) => definition.type],
         displayValue: ({ definition }) => definition.type
@@ -58,26 +58,26 @@ describe('field type resolution', () => {
         });
     });
 
-    describe('borrowedFieldType', () => {
-        it('should let the borrowed readers, writers, validators and formatters see the field as the built-in type', () => {
-            const borrowed = borrowedFieldType(text, 'rating');
+    describe('fieldTypeAlias', () => {
+        it('should let the readers, writers, validators and formatters of the original type see the field as that type', () => {
+            const alias = fieldTypeAlias(text, 'rating');
             const fieldJson: FieldJson = { id: 'rating', type: 'rating' };
 
-            expect(borrowed.type).toBe('rating');
-            expect(borrowed.initialValue(fieldJson, rating)).toBe('text');
-            expect(borrowed.submittedValue({ definition: rating, value: null })).toBe('text');
-            expect(borrowed.validators.map((validator) => validator(rating, null))).toEqual(['text']);
-            expect(borrowed.displayValue({ definition: rating, value: null })).toBe('text');
+            expect(alias.type).toBe('rating');
+            expect(alias.initialValue(fieldJson, rating)).toEqual(['rating', 'text']);
+            expect(alias.submittedValue({ definition: rating, value: null })).toBe('text');
+            expect(alias.validators.map((validator) => validator(rating, null))).toEqual(['text']);
+            expect(alias.displayValue({ definition: rating, value: null })).toBe('text');
         });
 
-        it('should borrow nothing a definition does not have', () => {
-            const borrowed = borrowedFieldType(json, 'custom-json');
+        it('should give the alias nothing the original type does not have', () => {
+            const alias = fieldTypeAlias(json, 'custom-json');
 
-            expect(borrowed.component).toBe(jsonComponent);
-            expect(borrowed.initialValue).toBeUndefined();
-            expect(borrowed.submittedValue).toBeUndefined();
-            expect(borrowed.validators).toBeUndefined();
-            expect(borrowed.displayValue).toBeUndefined();
+            expect(alias.component).toBe(jsonComponent);
+            expect(alias.initialValue).toBeUndefined();
+            expect(alias.submittedValue).toBeUndefined();
+            expect(alias.validators).toBeUndefined();
+            expect(alias.displayValue).toBeUndefined();
         });
     });
 

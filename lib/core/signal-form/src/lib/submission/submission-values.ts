@@ -64,11 +64,19 @@ export const toSubmissionValues = (
     model: FormValuesModel,
     fieldTypes: FieldTypeResolver
 ): SubmittedValues => {
-    const submission = submittedRecord(Object.entries(model.fields).map(([id, value]): FieldEntry => [fields.get(id), value]), fieldTypes);
+    const submission = submittedRecord(
+        Object.entries(model.fields).map(([id, value]): FieldEntry => [fields.get(id), value]),
+        fieldTypes
+    );
 
     for (const [sectionId, rows] of Object.entries(model.sections).filter(([, sectionRows]) => sectionRows.length > 0)) {
         const sectionFields = sections.get(sectionId).fields;
-        submission[sectionId] = rows.map((row) => submittedRecord(sectionFields.map((field): FieldEntry => [field, row[field.id]]), fieldTypes));
+        submission[sectionId] = rows.map((row) =>
+            submittedRecord(
+                sectionFields.map((field): FieldEntry => [field, row[field.id]]),
+                fieldTypes
+            )
+        );
     }
 
     return submission;
@@ -87,28 +95,21 @@ const submittedRecord = (entries: FieldEntry[], fieldTypes: FieldTypeResolver): 
     for (const [definition, value] of entries) {
         const submitted = submittedValue(definition, value, fieldTypes);
         if (submitted !== undefined) {
-            record[definition.id] = withoutSymbolKeys(submitted);
+            record[definition.id] = copyWithoutTrackingIds(submitted);
         }
     }
     return record;
 };
 
 /**
- * Copies a submitted value without symbol keys. Signal Forms stamps object items in arrays with a symbol to track
- * their identity, and that bookkeeping must not reach the submission.
+ * Copies a submitted value without the tracking ids Signal Forms writes on the objects of a list to follow them when
+ * they move, so only the field's own data is submitted. A structured clone copies only text keys, and the ids are
+ * symbol keys.
  *
  * @param value the submitted value
- * @returns the value without symbol keys
+ * @returns a copy of the value without tracking ids
  */
-const withoutSymbolKeys = <TValue>(value: TValue): TValue => {
-    if (Array.isArray(value)) {
-        return value.map((item) => withoutSymbolKeys(item)) as TValue;
-    }
-    if (value && typeof value === 'object' && Object.getPrototypeOf(value) === Object.prototype) {
-        return Object.fromEntries(Object.entries(value).map(([key, entry]) => [key, withoutSymbolKeys(entry)])) as TValue;
-    }
-    return value;
-};
+const copyWithoutTrackingIds = (value: SubmittedValue): SubmittedValue => structuredClone(value);
 
 /**
  * Converts one field value the way its type submits it, or returns `undefined` when the field submits nothing. A type
