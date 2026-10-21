@@ -17,7 +17,7 @@
 
 import type { FieldDefinition, FieldValue } from '../definition/form-definition.interface';
 import { BUILT_IN_FIELD_TYPE_RESOLVER } from '../field-types/built-in-field-types';
-import { displayFieldValue, stringifyValue } from './field-display-value';
+import { displayFieldValue, valueAsText } from './field-display-value';
 
 describe('displayFieldValue', () => {
     const field = (type: string, options: FieldDefinition['options'] = []) => ({ id: type, type, options }) as FieldDefinition;
@@ -43,18 +43,18 @@ describe('displayFieldValue', () => {
         expect(shown(colours, null)).toBe('');
         expect(shown(field('text'), 42)).toBe('42');
         expect(shown(field('json'), { a: 1 })).toBe('{"a":1}');
-        expect(stringifyValue('as is')).toBe('as is');
+        expect(valueAsText('as is')).toBe('as is');
     });
 
     it('should turn each kind of value into text', () => {
         const date = new Date(2024, 2, 15);
 
-        expect(stringifyValue(undefined)).toBe('');
-        expect(stringifyValue(null)).toBe('');
-        expect(stringifyValue(0)).toBe('0');
-        expect(stringifyValue(false)).toBe('false');
-        expect(stringifyValue(date)).toBe(date.toString());
-        expect(stringifyValue([{ id: 'it' }, 'fr'])).toBe('[{"id":"it"},"fr"]');
-        expect(stringifyValue(() => 'hidden')).toBe('');
+        expect(valueAsText(undefined)).toBe('');
+        expect(valueAsText(null)).toBe('');
+        expect(valueAsText(0)).toBe('0');
+        expect(valueAsText(false)).toBe('false');
+        expect(valueAsText(date)).toBe(date.toString());
+        expect(valueAsText([{ id: 'it' }, 'fr'])).toBe('[{"id":"it"},"fr"]');
+        expect(valueAsText(() => 'hidden')).toBe('');
     });
 });

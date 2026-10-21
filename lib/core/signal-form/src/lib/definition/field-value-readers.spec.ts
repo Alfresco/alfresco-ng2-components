@@ -24,10 +24,10 @@ import {
     dateTimeInitialValue,
     decimalInitialValue,
     dropdownInitialValue,
-    dropdownOptions,
+    completeDropdownOptions,
     jsonOptions,
     radioInitialValue,
-    radioOptions,
+    completeRadioOptions,
     readOptions,
     readSavedRow,
     savedValueFor,
@@ -69,7 +69,9 @@ describe('field value readers', () => {
 
     describe('readOptions', () => {
         it('should let the field type complete the options its JSON lists', () => {
-            const fieldTypes: FieldTypeResolver = { definitionFor: (type) => (type === 'dropdown' ? { type, options: dropdownOptions } : undefined) };
+            const fieldTypes: FieldTypeResolver = {
+                definitionFor: (type) => (type === 'dropdown' ? { type, options: completeDropdownOptions } : undefined)
+            };
 
             expect(readOptions(json({ type: 'dropdown', options: [italy] }), true, fieldTypes)).toEqual([emptyOption, italy]);
             expect(readOptions(json({ options: [italy] }), true, fieldTypes)).toEqual([italy]);
@@ -97,21 +99,21 @@ describe('field value readers', () => {
         });
     });
 
-    describe('dropdownOptions', () => {
+    describe('completeDropdownOptions', () => {
         it('should add the empty option first, and the options the value holds', () => {
-            expect(dropdownOptions(json({ value: portugal }), [italy], true)).toEqual([emptyOption, italy, portugal]);
-            expect(dropdownOptions(json({ value: [portugal, italy] }), [italy], false)).toEqual([italy, portugal]);
-            expect(dropdownOptions(json(), [emptyOption, italy], true)).toEqual([emptyOption, italy]);
+            expect(completeDropdownOptions(json({ value: portugal }), [italy], true)).toEqual([emptyOption, italy, portugal]);
+            expect(completeDropdownOptions(json({ value: [portugal, italy] }), [italy], false)).toEqual([italy, portugal]);
+            expect(completeDropdownOptions(json(), [emptyOption, italy], true)).toEqual([emptyOption, italy]);
         });
     });
 
-    describe('radioOptions', () => {
+    describe('completeRadioOptions', () => {
         it('should take the options the value lists, adding the option it holds when missing', () => {
             const value = { ...portugal, options: [italy] };
 
-            expect(radioOptions(json({ value }), [{ id: 'es', name: 'Spain' }], false)).toEqual([italy, portugal]);
-            expect(radioOptions(json({ value: italy }), [italy], false)).toEqual([italy]);
-            expect(radioOptions(json({ value: 'it' }), [italy], false)).toEqual([italy]);
+            expect(completeRadioOptions(json({ value }), [{ id: 'es', name: 'Spain' }], false)).toEqual([italy, portugal]);
+            expect(completeRadioOptions(json({ value: italy }), [italy], false)).toEqual([italy]);
+            expect(completeRadioOptions(json({ value: 'it' }), [italy], false)).toEqual([italy]);
         });
     });
 

@@ -94,7 +94,7 @@ export const readInitialValue = (field: FieldJson, definition: FieldDefinition, 
  * @param fieldTypes the field type definitions
  * @returns the field value
  */
-export const readValueAsType = (definition: FieldDefinition, value: unknown, fieldTypes: FieldTypeResolver): FieldValue =>
+export const readValueForField = (definition: FieldDefinition, value: unknown, fieldTypes: FieldTypeResolver): FieldValue =>
     readInitialValue(
         { id: definition.id, type: definition.type, options: definition.options, optionType: definition.optionType, value },
         definition,
@@ -117,7 +117,7 @@ export const readSavedRow = (
     Object.fromEntries(
         fields
             .filter((field) => row?.[field.id] !== undefined && row[field.id] !== null)
-            .map((field) => [field.id, readValueAsType(field, row[field.id], fieldTypes)])
+            .map((field) => [field.id, readValueForField(field, row[field.id], fieldTypes)])
     );
 
 /**
@@ -144,11 +144,11 @@ export const savedValueFor = (values: Record<string, unknown>, field: { id: stri
  * @param hasEmptyValue whether the field offers an empty option
  * @returns the complete options
  */
-export const dropdownOptions: FieldOptionsReader = (field, options, hasEmptyValue) => {
+export const completeDropdownOptions: FieldOptionsReader = (field, options, hasEmptyValue) => {
     const value = jsonValue(field);
     const held = Array.isArray(value) ? validOptions(value) : validOptions([value]);
     const withEmpty = hasEmptyValue && !options.some(({ id }) => id === EMPTY_OPTION_ID) ? [{ ...DEFAULT_EMPTY_OPTION }, ...options] : options;
-    return withOptions(withEmpty, held);
+    return addMissingOptions(withEmpty, held);
 };
 
 /**
@@ -159,10 +159,10 @@ export const dropdownOptions: FieldOptionsReader = (field, options, hasEmptyValu
  * @param options the options its JSON lists
  * @returns the complete options
  */
-export const radioOptions: FieldOptionsReader = (field, options) => {
+export const completeRadioOptions: FieldOptionsReader = (field, options) => {
     const value = jsonValue(field);
     const listed = isRecord(value) && Array.isArray(value['options']) ? validOptions(value['options']) : options;
-    return isValidOption(value) && !matchingOption(listed, value) ? withOptions(listed, [value]) : listed;
+    return isValidOption(value) && !matchingOption(listed, value) ? addMissingOptions(listed, [value]) : listed;
 };
 
 export const dropdownInitialValue: InitialValueReader<DropdownFieldValue> = (field, definition) => {
@@ -193,12 +193,12 @@ export const radioInitialValue: InitialValueReader<RadioFieldValue> = (field, de
 
 export const dateInitialValue: InitialValueReader<DateFieldValue> = (field) => {
     const value = jsonValue(field);
-    return value === TODAY ? new Date() : initialDateValue(value, false);
+    return value === TODAY ? new Date() : readDate(value, false);
 };
 
 export const dateTimeInitialValue: InitialValueReader<DateFieldValue> = (field) => {
     const value = jsonValue(field);
-    return value === NOW ? new Date() : initialDateValue(value, true);
+    return value === NOW ? new Date() : readDate(value, true);
 };
 
 /**
@@ -234,7 +234,7 @@ const matchingOption = (options: FieldOption[], value: FieldValue): FieldOption 
  * @param withTime whether the value carries a time
  * @returns the date, the unreadable text, or no value
  */
-const initialDateValue = (value: FieldValue, withTime: boolean): DateFieldValue => {
+const readDate = (value: FieldValue, withTime: boolean): DateFieldValue => {
     if (value instanceof Date) {
         return value;
     }
@@ -273,5 +273,5 @@ const isValidOption = (option: unknown): option is FieldOption => isRecord(optio
  * @param added the options to add
  * @returns the list with the missing options added
  */
-const withOptions = (options: FieldOption[], added: FieldOption[]): FieldOption[] =>
+const addMissingOptions = (options: FieldOption[], added: FieldOption[]): FieldOption[] =>
     added.reduce((list, option) => (list.some(({ id }) => id === option.id) ? list : [...list, { id: option.id, name: option.name }]), options);

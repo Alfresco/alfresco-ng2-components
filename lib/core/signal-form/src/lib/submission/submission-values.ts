@@ -43,7 +43,7 @@ export type SubmittedValues = Record<string, SubmittedValue>;
 
 type FieldEntry = [definition: FieldDefinition, value: FieldValue];
 
-export interface FormValuesModel {
+export interface CurrentFormValues {
     fields: FieldValues;
     sections: Record<string, FieldValues[]>;
 }
@@ -58,13 +58,13 @@ export interface FormValuesModel {
  * @param fieldTypes the field type definitions
  * @returns the submitted values
  */
-export const toSubmissionValues = (
+export const toSubmittedValues = (
     fields: Map<string, FieldDefinition>,
     sections: Map<string, SectionDefinition>,
-    model: FormValuesModel,
+    model: CurrentFormValues,
     fieldTypes: FieldTypeResolver
 ): SubmittedValues => {
-    const submission = submittedRecord(
+    const submission = submittedValuesOf(
         Object.entries(model.fields).map(([id, value]): FieldEntry => [fields.get(id), value]),
         fieldTypes
     );
@@ -72,7 +72,7 @@ export const toSubmissionValues = (
     for (const [sectionId, rows] of Object.entries(model.sections).filter(([, sectionRows]) => sectionRows.length > 0)) {
         const sectionFields = sections.get(sectionId).fields;
         submission[sectionId] = rows.map((row) =>
-            submittedRecord(
+            submittedValuesOf(
                 sectionFields.map((field): FieldEntry => [field, row[field.id]]),
                 fieldTypes
             )
@@ -90,7 +90,7 @@ export const toSubmissionValues = (
  * @param fieldTypes the field type definitions
  * @returns the submitted values, keyed by field id
  */
-const submittedRecord = (entries: FieldEntry[], fieldTypes: FieldTypeResolver): SubmittedValues => {
+const submittedValuesOf = (entries: FieldEntry[], fieldTypes: FieldTypeResolver): SubmittedValues => {
     const record: SubmittedValues = {};
     for (const [definition, value] of entries) {
         const submitted = submittedValue(definition, value, fieldTypes);
@@ -121,9 +121,9 @@ const copyWithoutTrackingIds = (value: SubmittedValue): SubmittedValue => struct
  * @returns the submitted value
  */
 export const submittedValue = (definition: FieldDefinition, value: FieldValue, fieldTypes: FieldTypeResolver): SubmittedValue =>
-    (resolveFieldType(fieldTypes, definition)?.definition.submittedValue ?? asIs)({ definition, value });
+    (resolveFieldType(fieldTypes, definition)?.definition.submittedValue ?? submitAsIs)({ definition, value });
 
-const asIs: SubmittedValueWriter = ({ value }) => value;
+const submitAsIs: SubmittedValueWriter = ({ value }) => value;
 
 export const noSubmittedValue: SubmittedValueWriter = () => undefined;
 

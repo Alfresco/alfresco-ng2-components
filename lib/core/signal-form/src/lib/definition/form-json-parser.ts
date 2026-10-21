@@ -94,7 +94,7 @@ export const parseFormJson = (
         applySavedValues(roots, values);
     }
     const variables = readVariables(content);
-    const withSourceValue = (field: FieldDefinition) => withSourceFieldValue(field, variables);
+    const withSourceValue = (field: FieldDefinition) => withProcessVariableValue(field, variables);
 
     return {
         name: content.name ?? null,
@@ -337,7 +337,7 @@ const defaultDateFormat = (field: FieldJson): string => {
  * @param variables the form and process variables
  * @returns the field, with its initial value taken from the process variable when there is one
  */
-const withSourceFieldValue = (field: FieldDefinition, variables: FormVariables): FieldDefinition => {
+const withProcessVariableValue = (field: FieldDefinition, variables: FormVariables): FieldDefinition => {
     const source = field.sourceField;
     if (!source) {
         return field;

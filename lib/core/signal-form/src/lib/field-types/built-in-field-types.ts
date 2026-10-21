@@ -21,9 +21,9 @@ import {
     dateTimeInitialValue,
     decimalInitialValue,
     dropdownInitialValue,
-    dropdownOptions,
+    completeDropdownOptions,
     radioInitialValue,
-    radioOptions
+    completeRadioOptions
 } from '../definition/field-value-readers';
 import { FormFieldType } from '../definition/form-field-types';
 import {
@@ -90,7 +90,7 @@ export const BUILT_IN_FIELD_TYPES: readonly FieldTypeDefinition[] = [
     },
     {
         type: FormFieldType.Dropdown,
-        options: dropdownOptions,
+        options: completeDropdownOptions,
         initialValue: dropdownInitialValue,
         submittedValue: dropdownSubmittedValue,
         validators: [dropdownValidator],
@@ -98,7 +98,7 @@ export const BUILT_IN_FIELD_TYPES: readonly FieldTypeDefinition[] = [
     },
     {
         type: FormFieldType.RadioButtons,
-        options: radioOptions,
+        options: completeRadioOptions,
         initialValue: radioInitialValue,
         submittedValue: radioSubmittedValue,
         validators: [requiredValidator],
@@ -143,9 +143,9 @@ export const BUILT_IN_FIELD_TYPES: readonly FieldTypeDefinition[] = [
  * @param definitions the definitions, in registration order
  * @returns a resolver over them
  */
-export const fieldTypeResolver = (definitions: readonly FieldTypeDefinition[]): FieldTypeResolver => {
+export const createFieldTypeResolver = (definitions: readonly FieldTypeDefinition[]): FieldTypeResolver => {
     const byType = new Map(definitions.map((definition) => [definition.type, definition]));
     return { definitionFor: (type) => byType.get(type) };
 };
 
-export const BUILT_IN_FIELD_TYPE_RESOLVER: FieldTypeResolver = fieldTypeResolver(BUILT_IN_FIELD_TYPES);
+export const BUILT_IN_FIELD_TYPE_RESOLVER: FieldTypeResolver = createFieldTypeResolver(BUILT_IN_FIELD_TYPES);

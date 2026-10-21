@@ -36,7 +36,7 @@ const fullNamePipe = new FullNamePipe();
  * @param value the value
  * @returns the text
  */
-export const stringifyValue = (value: unknown): string => {
+export const valueAsText = (value: unknown): string => {
     if (typeof value === 'string') {
         return value;
     }
@@ -62,7 +62,7 @@ export const displayFieldValue = (fieldTypes: FieldTypeResolver, definition: Fie
         return '';
     }
     const formatter = resolveFieldType(fieldTypes, definition)?.definition.displayValue;
-    return formatter ? formatter({ definition, value }) : stringifyValue(value);
+    return formatter ? formatter({ definition, value }) : valueAsText(value);
 };
 
 const joinNames = (names: string[]): string => names.filter((name) => !!name).join(', ');

@@ -28,11 +28,11 @@ import {
     numberSubmittedValue,
     peopleSubmittedValue,
     radioSubmittedValue,
-    toSubmissionValues,
+    toSubmittedValues,
     uploadSubmittedValue
 } from './submission-values';
 
-describe('toSubmissionValues', () => {
+describe('toSubmittedValues', () => {
     const definition = parseFormJson({
         formDefinition: {
             fields: [
@@ -72,7 +72,7 @@ describe('toSubmissionValues', () => {
     const sections = new Map(definition.sections.map((section) => [section.id, section]));
 
     const submit = () =>
-        toSubmissionValues(
+        toSubmittedValues(
             fields,
             sections,
             {
@@ -108,7 +108,7 @@ describe('toSubmissionValues', () => {
     it('should strip the symbol keys Signal Forms adds to tracked items', () => {
         const tracked = { id: 'a', [Symbol('tracking')]: 1 };
         const model = { fields: { data: { items: [tracked] } }, sections: {} };
-        const submitted = toSubmissionValues(fields, sections, model, BUILT_IN_FIELD_TYPE_RESOLVER);
+        const submitted = toSubmittedValues(fields, sections, model, BUILT_IN_FIELD_TYPE_RESOLVER);
         const [item] = (submitted['data'] as { items: object[] }).items;
 
         expect(item).toEqual({ id: 'a' });

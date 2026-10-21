@@ -77,7 +77,7 @@ export const minLengthValidator: FieldValidator = (field, value) =>
 
 export const maxLengthValidator: FieldValidator = (field, value) => {
     const limit = maxLengthOf(field);
-    return limit > 0 && typedLength(value) > limit ? 'maxLength' : null;
+    return limit > 0 && textLength(value) > limit ? 'maxLength' : null;
 };
 
 export const minValueValidator: FieldValidator<NumberFieldValue> = (field, value) =>
@@ -183,7 +183,7 @@ export const maxLengthOf = (field: FieldDefinition): number => {
     return field.type === FormFieldType.MultilineText ? field.maxLength : 0;
 };
 
-const dateRange = (field: FieldDefinition): { min: Date | null; max: Date | null } => {
+const dateOnlyRange = (field: FieldDefinition): { min: Date | null; max: Date | null } => {
     if (field.dynamicDateRangeSelection) {
         const today = field.dateRangeReference ?? new Date();
         return {
@@ -209,7 +209,7 @@ const dateTimeRange = (field: FieldDefinition): { min: Date | null; max: Date | 
  * @returns the range, each end `null` when open
  */
 export const dateFieldRange = (field: FieldDefinition): { min: Date | null; max: Date | null } =>
-    field.type === FormFieldType.Date ? dateRange(field) : dateTimeRange(field);
+    field.type === FormFieldType.Date ? dateOnlyRange(field) : dateTimeRange(field);
 
 /**
  * Reads a date field's value as the picker holds it: a valid date, no date, or an invalid date for a value that is no
@@ -263,7 +263,7 @@ const isEmptyFieldValue = (value: FieldValue): boolean =>
  * @param value the field value
  * @returns the length
  */
-const typedLength = (value: FieldValue): number => (typeof value === 'string' || typeof value === 'number' ? `${value}`.length : 0);
+const textLength = (value: FieldValue): number => (typeof value === 'string' || typeof value === 'number' ? `${value}`.length : 0);
 
 /**
  * Tells whether a value is at least a minimum. A value that is no number is not, so it fails the check, as today.

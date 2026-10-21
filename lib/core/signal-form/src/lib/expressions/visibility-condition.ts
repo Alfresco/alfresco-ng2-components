@@ -47,10 +47,10 @@ export const evaluateVisibilityCondition = (condition: ConditionOrNone, source: 
     if (!condition || !(left.type || left.value) || left.value === 'null') {
         return true;
     }
-    return combine(evaluateChain(condition, source));
+    return combineResults(evaluateEachCondition(condition, source));
 };
 
-const evaluateChain = (condition: VisibilityCondition, source: ConditionValueSource): EvaluatedCondition[] => {
+const evaluateEachCondition = (condition: VisibilityCondition, source: ConditionValueSource): EvaluatedCondition[] => {
     const evaluated: EvaluatedCondition[] = [];
     let current: ConditionOrNone = condition;
 
@@ -63,7 +63,7 @@ const evaluateChain = (condition: VisibilityCondition, source: ConditionValueSou
     return evaluated;
 };
 
-const combine = (conditions: EvaluatedCondition[]): boolean => {
+const combineResults = (conditions: EvaluatedCondition[]): boolean => {
     const orTerms: boolean[] = [];
     let term = conditions[0].result;
 
@@ -177,21 +177,21 @@ const evaluateOperator = (left: unknown, right: unknown, operator: string | unde
         case '!=':
             return comparedText(left) !== comparedText(right);
         case '<':
-            return ordered(left) < ordered(right);
+            return asComparable(left) < asComparable(right);
         case '>':
-            return ordered(left) > ordered(right);
+            return asComparable(left) > asComparable(right);
         case '>=':
-            return ordered(left) >= ordered(right);
+            return asComparable(left) >= asComparable(right);
         case '<=':
-            return ordered(left) <= ordered(right);
+            return asComparable(left) <= asComparable(right);
         case 'empty':
             return left ? left === '' : true;
         case '!empty':
             return left ? left !== '' : false;
         case 'contains':
-            return contains(left, right);
+            return containsAll(left, right);
         case '!contains':
-            return !contains(left, right);
+            return !containsAll(left, right);
         default:
             return undefined;
     }
@@ -237,9 +237,9 @@ const isPrimitive = (value: unknown): value is PrimitiveValue =>
  * @param value the condition value
  * @returns the value, typed for comparison
  */
-const ordered = (value: unknown): string | number => value as string | number;
+const asComparable = (value: unknown): string | number => value as string | number;
 
-const contains = (left: unknown, right: unknown): boolean =>
+const containsAll = (left: unknown, right: unknown): boolean =>
     Array.isArray(left) && Array.isArray(right) && right.every((element) => left.includes(element));
 
 const hasText = (value: ConditionLiteral | null | undefined): boolean => value !== null && value !== undefined && `${value}` !== '';

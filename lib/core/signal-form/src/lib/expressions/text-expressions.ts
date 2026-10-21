@@ -16,7 +16,7 @@
  */
 
 import type { FieldDefinition, FieldValue } from '../definition/form-definition.interface';
-import { stringifyValue } from '../display/field-display-value';
+import { valueAsText } from '../display/field-display-value';
 
 const EXPRESSION = /\$\{[a-zA-Z0-9_.]+\}/g;
 const FIELD_PREFIX = 'field.';
@@ -58,7 +58,7 @@ type ResolvedReference = ResolvedFieldReference | ResolvedTextReference;
 export const resolveTextExpressions = (text: string | null | undefined, source: TextExpressionSource, options: TextExpressionOptions = {}): string =>
     (text || '').replace(EXPRESSION, (expression) => {
         const resolved = resolveReference(expression, source);
-        const shown = resolved.value === null || resolved.value === undefined ? '' : shownValue(resolved, options);
+        const shown = resolved.value === null || resolved.value === undefined ? '' : referenceText(resolved, options);
         return options.escapeHtml ? escapeHtml(shown) : shown;
     });
 
@@ -74,11 +74,11 @@ const resolveReference = (expression: string, source: TextExpressionSource): Res
     return { value: source.variableValue(reference.slice(VARIABLE_PREFIX.length)) };
 };
 
-const shownValue = (resolved: ResolvedReference, { formatFieldValue }: TextExpressionOptions): string => {
+const referenceText = (resolved: ResolvedReference, { formatFieldValue }: TextExpressionOptions): string => {
     if (!formatFieldValue) {
         return typeof resolved.value === 'string' ? resolved.value : JSON.stringify(resolved.value);
     }
-    return 'definition' in resolved ? formatFieldValue(resolved.definition, resolved.value) : stringifyValue(resolved.value);
+    return 'definition' in resolved ? formatFieldValue(resolved.definition, resolved.value) : valueAsText(resolved.value);
 };
 
 const escapeHtml = (value: string): string => value.replace(/[&<>"']/g, (character) => HTML_ENTITIES[character]);

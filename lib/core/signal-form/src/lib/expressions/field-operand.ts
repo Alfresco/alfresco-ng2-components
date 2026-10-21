@@ -48,7 +48,7 @@ export const fieldOperandValue = (
 ): FieldOperandValue => {
     const label = isLabelReference(reference);
     const found = label ? optionNamesOf(submitted) : optionIdsOf(submitted);
-    return found ?? rawOperandValue(definition, label, value);
+    return found ?? operandFromRawValue(definition, label, value);
 };
 
 const optionNamesOf = (submitted: SubmittedValue): FieldOperandValue => {
@@ -74,7 +74,7 @@ const optionIdsOf = (submitted: SubmittedValue): FieldOperandValue => {
  * @param value the raw field value
  * @returns the value, an empty text when there is none
  */
-const rawOperandValue = (definition: FieldDefinition, label: boolean, value: FieldValue): FieldOperandValue => {
+const operandFromRawValue = (definition: FieldDefinition, label: boolean, value: FieldValue): FieldOperandValue => {
     const option = definition.options.find((candidate) => candidate.id === value);
     const optionValue = option && (label ? option.name : option.id);
     return nameOf(value) || optionValue || idOf(value) || (value ?? '');
