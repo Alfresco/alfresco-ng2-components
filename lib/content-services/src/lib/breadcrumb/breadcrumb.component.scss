@@ -14,6 +14,23 @@
         cursor: default;
         display: flex;
         overflow: hidden;
+
+        &-path {
+            display: flex;
+
+            &#{ms.$cdk-drop-list-dragging} .adf-breadcrumb-item:hover {
+                text-decoration: underline;
+                text-underline-offset: 4px;
+
+                &.adf-breadcrumb-item-drop-disabled {
+                    text-decoration: none;
+                }
+            }
+
+            #{ms.$cdk-drag-placeholder} {
+                display: none;
+            }
+        }
     }
 
     &-dropdown {
@@ -102,15 +119,6 @@
             &:focus {
                 outline: 1px solid var(--mat-sys-outline-variant);
                 outline-offset: -1px;
-            }
-
-            &#{ms.$cdk-drop-list-dragging}:hover {
-                text-decoration: underline;
-                text-underline-offset: 4px;
-            }
-
-            #{ms.$cdk-drag-placeholder} {
-                display: none;
             }
         }
 

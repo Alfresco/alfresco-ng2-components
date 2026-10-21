@@ -1,5 +1,38 @@
-.adf-compact-breadcrumb-menu {
+@use '../mat-selectors.scss' as ms;
+
+.adf-compact-breadcrumb-panel {
+    position: fixed;
+    z-index: 1000;
     width: 592px;
     max-width: 592px;
     height: 683px;
+    overflow: auto;
+    background: var(--mat-sys-surface);
+    box-shadow:
+        0 2px 4px -1px rgb(0, 0, 0, 0.2),
+        0 4px 5px 0 rgb(0, 0, 0, 0.14),
+        0 1px 10px 0 rgb(0, 0, 0, 0.12);
+    border-radius: 4px;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+
+    &--open {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    #{ms.$cdk-drag-placeholder} {
+        display: none;
+    }
+}
+
+.adf-compact-breadcrumb-item {
+    cursor: pointer;
+
+    &--disabled {
+        cursor: default;
+        opacity: 0.5;
+    }
 }

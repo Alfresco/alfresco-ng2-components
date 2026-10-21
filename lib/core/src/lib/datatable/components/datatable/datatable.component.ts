@@ -235,7 +235,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     /** The connected drop lists for drag and drop functionality. */
     @Input()
-    dropListConnectedTo: CdkDropList[] = [];
+    dropListConnectedTo: string[] = [];
 
     /** Selector for boundary element for drag and drop functionality that limits the drag area */
     @Input()
@@ -481,27 +481,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
         if (multiselectChanges?.currentValue === false) {
             this.resetSelection();
-        }
-
-        if (changes['dropListConnectedTo']?.currentValue?.length > 0) {
-            const newDropLists: CdkDropList[] = changes['dropListConnectedTo'].currentValue;
-
-            newDropLists.forEach((dropList) => {
-                // eslint-disable-next-line no-underscore-dangle
-                dropList._dropListRef.connectedTo([this.datatableBodyDropList._dropListRef]);
-                // Newly connected drop lists are added mid-drag (e.g. once the breadcrumb menu opens),
-                // after CDK already cached the drop zone positions at drag start. Without recomputing
-                // their position here, `_canReceive` always fails because `_domRect` is never set.
-                // `_scrollableElements` is only populated by CDK when a drag starts *from* that drop
-                // list (never true for the breadcrumb menu items), so it must be seeded here first,
-                // otherwise `_cacheParentPositions` throws because its own container was never cached.
-                // eslint-disable-next-line no-underscore-dangle
-                dropList._dropListRef.withScrollableParents([]);
-                // eslint-disable-next-line no-underscore-dangle
-                (dropList._dropListRef as any)._cacheParentPositions();
-            });
-            // eslint-disable-next-line no-underscore-dangle
-            this.datatableBodyDropList._dropListRef.connectedTo(newDropLists.map((dropList) => dropList._dropListRef));
         }
     }
 
