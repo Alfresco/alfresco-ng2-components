@@ -489,7 +489,7 @@ describe('CategoriesManagementComponent', () => {
                 component.categoryNameControl.markAsTouched();
                 fixture.detectChanges();
 
-                expect(getStatusText()).toBe('CATEGORIES_MANAGEMENT.NO_EXISTING_CATEGORIES');
+                expect(getStatusText()).toBe('CATEGORIES_MANAGEMENT.NO_EXISTING_CATEGORIES_ANNOUNCEMENT');
             }));
         });
 
