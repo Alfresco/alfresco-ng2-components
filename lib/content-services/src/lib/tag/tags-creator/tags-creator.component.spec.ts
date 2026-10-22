@@ -678,7 +678,7 @@ describe('TagsCreatorComponent', () => {
                 component.tagNameControl.markAsTouched();
                 fixture.detectChanges();
 
-                expect(getStatusText()).toBe('TAG.TAGS_CREATOR.NO_EXISTING_TAGS');
+                expect(getStatusText()).toBe('TAG.TAGS_CREATOR.NO_EXISTING_TAGS_ANNOUNCEMENT');
             }));
 
             it('should display exact tag', fakeAsync(() => {
