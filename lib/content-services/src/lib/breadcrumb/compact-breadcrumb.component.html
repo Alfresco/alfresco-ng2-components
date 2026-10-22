@@ -4,7 +4,7 @@
     class="adf-compact-breadcrumb-trigger"
     (click)="togglePanel()"
     (mouseenter)="onTriggerMouseEnter()">
-    {{'BREADCRUMB.COMPACT_MENU.OPEN_COMPACT_BREADCRUMB_BUTTON' | translate: { ancestorsCounter: 1 } }}
+    {{'BREADCRUMB.COMPACT_MENU.OPEN_COMPACT_BREADCRUMB_BUTTON' | translate: { ancestorsCounter: nodes().length - 1 } }}
 </button>
 <div
     #backdrop
@@ -53,28 +53,17 @@
                 >
                     {{ node.name | translate }}
                 </a>
-                @let nodeName = nodes()[index - 1]?.name;
                 <p
                     matListItemLine
                     class="adf-compact-breadcrumb-menu-description">
-                    {{
-                        nodeName ?
-                            (
-                                'BREADCRUMB.COMPACT_MENU.NOT_FIRST_LEVEL' | translate: {
-                                    level: index + 1,
-                                    ancestorName: nodeName
-                                }
-                            ) :
-                            ('BREADCRUMB.COMPACT_MENU.FIRST_LEVEL' | translate)
-
-                    }}
+                    {{ levelsDescriptions()[index] }}
                 </p>
                 @if (last) {
                     <div matListItemMeta class="adf-compact-breadcrumb-menu-list-item-current-marker">
                         <mat-icon class="adf-compact-breadcrumb-menu-list-item-current-marker-icon">
                             location_on
                         </mat-icon>
-                        {{ 'BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL' | translate }}
+                        {{ 'BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL_ICON_LABEL' | translate }}
                     </div>
                 }
             </mat-list-item>

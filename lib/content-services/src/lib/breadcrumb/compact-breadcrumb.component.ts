@@ -18,6 +18,7 @@
 import {
     AfterViewInit,
     Component,
+    computed,
     DestroyRef,
     ElementRef,
     HostListener,
@@ -32,7 +33,7 @@ import {
 } from '@angular/core';
 import { PathElement } from '@alfresco/js-api';
 import { MatButton } from '@angular/material/button';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { DataRow, DragDropStateService } from '@alfresco/adf-core';
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { MatListItem, MatListItemIcon, MatListItemLine, MatListItemMeta, MatListItemTitle, MatNavList } from '@angular/material/list';
@@ -64,6 +65,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     private readonly dragDropStateService = inject(DragDropStateService);
     private readonly renderer = inject(Renderer2);
     private readonly destroyRef = inject(DestroyRef);
+    private readonly translateService = inject(TranslateService);
 
     readonly nodes = input<PathElement[]>([]);
 
@@ -76,6 +78,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     private readonly backdrop = viewChild.required<ElementRef<HTMLButtonElement>, ElementRef<HTMLDivElement>>('backdrop', { read: ElementRef });
 
     protected readonly isPanelOpen = signal(false);
+    protected readonly levelsDescriptions = computed(() => this.nodes().map((_, index) => this.getLevelDescription(index)));
 
     private outsideClickTimeoutId: NodeJS.Timeout;
     private removeOutsideClickListener: () => void;
@@ -121,6 +124,16 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         } else {
             event.preventDefault();
         }
+    }
+
+    private getLevelDescription(nodeIndex: number): string {
+        if (nodeIndex === this.nodes().length - 1) {
+            return this.translateService.instant('BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL');
+        }
+        const name = this.nodes()[nodeIndex - 1]?.name;
+        return name
+            ? this.translateService.instant('BREADCRUMB.COMPACT_MENU.NOT_FIRST_LEVEL', { level: nodeIndex + 1, ancestorName: name })
+            : this.translateService.instant('BREADCRUMB.COMPACT_MENU.FIRST_LEVEL');
     }
 
     private openPanel(): void {

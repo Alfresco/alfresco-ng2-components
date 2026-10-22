@@ -56,7 +56,7 @@
                             (mouseenter)="hoveredItem = item"
                         >
                             @if (breadcrumbItemIsAnchor(last)) {
-                                @if (index === 0 || !compactMode) {
+                                @if (index === 0 || !compactMode || (index === 1 && lastNodes.length === 3)) {
                                     <a
                                         href="#"
                                         [attr.data-automation-id]="'breadcrumb_' + item.name"
