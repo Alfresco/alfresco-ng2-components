@@ -23,8 +23,12 @@
     cdkDropListSortingDisabled
     [cdkDropListData]="hoveredItem"
     (cdkDropListDropped)="onDrop($event)">
-    <h2 class="adf-compact-breadcrumb-menu-title">{{'BREADCRUMB.COMPACT_MENU.TITLE' | translate }}</h2>
-    <p class="adf-compact-breadcrumb-menu-description">{{'BREADCRUMB.COMPACT_MENU.DESCRIPTION' | translate }}</p>
+    <div class="adf-compact-breadcrumb-menu-header">
+        <h2 class="adf-compact-breadcrumb-menu-header-title">{{'BREADCRUMB.COMPACT_MENU.TITLE' | translate }}</h2>
+        <p class="adf-compact-breadcrumb-menu-description adf-compact-breadcrumb-menu-header-title-description">
+            {{'BREADCRUMB.COMPACT_MENU.DESCRIPTION' | translate }}
+        </p>
+    </div>
     <mat-nav-list class="adf-compact-breadcrumb-menu-list">
         @for (node of nodes(); track node.id; let last = $last; let index = $index) {
             <mat-list-item
@@ -35,6 +39,12 @@
                 cdkDragDisabled
                 [disabled]="last"
                 (mouseenter)="hoveredItem = node">
+                <img
+                    ngSrc="./assets/images/ft_ic_folder_empty.svg"
+                    width="26"
+                    height="30"
+                    alt=""
+                    matListItemIcon />
                 <a
                     matListItemTitle
                     href="#"
@@ -59,8 +69,19 @@
 
                     }}
                 </p>
+                @if (last) {
+                    <div matListItemMeta class="adf-compact-breadcrumb-menu-list-item-current-marker">
+                        <mat-icon class="adf-compact-breadcrumb-menu-list-item-current-marker-icon">
+                            location_on
+                        </mat-icon>
+                        {{ 'BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL' | translate }}
+                    </div>
+                }
             </mat-list-item>
         }
     </mat-nav-list>
-    <p class="adf-compact-breadcrumb-menu-description">{{'BREADCRUMB.COMPACT_MENU.PRESS_ESC_TO_CLOSE_HINT' | translate }}</p>
+    <p class="adf-compact-breadcrumb-menu-description adf-compact-breadcrumb-menu-footer">
+        <mat-icon class="adf-compact-breadcrumb-menu-description-back-icon">shortcut</mat-icon>
+        {{'BREADCRUMB.COMPACT_MENU.PRESS_ESC_TO_CLOSE_HINT' | translate }}
+    </p>
 </div>

@@ -35,13 +35,29 @@ import { MatButton } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DataRow, DragDropStateService } from '@alfresco/adf-core';
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
-import { MatListItem, MatListItemLine, MatListItemTitle, MatNavList } from '@angular/material/list';
+import { MatListItem, MatListItemIcon, MatListItemLine, MatListItemMeta, MatListItemTitle, MatNavList } from '@angular/material/list';
+import { NgOptimizedImage } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-compact-breadcrumb',
     templateUrl: './compact-breadcrumb.component.html',
     styleUrls: ['./compact-breadcrumb.component.scss'],
-    imports: [MatButton, TranslatePipe, CdkDropList, CdkDropListGroup, CdkDrag, MatNavList, MatListItem, MatListItemTitle, MatListItemLine],
+    imports: [
+        MatButton,
+        TranslatePipe,
+        CdkDropList,
+        CdkDropListGroup,
+        CdkDrag,
+        MatIcon,
+        MatNavList,
+        MatListItem,
+        MatListItemIcon,
+        MatListItemTitle,
+        MatListItemLine,
+        MatListItemMeta,
+        NgOptimizedImage
+    ],
     encapsulation: ViewEncapsulation.None
 })
 export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
