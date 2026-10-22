@@ -159,7 +159,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     @ViewChild('searchIconButton')
     private readonly searchIconButton!: MatIconButton;
 
-    isEnterPressedOnCloseIcon = false;
+    private restoreFocusToSearchIcon = false;
 
     animationStates: SearchAnimationDirection = {
         ltr: {
@@ -194,8 +194,8 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
                     }
 
                     setTimeout(() => {
-                        if (this.isEnterPressedOnCloseIcon) {
-                            this.isEnterPressedOnCloseIcon = false;
+                        if (this.restoreFocusToSearchIcon) {
+                            this.restoreFocusToSearchIcon = false;
                             this.changeDetectorRef.detectChanges();
                             this.searchIconButton.focus();
                         }
@@ -330,7 +330,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     resetSearch(event?: MouseEvent) {
         if (event?.detail === 0) {
-            this.isEnterPressedOnCloseIcon = true;
+            this.restoreFocusToSearchIcon = true;
         }
 
         if (this.isSearchBarActive()) {

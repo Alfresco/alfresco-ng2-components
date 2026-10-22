@@ -307,6 +307,40 @@ describe('SearchTextInputComponent', () => {
                 expect(component.subscriptAnimationState.value).toEqual('inactive');
                 expect(component.searchTerm).toEqual('');
             });
+
+            it('should pass the focus to search icon if it is pressed via keyboard', fakeAsync(() => {
+                component.showClearButton = true;
+                fixture.detectChanges();
+
+                const event = new MouseEvent('click', { detail: 0 });
+
+                getClearSearchButton().dispatchEvent(event);
+                tick(200);
+                fixture.detectChanges();
+                tick();
+
+                const searchButton = testingUtils.getByCSS('#adf-search-button');
+                expect(searchButton).toBeTruthy();
+
+                expect(document.activeElement).toBe(searchButton.nativeElement);
+            }));
+
+            it('should not pass the focus to search icon if it is clicked via mouse', fakeAsync(() => {
+                component.showClearButton = true;
+                fixture.detectChanges();
+
+                const event = new MouseEvent('click', { detail: 1 });
+
+                getClearSearchButton().dispatchEvent(event);
+                tick(200);
+                fixture.detectChanges();
+                tick();
+
+                const searchButton = testingUtils.getByCSS('#adf-search-button');
+                expect(searchButton).toBeTruthy();
+
+                expect(document.activeElement).not.toBe(searchButton.nativeElement);
+            }));
         });
 
         describe('Collapse on blur', () => {
