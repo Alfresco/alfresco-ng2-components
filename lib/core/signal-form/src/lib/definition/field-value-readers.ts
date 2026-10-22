@@ -16,7 +16,7 @@
  */
 
 import { isValid, parseISO } from 'date-fns';
-import { DateFnsUtils, isNumberValue } from '@alfresco/adf-core';
+import { DateFnsUtils } from '@alfresco/adf-core';
 import type { FieldJson } from './form-definition-json.interface';
 import type {
     DateFieldValue,
@@ -28,7 +28,7 @@ import type {
     RadioFieldValue
 } from './form-definition.interface';
 import { DEFAULT_EMPTY_OPTION, EMPTY_OPTION_ID } from './form-field-types';
-import { isRecord } from '../form-value-guards';
+import { isNumeric, isRecord } from '../form-value-guards';
 import { resolveFieldType } from '../field-types/field-type-resolution';
 import type { FieldOptionsReader, FieldTypeResolver, InitialValueReader } from '../field-types/field-type-definition.interface';
 
@@ -250,7 +250,7 @@ const readDate = (value: FieldValue, withTime: boolean): DateFieldValue => {
     if (!value) {
         return value;
     }
-    if (isNumberValue(value)) {
+    if (isNumeric(value)) {
         return validDateOr(new Date(value), value);
     }
     if (!withTime) {

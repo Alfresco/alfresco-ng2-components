@@ -16,10 +16,10 @@
  */
 
 import { addDays, isValid, parseISO } from 'date-fns';
-import { DateFnsUtils, isNumberValue } from '@alfresco/adf-core';
+import { DateFnsUtils } from '@alfresco/adf-core';
 import type { DropdownFieldValue, FieldDefinition, FieldValue, NumberFieldValue } from '../definition/form-definition.interface';
 import { FormFieldType } from '../definition/form-field-types';
-import { hasLength, isBlank } from '../form-value-guards';
+import { hasLength, isBlank, isNumeric } from '../form-value-guards';
 import type { FieldValidator } from '../field-types/field-type-definition.interface';
 
 const DEFAULT_TEXT_MAX_LENGTH = 1024;
@@ -81,10 +81,10 @@ export const maxLengthValidator: FieldValidator = (field, value) => {
 };
 
 export const minValueValidator: FieldValidator<NumberFieldValue> = (field, value) =>
-    value && RANGE_TYPES.has(field.type) && isNumberValue(field.minValue) && !isAtLeast(value, field.minValue) ? 'minValue' : null;
+    value && RANGE_TYPES.has(field.type) && isNumeric(field.minValue) && !isAtLeast(value, field.minValue) ? 'minValue' : null;
 
 export const maxValueValidator: FieldValidator<NumberFieldValue> = (field, value) =>
-    value && RANGE_TYPES.has(field.type) && isNumberValue(field.maxValue) && !isAtMost(value, field.maxValue) ? 'maxValue' : null;
+    value && RANGE_TYPES.has(field.type) && isNumeric(field.maxValue) && !isAtMost(value, field.maxValue) ? 'maxValue' : null;
 
 export const patternValidator: FieldValidator = (field, value) =>
     typeof value === 'string' && value && LENGTH_TYPES.has(field.type) && field.regexPattern && !matchesPattern(value, field.regexPattern)
@@ -95,7 +95,7 @@ export const decimalValidator: FieldValidator<NumberFieldValue> = (field, value)
     if (field.type !== FormFieldType.Decimal || !value) {
         return null;
     }
-    if (!isNumberValue(value)) {
+    if (!isNumeric(value)) {
         return 'decimal';
     }
     const decimalPart = `${value}`.split('.')[1];

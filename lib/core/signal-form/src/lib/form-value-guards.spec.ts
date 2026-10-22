@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { hasLength, isBlank, isRecord } from './form-value-guards';
+import { hasLength, isBlank, isNumeric, isRecord } from './form-value-guards';
 
 describe('form value guards', () => {
     it('should tell an object with properties from no value, a list or a primitive', () => {
@@ -45,5 +45,19 @@ describe('form value guards', () => {
         expect(isBlank(0)).toBeFalse();
         expect(isBlank(false)).toBeFalse();
         expect(isBlank([])).toBeFalse();
+    });
+
+    it('should tell a number or a numeric text from no value, an empty text or any other text', () => {
+        expect(isNumeric(0)).toBeTrue();
+        expect(isNumeric(-1.5)).toBeTrue();
+        expect(isNumeric('42')).toBeTrue();
+        expect(isNumeric(' 7 ')).toBeTrue();
+        expect(isNumeric('1e3')).toBeTrue();
+        expect(isNumeric(null)).toBeFalse();
+        expect(isNumeric(undefined)).toBeFalse();
+        expect(isNumeric('')).toBeFalse();
+        expect(isNumeric('abc')).toBeFalse();
+        expect(isNumeric('12abc')).toBeFalse();
+        expect(isNumeric(Number.NaN)).toBeFalse();
     });
 });

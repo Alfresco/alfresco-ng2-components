@@ -39,3 +39,11 @@ export const hasLength = (value: unknown): boolean => (Array.isArray(value) || t
  * @returns `true` for `null`, `undefined` or `''`
  */
 export const isBlank = (value: unknown): boolean => value === null || value === undefined || value === '';
+
+/**
+ * Whether a value is a number or a text that reads as one, as today's form checks it.
+ *
+ * @param value the value
+ * @returns `true` for a number or a numeric text, `false` for no value or an empty text
+ */
+export const isNumeric = (value: unknown): boolean => !isBlank(value) && !Number.isNaN(Number(value));
