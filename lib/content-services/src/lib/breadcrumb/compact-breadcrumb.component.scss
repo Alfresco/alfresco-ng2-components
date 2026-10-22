@@ -22,8 +22,7 @@ adf-compact-breadcrumb {
 .adf-compact-breadcrumb-menu {
     position: fixed;
     z-index: 1000;
-    width: 592px;
-    max-width: 552px;
+    width: 568px;
     max-height: 683px;
     box-shadow: var(--mat-sys-level2);
     border-radius: 8px;
@@ -59,6 +58,7 @@ adf-compact-breadcrumb {
             padding: 0;
             border-radius: 4px;
             border: 2px solid transparent;
+            border-bottom: 1px solid var(--mat-sys-outline-variant);
 
             &-disabled {
                 cursor: default;
