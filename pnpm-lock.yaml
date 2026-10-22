@@ -66,7 +66,7 @@ importers:
         version: 21.2.24(@angular/common@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(@angular/platform-browser@21.2.22(@angular/animations@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0)))(@angular/common@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0)))(rxjs@7.8.2)
       '@apollo/client':
         specifier: 4.3.1
-        version: 4.3.1(graphql-ws@6.3.0(graphql@16.14.2)(ws@8.21.3))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2)
+        version: 4.3.1(graphql-ws@6.3.0(graphql@16.14.2)(ws@8.22.0))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2)
       '@cspell/eslint-plugin':
         specifier: 10.0.1
         version: 10.0.1(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))
@@ -81,7 +81,7 @@ importers:
         version: 19.0.0(@angular/common@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))
       apollo-angular:
         specifier: 13.0.0
-        version: 13.0.0(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(@apollo/client@4.3.1(graphql-ws@6.3.0(graphql@16.14.2)(ws@8.21.3))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2))(graphql@16.14.2)(rxjs@7.8.2)
+        version: 13.0.0(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(@apollo/client@4.3.1(graphql-ws@6.3.0(graphql@16.14.2)(ws@8.22.0))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2))(graphql@16.14.2)(rxjs@7.8.2)
       chart.js:
         specifier: 4.5.1
         version: 4.5.1
@@ -102,7 +102,7 @@ importers:
         version: 5.0.4
       graphql-ws:
         specifier: 6.3.0
-        version: 6.3.0(graphql@16.14.2)(ws@8.21.3)
+        version: 6.3.0(graphql@16.14.2)(ws@8.22.0)
       material-icons:
         specifier: 1.13.14
         version: 1.13.14
@@ -163,7 +163,7 @@ importers:
         version: 21.2.22(@angular/compiler@21.2.22)(supports-color@10.2.2)(typescript@5.9.3)
       '@chromatic-com/storybook':
         specifier: 4.1.3
-        version: 4.1.3(storybook@10.6.1(prettier@3.9.6)(react@19.2.6))
+        version: 4.1.3(storybook@10.6.2(prettier@3.9.6)(react@19.2.6))
       '@eslint/compat':
         specifier: ^2.1.1
         version: 2.1.1(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))
@@ -178,7 +178,7 @@ importers:
         version: 23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(nx@23.3.0)(supports-color@10.2.2)
       '@nx/storybook':
         specifier: 23.3.0
-        version: 23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@nx/web@23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@nx/cypress@23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@zkochan/js-yaml@0.0.7)(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))(nx@23.3.0)(supports-color@10.2.2)(typescript@5.9.3))(@nx/eslint@23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@zkochan/js-yaml@0.0.7)(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))(nx@23.3.0)(supports-color@10.2.2))(debug@4.4.3(supports-color@10.2.2))(nx@23.3.0)(supports-color@10.2.2))(@zkochan/js-yaml@0.0.7)(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))(nx@23.3.0)(storybook@10.6.1(prettier@3.9.6)(react@19.2.6))(supports-color@10.2.2)(typescript@5.9.3)
+        version: 23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@nx/web@23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@nx/cypress@23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@zkochan/js-yaml@0.0.7)(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))(nx@23.3.0)(supports-color@10.2.2)(typescript@5.9.3))(@nx/eslint@23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@zkochan/js-yaml@0.0.7)(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))(nx@23.3.0)(supports-color@10.2.2))(debug@4.4.3(supports-color@10.2.2))(nx@23.3.0)(supports-color@10.2.2))(@zkochan/js-yaml@0.0.7)(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))(nx@23.3.0)(storybook@10.6.2(prettier@3.9.6)(react@19.2.6))(supports-color@10.2.2)(typescript@5.9.3)
       '@nx/workspace':
         specifier: 23.3.0
         version: 23.3.0
@@ -187,10 +187,10 @@ importers:
         version: 20.3.32(chokidar@4.0.3)
       '@storybook/addon-themes':
         specifier: 10.6.0
-        version: 10.6.0(storybook@10.6.1(prettier@3.9.6)(react@19.2.6))
+        version: 10.6.0(storybook@10.6.2(prettier@3.9.6)(react@19.2.6))
       '@storybook/angular':
         specifier: 10.6.0
-        version: 10.6.0(c925b41372738f0229335069c8ab8368)
+        version: 10.6.0(81771214a4d5dab58c6ac2c4a91fc0f8)
       '@types/jasmine':
         specifier: 4.0.3
         version: 4.0.3
@@ -312,8 +312,8 @@ importers:
         specifier: 6.11.0
         version: 6.11.0
       storybook:
-        specifier: 10.6.1
-        version: 10.6.1(prettier@3.9.6)(react@19.2.6)
+        specifier: 10.6.2
+        version: 10.6.2(prettier@3.9.6)(react@19.2.6)
       stylelint:
         specifier: 17.0.0
         version: 17.0.0(supports-color@7.2.0)(typescript@5.9.3)
@@ -2631,6 +2631,13 @@ packages:
       '@emnapi/core': ^1.7.1 || ^2.0.0-alpha.4
       '@emnapi/runtime': ^1.7.1 || ^2.0.0-alpha.4
 
+  '@napi-rs/wasm-runtime@1.2.5':
+    resolution: {integrity: sha512-HshSvXzmBxNzqejd3k/KemgQ3hdREUYFRRrgxOZ+gPljDIsO2SDZrVZMd4Z/HsxudQbE62OVyVFE8z9BCurfjA==}
+    engines: {node: ^20.19.0 || ^22.13.0 || >=23.5.0}
+    peerDependencies:
+      '@emnapi/core': ^1.7.1 || ^2.0.0-alpha.4
+      '@emnapi/runtime': ^1.7.1 || ^2.0.0-alpha.4
+
   '@neoconfetti/react@1.0.0':
     resolution: {integrity: sha512-klcSooChXXOzIm+SE5IISIAn3bYzYfPjbX7D7HoqZL84oAfgREeSg5vSIaSFH+DaGzzvImTyWe1OyrJ67vik4A==}
 
@@ -3594,8 +3601,8 @@ packages:
   '@storybook/global@5.0.0':
     resolution: {integrity: sha512-FcOqPAXACP0I3oJ/ws6/rrPT9WGhu915Cg8D02a9YxLo0DE9zI+a9A5gRGvmQ09fiWPukqI8ZAEoQEdWUKMQdQ==}
 
-  '@storybook/icons@2.1.0':
-    resolution: {integrity: sha512-Fxh9vYpX9bQqFeHRiY8h2ApeRGDzRSMLwJwNZ/AIRqnyOKHxRKL+yFe+ctEkVJmuptRE9u1Hrn8ZZNHyfDKKNg==}
+  '@storybook/icons@2.2.0':
+    resolution: {integrity: sha512-FpUB/xizIrV1ILhCIYFo+TtQNN9YEoLjfcnAW0JtOXL+BcM2aisSysI0B54JMWDnljriXySBHgN6ps4s9lb75A==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -3607,8 +3614,8 @@ packages:
     resolution: {integrity: sha512-zIcONa+hVtVSSep9UT3jZ5rizo2BsxgyDYU7WFD5eICBE7no3881HGeb/QkGfsJs6JTkY1aQhT7rIPC7e+0nnA==}
     engines: {node: '>=14', npm: '>=6', yarn: '>=1'}
 
-  '@testing-library/user-event@14.6.7':
-    resolution: {integrity: sha512-MPCpX8bxe8zS+JmmTwLp8jd0dy1rAm60Te/SL8JrQM3qvQJcBOs1d7IefJMyZzqM3EWBrDn/LWDt1BCGu4ASfg==}
+  '@testing-library/user-event@14.6.8':
+    resolution: {integrity: sha512-vgSSqnANMnkcYR/vUNDbwS7aM3OErRLNUG8vCVVlj4oc6cKffUrccX7UAS5AmJQQNZTSibi9z5GvvRZ0aYgUCQ==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
@@ -7450,8 +7457,8 @@ packages:
     resolution: {integrity: sha512-eCPu1qRxPVkl5605OTWF8Wz40b4Mf45NY5LQmVPQ599knfs5QhASUm9GbJ5BDMDOXgrnh0wyEdvzmL//YMlw0A==}
     engines: {node: '>=18'}
 
-  storybook@10.6.1:
-    resolution: {integrity: sha512-NeEmukMWPA5OqHizUkQtxCIhGt7MUZLPY4FFgpC0LNiipjrac/oKpH0TxI+9Zc+vI5+IoN+NiskOmBP7gtYfmA==}
+  storybook@10.6.2:
+    resolution: {integrity: sha512-qHDINMiapxFUxYb+xC3j8u7Y+85X3u+/PlytE/wmnyg+bU0agCW3jUmWP4vIh2MioO2jTK/2B3Lcw6IpRFzQBA==}
     hasBin: true
     peerDependencies:
       '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -8619,7 +8626,7 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@apollo/client@4.3.1(graphql-ws@6.3.0(graphql@16.14.2)(ws@8.21.3))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2)':
+  '@apollo/client@4.3.1(graphql-ws@6.3.0(graphql@16.14.2)(ws@8.22.0))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.14.2)
       '@wry/caches': 1.0.1
@@ -8631,7 +8638,7 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.8.1
     optionalDependencies:
-      graphql-ws: 6.3.0(graphql@16.14.2)(ws@8.21.3)
+      graphql-ws: 6.3.0(graphql@16.14.2)(ws@8.22.0)
       react: 19.2.6
       react-dom: 19.2.6(react@19.2.6)
 
@@ -9499,13 +9506,13 @@ snapshots:
       hashery: 1.5.1
       keyv: 5.6.0
 
-  '@chromatic-com/storybook@4.1.3(storybook@10.6.1(prettier@3.9.6)(react@19.2.6))':
+  '@chromatic-com/storybook@4.1.3(storybook@10.6.2(prettier@3.9.6)(react@19.2.6))':
     dependencies:
       '@neoconfetti/react': 1.0.0
       chromatic: 13.3.5
       filesize: 10.1.6
       jsonfile: 6.2.1
-      storybook: 10.6.1(prettier@3.9.6)(react@19.2.6)
+      storybook: 10.6.2(prettier@3.9.6)(react@19.2.6)
       strip-ansi: 7.2.0
     transitivePeerDependencies:
       - '@chromatic-com/cypress'
@@ -10570,13 +10577,6 @@ snapshots:
       '@tybys/wasm-util': 0.10.4
     optional: true
 
-  '@napi-rs/wasm-runtime@1.2.4(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)':
-    dependencies:
-      '@emnapi/core': 1.11.0
-      '@emnapi/runtime': 1.11.0
-      '@tybys/wasm-util': 0.10.4
-    optional: true
-
   '@napi-rs/wasm-runtime@1.2.4(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)':
     dependencies:
       '@emnapi/core': 1.11.3
@@ -10584,7 +10584,14 @@ snapshots:
       '@tybys/wasm-util': 0.10.4
     optional: true
 
-  '@napi-rs/wasm-runtime@1.2.4(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)':
+  '@napi-rs/wasm-runtime@1.2.5(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)':
+    dependencies:
+      '@emnapi/core': 1.11.0
+      '@emnapi/runtime': 1.11.0
+      '@tybys/wasm-util': 0.10.4
+    optional: true
+
+  '@napi-rs/wasm-runtime@1.2.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)':
     dependencies:
       '@emnapi/core': 1.9.2
       '@emnapi/runtime': 1.9.2
@@ -10804,7 +10811,7 @@ snapshots:
   '@nx/nx-win32-x64-msvc@23.3.0':
     optional: true
 
-  '@nx/storybook@23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@nx/web@23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@nx/cypress@23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@zkochan/js-yaml@0.0.7)(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))(nx@23.3.0)(supports-color@10.2.2)(typescript@5.9.3))(@nx/eslint@23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@zkochan/js-yaml@0.0.7)(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))(nx@23.3.0)(supports-color@10.2.2))(debug@4.4.3(supports-color@10.2.2))(nx@23.3.0)(supports-color@10.2.2))(@zkochan/js-yaml@0.0.7)(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))(nx@23.3.0)(storybook@10.6.1(prettier@3.9.6)(react@19.2.6))(supports-color@10.2.2)(typescript@5.9.3)':
+  '@nx/storybook@23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@nx/web@23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@nx/cypress@23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@zkochan/js-yaml@0.0.7)(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))(nx@23.3.0)(supports-color@10.2.2)(typescript@5.9.3))(@nx/eslint@23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@zkochan/js-yaml@0.0.7)(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))(nx@23.3.0)(supports-color@10.2.2))(debug@4.4.3(supports-color@10.2.2))(nx@23.3.0)(supports-color@10.2.2))(@zkochan/js-yaml@0.0.7)(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))(nx@23.3.0)(storybook@10.6.2(prettier@3.9.6)(react@19.2.6))(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
       '@nx/cypress': 23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@zkochan/js-yaml@0.0.7)(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))(nx@23.3.0)(supports-color@10.2.2)(typescript@5.9.3)
       '@nx/devkit': 23.3.0(nx@23.3.0)
@@ -10812,7 +10819,7 @@ snapshots:
       '@nx/js': 23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(nx@23.3.0)(supports-color@10.2.2)
       '@phenomnomnominal/tsquery': 6.2.0(typescript@5.9.3)
       semver: 7.8.5
-      storybook: 10.6.1(prettier@3.9.6)(react@19.2.6)
+      storybook: 10.6.2(prettier@3.9.6)(react@19.2.6)
       tslib: 2.8.1
     optionalDependencies:
       '@nx/web': 23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@nx/cypress@23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@zkochan/js-yaml@0.0.7)(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))(nx@23.3.0)(supports-color@10.2.2)(typescript@5.9.3))(@nx/eslint@23.3.0(@babel/traverse@7.29.7(supports-color@10.2.2))(@zkochan/js-yaml@0.0.7)(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))(nx@23.3.0)(supports-color@10.2.2))(debug@4.4.3(supports-color@10.2.2))(nx@23.3.0)(supports-color@10.2.2)
@@ -10917,7 +10924,7 @@ snapshots:
     dependencies:
       '@emnapi/core': 1.9.2
       '@emnapi/runtime': 1.9.2
-      '@napi-rs/wasm-runtime': 1.2.4(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)
+      '@napi-rs/wasm-runtime': 1.2.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)
     optional: true
 
   '@oxc-parser/binding-win32-arm64-msvc@0.127.0':
@@ -10985,7 +10992,7 @@ snapshots:
     dependencies:
       '@emnapi/core': 1.11.0
       '@emnapi/runtime': 1.11.0
-      '@napi-rs/wasm-runtime': 1.2.4(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)
+      '@napi-rs/wasm-runtime': 1.2.5(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)
     optional: true
 
   '@oxc-resolver/binding-win32-arm64-msvc@11.21.2':
@@ -11383,12 +11390,12 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
-  '@storybook/addon-themes@10.6.0(storybook@10.6.1(prettier@3.9.6)(react@19.2.6))':
+  '@storybook/addon-themes@10.6.0(storybook@10.6.2(prettier@3.9.6)(react@19.2.6))':
     dependencies:
-      storybook: 10.6.1(prettier@3.9.6)(react@19.2.6)
+      storybook: 10.6.2(prettier@3.9.6)(react@19.2.6)
       ts-dedent: 2.3.0
 
-  '@storybook/angular@10.6.0(c925b41372738f0229335069c8ab8368)':
+  '@storybook/angular@10.6.0(81771214a4d5dab58c6ac2c4a91fc0f8)':
     dependencies:
       '@angular-devkit/architect': 0.2102.22
       '@angular-devkit/build-angular': 21.2.22(ff4d611de7eeee18d656fd8af56d8d7d)
@@ -11399,10 +11406,10 @@ snapshots:
       '@angular/core': 21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0)
       '@angular/platform-browser': 21.2.22(@angular/animations@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0)))(@angular/common@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))
       '@angular/platform-browser-dynamic': 21.2.22(@angular/common@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/compiler@21.2.22)(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(@angular/platform-browser@21.2.22(@angular/animations@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0)))(@angular/common@21.2.22(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0)))
-      '@storybook/builder-webpack5': 10.6.0(@rspack/core@1.6.8)(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.25))(csso@5.0.5)(esbuild@0.28.1)(html-minifier-terser@6.1.0)(postcss@8.5.25)(storybook@10.6.1(prettier@3.9.6)(react@19.2.6))(svgo@4.0.2)(tslib@2.8.1)(typescript@5.9.3)
+      '@storybook/builder-webpack5': 10.6.0(@rspack/core@1.6.8)(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.25))(csso@5.0.5)(esbuild@0.28.1)(html-minifier-terser@6.1.0)(postcss@8.5.25)(storybook@10.6.2(prettier@3.9.6)(react@19.2.6))(svgo@4.0.2)(tslib@2.8.1)(typescript@5.9.3)
       '@storybook/global': 5.0.0
       rxjs: 7.8.2
-      storybook: 10.6.1(prettier@3.9.6)(react@19.2.6)
+      storybook: 10.6.2(prettier@3.9.6)(react@19.2.6)
       telejson: 8.0.0
       ts-dedent: 2.3.0
       tsconfig-paths-webpack-plugin: 4.2.0
@@ -11432,9 +11439,9 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@storybook/builder-webpack5@10.6.0(@rspack/core@1.6.8)(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.25))(csso@5.0.5)(esbuild@0.28.1)(html-minifier-terser@6.1.0)(postcss@8.5.25)(storybook@10.6.1(prettier@3.9.6)(react@19.2.6))(svgo@4.0.2)(tslib@2.8.1)(typescript@5.9.3)':
+  '@storybook/builder-webpack5@10.6.0(@rspack/core@1.6.8)(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.25))(csso@5.0.5)(esbuild@0.28.1)(html-minifier-terser@6.1.0)(postcss@8.5.25)(storybook@10.6.2(prettier@3.9.6)(react@19.2.6))(svgo@4.0.2)(tslib@2.8.1)(typescript@5.9.3)':
     dependencies:
-      '@storybook/core-webpack': 10.6.0(storybook@10.6.1(prettier@3.9.6)(react@19.2.6))
+      '@storybook/core-webpack': 10.6.0(storybook@10.6.2(prettier@3.9.6)(react@19.2.6))
       case-sensitive-paths-webpack-plugin: 2.4.0
       cjs-module-lexer: 1.4.3
       css-loader: 7.1.4(@rspack/core@1.6.8)(webpack@5.111.1(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.25))(csso@5.0.5)(esbuild@0.28.1)(html-minifier-terser@6.1.0)(postcss@8.5.25)(svgo@4.0.2))
@@ -11443,7 +11450,7 @@ snapshots:
       html-webpack-plugin: 5.6.7(@rspack/core@1.6.8)(webpack@5.111.1(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.25))(csso@5.0.5)(esbuild@0.28.1)(html-minifier-terser@6.1.0)(postcss@8.5.25)(svgo@4.0.2))
       magic-string: 1.3.1
       semver: 7.8.5
-      storybook: 10.6.1(prettier@3.9.6)(react@19.2.6)
+      storybook: 10.6.2(prettier@3.9.6)(react@19.2.6)
       style-loader: 4.0.0(webpack@5.111.1(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.25))(csso@5.0.5)(esbuild@0.28.1)(html-minifier-terser@6.1.0)(postcss@8.5.25)(svgo@4.0.2))
       terser-webpack-plugin: 5.6.1(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.25))(csso@5.0.5)(esbuild@0.28.1)(html-minifier-terser@6.1.0)(postcss@8.5.25)(webpack@5.111.1(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.25))(csso@5.0.5)(esbuild@0.28.1)(html-minifier-terser@6.1.0)(postcss@8.5.25)(svgo@4.0.2))
       ts-dedent: 2.3.0
@@ -11474,14 +11481,14 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@storybook/core-webpack@10.6.0(storybook@10.6.1(prettier@3.9.6)(react@19.2.6))':
+  '@storybook/core-webpack@10.6.0(storybook@10.6.2(prettier@3.9.6)(react@19.2.6))':
     dependencies:
-      storybook: 10.6.1(prettier@3.9.6)(react@19.2.6)
+      storybook: 10.6.2(prettier@3.9.6)(react@19.2.6)
       ts-dedent: 2.3.0
 
   '@storybook/global@5.0.0': {}
 
-  '@storybook/icons@2.1.0(react@19.2.6)':
+  '@storybook/icons@2.2.0(react@19.2.6)':
     dependencies:
       react: 19.2.6
 
@@ -11505,7 +11512,7 @@ snapshots:
       picocolors: 1.1.1
       redent: 3.0.0
 
-  '@testing-library/user-event@14.6.7(@testing-library/dom@10.4.2)':
+  '@testing-library/user-event@14.6.8(@testing-library/dom@10.4.2)':
     dependencies:
       '@testing-library/dom': 10.4.2
 
@@ -12123,10 +12130,10 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 4.0.7
 
-  apollo-angular@13.0.0(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(@apollo/client@4.3.1(graphql-ws@6.3.0(graphql@16.14.2)(ws@8.21.3))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2))(graphql@16.14.2)(rxjs@7.8.2):
+  apollo-angular@13.0.0(@angular/core@21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0))(@apollo/client@4.3.1(graphql-ws@6.3.0(graphql@16.14.2)(ws@8.22.0))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2))(graphql@16.14.2)(rxjs@7.8.2):
     dependencies:
       '@angular/core': 21.2.22(@angular/compiler@21.2.22)(rxjs@7.8.2)(zone.js@0.15.0)
-      '@apollo/client': 4.3.1(graphql-ws@6.3.0(graphql@16.14.2)(ws@8.21.3))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2)
+      '@apollo/client': 4.3.1(graphql-ws@6.3.0(graphql@16.14.2)(ws@8.22.0))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2)
       graphql: 16.14.2
       rxjs: 7.8.2
       tslib: 2.8.1
@@ -13696,11 +13703,11 @@ snapshots:
       graphql: 16.14.2
       tslib: 2.8.1
 
-  graphql-ws@6.3.0(graphql@16.14.2)(ws@8.21.3):
+  graphql-ws@6.3.0(graphql@16.14.2)(ws@8.22.0):
     dependencies:
       graphql: 16.14.2
     optionalDependencies:
-      ws: 8.21.3
+      ws: 8.22.0
 
   graphql@16.14.2: {}
 
@@ -15919,13 +15926,13 @@ snapshots:
 
   stdin-discarder@0.3.2: {}
 
-  storybook@10.6.1(prettier@3.9.6)(react@19.2.6):
+  storybook@10.6.2(prettier@3.9.6)(react@19.2.6):
     dependencies:
       '@storybook/global': 5.0.0
-      '@storybook/icons': 2.1.0(react@19.2.6)
+      '@storybook/icons': 2.2.0(react@19.2.6)
       '@testing-library/dom': 10.4.2
       '@testing-library/jest-dom': 6.9.1
-      '@testing-library/user-event': 14.6.7(@testing-library/dom@10.4.2)
+      '@testing-library/user-event': 14.6.8(@testing-library/dom@10.4.2)
       '@vitest/expect': 3.2.4
       '@vitest/spy': 3.2.4
       '@webcontainer/env': 1.1.1
@@ -16506,7 +16513,7 @@ snapshots:
       serve-index: 1.9.2(supports-color@7.2.0)
       tinyglobby: 0.2.17
       webpack-dev-middleware: 8.1.0(tslib@2.8.1)(webpack@5.105.2(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.25))(csso@5.0.5)(esbuild@0.28.1)(html-minifier-terser@6.1.0)(postcss@8.5.25))
-      ws: 8.21.3
+      ws: 8.22.0
     optionalDependencies:
       webpack: 5.105.2(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.25))(csso@5.0.5)(esbuild@0.28.1)(html-minifier-terser@6.1.0)(postcss@8.5.25)
     transitivePeerDependencies:
