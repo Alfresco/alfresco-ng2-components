@@ -16,13 +16,16 @@
  */
 
 import { DOCUMENT } from '@angular/common';
-import { Injectable, NgZone, OnDestroy, inject } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { throttleTime } from 'rxjs/operators';
 
 export const ACTIVITY_EVENTS = ['click', 'keydown', 'mousedown', 'mousemove', 'pointerdown', 'scroll', 'touchstart', 'wheel'] as const;
 
-/** High-frequency activity events (e.g. mousemove, scroll) are throttled to avoid rescheduling the idle timer on every DOM event. */
+/**
+ * Activity listeners are detached for this window after each emission, so high-frequency events
+ * (e.g. mousemove) are throttled at the source: they neither reschedule the idle timer nor trigger
+ * change detection on every DOM event.
+ */
 export const ACTIVITY_THROTTLE_MS = 1000;
 
 const ACTIVE_ACTIVITY_LISTENER_OPTIONS: AddEventListenerOptions = { capture: true, passive: false };
@@ -34,40 +37,34 @@ const getActivityListenerOptions = (eventName: (typeof ACTIVITY_EVENTS)[number])
 @Injectable()
 export class IdleActivityTracker implements OnDestroy {
     private readonly document = inject(DOCUMENT);
-    private readonly ngZone = inject(NgZone);
     private readonly activitySubject = new Subject<void>();
     private readonly visibilitySubject = new Subject<DocumentVisibilityState>();
-    private isRegistered = false;
+    private isStarted = false;
+    private areActivityListenersAttached = false;
+    private throttleTimeoutId: ReturnType<typeof setTimeout> | undefined;
 
-    readonly activity$: Observable<void> = this.activitySubject
-        .asObservable()
-        .pipe(throttleTime(ACTIVITY_THROTTLE_MS, undefined, { leading: true, trailing: true }));
+    readonly activity$: Observable<void> = this.activitySubject.asObservable();
     readonly visibilityChange$: Observable<DocumentVisibilityState> = this.visibilitySubject.asObservable();
 
     start(): void {
-        if (this.isRegistered) {
+        if (this.isStarted) {
             return;
         }
 
-        this.ngZone.runOutsideAngular(() => {
-            ACTIVITY_EVENTS.forEach((eventName) =>
-                this.document.addEventListener(eventName, this.handleActivity, getActivityListenerOptions(eventName))
-            );
-            this.document.addEventListener('visibilitychange', this.handleVisibilityChange);
-        });
-        this.isRegistered = true;
+        this.isStarted = true;
+        this.attachActivityListeners();
+        this.document.addEventListener('visibilitychange', this.handleVisibilityChange);
     }
 
     stop(): void {
-        if (!this.isRegistered) {
+        if (!this.isStarted) {
             return;
         }
 
-        ACTIVITY_EVENTS.forEach((eventName) =>
-            this.document.removeEventListener(eventName, this.handleActivity, getActivityListenerOptions(eventName))
-        );
+        this.isStarted = false;
+        this.clearThrottle();
+        this.detachActivityListeners();
         this.document.removeEventListener('visibilitychange', this.handleVisibilityChange);
-        this.isRegistered = false;
     }
 
     ngOnDestroy(): void {
@@ -75,10 +72,46 @@ export class IdleActivityTracker implements OnDestroy {
     }
 
     private readonly handleActivity = (): void => {
+        this.detachActivityListeners();
+        this.throttleTimeoutId = setTimeout(() => {
+            this.throttleTimeoutId = undefined;
+            if (this.isStarted) {
+                this.attachActivityListeners();
+            }
+        }, ACTIVITY_THROTTLE_MS);
         this.activitySubject.next();
     };
 
     private readonly handleVisibilityChange = (): void => {
         this.visibilitySubject.next(this.document.visibilityState);
     };
+
+    private attachActivityListeners(): void {
+        if (this.areActivityListenersAttached) {
+            return;
+        }
+
+        ACTIVITY_EVENTS.forEach((eventName) => this.document.addEventListener(eventName, this.handleActivity, getActivityListenerOptions(eventName)));
+        this.areActivityListenersAttached = true;
+    }
+
+    private detachActivityListeners(): void {
+        if (!this.areActivityListenersAttached) {
+            return;
+        }
+
+        ACTIVITY_EVENTS.forEach((eventName) =>
+            this.document.removeEventListener(eventName, this.handleActivity, getActivityListenerOptions(eventName))
+        );
+        this.areActivityListenersAttached = false;
+    }
+
+    private clearThrottle(): void {
+        if (this.throttleTimeoutId === undefined) {
+            return;
+        }
+
+        clearTimeout(this.throttleTimeoutId);
+        this.throttleTimeoutId = undefined;
+    }
 }
