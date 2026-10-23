@@ -18,12 +18,14 @@
 import { Direction } from '@angular/cdk/bidi';
 import { NgClass, NgStyle } from '@angular/common';
 import {
+    afterNextRender,
     ChangeDetectorRef,
     Component,
     DestroyRef,
     ElementRef,
     EventEmitter,
     inject,
+    Injector,
     Input,
     OnInit,
     OnDestroy,
@@ -57,6 +59,7 @@ import { IconModule } from '../icon/icon.module';
 export class SearchTextInputComponent implements OnInit, OnDestroy {
     private readonly userPreferencesService = inject(UserPreferencesService);
     private readonly changeDetectorRef = inject(ChangeDetectorRef);
+    private readonly injector = inject(Injector);
 
     /** Toggles auto-completion of the search input field. */
     @Input()
@@ -193,15 +196,18 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
                         this.searchInput.nativeElement.blur();
                     }
 
-                    setTimeout(() => {
-                        if (this.restoreFocusToSearchIcon) {
-                            this.restoreFocusToSearchIcon = false;
-                            this.changeDetectorRef.detectChanges();
-                            this.searchIconButton.focus();
-                        }
-                    }, 0);
+                    afterNextRender(
+                        () => {
+                            if (this.restoreFocusToSearchIcon) {
+                                this.restoreFocusToSearchIcon = false;
+                                this.changeDetectorRef.detectChanges();
+                                this.searchIconButton.focus();
+                            }
+                        },
+                        { injector: this.injector }
+                    );
                 } else if (this.subscriptAnimationState.value === 'active' && this.isDefaultStateCollapsed()) {
-                    setTimeout(() => this.searchInput.nativeElement.focus(), 0);
+                    afterNextRender(() => this.searchInput.nativeElement.focus(), { injector: this.injector });
                 }
                 this.emitVisibilitySearch();
             }
