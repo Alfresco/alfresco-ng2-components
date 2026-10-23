@@ -40,30 +40,30 @@ export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
     private readonly extensionService = inject(ExtensionService);
 
     @ViewChild('content', { read: ViewContainerRef, static: true })
-    content: ViewContainerRef;
+    content!: ViewContainerRef;
 
     /** ID string of the component to preview. */
     @Input()
-    id: string;
+    id!: string;
 
     /** Identifier of a node that is opened by the viewer. */
     @Input()
-    nodeId: string = null;
+    nodeId: string | null = null;
 
     /** URL of the content in the repository. */
     @Input()
-    url: string;
+    url!: string;
 
     /** File extension (.jpg, .png, etc) for the viewer. */
     @Input()
-    extension: string;
+    extension!: string;
 
     @Output()
     contentLoaded = new EventEmitter<void>();
 
     private readonly destroyRef = inject(DestroyRef);
 
-    private componentRef: ComponentRef<any>;
+    private componentRef: ComponentRef<any> | null = null;
 
     ngOnInit() {
         if (!this.id) {

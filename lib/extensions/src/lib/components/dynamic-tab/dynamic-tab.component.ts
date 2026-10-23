@@ -15,7 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnDestroy, ViewChild, ViewContainerRef, ComponentRef, OnChanges, SimpleChanges, inject } from '@angular/core';
+import {
+    Component,
+    Input,
+    OnInit,
+    OnDestroy,
+    ViewChild,
+    ViewContainerRef,
+    ComponentRef,
+    OnChanges,
+    SimpleChanges,
+    reflectComponentType,
+    inject
+} from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { ExtensionService } from '../../services/extension.service';
 
@@ -27,16 +39,16 @@ export class DynamicTabComponent implements OnInit, OnChanges, OnDestroy {
     private readonly extensions = inject(ExtensionService);
 
     @ViewChild('content', { read: ViewContainerRef, static: true })
-    content: ViewContainerRef;
+    content!: ViewContainerRef;
 
     /** Unique ID string for the component to show. */
     @Input()
-    id: string;
+    id!: string;
 
     @Input()
-    node: Node;
+    node!: Node;
 
-    private componentRef: ComponentRef<any>;
+    private componentRef: ComponentRef<any> | null = null;
 
     ngOnInit() {
         const componentType = this.extensions.getComponentById(this.id);
@@ -62,7 +74,15 @@ export class DynamicTabComponent implements OnInit, OnChanges, OnDestroy {
 
     private updateInstance() {
         if (this.componentRef?.instance) {
-            this.componentRef.instance.node = this.node;
+            const nodeInput = reflectComponentType(this.componentRef.componentType)?.inputs.find(
+                (input) => input.propName === 'node' || input.templateName === 'node'
+            );
+
+            if (nodeInput) {
+                this.componentRef.setInput(nodeInput.templateName, this.node);
+            } else {
+                this.componentRef.instance.node = this.node;
+            }
         }
     }
 }

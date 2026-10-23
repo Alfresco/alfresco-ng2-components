@@ -36,11 +36,6 @@ export class ExtensionLoaderService {
                 if (result) {
                     let config = result.config;
 
-                    const override = sessionStorage.getItem('app.extension.config');
-                    if (override) {
-                        config = JSON.parse(override);
-                    }
-
                     if (!config.$references?.length) {
                         config.$references = this.filterIgnoredExtensions(extensions || [], config.$ignoreReferenceList);
                     } else {

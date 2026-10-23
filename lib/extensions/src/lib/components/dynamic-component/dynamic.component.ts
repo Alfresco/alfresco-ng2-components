@@ -25,13 +25,13 @@ import {
     OnChanges,
     SimpleChanges,
     AfterViewInit,
+    reflectComponentType,
     inject
 } from '@angular/core';
 import { ExtensionService } from '../../services/extension.service';
 import { ExtensionComponent } from '../../services/component-register.service';
 import { MatMenuItem } from '@angular/material/menu';
 
-// cSpell:words lifecycle
 @Component({
     selector: 'adf-dynamic-component',
     template: `<div #content></div>`
@@ -40,24 +40,25 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
     private readonly extensions = inject(ExtensionService);
 
     @ViewChild('content', { read: ViewContainerRef, static: true })
-    content: ViewContainerRef;
+    content!: ViewContainerRef;
 
     /** Unique ID string for the component to show. */
-    @Input() id: string;
+    @Input() id!: string;
 
     /** Data for the dynamically-loaded component instance. */
     @Input() data: any;
 
     /** Provides the menu item of dynamically-loaded component instance. */
-    menuItem: MatMenuItem;
+    menuItem: MatMenuItem | undefined;
 
-    private componentRef: ComponentRef<ExtensionComponent>;
-    private loaded: boolean = false;
+    private componentRef: ComponentRef<ExtensionComponent> | null = null;
 
     ngOnChanges(changes: SimpleChanges) {
-        if (!this.loaded) {
+        if (changes.id) {
+            this.menuItem = undefined;
+            this.destroyComponent();
             this.loadComponent();
-            this.loaded = true;
+            this.updateMenuItem();
         }
 
         if (changes.data) {
@@ -65,18 +66,14 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
         }
 
         this.updateInstance();
-        this.proxy('ngOnChanges', changes);
     }
 
     ngOnDestroy() {
-        if (this.componentCreated()) {
-            this.componentRef.destroy();
-            this.componentRef = null;
-        }
+        this.destroyComponent();
     }
 
     ngAfterViewInit() {
-        this.menuItem = this.componentRef?.instance?.menuItem;
+        this.updateMenuItem();
     }
 
     private loadComponent() {
@@ -88,22 +85,27 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
     }
 
     private updateInstance() {
-        if (this.componentCreated()) {
-            this.componentRef.instance.data = this.data;
+        if (this.componentRef) {
+            const dataInput = reflectComponentType(this.componentRef.componentType)?.inputs.find(
+                (input) => input.propName === 'data' || input.templateName === 'data'
+            );
+
+            if (dataInput) {
+                this.componentRef.setInput(dataInput.templateName, this.data);
+            } else {
+                this.componentRef.instance.data = this.data;
+            }
         }
     }
 
-    private proxy(lifecycleMethod: string, ...args: any[]) {
-        if (this.componentCreated() && this.lifecycleHookIsImplemented(lifecycleMethod)) {
-            this.componentRef.instance[lifecycleMethod].apply(this.componentRef.instance, args);
+    private updateMenuItem() {
+        this.menuItem = this.componentRef?.instance?.menuItem;
+    }
+
+    private destroyComponent() {
+        if (this.componentRef) {
+            this.componentRef.destroy();
+            this.componentRef = null;
         }
-    }
-
-    private componentCreated(): boolean {
-        return !!this.componentRef && !!this.componentRef.instance;
-    }
-
-    private lifecycleHookIsImplemented(lifecycleMethod: string): boolean {
-        return !!this.componentRef.instance[lifecycleMethod];
     }
 }
