@@ -36,16 +36,16 @@ describe('SessionTimeoutDialogComponent', () => {
 
     it('initializes remainingSeconds from dialogTimeoutMs', () => {
         const fixture = TestBed.createComponent(SessionTimeoutDialogComponent);
-        expect(fixture.componentInstance.remainingSeconds).toBe(3);
+        expect(fixture.componentInstance.remainingSeconds()).toBe(3);
     });
 
     it('counts down each second', fakeAsync(() => {
         const fixture = TestBed.createComponent(SessionTimeoutDialogComponent);
         fixture.detectChanges();
         tick(1000);
-        expect(fixture.componentInstance.remainingSeconds).toBe(2);
+        expect(fixture.componentInstance.remainingSeconds()).toBe(2);
         tick(1000);
-        expect(fixture.componentInstance.remainingSeconds).toBe(1);
+        expect(fixture.componentInstance.remainingSeconds()).toBe(1);
         fixture.destroy();
     }));
 

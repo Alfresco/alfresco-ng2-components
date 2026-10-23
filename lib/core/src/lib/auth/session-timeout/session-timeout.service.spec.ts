@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { NgZone } from '@angular/core';
 import { TestBed, fakeAsync, flushMicrotasks, tick } from '@angular/core/testing';
 import { Observable, Subject, defer } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,6 +26,26 @@ import { SessionTimeoutOptions, SESSION_TIMEOUT_OPTIONS } from './session-timeou
 import { IdleActivityTracker } from './idle-activity-tracker';
 import { SessionTimeoutSyncChannel, SessionTimeoutSyncEvent } from './session-timeout-sync-channel';
 import { SESSION_TIMEOUT_BACKDROP_CLASS } from './session-timeout-dialog.component';
+import { ZONE_NATIVE_PREFIX } from './zone-native-api';
+
+const nativeSetTimeoutName = `${ZONE_NATIVE_PREFIX}setTimeout`;
+const nativeClearTimeoutName = `${ZONE_NATIVE_PREFIX}clearTimeout`;
+
+interface NativeTimerSpies {
+    setTimeout: jasmine.Spy;
+    clearTimeout: jasmine.Spy;
+}
+
+/**
+ * The service schedules its timers with the zone-unpatched timer API, which `tick()` cannot advance.
+ * Routing them back to the patched timers keeps the fake clock in control of the session timeouts.
+ *
+ * @returns The spies installed over the unpatched timer API
+ */
+const useFakeClockForNativeTimers = (): NativeTimerSpies => ({
+    clearTimeout: spyOn<any>(window, nativeClearTimeoutName).and.callFake((handle: ReturnType<typeof setTimeout>) => clearTimeout(handle)),
+    setTimeout: spyOn<any>(window, nativeSetTimeoutName).and.callFake((handler: () => void, timeout: number) => setTimeout(handler, timeout))
+});
 
 describe('SessionTimeoutService', () => {
     let authService: {
@@ -48,6 +69,7 @@ describe('SessionTimeoutService', () => {
         stop: jasmine.Spy;
         activity$: Subject<void>;
         visibilityChange$: Subject<DocumentVisibilityState>;
+        lastActivityAt: number | undefined;
     };
     let syncChannel: {
         open: jasmine.Spy;
@@ -57,8 +79,10 @@ describe('SessionTimeoutService', () => {
     };
     let dialogClosed$: Subject<boolean | undefined>;
     let isLoggedIn: boolean;
+    let nativeTimers: NativeTimerSpies;
 
     const configureTestingModule = (sessionTimeoutOptions?: SessionTimeoutOptions, providerOptions?: SessionTimeoutOptions) => {
+        nativeTimers = useFakeClockForNativeTimers();
         isLoggedIn = true;
         logoutSideEffect = jasmine.createSpy('logoutSideEffect');
         authService = {
@@ -92,7 +116,8 @@ describe('SessionTimeoutService', () => {
             start: jasmine.createSpy('start'),
             stop: jasmine.createSpy('stop'),
             activity$: new Subject<void>(),
-            visibilityChange$: new Subject<DocumentVisibilityState>()
+            visibilityChange$: new Subject<DocumentVisibilityState>(),
+            lastActivityAt: undefined
         };
         syncChannel = {
             open: jasmine.createSpy('open'),
@@ -265,6 +290,24 @@ describe('SessionTimeoutService', () => {
 
         tick(250);
 
+        expect(dialog.open).toHaveBeenCalledTimes(1);
+    }));
+
+    it('should not open the dialog early when the tracker throttled the latest activity', fakeAsync(() => {
+        configureTestingModule({ enabled: true, idleTimeoutMs: 1000 });
+
+        startService();
+        tick(500);
+
+        tracker.lastActivityAt = Date.now();
+        tick(500);
+
+        expect(dialog.open).not.toHaveBeenCalled();
+
+        tick(499);
+        expect(dialog.open).not.toHaveBeenCalled();
+
+        tick(1);
         expect(dialog.open).toHaveBeenCalledTimes(1);
     }));
 
@@ -526,6 +569,16 @@ describe('SessionTimeoutService', () => {
         expect(dialog.open).toHaveBeenCalledTimes(1);
     }));
 
+    it('should schedule the idle timeout through the zone-unpatched timer API', fakeAsync(() => {
+        configureTestingModule({ enabled: true, idleTimeoutMs: 1000 });
+
+        startService();
+
+        expect(nativeTimers.setTimeout).toHaveBeenCalledWith(jasmine.any(Function), 1000);
+
+        tick(1000);
+    }));
+
     it('should post timeout message when dialog opens', fakeAsync(() => {
         configureTestingModule({ enabled: true, idleTimeoutMs: 1000 });
 
@@ -534,4 +587,25 @@ describe('SessionTimeoutService', () => {
 
         expect(syncChannel.post).toHaveBeenCalledWith('timeout');
     }));
+
+    describe('Angular zone stability', () => {
+        it('should not keep the Angular zone unstable while the session is armed', () => {
+            configureTestingModule({ enabled: true, idleTimeoutMs: 60000 });
+            nativeTimers.setTimeout.and.callThrough();
+            nativeTimers.clearTimeout.and.callThrough();
+            const ngZone = TestBed.inject(NgZone);
+            const service = TestBed.inject(SessionTimeoutService);
+
+            ngZone.run(() => {
+                service.start();
+                authService.onLogin.next(undefined);
+            });
+
+            expect(nativeTimers.setTimeout).toHaveBeenCalledWith(jasmine.any(Function), 60000);
+            expect(ngZone.hasPendingMacrotasks).toBeFalse();
+            expect(ngZone.isStable).toBeTrue();
+
+            service.ngOnDestroy();
+        });
+    });
 });
