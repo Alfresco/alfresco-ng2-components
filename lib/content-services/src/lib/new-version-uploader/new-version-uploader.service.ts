@@ -71,7 +71,8 @@ export class NewVersionUploaderService {
                             showVersionsOnly,
                             allowViewVersions: data.allowViewVersions ?? true,
                             allowVersionDelete: data.allowVersionDelete ?? true,
-                            showActions: data.showActions ?? true
+                            showActions: data.showActions ?? true,
+                            ...(data.onUploadStarted ? { onUploadStarted: data.onUploadStarted } : {})
                         },
                         panelClass: this.composePanelClass(showVersionsOnly),
                         width: '630px',

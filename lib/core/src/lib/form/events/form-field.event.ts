@@ -17,12 +17,15 @@
 
 import { FormFieldModel } from '../components/widgets/core/form-field.model';
 import { FormEvent } from './form.event';
+import { currentFormWrite, FormWriteContext } from '../models/form-state.model';
 
 export class FormFieldEvent extends FormEvent {
     readonly field: FormFieldModel;
+    readonly writeContext?: FormWriteContext;
 
     constructor(form: any, field: FormFieldModel) {
         super(form);
         this.field = field;
+        this.writeContext = currentFormWrite(field);
     }
 }

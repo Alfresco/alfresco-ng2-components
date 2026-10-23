@@ -31,6 +31,17 @@ import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import { TranslateService } from '@ngx-translate/core';
+import { By } from '@angular/platform-browser';
+import { FormRendererComponent } from '../../form-renderer.component';
+import { FORM_RULES_MANAGER, FormInvocationProvider } from '../../../models/form-rules.model';
+import {
+    bindFormState,
+    commitFormState,
+    currentFormWrite,
+    FormInvocationRequest,
+    FormResetResult,
+    FormWriteContext
+} from '../../../models/form-state.model';
 
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
@@ -613,7 +624,8 @@ describe('AmountWidgetComponent - rendering', () => {
             widget.ngOnInit();
 
             const updateValueSpy = spyOn(widget, 'updateValue').and.callThrough();
-            formService.formFieldValueChanged.next(new FormFieldEvent(mockField.form, { ...mockField, value: '200' } as FormFieldModel));
+            mockField.restoreRuntimeValue('200');
+            formService.formFieldValueChanged.next(new FormFieldEvent(mockField.form, mockField));
             await fixture.whenStable();
 
             expect(updateValueSpy).toHaveBeenCalledWith('200');
@@ -633,7 +645,8 @@ describe('AmountWidgetComponent - rendering', () => {
             widget.isInputInFocus = false;
             widget.ngOnInit();
 
-            formService.formFieldValueChanged.next(new FormFieldEvent(mockField.form, { ...mockField, value: '200' } as FormFieldModel));
+            mockField.restoreRuntimeValue('200');
+            formService.formFieldValueChanged.next(new FormFieldEvent(mockField.form, mockField));
 
             expect(updateValueSpy).not.toHaveBeenCalled();
             expect(widget.amountWidgetValue).toBe('200');
@@ -652,7 +665,8 @@ describe('AmountWidgetComponent - rendering', () => {
             widget.amountWidgetValue = '100';
             widget.ngOnInit();
             const updateValueSpy = spyOn(widget, 'updateValue');
-            formService.formFieldValueChanged.next(new FormFieldEvent(mockField.form, { ...mockField, value: '200' } as FormFieldModel));
+            mockField.restoreRuntimeValue('200');
+            formService.formFieldValueChanged.next(new FormFieldEvent(mockField.form, mockField));
 
             expect(updateValueSpy).not.toHaveBeenCalled();
             expect(widget.amountWidgetValue).toBe('100');
@@ -900,10 +914,10 @@ describe('AmountWidgetComponent - rendering', () => {
 
                 expect(field).toBeDefined();
                 expect(widget.field.value).toBe(newValue);
-                expect(widget.valueAsNumber).toBeUndefined();
+                expect(widget.valueAsNumber).toBe(Number(newValue));
                 expect(fieldValueBeforeBlur).toBe('1234.55');
                 expect(blurSpy).toHaveBeenCalled();
-                expect(widget.valueAsNumber).toBeUndefined();
+                expect(widget.valueAsNumber).toBe(Number(newValue));
                 expect(widget.amountWidgetValue).toBe('456789');
                 expect(fieldValue).toBe('456789');
             });
@@ -1061,5 +1075,534 @@ describe('AmountWidgetComponent settings', () => {
         };
         widget.field = field;
         expect(widget.placeholder).toBe('some placeholder');
+    });
+});
+
+describe('AmountWidgetComponent reset through the form renderer', () => {
+    for (const locale of [false, true]) {
+        describe(`locale display ${locale}`, () => {
+            let service: FormService;
+            let manager: { initialize: jasmine.Spy; destroy: jasmine.Spy; rulesOnlyProvider?: FormInvocationProvider };
+
+            beforeEach(() => {
+                manager = { initialize: jasmine.createSpy('initialize'), destroy: jasmine.createSpy('destroy') };
+                TestBed.configureTestingModule({
+                    imports: [FormRendererComponent],
+                    providers: [
+                        { provide: FORM_RULES_MANAGER, useValue: manager },
+                        { provide: TranslationService, useValue: { getLocale: () => 'en-US' } },
+                        { provide: ADF_AMOUNT_SETTINGS, useValue: { enableDisplayBasedOnLocale: locale } }
+                    ]
+                });
+                service = TestBed.inject(FormService);
+            });
+
+            function mount(value?: number) {
+                const form = new FormModel(
+                    {
+                        id: 'same-definition',
+                        version: 1,
+                        fields: [
+                            {
+                                id: 'container',
+                                type: 'container',
+                                numberOfColumns: 1,
+                                fields: { 1: [{ id: 'amount', type: 'amount', currency: 'USD', ...(value === undefined ? {} : { value }) }] }
+                            }
+                        ],
+                        outcomes: [{ id: 'clear', name: 'Clear', executionMode: 'rules-only', skipValidation: true }]
+                    },
+                    undefined,
+                    false,
+                    service
+                );
+                const fixture = TestBed.createComponent(FormRendererComponent);
+                fixture.componentRef.setInput('formDefinition', form);
+                fixture.detectChanges();
+                const widget = fixture.debugElement.query(By.directive(AmountWidgetComponent)).componentInstance as AmountWidgetComponent;
+                const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+                return {
+                    fixture,
+                    form,
+                    widget,
+                    input,
+                    field: form.getFieldById('amount'),
+                    outcome: form.outcomes.find((item) => item.id === 'clear')
+                };
+            }
+
+            async function settle(...fixtures: ComponentFixture<FormRendererComponent<unknown>>[]) {
+                for (const fixture of fixtures) {
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+                    fixture.detectChanges();
+                }
+            }
+
+            for (const focused of [false, true]) {
+                it(`should keep the mounted state through a reset and a marked write when focused is ${focused}`, async () => {
+                    const a = mount(10);
+                    const b = mount(700);
+                    await settle(a.fixture, b.fixture);
+                    a.form.changeFieldValue('amount', 100);
+                    await settle(a.fixture);
+                    if (focused) {
+                        a.input.dispatchEvent(new FocusEvent('focus'));
+                        a.input.value = '999';
+                        a.input.dispatchEvent(new Event('input'));
+                        await settle(a.fixture);
+                    }
+                    const bBefore = {
+                        value: b.field.value,
+                        display: b.input.value,
+                        cache: b.widget.amountWidgetValue,
+                        number: b.widget.valueAsNumber,
+                        serialized: b.form.values.amount
+                    };
+                    const fields = spyOn(service.formFieldValueChanged, 'next').and.callThrough();
+                    const rules = spyOn(service.formRulesEvent, 'next').and.callThrough();
+                    const reset = spyOn(a.form, 'resetToDefaults').and.callThrough();
+                    let captured: FormInvocationRequest;
+                    manager.rulesOnlyProvider = {
+                        enabled: true,
+                        execute: async (request) => {
+                            captured = request;
+                            expect(request.form).toBe(a.form);
+                            expect(request.renderer).toBe(a.fixture.componentInstance);
+                            const result = await request.reset();
+                            expect(result.status).toBe('complete');
+                            expect(a.field.value).toBe(10);
+                            expect(a.form.values.amount).toBe(10);
+                            expect(a.widget.valueAsNumber).toBe(10);
+                            expect(a.widget.amountWidgetValue).toBe(locale && !focused ? '$10' : '10');
+                            a.fixture.detectChanges();
+                            expect(a.input.value).toBe(locale && !focused ? '$10' : '10');
+                            expect(fields).not.toHaveBeenCalled();
+                            expect(rules).not.toHaveBeenCalled();
+                            request.form.changeFieldValue('amount', 42, request);
+                            a.fixture.detectChanges();
+                            expect(a.widget.valueAsNumber).toBe(42);
+                            expect(a.widget.amountWidgetValue).toBe(locale && !focused ? '$42' : '42');
+                            expect(a.input.value).toBe(locale && !focused ? '$42' : '42');
+                            return result;
+                        }
+                    };
+                    const terminal = jasmine.createSpy('terminal');
+                    const result = await new Promise<FormResetResult>((resolve) => {
+                        expect(
+                            a.fixture.componentInstance.dispatchRulesOnlyOutcome(a.outcome, (completed) => {
+                                terminal(completed);
+                                expect(a.field.value).toBe(42);
+                                expect(a.form.values.amount).toBe(42);
+                                expect(a.widget.valueAsNumber).toBe(42);
+                                expect(a.input.value).toBe(locale && !focused ? '$42' : '42');
+                                resolve(completed);
+                            })
+                        ).toBeTrue();
+                    });
+                    expect(result.status).toBe('complete');
+                    expect(reset).toHaveBeenCalledOnceWith(
+                        jasmine.objectContaining({ form: a.form, renderer: a.fixture.componentInstance }),
+                        jasmine.objectContaining({ editableFields: jasmine.any(Set) })
+                    );
+                    expect(terminal).toHaveBeenCalledTimes(1);
+                    expect(fields).toHaveBeenCalledTimes(1);
+                    const event = fields.calls.mostRecent().args[0];
+                    expect(event.form).toBe(a.form);
+                    expect(event.field).toBe(a.field);
+                    expect(event.writeContext).toBe(captured);
+                    expect(rules).not.toHaveBeenCalled();
+                    expect({
+                        value: b.field.value,
+                        display: b.input.value,
+                        cache: b.widget.amountWidgetValue,
+                        number: b.widget.valueAsNumber,
+                        serialized: b.form.values.amount
+                    }).toEqual(bBefore);
+                    if (focused) {
+                        a.input.dispatchEvent(new FocusEvent('blur'));
+                        await settle(a.fixture);
+                    }
+                    expect(a.input.value).toBe(locale ? '$42' : '42');
+                    expect(a.form.values.amount).toBe(42);
+                    a.input.dispatchEvent(new FocusEvent('focus'));
+                    a.input.value = '56';
+                    a.input.dispatchEvent(new Event('input'));
+                    await settle(a.fixture);
+                    a.input.dispatchEvent(new FocusEvent('blur'));
+                    await settle(a.fixture);
+                    expect(a.field.value).toBe('56');
+                    expect(a.form.values.amount).toBe(56);
+                    expect(a.widget.valueAsNumber).toBe(56);
+                    expect(a.widget.amountWidgetValue).toBe(locale ? '$56' : '56');
+                    expect(a.input.value).toBe(locale ? '$56' : '56');
+                    expect(b.field.value).toBe(bBefore.value);
+                    expect(b.input.value).toBe(bBefore.display);
+                    expect(b.form.values.amount).toBe(bBefore.serialized);
+                });
+
+                for (const value of [undefined, 0]) {
+                    it(`should keep the ${value === undefined ? 'empty' : 'zero'} reset value when focused is ${focused}`, async () => {
+                        const mounted = mount(value);
+                        await settle(mounted.fixture);
+                        mounted.form.changeFieldValue('amount', 100);
+                        await settle(mounted.fixture);
+                        if (focused) {
+                            mounted.input.dispatchEvent(new FocusEvent('focus'));
+                            mounted.input.value = '999';
+                            mounted.input.dispatchEvent(new Event('input'));
+                            await settle(mounted.fixture);
+                        }
+                        const fields = spyOn(service.formFieldValueChanged, 'next').and.callThrough();
+                        const rules = spyOn(service.formRulesEvent, 'next').and.callThrough();
+                        manager.rulesOnlyProvider = { enabled: true, execute: (request) => request.reset() };
+                        const result = await new Promise<FormResetResult>((resolve) => {
+                            mounted.fixture.componentInstance.dispatchRulesOnlyOutcome(mounted.outcome, resolve);
+                        });
+                        expect(result.status).toBe('complete');
+                        expect(mounted.field.value).toBe(value ?? null);
+                        if (value === undefined) {
+                            expect(mounted.form.values.amount).toBeNaN();
+                        } else {
+                            expect(mounted.form.values.amount).toBe(0);
+                        }
+                        expect(JSON.parse(JSON.stringify(mounted.form.values)).amount).toBe(value ?? null);
+                        expect(mounted.widget.valueAsNumber).toBe(value ?? null);
+                        expect(mounted.widget.amountWidgetValue).toBe(value === undefined ? null : locale && !focused ? '$0' : '0');
+                        await settle(mounted.fixture);
+                        expect(mounted.input.value).toBe(value === undefined ? '' : locale && !focused ? '$0' : '0');
+                        expect(fields).not.toHaveBeenCalled();
+                        expect(rules).not.toHaveBeenCalled();
+                        if (focused) {
+                            mounted.input.dispatchEvent(new FocusEvent('blur'));
+                            await settle(mounted.fixture);
+                        }
+                        expect(mounted.input.value).toBe(value === undefined ? '' : locale ? '$0' : '0');
+                        expect(mounted.field.value).toBe(value ?? null);
+                        if (value === undefined) {
+                            expect(mounted.form.values.amount).toBeNaN();
+                        } else {
+                            expect(mounted.form.values.amount).toBe(0);
+                        }
+                        expect(JSON.parse(JSON.stringify(mounted.form.values)).amount).toBe(value ?? null);
+                        expect(mounted.widget.valueAsNumber).toBe(value ?? null);
+                    });
+                }
+            }
+        });
+    }
+});
+
+describe('AmountWidgetComponent state projection', () => {
+    let service: FormService;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [AmountWidgetComponent],
+            providers: [{ provide: TranslationService, useValue: { getLocale: () => 'en-US' } }]
+        });
+        service = TestBed.inject(FormService);
+    });
+
+    function mount(locale: boolean, value: number) {
+        const form = new FormModel(
+            { id: 'same-definition', fields: [{ id: 'amount', type: 'amount', value, currency: 'USD' }] },
+            undefined,
+            false,
+            service
+        );
+        const fixture = TestBed.createComponent(AmountWidgetComponent);
+        const field = form.getFieldById('amount');
+        fixture.componentRef.setInput('field', field);
+        fixture.componentInstance.enableDisplayBasedOnLocale = locale;
+        const context: FormWriteContext = {
+            form,
+            renderer: {},
+            generation: {},
+            invocation: {},
+            documentVersion: '1',
+            outcomeId: 'clear',
+            isCurrent: () => true
+        };
+        bindFormState(form, context.renderer, context.generation);
+        fixture.detectChanges();
+        return { form, fixture, field, context };
+    }
+
+    async function settle(...fixtures: ComponentFixture<AmountWidgetComponent>[]) {
+        for (const fixture of fixtures) {
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+        }
+    }
+
+    for (const locale of [false, true]) {
+        for (const focused of [false, true]) {
+            it(`should project a silent commit and a marked write only into the bound widget when locale display is ${locale} and focus is ${focused}`, async () => {
+                const a = mount(locale, 100);
+                const b = mount(locale, 700);
+                await settle(a.fixture, b.fixture);
+                const widget = a.fixture.componentInstance;
+                const input: HTMLInputElement = a.fixture.nativeElement.querySelector('input');
+                const bInput: HTMLInputElement = b.fixture.nativeElement.querySelector('input');
+                const bBefore = {
+                    display: bInput.value,
+                    cache: b.fixture.componentInstance.amountWidgetValue,
+                    number: b.fixture.componentInstance.valueAsNumber,
+                    serialized: b.form.values.amount
+                };
+                if (focused) {
+                    input.dispatchEvent(new FocusEvent('focus'));
+                    input.value = '999';
+                    input.dispatchEvent(new Event('input'));
+                    await settle(a.fixture);
+                }
+                const events: FormFieldEvent[] = [];
+                const subscription = service.formFieldValueChanged.subscribe((event) => events.push(event));
+                const rules = spyOn(service.formRulesEvent, 'next').and.callThrough();
+                expect(commitFormState(a.field, 10, a.context)).toBeTrue();
+                await settle(a.fixture, b.fixture);
+                expect(events.length).toBe(0);
+                expect(rules).not.toHaveBeenCalled();
+                expect(widget.valueAsNumber).toBe(10);
+                expect(widget.amountWidgetValue).toBe(locale && !focused ? '$10' : '10');
+                expect(input.value).toBe(locale && !focused ? '$10' : '10');
+                expect(a.form.values.amount).toBe(10);
+                a.form.changeFieldValue('amount', 42, a.context);
+                await settle(a.fixture, b.fixture);
+                expect(events.length).toBe(1);
+                expect(events[0].form).toBe(a.form);
+                expect(events[0].field).toBe(a.field);
+                expect(events[0].writeContext).toBe(a.context);
+                expect(currentFormWrite(a.field)).toBeUndefined();
+                expect(a.field.value).toBe(42);
+                expect(a.form.values.amount).toBe(42);
+                expect(widget.valueAsNumber).toBe(42);
+                expect(widget.amountWidgetValue).toBe(locale && !focused ? '$42' : '42');
+                expect(input.value).toBe(locale && !focused ? '$42' : '42');
+                expect(b.field.value).toBe(700);
+                expect(bInput.value).toBe(bBefore.display);
+                expect(b.fixture.componentInstance.amountWidgetValue).toBe(bBefore.cache);
+                expect(b.fixture.componentInstance.valueAsNumber).toBe(bBefore.number);
+                expect(b.form.values.amount).toBe(bBefore.serialized);
+                if (focused) {
+                    input.dispatchEvent(new FocusEvent('blur'));
+                }
+                await settle(a.fixture);
+                expect(input.value).toBe(locale ? '$42' : '42');
+                expect(a.form.values.amount).toBe(42);
+                input.dispatchEvent(new FocusEvent('focus'));
+                input.value = '56';
+                input.dispatchEvent(new Event('input'));
+                await settle(a.fixture);
+                expect(a.form.values.amount).toBe(56);
+                expect(input.value).toBe('56');
+                input.dispatchEvent(new FocusEvent('blur'));
+                await settle(a.fixture);
+                expect(input.value).toBe(locale ? '$56' : '56');
+                expect(widget.amountWidgetValue).toBe(locale ? '$56' : '56');
+                expect(a.field.value).toBe('56');
+                expect(a.form.values.amount).toBe(56);
+                expect(a.field.isValid).toBeTrue();
+                expect(widget.valueAsNumber).toBe(56);
+                expect(bInput.value).toBe(bBefore.display);
+                subscription.unsubscribe();
+            });
+        }
+    }
+
+    it('should reject commits and writes without notification when the generation is stale or the write is cancelled', async () => {
+        const a = mount(true, 100);
+        const publish = spyOn(service.formFieldValueChanged, 'next').and.callThrough();
+        bindFormState(a.form, a.context.renderer, {});
+        expect(commitFormState(a.field, 10, a.context)).toBeFalse();
+        a.form.changeFieldValue('amount', 42, a.context);
+        bindFormState(a.form, a.context.renderer, a.context.generation);
+        const cancelled = { ...a.context, isCurrent: () => false };
+        a.form.changeFieldValue('amount', 42, cancelled);
+        expect(commitFormState(a.field, 10, cancelled)).toBeFalse();
+        await settle(a.fixture);
+        expect(a.field.value).toBe(100);
+        expect(publish).not.toHaveBeenCalled();
+    });
+
+    it('should not project a marked write when an earlier observer invalidates it', async () => {
+        let valid = true;
+        const subscription = service.formFieldValueChanged.subscribe((event) => {
+            if (event.writeContext) {
+                valid = false;
+            }
+        });
+        const a = mount(true, 100);
+        const context = { ...a.context, isCurrent: () => valid };
+        a.form.changeFieldValue('amount', 42, context);
+        await settle(a.fixture);
+        expect(a.form.values.amount).toBe(42);
+        expect(a.fixture.componentInstance.amountWidgetValue).toBe('$100');
+        expect(a.fixture.componentInstance.valueAsNumber).toBe(100);
+        subscription.unsubscribe();
+    });
+
+    for (const locale of [false, true]) {
+        it(`should project a zero commit into a focused input when locale display is ${locale}`, async () => {
+            const a = mount(locale, 100);
+            const widget = a.fixture.componentInstance;
+            const input: HTMLInputElement = a.fixture.nativeElement.querySelector('input');
+            input.dispatchEvent(new FocusEvent('focus'));
+            expect(commitFormState(a.field, 0, a.context)).toBeTrue();
+            await settle(a.fixture);
+            expect(widget.valueAsNumber).toBe(0);
+            expect(widget.amountWidgetValue).toBe('0');
+            expect(input.value).toBe('0');
+            expect(a.form.values.amount).toBe(0);
+        });
+
+        it(`should project an empty commit into a focused input without restoring the draft on blur when locale display is ${locale}`, async () => {
+            const a = mount(locale, 100);
+            const widget = a.fixture.componentInstance;
+            const input: HTMLInputElement = a.fixture.nativeElement.querySelector('input');
+            input.dispatchEvent(new FocusEvent('focus'));
+            expect(commitFormState(a.field, null, a.context)).toBeTrue();
+            await settle(a.fixture);
+            expect(widget.valueAsNumber).toBeNull();
+            expect(widget.amountWidgetValue).toBeNull();
+            expect(input.value).toBe('');
+            expect(a.form.values.amount).toBeNaN();
+            input.dispatchEvent(new FocusEvent('blur'));
+            await settle(a.fixture);
+            expect(input.value).toBe('');
+        });
+    }
+
+    it('should keep the focused draft for an ordinary write and stop projecting when destroyed', async () => {
+        const a = mount(true, 100);
+        await settle(a.fixture);
+        const widget = a.fixture.componentInstance;
+        a.fixture.nativeElement.querySelector('input').dispatchEvent(new FocusEvent('focus'));
+        a.form.changeFieldValue('amount', 25);
+        await settle(a.fixture);
+        expect(widget.amountWidgetValue).toBe('100');
+        expect(a.form.values.amount).toBe(25);
+        a.fixture.destroy();
+        commitFormState(a.field, 10, a.context);
+        expect(widget.amountWidgetValue).toBe('100');
+    });
+
+    it('should keep the numeric value current when a genuine edit follows a marked write with locale display disabled', async () => {
+        const a = mount(false, 100);
+        a.form.changeFieldValue('amount', 42, a.context);
+        await settle(a.fixture);
+        const input: HTMLInputElement = a.fixture.nativeElement.querySelector('input');
+        input.dispatchEvent(new FocusEvent('focus'));
+        input.value = '56';
+        input.dispatchEvent(new Event('input'));
+        await settle(a.fixture);
+        expect(a.form.values.amount).toBe(56);
+        expect(a.fixture.componentInstance.amountWidgetValue).toBe('56');
+        expect(a.fixture.componentInstance.valueAsNumber).toBe(56);
+    });
+
+    for (const locale of [false, true]) {
+        for (const focused of [false, true]) {
+            it(`should ignore a stale widget mount when the form is rebound and locale display is ${locale} and focus is ${focused}`, async () => {
+                const old = mount(locale, 100);
+                const oldWidget = old.fixture.componentInstance;
+                const oldInput: HTMLInputElement = old.fixture.nativeElement.querySelector('input');
+                if (focused) {
+                    oldInput.dispatchEvent(new FocusEvent('focus'));
+                    oldInput.value = '999';
+                    oldInput.dispatchEvent(new Event('input'));
+                }
+                await settle(old.fixture);
+                const oldState = {
+                    display: oldInput.value,
+                    cache: oldWidget.amountWidgetValue,
+                    number: oldWidget.valueAsNumber
+                };
+                const currentContext = { ...old.context, renderer: {}, generation: {}, invocation: {} };
+                bindFormState(old.form, currentContext.renderer, currentContext.generation);
+                const currentFixture = TestBed.createComponent(AmountWidgetComponent);
+                const currentWidget = currentFixture.componentInstance;
+                currentFixture.componentRef.setInput('field', old.field);
+                currentWidget.enableDisplayBasedOnLocale = locale;
+                currentFixture.detectChanges();
+                const currentInput: HTMLInputElement = currentFixture.nativeElement.querySelector('input');
+                if (focused) {
+                    currentInput.dispatchEvent(new FocusEvent('focus'));
+                }
+                expect(commitFormState(old.field, 10, currentContext)).toBeTrue();
+                old.form.changeFieldValue('amount', 42, currentContext);
+                await settle(old.fixture, currentFixture);
+                expect(oldInput.value).toBe(oldState.display);
+                expect(oldWidget.amountWidgetValue).toBe(oldState.cache);
+                expect(oldWidget.valueAsNumber).toBe(oldState.number);
+                expect(currentInput.value).toBe(locale && !focused ? '$42' : '42');
+                expect(currentWidget.amountWidgetValue).toBe(locale && !focused ? '$42' : '42');
+                expect(currentWidget.valueAsNumber).toBe(42);
+                expect(old.field.value).toBe(42);
+                expect(old.form.values.amount).toBe(42);
+                expect(commitFormState(old.field, 1000, old.context)).toBeFalse();
+                old.form.changeFieldValue('amount', 1000, old.context);
+                expect(old.form.values.amount).toBe(42);
+                old.form.changeFieldValue('amount', 25);
+                await settle(old.fixture, currentFixture);
+                expect(oldInput.value).toBe(oldState.display);
+                expect(oldWidget.amountWidgetValue).toBe(oldState.cache);
+                expect(oldWidget.valueAsNumber).toBe(oldState.number);
+                expect(old.form.values.amount).toBe(25);
+                const publish = spyOn(service.formFieldValueChanged, 'next').and.callThrough();
+                const rules = spyOn(service.formRulesEvent, 'next').and.callThrough();
+                const touched = spyOn(oldWidget, 'markAsTouched').and.callThrough();
+                oldInput.dispatchEvent(new FocusEvent('focus'));
+                oldInput.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+                oldInput.value = '888';
+                oldInput.dispatchEvent(new Event('input', { bubbles: true }));
+                oldInput.dispatchEvent(new FocusEvent('blur'));
+                oldInput.dispatchEvent(new FocusEvent('focusout', { bubbles: true }));
+                await settle(old.fixture, currentFixture);
+                expect(old.form.values.amount).toBe(25);
+                expect(publish).not.toHaveBeenCalled();
+                expect(rules).not.toHaveBeenCalled();
+                expect(touched).not.toHaveBeenCalled();
+                currentInput.dispatchEvent(new FocusEvent('focus'));
+                currentInput.value = '56';
+                currentInput.dispatchEvent(new Event('input', { bubbles: true }));
+                currentInput.dispatchEvent(new FocusEvent('blur'));
+                await settle(old.fixture, currentFixture);
+                expect(old.form.values.amount).toBe(56);
+                expect(currentWidget.valueAsNumber).toBe(56);
+                expect(currentInput.value).toBe(locale ? '$56' : '56');
+                expect(publish).toHaveBeenCalledTimes(1);
+                expect(rules.calls.allArgs().filter(([event]) => event.type === 'fieldValueChanged').length).toBe(1);
+            });
+        }
+    }
+
+    it('should not project commits when the widget was initialized before the form was bound', async () => {
+        const form = new FormModel({ fields: [{ id: 'amount', type: 'amount', value: 100, currency: 'USD' }] }, undefined, false, service);
+        const fixture = TestBed.createComponent(AmountWidgetComponent);
+        const field = form.getFieldById('amount');
+        fixture.componentRef.setInput('field', field);
+        fixture.componentInstance.enableDisplayBasedOnLocale = true;
+        fixture.detectChanges();
+        await settle(fixture);
+        const context: FormWriteContext = {
+            form,
+            renderer: {},
+            generation: {},
+            invocation: {},
+            documentVersion: '1',
+            outcomeId: 'clear',
+            isCurrent: () => true
+        };
+        bindFormState(form, context.renderer, context.generation);
+        expect(commitFormState(field, 10, context)).toBeTrue();
+        form.changeFieldValue('amount', 42, context);
+        await settle(fixture);
+        expect(form.values.amount).toBe(42);
+        expect(fixture.componentInstance.amountWidgetValue).toBe('$100');
+        expect(fixture.componentInstance.valueAsNumber).toBe(100);
+        expect(fixture.nativeElement.querySelector('input').value).toBe('$100');
     });
 });

@@ -28,6 +28,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { UploadVersionButtonComponent } from '../upload';
+import { UploadFilesEvent } from '../upload/components/upload-files.event';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -106,6 +107,10 @@ export class VersionUploadComponent implements OnInit {
     /** Emitted when the upload starts */
     @Output()
     uploadStarted = new EventEmitter<FileUploadEvent>();
+
+    /** Emitted when a local file upload begins, before the upload is queued. */
+    @Output()
+    localUploadStarted = new EventEmitter<UploadFilesEvent>();
 
     private readonly destroyRef = inject(DestroyRef);
 

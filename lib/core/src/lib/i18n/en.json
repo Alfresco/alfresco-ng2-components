@@ -32,6 +32,7 @@
     "OPEN_HISTORY": "Open notification history"
   },
   "FORM": {
+    "OUTCOME_EXECUTION_FAILED": "The form action could not be completed. Some changes may have been applied.",
     "SIGNAL_FORM": {
       "WIDGET_LOADING": "Loading…",
       "WIDGET_UNSUPPORTED": "This field can't be shown: the field type {{ type }} isn't available.",

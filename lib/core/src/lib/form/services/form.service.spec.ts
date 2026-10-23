@@ -16,9 +16,12 @@
  */
 
 import { TestBed } from '@angular/core/testing';
+import { Subscription } from 'rxjs';
 import { formModelTabs } from '../../mock';
 import { FORM_SERVICE_FIELD_VALIDATORS_TOKEN, FormService } from './form.service';
 import { FORM_FIELD_VALIDATORS, FormFieldValidator } from '../public-api';
+import { FormModel } from '../components/widgets/core/form.model';
+import { FormStateCommit, FormWriteContext } from '../models/form-state.model';
 
 const fakeValidator = {
     supportedTypes: ['test'],
@@ -48,6 +51,56 @@ describe('Form service', () => {
             expect(formModelTabs.formRepresentation.formDefinition).toBeDefined();
             const formParsed = service.parseForm(formModelTabs);
             expect(formParsed.fieldValidators).toEqual([...FORM_FIELD_VALIDATORS, fakeValidator]);
+        });
+    });
+
+    describe('formState', () => {
+        let form: FormModel;
+        let context: FormWriteContext;
+        let commits: FormStateCommit[];
+        let subscription: Subscription;
+
+        beforeEach(() => {
+            form = new FormModel({ id: 'form', fields: [{ id: 'text', type: 'text', value: 'authored' }] }, undefined, false, service);
+            context = { form, renderer: {}, generation: {}, invocation: {}, documentVersion: '1', outcomeId: 'clear', isCurrent: () => true };
+            service.formState.bind(form, context.renderer, context.generation);
+            commits = [];
+            subscription = service.formState.commits.subscribe((commit) => commits.push(commit));
+        });
+
+        afterEach(() => subscription.unsubscribe());
+
+        it('should commit silently and publish the commit when the mount is current', () => {
+            const field = form.getFieldById('text');
+            const mount = service.formState.captureMount(field);
+            const edits = spyOn(service.formFieldValueChanged, 'next');
+            const rules = spyOn(service.formRulesEvent, 'next');
+            expect(mount).toEqual({ form, field, renderer: context.renderer, generation: context.generation });
+            expect(service.formState.isMountCurrent(field, mount)).toBeTrue();
+            expect(service.formState.isProjectionCurrent(field, context, mount)).toBeTrue();
+            expect(service.formState.commit(field, 'reset', context)).toBeTrue();
+            expect(form.values.text).toBe('reset');
+            expect(commits).toEqual([{ field, context }]);
+            expect(edits).not.toHaveBeenCalled();
+            expect(rules).not.toHaveBeenCalled();
+        });
+
+        it('should reject the commit and the mount when the form is bound to another renderer', () => {
+            const field = form.getFieldById('text');
+            const mount = service.formState.captureMount(field);
+            service.formState.bind(form, {}, {});
+            expect(service.formState.isMountCurrent(field, mount)).toBeFalse();
+            expect(service.formState.isProjectionCurrent(field, context, mount)).toBeFalse();
+            expect(service.formState.commit(field, 'stale', context)).toBeFalse();
+            expect(form.values.text).toBe('authored');
+            expect(commits).toEqual([]);
+        });
+
+        it('should project a field value only when the invocation is current', () => {
+            const field = form.getFieldById('text');
+            service.formState.project(field, context);
+            service.formState.project(field, { ...context, isCurrent: () => false });
+            expect(commits).toEqual([{ field, context }]);
         });
     });
 });

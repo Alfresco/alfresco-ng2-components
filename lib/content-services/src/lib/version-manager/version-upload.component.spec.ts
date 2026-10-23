@@ -25,6 +25,9 @@ import { By } from '@angular/platform-browser';
 import { UploadVersionButtonComponent } from '../upload';
 import { FileUploadErrorEvent, FileUploadEvent } from '../common';
 import { NoopAuthModule } from '@alfresco/adf-core';
+import { UploadFilesEvent } from '../upload/components/upload-files.event';
+import { FileModel } from '../common/models/file.model';
+import { EventEmitter } from '@angular/core';
 
 describe('VersionUploadComponent', () => {
     let component: VersionUploadComponent;
@@ -117,6 +120,16 @@ describe('VersionUploadComponent', () => {
 
         it('should be emitted uploadStarted when started uploading', () => {
             expect(component.uploadStarted.emit).toHaveBeenCalledWith(uploadEvent);
+        });
+
+        it('should forward the exact local begin event synchronously and preserve prevention', () => {
+            const file = new FileModel(new File(['version'], 'version.pdf'));
+            const event = new UploadFilesEvent([file], uploadService, new EventEmitter(), new EventEmitter());
+            const received = jasmine.createSpy('local begin').and.callFake((started: UploadFilesEvent) => started.preventDefault());
+            component.localUploadStarted.subscribe(received);
+            uploadVersionButtonComponent.beginUpload.emit(event);
+            expect(received).toHaveBeenCalledOnceWith(event);
+            expect(event.defaultPrevented).toBeTrue();
         });
 
         it('should be emitted success when uploading is successful', () => {
