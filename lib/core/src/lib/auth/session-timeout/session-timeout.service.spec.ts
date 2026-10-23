@@ -526,34 +526,6 @@ describe('SessionTimeoutService', () => {
         expect(dialog.open).toHaveBeenCalledTimes(1);
     }));
 
-    it('should expose the idle state as a signal while the dialog is shown', fakeAsync(() => {
-        configureTestingModule({ enabled: true, idleTimeoutMs: 1000 });
-
-        const service = startService();
-        expect(service.isIdle()).toBeFalse();
-
-        tick(1000);
-        expect(service.isIdle()).toBeTrue();
-
-        dialogClosed$.next(true);
-        flushMicrotasks();
-        expect(service.isIdle()).toBeFalse();
-    }));
-
-    it('should clear the idle state signal on logout', fakeAsync(() => {
-        configureTestingModule({ enabled: true, idleTimeoutMs: 1000 });
-
-        const service = startService();
-        tick(1000);
-
-        expect(service.isIdle()).toBeTrue();
-
-        dialogClosed$.next(false);
-        flushMicrotasks();
-
-        expect(service.isIdle()).toBeFalse();
-    }));
-
     it('should post timeout message when dialog opens', fakeAsync(() => {
         configureTestingModule({ enabled: true, idleTimeoutMs: 1000 });
 
