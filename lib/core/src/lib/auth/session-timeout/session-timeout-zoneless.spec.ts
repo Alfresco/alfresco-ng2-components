@@ -21,6 +21,7 @@ import { Observable, Subject } from 'rxjs';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { NoopTranslateModule } from '../../testing';
+import { FakeNativeTimers } from './fake-native-timers.mock';
 import { IdleActivityTracker } from './idle-activity-tracker';
 import { SESSION_TIMEOUT_OPTIONS } from './session-timeout.config';
 import { SessionTimeoutSyncChannel } from './session-timeout-sync-channel';
@@ -28,8 +29,6 @@ import { SessionTimeoutService } from './session-timeout.service';
 
 const IDLE_TIMEOUT_MS = 50;
 const DIALOG_TIMEOUT_MS = 100;
-
-const wait = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('SessionTimeoutService without zone.js change detection', () => {
     let service: SessionTimeoutService;
@@ -39,12 +38,15 @@ describe('SessionTimeoutService without zone.js change detection', () => {
 
     const getDialogContinueButton = (): Element | null => document.querySelector('[data-automation-id="session-timeout-dialog__continue-button"]');
 
+    const fakeTimers = new FakeNativeTimers();
+
     const settle = async (ms: number) => {
-        await wait(ms);
+        fakeTimers.advance(ms);
         await TestBed.inject(ApplicationRef).whenStable();
     };
 
     beforeEach(() => {
+        fakeTimers.install();
         logout = jasmine.createSpy('logout').and.returnValue(new Observable<void>((subscriber) => subscriber.complete()));
         TestBed.configureTestingModule({
             imports: [NoopTranslateModule],
@@ -72,6 +74,7 @@ describe('SessionTimeoutService without zone.js change detection', () => {
 
     afterEach(() => {
         service.ngOnDestroy();
+        fakeTimers.uninstall();
     });
 
     it('should run without zone.js change detection', () => {
