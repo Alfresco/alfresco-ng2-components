@@ -42,5 +42,19 @@ export * from './errors';
 
 export * from './form-base.module';
 
-export * from './models/form-rules.model';
+export { FORM_RULES_MANAGER, FormRulesManager, ByPassFormRuleManager, formRulesManagerFactory } from './models/form-rules.model';
+export type { FormInvocationProvider, FormInvocationResult } from './models/form-rules.model';
 export * from './models/task-process-variable.model';
+export type {
+    AuthoredDefault,
+    FormWriteContext,
+    FormStateMount,
+    FormStateCommit,
+    FormResetStatus,
+    FormResetItemResult,
+    FormResetResult,
+    FormResetOptions,
+    FormContextualDefaultResolver,
+    FormResetCapability,
+    FormInvocationRequest
+} from './models/form-state.model';

@@ -32,6 +32,23 @@ import { FormRulesEvent } from '../events/form-rules.event';
 import { FormSpinnerEvent } from '../events';
 import { FormOutcomeRequestEvent } from '../events/form-outcome-request.event';
 import { FormFieldModel, FormFieldValidator } from '../components/widgets';
+import {
+    bindFormState,
+    captureAuthoredDefault,
+    captureFormStateMount,
+    commitFormState,
+    formStateCommits,
+    getAuthoredDefault,
+    isFormStateMountCurrent,
+    isFormStateProjectionCurrent,
+    beginFormMutation,
+    cancelFormMutation,
+    isFormMutating,
+    canWriteFormField,
+    withFormMutationWrite,
+    runFormMutation,
+    isFormStateCurrent
+} from '../models/form-state.model';
 
 export const FORM_SERVICE_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldValidator[]>('FORM_SERVICE_FIELD_VALIDATORS_TOKEN');
 
@@ -39,6 +56,27 @@ export const FORM_SERVICE_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldV
     providedIn: 'root'
 })
 export class FormService implements FormValidationService {
+    readonly formState = {
+        commits: formStateCommits.asObservable(),
+        captureMount: captureFormStateMount,
+        isMountCurrent: isFormStateMountCurrent,
+        isProjectionCurrent: isFormStateProjectionCurrent,
+        bind: bindFormState,
+        commit: commitFormState,
+        captureAuthoredDefault,
+        getAuthoredDefault,
+        beginMutation: beginFormMutation,
+        cancelMutation: cancelFormMutation,
+        isMutating: isFormMutating,
+        canWrite: canWriteFormField,
+        completePendingWrite: withFormMutationWrite,
+        runMutation: runFormMutation,
+        project: (field: FormFieldModel, context: Parameters<typeof commitFormState>[2]) => {
+            if (isFormStateCurrent(field, context)) {
+                formStateCommits.next({ field, context });
+            }
+        }
+    };
     private readonly fieldValidators: FormFieldValidator[];
     formLoaded = new Subject<FormEvent>();
     formDataRefreshed = new Subject<FormEvent>();
