@@ -161,6 +161,12 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnChange
 
         this.formService.formContentClicked.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((content) => this.formContentClicked.emit(content));
 
+        this.formService.formFieldValueChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+            if (this.disableSaveButton) {
+                this.disableSaveButton = false;
+            }
+        });
+
         this.formService.validateForm.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((validateFormEvent) => {
             if (validateFormEvent.errorsField.length > 0) {
                 this.formError.next(validateFormEvent.errorsField);
