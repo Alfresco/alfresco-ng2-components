@@ -67,7 +67,7 @@ const renderDateCell = (dateConfig: DateConfig, value: number | string | Date, t
 };
 
 const checkDisplayedDate = (expectedDate: string) => {
-    const displayedDate = testingUtils.getByCSS('time').nativeElement.textContent.trim();
+    const displayedDate = testingUtils.getByCSS('time').nativeElement.querySelector('[aria-hidden="true"]').textContent.trim();
 
     expect(displayedDate).toBeTruthy();
     expect(displayedDate).toBe(expectedDate);
