@@ -54,9 +54,14 @@ export class IdleActivityTracker implements OnDestroy {
     private readonly visibilitySubject = new Subject<DocumentVisibilityState>();
     private isStarted = false;
     private lastActivityEmitAt: number | undefined;
+    private lastActivitySeenAt: number | undefined;
 
     readonly activity$: Observable<void> = this.activitySubject.asObservable();
     readonly visibilityChange$: Observable<DocumentVisibilityState> = this.visibilitySubject.asObservable();
+
+    get lastActivityAt(): number | undefined {
+        return this.lastActivitySeenAt;
+    }
 
     start(): void {
         if (this.isStarted) {
@@ -65,6 +70,7 @@ export class IdleActivityTracker implements OnDestroy {
 
         this.isStarted = true;
         this.lastActivityEmitAt = undefined;
+        this.lastActivitySeenAt = undefined;
 
         const { addEventListener } = getNativeEventListenerApi(this.document);
         ACTIVITY_EVENTS.forEach((eventName) => addEventListener(eventName, this.handleActivity, getActivityListenerOptions(eventName)));
@@ -89,6 +95,8 @@ export class IdleActivityTracker implements OnDestroy {
 
     private readonly handleActivity = (): void => {
         const now = Date.now();
+        this.lastActivitySeenAt = now;
+
         if (this.lastActivityEmitAt !== undefined && now - this.lastActivityEmitAt < ACTIVITY_THROTTLE_MS) {
             return;
         }

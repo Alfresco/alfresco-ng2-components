@@ -145,6 +145,21 @@ describe('IdleActivityTracker', () => {
         expect(spy).toHaveBeenCalledWith(doc.visibilityState);
     });
 
+    it('records the timestamp of throttled activity that never reaches activity$', fakeAsync(() => {
+        const spy = jasmine.createSpy('activity');
+        tracker.activity$.subscribe(spy);
+        tracker.start();
+
+        doc.dispatchEvent(new Event('mousemove'));
+        const firstActivityAt = tracker.lastActivityAt ?? 0;
+
+        tick(ACTIVITY_THROTTLE_MS - 1);
+        doc.dispatchEvent(new Event('mousemove'));
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(tracker.lastActivityAt).toBe(firstActivityAt + ACTIVITY_THROTTLE_MS - 1);
+    }));
+
     it('throttles without scheduling a timer', fakeAsync(() => {
         const setTimeoutSpy = spyOn(window, 'setTimeout').and.callThrough();
         const spy = jasmine.createSpy('activity');
