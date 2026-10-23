@@ -63,7 +63,8 @@
                                     'adf-datatable__header--sorted-desc': isColumnSorted(col, 'desc')
                                 }"
                                 [ngStyle]="col.width && !lastColumn && { flex: getFlexValue(col) }"
-                                role="columnheader"
+                                [attr.role]="isRepresentationContent(col) ? null : 'columnheader'"
+                                [attr.aria-hidden]="isRepresentationContent(col) ? 'true' : null"
                                 [attr.aria-label]="
                                     col.srTitle
                                         ? (col.srTitle | translate)
@@ -560,6 +561,7 @@
                             <div
                                 role="gridcell"
                                 class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-center-actions-column-ie adf-datatable-actions-menu"
+                                aria-hidden="true"
                             >
                                 @if (actions && actionsPosition === 'right') {
                                     <button
