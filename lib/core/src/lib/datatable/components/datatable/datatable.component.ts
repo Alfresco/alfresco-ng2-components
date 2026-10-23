@@ -131,7 +131,7 @@ export type ShowHeaderMode = (typeof ShowHeaderMode)[keyof typeof ShowHeaderMode
     host: { class: 'adf-datatable' }
 })
 export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
-    private readonly dragDropStateService = inject(DragDropStateService);
+    protected readonly dragDropStateService = inject(DragDropStateService);
     private readonly elementRef = inject(ElementRef);
     private readonly matIconRegistry = inject(MatIconRegistry);
     private readonly sanitizer = inject(DomSanitizer);

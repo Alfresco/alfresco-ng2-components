@@ -74,13 +74,19 @@ adf-compact-breadcrumb {
                 }
             }
 
+            &:not(.adf-compact-breadcrumb-menu-list-item-disabled) {
+                .adf-compact-breadcrumb-menu-list-item-meta-icon {
+                    margin-right: 3px;
+                }
+            }
+
             img {
                 margin-left: 8px;
                 margin-right: 6px;
                 margin-top: 14px;
             }
 
-            div.adf-compact-breadcrumb-menu-list-item-current-marker {
+            div.adf-compact-breadcrumb-menu-list-item-meta {
                 align-self: center;
                 align-items: center;
                 display: flex;
