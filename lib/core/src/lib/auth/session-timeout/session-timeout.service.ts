@@ -16,7 +16,7 @@
  */
 
 import { DOCUMENT } from '@angular/common';
-import { Injectable, OnDestroy, inject } from '@angular/core';
+import { Injectable, NgZone, OnDestroy, inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -41,6 +41,7 @@ export class SessionTimeoutService implements OnDestroy {
     private readonly appConfigService = inject(AppConfigService);
     private readonly authService = inject(AuthenticationService);
     private readonly dialog = inject(MatDialog);
+    private readonly ngZone = inject(NgZone);
     private readonly providerOptions = inject<SessionTimeoutOptions>(SESSION_TIMEOUT_OPTIONS);
     private readonly tracker = inject(IdleActivityTracker);
     private readonly syncChannel = inject(SessionTimeoutSyncChannel);
@@ -309,7 +310,7 @@ export class SessionTimeoutService implements OnDestroy {
         if (shouldNotifyTabs) {
             this.syncChannel.post('logout');
         }
-        this.authService.logout().pipe(take(1)).subscribe();
+        this.ngZone.run(() => this.authService.logout().pipe(take(1)).subscribe());
     }
 
     private clearSessionState(): void {
