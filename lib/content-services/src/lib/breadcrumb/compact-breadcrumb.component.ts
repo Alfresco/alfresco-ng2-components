@@ -21,7 +21,6 @@ import {
     computed,
     DestroyRef,
     ElementRef,
-    HostListener,
     inject,
     input,
     OnInit,
@@ -44,6 +43,9 @@ import { MatIcon } from '@angular/material/icon';
     selector: 'adf-compact-breadcrumb',
     templateUrl: './compact-breadcrumb.component.html',
     styleUrls: ['./compact-breadcrumb.component.scss'],
+    host: {
+        '(document:keydown.escape)': 'closePanel()'
+    },
     imports: [
         MatButton,
         TranslatePipe,
@@ -62,7 +64,7 @@ import { MatIcon } from '@angular/material/icon';
     encapsulation: ViewEncapsulation.None
 })
 export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
-    private readonly dragDropStateService = inject(DragDropStateService);
+    protected readonly dragDropStateService = inject(DragDropStateService);
     private readonly renderer = inject(Renderer2);
     private readonly destroyRef = inject(DestroyRef);
     private readonly translateService = inject(TranslateService);
@@ -83,7 +85,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     private outsideClickTimeoutId: NodeJS.Timeout;
     private removeOutsideClickListener: () => void;
 
-    protected hoveredItem: PathElement;
+    protected readonly hoveredItem = signal<PathElement>(undefined);
 
     ngOnInit(): void {
         this.destroyRef.onDestroy(() => {
@@ -113,17 +115,30 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
 
     onDrop(event: CdkDragDrop<PathElement, PathElement, DataRow>): void {
         this.closePanel();
-        if (this.isRouteActivated()) {
+        if (this.isRouteEnabled()) {
             this.dropped.emit(event);
         }
     }
 
     onRouteClick(node: PathElement, event: MouseEvent): void {
-        if (this.isRouteActivated()) {
+        if (this.isRouteEnabled()) {
             this.navigate.emit(node);
         } else {
             event.preventDefault();
         }
+    }
+
+    onNodeHover(node: PathElement): void {
+        this.hoveredItem.set(node);
+        this.dragDropStateService.hoveredDropName.set(node.name);
+    }
+
+    protected closePanel(): void {
+        this.isPanelOpen.set(false);
+        clearTimeout(this.outsideClickTimeoutId);
+        this.outsideClickTimeoutId = null;
+        this.removeOutsideClickListener?.();
+        this.removeOutsideClickListener = null;
     }
 
     private getLevelDescription(nodeIndex: number): string {
@@ -140,15 +155,6 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         this.updatePanelPosition();
         this.isPanelOpen.set(true);
         this.outsideClickTimeoutId = setTimeout(() => this.listenForOutsideClicks());
-    }
-
-    @HostListener('document:keydown.escape')
-    private closePanel(): void {
-        this.isPanelOpen.set(false);
-        clearTimeout(this.outsideClickTimeoutId);
-        this.outsideClickTimeoutId = null;
-        this.removeOutsideClickListener?.();
-        this.removeOutsideClickListener = null;
     }
 
     private listenForOutsideClicks(): void {
@@ -172,7 +178,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         panelElement.style.left = `${triggerRect.left}px`;
     }
 
-    private isRouteActivated(): boolean {
-        return this.nodes().findIndex((node) => node === this.hoveredItem) !== this.nodes().length - 1;
+    private isRouteEnabled(): boolean {
+        return this.nodes().findIndex((node) => node === this.hoveredItem()) !== this.nodes().length - 1;
     }
 }

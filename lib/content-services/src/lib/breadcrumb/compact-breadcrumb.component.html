@@ -21,7 +21,7 @@
     cdkDropListGroup
     cdkDropList
     cdkDropListSortingDisabled
-    [cdkDropListData]="hoveredItem"
+    [cdkDropListData]="hoveredItem()"
     (cdkDropListDropped)="onDrop($event)">
     <div class="adf-compact-breadcrumb-menu-header">
         <h2 class="adf-compact-breadcrumb-menu-header-title">{{'BREADCRUMB.COMPACT_MENU.TITLE' | translate }}</h2>
@@ -38,11 +38,12 @@
                 cdkDrag
                 cdkDragDisabled
                 [disabled]="last"
-                (mouseenter)="hoveredItem = node">
+                (mouseenter)="onNodeHover(node)"
+                (mouseleave)="hoveredItem.set(null)">
                 <img
                     ngSrc="./assets/images/ft_ic_folder_empty.svg"
-                    width="26"
-                    height="30"
+                    width="24"
+                    height="24"
                     alt=""
                     matListItemIcon />
                 <a
@@ -58,14 +59,20 @@
                     class="adf-compact-breadcrumb-menu-description">
                     {{ levelsDescriptions()[index] }}
                 </p>
-                @if (last) {
-                    <div matListItemMeta class="adf-compact-breadcrumb-menu-list-item-current-marker">
-                        <mat-icon class="adf-compact-breadcrumb-menu-list-item-current-marker-icon">
+
+                <div matListItemMeta class="adf-compact-breadcrumb-menu-list-item-meta">
+                    @if (last) {
+                        <mat-icon class="adf-compact-breadcrumb-menu-list-item-meta-icon">
                             location_on
                         </mat-icon>
                         {{ 'BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL_ICON_LABEL' | translate }}
-                    </div>
-                }
+                    } @else if (dragDropStateService.dragging() && hoveredItem()?.id === node.id) {
+                        <mat-icon class="adf-compact-breadcrumb-menu-list-item-meta-icon">
+                            check_circle
+                        </mat-icon>
+                        {{ 'BREADCRUMB.COMPACT_MENU.DROP_HINT' | translate }}
+                    }
+                </div>
             </mat-list-item>
         }
     </mat-nav-list>

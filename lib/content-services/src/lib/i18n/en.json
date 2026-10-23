@@ -706,7 +706,8 @@
       "FIRST_LEVEL": "Level 1",
       "NOT_FIRST_LEVEL": "Level {{ level }} • In {{ ancestorName }}",
       "CURRENT_LEVEL": "Already in this folder",
-      "CURRENT_LEVEL_ICON_LABEL": "Current"
+      "CURRENT_LEVEL_ICON_LABEL": "Current",
+      "DROP_HINT": "Move here"
     }
   },
   "NAME_COLUMN_LINK": {
