@@ -21,11 +21,7 @@ import { Observable, Subject } from 'rxjs';
 
 export const ACTIVITY_EVENTS = ['click', 'keydown', 'mousedown', 'mousemove', 'pointerdown', 'scroll', 'touchstart', 'wheel'] as const;
 
-/**
- * Activity listeners are detached for this window after each emission, so high-frequency events
- * (e.g. mousemove) are throttled at the source: they neither reschedule the idle timer nor trigger
- * change detection on every DOM event.
- */
+/** High-frequency activity events (e.g. mousemove, scroll) are throttled to avoid rescheduling the idle timer on every DOM event. */
 export const ACTIVITY_THROTTLE_MS = 1000;
 
 const ACTIVE_ACTIVITY_LISTENER_OPTIONS: AddEventListenerOptions = { capture: true, passive: false };
@@ -34,14 +30,30 @@ const PASSIVE_ACTIVITY_LISTENER_OPTIONS: AddEventListenerOptions = { capture: tr
 const getActivityListenerOptions = (eventName: (typeof ACTIVITY_EVENTS)[number]): AddEventListenerOptions =>
     eventName === 'mousemove' ? ACTIVE_ACTIVITY_LISTENER_OPTIONS : PASSIVE_ACTIVITY_LISTENER_OPTIONS;
 
+interface NativeEventListenerApi {
+    addEventListener: Document['addEventListener'];
+    removeEventListener: Document['removeEventListener'];
+}
+
+export const ZONE_NATIVE_LISTENER_PREFIX = '__zone_symbol__';
+
+const getNativeEventListenerApi = (target: Document): NativeEventListenerApi => {
+    const nativeAddEventListener = Reflect.get(target, `${ZONE_NATIVE_LISTENER_PREFIX}addEventListener`) as Document['addEventListener'] | undefined;
+    const nativeRemoveEventListener = Reflect.get(target, `${ZONE_NATIVE_LISTENER_PREFIX}removeEventListener`) as
+        Document['removeEventListener'] | undefined;
+
+    return typeof nativeAddEventListener === 'function' && typeof nativeRemoveEventListener === 'function'
+        ? { addEventListener: nativeAddEventListener.bind(target), removeEventListener: nativeRemoveEventListener.bind(target) }
+        : { addEventListener: target.addEventListener.bind(target), removeEventListener: target.removeEventListener.bind(target) };
+};
+
 @Injectable()
 export class IdleActivityTracker implements OnDestroy {
     private readonly document = inject(DOCUMENT);
     private readonly activitySubject = new Subject<void>();
     private readonly visibilitySubject = new Subject<DocumentVisibilityState>();
     private isStarted = false;
-    private areActivityListenersAttached = false;
-    private throttleTimeoutId: ReturnType<typeof setTimeout> | undefined;
+    private lastActivityEmitAt: number | undefined;
 
     readonly activity$: Observable<void> = this.activitySubject.asObservable();
     readonly visibilityChange$: Observable<DocumentVisibilityState> = this.visibilitySubject.asObservable();
@@ -52,8 +64,11 @@ export class IdleActivityTracker implements OnDestroy {
         }
 
         this.isStarted = true;
-        this.attachActivityListeners();
-        this.document.addEventListener('visibilitychange', this.handleVisibilityChange);
+        this.lastActivityEmitAt = undefined;
+
+        const { addEventListener } = getNativeEventListenerApi(this.document);
+        ACTIVITY_EVENTS.forEach((eventName) => addEventListener(eventName, this.handleActivity, getActivityListenerOptions(eventName)));
+        addEventListener('visibilitychange', this.handleVisibilityChange);
     }
 
     stop(): void {
@@ -62,9 +77,10 @@ export class IdleActivityTracker implements OnDestroy {
         }
 
         this.isStarted = false;
-        this.clearThrottle();
-        this.detachActivityListeners();
-        this.document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+
+        const { removeEventListener } = getNativeEventListenerApi(this.document);
+        ACTIVITY_EVENTS.forEach((eventName) => removeEventListener(eventName, this.handleActivity, getActivityListenerOptions(eventName)));
+        removeEventListener('visibilitychange', this.handleVisibilityChange);
     }
 
     ngOnDestroy(): void {
@@ -72,46 +88,16 @@ export class IdleActivityTracker implements OnDestroy {
     }
 
     private readonly handleActivity = (): void => {
-        this.detachActivityListeners();
-        this.throttleTimeoutId = setTimeout(() => {
-            this.throttleTimeoutId = undefined;
-            if (this.isStarted) {
-                this.attachActivityListeners();
-            }
-        }, ACTIVITY_THROTTLE_MS);
+        const now = Date.now();
+        if (this.lastActivityEmitAt !== undefined && now - this.lastActivityEmitAt < ACTIVITY_THROTTLE_MS) {
+            return;
+        }
+
+        this.lastActivityEmitAt = now;
         this.activitySubject.next();
     };
 
     private readonly handleVisibilityChange = (): void => {
         this.visibilitySubject.next(this.document.visibilityState);
     };
-
-    private attachActivityListeners(): void {
-        if (this.areActivityListenersAttached) {
-            return;
-        }
-
-        ACTIVITY_EVENTS.forEach((eventName) => this.document.addEventListener(eventName, this.handleActivity, getActivityListenerOptions(eventName)));
-        this.areActivityListenersAttached = true;
-    }
-
-    private detachActivityListeners(): void {
-        if (!this.areActivityListenersAttached) {
-            return;
-        }
-
-        ACTIVITY_EVENTS.forEach((eventName) =>
-            this.document.removeEventListener(eventName, this.handleActivity, getActivityListenerOptions(eventName))
-        );
-        this.areActivityListenersAttached = false;
-    }
-
-    private clearThrottle(): void {
-        if (this.throttleTimeoutId === undefined) {
-            return;
-        }
-
-        clearTimeout(this.throttleTimeoutId);
-        this.throttleTimeoutId = undefined;
-    }
 }

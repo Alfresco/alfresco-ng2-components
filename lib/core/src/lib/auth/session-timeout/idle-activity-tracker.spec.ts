@@ -17,9 +17,10 @@
 
 import { DOCUMENT } from '@angular/common';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { ACTIVITY_EVENTS, ACTIVITY_THROTTLE_MS, IdleActivityTracker } from './idle-activity-tracker';
+import { ACTIVITY_EVENTS, ACTIVITY_THROTTLE_MS, IdleActivityTracker, ZONE_NATIVE_LISTENER_PREFIX } from './idle-activity-tracker';
 
 describe('IdleActivityTracker', () => {
+    const nativeAddEventListener = `${ZONE_NATIVE_LISTENER_PREFIX}addEventListener`;
     let tracker: IdleActivityTracker;
     let doc: Document;
 
@@ -104,7 +105,7 @@ describe('IdleActivityTracker', () => {
     });
 
     it('should keep scroll-sensitive activity listeners passive when tracking starts', () => {
-        const addEventListener = spyOn(doc, 'addEventListener').and.callThrough();
+        const addEventListener = spyOn<any>(doc, nativeAddEventListener).and.callThrough();
 
         tracker.start();
 
@@ -112,6 +113,16 @@ describe('IdleActivityTracker', () => {
         expect(addEventListener).toHaveBeenCalledWith('mousemove', jasmine.any(Function), { capture: true, passive: false });
         expect(addEventListener).toHaveBeenCalledWith('touchstart', jasmine.any(Function), { capture: true, passive: true });
         expect(addEventListener).toHaveBeenCalledWith('wheel', jasmine.any(Function), { capture: true, passive: true });
+    });
+
+    it('should register listeners through the zone-unpatched listener API', () => {
+        const nativeSpy = spyOn<any>(doc, nativeAddEventListener).and.callThrough();
+        const patchedSpy = spyOn(doc, 'addEventListener').and.callThrough();
+
+        tracker.start();
+
+        expect(nativeSpy).toHaveBeenCalledTimes(ACTIVITY_EVENTS.length + 1);
+        expect(patchedSpy).not.toHaveBeenCalled();
     });
 
     it('is a no-op when stop() is called without a prior start()', () => {
@@ -134,32 +145,16 @@ describe('IdleActivityTracker', () => {
         expect(spy).toHaveBeenCalledWith(doc.visibilityState);
     });
 
-    it('detaches activity listeners while throttling and reattaches them after the window', fakeAsync(() => {
-        const removeEventListener = spyOn(doc, 'removeEventListener').and.callThrough();
-        const addEventListener = spyOn(doc, 'addEventListener').and.callThrough();
-        tracker.start();
-        addEventListener.calls.reset();
-
-        doc.dispatchEvent(new Event('mousemove'));
-
-        expect(removeEventListener).toHaveBeenCalledTimes(ACTIVITY_EVENTS.length);
-        expect(addEventListener).not.toHaveBeenCalled();
-
-        tick(ACTIVITY_THROTTLE_MS);
-
-        expect(addEventListener).toHaveBeenCalledTimes(ACTIVITY_EVENTS.length);
-    }));
-
-    it('does not reattach activity listeners when stopped during the throttle window', fakeAsync(() => {
+    it('throttles without scheduling a timer', fakeAsync(() => {
+        const setTimeoutSpy = spyOn(window, 'setTimeout').and.callThrough();
         const spy = jasmine.createSpy('activity');
         tracker.activity$.subscribe(spy);
         tracker.start();
 
-        doc.dispatchEvent(new Event('click'));
-        tracker.stop();
-        tick(ACTIVITY_THROTTLE_MS);
-        doc.dispatchEvent(new Event('click'));
+        doc.dispatchEvent(new Event('mousemove'));
+        doc.dispatchEvent(new Event('mousemove'));
 
         expect(spy).toHaveBeenCalledTimes(1);
+        expect(setTimeoutSpy).not.toHaveBeenCalled();
     }));
 });
