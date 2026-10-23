@@ -26,8 +26,9 @@ import { toSignal } from '@angular/core/rxjs-interop';
     selector: 'adf-date-cell',
     template: `
         @if (formattedDate()) {
-            <time [attr.datetime]="isoDate()" [attr.aria-label]="title() || null" [title]="title()" class="adf-datatable-cell-value"
-                >{{ formattedDate() }}
+            <time [attr.datetime]="isoDate()" [title]="title()" class="adf-datatable-cell-value">
+                <span class="adf-sr-only">{{ title() }}</span>
+                <span aria-hidden="true">{{ formattedDate() }}</span>
             </time>
         }
     `,
