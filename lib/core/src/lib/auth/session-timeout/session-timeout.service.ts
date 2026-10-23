@@ -197,7 +197,7 @@ export class SessionTimeoutService implements OnDestroy {
         }
 
         if (syncEvent.type === 'timeout') {
-            if (syncEvent.createdAt >= this.lastActivityAt) {
+            if (syncEvent.createdAt >= this.getLastActivityAt()) {
                 this.openContinueWorkingDialog(false);
             }
             return;
@@ -225,7 +225,7 @@ export class SessionTimeoutService implements OnDestroy {
             return;
         }
 
-        const elapsedMs = Date.now() - this.lastActivityAt;
+        const elapsedMs = Date.now() - this.getLastActivityAt();
         const remainingMs = Math.max(this.idleTimeoutMs - elapsedMs, 0);
         this.timeoutId = setTimeout(() => this.handleTimeout(), remainingMs);
     }
@@ -236,7 +236,7 @@ export class SessionTimeoutService implements OnDestroy {
             return;
         }
 
-        const elapsedMs = Date.now() - this.lastActivityAt;
+        const elapsedMs = Date.now() - this.getLastActivityAt();
         if (elapsedMs < this.idleTimeoutMs) {
             this.scheduleTimeout();
             return;
@@ -329,6 +329,10 @@ export class SessionTimeoutService implements OnDestroy {
         this.dialogRef = undefined;
         this.clearDialogTimeout();
         dialogRef.close();
+    }
+
+    private getLastActivityAt(): number {
+        return Math.max(this.lastActivityAt, this.tracker.lastActivityAt ?? 0);
     }
 
     private canArmSessionTimeout(): boolean {

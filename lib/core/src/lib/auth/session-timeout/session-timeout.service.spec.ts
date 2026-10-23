@@ -48,6 +48,7 @@ describe('SessionTimeoutService', () => {
         stop: jasmine.Spy;
         activity$: Subject<void>;
         visibilityChange$: Subject<DocumentVisibilityState>;
+        lastActivityAt: number | undefined;
     };
     let syncChannel: {
         open: jasmine.Spy;
@@ -92,7 +93,8 @@ describe('SessionTimeoutService', () => {
             start: jasmine.createSpy('start'),
             stop: jasmine.createSpy('stop'),
             activity$: new Subject<void>(),
-            visibilityChange$: new Subject<DocumentVisibilityState>()
+            visibilityChange$: new Subject<DocumentVisibilityState>(),
+            lastActivityAt: undefined
         };
         syncChannel = {
             open: jasmine.createSpy('open'),
@@ -265,6 +267,24 @@ describe('SessionTimeoutService', () => {
 
         tick(250);
 
+        expect(dialog.open).toHaveBeenCalledTimes(1);
+    }));
+
+    it('should not open the dialog early when the tracker throttled the latest activity', fakeAsync(() => {
+        configureTestingModule({ enabled: true, idleTimeoutMs: 1000 });
+
+        startService();
+        tick(500);
+
+        tracker.lastActivityAt = Date.now();
+        tick(500);
+
+        expect(dialog.open).not.toHaveBeenCalled();
+
+        tick(499);
+        expect(dialog.open).not.toHaveBeenCalled();
+
+        tick(1);
         expect(dialog.open).toHaveBeenCalledTimes(1);
     }));
 
