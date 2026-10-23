@@ -450,6 +450,10 @@
       "SEARCH": "Search",
       "APPLY": "Apply",
       "COLUMNS_VISIBILITY": "Select columns to display"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Release to move to {{ destination }}",
+      "CLOSE_HINT": "Esc to cancel"
     }
   },
   "USER_PROFILE": {
