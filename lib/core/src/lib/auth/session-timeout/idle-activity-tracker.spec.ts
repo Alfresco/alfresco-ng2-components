@@ -16,7 +16,6 @@
  */
 
 import { DOCUMENT } from '@angular/common';
-import { NgZone } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ACTIVITY_EVENTS, ACTIVITY_THROTTLE_MS, IdleActivityTracker } from './idle-activity-tracker';
 
@@ -135,10 +134,32 @@ describe('IdleActivityTracker', () => {
         expect(spy).toHaveBeenCalledWith(doc.visibilityState);
     });
 
-    it('registers listeners outside the Angular zone', () => {
-        const ngZone = TestBed.inject(NgZone);
-        const runOutside = spyOn(ngZone, 'runOutsideAngular').and.callThrough();
+    it('detaches activity listeners while throttling and reattaches them after the window', fakeAsync(() => {
+        const removeEventListener = spyOn(doc, 'removeEventListener').and.callThrough();
+        const addEventListener = spyOn(doc, 'addEventListener').and.callThrough();
         tracker.start();
-        expect(runOutside).toHaveBeenCalled();
-    });
+        addEventListener.calls.reset();
+
+        doc.dispatchEvent(new Event('mousemove'));
+
+        expect(removeEventListener).toHaveBeenCalledTimes(ACTIVITY_EVENTS.length);
+        expect(addEventListener).not.toHaveBeenCalled();
+
+        tick(ACTIVITY_THROTTLE_MS);
+
+        expect(addEventListener).toHaveBeenCalledTimes(ACTIVITY_EVENTS.length);
+    }));
+
+    it('does not reattach activity listeners when stopped during the throttle window', fakeAsync(() => {
+        const spy = jasmine.createSpy('activity');
+        tracker.activity$.subscribe(spy);
+        tracker.start();
+
+        doc.dispatchEvent(new Event('click'));
+        tracker.stop();
+        tick(ACTIVITY_THROTTLE_MS);
+        doc.dispatchEvent(new Event('click'));
+
+        expect(spy).toHaveBeenCalledTimes(1);
+    }));
 });

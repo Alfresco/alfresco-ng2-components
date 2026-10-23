@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable, NgZone, OnDestroy, inject } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -39,10 +39,10 @@ export class SessionTimeoutService implements OnDestroy {
     private readonly appConfigService = inject(AppConfigService);
     private readonly authService = inject(AuthenticationService);
     private readonly dialog = inject(MatDialog);
-    private readonly ngZone = inject(NgZone);
     private readonly providerOptions = inject<SessionTimeoutOptions>(SESSION_TIMEOUT_OPTIONS);
     private readonly tracker = inject(IdleActivityTracker);
     private readonly syncChannel = inject(SessionTimeoutSyncChannel);
+
     private readonly subscription = new Subscription();
     private sessionSubscription: Subscription | undefined;
     private timeoutId: ReturnType<typeof setTimeout> | undefined;
@@ -134,23 +134,20 @@ export class SessionTimeoutService implements OnDestroy {
     }
 
     private activateSessionTimeout(): void {
-        this.ngZone.runOutsideAngular(() => {
-            if (!this.canArmSessionTimeout()) {
-                return;
-            }
+        if (!this.canArmSessionTimeout()) {
+            return;
+        }
 
-            if (this.sessionSubscription) {
-                this.refreshSession();
-                return;
-            }
-
-            this.sessionSubscription = new Subscription();
-            this.tracker.start();
-            this.syncChannel.open();
-            this.subscribeToTrackerEvents();
-            this.subscribeToSyncEvents();
+        if (this.sessionSubscription) {
             this.refreshSession();
-        });
+            return;
+        }
+        this.sessionSubscription = new Subscription();
+        this.tracker.start();
+        this.syncChannel.open();
+        this.subscribeToTrackerEvents();
+        this.subscribeToSyncEvents();
+        this.refreshSession();
     }
 
     private subscribeToTrackerEvents(): void {
@@ -258,16 +255,14 @@ export class SessionTimeoutService implements OnDestroy {
         }
 
         this.clearTimeout();
-        this.dialogRef = this.ngZone.run(() =>
-            this.dialog.open<SessionTimeoutDialogComponent, SessionTimeoutDialogData, boolean>(SessionTimeoutDialogComponent, {
-                data: {
-                    dialogTimeoutMs: this.dialogTimeoutMs
-                },
-                backdropClass: SESSION_TIMEOUT_BACKDROP_CLASS,
-                disableClose: true,
-                width: '420px'
-            })
-        );
+        this.dialogRef = this.dialog.open<SessionTimeoutDialogComponent, SessionTimeoutDialogData, boolean>(SessionTimeoutDialogComponent, {
+            data: {
+                dialogTimeoutMs: this.dialogTimeoutMs
+            },
+            backdropClass: SESSION_TIMEOUT_BACKDROP_CLASS,
+            disableClose: true,
+            width: '420px'
+        });
         this.dialogTimeoutId = setTimeout(() => {
             this.dialogRef?.close(false);
         }, this.dialogTimeoutMs);
@@ -311,7 +306,7 @@ export class SessionTimeoutService implements OnDestroy {
         if (shouldNotifyTabs) {
             this.syncChannel.post('logout');
         }
-        this.ngZone.run(() => this.authService.logout().pipe(take(1)).subscribe());
+        this.authService.logout().pipe(take(1)).subscribe();
     }
 
     private clearSessionState(): void {
