@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { DOCUMENT } from '@angular/common';
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -31,6 +32,7 @@ import {
 import { IdleActivityTracker } from './idle-activity-tracker';
 import { SessionTimeoutSyncChannel, SessionTimeoutSyncEvent } from './session-timeout-sync-channel';
 import { SessionTimeoutDialogComponent, SessionTimeoutDialogData, SESSION_TIMEOUT_BACKDROP_CLASS } from './session-timeout-dialog.component';
+import { getNativeTimerApi } from './zone-native-api';
 
 const ACTIVITY_SYNC_THROTTLE_MS = 1000;
 
@@ -42,6 +44,7 @@ export class SessionTimeoutService implements OnDestroy {
     private readonly providerOptions = inject<SessionTimeoutOptions>(SESSION_TIMEOUT_OPTIONS);
     private readonly tracker = inject(IdleActivityTracker);
     private readonly syncChannel = inject(SessionTimeoutSyncChannel);
+    private readonly window = inject(DOCUMENT).defaultView;
 
     private readonly subscription = new Subscription();
     private sessionSubscription: Subscription | undefined;
@@ -227,7 +230,7 @@ export class SessionTimeoutService implements OnDestroy {
 
         const elapsedMs = Date.now() - this.getLastActivityAt();
         const remainingMs = Math.max(this.idleTimeoutMs - elapsedMs, 0);
-        this.timeoutId = setTimeout(() => this.handleTimeout(), remainingMs);
+        this.timeoutId = getNativeTimerApi(this.window).setTimeout(() => this.handleTimeout(), remainingMs);
     }
 
     private handleTimeout(): void {
@@ -263,7 +266,7 @@ export class SessionTimeoutService implements OnDestroy {
             disableClose: true,
             width: '420px'
         });
-        this.dialogTimeoutId = setTimeout(() => {
+        this.dialogTimeoutId = getNativeTimerApi(this.window).setTimeout(() => {
             this.dialogRef?.close(false);
         }, this.dialogTimeoutMs);
         if (shouldNotifyTabs) {
@@ -354,7 +357,7 @@ export class SessionTimeoutService implements OnDestroy {
             return;
         }
 
-        clearTimeout(this.timeoutId);
+        getNativeTimerApi(this.window).clearTimeout(this.timeoutId);
         this.timeoutId = undefined;
     }
 
@@ -363,7 +366,7 @@ export class SessionTimeoutService implements OnDestroy {
             return;
         }
 
-        clearTimeout(this.dialogTimeoutId);
+        getNativeTimerApi(this.window).clearTimeout(this.dialogTimeoutId);
         this.dialogTimeoutId = undefined;
     }
 }

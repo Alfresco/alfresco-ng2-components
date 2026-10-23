@@ -17,10 +17,11 @@
 
 import { DOCUMENT } from '@angular/common';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { ACTIVITY_EVENTS, ACTIVITY_THROTTLE_MS, IdleActivityTracker, ZONE_NATIVE_LISTENER_PREFIX } from './idle-activity-tracker';
+import { ACTIVITY_EVENTS, ACTIVITY_THROTTLE_MS, IdleActivityTracker } from './idle-activity-tracker';
+import { ZONE_NATIVE_PREFIX } from './zone-native-api';
 
 describe('IdleActivityTracker', () => {
-    const nativeAddEventListener = `${ZONE_NATIVE_LISTENER_PREFIX}addEventListener`;
+    const nativeAddEventListener = `${ZONE_NATIVE_PREFIX}addEventListener`;
     let tracker: IdleActivityTracker;
     let doc: Document;
 

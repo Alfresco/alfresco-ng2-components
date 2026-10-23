@@ -18,6 +18,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { getNativeEventListenerApi } from './zone-native-api';
 
 export const ACTIVITY_EVENTS = ['click', 'keydown', 'mousedown', 'mousemove', 'pointerdown', 'scroll', 'touchstart', 'wheel'] as const;
 
@@ -29,23 +30,6 @@ const PASSIVE_ACTIVITY_LISTENER_OPTIONS: AddEventListenerOptions = { capture: tr
 
 const getActivityListenerOptions = (eventName: (typeof ACTIVITY_EVENTS)[number]): AddEventListenerOptions =>
     eventName === 'mousemove' ? ACTIVE_ACTIVITY_LISTENER_OPTIONS : PASSIVE_ACTIVITY_LISTENER_OPTIONS;
-
-interface NativeEventListenerApi {
-    addEventListener: Document['addEventListener'];
-    removeEventListener: Document['removeEventListener'];
-}
-
-export const ZONE_NATIVE_LISTENER_PREFIX = '__zone_symbol__';
-
-const getNativeEventListenerApi = (target: Document): NativeEventListenerApi => {
-    const nativeAddEventListener = Reflect.get(target, `${ZONE_NATIVE_LISTENER_PREFIX}addEventListener`) as Document['addEventListener'] | undefined;
-    const nativeRemoveEventListener = Reflect.get(target, `${ZONE_NATIVE_LISTENER_PREFIX}removeEventListener`) as
-        Document['removeEventListener'] | undefined;
-
-    return typeof nativeAddEventListener === 'function' && typeof nativeRemoveEventListener === 'function'
-        ? { addEventListener: nativeAddEventListener.bind(target), removeEventListener: nativeRemoveEventListener.bind(target) }
-        : { addEventListener: target.addEventListener.bind(target), removeEventListener: target.removeEventListener.bind(target) };
-};
 
 @Injectable()
 export class IdleActivityTracker implements OnDestroy {
