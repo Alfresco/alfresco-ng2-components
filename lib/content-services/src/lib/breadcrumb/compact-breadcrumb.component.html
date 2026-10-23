@@ -2,27 +2,30 @@
     #trigger
     matButton
     class="adf-compact-breadcrumb-trigger"
-    (click)="togglePanel()"
-    (mouseenter)="onTriggerMouseEnter()">
+    (click)="toggleMenu()"
+    (mouseenter)="onTriggerMouseEnter()"
+    (mouseleave)="stopOpeningMenu()">
     {{'BREADCRUMB.COMPACT_MENU.OPEN_COMPACT_BREADCRUMB_BUTTON' | translate: { ancestorsCounter: nodes().length - 1 } }}
 </button>
 <div
     #backdrop
     class="adf-compact-breadcrumb-backdrop"
-    [class.adf-compact-breadcrumb-backdrop-open]="isPanelOpen()">
+    [class.adf-compact-breadcrumb-backdrop-open]="menuOpen()">
 </div>
 <div
-    #panel
+    #menu
     class="adf-compact-breadcrumb-menu"
     id="adf-compact-breadcrumb-menu"
-    [class.adf-compact-breadcrumb-menu-open]="isPanelOpen()"
-    [attr.aria-hidden]="!isPanelOpen()"
+    [class.adf-compact-breadcrumb-menu-open]="menuOpen()"
+    [attr.aria-hidden]="!menuOpen()"
     role="menu"
+    (mouseleave)="closeOnMenuLeave()"
+    (mouseenter)="stopClosingMenu()"
     cdkDropListGroup
     cdkDropList
     cdkDropListSortingDisabled
     [cdkDropListData]="hoveredItem()"
-    (cdkDropListDropped)="onDrop($event)">
+    (cdkDropListDropped)="onDrop($event)" >
     <div class="adf-compact-breadcrumb-menu-header">
         <h2 class="adf-compact-breadcrumb-menu-header-title">{{'BREADCRUMB.COMPACT_MENU.TITLE' | translate }}</h2>
         <p class="adf-compact-breadcrumb-menu-description adf-compact-breadcrumb-menu-header-title-description">
@@ -38,8 +41,8 @@
                 cdkDrag
                 cdkDragDisabled
                 [disabled]="last"
-                (mouseenter)="onNodeHover(node)"
-                (mouseleave)="hoveredItem.set(null)">
+                (mouseenter)="setNodeHoverState(node)"
+                (mouseleave)="setNodeHoverState(null)">
                 <img
                     ngSrc="./assets/images/ft_ic_folder_empty.svg"
                     width="24"

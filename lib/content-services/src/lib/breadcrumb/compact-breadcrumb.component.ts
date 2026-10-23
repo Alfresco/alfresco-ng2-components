@@ -19,7 +19,7 @@ import {
     AfterViewInit,
     Component,
     computed,
-    DestroyRef,
+    DestroyRef, effect,
     ElementRef,
     inject,
     input,
@@ -44,7 +44,7 @@ import { MatIcon } from '@angular/material/icon';
     templateUrl: './compact-breadcrumb.component.html',
     styleUrls: ['./compact-breadcrumb.component.scss'],
     host: {
-        '(document:keydown.escape)': 'closePanel()'
+        '(document:keydown.escape)': 'closeMenu()'
     },
     imports: [
         MatButton,
@@ -76,45 +76,61 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     navigate = output<PathElement>();
 
     private readonly trigger = viewChild.required<ElementRef<HTMLButtonElement>, ElementRef<HTMLButtonElement>>('trigger', { read: ElementRef });
-    private readonly panel = viewChild.required<ElementRef<HTMLButtonElement>, ElementRef<HTMLDivElement>>('panel', { read: ElementRef });
+    private readonly menu = viewChild.required<ElementRef<HTMLButtonElement>, ElementRef<HTMLDivElement>>('menu', { read: ElementRef });
     private readonly backdrop = viewChild.required<ElementRef<HTMLButtonElement>, ElementRef<HTMLDivElement>>('backdrop', { read: ElementRef });
 
-    protected readonly isPanelOpen = signal(false);
+    protected readonly menuOpen = signal(false);
     protected readonly levelsDescriptions = computed(() => this.nodes().map((_, index) => this.getLevelDescription(index)));
 
-    private outsideClickTimeoutId: NodeJS.Timeout;
     private removeOutsideClickListener: () => void;
 
     protected readonly hoveredItem = signal<PathElement>(undefined);
 
+    private openMenuTimer: NodeJS.Timeout;
+    private closeMenuTimer: NodeJS.Timeout;
+
+    constructor() {
+        effect(() => {
+            if (!this.dragDropStateService.dragging()) {
+                this.closeMenu();
+            }
+        });
+    }
+
     ngOnInit(): void {
         this.destroyRef.onDestroy(() => {
-            clearTimeout(this.outsideClickTimeoutId);
             this.removeOutsideClickListener?.();
-            this.panel().nativeElement.remove();
+            this.stopOpeningMenu();
+            this.stopClosingMenu();
+            this.menu().nativeElement.remove();
             this.backdrop().nativeElement.remove();
         });
     }
 
     ngAfterViewInit(): void {
         this.renderer.appendChild(document.body, this.backdrop().nativeElement);
-        this.renderer.appendChild(document.body, this.panel().nativeElement);
-        this.updatePanelPosition();
+        this.renderer.appendChild(document.body, this.menu().nativeElement);
+        this.updateMenuPosition();
     }
 
-    togglePanel(): void {
-        this.isPanelOpen() ? this.closePanel() : this.openPanel();
-        this.panel().nativeElement.classList.toggle('adf-compact-breadcrumb-menu-open', this.isPanelOpen());
+    toggleMenu(): void {
+        this.menuOpen() ? this.closeMenu() : this.openMenu();
+        this.menu().nativeElement.classList.toggle('adf-compact-breadcrumb-menu-open', this.menuOpen());
     }
 
     onTriggerMouseEnter(): void {
-        if (this.dragDropStateService.dragging()) {
-            this.openPanel();
-        }
+        this.openMenuTimer = setTimeout(() => {
+            if (this.dragDropStateService.dragging()) {
+                this.openMenu();
+            }
+        }, 500);
+    }
+
+    stopOpeningMenu(): void {
+        clearTimeout(this.openMenuTimer);
     }
 
     onDrop(event: CdkDragDrop<PathElement, PathElement, DataRow>): void {
-        this.closePanel();
         if (this.isRouteEnabled()) {
             this.dropped.emit(event);
         }
@@ -128,15 +144,23 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         }
     }
 
-    onNodeHover(node: PathElement): void {
+    setNodeHoverState(node: PathElement): void {
         this.hoveredItem.set(node);
-        this.dragDropStateService.hoveredDropName.set(node.name);
+        this.dragDropStateService.hoveredDropName.set(node?.name);
     }
 
-    protected closePanel(): void {
-        this.isPanelOpen.set(false);
-        clearTimeout(this.outsideClickTimeoutId);
-        this.outsideClickTimeoutId = null;
+    closeOnMenuLeave(): void {
+        this.closeMenuTimer = setTimeout(() => {
+            this.closeMenu();
+        }, 600);
+    }
+
+    stopClosingMenu(): void {
+        clearTimeout(this.closeMenuTimer);
+    }
+
+    protected closeMenu(): void {
+        this.menuOpen.set(false);
         this.removeOutsideClickListener?.();
         this.removeOutsideClickListener = null;
     }
@@ -147,35 +171,38 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         }
         const name = this.nodes()[nodeIndex - 1]?.name;
         return name
-            ? this.translateService.instant('BREADCRUMB.COMPACT_MENU.NOT_FIRST_LEVEL', { level: nodeIndex + 1, ancestorName: name })
+            ? this.translateService.instant('BREADCRUMB.COMPACT_MENU.NOT_FIRST_LEVEL', {
+                  level: nodeIndex + 1,
+                  ancestorName: this.translateService.instant(name)
+              })
             : this.translateService.instant('BREADCRUMB.COMPACT_MENU.FIRST_LEVEL');
     }
 
-    private openPanel(): void {
-        this.updatePanelPosition();
-        this.isPanelOpen.set(true);
-        this.outsideClickTimeoutId = setTimeout(() => this.listenForOutsideClicks());
+    private openMenu(): void {
+        this.updateMenuPosition();
+        this.menuOpen.set(true);
+        this.listenForOutsideClicks();
     }
 
     private listenForOutsideClicks(): void {
         this.removeOutsideClickListener?.();
         const handleOutsideClick = (event: MouseEvent): void => {
             const target = event.target as HTMLElement;
-            if (!this.trigger().nativeElement.contains(target) && !this.panel().nativeElement.contains(target)) {
+            if (!this.trigger().nativeElement.contains(target) && !this.menu().nativeElement.contains(target)) {
                 event.stopPropagation();
                 event.preventDefault();
-                this.closePanel();
+                this.closeMenu();
             }
         };
         document.addEventListener('click', handleOutsideClick, true);
         this.removeOutsideClickListener = () => document.removeEventListener('click', handleOutsideClick, true);
     }
 
-    private updatePanelPosition(): void {
+    private updateMenuPosition(): void {
         const triggerRect = this.trigger().nativeElement.getBoundingClientRect();
-        const panelElement = this.panel().nativeElement;
-        panelElement.style.top = `${triggerRect.bottom}px`;
-        panelElement.style.left = `${triggerRect.left}px`;
+        const menuElement = this.menu().nativeElement;
+        menuElement.style.top = `${triggerRect.bottom}px`;
+        menuElement.style.left = `${triggerRect.left}px`;
     }
 
     private isRouteEnabled(): boolean {

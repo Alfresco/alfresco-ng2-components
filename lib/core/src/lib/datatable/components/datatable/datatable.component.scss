@@ -781,10 +781,31 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
 .adf-datatable-row__dragging-preview {
     min-height: 0;
-    padding: 15px;
-    gap: 10px;
-    background-color: color-mix(in srgb, var(--mat-sys-surface) 87%, transparent);
+    padding: 18px 16px 16px;
+    gap: 16px;
     box-shadow: var(--mat-sys-level2);
+    flex-wrap: wrap;
+    width: 270px;
+    border-radius: 8px;
+
+    &-hints {
+        flex-basis: 100%;
+        font-size: 12px;
+        margin-top: 6px;
+        padding-bottom: 4px;
+
+        &-drop-destination, &-close-hint {
+            margin: 0;
+        }
+
+        &-drop-destination {
+            margin-bottom: 15px;
+        }
+    }
+
+    > :first-child {
+        margin-left: 6px;
+    }
 }
 
 .adf-is-dragging * {

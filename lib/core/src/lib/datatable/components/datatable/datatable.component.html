@@ -669,7 +669,19 @@
                                         }
                                     }
                                 }
-                                {{dragDropStateService.hoveredDropName()}}
+                                <div class="adf-datatable-row__dragging-preview-hints">
+                                    @if (dragDropStateService.hoveredDropName()) {
+                                        <p class="adf-datatable-row__dragging-preview-hints-drop-destination">
+                                            {{
+                                                'ADF-DATATABLE.DRAG_DROP.DESTINATION_HINT'
+                                                    | translate: { destination: dragDropStateService.hoveredDropName() | translate }
+                                            }}
+                                        </p>
+                                    }
+                                    <p class="adf-datatable-row__dragging-preview-hints-close-hint">
+                                        {{ 'ADF-DATATABLE.DRAG_DROP.CLOSE_HINT' | translate }}
+                                    </p>
+                                </div>
                             </div>
                         }
                     </adf-datatable-row>
