@@ -33,11 +33,11 @@
   },
   "FORM": {
     "SIGNAL_FORM": {
-      "WIDGET_LOADING": "Loading…",
-      "WIDGET_UNSUPPORTED": "This field can't be shown: the field type {{ type }} isn't available.",
-      "WIDGET_LOAD_FAILED": "This field can't be shown: the field type {{ type }} failed to load.",
-      "EXPAND_GROUP": "Expand {{ name }}",
-      "COLLAPSE_GROUP": "Collapse {{ name }}"
+      "WIDGET_LOADING": "Ładowanie…",
+      "WIDGET_UNSUPPORTED": "Nie można wyświetlić tego pola: typ pola {{ type }} jest niedostępny.",
+      "WIDGET_LOAD_FAILED": "Nie można wyświetlić tego pola: nie udało się wczytać typu pola {{ type }}.",
+      "EXPAND_GROUP": "Rozwiń: {{ name }}",
+      "COLLAPSE_GROUP": "Zwiń: {{ name }}"
     },
     "START_FORM": {
       "TITLE": "Uruchom formularz"
