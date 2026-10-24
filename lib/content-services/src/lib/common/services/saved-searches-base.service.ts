@@ -47,7 +47,7 @@ export abstract class SavedSearchesBaseService implements SavedSearchStrategy {
         return this.fetchAllSavedSearches();
     }
 
-    saveSearch(newSaveSearch: Pick<SavedSearch, 'name' | 'description' | 'encodedUrl'>): Observable<NodeEntry> {
+    saveSearch(newSaveSearch: Pick<SavedSearch, 'name' | 'description' | 'encodedUrl' | 'compiledQuery'>): Observable<NodeEntry> {
         const limit = SavedSearchesBaseService.SAVE_MODE_THRESHOLD;
         return this.fetchAllSavedSearches().pipe(
             take(1),
