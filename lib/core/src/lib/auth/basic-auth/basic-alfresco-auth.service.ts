@@ -22,7 +22,7 @@ import { CookieService } from '../../common/services/cookie.service';
 import { ContentAuth } from './content-auth';
 import { ProcessAuth } from './process-auth';
 import { catchError, map } from 'rxjs/operators';
-import { from, Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { RedirectionModel } from '../models/redirection.model';
 import { BaseAuthenticationService } from '../services/base-authentication.service';
 import { HttpHeaders } from '@angular/common/http';
@@ -323,13 +323,34 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         return this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false);
     }
 
+    /**
+     * With Kerberos, gets the ACS ticket (GET tickets/-me-) right before each OOI connector call,
+     * so that an expired ticket (e.g. after inactivity) is replaced by the one of the current SSO session.
+     *
+     * @param requestUrl the request url
+     * @param headersArg Header that will receive the token
+     * @returns The new header with the token added
+     */
+    addTokenToHeader(requestUrl: string, headersArg?: HttpHeaders): Observable<HttpHeaders> {
+        if (this.isKerberosEnabled() && this.isOoiServiceUrl(requestUrl)) {
+            const headers = headersArg ?? new HttpHeaders();
+            return from(this.requireAlfTicket()).pipe(
+                catchError(() => of(null)),
+                map(() => this.getAuthHeaders(requestUrl, headers))
+            );
+        }
+        return super.addTokenToHeader(requestUrl, headersArg);
+    }
+
     getAuthHeaders(requestUrl: string, header: HttpHeaders): HttpHeaders {
         return this.addBasicAuth(requestUrl, header);
     }
 
     private addBasicAuth(requestUrl: string, header: HttpHeaders): HttpHeaders {
         if (this.isKerberosEnabled()) {
-            return header;
+            if (!this.isOoiServiceUrl(requestUrl) || !this.contentAuth.ticket) {
+                return header;
+            }
         }
 
         const ticket = this.getTicketEcmBase64(requestUrl);
@@ -339,6 +360,11 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         }
 
         return header.set('Authorization', ticket);
+    }
+
+    private isOoiServiceUrl(requestUrl: string): boolean {
+        const ooiServiceRootUrl = `/${this.appConfig.get<string>(AppConfigValues.OOI_CONNECTOR_URL) || 'ooi-service'}/`;
+        return !!requestUrl?.includes(ooiServiceRootUrl);
     }
 
     async requireAlfTicket(): Promise<void> {
