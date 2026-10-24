@@ -18,11 +18,14 @@
 import { Direction } from '@angular/cdk/bidi';
 import { NgClass, NgStyle } from '@angular/common';
 import {
+    afterNextRender,
+    ChangeDetectorRef,
     Component,
     DestroyRef,
     ElementRef,
     EventEmitter,
     inject,
+    Injector,
     Input,
     OnInit,
     OnDestroy,
@@ -31,7 +34,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -55,6 +58,8 @@ import { IconModule } from '../icon/icon.module';
 })
 export class SearchTextInputComponent implements OnInit, OnDestroy {
     private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
+    private readonly injector = inject(Injector);
 
     /** Toggles auto-completion of the search input field. */
     @Input()
@@ -154,6 +159,11 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     @ViewChild('searchInput', { static: true })
     searchInput!: ElementRef;
 
+    @ViewChild('searchIconButton')
+    private readonly searchIconButton!: MatIconButton;
+
+    private restoreFocusToSearchIcon = false;
+
     animationStates: SearchAnimationDirection = {
         ltr: {
             active: { value: 'active', params: { 'margin-left': '13px' } },
@@ -185,8 +195,19 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
                     if (document.activeElement?.id === this.searchInput.nativeElement.id) {
                         this.searchInput.nativeElement.blur();
                     }
+
+                    afterNextRender(
+                        () => {
+                            if (this.restoreFocusToSearchIcon) {
+                                this.restoreFocusToSearchIcon = false;
+                                this.changeDetectorRef.detectChanges();
+                                this.searchIconButton.focus();
+                            }
+                        },
+                        { injector: this.injector }
+                    );
                 } else if (this.subscriptAnimationState.value === 'active' && this.isDefaultStateCollapsed()) {
-                    setTimeout(() => this.searchInput.nativeElement.focus(), 0);
+                    afterNextRender(() => this.searchInput.nativeElement.focus(), { injector: this.injector });
                 }
                 this.emitVisibilitySearch();
             }
@@ -313,7 +334,11 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         return this.showClearButton && this.isSearchBarActive();
     }
 
-    resetSearch() {
+    resetSearch(event?: MouseEvent) {
+        if (event?.detail === 0) {
+            this.restoreFocusToSearchIcon = true;
+        }
+
         if (this.isSearchBarActive()) {
             this.toggleSearchBar();
         }
