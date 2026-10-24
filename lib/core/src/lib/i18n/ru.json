@@ -32,6 +32,13 @@
     "OPEN_HISTORY": "Открыть историю оповещений"
   },
   "FORM": {
+    "SIGNAL_FORM": {
+      "WIDGET_LOADING": "Loading…",
+      "WIDGET_UNSUPPORTED": "This field can't be shown: the field type {{ type }} isn't available.",
+      "WIDGET_LOAD_FAILED": "This field can't be shown: the field type {{ type }} failed to load.",
+      "EXPAND_GROUP": "Expand {{ name }}",
+      "COLLAPSE_GROUP": "Collapse {{ name }}"
+    },
     "START_FORM": {
       "TITLE": "Запустить форму"
     },

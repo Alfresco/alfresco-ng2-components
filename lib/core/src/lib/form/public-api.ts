@@ -24,6 +24,7 @@ export * from './components/widgets';
 export * from './components/middlewares/middleware';
 export * from './components/middlewares/decimal-middleware.service';
 export * from './components/helpers/buttons-visibility';
+export * from './components/helpers/column-width';
 
 export * from './services/form-rendering.service';
 export * from './services/form.service';

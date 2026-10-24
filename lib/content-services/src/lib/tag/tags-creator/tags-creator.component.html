@@ -50,12 +50,12 @@
             @if (!spinnerVisible && existingTags) {
                 @if (existingTags.length > 0) {
                     @if (existingTags.length === 1) {
-                        {{ 'TAG.TAGS_CREATOR.ONE_EXISTING_TAG_AVAILABLE' | translate }}
+                        {{ 'TAG.TAGS_CREATOR.ONE_EXISTING_TAG_AVAILABLE' | translate : { wordTyped: tagNameControl.value } }}
                     } @else {
-                        {{ 'TAG.TAGS_CREATOR.EXISTING_TAGS_AVAILABLE' | translate : { tagsCount: existingTags?.length } }}
+                        {{ 'TAG.TAGS_CREATOR.EXISTING_TAGS_AVAILABLE' | translate : { tagsCount: existingTags?.length, wordTyped: tagNameControl.value } }}
                     }
                 } @else {
-                    {{ 'TAG.TAGS_CREATOR.NO_EXISTING_TAGS' | translate }}
+                    {{ 'TAG.TAGS_CREATOR.NO_EXISTING_TAGS_ANNOUNCEMENT' | translate : { wordTyped: tagNameControl.value } }}
                 }
             }
         </output>
