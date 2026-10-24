@@ -33,11 +33,11 @@
   },
   "FORM": {
     "SIGNAL_FORM": {
-      "WIDGET_LOADING": "Loading…",
-      "WIDGET_UNSUPPORTED": "This field can't be shown: the field type {{ type }} isn't available.",
-      "WIDGET_LOAD_FAILED": "This field can't be shown: the field type {{ type }} failed to load.",
-      "EXPAND_GROUP": "Expand {{ name }}",
-      "COLLAPSE_GROUP": "Collapse {{ name }}"
+      "WIDGET_LOADING": "جارٍ التحميل…",
+      "WIDGET_UNSUPPORTED": "لا يمكن إظهار هذا الحقل: نوع الحقل {{ type }} غير متوفر.",
+      "WIDGET_LOAD_FAILED": "لا يمكن إظهار هذا الحقل: فشل تحميل نوع الحقل {{ type }}.",
+      "EXPAND_GROUP": "فتح {{ name }}",
+      "COLLAPSE_GROUP": "طي {{ name }}"
     },
     "START_FORM": {
       "TITLE": "نموذج البدء"
