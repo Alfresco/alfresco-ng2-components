@@ -18,14 +18,14 @@
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { NodeEntry } from '@alfresco/js-api';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { NodeDownloadDirective } from '../../../directives/node-download.directive';
 
 @Component({
     selector: 'adf-file-auto-download',
-    imports: [CommonModule, MatDialogModule, TranslatePipe, MatButtonModule, NodeDownloadDirective],
+    imports: [MatDialogModule, TranslatePipe, MatButtonModule, NodeDownloadDirective],
     templateUrl: './file-auto-download.component.html'
 })
 export class FileAutoDownloadComponent {

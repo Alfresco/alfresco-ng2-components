@@ -16,7 +16,7 @@
  */
 
 import { AppConfigService } from '@alfresco/adf-core';
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -25,7 +25,7 @@ import { SearchConfiguration } from '../../models';
 
 @Component({
     selector: 'adf-search-input',
-    imports: [CommonModule, MatFormFieldModule, MatInputModule, TranslatePipe],
+    imports: [MatFormFieldModule, MatInputModule, TranslatePipe],
     templateUrl: `./search-input.component.html`,
     styleUrls: ['./search-input.component.scss'],
     encapsulation: ViewEncapsulation.None

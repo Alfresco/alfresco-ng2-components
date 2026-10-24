@@ -24,7 +24,7 @@ import { SearchQueryBuilderService } from '../../services/search-query-builder.s
 import { SearchFilterList } from '../../models/search-filter-list.model';
 import { ReplaySubject } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,7 +37,7 @@ export interface SearchRadioOption {
 
 @Component({
     selector: 'adf-search-radio',
-    imports: [CommonModule, MatRadioModule, FormsModule, TranslatePipe, MatButtonModule, IconModule],
+    imports: [MatRadioModule, FormsModule, TranslatePipe, MatButtonModule, IconModule],
     templateUrl: './search-radio.component.html',
     styleUrls: ['./search-radio.component.scss'],
     encapsulation: ViewEncapsulation.None,

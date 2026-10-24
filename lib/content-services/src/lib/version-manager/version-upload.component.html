@@ -1,42 +1,46 @@
 <div class="adf-new-version-max-width">
-    <div id="adf-version-type-label" class="adf-version-type-label">
-        {{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.VERSION_TYPE_LABEL' | translate }}
-    </div>
-    <mat-radio-group
-        class="adf-new-version-radio-group"
-        [(ngModel)]="semanticVersion"
-        (change)="onVersionChange()"
-        [attr.aria-labelledby]="'adf-version-type-label'">
-        <mat-radio-button class="adf-new-version-radio-button" id="adf-new-version-minor" [value]="'minor'">
-            {{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.MINOR' | translate: { version: minorVersion } }}
-        </mat-radio-button>
-        <mat-radio-button class="adf-new-version-radio-button" id="adf-new-version-major" [value]="'major'">
-            {{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.MAJOR' | translate: { version: majorVersion } }}
-        </mat-radio-button>
-    </mat-radio-group>
-    <mat-form-field class="adf-new-version-max-width">
-        <mat-label>{{'ADF_VERSION_LIST.ACTIONS.UPLOAD.COMMENT' | translate}}</mat-label>
-        <textarea matInput
-                  [(ngModel)]="comment"
-                  class="adf-new-version-text-area" id="adf-new-version-text-area"
-                  (change)="onCommentChange()"></textarea>
-    </mat-form-field>
+  <div id="adf-version-type-label" class="adf-version-type-label">
+    {{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.VERSION_TYPE_LABEL' | translate }}
+  </div>
+  <mat-radio-group
+    class="adf-new-version-radio-group"
+    [(ngModel)]="semanticVersion"
+    (change)="onVersionChange()"
+    [attr.aria-labelledby]="'adf-version-type-label'">
+    <mat-radio-button class="adf-new-version-radio-button" id="adf-new-version-minor" [value]="'minor'">
+      {{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.MINOR' | translate: { version: minorVersion } }}
+    </mat-radio-button>
+    <mat-radio-button class="adf-new-version-radio-button" id="adf-new-version-major" [value]="'major'">
+      {{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.MAJOR' | translate: { version: majorVersion } }}
+    </mat-radio-button>
+  </mat-radio-group>
+  <mat-form-field class="adf-new-version-max-width">
+    <mat-label>{{'ADF_VERSION_LIST.ACTIONS.UPLOAD.COMMENT' | translate}}</mat-label>
+    <textarea matInput
+      [(ngModel)]="comment"
+      class="adf-new-version-text-area" id="adf-new-version-text-area"
+    (change)="onCommentChange()"></textarea>
+  </mat-form-field>
 </div>
 <div class="adf-version-upload-buttons">
-    <adf-upload-version-button *ngIf="showUploadButton"
-        data-automation-id="adf-new-version-file-upload"
-        staticTitle="{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.TITLE' | translate }}"
-        [node]="node"
-        [disabled]="!canUpload()"
-        [rootFolderId]="node.parentId"
-        tooltip="{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.TOOLTIP' | translate }}"
-        [comment]="comment"
-        [versioning]="true"
-        [file]="newFileVersion"
-        [majorVersion]="isMajorVersion()"
-        (success)="onSuccess($event)"
-        (error)="onError($event)" />
-    <button mat-raised-button (click)="cancelUpload()" id="adf-new-version-cancel"  *ngIf="showCancelButton" >{{
-        'ADF_VERSION_LIST.ACTIONS.UPLOAD.CANCEL'| translate }}
+  @if (showUploadButton) {
+    <adf-upload-version-button
+      data-automation-id="adf-new-version-file-upload"
+      staticTitle="{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.TITLE' | translate }}"
+      [node]="node"
+      [disabled]="!canUpload()"
+      [rootFolderId]="node.parentId"
+      tooltip="{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.TOOLTIP' | translate }}"
+      [comment]="comment"
+      [versioning]="true"
+      [file]="newFileVersion"
+      [majorVersion]="isMajorVersion()"
+      (success)="onSuccess($event)"
+      (error)="onError($event)" />
+  }
+  @if (showCancelButton) {
+    <button mat-raised-button (click)="cancelUpload()" id="adf-new-version-cancel"  >{{
+      'ADF_VERSION_LIST.ACTIONS.UPLOAD.CANCEL'| translate }}
     </button>
+  }
 </div>
