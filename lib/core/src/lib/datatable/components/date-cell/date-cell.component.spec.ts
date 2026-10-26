@@ -68,8 +68,7 @@ const renderDateCell = (dateConfig: DateConfig, value: number | string | Date, t
 
 const checkDisplayedDate = (expectedDate: string) => {
     const time = testingUtils.getByCSS('time').nativeElement;
-
-    const displayedDate = time.querySelector('[aria-hidden="true"]').textContent.trim();
+    const displayedDate = testingUtils.getByDataAutomationId('formatted-date-label').nativeElement.textContent.trim();
     const dateAnnouncedBySR = time.querySelector('.adf-sr-only').textContent.trim();
 
     expect(displayedDate).toBeTruthy();
