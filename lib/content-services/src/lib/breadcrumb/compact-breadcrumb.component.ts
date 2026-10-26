@@ -19,7 +19,8 @@ import {
     AfterViewInit,
     Component,
     computed,
-    DestroyRef, effect,
+    DestroyRef,
+    effect,
     ElementRef,
     inject,
     input,
@@ -70,12 +71,15 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     private readonly translateService = inject(TranslateService);
 
     readonly nodes = input<PathElement[]>([]);
+    readonly fullWidth = input(false);
 
     /** Emitted when dragged item is dropped onto the breadcrumb. Emits drag and drop event. */
     dropped = output<CdkDragDrop<PathElement, PathElement, DataRow>>();
     navigate = output<PathElement>();
 
-    private readonly trigger = viewChild.required<ElementRef<HTMLButtonElement>, ElementRef<HTMLButtonElement>>('trigger', { read: ElementRef });
+    private readonly menuTrigger = viewChild.required<ElementRef<HTMLButtonElement>, ElementRef<HTMLButtonElement>>('menuTrigger', {
+        read: ElementRef
+    });
     private readonly menu = viewChild.required<ElementRef<HTMLButtonElement>, ElementRef<HTMLDivElement>>('menu', { read: ElementRef });
     private readonly backdrop = viewChild.required<ElementRef<HTMLButtonElement>, ElementRef<HTMLDivElement>>('backdrop', { read: ElementRef });
 
@@ -122,6 +126,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         this.openMenuTimer = setTimeout(() => {
             if (this.dragDropStateService.dragging()) {
                 this.openMenu();
+                this.closeOnMenuLeave(2000);
             }
         }, 500);
     }
@@ -151,10 +156,10 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         this.dragDropStateService.hoveredDropName.set(node?.name);
     }
 
-    closeOnMenuLeave(): void {
+    closeOnMenuLeave(delay = 600): void {
         this.closeMenuTimer = setTimeout(() => {
             this.closeMenu();
-        }, 600);
+        }, delay);
     }
 
     stopClosingMenu(): void {
@@ -190,7 +195,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         this.removeOutsideClickListener?.();
         const handleOutsideClick = (event: MouseEvent): void => {
             const target = event.target as HTMLElement;
-            if (!this.trigger().nativeElement.contains(target) && !this.menu().nativeElement.contains(target)) {
+            if (!this.menuTrigger().nativeElement.contains(target) && !this.menu().nativeElement.contains(target)) {
                 event.stopPropagation();
                 event.preventDefault();
                 this.closeMenu();
@@ -201,10 +206,10 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     }
 
     private updateMenuPosition(): void {
-        const triggerRect = this.trigger().nativeElement.getBoundingClientRect();
+        const triggerRect = this.menuTrigger().nativeElement.getBoundingClientRect();
         const menuElement = this.menu().nativeElement;
         menuElement.style.top = `${triggerRect.bottom}px`;
-        menuElement.style.left = `${triggerRect.left}px`;
+        menuElement.style.left = this.fullWidth() ? '0' : `${triggerRect.left}px`;
     }
 
     private isRouteEnabled(): boolean {

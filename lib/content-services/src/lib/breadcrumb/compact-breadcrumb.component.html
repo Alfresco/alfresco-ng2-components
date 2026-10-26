@@ -1,11 +1,13 @@
+@let menuButtonLabel = 'BREADCRUMB.COMPACT_MENU.OPEN_COMPACT_BREADCRUMB_BUTTON' | translate: { ancestorsCounter: nodes().length - 1 };
 <button
-    #trigger
+    #menuTrigger
     matButton
     class="adf-compact-breadcrumb-trigger"
     (click)="toggleMenu()"
     (mouseenter)="onTriggerMouseEnter()"
-    (mouseleave)="stopOpeningMenu()">
-    {{'BREADCRUMB.COMPACT_MENU.OPEN_COMPACT_BREADCRUMB_BUTTON' | translate: { ancestorsCounter: nodes().length - 1 } }}
+    (mouseleave)="stopOpeningMenu()"
+    [title]="menuButtonLabel" >
+    {{ menuButtonLabel }}
 </button>
 <div
     #backdrop
@@ -16,6 +18,7 @@
     #menu
     class="adf-compact-breadcrumb-menu"
     [class.adf-compact-breadcrumb-menu-open]="menuOpen()"
+    [class.adf-compact-breadcrumb-menu-full-width]="fullWidth()"
     [attr.aria-hidden]="!menuOpen()"
     role="menu"
     (mouseleave)="closeOnMenuLeave()"

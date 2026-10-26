@@ -2,8 +2,15 @@
 @use '@angular/material' as mat;
 
 adf-compact-breadcrumb {
+    min-width: 0;
+
     .adf-compact-breadcrumb-trigger {
         font-size: 20px;
+        max-width: 100%;
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 }
 
@@ -35,6 +42,11 @@ adf-compact-breadcrumb {
     &-open {
         visibility: visible;
         pointer-events: auto;
+    }
+
+    &-full-width {
+        width: 98%;
+        margin-left: 0;
     }
 
     &-header {

@@ -43,34 +43,34 @@
             cdkDropListSortingDisabled
             [cdkDropListData]="hoveredItem"
             id="adf-breadcrumb-path"
-            class="adf-breadcrumb-container-path">
+            class="adf-breadcrumb-container-path"
+            [class.adf-breadcrumb-container-path-compact-mode]="compactMode" >
                 @for (item of lastNodes; track item.id; let last = $last; let index = $index) {
                     @if (!compactMode || (compactMode && index < 2 || compactMode && last)) {
                         <div
                             [class.adf-active]="last"
                             [class.adf-breadcrumb-item-drop-disabled]="index > 0"
-                            title="{{ item.name ?? '' | translate }}"
+                            [title]="getBreadcrumbTitle(index)"
                             class="adf-breadcrumb-item"
                             cdkDrag
                             cdkDragDisabled
                             (mouseenter)="hoveredItem = item"
                         >
-                            @if (breadcrumbItemIsAnchor(last)) {
-                                @if (index === 0 || !compactMode || (index === 1 && lastNodes.length === 3)) {
-                                    <a
-                                        href="#"
-                                        [attr.data-automation-id]="'breadcrumb_' + item.name"
-                                        class="adf-breadcrumb-item-anchor"
-                                        (click)="onRoutePathClick(item, $event)"
-                                    >
-                                        {{ item.name ?? '' | translate }}
-                                    </a>
-                                } @else if (index === 1) {
-                                    <adf-compact-breadcrumb
-                                        [nodes]="lastNodes"
-                                        (dropped)="dropped.emit($event)"
-                                        (navigate)="onRouteClick($event)"/>
-                                }
+                            @if (isBreadcrumbItemAnchor(index)) {
+                                <a
+                                    href="#"
+                                    [attr.data-automation-id]="'breadcrumb_' + item.name"
+                                    class="adf-breadcrumb-item-anchor"
+                                    (click)="onRoutePathClick(item, $event)"
+                                >
+                                    {{ item.name ?? '' | translate }}
+                                </a>
+                            } @else if (isCompactBreadcrumbItem(index)) {
+                                <adf-compact-breadcrumb
+                                    [nodes]="lastNodes"
+                                    (dropped)="dropped.emit($event)"
+                                    (navigate)="onRouteClick($event)"
+                                    [fullWidth]="hostElement?.clientWidth < 362" />
                             } @else {
                                 <h1 class="adf-breadcrumb-item-current" aria-current="location">
                                     {{ (selectedRowItemsCount < 1 ? item.name ?? '' : 'BREADCRUMB.HEADER.SELECTED') | translate: { count: selectedRowItemsCount } }}

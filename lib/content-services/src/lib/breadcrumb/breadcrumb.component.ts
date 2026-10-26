@@ -19,6 +19,7 @@ import {
     afterNextRender,
     Component,
     DestroyRef,
+    ElementRef,
     EventEmitter,
     inject,
     Input,
@@ -95,7 +96,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     selectedRowItemsCount = 0;
 
     @Input()
-    compactMode = true;
+    compactMode = false;
 
     previousNodes: PathElement[];
     lastNodes: PathElement[];
@@ -127,6 +128,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     dropped = new EventEmitter<CdkDragDrop<PathElement, PathElement, DataRow>>();
 
     protected hoveredItem: PathElement;
+    protected hostElement = inject(ElementRef).nativeElement;
 
     constructor() {
         afterNextRender(() => {
@@ -219,8 +221,17 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
         return position;
     }
 
-    breadcrumbItemIsAnchor(lastItem): boolean {
-        return !this.readOnly && !lastItem;
+    isBreadcrumbItemAnchor(index: number): boolean {
+        return !this.readOnly && index != this.lastNodes.length - 1 && !this.isCompactBreadcrumbItem(index);
+    }
+
+    isCompactBreadcrumbItem(index): boolean {
+        return index != this.lastNodes.length - 1 && index !== 0 && this.compactMode && (index !== 1 || this.lastNodes.length !== 3);
+    }
+
+    getBreadcrumbTitle(index: number): string {
+        const anchor = this.isBreadcrumbItemAnchor(index);
+        return anchor || (!anchor && !this.isCompactBreadcrumbItem(index)) ? this.translationService.instant(this.lastNodes[index].name ?? '') : '';
     }
 
     onRoutePathClick(route: PathElement, event?: Event): void {
