@@ -441,6 +441,9 @@ for more information about installing and using the source code.
 
 ## Process Services Cloud API
 
+> ⚠️ **Maintenance mode:** `@alfresco/adf-process-services-cloud` is no longer actively supported.
+> Only critical bug fixes and security patches will be considered, and no new features will be added.
+
 Contains components related to Process Services Cloud.
 See the library's
 [README file](../lib/process-services-cloud/README.md)
