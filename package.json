@@ -53,7 +53,7 @@
     "@angular/router": "21.2.25",
     "@apollo/client": "4.3.1",
     "@cspell/eslint-plugin": "10.0.1",
-    "@mat-datetimepicker/core": "16.0.1",
+    "@mat-datetimepicker/core": "17.1.0",
     "@ngx-translate/core": "17.0.0",
     "angular-oauth2-oidc": "19.0.0",
     "apollo-angular": "13.0.0",
