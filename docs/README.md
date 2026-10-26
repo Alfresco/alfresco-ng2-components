@@ -353,6 +353,7 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Audit Service](content-services/services/audit.service.md) | Manages Audit apps and entries. | [Source](../lib/content-services/src/lib/audit/audit.service.ts) |
 | [Card View Content Update Service](content-services/services/card-view-content-update.service.md) | Manages Card View properties in the content services environment. Implements BaseCardViewContentUpdate. | [Source](../lib/content-services/src/lib/common/services/card-view-content-update.service.ts) |  |
+| [Cascading Dictionary service](content-services/services/cascading-dictionary.service.md) | Manages cascading dictionaries in Content Services. | [Source](../lib/content-services/src/lib/cascading-dictionary/services/cascading-dictionary.service.ts) |
 | [Category tree datasource service](content-services/services/category-tree-datasource.service.md) | Datasource service for category tree. | [Source](../lib/content-services/src/lib/category/services/category-tree-datasource.service.ts) |
 | [Category service](content-services/services/category.service.md) | Manages categories in Content Services. | [Source](../lib/content-services/src/lib/category/services/category.service.ts) |
 | [Content Comment List Service](content-services/services/content-comment-list.service.md) | Gets user image for comments in Content Services. | [Source](../lib/content-services/src/lib/node-comments/services/content-comment-list.service.ts) |
