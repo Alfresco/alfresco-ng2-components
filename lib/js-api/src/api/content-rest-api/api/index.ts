@@ -19,6 +19,7 @@ export * from './types';
 export * from './actions.api';
 export * from './activities.api';
 export * from './audit.api';
+export * from './cascadingDictionaries.api';
 export * from './categories.api';
 export * from './comments.api';
 export * from './downloads.api';
