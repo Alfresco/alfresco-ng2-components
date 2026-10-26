@@ -128,7 +128,10 @@ export type ShowHeaderMode = (typeof ShowHeaderMode)[keyof typeof ShowHeaderMode
     templateUrl: './datatable.component.html',
     styleUrls: ['./datatable.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable' }
+    host: {
+        class: 'adf-datatable',
+        '(document:keydown.escape)': 'stopNodeDragging()'
+    }
 })
 export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
     protected readonly dragDropStateService = inject(DragDropStateService);
@@ -1145,6 +1148,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         this.isDraggingRow = false;
         this.dragDropStateService.dragging.set(false);
         document.body.classList.remove('adf-is-dragging');
+    }
+
+    protected stopNodeDragging(): void {
+        document.dispatchEvent(new MouseEvent('mouseup'));
     }
 
     private updateColumnsWidths(): void {

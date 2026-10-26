@@ -806,6 +806,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     > :first-child {
         margin-left: 6px;
     }
+
+    .adf-datatable-cell-container {
+        max-width: 220px;
+    }
 }
 
 .adf-is-dragging * {

@@ -15,24 +15,28 @@
 <div
     #menu
     class="adf-compact-breadcrumb-menu"
-    id="adf-compact-breadcrumb-menu"
     [class.adf-compact-breadcrumb-menu-open]="menuOpen()"
     [attr.aria-hidden]="!menuOpen()"
     role="menu"
     (mouseleave)="closeOnMenuLeave()"
-    (mouseenter)="stopClosingMenu()"
-    cdkDropListGroup
-    cdkDropList
-    cdkDropListSortingDisabled
-    [cdkDropListData]="hoveredItem()"
-    (cdkDropListDropped)="onDrop($event)" >
+    (mouseenter)="stopClosingMenu()" >
     <div class="adf-compact-breadcrumb-menu-header">
         <h2 class="adf-compact-breadcrumb-menu-header-title">{{'BREADCRUMB.COMPACT_MENU.TITLE' | translate }}</h2>
         <p class="adf-compact-breadcrumb-menu-description adf-compact-breadcrumb-menu-header-title-description">
-            {{'BREADCRUMB.COMPACT_MENU.DESCRIPTION' | translate }}
+            {{
+                (dragDropStateService.dragging() ? 'BREADCRUMB.COMPACT_MENU.DESCRIPTION_WHEN_DRAGGING'
+                    : 'BREADCRUMB.COMPACT_MENU.DESCRIPTION_NO_DRAGGING') | translate
+            }}
         </p>
     </div>
-    <mat-nav-list class="adf-compact-breadcrumb-menu-list">
+    <mat-nav-list class="adf-compact-breadcrumb-menu-list"
+                  id="adf-compact-breadcrumb-menu-list"
+                  cdkDropListGroup
+                  cdkDropList
+                  cdkDropListSortingDisabled
+                  [cdkDropListData]="hoveredItem()"
+                  (cdkDropListDropped)="onDrop($event)"
+                  cdk-scrollable>
         @for (node of nodes(); track node.id; let last = $last; let index = $index) {
             <mat-list-item
                 class="adf-compact-breadcrumb-menu-list-item"
@@ -42,7 +46,8 @@
                 cdkDragDisabled
                 [disabled]="last"
                 (mouseenter)="setNodeHoverState(node)"
-                (mouseleave)="setNodeHoverState(null)">
+                (mouseleave)="setNodeHoverState(null)"
+                (click)="onRouteClick(node, $event)" >
                 <img
                     ngSrc="./assets/images/ft_ic_folder_empty.svg"
                     width="24"
@@ -53,7 +58,6 @@
                     matListItemTitle
                     href="#"
                     class="adf-compact-breadcrumb-menu-list-item-anchor"
-                    (click)="onRouteClick(node, $event)"
                 >
                     {{ node.name | translate }}
                 </a>
@@ -81,6 +85,9 @@
     </mat-nav-list>
     <p class="adf-compact-breadcrumb-menu-description adf-compact-breadcrumb-menu-footer">
         <mat-icon class="adf-compact-breadcrumb-menu-description-back-icon">shortcut</mat-icon>
-        {{'BREADCRUMB.COMPACT_MENU.PRESS_ESC_TO_CLOSE_HINT' | translate }}
+        {{
+            (dragDropStateService.dragging() ? 'BREADCRUMB.COMPACT_MENU.PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING'
+                : 'BREADCRUMB.COMPACT_MENU.PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING') | translate
+        }}
     </p>
 </div>

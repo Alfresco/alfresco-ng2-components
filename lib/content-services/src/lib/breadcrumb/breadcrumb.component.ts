@@ -130,7 +130,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
     constructor() {
         afterNextRender(() => {
-            this.breadcrumbPathElementsChange.emit(['adf-compact-breadcrumb-menu', 'adf-breadcrumb-path']);
+            this.breadcrumbPathElementsChange.emit(['adf-compact-breadcrumb-menu-list', 'adf-breadcrumb-path']);
         });
     }
 
