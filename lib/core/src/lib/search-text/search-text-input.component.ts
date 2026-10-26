@@ -184,6 +184,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     toggle$ = this.toggleSearch.asObservable();
 
     private readonly destroyRef = inject(DestroyRef);
+
     private destroyed = false;
 
     constructor() {
