@@ -186,8 +186,8 @@ importers:
         specifier: 20.3.32
         version: 20.3.32(chokidar@4.0.3)
       '@storybook/addon-themes':
-        specifier: 10.6.0
-        version: 10.6.0(storybook@10.6.2(prettier@3.9.6)(react@19.2.6))
+        specifier: 10.6.2
+        version: 10.6.2(storybook@10.6.2(prettier@3.9.6)(react@19.2.6))
       '@storybook/angular':
         specifier: 10.6.0
         version: 10.6.0(81771214a4d5dab58c6ac2c4a91fc0f8)
@@ -3553,10 +3553,10 @@ packages:
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
-  '@storybook/addon-themes@10.6.0':
-    resolution: {integrity: sha512-PJtRtaCzKCAcouEqkHevMwv0aeQNsYWab4K/qszNGuSyFXxdcPQguKwmbB6Ajd/FxW+Of/mLXjRgpjrGVSgm1g==}
+  '@storybook/addon-themes@10.6.2':
+    resolution: {integrity: sha512-NGvoAPnWH+WnCNVUAzbDzDQHz2dJNEM5CR0KLGjjDUhHjIvCoAzhD4+SMwnZQqznwm5sgYUdyyKqzrHMeSInog==}
     peerDependencies:
-      storybook: ^10.6.0
+      storybook: ^10.6.2
 
   '@storybook/angular@10.6.0':
     resolution: {integrity: sha512-tIElbeB2bIHNSqRkrFhAbOfdtxz69c60XFLCgwUzWoEu6E9AkfvryZHch8TljfSplCMlAHWT0sNBEoXfJEkCFQ==}
@@ -11390,7 +11390,7 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
-  '@storybook/addon-themes@10.6.0(storybook@10.6.2(prettier@3.9.6)(react@19.2.6))':
+  '@storybook/addon-themes@10.6.2(storybook@10.6.2(prettier@3.9.6)(react@19.2.6))':
     dependencies:
       storybook: 10.6.2(prettier@3.9.6)(react@19.2.6)
       ts-dedent: 2.3.0

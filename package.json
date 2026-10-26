@@ -93,7 +93,7 @@
     "@nx/storybook": "23.3.0",
     "@nx/workspace": "23.3.0",
     "@schematics/angular": "20.3.32",
-    "@storybook/addon-themes": "10.6.0",
+    "@storybook/addon-themes": "10.6.2",
     "@storybook/angular": "10.6.0",
     "@types/jasmine": "4.0.3",
     "@types/jasminewd2": "2.0.13",
