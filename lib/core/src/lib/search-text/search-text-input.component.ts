@@ -184,9 +184,13 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     toggle$ = this.toggleSearch.asObservable();
 
     private readonly destroyRef = inject(DestroyRef);
+    private destroyed = false;
 
     constructor() {
         this.toggle$.pipe(debounceTime(200), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+            if (this.destroyed) {
+                return;
+            }
             if (this.expandable) {
                 this.subscriptAnimationState = this.toggleAnimation();
                 if (this.subscriptAnimationState.value === 'inactive') {
@@ -229,6 +233,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+        this.destroyed = true;
         this.toggleSearch.complete();
         this.valueChange.complete();
     }
