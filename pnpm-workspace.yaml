@@ -15,7 +15,7 @@ overrides:
   postcss: '>=8.5.25'
   webpack-dev-server: '>=6.0.0'
   uuid: '>=11.1.1'
-  undici: 8.10.2
+  undici: 8.12.2
   smol-toml: 1.9.0
   piscina: 5.3.2
   proxy-addr: 2.0.8
