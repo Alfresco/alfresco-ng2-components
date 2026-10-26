@@ -64,7 +64,6 @@
                                 }"
                                 [ngStyle]="col.width && !lastColumn && { flex: getFlexValue(col) }"
                                 [attr.role]="isRepresentationContent(col) ? null : 'columnheader'"
-                                [attr.aria-hidden]="isRepresentationContent(col) ? 'true' : null"
                                 [attr.aria-label]="
                                     col.srTitle
                                         ? (col.srTitle | translate)
