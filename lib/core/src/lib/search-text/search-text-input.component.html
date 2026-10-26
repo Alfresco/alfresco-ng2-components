@@ -2,6 +2,7 @@
     <div class="adf-search-container-transition" [class.adf-search-active]="isSearchBarActive()" [class.adf-search-no-animation]="disableAnimations">
         @if (expandable && !isSearchBarActive()) {
             <button
+                #searchIconButton
                 mat-icon-button
                 id="adf-search-button"
                 class="adf-search-button"
@@ -41,8 +42,7 @@
                     data-automation-id="adf-clear-search-button"
                     class="adf-clear-search-button"
                     [title]="'CORE.SEARCH.FILTER.BUTTONS.CLOSE' | translate"
-                    (click)="resetSearch()"
-                    (keyup.enter)="resetSearch()"
+                    (click)="resetSearch($event)"
                 >
                     <mat-icon adf-icon="close" />
                 </button>
