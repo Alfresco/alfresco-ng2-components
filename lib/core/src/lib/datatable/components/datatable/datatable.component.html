@@ -63,7 +63,7 @@
                                     'adf-datatable__header--sorted-desc': isColumnSorted(col, 'desc')
                                 }"
                                 [ngStyle]="col.width && !lastColumn && { flex: getFlexValue(col) }"
-                                role="columnheader"
+                                [attr.role]="isRepresentationContent(col) ? null : 'columnheader'"
                                 [attr.aria-label]="
                                     col.srTitle
                                         ? (col.srTitle | translate)
