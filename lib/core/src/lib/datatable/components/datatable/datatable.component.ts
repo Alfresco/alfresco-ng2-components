@@ -130,7 +130,9 @@ export type ShowHeaderMode = (typeof ShowHeaderMode)[keyof typeof ShowHeaderMode
     encapsulation: ViewEncapsulation.None,
     host: {
         class: 'adf-datatable',
-        '(document:keydown.escape)': 'stopNodeDragging()'
+        '(document:keydown.escape)': 'stopNodeDragging()',
+        '(document:click)': 'stopNodeDragging()',
+        '(keydown)': 'preventChangeRowByTab($event)'
     }
 })
 export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
@@ -392,16 +394,28 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                 switch (event.key) {
                     case 'ArrowUp': {
                         this.draggedRowIndex = this.keyManager.activeItemIndex - 1;
+                        this.dragDropStateService.keyboardDraggingData.set(this.data.getRows()[this.draggedRowIndex].id);
+                        this.onDragStart();
                         break;
                     }
                     case 'ArrowDown': {
-                        if (this.draggedRowIndex !== undefined && this.draggedRowIndex !== null) {
+                        const currentIndex = this.keyManager.activeItemIndex - 1;
+                        if (this.draggedRowIndex !== undefined && this.draggedRowIndex !== null && this.draggedRowIndex !== currentIndex) {
                             this.dragDropped.emit({
                                 previousIndex: this.draggedRowIndex,
-                                currentIndex: this.keyManager.activeItemIndex - 1
+                                currentIndex
                             });
+                            this.draggedRowIndex = null;
+                            this.onDragEnd();
                         }
                         break;
+                    }
+                    case 'ArrowRight': {
+                        if (this.draggedRowIndex !== undefined && this.draggedRowIndex !== null) {
+                            const focusTrap = this.focusTrapFactory.create(document.getElementById(this.dropListConnectedTo[0]));
+                            focusTrap.focusFirstTabbableElement();
+                            focusTrap.destroy();
+                        }
                     }
                     default:
                         break;
@@ -438,14 +452,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             }
         } else {
             this.keyManager.onKeydown(event);
-        }
-        switch (event.key) {
-            case 'Escape': {
-                this.draggedRowIndex = null;
-                break;
-            }
-            default:
-                break;
         }
     }
 
@@ -1197,11 +1203,28 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     onDragEnd(): void {
         this.isDraggingRow = false;
         this.dragDropStateService.dragging.set(false);
+        this.dragDropStateService.keyboardDraggingData.set(null);
         document.body.classList.remove('adf-is-dragging');
+    }
+
+    preventChangeRowByTab(event: KeyboardEvent): void {
+        if (
+            this.enableDragRows &&
+            this.rowDropSortingDisabled &&
+            event.key === 'Tab' &&
+            this.draggedRowIndex !== undefined &&
+            this.draggedRowIndex !== null
+        ) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            event.stopPropagation();
+        }
     }
 
     protected stopNodeDragging(): void {
         document.dispatchEvent(new MouseEvent('mouseup'));
+        this.keyManager.setActiveItem(0);
+        this.draggedRowIndex = null;
     }
 
     private updateColumnsWidths(): void {

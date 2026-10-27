@@ -44,7 +44,8 @@
             [cdkDropListData]="hoveredItem"
             id="adf-breadcrumb-path"
             class="adf-breadcrumb-container-path"
-            [class.adf-breadcrumb-container-path-compact-mode]="compactMode" >
+            [class.adf-breadcrumb-container-path-compact-mode]="compactMode"
+            [cdkTrapFocus]="dragDropStateService.dragging()">
                 @for (item of lastNodes; track item.id; let last = $last; let index = $index) {
                     @if (!compactMode || (compactMode && index < 2 || compactMode && last)) {
                         <div
@@ -62,6 +63,7 @@
                                     [attr.data-automation-id]="'breadcrumb_' + item.name"
                                     class="adf-breadcrumb-item-anchor"
                                     (click)="onRoutePathClick(item, $event)"
+                                    (keydown.shift.arrowdown)="onKeyboardNodeDrop(item.id)"
                                 >
                                     {{ item.name ?? '' | translate }}
                                 </a>

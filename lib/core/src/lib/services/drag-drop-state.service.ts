@@ -23,4 +23,5 @@ import { Injectable, signal } from '@angular/core';
 export class DragDropStateService {
     readonly dragging = signal(false);
     readonly hoveredDropName = signal('');
+    readonly keyboardDraggingData = signal<string>('');
 }

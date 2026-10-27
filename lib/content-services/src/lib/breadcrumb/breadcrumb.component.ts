@@ -35,18 +35,21 @@ import { Node, PathElement } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DataRow, IconModule } from '@alfresco/adf-core';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { DataRow, DragDropStateService, IconModule } from '@alfresco/adf-core';
+import { CdkTrapFocus, LiveAnnouncer } from '@angular/cdk/a11y';
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { CompactBreadcrumbComponent } from './compact-breadcrumb.component';
 
 @Component({
     selector: 'adf-breadcrumb',
-    imports: [IconModule, TranslatePipe, MatSelectModule, CdkDropList, CdkDropListGroup, CompactBreadcrumbComponent, CdkDrag],
+    imports: [IconModule, TranslatePipe, MatSelectModule, CdkDropList, CdkDropListGroup, CompactBreadcrumbComponent, CdkDrag, CdkTrapFocus],
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-breadcrumb' }
+    host: {
+        class: 'adf-breadcrumb',
+        '(keyup.shift.arrowright)': 'goToNextDropList()'
+    }
 })
 export class BreadcrumbComponent implements OnInit, OnChanges {
     /** Active node, builds UI based on folderNode.path.elements collection. */
@@ -104,6 +107,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     route: PathElement[] = [];
 
     private readonly destroyRef = inject(DestroyRef);
+    protected readonly dragDropStateService = inject(DragDropStateService);
     private readonly liveAnnouncer = inject(LiveAnnouncer);
     private readonly translationService = inject(TranslateService);
 
@@ -132,7 +136,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
     constructor() {
         afterNextRender(() => {
-            this.breadcrumbPathElementsChange.emit(['adf-compact-breadcrumb-menu-list', 'adf-breadcrumb-path']);
+            this.breadcrumbPathElementsChange.emit(['adf-breadcrumb-path', 'adf-compact-breadcrumb-menu-list']);
         });
     }
 
@@ -255,6 +259,29 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     onDrop(event: CdkDragDrop<PathElement, PathElement, DataRow>): void {
         if (event.isPointerOverContainer && this.lastNodes.findIndex((node) => node === this.hoveredItem) === 0) {
             this.dropped.emit(event);
+        }
+    }
+
+    goToNextDropList(): void {
+        if (this.dragDropStateService.dragging()) {
+            (document.querySelector('.adf-datatable-body adf-datatable-row') as HTMLElement)?.focus();
+        }
+    }
+
+    onKeyboardNodeDrop(id: string): void {
+        if (this.dragDropStateService.dragging()) {
+            this.dropped.emit({
+                item: {
+                    data: {
+                        id: this.dragDropStateService.keyboardDraggingData()
+                    }
+                },
+                container: {
+                    data: {
+                        id
+                    }
+                }
+            } as CdkDragDrop<PathElement, PathElement, DataRow>);
         }
     }
 }
