@@ -245,6 +245,7 @@
                 cdkDropListHasAnchor
                 [cdkDropListSortingDisabled]="rowDropSortingDisabled"
                 role="rowgroup"
+                (focusin)="announceDragDropHints($event)"
             >
                 @if (!noPermission) {
                     <adf-datatable-row
@@ -267,6 +268,7 @@
                         [ngStyle]="rowStyle"
                         [ngClass]="getRowStyle(row)"
                         [class.adf-datatable-row__dragging]="isDraggingRow"
+                        [class.adf-datatable-row__keyboard-dragging]="draggedRowIndex === idx"
                         [attr.data-automation-id]="'datatable-row-' + idx"
                         (contextmenu)="markRowAsContextMenuSource(row)"
                         (focus)="onRowFocus(idx)"

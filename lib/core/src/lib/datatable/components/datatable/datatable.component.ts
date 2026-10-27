@@ -40,7 +40,7 @@ import {
     ViewChildren,
     ViewEncapsulation
 } from '@angular/core';
-import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory, FocusKeyManager } from '@angular/cdk/a11y';
+import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory, FocusKeyManager, LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { Observable, Observer, Subscription } from 'rxjs';
@@ -62,7 +62,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ResizeEvent } from '../../directives/resizable/types';
 import { CommonModule } from '@angular/common';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { FileTypePipe, LocalizedDatePipe } from '../../../pipes';
 import { DropZoneDirective } from '../../directives/drop-zone.directive';
 import { ResizableDirective } from '../../directives/resizable/resizable.directive';
@@ -136,8 +136,10 @@ export type ShowHeaderMode = (typeof ShowHeaderMode)[keyof typeof ShowHeaderMode
 export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
     protected readonly dragDropStateService = inject(DragDropStateService);
     private readonly elementRef = inject(ElementRef);
+    private readonly liveAnnouncer = inject(LiveAnnouncer);
     private readonly matIconRegistry = inject(MatIconRegistry);
     private readonly sanitizer = inject(DomSanitizer);
+    private readonly translateService = inject(TranslateService);
     private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
 
     private static readonly MINIMUM_COLUMN_SIZE = 100;
@@ -374,6 +376,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
 
+    protected draggedRowIndex: number;
     protected hoveredRowIndex: number;
 
     private readonly destroyRef = inject(DestroyRef);
@@ -385,33 +388,64 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @HostListener('keyup', ['$event'])
     onKeydown(event: KeyboardEvent): void {
         if (event.shiftKey && this.enableDragRows) {
-            switch (event.key) {
-                case 'ArrowUp': {
-                    if (this.keyManager.activeItemIndex > 1) {
-                        this.dragDropped.emit({
-                            previousIndex: this.keyManager.activeItemIndex - 1,
-                            currentIndex: this.keyManager.activeItemIndex - 2
-                        });
-                        setTimeout(() => {
-                            this.keyManager.setActiveItem(this.keyManager.activeItemIndex - 1);
-                        });
+            if (this.rowDropSortingDisabled) {
+                switch (event.key) {
+                    case 'ArrowUp': {
+                        this.draggedRowIndex = this.keyManager.activeItemIndex - 1;
+                        break;
                     }
-                    break;
-                }
-                case 'ArrowDown': {
-                    if (this.keyManager.activeItemIndex < this.rowsList.length - 1) {
-                        this.dragDropped.emit({ previousIndex: this.keyManager.activeItemIndex - 1, currentIndex: this.keyManager.activeItemIndex });
-                        setTimeout(() => {
-                            this.keyManager.setActiveItem(this.keyManager.activeItemIndex + 1);
-                        });
+                    case 'ArrowDown': {
+                        if (this.draggedRowIndex !== undefined && this.draggedRowIndex !== null) {
+                            this.dragDropped.emit({
+                                previousIndex: this.draggedRowIndex,
+                                currentIndex: this.keyManager.activeItemIndex - 1
+                            });
+                        }
+                        break;
                     }
-                    break;
+                    default:
+                        break;
                 }
-                default:
-                    break;
+            } else {
+                switch (event.key) {
+                    case 'ArrowUp': {
+                        if (this.keyManager.activeItemIndex > 1) {
+                            this.dragDropped.emit({
+                                previousIndex: this.keyManager.activeItemIndex - 1,
+                                currentIndex: this.keyManager.activeItemIndex - 2
+                            });
+                            setTimeout(() => {
+                                this.keyManager.setActiveItem(this.keyManager.activeItemIndex - 1);
+                            });
+                        }
+                        break;
+                    }
+                    case 'ArrowDown': {
+                        if (this.keyManager.activeItemIndex < this.rowsList.length - 1) {
+                            this.dragDropped.emit({
+                                previousIndex: this.keyManager.activeItemIndex - 1,
+                                currentIndex: this.keyManager.activeItemIndex
+                            });
+                            setTimeout(() => {
+                                this.keyManager.setActiveItem(this.keyManager.activeItemIndex + 1);
+                            });
+                        }
+                        break;
+                    }
+                    default:
+                        break;
+                }
             }
         } else {
             this.keyManager.onKeydown(event);
+        }
+        switch (event.key) {
+            case 'Escape': {
+                this.draggedRowIndex = null;
+                break;
+            }
+            default:
+                break;
         }
     }
 
@@ -1143,6 +1177,14 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                 previousIndex: droppedEvent.previousIndex,
                 currentIndex: this.rowDropSortingDisabled ? this.hoveredRowIndex : droppedEvent.currentIndex
             });
+        }
+    }
+
+    announceDragDropHints(event: FocusEvent): void {
+        const currentTarget = event.currentTarget as HTMLElement;
+        const previousTarget = event.relatedTarget as HTMLElement;
+        if ((!previousTarget || !currentTarget.contains(previousTarget)) && this.rowDropSortingDisabled) {
+            void this.liveAnnouncer.announce(this.translateService.instant('ADF-DATATABLE.ACCESSIBILITY.DRAG_DROP_HINTS'), 'assertive');
         }
     }
 

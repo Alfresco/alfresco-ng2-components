@@ -160,6 +160,12 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
             cursor: grabbing;
         }
 
+        #{ms.$cdk-drag-placeholder},
+        #{ms.$cdk-drag-anchor},
+        .adf-datatable-row__keyboard-dragging {
+            opacity: 0.4;
+        }
+
         .adf-datatable-row {
             @include mixins.material-animation-default(0.28s);
 
@@ -675,11 +681,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         @include mat.elevation-transition;
         @include mat.elevation(4);
     }
-}
-
-#{ms.$cdk-drag-placeholder},
-#{ms.$cdk-drag-anchor} {
-    opacity: 0.4;
 }
 
 /* [Accessibility] Material checkbox labels */

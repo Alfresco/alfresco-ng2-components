@@ -20,7 +20,7 @@
     [class.adf-compact-breadcrumb-menu-open]="menuOpen()"
     [class.adf-compact-breadcrumb-menu-full-width]="fullWidth()"
     [attr.aria-hidden]="!menuOpen()"
-    role="menu"
+    role="dialog"
     (mouseleave)="closeOnMenuLeave()"
     (mouseenter)="stopClosingMenu()" >
     <div class="adf-compact-breadcrumb-menu-header">
@@ -44,7 +44,6 @@
             <mat-list-item
                 class="adf-compact-breadcrumb-menu-list-item"
                 [class.adf-compact-breadcrumb-menu-list-item-disabled]="last"
-                role="menuitem"
                 cdkDrag
                 cdkDragDisabled
                 [disabled]="last"
