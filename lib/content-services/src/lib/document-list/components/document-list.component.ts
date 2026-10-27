@@ -408,6 +408,10 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     rowDropSortingDisabled = false;
 
+    /** Emitted when dragged row is dropped. */
+    @Output()
+    dragDropped = new EventEmitter<{ previousIndex: number; currentIndex: number }>();
+
     /**
      * Indicates if the data is provided externally.
      * If true the component won't fetch data itself

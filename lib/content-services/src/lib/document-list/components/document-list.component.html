@@ -35,7 +35,8 @@
     [dragBoundary]="dragBoundary"
     [showDragIndicator]="showDragIndicator"
     [useWholeRowAsDragPreview]="useWholeRowAsDragPreview"
-    [rowDropSortingDisabled]="rowDropSortingDisabled">
+    [rowDropSortingDisabled]="rowDropSortingDisabled"
+    (dragDropped)="dragDropped.emit($event)" >
 
     <div *ngIf="headerFilters">
         <adf-filter-header

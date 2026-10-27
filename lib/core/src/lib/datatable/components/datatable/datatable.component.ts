@@ -374,6 +374,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
 
+    protected hoveredRowIndex: number;
+
     private readonly destroyRef = inject(DestroyRef);
 
     private get rowsOffset(): number {
@@ -1133,8 +1135,14 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     onDragDrop(droppedEvent: CdkDragDrop<any>): void {
-        if (this.enableDragRows) {
-            this.dragDropped.emit({ previousIndex: droppedEvent.previousIndex, currentIndex: droppedEvent.currentIndex });
+        if (
+            this.enableDragRows &&
+            ((this.rowDropSortingDisabled && this.hoveredRowIndex !== undefined && this.hoveredRowIndex !== null) || !this.rowDropSortingDisabled)
+        ) {
+            this.dragDropped.emit({
+                previousIndex: droppedEvent.previousIndex,
+                currentIndex: this.rowDropSortingDisabled ? this.hoveredRowIndex : droppedEvent.currentIndex
+            });
         }
     }
 

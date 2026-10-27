@@ -254,6 +254,8 @@
                         (cdkDragDropped)="onDragDrop($event)"
                         (cdkDragStarted)="onDragStart()"
                         (cdkDragEnded)="onDragEnd()"
+                        (mouseenter)="hoveredRowIndex = idx"
+                        (mouseleave)="hoveredRowIndex = null"
                         [cdkDragBoundary]="dragBoundary"
                         [cdkDragData]="row"
                         [row]="row"
