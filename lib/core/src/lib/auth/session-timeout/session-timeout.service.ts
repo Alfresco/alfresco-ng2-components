@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { DOCUMENT } from '@angular/common';
 import { Injectable, NgZone, OnDestroy, inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -31,6 +32,7 @@ import {
 import { IdleActivityTracker } from './idle-activity-tracker';
 import { SessionTimeoutSyncChannel, SessionTimeoutSyncEvent } from './session-timeout-sync-channel';
 import { SessionTimeoutDialogComponent, SessionTimeoutDialogData, SESSION_TIMEOUT_BACKDROP_CLASS } from './session-timeout-dialog.component';
+import { getNativeTimerApi } from './zone-native-api';
 
 const ACTIVITY_SYNC_THROTTLE_MS = 1000;
 
@@ -43,6 +45,8 @@ export class SessionTimeoutService implements OnDestroy {
     private readonly providerOptions = inject<SessionTimeoutOptions>(SESSION_TIMEOUT_OPTIONS);
     private readonly tracker = inject(IdleActivityTracker);
     private readonly syncChannel = inject(SessionTimeoutSyncChannel);
+    private readonly window = inject(DOCUMENT).defaultView;
+
     private readonly subscription = new Subscription();
     private sessionSubscription: Subscription | undefined;
     private timeoutId: ReturnType<typeof setTimeout> | undefined;
@@ -134,23 +138,20 @@ export class SessionTimeoutService implements OnDestroy {
     }
 
     private activateSessionTimeout(): void {
-        this.ngZone.runOutsideAngular(() => {
-            if (!this.canArmSessionTimeout()) {
-                return;
-            }
+        if (!this.canArmSessionTimeout()) {
+            return;
+        }
 
-            if (this.sessionSubscription) {
-                this.refreshSession();
-                return;
-            }
-
-            this.sessionSubscription = new Subscription();
-            this.tracker.start();
-            this.syncChannel.open();
-            this.subscribeToTrackerEvents();
-            this.subscribeToSyncEvents();
+        if (this.sessionSubscription) {
             this.refreshSession();
-        });
+            return;
+        }
+        this.sessionSubscription = new Subscription();
+        this.tracker.start();
+        this.syncChannel.open();
+        this.subscribeToTrackerEvents();
+        this.subscribeToSyncEvents();
+        this.refreshSession();
     }
 
     private subscribeToTrackerEvents(): void {
@@ -200,7 +201,7 @@ export class SessionTimeoutService implements OnDestroy {
         }
 
         if (syncEvent.type === 'timeout') {
-            if (syncEvent.createdAt >= this.lastActivityAt) {
+            if (syncEvent.createdAt >= this.getLastActivityAt()) {
                 this.openContinueWorkingDialog(false);
             }
             return;
@@ -228,9 +229,9 @@ export class SessionTimeoutService implements OnDestroy {
             return;
         }
 
-        const elapsedMs = Date.now() - this.lastActivityAt;
+        const elapsedMs = Date.now() - this.getLastActivityAt();
         const remainingMs = Math.max(this.idleTimeoutMs - elapsedMs, 0);
-        this.timeoutId = setTimeout(() => this.handleTimeout(), remainingMs);
+        this.timeoutId = getNativeTimerApi(this.window).setTimeout(() => this.handleTimeout(), remainingMs);
     }
 
     private handleTimeout(): void {
@@ -239,7 +240,7 @@ export class SessionTimeoutService implements OnDestroy {
             return;
         }
 
-        const elapsedMs = Date.now() - this.lastActivityAt;
+        const elapsedMs = Date.now() - this.getLastActivityAt();
         if (elapsedMs < this.idleTimeoutMs) {
             this.scheduleTimeout();
             return;
@@ -258,17 +259,15 @@ export class SessionTimeoutService implements OnDestroy {
         }
 
         this.clearTimeout();
-        this.dialogRef = this.ngZone.run(() =>
-            this.dialog.open<SessionTimeoutDialogComponent, SessionTimeoutDialogData, boolean>(SessionTimeoutDialogComponent, {
-                data: {
-                    dialogTimeoutMs: this.dialogTimeoutMs
-                },
-                backdropClass: SESSION_TIMEOUT_BACKDROP_CLASS,
-                disableClose: true,
-                width: '420px'
-            })
-        );
-        this.dialogTimeoutId = setTimeout(() => {
+        this.dialogRef = this.dialog.open<SessionTimeoutDialogComponent, SessionTimeoutDialogData, boolean>(SessionTimeoutDialogComponent, {
+            data: {
+                dialogTimeoutMs: this.dialogTimeoutMs
+            },
+            backdropClass: SESSION_TIMEOUT_BACKDROP_CLASS,
+            disableClose: true,
+            width: '420px'
+        });
+        this.dialogTimeoutId = getNativeTimerApi(this.window).setTimeout(() => {
             this.dialogRef?.close(false);
         }, this.dialogTimeoutMs);
         if (shouldNotifyTabs) {
@@ -336,6 +335,10 @@ export class SessionTimeoutService implements OnDestroy {
         dialogRef.close();
     }
 
+    private getLastActivityAt(): number {
+        return Math.max(this.lastActivityAt, this.tracker.lastActivityAt ?? 0);
+    }
+
     private canArmSessionTimeout(): boolean {
         return this.isSessionActive && !this.isLoggingOut && this.authService.isLoggedIn();
     }
@@ -355,7 +358,7 @@ export class SessionTimeoutService implements OnDestroy {
             return;
         }
 
-        clearTimeout(this.timeoutId);
+        getNativeTimerApi(this.window).clearTimeout(this.timeoutId);
         this.timeoutId = undefined;
     }
 
@@ -364,7 +367,7 @@ export class SessionTimeoutService implements OnDestroy {
             return;
         }
 
-        clearTimeout(this.dialogTimeoutId);
+        getNativeTimerApi(this.window).clearTimeout(this.dialogTimeoutId);
         this.dialogTimeoutId = undefined;
     }
 }

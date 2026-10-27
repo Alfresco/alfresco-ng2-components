@@ -16,11 +16,12 @@
  */
 
 import { DOCUMENT } from '@angular/common';
-import { NgZone } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ACTIVITY_EVENTS, ACTIVITY_THROTTLE_MS, IdleActivityTracker } from './idle-activity-tracker';
+import { ZONE_NATIVE_PREFIX } from './zone-native-api';
 
 describe('IdleActivityTracker', () => {
+    const nativeAddEventListener = `${ZONE_NATIVE_PREFIX}addEventListener`;
     let tracker: IdleActivityTracker;
     let doc: Document;
 
@@ -105,7 +106,7 @@ describe('IdleActivityTracker', () => {
     });
 
     it('should keep scroll-sensitive activity listeners passive when tracking starts', () => {
-        const addEventListener = spyOn(doc, 'addEventListener').and.callThrough();
+        const addEventListener = spyOn<any>(doc, nativeAddEventListener).and.callThrough();
 
         tracker.start();
 
@@ -113,6 +114,16 @@ describe('IdleActivityTracker', () => {
         expect(addEventListener).toHaveBeenCalledWith('mousemove', jasmine.any(Function), { capture: true, passive: false });
         expect(addEventListener).toHaveBeenCalledWith('touchstart', jasmine.any(Function), { capture: true, passive: true });
         expect(addEventListener).toHaveBeenCalledWith('wheel', jasmine.any(Function), { capture: true, passive: true });
+    });
+
+    it('should register listeners through the zone-unpatched listener API', () => {
+        const nativeSpy = spyOn<any>(doc, nativeAddEventListener).and.callThrough();
+        const patchedSpy = spyOn(doc, 'addEventListener').and.callThrough();
+
+        tracker.start();
+
+        expect(nativeSpy).toHaveBeenCalledTimes(ACTIVITY_EVENTS.length + 1);
+        expect(patchedSpy).not.toHaveBeenCalled();
     });
 
     it('is a no-op when stop() is called without a prior start()', () => {
@@ -135,10 +146,31 @@ describe('IdleActivityTracker', () => {
         expect(spy).toHaveBeenCalledWith(doc.visibilityState);
     });
 
-    it('registers listeners outside the Angular zone', () => {
-        const ngZone = TestBed.inject(NgZone);
-        const runOutside = spyOn(ngZone, 'runOutsideAngular').and.callThrough();
+    it('records the timestamp of throttled activity that never reaches activity$', fakeAsync(() => {
+        const spy = jasmine.createSpy('activity');
+        tracker.activity$.subscribe(spy);
         tracker.start();
-        expect(runOutside).toHaveBeenCalled();
-    });
+
+        doc.dispatchEvent(new Event('mousemove'));
+        const firstActivityAt = tracker.lastActivityAt ?? 0;
+
+        tick(ACTIVITY_THROTTLE_MS - 1);
+        doc.dispatchEvent(new Event('mousemove'));
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(tracker.lastActivityAt).toBe(firstActivityAt + ACTIVITY_THROTTLE_MS - 1);
+    }));
+
+    it('throttles without scheduling a timer', fakeAsync(() => {
+        const setTimeoutSpy = spyOn(window, 'setTimeout').and.callThrough();
+        const spy = jasmine.createSpy('activity');
+        tracker.activity$.subscribe(spy);
+        tracker.start();
+
+        doc.dispatchEvent(new Event('mousemove'));
+        doc.dispatchEvent(new Event('mousemove'));
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(setTimeoutSpy).not.toHaveBeenCalled();
+    }));
 });

@@ -16,9 +16,9 @@
  */
 
 import { DOCUMENT } from '@angular/common';
-import { Injectable, NgZone, OnDestroy, inject } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { throttleTime } from 'rxjs/operators';
+import { getNativeEventListenerApi } from './zone-native-api';
 
 export const ACTIVITY_EVENTS = ['click', 'keydown', 'mousedown', 'mousemove', 'pointerdown', 'scroll', 'touchstart', 'wheel'] as const;
 
@@ -34,40 +34,43 @@ const getActivityListenerOptions = (eventName: (typeof ACTIVITY_EVENTS)[number])
 @Injectable()
 export class IdleActivityTracker implements OnDestroy {
     private readonly document = inject(DOCUMENT);
-    private readonly ngZone = inject(NgZone);
     private readonly activitySubject = new Subject<void>();
     private readonly visibilitySubject = new Subject<DocumentVisibilityState>();
-    private isRegistered = false;
+    private isStarted = false;
+    private lastActivityEmitAt: number | undefined;
+    private lastActivitySeenAt: number | undefined;
 
-    readonly activity$: Observable<void> = this.activitySubject
-        .asObservable()
-        .pipe(throttleTime(ACTIVITY_THROTTLE_MS, undefined, { leading: true, trailing: true }));
+    readonly activity$: Observable<void> = this.activitySubject.asObservable();
     readonly visibilityChange$: Observable<DocumentVisibilityState> = this.visibilitySubject.asObservable();
 
+    get lastActivityAt(): number | undefined {
+        return this.lastActivitySeenAt;
+    }
+
     start(): void {
-        if (this.isRegistered) {
+        if (this.isStarted) {
             return;
         }
 
-        this.ngZone.runOutsideAngular(() => {
-            ACTIVITY_EVENTS.forEach((eventName) =>
-                this.document.addEventListener(eventName, this.handleActivity, getActivityListenerOptions(eventName))
-            );
-            this.document.addEventListener('visibilitychange', this.handleVisibilityChange);
-        });
-        this.isRegistered = true;
+        this.isStarted = true;
+        this.lastActivityEmitAt = undefined;
+        this.lastActivitySeenAt = undefined;
+
+        const { addEventListener } = getNativeEventListenerApi(this.document);
+        ACTIVITY_EVENTS.forEach((eventName) => addEventListener(eventName, this.handleActivity, getActivityListenerOptions(eventName)));
+        addEventListener('visibilitychange', this.handleVisibilityChange);
     }
 
     stop(): void {
-        if (!this.isRegistered) {
+        if (!this.isStarted) {
             return;
         }
 
-        ACTIVITY_EVENTS.forEach((eventName) =>
-            this.document.removeEventListener(eventName, this.handleActivity, getActivityListenerOptions(eventName))
-        );
-        this.document.removeEventListener('visibilitychange', this.handleVisibilityChange);
-        this.isRegistered = false;
+        this.isStarted = false;
+
+        const { removeEventListener } = getNativeEventListenerApi(this.document);
+        ACTIVITY_EVENTS.forEach((eventName) => removeEventListener(eventName, this.handleActivity, getActivityListenerOptions(eventName)));
+        removeEventListener('visibilitychange', this.handleVisibilityChange);
     }
 
     ngOnDestroy(): void {
@@ -75,6 +78,14 @@ export class IdleActivityTracker implements OnDestroy {
     }
 
     private readonly handleActivity = (): void => {
+        const now = Date.now();
+        this.lastActivitySeenAt = now;
+
+        if (this.lastActivityEmitAt !== undefined && now - this.lastActivityEmitAt < ACTIVITY_THROTTLE_MS) {
+            return;
+        }
+
+        this.lastActivityEmitAt = now;
         this.activitySubject.next();
     };
 

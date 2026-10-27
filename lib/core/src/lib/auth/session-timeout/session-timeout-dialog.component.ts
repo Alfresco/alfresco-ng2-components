@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, ViewEncapsulation, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -38,11 +38,10 @@ export interface SessionTimeoutDialogData {
 export class SessionTimeoutDialogComponent implements OnDestroy {
     private readonly dialogRef = inject<MatDialogRef<SessionTimeoutDialogComponent, boolean>>(MatDialogRef);
     private readonly data = inject<SessionTimeoutDialogData>(MAT_DIALOG_DATA);
-    private readonly changeDetectorRef = inject(ChangeDetectorRef);
     private readonly timeoutEndTime = Date.now() + this.data.dialogTimeoutMs;
     private readonly countdownIntervalId = setInterval(() => this.updateRemainingSeconds(), 1000);
 
-    remainingSeconds = this.getRemainingSeconds();
+    readonly remainingSeconds = signal(this.getRemainingSeconds());
 
     ngOnDestroy(): void {
         clearInterval(this.countdownIntervalId);
@@ -57,8 +56,7 @@ export class SessionTimeoutDialogComponent implements OnDestroy {
     }
 
     private updateRemainingSeconds(): void {
-        this.remainingSeconds = this.getRemainingSeconds();
-        this.changeDetectorRef.markForCheck();
+        this.remainingSeconds.set(this.getRemainingSeconds());
     }
 
     private getRemainingSeconds(): number {
