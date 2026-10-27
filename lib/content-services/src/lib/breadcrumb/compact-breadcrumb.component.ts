@@ -39,6 +39,8 @@ import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cd
 import { MatListItem, MatListItemIcon, MatListItemLine, MatListItemMeta, MatListItemTitle, MatNavList } from '@angular/material/list';
 import { NgOptimizedImage } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
+import { CdkTrapFocus } from '@angular/cdk/a11y';
+import { CdkScrollable } from '@angular/cdk/overlay';
 
 @Component({
     selector: 'adf-compact-breadcrumb',
@@ -53,6 +55,7 @@ import { MatIcon } from '@angular/material/icon';
         CdkDropList,
         CdkDropListGroup,
         CdkDrag,
+        CdkTrapFocus,
         MatIcon,
         MatNavList,
         MatListItem,
@@ -60,7 +63,8 @@ import { MatIcon } from '@angular/material/icon';
         MatListItemTitle,
         MatListItemLine,
         MatListItemMeta,
-        NgOptimizedImage
+        NgOptimizedImage,
+        CdkScrollable
     ],
     encapsulation: ViewEncapsulation.None
 })
@@ -82,6 +86,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     });
     private readonly menu = viewChild.required<ElementRef<HTMLButtonElement>, ElementRef<HTMLDivElement>>('menu', { read: ElementRef });
     private readonly backdrop = viewChild.required<ElementRef<HTMLButtonElement>, ElementRef<HTMLDivElement>>('backdrop', { read: ElementRef });
+    private readonly trapFocus = viewChild.required(CdkTrapFocus);
 
     protected readonly menuOpen = signal(false);
     protected readonly levelsDescriptions = computed(() => this.nodes().map((_, index) => this.getLevelDescription(index)));
@@ -117,9 +122,10 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         this.updateMenuPosition();
     }
 
-    toggleMenu(): void {
+    toggleMenu(event: MouseEvent): void {
         this.menuOpen() ? this.closeMenu() : this.openMenu();
         this.menu().nativeElement.classList.toggle('adf-compact-breadcrumb-menu-open', this.menuOpen());
+        event.stopPropagation();
     }
 
     onTriggerMouseEnter(): void {
@@ -141,7 +147,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         }
     }
 
-    onRouteClick(node: PathElement, event: MouseEvent): void {
+    onRouteClick(node: PathElement, event: Event): void {
         if (event instanceof MouseEvent) {
             event.preventDefault();
         }
@@ -164,6 +170,24 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
 
     stopClosingMenu(): void {
         clearTimeout(this.closeMenuTimer);
+    }
+
+    onKeyboardNodeDrop(id: string): void {
+        if (this.dragDropStateService.dragging()) {
+            this.dropped.emit({
+                item: {
+                    data: {
+                        id: this.dragDropStateService.keyboardDraggingData()
+                    }
+                },
+                container: {
+                    data: {
+                        id
+                    }
+                }
+            } as CdkDragDrop<PathElement, PathElement, DataRow>);
+            this.dragDropStateService.dragging.set(false);
+        }
     }
 
     protected closeMenu(): void {
@@ -189,6 +213,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         this.updateMenuPosition();
         this.menuOpen.set(true);
         this.listenForOutsideClicks();
+        void this.trapFocus().focusTrap.focusFirstTabbableElementWhenReady();
     }
 
     private listenForOutsideClicks(): void {

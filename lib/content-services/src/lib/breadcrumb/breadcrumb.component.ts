@@ -101,6 +101,9 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @Input()
     compactMode = false;
 
+    @Input()
+    connectedDropListSelector = '';
+
     previousNodes: PathElement[];
     lastNodes: PathElement[];
 
@@ -264,7 +267,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
     goToNextDropList(): void {
         if (this.dragDropStateService.dragging()) {
-            (document.querySelector('.adf-datatable-body adf-datatable-row') as HTMLElement)?.focus();
+            (document.querySelector(this.connectedDropListSelector) as HTMLElement)?.focus();
         }
     }
 
@@ -282,6 +285,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
                     }
                 }
             } as CdkDragDrop<PathElement, PathElement, DataRow>);
+            this.dragDropStateService.dragging.set(false);
         }
     }
 }

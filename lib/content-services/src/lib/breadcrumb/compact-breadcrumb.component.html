@@ -3,7 +3,7 @@
     #menuTrigger
     matButton
     class="adf-compact-breadcrumb-trigger"
-    (click)="toggleMenu()"
+    (click)="toggleMenu($event)"
     (mouseenter)="onTriggerMouseEnter()"
     (mouseleave)="stopOpeningMenu()"
     [title]="menuButtonLabel" >
@@ -39,7 +39,8 @@
                   cdkDropListSortingDisabled
                   [cdkDropListData]="hoveredItem()"
                   (cdkDropListDropped)="onDrop($event)"
-                  cdk-scrollable>
+                  cdk-scrollable
+                  [cdkTrapFocus]="menuOpen()" >
         @for (node of nodes(); track node.id; let last = $last; let index = $index) {
             <mat-list-item
                 class="adf-compact-breadcrumb-menu-list-item"
@@ -49,7 +50,10 @@
                 [disabled]="last"
                 (mouseenter)="setNodeHoverState(node)"
                 (mouseleave)="setNodeHoverState(null)"
-                (click)="onRouteClick(node, $event)" >
+                (click)="onRouteClick(node, $event)"
+                (keydown.enter)="onRouteClick(node, $event)"
+                [attr.tabindex]="last ? null : 0"
+                (keydown.shift.arrowdown)="onKeyboardNodeDrop(node.id)">
                 <img
                     ngSrc="./assets/images/ft_ic_folder_empty.svg"
                     width="24"
@@ -59,6 +63,7 @@
                 <a
                     matListItemTitle
                     href="#"
+                    tabindex="-1"
                     class="adf-compact-breadcrumb-menu-list-item-anchor"
                 >
                     {{ node.name | translate }}

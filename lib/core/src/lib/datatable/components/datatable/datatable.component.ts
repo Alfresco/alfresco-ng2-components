@@ -22,6 +22,7 @@ import {
     ContentChild,
     DestroyRef,
     DoCheck,
+    effect,
     ElementRef,
     EventEmitter,
     HostListener,
@@ -131,7 +132,8 @@ export type ShowHeaderMode = (typeof ShowHeaderMode)[keyof typeof ShowHeaderMode
     host: {
         class: 'adf-datatable',
         '(document:keydown.escape)': 'stopNodeDragging()',
-        '(document:click)': 'stopNodeDragging()',
+        '(document:click)': 'stopNodeDragging(true)',
+        '(contextmenu)': 'stopNodeDragging()',
         '(keydown)': 'preventChangeRowByTab($event)'
     }
 })
@@ -395,7 +397,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                     case 'ArrowUp': {
                         this.draggedRowIndex = this.keyManager.activeItemIndex - 1;
                         this.dragDropStateService.keyboardDraggingData.set(this.data.getRows()[this.draggedRowIndex].id);
-                        this.onDragStart();
+                        this.onDragStart(false);
                         break;
                     }
                     case 'ArrowDown': {
@@ -463,6 +465,12 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         }
 
         this.click$ = new Observable<DataRowEvent>((observer) => (this.clickObserver = observer)).pipe(share());
+
+        effect(() => {
+            if (!this.dragDropStateService.dragging()) {
+                this.stopNodeDragging();
+            }
+        });
     }
 
     ngOnInit(): void {
@@ -1194,10 +1202,12 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         }
     }
 
-    onDragStart(): void {
+    onDragStart(addDraggingClass = true): void {
         this.isDraggingRow = true;
         this.dragDropStateService.dragging.set(true);
-        document.body.classList.add('adf-is-dragging');
+        if (addDraggingClass) {
+            document.body.classList.add('adf-is-dragging');
+        }
     }
 
     onDragEnd(): void {
@@ -1221,9 +1231,11 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         }
     }
 
-    protected stopNodeDragging(): void {
+    protected stopNodeDragging(stopByClick = false): void {
         document.dispatchEvent(new MouseEvent('mouseup'));
-        this.keyManager.setActiveItem(0);
+        if (stopByClick) {
+            this.keyManager?.setActiveItem(0);
+        }
         this.draggedRowIndex = null;
     }
 

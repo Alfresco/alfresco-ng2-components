@@ -45,7 +45,7 @@
             id="adf-breadcrumb-path"
             class="adf-breadcrumb-container-path"
             [class.adf-breadcrumb-container-path-compact-mode]="compactMode"
-            [cdkTrapFocus]="dragDropStateService.dragging()">
+            [cdkTrapFocus]="dragDropStateService.dragging()" >
                 @for (item of lastNodes; track item.id; let last = $last; let index = $index) {
                     @if (!compactMode || (compactMode && index < 2 || compactMode && last)) {
                         <div
