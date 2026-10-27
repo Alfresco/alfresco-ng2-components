@@ -53,7 +53,7 @@
                 (click)="onRouteClick(node, $event)"
                 (keydown.enter)="onRouteClick(node, $event)"
                 [attr.tabindex]="last ? null : 0"
-                (keydown.shift.arrowdown)="onKeyboardNodeDrop(node.id)">
+                (keydown.shift.arrowdown)="onKeyboardNodeDrop(node)">
                 <img
                     ngSrc="./assets/images/ft_ic_folder_empty.svg"
                     width="24"

@@ -172,7 +172,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         clearTimeout(this.closeMenuTimer);
     }
 
-    onKeyboardNodeDrop(id: string): void {
+    onKeyboardNodeDrop(node: PathElement): void {
         if (this.dragDropStateService.dragging()) {
             this.dropped.emit({
                 item: {
@@ -181,9 +181,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
                     }
                 },
                 container: {
-                    data: {
-                        id
-                    }
+                    data: node
                 }
             } as CdkDragDrop<PathElement, PathElement, DataRow>);
             this.dragDropStateService.dragging.set(false);

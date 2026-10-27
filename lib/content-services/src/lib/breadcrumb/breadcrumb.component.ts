@@ -271,7 +271,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
         }
     }
 
-    onKeyboardNodeDrop(id: string): void {
+    onKeyboardNodeDrop(node: PathElement): void {
         if (this.dragDropStateService.dragging()) {
             this.dropped.emit({
                 item: {
@@ -280,9 +280,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
                     }
                 },
                 container: {
-                    data: {
-                        id
-                    }
+                    data: node
                 }
             } as CdkDragDrop<PathElement, PathElement, DataRow>);
             this.dragDropStateService.dragging.set(false);

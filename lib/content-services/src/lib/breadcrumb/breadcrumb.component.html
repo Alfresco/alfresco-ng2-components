@@ -63,7 +63,7 @@
                                     [attr.data-automation-id]="'breadcrumb_' + item.name"
                                     class="adf-breadcrumb-item-anchor"
                                     (click)="onRoutePathClick(item, $event)"
-                                    (keydown.shift.arrowdown)="onKeyboardNodeDrop(item.id)"
+                                    (keydown.shift.arrowdown)="onKeyboardNodeDrop(item)"
                                 >
                                     {{ item.name ?? '' | translate }}
                                 </a>
