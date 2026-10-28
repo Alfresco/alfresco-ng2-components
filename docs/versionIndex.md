@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v9.1.0](#v910)
 -   [v8.3.0](#v830)
 -   [v7.0.0-alpha.3](#v700-alpha3)
 -   [v6.8.0](#v680)
@@ -48,6 +49,14 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v9.1.0
+
+<!--910 start-->
+
+-   [Compact Breadcrumb Component](content-services/components/compact-breadcrumb.component.md)
+
+<!--910 end-->
 
 ## v8.3.0
 

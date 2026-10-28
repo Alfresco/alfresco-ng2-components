@@ -98,9 +98,11 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @Input()
     selectedRowItemsCount = 0;
 
+    /** If true, the breadcrumb will be displayed in compact mode.  */
     @Input()
     compactMode = false;
 
+    /** Selector for connected drop list which allows to switch to that list when pressing Shift + ArrowRight. */
     @Input()
     connectedDropListSelector = '';
 
@@ -109,8 +111,9 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
     route: PathElement[] = [];
 
-    private readonly destroyRef = inject(DestroyRef);
     protected readonly dragDropStateService = inject(DragDropStateService);
+
+    private readonly destroyRef = inject(DestroyRef);
     private readonly liveAnnouncer = inject(LiveAnnouncer);
     private readonly translationService = inject(TranslateService);
 

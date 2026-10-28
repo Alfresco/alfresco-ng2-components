@@ -21,7 +21,10 @@ import { Injectable, signal } from '@angular/core';
     providedIn: 'root'
 })
 export class DragDropStateService {
+    /** If true, some item is being dragged. */
     readonly dragging = signal(false);
+    /** The name of the drop target currently hovered over. */
     readonly hoveredDropName = signal('');
+    /** Additional data like id. */
     readonly keyboardDraggingData = signal<string>('');
 }

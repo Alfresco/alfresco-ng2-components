@@ -79,11 +79,13 @@ interface PathElementWithState {
 })
 export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     protected readonly dragDropStateService = inject(DragDropStateService);
+
     private readonly renderer = inject(Renderer2);
     private readonly destroyRef = inject(DestroyRef);
     private readonly translateService = inject(TranslateService);
 
-    readonly nodes = input<PathElementWithState[], PathElement[]>([], {
+    /** The nodes to display in the breadcrumb. */
+    readonly nodes = input.required<PathElementWithState[], PathElement[]>({
         transform: (nodes) => {
             let indexOffset = 0;
             return nodes.map((node, index) => {
@@ -101,11 +103,13 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
             });
         }
     });
+    /** If true, the breadcrumb menu will be displayed in full width. */
     readonly fullWidth = input(false);
 
     /** Emitted when dragged item is dropped onto the breadcrumb. Emits drag and drop event. */
-    dropped = output<CdkDragDrop<PathElement, PathElement, DataRow>>();
-    navigate = output<PathElement>();
+    readonly dropped = output<CdkDragDrop<PathElement, PathElement, DataRow>>();
+    /** Emitted when a breadcrumb item is clicked and navigation is triggered. Emits the PathElement of the clicked item. */
+    readonly navigate = output<PathElement>();
 
     private readonly menuTrigger = viewChild.required<ElementRef<HTMLButtonElement>, ElementRef<HTMLButtonElement>>('menuTrigger', {
         read: ElementRef
@@ -115,14 +119,12 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     private readonly trapFocus = viewChild.required(CdkTrapFocus);
 
     protected readonly menuOpen = signal(false);
+    protected readonly hoveredItem = signal<PathElementWithState>(undefined);
+    protected readonly suppressHoverOpen = signal(false);
 
     private removeOutsideClickListener: () => void;
-
-    protected readonly hoveredItem = signal<PathElementWithState>(undefined);
-
     private openMenuTimer: NodeJS.Timeout;
     private closeMenuTimer: NodeJS.Timeout;
-    protected readonly suppressHoverOpen = signal(false);
 
     constructor() {
         effect(() => {
@@ -164,10 +166,6 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
                 this.closeOnMenuLeave(2000, true);
             }
         }, 500);
-    }
-
-    stopOpeningMenu(): void {
-        clearTimeout(this.openMenuTimer);
     }
 
     onDrop(event: CdkDragDrop<PathElement, PathElement, DataRow>): void {
@@ -226,7 +224,11 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         return route && !route.current && !route.libraryContainer;
     }
 
-    protected closeMenu(): void {
+    private stopOpeningMenu(): void {
+        clearTimeout(this.openMenuTimer);
+    }
+
+    private closeMenu(): void {
         if (this.menuOpen()) {
             this.menuTrigger().nativeElement.focus();
         }

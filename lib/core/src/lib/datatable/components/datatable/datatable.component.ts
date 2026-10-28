@@ -389,14 +389,14 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
 
-    protected draggedRowIndex: number;
-    protected hoveredRowIndex: number;
-
     private readonly destroyRef = inject(DestroyRef);
 
     private get rowsOffset(): number {
         return this.isHeaderVisible() ? 1 : 0;
     }
+
+    protected draggedRowIndex: number;
+    protected hoveredRowIndex: number;
 
     @HostListener('keyup', ['$event'])
     onKeydown(event: KeyboardEvent): void {
