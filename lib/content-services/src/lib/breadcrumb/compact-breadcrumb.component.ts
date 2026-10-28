@@ -17,6 +17,7 @@
 
 import {
     AfterViewInit,
+    ChangeDetectionStrategy,
     Component,
     DestroyRef,
     effect,
@@ -27,6 +28,7 @@ import {
     output,
     Renderer2,
     signal,
+    untracked,
     viewChild,
     ViewEncapsulation
 } from '@angular/core';
@@ -72,7 +74,8 @@ interface PathElementWithState {
         NgOptimizedImage,
         CdkScrollable
     ],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     protected readonly dragDropStateService = inject(DragDropStateService);
@@ -124,7 +127,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     constructor() {
         effect(() => {
             if (!this.dragDropStateService.dragging()) {
-                this.closeMenu();
+                untracked(() => this.closeMenu());
             }
         });
     }
@@ -158,7 +161,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         this.openMenuTimer = setTimeout(() => {
             if (this.dragDropStateService.dragging()) {
                 this.openMenu();
-                this.closeOnMenuLeave(2000);
+                this.closeOnMenuLeave(2000, true);
             }
         }, 500);
     }
@@ -168,7 +171,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     }
 
     onDrop(event: CdkDragDrop<PathElement, PathElement, DataRow>): void {
-        if (this.isRouteEnabled(this.hoveredItem())) {
+        if (this.isRouteEnabled(this.hoveredItem()) && event.isPointerOverContainer) {
             this.dropped.emit(event);
         }
     }
@@ -190,9 +193,12 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         }
     }
 
-    closeOnMenuLeave(delay = 600): void {
+    closeOnMenuLeave(delay = 600, suppressHoverOpen = false): void {
         this.closeMenuTimer = setTimeout(() => {
             this.closeMenu();
+            if (suppressHoverOpen) {
+                this.suppressHoverOpen.set(true);
+            }
         }, delay);
     }
 
@@ -222,7 +228,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
 
     protected closeMenu(): void {
         if (this.menuOpen()) {
-            this.suppressHoverOpen.set(true);
+            this.menuTrigger().nativeElement.focus();
         }
         this.menuOpen.set(false);
         this.removeOutsideClickListener?.();
