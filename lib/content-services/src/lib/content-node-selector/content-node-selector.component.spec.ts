@@ -37,6 +37,9 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatTabGroupHarness } from '@angular/material/tabs/testing';
 import { NoopAuthModule } from '@alfresco/adf-core';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { UploadButtonComponent } from '../upload/components/upload-button.component';
+import { UploadDragAreaComponent } from '../upload/components/upload-drag-area.component';
+import { UploadFilesEvent } from '../upload/components/upload-files.event';
 
 describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
@@ -258,7 +261,22 @@ describe('ContentNodeSelectorComponent', () => {
         });
     });
 
+    const createUploadFilesEvent = () =>
+        new UploadFilesEvent([new FileModel({ name: 'fake-name', size: 100 } as File)], uploadService, new EventEmitter(), new EventEmitter());
+
     describe('Upload button', () => {
+        it('should emit localUploadStarted with the same event when the upload button begins an upload', async () => {
+            enableLocalUpload();
+            await selectTabByIndex(1);
+            const started = jasmine.createSpy('localUploadStarted');
+            component.localUploadStarted.subscribe(started);
+            const event = createUploadFilesEvent();
+
+            fixture.debugElement.query(By.directive(UploadButtonComponent)).componentInstance.beginUpload.emit(event);
+
+            expect(started).toHaveBeenCalledOnceWith(event);
+        });
+
         it('Should not be able to upload a file whilst a search is still running', async () => {
             enableLocalUpload();
             fixture.detectChanges();
@@ -445,6 +463,18 @@ describe('ContentNodeSelectorComponent', () => {
     });
 
     describe('Drag and drop area', () => {
+        it('should emit localUploadStarted with the same event when the drag area begins an upload', async () => {
+            enableLocalUpload();
+            await selectTabByIndex(1);
+            const started = jasmine.createSpy('localUploadStarted');
+            component.localUploadStarted.subscribe(started);
+            const event = createUploadFilesEvent();
+
+            fixture.debugElement.query(By.directive(UploadDragAreaComponent)).componentInstance.beginUpload.emit(event);
+
+            expect(started).toHaveBeenCalledOnceWith(event);
+        });
+
         it('should uploadStarted be false by default', () => {
             expect(component.uploadStarted).toBe(false);
         });

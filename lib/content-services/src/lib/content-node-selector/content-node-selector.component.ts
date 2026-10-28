@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, output, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { EmptyListComponent, IconModule, NotificationService, ToolbarComponent, ToolbarTitleComponent, TranslationService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
@@ -37,6 +37,7 @@ import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel
 import { UploadButtonComponent } from '../upload/components/upload-button.component';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { UploadFilesEvent } from '../upload/components/upload-files.event';
 
 @Component({
     selector: 'adf-content-node-selector',
@@ -80,6 +81,9 @@ export class ContentNodeSelectorComponent implements OnInit {
     isLoading = true;
     selectedTabIndex: number = 0;
     uploadStarted: boolean = false;
+
+    /** Emitted when a local file upload begins from the upload button or the drag and drop area, before the upload is queued. */
+    readonly localUploadStarted = output<UploadFilesEvent>();
 
     emptyFolderImageUrl: string = './assets/images/empty_doc_lib.svg';
     breadcrumbFolderNode: Node;
@@ -132,6 +136,10 @@ export class ContentNodeSelectorComponent implements OnInit {
 
     onSelect(nodeList: Node[]) {
         this.chosenNode = nodeList;
+    }
+
+    onLocalUploadStarted(event: UploadFilesEvent): void {
+        this.localUploadStarted.emit(event);
     }
 
     onSiteChange(siteTitle: string) {

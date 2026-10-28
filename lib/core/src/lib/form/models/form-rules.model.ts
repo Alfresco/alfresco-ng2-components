@@ -21,6 +21,121 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { FormEvent } from '../events';
 import { FormRulesEvent } from '../events/form-rules.event';
 import { FormModel, FormService } from '../public-api';
+import { FormInvocationRequest, FormResetResult, FormWriteContext, hasFormStateBinding } from './form-state.model';
+
+export type FormInvocationResult = FormResetResult;
+
+export interface FormInvocationProvider {
+    readonly enabled: boolean;
+    execute(request: FormInvocationRequest): Promise<FormInvocationResult>;
+}
+
+export class FormInvocationCoordinator {
+    private activeInvocation?: object;
+    private pending?: Promise<FormInvocationResult>;
+
+    constructor(
+        private readonly form: FormModel,
+        private readonly renderer: object,
+        private readonly generation: object,
+        private readonly documentVersion: string,
+        private readonly isLive: () => boolean,
+        private readonly reportError: (error: unknown) => void = (error) => console.error(error)
+    ) {}
+
+    cancel(): void {
+        this.activeInvocation = undefined;
+        this.pending = undefined;
+    }
+
+    dispatch(
+        outcomeId: string,
+        provider: FormInvocationProvider | undefined,
+        reset: ((context: FormWriteContext) => Promise<FormResetResult>) | undefined,
+        notify: (result: FormInvocationResult) => void
+    ): Promise<FormInvocationResult> {
+        if (this.pending) {
+            return this.pending;
+        }
+        const invocation = {};
+        this.activeInvocation = invocation;
+        const isOwned = () => this.activeInvocation === invocation && this.isLive() && hasFormStateBinding(this.form, this.renderer, this.generation);
+        const context: FormWriteContext = {
+            form: this.form,
+            renderer: this.renderer,
+            generation: this.generation,
+            invocation,
+            documentVersion: this.documentVersion,
+            outcomeId,
+            isCurrent: () => isOwned() && provider?.enabled === true
+        };
+        const unavailable = (): FormInvocationResult => ({ context, status: 'unavailable', items: [] });
+        const request: FormInvocationRequest = {
+            ...context,
+            reset: () => {
+                if (!context.isCurrent() || !provider?.enabled || typeof reset !== 'function') {
+                    return Promise.resolve(unavailable());
+                }
+                let result: Promise<FormResetResult>;
+                try {
+                    result = reset(context);
+                } catch (error) {
+                    this.reportError(error);
+                    result = Promise.resolve({ context, status: 'failed', items: [] });
+                }
+                return Promise.resolve(result).then(
+                    (resetResult) => (context.isCurrent() ? { ...resetResult, context } : unavailable()),
+                    (error) => {
+                        this.reportError(error);
+                        return context.isCurrent() ? { context, status: 'failed' as const, items: [] } : unavailable();
+                    }
+                );
+            }
+        };
+        if (!context.isCurrent() || !provider?.enabled || typeof provider.execute !== 'function' || typeof reset !== 'function') {
+            const result = unavailable();
+            if (isOwned()) {
+                this.notify(result, notify);
+            }
+            if (this.activeInvocation === invocation) {
+                this.activeInvocation = undefined;
+            }
+            return Promise.resolve(result);
+        }
+        this.pending = Promise.resolve()
+            .then(() => (context.isCurrent() && provider.enabled ? provider.execute(request) : unavailable()))
+            .then(
+                (result) => (context.isCurrent() && provider.enabled ? { ...result, context } : unavailable()),
+                (error) => {
+                    this.reportError(error);
+                    return context.isCurrent() ? { context, status: 'failed' as const, items: [] } : unavailable();
+                }
+            )
+            .then((result) => {
+                if (isOwned()) {
+                    return this.notify(result, notify);
+                }
+                return result;
+            })
+            .finally(() => {
+                if (this.activeInvocation === invocation) {
+                    this.activeInvocation = undefined;
+                    this.pending = undefined;
+                }
+            });
+        return this.pending;
+    }
+
+    private notify(result: FormInvocationResult, notify: (result: FormInvocationResult) => void): FormInvocationResult {
+        try {
+            notify(result);
+            return result;
+        } catch (error) {
+            this.reportError(error);
+            return result;
+        }
+    }
+}
 
 export const FORM_RULES_MANAGER = new InjectionToken<FormRulesManager<any>>('form.rule.manager');
 
@@ -39,6 +154,7 @@ export function formRulesManagerFactory<T>(injector: Injector): FormRulesManager
 }
 
 export abstract class FormRulesManager<T> {
+    rulesOnlyProvider?: FormInvocationProvider;
     constructor(protected formService: FormService) {}
 
     protected formModel: FormModel;
