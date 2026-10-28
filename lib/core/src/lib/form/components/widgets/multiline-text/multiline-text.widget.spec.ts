@@ -26,6 +26,7 @@ import { UnitTestingUtils } from '../../../../testing/unit-testing-utils';
 import { ADF_CUSTOM_MESSAGE } from '../core/custom-validation-message.token';
 import { of, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { Component, ViewChild } from '@angular/core';
 
 describe('MultilineTextWidgetComponentComponent', () => {
     const validatorTranslations = {
@@ -179,6 +180,13 @@ describe('MultilineTextWidgetComponentComponent', () => {
             expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
         });
 
+        it('should report an error state after interaction when no status template is provided', async () => {
+            await testingUtils.input.blur();
+
+            expect(widget.field.isValid).toBeFalse();
+            expect(widget.errorStateMatcher.isErrorState(null, null)).toBeTrue();
+        });
+
         it('should be able to display label with asterisk and input field is required', async () => {
             const formField = await testingUtils.formField.get();
             const formControl = await formField.getControl();
@@ -187,6 +195,94 @@ describe('MultilineTextWidgetComponentComponent', () => {
 
             const inputField = testingUtils.getByCSS('.adf-input').nativeElement;
             expect(inputField.hasAttribute('required')).toBeTruthy();
+        });
+    });
+
+    describe('when fieldStatusTemplate is provided', () => {
+        @Component({
+            standalone: true,
+            template: `
+                <ng-template #fieldStatusTemplate let-widget>
+                    <div class="custom-status-message">
+                        {{ widget.field.validationSummary?.message || 'custom status message for ' + widget.field.name }}
+                    </div>
+                </ng-template>
+            `
+        })
+        class FieldStatusTemplateTestComponent {
+            @ViewChild('fieldStatusTemplate', { static: true }) fieldStatusTemplate: MultilineTextWidgetComponentComponent['fieldStatusTemplate'];
+        }
+
+        beforeEach(() => {
+            const templateFixture = TestBed.createComponent(FieldStatusTemplateTestComponent);
+            fixture.componentInstance.fieldStatusTemplate = templateFixture.componentInstance.fieldStatusTemplate;
+        });
+
+        it('should display custom status template', () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                id: 'multiline-text-id',
+                name: 'multiline-name',
+                type: FormFieldTypes.MULTILINE_TEXT
+            });
+            fixture.detectChanges();
+
+            const customStatusMessage = testingUtils.getByCSS('.custom-status-message').nativeElement;
+            expect(customStatusMessage?.textContent).toContain('custom status message for multiline-name');
+        });
+
+        it('should keep the character counter visible on a valid field when a status message is present', () => {
+            const field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                id: 'multiline-text-id',
+                name: 'multiline-name',
+                type: FormFieldTypes.MULTILINE_TEXT,
+                value: 'text',
+                maxLength: 10
+            });
+            field.validate();
+            (field as unknown as { validationSummary: { message: string } }).validationSummary = { message: 'Extracted successfully' };
+            widget.field = field;
+            fixture.detectChanges();
+
+            expect(widget.field.isValid).toBeTrue();
+            const counter = testingUtils.getByCSS('.adf-multiline-hint');
+            expect(counter).not.toBeNull();
+            expect(counter.nativeElement.textContent).toContain('4/10');
+            expect(testingUtils.getByCSS('.adf-error-text')).toBeNull();
+        });
+
+        it('should surface the max length error through the status template as the user types', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                id: 'multiline-text-id',
+                name: 'multiline-name',
+                type: FormFieldTypes.MULTILINE_TEXT,
+                value: '',
+                maxLength: 5
+            });
+            fixture.detectChanges();
+
+            await testingUtils.input.fill('123456');
+            fixture.detectChanges();
+
+            expect(widget.field.isValid).toBeFalse();
+            const customStatusMessage = testingUtils.getByCSS('.custom-status-message').nativeElement;
+            expect(customStatusMessage.textContent).toContain('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+            expect(testingUtils.getByCSS('.adf-error-text')).toBeNull();
+        });
+
+        it('should suppress the textarea error state so the status template is the sole error display', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                id: 'multiline-text-id',
+                name: 'multiline-name',
+                type: FormFieldTypes.MULTILINE_TEXT,
+                required: true,
+                value: ''
+            });
+            fixture.detectChanges();
+
+            await testingUtils.input.blur();
+
+            expect(widget.field.isValid).toBeFalse();
+            expect(widget.errorStateMatcher.isErrorState(null, null)).toBeFalse();
         });
     });
 });
