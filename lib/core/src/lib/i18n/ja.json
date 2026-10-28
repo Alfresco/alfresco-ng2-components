@@ -33,11 +33,11 @@
   },
   "FORM": {
     "SIGNAL_FORM": {
-      "WIDGET_LOADING": "Loading…",
-      "WIDGET_UNSUPPORTED": "This field can't be shown: the field type {{ type }} isn't available.",
-      "WIDGET_LOAD_FAILED": "This field can't be shown: the field type {{ type }} failed to load.",
-      "EXPAND_GROUP": "Expand {{ name }}",
-      "COLLAPSE_GROUP": "Collapse {{ name }}"
+      "WIDGET_LOADING": "読み込み中…",
+      "WIDGET_UNSUPPORTED": "このフィールドは表示できません: フィールドタイプ {{ type }} は使用できません。",
+      "WIDGET_LOAD_FAILED": "このフィールドは表示できません: フィールドタイプ {{ type }} の読み込みに失敗しました。",
+      "EXPAND_GROUP": "{{ name }} を展開",
+      "COLLAPSE_GROUP": "{{ name }} を折りたたむ"
     },
     "START_FORM": {
       "TITLE": "開始フォーム"
