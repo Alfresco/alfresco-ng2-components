@@ -189,6 +189,20 @@ export function beginFormMutation(context: FormWriteContext): { cancelled: Promi
 }
 
 /**
+ * Hands an error to a reporter without letting a reporter that throws or rejects break the operation being reported.
+ *
+ * @param reportError Error reporter
+ * @param error Error to report
+ */
+export function reportFormError(reportError: (error: unknown) => void, error: unknown): void {
+    try {
+        Promise.resolve(reportError(error)).catch(() => undefined);
+    } catch {
+        return;
+    }
+}
+
+/**
  * Coalesces concurrent resets and releases only their own terminal boundary.
  *
  * @param context Exact reset invocation
@@ -223,7 +237,7 @@ export function runFormMutation(
     pendingMutations.set(context.form, entry);
     const failed = (): FormResetResult => ({ context, status: context.isCurrent() ? 'failed' : 'unavailable', items: [] });
     const fail = (error: unknown) => {
-        reportError(error);
+        reportFormError(reportError, error);
         resolveWork(failed());
     };
     try {

@@ -516,7 +516,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     onCustomOutcomeClicked(outcome: FormOutcomeEvent) {
-        if (this.isProcessStarting) {
+        if (outcome.defaultPrevented || outcome.outcome.executionMode !== undefined || this.isProcessStarting) {
             return;
         }
 

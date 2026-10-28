@@ -24,6 +24,7 @@ import {
     FormOutcomeNotFoundError,
     FormOutcomeEvent,
     FormOutcomeModel,
+    FormOutcomeExecutionUnavailableError,
     FormOutcomeRequestEvent,
     FormEvent,
     FormService
@@ -1670,6 +1671,93 @@ describe('StartProcessCloudComponent', () => {
             });
             component.cancelStartProcess();
         });
+    });
+
+    for (const scenario of ['ordinary', 'rules-only', 'veto', 'unknown', 'disabled'] as const) {
+        it(`should preserve ${scenario} semantics through the real cloud-form start template binding`, async () => {
+            getProcessDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
+            formDefinitionSpy.and.returnValue(of({ formRepresentation: { formDefinition: fakeFormModelJson } }));
+            fixture.componentRef.setInput('appName', 'test app name');
+            fixture.detectChanges();
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My Process 1');
+            typeValueInto('#processDefinitionName', 'processwithform');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const child = fixture.debugElement.query(By.directive(FormCloudComponent)).componentInstance as FormCloudComponent;
+            component.customOutcomeName = 'Previous name';
+            component.customOutcomeId = 'previous-id';
+            child.form.selectedOutcome = 'Previous selected';
+            child.form.selectedOutcomeId = 'previous-selected-id';
+            const definition = {
+                id: 'configured-id',
+                name: 'Configured name',
+                ...(scenario === 'ordinary' ? {} : { executionMode: scenario === 'unknown' ? null : 'rules-only' })
+            };
+            const outcome = new FormOutcomeModel(child.form, definition);
+            const received = spyOn(component, 'onCustomOutcomeClicked').and.callThrough();
+            const complete = spyOn(child, 'completeTaskForm');
+            const save = spyOn(child, 'saveTaskForm');
+            const errors = spyOn(component.error, 'emit');
+            const observed: FormOutcomeEvent[] = [];
+            const preventedOnEmit: boolean[] = [];
+            child.executeOutcome.subscribe((event) => {
+                observed.push(event);
+                preventedOnEmit.push(event.defaultPrevented);
+                if (scenario === 'veto') {
+                    event.preventDefault();
+                }
+            });
+            if (scenario === 'disabled') {
+                child.form.readOnly = true;
+            }
+            child.onOutcomeClicked(outcome);
+
+            expect(observed.every((event) => event.outcome === outcome)).toBeTrue();
+            expect(preventedOnEmit).toEqual(observed.map(() => false));
+
+            if (scenario === 'ordinary') {
+                expect(startProcessWithFormSpy).toHaveBeenCalledTimes(1);
+                expect(component.customOutcomeName).toBe(definition.name);
+                expect(component.customOutcomeId).toBe(definition.id);
+                expect(complete).toHaveBeenCalledOnceWith(definition.name, definition.id);
+                expect(observed.length).toBe(1);
+            } else {
+                expect(startProcessWithFormSpy).not.toHaveBeenCalled();
+                expect(startProcessSpy).not.toHaveBeenCalled();
+                expect(complete).not.toHaveBeenCalled();
+                expect(save).not.toHaveBeenCalled();
+                expect(component.customOutcomeName).toBe('Previous name');
+                expect(component.customOutcomeId).toBe('previous-id');
+                expect(child.form.selectedOutcome).toBe('Previous selected');
+                expect(child.form.selectedOutcomeId).toBe('previous-selected-id');
+                expect(observed.length).toBe(scenario === 'unknown' || scenario === 'disabled' ? 0 : 1);
+                if (scenario === 'veto') {
+                    expect(observed[0].defaultPrevented).toBeTrue();
+                    expect(errors).not.toHaveBeenCalled();
+                } else {
+                    expect(errors).toHaveBeenCalledOnceWith(jasmine.any(FormOutcomeExecutionUnavailableError));
+                }
+            }
+            expect(received.calls.count()).toBe(observed.length);
+            if (observed.length) {
+                expect(received.calls.mostRecent().args[0]).toBe(observed[0]);
+            }
+        });
+    }
+
+    it('should ignore an already vetoed ordinary event before custom outcome mutation', () => {
+        component.customOutcomeName = 'Previous name';
+        component.customOutcomeId = 'previous-id';
+        const event = new FormOutcomeEvent(new FormOutcomeModel(null, { id: 'ordinary', name: 'Ordinary' }));
+        event.preventDefault();
+        component.onCustomOutcomeClicked(event);
+        expect(startProcessSpy).not.toHaveBeenCalled();
+        expect(startProcessWithFormSpy).not.toHaveBeenCalled();
+        expect(component.isProcessStarting).toBeFalse();
+        expect(component.customOutcomeName).toBe('Previous name');
+        expect(component.customOutcomeId).toBe('previous-id');
     });
 
     it('should emit customOutcomeSelected and success events when onCustomOutcomeClicked is called', async () => {
