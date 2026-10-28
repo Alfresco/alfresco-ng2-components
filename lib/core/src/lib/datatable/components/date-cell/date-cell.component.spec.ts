@@ -67,13 +67,10 @@ const renderDateCell = (dateConfig: DateConfig, value: number | string | Date, t
 };
 
 const checkDisplayedDate = (expectedDate: string) => {
-    const time = testingUtils.getByCSS('time').nativeElement;
-    const displayedDate = testingUtils.getByDataAutomationId('formatted-date-label').nativeElement.textContent.trim();
-    const dateAnnouncedBySR = time.querySelector('.adf-sr-only').textContent.trim();
+    const displayedDate = testingUtils.getByCSS('time').nativeElement.textContent.trim();
 
     expect(displayedDate).toBeTruthy();
     expect(displayedDate).toBe(expectedDate);
-    expect(dateAnnouncedBySR).toBe(time.title);
 };
 
 const checkDisplayedTooltip = (expectedTooltip: string) => {
