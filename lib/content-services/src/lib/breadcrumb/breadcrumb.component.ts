@@ -260,9 +260,17 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     }
 
     onDrop(event: CdkDragDrop<PathElement, PathElement, DataRow>): void {
-        if (event.isPointerOverContainer && this.lastNodes.findIndex((node) => node === this.hoveredItem) === 0) {
+        if (event.isPointerOverContainer && this.isDropAllowed(this.lastNodes.findIndex((node) => node === this.hoveredItem))) {
             this.dropped.emit(event);
         }
+    }
+
+    isDropAllowed(routeIndex: number): boolean {
+        return (
+            this.lastNodes.length - 1 !== routeIndex &&
+            this.lastNodes[routeIndex + 1]?.nodeType !== 'st:site' &&
+            !this.isCompactBreadcrumbItem(routeIndex)
+        );
     }
 
     goToNextDropList(): void {
