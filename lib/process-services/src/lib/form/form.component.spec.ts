@@ -23,6 +23,7 @@ import { Observable, of, throwError } from 'rxjs';
 import {
     FormFieldModel,
     FormFieldTypes,
+    FormFieldEvent,
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel,
@@ -935,6 +936,28 @@ describe('FormComponent', () => {
         });
 
         expect(formComponent.isOutcomeButtonEnabled(saveOutcome)).toBeFalsy();
+    });
+
+    it('should enable save button when form field value changed', () => {
+        const formModel = new FormModel();
+        formComponent.form = formModel;
+        formComponent.ngOnInit();
+        formComponent.disableSaveButton = true;
+
+        formService.formFieldValueChanged.next(new FormFieldEvent(formModel, new FormFieldModel(formModel)));
+
+        expect(formComponent.disableSaveButton).toBeFalse();
+    });
+
+    it('should not enable save button when field value changed in another form', () => {
+        formComponent.form = new FormModel();
+        formComponent.ngOnInit();
+        formComponent.disableSaveButton = true;
+
+        const otherForm = new FormModel();
+        formService.formFieldValueChanged.next(new FormFieldEvent(otherForm, new FormFieldModel(otherForm)));
+
+        expect(formComponent.disableSaveButton).toBeTrue();
     });
 
     it('should save outcome button be enabled when the form is invalid', () => {
