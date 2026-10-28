@@ -86,10 +86,10 @@ adf-compact-breadcrumb {
                 }
             }
 
-            &:not(.adf-compact-breadcrumb-menu-list-item-disabled) {
-                .adf-compact-breadcrumb-menu-list-item-meta-icon {
-                    margin-right: 3px;
-                }
+            .adf-compact-breadcrumb-menu-list-item-meta-icon {
+                margin-right: 7px;
+                width: 18px;
+                overflow: visible;
             }
 
             img {

@@ -31,8 +31,10 @@
 
             &-compact-mode {
                 .adf-breadcrumb-item:first-of-type {
-                    @container (width < 362px) {
-                        display: none;
+                    &:has(+ .adf-breadcrumb-item adf-compact-breadcrumb) {
+                        @container (width < 362px) {
+                            display: none;
+                        }
                     }
                 }
             }

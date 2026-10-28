@@ -58,7 +58,16 @@ import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
 import { buffer, debounceTime, filter, map, share } from 'rxjs/operators';
-import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, CdkDragPreview, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+    CdkDrag,
+    CdkDragDrop,
+    CdkDragMove,
+    CdkDragHandle,
+    CdkDragPlaceholder,
+    CdkDragPreview,
+    CdkDropList,
+    moveItemInArray
+} from '@angular/cdk/drag-drop';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ResizeEvent } from '../../directives/resizable/types';
@@ -1208,6 +1217,13 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         if (addDraggingClass) {
             document.body.classList.add('adf-is-dragging');
         }
+    }
+
+    onDragMoved(event: CdkDragMove): void {
+        const rowElement = document
+            .elementsFromPoint(event.pointerPosition.x, event.pointerPosition.y)
+            .find((element) => element instanceof HTMLElement && element.dataset.rowIndex !== undefined) as HTMLElement;
+        this.hoveredRowIndex = rowElement ? Number(rowElement.dataset.rowIndex) : null;
     }
 
     onDragEnd(): void {

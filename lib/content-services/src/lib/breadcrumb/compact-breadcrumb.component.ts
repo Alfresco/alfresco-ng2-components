@@ -18,7 +18,6 @@
 import {
     AfterViewInit,
     Component,
-    computed,
     DestroyRef,
     effect,
     ElementRef,
@@ -41,6 +40,13 @@ import { NgOptimizedImage } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { CdkScrollable } from '@angular/cdk/overlay';
+
+interface PathElementWithState {
+    node: PathElement;
+    current: boolean;
+    libraryContainer: boolean;
+    description: string;
+}
 
 @Component({
     selector: 'adf-compact-breadcrumb',
@@ -74,7 +80,24 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     private readonly destroyRef = inject(DestroyRef);
     private readonly translateService = inject(TranslateService);
 
-    readonly nodes = input<PathElement[]>([]);
+    readonly nodes = input<PathElementWithState[], PathElement[]>([], {
+        transform: (nodes) => {
+            let indexOffset = 0;
+            return nodes.map((node, index) => {
+                const current = index === nodes.length - 1;
+                const libraryContainer = nodes[index + 1]?.nodeType === 'st:site';
+                if (libraryContainer) {
+                    indexOffset = 1;
+                }
+                return {
+                    node,
+                    current,
+                    libraryContainer,
+                    description: this.getLevelDescription(nodes, index, indexOffset, current, libraryContainer)
+                };
+            });
+        }
+    });
     readonly fullWidth = input(false);
 
     /** Emitted when dragged item is dropped onto the breadcrumb. Emits drag and drop event. */
@@ -89,11 +112,10 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     private readonly trapFocus = viewChild.required(CdkTrapFocus);
 
     protected readonly menuOpen = signal(false);
-    protected readonly levelsDescriptions = computed(() => this.nodes().map((_, index) => this.getLevelDescription(index)));
 
     private removeOutsideClickListener: () => void;
 
-    protected readonly hoveredItem = signal<PathElement>(undefined);
+    protected readonly hoveredItem = signal<PathElementWithState>(undefined);
 
     private openMenuTimer: NodeJS.Timeout;
     private closeMenuTimer: NodeJS.Timeout;
@@ -142,24 +164,26 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     }
 
     onDrop(event: CdkDragDrop<PathElement, PathElement, DataRow>): void {
-        if (this.isRouteEnabled()) {
+        if (this.isRouteEnabled(this.hoveredItem())) {
             this.dropped.emit(event);
         }
     }
 
-    onRouteClick(node: PathElement, event: Event): void {
+    onRouteClick(nodeWithState: PathElementWithState, event: Event): void {
         if (event instanceof MouseEvent) {
             event.preventDefault();
         }
-        if (this.isRouteEnabled()) {
-            this.navigate.emit(node);
+        if (this.isRouteEnabled(this.hoveredItem())) {
+            this.navigate.emit(nodeWithState.node);
             this.closeMenu();
         }
     }
 
-    setNodeHoverState(node: PathElement): void {
-        this.hoveredItem.set(node);
-        this.dragDropStateService.hoveredDropName.set(node?.name);
+    setNodeHoverState(nodeWithState: PathElementWithState): void {
+        this.hoveredItem.set(nodeWithState);
+        if (this.isRouteEnabled(this.hoveredItem()) || !nodeWithState) {
+            this.dragDropStateService.hoveredDropName.set(nodeWithState?.node?.name);
+        }
     }
 
     closeOnMenuLeave(delay = 600): void {
@@ -188,23 +212,30 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         }
     }
 
+    isRouteEnabled(route: PathElementWithState): boolean {
+        return route && !route.current && !route.libraryContainer;
+    }
+
     protected closeMenu(): void {
         this.menuOpen.set(false);
         this.removeOutsideClickListener?.();
         this.removeOutsideClickListener = null;
     }
 
-    private getLevelDescription(nodeIndex: number): string {
-        if (nodeIndex === this.nodes().length - 1) {
+    private getLevelDescription(nodes: PathElement[], nodeIndex: number, indexOffset = 0, current: boolean, libraryContainer: boolean): string {
+        if (current) {
             return this.translateService.instant('BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL');
+        } else if (libraryContainer) {
+            return this.translateService.instant('BREADCRUMB.COMPACT_MENU.LIBRARY_CONTAINER_LEVEL');
         }
-        const name = this.nodes()[nodeIndex - 1]?.name;
-        return name
+        const name = nodes[nodeIndex - 1]?.name;
+        const library = nodes[nodeIndex]?.nodeType === 'st:site';
+        return name && !library
             ? this.translateService.instant('BREADCRUMB.COMPACT_MENU.NOT_FIRST_LEVEL', {
-                  level: nodeIndex + 1,
+                  level: nodeIndex + 1 - indexOffset,
                   ancestorName: this.translateService.instant(name)
               })
-            : this.translateService.instant('BREADCRUMB.COMPACT_MENU.FIRST_LEVEL');
+            : this.translateService.instant(library ? 'BREADCRUMB.COMPACT_MENU.FIRST_LEVEL_LIBRARY' : 'BREADCRUMB.COMPACT_MENU.FIRST_LEVEL');
     }
 
     private openMenu(): void {
@@ -233,9 +264,5 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         const menuElement = this.menu().nativeElement;
         menuElement.style.top = `${triggerRect.bottom}px`;
         menuElement.style.left = this.fullWidth() ? '0' : `${triggerRect.left}px`;
-    }
-
-    private isRouteEnabled(): boolean {
-        return this.nodes().findIndex((node) => node === this.hoveredItem()) !== this.nodes().length - 1;
     }
 }
