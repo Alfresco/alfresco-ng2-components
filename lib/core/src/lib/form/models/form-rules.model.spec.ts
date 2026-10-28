@@ -140,6 +140,35 @@ describe('FormInvocationCoordinator', () => {
         expect(reportError).toHaveBeenCalledTimes(2);
     });
 
+    for (const failure of ['reset', 'provider', 'observer'] as const) {
+        it(`should resolve one terminal result when the ${failure} fails and the reporter throws`, async () => {
+            reportError.and.throwError('reporter');
+            const coordinator = create();
+            const failureError = new Error(failure);
+            const notify = jasmine.createSpy('notify').and.callFake(() => {
+                if (failure === 'observer') {
+                    throw failureError;
+                }
+            });
+            const provider: FormInvocationProvider = {
+                enabled: true,
+                execute: (request) => (failure === 'provider' ? Promise.reject(failureError) : request.reset())
+            };
+            const reset = (context: FormWriteContext) => {
+                if (failure === 'reset') {
+                    throw failureError;
+                }
+                return Promise.resolve({ context, status: 'complete' as const, items: [] });
+            };
+
+            const result = await coordinator.dispatch('clear', provider, reset, notify);
+
+            expect(result.status).toBe(failure === 'observer' ? 'complete' : 'failed');
+            expect(notify).toHaveBeenCalledOnceWith(result);
+            expect(reportError).toHaveBeenCalledOnceWith(failureError);
+        });
+    }
+
     it('should not execute the provider when the invocation is cancelled before it starts', async () => {
         const coordinator = create();
         const notify = jasmine.createSpy('notify');

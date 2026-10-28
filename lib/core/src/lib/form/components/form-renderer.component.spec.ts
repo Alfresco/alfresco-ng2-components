@@ -918,7 +918,7 @@ describe('Form Renderer Component', () => {
             const formModel = formService.parseForm(customWidgetFormWithVisibility.formRepresentation.formDefinition);
 
             formRendererComponent.formDefinition = formModel;
-            fixture.componentRef.setInput('readOnly', true);
+            formRendererComponent.readOnly = true;
             formRendererComponent.ngOnInit();
 
             expect(rulesManager.initialize).not.toHaveBeenCalled();
@@ -2106,6 +2106,18 @@ describe('Form Renderer Component simultaneous instances', () => {
     });
 });
 
+const watchUnhandledErrors = () => {
+    const errors: unknown[] = [];
+    const zone = Zone.current.fork({
+        name: 'unhandled-errors',
+        onHandleError: (_parent, _current, _target, error) => {
+            errors.push(error);
+            return false;
+        }
+    });
+    return { errors, run: <R>(work: () => R): R => zone.run(work) };
+};
+
 const mountRulesOnlyRenderer = (version: string | number | undefined = 1, fields: object[] = [{ id: 'text', type: 'text', value: 'authored' }]) => {
     const form = new FormModel({
         id: 'same-definition',
@@ -2460,6 +2472,89 @@ describe('Form Renderer Component rules-only invocation', () => {
             expect(errorHandler.handleError).toHaveBeenCalledOnceWith(providerFailure);
         });
     }
+
+    for (const failure of ['provider', 'observer', 'notification'] as const) {
+        for (const handlerFailure of ['throws', 'rejects'] as const) {
+            it(`should deliver one terminal result and accept the next click when the ${failure} fails and the error handler ${handlerFailure}`, async () => {
+                const mounted = mountRulesOnlyRenderer();
+                const failureError = new Error(failure);
+                errorHandler.handleError.and.callFake(() => {
+                    if (handlerFailure === 'throws') {
+                        throw new Error('handler');
+                    }
+                    return Promise.reject(new Error('handler'));
+                });
+                if (failure === 'provider') {
+                    provider.execute.and.callFake(() => Promise.reject(failureError));
+                } else if (failure === 'notification') {
+                    manager.rulesOnlyProvider = undefined;
+                    notifications.and.callFake(() => {
+                        throw failureError;
+                    });
+                }
+                const terminal = jasmine.createSpy('terminal').and.callFake(() => {
+                    if (failure === 'observer') {
+                        throw failureError;
+                    }
+                });
+                const unhandled = watchUnhandledErrors();
+
+                unhandled.run(() => mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, terminal));
+                await flushPromises();
+
+                const status = { provider: 'failed', observer: 'complete', notification: 'unavailable' }[failure];
+                expect(terminal).toHaveBeenCalledOnceWith(jasmine.objectContaining({ status }));
+                expect(errorHandler.handleError).toHaveBeenCalledOnceWith(failureError);
+                expect(isFormMutating(mounted.form)).toBeFalse();
+                expect(unhandled.errors).toEqual([]);
+
+                terminal.and.stub();
+                notifications.and.stub();
+                manager.rulesOnlyProvider = provider;
+                provider.execute.and.callFake((request: FormInvocationRequest) => request.reset());
+                mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, terminal);
+                await flushPromises();
+
+                expect(terminal).toHaveBeenCalledTimes(2);
+                expect(terminal.calls.mostRecent().args[0].status).toBe('complete');
+            });
+        }
+    }
+
+    it('should keep a successor locked and silent when the reset of an invocation cancelled by read only settles late', async () => {
+        const mounted = mountRulesOnlyRenderer();
+        const cancelledTerminal = jasmine.createSpy('cancelled terminal');
+        const successorTerminal = jasmine.createSpy('successor terminal');
+        const finishes: Array<(result: FormResetResult) => void> = [];
+        const reset = (context: FormWriteContext) =>
+            runFormMutation(context, () => new Promise<FormResetResult>((resolve) => finishes.push(resolve)));
+        mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, cancelledTerminal, () => true, reset);
+        await flushPromises();
+        mounted.fixture.componentRef.setInput('readOnly', true);
+        mounted.fixture.detectChanges();
+        mounted.fixture.componentRef.setInput('readOnly', false);
+        mounted.fixture.detectChanges();
+        notifications.calls.reset();
+
+        expect(mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, successorTerminal, () => true, reset)).toBeTrue();
+        await flushPromises();
+        expect(isFormMutating(mounted.form)).toBeTrue();
+        finishes[0]({ context: requests[0], status: 'complete', items: [] });
+        await flushPromises();
+
+        expect(isFormMutating(mounted.form)).toBeTrue();
+        expect(cancelledTerminal).not.toHaveBeenCalled();
+        expect(successorTerminal).not.toHaveBeenCalled();
+        expect(notifications).not.toHaveBeenCalled();
+
+        finishes[1]({ context: requests[1], status: 'complete', items: [] });
+        await flushPromises();
+
+        expect(isFormMutating(mounted.form)).toBeFalse();
+        expect(successorTerminal).toHaveBeenCalledOnceWith(jasmine.objectContaining({ status: 'complete' }));
+        expect(cancelledTerminal).not.toHaveBeenCalled();
+        expect(notifications).not.toHaveBeenCalled();
+    });
 });
 
 describe('Form Renderer Component rules-only invocation without a rules manager', () => {

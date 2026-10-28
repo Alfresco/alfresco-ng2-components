@@ -28,9 +28,11 @@ import {
     Injector,
     input,
     Input,
+    OnChanges,
     OnDestroy,
     OnInit,
     signal,
+    SimpleChanges,
     untracked,
     ViewChild,
     ViewEncapsulation
@@ -55,7 +57,8 @@ import {
     unbindFormState,
     cancelFormMutation,
     runFormMutation,
-    isFormMutating
+    isFormMutating,
+    reportFormError
 } from '../models/form-state.model';
 import { NotificationService } from '../../notifications/services/notification.service';
 import { FormService } from '../services/form.service';
@@ -111,7 +114,7 @@ export const ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED = new InjectionToken<Ob
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class FormRendererComponent<T> implements OnInit, OnDestroy {
+export class FormRendererComponent<T> implements OnChanges, OnInit, OnDestroy {
     private readonly middlewareServices = inject<FormFieldModelRenderMiddleware[]>(FORM_FIELD_MODEL_RENDER_MIDDLEWARE, { optional: true }) ?? [];
 
     public readonly formService = inject(FormService);
@@ -175,7 +178,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     ): boolean {
         const form = this.formDefinition;
         const documentVersion = this.currentDocumentVersion;
-        if (this.destroyed || this.readOnly() || !form || form.readOnly || outcome.form !== form || !isHostCurrent()) {
+        if (this.destroyed || this.readOnly || !form || form.readOnly || outcome.form !== form || !isHostCurrent()) {
             return false;
         }
         if (documentVersion === undefined) {
@@ -190,7 +193,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
         }
         const isLive = () =>
             !this.destroyed &&
-            !this.readOnly() &&
+            !this.readOnly &&
             !form.readOnly &&
             this.formDefinition === form &&
             this.generation === generation &&
@@ -221,7 +224,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
         try {
             this.notificationService.showError('FORM.OUTCOME_EXECUTION_FAILED');
         } catch (error) {
-            this.reportError(error);
+            reportFormError(this.reportError, error);
         }
     }
 
@@ -240,7 +243,8 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
         return typeof value === 'number' && Number.isFinite(value) ? String(value) : undefined;
     }
 
-    readonly readOnly = input(false);
+    @Input()
+    readOnly = false;
 
     @ViewChild(MatTabGroup)
     set tabGroup(tabGroup: MatTabGroup | undefined) {
@@ -298,12 +302,6 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
         }
 
         effect(() => {
-            if (this.readOnly()) {
-                untracked(() => this.cancelForReadOnly());
-            }
-        });
-
-        effect(() => {
             const version = this.explicitDocumentVersion();
             untracked(() => {
                 if (version !== this.observedDocumentVersion) {
@@ -314,9 +312,15 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
         });
     }
 
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['readOnly']?.currentValue) {
+            this.cancelForReadOnly();
+        }
+    }
+
     ngOnInit(): void {
         this.runMiddlewareServices();
-        if (!this.readOnly()) {
+        if (!this.readOnly) {
             this.formRulesManager.initialize(this.formDefinition);
             this.formDefinition?.validateForm();
         }

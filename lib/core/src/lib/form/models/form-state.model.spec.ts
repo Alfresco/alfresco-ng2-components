@@ -33,6 +33,18 @@ import {
     withFormWrite
 } from './form-state.model';
 
+const watchUnhandledErrors = () => {
+    const errors: unknown[] = [];
+    const zone = Zone.current.fork({
+        name: 'unhandled-errors',
+        onHandleError: (_parent, _current, _target, error) => {
+            errors.push(error);
+            return false;
+        }
+    });
+    return { errors, run: <R>(work: () => R): R => zone.run(work) };
+};
+
 describe('FormStateModel', () => {
     let service: FormService;
 
@@ -192,6 +204,43 @@ describe('FormStateModel', () => {
             expect(outcome).toEqual({ context, status: 'unavailable', items: [] });
             expect(reportError).toHaveBeenCalledOnceWith(failure);
         });
+
+        for (const failure of ['throws', 'rejects'] as const) {
+            for (const reporterFailure of ['throws', 'rejects'] as const) {
+                it(`should release the lock with a failed result when the reset ${failure} and the reporter ${reporterFailure}`, async () => {
+                    const unhandled = watchUnhandledErrors();
+                    const context = bind(createForm());
+                    const resetFailure = new Error('reset');
+                    const reportError = jasmine.createSpy('reportError').and.callFake(() => {
+                        if (reporterFailure === 'throws') {
+                            throw new Error('reporter');
+                        }
+                        return Promise.reject(new Error('reporter'));
+                    });
+
+                    const outcome = await unhandled.run(() =>
+                        runFormMutation(
+                            context,
+                            () => {
+                                if (failure === 'throws') {
+                                    throw resetFailure;
+                                }
+                                return Promise.reject(resetFailure);
+                            },
+                            reportError
+                        )
+                    );
+
+                    expect(outcome).toEqual({ context, status: 'failed', items: [] });
+                    expect(reportError).toHaveBeenCalledOnceWith(resetFailure);
+                    expect(isFormMutating(context.form)).toBeFalse();
+                    const next = { ...context, invocation: {} };
+                    expect(await runFormMutation(next, () => Promise.resolve(result(next)))).toEqual(result(next));
+                    await new Promise((resolve) => setTimeout(resolve));
+                    expect(unhandled.errors).toEqual([]);
+                });
+            }
+        }
     });
 
     describe('withFormMutationWrite', () => {

@@ -21,7 +21,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { FormEvent } from '../events';
 import { FormRulesEvent } from '../events/form-rules.event';
 import { FormModel, FormService } from '../public-api';
-import { FormInvocationRequest, FormResetResult, FormWriteContext, hasFormStateBinding } from './form-state.model';
+import { FormInvocationRequest, FormResetResult, FormWriteContext, hasFormStateBinding, reportFormError } from './form-state.model';
 
 export type FormInvocationResult = FormResetResult;
 
@@ -80,13 +80,13 @@ export class FormInvocationCoordinator {
                 try {
                     result = reset(context);
                 } catch (error) {
-                    this.reportError(error);
+                    reportFormError(this.reportError, error);
                     result = Promise.resolve({ context, status: 'failed', items: [] });
                 }
                 return Promise.resolve(result).then(
                     (resetResult) => (context.isCurrent() ? { ...resetResult, context } : unavailable()),
                     (error) => {
-                        this.reportError(error);
+                        reportFormError(this.reportError, error);
                         return context.isCurrent() ? { context, status: 'failed' as const, items: [] } : unavailable();
                     }
                 );
@@ -107,7 +107,7 @@ export class FormInvocationCoordinator {
             .then(
                 (result) => (context.isCurrent() && provider.enabled ? { ...result, context } : unavailable()),
                 (error) => {
-                    this.reportError(error);
+                    reportFormError(this.reportError, error);
                     return context.isCurrent() ? { context, status: 'failed' as const, items: [] } : unavailable();
                 }
             )
@@ -131,7 +131,7 @@ export class FormInvocationCoordinator {
             notify(result);
             return result;
         } catch (error) {
-            this.reportError(error);
+            reportFormError(this.reportError, error);
             return result;
         }
     }
