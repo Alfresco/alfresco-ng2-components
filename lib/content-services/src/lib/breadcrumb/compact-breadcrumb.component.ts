@@ -119,6 +119,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
 
     private openMenuTimer: NodeJS.Timeout;
     private closeMenuTimer: NodeJS.Timeout;
+    protected readonly suppressHoverOpen = signal(false);
 
     constructor() {
         effect(() => {
@@ -151,6 +152,9 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     }
 
     onTriggerMouseEnter(): void {
+        if (this.suppressHoverOpen()) {
+            return;
+        }
         this.openMenuTimer = setTimeout(() => {
             if (this.dragDropStateService.dragging()) {
                 this.openMenu();
@@ -217,6 +221,9 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     }
 
     protected closeMenu(): void {
+        if (this.menuOpen()) {
+            this.suppressHoverOpen.set(true);
+        }
         this.menuOpen.set(false);
         this.removeOutsideClickListener?.();
         this.removeOutsideClickListener = null;

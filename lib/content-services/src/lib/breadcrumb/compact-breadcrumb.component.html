@@ -5,7 +5,7 @@
     class="adf-compact-breadcrumb-trigger"
     (click)="toggleMenu($event)"
     (mouseenter)="onTriggerMouseEnter()"
-    (mouseleave)="stopOpeningMenu()"
+    (mouseleave)="suppressHoverOpen.set(false)"
     [title]="menuButtonLabel" >
     {{ menuButtonLabel }}
 </button>
