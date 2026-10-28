@@ -17,7 +17,18 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UnitTestingUtils } from '../../testing';
-import { FORM_RULES_MANAGER, FormRulesManager } from '../models/form-rules.model';
+import { ByPassFormRuleManager, FORM_RULES_MANAGER, FormInvocationResult, FormRulesManager } from '../models/form-rules.model';
+import {
+    FormInvocationRequest,
+    FormResetResult,
+    captureFormStateMount,
+    hasFormStateBinding,
+    isFormMutating,
+    runFormMutation,
+    commitFormState,
+    FormWriteContext
+} from '../models/form-state.model';
+import { NotificationService } from '../../notifications/services/notification.service';
 import { FormRulesEvent } from '../events/form-rules.event';
 import { FormRenderingService } from '../services/form-rendering.service';
 import { FormService } from '../services/form.service';
@@ -51,7 +62,7 @@ import {
     textWidgetVisibility
 } from './mock/form-renderer.component.mock';
 import { ErrorMessageModel, FormFieldModel, FormModel, TextWidgetComponent, WidgetComponent } from './widgets';
-import { Component, OnInit, Provider } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ErrorHandler, inject, Injectable, OnInit, Provider, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, of } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -61,6 +72,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { repeatableSectionForm } from './mock/repeatable-section-form.mock';
+import { FormEvent } from '../events/form.event';
 
 @Component({
     selector: 'adf-test-reporting-date-widget',
@@ -906,7 +918,7 @@ describe('Form Renderer Component', () => {
             const formModel = formService.parseForm(customWidgetFormWithVisibility.formRepresentation.formDefinition);
 
             formRendererComponent.formDefinition = formModel;
-            formRendererComponent.readOnly = true;
+            fixture.componentRef.setInput('readOnly', true);
             formRendererComponent.ngOnInit();
 
             expect(rulesManager.initialize).not.toHaveBeenCalled();
@@ -2010,5 +2022,601 @@ describe('Form Renderer Component multi-tab validation indicators', () => {
             expect(getDateWidget()).toBeNull();
             expect(form.isValid).toBeFalse();
         });
+    });
+});
+
+@Injectable({ providedIn: 'root' })
+class RootFormRulesManager extends FormRulesManager<unknown> {
+    readonly handledForms: FormModel[] = [];
+
+    constructor() {
+        super(inject(FormService));
+    }
+
+    get boundForm(): FormModel {
+        return this.formModel;
+    }
+
+    protected getRules(): unknown {
+        return {};
+    }
+
+    protected handleRuleEvent(): void {
+        this.handledForms.push(this.formModel);
+    }
+}
+
+describe('Form Renderer Component simultaneous instances', () => {
+    const sharedDefinition = () => ({
+        id: 'shared-definition',
+        fields: [
+            { id: 'sharedContainer', type: 'container', numberOfColumns: 1, fields: { 1: [{ id: 'sharedText', type: 'text', value: 'Authored' }] } }
+        ]
+    });
+
+    const renderTwoInstances = (formService: FormService) => {
+        const firstForm = new FormModel(sharedDefinition(), undefined, false, formService);
+        const secondForm = new FormModel(sharedDefinition(), undefined, false, formService);
+        const first = TestBed.createComponent(FormRendererComponent);
+        const second = TestBed.createComponent(FormRendererComponent);
+        first.componentRef.setInput('formDefinition', firstForm);
+        second.componentRef.setInput('formDefinition', secondForm);
+        first.detectChanges();
+        second.detectChanges();
+
+        return { first, second, firstForm, secondForm };
+    };
+
+    it('should give each renderer its own bypass manager when no rules manager is provided', () => {
+        TestBed.configureTestingModule({ imports: [FormRendererComponent] });
+        const { first, second } = renderTwoInstances(TestBed.inject(FormService));
+
+        expect(first.debugElement.injector.get(FormRulesManager)).not.toBe(second.debugElement.injector.get(FormRulesManager));
+    });
+
+    it('should share one root manager across simultaneous renderers and bind it to the last initialized model', () => {
+        TestBed.configureTestingModule({
+            imports: [FormRendererComponent],
+            providers: [{ provide: FORM_RULES_MANAGER, useExisting: RootFormRulesManager }]
+        });
+        const formService = TestBed.inject(FormService);
+        const manager = TestBed.inject(RootFormRulesManager);
+        const { first, second, firstForm, secondForm } = renderTwoInstances(formService);
+        manager.handledForms.length = 0;
+
+        formService.formRulesEvent.next(new FormRulesEvent('fieldValueChanged', new FormEvent(firstForm)));
+
+        expect(first.debugElement.injector.get(FormRulesManager)).toBe(manager);
+        expect(second.debugElement.injector.get(FormRulesManager)).toBe(manager);
+        expect(manager.boundForm).toBe(secondForm);
+        expect(manager.handledForms).toEqual([secondForm]);
+    });
+
+    it('should route a rule event from one instance to every same-definition subscriber', () => {
+        TestBed.configureTestingModule({ imports: [FormRendererComponent] });
+        const formService = TestBed.inject(FormService);
+        const { firstForm, secondForm } = renderTwoInstances(formService);
+        const received: FormModel[] = [];
+        formService.formRulesEvent.pipe(filter((event) => event.form?.id === secondForm.id)).subscribe((event) => received.push(event.form));
+
+        formService.formRulesEvent.next(new FormRulesEvent('fieldValueChanged', new FormEvent(firstForm)));
+
+        expect(received).toEqual([firstForm]);
+        expect(firstForm.id).toBe(secondForm.id);
+    });
+});
+
+const mountRulesOnlyRenderer = (version: string | number | undefined = 1, fields: object[] = [{ id: 'text', type: 'text', value: 'authored' }]) => {
+    const form = new FormModel({
+        id: 'same-definition',
+        version,
+        fields,
+        outcomes: [{ id: 'clear', name: 'Clear', executionMode: 'rules-only', skipValidation: true }]
+    });
+    const fixture = TestBed.createComponent(FormRendererComponent);
+    fixture.componentRef.setInput('formDefinition', form);
+    fixture.detectChanges();
+    return { fixture, renderer: fixture.componentInstance, form, outcome: form.outcomes.find((outcome) => outcome.id === 'clear') };
+};
+
+describe('Form Renderer Component rules-only invocation', () => {
+    let manager: RootFormRulesManager;
+    let notifications: jasmine.Spy;
+    let requests: FormInvocationRequest[];
+    let provider: { enabled: boolean; execute: jasmine.Spy };
+    let errorHandler: jasmine.SpyObj<ErrorHandler>;
+
+    const flushPromises = (): Promise<void> => new Promise((resolve) => setTimeout(resolve));
+
+    beforeEach(() => {
+        errorHandler = jasmine.createSpyObj<ErrorHandler>('ErrorHandler', ['handleError']);
+        TestBed.configureTestingModule({
+            imports: [FormRendererComponent],
+            providers: [
+                { provide: FORM_RULES_MANAGER, useExisting: RootFormRulesManager },
+                { provide: ErrorHandler, useValue: errorHandler }
+            ]
+        });
+        manager = TestBed.inject(RootFormRulesManager);
+        notifications = spyOn(TestBed.inject(NotificationService), 'showError');
+        requests = [];
+        provider = {
+            enabled: true,
+            execute: jasmine.createSpy('execute').and.callFake((request: FormInvocationRequest) => {
+                requests.push(request);
+                return request.reset();
+            })
+        };
+        manager.rulesOnlyProvider = provider;
+    });
+
+    it('should dispatch exact independent mounted models despite a shared manager bound to the second', async () => {
+        const first = mountRulesOnlyRenderer();
+        const second = mountRulesOnlyRenderer();
+        const firstReset = spyOn(first.form, 'resetToDefaults').and.callThrough();
+        const secondReset = spyOn(second.form, 'resetToDefaults').and.callThrough();
+        const firstTerminal = jasmine.createSpy('first terminal');
+        const secondTerminal = jasmine.createSpy('second terminal');
+        expect(manager.boundForm).toBe(second.form);
+
+        first.renderer.dispatchRulesOnlyOutcome(first.outcome, firstTerminal);
+        second.renderer.dispatchRulesOnlyOutcome(second.outcome, secondTerminal);
+        await flushPromises();
+
+        expect(requests.map((request) => request.form)).toEqual([first.form, second.form]);
+        expect(requests[0].renderer).toBe(first.renderer);
+        expect(requests[1].renderer).toBe(second.renderer);
+        expect(requests[0].generation).not.toBe(requests[1].generation);
+        expect(requests[0].invocation).not.toBe(requests[1].invocation);
+        expect(requests[0].documentVersion).toBe('1');
+        expect(requests[0].outcomeId).toBe('clear');
+        expect(firstReset).toHaveBeenCalledOnceWith(
+            jasmine.objectContaining({ form: first.form, renderer: first.renderer }),
+            jasmine.objectContaining({ editableFields: jasmine.any(Set) })
+        );
+        expect(secondReset).toHaveBeenCalledOnceWith(
+            jasmine.objectContaining({ form: second.form, renderer: second.renderer }),
+            jasmine.objectContaining({ editableFields: jasmine.any(Set) })
+        );
+        expect(firstTerminal).toHaveBeenCalledOnceWith(jasmine.objectContaining({ status: 'complete' }));
+        expect(secondTerminal).toHaveBeenCalledOnceWith(jasmine.objectContaining({ status: 'complete' }));
+        expect(notifications).not.toHaveBeenCalled();
+    });
+
+    it('should complete without a failure notification when display-only widgets sit beside a text field', async () => {
+        const mounted = mountRulesOnlyRenderer(1, [
+            { id: 'text', type: 'text', value: 'authored' },
+            { id: 'viewer', type: 'file-viewer', value: 'file' },
+            { id: 'properties', type: 'properties-viewer' },
+            { id: 'table', type: 'data-table', value: [{ id: 'row' }] },
+            {
+                id: 'rows',
+                type: 'repeatable-section',
+                params: { initialNumberOfRows: 1 },
+                fields: {
+                    1: [
+                        { id: 'rowViewer', type: 'file-viewer' },
+                        { id: 'rowText', type: 'text', value: 'authored' }
+                    ]
+                }
+            }
+        ]);
+        mounted.form.getFieldById('text').value = 'draft';
+        const section = mounted.form.getFieldById('rows');
+        section.addRow(section.fields, mounted.form);
+
+        const result = await new Promise<FormInvocationResult>((resolve) => mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, resolve));
+
+        expect(result.status).toBe('complete');
+        expect(mounted.form.getFieldById('text').value).toBe('authored');
+        expect(mounted.form.getFieldById('rows').rows.length).toBe(1);
+        expect(notifications).not.toHaveBeenCalled();
+    });
+
+    it('should not dispatch when the renderer is read only', () => {
+        const mounted = mountRulesOnlyRenderer();
+        mounted.fixture.componentRef.setInput('readOnly', true);
+        const terminal = jasmine.createSpy('terminal');
+
+        expect(mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, terminal)).toBeFalse();
+        expect(provider.execute).not.toHaveBeenCalled();
+        expect(terminal).not.toHaveBeenCalled();
+        expect(notifications).not.toHaveBeenCalled();
+    });
+
+    it('should still deliver the terminal result when the failure notification throws', async () => {
+        const mounted = mountRulesOnlyRenderer();
+        manager.rulesOnlyProvider = undefined;
+        notifications.and.throwError('notification');
+
+        const result = await new Promise<FormInvocationResult>((resolve) => mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, resolve));
+
+        expect(result.status).toBe('unavailable');
+        expect(notifications).toHaveBeenCalledTimes(1);
+        expect(errorHandler.handleError).toHaveBeenCalledOnceWith(jasmine.objectContaining({ message: 'notification' }));
+    });
+
+    it('should release the reset lock and show the failure notification when the renderer becomes read only during an invocation', async () => {
+        const mounted = mountRulesOnlyRenderer();
+        const terminal = jasmine.createSpy('terminal');
+        let resetStarted: () => void;
+        const started = new Promise<void>((resolve) => (resetStarted = resolve));
+        mounted.renderer.dispatchRulesOnlyOutcome(
+            mounted.outcome,
+            terminal,
+            () => true,
+            (context) =>
+                runFormMutation(context, () => {
+                    resetStarted();
+                    return new Promise<FormResetResult>(() => undefined);
+                })
+        );
+        await started;
+        expect(isFormMutating(mounted.form)).toBeTrue();
+
+        mounted.fixture.componentRef.setInput('readOnly', true);
+        mounted.fixture.detectChanges();
+        await flushPromises();
+
+        expect(isFormMutating(mounted.form)).toBeFalse();
+        expect(requests[0].isCurrent()).toBeFalse();
+        expect(notifications).toHaveBeenCalledOnceWith('FORM.OUTCOME_EXECUTION_FAILED');
+        expect(terminal).not.toHaveBeenCalled();
+        expect(mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, terminal)).toBeFalse();
+    });
+
+    it('should drop the invocation without a failure notification when the renderer becomes read only before the reset starts', async () => {
+        const mounted = mountRulesOnlyRenderer();
+        const terminal = jasmine.createSpy('terminal');
+        provider.execute.and.callFake((request: FormInvocationRequest) => {
+            requests.push(request);
+            return new Promise<FormResetResult>(() => undefined);
+        });
+        mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, terminal);
+        await flushPromises();
+
+        mounted.fixture.componentRef.setInput('readOnly', true);
+        mounted.fixture.detectChanges();
+        const reset = await requests[0].reset();
+
+        expect(requests[0].isCurrent()).toBeFalse();
+        expect(reset.status).toBe('unavailable');
+        expect(notifications).not.toHaveBeenCalled();
+        expect(terminal).not.toHaveBeenCalled();
+    });
+
+    it('should not show a failure notification when the renderer becomes read only without an invocation in progress', () => {
+        const mounted = mountRulesOnlyRenderer();
+
+        mounted.fixture.componentRef.setInput('readOnly', true);
+        mounted.fixture.detectChanges();
+
+        expect(notifications).not.toHaveBeenCalled();
+        expect(isFormMutating(mounted.form)).toBeFalse();
+    });
+
+    it('should coalesce clicks while retaining authored reset positions and notify one failed invocation once', async () => {
+        const mounted = mountRulesOnlyRenderer();
+        let finish: (result: FormResetResult) => void;
+        const terminal = jasmine.createSpy('terminal');
+        const duplicate = jasmine.createSpy('duplicate terminal');
+        const reset = spyOn(mounted.form, 'resetToDefaults').and.callThrough();
+        provider.execute.and.callFake(async (request: FormInvocationRequest) => {
+            requests.push(request);
+            await request.reset();
+            request.form.changeFieldValue('text', 'intervening write', request);
+            await request.reset();
+            return new Promise<FormResetResult>((resolve) => (finish = resolve));
+        });
+        mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, terminal);
+        mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, duplicate);
+        await flushPromises();
+        expect(provider.execute).toHaveBeenCalledTimes(1);
+        expect(reset).toHaveBeenCalledTimes(2);
+        expect(mounted.form.getFieldById('text').value).toBe('authored');
+        finish({ context: requests[0], status: 'partial', items: [] });
+        await flushPromises();
+        expect(terminal).toHaveBeenCalledTimes(1);
+        expect(duplicate).not.toHaveBeenCalled();
+        expect(notifications).toHaveBeenCalledOnceWith('FORM.OUTCOME_EXECUTION_FAILED');
+        expect(requests[0].isCurrent()).toBeFalse();
+    });
+
+    for (const capability of ['missing', 'disabled', 'reset'] as const) {
+        it(`should report unavailable without effects for ${capability} capability`, async () => {
+            const mounted = mountRulesOnlyRenderer();
+            const terminal = jasmine.createSpy('terminal');
+            const reset = spyOn(mounted.form, 'resetToDefaults').and.callThrough();
+            if (capability === 'missing') {
+                manager.rulesOnlyProvider = undefined;
+            } else if (capability === 'disabled') {
+                manager.rulesOnlyProvider = { ...provider, enabled: false };
+            } else {
+                mounted.form.resetToDefaults = undefined;
+            }
+            expect(mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, terminal)).toBeTrue();
+            await flushPromises();
+            expect(provider.execute).not.toHaveBeenCalled();
+            expect(reset).not.toHaveBeenCalled();
+            expect(terminal).toHaveBeenCalledOnceWith(jasmine.objectContaining({ status: 'unavailable' }));
+            expect(notifications).toHaveBeenCalledTimes(1);
+        });
+    }
+
+    it('should release a pending reset when the document version input changes', async () => {
+        const mounted = mountRulesOnlyRenderer();
+        const terminal = jasmine.createSpy('terminal');
+        let resetStarted: () => void;
+        const started = new Promise<void>((resolve) => (resetStarted = resolve));
+        mounted.renderer.dispatchRulesOnlyOutcome(
+            mounted.outcome,
+            terminal,
+            () => true,
+            (context) =>
+                runFormMutation(context, () => {
+                    resetStarted();
+                    return new Promise<FormResetResult>(() => undefined);
+                })
+        );
+        await started;
+        expect(isFormMutating(mounted.form)).toBeTrue();
+
+        mounted.fixture.componentRef.setInput('documentVersion', 'next');
+        mounted.fixture.detectChanges();
+        await flushPromises();
+
+        expect(isFormMutating(mounted.form)).toBeFalse();
+        expect(terminal).not.toHaveBeenCalled();
+    });
+
+    it('should keep an invocation current when it was dispatched right after a document version change', async () => {
+        const mounted = mountRulesOnlyRenderer();
+        provider.execute.and.callFake((request: FormInvocationRequest) => {
+            requests.push(request);
+            return new Promise<FormResetResult>(() => undefined);
+        });
+        mounted.fixture.componentRef.setInput('documentVersion', 'next');
+        mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, jasmine.createSpy('terminal'));
+        await flushPromises();
+
+        mounted.fixture.detectChanges();
+
+        expect(requests[0].documentVersion).toBe('next');
+        expect(requests[0].isCurrent()).toBeTrue();
+    });
+
+    it('should require a real revision and accept explicit renderer revision without changing mount generation', async () => {
+        const mounted = mountRulesOnlyRenderer(undefined);
+        delete mounted.form.json.version;
+        const terminal = jasmine.createSpy('terminal');
+        const mountState = captureFormStateMount(mounted.form.getFormFields()[0]);
+        expect(mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, terminal)).toBeFalse();
+        expect(provider.execute).not.toHaveBeenCalled();
+        mounted.fixture.componentRef.setInput('documentVersion', 'authored-revision');
+        expect(mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, terminal)).toBeTrue();
+        await flushPromises();
+        expect(requests[0].documentVersion).toBe('authored-revision');
+        expect(requests[0].generation).toBe(mountState.generation);
+    });
+
+    for (const stale of ['cancel', 'version', 'explicit-version', 'replace', 'destroy'] as const) {
+        it(`should reject stale reset and completion after ${stale} without notifying a successor`, async () => {
+            const mounted = mountRulesOnlyRenderer();
+            let finish: (result: FormResetResult) => void;
+            const terminal = jasmine.createSpy('terminal');
+            const reset = spyOn(mounted.form, 'resetToDefaults').and.callThrough();
+            provider.execute.and.callFake((request: FormInvocationRequest) => {
+                requests.push(request);
+                return new Promise<FormResetResult>((resolve) => (finish = resolve));
+            });
+            mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, terminal);
+            await flushPromises();
+            const request = requests[0];
+            if (stale === 'cancel') {
+                mounted.renderer.cancelInvocation();
+            } else if (stale === 'version') {
+                mounted.form.json.version = 2;
+            } else if (stale === 'explicit-version') {
+                mounted.fixture.componentRef.setInput('documentVersion', 'next');
+            } else if (stale === 'replace') {
+                mounted.fixture.componentRef.setInput('formDefinition', new FormModel({ id: mounted.form.id, version: 2 }));
+            } else {
+                mounted.fixture.destroy();
+            }
+            expect(request.isCurrent()).toBeFalse();
+            let staleReset: FormResetResult;
+            request.reset().then((result) => (staleReset = result));
+            finish({ context: request, status: 'failed', items: [] });
+            await flushPromises();
+            expect(staleReset.status).toBe('unavailable');
+            expect(reset).not.toHaveBeenCalled();
+            expect(terminal).not.toHaveBeenCalled();
+            expect(notifications).not.toHaveBeenCalled();
+            if (stale === 'version' || stale === 'explicit-version' || stale === 'cancel') {
+                expect(hasFormStateBinding(mounted.form, mounted.renderer, request.generation)).toBeTrue();
+                provider.execute.and.callFake((next: FormInvocationRequest) => Promise.resolve({ context: next, status: 'complete', items: [] }));
+                mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, terminal);
+                await flushPromises();
+                expect(terminal).toHaveBeenCalledTimes(1);
+            }
+        });
+    }
+
+    for (const failure of ['throw', 'reject'] as const) {
+        it(`should turn a provider ${failure} into one failed terminal result`, async () => {
+            const mounted = mountRulesOnlyRenderer();
+            const terminal = jasmine.createSpy('terminal');
+            const providerFailure = new Error('provider failed');
+            provider.execute.and.callFake(() => {
+                if (failure === 'throw') {
+                    throw providerFailure;
+                }
+                return Promise.reject(providerFailure);
+            });
+            mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, terminal);
+            await flushPromises();
+            expect(terminal).toHaveBeenCalledOnceWith(jasmine.objectContaining({ status: 'failed' }));
+            expect(notifications).toHaveBeenCalledTimes(1);
+            expect(errorHandler.handleError).toHaveBeenCalledOnceWith(providerFailure);
+        });
+    }
+});
+
+describe('Form Renderer Component rules-only invocation without a rules manager', () => {
+    beforeEach(() => {
+        TestBed.configureTestingModule({ imports: [FormRendererComponent] });
+    });
+
+    it('should report unavailable when the renderer falls back to the bypass rules manager', async () => {
+        const notifications = spyOn(TestBed.inject(NotificationService), 'showError');
+        const mounted = mountRulesOnlyRenderer();
+
+        const result = await new Promise<FormInvocationResult>((resolve) => mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, resolve));
+
+        expect(mounted.fixture.debugElement.injector.get(FormRulesManager)).toBeInstanceOf(ByPassFormRuleManager);
+        expect(result.status).toBe('unavailable');
+        expect(notifications).toHaveBeenCalledOnceWith('FORM.OUTCOME_EXECUTION_FAILED');
+    });
+});
+
+@Component({
+    selector: 'adf-test-reactive-choice-widget',
+    template: '',
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+class ReactiveChoiceWidgetComponent extends WidgetComponent {
+    updateReactiveFormControl(): void {
+        return;
+    }
+}
+
+@Component({
+    selector: 'adf-test-on-push-renderer',
+    template: '@if (form(); as form) {<adf-form-renderer [formDefinition]="form" />}',
+    imports: [FormRendererComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+class OnPushRendererComponent {
+    readonly form = signal<FormModel | undefined>(undefined);
+}
+
+@Component({
+    selector: 'adf-test-on-push-renderer-host',
+    template: '<adf-test-on-push-renderer />',
+    imports: [OnPushRendererComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+class OnPushRendererHostComponent {}
+
+describe('Form Renderer Component state commits inside an OnPush host', () => {
+    beforeEach(() => {
+        TestBed.configureTestingModule({ imports: [OnPushRendererHostComponent] });
+        TestBed.inject(FormRenderingService).setComponentTypeResolver('dropdown', () => ReactiveChoiceWidgetComponent, true);
+    });
+
+    it('should re-render dependent field visibility when a reactive field receives a state commit inside an OnPush host', async () => {
+        const form = new FormModel(
+            {
+                id: 'zoneless',
+                fields: [
+                    {
+                        id: 'container',
+                        type: 'container',
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'choice',
+                                    type: 'dropdown',
+                                    optionType: 'manual',
+                                    options: [
+                                        { id: 'a', name: 'A' },
+                                        { id: 'b', name: 'B' }
+                                    ],
+                                    value: 'a'
+                                },
+                                {
+                                    id: 'dependent',
+                                    type: 'text',
+                                    visibilityCondition: {
+                                        leftType: 'field',
+                                        leftValue: 'choice',
+                                        operator: '==',
+                                        rightValue: 'b',
+                                        rightType: 'value'
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            { choice: 'b' },
+            false,
+            TestBed.inject(FormService)
+        );
+        const fixture = TestBed.createComponent(OnPushRendererHostComponent);
+        fixture.detectChanges();
+        fixture.debugElement.query(By.directive(OnPushRendererComponent)).componentInstance.form.set(form);
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const dependent = (): HTMLElement => fixture.nativeElement.querySelector('#field-dependent-container');
+        expect(dependent().style.display).toBe('block');
+        const choice = form.getFieldById('choice');
+        const mount = captureFormStateMount(choice);
+        const context: FormWriteContext = {
+            form,
+            renderer: mount.renderer,
+            generation: mount.generation,
+            invocation: {},
+            documentVersion: '1',
+            outcomeId: 'clear',
+            isCurrent: () => true
+        };
+
+        expect(commitFormState(choice, 'a', context)).toBeTrue();
+        fixture.detectChanges();
+
+        expect(dependent().style.display).toBe('none');
+    });
+
+    it('should re-render a text field value when it receives a state commit inside an OnPush host', async () => {
+        const form = new FormModel(
+            {
+                id: 'on-push-text',
+                fields: [{ id: 'container', type: 'container', numberOfColumns: 1, fields: { 1: [{ id: 'name', type: 'text', value: 'authored' }] } }]
+            },
+            undefined,
+            false,
+            TestBed.inject(FormService)
+        );
+        const fixture = TestBed.createComponent(OnPushRendererHostComponent);
+        fixture.detectChanges();
+        fixture.debugElement.query(By.directive(OnPushRendererComponent)).componentInstance.form.set(form);
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const input = (): HTMLInputElement => fixture.nativeElement.querySelector('input#name');
+        expect(input().value).toBe('authored');
+        const field = form.getFieldById('name');
+        const mount = captureFormStateMount(field);
+        const context: FormWriteContext = {
+            form,
+            renderer: mount.renderer,
+            generation: mount.generation,
+            invocation: {},
+            documentVersion: '1',
+            outcomeId: 'clear',
+            isCurrent: () => true
+        };
+
+        expect(commitFormState(field, 'cleared', context)).toBeTrue();
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(input().value).toBe('cleared');
     });
 });

@@ -17,8 +17,10 @@
 
 import { Directive, EventEmitter, Input, Output } from '@angular/core';
 import { FormFieldModel, FormFieldValidator, FormModel, FormOutcomeEvent, FormOutcomeModel } from './widgets';
+import { FormOutcomeExecutionUnavailableError } from '../errors/form-outcome-execution-unavailable.error';
 import { isOutcomeButtonVisible } from './helpers/buttons-visibility';
 import { FormOutcomeNotFoundError } from '../errors/form-outcome-not-found.error';
+import { isFormMutating } from '../models/form-state.model';
 
 @Directive({
     standalone: true
@@ -152,7 +154,7 @@ export abstract class FormBaseComponent {
     }
 
     isOutcomeButtonEnabled(outcome?: FormOutcomeModel): boolean {
-        if (this.form.readOnly) {
+        if (this.form.readOnly || isFormMutating(this.form) || (outcome?.executionMode === 'rules-only' && this.readOnly)) {
             return false;
         }
 
@@ -183,8 +185,24 @@ export abstract class FormBaseComponent {
      * @returns `true` if outcome button was clicked, otherwise `false`
      */
     onOutcomeClicked(outcome: FormOutcomeModel): boolean {
+        if (isFormMutating(this.form)) {
+            return false;
+        }
+        if (outcome?.executionMode === 'unsupported') {
+            this.error.emit(new FormOutcomeExecutionUnavailableError(outcome, 'unsupported-mode'));
+            return false;
+        }
+        if (outcome?.executionMode === 'rules-only' && (this.readOnly || !this.form || this.form.readOnly || !this.isOutcomeButtonEnabled(outcome))) {
+            this.error.emit(new FormOutcomeExecutionUnavailableError(outcome, 'execution-unavailable'));
+            return false;
+        }
         if (!this.readOnly && outcome && this.form) {
             if (!this.onExecuteOutcome(outcome)) {
+                return false;
+            }
+
+            if (outcome.executionMode === 'rules-only') {
+                this.dispatchRulesOnlyOutcome(outcome);
                 return false;
             }
 
@@ -224,6 +242,10 @@ export abstract class FormBaseComponent {
         return false;
     }
 
+    protected dispatchRulesOnlyOutcome(outcome: FormOutcomeModel): void {
+        this.error.emit(new FormOutcomeExecutionUnavailableError(outcome, 'execution-unavailable'));
+    }
+
     /**
      * Executes an outcome requested by another form control using strict id lookup.
      *
@@ -238,20 +260,24 @@ export abstract class FormBaseComponent {
             return false;
         }
 
+        if (outcome.executionMode === 'unsupported') {
+            return this.onOutcomeClicked(outcome);
+        }
+
         if (this.readOnly || this.form.readOnly) {
-            return false;
+            return outcome.executionMode === 'rules-only' ? this.onOutcomeClicked(outcome) : false;
         }
 
         if (!outcome.skipValidation && outcome.name !== FormOutcomeModel.SAVE_ACTION) {
             this.form.validateForm();
             if (!this.form.isValid) {
                 this.form.showAllValidationErrors = true;
-                return false;
+                return outcome.executionMode === 'rules-only' ? this.onOutcomeClicked(outcome) : false;
             }
         }
 
         if (!this.isOutcomeButtonEnabled(outcome)) {
-            return false;
+            return outcome.executionMode === 'rules-only' ? this.onOutcomeClicked(outcome) : false;
         }
 
         return this.onOutcomeClicked(outcome);

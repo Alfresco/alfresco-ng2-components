@@ -16,3 +16,4 @@
  */
 
 export * from './form-outcome-not-found.error';
+export * from './form-outcome-execution-unavailable.error';

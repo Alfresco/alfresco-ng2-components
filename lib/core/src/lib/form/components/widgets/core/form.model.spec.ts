@@ -30,6 +30,7 @@ import { TestBed } from '@angular/core/testing';
 import { ValidateFormEvent } from '../../../events/validate-form.event';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { tabInvalidFormVisibility } from '../../../../mock/form/widget-visibility.service.mock';
+import { beginFormMutation, bindFormState } from '../../../models/form-state.model';
 
 describe('FormModel', () => {
     let formService: FormService;
@@ -2171,6 +2172,48 @@ describe('FormModel', () => {
         it('should keep ids of fields outside a repeatable section stable across parses', () => {
             expect(new FormModel(formJson()).getFieldById('topLevelField')).toBeDefined();
             expect(new FormModel(formJson()).getFieldById('topLevelField')).toBeDefined();
+        });
+    });
+
+    describe('while the form is being reset', () => {
+        it('should ignore rule changes, field notifications and row count changes', () => {
+            const service = TestBed.inject(FormService);
+            const form = new FormModel(
+                {
+                    fields: [
+                        { id: 'text', type: 'text', value: 'authored' },
+                        { id: 'rows', type: 'repeatable-section', params: { initialNumberOfRows: 1 }, fields: { 1: [{ id: 'child', type: 'text' }] } }
+                    ],
+                    variables: [{ id: 'variable', name: 'variable', type: 'string', value: 'authored' }]
+                },
+                undefined,
+                false,
+                service
+            );
+            const context = { form, renderer: {}, generation: {}, invocation: {}, documentVersion: '1', outcomeId: 'clear', isCurrent: () => true };
+            bindFormState(form, context.renderer, context.generation);
+            const text = form.getFieldById('text');
+            const flags = { readOnly: text.readOnly, required: text.required };
+            const fieldChanges = spyOn(service.formFieldValueChanged, 'next');
+            const rules = spyOn(service.formRulesEvent, 'next');
+            const boundary = beginFormMutation(context);
+
+            try {
+                form.changeFieldVisibility('text', false);
+                form.changeFieldDisabled('text', true);
+                form.changeFieldRequired('text', true);
+                form.changeVariableValue('variable', 'changed');
+                form.onFormFieldChanged(text);
+                form.onRepeatableSectionRowCountChanged(form.getFieldById('rows'));
+            } finally {
+                boundary.release();
+            }
+
+            expect(text.isVisible).toBeTrue();
+            expect({ readOnly: text.readOnly, required: text.required }).toEqual(flags);
+            expect(form.getFormVariable('variable').value).toBe('authored');
+            expect(fieldChanges).not.toHaveBeenCalled();
+            expect(rules).not.toHaveBeenCalled();
         });
     });
 });

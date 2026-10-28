@@ -71,6 +71,12 @@ The properties are described in the table below:
 | showSearch           | `boolean`            | `true`              | Render search input                                                                                                                                                                                                                                                      |
 | showDropdownSiteList | `boolean`            | `true`              | Render sites list dropdown menu                                                                                                                                                                                                                                          |
 
+### Events
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| localUploadStarted | [`OutputEmitterRef`](https://angular.dev/api/core/OutputEmitterRef)`<`[`UploadFilesEvent`](../../../lib/content-services/src/lib/upload/components/upload-files.event.ts)`>` | Emitted when a local file upload begins from the upload button or the drag and drop area, before the upload is queued. Calling `preventDefault()` on the event cancels the upload. |
+
 If you don't want to manage the dialog yourself then it is easier to use the
 [Content Node Selector Panel component](content-node-selector-panel.component.md), or the
 methods of the [Content Node Dialog service](../services/content-node-dialog.service.md), which create

@@ -24,6 +24,7 @@ import { MinValueFieldValidator, RequiredFieldValidator } from './form-field-val
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
 import { repeatableSectionForm } from '../../mock/repeatable-section-form.mock';
+import { beginFormMutation, bindFormState } from '../../../models/form-state.model';
 
 describe('FormFieldModel', () => {
     it('should store the form reference', () => {
@@ -2406,6 +2407,31 @@ describe('FormFieldModel', () => {
             expect(form.values['dd1']).toBeNull();
         });
 
+        it('should restore the previous value and serialization when applying the value fails', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, { id: 'text1', type: 'text', value: 'existing' });
+            spyOn(field, 'getFormValue').and.throwError('serializer');
+
+            expect(() => field.restoreRuntimeValue('restored')).toThrowError('serializer');
+
+            expect(field.value).toBe('existing');
+            expect(form.values['text1']).toBe('existing');
+        });
+
+        it('should remove a new serialization when applying the value fails without a previous one', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, { id: 'text1', type: 'text', value: 'existing' });
+            delete form.values['text1'];
+            spyOn(field, 'getFormValue').and.callFake(() => {
+                form.values['text1'] = 'partial';
+                throw new Error('serializer');
+            });
+
+            expect(() => field.restoreRuntimeValue('restored')).toThrowError('serializer');
+
+            expect(Object.prototype.hasOwnProperty.call(form.values, 'text1')).toBeFalse();
+        });
+
         it('should not update form.values when resolved value is undefined', () => {
             const form = new FormModel();
             form.values['text1'] = 'existing';
@@ -2414,6 +2440,37 @@ describe('FormFieldModel', () => {
             field.restoreRuntimeValue(undefined);
 
             expect(form.values['text1']).toBe('existing');
+        });
+    });
+
+    describe('while the form is being reset', () => {
+        it('should ignore ordinary value, flag and row changes', () => {
+            const form = new FormModel({
+                fields: [
+                    { id: 'text', type: 'text', value: 'authored', required: false, readOnly: false },
+                    { id: 'rows', type: 'repeatable-section', params: { initialNumberOfRows: 1 }, fields: { 1: [{ id: 'child', type: 'text' }] } }
+                ]
+            });
+            const context = { form, renderer: {}, generation: {}, invocation: {}, documentVersion: '1', outcomeId: 'clear', isCurrent: () => true };
+            bindFormState(form, context.renderer, context.generation);
+            const text = form.getFieldById('text');
+            const rows = form.getFieldById('rows');
+            const boundary = beginFormMutation(context);
+
+            try {
+                text.value = 'draft';
+                text.readOnly = true;
+                text.required = true;
+                rows.addRow(rows.fields, form);
+                rows.removeRow(0);
+            } finally {
+                boundary.release();
+            }
+
+            expect(text.value).toBe('authored');
+            expect(text.readOnly).toBeFalse();
+            expect(text.required).toBeFalse();
+            expect(rows.rows.length).toBe(1);
         });
     });
 });
