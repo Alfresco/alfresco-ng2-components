@@ -13,6 +13,7 @@ https://localhost/alfresco/api/-default-/public/alfresco/versions/1
 - [ActionsApi](docs/ActionsApi.md)
 - [ActivitiesApi](docs/ActivitiesApi.md)
 - [AuditApi](docs/AuditApi.md)
+- [CascadingDictionariesApi](docs/CascadingDictionariesApi.md)
 - [CommentsApi](docs/CommentsApi.md)
 - [DownloadsApi](docs/DownloadsApi.md)
 - [FavoritesApi](docs/FavoritesApi.md)

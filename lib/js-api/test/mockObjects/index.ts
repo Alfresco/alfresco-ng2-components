@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './content-services/cascading-dictionaries.mock';
 export * from './content-services/categories.mock';
 export * from './content-services/comment.mock';
 export * from './content-services/ecm-auth.mock';
