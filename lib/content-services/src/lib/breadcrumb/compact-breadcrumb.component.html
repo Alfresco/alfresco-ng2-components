@@ -41,7 +41,7 @@
                   (cdkDropListDropped)="onDrop($event)"
                   cdk-scrollable
                   [cdkTrapFocus]="menuOpen()" >
-        @for (nodeWithState of nodes(); track nodeWithState.node.id; let index = $index) {
+        @for (nodeWithState of nodes(); track nodeWithState.node.id) {
             @let disabledRoute = !isRouteEnabled(nodeWithState);
             <mat-list-item
                 class="adf-compact-breadcrumb-menu-list-item"
@@ -51,8 +51,8 @@
                 [disabled]="disabledRoute"
                 (mouseenter)="setNodeHoverState(nodeWithState)"
                 (mouseleave)="setNodeHoverState(null)"
-                (click)="onRouteClick(nodeWithState, $event)"
-                (keydown.enter)="onRouteClick(nodeWithState, $event)"
+                (click)="onRouteSelection(nodeWithState, $event)"
+                (keydown.enter)="onRouteSelection(nodeWithState, $event)"
                 [attr.tabindex]="disabledRoute ? null : 0"
                 (keydown.shift.arrowdown)="onKeyboardNodeDrop(nodeWithState.node)">
                 <img

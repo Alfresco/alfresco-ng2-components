@@ -174,11 +174,11 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         }
     }
 
-    onRouteClick(nodeWithState: PathElementWithState, event: Event): void {
+    onRouteSelection(nodeWithState: PathElementWithState, event: Event): void {
         if (event instanceof MouseEvent) {
             event.preventDefault();
         }
-        if (this.isRouteEnabled(this.hoveredItem())) {
+        if (this.isRouteEnabled(nodeWithState) && !this.dragDropStateService.dragging()) {
             this.navigate.emit(nodeWithState.node);
             this.closeMenu();
         }
