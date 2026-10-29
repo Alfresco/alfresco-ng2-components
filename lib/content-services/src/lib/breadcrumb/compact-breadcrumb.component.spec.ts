@@ -20,7 +20,7 @@ import { CompactBreadcrumbComponent } from './compact-breadcrumb.component';
 import { DragDropStateService, UnitTestingUtils } from '@alfresco/adf-core';
 import { DebugElement } from '@angular/core';
 import { MatNavList } from '@angular/material/list';
-import { CdkScrollable } from '@angular/cdk/overlay';
+import { CdkScrollable } from '@angular/cdk/scrolling';
 import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { CdkDropList } from '@angular/cdk/drag-drop';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';

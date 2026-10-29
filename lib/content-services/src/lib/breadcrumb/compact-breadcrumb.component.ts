@@ -42,7 +42,7 @@ import { MatListItem, MatListItemIcon, MatListItemLine, MatListItemMeta, MatList
 import { NgOptimizedImage } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { CdkTrapFocus } from '@angular/cdk/a11y';
-import { CdkScrollable } from '@angular/cdk/overlay';
+import { CdkScrollable } from '@angular/cdk/scrolling';
 
 interface PathElementWithState {
     node: PathElement;
