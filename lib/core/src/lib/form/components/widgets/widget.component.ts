@@ -20,6 +20,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation, inject } from '@angular/core';
 import { FormFieldEvent, FormRulesEvent } from '../../events';
 import { FormService } from '../../services/form.service';
+import { isFormMutating } from '../../models/form-state.model';
 import { FormFieldModel } from './core';
 
 /**
@@ -101,7 +102,7 @@ export class WidgetComponent implements AfterViewInit {
     }
 
     onFieldChanged(field: FormFieldModel) {
-        if (this.formService.formState.isMutating(field?.form)) {
+        if (isFormMutating(field?.form)) {
             return;
         }
         this.fieldChanged.emit(field);
@@ -109,7 +110,7 @@ export class WidgetComponent implements AfterViewInit {
     }
 
     event(event: Event): void {
-        if (this.formService.formState.isMutating(this.field?.form)) {
+        if (isFormMutating(this.field?.form)) {
             return;
         }
         this.formService.formEvents.next(event);

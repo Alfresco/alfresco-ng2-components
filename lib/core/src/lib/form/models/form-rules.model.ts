@@ -54,7 +54,7 @@ export class FormInvocationCoordinator {
         reset: ((context: FormWriteContext) => Promise<FormResetResult>) | undefined,
         notify: (result: FormInvocationResult) => void
     ): Promise<FormInvocationResult> {
-        if (this.pending) {
+        if (this.pending !== undefined) {
             return this.pending;
         }
         const invocation = {};
@@ -76,14 +76,7 @@ export class FormInvocationCoordinator {
                 if (!context.isCurrent() || !provider?.enabled || typeof reset !== 'function') {
                     return Promise.resolve(unavailable());
                 }
-                let result: Promise<FormResetResult>;
-                try {
-                    result = reset(context);
-                } catch (error) {
-                    reportFormError(this.reportError, error);
-                    result = Promise.resolve({ context, status: 'failed', items: [] });
-                }
-                return Promise.resolve(result).then(
+                return new Promise<FormResetResult>((resolve) => resolve(reset(context))).then(
                     (resetResult) => (context.isCurrent() ? { ...resetResult, context } : unavailable()),
                     (error) => {
                         reportFormError(this.reportError, error);
