@@ -240,11 +240,7 @@ export function runFormMutation(
         reportFormError(reportError, error);
         resolveWork(failed());
     };
-    try {
-        Promise.resolve(reset(boundary.cancelled)).then(resolveWork, fail);
-    } catch (error) {
-        fail(error);
-    }
+    new Promise<FormResetResult>((resolve) => resolve(reset(boundary.cancelled))).then(resolveWork, fail);
     return entry.result;
 }
 
