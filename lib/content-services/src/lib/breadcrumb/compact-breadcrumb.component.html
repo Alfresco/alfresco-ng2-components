@@ -1,4 +1,4 @@
-@let menuButtonLabel = 'BREADCRUMB.COMPACT_MENU.OPEN_COMPACT_BREADCRUMB_BUTTON' | translate: { ancestorsCounter: nodes().length - 1 };
+@let menuButtonLabel = 'BREADCRUMB.COMPACT_MENU.OPEN_COMPACT_BREADCRUMB_BUTTON' | translate: { parentsCounter: parentsCounter() };
 <button
     #menuTrigger
     matButton
@@ -53,6 +53,7 @@
                 (mouseleave)="setNodeHoverState(null)"
                 (click)="onRouteSelection(nodeWithState, $event)"
                 (keydown.enter)="onRouteSelection(nodeWithState, $event)"
+                [title]="nodeWithState.node.name | translate"
                 [attr.tabindex]="disabledRoute ? null : 0"
                 (keydown.shift.arrowdown)="onKeyboardNodeDrop(nodeWithState.node)">
                 <img
@@ -71,7 +72,8 @@
                 </a>
                 <p
                     matListItemLine
-                    class="adf-compact-breadcrumb-menu-description">
+                    class="adf-compact-breadcrumb-menu-description"
+                    [title]="nodeWithState.description">
                     {{ nodeWithState.description }}
                 </p>
 

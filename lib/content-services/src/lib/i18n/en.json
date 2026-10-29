@@ -699,7 +699,7 @@
       "SELECTED": "Selected ({{ count }})"
     },
     "COMPACT_MENU": {
-      "OPEN_COMPACT_BREADCRUMB_BUTTON": "Parent folders ({{ ancestorsCounter }})",
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "Parent folders ({{ parentsCounter }})",
       "TITLE": "Move to a parent folder",
       "DESCRIPTION_WHEN_DRAGGING": "Release on a destination to move. Full path shown below.",
       "DESCRIPTION_NO_DRAGGING": "Full path shown below.",

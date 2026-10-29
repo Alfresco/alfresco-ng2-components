@@ -277,7 +277,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     }
 
     goToNextDropList(): void {
-        if (this.dragDropStateService.dragging()) {
+        if (this.dragDropStateService.dragging() && this.connectedDropListSelector) {
             (document.querySelector(this.connectedDropListSelector) as HTMLElement)?.focus();
         }
     }
@@ -295,6 +295,13 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
                 }
             } as CdkDragDrop<PathElement, PathElement, DataRow>);
             this.dragDropStateService.dragging.set(false);
+        }
+    }
+
+    onItemMouseEnter(nodeIndex: number): void {
+        this.hoveredItem = this.lastNodes[nodeIndex];
+        if (this.isDropAllowed(nodeIndex)) {
+            this.dragDropStateService.hoveredDropName.set(this.hoveredItem.name);
         }
     }
 }

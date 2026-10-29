@@ -148,6 +148,7 @@ export type ShowHeaderMode = (typeof ShowHeaderMode)[keyof typeof ShowHeaderMode
 })
 export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
     protected readonly dragDropStateService = inject(DragDropStateService);
+
     private readonly elementRef = inject(ElementRef);
     private readonly liveAnnouncer = inject(LiveAnnouncer);
     private readonly matIconRegistry = inject(MatIconRegistry);
@@ -404,7 +405,11 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             if (this.rowDropSortingDisabled) {
                 switch (event.key) {
                     case 'ArrowUp': {
-                        this.draggedRowIndex = this.keyManager.activeItemIndex - 1;
+                        const rowIndex = this.keyManager.activeItemIndex - 1;
+                        if (rowIndex < 0 || rowIndex >= this.data.getRows().length) {
+                            break;
+                        }
+                        this.draggedRowIndex = rowIndex;
                         this.dragDropStateService.keyboardDraggingData.set(this.data.getRows()[this.draggedRowIndex].id);
                         this.onDragStart(false);
                         break;
@@ -422,7 +427,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                         break;
                     }
                     case 'ArrowRight': {
-                        if (this.draggedRowIndex !== undefined && this.draggedRowIndex !== null) {
+                        if (this.draggedRowIndex !== undefined && this.draggedRowIndex !== null && this.dropListConnectedTo.length) {
                             const focusTrap = this.focusTrapFactory.create(document.getElementById(this.dropListConnectedTo[0]));
                             focusTrap.focusFirstTabbableElement();
                             focusTrap.destroy();
@@ -1233,6 +1238,18 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         document.body.classList.remove('adf-is-dragging');
     }
 
+    onRowMouseEnter(rowIndex: number, row: DataRow): void {
+        this.hoveredRowIndex = rowIndex;
+        if (row.node?.entry?.isFolder) {
+            this.dragDropStateService.hoveredDropName.set(row.node.entry.name);
+        }
+    }
+
+    onRowMouseLeave(): void {
+        this.hoveredRowIndex = null;
+        this.dragDropStateService.hoveredDropName.set(null);
+    }
+
     preventChangeRowByTab(event: KeyboardEvent): void {
         if (
             this.enableDragRows &&
@@ -1253,6 +1270,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             this.keyManager?.setActiveItem(0);
         }
         this.draggedRowIndex = null;
+        this.dragDropStateService.keyboardDraggingData.set(null);
+        this.dragDropStateService.dragging.set(false);
     }
 
     private updateColumnsWidths(): void {

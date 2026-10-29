@@ -256,8 +256,8 @@
                         (cdkDragStarted)="onDragStart()"
                         (cdkDragMoved)="onDragMoved($event)"
                         (cdkDragEnded)="onDragEnd()"
-                        (mouseenter)="hoveredRowIndex = idx"
-                        (mouseleave)="hoveredRowIndex = null"
+                        (mouseenter)="onRowMouseEnter(idx, row)"
+                        (mouseleave)="onRowMouseLeave()"
                         [cdkDragBoundary]="dragBoundary"
                         [cdkDragData]="row"
                         [row]="row"
@@ -676,7 +676,7 @@
                                     }
                                 }
                                 <div class="adf-datatable-row__dragging-preview-hints">
-                                    @if (dragDropStateService.hoveredDropName()) {
+                                    @if (dragDropStateService.hoveredDropName() && dragDropStateService.hoveredDropName() !== row.node?.entry?.name) {
                                         <p class="adf-datatable-row__dragging-preview-hints-drop-destination">
                                             {{
                                                 'ADF-DATATABLE.DRAG_DROP.DESTINATION_HINT'

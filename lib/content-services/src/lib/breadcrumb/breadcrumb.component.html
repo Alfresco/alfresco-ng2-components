@@ -55,7 +55,8 @@
                             class="adf-breadcrumb-item"
                             cdkDrag
                             cdkDragDisabled
-                            (mouseenter)="hoveredItem = item"
+                            (mouseenter)="onItemMouseEnter(index)"
+                            (mouseleave)="dragDropStateService.hoveredDropName.set(null)"
                         >
                             @if (isBreadcrumbItemAnchor(index)) {
                                 <a
@@ -64,6 +65,7 @@
                                     class="adf-breadcrumb-item-anchor"
                                     (click)="onRoutePathClick(item, $event)"
                                     (keydown.shift.arrowdown)="onKeyboardNodeDrop(item)"
+                                    [tabindex]="isDropAllowed(index) || !dragDropStateService.dragging() ? 0 : -1"
                                 >
                                     {{ item.name ?? '' | translate }}
                                 </a>

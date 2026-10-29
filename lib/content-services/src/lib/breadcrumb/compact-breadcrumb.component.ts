@@ -19,6 +19,7 @@ import {
     AfterViewInit,
     ChangeDetectionStrategy,
     Component,
+    computed,
     DestroyRef,
     effect,
     ElementRef,
@@ -120,6 +121,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
 
     protected readonly menuOpen = signal(false);
     protected readonly hoveredItem = signal<PathElementWithState>(undefined);
+    protected readonly parentsCounter = computed(() => this.nodes().filter((node) => !node.current && !node.libraryContainer).length);
     protected readonly suppressHoverOpen = signal(false);
 
     private removeOutsideClickListener: () => void;
@@ -151,13 +153,15 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     }
 
     toggleMenu(event: MouseEvent): void {
-        this.menuOpen() ? this.closeMenu() : this.openMenu();
-        this.menu().nativeElement.classList.toggle('adf-compact-breadcrumb-menu-open', this.menuOpen());
-        event.stopPropagation();
+        if (!this.dragDropStateService.keyboardDraggingData()) {
+            this.menuOpen() ? this.closeMenu() : this.openMenu();
+            this.menu().nativeElement.classList.toggle('adf-compact-breadcrumb-menu-open', this.menuOpen());
+            event.stopPropagation();
+        }
     }
 
     onTriggerMouseEnter(): void {
-        if (this.suppressHoverOpen()) {
+        if (this.suppressHoverOpen() || this.dragDropStateService.keyboardDraggingData()) {
             return;
         }
         this.openMenuTimer = setTimeout(() => {
@@ -224,17 +228,17 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         return route && !route.current && !route.libraryContainer;
     }
 
-    private stopOpeningMenu(): void {
-        clearTimeout(this.openMenuTimer);
-    }
-
-    private closeMenu(): void {
+    closeMenu(): void {
         if (this.menuOpen()) {
             this.menuTrigger().nativeElement.focus();
         }
         this.menuOpen.set(false);
         this.removeOutsideClickListener?.();
         this.removeOutsideClickListener = null;
+    }
+
+    private stopOpeningMenu(): void {
+        clearTimeout(this.openMenuTimer);
     }
 
     private getLevelDescription(nodes: PathElement[], nodeIndex: number, indexOffset = 0, current: boolean, libraryContainer: boolean): string {
