@@ -33,10 +33,12 @@ import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
+import { ConfigurableFocusTrapFactory, LiveAnnouncer } from '@angular/cdk/a11y';
 import { provideRouter } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { By } from '@angular/platform-browser';
+import { DataTableRowComponent } from '../datatable-row/datatable-row.component';
 
 @Component({
     selector: 'adf-custom-column-template-component',
@@ -1593,6 +1595,138 @@ describe('DataTable', () => {
         // Verify new records are loaded and first record is at top
         expect(scrollBody.scrollTop).toBe(0);
         expect(testingUtils.getInnerTextByDataAutomationId('text_Row 21')).toContain('Row 21');
+    });
+
+    describe('Body', () => {
+        let liveAnnouncer: LiveAnnouncer;
+
+        const getDatatableBody = (): DebugElement => testingUtils.getByCSS('.adf-datatable-body');
+
+        const getDropList = (): CdkDropList => getDatatableBody().injector.get(CdkDropList);
+
+        beforeEach(() => {
+            const dataRows = [{ name: 'test1' }, { name: 'test2' }, { name: 'test3' }, { name: 'test4' }];
+            dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
+            dataTable.ngOnChanges({
+                rows: new SimpleChange(null, dataRows, false)
+            });
+            fixture.detectChanges();
+            liveAnnouncer = TestBed.inject(LiveAnnouncer);
+        });
+
+        it('should have assigned correct cdkDropListConnectedTo', () => {
+            dataTable.dropListConnectedTo = ['list1', 'list2'];
+            fixture.detectChanges();
+
+            expect(getDropList().connectedTo).toEqual(['list1', 'list2']);
+        });
+
+        it('should have assigned true to cdkDropListHasAnchor', () => {
+            expect(getDropList().hasAnchor).toBeTrue();
+        });
+
+        it('should have assigned true to cdkDropListSortingDisabled if rowDropSortingDisabled is true', () => {
+            dataTable.rowDropSortingDisabled = true;
+            fixture.detectChanges();
+
+            expect(getDropList().sortingDisabled).toBeTrue();
+        });
+
+        it('should have assigned false to cdkDropListSortingDisabled if rowDropSortingDisabled is false', () => {
+            dataTable.rowDropSortingDisabled = false;
+            fixture.detectChanges();
+
+            expect(getDropList().sortingDisabled).toBeFalse();
+        });
+
+        it('should call announce on LiveAnnouncer when focusin is triggered and rowDropSortingDisabled is true', () => {
+            spyOn(liveAnnouncer, 'announce');
+            dataTable.rowDropSortingDisabled = true;
+
+            getDatatableBody().nativeElement.dispatchEvent(new FocusEvent('focusin'));
+            expect(liveAnnouncer.announce).toHaveBeenCalledWith('ADF-DATATABLE.ACCESSIBILITY.DRAG_DROP_HINTS', 'assertive');
+        });
+
+        it('should not call announce on LiveAnnouncer when focusin is triggered and rowDropSortingDisabled is false', () => {
+            spyOn(liveAnnouncer, 'announce');
+            dataTable.rowDropSortingDisabled = false;
+
+            getDatatableBody().nativeElement.dispatchEvent(new FocusEvent('focusin'));
+            expect(liveAnnouncer.announce).not.toHaveBeenCalled();
+        });
+
+        describe('Rows', () => {
+            let rows: DebugElement[];
+
+            const getDragDirective = (index = 0): CdkDrag => rows[index].injector.get(CdkDrag);
+
+            beforeEach(() => {
+                rows = getDatatableBody().queryAll(By.directive(DataTableRowComponent));
+            });
+
+            it('should emit dragDropped when cdkDragDropped is triggered and some row is hovered', () => {
+                rows[0].nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
+                spyOn(dataTable.dragDropped, 'emit');
+                dataTable.enableDragRows = true;
+                dataTable.rowDropSortingDisabled = true;
+
+                getDragDirective().dropped.emit({
+                    previousIndex: 4,
+                    currentIndex: 2
+                } as CdkDragDrop<any>);
+                expect(dataTable.dragDropped.emit).toHaveBeenCalledWith({ previousIndex: 4, currentIndex: 0 });
+            });
+
+            it('should not emit dragDropped when cdkDragDropped is triggered and none row is hovered', () => {
+                spyOn(dataTable.dragDropped, 'emit');
+                dataTable.enableDragRows = true;
+                dataTable.rowDropSortingDisabled = true;
+
+                getDragDirective().dropped.emit({
+                    previousIndex: 4,
+                    currentIndex: 2
+                } as CdkDragDrop<any>);
+                expect(dataTable.dragDropped.emit).not.toHaveBeenCalled();
+            });
+
+            it('should not emit dragDropped when cdkDragDropped is triggered and after hovering row, mouseleave is triggered', () => {
+                rows[0].nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
+                rows[0].nativeElement.dispatchEvent(new MouseEvent('mouseleave'));
+                spyOn(dataTable.dragDropped, 'emit');
+                dataTable.enableDragRows = true;
+                dataTable.rowDropSortingDisabled = true;
+
+                getDragDirective().dropped.emit({
+                    previousIndex: 4,
+                    currentIndex: 2
+                } as CdkDragDrop<any>);
+                expect(dataTable.dragDropped.emit).not.toHaveBeenCalled();
+            });
+
+            it('should have assigned default cdkDragBoundary for each row', () => {
+                for (let i = 0; i < rows.length; i++) {
+                    const dragDirective = getDragDirective(i);
+                    expect(dragDirective.boundaryElement).toBe('.adf-datatable-body');
+                }
+            });
+
+            it('should have assigned cdkDragBoundary equal to datatable dragBoundary', () => {
+                dataTable.dragBoundary = '.custom-boundary';
+                fixture.detectChanges();
+
+                for (let i = 0; i < rows.length; i++) {
+                    const dragDirective = getDragDirective(i);
+                    expect(dragDirective.boundaryElement).toBe(dataTable.dragBoundary);
+                }
+            });
+
+            it('should have assigned correct cdkDragData for each row', () => {
+                for (let i = 0; i < rows.length; i++) {
+                    const dragDirective = getDragDirective(i);
+                    expect(dragDirective.data).toBe(dataTable.data.getRows()[i]);
+                }
+            });
+        });
     });
 });
 

@@ -382,9 +382,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     displayDragAndDropHint = true;
 
-    /**
-     * Flag that enables dragging rows
-     */
+    /** Flag that enables dragging rows */
     @Input()
     enableDragRows = false;
 
