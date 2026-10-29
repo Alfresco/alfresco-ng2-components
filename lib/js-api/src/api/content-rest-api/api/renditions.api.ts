@@ -138,7 +138,7 @@ export class RenditionsApi extends BaseApi {
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
      *
-     * Gets a list of the rendition information for each rendition of the the file **nodeId**, including the rendition id.
+     * Gets a list of the rendition information for each rendition of the file **nodeId**, including the rendition id.
      * Each rendition returned has a **status**: CREATED means it is available to view or download, NOT_CREATED means the rendition can be requested.
      * You can use the **where** parameter to filter the returned renditions by **status**. For example, the following **where**
      * clause will return just the CREATED renditions:
