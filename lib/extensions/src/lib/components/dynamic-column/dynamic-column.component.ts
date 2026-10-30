@@ -61,7 +61,7 @@ export class DynamicColumnComponent implements OnInit, OnChanges, OnDestroy {
 
     private componentRef: ComponentRef<any>;
 
-    ngOnInit() {
+    ngOnInit(): void {
         const componentType = this.extensions.getComponentById(this.id);
         if (componentType) {
             this.content.clear();
@@ -70,20 +70,20 @@ export class DynamicColumnComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes.node) {
             this.updateInstance();
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.componentRef) {
             this.componentRef.destroy();
             this.componentRef = null;
         }
     }
 
-    private updateInstance() {
+    private updateInstance(): void {
         if (this.componentRef?.instance) {
             this.componentRef.instance.context = this.context;
         }
