@@ -1,9 +1,12 @@
+@use '../mat-selectors.scss' as ms;
+
 .adf-breadcrumb {
     display: flex;
     flex: 1;
     font: var(--mat-sys-body-medium);
     color: var(--mat-sys-on-surface);
     overflow: hidden;
+    container-type: inline-size;
 
     &-container {
         margin: 0;
@@ -12,6 +15,34 @@
         cursor: default;
         display: flex;
         overflow: hidden;
+
+        &-path {
+            display: flex;
+            min-width: 0;
+
+            &#{ms.$cdk-drop-list-dragging} .adf-breadcrumb-item:hover {
+                text-decoration: underline;
+                text-underline-offset: 4px;
+
+                &.adf-breadcrumb-item-drop-disabled {
+                    text-decoration: none;
+                }
+            }
+
+            &-compact-mode {
+                .adf-breadcrumb-item:first-of-type {
+                    &:has(+ .adf-breadcrumb-item adf-compact-breadcrumb) {
+                        @container (width < 362px) {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            #{ms.$cdk-drag-placeholder} {
+                display: none;
+            }
+        }
     }
 
     &-dropdown {

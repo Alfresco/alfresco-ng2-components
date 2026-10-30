@@ -160,6 +160,12 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
             cursor: grabbing;
         }
 
+        #{ms.$cdk-drag-placeholder},
+        #{ms.$cdk-drag-anchor},
+        .adf-datatable-row__keyboard-dragging {
+            opacity: 0.4;
+        }
+
         .adf-datatable-row {
             @include mixins.material-animation-default(0.28s);
 
@@ -299,6 +305,11 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     .adf-datatable-cell {
         color: var(--mat-sys-on-surface);
         min-height: inherit;
+
+        [role='link'],
+        a {
+            cursor: pointer;
+        }
     }
 
     /* stylelint-disable-next-line no-duplicate-selectors */
@@ -767,4 +778,41 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     .adf-datatable-header {
         max-height: 50%;
     }
+}
+
+.adf-datatable-row__dragging-preview {
+    min-height: 0;
+    padding: 18px 16px 16px;
+    gap: 16px;
+    box-shadow: var(--mat-sys-level2);
+    flex-wrap: wrap;
+    width: 270px;
+    border-radius: 8px;
+
+    &-hints {
+        flex-basis: 100%;
+        font-size: 12px;
+        margin-top: 6px;
+        padding-bottom: 4px;
+
+        &-drop-destination, &-close-hint {
+            margin: 0;
+        }
+
+        &-drop-destination {
+            margin-bottom: 15px;
+        }
+    }
+
+    > :first-child {
+        margin-left: 6px;
+    }
+
+    .adf-datatable-cell-container {
+        max-width: 220px;
+    }
+}
+
+.adf-is-dragging * {
+    cursor: grabbing;
 }

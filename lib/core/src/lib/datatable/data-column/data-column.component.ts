@@ -125,6 +125,10 @@ export class DataColumnComponent implements OnInit {
     @Input()
     dateConfig?: DateConfig;
 
+    /** Determines whether the column's data is visible in the drag preview. */
+    @Input()
+    visibleInDragPreview?: boolean;
+
     /** Data column header template */
     header?: TemplateRef<any>;
 

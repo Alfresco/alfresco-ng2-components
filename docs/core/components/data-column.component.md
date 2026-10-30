@@ -42,30 +42,31 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| copyContent | `boolean` |  | Enables/disables a [Clipboard directive](../../core/directives/clipboard.directive.md) to allow copying of cell contents. |
-| cssClass | `string` |  | Additional CSS class to be applied to column (header and cells). |
-| customData | `any` |  | You can specify any custom data which can be used by any specific feature |
-| draggable | `boolean` | false | Enable drag and drop for header column |
-| resizable | `boolean` | true | Enable column resizing |
-| editable | `boolean` | false | Toggles the editing support of the column data. |
-| focus | `boolean` | true | Enable or disable cell focus |
-| format | `string` |  | Value format (if supported by the parent component), for example format of the date. |
-| formatTooltip | `Function` |  | Custom tooltip formatter function. |
-| id | `string` | "" | Id of the Column |
-| isHidden | `boolean` | false | Hide column |
-| key | `string` |  | Data source key. Can be either a column/property key like `title`  or a property path like `createdBy.name`. |
-| sortable | `boolean` | true | Toggles ability to sort by this column, for example by clicking the column header. |
-| sortingKey | `string` |  | When using server side sorting the column used by the api call where the sorting will be performed |
-| srTitle | `string` |  | Title to be used for screen readers. |
-| title | `string` | "" | Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically. |
-| type | `string` | "text" | Value type for the column. Possible settings are 'text', 'boolean', 'icon', 'image', 'date', 'fileSize', 'location', 'json', 'amount' and 'number'. |
-| order | `number` |  | Sets position of column. |
-| currencyConfig | `CurrencyConfig` | [Default currency config](#default-currency-config) | Currency configuration to customize the formatting and display of currency values within the component. |
-| decimalConfig | `DecimalConfig` | [Default decimal config](#default-decimal-config) | Decimal configuration to customize the formatting and display of decimal values within the component. |
-| dateConfig | `DateConfig` | [Default date config](#default-date-config) | Date configuration to customize the formatting and localization of date values within the component. |
-| maxTextLength | `number` | 250 | Max length of the text displayed in column before truncation. |
+| Name                 | Type             | Default value                                       | Description                                                                                                                                         |
+|----------------------|------------------|-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| copyContent          | `boolean`        |                                                     | Enables/disables a [Clipboard directive](../../core/directives/clipboard.directive.md) to allow copying of cell contents.                           |
+| cssClass             | `string`         |                                                     | Additional CSS class to be applied to column (header and cells).                                                                                    |
+| customData           | `any`            |                                                     | You can specify any custom data which can be used by any specific feature                                                                           |
+| draggable            | `boolean`        | false                                               | Enable drag and drop for header column                                                                                                              |
+| resizable            | `boolean`        | true                                                | Enable column resizing                                                                                                                              |
+| editable             | `boolean`        | false                                               | Toggles the editing support of the column data.                                                                                                     |
+| focus                | `boolean`        | true                                                | Enable or disable cell focus                                                                                                                        |
+| format               | `string`         |                                                     | Value format (if supported by the parent component), for example format of the date.                                                                |
+| formatTooltip        | `Function`       |                                                     | Custom tooltip formatter function.                                                                                                                  |
+| id                   | `string`         | ""                                                  | Id of the Column                                                                                                                                    |
+| isHidden             | `boolean`        | false                                               | Hide column                                                                                                                                         |
+| key                  | `string`         |                                                     | Data source key. Can be either a column/property key like `title`  or a property path like `createdBy.name`.                                        |
+| sortable             | `boolean`        | true                                                | Toggles ability to sort by this column, for example by clicking the column header.                                                                  |
+| sortingKey           | `string`         |                                                     | When using server side sorting the column used by the api call where the sorting will be performed                                                  |
+| srTitle              | `string`         |                                                     | Title to be used for screen readers.                                                                                                                |
+| title                | `string`         | ""                                                  | Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically.               |
+| type                 | `string`         | "text"                                              | Value type for the column. Possible settings are 'text', 'boolean', 'icon', 'image', 'date', 'fileSize', 'location', 'json', 'amount' and 'number'. |
+| order                | `number`         |                                                     | Sets position of column.                                                                                                                            |
+| currencyConfig       | `CurrencyConfig` | [Default currency config](#default-currency-config) | Currency configuration to customize the formatting and display of currency values within the component.                                             |
+| decimalConfig        | `DecimalConfig`  | [Default decimal config](#default-decimal-config)   | Decimal configuration to customize the formatting and display of decimal values within the component.                                               |
+| dateConfig           | `DateConfig`     | [Default date config](#default-date-config)         | Date configuration to customize the formatting and localization of date values within the component.                                                |
+| maxTextLength        | `number`         | 250                                                 | Max length of the text displayed in column before truncation.                                                                                       |
+| visibleInDragPreview | `boolean`        |                                                     | Determines whether the column's data is visible in the drag preview.                                                                                |
 
 ## Properties configuration
 

@@ -1795,6 +1795,99 @@ describe('DocumentList', () => {
         );
     });
 
+    describe('Datatable', () => {
+        let datatable: DataTableComponent;
+
+        beforeEach(() => {
+            datatable = unitTestingUtils.getByDirective(DataTableComponent).componentInstance;
+        });
+
+        it('should have assigned enableDragRows to true if enableDragRows in document list is true', () => {
+            documentList.enableDragRows = true;
+
+            fixture.detectChanges();
+            expect(datatable.enableDragRows).toBeTrue();
+        });
+
+        it('should have assigned enableDragRows to false if enableDragRows in document list is false', () => {
+            documentList.enableDragRows = false;
+
+            fixture.detectChanges();
+            expect(datatable.enableDragRows).toBeFalse();
+        });
+
+        it('should have assigned dropListConnectedTo to document list dropListConnectedTo', () => {
+            documentList.dropListConnectedTo = ['list1', 'list2'];
+
+            fixture.detectChanges();
+            expect(datatable.dropListConnectedTo).toEqual(['list1', 'list2']);
+        });
+
+        it('should have assigned default value for dragBoundary', () => {
+            expect(datatable.dragBoundary).toBe('.adf-datatable-body');
+        });
+
+        it('should have assigned dragBoundary to document list dragBoundary', () => {
+            documentList.dragBoundary = '.custom-boundary';
+
+            fixture.detectChanges();
+            expect(datatable.dragBoundary).toBe('.custom-boundary');
+        });
+
+        it('should have assigned showDragIndicator to true if document list showDragIndicator is true', () => {
+            documentList.showDragIndicator = true;
+
+            fixture.detectChanges();
+            expect(datatable.showDragIndicator).toBeTrue();
+        });
+
+        it('should have assigned showDragIndicator to false if document list showDragIndicator is false', () => {
+            documentList.showDragIndicator = false;
+
+            fixture.detectChanges();
+            expect(datatable.showDragIndicator).toBeFalse();
+        });
+
+        it('should have assigned useWholeRowAsDragPreview to true if document list useWholeRowAsDragPreview is true', () => {
+            documentList.useWholeRowAsDragPreview = true;
+
+            fixture.detectChanges();
+            expect(datatable.useWholeRowAsDragPreview).toBeTrue();
+        });
+
+        it('should have assigned useWholeRowAsDragPreview to false if document list rowDropSortingDisabled is false', () => {
+            documentList.useWholeRowAsDragPreview = false;
+
+            fixture.detectChanges();
+            expect(datatable.useWholeRowAsDragPreview).toBeFalse();
+        });
+
+        it('should have assigned rowDropSortingDisabled to true if document list rowDropSortingDisabled is true', () => {
+            documentList.rowDropSortingDisabled = true;
+
+            fixture.detectChanges();
+            expect(datatable.rowDropSortingDisabled).toBeTrue();
+        });
+
+        it('should have assigned rowDropSortingDisabled to false if document list rowDropSortingDisabled is false', () => {
+            documentList.rowDropSortingDisabled = false;
+
+            fixture.detectChanges();
+            expect(datatable.rowDropSortingDisabled).toBeFalse();
+        });
+
+        it('should emit dragDropped when dragDropped event is triggered by datatable', () => {
+            spyOn(documentList.dragDropped, 'emit');
+            const event = {
+                previousIndex: 0,
+                currentIndex: 1
+            };
+
+            datatable.dragDropped.emit(event);
+            expect(documentList.dragDropped.emit).toHaveBeenCalledWith(event);
+        });
+    });
+
     describe('Preselect nodes', () => {
         beforeEach(() => {
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_created.svg`);

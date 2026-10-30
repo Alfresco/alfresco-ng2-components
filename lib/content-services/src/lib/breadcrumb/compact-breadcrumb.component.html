@@ -1,0 +1,107 @@
+@let menuButtonLabel = 'BREADCRUMB.COMPACT_MENU.OPEN_COMPACT_BREADCRUMB_BUTTON' | translate: { parentsCounter: parentsCounter() };
+<button
+    #menuTrigger
+    matButton
+    class="adf-compact-breadcrumb-trigger"
+    (click)="toggleMenu($event)"
+    (mouseenter)="onTriggerMouseEnter()"
+    (mouseleave)="suppressHoverOpen.set(false)"
+    [title]="menuButtonLabel" >
+    {{ menuButtonLabel }}
+</button>
+<div
+    #backdrop
+    class="adf-compact-breadcrumb-backdrop"
+    [class.adf-compact-breadcrumb-backdrop-open]="menuOpen()">
+</div>
+<dialog
+    #menu
+    class="adf-compact-breadcrumb-menu"
+    [class.adf-compact-breadcrumb-menu-open]="menuOpen()"
+    [class.adf-compact-breadcrumb-menu-full-width]="fullWidth()"
+    [attr.aria-hidden]="!menuOpen()"
+    (mouseleave)="closeOnMenuLeave()"
+    (mouseenter)="stopClosingMenu()" >
+    <div class="adf-compact-breadcrumb-menu-header">
+        <h2 class="adf-compact-breadcrumb-menu-header-title">{{'BREADCRUMB.COMPACT_MENU.TITLE' | translate }}</h2>
+        <p class="adf-compact-breadcrumb-menu-description adf-compact-breadcrumb-menu-header-title-description">
+            {{
+                (dragDropStateService.dragging() ? 'BREADCRUMB.COMPACT_MENU.DESCRIPTION_WHEN_DRAGGING'
+                    : 'BREADCRUMB.COMPACT_MENU.DESCRIPTION_NO_DRAGGING') | translate
+            }}
+        </p>
+    </div>
+    <mat-nav-list class="adf-compact-breadcrumb-menu-list"
+                  id="adf-compact-breadcrumb-menu-list"
+                  cdkDropListGroup
+                  cdkDropList
+                  cdkDropListSortingDisabled
+                  [cdkDropListData]="hoveredItem()?.node"
+                  (cdkDropListDropped)="onDrop($event)"
+                  cdk-scrollable
+                  [cdkTrapFocus]="menuOpen()" >
+        @for (nodeWithState of nodes(); track nodeWithState.node.id) {
+            @let disabledRoute = !isRouteEnabled(nodeWithState);
+            <mat-list-item
+                class="adf-compact-breadcrumb-menu-list-item"
+                [class.adf-compact-breadcrumb-menu-list-item-disabled]="disabledRoute"
+                cdkDrag
+                cdkDragDisabled
+                [disabled]="disabledRoute"
+                (mouseenter)="setNodeHoverState(nodeWithState)"
+                (mouseleave)="setNodeHoverState(null)"
+                (click)="onRouteSelection(nodeWithState, $event)"
+                (keydown.enter)="onRouteSelection(nodeWithState, $event)"
+                [title]="nodeWithState.node.name | translate"
+                [attr.tabindex]="disabledRoute ? null : 0"
+                (keydown.shift.arrowdown)="onKeyboardNodeDrop(nodeWithState.node)">
+                <img
+                    ngSrc="./assets/images/ft_ic_folder_empty.svg"
+                    width="24"
+                    height="24"
+                    alt=""
+                    matListItemIcon />
+                <a
+                    matListItemTitle
+                    href="#"
+                    tabindex="-1"
+                    class="adf-compact-breadcrumb-menu-list-item-anchor"
+                >
+                    {{ nodeWithState.node.name | translate }}
+                </a>
+                <p
+                    matListItemLine
+                    class="adf-compact-breadcrumb-menu-description"
+                    [title]="nodeWithState.description">
+                    {{ nodeWithState.description }}
+                </p>
+
+                <div matListItemMeta class="adf-compact-breadcrumb-menu-list-item-meta">
+                    @if (nodeWithState.current) {
+                        <mat-icon class="adf-compact-breadcrumb-menu-list-item-meta-icon">
+                            location_on
+                        </mat-icon>
+                        {{ 'BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL_ICON_LABEL' | translate }}
+                    } @else if (nodeWithState.libraryContainer) {
+                        <mat-icon class="adf-compact-breadcrumb-menu-list-item-meta-icon">
+                            do_not_disturb
+                        </mat-icon>
+                        {{ 'BREADCRUMB.COMPACT_MENU.LIBRARY_CONTAINER_LEVEL_ICON_LABEL' | translate }}
+                    } @else if (dragDropStateService.dragging() && hoveredItem()?.node.id === nodeWithState.node.id) {
+                        <mat-icon class="adf-compact-breadcrumb-menu-list-item-meta-icon">
+                            check_circle
+                        </mat-icon>
+                        {{ 'BREADCRUMB.COMPACT_MENU.DROP_HINT' | translate }}
+                    }
+                </div>
+            </mat-list-item>
+        }
+    </mat-nav-list>
+    <p class="adf-compact-breadcrumb-menu-description adf-compact-breadcrumb-menu-footer">
+        <mat-icon class="adf-compact-breadcrumb-menu-description-back-icon">shortcut</mat-icon>
+        {{
+            (dragDropStateService.dragging() ? 'BREADCRUMB.COMPACT_MENU.PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING'
+                : 'BREADCRUMB.COMPACT_MENU.PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING') | translate
+        }}
+    </p>
+</dialog>

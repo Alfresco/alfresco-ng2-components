@@ -697,6 +697,22 @@
     },
     "HEADER": {
       "SELECTED": "Selected ({{ count }})"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "Parent folders ({{ parentsCounter }})",
+      "TITLE": "Move to a parent folder",
+      "DESCRIPTION_WHEN_DRAGGING": "Release on a destination to move. Full path shown below.",
+      "DESCRIPTION_NO_DRAGGING": "Full path shown below.",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING": "Esc or release outside a target to cancel • No move made",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING": "Esc, leave menu or click outside menu to cancel",
+      "FIRST_LEVEL": "Level 1",
+      "FIRST_LEVEL_LIBRARY": "Library • Level 1",
+      "NOT_FIRST_LEVEL": "Level {{ level }} • In {{ ancestorName }}",
+      "CURRENT_LEVEL": "Already in this folder",
+      "CURRENT_LEVEL_ICON_LABEL": "Current",
+      "LIBRARY_CONTAINER_LEVEL": "Library navigation only",
+      "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Unavailable",
+      "DROP_HINT": "Move here"
     }
   },
   "NAME_COLUMN_LINK": {

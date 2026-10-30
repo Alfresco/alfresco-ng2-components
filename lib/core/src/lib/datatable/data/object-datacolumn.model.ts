@@ -45,6 +45,7 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
     decimalConfig?: DecimalConfig;
     dateConfig?: DateConfig;
     maxTextLength?: number;
+    visibleInDragPreview?: boolean;
 
     constructor(input: any) {
         this.id = input.id ?? '';
@@ -71,5 +72,6 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
         this.decimalConfig = input.decimalConfig;
         this.dateConfig = input.dateConfig;
         this.maxTextLength = input.maxTextLength;
+        this.visibleInDragPreview = input.visibleInDragPreview;
     }
 }

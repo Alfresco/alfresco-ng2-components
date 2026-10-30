@@ -29,7 +29,14 @@
     (row-select)="onNodeSelect($any($event).detail)"
     (row-unselect)="onNodeUnselect($any($event).detail)"
     (sorting-changed)="onSortingChanged($any($event))"
-    [class.adf-datatable-gallery-thumbnails]="data.thumbnails">
+    [class.adf-datatable-gallery-thumbnails]="data.thumbnails"
+    [enableDragRows]="enableDragRows"
+    [dropListConnectedTo]="dropListConnectedTo"
+    [dragBoundary]="dragBoundary"
+    [showDragIndicator]="showDragIndicator"
+    [useWholeRowAsDragPreview]="useWholeRowAsDragPreview"
+    [rowDropSortingDisabled]="rowDropSortingDisabled"
+    (dragDropped)="dragDropped.emit($event)" >
 
     <div *ngIf="headerFilters">
         <adf-filter-header
