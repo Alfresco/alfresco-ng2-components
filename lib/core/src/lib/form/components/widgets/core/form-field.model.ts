@@ -63,6 +63,53 @@ const cloneJsonCompatibleValue = (value: unknown): unknown => {
     }
 };
 
+interface RepeatableRowOptions {
+    readonly index: number;
+    readonly value?: any;
+    readonly isInitial?: boolean;
+    readonly preserveRowValuePresence?: boolean;
+}
+
+interface RowColumnOptions {
+    readonly rowId: string;
+    readonly index?: number;
+    readonly value?: any;
+    readonly isTemplate?: boolean;
+    readonly preserveRowValuePresence?: boolean;
+}
+
+interface RuntimeValueSnapshot {
+    readonly value: any;
+    readonly rows: ContainerRowModel[];
+    readonly columns: ContainerColumnModel[];
+    readonly fields: any;
+    readonly serializedKey: string;
+    readonly hasSerializedValue: boolean;
+    readonly serializedValue: any;
+    readonly serializedRows?: any[];
+}
+
+const hasOwnRowValue = (rowValue: any, fieldId: string): boolean => Object.prototype.hasOwnProperty.call(rowValue ?? {}, fieldId);
+
+const copySerializedRows = (parent: RepeatableSectionModel | undefined, serializedValue: any): any[] | undefined => {
+    if (!parent || !Array.isArray(serializedValue)) {
+        return undefined;
+    }
+    return serializedValue.map((row) => ({ ...row }));
+};
+
+const restoreSerializedValue = (values: any, snapshot: RuntimeValueSnapshot): void => {
+    const { serializedKey, serializedValue, serializedRows } = snapshot;
+    if (!snapshot.hasSerializedValue) {
+        delete values[serializedKey];
+        return;
+    }
+    if (serializedRows) {
+        serializedValue.splice(0, serializedValue.length, ...serializedRows);
+    }
+    values[serializedKey] = serializedValue;
+};
+
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
     private _value: string;
@@ -316,7 +363,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.schemaDefinition = json.schemaDefinition;
             this.precision = json.precision;
             this.externalProperty = json.externalProperty;
-            this._value = parent?.hasAuthoredRowValue ? this.parseValue({ ...json, value: parent.value }) : this.parseValue(json, parent?.value);
+            this._value = this.parseInitialValue(json, parent);
             this.style = json.style;
             this.parent = parent;
 
@@ -348,6 +395,13 @@ export class FormFieldModel extends FormWidgetModel {
 
     private getEmptyOption(options: FormFieldOption[]): FormFieldOption {
         return options.find((option) => option?.id === this.defaultEmptyOptionId);
+    }
+
+    private parseInitialValue(json: any, parent?: RepeatableSectionModel) {
+        if (parent?.hasAuthoredRowValue) {
+            return this.parseValue({ ...json, value: parent.value });
+        }
+        return this.parseValue(json, parent?.value);
     }
 
     private setValueForReadonlyType(form: any) {
@@ -416,7 +470,7 @@ export class FormFieldModel extends FormWidgetModel {
                 ...this.parent,
                 uid: this.getUniqueId(field, this.parent.uid.split(ROW_ID_PREFIX)[1]),
                 value: this.parent.value?.[field.id],
-                hasAuthoredRowValue: this.parent.preserveRowValuePresence && Object.prototype.hasOwnProperty.call(this.parent.value ?? {}, field.id)
+                hasAuthoredRowValue: this.parent.preserveRowValuePresence && hasOwnRowValue(this.parent.value, field.id)
             };
         }
 
@@ -433,14 +487,16 @@ export class FormFieldModel extends FormWidgetModel {
         this.rows = [];
 
         for (let i = 0; i < this.getNumberOfRows(params.initialNumberOfRows, params.maxNumberOfRows, value); i++) {
-            this.rows.push(this.createRow(fields, form, i, value?.[i], i < params?.initialNumberOfRows, preserveRowValuePresence));
+            this.rows.push(
+                this.createRow(fields, form, { index: i, value: value?.[i], isInitial: i < params?.initialNumberOfRows, preserveRowValuePresence })
+            );
         }
 
         if (this.rows.length > 0) {
             this.columns = this.rows[0].columns;
         } else if (this.columns.length === 0) {
             // Design-time column template for Studio and form-rules; isTemplate suppresses form.values writes.
-            this.columns = this.createColumns(fields, form, TEMPLATE_ROW_ID, 0, undefined, true, preserveRowValuePresence);
+            this.columns = this.createColumns(fields, form, { rowId: TEMPLATE_ROW_ID, index: 0, isTemplate: true, preserveRowValuePresence });
         }
     }
 
@@ -448,23 +504,15 @@ export class FormFieldModel extends FormWidgetModel {
         return value?.length ? (maxNrRows ? Math.min(value.length, maxNrRows) : value.length) : initialNrRows;
     }
 
-    private createRow(fields: any, form: any, index: number, value?: any, isInitial: boolean = false, preserveRowValuePresence: boolean = false) {
+    private createRow(fields: any, form: any, { index, value, isInitial = false, preserveRowValuePresence = false }: RepeatableRowOptions) {
         const row = new ContainerRowModel(isInitial);
 
-        row.columns.push(...this.createColumns(fields, form, row.id, index, value, false, preserveRowValuePresence));
+        row.columns.push(...this.createColumns(fields, form, { rowId: row.id, index, value, preserveRowValuePresence }));
 
         return row;
     }
 
-    private createColumns(
-        fields: any,
-        form: any,
-        rowId: string,
-        index?: number,
-        value?: any,
-        isTemplate: boolean = false,
-        preserveRowValuePresence: boolean = false
-    ) {
+    private createColumns(fields: any, form: any, options: RowColumnOptions) {
         const columns: ContainerColumnModel[] = [];
 
         Object.keys(fields).forEach((currentField) => {
@@ -474,17 +522,7 @@ export class FormFieldModel extends FormWidgetModel {
 
             const col = new ContainerColumnModel();
             col.fields = (fields[currentField] || []).map(
-                (field: any) =>
-                    new FormFieldModel(form, field, {
-                        id: this.id,
-                        uid: this.getUniqueId(field, rowId),
-                        fields: this.fields,
-                        rowIndex: index ?? 0,
-                        value: field.type === FormFieldTypes.SECTION ? value : value?.[field.id],
-                        isTemplate: isTemplate || this.parent?.isTemplate,
-                        preserveRowValuePresence,
-                        hasAuthoredRowValue: preserveRowValuePresence && Object.prototype.hasOwnProperty.call(value ?? {}, field.id)
-                    })
+                (field: any) => new FormFieldModel(form, field, this.createRowParentConfig(field, options))
             );
             col.rowspan = fields[currentField].length;
 
@@ -497,6 +535,22 @@ export class FormFieldModel extends FormWidgetModel {
         });
 
         return columns;
+    }
+
+    private createRowParentConfig(
+        field: any,
+        { rowId, index, value, isTemplate = false, preserveRowValuePresence = false }: RowColumnOptions
+    ): RepeatableSectionModel {
+        return {
+            id: this.id,
+            uid: this.getUniqueId(field, rowId),
+            fields: this.fields,
+            rowIndex: index ?? 0,
+            value: field.type === FormFieldTypes.SECTION ? value : value?.[field.id],
+            isTemplate: isTemplate || this.parent?.isTemplate,
+            preserveRowValuePresence,
+            hasAuthoredRowValue: preserveRowValuePresence && hasOwnRowValue(value, field.id)
+        };
     }
 
     private updateRepeatableSectionReadOnlyState(state: boolean) {
@@ -588,7 +642,7 @@ export class FormFieldModel extends FormWidgetModel {
             return;
         }
 
-        const row = this.createRow(fields, form, this.rows.length);
+        const row = this.createRow(fields, form, { index: this.rows.length });
         this.copyParentVisibilityValidationState(this.columns, row.columns);
         this.rows.push(row);
         this.form.onRepeatableSectionRowCountChanged(this);
@@ -757,41 +811,53 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     restoreRuntimeValue(value: any, repeatableDefinition?: Record<string, unknown>): void {
-        const previous = { value: this._value, rows: this.rows, columns: this.columns, fields: this.fields };
-        const serializedKey = this.parent?.id ?? this.id;
-        const hasSerializedValue = Object.prototype.hasOwnProperty.call(this.form.values, serializedKey);
-        const serializedValue = this.form.values[serializedKey];
-        const serializedRows = this.parent && Array.isArray(serializedValue) ? serializedValue.map((row) => ({ ...row })) : undefined;
+        const snapshot = this.captureRuntimeSnapshot();
         this._value = value;
         try {
-            if (this.parent?.isTemplate) {
-                return;
-            }
-            if (repeatableDefinition) {
-                this.columns = [];
-                this.form.values[this.id] = [];
-            }
-            const formValue = this.getFormValue(repeatableDefinition);
-            if (this.parent) {
-                this.updateRepeatableSectionValue(formValue);
-            } else {
-                this.updateValue(formValue);
-            }
+            this.applyRuntimeValue(repeatableDefinition);
         } catch (error) {
-            this._value = previous.value;
-            this.rows = previous.rows;
-            this.columns = previous.columns;
-            this.fields = previous.fields;
-            if (hasSerializedValue) {
-                if (serializedRows) {
-                    serializedValue.splice(0, serializedValue.length, ...serializedRows);
-                }
-                this.form.values[serializedKey] = serializedValue;
-            } else {
-                delete this.form.values[serializedKey];
-            }
+            this.rollbackRuntimeValue(snapshot);
             throw error;
         }
+    }
+
+    private captureRuntimeSnapshot(): RuntimeValueSnapshot {
+        const serializedKey = this.parent?.id ?? this.id;
+        const serializedValue = this.form.values[serializedKey];
+        return {
+            value: this._value,
+            rows: this.rows,
+            columns: this.columns,
+            fields: this.fields,
+            serializedKey,
+            hasSerializedValue: Object.prototype.hasOwnProperty.call(this.form.values, serializedKey),
+            serializedValue,
+            serializedRows: copySerializedRows(this.parent, serializedValue)
+        };
+    }
+
+    private applyRuntimeValue(repeatableDefinition?: Record<string, unknown>): void {
+        if (this.parent?.isTemplate) {
+            return;
+        }
+        if (repeatableDefinition) {
+            this.columns = [];
+            this.form.values[this.id] = [];
+        }
+        const formValue = this.getFormValue(repeatableDefinition);
+        if (this.parent) {
+            this.updateRepeatableSectionValue(formValue);
+        } else {
+            this.updateValue(formValue);
+        }
+    }
+
+    private rollbackRuntimeValue(snapshot: RuntimeValueSnapshot): void {
+        this._value = snapshot.value;
+        this.rows = snapshot.rows;
+        this.columns = snapshot.columns;
+        this.fields = snapshot.fields;
+        restoreSerializedValue(this.form.values, snapshot);
     }
 
     restoreRuntimeFlags(required: boolean, readOnly: boolean): void {
@@ -938,7 +1004,10 @@ export class FormFieldModel extends FormWidgetModel {
                     resetReconstruction
                 );
 
-                return resetReconstruction ? this.form.values[this.id] : this.value ? this.value : this.form.values[this.id];
+                if (resetReconstruction || !this.value) {
+                    return this.form.values[this.id];
+                }
+                return this.value;
             }
             default:
                 if (this.shouldUpdateFormValues(this.type)) {

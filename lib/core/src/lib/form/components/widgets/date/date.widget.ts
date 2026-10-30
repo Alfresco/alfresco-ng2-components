@@ -86,7 +86,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, Reac
     }
 
     override event(event: Event): void {
-        if (this.stateMount && !this.formService.formState.isMountCurrent(this.field, this.stateMount)) {
+        if (this.isStateMountStale()) {
             return;
         }
         super.event(event);
@@ -123,9 +123,13 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, Reac
         this.dateInputControl.updateValueAndValidity({ emitEvent: false });
     }
 
+    private isStateMountStale(): boolean {
+        return !!this.stateMount && !this.formService.formState.isMountCurrent(this.field, this.stateMount);
+    }
+
     private subscribeToDateChanges(): void {
         this.dateInputControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((newDate: Date) => {
-            if (this.stateMount && !this.formService.formState.isMountCurrent(this.field, this.stateMount)) {
+            if (this.isStateMountStale()) {
                 return;
             }
             this.field.value = newDate;

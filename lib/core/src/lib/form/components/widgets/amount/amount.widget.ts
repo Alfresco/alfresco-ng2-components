@@ -138,12 +138,7 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
                 this.showPlaceholder = this.showReadonlyPlaceholder;
             }
             this.subscribeToFieldChanges();
-            formStateCommits
-                .pipe(
-                    filter(({ field, context }) => field === this.field && isFormStateProjectionCurrent(field, context, this.stateMount)),
-                    takeUntilDestroyed(this.destroyRef)
-                )
-                .subscribe(() => this.projectCommittedValue());
+            this.subscribeToStateCommits();
             this.setInitialValues();
             this.initErrorStateMatcher();
             this.field.validationSummaryChanges$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((validationSummary) => {
@@ -153,7 +148,7 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     amountWidgetOnBlur(): void {
-        if (this.stateMount && !isFormStateMountCurrent(this.field, this.stateMount)) {
+        if (this.isStateMountStale()) {
             return;
         }
         this.isInputInFocus = false;
@@ -176,7 +171,7 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     amountWidgetOnFocus(): void {
-        if (this.stateMount && !isFormStateMountCurrent(this.field, this.stateMount)) {
+        if (this.isStateMountStale()) {
             return;
         }
         this.isInputInFocus = true;
@@ -192,7 +187,7 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     onFieldChangedAmountWidget(): void {
-        if (this.stateMount && !isFormStateMountCurrent(this.field, this.stateMount)) {
+        if (this.isStateMountStale()) {
             return;
         }
         this.field.value = this.amountWidgetValue;
@@ -202,7 +197,7 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     override event(event: Event): void {
-        if (this.stateMount && !isFormStateMountCurrent(this.field, this.stateMount)) {
+        if (this.isStateMountStale()) {
             return;
         }
         super.event(event);
@@ -221,25 +216,40 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     subscribeToFieldChanges(): void {
         this.formService.formFieldValueChanged
             .pipe(
-                filter(
-                    (ev: FormFieldEvent) =>
-                        ev.form === this.field.form &&
-                        ev.field === this.field &&
-                        (!this.stateMount || isFormStateMountCurrent(this.field, this.stateMount))
-                ),
+                filter((ev: FormFieldEvent) => ev.form === this.field.form && ev.field === this.field && !this.isStateMountStale()),
                 takeUntilDestroyed(this.destroyRef)
             )
-            .subscribe((ev: FormFieldEvent) => {
-                if (ev.writeContext) {
-                    if (isFormStateProjectionCurrent(this.field, ev.writeContext, this.stateMount)) {
-                        this.projectCommittedValue();
-                    }
-                } else if (!this.isInputInFocus && this.enableDisplayBasedOnLocale) {
-                    this.updateValue(ev.field.value);
-                } else if (!this.isInputInFocus) {
-                    this.amountWidgetValue = ev.field.value;
-                }
-            });
+            .subscribe((ev: FormFieldEvent) => this.syncWithFieldValue(ev));
+    }
+
+    private subscribeToStateCommits(): void {
+        formStateCommits
+            .pipe(
+                filter(({ field, context }) => field === this.field && isFormStateProjectionCurrent(field, context, this.stateMount)),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe(() => this.projectCommittedValue());
+    }
+
+    private syncWithFieldValue(ev: FormFieldEvent): void {
+        if (ev.writeContext) {
+            if (isFormStateProjectionCurrent(this.field, ev.writeContext, this.stateMount)) {
+                this.projectCommittedValue();
+            }
+            return;
+        }
+        if (this.isInputInFocus) {
+            return;
+        }
+        if (this.enableDisplayBasedOnLocale) {
+            this.updateValue(ev.field.value);
+            return;
+        }
+        this.amountWidgetValue = ev.field.value;
+    }
+
+    private isStateMountStale(): boolean {
+        return !!this.stateMount && !isFormStateMountCurrent(this.field, this.stateMount);
     }
 
     private projectCommittedValue(): void {
