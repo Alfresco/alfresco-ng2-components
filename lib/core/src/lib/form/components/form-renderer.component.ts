@@ -19,7 +19,6 @@ import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
     ChangeDetectorRef,
     Component,
-    computed,
     DestroyRef,
     effect,
     ErrorHandler,
@@ -43,24 +42,10 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { TranslatePipe } from '@ngx-translate/core';
-import {
-    ByPassFormRuleManager,
-    FormInvocationCoordinator,
-    FormInvocationResult,
-    FormRulesManager,
-    formRulesManagerFactory
-} from '../models/form-rules.model';
-import {
-    bindFormState,
-    FormWriteContext,
-    FormResetResult,
-    unbindFormState,
-    cancelFormMutation,
-    runFormMutation,
-    isFormMutating,
-    reportFormError
-} from '../models/form-state.model';
+import { FormInvocationResult, FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
+import { FormWriteContext, FormResetResult } from '../models/form-state.model';
 import { NotificationService } from '../../notifications/services/notification.service';
+import { FormRendererInvocationLifecycle } from './form-renderer-invocation-lifecycle';
 import { FormService } from '../services/form.service';
 import { WidgetVisibilityService } from '../services/widget-visibility.service';
 import { FormFieldComponent } from './form-field/form-field.component';
@@ -125,24 +110,16 @@ export class FormRendererComponent<T> implements OnChanges, OnInit, OnDestroy {
     private readonly destroyRef = inject(DestroyRef);
     private readonly notificationService = inject(NotificationService);
     private readonly errorHandler = inject(ErrorHandler);
-    private readonly reportError = (error: unknown): void => this.errorHandler.handleError(error);
-    private generation = {};
-    private invocationCoordinator?: FormInvocationCoordinator;
-    private invocationVersion?: string;
-    private destroyed = false;
-    private observedDocumentVersion?: string;
+    private readonly invocations = new FormRendererInvocationLifecycle(this, {
+        rulesManager: this.formRulesManager,
+        notificationService: this.notificationService,
+        errorHandler: this.errorHandler
+    });
 
     @Input({ required: true })
     set formDefinition(formDefinition: FormModel) {
         if (this._formDefinition !== formDefinition) {
-            this.cancelInvocation();
-            if (this._formDefinition) {
-                unbindFormState(this._formDefinition, this, this.generation);
-            }
-            this.generation = {};
-            if (formDefinition) {
-                bindFormState(formDefinition, this, this.generation);
-            }
+            this.invocations.rebind(this._formDefinition, formDefinition);
         }
         this._formDefinition = formDefinition;
         this.syncCurrentTabIndex();
@@ -155,19 +132,8 @@ export class FormRendererComponent<T> implements OnChanges, OnInit, OnDestroy {
     /** Revision of the rendered form definition. Falls back to the form definition version when not set. */
     readonly documentVersion = input<string | number | undefined>();
 
-    private readonly explicitDocumentVersion = computed(() => this.parseDocumentVersion(this.documentVersion()));
-
-    private get currentDocumentVersion(): string | undefined {
-        return this.explicitDocumentVersion() ?? this.parseDocumentVersion(this.formDefinition?.json?.version);
-    }
-
     cancelInvocation(): void {
-        if (this.formDefinition) {
-            cancelFormMutation(this.formDefinition, this, this.generation);
-        }
-        this.invocationCoordinator?.cancel();
-        this.invocationCoordinator = undefined;
-        this.invocationVersion = undefined;
+        this.invocations.cancel();
     }
 
     dispatchRulesOnlyOutcome(
@@ -176,71 +142,7 @@ export class FormRendererComponent<T> implements OnChanges, OnInit, OnDestroy {
         isHostCurrent: () => boolean = () => true,
         resetCapability?: (context: FormWriteContext) => Promise<FormResetResult>
     ): boolean {
-        const form = this.formDefinition;
-        const documentVersion = this.currentDocumentVersion;
-        if (this.destroyed || this.readOnly || !form || form.readOnly || outcome.form !== form || !isHostCurrent()) {
-            return false;
-        }
-        if (documentVersion === undefined) {
-            this.notifyOutcomeFailure();
-            return false;
-        }
-        const generation = this.generation;
-        this.observedDocumentVersion = this.explicitDocumentVersion();
-        if (this.invocationVersion !== documentVersion) {
-            this.cancelInvocation();
-            this.invocationVersion = documentVersion;
-        }
-        const isLive = () =>
-            !this.destroyed &&
-            !this.readOnly &&
-            !form.readOnly &&
-            this.formDefinition === form &&
-            this.generation === generation &&
-            this.currentDocumentVersion === documentVersion &&
-            isHostCurrent();
-        this.invocationCoordinator ??= new FormInvocationCoordinator(form, this, generation, documentVersion, isLive, this.reportError);
-        const provider = this.formRulesManager instanceof ByPassFormRuleManager ? undefined : this.formRulesManager.rulesOnlyProvider;
-        const reset =
-            typeof form.resetToDefaults === 'function'
-                ? (resetCapability ??
-                  ((context: FormWriteContext) =>
-                      runFormMutation(
-                          context,
-                          () => form.resetToDefaults(context, { editableFields: form.captureResetEditability() }),
-                          this.reportError
-                      )))
-                : undefined;
-        void this.invocationCoordinator.dispatch(outcome.id, provider, reset, (result) => {
-            if (result.status !== 'complete') {
-                this.notifyOutcomeFailure();
-            }
-            notify(result);
-        });
-        return true;
-    }
-
-    private notifyOutcomeFailure(): void {
-        try {
-            this.notificationService.showError('FORM.OUTCOME_EXECUTION_FAILED');
-        } catch (error) {
-            reportFormError(this.reportError, error);
-        }
-    }
-
-    private cancelForReadOnly(): void {
-        const resetInterrupted = !!this.formDefinition && isFormMutating(this.formDefinition);
-        this.cancelInvocation();
-        if (resetInterrupted) {
-            this.notifyOutcomeFailure();
-        }
-    }
-
-    private parseDocumentVersion(value: unknown): string | undefined {
-        if (typeof value === 'string' && value.trim().length > 0) {
-            return value;
-        }
-        return typeof value === 'number' && Number.isFinite(value) ? String(value) : undefined;
+        return this.invocations.dispatch({ outcome, notify, isHostCurrent, resetCapability });
     }
 
     @Input()
@@ -302,19 +204,14 @@ export class FormRendererComponent<T> implements OnChanges, OnInit, OnDestroy {
         }
 
         effect(() => {
-            const version = this.explicitDocumentVersion();
-            untracked(() => {
-                if (version !== this.observedDocumentVersion) {
-                    this.observedDocumentVersion = version;
-                    this.cancelInvocation();
-                }
-            });
+            const version = this.invocations.explicitDocumentVersion();
+            untracked(() => this.invocations.observeDocumentVersion(version));
         });
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['readOnly']?.currentValue) {
-            this.cancelForReadOnly();
+            this.invocations.cancelForReadOnly();
         }
     }
 
@@ -346,11 +243,7 @@ export class FormRendererComponent<T> implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.destroyed = true;
-        this.cancelInvocation();
-        if (this.formDefinition) {
-            unbindFormState(this.formDefinition, this, this.generation);
-        }
+        this.invocations.destroy();
         this.tabGroupSelectionSubscription?.unsubscribe();
         this.formRulesManager.destroy();
     }

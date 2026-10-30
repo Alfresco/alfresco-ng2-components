@@ -48,7 +48,7 @@ describe('FormInvocationCoordinator', () => {
         const renderer = {};
         const generation = {};
         bindFormState(form, renderer, generation);
-        return new FormInvocationCoordinator(form, renderer, generation, '1', () => true, reportError);
+        return new FormInvocationCoordinator({ form, renderer, generation, documentVersion: '1', isLive: () => true, reportError });
     };
 
     beforeEach(() => {
@@ -60,7 +60,7 @@ describe('FormInvocationCoordinator', () => {
         const renderer = {};
         const generation = {};
         bindFormState(form, renderer, generation);
-        const coordinator = new FormInvocationCoordinator(form, renderer, generation, '1', () => true);
+        const coordinator = new FormInvocationCoordinator({ form, renderer, generation, documentVersion: '1', isLive: () => true });
         let finish: (result: FormResetResult) => void;
         let request: FormInvocationRequest;
         const provider: FormInvocationProvider = {

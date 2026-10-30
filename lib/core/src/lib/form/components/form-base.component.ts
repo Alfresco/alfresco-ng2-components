@@ -22,6 +22,10 @@ import { isOutcomeButtonVisible } from './helpers/buttons-visibility';
 import { FormOutcomeNotFoundError } from '../errors/form-outcome-not-found.error';
 import { isFormMutating } from '../models/form-state.model';
 
+type OutcomeUnavailableReason = FormOutcomeExecutionUnavailableError['reason'];
+
+const isRulesOnlyOutcome = (outcome?: FormOutcomeModel): boolean => outcome?.executionMode === 'rules-only';
+
 @Directive({
     standalone: true
 })
@@ -154,7 +158,7 @@ export abstract class FormBaseComponent {
     }
 
     isOutcomeButtonEnabled(outcome?: FormOutcomeModel): boolean {
-        if (this.form.readOnly || isFormMutating(this.form) || (outcome?.executionMode === 'rules-only' && this.readOnly)) {
+        if (this.form.readOnly || isFormMutating(this.form) || (isRulesOnlyOutcome(outcome) && this.readOnly)) {
             return false;
         }
 
@@ -188,12 +192,9 @@ export abstract class FormBaseComponent {
         if (isFormMutating(this.form)) {
             return false;
         }
-        if (outcome?.executionMode === 'unsupported') {
-            this.error.emit(new FormOutcomeExecutionUnavailableError(outcome, 'unsupported-mode'));
-            return false;
-        }
-        if (outcome?.executionMode === 'rules-only' && (this.readOnly || !this.form || this.form.readOnly || !this.isOutcomeButtonEnabled(outcome))) {
-            this.error.emit(new FormOutcomeExecutionUnavailableError(outcome, 'execution-unavailable'));
+        const unavailableReason = this.getOutcomeUnavailableReason(outcome);
+        if (unavailableReason) {
+            this.error.emit(new FormOutcomeExecutionUnavailableError(outcome, unavailableReason));
             return false;
         }
         if (!this.readOnly && outcome && this.form) {
@@ -201,7 +202,7 @@ export abstract class FormBaseComponent {
                 return false;
             }
 
-            if (outcome.executionMode === 'rules-only') {
+            if (isRulesOnlyOutcome(outcome)) {
                 this.dispatchRulesOnlyOutcome(outcome);
                 return false;
             }
@@ -265,19 +266,19 @@ export abstract class FormBaseComponent {
         }
 
         if (this.readOnly || this.form.readOnly) {
-            return outcome.executionMode === 'rules-only' ? this.onOutcomeClicked(outcome) : false;
+            return this.handleBlockedOutcomeRequest(outcome);
         }
 
         if (!outcome.skipValidation && outcome.name !== FormOutcomeModel.SAVE_ACTION) {
             this.form.validateForm();
             if (!this.form.isValid) {
                 this.form.showAllValidationErrors = true;
-                return outcome.executionMode === 'rules-only' ? this.onOutcomeClicked(outcome) : false;
+                return this.handleBlockedOutcomeRequest(outcome);
             }
         }
 
         if (!this.isOutcomeButtonEnabled(outcome)) {
-            return outcome.executionMode === 'rules-only' ? this.onOutcomeClicked(outcome) : false;
+            return this.handleBlockedOutcomeRequest(outcome);
         }
 
         return this.onOutcomeClicked(outcome);
@@ -300,6 +301,20 @@ export abstract class FormBaseComponent {
     protected abstract storeFormAsMetadata(): void;
 
     protected abstract onExecuteOutcome(outcome: FormOutcomeModel): boolean;
+
+    private getOutcomeUnavailableReason(outcome?: FormOutcomeModel): OutcomeUnavailableReason | undefined {
+        if (outcome?.executionMode === 'unsupported') {
+            return 'unsupported-mode';
+        }
+        if (isRulesOnlyOutcome(outcome) && (this.readOnly || !this.form || this.form.readOnly || !this.isOutcomeButtonEnabled(outcome))) {
+            return 'execution-unavailable';
+        }
+        return undefined;
+    }
+
+    private handleBlockedOutcomeRequest(outcome: FormOutcomeModel): boolean {
+        return isRulesOnlyOutcome(outcome) && this.onOutcomeClicked(outcome);
+    }
 
     private flattenStyles(styles: { [key: string]: string }): string {
         return Object.entries(styles)

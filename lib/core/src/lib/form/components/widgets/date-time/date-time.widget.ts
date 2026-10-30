@@ -78,7 +78,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
     }
 
     override event(event: Event): void {
-        if (this.stateMount && !this.formService.formState.isMountCurrent(this.field, this.stateMount)) {
+        if (this.isStateMountStale()) {
             return;
         }
         super.event(event);
@@ -111,9 +111,13 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
         this.datetimeInputControl.updateValueAndValidity({ emitEvent: false });
     }
 
+    private isStateMountStale(): boolean {
+        return !!this.stateMount && !this.formService.formState.isMountCurrent(this.field, this.stateMount);
+    }
+
     private subscribeToDateChanges(): void {
         this.datetimeInputControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((newDate: Date) => {
-            if (this.stateMount && !this.formService.formState.isMountCurrent(this.field, this.stateMount)) {
+            if (this.isStateMountStale()) {
                 return;
             }
             this.field.value = newDate;
