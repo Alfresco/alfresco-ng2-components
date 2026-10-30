@@ -1,0 +1,16 @@
+name: "Check peer dependencies"
+description: "Compare the unmet peer dependencies with the ones present before the update and record the result"
+runs:
+  using: "composite"
+  steps:
+    - name: Check peer dependencies
+      id: peers
+      shell: bash
+      run: |
+        OUTCOME=$(node scripts/update-angular/report-peers.mjs "$RUNNER_TEMP/peers-baseline.json" report "$RUNNER_TEMP/validation.log" "$RUNNER_TEMP/peers-aligned.md")
+        echo "outcome=$OUTCOME" >> "$GITHUB_OUTPUT"
+    - name: Record result
+      uses: ./.github/actions/update-angular/record-validation-result
+      with:
+        name: peers
+        outcome: ${{ steps.peers.outputs.outcome }}
