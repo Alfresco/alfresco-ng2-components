@@ -24,6 +24,10 @@ import { MinValueFieldValidator, RequiredFieldValidator } from './form-field-val
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
 import { repeatableSectionForm } from '../../mock/repeatable-section-form.mock';
+import { beginFormMutation, bindFormState } from '../../../models/form-state.model';
+import { EnvironmentInjector } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { provideFormInstanceReset } from '../../../services/provide-form-instance-reset';
 
 describe('FormFieldModel', () => {
     it('should store the form reference', () => {
@@ -2353,6 +2357,11 @@ describe('FormFieldModel', () => {
     });
 
     describe('restoreRuntimeValue', () => {
+        beforeEach(() => {
+            TestBed.configureTestingModule({ providers: [provideFormInstanceReset()] });
+            TestBed.inject(EnvironmentInjector);
+        });
+
         it('should set _value and write to form.values for a top-level text field', () => {
             const form = new FormModel();
             const field = new FormFieldModel(form, { id: 'text1', type: 'text', value: null });
@@ -2406,6 +2415,31 @@ describe('FormFieldModel', () => {
             expect(form.values['dd1']).toBeNull();
         });
 
+        it('should restore the previous value and serialization when applying the value fails', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, { id: 'text1', type: 'text', value: 'existing' });
+            spyOn(field, 'getFormValue').and.throwError('serializer');
+
+            expect(() => field.restoreRuntimeValue('restored')).toThrowError('serializer');
+
+            expect(field.value).toBe('existing');
+            expect(form.values['text1']).toBe('existing');
+        });
+
+        it('should remove a new serialization when applying the value fails without a previous one', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, { id: 'text1', type: 'text', value: 'existing' });
+            delete form.values['text1'];
+            spyOn(field, 'getFormValue').and.callFake(() => {
+                form.values['text1'] = 'partial';
+                throw new Error('serializer');
+            });
+
+            expect(() => field.restoreRuntimeValue('restored')).toThrowError('serializer');
+
+            expect(Object.prototype.hasOwnProperty.call(form.values, 'text1')).toBeFalse();
+        });
+
         it('should not update form.values when resolved value is undefined', () => {
             const form = new FormModel();
             form.values['text1'] = 'existing';
@@ -2414,6 +2448,37 @@ describe('FormFieldModel', () => {
             field.restoreRuntimeValue(undefined);
 
             expect(form.values['text1']).toBe('existing');
+        });
+    });
+
+    describe('while the form is being reset', () => {
+        it('should ignore ordinary value, flag and row changes', () => {
+            const form = new FormModel({
+                fields: [
+                    { id: 'text', type: 'text', value: 'authored', required: false, readOnly: false },
+                    { id: 'rows', type: 'repeatable-section', params: { initialNumberOfRows: 1 }, fields: { 1: [{ id: 'child', type: 'text' }] } }
+                ]
+            });
+            const context = { form, renderer: {}, generation: {}, invocation: {}, documentVersion: '1', outcomeId: 'clear', isCurrent: () => true };
+            bindFormState(form, context.renderer, context.generation);
+            const text = form.getFieldById('text');
+            const rows = form.getFieldById('rows');
+            const boundary = beginFormMutation(context);
+
+            try {
+                text.value = 'draft';
+                text.readOnly = true;
+                text.required = true;
+                rows.addRow(rows.fields, form);
+                rows.removeRow(0);
+            } finally {
+                boundary.release();
+            }
+
+            expect(text.value).toBe('authored');
+            expect(text.readOnly).toBeFalse();
+            expect(text.required).toBeFalse();
+            expect(rows.rows.length).toBe(1);
         });
     });
 });
@@ -2469,5 +2534,63 @@ describe('getValidationSummaryTranslationParameters', () => {
     it('should return empty parameters when the summary is inactive or omitted', () => {
         expect(getValidationSummaryTranslationParameters(new ErrorMessageModel())).toEqual({});
         expect(getValidationSummaryTranslationParameters()).toEqual({});
+    });
+});
+
+describe('FormFieldModel when form instance reset is disabled', () => {
+    const nestedTemplateJson = {
+        id: 'outer',
+        type: FormFieldTypes.REPEATABLE_SECTION,
+        params: { initialNumberOfRows: 0 },
+        numberOfColumns: 1,
+        fields: {
+            1: [
+                {
+                    id: 'inner',
+                    type: FormFieldTypes.REPEATABLE_SECTION,
+                    params: { initialNumberOfRows: 1 },
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'text', type: FormFieldTypes.TEXT }] }
+                }
+            ]
+        }
+    };
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({ providers: [provideFormInstanceReset(() => false)] });
+        TestBed.inject(EnvironmentInjector);
+    });
+
+    it('should keep the new runtime value when serializing it fails', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, { id: 'text1', type: 'text', value: 'existing' });
+        spyOn(field, 'getFormValue').and.throwError('serializer');
+
+        expect(() => field.restoreRuntimeValue('restored')).toThrowError('serializer');
+
+        expect(field.value).toBe('restored');
+    });
+
+    it('should serialize a restored value of a column template field', () => {
+        const form = new FormModel();
+        const section = new FormFieldModel(form, {
+            id: 'rows',
+            type: FormFieldTypes.REPEATABLE_SECTION,
+            params: { initialNumberOfRows: 0 },
+            numberOfColumns: 1,
+            fields: { 1: [{ id: 'text', type: FormFieldTypes.TEXT }] }
+        });
+
+        section.columns[0].fields[0].restoreRuntimeValue('restored');
+
+        expect(form.values['rows'][0]['text']).toBe('restored');
+    });
+
+    it('should not mark the rows of a repeatable section nested in a column template as template rows', () => {
+        const outer = new FormFieldModel(new FormModel(), nestedTemplateJson);
+        const inner = outer.columns[0].fields[0];
+
+        expect(inner.parent.isTemplate).toBeTrue();
+        expect(inner.rows[0].columns[0].fields[0].parent.isTemplate).toBeFalse();
     });
 });

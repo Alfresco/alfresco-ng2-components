@@ -17,13 +17,20 @@
 
 import { Directive, EventEmitter, Input, Output } from '@angular/core';
 import { FormFieldModel, FormFieldValidator, FormModel, FormOutcomeEvent, FormOutcomeModel } from './widgets';
+import { FormOutcomeExecutionUnavailableError } from '../errors/form-outcome-execution-unavailable.error';
 import { isOutcomeButtonVisible } from './helpers/buttons-visibility';
 import { FormOutcomeNotFoundError } from '../errors/form-outcome-not-found.error';
+import { isFormMutating } from '../models/form-state.model';
+import { injectFormInstanceResetEnabled } from '../services/provide-form-instance-reset';
+
+type OutcomeUnavailableReason = FormOutcomeExecutionUnavailableError['reason'];
 
 @Directive({
     standalone: true
 })
 export abstract class FormBaseComponent {
+    private readonly formInstanceResetEnabled = injectFormInstanceResetEnabled();
+
     protected _form: FormModel;
 
     /**
@@ -152,7 +159,7 @@ export abstract class FormBaseComponent {
     }
 
     isOutcomeButtonEnabled(outcome?: FormOutcomeModel): boolean {
-        if (this.form.readOnly) {
+        if (this.form.readOnly || isFormMutating(this.form) || (this.isRulesOnlyOutcome(outcome) && this.readOnly)) {
             return false;
         }
 
@@ -183,8 +190,21 @@ export abstract class FormBaseComponent {
      * @returns `true` if outcome button was clicked, otherwise `false`
      */
     onOutcomeClicked(outcome: FormOutcomeModel): boolean {
+        if (isFormMutating(this.form)) {
+            return false;
+        }
+        const unavailableReason = this.getOutcomeUnavailableReason(outcome);
+        if (unavailableReason) {
+            this.error.emit(new FormOutcomeExecutionUnavailableError(outcome, unavailableReason));
+            return false;
+        }
         if (!this.readOnly && outcome && this.form) {
             if (!this.onExecuteOutcome(outcome)) {
+                return false;
+            }
+
+            if (this.isRulesOnlyOutcome(outcome)) {
+                this.dispatchRulesOnlyOutcome(outcome);
                 return false;
             }
 
@@ -224,6 +244,10 @@ export abstract class FormBaseComponent {
         return false;
     }
 
+    protected dispatchRulesOnlyOutcome(outcome: FormOutcomeModel): void {
+        this.error.emit(new FormOutcomeExecutionUnavailableError(outcome, 'execution-unavailable'));
+    }
+
     /**
      * Executes an outcome requested by another form control using strict id lookup.
      *
@@ -238,20 +262,24 @@ export abstract class FormBaseComponent {
             return false;
         }
 
+        if (this.executionModeOf(outcome) === 'unsupported') {
+            return this.onOutcomeClicked(outcome);
+        }
+
         if (this.readOnly || this.form.readOnly) {
-            return false;
+            return this.handleBlockedOutcomeRequest(outcome);
         }
 
         if (!outcome.skipValidation && outcome.name !== FormOutcomeModel.SAVE_ACTION) {
             this.form.validateForm();
             if (!this.form.isValid) {
                 this.form.showAllValidationErrors = true;
-                return false;
+                return this.handleBlockedOutcomeRequest(outcome);
             }
         }
 
         if (!this.isOutcomeButtonEnabled(outcome)) {
-            return false;
+            return this.handleBlockedOutcomeRequest(outcome);
         }
 
         return this.onOutcomeClicked(outcome);
@@ -274,6 +302,31 @@ export abstract class FormBaseComponent {
     protected abstract storeFormAsMetadata(): void;
 
     protected abstract onExecuteOutcome(outcome: FormOutcomeModel): boolean;
+
+    private getOutcomeUnavailableReason(outcome?: FormOutcomeModel): OutcomeUnavailableReason | undefined {
+        if (this.executionModeOf(outcome) === 'unsupported') {
+            return 'unsupported-mode';
+        }
+        if (this.isRulesOnlyOutcome(outcome) && (this.readOnly || !this.form || this.form.readOnly || !this.isOutcomeButtonEnabled(outcome))) {
+            return 'execution-unavailable';
+        }
+        return undefined;
+    }
+
+    private handleBlockedOutcomeRequest(outcome: FormOutcomeModel): boolean {
+        return this.isRulesOnlyOutcome(outcome) && this.onOutcomeClicked(outcome);
+    }
+
+    private executionModeOf(outcome?: FormOutcomeModel): FormOutcomeModel['executionMode'] {
+        if (!this.formInstanceResetEnabled()) {
+            return undefined;
+        }
+        return outcome?.executionMode;
+    }
+
+    private isRulesOnlyOutcome(outcome?: FormOutcomeModel): boolean {
+        return this.executionModeOf(outcome) === 'rules-only';
+    }
 
     private flattenStyles(styles: { [key: string]: string }): string {
         return Object.entries(styles)

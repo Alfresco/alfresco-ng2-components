@@ -21,6 +21,7 @@ import { FormRulesEvent } from '../../events';
 import { FormFieldModel, FormModel } from './core';
 import { WidgetComponent } from './widget.component';
 import { FormService } from '../../services/form.service';
+import { beginFormMutation, bindFormState } from '../../models/form-state.model';
 
 describe('WidgetComponent', () => {
     let widget: WidgetComponent;
@@ -42,6 +43,28 @@ describe('WidgetComponent', () => {
     });
 
     describe('Events', () => {
+        it('should not forward field changes or DOM events while the form is being reset', () => {
+            const form = new FormModel({ fields: [{ id: 'text', type: 'text' }] });
+            const context = { form, renderer: {}, generation: {}, invocation: {}, documentVersion: '1', outcomeId: 'clear', isCurrent: () => true };
+            bindFormState(form, context.renderer, context.generation);
+            fixture.componentRef.setInput('field', form.getFieldById('text'));
+            const fieldChanged = spyOn(widget.fieldChanged, 'emit');
+            const formEvents = spyOn(formService.formEvents, 'next');
+            const rules = spyOn(formService.formRulesEvent, 'next');
+            const boundary = beginFormMutation(context);
+
+            try {
+                widget.onFieldChanged(widget.field);
+                widget.event(new Event('click'));
+            } finally {
+                boundary.release();
+            }
+
+            expect(fieldChanged).not.toHaveBeenCalled();
+            expect(formEvents).not.toHaveBeenCalled();
+            expect(rules).not.toHaveBeenCalled();
+        });
+
         it('should click event be redirect on the form event service', fakeAsync(() => {
             formService.formEvents.subscribe((event) => {
                 expect(event).toBeTruthy();

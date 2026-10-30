@@ -27,6 +27,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter, DateFnsUtils, DEFAULT_DATE_FORMAT } from '../../../../common';
 import { FormService } from '../../../services/form.service';
+import { FormStateMount } from '../../../models/form-state.model';
 import { WidgetComponent } from '../widget.component';
 import { getValidationSummaryTranslationParameters } from '../core/error-message.model';
 import { getDateFieldRange, isEmptyFieldValue } from '../core/form-field-validator';
@@ -68,11 +69,13 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, Reac
     };
 
     public readonly formService = inject(FormService);
+    private stateMount: FormStateMount | undefined;
 
     private readonly dateAdapter = inject(DateAdapter);
     private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit(): void {
+        this.stateMount = this.formService.formState.captureMount(this.field);
         this.setFormControlValue();
         this.updateFormControlState();
         this.initDateAdapter();
@@ -80,6 +83,13 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, Reac
         this.initStartAt();
         this.subscribeToDateChanges();
         this.validateField();
+    }
+
+    override event(event: Event): void {
+        if (this.isStateMountStale()) {
+            return;
+        }
+        super.event(event);
     }
 
     updateReactiveFormControl(): void {
@@ -113,8 +123,15 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, Reac
         this.dateInputControl.updateValueAndValidity({ emitEvent: false });
     }
 
+    private isStateMountStale(): boolean {
+        return !!this.stateMount && !this.formService.formState.isMountCurrent(this.field, this.stateMount);
+    }
+
     private subscribeToDateChanges(): void {
         this.dateInputControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((newDate: Date) => {
+            if (this.isStateMountStale()) {
+                return;
+            }
             this.field.value = newDate;
             this.updateField();
         });

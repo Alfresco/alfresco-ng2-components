@@ -36,6 +36,9 @@ import { FormValidationService } from '../../../services/form-validation-service
 import { ProcessFormModel } from './process-form-model.interface';
 import { WidgetTypeEnum, WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { ThemeModel } from './theme.model';
+import { FormResetOptions, FormResetResult, FormWriteContext, withFormWrite, isFormMutating } from '../../../models/form-state.model';
+import { resetFormToDefaults, captureFormResetEditability } from '../../../models/form-reset';
+import { isFormInstanceResetEnabled } from '../../../models/form-instance-reset-switch.model';
 
 export interface ConfirmMessage {
     show: boolean;
@@ -147,6 +150,9 @@ export class FormModel implements ProcessFormModel {
     }
 
     onFormFieldChanged(field: FormFieldModel) {
+        if (isFormMutating(this)) {
+            return;
+        }
         this.validateField(field);
 
         if (this.formService) {
@@ -159,6 +165,9 @@ export class FormModel implements ProcessFormModel {
     }
 
     onRepeatableSectionRowCountChanged(sectionField: FormFieldModel): void {
+        if (isFormMutating(this)) {
+            return;
+        }
         this.onRepeatableSectionChanged();
         this.formService?.formRulesEvent?.next(new FormRulesEvent('onRowCountChanged', new FormFieldEvent(this, sectionField)));
     }
@@ -455,7 +464,7 @@ export class FormModel implements ProcessFormModel {
         return field.type === FormFieldTypes.SECTION;
     }
 
-    private isRepeatableSectionField(field: ContainerModel | FormFieldModel): field is ContainerModel {
+    private isRepeatableSectionField(field: ContainerModel | FormFieldModel): boolean {
         return field.type === FormFieldTypes.REPEATABLE_SECTION;
     }
 
@@ -466,13 +475,21 @@ export class FormModel implements ProcessFormModel {
         });
     }
 
-    private handleRepeatableSectionField(repeatableSection: ContainerModel, formFieldModel: FormFieldModel[]): void {
-        formFieldModel.push(repeatableSection.field);
-        for (const row of repeatableSection.field.rows) {
+    private handleRepeatableSectionField(repeatableSection: ContainerModel | FormFieldModel, formFieldModel: FormFieldModel[]): void {
+        const field = this.repeatableSectionFieldOf(repeatableSection);
+        formFieldModel.push(field);
+        for (const row of field.rows) {
             for (const column of row.columns) {
                 this.processFields(column.fields, formFieldModel);
             }
         }
+    }
+
+    private repeatableSectionFieldOf(repeatableSection: ContainerModel | FormFieldModel): FormFieldModel {
+        if (repeatableSection instanceof ContainerModel || !isFormInstanceResetEnabled()) {
+            return repeatableSection.field;
+        }
+        return repeatableSection;
     }
 
     private handleContainerField(container: ContainerModel, formFieldModel: FormFieldModel[]): void {
@@ -562,6 +579,9 @@ export class FormModel implements ProcessFormModel {
     }
 
     changeFieldVisibility(fieldId: string, visibility: boolean): void {
+        if (isFormMutating(this)) {
+            return;
+        }
         const visibilityRule: WidgetVisibilityModel = new WidgetVisibilityModel();
 
         const field = this.getFieldById(fieldId);
@@ -574,6 +594,9 @@ export class FormModel implements ProcessFormModel {
     }
 
     changeFieldDisabled(fieldId: string, disabled: boolean): void {
+        if (isFormMutating(this)) {
+            return;
+        }
         const field = this.getFieldById(fieldId);
         if (field) {
             field.readOnly = this.readOnly || disabled;
@@ -581,20 +604,34 @@ export class FormModel implements ProcessFormModel {
     }
 
     changeFieldRequired(fieldId: string, required: boolean): void {
+        if (isFormMutating(this)) {
+            return;
+        }
         const field = this.getFieldById(fieldId);
         if (field) {
             field.required = required;
         }
     }
 
-    changeFieldValue(fieldId: string, value: any): void {
+    resetToDefaults(context: FormWriteContext, options?: FormResetOptions): Promise<FormResetResult> {
+        return resetFormToDefaults(this, context, options);
+    }
+
+    captureResetEditability(): ReadonlySet<FormFieldModel> {
+        return captureFormResetEditability(this);
+    }
+
+    changeFieldValue(fieldId: string, value: any, context?: FormWriteContext): void {
         const field = this.getFieldById(fieldId);
         if (field) {
-            field.value = value;
+            withFormWrite(field, context, () => (field.value = value));
         }
     }
 
     changeVariableValue(variableId: string, value: any): void {
+        if (isFormMutating(this)) {
+            return;
+        }
         const variable = this.getFormVariable(variableId);
         if (variable) {
             variable.value = value;

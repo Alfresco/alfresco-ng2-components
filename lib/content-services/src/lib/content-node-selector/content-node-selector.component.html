@@ -27,7 +27,7 @@
                     </ng-template>
                 </div>
                 <div class="adf-content-node-selector-local-upload-content">
-                    <adf-upload-drag-area [rootFolderId]="currentDirectoryId">
+                    <adf-upload-drag-area [rootFolderId]="currentDirectoryId" (beginUpload)="onLocalUploadStarted($event)">
                         <div [class.adf-upload-dialog-container]="uploadStarted">
                             <adf-file-uploading-dialog [alwaysVisible]="true" />
                         </div>
@@ -80,6 +80,7 @@
                 [multipleFiles]="isMultipleSelection()"
                 [rootFolderId]="currentDirectoryId"
                 [disabled]="isNotAllowedToUpload()"
+                (beginUpload)="onLocalUploadStarted($event)"
                 (error)="onError($event)" />
         </ng-container>
     </div>

@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { CurrencyPipe, NgIf } from '@angular/common';
-import { Component, OnInit, ViewEncapsulation, InjectionToken, inject, DestroyRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, InjectionToken, inject, DestroyRef, signal } from '@angular/core';
 import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -31,6 +31,14 @@ import { filter, isObservable, Observable } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormFieldEvent } from '../../../events/form-field.event';
 import { TranslationService } from '../../../../translation/translation.service';
+import {
+    captureFormStateMount,
+    FormStateMount,
+    formStateCommits,
+    isFormStateMountCurrent,
+    isFormStateProjectionCurrent
+} from '../../../models/form-state.model';
+import { injectFormInstanceResetEnabled } from '../../../services/provide-form-instance-reset';
 
 export interface AmountWidgetSettings {
     showReadonlyPlaceholder: boolean;
@@ -65,8 +73,19 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     static DEFAULT_CURRENCY: string = '$';
     private showPlaceholder = true;
     private readonly destroyRef = inject(DestroyRef);
+    private readonly formInstanceResetEnabled = injectFormInstanceResetEnabled();
+    private stateMount?: FormStateMount;
 
-    amountWidgetValue: string;
+    private readonly displayValue = signal<string>(undefined);
+
+    get amountWidgetValue(): string {
+        return this.displayValue();
+    }
+
+    set amountWidgetValue(value: string) {
+        this.displayValue.set(value);
+    }
+
     currency: string = AmountWidgetComponent.DEFAULT_CURRENCY;
     currencyDisplay: string | boolean = 'symbol';
     decimalProperty: string;
@@ -107,6 +126,7 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
 
     ngOnInit() {
         if (this.field) {
+            this.stateMount = captureFormStateMount(this.field);
             if (this.field.currency) {
                 this.currency = this.field.currency;
             } else {
@@ -120,6 +140,7 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
                 this.showPlaceholder = this.showReadonlyPlaceholder;
             }
             this.subscribeToFieldChanges();
+            this.subscribeToStateCommits();
             this.setInitialValues();
             this.initErrorStateMatcher();
             this.field.validationSummaryChanges$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((validationSummary) => {
@@ -129,6 +150,9 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     amountWidgetOnBlur(): void {
+        if (this.isStateMountStale()) {
+            return;
+        }
         this.isInputInFocus = false;
         if (this.enableDisplayBasedOnLocale) {
             if (this.amountWidgetValue) {
@@ -149,6 +173,9 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     amountWidgetOnFocus(): void {
+        if (this.isStateMountStale()) {
+            return;
+        }
         this.isInputInFocus = true;
         if (this.enableDisplayBasedOnLocale) {
             const hasValue = this.valueAsNumber === 0 || this.valueAsNumber;
@@ -162,9 +189,20 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     onFieldChangedAmountWidget(): void {
+        if (this.isStateMountStale()) {
+            return;
+        }
         this.field.value = this.amountWidgetValue;
+        this.syncValueAsNumber();
         super.onFieldChanged(this.field);
         this.markAsTouched();
+    }
+
+    override event(event: Event): void {
+        if (this.isStateMountStale()) {
+            return;
+        }
+        super.event(event);
     }
 
     setInitialValues(): void {
@@ -181,15 +219,59 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
         this.formService.formFieldValueChanged
             .pipe(
                 filter((ev: FormFieldEvent) => ev.field.id === this.field.id),
+                filter((ev: FormFieldEvent) => this.isCurrentFieldEvent(ev)),
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((ev: FormFieldEvent) => {
+                if (ev.writeContext) {
+                    if (isFormStateProjectionCurrent(this.field, ev.writeContext, this.stateMount)) {
+                        this.projectCommittedValue();
+                    }
+                    return;
+                }
                 if (!this.isInputInFocus && this.enableDisplayBasedOnLocale) {
                     this.updateValue(ev.field.value);
                 } else if (!this.isInputInFocus) {
                     this.amountWidgetValue = ev.field.value;
                 }
             });
+    }
+
+    private subscribeToStateCommits(): void {
+        formStateCommits
+            .pipe(
+                filter(({ field, context }) => field === this.field && isFormStateProjectionCurrent(field, context, this.stateMount)),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe(() => this.projectCommittedValue());
+    }
+
+    private isCurrentFieldEvent(ev: FormFieldEvent): boolean {
+        if (!this.formInstanceResetEnabled()) {
+            return true;
+        }
+        return ev.form === this.field.form && ev.field === this.field && !this.isStateMountStale();
+    }
+
+    private syncValueAsNumber(): void {
+        if (!this.formInstanceResetEnabled()) {
+            return;
+        }
+        this.valueAsNumber = this.amountWidgetValue === null || this.amountWidgetValue === '' ? null : Number(this.amountWidgetValue);
+    }
+
+    private isStateMountStale(): boolean {
+        return !!this.stateMount && !isFormStateMountCurrent(this.field, this.stateMount);
+    }
+
+    private projectCommittedValue(): void {
+        const value = this.field.value;
+        this.valueAsNumber = value === null || value === undefined || value === '' ? null : Number(value);
+        if (this.enableDisplayBasedOnLocale && !this.isInputInFocus) {
+            this.updateValue(this.valueAsNumber);
+        } else {
+            this.amountWidgetValue = this.valueAsNumber === null ? null : String(this.valueAsNumber);
+        }
     }
 
     updateValue(value: any): void {

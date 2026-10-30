@@ -35,6 +35,7 @@ import {
     ContentLinkModel,
     DisplayTextWidgetSettings,
     FormExpressionService,
+    injectFormInstanceResetEnabled,
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel,
@@ -219,6 +220,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     private readonly dialog = inject(MatDialog);
     private readonly taskTypeResolverService = inject(TaskTypeResolverService);
     private readonly expressions = inject(FormExpressionService);
+    private readonly formInstanceResetEnabled = injectFormInstanceResetEnabled();
     private readonly displayTextSettings = inject<Observable<DisplayTextWidgetSettings> | DisplayTextWidgetSettings>(ADF_DISPLAY_TEXT_SETTINGS, {
         optional: true
     });
@@ -516,7 +518,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     onCustomOutcomeClicked(outcome: FormOutcomeEvent) {
-        if (this.isProcessStarting) {
+        if (this.isOutcomeHandledByForm(outcome) || this.isProcessStarting) {
             return;
         }
 
@@ -622,6 +624,13 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                 this.isProcessStarting = false;
             }
         });
+    }
+
+    private isOutcomeHandledByForm(outcome: FormOutcomeEvent): boolean {
+        if (!this.formInstanceResetEnabled()) {
+            return false;
+        }
+        return outcome.defaultPrevented || outcome.outcome.executionMode !== undefined;
     }
 
     private getFormSubmissionValues(form: FormModel): FormValues {

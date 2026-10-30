@@ -34,6 +34,7 @@ Displays the new version's minor/major changes and the optional comment of a nod
 | cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an cancelling during upload. |
 | commentChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the comment is changed. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FileUploadErrorEvent`](../../../lib/content-services/src/lib/common/events/file.event.ts)`>` | Emitted when an error occurs. |
+| localUploadStarted | [`OutputEmitterRef`](https://angular.dev/api/core/OutputEmitterRef)`<`[`UploadFilesEvent`](../../../lib/content-services/src/lib/upload/components/upload-files.event.ts)`>` | Emitted when a local file upload begins, before the upload is queued. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the file is uploaded successfully. |
 | uploadStarted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FileUploadEvent`](../../../lib/content-services/src/lib/common/events/file.event.ts)`>` | Emitted when the upload starts |
 | versionChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the version is changed. |

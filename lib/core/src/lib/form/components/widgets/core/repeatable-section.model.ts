@@ -28,4 +28,6 @@ export interface RepeatableSectionModel {
     value?: any;
     /** When true, field is a design-time column template and must not write to form.values. */
     isTemplate?: boolean;
+    preserveRowValuePresence?: boolean;
+    hasAuthoredRowValue?: boolean;
 }

@@ -21,6 +21,10 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { FormEvent } from '../events';
 import { FormRulesEvent } from '../events/form-rules.event';
 import { FormModel, FormService } from '../public-api';
+import type { FormInvocationProvider } from './form-invocation-coordinator.model';
+
+export { FormInvocationCoordinator } from './form-invocation-coordinator.model';
+export type { FormInvocationProvider, FormInvocationResult } from './form-invocation-coordinator.model';
 
 export const FORM_RULES_MANAGER = new InjectionToken<FormRulesManager<any>>('form.rule.manager');
 
@@ -39,6 +43,7 @@ export function formRulesManagerFactory<T>(injector: Injector): FormRulesManager
 }
 
 export abstract class FormRulesManager<T> {
+    rulesOnlyProvider?: FormInvocationProvider;
     constructor(protected formService: FormService) {}
 
     protected formModel: FormModel;

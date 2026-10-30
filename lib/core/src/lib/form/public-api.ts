@@ -34,6 +34,7 @@ export * from './services/widget-visibility.service';
 export * from './services/form-field-value-formatter.service';
 export * from './services/form-field-value-formatter.token';
 export * from './services/form-field-value-adapter.service';
+export { injectFormInstanceResetEnabled, provideFormInstanceReset } from './services/provide-form-instance-reset';
 
 export * from './pipes';
 
@@ -42,5 +43,19 @@ export * from './errors';
 
 export * from './form-base.module';
 
-export * from './models/form-rules.model';
+export { FORM_RULES_MANAGER, FormRulesManager, ByPassFormRuleManager, formRulesManagerFactory } from './models/form-rules.model';
+export type { FormInvocationProvider, FormInvocationResult } from './models/form-rules.model';
 export * from './models/task-process-variable.model';
+export type {
+    AuthoredDefault,
+    FormWriteContext,
+    FormStateMount,
+    FormStateCommit,
+    FormResetStatus,
+    FormResetItemResult,
+    FormResetResult,
+    FormResetOptions,
+    FormContextualDefaultResolver,
+    FormResetCapability,
+    FormInvocationRequest
+} from './models/form-state.model';
