@@ -4,8 +4,17 @@ runs:
   using: "composite"
   steps:
     - name: Align peer dependencies
+      id: stage
       shell: bash
       run: |
-        node scripts/update-angular/align-peers.mjs "$RUNNER_TEMP/peers-aligned.md"
-        git add -A
-        git diff --cached --quiet || git commit -m "chore: align peer dependencies"
+        {
+          node scripts/update-angular/align-peers.mjs "$RUNNER_TEMP/peers-aligned.md"
+          git add -A
+          git diff --cached --quiet || git commit -m "chore: align peer dependencies"
+        } 2>&1 | tee "$RUNNER_TEMP/validation.log"
+    - name: Record result
+      if: ${{ always() }}
+      uses: ./.github/actions/update-angular/record-validation-result
+      with:
+        name: align-peers
+        outcome: ${{ steps.stage.outcome }}

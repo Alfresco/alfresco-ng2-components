@@ -1,0 +1,15 @@
+name: "Verify lockfile"
+description: "Check that pnpm-lock.yaml matches the package manifests"
+runs:
+  using: "composite"
+  steps:
+    - name: Verify lockfile
+      id: stage
+      shell: bash
+      run: pnpm install --frozen-lockfile 2>&1 | tee "$RUNNER_TEMP/validation.log"
+    - name: Record result
+      if: ${{ always() }}
+      uses: ./.github/actions/update-angular/record-validation-result
+      with:
+        name: lockfile
+        outcome: ${{ steps.stage.outcome }}
