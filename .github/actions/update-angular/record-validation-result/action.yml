@@ -1,0 +1,32 @@
+name: 'Record validation result'
+description: 'Store the outcome and log tail of a validation step as an artifact'
+inputs:
+  name:
+    description: 'Name of the check'
+    required: true
+  outcome:
+    description: 'Outcome of the validated step'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Write result
+      id: write
+      shell: bash
+      env:
+        CHECK_NAME: ${{ inputs.name }}
+        OUTCOME: ${{ inputs.outcome }}
+      run: |
+        SAFE_NAME="${CHECK_NAME//\//-}"
+        mkdir -p "$RUNNER_TEMP/validation-results"
+        echo "$OUTCOME" > "$RUNNER_TEMP/validation-results/$SAFE_NAME.status"
+        if [ -f "$RUNNER_TEMP/validation.log" ]; then
+          sed 's/\x1b\[[0-9;]*[A-Za-z]//g' "$RUNNER_TEMP/validation.log" | tail -n 60 | tail -c 3000 > "$RUNNER_TEMP/validation-results/$SAFE_NAME.log"
+        fi
+        echo "safe-name=$SAFE_NAME" >> "$GITHUB_OUTPUT"
+    - name: Upload result
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      with:
+        name: validation-${{ steps.write.outputs.safe-name }}
+        path: ${{ runner.temp }}/validation-results
+        retention-days: 7

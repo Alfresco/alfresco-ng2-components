@@ -1,0 +1,234 @@
+name: "🚀 Update Angular and Nx"
+
+on:
+  workflow_dispatch:
+    inputs:
+      angular-major:
+        description: "Target Angular major version (must be the next major, e.g. 22)"
+        required: true
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+env:
+  NODE_OPTIONS: "--max-old-space-size=5120"
+
+permissions:
+  contents: read
+
+jobs:
+  migrate:
+    name: "🔄 Migrate"
+    # if: ${{ github.ref == 'refs/heads/develop' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    outputs:
+      branch: ${{ steps.prepare.outputs.branch }}
+      version: ${{ steps.prepare.outputs.version }}
+    steps:
+      - name: Generate app token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ vars.GH_APP_ENGINEERING_CONTRIB_CLIENT_ID }}
+          private-key: ${{ secrets.GH_APP_ENGINEERING_CONTRIB_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token }}
+      - name: Setup environment
+        uses: ./.github/actions/setup
+        with:
+          cache-suffix: update-angular
+          full-setup: 'false'
+      - name: Prepare branch
+        id: prepare
+        uses: ./.github/actions/update-angular/prepare-branch
+        with:
+          angular-major: ${{ inputs.angular-major }}
+      - name: Save peer dependency baseline
+        run: node scripts/update-angular/save-peer-baseline.mjs "$RUNNER_TEMP/peers-baseline.json"
+      - name: Configure signed commits
+        uses: ./.github/actions/update-angular/configure-signed-commits
+        with:
+          gpg-private-key: ${{ secrets.HXPS_GIT_COMMIT_SIGNING_PRIVATE_KEY }}
+          git-user: ${{ vars.HXPS_GIT_USERNAME }}
+          git-email: ${{ vars.HXPS_GIT_EMAIL }}
+      - name: Update Nx
+        uses: ./.github/actions/update-angular/update-nx
+        with:
+          angular-major: ${{ inputs.angular-major }}
+      - name: Update Angular packages
+        uses: ./.github/actions/update-angular/update-angular-packages
+        with:
+          angular-major: ${{ inputs.angular-major }}
+          version: ${{ steps.prepare.outputs.version }}
+      - name: Align peer dependencies
+        uses: ./.github/actions/update-angular/align-peers
+      - name: Run migrations
+        uses: ./.github/actions/update-angular/run-migrations
+      - name: Fix format and lint
+        uses: ./.github/actions/update-angular/fix-format-and-lint
+      - name: Verify lockfile
+        run: pnpm install --frozen-lockfile
+      - name: Check peer dependencies
+        uses: ./.github/actions/update-angular/check-peers
+      - name: Push branch
+        env:
+          BRANCH: ${{ steps.prepare.outputs.branch }}
+        run: git push origin "$BRANCH"
+      - name: Create migration report
+        uses: ./.github/actions/update-angular/create-report
+        with:
+          base-sha: ${{ steps.prepare.outputs.base-sha }}
+
+  clean-overrides:
+    name: "🧹 Clean overrides"
+    needs: [migrate]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Generate app token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ vars.GH_APP_ENGINEERING_CONTRIB_CLIENT_ID }}
+          private-key: ${{ secrets.GH_APP_ENGINEERING_CONTRIB_PRIVATE_KEY }}
+          permission-contents: write
+      - name: Checkout migration branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.migrate.outputs.branch }}
+          token: ${{ steps.app-token.outputs.token }}
+      - name: Setup environment
+        uses: ./.github/actions/setup
+        with:
+          cache-suffix: update-angular-overrides
+          full-setup: 'false'
+      - name: Configure signed commits
+        uses: ./.github/actions/update-angular/configure-signed-commits
+        with:
+          gpg-private-key: ${{ secrets.HXPS_GIT_COMMIT_SIGNING_PRIVATE_KEY }}
+          git-user: ${{ vars.HXPS_GIT_USERNAME }}
+          git-email: ${{ vars.HXPS_GIT_EMAIL }}
+      - name: Clean overrides
+        uses: ./.github/actions/update-angular/clean-overrides
+      - name: Push branch
+        env:
+          BRANCH: ${{ needs.migrate.outputs.branch }}
+        run: git push origin "$BRANCH"
+
+  build:
+    name: "🏗️ Build"
+    needs: [migrate, clean-overrides]
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout migration branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.migrate.outputs.branch }}
+      - name: Build all libs
+        uses: ./.github/actions/update-angular/validate
+        with:
+          name: build
+          command: pnpm nx run-many -t build --configuration=production --exclude=stories --skip-nx-cache
+          cache-suffix: update-angular-build
+
+  lint:
+    name: "🔍 Lint"
+    needs: [migrate, clean-overrides]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout migration branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.migrate.outputs.branch }}
+      - name: Lint all projects
+        uses: ./.github/actions/update-angular/validate
+        with:
+          name: lint
+          command: pnpm nx run-many -t lint --skip-nx-cache
+          cache-suffix: update-angular-lint
+
+  test-matrix:
+    name: "🧪 Test matrix"
+    needs: [migrate, clean-overrides]
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.projects.outputs.matrix }}
+    steps:
+      - name: Checkout migration branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.migrate.outputs.branch }}
+      - name: List test projects
+        id: projects
+        uses: ./.github/actions/update-angular/list-test-projects
+
+  unit-tests:
+    name: "🎯 Test ${{ matrix.project }}"
+    needs: [migrate, test-matrix]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.test-matrix.outputs.matrix) }}
+    steps:
+      - name: Checkout migration branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.migrate.outputs.branch }}
+      - name: Run unit tests
+        uses: ./.github/actions/update-angular/validate
+        with:
+          name: test-${{ matrix.project }}
+          command: xvfb-run --auto-servernum pnpm nx run ${{ matrix.project }}:test --skip-nx-cache
+          cache-suffix: update-angular-test-${{ matrix.project }}
+
+  pull-request:
+    name: "🔀 Open pull request"
+    needs: [migrate, clean-overrides, build, lint, unit-tests]
+    if: ${{ always() && needs.migrate.result == 'success' && needs.clean-overrides.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate app token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ vars.GH_APP_ENGINEERING_CONTRIB_CLIENT_ID }}
+          private-key: ${{ secrets.GH_APP_ENGINEERING_CONTRIB_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Download migration report
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: migration-report
+          path: report
+      - name: Download overrides report
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: overrides-report
+          path: report
+      - name: Download validation results
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: validation-*
+          path: validation
+          merge-multiple: true
+      - name: Create pull request
+        uses: ./.github/actions/update-angular/create-pull-request
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          branch: ${{ needs.migrate.outputs.branch }}
+          version: ${{ needs.migrate.outputs.version }}
+          job-results: ${{ needs.build.result }} ${{ needs.lint.result }} ${{ needs.unit-tests.result }}
