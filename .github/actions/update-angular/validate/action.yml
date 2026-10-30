@@ -1,0 +1,33 @@
+name: "Validate"
+description: "Run a check on the update branch without failing the job, and record its outcome for the pull request"
+inputs:
+  name:
+    description: "Name of the check, shown in the pull request"
+    required: true
+  command:
+    description: "Shell command that runs the check"
+    required: true
+  cache-suffix:
+    description: "Suffix of the Nx cache key"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Setup environment
+      uses: ./.github/actions/setup
+      with:
+        cache-suffix: ${{ inputs.cache-suffix }}
+        full-setup: 'false'
+    - name: Run check
+      id: check
+      shell: bash
+      continue-on-error: true
+      env:
+        COMMAND: ${{ inputs.command }}
+      run: bash -c "$COMMAND" 2>&1 | tee "$RUNNER_TEMP/validation.log"
+    - name: Record result
+      if: ${{ always() }}
+      uses: ./.github/actions/update-angular/record-validation-result
+      with:
+        name: ${{ inputs.name }}
+        outcome: ${{ steps.check.outcome }}

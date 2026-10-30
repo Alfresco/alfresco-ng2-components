@@ -1,0 +1,41 @@
+name: "Create pull request"
+description: "Open the update pull request, as a draft when validation did not fully pass"
+inputs:
+  github-token:
+    description: "Token allowed to open pull requests"
+    required: true
+  branch:
+    description: "Branch with the update"
+    required: true
+  version:
+    description: "Angular version the update moves to"
+    required: true
+  job-results:
+    description: "Space separated results of the validation jobs"
+    required: true
+  base-branch:
+    description: "Branch the pull request targets"
+    required: false
+    default: develop
+runs:
+  using: "composite"
+  steps:
+    - name: Create pull request
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        GH_REPO: ${{ github.repository }}
+        BRANCH: ${{ inputs.branch }}
+        VERSION: ${{ inputs.version }}
+        JOB_RESULTS: ${{ inputs.job-results }}
+        BASE_BRANCH: ${{ inputs.base-branch }}
+        RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      run: |
+        STATE=$(node scripts/update-angular/build-pull-request-body.mjs body.md validation report "$VERSION" "$RUN_URL" $JOB_RESULTS)
+        TITLE="GH auto: Update Angular to $VERSION"
+        DRAFT_FLAG=""
+        if [ "$STATE" == "draft" ]; then
+          DRAFT_FLAG="--draft"
+          TITLE="$TITLE (needs manual fixes)"
+        fi
+        gh pr create --base "$BASE_BRANCH" --head "$BRANCH" --title "$TITLE" --body-file body.md $DRAFT_FLAG

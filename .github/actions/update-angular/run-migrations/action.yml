@@ -1,0 +1,15 @@
+name: "Run migrations"
+description: "Run the collected Nx migrations, one commit each, then remove the migrations file"
+runs:
+  using: "composite"
+  steps:
+    - name: Run migrations
+      shell: bash
+      run: pnpm nx migrate --run-migrations --create-commits
+    - name: Remove migrations file and refresh lockfile
+      shell: bash
+      run: |
+        git rm -f --ignore-unmatch migrations.json
+        pnpm install --no-frozen-lockfile
+        git add -A
+        git diff --cached --quiet || git commit -m "chore: remove migrations file and refresh lockfile"

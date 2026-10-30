@@ -1,0 +1,16 @@
+name: "Fix format and lint"
+description: "Apply the automatic format and lint fixes and commit them"
+runs:
+  using: "composite"
+  steps:
+    - name: Format and fix lint
+      shell: bash
+      continue-on-error: true
+      run: |
+        pnpm nx format:write
+        pnpm nx run-many -t lint --fix --skip-nx-cache
+    - name: Commit fixes
+      shell: bash
+      run: |
+        git add -A
+        git diff --cached --quiet || git commit -m "chore: apply format and lint fixes"

@@ -1,0 +1,47 @@
+name: "Prepare update branch"
+description: "Resolve the target Angular version and create the branch of the update"
+inputs:
+  angular-major:
+    description: "Target Angular major version"
+    required: true
+  base-branch:
+    description: "Branch the update starts from"
+    required: false
+    default: develop
+outputs:
+  version:
+    description: "Resolved @angular/core version"
+    value: ${{ steps.version.outputs.version }}
+  branch:
+    description: "Name of the created branch"
+    value: ${{ steps.branch.outputs.name }}
+  base-sha:
+    description: "Commit the update starts from"
+    value: ${{ steps.branch.outputs.base-sha }}
+runs:
+  using: "composite"
+  steps:
+    - name: Resolve target version
+      id: version
+      shell: bash
+      env:
+        TARGET_MAJOR: ${{ inputs.angular-major }}
+      run: |
+        VERSION=$(node scripts/update-angular/resolve-angular-version.mjs "$TARGET_MAJOR")
+        echo "Resolved @angular/core $VERSION"
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+    - name: Create branch
+      id: branch
+      shell: bash
+      env:
+        VERSION: ${{ steps.version.outputs.version }}
+        BASE_BRANCH: ${{ inputs.base-branch }}
+      run: |
+        BRANCH="chore/update-angular-$VERSION"
+        if git ls-remote --exit-code --heads origin "$BRANCH" > /dev/null; then
+          echo "Branch $BRANCH already exists"
+          exit 1
+        fi
+        git checkout -b "$BRANCH"
+        echo "name=$BRANCH" >> "$GITHUB_OUTPUT"
+        echo "base-sha=$(git rev-parse "origin/$BASE_BRANCH")" >> "$GITHUB_OUTPUT"

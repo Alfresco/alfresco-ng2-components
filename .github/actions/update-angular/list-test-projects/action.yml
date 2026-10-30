@@ -1,0 +1,22 @@
+name: "List test projects"
+description: "List the projects that have unit tests, as a matrix for the test jobs"
+outputs:
+  matrix:
+    description: "JSON matrix with one entry per project"
+    value: ${{ steps.matrix.outputs.matrix }}
+runs:
+  using: "composite"
+  steps:
+    - name: Setup environment
+      uses: ./.github/actions/setup
+      with:
+        cache-suffix: update-angular-test-matrix
+        full-setup: 'false'
+    - name: List projects
+      id: matrix
+      shell: bash
+      run: |
+        PROJECTS=$(pnpm nx show projects --target=test --select=projects --plain --exclude=cli,stories,eslint-angular)
+        MATRIX=$(echo "$PROJECTS" | xargs -n1 | jq -R -s -c 'split("\n") | map(select(length > 0)) | map({ "project": . })')
+        echo "Matrix: $MATRIX"
+        echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"

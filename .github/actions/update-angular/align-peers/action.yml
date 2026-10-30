@@ -1,0 +1,11 @@
+name: "Align peer dependencies"
+description: "Upgrade direct dependencies so that their peer dependencies are satisfied"
+runs:
+  using: "composite"
+  steps:
+    - name: Align peer dependencies
+      shell: bash
+      run: |
+        node scripts/update-angular/align-peers.mjs "$RUNNER_TEMP/peers-aligned.md"
+        git add -A
+        git diff --cached --quiet || git commit -m "chore: align peer dependencies"
