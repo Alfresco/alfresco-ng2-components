@@ -56,7 +56,7 @@
     "@mat-datetimepicker/core": "17.1.0",
     "@ngx-translate/core": "17.0.0",
     "angular-oauth2-oidc": "19.0.0",
-    "apollo-angular": "13.0.0",
+    "apollo-angular": "14.2.0",
     "chart.js": "4.5.1",
     "cropperjs": "1.6.2",
     "date-fns": "2.30.0",
@@ -139,7 +139,7 @@
     "stylelint": "17.0.0",
     "stylelint-config-standard-scss": "17.0.0",
     "ts-node": "10.9.2",
-    "typescript": "5.9.3",
+    "typescript": "6.0.3",
     "undici": "8.12.2",
     "webpack": "5.111.1"
   },
