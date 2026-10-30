@@ -8,23 +8,32 @@ runs:
   using: "composite"
   steps:
     - name: Update Nx
+      id: stage
       shell: bash
       env:
         TARGET_MAJOR: ${{ inputs.angular-major }}
       run: |
-        mkdir -p "$RUNNER_TEMP/reported"
-        NX_SPEC=$(node scripts/update-angular/plan-nx.mjs "$TARGET_MAJOR")
-        if [ -z "$NX_SPEC" ]; then
-          echo "Installed Nx already supports Angular $TARGET_MAJOR"
-          exit 0
-        fi
-        pnpm nx migrate "$NX_SPEC" --include=required
-        pnpm install --no-frozen-lockfile
-        git add -A
-        git commit -m "chore: update Nx to ${NX_SPEC#nx@}"
-        if [ -f migrations.json ]; then
-          cp migrations.json "$RUNNER_TEMP/reported/nx.json"
-          pnpm nx migrate --run-migrations --create-commits
-          git rm -f --ignore-unmatch migrations.json
-          git diff --cached --quiet || git commit -m "chore: remove Nx migrations file"
-        fi
+        {
+          mkdir -p "$RUNNER_TEMP/reported"
+          NX_SPEC=$(node scripts/update-angular/plan-nx.mjs "$TARGET_MAJOR")
+          if [ -z "$NX_SPEC" ]; then
+            echo "Installed Nx already supports Angular $TARGET_MAJOR"
+            exit 0
+          fi
+          pnpm nx migrate "$NX_SPEC" --include=required
+          pnpm install --no-frozen-lockfile
+          git add -A
+          git commit -m "chore: update Nx to ${NX_SPEC#nx@}"
+          if [ -f migrations.json ]; then
+            cp migrations.json "$RUNNER_TEMP/reported/nx.json"
+            pnpm nx migrate --run-migrations --create-commits
+            git rm -f --ignore-unmatch migrations.json
+            git diff --cached --quiet || git commit -m "chore: remove Nx migrations file"
+          fi
+        } 2>&1 | tee "$RUNNER_TEMP/validation.log"
+    - name: Record result
+      if: ${{ always() }}
+      uses: ./.github/actions/update-angular/record-validation-result
+      with:
+        name: update-nx
+        outcome: ${{ steps.stage.outcome }}

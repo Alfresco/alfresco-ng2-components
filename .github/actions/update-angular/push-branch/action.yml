@@ -1,0 +1,25 @@
+name: "Push branch"
+description: "Commit what is left in the working tree, so that a failed update can be continued by hand, and push the branch"
+inputs:
+  branch:
+    description: "Branch with the update"
+    required: true
+  base-branch:
+    description: "Branch the update started from"
+    required: false
+    default: develop
+runs:
+  using: "composite"
+  steps:
+    - name: Push branch
+      shell: bash
+      env:
+        BRANCH: ${{ inputs.branch }}
+        BASE_BRANCH: ${{ inputs.base-branch }}
+      run: |
+        git add -A
+        git diff --cached --quiet || git commit -m "chore: save the progress of an update that did not complete"
+        if [ "$(git rev-list --count "origin/$BASE_BRANCH..HEAD")" = "0" ]; then
+          git commit --allow-empty -m "chore: start of an update that did not complete"
+        fi
+        git push origin "$BRANCH"
