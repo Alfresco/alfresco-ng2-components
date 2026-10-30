@@ -14,13 +14,12 @@
     class="adf-compact-breadcrumb-backdrop"
     [class.adf-compact-breadcrumb-backdrop-open]="menuOpen()">
 </div>
-<div
+<dialog
     #menu
     class="adf-compact-breadcrumb-menu"
     [class.adf-compact-breadcrumb-menu-open]="menuOpen()"
     [class.adf-compact-breadcrumb-menu-full-width]="fullWidth()"
     [attr.aria-hidden]="!menuOpen()"
-    role="dialog"
     (mouseleave)="closeOnMenuLeave()"
     (mouseenter)="stopClosingMenu()" >
     <div class="adf-compact-breadcrumb-menu-header">
@@ -105,4 +104,4 @@
                 : 'BREADCRUMB.COMPACT_MENU.PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING') | translate
         }}
     </p>
-</div>
+</dialog>

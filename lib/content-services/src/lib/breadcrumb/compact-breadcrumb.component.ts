@@ -99,7 +99,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
                     node,
                     current,
                     libraryContainer,
-                    description: this.getLevelDescription(nodes, index, indexOffset, current, libraryContainer)
+                    description: this.getLevelDescription(nodes, index, current, libraryContainer, indexOffset)
                 };
             });
         }
@@ -241,7 +241,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         clearTimeout(this.openMenuTimer);
     }
 
-    private getLevelDescription(nodes: PathElement[], nodeIndex: number, indexOffset = 0, current: boolean, libraryContainer: boolean): string {
+    private getLevelDescription(nodes: PathElement[], nodeIndex: number, current: boolean, libraryContainer: boolean, indexOffset = 0): string {
         if (current) {
             return this.translateService.instant('BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL');
         } else if (libraryContainer) {
@@ -249,12 +249,13 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         }
         const name = nodes[nodeIndex - 1]?.name;
         const library = nodes[nodeIndex]?.nodeType === 'st:site';
+        const translationKey = library ? 'BREADCRUMB.COMPACT_MENU.FIRST_LEVEL_LIBRARY' : 'BREADCRUMB.COMPACT_MENU.FIRST_LEVEL';
         return name && !library
             ? this.translateService.instant('BREADCRUMB.COMPACT_MENU.NOT_FIRST_LEVEL', {
                   level: nodeIndex + 1 - indexOffset,
                   ancestorName: this.translateService.instant(name)
               })
-            : this.translateService.instant(library ? 'BREADCRUMB.COMPACT_MENU.FIRST_LEVEL_LIBRARY' : 'BREADCRUMB.COMPACT_MENU.FIRST_LEVEL');
+            : this.translateService.instant(translationKey);
     }
 
     private openMenu(): void {

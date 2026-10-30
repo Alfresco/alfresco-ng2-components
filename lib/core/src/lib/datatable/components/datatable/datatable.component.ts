@@ -402,70 +402,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @HostListener('keyup', ['$event'])
     onKeydown(event: KeyboardEvent): void {
         if (event.shiftKey && this.enableDragRows) {
-            if (this.rowDropSortingDisabled) {
-                switch (event.key) {
-                    case 'ArrowUp': {
-                        const rowIndex = this.keyManager.activeItemIndex - 1;
-                        if (rowIndex < 0 || rowIndex >= this.data.getRows().length) {
-                            break;
-                        }
-                        this.draggedRowIndex = rowIndex;
-                        this.dragDropStateService.keyboardDraggingData.set(this.data.getRows()[this.draggedRowIndex].id);
-                        this.onDragStart(false);
-                        break;
-                    }
-                    case 'ArrowDown': {
-                        const currentIndex = this.keyManager.activeItemIndex - 1;
-                        if (this.draggedRowIndex !== undefined && this.draggedRowIndex !== null && this.draggedRowIndex !== currentIndex) {
-                            this.dragDropped.emit({
-                                previousIndex: this.draggedRowIndex,
-                                currentIndex
-                            });
-                            this.draggedRowIndex = null;
-                            this.onDragEnd();
-                        }
-                        break;
-                    }
-                    case 'ArrowRight': {
-                        if (this.draggedRowIndex !== undefined && this.draggedRowIndex !== null && this.dropListConnectedTo.length) {
-                            const focusTrap = this.focusTrapFactory.create(document.getElementById(this.dropListConnectedTo[0]));
-                            focusTrap.focusFirstTabbableElement();
-                            focusTrap.destroy();
-                        }
-                    }
-                    default:
-                        break;
-                }
-            } else {
-                switch (event.key) {
-                    case 'ArrowUp': {
-                        if (this.keyManager.activeItemIndex > 1) {
-                            this.dragDropped.emit({
-                                previousIndex: this.keyManager.activeItemIndex - 1,
-                                currentIndex: this.keyManager.activeItemIndex - 2
-                            });
-                            setTimeout(() => {
-                                this.keyManager.setActiveItem(this.keyManager.activeItemIndex - 1);
-                            });
-                        }
-                        break;
-                    }
-                    case 'ArrowDown': {
-                        if (this.keyManager.activeItemIndex < this.rowsList.length - 1) {
-                            this.dragDropped.emit({
-                                previousIndex: this.keyManager.activeItemIndex - 1,
-                                currentIndex: this.keyManager.activeItemIndex
-                            });
-                            setTimeout(() => {
-                                this.keyManager.setActiveItem(this.keyManager.activeItemIndex + 1);
-                            });
-                        }
-                        break;
-                    }
-                    default:
-                        break;
-                }
-            }
+            this.rowDropSortingDisabled
+                ? this.handleKeyDownForDragAndDropWithDisabledSorting(event)
+                : this.handleKeyDownForDragAndDropWithEnabledSorting(event);
         } else {
             this.keyManager.onKeydown(event);
         }
@@ -1264,6 +1203,74 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         this.draggedRowIndex = null;
         this.dragDropStateService.keyboardDraggingData.set(null);
         this.dragDropStateService.dragging.set(false);
+    }
+
+    private handleKeyDownForDragAndDropWithDisabledSorting(event: KeyboardEvent): void {
+        switch (event.key) {
+            case 'ArrowUp': {
+                const rowIndex = this.keyManager.activeItemIndex - 1;
+                if (rowIndex < 0 || rowIndex >= this.data.getRows().length) {
+                    break;
+                }
+                this.draggedRowIndex = rowIndex;
+                this.dragDropStateService.keyboardDraggingData.set(this.data.getRows()[this.draggedRowIndex].id);
+                this.onDragStart(false);
+                break;
+            }
+            case 'ArrowDown': {
+                const currentIndex = this.keyManager.activeItemIndex - 1;
+                if (this.draggedRowIndex !== undefined && this.draggedRowIndex !== null && this.draggedRowIndex !== currentIndex) {
+                    this.dragDropped.emit({
+                        previousIndex: this.draggedRowIndex,
+                        currentIndex
+                    });
+                    this.draggedRowIndex = null;
+                    this.onDragEnd();
+                }
+                break;
+            }
+            case 'ArrowRight': {
+                if (this.draggedRowIndex !== undefined && this.draggedRowIndex !== null && this.dropListConnectedTo.length) {
+                    const focusTrap = this.focusTrapFactory.create(document.getElementById(this.dropListConnectedTo[0]));
+                    focusTrap.focusFirstTabbableElement();
+                    focusTrap.destroy();
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    private handleKeyDownForDragAndDropWithEnabledSorting(event: KeyboardEvent): void {
+        switch (event.key) {
+            case 'ArrowUp': {
+                if (this.keyManager.activeItemIndex > 1) {
+                    this.dragDropped.emit({
+                        previousIndex: this.keyManager.activeItemIndex - 1,
+                        currentIndex: this.keyManager.activeItemIndex - 2
+                    });
+                    setTimeout(() => {
+                        this.keyManager.setActiveItem(this.keyManager.activeItemIndex - 1);
+                    });
+                }
+                break;
+            }
+            case 'ArrowDown': {
+                if (this.keyManager.activeItemIndex < this.rowsList.length - 1) {
+                    this.dragDropped.emit({
+                        previousIndex: this.keyManager.activeItemIndex - 1,
+                        currentIndex: this.keyManager.activeItemIndex
+                    });
+                    setTimeout(() => {
+                        this.keyManager.setActiveItem(this.keyManager.activeItemIndex + 1);
+                    });
+                }
+                break;
+            }
+            default:
+                break;
+        }
     }
 
     private updateColumnsWidths(): void {

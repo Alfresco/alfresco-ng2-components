@@ -33,11 +33,13 @@ adf-compact-breadcrumb {
     max-height: 683px;
     box-shadow: var(--mat-sys-level2);
     border-radius: 8px;
+    display: block;
     visibility: hidden;
     pointer-events: none;
     margin-top: 31px;
     margin-left: -40px;
     padding: 4px 12px 16px;
+    border: none;
 
     &-open {
         visibility: visible;

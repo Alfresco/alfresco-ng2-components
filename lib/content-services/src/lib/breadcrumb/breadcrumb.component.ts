@@ -232,11 +232,11 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     }
 
     isBreadcrumbItemAnchor(index: number): boolean {
-        return !this.readOnly && index != this.lastNodes.length - 1 && !this.isCompactBreadcrumbItem(index);
+        return !this.readOnly && index !== this.lastNodes.length - 1 && !this.isCompactBreadcrumbItem(index);
     }
 
-    isCompactBreadcrumbItem(index): boolean {
-        return index != this.lastNodes.length - 1 && index !== 0 && this.compactMode && (index !== 1 || this.lastNodes.length !== 3);
+    isCompactBreadcrumbItem(index: number): boolean {
+        return index !== this.lastNodes.length - 1 && index !== 0 && this.compactMode && (index !== 1 || this.lastNodes.length !== 3);
     }
 
     getBreadcrumbTitle(index: number): string {
