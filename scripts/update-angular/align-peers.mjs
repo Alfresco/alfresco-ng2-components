@@ -20,7 +20,7 @@ import { main } from './lib/cli.mjs';
 import { installedVersion, setDependencyVersions, workspaceDependencies } from './lib/package-json.mjs';
 import { findPeerIssues } from './lib/peers.mjs';
 import { installableReleases, peerDependenciesOf } from './lib/registry.mjs';
-import { run } from './lib/shell.mjs';
+import { runVisibly } from './lib/shell.mjs';
 import { compareVersions, exactVersion, majorVersion, satisfiesRange } from './lib/versions.mjs';
 
 const MAX_ROUNDS = 3;
@@ -124,7 +124,7 @@ function alignPeers(reportFile) {
 
         setDependencyVersions(upgrades);
         rows.push(...upgrades.map(({ name, from, to }) => `| \`${name}\` | ${from} | ${from.match(/^\D*/)[0]}${to} |\n`));
-        run('pnpm', ['install', '--no-frozen-lockfile']);
+        runVisibly('pnpm', ['install', '--no-frozen-lockfile']);
     }
 
     fs.writeFileSync(reportFile, rows.join(''));
