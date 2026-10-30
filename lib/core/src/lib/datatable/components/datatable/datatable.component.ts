@@ -1250,7 +1250,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         this.dragDropStateService.hoveredDropName.set(null);
     }
 
-    preventChangeRowByTab(event: KeyboardEvent): void {
+    preventChangeRowByTab(event: Event): void {
         if (this.enableDragRows && this.rowDropSortingDisabled && this.draggedRowIndex !== undefined && this.draggedRowIndex !== null) {
             event.preventDefault();
         }
