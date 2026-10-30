@@ -143,7 +143,7 @@ export type ShowHeaderMode = (typeof ShowHeaderMode)[keyof typeof ShowHeaderMode
         '(document:keydown.escape)': 'stopNodeDragging()',
         '(document:click)': 'stopNodeDragging(true)',
         '(contextmenu)': 'stopNodeDragging()',
-        '(keydown)': 'preventChangeRowByTab($event)'
+        '(keydown.tab)': 'preventChangeRowByTab($event)'
     }
 })
 export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
@@ -1251,16 +1251,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     preventChangeRowByTab(event: KeyboardEvent): void {
-        if (
-            this.enableDragRows &&
-            this.rowDropSortingDisabled &&
-            event.key === 'Tab' &&
-            this.draggedRowIndex !== undefined &&
-            this.draggedRowIndex !== null
-        ) {
+        if (this.enableDragRows && this.rowDropSortingDisabled && this.draggedRowIndex !== undefined && this.draggedRowIndex !== null) {
             event.preventDefault();
-            event.stopImmediatePropagation();
-            event.stopPropagation();
         }
     }
 

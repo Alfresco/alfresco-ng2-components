@@ -33,7 +33,7 @@ import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { ConfigurableFocusTrapFactory, LiveAnnouncer } from '@angular/cdk/a11y';
+import { ConfigurableFocusTrapFactory, FocusKeyManager, LiveAnnouncer } from '@angular/cdk/a11y';
 import { provideRouter } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
@@ -1783,7 +1783,13 @@ describe('Accessibility', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [CustomColumnTemplateComponent],
-            providers: [{ provide: ConfigurableFocusTrapFactory, useValue: focusTrapFactory }]
+            providers: [
+                {
+                    provide: ConfigurableFocusTrapFactory,
+                    useValue: focusTrapFactory
+                },
+                FocusKeyManager
+            ]
         });
         columnCustomTemplate = TestBed.createComponent(CustomColumnTemplateComponent).componentInstance.templateRef;
         fixture = TestBed.createComponent(DataTableComponent);
@@ -2351,6 +2357,30 @@ describe('Accessibility', () => {
 
             expect(await tooltip.isOpen()).toBe(true);
             expect(await tooltip.getTooltipText()).toBe('ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL');
+        });
+    });
+
+    describe('preventChangeRowByTab', () => {
+        it('should call preventDefault on event when Tab key is pressed', () => {
+            const dataRows = [{ name: 'test1' }, { name: 'test2' }, { name: 'test3' }, { name: 'test4' }];
+            dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
+            dataTable.ngOnChanges({
+                rows: new SimpleChange(null, dataRows, false)
+            });
+            fixture.detectChanges();
+            const startDragEvent = new KeyboardEvent('keyup', {
+                key: 'ArrowUp',
+                shiftKey: true
+            });
+            dataTable.rowDropSortingDisabled = true;
+            dataTable.enableDragRows = true;
+            spyOnProperty(FocusKeyManager.prototype, 'activeItemIndex').and.returnValue(1);
+            fixture.nativeElement.dispatchEvent(startDragEvent);
+            const tabEvent = new KeyboardEvent('keydown', { key: 'Tab' });
+            spyOn(tabEvent, 'preventDefault');
+
+            fixture.nativeElement.dispatchEvent(tabEvent);
+            expect(tabEvent.preventDefault).toHaveBeenCalled();
         });
     });
 });
