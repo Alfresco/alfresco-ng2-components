@@ -26,5 +26,14 @@ const MAX_OUTPUT_BYTES = 64 * 1024 * 1024;
  * @returns what the command printed
  */
 export function run(command, args) {
-    return execFileSync(command, args, { encoding: 'utf8', maxBuffer: MAX_OUTPUT_BYTES });
+    return execFileSync(command, args, { encoding: 'utf8', maxBuffer: MAX_OUTPUT_BYTES, stdio: ['ignore', 'pipe', 'pipe'] });
+}
+
+/**
+ * Runs a command showing its output as it goes, for long commands whose failure needs to be understood from the log.
+ * @param command executable to run
+ * @param args command arguments
+ */
+export function runVisibly(command, args) {
+    execFileSync(command, args, { stdio: 'inherit' });
 }
