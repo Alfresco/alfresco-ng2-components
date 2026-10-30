@@ -21,7 +21,7 @@ runs:
         mkdir -p "$RUNNER_TEMP/migrations" "$RUNNER_TEMP/reported"
         COUNT=0
         while read -r spec; do
-          pnpm nx migrate "$spec"
+          ./node_modules/.bin/nx migrate "$spec"
           if [ -f migrations.json ]; then
             mv migrations.json "$RUNNER_TEMP/migrations/$COUNT.json"
           fi
