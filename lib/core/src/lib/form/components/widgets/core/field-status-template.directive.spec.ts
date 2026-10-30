@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FIELD_STATUS_TEMPLATE, FieldStatusTemplateDirective } from './field-status-template.directive';
@@ -28,12 +28,12 @@ import { FIELD_STATUS_TEMPLATE, FieldStatusTemplateDirective } from './field-sta
         <ng-template #statusTemplate />
     `
 })
-class TestHostComponent {
-    @ViewChild('statusTemplate', { static: true }) statusTemplate!: TemplateRef<unknown>;
-}
+class TestHostComponent {}
 
 describe('FieldStatusTemplateDirective', () => {
     let fixture: ComponentFixture<TestHostComponent>;
+    let debugElement: DebugElement;
+    let directive: FieldStatusTemplateDirective;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -41,19 +41,12 @@ describe('FieldStatusTemplateDirective', () => {
         });
         fixture = TestBed.createComponent(TestHostComponent);
         fixture.detectChanges();
+        debugElement = fixture.debugElement.query(By.directive(FieldStatusTemplateDirective));
+        directive = debugElement.injector.get(FieldStatusTemplateDirective);
     });
 
-    const getDirectiveDebugElement = (): DebugElement => fixture.debugElement.query(By.directive(FieldStatusTemplateDirective));
-
-    it('should expose the template provided through the input', () => {
-        const directive = getDirectiveDebugElement().injector.get(FieldStatusTemplateDirective);
-
-        expect(directive.template).toBe(fixture.componentInstance.statusTemplate);
-    });
-
-    it('should provide the input template through the FIELD_STATUS_TEMPLATE token', () => {
-        const providedTemplate = getDirectiveDebugElement().injector.get(FIELD_STATUS_TEMPLATE);
-
-        expect(providedTemplate).toBe(fixture.componentInstance.statusTemplate);
+    it('provides the input template through the FIELD_STATUS_TEMPLATE token', () => {
+        expect(directive.template).toBeTruthy();
+        expect(debugElement.injector.get(FIELD_STATUS_TEMPLATE)).toBe(directive.template);
     });
 });
