@@ -2360,6 +2360,38 @@ describe('Accessibility', () => {
         });
     });
 
+    describe('Drag and drop', () => {
+        it('should emit dragDropped event when arrow down is pressed', () => {
+            const dataRows = [{ name: 'test1' }, { name: 'test2' }, { name: 'test3' }, { name: 'test4' }];
+            dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
+            dataTable.ngOnChanges({
+                rows: new SimpleChange(null, dataRows, false)
+            });
+            fixture.detectChanges();
+            dataTable.rowDropSortingDisabled = true;
+            dataTable.enableDragRows = true;
+            spyOnProperty(FocusKeyManager.prototype, 'activeItemIndex').and.returnValues(1, 2);
+            fixture.nativeElement.dispatchEvent(
+                new KeyboardEvent('keyup', {
+                    key: 'ArrowUp',
+                    shiftKey: true
+                })
+            );
+            spyOn(dataTable.dragDropped, 'emit');
+
+            fixture.nativeElement.dispatchEvent(
+                new KeyboardEvent('keyup', {
+                    key: 'ArrowDown',
+                    shiftKey: true
+                })
+            );
+            expect(dataTable.dragDropped.emit).toHaveBeenCalledWith({
+                previousIndex: 0,
+                currentIndex: 1
+            });
+        });
+    });
+
     describe('preventChangeRowByTab', () => {
         it('should call preventDefault on event when Tab key is pressed', () => {
             const dataRows = [{ name: 'test1' }, { name: 'test2' }, { name: 'test3' }, { name: 'test4' }];
@@ -2368,14 +2400,15 @@ describe('Accessibility', () => {
                 rows: new SimpleChange(null, dataRows, false)
             });
             fixture.detectChanges();
-            const startDragEvent = new KeyboardEvent('keyup', {
-                key: 'ArrowUp',
-                shiftKey: true
-            });
             dataTable.rowDropSortingDisabled = true;
             dataTable.enableDragRows = true;
             spyOnProperty(FocusKeyManager.prototype, 'activeItemIndex').and.returnValue(1);
-            fixture.nativeElement.dispatchEvent(startDragEvent);
+            fixture.nativeElement.dispatchEvent(
+                new KeyboardEvent('keyup', {
+                    key: 'ArrowUp',
+                    shiftKey: true
+                })
+            );
             const tabEvent = new KeyboardEvent('keydown', { key: 'Tab' });
             spyOn(tabEvent, 'preventDefault');
 
