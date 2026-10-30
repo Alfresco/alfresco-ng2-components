@@ -38,7 +38,7 @@ Implements a [search widget](../../../lib/content-services/src/lib/search/models
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| field | string | Field to to use |
+| field | string | Field to use |
 | format | string | Value format. Uses string substitution to allow all sorts of [range queries](https://support.hyland.com/r/Alfresco/Alfresco-Search-Services/2.0/Alfresco-Search-Services/Using/Full-text-search-reference/Search-for-ranges). |
 | hideDefaultAction | boolean | Show/hide the widget actions. By default is false. |
 

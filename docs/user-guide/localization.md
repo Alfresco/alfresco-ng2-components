@@ -2,7 +2,7 @@
 
 Localization is the process of making something local in character or restricting it to a particular place. 
 
-Dates are not written the same around the world. That is where localizing a date comes in handy. ADF lets you dynamically change the way dates are written in your app so that they can adapt to to a specific region.
+Dates are not written the same around the world. That is where localizing a date comes in handy. ADF lets you dynamically change the way dates are written in your app so that they can adapt to a specific region.
 
 ## Setting up the configuration in your app
 

@@ -33,11 +33,11 @@
   },
   "FORM": {
     "SIGNAL_FORM": {
-      "WIDGET_LOADING": "Loading…",
-      "WIDGET_UNSUPPORTED": "This field can't be shown: the field type {{ type }} isn't available.",
-      "WIDGET_LOAD_FAILED": "This field can't be shown: the field type {{ type }} failed to load.",
-      "EXPAND_GROUP": "Expand {{ name }}",
-      "COLLAPSE_GROUP": "Collapse {{ name }}"
+      "WIDGET_LOADING": "Načítání…",
+      "WIDGET_UNSUPPORTED": "Toto pole nelze zobrazit: typ pole {{ type }} není k dispozici.",
+      "WIDGET_LOAD_FAILED": "Toto pole nelze zobrazit: typ pole {{ type }} se nepodařilo načíst.",
+      "EXPAND_GROUP": "Rozbalit {{ name }}",
+      "COLLAPSE_GROUP": "Sbalit {{ name }}"
     },
     "START_FORM": {
       "TITLE": "Spustit formulář"
