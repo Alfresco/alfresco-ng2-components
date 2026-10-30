@@ -1,0 +1,28 @@
+name: "Configure signed commits"
+description: "Import the signing key and set the git identity"
+inputs:
+  gpg-private-key:
+    description: "Private key used to sign commits"
+    required: true
+  git-user:
+    description: "Name of the committer"
+    required: true
+  git-email:
+    description: "Email of the committer"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Configure signed commits
+      shell: bash
+      env:
+        GPG_KEY: ${{ inputs.gpg-private-key }}
+        GIT_USER: ${{ inputs.git-user }}
+        GIT_EMAIL: ${{ inputs.git-email }}
+      run: |
+        echo "$GPG_KEY" | gpg --batch --import
+        KEY_ID=$(gpg --list-secret-keys --with-colons | awk -F: '/^sec/ {print $5; exit}')
+        git config user.name "$GIT_USER"
+        git config user.email "$GIT_EMAIL"
+        git config user.signingkey "$KEY_ID"
+        git config commit.gpgsign true

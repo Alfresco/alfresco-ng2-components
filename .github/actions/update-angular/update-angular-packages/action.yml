@@ -1,0 +1,35 @@
+name: "Update Angular packages"
+description: "Bump every Angular package to the target major and regenerate the lockfile"
+inputs:
+  angular-major:
+    description: "Target Angular major version"
+    required: true
+  version:
+    description: "Resolved @angular/core version, used in the commit message"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Update Angular packages
+      shell: bash
+      env:
+        TARGET_MAJOR: ${{ inputs.angular-major }}
+        VERSION: ${{ inputs.version }}
+      run: |
+        PLAN=$(node scripts/update-angular/plan-angular-packages.mjs "$TARGET_MAJOR")
+        echo "$PLAN"
+        mkdir -p "$RUNNER_TEMP/migrations" "$RUNNER_TEMP/reported"
+        COUNT=0
+        while read -r spec; do
+          pnpm nx migrate "$spec"
+          if [ -f migrations.json ]; then
+            mv migrations.json "$RUNNER_TEMP/migrations/$COUNT.json"
+          fi
+          COUNT=$((COUNT+1))
+        done <<< "$PLAN"
+        node scripts/update-angular/merge-migrations.mjs migrations.json "$RUNNER_TEMP"/migrations/*.json
+        pnpm install --no-frozen-lockfile
+        node scripts/update-angular/verify-versions.mjs "$TARGET_MAJOR"
+        cp migrations.json "$RUNNER_TEMP/reported/angular.json"
+        git add -A
+        git commit -m "chore: update Angular to $VERSION"
