@@ -204,7 +204,7 @@ These still work in v8.3.1 but are newly `@deprecated` and slated for removal �
   suppressed while cropping); PDF text/note annotations now render with hover/focus tooltips. New exported PDF
   types: `PageChangingEvent`, `PdfThumbnailPage`, `PdfAnnotationData`, `PdfAnnotationWithTitle`.
 - **Custom field-status template** — new `FieldStatusTemplateDirective` (`[adf-field-status-template]`) and
-  `FIELD_STATUS_TEMPLATE` token, so the text widget can render custom field-status content.
+  `FIELD_STATUS_TEMPLATE` token, so the text and multiline-text widgets can render custom field-status content.
 - **`ProcessListCloudComponent.@Input() enableAppChange`** — reloads preferences/process list when `appName` changes (opt-in).
 - **New models/exports** — `NodeTooltipUtils` (replaces the removed tooltip pipe); `ProcessPayloadCloudData` interface;
   `RelatedProcessInstance` interface + `ProcessInstanceCloud.linkedProcesses`/`subprocesses`/`linkedProcessInstanceId`/`linkedProcessInstanceType`;
