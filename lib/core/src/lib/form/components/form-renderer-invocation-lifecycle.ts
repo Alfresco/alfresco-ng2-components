@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { computed, ErrorHandler } from '@angular/core';
+import { computed, ErrorHandler, Signal } from '@angular/core';
 import { NotificationService } from '../../notifications/services/notification.service';
 import { FormInvocationObserver, FormResetHandler } from '../models/form-invocation-coordinator.model';
 import {
@@ -30,6 +30,7 @@ import {
     cancelFormMutation,
     FormGenerationIdentity,
     FormWriteContext,
+    hasFormStateBinding,
     isFormMutating,
     reportFormError,
     runFormMutation,
@@ -47,6 +48,7 @@ export interface FormRendererInvocationServices {
     readonly rulesManager: FormRulesManager<unknown>;
     readonly notificationService: NotificationService;
     readonly errorHandler: ErrorHandler;
+    readonly instanceResetEnabled: Signal<boolean>;
 }
 
 export interface RulesOnlyOutcomeDispatch {
@@ -81,6 +83,7 @@ export class FormRendererInvocationLifecycle {
     private invocationVersion?: string;
     private observedDocumentVersion?: string;
     private destroyed = false;
+    private observedInstanceReset: boolean;
     private readonly reportError = (error: unknown): void => this.services.errorHandler.handleError(error);
 
     private get currentDocumentVersion(): string | undefined {
@@ -90,7 +93,9 @@ export class FormRendererInvocationLifecycle {
     constructor(
         private readonly host: FormRendererInvocationHost,
         private readonly services: FormRendererInvocationServices
-    ) {}
+    ) {
+        this.observedInstanceReset = services.instanceResetEnabled();
+    }
 
     rebind(previous: FormModel | undefined, next: FormModel | undefined): void {
         this.cancel();
@@ -98,7 +103,7 @@ export class FormRendererInvocationLifecycle {
             unbindFormState(previous, this.host, this.generation);
         }
         this.generation = {};
-        if (next) {
+        if (next && this.services.instanceResetEnabled()) {
             bindFormState(next, this.host, this.generation);
         }
     }
@@ -127,6 +132,18 @@ export class FormRendererInvocationLifecycle {
         }
     }
 
+    observeInstanceReset(enabled: boolean): void {
+        if (enabled === this.observedInstanceReset) {
+            return;
+        }
+        this.observedInstanceReset = enabled;
+        if (!enabled) {
+            this.cancel();
+            return;
+        }
+        this.bindCurrentForm();
+    }
+
     destroy(): void {
         this.destroyed = true;
         this.cancel();
@@ -153,7 +170,22 @@ export class FormRendererInvocationLifecycle {
     }
 
     private canDispatch(form: FormModel, { outcome, isHostCurrent }: RulesOnlyOutcomeDispatch): boolean {
-        return !this.destroyed && !this.host.readOnly && !!form && !form.readOnly && outcome.form === form && isHostCurrent();
+        return (
+            this.services.instanceResetEnabled() &&
+            !this.destroyed &&
+            !this.host.readOnly &&
+            !!form &&
+            !form.readOnly &&
+            outcome.form === form &&
+            isHostCurrent()
+        );
+    }
+
+    private bindCurrentForm(): void {
+        const form = this.host.formDefinition;
+        if (form && !hasFormStateBinding(form, this.host, this.generation)) {
+            bindFormState(form, this.host, this.generation);
+        }
     }
 
     private prepareCoordinator(target: InvocationTarget): FormInvocationCoordinator {

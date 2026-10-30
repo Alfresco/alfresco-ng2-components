@@ -38,6 +38,7 @@ import { WidgetTypeEnum, WidgetVisibilityModel } from '../../../models/widget-vi
 import { ThemeModel } from './theme.model';
 import { FormResetOptions, FormResetResult, FormWriteContext, withFormWrite, isFormMutating } from '../../../models/form-state.model';
 import { resetFormToDefaults, captureFormResetEditability } from '../../../models/form-reset';
+import { isFormInstanceResetEnabled } from '../../../models/form-instance-reset-switch.model';
 
 export interface ConfirmMessage {
     show: boolean;
@@ -475,13 +476,20 @@ export class FormModel implements ProcessFormModel {
     }
 
     private handleRepeatableSectionField(repeatableSection: ContainerModel | FormFieldModel, formFieldModel: FormFieldModel[]): void {
-        const field = repeatableSection instanceof ContainerModel ? repeatableSection.field : repeatableSection;
+        const field = this.repeatableSectionFieldOf(repeatableSection);
         formFieldModel.push(field);
         for (const row of field.rows) {
             for (const column of row.columns) {
                 this.processFields(column.fields, formFieldModel);
             }
         }
+    }
+
+    private repeatableSectionFieldOf(repeatableSection: ContainerModel | FormFieldModel): FormFieldModel {
+        if (repeatableSection instanceof ContainerModel || !isFormInstanceResetEnabled()) {
+            return repeatableSection.field;
+        }
+        return repeatableSection;
     }
 
     private handleContainerField(container: ContainerModel, formFieldModel: FormFieldModel[]): void {

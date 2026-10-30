@@ -36,6 +36,7 @@ import { RepeatableSectionModel, ROW_ID_PREFIX, TEMPLATE_ROW_ID } from './repeat
 import { formFieldRuleHandler } from './handlers/form-field-rule.handler';
 import { formFieldVisibilityConditionHandler } from './handlers/form-field-visibility-condition.handler';
 import { captureAuthoredDefinition, isFormStateConstructionSilent, canWriteFormField } from '../../../models/form-state.model';
+import { isFormInstanceResetEnabled } from '../../../models/form-instance-reset-switch.model';
 
 export type FieldOptionType = 'rest' | 'manual' | 'variable';
 export type FieldSelectionType = 'single' | 'multiple';
@@ -512,7 +513,7 @@ export class FormFieldModel extends FormWidgetModel {
         return row;
     }
 
-    private createColumns(fields: any, form: any, options: RowColumnOptions) {
+    private createColumns(fields: any, form: any, { rowId, index, value, isTemplate = false, preserveRowValuePresence = false }: RowColumnOptions) {
         const columns: ContainerColumnModel[] = [];
 
         Object.keys(fields).forEach((currentField) => {
@@ -522,7 +523,17 @@ export class FormFieldModel extends FormWidgetModel {
 
             const col = new ContainerColumnModel();
             col.fields = (fields[currentField] || []).map(
-                (field: any) => new FormFieldModel(form, field, this.createRowParentConfig(field, options))
+                (field: any) =>
+                    new FormFieldModel(form, field, {
+                        id: this.id,
+                        uid: this.getUniqueId(field, rowId),
+                        fields: this.fields,
+                        rowIndex: index ?? 0,
+                        value: field.type === FormFieldTypes.SECTION ? value : value?.[field.id],
+                        isTemplate: this.isTemplateColumn(isTemplate),
+                        preserveRowValuePresence,
+                        hasAuthoredRowValue: preserveRowValuePresence && hasOwnRowValue(value, field.id)
+                    })
             );
             col.rowspan = fields[currentField].length;
 
@@ -537,20 +548,11 @@ export class FormFieldModel extends FormWidgetModel {
         return columns;
     }
 
-    private createRowParentConfig(
-        field: any,
-        { rowId, index, value, isTemplate = false, preserveRowValuePresence = false }: RowColumnOptions
-    ): RepeatableSectionModel {
-        return {
-            id: this.id,
-            uid: this.getUniqueId(field, rowId),
-            fields: this.fields,
-            rowIndex: index ?? 0,
-            value: field.type === FormFieldTypes.SECTION ? value : value?.[field.id],
-            isTemplate: isTemplate || this.parent?.isTemplate,
-            preserveRowValuePresence,
-            hasAuthoredRowValue: preserveRowValuePresence && hasOwnRowValue(value, field.id)
-        };
+    private isTemplateColumn(isTemplate: boolean): boolean {
+        if (!isFormInstanceResetEnabled()) {
+            return isTemplate;
+        }
+        return isTemplate || this.parent?.isTemplate;
     }
 
     private updateRepeatableSectionReadOnlyState(state: boolean) {
@@ -811,6 +813,11 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     restoreRuntimeValue(value: any, repeatableDefinition?: Record<string, unknown>): void {
+        if (!isFormInstanceResetEnabled()) {
+            this._value = value;
+            this.writeRuntimeValue(this.getFormValue());
+            return;
+        }
         const snapshot = this.captureRuntimeSnapshot();
         this._value = value;
         try {
@@ -844,7 +851,10 @@ export class FormFieldModel extends FormWidgetModel {
             this.columns = [];
             this.form.values[this.id] = [];
         }
-        const formValue = this.getFormValue(repeatableDefinition);
+        this.writeRuntimeValue(this.getFormValue(repeatableDefinition));
+    }
+
+    private writeRuntimeValue(formValue: any): void {
         if (this.parent) {
             this.updateRepeatableSectionValue(formValue);
         } else {

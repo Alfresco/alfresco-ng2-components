@@ -27,7 +27,8 @@ import {
     FormOutcomeExecutionUnavailableError,
     FormOutcomeRequestEvent,
     FormEvent,
-    FormService
+    FormService,
+    provideFormInstanceReset
 } from '@alfresco/adf-core';
 import { Subject, of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
@@ -1837,5 +1838,31 @@ describe('StartProcessCloudComponent', () => {
         expect(startProcessWithFormSpy).not.toHaveBeenCalled();
         expect(component.customOutcomeName).toBeUndefined();
         expect(component.customOutcomeId).toBeUndefined();
+    });
+});
+
+describe('StartProcessCloudComponent when form instance reset is disabled', () => {
+    let component: StartProcessCloudComponent;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [StartProcessCloudComponent],
+            providers: [{ provide: ADF_DISPLAY_TEXT_SETTINGS, useValue: { enableExpressionEvaluation: true } }, provideFormInstanceReset(() => false)]
+        });
+        component = TestBed.createComponent(StartProcessCloudComponent).componentInstance;
+    });
+
+    it('should start the process for vetoed and execution mode outcome events', () => {
+        const startProcess = spyOn(component, 'startProcess');
+        const vetoed = new FormOutcomeEvent(new FormOutcomeModel(null, { id: 'ordinary', name: 'Ordinary' }));
+        vetoed.preventDefault();
+        const rulesOnly = new FormOutcomeEvent(new FormOutcomeModel(null, { id: 'clear', name: 'Clear', executionMode: 'rules-only' }));
+
+        component.onCustomOutcomeClicked(vetoed);
+        component.onCustomOutcomeClicked(rulesOnly);
+
+        expect(startProcess).toHaveBeenCalledTimes(2);
+        expect(component.customOutcomeName).toBe('Clear');
+        expect(component.customOutcomeId).toBe('clear');
     });
 });

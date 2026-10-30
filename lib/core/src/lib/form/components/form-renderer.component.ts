@@ -46,6 +46,7 @@ import { FormInvocationResult, FormRulesManager, formRulesManagerFactory } from 
 import { FormWriteContext, FormResetResult } from '../models/form-state.model';
 import { NotificationService } from '../../notifications/services/notification.service';
 import { FormRendererInvocationLifecycle } from './form-renderer-invocation-lifecycle';
+import { injectFormInstanceResetEnabled } from '../services/provide-form-instance-reset';
 import { FormService } from '../services/form.service';
 import { WidgetVisibilityService } from '../services/widget-visibility.service';
 import { FormFieldComponent } from './form-field/form-field.component';
@@ -110,10 +111,12 @@ export class FormRendererComponent<T> implements OnChanges, OnInit, OnDestroy {
     private readonly destroyRef = inject(DestroyRef);
     private readonly notificationService = inject(NotificationService);
     private readonly errorHandler = inject(ErrorHandler);
+    private readonly formInstanceResetEnabled = injectFormInstanceResetEnabled();
     private readonly invocations = new FormRendererInvocationLifecycle(this, {
         rulesManager: this.formRulesManager,
         notificationService: this.notificationService,
-        errorHandler: this.errorHandler
+        errorHandler: this.errorHandler,
+        instanceResetEnabled: this.formInstanceResetEnabled
     });
 
     @Input({ required: true })
@@ -206,6 +209,11 @@ export class FormRendererComponent<T> implements OnChanges, OnInit, OnDestroy {
         effect(() => {
             const version = this.invocations.explicitDocumentVersion();
             untracked(() => this.invocations.observeDocumentVersion(version));
+        });
+
+        effect(() => {
+            const enabled = this.formInstanceResetEnabled();
+            untracked(() => this.invocations.observeInstanceReset(enabled));
         });
     }
 

@@ -25,6 +25,9 @@ import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
 import { repeatableSectionForm } from '../../mock/repeatable-section-form.mock';
 import { beginFormMutation, bindFormState } from '../../../models/form-state.model';
+import { EnvironmentInjector } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { provideFormInstanceReset } from '../../../services/provide-form-instance-reset';
 
 describe('FormFieldModel', () => {
     it('should store the form reference', () => {
@@ -2354,6 +2357,11 @@ describe('FormFieldModel', () => {
     });
 
     describe('restoreRuntimeValue', () => {
+        beforeEach(() => {
+            TestBed.configureTestingModule({ providers: [provideFormInstanceReset()] });
+            TestBed.inject(EnvironmentInjector);
+        });
+
         it('should set _value and write to form.values for a top-level text field', () => {
             const form = new FormModel();
             const field = new FormFieldModel(form, { id: 'text1', type: 'text', value: null });
@@ -2526,5 +2534,63 @@ describe('getValidationSummaryTranslationParameters', () => {
     it('should return empty parameters when the summary is inactive or omitted', () => {
         expect(getValidationSummaryTranslationParameters(new ErrorMessageModel())).toEqual({});
         expect(getValidationSummaryTranslationParameters()).toEqual({});
+    });
+});
+
+describe('FormFieldModel when form instance reset is disabled', () => {
+    const nestedTemplateJson = {
+        id: 'outer',
+        type: FormFieldTypes.REPEATABLE_SECTION,
+        params: { initialNumberOfRows: 0 },
+        numberOfColumns: 1,
+        fields: {
+            1: [
+                {
+                    id: 'inner',
+                    type: FormFieldTypes.REPEATABLE_SECTION,
+                    params: { initialNumberOfRows: 1 },
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'text', type: FormFieldTypes.TEXT }] }
+                }
+            ]
+        }
+    };
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({ providers: [provideFormInstanceReset(() => false)] });
+        TestBed.inject(EnvironmentInjector);
+    });
+
+    it('should keep the new runtime value when serializing it fails', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, { id: 'text1', type: 'text', value: 'existing' });
+        spyOn(field, 'getFormValue').and.throwError('serializer');
+
+        expect(() => field.restoreRuntimeValue('restored')).toThrowError('serializer');
+
+        expect(field.value).toBe('restored');
+    });
+
+    it('should serialize a restored value of a column template field', () => {
+        const form = new FormModel();
+        const section = new FormFieldModel(form, {
+            id: 'rows',
+            type: FormFieldTypes.REPEATABLE_SECTION,
+            params: { initialNumberOfRows: 0 },
+            numberOfColumns: 1,
+            fields: { 1: [{ id: 'text', type: FormFieldTypes.TEXT }] }
+        });
+
+        section.columns[0].fields[0].restoreRuntimeValue('restored');
+
+        expect(form.values['rows'][0]['text']).toBe('restored');
+    });
+
+    it('should not mark the rows of a repeatable section nested in a column template as template rows', () => {
+        const outer = new FormFieldModel(new FormModel(), nestedTemplateJson);
+        const inner = outer.columns[0].fields[0];
+
+        expect(inner.parent.isTemplate).toBeTrue();
+        expect(inner.rows[0].columns[0].fields[0].parent.isTemplate).toBeFalse();
     });
 });

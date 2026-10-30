@@ -34,6 +34,7 @@ export * from './services/widget-visibility.service';
 export * from './services/form-field-value-formatter.service';
 export * from './services/form-field-value-formatter.token';
 export * from './services/form-field-value-adapter.service';
+export { injectFormInstanceResetEnabled, provideFormInstanceReset } from './services/provide-form-instance-reset';
 
 export * from './pipes';
 

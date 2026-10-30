@@ -16,12 +16,12 @@
  */
 
 import { BrowserTestingModule } from '@angular/platform-browser/testing';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule, provideFormInstanceReset } from '@alfresco/adf-core';
 import { NgModule, provideZoneChangeDetection } from '@angular/core';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [BrowserTestingModule, NoopTranslateModule],
-    providers: [provideNoopAnimations(), provideZoneChangeDetection()]
+    providers: [provideNoopAnimations(), provideZoneChangeDetection(), provideFormInstanceReset()]
 })
 export class GlobalTestingModule {}
