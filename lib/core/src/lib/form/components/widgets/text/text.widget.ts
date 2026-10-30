@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { NgIf, NgTemplateOutlet } from '@angular/common';
-import { Component, Directive, inject, InjectionToken, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -26,30 +26,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { WidgetComponent } from '../widget.component';
 import { ErrorMessageModel, getValidationSummaryTranslationParameters } from '../core/error-message.model';
 import { FormattableTextWidgetComponent } from '../core/formattable-text.widget';
 import { DEFAULT_TEXT_MAX_LENGTH } from '../core/form-field-validator';
 import { InputMaskDirective } from './text-mask.component';
 import { IconModule } from '../../../../icon/icon.module';
-
-type FieldStatusTemplate = TemplateRef<{ $implicit: WidgetComponent }>;
-const FIELD_STATUS_TEMPLATE = new InjectionToken<FieldStatusTemplate>('FIELD_STATUS_TEMPLATE');
-
-@Directive({
-    selector: '[adf-field-status-template]',
-    providers: [
-        {
-            provide: FIELD_STATUS_TEMPLATE,
-            useFactory: (directive: FieldStatusTemplateDirective) => directive.template,
-            deps: [FieldStatusTemplateDirective]
-        }
-    ]
-})
-export class FieldStatusTemplateDirective {
-    @Input('adf-field-status-template')
-    template?: FieldStatusTemplate;
-}
+import { FIELD_STATUS_TEMPLATE } from '../core/field-status-template.directive';
 
 @Component({
     selector: 'text-widget',
