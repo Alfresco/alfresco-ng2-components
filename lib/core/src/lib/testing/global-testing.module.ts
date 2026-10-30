@@ -19,9 +19,10 @@ import { NoopTranslateModule } from './noop-translate.module';
 import { NgModule, provideZoneChangeDetection } from '@angular/core';
 import { BrowserTestingModule } from '@angular/platform-browser/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideFormInstanceReset } from '../form/services/provide-form-instance-reset';
 
 @NgModule({
     imports: [BrowserTestingModule, NoopTranslateModule],
-    providers: [provideNoopAnimations(), provideZoneChangeDetection()]
+    providers: [provideNoopAnimations(), provideZoneChangeDetection(), provideFormInstanceReset()]
 })
 export class GlobalTestingModule {}

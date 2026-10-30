@@ -43,6 +43,7 @@ import {
     FormResetResult,
     FormWriteContext
 } from '../../../models/form-state.model';
+import { provideFormInstanceReset } from '../../../services/provide-form-instance-reset';
 
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
@@ -1292,6 +1293,77 @@ describe('AmountWidgetComponent reset through the form renderer', () => {
             }
         });
     }
+});
+
+describe('AmountWidgetComponent when form instance reset is disabled', () => {
+    let service: FormService;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [FormRendererComponent],
+            providers: [
+                { provide: FORM_RULES_MANAGER, useValue: { initialize: jasmine.createSpy('initialize'), destroy: jasmine.createSpy('destroy') } },
+                { provide: TranslationService, useValue: { getLocale: () => 'en-US' } },
+                provideFormInstanceReset(() => false)
+            ]
+        });
+        service = TestBed.inject(FormService);
+    });
+
+    function mount() {
+        const form = new FormModel(
+            {
+                id: 'definition',
+                fields: [
+                    {
+                        id: 'container',
+                        type: 'container',
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'amount', type: 'amount', currency: 'USD', value: 100 }] }
+                    }
+                ]
+            },
+            undefined,
+            false,
+            service
+        );
+        const fixture = TestBed.createComponent(FormRendererComponent);
+        fixture.componentRef.setInput('formDefinition', form);
+        fixture.detectChanges();
+        const widget = fixture.debugElement.query(By.directive(AmountWidgetComponent)).componentInstance as AmountWidgetComponent;
+        return { form, widget, field: form.getFieldById('amount') };
+    }
+
+    it('should keep handling input after the form state is bound to another owner', () => {
+        const { form, widget, field } = mount();
+        expect(service.formState.captureMount(field)).toBeUndefined();
+
+        bindFormState(form, {}, {});
+        widget.amountWidgetValue = '250';
+        widget.onFieldChangedAmountWidget();
+
+        expect(field.value).toBe('250');
+    });
+
+    it('should follow value changes published for another field instance with the same id', () => {
+        const { widget } = mount();
+        const sameId = new FormFieldModel(new FormModel(), { id: 'amount', type: 'amount', value: '300' });
+
+        service.formFieldValueChanged.next(new FormFieldEvent(sameId.form, sameId));
+
+        expect(widget.amountWidgetValue).toBe(sameId.value);
+    });
+
+    it('should leave valueAsNumber unchanged when the amount is edited', () => {
+        const { widget, field } = mount();
+        widget.valueAsNumber = 100;
+        widget.amountWidgetValue = '250';
+
+        widget.onFieldChangedAmountWidget();
+
+        expect(field.value).toBe('250');
+        expect(widget.valueAsNumber).toBe(100);
+    });
 });
 
 describe('AmountWidgetComponent state projection', () => {

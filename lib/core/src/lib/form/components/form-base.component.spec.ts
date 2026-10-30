@@ -15,11 +15,14 @@
  * limitations under the License.
  */
 
+import { Injector, runInInjectionContext, signal } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { FormOutcomeNotFoundError } from '../errors/form-outcome-not-found.error';
 import { FormBaseComponent } from './form-base.component';
 import { FormFieldModel, FormModel, FormOutcomeModel } from './widgets';
 import { FormOutcomeExecutionUnavailableError } from '../errors/form-outcome-execution-unavailable.error';
 import { beginFormMutation, bindFormState } from '../models/form-state.model';
+import { FORM_INSTANCE_RESET_ENABLED } from '../services/provide-form-instance-reset';
 
 class TestFormComponent extends FormBaseComponent {
     completeTaskForm = jasmine.createSpy('completeTaskForm');
@@ -35,7 +38,7 @@ describe('FormBaseComponent', () => {
     let target: FormOutcomeModel;
 
     beforeEach(() => {
-        component = new TestFormComponent();
+        component = TestBed.runInInjectionContext(() => new TestFormComponent());
         component.form = new FormModel({ id: 'form', fields: [], outcomes: [{ id: 'approve', name: 'Approve' }] });
         target = component.form.outcomes.find((outcome) => outcome.id === 'approve');
         target.isVisible = false;
@@ -323,5 +326,45 @@ describe('FormBaseComponent', () => {
         expect(validateFormSpy).not.toHaveBeenCalled();
         expect(component.form.showAllValidationErrors).toBeFalse();
         expect(component.completeTaskForm).not.toHaveBeenCalled();
+    });
+
+    describe('when form instance reset is disabled', () => {
+        beforeEach(() => {
+            const injector = Injector.create({
+                providers: [{ provide: FORM_INSTANCE_RESET_ENABLED, useValue: signal(false) }],
+                parent: TestBed.inject(Injector)
+            });
+            component = runInInjectionContext(injector, () => new TestFormComponent());
+            component.form = new FormModel({ id: 'form', fields: [], outcomes: [{ id: 'approve', name: 'Approve' }] });
+        });
+
+        it('should run an outcome with an execution mode through ordinary routing', () => {
+            const outcome = new FormOutcomeModel(component.form, { id: 'configured', name: 'Custom name', executionMode: 'unknown' });
+            const errors = spyOn(component.error, 'emit');
+
+            expect(component.onOutcomeClicked(outcome)).toBeTrue();
+            expect(component.completeTaskForm).toHaveBeenCalledOnceWith('Custom name', 'configured');
+            expect(errors).not.toHaveBeenCalled();
+        });
+
+        it('should keep a rules-only outcome enabled and routed ordinarily when the component is read only', () => {
+            const outcome = new FormOutcomeModel(component.form, { id: 'clear', name: 'Clear', executionMode: 'rules-only' });
+            component.readOnly = true;
+
+            expect(component.isOutcomeButtonEnabled(outcome)).toBeTrue();
+            expect(component.onOutcomeClicked(outcome)).toBeFalse();
+            expect(component.completeTaskForm).not.toHaveBeenCalled();
+        });
+
+        it('should request an outcome with an execution mode like an ordinary outcome', () => {
+            component.form.outcomes = [new FormOutcomeModel(component.form, { id: 'clear', name: 'Clear', executionMode: 'rules-only' })];
+            const errors = spyOn(component.error, 'emit');
+
+            expect(component.onOutcomeRequested('clear')).toBeTrue();
+            expect(component.completeTaskForm).toHaveBeenCalledOnceWith('Clear', 'clear');
+            component.form.readOnly = true;
+            expect(component.onOutcomeRequested('clear')).toBeFalse();
+            expect(errors).not.toHaveBeenCalled();
+        });
     });
 });

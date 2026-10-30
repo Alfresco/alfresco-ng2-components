@@ -32,6 +32,7 @@ import { NotificationService } from '../../notifications/services/notification.s
 import { FormRulesEvent } from '../events/form-rules.event';
 import { FormRenderingService } from '../services/form-rendering.service';
 import { FormService } from '../services/form.service';
+import { provideFormInstanceReset } from '../services/provide-form-instance-reset';
 import { ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED, FormRendererComponent } from './form-renderer.component';
 import {
     amountWidgetFormVisibilityMock,
@@ -2130,6 +2131,66 @@ const mountRulesOnlyRenderer = (version: string | number | undefined = 1, fields
     fixture.detectChanges();
     return { fixture, renderer: fixture.componentInstance, form, outcome: form.outcomes.find((outcome) => outcome.id === 'clear') };
 };
+
+describe('Form Renderer Component form instance reset switch', () => {
+    let switchState: BehaviorSubject<boolean>;
+    let service: FormService;
+    let notifications: jasmine.Spy;
+    let provider: { enabled: boolean; execute: jasmine.Spy };
+
+    const flushPromises = (): Promise<void> => new Promise((resolve) => setTimeout(resolve));
+
+    const turnSwitch = async (enabled: boolean, fixture: ComponentFixture<FormRendererComponent<unknown>>) => {
+        switchState.next(enabled);
+        fixture.detectChanges();
+        await fixture.whenStable();
+    };
+
+    beforeEach(() => {
+        switchState = new BehaviorSubject(false);
+        TestBed.configureTestingModule({
+            imports: [FormRendererComponent],
+            providers: [{ provide: FORM_RULES_MANAGER, useExisting: RootFormRulesManager }, provideFormInstanceReset(() => switchState)]
+        });
+        service = TestBed.inject(FormService);
+        notifications = spyOn(TestBed.inject(NotificationService), 'showError');
+        provider = { enabled: true, execute: jasmine.createSpy('execute').and.callFake((request: FormInvocationRequest) => request.reset()) };
+        TestBed.inject(RootFormRulesManager).rulesOnlyProvider = provider;
+    });
+
+    it('should neither bind form state nor dispatch rules-only outcomes while the switch is off', () => {
+        const mounted = mountRulesOnlyRenderer();
+
+        expect(service.formState.captureMount(mounted.form.getFieldById('text'))).toBeUndefined();
+        expect(mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, jasmine.createSpy('terminal'))).toBeFalse();
+        expect(provider.execute).not.toHaveBeenCalled();
+        expect(notifications).not.toHaveBeenCalled();
+    });
+
+    it('should bind form state and dispatch once the switch is turned on at runtime', async () => {
+        const mounted = mountRulesOnlyRenderer();
+        const terminal = jasmine.createSpy('terminal');
+
+        await turnSwitch(true, mounted.fixture);
+
+        expect(service.formState.captureMount(mounted.form.getFieldById('text'))).toEqual(
+            jasmine.objectContaining({ form: mounted.form, renderer: mounted.renderer })
+        );
+        expect(mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, terminal)).toBeTrue();
+        await flushPromises();
+        expect(terminal).toHaveBeenCalledOnceWith(jasmine.objectContaining({ status: 'complete' }));
+    });
+
+    it('should stop dispatching rules-only outcomes once the switch is turned off at runtime', async () => {
+        switchState.next(true);
+        const mounted = mountRulesOnlyRenderer();
+
+        await turnSwitch(false, mounted.fixture);
+
+        expect(mounted.renderer.dispatchRulesOnlyOutcome(mounted.outcome, jasmine.createSpy('terminal'))).toBeFalse();
+        expect(provider.execute).not.toHaveBeenCalled();
+    });
+});
 
 describe('Form Renderer Component rules-only invocation', () => {
     let manager: RootFormRulesManager;
