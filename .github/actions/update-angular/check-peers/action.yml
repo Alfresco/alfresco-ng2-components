@@ -7,7 +7,7 @@ runs:
       id: peers
       shell: bash
       run: |
-        OUTCOME=$(node scripts/update-angular/report-peers.mjs "$RUNNER_TEMP/peers-baseline.json" report "$RUNNER_TEMP/validation.log" "$RUNNER_TEMP/peers-aligned.md")
+        OUTCOME=$(node scripts/update-angular/report-peers.mjs "$RUNNER_TEMP/peers-baseline.json" "$RUNNER_TEMP/report" "$RUNNER_TEMP/validation.log" "$RUNNER_TEMP/peers-aligned.md")
         echo "outcome=$OUTCOME" >> "$GITHUB_OUTPUT"
     - name: Record result
       uses: ./.github/actions/update-angular/record-validation-result
