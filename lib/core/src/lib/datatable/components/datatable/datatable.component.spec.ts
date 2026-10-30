@@ -39,6 +39,7 @@ import { firstValueFrom } from 'rxjs';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { By } from '@angular/platform-browser';
 import { DataTableRowComponent } from '../datatable-row/datatable-row.component';
+import { DragDropStateService } from '../../../services/drag-drop-state.service';
 
 @Component({
     selector: 'adf-custom-column-template-component',
@@ -1657,11 +1658,13 @@ describe('DataTable', () => {
 
         describe('Rows', () => {
             let rows: DebugElement[];
+            let dragDropStateService: DragDropStateService;
 
             const getDragDirective = (index = 0): CdkDrag => rows[index].injector.get(CdkDrag);
 
             beforeEach(() => {
                 rows = getDatatableBody().queryAll(By.directive(DataTableRowComponent));
+                dragDropStateService = TestBed.inject(DragDropStateService);
             });
 
             it('should emit dragDropped when cdkDragDropped is triggered and some row is hovered', () => {
@@ -1701,6 +1704,22 @@ describe('DataTable', () => {
                     currentIndex: 2
                 } as CdkDragDrop<any>);
                 expect(dataTable.dragDropped.emit).not.toHaveBeenCalled();
+            });
+
+            it('should set dragDropStateService dragging to true if cdkDragStarted is triggered', () => {
+                const draggingBefore = dragDropStateService.dragging();
+                getDragDirective().started.emit();
+
+                expect(dragDropStateService.dragging()).toBeTrue();
+                expect(draggingBefore).not.toEqual(dragDropStateService.dragging());
+            });
+
+            it('should set dragDropStateService dragging to false if cdkDragEnded is triggered', () => {
+                const dragDirective = getDragDirective();
+                dragDirective.started.emit();
+                dragDirective.ended.emit();
+
+                expect(dragDropStateService.dragging()).toBeFalse();
             });
 
             it('should have assigned default cdkDragBoundary for each row', () => {
