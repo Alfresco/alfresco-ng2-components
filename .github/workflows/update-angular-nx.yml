@@ -7,6 +7,7 @@ on:
         description: "Target Angular major version (must be the next major, e.g. 22)"
         required: true
         type: string
+        default: '22'
   push:
     branches:
       - improvement/AAE-52273-automate-angular-migration
