@@ -78,14 +78,16 @@ jobs:
       - name: Fix format and lint
         uses: ./.github/actions/update-angular/fix-format-and-lint
       - name: Verify lockfile
-        run: pnpm install --frozen-lockfile
+        uses: ./.github/actions/update-angular/verify-lockfile
       - name: Check peer dependencies
         uses: ./.github/actions/update-angular/check-peers
       - name: Push branch
-        env:
-          BRANCH: ${{ steps.prepare.outputs.branch }}
-        run: git push origin "$BRANCH"
+        if: ${{ always() && steps.prepare.outputs.branch != '' }}
+        uses: ./.github/actions/update-angular/push-branch
+        with:
+          branch: ${{ steps.prepare.outputs.branch }}
       - name: Create migration report
+        if: ${{ always() && steps.prepare.outputs.base-sha != '' }}
         uses: ./.github/actions/update-angular/create-report
         with:
           base-sha: ${{ steps.prepare.outputs.base-sha }}
@@ -199,7 +201,7 @@ jobs:
   pull-request:
     name: "🔀 Open pull request"
     needs: [migrate, clean-overrides, build, lint, unit-tests]
-    if: ${{ always() && needs.migrate.result == 'success' && needs.clean-overrides.result == 'success' }}
+    if: ${{ always() && needs.migrate.outputs.branch != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Generate app token
@@ -213,11 +215,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Download migration report
+        continue-on-error: true
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: migration-report
           path: report
       - name: Download overrides report
+        continue-on-error: true
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: overrides-report
@@ -234,4 +238,9 @@ jobs:
           github-token: ${{ steps.app-token.outputs.token }}
           branch: ${{ needs.migrate.outputs.branch }}
           version: ${{ needs.migrate.outputs.version }}
-          job-results: ${{ needs.build.result }} ${{ needs.lint.result }} ${{ needs.unit-tests.result }}
+          job-results: ${{ needs.migrate.result }} ${{ needs.clean-overrides.result }} ${{ needs.build.result }} ${{ needs.lint.result }} ${{ needs.unit-tests.result }}
+      - name: Fail the run when the update did not complete
+        if: ${{ needs.migrate.result != 'success' || needs.clean-overrides.result != 'success' }}
+        run: |
+          echo "::error::The update did not complete. A draft pull request with the report was opened."
+          exit 1
