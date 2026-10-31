@@ -31,8 +31,8 @@ describe('SavedSearchesService', () => {
     const testNodeId = 'test-node-id';
     const LOCAL_STORAGE_KEY = 'saved-searches-test-user-migrated';
     const SAVED_SEARCHES_CONTENT = JSON.stringify([
-        { name: 'Search 1', description: 'Description 1', encodedUrl: 'url1', order: 0 },
-        { name: 'Search 2', description: 'Description 2', encodedUrl: 'url2', order: 1 }
+        { name: 'Search 1', description: 'Description 1', encodedUrl: 'url1', order: 0, compiledQuery: 'query1' },
+        { name: 'Search 2', description: 'Description 2', encodedUrl: 'url2', order: 1, compiledQuery: 'query2' }
     ]);
 
     /**
@@ -106,7 +106,7 @@ describe('SavedSearchesService', () => {
         it('should save a new search', (done) => {
             spyOn(authService, 'getUsername').and.callFake(() => testUserName);
             spyOn(localStorage, 'getItem').and.callFake(() => 'true');
-            const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3' };
+            const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3', compiledQuery: 'query3' };
             service.init();
 
             service.saveSearch(newSearch).subscribe(() => {
@@ -134,7 +134,7 @@ describe('SavedSearchesService', () => {
         it('should emit updated saved searches after saving a new search', (done) => {
             spyOn(authService, 'getUsername').and.callFake(() => testUserName);
             spyOn(localStorage, 'getItem').and.callFake(() => 'true');
-            const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3' };
+            const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3', compiledQuery: 'query3' };
             service.init();
 
             service.saveSearch(newSearch).subscribe(() => {

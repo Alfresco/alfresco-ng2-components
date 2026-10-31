@@ -19,5 +19,6 @@ export interface SavedSearch {
     name: string;
     description?: string;
     encodedUrl: string;
+    compiledQuery: string;
     order: number;
 }
