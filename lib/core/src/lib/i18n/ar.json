@@ -434,7 +434,8 @@
       "DRAGGABLE": "قابل للسحب",
       "EMPTY_HEADER": "الرأس فارغ",
       "RESIZE_COLUMN": "غيّر حجم العمود {{ column }}. استخدم مفاتيح الأسهم لضبط العرض، واستخدم Shift للخطوات الأكبر.",
-      "COLUMN_WIDTH_CHANGED": "عرض العمود {{ column }}: {{ width }} بكسل"
+      "COLUMN_WIDTH_CHANGED": "عرض العمود {{ column }}: {{ width }} بكسل",
+      "DRAG_DROP_HINTS": "You can hit Shift + Arrow Up to start drag, Shift + Arrow Down to drop, Shift + Arrow Right to change drop area, and Escape to cancel."
     },
     "FILE_TYPE": {
       "DOCUMENT": "مستند",
@@ -457,6 +458,10 @@
       "SEARCH": "بحث",
       "APPLY": "تطبيق",
       "COLUMNS_VISIBILITY": "حدد الأعمدة المطلوب عرضها"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Release to move to {{ destination }}",
+      "CLOSE_HINT": "Esc to cancel"
     }
   },
   "USER_PROFILE": {

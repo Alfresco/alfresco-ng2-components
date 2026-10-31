@@ -434,7 +434,8 @@
       "DRAGGABLE": "Verschiebbar",
       "EMPTY_HEADER": "Leerer Header",
       "RESIZE_COLUMN": "Ändern Sie die Größe der {{ column }} Spalte. Verwenden Sie Pfeiltasten, um die Breite anzupassen, Umschalt für größere Schritte.",
-      "COLUMN_WIDTH_CHANGED": "{{ column }} Spaltenbreite: {{ width }} Pixel"
+      "COLUMN_WIDTH_CHANGED": "{{ column }} Spaltenbreite: {{ width }} Pixel",
+      "DRAG_DROP_HINTS": "You can hit Shift + Arrow Up to start drag, Shift + Arrow Down to drop, Shift + Arrow Right to change drop area, and Escape to cancel."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -457,6 +458,10 @@
       "SEARCH": "Suchen",
       "APPLY": "Anwenden",
       "COLUMNS_VISIBILITY": "Spalten zum Anzeigen auswählen"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Release to move to {{ destination }}",
+      "CLOSE_HINT": "Esc to cancel"
     }
   },
   "USER_PROFILE": {
