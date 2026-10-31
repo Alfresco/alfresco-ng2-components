@@ -434,7 +434,8 @@
       "DRAGGABLE": "Dragbar",
       "EMPTY_HEADER": "Tomt sidhuvud",
       "RESIZE_COLUMN": "Ändra storlek på kolumnen {{ column }}. Använd piltangenterna för att justera bredden, Shift för större steg.",
-      "COLUMN_WIDTH_CHANGED": "{{ column }} kolumnbredd: {{ width }} pixlar"
+      "COLUMN_WIDTH_CHANGED": "{{ column }} kolumnbredd: {{ width }} pixlar",
+      "DRAG_DROP_HINTS": "You can hit Shift + Arrow Up to start drag, Shift + Arrow Down to drop, Shift + Arrow Right to change drop area, and Escape to cancel."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -457,6 +458,10 @@
       "SEARCH": "Sök",
       "APPLY": "Tillämpa",
       "COLUMNS_VISIBILITY": "Välj kolumner att visa"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Release to move to {{ destination }}",
+      "CLOSE_HINT": "Esc to cancel"
     }
   },
   "USER_PROFILE": {

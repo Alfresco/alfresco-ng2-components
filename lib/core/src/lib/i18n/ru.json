@@ -434,7 +434,8 @@
       "DRAGGABLE": "Перемещаемый",
       "EMPTY_HEADER": "Пустой заголовок",
       "RESIZE_COLUMN": "Изменение размера столбца {{ column }}. Используйте клавиши со стрелками для настройки ширины, Shift — для больших шагов.",
-      "COLUMN_WIDTH_CHANGED": "Ширина столбца {{ column }}: {{ width }} пикселей"
+      "COLUMN_WIDTH_CHANGED": "Ширина столбца {{ column }}: {{ width }} пикселей",
+      "DRAG_DROP_HINTS": "You can hit Shift + Arrow Up to start drag, Shift + Arrow Down to drop, Shift + Arrow Right to change drop area, and Escape to cancel."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Документ",
@@ -457,6 +458,10 @@
       "SEARCH": "Поиск",
       "APPLY": "Применить",
       "COLUMNS_VISIBILITY": "Выберите столбцы для отображения"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Release to move to {{ destination }}",
+      "CLOSE_HINT": "Esc to cancel"
     }
   },
   "USER_PROFILE": {

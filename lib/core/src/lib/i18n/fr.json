@@ -434,7 +434,8 @@
       "DRAGGABLE": "Déplaçable",
       "EMPTY_HEADER": "En-tête vide",
       "RESIZE_COLUMN": "Redimensionnez la colonne {{ column }}. Utilisez les flèches de direction pour ajuster la largeur et la touche Maj pour des incréments plus importants.",
-      "COLUMN_WIDTH_CHANGED": "Largeur de la colonne {{ column }} : {{ width }} pixels"
+      "COLUMN_WIDTH_CHANGED": "Largeur de la colonne {{ column }} : {{ width }} pixels",
+      "DRAG_DROP_HINTS": "You can hit Shift + Arrow Up to start drag, Shift + Arrow Down to drop, Shift + Arrow Right to change drop area, and Escape to cancel."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Document",
@@ -457,6 +458,10 @@
       "SEARCH": "Rechercher",
       "APPLY": "Appliquer",
       "COLUMNS_VISIBILITY": "Sélectionner les colonnes à afficher"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Release to move to {{ destination }}",
+      "CLOSE_HINT": "Esc to cancel"
     }
   },
   "USER_PROFILE": {

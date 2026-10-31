@@ -434,7 +434,8 @@
       "DRAGGABLE": "Versleepbaar",
       "EMPTY_HEADER": "Lege kop",
       "RESIZE_COLUMN": "Formaat van kolom {{ column }} wijzigen. Gebruik de pijltoetsen om de breedte aan te passen, Shift voor grotere stappen.",
-      "COLUMN_WIDTH_CHANGED": "Breedte van kolom {{ column }}: {{ width }} pixels"
+      "COLUMN_WIDTH_CHANGED": "Breedte van kolom {{ column }}: {{ width }} pixels",
+      "DRAG_DROP_HINTS": "You can hit Shift + Arrow Up to start drag, Shift + Arrow Down to drop, Shift + Arrow Right to change drop area, and Escape to cancel."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Document",
@@ -457,6 +458,10 @@
       "SEARCH": "Zoeken",
       "APPLY": "Toepassen",
       "COLUMNS_VISIBILITY": "Selecteer kolommen om weer te geven"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Release to move to {{ destination }}",
+      "CLOSE_HINT": "Esc to cancel"
     }
   },
   "USER_PROFILE": {

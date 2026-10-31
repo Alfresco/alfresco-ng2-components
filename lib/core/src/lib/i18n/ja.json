@@ -434,7 +434,8 @@
       "DRAGGABLE": "ドラッグ可能",
       "EMPTY_HEADER": "空のヘッダー",
       "RESIZE_COLUMN": "{{ column }} 列のサイズを変更します。矢印キーで幅を調整し、Shiftキーでより大きなステップで調整します。",
-      "COLUMN_WIDTH_CHANGED": "{{ column }} 列の幅: {{ width }} ピクセル"
+      "COLUMN_WIDTH_CHANGED": "{{ column }} 列の幅: {{ width }} ピクセル",
+      "DRAG_DROP_HINTS": "You can hit Shift + Arrow Up to start drag, Shift + Arrow Down to drop, Shift + Arrow Right to change drop area, and Escape to cancel."
     },
     "FILE_TYPE": {
       "DOCUMENT": "文書",
@@ -457,6 +458,10 @@
       "SEARCH": "検索",
       "APPLY": "適用",
       "COLUMNS_VISIBILITY": "表示する列を選択"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Release to move to {{ destination }}",
+      "CLOSE_HINT": "Esc to cancel"
     }
   },
   "USER_PROFILE": {

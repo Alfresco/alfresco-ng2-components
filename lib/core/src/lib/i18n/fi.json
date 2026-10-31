@@ -434,7 +434,8 @@
       "DRAGGABLE": "Vedettävä",
       "EMPTY_HEADER": "Tyhjä otsikko",
       "RESIZE_COLUMN": "Muuta sarakkeen {{ column }} kokoa. Käytä nuolinäppäimiä leveyden säätämiseen, Shift suurempiin askeliin.",
-      "COLUMN_WIDTH_CHANGED": "Sarakkeen {{ column }} leveys: {{ width }} pikseliä"
+      "COLUMN_WIDTH_CHANGED": "Sarakkeen {{ column }} leveys: {{ width }} pikseliä",
+      "DRAG_DROP_HINTS": "You can hit Shift + Arrow Up to start drag, Shift + Arrow Down to drop, Shift + Arrow Right to change drop area, and Escape to cancel."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Asiakirja",
@@ -457,6 +458,10 @@
       "SEARCH": "Hae",
       "APPLY": "Käytä",
       "COLUMNS_VISIBILITY": "Valitse näytettävät sarakkeet"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Release to move to {{ destination }}",
+      "CLOSE_HINT": "Esc to cancel"
     }
   },
   "USER_PROFILE": {

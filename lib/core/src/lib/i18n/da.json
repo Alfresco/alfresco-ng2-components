@@ -434,7 +434,8 @@
       "DRAGGABLE": "Trækbar",
       "EMPTY_HEADER": "Tom toptekst",
       "RESIZE_COLUMN": "Tilpas størrelsen på kolonnen {{ column }}. Brug piletasterne til at justere bredden, Shift for større trin.",
-      "COLUMN_WIDTH_CHANGED": "{{ column }} kolonnebredde: {{ width }} pixels"
+      "COLUMN_WIDTH_CHANGED": "{{ column }} kolonnebredde: {{ width }} pixels",
+      "DRAG_DROP_HINTS": "You can hit Shift + Arrow Up to start drag, Shift + Arrow Down to drop, Shift + Arrow Right to change drop area, and Escape to cancel."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -457,6 +458,10 @@
       "SEARCH": "Søg",
       "APPLY": "Anvend",
       "COLUMNS_VISIBILITY": "Vælg kolonner, der skal vises"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Release to move to {{ destination }}",
+      "CLOSE_HINT": "Esc to cancel"
     }
   },
   "USER_PROFILE": {

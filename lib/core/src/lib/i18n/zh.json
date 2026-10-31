@@ -434,7 +434,8 @@
       "DRAGGABLE": "可拖动",
       "EMPTY_HEADER": "空白标题",
       "RESIZE_COLUMN": "调整 {{ column }} 列大小。使用箭头键调整宽度,按 Shift 键可加大调整幅度。",
-      "COLUMN_WIDTH_CHANGED": "{{ column }} 列宽:{{ width }} 像素"
+      "COLUMN_WIDTH_CHANGED": "{{ column }} 列宽:{{ width }} 像素",
+      "DRAG_DROP_HINTS": "You can hit Shift + Arrow Up to start drag, Shift + Arrow Down to drop, Shift + Arrow Right to change drop area, and Escape to cancel."
     },
     "FILE_TYPE": {
       "DOCUMENT": "文档",
@@ -457,6 +458,10 @@
       "SEARCH": "搜索",
       "APPLY": "应用",
       "COLUMNS_VISIBILITY": "选择要显示的列"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Release to move to {{ destination }}",
+      "CLOSE_HINT": "Esc to cancel"
     }
   },
   "USER_PROFILE": {

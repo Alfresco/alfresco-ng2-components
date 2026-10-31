@@ -434,7 +434,8 @@
       "DRAGGABLE": "Kan dras",
       "EMPTY_HEADER": "Tom topptekst",
       "RESIZE_COLUMN": "Endre størrelse på kolonnen {{ column }}. Bruk piltastene for å justere bredden, Shift for større steg.",
-      "COLUMN_WIDTH_CHANGED": "{{ column }} kolonnebredde: {{ width }} piksler"
+      "COLUMN_WIDTH_CHANGED": "{{ column }} kolonnebredde: {{ width }} piksler",
+      "DRAG_DROP_HINTS": "You can hit Shift + Arrow Up to start drag, Shift + Arrow Down to drop, Shift + Arrow Right to change drop area, and Escape to cancel."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -457,6 +458,10 @@
       "SEARCH": "Søk",
       "APPLY": "Bruk",
       "COLUMNS_VISIBILITY": "Velg kolonner som skal vises"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Release to move to {{ destination }}",
+      "CLOSE_HINT": "Esc to cancel"
     }
   },
   "USER_PROFILE": {
