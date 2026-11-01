@@ -59,7 +59,7 @@
     "apollo-angular": "13.0.0",
     "chart.js": "4.5.1",
     "cropperjs": "1.6.2",
-    "date-fns": "2.30.0",
+    "date-fns": "4.4.0",
     "dotenv-expand": "5.1.0",
     "editorjs-html": "4.0.5",
     "eventemitter3": "5.0.4",
