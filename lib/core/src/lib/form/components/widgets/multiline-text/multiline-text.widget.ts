@@ -17,6 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
@@ -29,6 +30,7 @@ import { isObservable } from 'rxjs';
 import { ADF_CUSTOM_MESSAGE } from '../core/custom-validation-message.token';
 import { getValidationSummaryTranslationParameters } from '../core/error-message.model';
 import { WidgetComponent } from '../widget.component';
+import { FIELD_STATUS_TEMPLATE } from '../core/field-status-template.directive';
 
 @Component({
     selector: 'multiline-text-widget',
@@ -45,12 +47,13 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [MatFormFieldModule, TranslatePipe, MatInputModule, FormsModule, MatIconModule],
+    imports: [MatFormFieldModule, TranslatePipe, MatInputModule, FormsModule, MatIconModule, NgTemplateOutlet],
     encapsulation: ViewEncapsulation.None
 })
 export class MultilineTextWidgetComponentComponent extends WidgetComponent implements OnInit {
     private readonly destroyRef = inject(DestroyRef);
     private readonly enableCustomMessage = inject(ADF_CUSTOM_MESSAGE, { optional: true });
+    fieldStatusTemplate = inject(FIELD_STATUS_TEMPLATE, { optional: true });
 
     errorStateMatcher: ErrorStateMatcher;
     translateParameters: Record<string, string> = {};
@@ -86,7 +89,7 @@ export class MultilineTextWidgetComponentComponent extends WidgetComponent imple
     private initErrorStateMatcher(): void {
         this.errorStateMatcher = {
             isErrorState: (_control: UntypedFormControl | null, _form: FormGroupDirective | NgForm | null): boolean =>
-                !this.field.isValid && this.isTouched()
+                !this.fieldStatusTemplate && !this.field.isValid && this.isTouched()
         };
     }
 }
