@@ -26,6 +26,7 @@ import { provideCoreAuthTesting } from '../../testing/noop-auth.module';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatBadgeHarness } from '@angular/material/badge/testing';
+import { MatMenuItem } from '@angular/material/menu';
 import { AppConfigService } from '../../app-config/app-config.service';
 
 describe('Notification History Component', () => {
@@ -74,6 +75,9 @@ describe('Notification History Component', () => {
 
         const getNotificationElements = (): NodeListOf<HTMLButtonElement> =>
             overlayContainerElement.querySelectorAll<HTMLButtonElement>('.adf-notification-history-menu-item');
+
+        const getNotificationMenuItems = (): MatMenuItem[] =>
+            testingUtils.getAllByDirective(MatMenuItem).map((menuItem) => menuItem.componentInstance);
 
         it('should empty message be present when there are no notifications in the history', (done) => {
             openNotification();
@@ -131,6 +135,38 @@ describe('Notification History Component', () => {
                 done();
             });
         }, 10000);
+
+        it('should display notification without click callback as not clickable', (done) => {
+            fixture.detectChanges();
+            notificationService.showInfo('Example Message');
+            openNotification();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const notification = getNotificationElements()[0];
+                expect(notification.classList).not.toContain('adf-notification-history-menu-item-clickable');
+                expect(getComputedStyle(notification).cursor).toBe('default');
+                expect(getNotificationMenuItems()[0].disableRipple).toBeTrue();
+                done();
+            });
+        });
+
+        it('should display notification with click callback as clickable', (done) => {
+            fixture.detectChanges();
+            notificationService.pushToNotificationHistory({
+                clickCallBack: jasmine.createSpy('callBack'),
+                messages: ['My new message'],
+                datetime: new Date()
+            } as NotificationModel);
+            openNotification();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const notification = getNotificationElements()[0];
+                expect(notification.classList).toContain('adf-notification-history-menu-item-clickable');
+                expect(getComputedStyle(notification).cursor).toBe('pointer');
+                expect(getNotificationMenuItems()[0].disableRipple).toBeFalse();
+                done();
+            });
+        });
 
         it('should show load more button when there are more notifications', (done) => {
             fixture.detectChanges();
