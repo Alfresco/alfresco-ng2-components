@@ -16,15 +16,18 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Node } from '@alfresco/js-api';
+import { Node, PathElement } from '@alfresco/js-api';
 import { fakeNodeWithCreatePermission } from '../mock';
 import { DocumentListComponent, DocumentListService } from '../document-list';
 import { BreadcrumbComponent } from './breadcrumb.component';
 import { of } from 'rxjs';
-import { NoopAuthModule, UnitTestingUtils } from '@alfresco/adf-core';
-import { SimpleChange } from '@angular/core';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { DataRow, DragDropStateService, NoopAuthModule, UnitTestingUtils } from '@alfresco/adf-core';
+import { DebugElement, SimpleChange } from '@angular/core';
+import { CdkTrapFocus, LiveAnnouncer } from '@angular/cdk/a11y';
 import { TranslateService } from '@ngx-translate/core';
+import { CompactBreadcrumbComponent } from './compact-breadcrumb.component';
+import { By } from '@angular/platform-browser';
+import { CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 
 describe('Breadcrumb', () => {
     let component: BreadcrumbComponent;
@@ -38,7 +41,9 @@ describe('Breadcrumb', () => {
     let translateService: TranslateService;
     let unitTestingUtils: UnitTestingUtils;
 
-    const getBreadcrumbActionText = (): string => fixture.debugElement.nativeElement.querySelector('.adf-breadcrumb-item-current').textContent.trim();
+    const breadcrumbItemCurrent = '.adf-breadcrumb-item-current';
+
+    const getBreadcrumbActionText = (): string => fixture.debugElement.nativeElement.querySelector(breadcrumbItemCurrent).textContent.trim();
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -207,7 +212,7 @@ describe('Breadcrumb', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
 
-        const titleElement = unitTestingUtils.getByCSS('.adf-breadcrumb-item-current');
+        const titleElement = unitTestingUtils.getByCSS(breadcrumbItemCurrent);
         expect(titleElement.nativeElement.tagName).toBe('H1');
     });
 
@@ -375,5 +380,230 @@ describe('Breadcrumb', () => {
 
         expect(translateService.instant).toHaveBeenCalledWith('BREADCRUMB.HEADER.SELECTED', { count: 10 });
         expect(liveAnnouncer.announce).toHaveBeenCalledWith('BREADCRUMB.HEADER.SELECTED');
+    });
+
+    describe('Compact mode', () => {
+        let folderNode: Node;
+
+        const getBreadcrumbItems = (): DebugElement[] => unitTestingUtils.getAllByCSS('.adf-breadcrumb-item');
+
+        const getBreadcrumbContainerPathCompactModeElement = (): DebugElement =>
+            unitTestingUtils.getByCSS('.adf-breadcrumb-container-path-compact-mode');
+
+        beforeEach(() => {
+            folderNode = {
+                id: 'folder2',
+                name: 'folder 2',
+                nodeType: 'cm:folder',
+                isFolder: true,
+                isFile: false,
+                path: {
+                    elements: [
+                        {
+                            id: '-root-',
+                            name: 'root'
+                        },
+                        {
+                            id: 'folder0',
+                            name: 'folder 0'
+                        },
+                        {
+                            id: 'folder1',
+                            name: 'folder 1'
+                        }
+                    ]
+                }
+            } as Node;
+            component.target = documentListComponent;
+            component.compactMode = true;
+            fixture.detectChanges();
+
+            documentListComponent.$folderNode.next(folderNode);
+            fixture.detectChanges();
+        });
+
+        it('should display correct paths and compact breadcrumb in compact mode', () => {
+            const items = getBreadcrumbItems();
+            expect(items.length).toBe(3);
+            expect(items[0].query(By.css('.adf-breadcrumb-item-anchor')).nativeElement.textContent.trim()).toBe('root');
+            expect(items[1].query(By.directive(CompactBreadcrumbComponent))).not.toBeNull();
+            expect(items[2].query(By.css(breadcrumbItemCurrent)).nativeElement.textContent.trim()).toBe('folder 2');
+        });
+
+        it('should display element with adf-breadcrumb-container-path-compact-mode class in compact mode', () => {
+            expect(getBreadcrumbContainerPathCompactModeElement()).not.toBeNull();
+        });
+
+        it('should not display element with adf-breadcrumb-container-path-compact-mode class in not compact mode', () => {
+            component.compactMode = false;
+
+            fixture.detectChanges();
+            expect(getBreadcrumbContainerPathCompactModeElement()).toBeNull();
+        });
+
+        describe('CompactBreadcrumb', () => {
+            let compactBreadcrumbComponent: CompactBreadcrumbComponent;
+
+            beforeEach(() => {
+                compactBreadcrumbComponent = unitTestingUtils.getByDirective(CompactBreadcrumbComponent).componentInstance;
+            });
+
+            it('should have assigned correct nodes', () => {
+                expect(compactBreadcrumbComponent.nodes()).toEqual([
+                    {
+                        node: folderNode.path.elements[0],
+                        current: false,
+                        libraryContainer: false,
+                        description: 'BREADCRUMB.COMPACT_MENU.FIRST_LEVEL'
+                    },
+                    {
+                        node: folderNode.path.elements[1],
+                        current: false,
+                        libraryContainer: false,
+                        description: 'BREADCRUMB.COMPACT_MENU.NOT_FIRST_LEVEL'
+                    },
+                    {
+                        node: folderNode.path.elements[2],
+                        current: false,
+                        libraryContainer: false,
+                        description: 'BREADCRUMB.COMPACT_MENU.NOT_FIRST_LEVEL'
+                    },
+                    {
+                        node: jasmine.objectContaining({
+                            id: folderNode.id,
+                            name: folderNode.name
+                        }),
+                        current: true,
+                        libraryContainer: false,
+                        description: 'BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL'
+                    }
+                ]);
+            });
+
+            it('should emit dropped event on breadcrumbs when dropped event is emitted', () => {
+                spyOn(component.dropped, 'emit');
+                const event = {
+                    item: {}
+                } as CdkDragDrop<PathElement, PathElement, DataRow>;
+
+                compactBreadcrumbComponent.dropped.emit(event);
+                expect(component.dropped.emit).toHaveBeenCalledWith(event);
+            });
+
+            it('should emit navigate on breadcrumbs when navigate event is emitted', () => {
+                spyOn(component.navigate, 'emit');
+                const element = folderNode.path.elements[1];
+
+                compactBreadcrumbComponent.navigate.emit(element);
+                expect(component.navigate.emit).toHaveBeenCalledWith(element);
+            });
+
+            it('should have assigned fullWidth to true', () => {
+                spyOnProperty(fixture.nativeElement, 'clientWidth').and.returnValue(361);
+
+                fixture.detectChanges();
+                expect(compactBreadcrumbComponent.fullWidth()).toBeTrue();
+            });
+
+            it('should have assigned fullWidth to false', () => {
+                spyOnProperty(fixture.nativeElement, 'clientWidth').and.returnValue(362);
+
+                fixture.detectChanges();
+                expect(compactBreadcrumbComponent.fullWidth()).toBeFalse();
+            });
+        });
+
+        describe('Drop', () => {
+            let dropList: CdkDropList;
+            let trapFocus: CdkTrapFocus;
+            let dragDropStateService: DragDropStateService;
+
+            beforeEach(() => {
+                const injector = unitTestingUtils.getByCSS('#adf-breadcrumb-path').injector;
+                dropList = injector.get(CdkDropList);
+                trapFocus = injector.get(CdkTrapFocus);
+                dragDropStateService = TestBed.inject(DragDropStateService);
+            });
+
+            it('should emit dropped event when cdkDropListDropped event is emitted, isPointerOverContainer is true and correct node is hovered', () => {
+                spyOn(component.dropped, 'emit');
+                getBreadcrumbItems()[0].nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
+                const event = {
+                    item: {},
+                    isPointerOverContainer: true
+                } as CdkDragDrop<PathElement, PathElement, DataRow>;
+
+                dropList.dropped.emit(event);
+                expect(component.dropped.emit).toHaveBeenCalledWith(event);
+            });
+
+            it('should not emit dropped event when cdkDropListDropped event is emitted, isPointerOverContainer is false and correct node is hovered', () => {
+                spyOn(component.dropped, 'emit');
+                getBreadcrumbItems()[0].nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
+
+                dropList.dropped.emit({
+                    item: {},
+                    isPointerOverContainer: false
+                } as CdkDragDrop<PathElement, PathElement, DataRow>);
+                expect(component.dropped.emit).not.toHaveBeenCalled();
+            });
+
+            it('should not emit dropped event when cdkDropListDropped event is emitted, isPointerOverContainer is true and none node is hovered', () => {
+                spyOn(component.dropped, 'emit');
+
+                dropList.dropped.emit({
+                    item: {},
+                    isPointerOverContainer: true
+                } as CdkDragDrop<PathElement, PathElement, DataRow>);
+                expect(component.dropped.emit).not.toHaveBeenCalled();
+            });
+
+            it('should not emit dropped event when cdkDropListDropped event is emitted, isPointerOverContainer is true and hovered node is last node', () => {
+                spyOn(component.dropped, 'emit');
+                getBreadcrumbItems()[2].nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
+
+                dropList.dropped.emit({
+                    item: {},
+                    isPointerOverContainer: true
+                } as CdkDragDrop<PathElement, PathElement, DataRow>);
+                expect(component.dropped.emit).not.toHaveBeenCalled();
+            });
+
+            it('should not emit dropped event when cdkDropListDropped event is emitted, isPointerOverContainer is true and hovered node is compact breadcrumb item', () => {
+                spyOn(component.dropped, 'emit');
+                getBreadcrumbItems()[1].nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
+
+                dropList.dropped.emit({
+                    item: {},
+                    isPointerOverContainer: true
+                } as CdkDragDrop<PathElement, PathElement, DataRow>);
+                expect(component.dropped.emit).not.toHaveBeenCalled();
+            });
+
+            it('should have assigned hoveredItem to cdkDropListData', () => {
+                getBreadcrumbItems()[0].nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
+
+                fixture.detectChanges();
+                expect(dropList.data).toBe(folderNode.path.elements[0]);
+            });
+
+            it('should have assigned cdkDropListSortingDisabled to true', () => {
+                expect(dropList.sortingDisabled).toBeTrue();
+            });
+
+            it('should have assigned true to cdkTrapFocus if DragDropStateService has dragging set to true', () => {
+                dragDropStateService.dragging.set(true);
+
+                fixture.detectChanges();
+                expect(trapFocus.enabled).toBeTrue();
+            });
+
+            it('should have assigned false to cdkTrapFocus if DragDropStateService has dragging set to false', () => {
+                dragDropStateService.dragging.set(false);
+
+                fixture.detectChanges();
+                expect(trapFocus.enabled).toBeFalse();
+            });
+        });
     });
 });

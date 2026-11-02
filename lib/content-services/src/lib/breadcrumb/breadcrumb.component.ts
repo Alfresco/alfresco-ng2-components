@@ -16,8 +16,10 @@
  */
 
 import {
+    afterNextRender,
     Component,
     DestroyRef,
+    ElementRef,
     EventEmitter,
     inject,
     Input,
@@ -33,16 +35,21 @@ import { Node, PathElement } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { IconModule } from '@alfresco/adf-core';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { DataRow, DragDropStateService, IconModule } from '@alfresco/adf-core';
+import { CdkTrapFocus, LiveAnnouncer } from '@angular/cdk/a11y';
+import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
+import { CompactBreadcrumbComponent } from './compact-breadcrumb.component';
 
 @Component({
     selector: 'adf-breadcrumb',
-    imports: [IconModule, TranslatePipe, MatSelectModule],
+    imports: [IconModule, TranslatePipe, MatSelectModule, CdkDropList, CdkDropListGroup, CompactBreadcrumbComponent, CdkDrag, CdkTrapFocus],
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-breadcrumb' }
+    host: {
+        class: 'adf-breadcrumb',
+        '(keyup.shift.arrowright)': 'goToNextDropList()'
+    }
 })
 export class BreadcrumbComponent implements OnInit, OnChanges {
     /** Active node, builds UI based on folderNode.path.elements collection. */
@@ -91,10 +98,20 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @Input()
     selectedRowItemsCount = 0;
 
+    /** If true, the breadcrumb will be displayed in compact mode.  */
+    @Input()
+    compactMode = false;
+
+    /** Selector for connected drop list which allows to switch to that list when pressing Shift + ArrowRight. */
+    @Input()
+    connectedDropListSelector = '';
+
     previousNodes: PathElement[];
     lastNodes: PathElement[];
 
     route: PathElement[] = [];
+
+    protected readonly dragDropStateService = inject(DragDropStateService);
 
     private readonly destroyRef = inject(DestroyRef);
     private readonly liveAnnouncer = inject(LiveAnnouncer);
@@ -111,6 +128,23 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     /** Emitted when the user clicks on a breadcrumb. */
     @Output()
     navigate = new EventEmitter<PathElement>();
+
+    /** Emitted when the breadcrumb path elements change. */
+    @Output()
+    breadcrumbPathElementsChange = new EventEmitter<string[]>();
+
+    /** Emitted when dragged item is dropped onto the breadcrumb. Emits drag and drop event. */
+    @Output()
+    dropped = new EventEmitter<CdkDragDrop<PathElement, PathElement, DataRow>>();
+
+    protected hoveredItem: PathElement;
+    protected hostElement = inject(ElementRef).nativeElement;
+
+    constructor() {
+        afterNextRender(() => {
+            this.breadcrumbPathElementsChange.emit(['adf-breadcrumb-path', 'adf-compact-breadcrumb-menu-list']);
+        });
+    }
 
     ngOnInit() {
         this.transform = this.transform ? this.transform : null;
@@ -197,8 +231,17 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
         return position;
     }
 
-    breadcrumbItemIsAnchor(lastItem): boolean {
-        return !this.readOnly && !lastItem;
+    isBreadcrumbItemAnchor(index: number): boolean {
+        return !this.readOnly && index !== this.lastNodes.length - 1 && !this.isCompactBreadcrumbItem(index);
+    }
+
+    isCompactBreadcrumbItem(index: number): boolean {
+        return index !== this.lastNodes.length - 1 && index !== 0 && this.compactMode && (index !== 1 || this.lastNodes.length !== 3);
+    }
+
+    getBreadcrumbTitle(index: number): string {
+        const anchor = this.isBreadcrumbItemAnchor(index);
+        return anchor || (!anchor && !this.isCompactBreadcrumbItem(index)) ? this.translationService.instant(this.lastNodes[index].name ?? '') : '';
     }
 
     onRoutePathClick(route: PathElement, event?: Event): void {
@@ -216,6 +259,49 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             if (this.target) {
                 this.target.navigateTo(route.id);
             }
+        }
+    }
+
+    onDrop(event: CdkDragDrop<PathElement, PathElement, DataRow>): void {
+        if (event.isPointerOverContainer && this.isDropAllowed(this.lastNodes.findIndex((node) => node === this.hoveredItem))) {
+            this.dropped.emit(event);
+        }
+    }
+
+    isDropAllowed(routeIndex: number): boolean {
+        return (
+            this.lastNodes.length - 1 !== routeIndex &&
+            this.lastNodes[routeIndex + 1]?.nodeType !== 'st:site' &&
+            !this.isCompactBreadcrumbItem(routeIndex)
+        );
+    }
+
+    goToNextDropList(): void {
+        if (this.dragDropStateService.dragging() && this.connectedDropListSelector) {
+            (document.querySelector(this.connectedDropListSelector) as HTMLElement)?.focus();
+        }
+    }
+
+    onKeyboardNodeDrop(node: PathElement): void {
+        if (this.dragDropStateService.dragging()) {
+            this.dropped.emit({
+                item: {
+                    data: {
+                        id: this.dragDropStateService.keyboardDraggingData()
+                    }
+                },
+                container: {
+                    data: node
+                }
+            } as CdkDragDrop<PathElement, PathElement, DataRow>);
+            this.dragDropStateService.dragging.set(false);
+        }
+    }
+
+    onItemMouseEnter(nodeIndex: number): void {
+        this.hoveredItem = this.lastNodes[nodeIndex];
+        if (this.isDropAllowed(nodeIndex)) {
+            this.dragDropStateService.hoveredDropName.set(this.hoveredItem.name);
         }
     }
 }

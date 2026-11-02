@@ -434,7 +434,8 @@
       "DRAGGABLE": "Draggable",
       "EMPTY_HEADER": "Empty header",
       "RESIZE_COLUMN": "Resize {{ column }} column. Use arrow keys to adjust width, Shift for larger steps.",
-      "COLUMN_WIDTH_CHANGED": "{{ column }} column width: {{ width }} pixels"
+      "COLUMN_WIDTH_CHANGED": "{{ column }} column width: {{ width }} pixels",
+      "DRAG_DROP_HINTS": "You can hit Shift + Arrow Up to start drag, Shift + Arrow Down to drop, Shift + Arrow Right to change drop area, and Escape to cancel."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Document",
@@ -457,6 +458,10 @@
       "SEARCH": "Search",
       "APPLY": "Apply",
       "COLUMNS_VISIBILITY": "Select columns to display"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Release to move to {{ destination }}",
+      "CLOSE_HINT": "Esc to cancel"
     }
   },
   "USER_PROFILE": {

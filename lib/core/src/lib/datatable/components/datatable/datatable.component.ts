@@ -22,6 +22,7 @@ import {
     ContentChild,
     DestroyRef,
     DoCheck,
+    effect,
     ElementRef,
     EventEmitter,
     HostListener,
@@ -40,7 +41,7 @@ import {
     ViewChildren,
     ViewEncapsulation
 } from '@angular/core';
-import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory, FocusKeyManager } from '@angular/cdk/a11y';
+import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory, FocusKeyManager, LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { Observable, Observer, Subscription } from 'rxjs';
@@ -57,12 +58,21 @@ import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
 import { buffer, debounceTime, filter, map, share } from 'rxjs/operators';
-import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+    CdkDrag,
+    CdkDragDrop,
+    CdkDragMove,
+    CdkDragHandle,
+    CdkDragPlaceholder,
+    CdkDragPreview,
+    CdkDropList,
+    moveItemInArray
+} from '@angular/cdk/drag-drop';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ResizeEvent } from '../../directives/resizable/types';
 import { CommonModule } from '@angular/common';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { FileTypePipe, LocalizedDatePipe } from '../../../pipes';
 import { DropZoneDirective } from '../../directives/drop-zone.directive';
 import { ResizableDirective } from '../../directives/resizable/resizable.directive';
@@ -82,6 +92,7 @@ import { NumberCellComponent } from '../number-cell/number-cell.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IconModule } from '../../../icon/icon.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DragDropStateService } from '../../../services/drag-drop-state.service';
 
 export const ShowHeaderMode = {
     Never: 'never',
@@ -121,17 +132,28 @@ export type ShowHeaderMode = (typeof ShowHeaderMode)[keyof typeof ShowHeaderMode
         AmountCellComponent,
         NumberCellComponent,
         MatTooltipModule,
-        CdkDragPlaceholder
+        CdkDragPlaceholder,
+        CdkDragPreview
     ],
     templateUrl: './datatable.component.html',
     styleUrls: ['./datatable.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable' }
+    host: {
+        class: 'adf-datatable',
+        '(document:keydown.escape)': 'stopNodeDragging()',
+        '(document:click)': 'stopNodeDragging(true)',
+        '(contextmenu)': 'stopNodeDragging()',
+        '(keydown.tab)': 'preventChangeRowByTab($event)'
+    }
 })
 export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
+    protected readonly dragDropStateService = inject(DragDropStateService);
+
     private readonly elementRef = inject(ElementRef);
+    private readonly liveAnnouncer = inject(LiveAnnouncer);
     private readonly matIconRegistry = inject(MatIconRegistry);
     private readonly sanitizer = inject(DomSanitizer);
+    private readonly translateService = inject(TranslateService);
     private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
 
     private static readonly MINIMUM_COLUMN_SIZE = 100;
@@ -141,6 +163,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     @ViewChild('mainMenuTemplate')
     mainMenuTemplate: ElementRef;
+
+    @ViewChild('datatableBodyDropList')
+    datatableBodyDropList: CdkDropList;
 
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
@@ -226,6 +251,26 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     /** Toggles the sticky header mode. */
     @Input()
     stickyHeader: boolean = false;
+
+    /** The connected drop lists for drag and drop functionality. */
+    @Input()
+    dropListConnectedTo: string[] = [];
+
+    /** Selector for boundary element for drag and drop functionality that limits the drag area */
+    @Input()
+    dragBoundary = '.adf-datatable-body';
+
+    /** Flag that decides if drag indicator is visible or not */
+    @Input()
+    showDragIndicator = true;
+
+    /** Flag that decides if drag preview should look like original row or should be limited to name and node type icon */
+    @Input()
+    useWholeRowAsDragPreview = true;
+
+    /** Flag that decides if dragging should change rows order */
+    @Input()
+    rowDropSortingDisabled = false;
 
     /** Emitted when the user clicks a row. */
     @Output()
@@ -351,34 +396,15 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         return this.isHeaderVisible() ? 1 : 0;
     }
 
+    protected draggedRowIndex: number;
+    protected hoveredRowIndex: number;
+
     @HostListener('keyup', ['$event'])
     onKeydown(event: KeyboardEvent): void {
         if (event.shiftKey && this.enableDragRows) {
-            switch (event.key) {
-                case 'ArrowUp': {
-                    if (this.keyManager.activeItemIndex > 1) {
-                        this.dragDropped.emit({
-                            previousIndex: this.keyManager.activeItemIndex - 1,
-                            currentIndex: this.keyManager.activeItemIndex - 2
-                        });
-                        setTimeout(() => {
-                            this.keyManager.setActiveItem(this.keyManager.activeItemIndex - 1);
-                        });
-                    }
-                    break;
-                }
-                case 'ArrowDown': {
-                    if (this.keyManager.activeItemIndex < this.rowsList.length - 1) {
-                        this.dragDropped.emit({ previousIndex: this.keyManager.activeItemIndex - 1, currentIndex: this.keyManager.activeItemIndex });
-                        setTimeout(() => {
-                            this.keyManager.setActiveItem(this.keyManager.activeItemIndex + 1);
-                        });
-                    }
-                    break;
-                }
-                default:
-                    break;
-            }
+            this.rowDropSortingDisabled
+                ? this.handleKeyDownForDragAndDropWithDisabledSorting(event)
+                : this.handleKeyDownForDragAndDropWithEnabledSorting(event);
         } else {
             this.keyManager.onKeydown(event);
         }
@@ -392,6 +418,12 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         }
 
         this.click$ = new Observable<DataRowEvent>((observer) => (this.clickObserver = observer)).pipe(share());
+
+        effect(() => {
+            if (!this.dragDropStateService.dragging()) {
+                this.stopNodeDragging();
+            }
+        });
     }
 
     ngOnInit(): void {
@@ -1104,17 +1136,141 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     onDragDrop(droppedEvent: CdkDragDrop<any>): void {
-        if (this.enableDragRows) {
-            this.dragDropped.emit({ previousIndex: droppedEvent.previousIndex, currentIndex: droppedEvent.currentIndex });
+        if (
+            this.enableDragRows &&
+            ((this.rowDropSortingDisabled && this.hoveredRowIndex !== undefined && this.hoveredRowIndex !== null) || !this.rowDropSortingDisabled)
+        ) {
+            this.dragDropped.emit({
+                previousIndex: droppedEvent.previousIndex,
+                currentIndex: this.rowDropSortingDisabled ? this.hoveredRowIndex : droppedEvent.currentIndex
+            });
         }
     }
 
-    onDragStart(): void {
+    announceDragDropHints(event: FocusEvent): void {
+        const currentTarget = event.currentTarget as HTMLElement;
+        const previousTarget = event.relatedTarget as HTMLElement;
+        if ((!previousTarget || !currentTarget.contains(previousTarget)) && this.rowDropSortingDisabled) {
+            void this.liveAnnouncer.announce(this.translateService.instant('ADF-DATATABLE.ACCESSIBILITY.DRAG_DROP_HINTS'), 'assertive');
+        }
+    }
+
+    onDragStart(addDraggingClass = true): void {
         this.isDraggingRow = true;
+        this.dragDropStateService.dragging.set(true);
+        if (addDraggingClass) {
+            document.body.classList.add('adf-is-dragging');
+        }
+    }
+
+    onDragMoved(event: CdkDragMove): void {
+        const rowElement = document
+            .elementsFromPoint(event.pointerPosition.x, event.pointerPosition.y)
+            .find((element) => element instanceof HTMLElement && element.dataset.rowIndex !== undefined) as HTMLElement;
+        this.hoveredRowIndex = rowElement ? Number(rowElement.dataset.rowIndex) : null;
     }
 
     onDragEnd(): void {
         this.isDraggingRow = false;
+        this.dragDropStateService.dragging.set(false);
+        this.dragDropStateService.keyboardDraggingData.set(null);
+        document.body.classList.remove('adf-is-dragging');
+    }
+
+    onRowMouseEnter(rowIndex: number, row: DataRow): void {
+        this.hoveredRowIndex = rowIndex;
+        if (row.node?.entry?.isFolder) {
+            this.dragDropStateService.hoveredDropName.set(row.node.entry.name);
+        }
+    }
+
+    onRowMouseLeave(): void {
+        this.hoveredRowIndex = null;
+        this.dragDropStateService.hoveredDropName.set(null);
+    }
+
+    preventChangeRowByTab(event: Event): void {
+        if (this.enableDragRows && this.rowDropSortingDisabled && this.draggedRowIndex !== undefined && this.draggedRowIndex !== null) {
+            event.preventDefault();
+        }
+    }
+
+    protected stopNodeDragging(stopByClick = false): void {
+        document.dispatchEvent(new MouseEvent('mouseup'));
+        if (stopByClick) {
+            this.keyManager?.setActiveItem(0);
+        }
+        this.draggedRowIndex = null;
+        this.dragDropStateService.keyboardDraggingData.set(null);
+        this.dragDropStateService.dragging.set(false);
+    }
+
+    private handleKeyDownForDragAndDropWithDisabledSorting(event: KeyboardEvent): void {
+        switch (event.key) {
+            case 'ArrowUp': {
+                const rowIndex = this.keyManager.activeItemIndex - 1;
+                if (rowIndex < 0 || rowIndex >= this.data.getRows().length) {
+                    break;
+                }
+                this.draggedRowIndex = rowIndex;
+                this.dragDropStateService.keyboardDraggingData.set(this.data.getRows()[this.draggedRowIndex].id);
+                this.onDragStart(false);
+                break;
+            }
+            case 'ArrowDown': {
+                const currentIndex = this.keyManager.activeItemIndex - 1;
+                if (this.draggedRowIndex !== undefined && this.draggedRowIndex !== null && this.draggedRowIndex !== currentIndex) {
+                    this.dragDropped.emit({
+                        previousIndex: this.draggedRowIndex,
+                        currentIndex
+                    });
+                    this.draggedRowIndex = null;
+                    this.onDragEnd();
+                }
+                break;
+            }
+            case 'ArrowRight': {
+                if (this.draggedRowIndex !== undefined && this.draggedRowIndex !== null && this.dropListConnectedTo.length) {
+                    const focusTrap = this.focusTrapFactory.create(document.getElementById(this.dropListConnectedTo[0]));
+                    focusTrap.focusFirstTabbableElement();
+                    focusTrap.destroy();
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    private handleKeyDownForDragAndDropWithEnabledSorting(event: KeyboardEvent): void {
+        switch (event.key) {
+            case 'ArrowUp': {
+                if (this.keyManager.activeItemIndex > 1) {
+                    this.dragDropped.emit({
+                        previousIndex: this.keyManager.activeItemIndex - 1,
+                        currentIndex: this.keyManager.activeItemIndex - 2
+                    });
+                    setTimeout(() => {
+                        this.keyManager.setActiveItem(this.keyManager.activeItemIndex - 1);
+                    });
+                }
+                break;
+            }
+            case 'ArrowDown': {
+                if (this.keyManager.activeItemIndex < this.rowsList.length - 1) {
+                    this.dragDropped.emit({
+                        previousIndex: this.keyManager.activeItemIndex - 1,
+                        currentIndex: this.keyManager.activeItemIndex
+                    });
+                    setTimeout(() => {
+                        this.keyManager.setActiveItem(this.keyManager.activeItemIndex + 1);
+                    });
+                }
+                break;
+            }
+            default:
+                break;
+        }
     }
 
     private updateColumnsWidths(): void {

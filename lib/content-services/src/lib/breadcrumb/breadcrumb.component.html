@@ -4,6 +4,7 @@
         class="adf-breadcrumb-container"
         role="navigation"
         [attr.aria-label]="'BREADCRUMB.ARIA-LABEL.BREADCRUMB' | translate"
+        cdkDropListGroup
     >
         @if (hasPreviousNodes()) {
             <button
@@ -36,31 +37,57 @@
             </mat-select>
         }
 
-        @for (item of lastNodes; track item.id; let last = $last) {
-            <div
-                [class.adf-active]="last"
-                title="{{ item.name ?? '' | translate }}"
-                class="adf-breadcrumb-item">
-            @if (breadcrumbItemIsAnchor(last)) {
-                <a
-                    href="#"
-                    [attr.data-automation-id]="'breadcrumb_' + item.name"
-                    class="adf-breadcrumb-item-anchor"
-                    (click)="onRoutePathClick(item, $event)"
-                >
-                    {{ item.name ?? '' | translate }}
-                </a>
-            } @else {
-                <h1 class="adf-breadcrumb-item-current" aria-current="location">
-                    {{ (selectedRowItemsCount < 1 ? item.name ?? '' : 'BREADCRUMB.HEADER.SELECTED') | translate: { count: selectedRowItemsCount } }}
-                </h1>
-            }
+        <div
+            cdkDropList
+            (cdkDropListDropped)="onDrop($event)"
+            cdkDropListSortingDisabled
+            [cdkDropListData]="hoveredItem"
+            id="adf-breadcrumb-path"
+            class="adf-breadcrumb-container-path"
+            [class.adf-breadcrumb-container-path-compact-mode]="compactMode"
+            [cdkTrapFocus]="dragDropStateService.dragging()" >
+                @for (item of lastNodes; track item.id; let last = $last; let index = $index) {
+                    @if (!compactMode || (compactMode && index < 2 || compactMode && last)) {
+                        <div
+                            [class.adf-active]="last"
+                            [class.adf-breadcrumb-item-drop-disabled]="!isDropAllowed(index)"
+                            [title]="getBreadcrumbTitle(index)"
+                            class="adf-breadcrumb-item"
+                            cdkDrag
+                            cdkDragDisabled
+                            (mouseenter)="onItemMouseEnter(index)"
+                            (mouseleave)="dragDropStateService.hoveredDropName.set(null)"
+                        >
+                            @if (isBreadcrumbItemAnchor(index)) {
+                                <a
+                                    href="#"
+                                    [attr.data-automation-id]="'breadcrumb_' + item.name"
+                                    class="adf-breadcrumb-item-anchor"
+                                    (click)="onRoutePathClick(item, $event)"
+                                    (keydown.shift.arrowdown)="onKeyboardNodeDrop(item)"
+                                    [tabindex]="isDropAllowed(index) || !dragDropStateService.dragging() ? 0 : -1"
+                                >
+                                    {{ item.name ?? '' | translate }}
+                                </a>
+                            } @else if (isCompactBreadcrumbItem(index)) {
+                                <adf-compact-breadcrumb
+                                    [nodes]="lastNodes"
+                                    (dropped)="dropped.emit($event)"
+                                    (navigate)="onRouteClick($event)"
+                                    [fullWidth]="hostElement?.clientWidth < 362" />
+                            } @else {
+                                <h1 class="adf-breadcrumb-item-current" aria-current="location">
+                                    {{ (selectedRowItemsCount < 1 ? item.name ?? '' : 'BREADCRUMB.HEADER.SELECTED') | translate: { count: selectedRowItemsCount } }}
+                                </h1>
+                            }
 
-            @if (!last) {
-                <mat-icon class="adf-breadcrumb-item-chevron" adf-icon="chevron_right" />
-            }
-            </div>
-        }
+                            @if (!last) {
+                                <mat-icon class="adf-breadcrumb-item-chevron" adf-icon="chevron_right" />
+                            }
+                        </div>
+                    }
+                }
+        </div>
     </nav>
 
     @if (!folderNode && hasRoot) {
