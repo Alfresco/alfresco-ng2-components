@@ -38,6 +38,8 @@
                     *ngFor="let notification of paginatedNotifications"
                     (click)="onNotificationClick(notification, $event)"
                     class="adf-notification-history-menu-item"
+                    [class.adf-notification-history-menu-item-clickable]="!!notification.clickCallBack"
+                    [disableRipple]="!notification.clickCallBack"
                     (keydown)="manageFocus($event)">
                 <div class="adf-notification-history-menu-item-content">
                     <div *ngIf="notification.initiator; else no_avatar"

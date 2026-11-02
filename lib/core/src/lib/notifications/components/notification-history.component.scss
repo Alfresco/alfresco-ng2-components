@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @use '../../styles/mat-selectors' as ms;
 
 $notification-item-height: 72px;
@@ -62,6 +63,16 @@ $notification-item-height: 72px;
                 align-items: center;
                 display: block;
                 padding: 0 14px;
+
+                &:not(.adf-notification-history-menu-item-clickable) {
+                    cursor: default;
+
+                    @include mat.menu-overrides(
+                        (
+                            item-hover-state-layer-color: transparent
+                        )
+                    );
+                }
 
                 &-content {
                     height: 100%;
