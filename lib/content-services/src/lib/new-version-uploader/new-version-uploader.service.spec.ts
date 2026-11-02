@@ -118,6 +118,14 @@ describe('NewVersionUploaderService', () => {
             expect(spyOnDialogOpen).toHaveBeenCalledWith(NewVersionUploaderDialogComponent, expectedConfig);
         }));
 
+        it('should forward an explicitly supplied local upload boundary callback without changing defaults', fakeAsync(() => {
+            const onUploadStarted = jasmine.createSpy('exact local upload boundary');
+            mockNewVersionUploaderDialogData.onUploadStarted = onUploadStarted;
+            firstValueFrom(service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData));
+            tick();
+            expect(spyOnDialogOpen.calls.mostRecent().args[1].data.onUploadStarted).toBe(onUploadStarted);
+        }));
+
         it('should override default dialog panelClass', fakeAsync(() => {
             const mockDialogConfiguration: MatDialogConfig = {
                 panelClass: 'adf-custom-class',

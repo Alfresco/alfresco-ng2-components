@@ -20,13 +20,19 @@ import {
     ChangeDetectorRef,
     Component,
     DestroyRef,
+    effect,
+    ErrorHandler,
     inject,
     InjectionToken,
     Injector,
+    input,
     Input,
+    OnChanges,
     OnDestroy,
     OnInit,
     signal,
+    SimpleChanges,
+    untracked,
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
@@ -36,12 +42,16 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { TranslatePipe } from '@ngx-translate/core';
-import { FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
+import { FormInvocationResult, FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
+import { FormWriteContext, FormResetResult } from '../models/form-state.model';
+import { NotificationService } from '../../notifications/services/notification.service';
+import { FormRendererInvocationLifecycle } from './form-renderer-invocation-lifecycle';
+import { injectFormInstanceResetEnabled } from '../services/provide-form-instance-reset';
 import { FormService } from '../services/form.service';
 import { WidgetVisibilityService } from '../services/widget-visibility.service';
 import { FormFieldComponent } from './form-field/form-field.component';
 import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE, FormFieldModelRenderMiddleware } from './middlewares/middleware';
-import { ContainerModel, FormFieldModel, FormModel, TabModel, RepeatWidgetComponent } from './widgets';
+import { ContainerModel, FormFieldModel, FormModel, FormOutcomeModel, TabModel, RepeatWidgetComponent } from './widgets';
 import { HeaderWidgetComponent } from './widgets/header/header.widget';
 import { FormSectionComponent } from './form-section/form-section.component';
 import { DecimalRenderMiddlewareService } from './middlewares/decimal-middleware.service';
@@ -90,7 +100,7 @@ export const ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED = new InjectionToken<Ob
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class FormRendererComponent<T> implements OnInit, OnDestroy {
+export class FormRendererComponent<T> implements OnChanges, OnInit, OnDestroy {
     private readonly middlewareServices = inject<FormFieldModelRenderMiddleware[]>(FORM_FIELD_MODEL_RENDER_MIDDLEWARE, { optional: true }) ?? [];
 
     public readonly formService = inject(FormService);
@@ -99,15 +109,43 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     private readonly dialog = inject(MatDialog);
     private readonly cdr = inject(ChangeDetectorRef);
     private readonly destroyRef = inject(DestroyRef);
+    private readonly notificationService = inject(NotificationService);
+    private readonly errorHandler = inject(ErrorHandler);
+    private readonly formInstanceResetEnabled = injectFormInstanceResetEnabled();
+    private readonly invocations = new FormRendererInvocationLifecycle(this, {
+        rulesManager: this.formRulesManager,
+        notificationService: this.notificationService,
+        errorHandler: this.errorHandler,
+        instanceResetEnabled: this.formInstanceResetEnabled
+    });
 
     @Input({ required: true })
     set formDefinition(formDefinition: FormModel) {
+        if (this._formDefinition !== formDefinition) {
+            this.invocations.rebind(this._formDefinition, formDefinition);
+        }
         this._formDefinition = formDefinition;
         this.syncCurrentTabIndex();
     }
 
     get formDefinition(): FormModel {
         return this._formDefinition;
+    }
+
+    /** Revision of the rendered form definition. Falls back to the form definition version when not set. */
+    readonly documentVersion = input<string | number | undefined>();
+
+    cancelInvocation(): void {
+        this.invocations.cancel();
+    }
+
+    dispatchRulesOnlyOutcome(
+        outcome: FormOutcomeModel,
+        notify: (result: FormInvocationResult) => void,
+        isHostCurrent: () => boolean = () => true,
+        resetCapability?: (context: FormWriteContext) => Promise<FormResetResult>
+    ): boolean {
+        return this.invocations.dispatch({ outcome, notify, isHostCurrent, resetCapability });
     }
 
     @Input()
@@ -167,6 +205,22 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
                 this.tabValidationIndicatorsEnabled.set(tabValidationIndicatorsToken);
             }
         }
+
+        effect(() => {
+            const version = this.invocations.explicitDocumentVersion();
+            untracked(() => this.invocations.observeDocumentVersion(version));
+        });
+
+        effect(() => {
+            const enabled = this.formInstanceResetEnabled();
+            untracked(() => this.invocations.observeInstanceReset(enabled));
+        });
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['readOnly']?.currentValue) {
+            this.invocations.cancelForReadOnly();
+        }
     }
 
     ngOnInit(): void {
@@ -187,9 +241,17 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
                 }
                 this.formDefinition?.validateForm();
             });
+
+        this.formService.formState.commits
+            .pipe(
+                filter(({ field }) => field.form === this.formDefinition),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe(() => this.cdr.markForCheck());
     }
 
     ngOnDestroy() {
+        this.invocations.destroy();
         this.tabGroupSelectionSubscription?.unsubscribe();
         this.formRulesManager.destroy();
     }

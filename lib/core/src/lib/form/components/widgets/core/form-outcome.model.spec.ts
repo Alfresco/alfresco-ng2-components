@@ -19,6 +19,21 @@ import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 
 describe('FormOutcomeModel', () => {
+    it('should preserve absent mode as ordinary without inventing a submission mode', () => {
+        expect(new FormOutcomeModel(null, { id: 'ordinary', name: 'Clear' }).executionMode).toBeUndefined();
+    });
+
+    for (const mode of ['rules-only', null, undefined, 'submit', 'RULES-ONLY', '', false, 0]) {
+        it(`should parse explicit ${String(mode)} without changing the original outcome identity`, () => {
+            const json = { id: 'configured-id', name: 'Configured name', executionMode: mode };
+            const model = new FormOutcomeModel(null, json);
+            expect(model.executionMode).toBe(mode === 'rules-only' ? 'rules-only' : 'unsupported');
+            expect(model.json).toBe(json);
+            expect(model.name).toBe(json.name);
+            expect(model.id).toBe(json.id);
+        });
+    }
+
     it('should setup with json config', () => {
         const json = {
             id: '<id>',

@@ -27,9 +27,12 @@ import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
 import { fakeMetadataForm, mockDisplayExternalPropertyForm, mockFormWithSections, fakeValidatorMock } from '../../mock/form.mock';
 import { TestBed } from '@angular/core/testing';
+import { EnvironmentInjector } from '@angular/core';
+import { provideFormInstanceReset } from '../../../services/provide-form-instance-reset';
 import { ValidateFormEvent } from '../../../events/validate-form.event';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { tabInvalidFormVisibility } from '../../../../mock/form/widget-visibility.service.mock';
+import { beginFormMutation, bindFormState } from '../../../models/form-state.model';
 
 describe('FormModel', () => {
     let formService: FormService;
@@ -2172,5 +2175,93 @@ describe('FormModel', () => {
             expect(new FormModel(formJson()).getFieldById('topLevelField')).toBeDefined();
             expect(new FormModel(formJson()).getFieldById('topLevelField')).toBeDefined();
         });
+    });
+
+    describe('while the form is being reset', () => {
+        it('should ignore rule changes, field notifications and row count changes', () => {
+            const service = TestBed.inject(FormService);
+            const form = new FormModel(
+                {
+                    fields: [
+                        { id: 'text', type: 'text', value: 'authored' },
+                        { id: 'rows', type: 'repeatable-section', params: { initialNumberOfRows: 1 }, fields: { 1: [{ id: 'child', type: 'text' }] } }
+                    ],
+                    variables: [{ id: 'variable', name: 'variable', type: 'string', value: 'authored' }]
+                },
+                undefined,
+                false,
+                service
+            );
+            const context = { form, renderer: {}, generation: {}, invocation: {}, documentVersion: '1', outcomeId: 'clear', isCurrent: () => true };
+            bindFormState(form, context.renderer, context.generation);
+            const text = form.getFieldById('text');
+            const flags = { readOnly: text.readOnly, required: text.required };
+            const fieldChanges = spyOn(service.formFieldValueChanged, 'next');
+            const rules = spyOn(service.formRulesEvent, 'next');
+            const boundary = beginFormMutation(context);
+
+            try {
+                form.changeFieldVisibility('text', false);
+                form.changeFieldDisabled('text', true);
+                form.changeFieldRequired('text', true);
+                form.changeVariableValue('variable', 'changed');
+                form.onFormFieldChanged(text);
+                form.onRepeatableSectionRowCountChanged(form.getFieldById('rows'));
+            } finally {
+                boundary.release();
+            }
+
+            expect(text.isVisible).toBeTrue();
+            expect({ readOnly: text.readOnly, required: text.required }).toEqual(flags);
+            expect(form.getFormVariable('variable').value).toBe('authored');
+            expect(fieldChanges).not.toHaveBeenCalled();
+            expect(rules).not.toHaveBeenCalled();
+        });
+    });
+});
+
+describe('FormModel nested repeatable sections', () => {
+    const nestedRepeatableJson = {
+        id: 'form',
+        fields: [
+            {
+                id: 'container',
+                type: FormFieldTypes.CONTAINER,
+                numberOfColumns: 1,
+                fields: {
+                    1: [
+                        {
+                            id: 'rows',
+                            type: FormFieldTypes.REPEATABLE_SECTION,
+                            params: { initialNumberOfRows: 1 },
+                            numberOfColumns: 1,
+                            fields: { 1: [{ id: 'text', type: FormFieldTypes.TEXT }] }
+                        }
+                    ]
+                }
+            }
+        ]
+    };
+
+    const useFormInstanceReset = (enabled: boolean) => {
+        TestBed.configureTestingModule({ providers: [provideFormInstanceReset(() => enabled)] });
+        TestBed.inject(EnvironmentInjector);
+    };
+
+    it('should collect a repeatable section nested in a container with its row fields when form instance reset is enabled', () => {
+        useFormInstanceReset(true);
+        const form = new FormModel(nestedRepeatableJson);
+
+        expect(form.getFormFields().map((field) => field.type)).toEqual([
+            FormFieldTypes.CONTAINER,
+            FormFieldTypes.REPEATABLE_SECTION,
+            FormFieldTypes.TEXT
+        ]);
+    });
+
+    it('should fail to build a form with a repeatable section nested in a container when form instance reset is disabled', () => {
+        useFormInstanceReset(false);
+
+        expect(() => new FormModel(nestedRepeatableJson)).toThrowError(TypeError);
     });
 });

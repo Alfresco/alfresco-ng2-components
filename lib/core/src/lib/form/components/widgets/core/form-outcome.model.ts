@@ -27,12 +27,16 @@ export class FormOutcomeModel extends FormWidgetModel {
     isSelected: boolean = false;
     isVisible: boolean = true;
     skipValidation: boolean = false;
+    readonly executionMode?: 'rules-only' | 'unsupported';
     visibilityCondition: WidgetVisibilityModel;
 
     constructor(form: any, json?: any) {
         super(form, json);
 
         if (json) {
+            if (Object.prototype.hasOwnProperty.call(json, 'executionMode')) {
+                this.executionMode = json.executionMode === 'rules-only' ? 'rules-only' : 'unsupported';
+            }
             this.isSystem = json.isSystem ? true : false;
             this.skipValidation = json.skipValidation ?? false;
             this.isSelected = form && json.name === form.selectedOutcome ? true : false;

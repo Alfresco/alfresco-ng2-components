@@ -17,6 +17,7 @@
 
 import { Version, NodeChildAssociation, Node } from '@alfresco/js-api';
 import { NodeEntityEvent } from '../../document-list';
+import { UploadFilesEvent } from '../../upload/components/upload-files.event';
 
 export interface NewVersionUploaderDialogData {
     title?: string;
@@ -29,6 +30,7 @@ export interface NewVersionUploaderDialogData {
     allowDownload?: boolean;
     allowViewVersions?: boolean;
     allowVersionDelete?: boolean;
+    onUploadStarted?: (event: UploadFilesEvent) => void;
 }
 
 export type NewVersionUploaderData = VersionManagerUploadData | ViewVersion | RefreshData;

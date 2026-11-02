@@ -35,6 +35,7 @@
         [file]="newFileVersion"
         [majorVersion]="isMajorVersion()"
         (success)="onSuccess($event)"
+        (beginUpload)="localUploadStarted.emit($event)"
         (error)="onError($event)" />
     <button mat-raised-button (click)="cancelUpload()" id="adf-new-version-cancel"  *ngIf="showCancelButton" >{{
         'ADF_VERSION_LIST.ACTIONS.UPLOAD.CANCEL'| translate }}

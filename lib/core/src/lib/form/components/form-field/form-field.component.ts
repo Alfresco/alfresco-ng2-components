@@ -16,6 +16,7 @@
  */
 
 import {
+    ChangeDetectorRef,
     Compiler,
     Component,
     ComponentFactory,
@@ -37,6 +38,9 @@ import { FieldStylePipe } from '../../pipes/field-style.pipe';
 import { FormFieldTypes } from '../widgets/core/form-field-types';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormWidget } from '../widgets/reactive-widget.interface';
+import { filter } from 'rxjs';
+import { FormService } from '../../services/form.service';
+import { FormStateMount } from '../../models/form-state.model';
 
 declare const adf: any;
 
@@ -72,6 +76,8 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     private readonly visibilityService = inject(WidgetVisibilityService);
     private readonly destroyRef = inject(DestroyRef);
     private readonly compiler = inject(Compiler);
+    private readonly formService = inject(FormService);
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
     ngOnInit() {
         const w: any = window;
@@ -81,6 +87,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
 
         const originalField = this.getField();
         if (originalField) {
+            const mount = this.formService.formState.captureMount(this.field);
             const customTemplate = this.field.form.customFieldTemplates[originalField.type];
             if (customTemplate && this.hasController(originalField.type)) {
                 const factory = this.getComponentFactorySync(originalField.type, customTemplate);
@@ -98,25 +105,47 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                     instance.field = this.field;
 
                     instance.fieldChanged.subscribe((field) => {
-                        if (field && this.field.form) {
+                        if (field && this.field.form && (!mount || this.formService.formState.isMountCurrent(this.field, mount))) {
                             this.visibilityService.refreshVisibility(field.form);
                             this.triggerFormFieldChanged(field);
                         }
                     });
 
                     if (FormFieldTypes.isReactiveWidget(instance)) {
-                        this.updateReactiveFormControlOnFormRulesEvent(instance);
+                        this.updateReactiveFormControlOnFormRulesEvent(instance, mount);
+                        this.updateReactiveFormControlOnStateCommit(instance, mount);
                     }
                 }
             }
         }
     }
 
-    private updateReactiveFormControlOnFormRulesEvent(instance: ReactiveFormWidget): void {
-        instance?.formService.formRulesEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-            instance?.updateReactiveFormControl();
-            instance?.field?.form.validateForm(instance?.field);
-        });
+    private updateReactiveFormControlOnFormRulesEvent(instance: ReactiveFormWidget, mount: FormStateMount | undefined): void {
+        instance?.formService.formRulesEvent
+            .pipe(
+                filter(() => !mount || instance.formService.formState.isMountCurrent(instance.field, mount)),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe(() => {
+                instance?.updateReactiveFormControl();
+                instance?.field?.form.validateForm(instance?.field);
+            });
+    }
+
+    private updateReactiveFormControlOnStateCommit(instance: ReactiveFormWidget, mount: FormStateMount | undefined): void {
+        const field = instance.field;
+        const formState = instance.formService.formState;
+        formState.commits
+            .pipe(
+                filter((event) => event.field === field && instance.field === field && formState.isProjectionCurrent(field, event.context, mount)),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe(() => {
+                instance.updateReactiveFormControl();
+                field.form.validateForm(field);
+                this.visibilityService.refreshVisibility(field.form);
+                this.changeDetectorRef.markForCheck();
+            });
     }
 
     private triggerFormFieldChanged(field: FormFieldModel): void {
