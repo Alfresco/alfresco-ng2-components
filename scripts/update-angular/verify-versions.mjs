@@ -16,7 +16,7 @@
  */
 
 import fs from 'node:fs';
-import { isAngularPackage, packagesBehind } from './lib/angular.mjs';
+import { isAngularPackage, isRequiredAngularPackage, packagesBehind } from './lib/angular.mjs';
 import { main } from './lib/cli.mjs';
 import { installedVersion, workspaceDependencies } from './lib/package-json.mjs';
 import { satisfiesRange } from './lib/versions.mjs';
@@ -40,14 +40,17 @@ function findNxPeerProblems() {
 }
 
 /**
- * Fails when an Angular package is below the target major or the installed `@nx/angular` does not accept the installed Angular.
+ * Fails when a required Angular package is below the target major or the installed `@nx/angular` does not accept the installed Angular.
+ * The best-effort tooling packages may still be behind, the plan reports them.
  * Run it after the packages are bumped and installed.
  * @param target Angular major that was requested
  */
 function verifyVersions(target) {
     const targetMajor = Number(target);
     const dependencies = workspaceDependencies();
-    const problems = packagesBehind(dependencies, targetMajor).map((name) => `${name} is ${dependencies[name]}, expected Angular ${targetMajor}`);
+    const problems = packagesBehind(dependencies, targetMajor)
+        .filter(isRequiredAngularPackage)
+        .map((name) => `${name} is ${dependencies[name]}, expected Angular ${targetMajor}`);
 
     if (dependencies['@nx/angular']) {
         problems.push(...findNxPeerProblems());
