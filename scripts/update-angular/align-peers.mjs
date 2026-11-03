@@ -18,7 +18,7 @@
 import fs from 'node:fs';
 import { main } from './lib/cli.mjs';
 import { installedVersion, setDependencyVersions, workspaceDependencies } from './lib/package-json.mjs';
-import { findPeerIssues } from './lib/peers.mjs';
+import { findPeerIssues, issueKey, readBaselineKeys } from './lib/peers.mjs';
 import { installableReleases, peerDependenciesOf } from './lib/registry.mjs';
 import { runVisibly } from './lib/shell.mjs';
 import { compareVersions, exactVersion, majorVersion, satisfiesRange } from './lib/versions.mjs';
@@ -109,15 +109,19 @@ function chooseUpgrades(issues, dependencies, tried) {
 }
 
 /**
- * Upgrades direct dependencies until their peers are satisfied or nothing more can be done, installing after each round.
+ * Upgrades direct dependencies until the peers the update broke are satisfied or nothing more can be done, installing after each round.
+ * Issues that were already there before the update are left alone, they are only reported.
+ * @param baselineFile issues saved before the update
  * @param reportFile markdown table rows listing the upgrades
  */
-function alignPeers(reportFile) {
+function alignPeers(baselineFile, reportFile) {
+    const baselineKeys = readBaselineKeys(baselineFile);
     const rows = [];
     const tried = new Set();
 
     for (let round = 0; round < MAX_ROUNDS; round++) {
-        const upgrades = chooseUpgrades(findPeerIssues(), workspaceDependencies(), tried);
+        const newIssues = findPeerIssues().filter((issue) => !baselineKeys.has(issueKey(issue)));
+        const upgrades = chooseUpgrades(newIssues, workspaceDependencies(), tried);
         if (!upgrades.length) {
             break;
         }
