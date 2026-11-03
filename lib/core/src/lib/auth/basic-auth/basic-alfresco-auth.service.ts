@@ -362,9 +362,21 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         return header.set('Authorization', ticket);
     }
 
+    /**
+     * Checks if the request targets the OOI service, matching only the url path
+     * so that the OOI service path in the query string or fragment is ignored.
+     *
+     * @param requestUrl the request url
+     * @returns True if the request is an http(s) OOI service request, false otherwise
+     */
     private isOoiServiceUrl(requestUrl: string): boolean {
-        const ooiServiceRootUrl = `/${this.appConfig.get<string>(AppConfigValues.OOI_CONNECTOR_URL) || 'ooi-service'}/`;
-        return !!requestUrl?.includes(ooiServiceRootUrl);
+        const ooiServiceRootUrl = this.appConfig.get<string>(AppConfigValues.OOI_CONNECTOR_URL) || 'ooi-service';
+        try {
+            const url = new URL(requestUrl, location.origin);
+            return /^https?:$/i.test(url.protocol) && `${url.pathname}/`.includes(`/${ooiServiceRootUrl}/`);
+        } catch {
+            return false;
+        }
     }
 
     async requireAlfTicket(): Promise<void> {
@@ -381,7 +393,6 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         let ticket = null;
         const bpmRoot = `/${this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM) || 'activiti-app'}/`;
         const ecmRoot = `/${this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM) || 'alfresco'}/`;
-        const ooiServiceRootUrl = `/${this.appConfig.get<string>(AppConfigValues.OOI_CONNECTOR_URL) || 'ooi-service'}/`;
 
         if (requestUrl?.includes(ecmRoot) && !requestUrl.includes(bpmRoot)) {
             ticket = this.getContentServicesTicket();
@@ -389,7 +400,7 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
             ticket = this.getProcessServicesTicket();
         } else if (requestUrl?.includes(ecmRoot) && requestUrl.includes(bpmRoot)) {
             ticket = requestUrl.indexOf(ecmRoot) < requestUrl.indexOf(bpmRoot) ? this.getContentServicesTicket() : this.getProcessServicesTicket();
-        } else if (requestUrl.includes(ooiServiceRootUrl)) {
+        } else if (this.isOoiServiceUrl(requestUrl)) {
             ticket = this.getContentServicesTicket();
         }
 
