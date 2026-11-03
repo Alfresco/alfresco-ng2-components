@@ -21,12 +21,22 @@ import { majorVersion, satisfiesRange } from './versions.mjs';
 const DEVKIT_ARCHITECT = '@angular-devkit/architect';
 
 /**
- * Tells whether a package is versioned together with Angular.
+ * Tells whether a package is one the update cannot do without: Angular itself and its devkit, released together with each major.
+ * @param name package name
+ * @returns true for required Angular packages
+ */
+export function isRequiredAngularPackage(name) {
+    return /^(@angular\/|@angular-devkit\/)/.test(name);
+}
+
+/**
+ * Tells whether a package is versioned together with Angular. The tooling packages (`@angular-eslint`, `@schematics/angular`, `ng-packagr`)
+ * are best effort: they often ship days or weeks after an Angular major, so the update goes on without them and reports what is left.
  * @param name package name
  * @returns true for Angular packages
  */
 export function isAngularPackage(name) {
-    return /^(@angular\/|@angular-devkit\/|@angular-eslint\/|@schematics\/angular$|ng-packagr$)/.test(name);
+    return isRequiredAngularPackage(name) || /^(@angular-eslint\/|@schematics\/angular$|ng-packagr$)/.test(name);
 }
 
 /**
