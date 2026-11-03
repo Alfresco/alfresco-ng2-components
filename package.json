@@ -63,7 +63,7 @@
     "dotenv-expand": "5.1.0",
     "editorjs-html": "4.0.5",
     "eventemitter3": "5.0.4",
-    "graphql-ws": "6.3.0",
+    "graphql-ws": "6.4.1",
     "material-icons": "1.13.14",
     "minimatch": "10.2.6",
     "ng2-charts": "9.0.0",
