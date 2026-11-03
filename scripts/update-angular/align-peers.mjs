@@ -57,30 +57,36 @@ function fitsInstalledPackages(name, version) {
 }
 
 /**
- * Finds the nearest newer release of a package whose peers fit what is installed, trying the current major first.
+ * Finds the newest release of a given major, newer than the current version, whose peers fit what is installed.
  * @param name package name
  * @param current current version or range
+ * @param major major the release must belong to
  * @returns release, or undefined when none fits
  */
-function releaseFittingInstalledPackages(name, current) {
-    const major = majorVersion(current);
-    const newer = installableReleases(name, (version) => compareVersions(version, exactVersion(current)) > 0);
-    const newestFirst = (wanted) => newer.filter((version) => majorVersion(version) === wanted).reverse();
+function newestFittingRelease(name, current, major) {
+    const newer = installableReleases(name, (version) => majorVersion(version) === major && compareVersions(version, exactVersion(current)) > 0);
 
-    return [...newestFirst(major), ...newestFirst(major + 1)].slice(0, MAX_CANDIDATES).find((version) => fitsInstalledPackages(name, version));
+    return newer
+        .reverse()
+        .slice(0, MAX_CANDIDATES)
+        .find((version) => fitsInstalledPackages(name, version));
 }
 
 /**
  * Chooses which direct dependencies to upgrade to satisfy the unmet peers.
- * A peer that is a direct dependency itself is upgraded to a release the packages needing it accept.
- * Otherwise the direct dependency needing the peer is upgraded to a release that fits what is installed.
+ * A peer that is a direct dependency itself is upgraded to a release the packages needing it accept, even to a new major,
+ * because those packages are the ones the update just moved.
+ * Otherwise the direct dependency needing the peer is upgraded within its current major. A new major is never applied,
+ * it is returned as manual work, because nothing here tells whether its API still fits the code.
  * @param issues unmet peers
  * @param dependencies direct dependencies
  * @param tried package names already handled, updated here so nothing is tried twice
- * @returns upgrades with the package name, the current range in `from` and the new exact version in `to`
+ * @returns the `upgrades` to apply and the `manual` upgrades to leave to a person, each with the package name,
+ * the current range in `from` and the release in `to`
  */
 function chooseUpgrades(issues, dependencies, tried) {
     const upgrades = [];
+    const manual = [];
     const upgradedPeers = new Set();
 
     for (const peer of new Set(issues.map((issue) => issue.peer))) {
@@ -98,40 +104,47 @@ function chooseUpgrades(issues, dependencies, tried) {
     for (const name of new Set(issues.filter((issue) => !upgradedPeers.has(issue.peer)).map((issue) => issue.topParent))) {
         if (dependencies[name] && !tried.has(name)) {
             tried.add(name);
-            const to = releaseFittingInstalledPackages(name, dependencies[name]);
-            if (to) {
-                upgrades.push({ name, from: dependencies[name], to });
+            const major = majorVersion(dependencies[name]);
+            const sameMajor = newestFittingRelease(name, dependencies[name], major);
+            const nextMajor = sameMajor ? undefined : newestFittingRelease(name, dependencies[name], major + 1);
+
+            if (sameMajor) {
+                upgrades.push({ name, from: dependencies[name], to: sameMajor });
+            } else if (nextMajor) {
+                manual.push({ name, from: dependencies[name], to: nextMajor });
             }
         }
     }
 
-    return upgrades;
+    return { upgrades, manual };
 }
 
 /**
  * Upgrades direct dependencies until the peers the update broke are satisfied or nothing more can be done, installing after each round.
  * Issues that were already there before the update are left alone, they are only reported.
  * @param baselineFile issues saved before the update
- * @param reportFile markdown table rows listing the upgrades
+ * @param reportFile JSON file listing the `upgrades` made and the `manual` upgrades that are left to a person
  */
 function alignPeers(baselineFile, reportFile) {
     const baselineKeys = readBaselineKeys(baselineFile);
-    const rows = [];
+    const report = { upgrades: [], manual: [] };
     const tried = new Set();
 
     for (let round = 0; round < MAX_ROUNDS; round++) {
         const newIssues = findPeerIssues().filter((issue) => !baselineKeys.has(issueKey(issue)));
-        const upgrades = chooseUpgrades(newIssues, workspaceDependencies(), tried);
+        const { upgrades, manual } = chooseUpgrades(newIssues, workspaceDependencies(), tried);
+
+        report.manual.push(...manual);
         if (!upgrades.length) {
             break;
         }
 
         setDependencyVersions(upgrades);
-        rows.push(...upgrades.map(({ name, from, to }) => `| \`${name}\` | ${from} | ${from.match(/^\D*/)[0]}${to} |\n`));
+        report.upgrades.push(...upgrades.map(({ name, from, to }) => ({ name, from, to: `${from.match(/^\D*/)[0]}${to}` })));
         runVisibly('pnpm', ['install', '--no-frozen-lockfile']);
     }
 
-    fs.writeFileSync(reportFile, rows.join(''));
+    fs.writeFileSync(reportFile, `${JSON.stringify(report, null, 2)}\n`);
 }
 
 main(alignPeers);
