@@ -33,7 +33,7 @@ export const FORM_INSTANCE_RESET_ENABLED = new InjectionToken<Signal<boolean>>('
 
 const FORM_INSTANCE_RESET_DISABLED = signal(false).asReadonly();
 
-const toEnabledSignal = (enabled: Observable<boolean> | boolean): Signal<boolean> => {
+const toEnabledSignal = (enabled: Observable<boolean> | boolean) => {
     if (isObservable(enabled)) {
         return toSignal(enabled.pipe(map((value) => value ?? false)), { initialValue: false });
     }
