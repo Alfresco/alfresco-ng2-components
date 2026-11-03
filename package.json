@@ -65,7 +65,7 @@
     "eventemitter3": "5.0.4",
     "graphql-ws": "6.4.1",
     "material-icons": "1.13.14",
-    "minimatch": "10.2.6",
+    "minimatch": "11.0.1",
     "ng2-charts": "9.0.0",
     "pdfjs-dist": "5.1.91",
     "raphael": "2.3.0",
