@@ -28,7 +28,10 @@ const UPDATE_STAGES = [
     { name: 'align-peers', todo: 'Run `pnpm peers check`, upgrade the packages with unmet peers, then run `pnpm install`.' },
     { name: 'run-migrations', todo: 'Run `pnpm nx migrate --run-migrations --create-commits`, delete `migrations.json`, then run `pnpm install`.' },
     { name: 'lockfile', todo: 'Run `pnpm install` and commit `pnpm-lock.yaml`.' },
-    { name: 'peers', todo: 'Fix the unmet peer dependencies listed in the peer dependencies section.' }
+    {
+        name: 'peers',
+        todo: 'Go through the peer dependencies section: check the changelog of every package moved to a new major, upgrade by hand what is listed there, and fix the unmet peers.'
+    }
 ];
 const VALIDATION_STAGES = [
     { name: 'clean-overrides', todo: 'Compare the overrides in `pnpm-workspace.yaml` with a lockfile resolved without them.' },
