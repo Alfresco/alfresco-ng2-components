@@ -8,7 +8,7 @@ runs:
       shell: bash
       run: |
         {
-          node scripts/update-angular/align-peers.mjs "$RUNNER_TEMP/peers-aligned.md"
+          node scripts/update-angular/align-peers.mjs "$RUNNER_TEMP/peers-baseline.json" "$RUNNER_TEMP/peers-aligned.md"
           git add -A
           git diff --cached --quiet || git commit -m "chore: align peer dependencies"
         } 2>&1 | tee "$RUNNER_TEMP/validation.log"

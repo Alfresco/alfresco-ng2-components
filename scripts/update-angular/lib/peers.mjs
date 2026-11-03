@@ -16,6 +16,7 @@
  */
 
 import { spawnSync } from 'node:child_process';
+import fs from 'node:fs';
 
 const MAX_OUTPUT_BYTES = 64 * 1024 * 1024;
 
@@ -56,4 +57,13 @@ export function findPeerIssues() {
  */
 export function issueKey(issue) {
     return `${issue.project}|${issue.peer}|${issue.topParent}`;
+}
+
+/**
+ * Reads the keys of the issues saved before the update, to tell the issues the update introduced from the older ones.
+ * @param file file written by save-peer-baseline
+ * @returns issue keys
+ */
+export function readBaselineKeys(file) {
+    return new Set(JSON.parse(fs.readFileSync(file, 'utf8')).map(issueKey));
 }
