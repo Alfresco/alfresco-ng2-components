@@ -23,7 +23,12 @@ runs:
         echo "$OUTCOME" > "$RESULTS/$SAFE_NAME.status"
         if [ -f "$RUNNER_TEMP/validation.log" ]; then
           CLEAN_LOG="$RUNNER_TEMP/validation-clean.log"
-          sed 's/\x1b\[[0-9;]*[A-Za-z]//g' "$RUNNER_TEMP/validation.log" > "$CLEAN_LOG"
+          sed 's/\x1b\[[0-9;]*[A-Za-z]//g' "$RUNNER_TEMP/validation.log" | perl -0pe '
+            s/-----BEGIN PGP PRIVATE KEY BLOCK-----.*?-----END PGP PRIVATE KEY BLOCK-----/[redacted PGP private key]/gs;
+            s/\b(?:gh[pousr]_|github_pat_|npm_)[A-Za-z0-9_]{20,}/[redacted token]/g;
+            s/x-access-token:[^@\s]+@/x-access-token:[redacted]@/g;
+            s/(AUTHORIZATION:\s*basic\s+)\S+/$1\[redacted]/gi;
+          ' > "$CLEAN_LOG"
           {
             if grep -qE 'error|Error|ERROR|✖|FAIL' "$CLEAN_LOG"; then
               echo "Errors found in the full log (last 40 matching lines):"
