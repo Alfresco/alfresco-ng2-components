@@ -21,7 +21,7 @@ import { installedVersion, setDependencyVersions, workspaceDependencies } from '
 import { findPeerIssues, issueKey, readBaselineKeys } from './lib/peers.mjs';
 import { installableReleases, peerDependenciesOf } from './lib/registry.mjs';
 import { runVisibly } from './lib/shell.mjs';
-import { compareVersions, exactVersion, majorVersion, satisfiesRange } from './lib/versions.mjs';
+import { compareVersions, exactVersion, isVersionRange, majorVersion, satisfiesRange } from './lib/versions.mjs';
 
 const MAX_ROUNDS = 3;
 const MAX_CANDIDATES = 15;
@@ -82,16 +82,27 @@ function newestFittingRelease(name, current, major) {
  * @param dependencies direct dependencies
  * @param tried package names already handled, updated here so nothing is tried twice
  * @returns the `upgrades` to apply and the `manual` upgrades to leave to a person, each with the package name,
- * the current range in `from` and the release in `to`
+ * the current range in `from` and the release in `to`, and the `skipped` dependencies whose range is not a plain version
  */
 function chooseUpgrades(issues, dependencies, tried) {
     const upgrades = [];
     const manual = [];
+    const skipped = [];
     const upgradedPeers = new Set();
+    const canUpgrade = (name) => {
+        if (isVersionRange(dependencies[name])) {
+            return true;
+        }
+        skipped.push({ name, range: dependencies[name] });
+        return false;
+    };
 
     for (const peer of new Set(issues.map((issue) => issue.peer))) {
         if (dependencies[peer] && !tried.has(peer)) {
             tried.add(peer);
+            if (!canUpgrade(peer)) {
+                continue;
+            }
             const ranges = issues.filter((issue) => issue.peer === peer).map((issue) => issue.wanted);
             const to = releaseSatisfyingRanges(peer, dependencies[peer], ranges);
             if (to) {
@@ -104,6 +115,9 @@ function chooseUpgrades(issues, dependencies, tried) {
     for (const name of new Set(issues.filter((issue) => !upgradedPeers.has(issue.peer)).map((issue) => issue.topParent))) {
         if (dependencies[name] && !tried.has(name)) {
             tried.add(name);
+            if (!canUpgrade(name)) {
+                continue;
+            }
             const major = majorVersion(dependencies[name]);
             const sameMajor = newestFittingRelease(name, dependencies[name], major);
             const nextMajor = sameMajor ? undefined : newestFittingRelease(name, dependencies[name], major + 1);
@@ -116,25 +130,26 @@ function chooseUpgrades(issues, dependencies, tried) {
         }
     }
 
-    return { upgrades, manual };
+    return { upgrades, manual, skipped };
 }
 
 /**
  * Upgrades direct dependencies until the peers the update broke are satisfied or nothing more can be done, installing after each round.
  * Issues that were already there before the update are left alone, they are only reported.
  * @param baselineFile issues saved before the update
- * @param reportFile JSON file listing the `upgrades` made and the `manual` upgrades that are left to a person
+ * @param reportFile JSON file listing the `upgrades` made, the `manual` upgrades left to a person and the `skipped` dependencies
  */
 function alignPeers(baselineFile, reportFile) {
     const baselineKeys = readBaselineKeys(baselineFile);
-    const report = { upgrades: [], manual: [] };
+    const report = { upgrades: [], manual: [], skipped: [] };
     const tried = new Set();
 
     for (let round = 0; round < MAX_ROUNDS; round++) {
         const newIssues = findPeerIssues().filter((issue) => !baselineKeys.has(issueKey(issue)));
-        const { upgrades, manual } = chooseUpgrades(newIssues, workspaceDependencies(), tried);
+        const { upgrades, manual, skipped } = chooseUpgrades(newIssues, workspaceDependencies(), tried);
 
         report.manual.push(...manual);
+        report.skipped.push(...skipped);
         if (!upgrades.length) {
             break;
         }

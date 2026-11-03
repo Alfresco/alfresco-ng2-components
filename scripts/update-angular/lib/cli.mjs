@@ -18,14 +18,17 @@
 import process from 'node:process';
 
 /**
- * Runs a script task with the command line arguments, printing the error message and exiting with 1 when it throws.
+ * Runs a script task with the command line arguments, printing the error with its stack and exiting with 1 when it throws.
  * @param task function receiving the command line arguments
  */
 export function main(task) {
     try {
         task(...process.argv.slice(2));
     } catch (error) {
-        console.error(error.message);
+        console.error(error.stack ?? error.message);
+        if (error.stderr && !error.message.includes(error.stderr)) {
+            console.error(String(error.stderr));
+        }
         process.exit(1);
     }
 }

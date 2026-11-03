@@ -62,6 +62,15 @@ function upgradesSection(aligned) {
               )
           ].join('\n')
         : 'No package needed upgrading.';
+    const skipped = aligned.skipped.length
+        ? [
+              '**Not upgraded**: their version in package.json is not a plain version (a workspace package or a compound range), so it was left alone.',
+              '',
+              '| Package | Range |',
+              '| --- | --- |',
+              ...aligned.skipped.map((dependency) => `| \`${dependency.name}\` | \`${dependency.range}\` |`)
+          ].join('\n')
+        : '';
     const manual = aligned.manual.length
         ? [
               '**To upgrade by hand**: only a new major fits their peers, and a new major is not applied automatically.',
@@ -72,7 +81,7 @@ function upgradesSection(aligned) {
           ].join('\n')
         : '';
 
-    return [upgraded, manual].filter(Boolean).join('\n\n');
+    return [upgraded, manual, skipped].filter(Boolean).join('\n\n');
 }
 
 /**
@@ -103,7 +112,8 @@ function findingsLog(aligned, newIssues) {
         ...aligned.upgrades
             .filter(isMajorUpgrade)
             .map((upgrade) => `${upgrade.name} was moved to a new major (${upgrade.from} -> ${upgrade.to}), check its changelog`),
-        ...aligned.manual.map((upgrade) => `${upgrade.name} ${upgrade.from} needs the new major ${upgrade.to} to fit its peers, upgrade it by hand`)
+        ...aligned.manual.map((upgrade) => `${upgrade.name} ${upgrade.from} needs the new major ${upgrade.to} to fit its peers, upgrade it by hand`),
+        ...aligned.skipped.map((dependency) => `${dependency.name} (${dependency.range}) is not a plain version, it was not upgraded`)
     ];
 }
 
@@ -120,7 +130,7 @@ function reportPeers(baselineFile, reportDir, logFile, alignedFile) {
     const issues = findPeerIssues();
     const newIssues = issues.filter((issue) => !baselineKeys.has(issueKey(issue)));
     const oldIssues = issues.filter((issue) => baselineKeys.has(issueKey(issue)));
-    const aligned = fs.existsSync(alignedFile) ? JSON.parse(fs.readFileSync(alignedFile, 'utf8')) : { upgrades: [], manual: [] };
+    const aligned = fs.existsSync(alignedFile) ? JSON.parse(fs.readFileSync(alignedFile, 'utf8')) : { upgrades: [], manual: [], skipped: [] };
     const findings = findingsLog(aligned, newIssues);
 
     fs.mkdirSync(reportDir, { recursive: true });

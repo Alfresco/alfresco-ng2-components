@@ -58,6 +58,7 @@ export function installedVersion(name) {
 
 /**
  * Writes new versions into package.json, keeping its formatting and the range prefix (^, ~) of each dependency.
+ * Fails instead of rewriting a dependency whose range is not a plain version, so nothing is silently corrupted.
  * @param upgrades dependencies with the new exact version in `to`
  */
 export function setDependencyVersions(upgrades) {
@@ -65,7 +66,11 @@ export function setDependencyVersions(upgrades) {
 
     for (const { name, to } of upgrades) {
         const escapedName = name.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&');
-        content = content.replace(new RegExp(`("${escapedName}":\\s*"\\D*)[^"]+(")`), `$1${to}$2`);
+        const plainVersion = new RegExp(`("${escapedName}":\\s*"[\\^~=]?)\\d+\\.\\d+\\.\\d+(")`);
+        if (!plainVersion.test(content)) {
+            throw new Error(`Cannot upgrade "${name}" to ${to}: its range in package.json is not a plain version`);
+        }
+        content = content.replace(plainVersion, `$1${to}$2`);
     }
 
     fs.writeFileSync('package.json', content);

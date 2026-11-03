@@ -25,7 +25,7 @@ import process from 'node:process';
  * @returns major number
  */
 export function majorVersion(version) {
-    return Number(version.match(/\d+/)[0]);
+    return Number(matchOrFail(version, /\d+/)[0]);
 }
 
 /**
@@ -34,7 +34,31 @@ export function majorVersion(version) {
  * @returns exact version, e.g. "21.2.25"
  */
 export function exactVersion(range) {
-    return range.match(/\d+\.\d+\.\d+/)[0];
+    return matchOrFail(range, /\d+\.\d+\.\d+/)[0];
+}
+
+/**
+ * Tells whether a dependency range is a plain version that can be read and rewritten safely: x.y.z, optionally prefixed with ^, ~ or =.
+ * Anything else, such as "workspace:*", "latest" or ">=1.0.0 <2", needs a person.
+ * @param range dependency range as written in package.json
+ * @returns true for a plain version range
+ */
+export function isVersionRange(range) {
+    return /^[\^~=]?\d+\.\d+\.\d+$/.test(range);
+}
+
+/**
+ * Matches a pattern in a version or range, failing with the offending text when it does not contain a version.
+ * @param range version or range
+ * @param pattern pattern to find
+ * @returns the match
+ */
+function matchOrFail(range, pattern) {
+    const match = range.match(pattern);
+    if (!match) {
+        throw new Error(`"${range}" is not a version range`);
+    }
+    return match;
 }
 
 /**
