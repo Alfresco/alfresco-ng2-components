@@ -38,7 +38,7 @@ runs:
         BASE_BRANCH: ${{ inputs.base-branch }}
       run: |
         BRANCH="chore/update-angular-$VERSION"
-        if git ls-remote --exit-code --heads origin "$BRANCH" > /dev/null; then
+        if git rev-parse --verify --quiet "refs/remotes/origin/$BRANCH" > /dev/null; then
           echo "Branch $BRANCH already exists"
           exit 1
         fi
