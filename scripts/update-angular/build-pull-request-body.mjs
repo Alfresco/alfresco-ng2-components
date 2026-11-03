@@ -19,6 +19,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import { main } from './lib/cli.mjs';
+import { fenced, shareBudget, truncateMarkdown } from './lib/markdown.mjs';
 
 const NOT_RUN = 'not run';
 
@@ -46,8 +47,10 @@ const VALIDATION_STAGES = [
 ];
 const TEST_TODO = 'Fix the failing unit tests shown in the log.';
 const MAX_BODY_CHARS = 60000;
-const LOG_BUDGET_CHARS = 36000;
-const MIN_LOG_CHARS = 1000;
+const MIN_DETAILS_CHARS = 8000;
+const LOG_OVERHEAD_CHARS = 300;
+const SEPARATORS_ROOM_CHARS = 200;
+const MIN_LOG_CHARS = 800;
 const MAX_LOG_CHARS = 6000;
 
 /**
@@ -130,19 +133,24 @@ function clip(text, limit) {
 
 /**
  * Builds a collapsible block with the log excerpt of every failed step and where to find its full log.
- * The excerpts share a fixed budget so that the pull request body stays within GitHub's size limit.
+ * The excerpts share the budget, and are left out when it is too small to show anything useful.
  * @param steps all steps
  * @param runUrl URL of the workflow run
+ * @param budget number of characters available
  * @returns markdown
  */
-function failureDetails(steps, runUrl) {
+function failureDetails(steps, runUrl, budget) {
     const failed = steps.filter((step) => step.log && step.outcome !== 'success');
-    const limit = Math.max(MIN_LOG_CHARS, Math.min(MAX_LOG_CHARS, Math.floor(LOG_BUDGET_CHARS / Math.max(failed.length, 1))));
+    const limit = Math.min(MAX_LOG_CHARS, Math.floor(budget / Math.max(failed.length, 1)) - LOG_OVERHEAD_CHARS);
+
+    if (failed.length && limit < MIN_LOG_CHARS) {
+        return 'The log excerpts were left out because the description would be too long. They are in the `full-log-*` artifacts of the workflow run.';
+    }
 
     return failed
         .map(
             (step) =>
-                `<details><summary>${step.name}</summary>\n\n\`\`\`\n${clip(step.log, limit)}\n\`\`\`\n\nFull log: the \`full-log-${step.name}\` artifact of the [workflow run](${runUrl}).\n\n</details>`
+                `<details><summary>${step.name}</summary>\n\n${fenced(clip(step.log, limit))}\n\nFull log: the \`full-log-${step.name}\` artifact of the [workflow run](${runUrl}).\n\n</details>`
         )
         .join('\n\n');
 }
@@ -186,28 +194,26 @@ function stoppedWarning(steps) {
 function buildPullRequestBody(bodyFile, validationDir, reportDir, version, runUrl, ...jobResults) {
     const steps = listSteps(readRecordedSteps(validationDir));
     const needsFixes = steps.some((step) => step.outcome !== 'success') || jobResults.some((result) => result !== 'success');
+    const readReport = (file) => readIfExists(path.join(reportDir, file)).trim();
+    const join = (sections) => `${sections.filter(Boolean).join('\n\n')}\n`;
 
-    const sectionsWith = (details) => [
+    const head = [
         `Automated update of Angular and Nx packages to Angular ${version}.`,
         stoppedWarning(steps),
         `### Steps\n\n${resultsTable(steps)}`,
-        nextSteps(steps),
-        details,
-        `[Workflow run](${runUrl})`,
-        readIfExists(path.join(reportDir, 'migration-report.md')).trim(),
-        readIfExists(path.join(reportDir, 'peers.md')).trim(),
-        readIfExists(path.join(reportDir, 'overrides.md')).trim()
+        nextSteps(steps)
     ];
-    const join = (sections) => `${sections.filter(Boolean).join('\n\n')}\n`;
+    const runLink = `[Workflow run](${runUrl})`;
+    const available = MAX_BODY_CHARS - join([...head, runLink]).length - SEPARATORS_ROOM_CHARS;
 
-    let body = join(sectionsWith(failureDetails(steps, runUrl)));
-    if (body.length > MAX_BODY_CHARS) {
-        body = join(
-            sectionsWith(
-                'The log excerpts were left out because the description would be too long. They are in the `full-log-*` artifacts of the workflow run.'
-            )
-        );
-    }
+    const reports = shareBudget(
+        [readReport('migration-report.md'), readReport('peers.md'), readReport('overrides.md')],
+        available - MIN_DETAILS_CHARS
+    );
+    const reportsLength = reports.reduce((total, report) => total + report.length, 0);
+    const details = failureDetails(steps, runUrl, available - reportsLength);
+
+    const body = truncateMarkdown(join([...head, details, runLink, ...reports]), MAX_BODY_CHARS);
 
     fs.writeFileSync(bodyFile, body);
     process.stdout.write(needsFixes ? 'draft' : 'ready');

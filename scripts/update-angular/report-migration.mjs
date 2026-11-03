@@ -46,7 +46,7 @@ function migrationsTable(migrationsFile) {
     const migrations = fs.existsSync(migrationsFile) ? (JSON.parse(fs.readFileSync(migrationsFile, 'utf8')).migrations ?? []) : [];
     const rows = migrations.map(
         (migration) =>
-            `| \`${migration.package}\` | \`${migration.name}\` | ${migration.version} | ${(migration.description ?? '').replaceAll('|', '\\|')} |`
+            `| \`${migration.package}\` | \`${migration.name}\` | ${migration.version} | ${(migration.description ?? '').replace(/\s+/g, ' ').replaceAll('|', '\\|')} |`
     );
     const table = rows.length
         ? ['| Package | Migration | Version | Description |', '| --- | --- | --- | --- |', ...rows].join('\n')
