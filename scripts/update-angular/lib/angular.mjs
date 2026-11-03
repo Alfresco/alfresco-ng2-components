@@ -36,8 +36,9 @@ export function isAngularPackage(name) {
  * @returns Angular major
  */
 export function angularMajor(name, version) {
-    const [major, minor] = version.match(/\d+/g);
-    return name === DEVKIT_ARCHITECT ? Number(minor.slice(0, -2)) : Number(major);
+    const major = majorVersion(version);
+    const minor = version.match(/\d+/g)[1];
+    return name === DEVKIT_ARCHITECT ? Number(minor.slice(0, -2)) : major;
 }
 
 /**
