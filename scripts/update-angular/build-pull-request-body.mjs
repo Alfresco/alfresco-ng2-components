@@ -45,6 +45,10 @@ const VALIDATION_STAGES = [
     { name: 'lint', todo: 'Fix the lint errors shown in the log.' }
 ];
 const TEST_TODO = 'Fix the failing unit tests shown in the log.';
+const MAX_BODY_CHARS = 60000;
+const LOG_BUDGET_CHARS = 36000;
+const MIN_LOG_CHARS = 1000;
+const MAX_LOG_CHARS = 6000;
 
 /**
  * Reads a file, or returns an empty text when it does not exist.
@@ -115,14 +119,31 @@ function resultsTable(steps) {
 }
 
 /**
- * Builds a collapsible block with the log of every failed step.
+ * Shortens a text to a number of characters, keeping its beginning, which is where the errors of a log are.
+ * @param text text to shorten
+ * @param limit maximum number of characters kept
+ * @returns the text, with a note when it was shortened
+ */
+function clip(text, limit) {
+    return text.length > limit ? `${text.slice(0, limit)}\n… (shortened, see the full log)` : text;
+}
+
+/**
+ * Builds a collapsible block with the log excerpt of every failed step and where to find its full log.
+ * The excerpts share a fixed budget so that the pull request body stays within GitHub's size limit.
  * @param steps all steps
+ * @param runUrl URL of the workflow run
  * @returns markdown
  */
-function failureDetails(steps) {
-    return steps
-        .filter((step) => step.log && step.outcome !== 'success')
-        .map((step) => `<details><summary>${step.name}</summary>\n\n\`\`\`\n${step.log}\n\`\`\`\n\n</details>`)
+function failureDetails(steps, runUrl) {
+    const failed = steps.filter((step) => step.log && step.outcome !== 'success');
+    const limit = Math.max(MIN_LOG_CHARS, Math.min(MAX_LOG_CHARS, Math.floor(LOG_BUDGET_CHARS / Math.max(failed.length, 1))));
+
+    return failed
+        .map(
+            (step) =>
+                `<details><summary>${step.name}</summary>\n\n\`\`\`\n${clip(step.log, limit)}\n\`\`\`\n\nFull log: the \`full-log-${step.name}\` artifact of the [workflow run](${runUrl}).\n\n</details>`
+        )
         .join('\n\n');
 }
 
@@ -166,19 +187,29 @@ function buildPullRequestBody(bodyFile, validationDir, reportDir, version, runUr
     const steps = listSteps(readRecordedSteps(validationDir));
     const needsFixes = steps.some((step) => step.outcome !== 'success') || jobResults.some((result) => result !== 'success');
 
-    const sections = [
+    const sectionsWith = (details) => [
         `Automated update of Angular and Nx packages to Angular ${version}.`,
         stoppedWarning(steps),
         `### Steps\n\n${resultsTable(steps)}`,
         nextSteps(steps),
-        failureDetails(steps),
+        details,
         `[Workflow run](${runUrl})`,
         readIfExists(path.join(reportDir, 'migration-report.md')).trim(),
         readIfExists(path.join(reportDir, 'peers.md')).trim(),
         readIfExists(path.join(reportDir, 'overrides.md')).trim()
     ];
+    const join = (sections) => `${sections.filter(Boolean).join('\n\n')}\n`;
 
-    fs.writeFileSync(bodyFile, `${sections.filter(Boolean).join('\n\n')}\n`);
+    let body = join(sectionsWith(failureDetails(steps, runUrl)));
+    if (body.length > MAX_BODY_CHARS) {
+        body = join(
+            sectionsWith(
+                'The log excerpts were left out because the description would be too long. They are in the `full-log-*` artifacts of the workflow run.'
+            )
+        );
+    }
+
+    fs.writeFileSync(bodyFile, body);
     process.stdout.write(needsFixes ? 'draft' : 'ready');
 }
 
