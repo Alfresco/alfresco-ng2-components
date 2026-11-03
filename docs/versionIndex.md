@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v10.0.0](#v1000)
 -   [v9.1.0](#v910)
 -   [v8.3.0](#v830)
 -   [v7.0.0-alpha.3](#v700-alpha3)
@@ -49,6 +50,14 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v10.0.0
+
+<!--1000 start-->
+
+-   [Cascading Dictionary service](content-services/services/cascading-dictionary.service.md)
+
+<!--1000 end-->
 
 ## v9.1.0
 

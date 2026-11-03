@@ -1,6 +1,6 @@
 ---
 Title: Cascading Dictionary service
-Added: v8.0.0
+Added: v10.0.0
 Status: Active
 Last reviewed: 2026-10-26
 ---
