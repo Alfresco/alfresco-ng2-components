@@ -20,14 +20,35 @@ import { run } from './shell.mjs';
 import { compareVersions, isStable } from './versions.mjs';
 
 const MS_PER_MINUTE = 60 * 1000;
+const publishTimesByPackage = new Map();
+const peersByRelease = new Map();
+let publishTimeLimit;
 
 /**
- * Returns the newest publish time pnpm accepts, based on minimumReleaseAge.
+ * Returns the result of a computation, running it only the first time its key is asked for.
+ * Registry data does not change during a script run, so asking for it twice would only cost another pnpm process.
+ * @param cache map holding the results
+ * @param key what identifies the computation
+ * @param compute function producing the result
+ * @returns the result
+ */
+function remember(cache, key, compute) {
+    if (!cache.has(key)) {
+        cache.set(key, compute());
+    }
+    return cache.get(key);
+}
+
+/**
+ * Returns the newest publish time pnpm accepts, based on minimumReleaseAge. It is read once per script run.
  * @returns epoch milliseconds
  */
 function newestAllowedPublishTime() {
-    const minimumAge = fs.readFileSync('pnpm-workspace.yaml', 'utf8').match(/^minimumReleaseAge:\s*(\d+)/m);
-    return Date.now() - (minimumAge ? Number(minimumAge[1]) : 0) * MS_PER_MINUTE;
+    if (publishTimeLimit === undefined) {
+        const minimumAge = fs.readFileSync('pnpm-workspace.yaml', 'utf8').match(/^minimumReleaseAge:\s*(\d+)/m);
+        publishTimeLimit = Date.now() - (minimumAge ? Number(minimumAge[1]) : 0) * MS_PER_MINUTE;
+    }
+    return publishTimeLimit;
 }
 
 /**
@@ -37,7 +58,7 @@ function newestAllowedPublishTime() {
  * @returns versions
  */
 export function installableReleases(name, accepts) {
-    const publishTimes = JSON.parse(run('pnpm', ['view', name, 'time', '--json']));
+    const publishTimes = remember(publishTimesByPackage, name, () => JSON.parse(run('pnpm', ['view', name, 'time', '--json'])));
     const newestAllowed = newestAllowedPublishTime();
 
     return Object.keys(publishTimes)
@@ -52,12 +73,14 @@ export function installableReleases(name, accepts) {
  * @returns peers with their name, range and whether they are optional
  */
 export function peerDependenciesOf(name, version) {
-    const output = run('pnpm', ['view', `${name}@${version}`, 'peerDependencies', 'peerDependenciesMeta', '--json']).trim();
-    const { peerDependencies = {}, peerDependenciesMeta = {} } = output ? JSON.parse(output) : {};
+    return remember(peersByRelease, `${name}@${version}`, () => {
+        const output = run('pnpm', ['view', `${name}@${version}`, 'peerDependencies', 'peerDependenciesMeta', '--json']).trim();
+        const { peerDependencies = {}, peerDependenciesMeta = {} } = output ? JSON.parse(output) : {};
 
-    return Object.entries(peerDependencies).map(([peer, range]) => ({
-        name: peer,
-        range,
-        optional: Boolean(peerDependenciesMeta[peer]?.optional)
-    }));
+        return Object.entries(peerDependencies).map(([peer, range]) => ({
+            name: peer,
+            range,
+            optional: Boolean(peerDependenciesMeta[peer]?.optional)
+        }));
+    });
 }
