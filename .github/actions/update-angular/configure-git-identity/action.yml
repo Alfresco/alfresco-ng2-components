@@ -1,0 +1,20 @@
+name: "Configure git identity"
+description: "Set the author of the commits the update creates. They are signed later, right before they are pushed, so no secret is present while packages are installed and migrations run."
+inputs:
+  git-user:
+    description: "Name of the committer"
+    required: true
+  git-email:
+    description: "Email of the committer"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Configure git identity
+      shell: bash
+      env:
+        GIT_USER: ${{ inputs.git-user }}
+        GIT_EMAIL: ${{ inputs.git-email }}
+      run: |
+        git config user.name "$GIT_USER"
+        git config user.email "$GIT_EMAIL"
