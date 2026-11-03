@@ -19,7 +19,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import { main } from './lib/cli.mjs';
-import { findPeerIssues, issueKey } from './lib/peers.mjs';
+import { findPeerIssues, issueKey, readBaselineKeys } from './lib/peers.mjs';
 
 /**
  * Builds a markdown table of peer issues.
@@ -61,7 +61,7 @@ function buildSection(upgradeRows, newIssues, oldIssues) {
  * @param upgradesFile rows written by align-peers
  */
 function reportPeers(baselineFile, reportDir, logFile, upgradesFile) {
-    const baselineKeys = new Set(JSON.parse(fs.readFileSync(baselineFile, 'utf8')).map(issueKey));
+    const baselineKeys = readBaselineKeys(baselineFile);
     const issues = findPeerIssues();
     const newIssues = issues.filter((issue) => !baselineKeys.has(issueKey(issue)));
     const oldIssues = issues.filter((issue) => baselineKeys.has(issueKey(issue)));
