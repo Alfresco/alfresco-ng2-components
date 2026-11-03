@@ -33,6 +33,12 @@ const UPDATE_STAGES = [
         todo: 'Go through the peer dependencies section: check the changelog of every package moved to a new major, upgrade by hand what is listed there, and fix the unmet peers.'
     }
 ];
+const OPTIONAL_STAGES = [
+    {
+        name: 'available-releases',
+        todo: 'Upgrade the packages listed in the log once a release for the new Angular is old enough to install (`minimumReleaseAge`).'
+    }
+];
 const VALIDATION_STAGES = [
     { name: 'clean-overrides', todo: 'Compare the overrides in `pnpm-workspace.yaml` with a lockfile resolved without them.' },
     { name: 'build', todo: 'Fix the build errors shown in the log.' },
@@ -80,7 +86,13 @@ function readRecordedSteps(validationDir) {
  */
 function listSteps(recorded) {
     const find = (name) => recorded.find((step) => step.name === name);
-    const known = [...UPDATE_STAGES, ...VALIDATION_STAGES].map((stage) => ({ log: '', outcome: NOT_RUN, ...find(stage.name), ...stage }));
+    const optional = OPTIONAL_STAGES.filter((stage) => find(stage.name));
+    const known = [...UPDATE_STAGES, ...optional, ...VALIDATION_STAGES].map((stage) => ({
+        log: '',
+        outcome: NOT_RUN,
+        ...find(stage.name),
+        ...stage
+    }));
     const tests = recorded.filter((step) => step.name.startsWith('test-')).map((step) => ({ ...step, todo: TEST_TODO }));
 
     return [...known, ...(tests.length ? tests : [{ name: 'unit tests', outcome: NOT_RUN, log: '', todo: TEST_TODO }])];

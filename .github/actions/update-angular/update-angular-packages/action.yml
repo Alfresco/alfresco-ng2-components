@@ -18,7 +18,7 @@ runs:
         VERSION: ${{ inputs.version }}
       run: |
         {
-          PLAN=$(node scripts/update-angular/plan-angular-packages.mjs "$TARGET_MAJOR")
+          PLAN=$(node scripts/update-angular/plan-angular-packages.mjs "$TARGET_MAJOR" "$RUNNER_TEMP/missing-releases.log")
           echo "$PLAN"
           mkdir -p "$RUNNER_TEMP/migrations" "$RUNNER_TEMP/reported"
           COUNT=0
@@ -42,3 +42,22 @@ runs:
       with:
         name: update-angular-packages
         outcome: ${{ steps.stage.outcome }}
+    - name: Check available releases
+      id: available
+      if: ${{ always() }}
+      shell: bash
+      run: |
+        if [ -f "$RUNNER_TEMP/missing-releases.log" ]; then
+          cp "$RUNNER_TEMP/missing-releases.log" "$RUNNER_TEMP/validation.log"
+          if [ -s "$RUNNER_TEMP/missing-releases.log" ]; then
+            echo "outcome=failure" >> "$GITHUB_OUTPUT"
+          else
+            echo "outcome=success" >> "$GITHUB_OUTPUT"
+          fi
+        fi
+    - name: Record available releases
+      if: ${{ always() && steps.available.outputs.outcome != '' }}
+      uses: ./.github/actions/update-angular/record-validation-result
+      with:
+        name: available-releases
+        outcome: ${{ steps.available.outputs.outcome }}
