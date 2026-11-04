@@ -77,4 +77,10 @@
             <mat-icon adf-icon="print" />
         </button>
     </adf-viewer-toolbar-custom-actions>
+    @if (nodeEntry) {
+        <adf-breadcrumb
+            [folderNode]="nodeEntry.entry"
+            [root]="'APP.BROWSE.PERSONAL.TITLE'"
+            class="adf-viewer-toolbar-breadcrumb" />
+    }
 </adf-viewer>

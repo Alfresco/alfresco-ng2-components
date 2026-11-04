@@ -59,10 +59,12 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { NodeDownloadDirective } from '../../directives';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BreadcrumbComponent } from '../../breadcrumb';
+import { PeopleContentService } from '../../common';
 
 @Component({
     selector: 'adf-alfresco-viewer',
-    imports: [CommonModule, TranslatePipe, MatButtonModule, IconModule, ...VIEWER_DIRECTIVES, NodeDownloadDirective],
+    imports: [CommonModule, TranslatePipe, MatButtonModule, IconModule, ...VIEWER_DIRECTIVES, NodeDownloadDirective, BreadcrumbComponent],
     templateUrl: './alfresco-viewer.component.html',
     host: { class: 'adf-alfresco-viewer' },
     encapsulation: ViewEncapsulation.None,
@@ -78,6 +80,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     dialog = inject(MatDialog);
     private readonly cdr = inject(ChangeDetectorRef);
     private readonly nodeActionsService = inject(NodeActionsService);
+    private readonly peopleContentService = inject(PeopleContentService);
 
     @ViewChild('adfViewer')
     adfViewer: ViewerComponent<{ node: Node }>;
@@ -317,7 +320,8 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
 
     private async setupNode() {
         try {
-            this.nodeEntry = await this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] });
+            this.nodeEntry = await this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations', 'path'] });
+            this.prepareNodePath(this.nodeEntry.entry);
             if (this.versionId) {
                 this.versionEntry = await this.versionsApi.getVersion(this.nodeId, this.versionId);
                 await this.setUpNodeFile(this.nodeEntry.entry, this.versionEntry.entry);
@@ -327,6 +331,19 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
             this.cdr.detectChanges();
         } catch {
             this.urlFileContent = 'invalid-node';
+        }
+    }
+
+    private async prepareNodePath(node: Node) {
+        if (node?.path?.elements) {
+            const elements = node.path.elements;
+            if (elements.length > 1) {
+                if (elements[1].name === 'User Homes') {
+                    if (!this.peopleContentService.isCurrentUserAdmin()) {
+                        elements.splice(0, 2);
+                    }
+                }
+            }
         }
     }
 
