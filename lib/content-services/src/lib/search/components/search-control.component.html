@@ -18,7 +18,7 @@
       <ng-template let-data>
         @if (searchTextInput?.isSearchBarActive()) {
           <mat-list id="autocomplete-search-result-list">
-            @for (item of data?.list?.entries; track item; let idx = $index) {
+            @for (item of data?.list?.entries; track item.entry.id; let idx = $index) {
               <mat-list-item
                 id="result_option_{{idx}}"
                 [attr.data-automation-id]="'autocomplete_for_' + item.entry.name"

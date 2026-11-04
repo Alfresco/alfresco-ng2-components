@@ -1,5 +1,5 @@
 <mat-list>
-  @for (currentEntry of tagsEntries; track currentEntry; let idx = $index) {
+  @for (currentEntry of tagsEntries; track currentEntry.entry.id; let idx = $index) {
     <mat-list-item>
       <div
         class="adf-tag-actions-container"

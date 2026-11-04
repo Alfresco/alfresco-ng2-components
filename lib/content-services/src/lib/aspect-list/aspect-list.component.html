@@ -1,7 +1,7 @@
 @if (aspects$ | async; as aspects) {
   <div id="aspect-list-container" class="adf-aspect-list-container">
     <mat-accordion class="adf-accordion-aspect-list">
-      @for (aspect of aspects; track aspect; let colIndex = $index) {
+      @for (aspect of aspects; track aspect?.entry?.id; let colIndex = $index) {
         <div class="adf-accordion-aspect-list-item"
           [ngClass]="{'adf-hover' : !isPanelOpen[colIndex]}">
           <mat-checkbox class="adf-aspect-list-check-button" [id]="'aspect-list-'+colIndex+'-check'"

@@ -61,7 +61,7 @@
         </div>
       </mat-list-option>
 
-      @for (item of data?.list?.entries; track item; let idx = $index) {
+      @for (item of data?.list?.entries; track item.entry?.id; let idx = $index) {
         <mat-list-option
           [disableRipple]="true"
           [value]="item"

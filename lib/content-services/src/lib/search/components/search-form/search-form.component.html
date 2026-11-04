@@ -21,7 +21,7 @@
       <mat-icon [class.adf-search-form-icon-selected]="menuTrigger.menuOpen" class="adf-search-form-icon" adf-icon="expand_more" iconPositionEnd />
     </button>
     <mat-menu #menu="matMenu" class="adf-search-form-menu">
-      @for (form of forms; track form) {
+      @for (form of forms; track form.id) {
         <button mat-menu-item tabindex="0" [attr.aria-label]="form.name | translate" (click)="onSelectionChange(form)">
           {{ form.name | translate }}
         </button>
