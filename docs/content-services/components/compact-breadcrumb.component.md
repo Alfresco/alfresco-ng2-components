@@ -1,6 +1,6 @@
 ---
 Title: Compact Breadcrumb Component
-Added: v9.1.0
+Added: v10.0.0
 Status: Active
 Last reviewed: 2026-10-28
 ---

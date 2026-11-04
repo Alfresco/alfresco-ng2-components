@@ -13,7 +13,6 @@ backend services have been tested with each released version of ADF.
 ## Versions
 
 -   [v10.0.0](#v1000)
--   [v9.1.0](#v910)
 -   [v8.3.0](#v830)
 -   [v7.0.0-alpha.3](#v700-alpha3)
 -   [v6.8.0](#v680)
@@ -56,16 +55,10 @@ backend services have been tested with each released version of ADF.
 <!--1000 start-->
 
 -   [Cascading Dictionary service](content-services/services/cascading-dictionary.service.md)
+-   [Compact Breadcrumb Component](content-services/components/compact-breadcrumb.component.md)
+-   [Drag Drop State Service](core/services/drag-drop-state.service.md)
 
 <!--1000 end-->
-
-## v9.1.0
-
-<!--910 start-->
-
--   [Compact Breadcrumb Component](content-services/components/compact-breadcrumb.component.md)
-
-<!--910 end-->
 
 ## v8.3.0
 
