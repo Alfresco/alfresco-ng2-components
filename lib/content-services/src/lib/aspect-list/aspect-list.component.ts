@@ -82,7 +82,7 @@ export class AspectListComponent implements OnInit {
         );
     }
 
-    onCheckBoxClick(event: Event): void {
+    onCheckBoxClick(event: Event) {
         event.stopImmediatePropagation();
     }
 
