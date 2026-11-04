@@ -179,7 +179,7 @@
       </mat-expansion-panel-header>
       @if (currentPanel.panelTitle === DefaultPanels.CATEGORIES && editedPanelTitle !== DefaultPanels.CATEGORIES) {
         <div>
-          @for (category of categories; track category) {
+          @for (category of categories; track category.id) {
             <p class="adf-metadata-categories">{{ category.name }}</p>
           }
         </div>

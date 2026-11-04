@@ -10,7 +10,7 @@
         {{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.LABEL' | translate }}
       </mat-chip-option>
     }
-    @for (selection of facetFiltersService.selectedBuckets; track selection) {
+    @for (selection of facetFiltersService.selectedBuckets; track selection.bucket) {
       <mat-chip-option
         data-automation-id="chip-list-entry"
         class="adf-search-chip-list-item"

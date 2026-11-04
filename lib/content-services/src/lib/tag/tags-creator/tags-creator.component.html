@@ -68,7 +68,7 @@
         </output>
       @if (!spinnerVisible && existingTags) {
         <mat-list [disabled]="isOnlyCreateMode()">
-          @for (tagRow of existingTags; track tagRow) {
+          @for (tagRow of existingTags; track tagRow.entry.id) {
             <mat-list-item class="adf-tag"
               (click)="addExistingTagToTagsToAssign(tagRow)">
               {{ tagRow.entry.tag }}
