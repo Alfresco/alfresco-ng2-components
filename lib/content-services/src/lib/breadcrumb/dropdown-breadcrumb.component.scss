@@ -31,11 +31,11 @@ $dropdown-horizontal-offset: 30px;
         border: none;
         background: transparent;
         width: 25px;
+        height: 24px;
 
         &:focus-visible {
-            color: var(--mat-sys-primary);
-            outline: 2px solid var(--mat-sys-primary);
-            outline-offset: 1px;
+            outline: 2px solid var(--adf-outline-color);
+            outline-offset: -2px;
             border-radius: 4px;
         }
     }
