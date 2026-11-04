@@ -206,6 +206,7 @@ A collection of Angular components for generic use.
 | [Deleted Nodes Api service](core/services/deleted-nodes-api.service.md) | Gets a list of Content Services nodes currently in the trash. | [Source](../lib/core/src/lib/services/deleted-nodes-api.service.ts) |
 | [Discovery Api service](core/services/discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](../lib/content-services/src/lib/common/services/discovery-api.service.ts) |
 | [Download zip service](core/services/download-zip.service.md) | Creates and manages downloads. | [Source](../lib/content-services/src/lib/dialogs/download-zip/services/download-zip.service.ts) |
+| [Drag drop state service](core/services/drag-drop-state.service.md) | Manages state of drag and drop. | [Source](../lib/core/src/lib/services/drag-drop-state.service.ts) |
 | [Ecm User service](core/services/ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/src/lib/services/ecm-user.service.ts) |
 | [Favorites Api service](core/services/favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](../lib/content-services/src/lib/common/services/favorites-api.service.ts) |
 | [Form Rendering service](core/services/form-rendering.service.md) | Maps a form field type string onto the corresponding form widget component type. | [Source](../lib/core/src/lib/form/services/form-rendering.service.ts) |
