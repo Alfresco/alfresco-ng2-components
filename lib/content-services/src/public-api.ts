@@ -38,6 +38,7 @@ export * from './lib/interfaces/index';
 export * from './lib/version-compatibility/index';
 export * from './lib/common/index';
 export * from './lib/tree/index';
+export * from './lib/cascading-dictionary/index';
 export * from './lib/category/index';
 export * from './lib/viewer/index';
 export * from './lib/security/index';
