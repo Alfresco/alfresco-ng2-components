@@ -164,12 +164,18 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         if (this.suppressHoverOpen() || this.dragDropStateService.keyboardDraggingData()) {
             return;
         }
+        this.stopOpeningMenu();
         this.openMenuTimer = setTimeout(() => {
             if (this.dragDropStateService.dragging()) {
                 this.openMenu();
                 this.closeOnMenuLeave(2000, true);
             }
         }, 500);
+    }
+
+    onTriggerMouseLeave(): void {
+        this.suppressHoverOpen.set(false);
+        this.stopOpeningMenu();
     }
 
     onDrop(event: CdkDragDrop<PathElement, PathElement, DataRow>): void {
@@ -196,6 +202,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     }
 
     closeOnMenuLeave(delay = 600, suppressHoverOpen = false): void {
+        this.stopClosingMenu();
         this.closeMenuTimer = setTimeout(() => {
             this.closeMenu();
             if (suppressHoverOpen) {
