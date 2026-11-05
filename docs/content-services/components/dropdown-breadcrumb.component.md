@@ -14,10 +14,12 @@ Indicates the current position within a navigation hierarchy using a dropdown me
 ## Basic Usage
 
 ```html
-<adf-dropdown-breadcrumb  *ngIf="useDropdownBreadcrumb"
-    [target]="documentList"
-    [folderNode]="documentList.folderNode">
-</adf-dropdown-breadcrumb>
+@if (useDropdownBreadcrumb) {
+    <adf-dropdown-breadcrumb
+        [target]="documentList"
+        [folderNode]="documentList.folderNode">
+    </adf-dropdown-breadcrumb>
+}
 ```
 
 ## Class members
