@@ -56,7 +56,7 @@ interface PathElementWithState {
     templateUrl: './compact-breadcrumb.component.html',
     styleUrls: ['./compact-breadcrumb.component.scss'],
     host: {
-        '(document:keydown.escape)': 'closeMenu()'
+        '(document:keydown.escape)': 'closeMenu(true)'
     },
     imports: [
         MatButton,
@@ -228,8 +228,8 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         return route && !route.current && !route.libraryContainer;
     }
 
-    closeMenu(): void {
-        if (this.menuOpen()) {
+    closeMenu(usedEsc = false): void {
+        if (this.menuOpen() && usedEsc) {
             this.menuTrigger().nativeElement.focus();
         }
         this.menuOpen.set(false);
