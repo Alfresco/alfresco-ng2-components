@@ -280,7 +280,12 @@ describe('SignalForm', () => {
                                 type: 'repeatable-section',
                                 numberOfColumns: 1,
                                 params: { initialNumberOfRows: 1, maxNumberOfRows: 5 },
-                                fields: { 1: [{ id: 'when', type: 'date' }] }
+                                fields: {
+                                    1: [
+                                        { id: 'when', type: 'date' },
+                                        { id: 'source', type: 'display-external-property', value: 'from the API' }
+                                    ]
+                                }
                             }
                         ],
                         outcomes: [],
@@ -321,10 +326,18 @@ describe('SignalForm', () => {
 
             expect(form.rowCount('lines')).toBe(3);
             expect(form.submittedValues()['lines']).toEqual([
-                { when: '2024-03-15T00:00:00.000Z' },
-                { when: null },
-                { when: '2024-04-01T00:00:00.000Z' }
+                { when: '2024-03-15T00:00:00.000Z', source: 'from the API' },
+                { when: null, source: 'from the API' },
+                { when: '2024-04-01T00:00:00.000Z', source: 'from the API' }
             ]);
+        });
+
+        it('should keep the constant values of refreshed repeatable section rows', () => {
+            const form = refreshedForm();
+
+            form.refreshValues({ lines: [{ when: '2024-03-15', source: 'refreshed' }] });
+
+            expect(form.submittedValues()['lines']).toEqual([{ when: '2024-03-15T00:00:00.000Z', source: 'from the API' }]);
         });
 
         it('should fill only the fields still without a value', () => {

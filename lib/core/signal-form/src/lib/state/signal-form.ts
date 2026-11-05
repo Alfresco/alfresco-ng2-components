@@ -580,11 +580,12 @@ export class SignalForm {
     }
 
     private refreshableFields(): FieldDefinition[] {
-        return [...this.fields.values()].filter((field) => !CONSTANT_VALUE_FIELD_TYPES.has(field.type));
+        return [...this.fields.values()].filter(isRefreshable);
     }
 
     private replaceRows(section: SectionDefinition, savedRows: Record<string, unknown>[]): void {
-        const rows = savedRows.map((saved) => ({ ...this.emptyRow(section), ...readSavedRow(section.fields, saved, this.fieldTypes) }));
+        const refreshableFields = section.fields.filter(isRefreshable);
+        const rows = savedRows.map((saved) => ({ ...this.emptyRow(section), ...readSavedRow(refreshableFields, saved, this.fieldTypes) }));
         this.updateRows(section.id, () => rows);
         this.initialRows.update((current) => ({ ...current, [section.id]: [...rows.keys()].map((index) => index < section.initialRows) }));
         this.keys.update((current) => ({ ...current, [section.id]: this.newRowKeys(rows.length) }));
@@ -612,6 +613,8 @@ const matchingId = (reference: string, ids: Iterable<string>): string | undefine
 
 const rowOf = (pathKeys: readonly string[]): RowAddress | undefined =>
     pathKeys[0] === SECTIONS_KEY ? { sectionId: pathKeys[1], index: Number(pathKeys[2]) } : undefined;
+
+const isRefreshable = (field: FieldDefinition): boolean => !CONSTANT_VALUE_FIELD_TYPES.has(field.type);
 
 const isMissingValue = (value: FieldValue): boolean =>
     isBlank(value) || (Array.isArray(value) && value.length === 0) || (isRecord(value) && value['id'] === EMPTY_OPTION_ID);
