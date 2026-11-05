@@ -56,7 +56,7 @@ interface PathElementWithState {
     templateUrl: './compact-breadcrumb.component.html',
     styleUrls: ['./compact-breadcrumb.component.scss'],
     host: {
-        '(document:keydown.escape)': 'closeMenu(true)'
+        '(document:keydown.escape)': 'closeMenu($event)'
     },
     imports: [
         MatButton,
@@ -90,7 +90,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         transform: (nodes) => {
             let indexOffset = 0;
             return nodes.map((node, index) => {
-                const current = index === nodes.length - 1;
+                const current = index === nodes.length - 1 && this.insideCurrentLocation();
                 const libraryContainer = nodes[index + 1]?.nodeType === 'st:site';
                 if (libraryContainer) {
                     indexOffset = 1;
@@ -106,6 +106,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     });
     /** If true, the breadcrumb menu will be displayed in full width. */
     readonly fullWidth = input(false);
+    readonly insideCurrentLocation = input(false);
 
     /** Emitted when dragged item is dropped onto the breadcrumb. Emits drag and drop event. */
     readonly dropped = output<CdkDragDrop<PathElement, PathElement, DataRow>>();
@@ -237,13 +238,16 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         return route && !route.current && !route.libraryContainer;
     }
 
-    closeMenu(usedEsc = false): void {
-        if (this.menuOpen() && usedEsc) {
+    closeMenu(event?: KeyboardEvent): void {
+        if (this.menuOpen() && event) {
             this.menuTrigger().nativeElement.focus();
         }
         this.menuOpen.set(false);
         this.removeOutsideClickListener?.();
         this.removeOutsideClickListener = null;
+        if (event && !this.dragDropStateService.dragging()) {
+            event.stopPropagation();
+        }
     }
 
     private stopOpeningMenu(): void {
@@ -284,8 +288,18 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
                 this.closeMenu();
             }
         };
+        // Escape is handled in the capture phase so it is stopped before reaching other document listeners (e.g. viewer)
+        const handleEscape = (event: KeyboardEvent): void => {
+            if (event.key === 'Escape' && this.menuOpen()) {
+                this.closeMenu(event);
+            }
+        };
         document.addEventListener('click', handleOutsideClick, true);
-        this.removeOutsideClickListener = () => document.removeEventListener('click', handleOutsideClick, true);
+        document.addEventListener('keydown', handleEscape, true);
+        this.removeOutsideClickListener = () => {
+            document.removeEventListener('click', handleOutsideClick, true);
+            document.removeEventListener('keydown', handleEscape, true);
+        };
     }
 
     private updateMenuPosition(): void {

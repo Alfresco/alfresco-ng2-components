@@ -66,6 +66,7 @@ import { PeopleContentService } from '../../common';
     selector: 'adf-alfresco-viewer',
     imports: [CommonModule, TranslatePipe, MatButtonModule, IconModule, ...VIEWER_DIRECTIVES, NodeDownloadDirective, BreadcrumbComponent],
     templateUrl: './alfresco-viewer.component.html',
+    styleUrl: 'alfresco-viewer.component.scss',
     host: { class: 'adf-alfresco-viewer' },
     encapsulation: ViewEncapsulation.None,
     providers: [ViewUtilService]

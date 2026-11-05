@@ -106,6 +106,9 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @Input()
     connectedDropListSelector = '';
 
+    @Input()
+    hideCurrentLocation = false;
+
     previousNodes: PathElement[];
     lastNodes: PathElement[];
 
@@ -179,6 +182,9 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             this.lastNodes = this.route;
             this.previousNodes = null;
         }
+        if (this.hideCurrentLocation) {
+            this.lastNodes.pop();
+        }
     }
 
     open(): void {
@@ -232,7 +238,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     }
 
     isBreadcrumbItemAnchor(index: number): boolean {
-        return !this.readOnly && index !== this.lastNodes.length - 1 && !this.isCompactBreadcrumbItem(index);
+        return !this.readOnly && (index !== this.lastNodes.length - 1 || this.hideCurrentLocation) && !this.isCompactBreadcrumbItem(index);
     }
 
     isCompactBreadcrumbItem(index: number): boolean {
