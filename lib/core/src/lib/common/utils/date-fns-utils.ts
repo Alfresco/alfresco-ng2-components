@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { format, parse, parseISO, isValid, isBefore, isAfter } from 'date-fns';
+import { format, parse, parseISO, isValid, isBefore, isAfter, Locale } from 'date-fns';
 import { ar, cs, da, de, enUS, es, fi, fr, it, ja, nb, nl, pl, ptBR, ru, sv, zhCN } from 'date-fns/locale';
 
 const panDate = (num: number = 1): string => {

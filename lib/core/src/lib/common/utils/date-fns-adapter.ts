@@ -124,7 +124,7 @@ export class AdfDateFnsAdapter extends DateFnsAdapter {
     }
 
     private parseAndValidateDate(value: any): Date {
-        const parsedDate = parse(value, this.displayFormat || DEFAULT_DATE_FORMAT, new Date());
+        const parsedDate = typeof value === 'string' ? parse(value, this.displayFormat || DEFAULT_DATE_FORMAT, new Date()) : null;
         return isValid(parsedDate) ? parsedDate : value;
     }
 }

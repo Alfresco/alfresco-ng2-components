@@ -19,7 +19,7 @@
   "dependencies": {
     "cropperjs": "^1.6.2",
     "angular-oauth2-oidc": "19.0.0",
-    "date-fns": "^2.30.0"
+    "date-fns": "4.4.0"
   },
   "peerDependencies": {
     "@angular/cdk": ">=20.2.14",
