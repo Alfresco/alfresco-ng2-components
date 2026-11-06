@@ -697,6 +697,22 @@
     },
     "HEADER": {
       "SELECTED": "Wybrano ({{ count }})"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "Foldery nadrzędne ({{ parentsCounter }})",
+      "TITLE": "Przenieś do folderu nadrzędnego",
+      "DESCRIPTION_WHEN_DRAGGING": "Upuść nad miejscem docelowym, aby przenieść. Pełna ścieżka widoczna poniżej.",
+      "DESCRIPTION_NO_DRAGGING": "Pełna ścieżka widoczna poniżej.",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING": "Naciśnij Esc lub upuść poza miejscem docelowym, aby anulować • Nie wykonano przeniesienia",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING": "Naciśnij Esc, opuść menu lub kliknij poza menu, aby anulować",
+      "FIRST_LEVEL": "Poziom 1",
+      "FIRST_LEVEL_LIBRARY": "Biblioteka • Poziom 1",
+      "NOT_FIRST_LEVEL": "Poziom {{ level }} • W {{ ancestorName }}",
+      "CURRENT_LEVEL": "Już w tym folderze",
+      "CURRENT_LEVEL_ICON_LABEL": "Bieżący",
+      "LIBRARY_CONTAINER_LEVEL": "Tylko nawigacja w bibliotece",
+      "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Niedostępne",
+      "DROP_HINT": "Przenieś tutaj"
     }
   },
   "NAME_COLUMN_LINK": {

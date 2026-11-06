@@ -697,6 +697,22 @@
     },
     "HEADER": {
       "SELECTED": "選択された ({{ count }})"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "親フォルダ ({{ parentsCounter }})",
+      "TITLE": "親フォルダに移動",
+      "DESCRIPTION_WHEN_DRAGGING": "移動先でドロップして移動します。完全なパスは以下に表示されます。",
+      "DESCRIPTION_NO_DRAGGING": "完全なパスは以下に表示されます。",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING": "Esc キーを押すか、ターゲット外でドロップしてキャンセル • 移動は行われませんでした",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING": "Escキーを押すか、メニューを離れるか、メニュー外をクリックしてキャンセル",
+      "FIRST_LEVEL": "レベル 1",
+      "FIRST_LEVEL_LIBRARY": "ライブラリ • レベル 1",
+      "NOT_FIRST_LEVEL": "レベル {{ level }} • {{ ancestorName }} 内",
+      "CURRENT_LEVEL": "すでにこのフォルダ内にあります",
+      "CURRENT_LEVEL_ICON_LABEL": "現在",
+      "LIBRARY_CONTAINER_LEVEL": "ライブラリナビゲーションのみ",
+      "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "利用不可",
+      "DROP_HINT": "ここに移動"
     }
   },
   "NAME_COLUMN_LINK": {

@@ -697,6 +697,22 @@
     },
     "HEADER": {
       "SELECTED": "Valgt ({{ count }})"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "Overordnede mapper ({{ parentsCounter }})",
+      "TITLE": "Flyt til en overordnet mappe",
+      "DESCRIPTION_WHEN_DRAGGING": "Frigiv på en destination for at flytte. Fuld sti vises nedenfor.",
+      "DESCRIPTION_NO_DRAGGING": "Fuld sti vises nedenfor.",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING": "Esc eller frigiv uden for et mål for at annullere • Ingen flytning udført",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING": "Esc, forlad menuen eller klik uden for menuen for at annullere",
+      "FIRST_LEVEL": "Niveau 1",
+      "FIRST_LEVEL_LIBRARY": "Bibliotek • Niveau 1",
+      "NOT_FIRST_LEVEL": "Niveau {{ level }} • I {{ ancestorName }}",
+      "CURRENT_LEVEL": "Allerede i denne mappe",
+      "CURRENT_LEVEL_ICON_LABEL": "Nuværende",
+      "LIBRARY_CONTAINER_LEVEL": "Kun biblioteksnavigation",
+      "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Ikke tilgængelig",
+      "DROP_HINT": "Flyt hertil"
     }
   },
   "NAME_COLUMN_LINK": {

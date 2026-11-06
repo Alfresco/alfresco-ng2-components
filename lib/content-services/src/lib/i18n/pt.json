@@ -697,6 +697,22 @@
     },
     "HEADER": {
       "SELECTED": "Selecionado ({{ count }})"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "Pastas pai ({{ parentsCounter }})",
+      "TITLE": "Mover para uma pasta pai",
+      "DESCRIPTION_WHEN_DRAGGING": "Libere em um destino para mover. Caminho completo mostrado abaixo.",
+      "DESCRIPTION_NO_DRAGGING": "Caminho completo mostrado abaixo.",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING": "Esc ou libere fora de um destino para cancelar • Nenhuma movimentação feita",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING": "Esc, saia do menu ou clique fora do menu para cancelar",
+      "FIRST_LEVEL": "Nível 1",
+      "FIRST_LEVEL_LIBRARY": "Biblioteca • Nível 1",
+      "NOT_FIRST_LEVEL": "Nível {{ level }} • Em {{ ancestorName }}",
+      "CURRENT_LEVEL": "Já está nesta pasta",
+      "CURRENT_LEVEL_ICON_LABEL": "Atual",
+      "LIBRARY_CONTAINER_LEVEL": "Somente navegação na biblioteca",
+      "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Indisponível",
+      "DROP_HINT": "Mover para aqui"
     }
   },
   "NAME_COLUMN_LINK": {

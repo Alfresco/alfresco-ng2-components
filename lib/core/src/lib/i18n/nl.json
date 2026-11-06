@@ -32,6 +32,7 @@
     "OPEN_HISTORY": "Meldingsgeschiedenis openen"
   },
   "FORM": {
+    "OUTCOME_EXECUTION_FAILED": "De formulieractie kon niet worden voltooid. Sommige wijzigingen zijn mogelijk toegepast.",
     "SIGNAL_FORM": {
       "WIDGET_LOADING": "Wordt geladen…",
       "WIDGET_UNSUPPORTED": "Dit veld kan niet worden weergegeven: het veldtype {{ type }} is niet beschikbaar.",
@@ -434,7 +435,8 @@
       "DRAGGABLE": "Versleepbaar",
       "EMPTY_HEADER": "Lege kop",
       "RESIZE_COLUMN": "Formaat van kolom {{ column }} wijzigen. Gebruik de pijltoetsen om de breedte aan te passen, Shift voor grotere stappen.",
-      "COLUMN_WIDTH_CHANGED": "Breedte van kolom {{ column }}: {{ width }} pixels"
+      "COLUMN_WIDTH_CHANGED": "Breedte van kolom {{ column }}: {{ width }} pixels",
+      "DRAG_DROP_HINTS": "U kunt Shift + Pijl omhoog gebruiken om te beginnen met slepen, Shift + Pijl omlaag om neer te zetten, Shift + Pijl rechts om het neerzetgebied te wijzigen en Escape om te annuleren."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Document",
@@ -457,6 +459,10 @@
       "SEARCH": "Zoeken",
       "APPLY": "Toepassen",
       "COLUMNS_VISIBILITY": "Selecteer kolommen om weer te geven"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Vrijgeven om te verplaatsen naar {{ destination }}",
+      "CLOSE_HINT": "Esc om te annuleren"
     }
   },
   "USER_PROFILE": {

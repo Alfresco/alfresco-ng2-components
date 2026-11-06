@@ -32,6 +32,7 @@
     "OPEN_HISTORY": "Benachrichtigungsverlauf öffnen"
   },
   "FORM": {
+    "OUTCOME_EXECUTION_FAILED": "Die Formularaktion konnte nicht abgeschlossen werden. Einige Änderungen wurden möglicherweise übernommen.",
     "SIGNAL_FORM": {
       "WIDGET_LOADING": "Wird geladen…",
       "WIDGET_UNSUPPORTED": "Dieses Feld kann nicht angezeigt werden: Der Feldtyp {{ type }} ist nicht verfügbar.",
@@ -434,7 +435,8 @@
       "DRAGGABLE": "Verschiebbar",
       "EMPTY_HEADER": "Leerer Header",
       "RESIZE_COLUMN": "Ändern Sie die Größe der {{ column }} Spalte. Verwenden Sie Pfeiltasten, um die Breite anzupassen, Umschalt für größere Schritte.",
-      "COLUMN_WIDTH_CHANGED": "{{ column }} Spaltenbreite: {{ width }} Pixel"
+      "COLUMN_WIDTH_CHANGED": "{{ column }} Spaltenbreite: {{ width }} Pixel",
+      "DRAG_DROP_HINTS": "Drücken Sie Umschalt + Nach-oben, um den Ziehvorgang zu starten, Umschalt + Nach-unten, um abzulegen, Umschalt + Nach-rechts, um den Ablagebereich zu ändern, und Escape, um abzubrechen."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -457,6 +459,10 @@
       "SEARCH": "Suchen",
       "APPLY": "Anwenden",
       "COLUMNS_VISIBILITY": "Spalten zum Anzeigen auswählen"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Freigeben, um nach {{ destination }} zu verschieben",
+      "CLOSE_HINT": "Esc, um abzubrechen"
     }
   },
   "USER_PROFILE": {

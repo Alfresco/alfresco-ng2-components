@@ -697,6 +697,22 @@
     },
     "HEADER": {
       "SELECTED": "Valgt ({{ count }})"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "Overordnede mapper ({{ parentsCounter }})",
+      "TITLE": "Flytt til en overordnet mappe",
+      "DESCRIPTION_WHEN_DRAGGING": "Slipp på et mål for å flytte. Full bane vises nedenfor.",
+      "DESCRIPTION_NO_DRAGGING": "Full bane vises nedenfor.",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING": "Esc eller slipp utenfor et mål for å avbryte • Ingen flytting utført",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING": "Esc, forlat menyen eller klikk utenfor menyen for å avbryte",
+      "FIRST_LEVEL": "Nivå 1",
+      "FIRST_LEVEL_LIBRARY": "Bibliotek • Nivå 1",
+      "NOT_FIRST_LEVEL": "Nivå {{ level }} • I {{ ancestorName }}",
+      "CURRENT_LEVEL": "Allerede i denne mappen",
+      "CURRENT_LEVEL_ICON_LABEL": "Gjeldende",
+      "LIBRARY_CONTAINER_LEVEL": "Kun biblioteknavigasjon",
+      "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Ikke tilgjengelig",
+      "DROP_HINT": "Flytt hit"
     }
   },
   "NAME_COLUMN_LINK": {

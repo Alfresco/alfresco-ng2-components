@@ -697,6 +697,22 @@
     },
     "HEADER": {
       "SELECTED": "已选择 ({{ count }})"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "父文件夹 ({{ parentsCounter }})",
+      "TITLE": "移动到父文件夹",
+      "DESCRIPTION_WHEN_DRAGGING": "释放到目标位置以移动。下方显示完整路径。",
+      "DESCRIPTION_NO_DRAGGING": "下方显示完整路径。",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING": "按 Esc 或在目标外释放以取消 • 未执行移动",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING": "按 Esc、离开菜单或点击菜单外部以取消",
+      "FIRST_LEVEL": "第 1 级",
+      "FIRST_LEVEL_LIBRARY": "库 • 第 1 级",
+      "NOT_FIRST_LEVEL": "第 {{ level }} 级 • 在 {{ ancestorName }} 内",
+      "CURRENT_LEVEL": "已在此文件夹中",
+      "CURRENT_LEVEL_ICON_LABEL": "当前",
+      "LIBRARY_CONTAINER_LEVEL": "仅限库导航",
+      "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "不可用",
+      "DROP_HINT": "移动到此处"
     }
   },
   "NAME_COLUMN_LINK": {

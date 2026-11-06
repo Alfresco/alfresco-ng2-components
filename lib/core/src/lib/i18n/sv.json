@@ -32,6 +32,7 @@
     "OPEN_HISTORY": "Öppna meddelandehistorik"
   },
   "FORM": {
+    "OUTCOME_EXECUTION_FAILED": "Formuläråtgärden kunde inte slutföras. Vissa ändringar kan ha tillämpats.",
     "SIGNAL_FORM": {
       "WIDGET_LOADING": "Läser in…",
       "WIDGET_UNSUPPORTED": "Det här fältet kan inte visas: fälttypen {{ type }} är inte tillgänglig.",
@@ -434,7 +435,8 @@
       "DRAGGABLE": "Dragbar",
       "EMPTY_HEADER": "Tomt sidhuvud",
       "RESIZE_COLUMN": "Ändra storlek på kolumnen {{ column }}. Använd piltangenterna för att justera bredden, Shift för större steg.",
-      "COLUMN_WIDTH_CHANGED": "{{ column }} kolumnbredd: {{ width }} pixlar"
+      "COLUMN_WIDTH_CHANGED": "{{ column }} kolumnbredd: {{ width }} pixlar",
+      "DRAG_DROP_HINTS": "Du kan trycka på Shift + Pil upp för att starta dragningen, Shift + Pil ned för att släppa, Shift + Pil höger för att ändra släppområde och Escape för att avbryta."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -457,6 +459,10 @@
       "SEARCH": "Sök",
       "APPLY": "Tillämpa",
       "COLUMNS_VISIBILITY": "Välj kolumner att visa"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Släpp för att flytta till {{ destination }}",
+      "CLOSE_HINT": "Esc för att avbryta"
     }
   },
   "USER_PROFILE": {

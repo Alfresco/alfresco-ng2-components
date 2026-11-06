@@ -32,6 +32,7 @@
     "OPEN_HISTORY": "Otwórz historię powiadomień"
   },
   "FORM": {
+    "OUTCOME_EXECUTION_FAILED": "Nie można było zakończyć czynności formularza. Niektóre zmiany mogły zostać zastosowane.",
     "SIGNAL_FORM": {
       "WIDGET_LOADING": "Ładowanie…",
       "WIDGET_UNSUPPORTED": "Nie można wyświetlić tego pola: typ pola {{ type }} jest niedostępny.",
@@ -434,7 +435,8 @@
       "DRAGGABLE": "Przeciągany",
       "EMPTY_HEADER": "Pusty nagłówek",
       "RESIZE_COLUMN": "Zmień rozmiar kolumny {{ column }}. Użyj klawiszy strzałek, aby dostosować szerokość lub Shift, aby uzyskać większe kroki.",
-      "COLUMN_WIDTH_CHANGED": "Szerokość kolumny {{ column }}: {{ width }} pikseli"
+      "COLUMN_WIDTH_CHANGED": "Szerokość kolumny {{ column }}: {{ width }} pikseli",
+      "DRAG_DROP_HINTS": "Możesz nacisnąć Shift + Strzałka w górę, aby rozpocząć przeciąganie, Shift + Strzałka w dół, aby upuścić, Shift + Strzałka w prawo, aby zmienić obszar upuszczenia, oraz Escape, aby anulować."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -457,6 +459,10 @@
       "SEARCH": "Szukaj",
       "APPLY": "Zastosuj",
       "COLUMNS_VISIBILITY": "Wybierz kolumny do wyświetlenia"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Zwolnij, aby przenieść do {{ destination }}",
+      "CLOSE_HINT": "Esc, aby anulować"
     }
   },
   "USER_PROFILE": {

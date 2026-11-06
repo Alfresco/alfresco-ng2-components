@@ -32,6 +32,7 @@
     "OPEN_HISTORY": "通知履歴を開く"
   },
   "FORM": {
+    "OUTCOME_EXECUTION_FAILED": "フォームアクションを完了できませんでした。一部の変更が適用されている可能性があります。",
     "SIGNAL_FORM": {
       "WIDGET_LOADING": "読み込み中…",
       "WIDGET_UNSUPPORTED": "このフィールドは表示できません: フィールドタイプ {{ type }} は使用できません。",
@@ -434,7 +435,8 @@
       "DRAGGABLE": "ドラッグ可能",
       "EMPTY_HEADER": "空のヘッダー",
       "RESIZE_COLUMN": "{{ column }} 列のサイズを変更します。矢印キーで幅を調整し、Shiftキーでより大きなステップで調整します。",
-      "COLUMN_WIDTH_CHANGED": "{{ column }} 列の幅: {{ width }} ピクセル"
+      "COLUMN_WIDTH_CHANGED": "{{ column }} 列の幅: {{ width }} ピクセル",
+      "DRAG_DROP_HINTS": "Shift + 上矢印キーでドラッグを開始、Shift + 下矢印キーでドロップ、Shift + 右矢印キーでドロップ領域を変更、Escape キーでキャンセルできます。"
     },
     "FILE_TYPE": {
       "DOCUMENT": "文書",
@@ -457,6 +459,10 @@
       "SEARCH": "検索",
       "APPLY": "適用",
       "COLUMNS_VISIBILITY": "表示する列を選択"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "{{ destination }} に移動するにはリリースしてください",
+      "CLOSE_HINT": "キャンセルするには Esc"
     }
   },
   "USER_PROFILE": {

@@ -697,6 +697,22 @@
     },
     "HEADER": {
       "SELECTED": "Vald ({{ count }})"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "Överordnade mappar ({{ parentsCounter }})",
+      "TITLE": "Flytta till en överordnad mapp",
+      "DESCRIPTION_WHEN_DRAGGING": "Släpp på en destination för att flytta. Hela sökvägen visas nedan.",
+      "DESCRIPTION_NO_DRAGGING": "Hela sökvägen visas nedan.",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING": "Esc eller släpp utanför ett mål för att avbryta • Ingen flytt utförd",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING": "Esc, lämna menyn eller klicka utanför menyn för att avbryta",
+      "FIRST_LEVEL": "Nivå 1",
+      "FIRST_LEVEL_LIBRARY": "Bibliotek • Nivå 1",
+      "NOT_FIRST_LEVEL": "Nivå {{ level }} • I {{ ancestorName }}",
+      "CURRENT_LEVEL": "Redan i denna mapp",
+      "CURRENT_LEVEL_ICON_LABEL": "Aktuell",
+      "LIBRARY_CONTAINER_LEVEL": "Endast biblioteksnavigering",
+      "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Otillgänglig",
+      "DROP_HINT": "Flytta hit"
     }
   },
   "NAME_COLUMN_LINK": {

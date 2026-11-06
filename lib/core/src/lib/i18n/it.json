@@ -32,6 +32,7 @@
     "OPEN_HISTORY": "Apri cronologia notifiche"
   },
   "FORM": {
+    "OUTCOME_EXECUTION_FAILED": "Non è stato possibile completare l'azione del modulo. Alcune modifiche potrebbero essere state applicate.",
     "SIGNAL_FORM": {
       "WIDGET_LOADING": "Caricamento in corso…",
       "WIDGET_UNSUPPORTED": "Questo campo non può essere visualizzato: il tipo di campo {{ type }} non è disponibile.",
@@ -434,7 +435,8 @@
       "DRAGGABLE": "Trascinabile",
       "EMPTY_HEADER": "Intestazione vuota",
       "RESIZE_COLUMN": "Ridimensiona colonna {{ column }}. Utilizzare i tasti freccia per regolare la larghezza, Maiusc per passi più grandi.",
-      "COLUMN_WIDTH_CHANGED": "Larghezza colonna {{ column }}: {{ width }} pixel"
+      "COLUMN_WIDTH_CHANGED": "Larghezza colonna {{ column }}: {{ width }} pixel",
+      "DRAG_DROP_HINTS": "Puoi premere Maiusc + Freccia Su per avviare il trascinamento, Maiusc + Freccia Giù per rilasciare, Maiusc + Freccia Destra per cambiare l'area di rilascio ed Esc per annullare."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Documento",
@@ -457,6 +459,10 @@
       "SEARCH": "Cerca",
       "APPLY": "Applica",
       "COLUMNS_VISIBILITY": "Seleziona le colonne da visualizzare"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Rilascia per spostare in {{ destination }}",
+      "CLOSE_HINT": "Esc per annullare"
     }
   },
   "USER_PROFILE": {
