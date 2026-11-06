@@ -127,7 +127,8 @@ export class AdfDateTimeFnsAdapter extends DatetimeAdapter<Date> {
     }
 
     override parse(value: any, parseFormat: any): Date {
-        const dateToParse = isValid(new Date(value)) ? parse(value, this.displayFormat ?? parseFormat, new Date()) : value;
+        const isDateText = typeof value === 'string' && isValid(new Date(value));
+        const dateToParse = isDateText ? parse(value, this.displayFormat ?? parseFormat, new Date()) : value;
         return this._delegate.parse(dateToParse, parseFormat);
     }
 
