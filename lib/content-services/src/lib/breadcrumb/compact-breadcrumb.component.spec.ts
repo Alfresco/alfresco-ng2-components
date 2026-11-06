@@ -478,6 +478,7 @@ describe('CompactBreadcrumbComponent', () => {
         let triggerElement: HTMLButtonElement;
 
         beforeEach(() => {
+            fixture.detectChanges();
             triggerElement = getMenuTriggerElement();
             spyOn(triggerElement, 'focus');
         });
