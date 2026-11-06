@@ -4,6 +4,8 @@
     "outDir": "../../dist/out-tsc",
     "declaration": true,
     "declarationMap": true,
+    "strict": true,
+    "noImplicitOverride": true,
     "paths": {
       "@alfresco/js-api": ["../../../dist/libs/js-api"],
       "@alfresco/js-api/*": ["../../../dist/libs/js-api/*"]

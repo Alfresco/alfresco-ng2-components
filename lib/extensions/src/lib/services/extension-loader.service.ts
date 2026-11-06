@@ -44,7 +44,7 @@ export class ExtensionLoaderService {
                     if (!config.$references?.length) {
                         config.$references = this.filterIgnoredExtensions(extensions || [], config.$ignoreReferenceList);
                     } else {
-                        config.$references = this.filterIgnoredExtensions(config.$references, config.$ignoreReferenceList);
+                        config.$references = this.filterIgnoredExtensions(config.$references ?? [], config.$ignoreReferenceList);
                     }
 
                     if (config.$references?.length > 0 || extensionValues) {
@@ -52,7 +52,7 @@ export class ExtensionLoaderService {
 
                         Promise.all(plugins).then((results) => {
                             let configs = results
-                                .filter((entry) => entry)
+                                .filter((entry): entry is { order: number; config: ExtensionConfig } => entry !== null)
                                 .sort(sortByOrder)
                                 .map((entry) => entry.config);
 
@@ -91,37 +91,37 @@ export class ExtensionLoaderService {
      * @param fallback fallback array of values
      * @returns list of elements
      */
-    getElements<T extends ExtensionElement>(config: ExtensionConfig, key: string, fallback: Array<T> = []): Array<T> {
+    getElements<T extends ExtensionElement>(config: ExtensionConfig | null, key: string, fallback: Array<T> = []): Array<T> {
         const values = getValue(config, key) || fallback || [];
         return values.filter(filterEnabled).sort(sortByOrder);
     }
 
     getContentActions(config: ExtensionConfig, key: string): Array<ContentActionRef> {
-        return this.getElements(config, key).map(this.setActionDefaults);
+        return this.getElements<ContentActionRef>(config, key).map((action) => this.setActionDefaults(action));
     }
 
-    getRules(config: ExtensionConfig): Array<RuleRef> {
+    getRules(config: ExtensionConfig | null): Array<RuleRef> {
         if (config?.rules) {
             return config.rules;
         }
         return [];
     }
 
-    getRoutes(config: ExtensionConfig): Array<RouteRef> {
+    getRoutes(config: ExtensionConfig | null): Array<RouteRef> {
         if (config) {
             return config.routes || [];
         }
         return [];
     }
 
-    getActions(config: ExtensionConfig): Array<ActionRef> {
+    getActions(config: ExtensionConfig | null): Array<ActionRef> {
         if (config) {
             return config.actions || [];
         }
         return [];
     }
 
-    getFeatures(config: ExtensionConfig): any {
+    getFeatures(config: ExtensionConfig | null): any {
         if (config) {
             return config.features || [];
         }
@@ -130,17 +130,18 @@ export class ExtensionLoaderService {
 
     protected getMetadata(config: ExtensionConfig): ExtensionRef {
         const result: any = {};
+        const configValues = config as Record<string, any>;
 
         Object.keys(config)
             .filter((key) => key.startsWith('$'))
             .forEach((key) => {
-                result[key] = config[key];
+                result[key] = configValues[key];
             });
 
         return result;
     }
 
-    protected loadConfig(url: string, order: number): Promise<{ order: number; config: ExtensionConfig }> {
+    protected loadConfig(url: string, order: number): Promise<{ order: number; config: ExtensionConfig } | null> {
         return new Promise((resolve) => {
             this.http.get<ExtensionConfig>(url).subscribe(
                 (config) => {
@@ -164,11 +165,18 @@ export class ExtensionLoaderService {
         return action;
     }
 
-    private filterIgnoredExtensions(extensions: Array<string | ExtensionRef>, ignoreReferenceList: string[]): Array<string | ExtensionRef> {
+    private filterIgnoredExtensions(extensions: Array<string | ExtensionRef>, ignoreReferenceList?: string[]): Array<string | ExtensionRef> {
         if (!ignoreReferenceList?.length) {
             return extensions;
         }
 
-        return extensions.map((file: string) => file.match('(?!.*/).+')[0]).filter((fileName: string) => !ignoreReferenceList.includes(fileName));
+        return extensions.flatMap<string | ExtensionRef>((extension) => {
+            if (typeof extension !== 'string') {
+                return [extension];
+            }
+
+            const fileName = extension.split('/').pop();
+            return fileName && !ignoreReferenceList.includes(fileName) ? [fileName] : [];
+        });
     }
 }

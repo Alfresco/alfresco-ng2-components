@@ -35,7 +35,7 @@ export interface RuleContext {
 }
 
 export class RuleRef {
-    type: string;
+    type!: string;
     id?: string;
     parameters?: Array<RuleParameter>;
 }

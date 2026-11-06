@@ -80,6 +80,18 @@ describe('ExtensionLoaderService', () => {
         httpMock.expectOne('assets/app.extensions.json').flush(appExtensionsConfig);
     });
 
+    it('should load the basename of registered extension paths when an ignore list is defined', fakeAsync(() => {
+        appExtensionsConfig.$ignoreReferenceList = ['other.extension.json'];
+
+        extensionLoaderService.load('assets/app.extensions.json', 'assets/plugins', ['custom/test.extension.1.json']);
+        httpMock.expectOne('assets/app.extensions.json').flush(appExtensionsConfig);
+        tick();
+        const pluginRequest = httpMock.expectOne('assets/plugins/test.extension.1.json');
+        expect(pluginRequest.request.method).toBe('GET');
+        pluginRequest.flush(pluginConfig1);
+        flushMicrotasks();
+    }));
+
     it('should load only extensions defined by $references', fakeAsync(() => {
         appExtensionsConfig.$references = ['test.extension.1.json'];
 

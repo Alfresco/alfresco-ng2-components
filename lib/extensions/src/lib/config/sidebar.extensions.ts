@@ -23,7 +23,7 @@ export interface SidebarTabRef extends ExtensionElement {
 
     icon?: string;
     rules?: {
-        [key: string]: string;
+        [key: string]: string | undefined;
         visible?: string;
     };
 }
