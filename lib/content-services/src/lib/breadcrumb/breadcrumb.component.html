@@ -65,6 +65,7 @@
                                     class="adf-breadcrumb-item-anchor"
                                     (click)="onRoutePathClick(item, $event)"
                                     (keydown.shift.arrowdown)="onKeyboardNodeDrop(item)"
+                                    (keydown.enter)="preventNavigationDuringDragging($event)"
                                     [tabindex]="isDropAllowed(index) || !dragDropStateService.dragging() ? 0 : -1"
                                     [style.pointer-events]="dragDropStateService.dragging() ? 'none' : 'auto'" >
                                     {{ item.name ?? '' | translate }}

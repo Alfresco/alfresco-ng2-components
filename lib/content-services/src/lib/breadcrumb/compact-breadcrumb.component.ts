@@ -152,8 +152,8 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         this.updateMenuPosition();
     }
 
-    toggleMenu(event: MouseEvent): void {
-        if (!this.dragDropStateService.keyboardDraggingData()) {
+    toggleMenu(event: PointerEvent): void {
+        if ((event.pointerType === 'mouse' && !this.dragDropStateService.keyboardDraggingData()) || event.pointerType === '') {
             this.menuOpen() ? this.closeMenu() : this.openMenu();
             this.menu().nativeElement.classList.toggle('adf-compact-breadcrumb-menu-open', this.menuOpen());
             event.stopPropagation();
@@ -203,12 +203,14 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
 
     closeOnMenuLeave(delay = 600, suppressHoverOpen = false): void {
         this.stopClosingMenu();
-        this.closeMenuTimer = setTimeout(() => {
-            this.closeMenu();
-            if (suppressHoverOpen) {
-                this.suppressHoverOpen.set(true);
-            }
-        }, delay);
+        if (!this.dragDropStateService.keyboardDraggingData()) {
+            this.closeMenuTimer = setTimeout(() => {
+                this.closeMenu();
+                if (suppressHoverOpen) {
+                    this.suppressHoverOpen.set(true);
+                }
+            }, delay);
+        }
     }
 
     stopClosingMenu(): void {

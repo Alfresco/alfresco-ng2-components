@@ -304,4 +304,10 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             this.dragDropStateService.hoveredDropName.set(this.hoveredItem.name);
         }
     }
+
+    preventNavigationDuringDragging(event: Event): void {
+        if (this.dragDropStateService.dragging()) {
+            event.preventDefault();
+        }
+    }
 }
