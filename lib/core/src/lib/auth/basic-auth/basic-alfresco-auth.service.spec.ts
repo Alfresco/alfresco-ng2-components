@@ -20,7 +20,7 @@ import { BasicAlfrescoAuthService } from './basic-alfresco-auth.service';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { ProcessAuth } from './process-auth';
 import { ContentAuth } from './content-auth';
-import { provideHttpClient } from '@angular/common/http';
+import { HttpHeaders, provideHttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
 
@@ -75,6 +75,21 @@ describe('BasicAlfrescoAuthService', () => {
         const ticket = basicAlfrescoAuthService.getTicketEcmBase64('http://www.example.com/ooi-service/mock-api-url');
         const base64Segment = ticket.split('Basic ')[1];
         expect(atob(base64Segment)).toEqual('Mock Content Auth ticket');
+    });
+
+    it('should return content services ticket when requestUrl path ends with OOI_SERVICE_URL context root', () => {
+        const ticket = basicAlfrescoAuthService.getTicketEcmBase64('http://www.example.com/ooi-service');
+        const base64Segment = ticket.split('Basic ')[1];
+        expect(atob(base64Segment)).toEqual('Mock Content Auth ticket');
+    });
+
+    it('should not return a ticket when OOI_SERVICE_URL context root is only in the query string or fragment', () => {
+        expect(basicAlfrescoAuthService.getTicketEcmBase64('http://www.example.com/other-service/api?next=/ooi-service/')).toBeNull();
+        expect(basicAlfrescoAuthService.getTicketEcmBase64('http://www.example.com/other-service/api#/ooi-service/')).toBeNull();
+    });
+
+    it('should not return a ticket for non http(s) requestUrl containing OOI_SERVICE_URL context root', () => {
+        expect(basicAlfrescoAuthService.getTicketEcmBase64('ftp://www.example.com/ooi-service/mock-api-url')).toBeNull();
     });
 
     describe('login', () => {
@@ -212,6 +227,163 @@ describe('BasicAlfrescoAuthService', () => {
                 expect(result).toBeTrue();
                 expect(contentAuth.isLoggedIn).toHaveBeenCalled();
                 expect(processAuth.isLoggedIn).toHaveBeenCalled();
+            });
+        });
+    });
+
+    describe('addTokenToHeader', () => {
+        const ecmUrl = 'http://www.example.com/alfresco/mock-api-url';
+        const ooiUrl = 'http://www.example.com/ooi-service/mock-api-url';
+        const expectedAuthorization = `Basic ${btoa('Mock Content Auth ticket')}`;
+        let requireAlfTicketSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            requireAlfTicketSpy = spyOn(contentAuth, 'requireAlfTicket').and.callFake(async () => {
+                contentAuth.ticket = 'Mock Content Auth ticket';
+            });
+        });
+
+        describe('kerberos disabled', () => {
+            beforeEach(() => {
+                appConfigSpy.withArgs(AppConfigValues.AUTH_WITH_CREDENTIALS, false).and.returnValue(false);
+            });
+
+            it('should add the Authorization header without requiring a new ticket', async () => {
+                const headers = await firstValueFrom(basicAlfrescoAuthService.addTokenToHeader(ecmUrl));
+
+                expect(headers.get('Authorization')).toBe(expectedAuthorization);
+                expect(requireAlfTicketSpy).not.toHaveBeenCalled();
+            });
+
+            it('should add the Authorization header to OOI service requests without requiring a new ticket', async () => {
+                const headers = await firstValueFrom(basicAlfrescoAuthService.addTokenToHeader(ooiUrl));
+
+                expect(headers.get('Authorization')).toBe(expectedAuthorization);
+                expect(requireAlfTicketSpy).not.toHaveBeenCalled();
+            });
+        });
+
+        describe('kerberos enabled', () => {
+            beforeEach(() => {
+                appConfigSpy.withArgs(AppConfigValues.AUTH_WITH_CREDENTIALS, false).and.returnValue(true);
+                contentAuth.ticket = null;
+            });
+
+            it('should not add the Authorization header for non OOI service requests', async () => {
+                contentAuth.ticket = 'Mock Content Auth ticket';
+
+                const headers = await firstValueFrom(basicAlfrescoAuthService.addTokenToHeader(ecmUrl));
+
+                expect(headers.has('Authorization')).toBeFalse();
+                expect(requireAlfTicketSpy).not.toHaveBeenCalled();
+            });
+
+            it('should require a new ticket and add the Authorization header for OOI service requests', async () => {
+                const headers = await firstValueFrom(basicAlfrescoAuthService.addTokenToHeader(ooiUrl));
+
+                expect(requireAlfTicketSpy).toHaveBeenCalledTimes(1);
+                expect(headers.get('Authorization')).toBe(expectedAuthorization);
+            });
+
+            it('should keep the existing headers when adding the Authorization header for OOI service requests', async () => {
+                const headers = await firstValueFrom(
+                    basicAlfrescoAuthService.addTokenToHeader(ooiUrl, new HttpHeaders({ 'Content-Type': 'application/json' }))
+                );
+
+                expect(headers.get('Content-Type')).toBe('application/json');
+                expect(headers.get('Authorization')).toBe(expectedAuthorization);
+            });
+
+            it('should add the Authorization header with the existing ticket when requiring a new ticket fails', async () => {
+                contentAuth.ticket = 'Mock Content Auth ticket';
+                requireAlfTicketSpy.and.returnValue(Promise.reject(new Error('Unauthorized')));
+
+                const headers = await firstValueFrom(basicAlfrescoAuthService.addTokenToHeader(ooiUrl));
+
+                expect(requireAlfTicketSpy).toHaveBeenCalled();
+                expect(headers.get('Authorization')).toBe(expectedAuthorization);
+            });
+
+            it('should not add the Authorization header when requiring a new ticket fails and there is no ticket', async () => {
+                requireAlfTicketSpy.and.returnValue(Promise.reject(new Error('Unauthorized')));
+
+                const headers = await firstValueFrom(basicAlfrescoAuthService.addTokenToHeader(ooiUrl));
+
+                expect(requireAlfTicketSpy).toHaveBeenCalled();
+                expect(headers.has('Authorization')).toBeFalse();
+            });
+
+            it('should use the configured OOI service url to identify OOI service requests', async () => {
+                appConfigSpy.withArgs(AppConfigValues.OOI_CONNECTOR_URL).and.returnValue('custom-ooi');
+
+                const customOoiHeaders = await firstValueFrom(
+                    basicAlfrescoAuthService.addTokenToHeader('http://www.example.com/custom-ooi/mock-api-url')
+                );
+
+                expect(requireAlfTicketSpy).toHaveBeenCalledTimes(1);
+                expect(customOoiHeaders.get('Authorization')).toBe(expectedAuthorization);
+
+                const defaultOoiHeaders = await firstValueFrom(basicAlfrescoAuthService.addTokenToHeader(ooiUrl));
+
+                expect(requireAlfTicketSpy).toHaveBeenCalledTimes(1);
+                expect(defaultOoiHeaders.has('Authorization')).toBeFalse();
+            });
+
+            it('should add the Authorization header for relative OOI service requests', async () => {
+                const headers = await firstValueFrom(basicAlfrescoAuthService.addTokenToHeader('/ooi-service/mock-api-url'));
+
+                expect(requireAlfTicketSpy).toHaveBeenCalledTimes(1);
+                expect(headers.get('Authorization')).toBe(expectedAuthorization);
+            });
+
+            it('should add the Authorization header for OOI service requests on a separate host', async () => {
+                const headers = await firstValueFrom(basicAlfrescoAuthService.addTokenToHeader('https://www.abc.com/ooi-service/mock-api-url'));
+
+                expect(requireAlfTicketSpy).toHaveBeenCalledTimes(1);
+                expect(headers.get('Authorization')).toBe(expectedAuthorization);
+            });
+
+            it('should add the Authorization header when the OOI service path has no trailing slash', async () => {
+                const headers = await firstValueFrom(basicAlfrescoAuthService.addTokenToHeader('http://www.example.com/ooi-service'));
+
+                expect(requireAlfTicketSpy).toHaveBeenCalledTimes(1);
+                expect(headers.get('Authorization')).toBe(expectedAuthorization);
+            });
+
+            it('should not add the Authorization header for non http(s) OOI service urls', async () => {
+                contentAuth.ticket = 'Mock Content Auth ticket';
+
+                const nonHttpUrls = ['ftp://www.example.com/ooi-service/mock-api-url', 'ws://www.example.com/ooi-service/mock-api-url'];
+
+                for (const nonHttpUrl of nonHttpUrls) {
+                    const headers = await firstValueFrom(basicAlfrescoAuthService.addTokenToHeader(nonHttpUrl));
+                    expect(headers.has('Authorization')).withContext(nonHttpUrl).toBeFalse();
+                }
+                expect(requireAlfTicketSpy).not.toHaveBeenCalled();
+            });
+
+            it('should not add the Authorization header when the OOI service path is only in the query string or fragment', async () => {
+                contentAuth.ticket = 'Mock Content Auth ticket';
+
+                const queryHeaders = await firstValueFrom(
+                    basicAlfrescoAuthService.addTokenToHeader('http://www.example.com/other-service/api?next=/ooi-service/')
+                );
+                const fragmentHeaders = await firstValueFrom(
+                    basicAlfrescoAuthService.addTokenToHeader('http://www.example.com/other-service/api#/ooi-service/')
+                );
+
+                expect(queryHeaders.has('Authorization')).toBeFalse();
+                expect(fragmentHeaders.has('Authorization')).toBeFalse();
+                expect(requireAlfTicketSpy).not.toHaveBeenCalled();
+            });
+
+            it('should not add the Authorization header for invalid urls', async () => {
+                contentAuth.ticket = 'Mock Content Auth ticket';
+
+                const headers = await firstValueFrom(basicAlfrescoAuthService.addTokenToHeader('http://[invalid/ooi-service/mock-api-url'));
+
+                expect(headers.has('Authorization')).toBeFalse();
+                expect(requireAlfTicketSpy).not.toHaveBeenCalled();
             });
         });
     });
