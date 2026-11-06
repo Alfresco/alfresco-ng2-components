@@ -5,7 +5,7 @@
     class="adf-compact-breadcrumb-trigger"
     (click)="toggleMenu($event)"
     (mouseenter)="onTriggerMouseEnter()"
-    (mouseleave)="suppressHoverOpen.set(false)"
+    (mouseleave)="onTriggerMouseLeave()"
     [title]="menuButtonLabel" >
     {{ menuButtonLabel }}
 </button>
@@ -66,7 +66,7 @@
                     href="#"
                     tabindex="-1"
                     class="adf-compact-breadcrumb-menu-list-item-anchor"
-                >
+                    [style.pointer-events]="dragDropStateService.dragging() ? 'none' : 'auto'" >
                     {{ nodeWithState.node.name | translate }}
                 </a>
                 <p

@@ -111,6 +111,16 @@ describe('CompactBreadcrumbComponent', () => {
             expect(getOpenedMenuElement()).not.toBeNull();
         });
 
+        it('should not open menu when mouseenter is triggered and DragDropStateService dragging is true but mouseleave was triggered before timeout', async () => {
+            dragDropStateService.dragging.set(true);
+            triggerElement.dispatchEvent(new MouseEvent('mouseenter'));
+
+            triggerElement.dispatchEvent(new MouseEvent('mouseleave'));
+            await wait(500);
+            fixture.detectChanges();
+            expect(getOpenedMenuElement()).toBeNull();
+        });
+
         it('should render menu backdrop when mouseenter is triggered and DragDropStateService dragging is true', async () => {
             dragDropStateService.dragging.set(true);
 
@@ -123,6 +133,7 @@ describe('CompactBreadcrumbComponent', () => {
 
     describe('Menu', () => {
         let menu: HTMLDivElement;
+        let triggerElement: HTMLButtonElement;
 
         const getFullWidthMenuElement = (): DebugElement => unitTestingUtils.getByCSS('.adf-compact-breadcrumb-menu-full-width');
 
@@ -133,7 +144,8 @@ describe('CompactBreadcrumbComponent', () => {
 
         beforeEach(() => {
             fixture.detectChanges();
-            getMenuTriggerElement().click();
+            triggerElement = getMenuTriggerElement();
+            triggerElement.click();
             menu = getOpenedMenuElement().nativeElement;
         });
 
@@ -149,6 +161,16 @@ describe('CompactBreadcrumbComponent', () => {
             fixture.detectChanges();
 
             expect(getFullWidthMenuElement()).toBeNull();
+        });
+
+        it('should not call focus on menu trigger if mouseleave is triggered', async () => {
+            spyOn(triggerElement, 'focus');
+
+            menu.dispatchEvent(new MouseEvent('mouseleave'));
+            fixture.detectChanges();
+            await wait(600);
+            fixture.detectChanges();
+            expect(triggerElement.focus).not.toHaveBeenCalled();
         });
 
         it('should be closed when mouseleave is triggered', async () => {
@@ -229,6 +251,8 @@ describe('CompactBreadcrumbComponent', () => {
 
                 const getItemMetas = (): DebugElement[] =>
                     unitTestingUtils.getAllByCSS('.adf-compact-breadcrumb-menu-list-item .adf-compact-breadcrumb-menu-list-item-meta');
+
+                const getAnchorElements = (): DebugElement[] => unitTestingUtils.getAllByCSS('.adf-compact-breadcrumb-menu-list-item-anchor');
 
                 beforeEach(async () => {
                     nodes = [
@@ -391,10 +415,24 @@ describe('CompactBreadcrumbComponent', () => {
                 });
 
                 it('should have correct text for each item', () => {
-                    const anchors = unitTestingUtils.getAllByCSS('.adf-compact-breadcrumb-menu-list-item-anchor');
+                    const anchors = getAnchorElements();
                     for (let i = 0; i < 4; i++) {
                         expect(anchors[i].nativeElement.textContent.trim()).toBe(nodes[i].name);
                     }
+                });
+
+                it('should have assigned pointer-events to none if dragging on DragDropStateService is true', () => {
+                    dragDropStateService.dragging.set(true);
+
+                    fixture.detectChanges();
+                    expect(getAnchorElements()[0].nativeElement.style.pointerEvents).toBe('none');
+                });
+
+                it('should have assigned pointer-events to auto if dragging on DragDropStateService is false', () => {
+                    dragDropStateService.dragging.set(false);
+
+                    fixture.detectChanges();
+                    expect(getAnchorElements()[0].nativeElement.style.pointerEvents).toBe('auto');
                 });
 
                 it('should have correct description for each item', () => {
@@ -433,6 +471,47 @@ describe('CompactBreadcrumbComponent', () => {
                     expect(getItemMetas()[1].nativeElement.textContent.trim()).toBe('');
                 });
             });
+        });
+    });
+
+    describe('Component events', () => {
+        let triggerElement: HTMLButtonElement;
+
+        beforeEach(() => {
+            fixture.detectChanges();
+            triggerElement = getMenuTriggerElement();
+            spyOn(triggerElement, 'focus');
+        });
+
+        it('should call focus on menu trigger if ESC was hit', () => {
+            triggerElement.click();
+
+            document.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                    key: 'Escape'
+                })
+            );
+            expect(triggerElement.focus).toHaveBeenCalled();
+        });
+
+        it('should not call focus on menu trigger if ESC was hit but menu is closed', () => {
+            document.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                    key: 'Escape'
+                })
+            );
+            expect(triggerElement.focus).not.toHaveBeenCalled();
+        });
+
+        it('should not call focus on menu trigger if key other than ESC was hit', () => {
+            triggerElement.click();
+
+            document.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                    key: 'Enter'
+                })
+            );
+            expect(triggerElement.focus).not.toHaveBeenCalled();
         });
     });
 });

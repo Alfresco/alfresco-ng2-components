@@ -56,7 +56,7 @@ interface PathElementWithState {
     templateUrl: './compact-breadcrumb.component.html',
     styleUrls: ['./compact-breadcrumb.component.scss'],
     host: {
-        '(document:keydown.escape)': 'closeMenu()'
+        '(document:keydown.escape)': 'closeMenu(true)'
     },
     imports: [
         MatButton,
@@ -152,8 +152,8 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         this.updateMenuPosition();
     }
 
-    toggleMenu(event: MouseEvent): void {
-        if (!this.dragDropStateService.keyboardDraggingData()) {
+    toggleMenu(event: PointerEvent): void {
+        if ((event.pointerType === 'mouse' && !this.dragDropStateService.keyboardDraggingData()) || event.pointerType === '') {
             this.menuOpen() ? this.closeMenu() : this.openMenu();
             this.menu().nativeElement.classList.toggle('adf-compact-breadcrumb-menu-open', this.menuOpen());
             event.stopPropagation();
@@ -164,12 +164,18 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         if (this.suppressHoverOpen() || this.dragDropStateService.keyboardDraggingData()) {
             return;
         }
+        this.stopOpeningMenu();
         this.openMenuTimer = setTimeout(() => {
             if (this.dragDropStateService.dragging()) {
                 this.openMenu();
                 this.closeOnMenuLeave(2000, true);
             }
         }, 500);
+    }
+
+    onTriggerMouseLeave(): void {
+        this.suppressHoverOpen.set(false);
+        this.stopOpeningMenu();
     }
 
     onDrop(event: CdkDragDrop<PathElement, PathElement, DataRow>): void {
@@ -196,12 +202,15 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     }
 
     closeOnMenuLeave(delay = 600, suppressHoverOpen = false): void {
-        this.closeMenuTimer = setTimeout(() => {
-            this.closeMenu();
-            if (suppressHoverOpen) {
-                this.suppressHoverOpen.set(true);
-            }
-        }, delay);
+        this.stopClosingMenu();
+        if (!this.dragDropStateService.keyboardDraggingData()) {
+            this.closeMenuTimer = setTimeout(() => {
+                this.closeMenu();
+                if (suppressHoverOpen) {
+                    this.suppressHoverOpen.set(true);
+                }
+            }, delay);
+        }
     }
 
     stopClosingMenu(): void {
@@ -228,8 +237,8 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         return route && !route.current && !route.libraryContainer;
     }
 
-    closeMenu(): void {
-        if (this.menuOpen()) {
+    closeMenu(usedEsc = false): void {
+        if (this.menuOpen() && usedEsc) {
             this.menuTrigger().nativeElement.focus();
         }
         this.menuOpen.set(false);
