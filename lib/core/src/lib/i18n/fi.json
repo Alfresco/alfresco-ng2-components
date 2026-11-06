@@ -32,6 +32,7 @@
     "OPEN_HISTORY": "Avaa ilmoitushistoria"
   },
   "FORM": {
+    "OUTCOME_EXECUTION_FAILED": "Lomaketoimintoa ei voitu suorittaa loppuun. Jotkin muutokset on saatettu tehdä.",
     "SIGNAL_FORM": {
       "WIDGET_LOADING": "Ladataan…",
       "WIDGET_UNSUPPORTED": "Tätä kenttää ei voida näyttää: kenttätyyppi {{ type }} ei ole käytettävissä.",
@@ -434,7 +435,8 @@
       "DRAGGABLE": "Vedettävä",
       "EMPTY_HEADER": "Tyhjä otsikko",
       "RESIZE_COLUMN": "Muuta sarakkeen {{ column }} kokoa. Käytä nuolinäppäimiä leveyden säätämiseen, Shift suurempiin askeliin.",
-      "COLUMN_WIDTH_CHANGED": "Sarakkeen {{ column }} leveys: {{ width }} pikseliä"
+      "COLUMN_WIDTH_CHANGED": "Sarakkeen {{ column }} leveys: {{ width }} pikseliä",
+      "DRAG_DROP_HINTS": "Voit painaa Shift + Ylänuoli aloittaaksesi vetämisen, Shift + Alanuoli pudottaaksesi, Shift + Oikea nuoli vaihtaaksesi pudotusaluetta ja Esc peruuttaaksesi."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Asiakirja",
@@ -457,6 +459,10 @@
       "SEARCH": "Hae",
       "APPLY": "Käytä",
       "COLUMNS_VISIBILITY": "Valitse näytettävät sarakkeet"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Vapauta siirtääksesi kohteeseen {{ destination }}",
+      "CLOSE_HINT": "Esc peruuttaa"
     }
   },
   "USER_PROFILE": {

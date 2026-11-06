@@ -697,6 +697,22 @@
     },
     "HEADER": {
       "SELECTED": "({{ count }}) sélectionnés"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "Dossiers parents ({{ parentsCounter }})",
+      "TITLE": "Déplacer vers un dossier parent",
+      "DESCRIPTION_WHEN_DRAGGING": "Relâchez sur une destination pour déplacer. Chemin complet affiché ci-dessous.",
+      "DESCRIPTION_NO_DRAGGING": "Chemin complet affiché ci-dessous.",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING": "Échap ou relâcher en dehors d'une cible pour annuler • Aucun déplacement effectué",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING": "Échap, quitter le menu ou cliquer en dehors du menu pour annuler",
+      "FIRST_LEVEL": "Niveau 1",
+      "FIRST_LEVEL_LIBRARY": "Bibliothèque • Niveau 1",
+      "NOT_FIRST_LEVEL": "Niveau {{ level }} • Dans {{ ancestorName }}",
+      "CURRENT_LEVEL": "Déjà dans ce dossier",
+      "CURRENT_LEVEL_ICON_LABEL": "Actuel",
+      "LIBRARY_CONTAINER_LEVEL": "Navigation dans la bibliothèque uniquement",
+      "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Indisponible",
+      "DROP_HINT": "Déplacer ici"
     }
   },
   "NAME_COLUMN_LINK": {

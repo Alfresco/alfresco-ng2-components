@@ -697,6 +697,22 @@
     },
     "HEADER": {
       "SELECTED": "Seleccionado(s) ({{ count }})"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "Carpetas principales ({{ parentsCounter }})",
+      "TITLE": "Mover a una carpeta principal",
+      "DESCRIPTION_WHEN_DRAGGING": "Suelte en un destino para mover. La ruta completa se muestra a continuación.",
+      "DESCRIPTION_NO_DRAGGING": "La ruta completa se muestra a continuación.",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING": "Esc o suelte fuera de un destino para cancelar • No se realizó ningún movimiento",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING": "Esc, salga del menú o haga clic fuera del menú para cancelar",
+      "FIRST_LEVEL": "Nivel 1",
+      "FIRST_LEVEL_LIBRARY": "Biblioteca • Nivel 1",
+      "NOT_FIRST_LEVEL": "Nivel {{ level }} • En {{ ancestorName }}",
+      "CURRENT_LEVEL": "Ya está en esta carpeta",
+      "CURRENT_LEVEL_ICON_LABEL": "Actual",
+      "LIBRARY_CONTAINER_LEVEL": "Solo navegación de bibliotecas",
+      "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "No disponible",
+      "DROP_HINT": "Mover aquí"
     }
   },
   "NAME_COLUMN_LINK": {

@@ -697,6 +697,22 @@
     },
     "HEADER": {
       "SELECTED": "Ausgewählt ({{ count }})"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "Übergeordnete Ordner ({{ parentsCounter }})",
+      "TITLE": "Zu einem übergeordneten Ordner verschieben",
+      "DESCRIPTION_WHEN_DRAGGING": "Auf einem Ziel freigeben, um zu verschieben. Vollständiger Pfad unten angezeigt.",
+      "DESCRIPTION_NO_DRAGGING": "Vollständiger Pfad unten angezeigt.",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING": "Esc oder außerhalb eines Ziels freigeben, um abzubrechen • Keine Verschiebung durchgeführt",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING": "Esc, Menü verlassen oder außerhalb des Menüs klicken, um abzubrechen",
+      "FIRST_LEVEL": "Ebene 1",
+      "FIRST_LEVEL_LIBRARY": "Bibliothek • Ebene 1",
+      "NOT_FIRST_LEVEL": "Ebene {{ level }} • In {{ ancestorName }}",
+      "CURRENT_LEVEL": "Bereits in diesem Ordner",
+      "CURRENT_LEVEL_ICON_LABEL": "Aktuell",
+      "LIBRARY_CONTAINER_LEVEL": "Nur Bibliotheksnavigation",
+      "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Nicht verfügbar",
+      "DROP_HINT": "Hier verschieben"
     }
   },
   "NAME_COLUMN_LINK": {

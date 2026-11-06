@@ -697,6 +697,22 @@
     },
     "HEADER": {
       "SELECTED": "Geselecteerd ({{ count }})"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "Bovenliggende mappen ({{ parentsCounter }})",
+      "TITLE": "Verplaatsen naar een bovenliggende map",
+      "DESCRIPTION_WHEN_DRAGGING": "Laat los op een bestemming om te verplaatsen. Het volledige pad wordt hieronder weergegeven.",
+      "DESCRIPTION_NO_DRAGGING": "Volledig pad wordt hieronder weergegeven.",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING": "Esc of loslaten buiten een doel om te annuleren • Geen verplaatsing uitgevoerd",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING": "Esc, verlaat het menu of klik buiten het menu om te annuleren",
+      "FIRST_LEVEL": "Niveau 1",
+      "FIRST_LEVEL_LIBRARY": "Bibliotheek • Niveau 1",
+      "NOT_FIRST_LEVEL": "Niveau {{ level }} • In {{ ancestorName }}",
+      "CURRENT_LEVEL": "Al in deze map",
+      "CURRENT_LEVEL_ICON_LABEL": "Huidige",
+      "LIBRARY_CONTAINER_LEVEL": "Alleen bibliotheeknavigatie",
+      "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Niet beschikbaar",
+      "DROP_HINT": "Hier verplaatsen"
     }
   },
   "NAME_COLUMN_LINK": {

@@ -32,6 +32,7 @@
     "OPEN_HISTORY": "Åpne varslingshistorikk"
   },
   "FORM": {
+    "OUTCOME_EXECUTION_FAILED": "Skjemahandlingen kunne ikke fullføres. Noen endringer kan ha blitt utført.",
     "SIGNAL_FORM": {
       "WIDGET_LOADING": "Laster…",
       "WIDGET_UNSUPPORTED": "Dette feltet kan ikke vises: felttypen {{ type }} er ikke tilgjengelig.",
@@ -434,7 +435,8 @@
       "DRAGGABLE": "Kan dras",
       "EMPTY_HEADER": "Tom topptekst",
       "RESIZE_COLUMN": "Endre størrelse på kolonnen {{ column }}. Bruk piltastene for å justere bredden, Shift for større steg.",
-      "COLUMN_WIDTH_CHANGED": "{{ column }} kolonnebredde: {{ width }} piksler"
+      "COLUMN_WIDTH_CHANGED": "{{ column }} kolonnebredde: {{ width }} piksler",
+      "DRAG_DROP_HINTS": "Du kan trykke Shift + Pil opp for å begynne å dra, Shift + Pil ned for å slippe, Shift + Pil høyre for å endre slippområde, og Escape for å avbryte."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -457,6 +459,10 @@
       "SEARCH": "Søk",
       "APPLY": "Bruk",
       "COLUMNS_VISIBILITY": "Velg kolonner som skal vises"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Slipp for å flytte til {{ destination }}",
+      "CLOSE_HINT": "Esc for å avbryte"
     }
   },
   "USER_PROFILE": {

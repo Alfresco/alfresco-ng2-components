@@ -32,6 +32,7 @@
     "OPEN_HISTORY": "Ouvrir l'historique des notifications"
   },
   "FORM": {
+    "OUTCOME_EXECUTION_FAILED": "L'action du formulaire n'a pas pu être terminée. Certaines modifications peuvent avoir été appliquées.",
     "SIGNAL_FORM": {
       "WIDGET_LOADING": "Chargement…",
       "WIDGET_UNSUPPORTED": "Ce champ ne peut pas être affiché : le type de champ {{ type }} n'est pas disponible.",
@@ -434,7 +435,8 @@
       "DRAGGABLE": "Déplaçable",
       "EMPTY_HEADER": "En-tête vide",
       "RESIZE_COLUMN": "Redimensionnez la colonne {{ column }}. Utilisez les flèches de direction pour ajuster la largeur et la touche Maj pour des incréments plus importants.",
-      "COLUMN_WIDTH_CHANGED": "Largeur de la colonne {{ column }} : {{ width }} pixels"
+      "COLUMN_WIDTH_CHANGED": "Largeur de la colonne {{ column }} : {{ width }} pixels",
+      "DRAG_DROP_HINTS": "Vous pouvez appuyer sur Maj + Flèche Haut pour démarrer le déplacement, Maj + Flèche Bas pour déposer, Maj + Flèche Droite pour changer la zone de dépôt, et Échap pour annuler."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Document",
@@ -457,6 +459,10 @@
       "SEARCH": "Rechercher",
       "APPLY": "Appliquer",
       "COLUMNS_VISIBILITY": "Sélectionner les colonnes à afficher"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Relâcher pour déplacer vers {{ destination }}",
+      "CLOSE_HINT": "Échap pour annuler"
     }
   },
   "USER_PROFILE": {

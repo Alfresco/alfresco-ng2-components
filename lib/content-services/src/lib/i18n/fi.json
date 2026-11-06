@@ -697,6 +697,22 @@
     },
     "HEADER": {
       "SELECTED": "Valittu ({{ count }})"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "Yläkansiot ({{ parentsCounter }})",
+      "TITLE": "Siirrä yläkansioon",
+      "DESCRIPTION_WHEN_DRAGGING": "Vapauta kohteen päällä siirtääksesi. Koko polku näkyy alla.",
+      "DESCRIPTION_NO_DRAGGING": "Koko polku näkyy alla.",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING": "Esc tai vapauta kohteen ulkopuolella peruuttaaksesi • Siirtoa ei tehty",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING": "Esc, poistu valikosta tai napsauta valikon ulkopuolella peruuttaaksesi",
+      "FIRST_LEVEL": "Taso 1",
+      "FIRST_LEVEL_LIBRARY": "Kirjasto • Taso 1",
+      "NOT_FIRST_LEVEL": "Taso {{ level }} • Kohteessa {{ ancestorName }}",
+      "CURRENT_LEVEL": "Olet jo tässä kansiossa",
+      "CURRENT_LEVEL_ICON_LABEL": "Nykyinen",
+      "LIBRARY_CONTAINER_LEVEL": "Vain kirjastonavigointi",
+      "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Ei käytettävissä",
+      "DROP_HINT": "Siirrä tähän"
     }
   },
   "NAME_COLUMN_LINK": {

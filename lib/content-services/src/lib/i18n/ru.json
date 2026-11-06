@@ -697,6 +697,22 @@
     },
     "HEADER": {
       "SELECTED": "Выбранные ({{ count }})"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "Родительские папки ({{ parentsCounter }})",
+      "TITLE": "Переместить в родительскую папку",
+      "DESCRIPTION_WHEN_DRAGGING": "Отпустите над местом назначения для перемещения. Полный путь показан ниже.",
+      "DESCRIPTION_NO_DRAGGING": "Полный путь показан ниже.",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING": "Esc или отпустите за пределами цели для отмены • Перемещение не выполнено",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING": "Esc, выйдите из меню или нажмите за его пределами для отмены",
+      "FIRST_LEVEL": "Уровень 1",
+      "FIRST_LEVEL_LIBRARY": "Библиотека • Уровень 1",
+      "NOT_FIRST_LEVEL": "Уровень {{ level }} • В {{ ancestorName }}",
+      "CURRENT_LEVEL": "Уже в этой папке",
+      "CURRENT_LEVEL_ICON_LABEL": "Текущее",
+      "LIBRARY_CONTAINER_LEVEL": "Только навигация по библиотеке",
+      "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Недоступно",
+      "DROP_HINT": "Переместить сюда"
     }
   },
   "NAME_COLUMN_LINK": {

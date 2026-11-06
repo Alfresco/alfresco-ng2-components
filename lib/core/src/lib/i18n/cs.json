@@ -32,6 +32,7 @@
     "OPEN_HISTORY": "Otevřít historii oznámení"
   },
   "FORM": {
+    "OUTCOME_EXECUTION_FAILED": "Akci formuláře se nepodařilo dokončit. Některé změny mohly být použity.",
     "SIGNAL_FORM": {
       "WIDGET_LOADING": "Načítání…",
       "WIDGET_UNSUPPORTED": "Toto pole nelze zobrazit: typ pole {{ type }} není k dispozici.",
@@ -434,7 +435,8 @@
       "DRAGGABLE": "Přesunutelné",
       "EMPTY_HEADER": "Prázdný nadpis",
       "RESIZE_COLUMN": "Změnit velikost sloupce {{ column }}. Pro úpravu šířky použijte klávesy se šipkami, pro větší kroky použijte Shift.",
-      "COLUMN_WIDTH_CHANGED": "Šířka sloupce {{ column }}: {{ width }} pixelů"
+      "COLUMN_WIDTH_CHANGED": "Šířka sloupce {{ column }}: {{ width }} pixelů",
+      "DRAG_DROP_HINTS": "Stisknutím Shift + šipka nahoru zahájíte přetahování, Shift + šipka dolů ukončíte přetahování, Shift + šipka vpravo změníte oblast pro umístění a Escape zrušíte akci."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -457,6 +459,10 @@
       "SEARCH": "Hledat",
       "APPLY": "Použít",
       "COLUMNS_VISIBILITY": "Vyberte sloupce k zobrazení"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Uvolněním přesunete do {{ destination }}",
+      "CLOSE_HINT": "Esc pro zrušení"
     }
   },
   "USER_PROFILE": {

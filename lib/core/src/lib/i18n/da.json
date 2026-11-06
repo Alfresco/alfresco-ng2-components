@@ -32,6 +32,7 @@
     "OPEN_HISTORY": "Åbn meddelelseshistorie"
   },
   "FORM": {
+    "OUTCOME_EXECUTION_FAILED": "Formularhandlingen kunne ikke udføres. Nogle ændringer kan være blevet anvendt.",
     "SIGNAL_FORM": {
       "WIDGET_LOADING": "Indlæser…",
       "WIDGET_UNSUPPORTED": "Dette felt kan ikke vises: feltypen {{ type }} er ikke tilgængelig.",
@@ -434,7 +435,8 @@
       "DRAGGABLE": "Trækbar",
       "EMPTY_HEADER": "Tom toptekst",
       "RESIZE_COLUMN": "Tilpas størrelsen på kolonnen {{ column }}. Brug piletasterne til at justere bredden, Shift for større trin.",
-      "COLUMN_WIDTH_CHANGED": "{{ column }} kolonnebredde: {{ width }} pixels"
+      "COLUMN_WIDTH_CHANGED": "{{ column }} kolonnebredde: {{ width }} pixels",
+      "DRAG_DROP_HINTS": "Du kan trykke på Shift + Pil op for at starte træk, Shift + Pil ned for at slippe, Shift + Pil højre for at ændre dropområde, og Escape for at annullere."
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -457,6 +459,10 @@
       "SEARCH": "Søg",
       "APPLY": "Anvend",
       "COLUMNS_VISIBILITY": "Vælg kolonner, der skal vises"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "Frigiv for at flytte til {{ destination }}",
+      "CLOSE_HINT": "Esc for at annullere"
     }
   },
   "USER_PROFILE": {

@@ -697,6 +697,22 @@
     },
     "HEADER": {
       "SELECTED": "({{ count }}) محدد"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "المجلدات الرئيسية ({{ parentsCounter }})",
+      "TITLE": "الانتقال إلى مجلد رئيسي",
+      "DESCRIPTION_WHEN_DRAGGING": "حرر الزر عند الوصول إلى الوجهة للنقل. المسار الكامل معروض أدناه.",
+      "DESCRIPTION_NO_DRAGGING": "المسار الكامل معروض أدناه.",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING": "اضغط Esc أو حرر الزر خارج الهدف للإلغاء • لم يتم النقل",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING": "اضغط Esc، أو اترك القائمة أو انقر خارجها للإلغاء",
+      "FIRST_LEVEL": "المستوى 1",
+      "FIRST_LEVEL_LIBRARY": "مكتبة • المستوى 1",
+      "NOT_FIRST_LEVEL": "المستوى {{ level }} • في {{ ancestorName }}",
+      "CURRENT_LEVEL": "أنت موجود بالفعل في هذا المجلد",
+      "CURRENT_LEVEL_ICON_LABEL": "الحالي",
+      "LIBRARY_CONTAINER_LEVEL": "التنقل داخل المكتبة فقط",
+      "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "غير متاح",
+      "DROP_HINT": "النقل هنا"
     }
   },
   "NAME_COLUMN_LINK": {

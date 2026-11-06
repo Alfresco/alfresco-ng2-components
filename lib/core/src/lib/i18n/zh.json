@@ -32,6 +32,7 @@
     "OPEN_HISTORY": "打开通知历史记录"
   },
   "FORM": {
+    "OUTCOME_EXECUTION_FAILED": "表单操作未能完成。部分更改可能已应用。",
     "SIGNAL_FORM": {
       "WIDGET_LOADING": "正在加载…",
       "WIDGET_UNSUPPORTED": "无法显示此字段：字段类型 {{ type }} 不可用。",
@@ -434,7 +435,8 @@
       "DRAGGABLE": "可拖动",
       "EMPTY_HEADER": "空白标题",
       "RESIZE_COLUMN": "调整 {{ column }} 列大小。使用箭头键调整宽度,按 Shift 键可加大调整幅度。",
-      "COLUMN_WIDTH_CHANGED": "{{ column }} 列宽:{{ width }} 像素"
+      "COLUMN_WIDTH_CHANGED": "{{ column }} 列宽:{{ width }} 像素",
+      "DRAG_DROP_HINTS": "您可以按 Shift + 向上箭头开始拖动，Shift + 向下箭头放置，Shift + 向右箭头更改放置区域，按 Escape 取消。"
     },
     "FILE_TYPE": {
       "DOCUMENT": "文档",
@@ -457,6 +459,10 @@
       "SEARCH": "搜索",
       "APPLY": "应用",
       "COLUMNS_VISIBILITY": "选择要显示的列"
+    },
+    "DRAG_DROP": {
+      "DESTINATION_HINT": "释放以移动到 {{ destination }}",
+      "CLOSE_HINT": "按 Esc 取消"
     }
   },
   "USER_PROFILE": {

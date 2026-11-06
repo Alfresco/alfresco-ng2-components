@@ -697,6 +697,22 @@
     },
     "HEADER": {
       "SELECTED": "Vybrané ({{ count }})"
+    },
+    "COMPACT_MENU": {
+      "OPEN_COMPACT_BREADCRUMB_BUTTON": "Nadřazené složky ({{ parentsCounter }})",
+      "TITLE": "Přesunout do nadřazené složky",
+      "DESCRIPTION_WHEN_DRAGGING": "Pro přesunutí uvolněte nad cílem. Celá cesta je zobrazena níže.",
+      "DESCRIPTION_NO_DRAGGING": "Celá cesta je zobrazena níže.",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING": "Esc nebo uvolnění mimo cíl pro zrušení • Žádný přesun nebyl proveden",
+      "PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING": "Esc, opuštění nabídky nebo kliknutí mimo nabídku pro zrušení",
+      "FIRST_LEVEL": "Úroveň 1",
+      "FIRST_LEVEL_LIBRARY": "Knihovna • Úroveň 1",
+      "NOT_FIRST_LEVEL": "Úroveň {{ level }} • V {{ ancestorName }}",
+      "CURRENT_LEVEL": "Již v této složce",
+      "CURRENT_LEVEL_ICON_LABEL": "Aktuální",
+      "LIBRARY_CONTAINER_LEVEL": "Pouze navigace knihovny",
+      "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Nedostupné",
+      "DROP_HINT": "Přesunout zde"
     }
   },
   "NAME_COLUMN_LINK": {
