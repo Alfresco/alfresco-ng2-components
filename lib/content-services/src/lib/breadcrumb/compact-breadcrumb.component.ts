@@ -238,7 +238,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         return route && !route.current && !route.libraryContainer;
     }
 
-    closeMenu(event?: KeyboardEvent): void {
+    closeMenu(event?: Event): void {
         if (this.menuOpen() && event) {
             this.menuTrigger().nativeElement.focus();
         }

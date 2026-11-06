@@ -45,7 +45,19 @@ import {
     ViewUtilService
 } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { ContentApi, LazyApi, Node, NodeEntry, NodesApi, RenditionEntry, SharedlinksApi, Version, VersionEntry, VersionsApi } from '@alfresco/js-api';
+import {
+    ContentApi,
+    LazyApi,
+    Node,
+    NodeEntry,
+    NodesApi,
+    PathElement,
+    RenditionEntry,
+    SharedlinksApi,
+    Version,
+    VersionEntry,
+    VersionsApi
+} from '@alfresco/js-api';
 import { RenditionService } from '../../common/services/rendition.service';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
@@ -209,6 +221,9 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     @Input()
     showToolbarDividers = true;
 
+    @Input()
+    showBreadcrumbs = false;
+
     /** Emitted when the shared link used is not valid. */
     @Output()
     invalidSharedLink = new EventEmitter<void>();
@@ -224,6 +239,9 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     /** Emitted when the viewer close */
     @Output()
     showViewerChange = new EventEmitter<boolean>();
+
+    @Output()
+    breadcrumbNavigate = new EventEmitter<PathElement>();
 
     private cacheBusterNumber: number;
 

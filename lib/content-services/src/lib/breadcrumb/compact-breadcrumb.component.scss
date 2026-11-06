@@ -11,6 +11,7 @@ adf-compact-breadcrumb {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        outline-offset: -2px;
     }
 }
 
