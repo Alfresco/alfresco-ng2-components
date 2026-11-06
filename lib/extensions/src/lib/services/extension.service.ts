@@ -93,10 +93,10 @@ export class ExtensionService {
     features: Array<any> = [];
     authGuards: Record<string, CanActivateFn> = {};
 
-    setup$: Observable<ExtensionConfig>;
+    setup$: Observable<ExtensionConfig | null>;
 
-    protected config: ExtensionConfig = null;
-    protected onSetup$ = new BehaviorSubject<ExtensionConfig>(this.config);
+    protected config: ExtensionConfig | null = null;
+    protected onSetup$ = new BehaviorSubject<ExtensionConfig | null>(this.config);
 
     constructor() {
         this.setup$ = this.onSetup$.asObservable();
@@ -150,7 +150,7 @@ export class ExtensionService {
      */
     getFeature<T = any[]>(key: string | string[], defaultValue: any = []): T {
         const properties: string[] = Array.isArray(key) ? key : key.split('.');
-        return properties.reduce((prev, curr) => prev?.[curr], this.features) || defaultValue;
+        return properties.reduce<any>((prev, curr) => prev?.[curr], this.features) || defaultValue;
     }
 
     getElements<T extends ExtensionElement>(key: string, fallback: Array<T> = []): Array<T> {
@@ -192,7 +192,7 @@ export class ExtensionService {
      * @param id The ID value to look for
      * @returns The route or null if not found
      */
-    getRouteById(id: string): RouteRef {
+    getRouteById(id: string): RouteRef | undefined {
         return this.routes.find((route) => route.id === id);
     }
 
@@ -212,7 +212,7 @@ export class ExtensionService {
      * @param id The ID value to look for
      * @returns Action or null if not found
      */
-    getActionById(id: string): ActionRef {
+    getActionById(id: string): ActionRef | undefined {
         return this.actions.find((action) => action.id === id);
     }
 
@@ -222,7 +222,7 @@ export class ExtensionService {
      * @param key Key name to look for
      * @returns RuleEvaluator or null if not found
      */
-    getEvaluator(key: string): RuleEvaluator {
+    getEvaluator(key: string): RuleEvaluator | undefined {
         return this.ruleService.getEvaluator(key);
     }
 
@@ -253,7 +253,7 @@ export class ExtensionService {
      * @param id The ID value to look for
      * @returns The rule or null if not found
      */
-    getRuleById(id: string): RuleRef {
+    getRuleById(id: string): RuleRef | undefined {
         return this.ruleService.getRuleById(id);
     }
 

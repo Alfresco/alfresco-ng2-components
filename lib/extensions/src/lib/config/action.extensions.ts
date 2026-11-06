@@ -39,11 +39,11 @@ export interface ContentActionRef extends ExtensionElement {
     data?: any;
     color?: string;
     actions?: {
-        [key: string]: string;
+        [key: string]: string | undefined;
         click?: string;
     };
     rules?: {
-        [key: string]: string;
+        [key: string]: string | undefined;
         enabled?: string;
         visible?: string;
     };

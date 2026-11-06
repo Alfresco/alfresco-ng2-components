@@ -48,7 +48,7 @@ export default [
             '.husky',
             '.nx',
             '.vscode',
-            'coverage',
+            '**/coverage/**',
             'dist',
             '**/docs',
             'nxcache',

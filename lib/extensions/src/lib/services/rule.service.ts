@@ -26,7 +26,7 @@ import { ExtensionLoaderService } from './extension-loader.service';
 export class RuleService {
     protected loader = inject(ExtensionLoaderService);
 
-    context: RuleContext = null;
+    context: RuleContext | null = null;
     rules: Array<RuleRef> = [];
     evaluators: { [key: string]: RuleEvaluator } = {};
 
@@ -51,7 +51,7 @@ export class RuleService {
      * @param id The ID value to look for
      * @returns The rule or null if not found
      */
-    getRuleById(id: string): RuleRef {
+    getRuleById(id: string): RuleRef | undefined {
         return this.rules.find((ref) => ref.id === id);
     }
 
@@ -61,10 +61,10 @@ export class RuleService {
      * @param key Key name to look for
      * @returns RuleEvaluator or null if not found
      */
-    getEvaluator(key: string): RuleEvaluator {
+    getEvaluator(key: string): RuleEvaluator | undefined {
         if (key?.startsWith('!')) {
             const fn = this.evaluators[key.substring(1)];
-            return (context: RuleContext, ...args: RuleParameter[]): boolean => !fn(context, ...args);
+            return fn ? (context: RuleContext, ...args: RuleParameter[]): boolean => !fn(context, ...args) : undefined;
         }
         return this.evaluators[key];
     }
@@ -78,17 +78,21 @@ export class RuleService {
      */
     evaluateRule(ruleId: string, context?: RuleContext): boolean {
         const ruleRef = this.getRuleById(ruleId);
-        context = context || this.context;
+        const ruleContext = context ?? this.context;
+
+        if (!ruleContext) {
+            return false;
+        }
 
         if (ruleRef) {
             const evaluator = this.getEvaluator(ruleRef.type);
             if (evaluator) {
-                return evaluator(context, ...ruleRef.parameters);
+                return evaluator(ruleContext, ...(ruleRef.parameters ?? []));
             }
         } else {
             const evaluator = this.getEvaluator(ruleId);
             if (evaluator) {
-                return evaluator(context);
+                return evaluator(ruleContext);
             }
         }
         return false;

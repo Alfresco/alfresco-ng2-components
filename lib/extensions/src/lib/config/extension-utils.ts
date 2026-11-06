@@ -28,10 +28,7 @@ export const getValue = (target: any, key: string): any => {
     do {
         key += keys.shift();
         const value = target[key];
-        if (
-            value !== undefined &&
-            (typeof value === 'object' || !keys.length)
-        ) {
+        if (value !== undefined && (typeof value === 'object' || !keys.length)) {
             target = value;
             key = '';
         } else if (!keys.length) {
@@ -46,21 +43,13 @@ export const getValue = (target: any, key: string): any => {
 
 export const filterEnabled = (entry: { disabled?: boolean }): boolean => !entry.disabled;
 
-export const sortByOrder = (
-    a: { order?: number | undefined },
-    b: { order?: number | undefined }
-) => {
+export const sortByOrder = (a: { order?: number | undefined }, b: { order?: number | undefined }) => {
     const left = a.order === undefined ? Number.MAX_SAFE_INTEGER : a.order;
     const right = b.order === undefined ? Number.MAX_SAFE_INTEGER : b.order;
     return left - right;
 };
 
-export const reduceSeparators = (
-    acc: ContentActionRef[],
-    el: ContentActionRef,
-    i: number,
-    arr: ContentActionRef[]
-): ContentActionRef[] => {
+export const reduceSeparators = (acc: ContentActionRef[], el: ContentActionRef, i: number, arr: ContentActionRef[]): ContentActionRef[] => {
     // remove leading separator
     if (i === 0) {
         if (arr[i].type === ContentActionType.separator) {
@@ -70,10 +59,7 @@ export const reduceSeparators = (
     // remove duplicate separators
     if (i > 0) {
         const prev = arr[i - 1];
-        if (
-            prev.type === ContentActionType.separator &&
-            el.type === ContentActionType.separator
-        ) {
+        if (prev.type === ContentActionType.separator && el.type === ContentActionType.separator) {
             return acc;
         }
 
@@ -88,10 +74,7 @@ export const reduceSeparators = (
     return acc.concat(el);
 };
 
-export const reduceEmptyMenus = (
-    acc: ContentActionRef[],
-    el: ContentActionRef
-): ContentActionRef[] => {
+export const reduceEmptyMenus = (acc: ContentActionRef[], el: ContentActionRef): ContentActionRef[] => {
     if (el.type === ContentActionType.menu) {
         if ((el.children || []).length === 0) {
             return acc;
@@ -101,7 +84,7 @@ export const reduceEmptyMenus = (
 };
 
 export const mergeObjects = (...objects: any[]): any => {
-    const result = {};
+    const result: Record<string, any> = {};
 
     objects.forEach((source) => {
         Object.keys(source).forEach((prop) => {
@@ -134,8 +117,8 @@ export const mergeObjects = (...objects: any[]): any => {
 };
 
 export const mergeArrays = (left: any[], right: any[]): any[] => {
-    const result = [];
-    const map = {};
+    const result: any[] = [];
+    const map: Record<string, any> = {};
 
     (left || []).forEach((entry) => {
         const element = entry;
@@ -156,5 +139,7 @@ export const mergeArrays = (left: any[], right: any[]): any[] => {
         }
     });
 
-    return Object.keys(map).map((key) => map[key]).concat(result);
+    return Object.keys(map)
+        .map((key) => map[key])
+        .concat(result);
 };

@@ -44,7 +44,7 @@ export interface DocumentListPresetRef extends ExtensionElement {
     sortingKey: string;
     isHidden?: boolean;
     rules?: {
-        [key: string]: string;
+        [key: string]: string | undefined;
         visible?: string;
     };
     draggable?: boolean;

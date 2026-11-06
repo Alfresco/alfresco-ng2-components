@@ -40,18 +40,18 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
     private readonly extensions = inject(ExtensionService);
 
     @ViewChild('content', { read: ViewContainerRef, static: true })
-    content: ViewContainerRef;
+    content!: ViewContainerRef;
 
     /** Unique ID string for the component to show. */
-    @Input() id: string;
+    @Input() id!: string;
 
     /** Data for the dynamically-loaded component instance. */
     @Input() data: any;
 
     /** Provides the menu item of dynamically-loaded component instance. */
-    menuItem: MatMenuItem;
+    menuItem?: MatMenuItem;
 
-    private componentRef: ComponentRef<ExtensionComponent>;
+    private componentRef: ComponentRef<ExtensionComponent> | null = null;
     private loaded: boolean = false;
 
     ngOnChanges(changes: SimpleChanges) {
@@ -69,10 +69,8 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
     }
 
     ngOnDestroy() {
-        if (this.componentCreated()) {
-            this.componentRef.destroy();
-            this.componentRef = null;
-        }
+        this.componentRef?.destroy();
+        this.componentRef = null;
     }
 
     ngAfterViewInit() {
@@ -88,22 +86,27 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
     }
 
     private updateInstance() {
-        if (this.componentCreated()) {
+        if (this.componentRef?.instance) {
             this.componentRef.instance.data = this.data;
         }
     }
 
     private proxy(lifecycleMethod: string, ...args: any[]) {
         if (this.componentCreated() && this.lifecycleHookIsImplemented(lifecycleMethod)) {
-            this.componentRef.instance[lifecycleMethod].apply(this.componentRef.instance, args);
+            const instance = this.componentRef!.instance as ExtensionComponent & Record<string, unknown>;
+            const hook = instance[lifecycleMethod];
+            if (typeof hook === 'function') {
+                hook.apply(instance, args);
+            }
         }
     }
 
     private componentCreated(): boolean {
-        return !!this.componentRef && !!this.componentRef.instance;
+        return !!this.componentRef?.instance;
     }
 
     private lifecycleHookIsImplemented(lifecycleMethod: string): boolean {
-        return !!this.componentRef.instance[lifecycleMethod];
+        const instance = this.componentRef?.instance as (ExtensionComponent & Record<string, unknown>) | undefined;
+        return typeof instance?.[lifecycleMethod] === 'function';
     }
 }
