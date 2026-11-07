@@ -80,7 +80,7 @@
     @if (nodeEntry && showBreadcrumbs) {
         <adf-breadcrumb
             [folderNode]="nodeEntry.entry"
-            [root]="'APP.BROWSE.PERSONAL.TITLE'"
+            [root]="breadcrumbsRoot"
             [compactMode]="true"
             [hideCurrentLocation]="true"
             (navigate)="breadcrumbNavigate.emit($event)"

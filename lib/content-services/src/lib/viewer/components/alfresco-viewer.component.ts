@@ -224,6 +224,9 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     @Input()
     showBreadcrumbs = false;
 
+    @Input()
+    breadcrumbsRoot?: string;
+
     /** Emitted when the shared link used is not valid. */
     @Output()
     invalidSharedLink = new EventEmitter<void>();
@@ -361,6 +364,8 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
                     if (!this.peopleContentService.isCurrentUserAdmin()) {
                         elements.splice(0, 2);
                     }
+                } else if (elements[1].nodeType === 'st:sites') {
+                    node.path.elements = elements.filter((element) => element.nodeType !== 'st:sites' && element.name !== 'documentLibrary');
                 }
             }
         }
