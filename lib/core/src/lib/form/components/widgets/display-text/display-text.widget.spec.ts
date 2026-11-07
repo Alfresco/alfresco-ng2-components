@@ -355,4 +355,21 @@ describe('DisplayTextWidgetComponent', () => {
             });
         });
     });
+
+    describe('long unbroken text', () => {
+        const CONTAINER_WIDTH_PX = 200;
+        const LONG_UNBROKEN_TEXT = 'DisplaytextaspartoftheformDisplaytextaspartoftheformDisplaytextaspartoftheform';
+
+        it('should keep a long unbroken value within a container that sizes to its content', () => {
+            const host: HTMLElement = fixture.nativeElement;
+            host.style.display = 'grid';
+            host.style.width = `${CONTAINER_WIDTH_PX}px`;
+            widget.field = new FormFieldModel(new FormModel(), { id: 'displayText1', type: FormFieldTypes.READONLY_TEXT, value: LONG_UNBROKEN_TEXT });
+            fixture.detectChanges();
+
+            const displayText: HTMLElement = host.querySelector('.adf-display-text-widget');
+
+            expect(displayText.getBoundingClientRect().width).toBeLessThanOrEqual(CONTAINER_WIDTH_PX);
+        });
+    });
 });

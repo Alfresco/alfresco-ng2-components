@@ -4,7 +4,7 @@
     font-weight: var(--adf-readonly-text-font-weight, var(--adf-form-label-font-weight, var(--mat-sys-body-medium-weight)));
     color: var(--adf-readonly-text-color, var(--adf-form-label-color, var(--mat-sys-on-surface)));
     line-height: normal;
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
     position: relative;
     top: 3px;
 }
