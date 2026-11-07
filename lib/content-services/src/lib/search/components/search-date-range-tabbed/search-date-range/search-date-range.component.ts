@@ -37,7 +37,7 @@ import { DateRangeType } from './date-range-type';
 import { SearchDateRange } from './search-date-range';
 import { FormBuilder, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
 import { DateFnsUtils, UserPreferencesService } from '@alfresco/adf-core';
-import { CommonModule } from '@angular/common';
+
 import { MatRadioModule } from '@angular/material/radio';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -51,16 +51,7 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
 @Component({
     selector: 'adf-search-date-range',
-    imports: [
-        CommonModule,
-        MatRadioModule,
-        ReactiveFormsModule,
-        TranslatePipe,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MatDatepickerModule
-    ],
+    imports: [MatRadioModule, ReactiveFormsModule, TranslatePipe, MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule],
     templateUrl: './search-date-range.component.html',
     styleUrls: ['./search-date-range.component.scss'],
     providers: [

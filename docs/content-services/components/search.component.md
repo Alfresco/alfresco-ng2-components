@@ -61,9 +61,11 @@ You can add a custom template to show the search results when once they are load
 <adf-search [searchTerm]="searchTerm">
     <ng-template let-result>
         <ul>
-            <li *ngFor="let item of result?.list?.entries">
-                {{ item?.entry.name }}
-            </li>
+            @for (item of result?.list?.entries; track item.entry.id) {
+                <li>
+                    {{ item?.entry.name }}
+                </li>
+            }
         </ul>
     </ng-template>
 </adf-search>
@@ -86,35 +88,39 @@ However, you can use a more complex template if necessary:
             [resultSort]="liveSearchResultSort"
             [maxResults]="liveSearchMaxResults">
     <ng-template let-data>
-        <mat-list *ngIf="isSearchBarActive()" id="autocomplete-search-result-list">
-            <mat-list-item
-                *ngFor="let item of data?.list?.entries; let idx = index"
-                id="result_option_{{idx}}"
-                [tabindex]="0"
-                (focus)="onFocus($event)"
-                (blur)="onBlur($event)"
-                class="adf-search-autocomplete-item"
-                (click)="elementClicked(item)"
-                (keyup.enter)="elementClicked(item)">
-                <mat-icon matListItemLine>
-                    <img [src]="getMimeTypeIcon(item)" />
-                </mat-icon>
-                    <h4 mat-line id="result_name_{{idx}}"
-                        *ngIf="highlight; else elseBlock"
-                        class="adf-search-fixed-text"
-                        [innerHtml]="item.entry.name | highlight: searchTerm">
-                        {{ item?.entry.name }}</h4>
-                    <ng-template #elseBlock>
-                        <h4 class="adf-search-fixed-text" mat-line id="result_name_{{idx}}" [innerHtml]="item.entry.name"></h4>
-                    </ng-template>
-                    <p mat-line class="adf-search-fixed-text"> {{item?.entry.createdByUser.displayName}} </p>
-            </mat-list-item>
-            <mat-list-item
-                id="search_no_result"
-                *ngIf="data?.list?.entries.length === 0">
-                <p mat-line class="adf-search-fixed-text">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</p>
-            </mat-list-item>
-        </mat-list>
+        @if (isSearchBarActive()) {
+            <mat-list id="autocomplete-search-result-list">
+                @for (item of data?.list?.entries; track item.entry.id; let idx = $index) {
+                    <mat-list-item
+                        id="result_option_{{idx}}"
+                        [tabindex]="0"
+                        (focus)="onFocus($event)"
+                        (blur)="onBlur($event)"
+                        class="adf-search-autocomplete-item"
+                        (click)="elementClicked(item)"
+                        (keyup.enter)="elementClicked(item)">
+                        <mat-icon matListItemLine>
+                            <img [src]="getMimeTypeIcon(item)" />
+                        </mat-icon>
+                        @if (highlight) {
+                            <h4 mat-line id="result_name_{{idx}}"
+                                class="adf-search-fixed-text"
+                                [innerHtml]="item.entry.name | highlight: searchTerm">
+                                {{ item?.entry.name }}</h4>
+                        } @else {
+                            <h4 class="adf-search-fixed-text" mat-line id="result_name_{{idx}}" [innerHtml]="item.entry.name"></h4>
+                        }
+                        <p mat-line class="adf-search-fixed-text"> {{item?.entry.createdByUser.displayName}} </p>
+                    </mat-list-item>
+                }
+                @if (data?.list?.entries.length === 0) {
+                    <mat-list-item
+                        id="search_no_result">
+                        <p mat-line class="adf-search-fixed-text">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</p>
+                    </mat-list-item>
+                }
+            </mat-list>
+        }
     </ng-template>
 </adf-search>
 ```
@@ -137,9 +143,11 @@ instance called "search":
 
 <adf-search #search="searchAutocomplete">
     <ng-template let-result>
-        <span *ngFor="let item of result?.list?.entries">
-            {{ item?.entry.name }}
-        </span>
+        @for (item of result?.list?.entries; track item.entry.id) {
+            <span>
+                {{ item?.entry.name }}
+            </span>
+        }
     </ng-template>
 </adf-search>        
 ```

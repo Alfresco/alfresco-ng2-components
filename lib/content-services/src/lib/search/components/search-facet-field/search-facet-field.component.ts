@@ -24,7 +24,7 @@ import { SearchFacetFiltersService } from '../../services/search-facet-filters.s
 import { FacetWidget } from '../../models/facet-widget.interface';
 import { IconModule, TranslationService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -33,7 +33,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'adf-search-facet-field',
-    imports: [CommonModule, MatButtonModule, IconModule, MatFormFieldModule, MatInputModule, TranslatePipe, FormsModule, MatCheckboxModule],
+    imports: [MatButtonModule, IconModule, MatFormFieldModule, MatInputModule, TranslatePipe, FormsModule, MatCheckboxModule],
     templateUrl: './search-facet-field.component.html',
     styleUrls: ['./search-facet-field.component.scss'],
     encapsulation: ViewEncapsulation.None

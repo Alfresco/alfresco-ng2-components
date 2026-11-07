@@ -27,7 +27,7 @@ import { map } from 'rxjs/operators';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerInputEvent, MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { endOfMinute, isBefore, isValid, parseISO, startOfMinute } from 'date-fns';
-import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -47,7 +47,7 @@ export const DEFAULT_DATETIME_FORMAT: string = 'dd/MM/yyyy HH:mm';
 
 @Component({
     selector: 'adf-search-datetime-range',
-    imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, TranslatePipe, MatDatetimepickerModule],
+    imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, TranslatePipe, MatDatetimepickerModule],
     templateUrl: './search-datetime-range.component.html',
     styleUrls: ['./search-datetime-range.component.scss'],
     providers: [
