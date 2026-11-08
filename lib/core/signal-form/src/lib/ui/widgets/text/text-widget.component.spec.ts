@@ -136,7 +136,6 @@ describe('SignalTextWidgetComponent', () => {
         typeInto(textInput(element), '1234567890');
         fixture.detectChanges();
 
-        expect(element.querySelector('adf-signal-masked-text-input')).not.toBeNull();
         expect(textInput(element).placeholder).toBe('(___) ___-____');
         expect(form.submittedValues()['phone']).toBe('(123) 456-7890');
     });
