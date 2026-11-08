@@ -40,7 +40,7 @@
                   (cdkDropListDropped)="onDrop($event)"
                   cdk-scrollable
                   [cdkTrapFocus]="menuOpen()" >
-        @for (nodeWithState of nodes(); track nodeWithState.node.id) {
+        @for (nodeWithState of nodesWithState(); track nodeWithState.node.id) {
             @let disabledRoute = !isRouteEnabled(nodeWithState);
             <mat-list-item
                 class="adf-compact-breadcrumb-menu-list-item"
@@ -69,12 +69,14 @@
                     [style.pointer-events]="dragDropStateService.dragging() ? 'none' : 'auto'" >
                     {{ nodeWithState.node.name | translate }}
                 </a>
-                <p
-                    matListItemLine
-                    class="adf-compact-breadcrumb-menu-description"
-                    [title]="nodeWithState.description">
-                    {{ nodeWithState.description }}
-                </p>
+                @if ((nodeWithState.libraryContainer && dragDropStateService.dragging()) || !nodeWithState.libraryContainer) {
+                    <p
+                        matListItemLine
+                        class="adf-compact-breadcrumb-menu-description"
+                        [title]="nodeWithState.description">
+                        {{ nodeWithState.description }}
+                    </p>
+                }
 
                 <div matListItemMeta class="adf-compact-breadcrumb-menu-list-item-meta">
                     @if (nodeWithState.current) {
@@ -82,7 +84,7 @@
                             location_on
                         </mat-icon>
                         {{ 'BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL_ICON_LABEL' | translate }}
-                    } @else if (nodeWithState.libraryContainer) {
+                    } @else if (nodeWithState.libraryContainer && dragDropStateService.dragging()) {
                         <mat-icon class="adf-compact-breadcrumb-menu-list-item-meta-icon">
                             do_not_disturb
                         </mat-icon>

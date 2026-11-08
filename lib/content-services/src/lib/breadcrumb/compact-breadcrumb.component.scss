@@ -74,6 +74,7 @@ adf-compact-breadcrumb {
             border-radius: 4px;
             border: 2px solid transparent;
             border-bottom: 1px solid var(--mat-sys-outline-variant);
+            min-height: 56px;
 
             &-disabled {
                 cursor: default;
@@ -96,9 +97,7 @@ adf-compact-breadcrumb {
             }
 
             img {
-                margin-left: 8px;
-                margin-right: 6px;
-                margin-top: 14px;
+                margin: auto 6px auto 8px;
             }
 
             div.adf-compact-breadcrumb-menu-list-item-meta {
