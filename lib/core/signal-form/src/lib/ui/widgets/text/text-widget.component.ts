@@ -21,7 +21,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { maxLengthOf } from '../../../validation/field-validators';
-import { SignalMaskedTextInputControlComponent } from '../../controls/masked-text-input-control.component';
+import { SignalInputMaskDirective } from '../../controls/input-mask.directive';
 import { SignalFieldErrorComponent } from '../field-error/field-error.component';
 import { fieldErrorMessage } from '../field-error-message';
 import { SignalLeftLabelComponent } from '../left-label/left-label.component';
@@ -32,7 +32,7 @@ const TEXT_WIDGET_IMPORTS = [
     MatFormFieldModule,
     MatInputModule,
     TranslatePipe,
-    SignalMaskedTextInputControlComponent,
+    SignalInputMaskDirective,
     SignalLeftLabelComponent,
     SignalFieldErrorComponent
 ];
