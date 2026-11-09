@@ -26,7 +26,7 @@ import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 @Component({
     template: ` <mat-select adf-infinite-select-scroll (scrollEnd)="load()">
-        @for (option of options; track option; let idx = $index) {
+        @for (option of options; track $index) {
             <mat-option>
                 {{ option.text }}
             </mat-option>

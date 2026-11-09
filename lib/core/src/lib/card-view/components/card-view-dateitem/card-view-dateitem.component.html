@@ -116,7 +116,7 @@
         {{ property.label | translate }}
       </mat-label>
       <mat-chip-listbox #chipList class="adf-textitem-chip-list" [disabled]="isReadonlyProperty || !editable">
-        @for (propertyValue of property.displayValue; track propertyValue; let idx = $index) {
+        @for (propertyValue of property.displayValue; track $index; let idx = $index) {
           <mat-chip-option
             [removable]="isEditable"
             (removed)="removeValueFromList(idx)"

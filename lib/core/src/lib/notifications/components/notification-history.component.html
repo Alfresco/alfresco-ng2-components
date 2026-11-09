@@ -50,7 +50,7 @@
               <mat-icon class="adf-notification-history-menu-initiator" [adf-icon]="notification.icon" />
             }
             <div class="adf-notification-history-menu-item-content-message">
-              @for (message of notification.messages; track message) {
+              @for (message of notification.messages; track $index) {
                 <p class="adf-notification-history-menu-text adf-notification-history-menu-message"
                 [title]="message">{{ message }}</p>
               }
