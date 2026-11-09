@@ -26,12 +26,12 @@ import {
 } from '@alfresco/adf-core';
 import { Component, Input, OnChanges, inject } from '@angular/core';
 import { ProcessInstanceRepresentation } from '@alfresco/js-api';
-import { CommonModule } from '@angular/common';
+
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'adf-process-instance-header',
-    imports: [CommonModule, MatCardModule, CardViewComponent],
+    imports: [MatCardModule, CardViewComponent],
     templateUrl: './process-instance-header.component.html',
     styleUrls: ['./process-instance-header.component.css']
 })

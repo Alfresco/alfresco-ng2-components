@@ -21,7 +21,7 @@ import { TaskListService } from '../../services/tasklist.service';
 import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
 import { ModelService } from '../../../form/services/model.service';
 import { TaskFormService } from '../../../form/services/task-form.service';
-import { CommonModule } from '@angular/common';
+
 import { MatCardModule } from '@angular/material/card';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -31,7 +31,7 @@ import { FormComponent } from '../../../form';
 
 @Component({
     selector: 'adf-attach-form',
-    imports: [CommonModule, MatCardModule, TranslatePipe, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, MatButtonModule, FormComponent],
+    imports: [MatCardModule, TranslatePipe, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, MatButtonModule, FormComponent],
     templateUrl: './attach-form.component.html',
     styleUrls: ['./attach-form.component.scss']
 })

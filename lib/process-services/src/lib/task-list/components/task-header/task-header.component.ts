@@ -33,7 +33,7 @@ import {
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { TaskDescriptionValidator } from '../../validators/task-description.validator';
 import { TaskRepresentation } from '@alfresco/js-api';
-import { CommonModule } from '@angular/common';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { UnclaimTaskDirective } from '../task-form/unclaim-task.directive';
@@ -45,7 +45,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-task-header',
-    imports: [CommonModule, MatCardModule, MatButtonModule, UnclaimTaskDirective, ClaimTaskDirective, TranslatePipe, CardViewComponent],
+    imports: [MatCardModule, MatButtonModule, UnclaimTaskDirective, ClaimTaskDirective, TranslatePipe, CardViewComponent],
     templateUrl: './task-header.component.html',
     styleUrls: ['./task-header.component.scss'],
     encapsulation: ViewEncapsulation.None

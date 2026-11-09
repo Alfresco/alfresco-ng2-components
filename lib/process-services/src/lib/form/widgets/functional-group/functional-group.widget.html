@@ -1,57 +1,59 @@
 <div
-    class="adf-group-widget {{field.className}}"
-    [class.is-dirty]="!!field.value"
-    [class.adf-invalid]="!field.isValid && isTouched()"
-    [class.adf-readonly]="field.readOnly"
-    id="functional-group-div"
->
-    <mat-form-field class="adf-group-widget-field">
-        <mat-label class="adf-label" data-automation-id="adf-group-widget-label">{{ field.name | translate }}</mat-label>
-        <mat-chip-grid #chipGrid [required]="isRequired()">
-            <mat-chip-row
-                *ngFor="let group of selectedGroups"
-                (removed)="onRemove(group)"
-                [disabled]="field.readOnly"
-                [attr.data-automation-id]="'adf-group-widget-chip-' + group.id"
-                class="adf-group-widget-field-chip"
-            >
-                {{ getDisplayName(group) }}
-                <button matChipRemove [attr.aria-label]="'remove ' + group.name">
-                    <mat-icon>close</mat-icon>
-                </button>
-            </mat-chip-row>
-            <input
-                matInput
-                class="adf-input"
-                type="text"
-                data-automation-id="adf-group-search-input"
-                [matChipInputFor]="chipGrid"
-                [id]="field.id"
-                [formControl]="searchTerm"
-                [disabled]="!multiSelect && selectedGroups.length > 0 || field.readOnly"
-                [placeholder]="field.placeholder"
-                (blur)="markAsTouched()"
-                [matAutocomplete]="auto"
-                #inputValue
-            />
-        </mat-chip-grid>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="updateOption($event.option.value)" [displayWith]="getDisplayName">
-            <mat-option
-                *ngFor="let item of groups$ | async; let i = index"
-                id="adf-group-widget-user-{{i}}"
-                [id]="field.id +'-'+item.id"
-                [value]="item"
-                [disabled]="isGroupAlreadySelected(item)"
-            >
-                <span id="adf-group-label-name">{{item.name}}</span>
-            </mat-option>
-        </mat-autocomplete>
-        @if (field.validationSummary?.message || (isInvalidFieldRequired() && isTouched())) {
-            <mat-error>
-                <mat-icon class="adf-error-icon">error_outline</mat-icon>
-                <span class="adf-error-text"
-                    >@if (field.validationSummary?.message) {{{ field.validationSummary.message | translate }}} @else {{{ 'FORM.FIELD.REQUIRED' | translate }}}</span>
-            </mat-error>
-        }
-    </mat-form-field>
+  class="adf-group-widget {{field.className}}"
+  [class.is-dirty]="!!field.value"
+  [class.adf-invalid]="!field.isValid && isTouched()"
+  [class.adf-readonly]="field.readOnly"
+  id="functional-group-div"
+  >
+  <mat-form-field class="adf-group-widget-field">
+    <mat-label class="adf-label" data-automation-id="adf-group-widget-label">{{ field.name | translate }}</mat-label>
+    <mat-chip-grid #chipGrid [required]="isRequired()">
+      @for (group of selectedGroups; track group) {
+        <mat-chip-row
+          (removed)="onRemove(group)"
+          [disabled]="field.readOnly"
+          [attr.data-automation-id]="'adf-group-widget-chip-' + group.id"
+          class="adf-group-widget-field-chip"
+          >
+          {{ getDisplayName(group) }}
+          <button matChipRemove [attr.aria-label]="'remove ' + group.name">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-chip-row>
+      }
+      <input
+        matInput
+        class="adf-input"
+        type="text"
+        data-automation-id="adf-group-search-input"
+        [matChipInputFor]="chipGrid"
+        [id]="field.id"
+        [formControl]="searchTerm"
+        [disabled]="!multiSelect && selectedGroups.length > 0 || field.readOnly"
+        [placeholder]="field.placeholder"
+        (blur)="markAsTouched()"
+        [matAutocomplete]="auto"
+        #inputValue
+        />
+    </mat-chip-grid>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="updateOption($event.option.value)" [displayWith]="getDisplayName">
+      @for (item of groups$ | async; track item.id; let i = $index) {
+        <mat-option
+          id="adf-group-widget-user-{{i}}"
+          [id]="field.id +'-'+item.id"
+          [value]="item"
+          [disabled]="isGroupAlreadySelected(item)"
+          >
+          <span id="adf-group-label-name">{{item.name}}</span>
+        </mat-option>
+      }
+    </mat-autocomplete>
+    @if (field.validationSummary?.message || (isInvalidFieldRequired() && isTouched())) {
+      <mat-error>
+        <mat-icon class="adf-error-icon">error_outline</mat-icon>
+        <span class="adf-error-text"
+        >@if (field.validationSummary?.message) {{{ field.validationSummary.message | translate }}} @else {{{ 'FORM.FIELD.REQUIRED' | translate }}}</span>
+      </mat-error>
+    }
+  </mat-form-field>
 </div>

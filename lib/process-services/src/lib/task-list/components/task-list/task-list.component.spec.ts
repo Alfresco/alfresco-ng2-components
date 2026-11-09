@@ -40,7 +40,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatMenuItemHarness } from '@angular/material/menu/testing';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
-import { CommonModule } from '@angular/common';
 
 describe('TaskListComponent', () => {
     let component: TaskListComponent;
@@ -701,7 +700,7 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
 });
 
 @Component({
-    imports: [CommonModule, TaskListComponent, DataColumnComponent, DataColumnListComponent, FullNamePipe],
+    imports: [TaskListComponent, DataColumnComponent, DataColumnListComponent, FullNamePipe],
     template: ` <adf-tasklist [showContextMenu]="true" (showRowContextMenu)="onShowRowContextMenu($event)" #taskList>
         <data-columns>
             <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column" />

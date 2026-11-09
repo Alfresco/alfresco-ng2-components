@@ -213,12 +213,13 @@ The TaskList also supports pagination as shown in the example below:
     [size]="size"
     #taskList>
 </adf-tasklist>
-<adf-pagination
-    *ngIf="taskList"
-    [target]="taskList"
-    [supportedPageSizes]="supportedPages"
-    #taskListPagination>
-</adf-pagination>
+@if (taskList) {
+    <adf-pagination
+        [target]="taskList"
+        [supportedPageSizes]="supportedPages"
+        #taskListPagination>
+    </adf-pagination>
+}
 ```
 
 ### DataTableAdapter example

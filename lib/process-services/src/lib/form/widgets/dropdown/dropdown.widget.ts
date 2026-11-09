@@ -21,7 +21,7 @@ import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angul
 import { FormService, FormFieldOption, WidgetComponent, FormFieldModel, ReactiveFormWidget } from '@alfresco/adf-core';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { TaskFormService } from '../../services/task-form.service';
-import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
@@ -65,7 +65,7 @@ export const dropdownRequiredValidator =
 
 @Component({
     selector: 'dropdown-widget',
-    imports: [CommonModule, TranslatePipe, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, MatIconModule],
+    imports: [TranslatePipe, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, MatIconModule],
     templateUrl: './dropdown.widget.html',
     styleUrls: ['./dropdown.widget.scss'],
     host: {

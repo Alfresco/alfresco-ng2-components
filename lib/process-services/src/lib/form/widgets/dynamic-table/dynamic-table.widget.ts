@@ -22,7 +22,7 @@ import { ChangeDetectorRef, Component, ElementRef, inject, OnInit, ViewEncapsula
 import { DynamicTableColumn } from './editors/models/dynamic-table-column.model';
 import { DynamicTableRow } from './editors/models/dynamic-table-row.model';
 import { DynamicTableModel } from './editors/models/dynamic-table.widget.model';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,7 +31,7 @@ import { RowEditorComponent } from './editors/row-editor/row.editor';
 
 @Component({
     selector: 'dynamic-table-widget',
-    imports: [CommonModule, TranslatePipe, MatCheckboxModule, MatButtonModule, MatIconModule, RowEditorComponent, ErrorWidgetComponent],
+    imports: [TranslatePipe, MatCheckboxModule, MatButtonModule, MatIconModule, RowEditorComponent, ErrorWidgetComponent],
     templateUrl: './dynamic-table.widget.html',
     styleUrls: ['./dynamic-table.widget.scss'],
     host: {

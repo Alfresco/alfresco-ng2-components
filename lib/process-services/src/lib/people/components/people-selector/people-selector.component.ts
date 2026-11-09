@@ -24,7 +24,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -32,7 +32,7 @@ const DEFAULT_ASSIGNEE_PLACEHOLDER = 'ADF_TASK_LIST.PEOPLE.ASSIGNEE';
 
 @Component({
     selector: 'adf-people-selector',
-    imports: [CommonModule, PeopleSearchFieldComponent, MatButtonModule, MatIconModule],
+    imports: [PeopleSearchFieldComponent, MatButtonModule, MatIconModule],
     templateUrl: './people-selector.component.html',
     styleUrls: ['./people-selector.component.scss'],
     host: { class: 'adf-people-selector' },

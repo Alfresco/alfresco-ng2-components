@@ -1,97 +1,99 @@
 <mat-card appearance="outlined" class="adf-new-task-layout-card">
-    <mat-card-header class="adf-new-task-heading">
-        <mat-card-title>{{'ADF_TASK_LIST.START_TASK.FORM.TITLE' | translate}}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <form [formGroup]="taskForm" class="adf-new-task-form">
-            <div class="adf-task-name">
-                <mat-form-field>
-                    <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NAME' | translate}}</mat-label>
-                    <input
-                        matInput
-                        id="name_id"
-                        formControlName="name">
-                        @if (nameController.invalid) {
-                            <mat-error>
-                                <span class="adf-error-text"
-                                    >@if (nameController.hasError('required') || nameController.hasError('whitespace')) {{{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.REQUIRED' | translate }}} @else if (nameController.hasError('maxlength')) {{{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxTaskNameLength } }}}</span>
-                            </mat-error>
-                        }
-                </mat-form-field>
-            </div>
-            <div class="adf-task-description">
-                <mat-form-field>
-                    <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DESCRIPTION' | translate}}</mat-label>
-                    <textarea
-                        matInput
-                        rows="1"
-                        id="description_id"
-                        formControlName="description">
-                    </textarea>
-                    @if (descriptionController.hasError('whitespace')) {
-                        <mat-error>
-                            <span class="adf-error-text">{{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MESSAGE' | translate }}</span>
-                        </mat-error>
-                    }
-                </mat-form-field>
-            </div>
-            <div class="adf-input-row">
-                <mat-form-field class="adf-form-field-input">
-                    <input
-                        matInput
-                        (keyup)="onDateChanged($any($event).srcElement.value)"
-                        (dateInput)="onDateChanged($any($event).value)"
-                        [matDatepicker]="taskDatePicker"
-                        [errorStateMatcher]="dateErrorStateMatcher"
-                        placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
-                        id="date_id">
-                    <mat-datepicker-toggle
-                        matSuffix
-                        [for]="taskDatePicker" />
-                    <mat-datepicker
-                        #taskDatePicker
-                        [touchUi]="true" />
-                    @if (dateError) {
-                        <mat-error>
-                            <mat-icon class="adf-error-icon">warning</mat-icon>
-                            <span class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</span>
-                        </mat-error>
-                    }
-                </mat-form-field>
-                <people-widget
-                    (peopleSelected)="setAssigneeId($event)"
-                    [field]="field"
-                    class="adf-people-widget-content" />
-            </div>
-            <mat-form-field class="adf-task-form">
-                <mat-label id="form_label">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}</mat-label>
-                <mat-select
-                    id="form_id"
-                    class="form-control"
-                    formControlName="formKey">
-                <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
-                <mat-option *ngFor="let form of forms$ | async" [value]="form.id">{{ form.name }}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </form>
-    </mat-card-content>
-    <mat-card-actions>
-        <div class="adf-new-task-footer">
-            <button
-                mat-button
-                class="adf-uppercase"
-                (click)="onCancel()"
-                id="button-cancel">
-                {{ 'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL' | translate }}
-            </button>
-            <button
-                mat-button
-                class="adf-uppercase"
-                [disabled]="!isFormValid()"
-                (click)="saveTask()"
-                id="button-start">
-                {{ 'ADF_TASK_LIST.START_TASK.FORM.ACTION.START' | translate }}
-            </button>
-        </div>
-    </mat-card-actions>
+  <mat-card-header class="adf-new-task-heading">
+    <mat-card-title>{{'ADF_TASK_LIST.START_TASK.FORM.TITLE' | translate}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="taskForm" class="adf-new-task-form">
+      <div class="adf-task-name">
+        <mat-form-field>
+          <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NAME' | translate}}</mat-label>
+          <input
+            matInput
+            id="name_id"
+            formControlName="name">
+          @if (nameController.invalid) {
+            <mat-error>
+              <span class="adf-error-text"
+              >@if (nameController.hasError('required') || nameController.hasError('whitespace')) {{{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.REQUIRED' | translate }}} @else if (nameController.hasError('maxlength')) {{{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxTaskNameLength } }}}</span>
+            </mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="adf-task-description">
+        <mat-form-field>
+          <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DESCRIPTION' | translate}}</mat-label>
+          <textarea
+            matInput
+            rows="1"
+            id="description_id"
+            formControlName="description">
+          </textarea>
+          @if (descriptionController.hasError('whitespace')) {
+            <mat-error>
+              <span class="adf-error-text">{{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MESSAGE' | translate }}</span>
+            </mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="adf-input-row">
+        <mat-form-field class="adf-form-field-input">
+          <input
+            matInput
+            (keyup)="onDateChanged($any($event).srcElement.value)"
+            (dateInput)="onDateChanged($any($event).value)"
+            [matDatepicker]="taskDatePicker"
+            [errorStateMatcher]="dateErrorStateMatcher"
+            placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
+            id="date_id">
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="taskDatePicker" />
+          <mat-datepicker
+            #taskDatePicker
+            [touchUi]="true" />
+          @if (dateError) {
+            <mat-error>
+              <mat-icon class="adf-error-icon">warning</mat-icon>
+              <span class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</span>
+            </mat-error>
+          }
+        </mat-form-field>
+        <people-widget
+          (peopleSelected)="setAssigneeId($event)"
+          [field]="field"
+          class="adf-people-widget-content" />
+      </div>
+      <mat-form-field class="adf-task-form">
+        <mat-label id="form_label">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}</mat-label>
+        <mat-select
+          id="form_id"
+          class="form-control"
+          formControlName="formKey">
+          <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
+          @for (form of forms$ | async; track form) {
+            <mat-option [value]="form.id">{{ form.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="adf-new-task-footer">
+      <button
+        mat-button
+        class="adf-uppercase"
+        (click)="onCancel()"
+        id="button-cancel">
+        {{ 'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL' | translate }}
+      </button>
+      <button
+        mat-button
+        class="adf-uppercase"
+        [disabled]="!isFormValid()"
+        (click)="saveTask()"
+        id="button-start">
+        {{ 'ADF_TASK_LIST.START_TASK.FORM.ACTION.START' | translate }}
+      </button>
+    </div>
+  </mat-card-actions>
 </mat-card>
