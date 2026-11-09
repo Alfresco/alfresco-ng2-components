@@ -89,7 +89,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     readonly nodes = input.required<PathElement[]>();
     /** If true, the breadcrumb menu will be displayed in full width. */
     readonly fullWidth = input(false);
-    readonly insideCurrentLocation = input(false);
+    readonly disableCurrentLocation = input(true);
 
     /** Emitted when dragged item is dropped onto the breadcrumb. Emits drag and drop event. */
     readonly dropped = output<CdkDragDrop<PathElement, PathElement, DataRow>>();
@@ -106,12 +106,10 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     protected readonly menuOpen = signal(false);
     protected readonly hoveredItem = signal<PathElementWithState>(undefined);
     protected readonly nodesWithState = computed<PathElementWithState[]>(() => {
-        const nodes = this.nodes();
-        const insideCurrentLocation = this.insideCurrentLocation();
         let indexOffset = 0;
-        return nodes.map((node, index) => {
-            const current = index === nodes.length - 1 && insideCurrentLocation;
-            const libraryContainer = nodes[index + 1]?.nodeType === 'st:site';
+        return this.nodes().map((node, index) => {
+            const current = index === this.nodes().length - 1 && this.disableCurrentLocation();
+            const libraryContainer = this.nodes()[index + 1]?.nodeType === 'st:site';
             if (libraryContainer) {
                 indexOffset = 1;
             }
@@ -119,7 +117,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
                 node,
                 current,
                 libraryContainer,
-                description: this.getLevelDescription(nodes, index, current, libraryContainer, indexOffset)
+                description: this.getLevelDescription(this.nodes(), index, current, libraryContainer, indexOffset)
             };
         });
     });
@@ -240,15 +238,17 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     }
 
     closeMenu(event?: Event): void {
-        if (this.menuOpen() && event) {
-            this.menuTrigger().nativeElement.focus();
+        if (event) {
+            if (this.menuOpen()) {
+                this.menuTrigger().nativeElement.focus();
+            }
+            if (!this.dragDropStateService.dragging()) {
+                event.stopPropagation();
+            }
         }
         this.menuOpen.set(false);
         this.removeOutsideClickListener?.();
         this.removeOutsideClickListener = null;
-        if (event && !this.dragDropStateService.dragging()) {
-            event.stopPropagation();
-        }
     }
 
     private stopOpeningMenu(): void {
@@ -289,7 +289,6 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
                 this.closeMenu();
             }
         };
-        // Escape is handled in the capture phase so it is stopped before reaching other document listeners (e.g. viewer)
         const handleEscape = (event: KeyboardEvent): void => {
             if (event.key === 'Escape' && this.menuOpen()) {
                 this.closeMenu(event);

@@ -285,16 +285,74 @@ describe('CompactBreadcrumbComponent', () => {
                     expect(listItems.length).toBe(4);
                 });
 
-                it('should be enabled if node is not site container and is not last', async () => {
+                it('should be enabled if node is not site container, is not last, dragging is set to true on DragDropStateService and disableCurrentLocation is true', async () => {
+                    dragDropStateService.dragging.set(true);
+                    fixture.componentRef.setInput('disableCurrentLocation', true);
+
                     for (let i = 0; i < listItems.length; i++) {
                         expect(await listItems[i].isDisabled()).toBe(i === 0 || i === 3);
                     }
                 });
 
-                it('should not have adf-compact-breadcrumb-menu-list-item-disabled class if node is not site container and is not last', async () => {
+                it('should be enabled if node is not site container, dragging is set to true on DragDropStateService and disableCurrentLocation is false', async () => {
+                    dragDropStateService.dragging.set(true);
+                    fixture.componentRef.setInput('disableCurrentLocation', false);
+
+                    for (let i = 0; i < listItems.length; i++) {
+                        expect(await listItems[i].isDisabled()).toBe(i === 0);
+                    }
+                });
+
+                it('should be enabled if node is not last, dragging is set to false on DragDropStateService and disableCurrentLocation is true', async () => {
+                    dragDropStateService.dragging.set(false);
+                    fixture.componentRef.setInput('disableCurrentLocation', true);
+
+                    for (let i = 0; i < listItems.length; i++) {
+                        expect(await listItems[i].isDisabled()).toBe(i === 3);
+                    }
+                });
+
+                it('should be enabled if dragging is set to false on DragDropStateService and disableCurrentLocation is false', async () => {
+                    dragDropStateService.dragging.set(false);
+                    fixture.componentRef.setInput('disableCurrentLocation', false);
+
+                    expect(listItems.every(async (item) => !(await item.isDisabled()))).toBeTrue();
+                });
+
+                it('should not have adf-compact-breadcrumb-menu-list-item-disabled class if node is not site container, is not last, dragging is set to true on DragDropStateService and disableCurrentLocation is true', async () => {
+                    dragDropStateService.dragging.set(true);
+                    fixture.componentRef.setInput('disableCurrentLocation', true);
+
                     for (let i = 0; i < listItemsElements.length; i++) {
                         expect(await listItemsElements[i].hasClass('adf-compact-breadcrumb-menu-list-item-disabled')).toBe(i === 0 || i === 3);
                     }
+                });
+
+                it('should not have adf-compact-breadcrumb-menu-list-item-disabled class if node is not site container, dragging is set to true on DragDropStateService and disableCurrentLocation is false', async () => {
+                    dragDropStateService.dragging.set(true);
+                    fixture.componentRef.setInput('disableCurrentLocation', false);
+
+                    for (let i = 0; i < listItemsElements.length; i++) {
+                        expect(await listItemsElements[i].hasClass('adf-compact-breadcrumb-menu-list-item-disabled')).toBe(i === 0);
+                    }
+                });
+
+                it('should not have adf-compact-breadcrumb-menu-list-item-disabled class if node is not last, dragging is set to false on DragDropStateService and disableCurrentLocation is true', async () => {
+                    dragDropStateService.dragging.set(false);
+                    fixture.componentRef.setInput('disableCurrentLocation', true);
+
+                    for (let i = 0; i < listItemsElements.length; i++) {
+                        expect(await listItemsElements[i].hasClass('adf-compact-breadcrumb-menu-list-item-disabled')).toBe(i === 3);
+                    }
+                });
+
+                it('should not have adf-compact-breadcrumb-menu-list-item-disabled class if dragging is set to false on DragDropStateService and disableCurrentLocation is false', async () => {
+                    dragDropStateService.dragging.set(false);
+                    fixture.componentRef.setInput('disableCurrentLocation', false);
+
+                    expect(
+                        listItemsElements.every(async (item) => !(await item.hasClass('adf-compact-breadcrumb-menu-list-item-disabled')))
+                    ).toBeTrue();
                 });
 
                 it('should set cdkDropListData for NavList if mouseenter is triggered', async () => {
@@ -312,6 +370,7 @@ describe('CompactBreadcrumbComponent', () => {
 
                 it('should not set DragDropStateService hoveredDropName if mouseenter is triggered but route is disabled', async () => {
                     const nameBefore = dragDropStateService.hoveredDropName();
+                    dragDropStateService.dragging.set(true);
 
                     await listItemsElements[0].dispatchEvent('mouseenter');
                     expect(dragDropStateService.hoveredDropName()).toBe(nameBefore);
@@ -343,6 +402,7 @@ describe('CompactBreadcrumbComponent', () => {
 
                 it('should not emit navigate if click is triggered but route is disabled', async () => {
                     spyOn(component.navigate, 'emit');
+                    dragDropStateService.dragging.set(true);
 
                     await listItemsElements[0].dispatchEvent('click');
                     expect(component.navigate.emit).not.toHaveBeenCalled();
@@ -365,6 +425,7 @@ describe('CompactBreadcrumbComponent', () => {
 
                 it('should not close menu if click is triggered but route is disabled', async () => {
                     spyOn(component.navigate, 'emit');
+                    dragDropStateService.dragging.set(true);
 
                     await listItemsElements[0].dispatchEvent('click');
                     expect(getOpenedMenuElement()).not.toBeNull();
@@ -387,6 +448,7 @@ describe('CompactBreadcrumbComponent', () => {
 
                 it('should not emit navigate if keydown for enter is triggered but route is disabled', async () => {
                     spyOn(component.navigate, 'emit');
+                    dragDropStateService.dragging.set(true);
 
                     await listItemsElements[0].dispatchEvent('keydown', { key: 'Enter' });
                     expect(component.navigate.emit).not.toHaveBeenCalled();
@@ -409,6 +471,7 @@ describe('CompactBreadcrumbComponent', () => {
 
                 it('should not close menu if keydown for enter is triggered but route is disabled', async () => {
                     spyOn(component.navigate, 'emit');
+                    dragDropStateService.dragging.set(true);
 
                     await listItemsElements[0].dispatchEvent('keydown', { key: 'Enter' });
                     expect(getOpenedMenuElement()).not.toBeNull();
@@ -435,14 +498,31 @@ describe('CompactBreadcrumbComponent', () => {
                     expect(getAnchorElements()[0].nativeElement.style.pointerEvents).toBe('auto');
                 });
 
-                it('should have correct description for each item', () => {
+                it('should have correct description for each item including library container if dragging is set to true on DragDropStateService', () => {
+                    dragDropStateService.dragging.set(true);
+                    fixture.detectChanges();
+
                     const descriptionElements = unitTestingUtils.getAllByCSS(
                         '.adf-compact-breadcrumb-menu-list-item .adf-compact-breadcrumb-menu-description'
                     );
+                    expect(descriptionElements.length).toBe(4);
                     expect(descriptionElements[0].nativeElement.textContent.trim()).toBe('BREADCRUMB.COMPACT_MENU.LIBRARY_CONTAINER_LEVEL');
                     expect(descriptionElements[1].nativeElement.textContent.trim()).toBe('BREADCRUMB.COMPACT_MENU.FIRST_LEVEL_LIBRARY');
                     expect(descriptionElements[2].nativeElement.textContent.trim()).toBe('BREADCRUMB.COMPACT_MENU.NOT_FIRST_LEVEL');
                     expect(descriptionElements[3].nativeElement.textContent.trim()).toBe('BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL');
+                });
+
+                it('should have correct description for each item excluding library container if dragging is set to false on DragDropStateService', () => {
+                    dragDropStateService.dragging.set(false);
+                    fixture.detectChanges();
+
+                    const descriptionElements = unitTestingUtils.getAllByCSS(
+                        '.adf-compact-breadcrumb-menu-list-item .adf-compact-breadcrumb-menu-description'
+                    );
+                    expect(descriptionElements.length).toBe(3);
+                    expect(descriptionElements[0].nativeElement.textContent.trim()).toBe('BREADCRUMB.COMPACT_MENU.FIRST_LEVEL_LIBRARY');
+                    expect(descriptionElements[1].nativeElement.textContent.trim()).toBe('BREADCRUMB.COMPACT_MENU.NOT_FIRST_LEVEL');
+                    expect(descriptionElements[2].nativeElement.textContent.trim()).toBe('BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL');
                 });
 
                 it('should have rendered correct icon', async () => {
@@ -470,36 +550,38 @@ describe('CompactBreadcrumbComponent', () => {
 
                     expect(getItemMetas()[1].nativeElement.textContent.trim()).toBe('');
                 });
+
+                it('should have not rendered icon for library container level if DragDropStateService dragging is false', async () => {
+                    dragDropStateService.dragging.set(false);
+
+                    expect(getItemMetas()[0].nativeElement.textContent.trim()).toBe('');
+                });
             });
         });
     });
 
     describe('Component events', () => {
         let triggerElement: HTMLButtonElement;
+        let escEvent: KeyboardEvent;
 
         beforeEach(() => {
             fixture.detectChanges();
             triggerElement = getMenuTriggerElement();
             spyOn(triggerElement, 'focus');
+            escEvent = new KeyboardEvent('keydown', {
+                key: 'Escape'
+            });
         });
 
         it('should call focus on menu trigger if ESC was hit', () => {
             triggerElement.click();
 
-            document.dispatchEvent(
-                new KeyboardEvent('keydown', {
-                    key: 'Escape'
-                })
-            );
+            document.dispatchEvent(escEvent);
             expect(triggerElement.focus).toHaveBeenCalled();
         });
 
         it('should not call focus on menu trigger if ESC was hit but menu is closed', () => {
-            document.dispatchEvent(
-                new KeyboardEvent('keydown', {
-                    key: 'Escape'
-                })
-            );
+            document.dispatchEvent(escEvent);
             expect(triggerElement.focus).not.toHaveBeenCalled();
         });
 
@@ -512,6 +594,34 @@ describe('CompactBreadcrumbComponent', () => {
                 })
             );
             expect(triggerElement.focus).not.toHaveBeenCalled();
+        });
+
+        it('should call stopPropagation on event if ESC was hit and dragging is false on DragDropStateService', () => {
+            dragDropStateService.dragging.set(false);
+            spyOn(escEvent, 'stopPropagation');
+
+            document.dispatchEvent(escEvent);
+            expect(escEvent.stopPropagation).toHaveBeenCalled();
+        });
+
+        it('should not call stopPropagation on event if ESC was hit and dragging is true on DragDropStateService', () => {
+            dragDropStateService.dragging.set(true);
+            spyOn(escEvent, 'stopPropagation');
+
+            document.dispatchEvent(escEvent);
+            expect(escEvent.stopPropagation).not.toHaveBeenCalled();
+        });
+
+        it('should not call stopPropagation on event if other than ESC key was hit and dragging is false on DragDropStateService', () => {
+            dragDropStateService.dragging.set(false);
+            spyOn(escEvent, 'stopPropagation');
+
+            document.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                    key: 'Enter'
+                })
+            );
+            expect(escEvent.stopPropagation).not.toHaveBeenCalled();
         });
     });
 });

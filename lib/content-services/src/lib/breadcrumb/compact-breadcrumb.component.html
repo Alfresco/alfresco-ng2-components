@@ -84,16 +84,20 @@
                             location_on
                         </mat-icon>
                         {{ 'BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL_ICON_LABEL' | translate }}
-                    } @else if (nodeWithState.libraryContainer && dragDropStateService.dragging()) {
-                        <mat-icon class="adf-compact-breadcrumb-menu-list-item-meta-icon">
-                            do_not_disturb
-                        </mat-icon>
-                        {{ 'BREADCRUMB.COMPACT_MENU.LIBRARY_CONTAINER_LEVEL_ICON_LABEL' | translate }}
-                    } @else if (dragDropStateService.dragging() && hoveredItem()?.node.id === nodeWithState.node.id) {
-                        <mat-icon class="adf-compact-breadcrumb-menu-list-item-meta-icon">
-                            check_circle
-                        </mat-icon>
-                        {{ 'BREADCRUMB.COMPACT_MENU.DROP_HINT' | translate }}
+                    } @else {
+                        @if (dragDropStateService.dragging()) {
+                            @if (nodeWithState.libraryContainer) {
+                                <mat-icon class="adf-compact-breadcrumb-menu-list-item-meta-icon">
+                                    do_not_disturb
+                                </mat-icon>
+                                {{ 'BREADCRUMB.COMPACT_MENU.LIBRARY_CONTAINER_LEVEL_ICON_LABEL' | translate }}
+                            } @else if (hoveredItem()?.node.id === nodeWithState.node.id) {
+                                <mat-icon class="adf-compact-breadcrumb-menu-list-item-meta-icon">
+                                    check_circle
+                                </mat-icon>
+                                {{ 'BREADCRUMB.COMPACT_MENU.DROP_HINT' | translate }}
+                            }
+                        }
                     }
                 </div>
             </mat-list-item>

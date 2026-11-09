@@ -43,6 +43,17 @@ import { ViewerRenderComponent } from './viewer-render/viewer-render.component';
 })
 class DummyDialogComponent {}
 
+@Component({
+    selector: 'adf-viewer-breadcrumb-mock',
+    imports: [ViewerComponent],
+    template: `
+        <adf-viewer>
+            <div class="adf-viewer-toolbar-breadcrumb"></div>
+        </adf-viewer>
+    `
+})
+class ViewerWithBreadcrumbHostComponent {}
+
 describe('ViewerComponent', () => {
     let component: ViewerComponent<unknown>;
     let fixture: ComponentFixture<ViewerComponent<unknown>>;
@@ -362,6 +373,15 @@ describe('ViewerComponent', () => {
     });
 
     describe('Toolbar', () => {
+        it('should project element with adf-viewer-toolbar-breadcrumb class into default toolbar', () => {
+            const viewerWithBreadcrumbFixture = TestBed.createComponent(ViewerWithBreadcrumbHostComponent);
+
+            viewerWithBreadcrumbFixture.detectChanges();
+            expect(
+                new UnitTestingUtils(viewerWithBreadcrumbFixture.debugElement).getByCSS('#adf-viewer-toolbar .adf-viewer-toolbar-breadcrumb')
+            ).not.toBeNull();
+        });
+
         it('should show only next file button', async () => {
             component.allowNavigate = true;
             component.canNavigateBefore = false;
