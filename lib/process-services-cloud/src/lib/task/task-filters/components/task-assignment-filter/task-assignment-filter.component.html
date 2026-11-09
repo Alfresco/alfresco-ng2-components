@@ -1,37 +1,43 @@
 <div class="adf-cloud-assignment-container">
-    <mat-form-field floatLabel="auto" class="adf-task-assignment-filter-container">
-        <mat-label class="adf-task-assignment-filter-label"
-            [ngClass]="{'adf-task-assignment-filter-label--focus': typeDropdown.focused}">
-            {{ 'ADF_CLOUD_TASK_ASSIGNMENT_FILTER.ASSIGNMENT_TYPE' | translate }}
-        </mat-label>
-        <mat-select class="adf-task-assignment-filter"
-                    [(ngModel)]="assignmentType" #typeDropdown
-                    [attr.data-automation-id]="'adf-task-assignment-filter-select'"
-                    (selectionChange)="onAssignmentTypeChange($event)">
-            <mat-option *ngFor="let assignmentType of assignmentTypeOptions"
-                class="adf-task-assignment-filter-option"
-                [ngClass]="{'adf-task-assignment-filter-option--selected': filterOption.selected}"
-                [value]="assignmentType.value" #filterOption
-                [attr.data-automation-id]="'adf-task-assignment-filter-' + assignmentType.value">
-                {{ assignmentType.label | translate }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+  <mat-form-field floatLabel="auto" class="adf-task-assignment-filter-container">
+    <mat-label class="adf-task-assignment-filter-label"
+      [ngClass]="{'adf-task-assignment-filter-label--focus': typeDropdown.focused}">
+      {{ 'ADF_CLOUD_TASK_ASSIGNMENT_FILTER.ASSIGNMENT_TYPE' | translate }}
+    </mat-label>
+    <mat-select class="adf-task-assignment-filter"
+      [(ngModel)]="assignmentType" #typeDropdown
+      [attr.data-automation-id]="'adf-task-assignment-filter-select'"
+      (selectionChange)="onAssignmentTypeChange($event)">
+      @for (assignmentType of assignmentTypeOptions; track assignmentType) {
+        <mat-option
+          class="adf-task-assignment-filter-option"
+          [ngClass]="{'adf-task-assignment-filter-option--selected': filterOption.selected}"
+          [value]="assignmentType.value" #filterOption
+          [attr.data-automation-id]="'adf-task-assignment-filter-' + assignmentType.value">
+          {{ assignmentType.label | translate }}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 
-    <adf-cloud-group *ngIf="isCandidateGroupsType()"
-        class="adf-group-cloud-filter"
-        data-automation-id="adf-group-cloud-candidate-groups-filter"
-        [appName]="appName"
-        [preSelectGroups]="candidateGroups"
-        [mode]="taskFilterProperty.selectionMode"
-        [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.CANDIDATE_GROUP'"
-        (changedGroups)="onChangedGroups($event)" />
+  @if (isCandidateGroupsType()) {
+    <adf-cloud-group
+      class="adf-group-cloud-filter"
+      data-automation-id="adf-group-cloud-candidate-groups-filter"
+      [appName]="appName"
+      [preSelectGroups]="candidateGroups"
+      [mode]="taskFilterProperty.selectionMode"
+      [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.CANDIDATE_GROUP'"
+      (changedGroups)="onChangedGroups($event)" />
+  }
 
-    <adf-cloud-people *ngIf="isAssignedToType()"
-        class="adf-group-cloud-filter"
-        data-automation-id="adf-group-cloud-assigned-to-filter"
-        [preSelectUsers]="assignedUsers"
-        [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'"
-        [appName]="appName"
-        (changedUsers)="onChangedAssignedUsers($event)" />
+  @if (isAssignedToType()) {
+    <adf-cloud-people
+      class="adf-group-cloud-filter"
+      data-automation-id="adf-group-cloud-assigned-to-filter"
+      [preSelectUsers]="assignedUsers"
+      [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'"
+      [appName]="appName"
+      (changedUsers)="onChangedAssignedUsers($event)" />
+  }
 </div>

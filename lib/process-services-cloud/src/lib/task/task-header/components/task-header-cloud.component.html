@@ -1,20 +1,24 @@
-<h3 *ngIf="showTitle" class="adf-task-title">{{ taskDetails?.name }}</h3>
+@if (showTitle) {
+  <h3 class="adf-task-title">{{ taskDetails?.name }}</h3>
+}
 
 <div class="adf-task-header-container">
-    <mat-card appearance="outlined" *ngIf="isTaskValid()" class="adf-card-container">
-        <mat-card-content>
-            <adf-card-view
-                *ngIf="!isLoading; else loadingTemplate"
-                [displayNoneOption]="false"
-                [properties]="properties"
-                [editable]="isTaskEditable()"
-                [displayClearAction]="displayDateClearAction" />
-        </mat-card-content>
+  @if (isTaskValid()) {
+    <mat-card appearance="outlined" class="adf-card-container">
+      <mat-card-content>
+        @if (!isLoading) {
+          <adf-card-view
+            [displayNoneOption]="false"
+            [properties]="properties"
+            [editable]="isTaskEditable()"
+            [displayClearAction]="displayDateClearAction" />
+        } @else {
+          <div class="adf-task-header-loading">
+            <mat-spinner />
+          </div>
+        }
+      </mat-card-content>
     </mat-card>
+  }
 </div>
 
-<ng-template #loadingTemplate>
-    <div class="adf-task-header-loading">
-        <mat-spinner />
-    </div>
-</ng-template>
