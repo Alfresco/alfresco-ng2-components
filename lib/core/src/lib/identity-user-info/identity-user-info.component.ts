@@ -18,7 +18,7 @@
 import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { IdentityUserModel } from '../auth/models/identity-user.model';
-import { CommonModule } from '@angular/common';
+
 import { FullNamePipe, InitialUsernamePipe } from '../pipes';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -26,7 +26,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-identity-user-info',
-    imports: [CommonModule, FullNamePipe, MatMenuModule, InitialUsernamePipe, MatButtonModule, MatCardModule, TranslatePipe],
+    imports: [FullNamePipe, MatMenuModule, InitialUsernamePipe, MatButtonModule, MatCardModule, TranslatePipe],
     templateUrl: './identity-user-info.component.html',
     styleUrls: ['./identity-user-info.component.scss'],
     encapsulation: ViewEncapsulation.None

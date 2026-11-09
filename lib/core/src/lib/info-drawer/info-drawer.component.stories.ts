@@ -247,13 +247,17 @@ export const TabLayoutWithTextLabels: Story = {
                 <div class="info-drawer-tab-text">{{ tab1Text }}</div>
             </adf-info-drawer-tab>
 
-            <adf-info-drawer-tab [label]="label2" [icon]="[icon2]" *ngIf="showSecondTab">
-                <div class="info-drawer-tab-text">{{ tab2Text }}</div>
-            </adf-info-drawer-tab>
+            @if (showSecondTab) {
+                <adf-info-drawer-tab [label]="label2" [icon]="[icon2]">
+                    <div class="info-drawer-tab-text">{{ tab2Text }}</div>
+                </adf-info-drawer-tab>
+            }
 
-            <adf-info-drawer-tab [label]="label3" [icon]="[icon3]" *ngIf="showThirdTab">
-                <div class="info-drawer-tab-text">{{ tab3Text }}</div>
-            </adf-info-drawer-tab>
+            @if (showThirdTab) {
+                <adf-info-drawer-tab [label]="label3" [icon]="[icon3]">
+                    <div class="info-drawer-tab-text">{{ tab3Text }}</div>
+                </adf-info-drawer-tab>
+            }
 
         </adf-info-drawer>`
     }),
@@ -283,13 +287,17 @@ export const TabLayoutWithIconLabels: Story = {
                 <div class="info-drawer-tab-text">{{ tab1Text }}</div>
             </adf-info-drawer-tab>
 
-            <adf-info-drawer-tab [label]="label2" [icon]="[icon2]" *ngIf="showSecondTab">
-                <div class="info-drawer-tab-text">{{ tab2Text }}</div>
-            </adf-info-drawer-tab>
+            @if (showSecondTab) {
+                <adf-info-drawer-tab [label]="label2" [icon]="[icon2]">
+                    <div class="info-drawer-tab-text">{{ tab2Text }}</div>
+                </adf-info-drawer-tab>
+            }
 
-            <adf-info-drawer-tab [label]="label3" [icon]="[icon3]" *ngIf="showThirdTab">
-                <div class="info-drawer-tab-text">{{ tab3Text }}</div>
-            </adf-info-drawer-tab>
+            @if (showThirdTab) {
+                <adf-info-drawer-tab [label]="label3" [icon]="[icon3]">
+                    <div class="info-drawer-tab-text">{{ tab3Text }}</div>
+                </adf-info-drawer-tab>
+            }
 
         </adf-info-drawer>`
     }),

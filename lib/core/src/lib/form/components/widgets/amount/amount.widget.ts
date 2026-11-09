@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { CurrencyPipe, NgIf } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation, InjectionToken, inject, DestroyRef, signal } from '@angular/core';
 import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -62,7 +62,7 @@ export const ADF_AMOUNT_SETTINGS = new InjectionToken<Observable<AmountWidgetSet
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [MatFormFieldModule, MatInputModule, FormsModule, TranslatePipe, NgIf, MatIconModule],
+    imports: [MatFormFieldModule, MatInputModule, FormsModule, TranslatePipe, MatIconModule],
     providers: [CurrencyPipe],
     encapsulation: ViewEncapsulation.None
 })

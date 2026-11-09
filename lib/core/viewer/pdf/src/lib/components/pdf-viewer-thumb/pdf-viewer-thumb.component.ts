@@ -16,7 +16,7 @@
  */
 
 import { FocusableOption } from '@angular/cdk/a11y';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, ElementRef, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -25,7 +25,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     selector: 'adf-pdf-thumb',
     templateUrl: './pdf-viewer-thumb.component.html',
     encapsulation: ViewEncapsulation.None,
-    imports: [AsyncPipe, TranslatePipe, NgIf],
+    imports: [AsyncPipe, TranslatePipe],
     host: { tabindex: '0' }
 })
 export class PdfThumbComponent implements OnInit, FocusableOption {

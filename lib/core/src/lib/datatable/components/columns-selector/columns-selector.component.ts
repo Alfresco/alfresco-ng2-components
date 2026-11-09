@@ -20,7 +20,7 @@ import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { debounceTime } from 'rxjs/operators';
 import { DataColumn } from '../../data/data-column.model';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -35,7 +35,6 @@ import { IconModule } from '../../../icon/icon.module';
 @Component({
     selector: 'adf-datatable-column-selector',
     imports: [
-        CommonModule,
         TranslatePipe,
         MatButtonModule,
         IconModule,

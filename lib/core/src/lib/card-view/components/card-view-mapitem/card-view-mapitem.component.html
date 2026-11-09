@@ -1,24 +1,30 @@
-<div [attr.data-automation-id]="'card-mapitem-label-' + property.key"
-     class="adf-property-label"
-     *ngIf="showProperty">{{ property.label | translate }}</div>
+@if (showProperty) {
+  <div [attr.data-automation-id]="'card-mapitem-label-' + property.key"
+    class="adf-property-label"
+  >{{ property.label | translate }}</div>
+}
 <div class="adf-property-value adf-map-item-padding">
-    <div>
-        <span *ngIf="!isClickable; else clickableTemplate"
-              [attr.data-automation-id]="'card-mapitem-value-' + property.key">
-            <span *ngIf="showProperty;">{{ property.displayValue }}</span>
-        </span>
-    </div>
-    <ng-template #clickableTemplate>
-        <span class="adf-mapitem-clickable-value"
-              (click)="clicked()"
-              tabindex="0"
-              role="button"
-              (keyup.enter)="clicked()"
-              [attr.data-automation-id]="'card-mapitem-value-' + property.key">
-            <span *ngIf="showProperty; else emptyValueTemplate">{{ property.displayValue }}</span>
-        </span>
-    </ng-template>
-    <ng-template #emptyValueTemplate>
-        {{ property.default | translate }}
-    </ng-template>
+  <div>
+    @if (!isClickable) {
+      <span
+        [attr.data-automation-id]="'card-mapitem-value-' + property.key">
+        @if (showProperty;) {
+          <span>{{ property.displayValue }}</span>
+        }
+      </span>
+    } @else {
+      <span class="adf-mapitem-clickable-value"
+        (click)="clicked()"
+        tabindex="0"
+        role="button"
+        (keyup.enter)="clicked()"
+        [attr.data-automation-id]="'card-mapitem-value-' + property.key">
+        @if (showProperty) {
+          <span>{{ property.displayValue }}</span>
+        } @else {
+          {{ property.default | translate }}
+        }
+      </span>
+    }
+  </div>
 </div>

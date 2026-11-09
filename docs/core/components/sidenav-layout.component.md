@@ -49,8 +49,11 @@ sub-components (note the use of `<ng-template>` in the sub-components' body sect
 
     <adf-sidenav-layout-navigation>
         <ng-template let-isMenuMinimized="isMenuMinimized">
-            <div *ngIf="isMenuMinimized()" class="app-compact-navigation"></div>
-            <div *ngIf="!isMenuMinimized()" class="app-expanded-navigation"></div>
+            @if (isMenuMinimized()) {
+                <div class="app-compact-navigation"></div>
+            } @else {
+                <div class="app-expanded-navigation"></div>
+            }
         </ng-template>
     </adf-sidenav-layout-navigation>
 

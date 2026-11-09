@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { NgIf } from '@angular/common';
 import {
     AfterViewInit,
     Component,
@@ -44,7 +43,7 @@ import { IconModule } from '../../../icon/icon.module';
     templateUrl: './img-viewer.component.html',
     styleUrls: ['./img-viewer.component.scss'],
     host: { class: 'adf-image-viewer' },
-    imports: [ToolbarComponent, TranslatePipe, IconModule, MatButtonModule, NgIf],
+    imports: [ToolbarComponent, TranslatePipe, IconModule, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {

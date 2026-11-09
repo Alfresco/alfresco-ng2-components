@@ -29,15 +29,17 @@ Presentational component to display About information as a set of collapsible pa
 
 ## Conditional Display
 
-You can wire each panel with the `*ngIf` conditions:
+You can wire each panel with the `@if` conditions:
 
 ```html
 <adf-about>
-    <adf-about-panel *ngIf="devMode" [label]="'Panel 1'">
-        <ng-template>
-            <your-components></your-components>
-        </ng-template>
-    </adf-about-panel>
+    @if (devMode) {
+        <adf-about-panel [label]="'Panel 1'">
+            <ng-template>
+                <your-components></your-components>
+            </ng-template>
+        </adf-about-panel>
+    }
 </adf-about>
 ```
 
@@ -47,10 +49,12 @@ Observables are also supported:
 
 ```html
 <adf-about>
-    <adf-about-panel *ngIf="extensions$ | async as extensions" [label]="'ABOUT.PLUGINS.TITLE' | translate">
-        <ng-template>
-            <adf-about-extension-list [data]="extensions"></adf-about-extension-list>
-        </ng-template>
-    </adf-about-panel>
+    @if (extensions$ | async; as extensions) {
+        <adf-about-panel [label]="'ABOUT.PLUGINS.TITLE' | translate">
+            <ng-template>
+                <adf-about-extension-list [data]="extensions"></adf-about-extension-list>
+            </ng-template>
+        </adf-about-panel>
+    }
 </adf-about>
 ```

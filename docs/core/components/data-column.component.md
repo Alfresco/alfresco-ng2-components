@@ -152,14 +152,15 @@ For more details on the possible use cases of the above properties, see the [off
 
 ### Conditional visibility
 
-You can use `ngIf` directives to provide conditional visibility support for the columns:
+You can use `@if` blocks to provide conditional visibility support for the columns:
 
 ```html
-<data-column
-    *nfIg="showNameColumn"
-    key="name"
-    title="MY.RESOURCE.KEY">
-</data-column>
+@if (showNameColumn) {
+    <data-column
+        key="name"
+        title="MY.RESOURCE.KEY">
+    </data-column>
+}
 ```
 
 ### Automatic column header translation

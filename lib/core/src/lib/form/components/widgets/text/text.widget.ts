@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
@@ -48,7 +48,7 @@ import { FIELD_STATUS_TEMPLATE } from '../core/field-status-template.directive';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, InputMaskDirective, NgTemplateOutlet, IconModule, MatIconModule],
+    imports: [TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, InputMaskDirective, NgTemplateOutlet, IconModule, MatIconModule],
     encapsulation: ViewEncapsulation.None
 })
 export class TextWidgetComponent extends FormattableTextWidgetComponent {

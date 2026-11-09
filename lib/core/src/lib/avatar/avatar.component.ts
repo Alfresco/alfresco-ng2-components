@@ -16,11 +16,10 @@
  */
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-avatar',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './avatar.component.html',
     styleUrls: ['./avatar.component.scss'],
     encapsulation: ViewEncapsulation.None
