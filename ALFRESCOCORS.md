@@ -149,7 +149,7 @@ See the [Alfresco community page](https://community.alfresco.com/community/appli
 If you want to completely enable CORS calls in your Content Services and Process Services,
 please refer to the following Alfresco documents:
 
-* [Enable Cross Origin Resource Sharing (CORS) in Alfresco Process Services](https://support.hyland.com/r/Alfresco/Alfresco-Process-Services/24.4/Alfresco-Process-Services/Configure/Overview/CORS)
+* [Enable Cross Origin Resource Sharing (CORS) in Alfresco Process Services](https://docs.hyland.com/r/Alfresco/Alfresco-Process-Services/24.4/Alfresco-Process-Services/Configure/Overview/CORS)
 
 * Enable Cross Origin Resource Sharing (CORS) in Alfresco Content Services 
 

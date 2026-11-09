@@ -202,7 +202,7 @@ The viewer component consists of separate Views that handle particular file type
 
 For those extensions and mime types that cannot be natively displayed in the browser, the Viewer will try to fetch the corresponding rendition using the [renditions service api](../services/renditions.service.md).
 
-For the full list of supported types please refer to: [File types that support preview and thumbnail generation](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.3/Alfresco-Content-Services/Administer/Transformation/File-types-that-support-preview-and-thumbnail-generation).
+For the full list of supported types please refer to: [File types that support preview and thumbnail generation](https://docs.hyland.com/r/Alfresco/Alfresco-Content-Services/23.3/Alfresco-Content-Services/Administer/Transformation/File-types-that-support-preview-and-thumbnail-generation).
 
 ### Configuring PDF.js library
 
