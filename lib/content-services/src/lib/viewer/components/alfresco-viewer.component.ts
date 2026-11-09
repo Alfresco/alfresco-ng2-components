@@ -60,7 +60,8 @@ import {
 } from '@alfresco/js-api';
 import { RenditionService } from '../../common/services/rendition.service';
 import { MatDialog } from '@angular/material/dialog';
-import { filter } from 'rxjs/operators';
+import { firstValueFrom } from 'rxjs';
+import { filter, map, shareReplay } from 'rxjs/operators';
 import { ContentService } from '../../common/services/content.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
@@ -278,6 +279,10 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     declare readonly contentApi: ContentApi;
 
     private readonly destroyRef = inject(DestroyRef);
+    private readonly adminUser$ = this.peopleContentService.getCurrentPerson().pipe(
+        map((user) => user.capabilities.isAdmin),
+        shareReplay(1)
+    );
 
     constructor() {
         const renditionService = this.renditionService;
@@ -342,8 +347,12 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
 
     private async setupNode() {
         try {
-            this.nodeEntry = await this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations', 'path'] });
-            this.prepareNodePath(this.nodeEntry.entry);
+            const [nodeEntry, adminUser] = await Promise.all([
+                this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations', 'path'] }),
+                firstValueFrom(this.adminUser$)
+            ]);
+            this.nodeEntry = nodeEntry;
+            this.prepareNodePath(this.nodeEntry.entry, adminUser);
             if (this.versionId) {
                 this.versionEntry = await this.versionsApi.getVersion(this.nodeId, this.versionId);
                 await this.setUpNodeFile(this.nodeEntry.entry, this.versionEntry.entry);
@@ -356,12 +365,12 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
         }
     }
 
-    private async prepareNodePath(node: Node) {
+    private prepareNodePath(node: Node, adminUser = false) {
         if (node?.path?.elements) {
             const elements = node.path.elements;
             if (elements.length > 1) {
                 if (elements[1].name === 'User Homes') {
-                    if (!this.peopleContentService.isCurrentUserAdmin()) {
+                    if (!adminUser) {
                         elements.splice(0, 2);
                     }
                 } else if (elements[1].nodeType === 'st:sites') {

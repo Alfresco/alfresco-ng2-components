@@ -123,7 +123,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
             };
         });
     });
-    protected readonly parentsCounter = computed(() => this.nodesWithState().filter((node) => !node.current && !node.libraryContainer).length);
+    protected readonly parentsCounter = computed(() => this.nodesWithState().length - 2);
     protected readonly suppressHoverOpen = signal(false);
 
     private removeOutsideClickListener: () => void;
