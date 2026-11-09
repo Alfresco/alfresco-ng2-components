@@ -1,26 +1,44 @@
-<div [ngSwitch]="data.taskType">
-    <div *ngSwitchCase="'mail'">
+<div>
+  @switch (data.taskType) {
+    @case ('mail') {
+      <div>
         <diagram-send-task [data]="data" />
-    </div>
-    <div *ngSwitchCase="'camel'">
+      </div>
+    }
+    @case ('camel') {
+      <div>
         <diagram-camel-task [data]="data" />
-    </div>
-    <div *ngSwitchCase="'mule'">
+      </div>
+    }
+    @case ('mule') {
+      <div>
         <diagram-mule-task [data]="data" />
-    </div>
-    <div *ngSwitchCase="'alfresco_publish'">
+      </div>
+    }
+    @case ('alfresco_publish') {
+      <div>
         <adf-diagram-publish-task [data]="data" />
-    </div>
-    <div *ngSwitchCase="'rest_call'">
+      </div>
+    }
+    @case ('rest_call') {
+      <div>
         <diagram-rest-call-task [data]="data" />
-    </div>
-    <div *ngSwitchCase="'google_drive_publish'">
+      </div>
+    }
+    @case ('google_drive_publish') {
+      <div>
         <diagram-google-drive-publish-task [data]="data" />
-    </div>
-    <div *ngSwitchCase="'box_publish'">
+      </div>
+    }
+    @case ('box_publish') {
+      <div>
         <diagram-box-publish-task [data]="data" />
-    </div>
-    <div *ngSwitchDefault>
+      </div>
+    }
+    @default {
+      <div>
         <diagram-service-task [data]="data" />
-    </div>
+      </div>
+    }
+  }
 </div>

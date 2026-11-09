@@ -18,13 +18,13 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
+
 import { DiagramPoolComponent } from './diagram-pool.component';
 import { DiagramLanesComponent } from './diagram-lanes.component';
 
 @Component({
     selector: 'diagram-pools',
-    imports: [NgIf, NgForOf, DiagramPoolComponent, DiagramLanesComponent],
+    imports: [DiagramPoolComponent, DiagramLanesComponent],
     templateUrl: './diagram-pools.component.html'
 })
 export class DiagramPoolsComponent {

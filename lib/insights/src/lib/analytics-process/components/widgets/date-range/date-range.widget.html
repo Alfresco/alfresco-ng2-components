@@ -1,50 +1,54 @@
 <label for="adf-dateRange">{{field.nameKey | translate}}</label><br />
 <div id="adf-dateRange" [formGroup]="dateRange">
-    <small *ngIf="isStartDateGreaterThanEndDate()" class="adf-date-range-analytics-text-danger">
-        {{'DATE-WIDGET.MESSAGES.START-LESS-THAN-END-DATE' | translate}}
+  @if (isStartDateGreaterThanEndDate()) {
+    <small class="adf-date-range-analytics-text-danger">
+      {{'DATE-WIDGET.MESSAGES.START-LESS-THAN-END-DATE' | translate}}
     </small>
-    <small *ngIf="isStartDateEmpty()" class="adf-date-range-analytics-text-danger">
-        {{'DATE-WIDGET.MESSAGES.START-DATE-REQUIRED' | translate}}
+  }
+  @if (isStartDateEmpty()) {
+    <small class="adf-date-range-analytics-text-danger">
+      {{'DATE-WIDGET.MESSAGES.START-DATE-REQUIRED' | translate}}
     </small>
+  }
 
-    <mat-grid-list cols="2" rowHeight="80px">
-        <mat-grid-tile>
-            <mat-form-field>
-                <input
-                    matInput
-                    [min]="minDate"
-                    [max]="maxDate"
-                    formControlName="startDate"
-                    [matDatepicker]="startDate"
-                    [value]="startDateValue"
-                    (keydown)="true"
-                    (dateChange)="onGroupValueChanged()"
-                    placeholder="{{'DATE-WIDGET.START-DATE' | translate}}"
-                    id="startDate_id"
-                    required
-                />
-                <mat-datepicker-toggle matSuffix [for]="startDate" />
-            </mat-form-field>
-            <mat-datepicker #startDate [touchUi]="true" />
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <mat-form-field>
-                <input
-                    matInput
-                    [min]="minDate"
-                    [max]="maxDate"
-                    formControlName="endDate"
-                    [matDatepicker]="endDate"
-                    [value]="endDateValue"
-                    (keydown)="true"
-                    (dateChange)="onGroupValueChanged()"
-                    placeholder="{{'DATE-WIDGET.END-DATE' | translate}}"
-                    id="endDate_id"
-                    required
-                />
-                <mat-datepicker-toggle matSuffix [for]="endDate" />
-            </mat-form-field>
-            <mat-datepicker #endDate [touchUi]="true" />
-        </mat-grid-tile>
-    </mat-grid-list>
+  <mat-grid-list cols="2" rowHeight="80px">
+    <mat-grid-tile>
+      <mat-form-field>
+        <input
+          matInput
+          [min]="minDate"
+          [max]="maxDate"
+          formControlName="startDate"
+          [matDatepicker]="startDate"
+          [value]="startDateValue"
+          (keydown)="true"
+          (dateChange)="onGroupValueChanged()"
+          placeholder="{{'DATE-WIDGET.START-DATE' | translate}}"
+          id="startDate_id"
+          required
+          />
+        <mat-datepicker-toggle matSuffix [for]="startDate" />
+      </mat-form-field>
+      <mat-datepicker #startDate [touchUi]="true" />
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field>
+        <input
+          matInput
+          [min]="minDate"
+          [max]="maxDate"
+          formControlName="endDate"
+          [matDatepicker]="endDate"
+          [value]="endDateValue"
+          (keydown)="true"
+          (dateChange)="onGroupValueChanged()"
+          placeholder="{{'DATE-WIDGET.END-DATE' | translate}}"
+          id="endDate_id"
+          required
+          />
+        <mat-datepicker-toggle matSuffix [for]="endDate" />
+      </mat-form-field>
+      <mat-datepicker #endDate [touchUi]="true" />
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>
