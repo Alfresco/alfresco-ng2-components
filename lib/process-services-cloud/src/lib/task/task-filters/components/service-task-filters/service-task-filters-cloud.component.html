@@ -1,6 +1,6 @@
 @if (filters$ | async; as filterList) {
   <mat-action-list class="adf-task-filters">
-    @for (filter of filterList; track filter.id) {
+    @for (filter of filterList; track filter) {
       <button
         mat-list-item
         (click)="onFilterClick(filter)"
