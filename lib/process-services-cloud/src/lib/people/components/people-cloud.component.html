@@ -52,7 +52,7 @@
       [displayWith]="getDisplayName"
       >
       @if ((searchUsers$ | async)?.length) {
-        @for (user of searchUsers$ | async; track user.id; let i = $index) {
+        @for (user of searchUsers$ | async; track user; let i = $index) {
           <mat-option [value]="user" class="adf-people-cloud-option-active">
             <div class="adf-people-cloud-row" id="adf-people-cloud-user-{{ user.username }}" data-automation-id="adf-people-cloud-row">
               <div [outerHTML]="user | usernameInitials: 'adf-people-cloud-pic'"></div>

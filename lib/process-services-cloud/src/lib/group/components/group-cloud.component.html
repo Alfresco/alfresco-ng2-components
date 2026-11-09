@@ -44,7 +44,7 @@
         data-automation-id="adf-cloud-group-autocomplete"
         >
         @if ((searchGroups$ | async)?.length) {
-          @for (group of searchGroups$ | async; track group.id; let i = $index) {
+          @for (group of searchGroups$ | async; track group; let i = $index) {
             <mat-option
               [value]="group"
               [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name"
