@@ -19,12 +19,13 @@ import { formatDate } from '@angular/common';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { VersionListComponent, VersionListDataSource } from './version-list.component';
 import { MatDialog } from '@angular/material/dialog';
-import { of } from 'rxjs';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { of, Subject } from 'rxjs';
 import { Node, NodeEntry, VersionEntry, Version, UserInfo } from '@alfresco/js-api';
 import { ContentVersionService } from './content-version.service';
 import { take } from 'rxjs/operators';
 import { CdkFixedSizeVirtualScroll } from '@angular/cdk/scrolling';
-import { NoopAuthModule, UnitTestingUtils } from '@alfresco/adf-core';
+import { ConfirmDialogComponent, NoopAuthModule, UnitTestingUtils } from '@alfresco/adf-core';
 import { provideApiTesting } from '../testing/providers';
 import { DebugElement } from '@angular/core';
 
@@ -123,6 +124,34 @@ describe('VersionListComponent', () => {
 
         expect(dialog.open).toHaveBeenCalled();
         expect(component.versionsApi.deleteVersion).not.toHaveBeenCalled();
+    });
+
+    it('should open the delete confirmation dialog only after the version actions menu is closed', () => {
+        spyOn(dialog, 'open').and.returnValue({
+            afterClosed: () => of(false)
+        } as any);
+        const menuClosed = new Subject<void>();
+        const menuTrigger = { menuOpen: true, menuClosed } as unknown as MatMenuTrigger;
+
+        fixture.detectChanges();
+        component.deleteVersion(versionId, menuTrigger);
+
+        expect(dialog.open).not.toHaveBeenCalled();
+
+        menuClosed.next();
+
+        expect(dialog.open).toHaveBeenCalled();
+    });
+
+    it('should restore focus when the delete confirmation dialog is closed', () => {
+        spyOn(dialog, 'open').and.returnValue({
+            afterClosed: () => of(false)
+        } as any);
+
+        fixture.detectChanges();
+        component.deleteVersion(versionId);
+
+        expect(dialog.open).toHaveBeenCalledWith(ConfirmDialogComponent, jasmine.objectContaining({ restoreFocus: true }));
     });
 
     it('should reload and raise deleted event', (done) => {
@@ -413,6 +442,23 @@ describe('VersionListComponent', () => {
                 component.allowVersionDelete = false;
                 fixture.detectChanges();
                 testDeleteButtonVisibility(done, false);
+            });
+
+            it('should open the delete confirmation dialog once the actions menu has returned focus to its trigger', async () => {
+                let focusedElementOnDialogOpen: Element;
+                spyOn(dialog, 'open').and.callFake(() => {
+                    focusedElementOnDialogOpen = document.activeElement;
+                    return { afterClosed: () => of(false) } as any;
+                });
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const actionMenuButton = getActionMenuButton('1.1');
+                actionMenuButton.click();
+                getDeleteButton().nativeElement.click();
+
+                expect(dialog.open).toHaveBeenCalled();
+                expect(focusedElementOnDialogOpen).toBe(actionMenuButton);
             });
         });
     });
