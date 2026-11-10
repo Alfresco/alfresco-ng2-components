@@ -36,7 +36,7 @@ export abstract class SignalFormWidget<TValue extends FieldValue = FieldValue> {
     protected readonly readOnly = computed(() => this.field()().readonly());
     protected readonly leftLabel = computed(() => this.form().definition.leftLabels);
     protected readonly fieldRequired = computed(() => this.field()().required());
-    protected readonly showsFloatingLabel = computed(() => !this.leftLabel() && (!!this.definition().name || this.definition().required));
+    protected readonly showsFloatingLabel = computed(() => !this.leftLabel() && (!!this.definition().name || this.fieldRequired()));
 
     protected readonly showError = computed(() => {
         const state = this.field()();

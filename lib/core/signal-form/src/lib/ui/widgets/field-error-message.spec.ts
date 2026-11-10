@@ -16,7 +16,7 @@
  */
 
 import type { FieldDefinition } from '../../definition/form-definition.interface';
-import { fieldErrorMessage } from './field-error-message';
+import { fieldErrorMessage, maxLengthMessage } from './field-error-message';
 
 describe('fieldErrorMessage', () => {
     const field = (patch: Partial<FieldDefinition>) => ({ id: 'field', type: 'text', maxLength: 0, minLength: 0, ...patch }) as FieldDefinition;
@@ -25,6 +25,10 @@ describe('fieldErrorMessage', () => {
         expect(fieldErrorMessage('maxLength', field({})).params).toEqual({ maxLength: (1024).toLocaleString() });
         expect(fieldErrorMessage('maxLength', field({ maxLength: 20 })).params).toEqual({ maxLength: '20' });
         expect(fieldErrorMessage('maxLength', field({ type: 'integer' })).params).toEqual({ maxLength: '10' });
+    });
+
+    it('should show a given length limit, locale formatted', () => {
+        expect(maxLengthMessage(5000)).toEqual({ key: 'FORM.FIELD.VALIDATOR.NO_LONGER_THAN', params: { maxLength: (5000).toLocaleString() } });
     });
 
     it('should locale format numeric limits', () => {
