@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CommonModule, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Observable, Observer } from 'rxjs';
@@ -33,7 +33,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-process-instance-tasks',
-    imports: [CommonModule, MatButtonModule, TranslatePipe, MatChipsModule, MatListModule, MatIconModule, MatDialogModule, StartFormComponent],
+    imports: [MatButtonModule, TranslatePipe, MatChipsModule, MatListModule, MatIconModule, MatDialogModule, StartFormComponent],
     templateUrl: './process-instance-tasks.component.html',
     styleUrls: ['./process-instance-tasks.component.css']
 })

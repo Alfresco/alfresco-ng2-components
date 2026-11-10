@@ -184,12 +184,13 @@ The Process Instance List also supports pagination:
     [size]="size"
     #processList>
 </adf-process-instance-list>
-<adf-pagination
-    *ngIf="processList"
-    [target]="processList"
-    [supportedPageSizes]="supportedPages"
-    #processListPagination>
-</adf-pagination>
+@if (processList) {
+    <adf-pagination
+        [target]="processList"
+        [supportedPageSizes]="supportedPages"
+        #processListPagination>
+    </adf-pagination>
+}
 ```
 
 #### showRowContextMenu event

@@ -23,14 +23,14 @@ import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
 import { isValid } from 'date-fns';
-import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'adf-date-editor',
-    imports: [CommonModule, MatFormFieldModule, MatDatepickerModule, MatInputModule, FormsModule],
+    imports: [MatFormFieldModule, MatDatepickerModule, MatInputModule, FormsModule],
     templateUrl: './date.editor.html',
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },

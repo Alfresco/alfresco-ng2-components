@@ -1,14 +1,16 @@
-<div class="adf-search-text-header" *ngIf="headerTitle">
+@if (headerTitle) {
+  <div class="adf-search-text-header">
     {{headerTitle | translate}}
-</div>
+  </div>
+}
 
 <adf-people-search-field [performSearch]="performSearch" (rowClick)="onRowClick($event)" />
 
 <div class="search-list-action-container">
-    <button mat-button type="button" id="close-people-search" (click)="closeSearchList()">
-        {{'ADF_TASK_LIST.PEOPLE.DIALOG_CLOSE' | translate }}
-    </button>
-    <button mat-button type="button" id="add-people" (click)="involveUserAndClose()">
-        {{actionLabel | translate}}
-    </button>
+  <button mat-button type="button" id="close-people-search" (click)="closeSearchList()">
+    {{'ADF_TASK_LIST.PEOPLE.DIALOG_CLOSE' | translate }}
+  </button>
+  <button mat-button type="button" id="add-people" (click)="involveUserAndClose()">
+    {{actionLabel | translate}}
+  </button>
 </div>

@@ -17,12 +17,12 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { WidgetComponent } from '@alfresco/adf-core';
-import { CommonModule } from '@angular/common';
+
 import { ContentWidgetComponent } from './content.widget';
 
 @Component({
     selector: 'adf-form-document-widget',
-    imports: [CommonModule, ContentWidgetComponent],
+    imports: [ContentWidgetComponent],
     templateUrl: './document.widget.html',
     host: {
         '(click)': 'event($event)',

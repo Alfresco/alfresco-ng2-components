@@ -48,7 +48,7 @@ import { catchError, share } from 'rxjs/operators';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation, TaskQueryRepresentation, TaskRepresentation } from '@alfresco/js-api';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { AttachFormComponent } from '../attach-form/attach-form.component';
 import { PeopleComponent, PeopleSearchComponent } from '../../../people';
@@ -57,13 +57,13 @@ import { TaskCommentsComponent, TaskCommentsService } from '../../../task-commen
 import { ChecklistComponent } from '../checklist/checklist.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { NgTemplateOutlet } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /** @deprecated no longer used anywhere, and can be safely removed */
 @Component({
     selector: 'adf-task-details',
     imports: [
-        CommonModule,
         TranslatePipe,
         TaskFormComponent,
         AttachFormComponent,
@@ -76,7 +76,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         MatButtonModule,
         InfoDrawerTabComponent,
         InfoDrawerComponent,
-        MatCardModule
+        MatCardModule,
+        NgTemplateOutlet
     ],
     providers: [
         {

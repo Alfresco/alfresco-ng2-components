@@ -24,7 +24,7 @@ import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@an
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -33,7 +33,7 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'typeahead-widget',
-    imports: [CommonModule, TranslatePipe, MatFormFieldModule, FormsModule, MatAutocompleteModule, MatInputModule, MatIconModule],
+    imports: [TranslatePipe, MatFormFieldModule, FormsModule, MatAutocompleteModule, MatInputModule, MatIconModule],
     templateUrl: './typeahead.widget.html',
     styleUrls: ['./typeahead.widget.scss'],
     host: {

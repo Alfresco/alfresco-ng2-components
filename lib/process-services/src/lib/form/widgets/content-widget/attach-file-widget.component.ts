@@ -26,7 +26,7 @@ import { mergeMap } from 'rxjs/operators';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { UploadWidgetComponent } from '../upload/upload.widget';
 import { ActivitiContentService } from '../../services/activiti-alfresco.service';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,7 +37,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'attach-widget',
-    imports: [CommonModule, TranslatePipe, MatIconModule, MatButtonModule, MatMenuModule, MatListModule, ErrorWidgetComponent, AlfrescoIconComponent],
+    imports: [TranslatePipe, MatIconModule, MatButtonModule, MatMenuModule, MatListModule, ErrorWidgetComponent, AlfrescoIconComponent],
     templateUrl: './attach-file-widget.component.html',
     styleUrls: ['./attach-file-widget.component.scss'],
     encapsulation: ViewEncapsulation.None

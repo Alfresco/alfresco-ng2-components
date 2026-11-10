@@ -1,17 +1,19 @@
 <div>
-    <mat-form-field class="adf-date-editor">
-        <mat-label>{{ column.name }} ({{ DATE_FORMAT }})</mat-label>
-        <input matInput
-            id="dateInput"
-            type="text"
-            [matDatepicker]="datePicker"
-            [(ngModel)]="value"
-            [id]="column.id"
-            [required]="column.required"
-            [disabled]="!column.editable"
-            (focusout)="onDateChanged($any($event).target.value)"
-            (dateChange)="onDateChanged($event)">
-        <mat-datepicker-toggle  *ngIf="column.editable" matSuffix [for]="datePicker" class="adf-date-editor-button" />
-    </mat-form-field>
-    <mat-datepicker #datePicker [touchUi]="true" />
+  <mat-form-field class="adf-date-editor">
+    <mat-label>{{ column.name }} ({{ DATE_FORMAT }})</mat-label>
+    <input matInput
+      id="dateInput"
+      type="text"
+      [matDatepicker]="datePicker"
+      [(ngModel)]="value"
+      [id]="column.id"
+      [required]="column.required"
+      [disabled]="!column.editable"
+      (focusout)="onDateChanged($any($event).target.value)"
+      (dateChange)="onDateChanged($event)">
+    @if (column.editable) {
+      <mat-datepicker-toggle  matSuffix [for]="datePicker" class="adf-date-editor-button" />
+    }
+  </mat-form-field>
+  <mat-datepicker #datePicker [touchUi]="true" />
 </div>

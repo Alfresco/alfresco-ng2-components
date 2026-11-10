@@ -18,14 +18,14 @@
 import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessContentService } from '../../form/services/process-content.service';
 import { RelatedContentRepresentation } from '@alfresco/js-api';
-import { CommonModule } from '@angular/common';
+
 import { UploadDirective } from '@alfresco/adf-core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-create-process-attachment',
-    imports: [CommonModule, UploadDirective, MatButtonModule, MatIconModule],
+    imports: [UploadDirective, MatButtonModule, MatIconModule],
     styleUrls: ['./create-process-attachment.component.css'],
     templateUrl: './create-process-attachment.component.html'
 })

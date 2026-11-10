@@ -28,14 +28,14 @@ import {
 } from '@alfresco/adf-content-services';
 import { ExternalAlfrescoApiService } from '../../services/external-alfresco-api.service';
 import { Node } from '@alfresco/js-api';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-attach-file-widget-dialog',
-    imports: [CommonModule, MatDialogModule, LoginDialogPanelComponent, MatButtonModule, TranslatePipe, ContentNodeSelectorPanelComponent],
+    imports: [MatDialogModule, LoginDialogPanelComponent, MatButtonModule, TranslatePipe, ContentNodeSelectorPanelComponent],
     templateUrl: './attach-file-widget-dialog.component.html',
     styleUrls: ['./attach-file-widget-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None,
