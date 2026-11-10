@@ -28,6 +28,7 @@ Displays breadcrumb as menu to allow see whole path.
 |-----------|---------------------------------------------------|---------------|---------------------------------------------------------------|
 | nodes     | [`PathElementWithState[]`](#PathElementWithState) | `[]`          | The nodes to display in the breadcrumb.                       |
 | fullWidth | `boolean`                                         | `false`       | If true, the breadcrumb menu will be displayed in full width. |
+| disableCurrentLocation | `boolean`                                         | `true`       | If true, the current location will be disabled in the breadcrumb. |
 
 ### Events
 

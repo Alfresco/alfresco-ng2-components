@@ -90,15 +90,15 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @ViewChild('dropdown')
     dropdown: MatSelect;
 
-    /** Maximum number of nodes to display before wrapping them with a dropdown element.  */
+    /** Maximum number of nodes to display before wrapping them with a dropdown element. */
     @Input()
     maxItems: number;
 
-    /** Number of table rows that are currently selected.  */
+    /** Number of table rows that are currently selected. */
     @Input()
     selectedRowItemsCount = 0;
 
-    /** If true, the breadcrumb will be displayed in compact mode.  */
+    /** If true, the breadcrumb will be displayed in compact mode. */
     @Input()
     compactMode = false;
 
@@ -106,6 +106,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @Input()
     connectedDropListSelector = '';
 
+    /** If true, the current location will be hidden from the breadcrumb. */
     @Input()
     hideCurrentLocation = false;
 

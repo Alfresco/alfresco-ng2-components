@@ -89,6 +89,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     readonly nodes = input.required<PathElement[]>();
     /** If true, the breadcrumb menu will be displayed in full width. */
     readonly fullWidth = input(false);
+    /** If true, the current location will be disabled in the breadcrumb. */
     readonly disableCurrentLocation = input(true);
 
     /** Emitted when dragged item is dropped onto the breadcrumb. Emits drag and drop event. */

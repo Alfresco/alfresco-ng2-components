@@ -222,9 +222,15 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     @Input()
     showToolbarDividers = true;
 
+    /** If true breadcrumbs will be displayed in the viewer. */
     @Input()
     showBreadcrumbs = false;
 
+    /**
+     * Name of the root element of the breadcrumb. You can use
+     * this property to rename "Company Home" to "Personal Files" for
+     * example. You can use an i18n resource key for the property value.
+     */
     @Input()
     breadcrumbsRoot?: string;
 
@@ -244,6 +250,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     @Output()
     showViewerChange = new EventEmitter<boolean>();
 
+    /** Emitted when the user clicks on a breadcrumb. */
     @Output()
     breadcrumbNavigate = new EventEmitter<PathElement>();
 
