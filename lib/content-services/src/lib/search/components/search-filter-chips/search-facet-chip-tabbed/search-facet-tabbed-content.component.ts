@@ -23,7 +23,7 @@ import { TranslationService } from '@alfresco/adf-core';
 import { AutocompleteOption } from '../../../models/autocomplete-option.interface';
 import { TabbedFacetField } from '../../../models/tabbed-facet-field.interface';
 import { SearchFacetFiltersService } from '../../../services/search-facet-filters.service';
-import { CommonModule } from '@angular/common';
+
 import { SearchChipAutocompleteInputComponent } from '../../search-chip-autocomplete-input';
 import { SearchFilterTabbedComponent } from '../../search-filter-tabbed/search-filter-tabbed.component';
 import { SearchFilterTabDirective } from '../../search-filter-tabbed';
@@ -31,7 +31,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-facet-tabbed-content',
-    imports: [CommonModule, SearchChipAutocompleteInputComponent, SearchFilterTabbedComponent, SearchFilterTabDirective],
+    imports: [SearchChipAutocompleteInputComponent, SearchFilterTabbedComponent, SearchFilterTabDirective],
     templateUrl: './search-facet-tabbed-content.component.html',
     encapsulation: ViewEncapsulation.None
 })

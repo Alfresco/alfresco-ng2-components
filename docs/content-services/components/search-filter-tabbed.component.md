@@ -16,9 +16,9 @@ Represents a container for [Search Filters](search-filter.component.md) to provi
 ```html
 
 <adf-search-filter-tabbed>
-    <ng-container *ngFor="let field of fields">
+    @for (field of fields; track field.id) {
         <my-search-filter *adf-search-filter-tab="MyTabLabel"></my-search-filter>
-    </ng-container>
+    }
 </adf-search-filter-tabbed>
 ```
 

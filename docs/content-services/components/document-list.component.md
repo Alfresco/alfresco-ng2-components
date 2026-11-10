@@ -175,14 +175,15 @@ Below is a basic example of handling DOM events in the parent elements.
 
 ### Conditional visibility
 
-You can use `ngIf` directives to provide conditional visibility support for the columns:
+You can use `@if` blocks to provide conditional visibility support for the columns:
 
 ```html
-<data-column
-    *nfIg="showNameColumn"
-    key="name"
-    title="MY.RESOURCE.KEY">
-</data-column>
+@if (showNameColumn) {
+    <data-column
+        key="name"
+        title="MY.RESOURCE.KEY">
+    </data-column>
+}
 ```
 
 ### Pagination strategy
