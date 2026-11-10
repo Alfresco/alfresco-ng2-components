@@ -5,6 +5,8 @@ REMEMBER FOR SUPPORT REQUESTS YOU CAN ALSO ASK ON OUR GITTER CHAT:
 Please ask before on our gitter channel https://gitter.im/Alfresco/alfresco-ng2-components
 -->
 
+> **Note:** `@alfresco/adf-process-services-cloud` is in maintenance mode: only critical bugs will be addressed and no new features will be added.
+
 **Type of issue:**  (check with "[x]")
 
 > - [ ] New feature request

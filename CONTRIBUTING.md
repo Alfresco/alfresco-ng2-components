@@ -6,6 +6,9 @@
 
 ## Submitting a Pull Request (PR)
 
+> **Maintenance mode:** `@alfresco/adf-process-services-cloud` (`lib/process-services-cloud`) is in maintenance mode.
+> Only critical bug fixes are accepted for it; new features and enhancements will not be merged.
+
 Before you submit a pull request please follow the steps below: 
 
 * Search in  [GitHub PR](https://github.com/Alfresco/alfresco-ng2-components/pulls) for an open or closed PR

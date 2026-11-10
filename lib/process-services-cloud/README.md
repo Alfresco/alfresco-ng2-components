@@ -1,5 +1,11 @@
 # Alfresco Process Services Cloud Library
 
+> ⚠️ **Maintenance mode**
+>
+> `@alfresco/adf-process-services-cloud` is in maintenance mode. Development of this library has
+> moved out of this repository. Only critical bug fixes will be merged here: no new features or
+> enhancements will be added.
+
 Contains a variety of components, directives and services used throughout ADF
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
