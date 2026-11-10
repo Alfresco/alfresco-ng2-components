@@ -3,24 +3,19 @@
 </h2>
 
 <mat-dialog-content>
-  <br />
-  <form [formGroup]="form" (submit)="submit()">
+  <form class="adf-node-lock-form" [formGroup]="form" (submit)="submit()">
     <mat-checkbox  data-automation-id="adf-lock-node-checkbox" class="adf-lock-file-name" [title]="nodeName" [formControlName]="'isLocked'" ngDefaultControl>
       {{ 'CORE.FILE_DIALOG.FILE_LOCK_CHECKBOX' | translate }} <strong>"{{ nodeName }}"</strong>
     </mat-checkbox>
-
-    <br />
 
     @if (form.value?.isLocked) {
       <div>
         <mat-checkbox class="adf-lock-file-name" [formControlName]="'allowOwner'" ngDefaultControl>
           {{ 'CORE.FILE_DIALOG.ALLOW_OTHERS_CHECKBOX' | translate }}
         </mat-checkbox>
-        <br />
         <mat-checkbox class="adf-lock-file-name" [formControlName]="'isTimeLock'" ngDefaultControl>
           {{ 'CORE.FILE_DIALOG.TIME_LOCK_CHECKBOX' | translate }}
         </mat-checkbox>
-        <br />
         @if (form.value?.isTimeLock) {
           <mat-form-field>
             <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix />
@@ -31,7 +26,6 @@
       </div>
     }
   </form>
-  <br />
 </mat-dialog-content>
 
 <mat-dialog-actions class="adf-dialog-buttons">

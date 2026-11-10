@@ -1,5 +1,5 @@
 <mat-chip-set [attr.aria-label]="'SEARCH.FILTER.ARIA-LABEL.SEARCH_FILTER' | translate">
-  @for (category of categories; track category) {
+  @for (category of categories; track category.id) {
     <adf-search-widget-chip [category]="category" />
   }
 
@@ -10,7 +10,7 @@
   }
 
   @if (showContextFacets && responseFacets) {
-    @for (field of responseFacets; track field) {
+    @for (field of responseFacets; track field.label) {
       <adf-search-facet-chip [field]="field" [attr.data-automation-id]="'search-fact-chip-' + field.field" />
     }
   }

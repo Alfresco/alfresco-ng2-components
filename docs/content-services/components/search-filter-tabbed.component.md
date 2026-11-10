@@ -16,7 +16,7 @@ Represents a container for [Search Filters](search-filter.component.md) to provi
 ```html
 
 <adf-search-filter-tabbed>
-    @for (field of fields; track field) {
+    @for (field of fields; track field.id) {
         <my-search-filter *adf-search-filter-tab="MyTabLabel"></my-search-filter>
     }
 </adf-search-filter-tabbed>

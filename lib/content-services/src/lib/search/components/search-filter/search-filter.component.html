@@ -8,7 +8,7 @@
       {{ 'SEARCH.FILTER.BUTTONS.RESET-ALL.LABEL' | translate }}
     </button>
   }
-  @for (category of queryBuilder.categories; track category) {
+  @for (category of queryBuilder.categories; track category.id) {
     <mat-expansion-panel
       [attr.data-automation-id]="'expansion-panel-'+category.name"
       [(expanded)]="category.expanded">
@@ -33,7 +33,7 @@
   }
 
   @if (facetFiltersService.responseFacets && showContextFacets) {
-    @for (field of facetFiltersService.responseFacets; track field) {
+    @for (field of facetFiltersService.responseFacets; track field.label) {
       <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+field.label"
         [expanded]="shouldExpand(field)">
         <mat-expansion-panel-header>

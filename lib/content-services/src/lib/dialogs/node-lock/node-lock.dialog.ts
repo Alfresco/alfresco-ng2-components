@@ -42,6 +42,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
         MatButtonModule
     ],
     templateUrl: './node-lock.dialog.html',
+    styleUrls: ['./node-lock.dialog.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class NodeLockDialogComponent implements OnInit {

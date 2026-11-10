@@ -1,5 +1,5 @@
 <mat-chip-listbox class="adf-tag-chips-list">
-  @for (currentEntry of tagsEntries; track currentEntry; let idx = $index) {
+  @for (currentEntry of tagsEntries; track currentEntry.entry.id; let idx = $index) {
     <div class="adf-list-tag">
       <mat-chip-option class="adf-tag-list-chip">
         <span id="tag_name_{{idx}}">{{currentEntry.entry.tag}}</span>

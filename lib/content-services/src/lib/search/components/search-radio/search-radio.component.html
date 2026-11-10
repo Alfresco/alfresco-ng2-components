@@ -2,7 +2,7 @@
   class="adf-search-radio-group"
   [(ngModel)]="value"
   (change)="changeHandler($event)">
-  @for (option of options; track option) {
+  @for (option of options; track option.value) {
     <mat-radio-button [attr.data-automation-id]="'search-radio-'+(option.name | translate)"
       [value]="option.value"
       class="adf-facet-filter">

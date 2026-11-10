@@ -1,5 +1,5 @@
 <fieldset class="adf-search-checklist">
-  @for (option of options; track option) {
+  @for (option of options; track option.value) {
     <mat-checkbox
       [checked]="option.checked"
       (keydown.enter)="option.checked = !option.checked"

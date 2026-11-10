@@ -202,7 +202,7 @@
     </mat-expansion-panel>
   }
 
-  @for (customPanel of customPanels; track customPanel) {
+  @for (customPanel of customPanels; track customPanel.panelTitle) {
     <mat-expansion-panel
       [expanded]="currentPanel.panelTitle === customPanel.panelTitle && currentPanel.expanded"
       (opened)="expandPanel(customPanel.panelTitle)"
@@ -223,7 +223,7 @@
   }
 
   @if (groupedProperties$ | async; as groupedProperties) {
-    @for (group of groupedProperties; track group; let first = $first) {
+    @for (group of groupedProperties; track group.title; let first = $first) {
       <div class="adf-metadata-grouped-properties-container">
         <mat-expansion-panel
           [attr.data-automation-id]="'adf-metadata-group-' + group.title"

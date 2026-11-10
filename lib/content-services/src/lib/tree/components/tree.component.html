@@ -115,7 +115,7 @@
             <mat-icon adf-icon="more_vert" />
           </button>
           <mat-menu #menu="matMenu">
-            @for (option of contextMenuOptions; track $index) {
+            @for (option of contextMenuOptions; track option.title) {
               <button
                 mat-menu-item
                 [title]="option.title | translate"

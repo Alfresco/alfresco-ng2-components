@@ -26,12 +26,13 @@ import { CommonModule } from '@angular/common';
     selector: 'adf-user-name-column',
     imports: [CommonModule],
     template: `
-        <div class="adf-ellipsis-cell" [attr.data-automation-id]="displayText$ | async">
-            <span class="adf-user-name-column" title="{{ displayText$ | async }}"> {{ displayText$ | async }}</span>
-            <br />
-            @if (subTitleText$ | async) {
-                <span class="adf-user-email-column" title="{{ subTitleText$ | async }}">
-                    {{ subTitleText$ | async }}
+        @let displayText = displayText$ | async;
+        @let subTitleText = subTitleText$ | async;
+        <div class="adf-ellipsis-cell" [attr.data-automation-id]="displayText">
+            <span class="adf-user-name-column" title="{{ displayText }}"> {{ displayText }}</span>
+            @if (subTitleText) {
+                <span class="adf-user-email-column" title="{{ subTitleText }}">
+                    {{ subTitleText }}
                 </span>
             }
         </div>

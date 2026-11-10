@@ -21,7 +21,7 @@
   </mat-form-field>
 
   <div class="adf-checklist">
-    @for (bucket of field.buckets; track bucket) {
+    @for (bucket of field.buckets; track bucket.label) {
       <mat-checkbox
         [checked]="bucket.checked"
         [attr.data-automation-id]="'checkbox-' + field.label + '-' + (bucket.display || bucket.label)"

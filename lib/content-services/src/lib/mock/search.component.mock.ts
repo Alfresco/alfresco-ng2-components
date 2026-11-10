@@ -89,7 +89,7 @@ export const noResult = {
         >
             <ng-template let-data>
                 <ul id="autocomplete-search-result-list">
-                    @for (item of data?.list?.entries; track item; let idx = $index) {
+                    @for (item of data?.list?.entries; track item.entry.id; let idx = $index) {
                         <li (click)="elementClicked()" tabindex="0" role="button" (keyup.enter)="elementClicked()">
                             <div id="result_option_{{ idx }}">
                                 <span>{{ item?.entry.name }}</span>
