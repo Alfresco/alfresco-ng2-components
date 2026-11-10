@@ -25,7 +25,7 @@ import { AuthGuard } from './auth-guard';
 import { AuthGuardService } from './auth-guard.service';
 
 const ACCESS_TOKEN_KEY = 'access_token';
-const PREFIXED_ACCESS_TOKEN_KEY = 'HXP_MODELING_access_token';
+const PREFIXED_ACCESS_TOKEN_KEY = 'SOME_APP_access_token';
 const CURRENT_ROUTE = '/current-route';
 
 const buildToken = (payload: object): string => `header.${btoa(JSON.stringify(payload))}.signature`;
