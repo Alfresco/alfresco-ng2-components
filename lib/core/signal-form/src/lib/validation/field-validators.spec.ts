@@ -28,7 +28,8 @@ import {
     minValueValidator,
     numberValidator,
     patternValidator,
-    requiredValidator
+    requiredValidator,
+    textMaxLength
 } from './field-validators';
 
 describe('field validators', () => {
@@ -107,6 +108,12 @@ describe('field validators', () => {
             expect(maxLengthOf(field('integer', { maxLength: 3 }))).toBe(10);
             expect(maxLengthOf(field('multi-line-text', { maxLength: 7 }))).toBe(7);
             expect(maxLengthOf(field('date'))).toBe(0);
+        });
+
+        it('should limit typed text to its own maximum length, or the default text one, whatever the field type', () => {
+            expect(textMaxLength(field('string', { maxLength: 5 }))).toBe(5);
+            expect(textMaxLength(field('string'))).toBe(1024);
+            expect(textMaxLength(field('text', { maxLength: 0 }))).toBe(1024);
         });
 
         it('should check a text against its pattern', () => {

@@ -20,10 +20,10 @@ import { FormField } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { maxLengthOf } from '../../../validation/field-validators';
+import { maxLengthOf, textMaxLength } from '../../../validation/field-validators';
 import { SignalInputMaskDirective } from '../../controls/input-mask.directive';
 import { SignalFieldErrorComponent } from '../field-error/field-error.component';
-import { fieldErrorMessage } from '../field-error-message';
+import { maxLengthMessage } from '../field-error-message';
 import { SignalLeftLabelComponent } from '../left-label/left-label.component';
 import { SignalFormWidget } from '../signal-form-widget';
 
@@ -52,17 +52,19 @@ export class SignalTextWidgetComponent extends SignalFormWidget<string> {
     protected readonly inputMask = computed(() => this.definition().inputMask ?? null);
     protected readonly placeholder = computed(() => this.inputMask()?.placeholder || (this.definition().placeholder ?? ''));
 
+    protected readonly pasteLimit = computed(() => textMaxLength(this.definition()));
+
     private readonly pasteRejected = signal(false);
 
     protected override readonly shownError = computed(() => {
         if (this.pasteRejected()) {
-            return fieldErrorMessage('maxLength', this.definition());
+            return maxLengthMessage(this.pasteLimit());
         }
         return this.showError() ? this.error() : null;
     });
 
     protected guardPaste(event: ClipboardEvent, textInput: HTMLInputElement): void {
-        const limit = maxLengthOf(this.definition());
+        const limit = this.pasteLimit();
         if (!limit) {
             return;
         }
@@ -93,6 +95,7 @@ export class SignalTextWidgetComponent extends SignalFormWidget<string> {
 export class SignalIntegerWidgetComponent extends SignalTextWidgetComponent {
     protected override readonly widgetClass: string = 'adf-number-widget';
     protected override readonly labelAutomationId: string = 'adf-number-widget-label';
+    protected override readonly pasteLimit = computed(() => maxLengthOf(this.definition()));
 }
 
 @Component({
@@ -104,6 +107,7 @@ export class SignalIntegerWidgetComponent extends SignalTextWidgetComponent {
 export class SignalDecimalWidgetComponent extends SignalTextWidgetComponent {
     protected override readonly widgetClass: string = 'adf-decimal-widget';
     protected override readonly labelAutomationId: string = 'adf-decimal-widget-label';
+    protected override readonly pasteLimit = computed(() => maxLengthOf(this.definition()));
 }
 
 const isPasteInput = (event: Event): boolean => event instanceof InputEvent && event.inputType === PASTE_INPUT_TYPE;

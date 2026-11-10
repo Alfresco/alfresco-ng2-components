@@ -36,12 +36,23 @@ const localized = (limit: NumberFieldValue | undefined): string => {
 const shownDate = (date: Date | null, field: FieldDefinition): string =>
     date ? DateFnsUtils.formatDate(date, field.dateDisplayFormat).toLocaleUpperCase() : '';
 
+/**
+ * Returns the message for text longer than the given limit.
+ *
+ * @param limit the maximum length
+ * @returns the message to show
+ */
+export const maxLengthMessage = (limit: number): FieldErrorMessage => ({
+    key: 'FORM.FIELD.VALIDATOR.NO_LONGER_THAN',
+    params: { maxLength: localized(limit) }
+});
+
 const MESSAGES: Readonly<Record<string, (field: FieldDefinition) => FieldErrorMessage>> = {
     required: () => ({ key: 'FORM.FIELD.REQUIRED' }),
     dropdown: () => ({ key: 'FORM.FIELD.REQUIRED' }),
     number: () => ({ key: 'FORM.FIELD.VALIDATOR.INVALID_NUMBER' }),
     minLength: ({ minLength }) => ({ key: 'FORM.FIELD.VALIDATOR.AT_LEAST_LONG', params: { minLength: localized(minLength) } }),
-    maxLength: (field) => ({ key: 'FORM.FIELD.VALIDATOR.NO_LONGER_THAN', params: { maxLength: localized(maxLengthOf(field)) } }),
+    maxLength: (field) => maxLengthMessage(maxLengthOf(field)),
     minValue: ({ minValue }) => ({ key: 'FORM.FIELD.VALIDATOR.NOT_LESS_THAN', params: { minValue: localized(minValue) } }),
     maxValue: ({ maxValue }) => ({ key: 'FORM.FIELD.VALIDATOR.NOT_GREATER_THAN', params: { maxValue: localized(maxValue) } }),
     pattern: () => ({ key: 'FORM.FIELD.VALIDATOR.INVALID_VALUE' }),

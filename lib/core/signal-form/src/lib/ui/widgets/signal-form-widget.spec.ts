@@ -68,6 +68,15 @@ describe('SignalFormWidget', () => {
         expect(probe({ name: 'Name' }, { leftLabels: true }).widget.probedFloatingLabel()).toBeFalse();
     });
 
+    it('should float the label once a rule makes an unnamed field required', () => {
+        const { form, widget } = probe({});
+        expect(widget.probedFloatingLabel()).toBeFalse();
+
+        form.setRequired('name', true);
+
+        expect(widget.probedFloatingLabel()).toBeTrue();
+    });
+
     it('should show a missing value once the field is touched', () => {
         const { form, widget } = probe({ required: true });
         expect(widget.probedError()).toBeNull();

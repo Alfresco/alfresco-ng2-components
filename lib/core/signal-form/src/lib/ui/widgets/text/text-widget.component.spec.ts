@@ -102,6 +102,25 @@ describe('SignalTextWidgetComponent', () => {
         expect(errorText(element)).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
     });
 
+    it('should refuse a paste that makes a string field longer than its text limit', () => {
+        const form = createFieldsForm([{ id: 'code', type: 'string', value: 'abc', maxLength: 5 }]);
+        const fixture = renderWidget(SignalTextWidgetComponent, form, 'code');
+        const element: HTMLElement = fixture.nativeElement;
+
+        const refused = paste(textInput(element), 'defgh');
+        fixture.detectChanges();
+
+        expect(refused.defaultPrevented).toBeTrue();
+        expect(errorText(element)).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+    });
+
+    it('should refuse a paste into an integer field longer than its default limit', () => {
+        const form = createFieldsForm([{ id: 'count', type: 'integer' }]);
+        const fixture = renderWidget(SignalIntegerWidgetComponent, form, 'count');
+
+        expect(paste(textInput(fixture.nativeElement), '1'.repeat(11)).defaultPrevented).toBeTrue();
+    });
+
     it('should not limit a paste into a field without a maximum length', () => {
         const form = createFieldsForm([{ id: 'ratio', type: 'bigdecimal' }]);
         const fixture = renderWidget(SignalDecimalWidgetComponent, form, 'ratio');
