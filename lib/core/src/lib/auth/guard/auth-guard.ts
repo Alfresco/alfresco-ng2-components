@@ -15,33 +15,41 @@
  * limitations under the License.
  */
 
+import { DOCUMENT } from '@angular/common';
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { AuthGuardService } from './auth-guard.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
 
-const ticketChangeRedirect = (event: StorageEvent, authGuardBaseService: AuthGuardService, url: string): void => {
+const ticketChangeRedirect = (event: StorageEvent, authGuardBaseService: AuthGuardService, url: string, windowRef: Window): void => {
     if (event.newValue) {
         authGuardBaseService.navigate(url);
     } else {
-        window.location.reload();
+        windowRef.location.reload();
     }
 };
 
-const ticketChangeHandler = (event: StorageEvent, authGuardBaseService: AuthGuardService, jwtHelperService: JwtHelperService, url: string): void => {
+const ticketChangeHandler = (
+    event: StorageEvent,
+    authGuardBaseService: AuthGuardService,
+    jwtHelperService: JwtHelperService,
+    url: string,
+    windowRef: Window
+): void => {
     if (event.newValue !== event.oldValue) {
-        if (event.key.includes('ticket-ECM') || event.key.includes('ticket-BPM')) {
-            ticketChangeRedirect(event, authGuardBaseService, url);
+        if (event.key?.includes('ticket-ECM') || event.key?.includes('ticket-BPM')) {
+            ticketChangeRedirect(event, authGuardBaseService, url, windowRef);
         }
     }
 
     if (
-        event.key.endsWith(JwtHelperService.USER_ACCESS_TOKEN) &&
-        jwtHelperService.getValueFromToken(event.newValue, JwtHelperService.USER_PREFERRED_USERNAME) !==
-            jwtHelperService.getValueFromToken(event.oldValue, JwtHelperService.USER_PREFERRED_USERNAME)
+        event.key?.endsWith(JwtHelperService.USER_ACCESS_TOKEN) &&
+        (!event.newValue ||
+            jwtHelperService.getValueFromToken(event.newValue, JwtHelperService.USER_PREFERRED_USERNAME) !==
+                jwtHelperService.getValueFromToken(event.oldValue ?? '', JwtHelperService.USER_PREFERRED_USERNAME))
     ) {
-        ticketChangeRedirect(event, authGuardBaseService, url);
+        ticketChangeRedirect(event, authGuardBaseService, url, windowRef);
     }
 };
 
@@ -50,8 +58,13 @@ export const AuthGuard: CanActivateFn = async (_: ActivatedRouteSnapshot, state:
     const jwtHelperService = inject(JwtHelperService);
     const authGuardBaseService = inject(AuthGuardService);
     const authenticationService = inject(AuthenticationService);
+    const windowRef = inject(DOCUMENT).defaultView;
 
-    window.addEventListener('storage', (event: StorageEvent) => ticketChangeHandler(event, authGuardBaseService, jwtHelperService, router.url));
+    if (windowRef) {
+        windowRef.addEventListener('storage', (event: StorageEvent) =>
+            ticketChangeHandler(event, authGuardBaseService, jwtHelperService, router.url, windowRef)
+        );
+    }
 
     if (authenticationService.isLoggedIn() || authGuardBaseService.withCredentials) {
         return true;
