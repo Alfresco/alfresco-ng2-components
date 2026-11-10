@@ -37,7 +37,7 @@ import { MatButton, MatButtonModule, MatIconButton } from '@angular/material/but
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatBadgeModule, MatBadgeSize } from '@angular/material/badge';
 import { MatListModule } from '@angular/material/list';
-import { NgForOf, NgIf } from '@angular/common';
+
 import { InitialUsernamePipe, TimeAgoPipe } from '../../pipes';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -56,8 +56,6 @@ import { AppConfigService } from '../../app-config/app-config.service';
         IconModule,
         MatBadgeModule,
         MatListModule,
-        NgIf,
-        NgForOf,
         TimeAgoPipe,
         InitialUsernamePipe,
         MatSnackBarModule

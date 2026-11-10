@@ -17,7 +17,7 @@
 
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, inject } from '@angular/core';
 import { LicenseData } from '../interfaces';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 
@@ -27,7 +27,7 @@ import { MatTableModule } from '@angular/material/table';
     styleUrls: ['./about-license-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, TranslatePipe, MatTableModule]
+    imports: [TranslatePipe, MatTableModule]
 })
 export class AboutLicenseListComponent {
     private readonly translateService = inject(TranslateService);

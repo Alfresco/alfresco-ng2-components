@@ -1,12 +1,14 @@
 <mat-table [dataSource]="data">
-  <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
-    <mat-header-cell *matHeaderCellDef>
-      {{ column.header | translate }}
-    </mat-header-cell>
-    <mat-cell *matCellDef="let row"
-              class="adf-about-license-cell"
-              [innerHTML]="column.cell(row)" />
-  </ng-container>
+  @for (column of columns; track column) {
+    <ng-container [matColumnDef]="column.columnDef">
+      <mat-header-cell *matHeaderCellDef>
+        {{ column.header | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"
+        class="adf-about-license-cell"
+        [innerHTML]="column.cell(row)" />
+    </ng-container>
+  }
 
   <mat-header-row *matHeaderRowDef="displayedColumns" />
   <mat-row *matRowDef="let row; columns: displayedColumns" />

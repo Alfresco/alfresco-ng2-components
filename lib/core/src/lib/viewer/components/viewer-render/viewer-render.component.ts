@@ -16,7 +16,7 @@
  */
 
 import { AppExtensionService, ExtensionsModule, ViewerExtensionRef, PreviewExtensionComponent } from '@alfresco/adf-extensions';
-import { NgComponentOutlet, NgForOf, NgTemplateOutlet } from '@angular/common';
+import { NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
 import {
     Component,
     effect,
@@ -63,7 +63,6 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
         NgTemplateOutlet,
         UnknownFormatComponent,
         ExtensionsModule,
-        NgForOf,
         PreviewExtensionComponent
     ],
     providers: [ViewUtilService]

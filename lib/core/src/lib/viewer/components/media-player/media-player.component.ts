@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgClass, NgForOf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
 import { UrlService } from '../../../common';
 import { Track } from '../../models/viewer.model';
@@ -25,7 +25,7 @@ import { Track } from '../../models/viewer.model';
     templateUrl: './media-player.component.html',
     styleUrls: ['./media-player.component.scss'],
     host: { class: 'adf-media-player' },
-    imports: [NgClass, NgForOf],
+    imports: [NgClass],
     encapsulation: ViewEncapsulation.None
 })
 export class MediaPlayerComponent implements OnChanges {

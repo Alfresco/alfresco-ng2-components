@@ -34,7 +34,7 @@ import { PaginationComponentInterface } from './pagination-component.interface';
 import { PaginationModel } from '../models/pagination.model';
 import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -57,7 +57,7 @@ export const DEFAULT_PAGINATION: PaginationModel = {
     styleUrls: ['./pagination.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    imports: [CommonModule, TranslatePipe, MatButtonModule, IconModule, MatMenuModule]
+    imports: [TranslatePipe, MatButtonModule, IconModule, MatMenuModule]
 })
 export class PaginationComponent implements OnInit, PaginationComponentInterface {
     private readonly elementRef = inject(ElementRef);

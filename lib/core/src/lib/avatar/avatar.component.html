@@ -1,10 +1,11 @@
 <div class="adf-avatar">
-    <img (error)="src = ''" *ngIf="src; else initialsTemplate" class="adf-avatar__image"
-        [src]="src" [alt]="initials" [title]="tooltip"
-        [style.width]="size" [style.height]="size" [style.cursor]="cursor" />
+  @if (src) {
+    <img (error)="src = ''" class="adf-avatar__image"
+      [src]="src" [alt]="initials" [title]="tooltip"
+      [style.width]="size" [style.height]="size" [style.cursor]="cursor" />
+  } @else {
+    <div class="adf-avatar__image adf-avatar__initials" [title]="tooltip"
+    [style.width]="size" [style.height]="size" [style.cursor]="cursor">{{ initials }}</div>
+  }
 </div>
 
-<ng-template #initialsTemplate>
-    <div class="adf-avatar__image adf-avatar__initials" [title]="tooltip"
-        [style.width]="size" [style.height]="size" [style.cursor]="cursor">{{ initials }}</div>
-</ng-template>

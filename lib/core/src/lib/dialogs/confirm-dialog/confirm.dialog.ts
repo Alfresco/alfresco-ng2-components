@@ -19,7 +19,7 @@ import { Component, SecurityContext, ViewEncapsulation, inject } from '@angular/
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslatePipe } from '@ngx-translate/core';
-import { NgIf } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 
 export interface ConfirmDialogComponentProps {
@@ -38,7 +38,7 @@ export interface ConfirmDialogComponentProps {
     host: { class: 'adf-confirm-dialog' },
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [TranslatePipe, MatDialogModule, NgIf, MatButtonModule]
+    imports: [TranslatePipe, MatDialogModule, MatButtonModule]
 })
 export class ConfirmDialogComponent {
     private readonly sanitizer = inject(DomSanitizer);

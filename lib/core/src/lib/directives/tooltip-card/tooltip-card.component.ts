@@ -17,11 +17,10 @@
 
 import { Component, Input, SecurityContext, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-tooltip-card-component',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './tooltip-card.component.html',
     styleUrls: ['./tooltip-card.component.scss']
 })

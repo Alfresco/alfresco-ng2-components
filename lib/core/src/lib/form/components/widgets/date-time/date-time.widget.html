@@ -1,51 +1,53 @@
 <div class="{{ field.className }}"
-     id="data-time-widget"
-     [class.adf-invalid]="hasValidationError() && datetimeInputControl.touched"
-     [class.adf-readonly]="field.readOnly"
-     [class.adf-left-label-input-container]="field.leftLabels">
-    <div *ngIf="field.leftLabels">
-        <label class="adf-label adf-left-label" [attr.for]="field.id">
-            {{ field.name | translate }} ({{ field.dateDisplayFormat }})<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
-        </label>
+  id="data-time-widget"
+  [class.adf-invalid]="hasValidationError() && datetimeInputControl.touched"
+  [class.adf-readonly]="field.readOnly"
+  [class.adf-left-label-input-container]="field.leftLabels">
+  @if (field.leftLabels) {
+    <div>
+      <label class="adf-label adf-left-label" [attr.for]="field.id">
+        {{ field.name | translate }} ({{ field.dateDisplayFormat }})<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
+      </label>
     </div>
-    <div class="adf-date-time-widget-container">
-        <mat-form-field class="adf-date-time-widget adf-form-field-input"
-                        subscriptSizing="dynamic"
-                        [class.adf-left-label-input-datepicker]="field.leftLabels"
-                        [floatLabel]="field.placeholder ? 'always' : null">
-            @if( (field.name || field?.required) && !field.leftLabels) {
-            <mat-label class="adf-label">
-                {{ field.name | translate }} ({{ field.dateDisplayFormat }})
-            </mat-label>
-            }
-            <input matInput
-                   class="adf-input"
-                   [matDatetimepicker]="datetimePicker"
-                   [readonly]="field.readOnly"
-                   [required]="field.required && field.isVisible"
-                   [id]="field.id"
-                   [formControl]="datetimeInputControl"
-                   [errorStateMatcher]="errorStateMatcher"
-                   (keydown.enter)="datetimePicker.open()"
-                   [placeholder]="field.placeholder"
-                   [title]="field.tooltip"
-                   [min]="minDate"
-                   [max]="maxDate">
-            <mat-datetimepicker-toggle matSuffix [for]="datetimePicker"
-                                       [disabled]="field.readOnly" />
-            <mat-datetimepicker #datetimePicker
-                data-automation-id="adf-date-time-widget-picker"
-                type="datetime"
-                [touchUi]="true"
-                [timeInterval]="5"
-                [disabled]="field.readOnly" />
-            @if (hasValidationError() && datetimeInputControl.touched) {
-                <mat-error class="adf-form-field-status-slot">
-                    <mat-icon class="adf-error-icon">error_outline</mat-icon>
-                    <span class="adf-error-text">{{ field.validationSummary.message | translate:translateParameters }}</span>
-                </mat-error>
-            }
-            <mat-hint class="adf-form-field-status-slot" aria-hidden="true" />
-        </mat-form-field>
-    </div>
+  }
+  <div class="adf-date-time-widget-container">
+    <mat-form-field class="adf-date-time-widget adf-form-field-input"
+      subscriptSizing="dynamic"
+      [class.adf-left-label-input-datepicker]="field.leftLabels"
+      [floatLabel]="field.placeholder ? 'always' : null">
+      @if( (field.name || field?.required) && !field.leftLabels) {
+        <mat-label class="adf-label">
+          {{ field.name | translate }} ({{ field.dateDisplayFormat }})
+        </mat-label>
+      }
+      <input matInput
+        class="adf-input"
+        [matDatetimepicker]="datetimePicker"
+        [readonly]="field.readOnly"
+        [required]="field.required && field.isVisible"
+        [id]="field.id"
+        [formControl]="datetimeInputControl"
+        [errorStateMatcher]="errorStateMatcher"
+        (keydown.enter)="datetimePicker.open()"
+        [placeholder]="field.placeholder"
+        [title]="field.tooltip"
+        [min]="minDate"
+        [max]="maxDate">
+      <mat-datetimepicker-toggle matSuffix [for]="datetimePicker"
+        [disabled]="field.readOnly" />
+      <mat-datetimepicker #datetimePicker
+        data-automation-id="adf-date-time-widget-picker"
+        type="datetime"
+        [touchUi]="true"
+        [timeInterval]="5"
+        [disabled]="field.readOnly" />
+      @if (hasValidationError() && datetimeInputControl.touched) {
+        <mat-error class="adf-form-field-status-slot">
+          <mat-icon class="adf-error-icon">error_outline</mat-icon>
+          <span class="adf-error-text">{{ field.validationSummary.message | translate:translateParameters }}</span>
+        </mat-error>
+      }
+      <mat-hint class="adf-form-field-status-slot" aria-hidden="true" />
+    </mat-form-field>
+  </div>
 </div>

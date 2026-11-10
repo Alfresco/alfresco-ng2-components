@@ -41,8 +41,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         `
     ],
     template: `
-        <span [ngClass]="['activity-indicator', size]" *ngIf="isEnabled; else inActive">🟢</span>
-        <ng-template #inActive><span [ngClass]="['activity-indicator', size]">🔴</span></ng-template>
+        @if (isEnabled) {
+            <span [ngClass]="['activity-indicator', size]">🟢</span>
+        } @else {
+            <span [ngClass]="['activity-indicator', size]">🔴</span>
+        }
     `,
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush

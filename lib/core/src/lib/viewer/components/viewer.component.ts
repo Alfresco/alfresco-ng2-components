@@ -16,7 +16,7 @@
  */
 
 import { A11yModule } from '@angular/cdk/a11y';
-import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
     Component,
     ContentChild,
@@ -71,7 +71,6 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
     host: { class: 'adf-viewer' },
     encapsulation: ViewEncapsulation.None,
     imports: [
-        NgIf,
         A11yModule,
         ToolbarComponent,
         ToolbarTitleComponent,

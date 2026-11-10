@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { NgIf } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
@@ -42,7 +41,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, MatIconModule],
+    imports: [TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, MatIconModule],
     encapsulation: ViewEncapsulation.None
 })
 export class DecimalWidgetComponent extends WidgetComponent implements OnInit {

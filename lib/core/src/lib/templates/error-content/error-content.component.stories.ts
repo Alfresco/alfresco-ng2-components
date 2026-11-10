@@ -81,9 +81,11 @@ export const ErrorContent: Story = {
         props: args,
         template: `
     <adf-error-content errorCode="${args.errorCode}">
-        <div adf-error-content-actions *ngIf="${args.errorContentActions}">
-        <button mat-raised-button type="button">MyAction</button>
-        </div>
+        @if (${args.errorContentActions}) {
+            <div adf-error-content-actions>
+                <button mat-raised-button type="button">MyAction</button>
+            </div>
+        }
     </adf-error-content>`
     })
 };

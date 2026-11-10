@@ -15,9 +15,11 @@ Load more options to select component if API returns more items
 <mat-select
     adf-infinite-select-scroll
     (scrollEnd)="load()">
-    <mat-option *ngFor="let option of options">
-        {{ option }}
-    </mat-option>
+    @for (option of options; track option) {
+        <mat-option>
+            {{ option }}
+        </mat-option>
+    }
 </mat-select>`
 ```
 

@@ -17,7 +17,7 @@
 
 /* eslint-disable no-underscore-dangle */
 
-import { NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
     Component,
     EventEmitter,
@@ -92,7 +92,6 @@ export const PDFJS_VIEWER_MODULE = new InjectionToken('PDFJS_VIEWER_MODULE', { f
         IconModule,
         TranslatePipe,
         PdfThumbListComponent,
-        NgIf,
         NgTemplateOutlet,
         MatProgressBarModule,
         NgStyle,

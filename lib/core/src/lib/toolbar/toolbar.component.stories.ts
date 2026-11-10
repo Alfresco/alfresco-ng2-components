@@ -104,11 +104,17 @@ export const Toolbar: Story = {
         props: args,
         template: `
     <adf-toolbar title="${args.title}">
-        <ng-container *ngIf="${args.toolbarTitle}"><adf-toolbar-title>Projected Title</adf-toolbar-title></ng-container>
-        <ng-container *ngIf="${args.anyContentProjection}">
-            <span style="color:red">projected content</span>
-        </ng-container>
-        <ng-container *ngIf="${args.toolbarDivider}">left<adf-toolbar-divider></adf-toolbar-divider>right</ng-container>
+        @if (${args.toolbarTitle}) {
+            <ng-container><adf-toolbar-title>Projected Title</adf-toolbar-title></ng-container>
+        }
+        @if (${args.anyContentProjection}) {
+            <ng-container>
+                <span style="color:red">projected content</span>
+            </ng-container>
+        }
+        @if (${args.toolbarDivider}) {
+            <ng-container>left<adf-toolbar-divider></adf-toolbar-divider>right</ng-container>
+        }
     </adf-toolbar>`
     }),
     play: async ({ canvasElement }) => {

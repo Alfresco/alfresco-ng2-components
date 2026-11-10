@@ -1,66 +1,78 @@
 <div [attr.data-automation-id]="'card-array-label-' + property.key" class="adf-property-label">{{ property.label | translate }}</div>
 <div class="adf-property-value adf-card-view-array-item-container">
-    <ng-container *ngIf="(property.displayValue | async) as items; else elseEmptyValueBlock">
-        <mat-chip-listbox *ngIf="items.length > 0; else elseEmptyValueBlock" data-automation-id="card-arrayitem-chip-list-container">
-            <ng-container *ngIf="displayCount > 0; else withOutDisplayCount" >
-                <mat-chip
-                    *ngFor="let item of items.slice(0, displayCount)"
-                    (keyup.enter)="clicked()"
-                    (click)="clicked()"
-                    [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
-                    <div class="adf-card-view-array-chip-content">
-                        <mat-icon *ngIf="item?.icon" class="adf-array-item-icon" [adf-icon]="item.icon" />
-                        <span>{{item?.value}}</span>
-                    </div>
-                </mat-chip>
-                <mat-chip
-                    *ngIf="items.length > displayCount"
-                    data-automation-id="card-arrayitem-more-chip"
-                    [matMenuTriggerFor]="menu">
-                    <span>{{items.length - displayCount}} {{'CORE.CARDVIEW.MORE' | translate}}</span>
-                </mat-chip>
-            </ng-container>
-            <ng-template #withOutDisplayCount>
-                <mat-chip
-                    *ngFor="let item of items"
-                    (keyup.enter)="clicked()"
-                    (click)="clicked()"
-                    [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
-                    <div class="adf-card-view-array-chip-content">
-                        <mat-icon *ngIf="item?.icon" class="adf-array-item-icon" [adf-icon]="item.icon" />
-                        <span>{{item?.value}}</span>
-                    </div>
-                </mat-chip>
-            </ng-template>
-        </mat-chip-listbox>
-        <mat-menu #menu="matMenu">
-            <mat-card appearance="outlined" class="adf-array-item-more-chip-container">
-                <mat-card-content>
-                    <mat-chip-listbox>
-                        <mat-chip (click)="clicked()" (keyup.enter)="clicked()"
-                            *ngFor="let item of items.slice(displayCount, items.length)"
-                            [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
-                            <div class="adf-card-view-array-chip-content">
-                                <mat-icon *ngIf="item?.icon" class="adf-array-item-icon" [adf-icon]="item.icon" />
-                                <span>{{item?.value}}</span>
-                            </div>
-                        </mat-chip>
-                    </mat-chip-listbox>
-                </mat-card-content>
-            </mat-card>
-        </mat-menu>
-    </ng-container>
-    <ng-template #elseEmptyValueBlock>
-        <span class="adf-card-array-item-default" data-automation-id="card-arrayitem-default">{{ property?.default | translate }}</span>
-    </ng-template>
-    @if (showClickableIcon) {
-        <button mat-icon-button
-            (click)="clicked()"
-            (keydown.enter)="clicked()"
-            [attr.aria-label]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-            [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-            [attr.data-automation-id]="'card-array-item-clickable-icon-' + property.key">
-            <mat-icon class="adf-array-item-button-icon" [adf-icon]="property.icon" />
-        </button>
+  @if ((property.displayValue | async); as items) {
+    @if (items.length > 0) {
+      <mat-chip-listbox data-automation-id="card-arrayitem-chip-list-container">
+        @if (displayCount > 0) {
+          @for (item of items.slice(0, displayCount); track item) {
+            <mat-chip
+              (keyup.enter)="clicked()"
+              (click)="clicked()"
+              [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
+              <div class="adf-card-view-array-chip-content">
+                @if (item?.icon) {
+                  <mat-icon class="adf-array-item-icon" [adf-icon]="item.icon" />
+                }
+                <span>{{item?.value}}</span>
+              </div>
+            </mat-chip>
+          }
+          @if (items.length > displayCount) {
+            <mat-chip
+              data-automation-id="card-arrayitem-more-chip"
+              [matMenuTriggerFor]="menu">
+              <span>{{items.length - displayCount}} {{'CORE.CARDVIEW.MORE' | translate}}</span>
+            </mat-chip>
+          }
+        } @else {
+          @for (item of items; track item) {
+            <mat-chip
+              (keyup.enter)="clicked()"
+              (click)="clicked()"
+              [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
+              <div class="adf-card-view-array-chip-content">
+                @if (item?.icon) {
+                  <mat-icon class="adf-array-item-icon" [adf-icon]="item.icon" />
+                }
+                <span>{{item?.value}}</span>
+              </div>
+            </mat-chip>
+          }
+        }
+      </mat-chip-listbox>
+    } @else {
+      <span class="adf-card-array-item-default" data-automation-id="card-arrayitem-default">{{ property?.default | translate }}</span>
     }
+    <mat-menu #menu="matMenu">
+      <mat-card appearance="outlined" class="adf-array-item-more-chip-container">
+        <mat-card-content>
+          <mat-chip-listbox>
+            @for (item of items.slice(displayCount, items.length); track item) {
+              <mat-chip (click)="clicked()" (keyup.enter)="clicked()"
+                [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
+                <div class="adf-card-view-array-chip-content">
+                  @if (item?.icon) {
+                    <mat-icon class="adf-array-item-icon" [adf-icon]="item.icon" />
+                  }
+                  <span>{{item?.value}}</span>
+                </div>
+              </mat-chip>
+            }
+          </mat-chip-listbox>
+        </mat-card-content>
+      </mat-card>
+    </mat-menu>
+  } @else {
+    <span class="adf-card-array-item-default" data-automation-id="card-arrayitem-default">{{ property?.default | translate }}</span>
+  }
+  @if (showClickableIcon) {
+    <button mat-icon-button
+      (click)="clicked()"
+      (keydown.enter)="clicked()"
+      [attr.aria-label]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+      [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+      [attr.data-automation-id]="'card-array-item-clickable-icon-' + property.key">
+      <mat-icon class="adf-array-item-button-icon" [adf-icon]="property.icon" />
+    </button>
+  }
 </div>

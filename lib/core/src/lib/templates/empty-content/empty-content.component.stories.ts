@@ -96,9 +96,11 @@ export const EmptyContent: Story = {
         props: args,
         template: `
     <adf-empty-content icon="${args.icon}" title="${args.title}" subtitle="${args.subtitle}">
-        <div *ngIf="${args.anyContentProjection}" style="color:red">
-            projected content
-        </div>
+        @if (${args.anyContentProjection}) {
+            <div style="color:red">
+                projected content
+            </div>
+        }
     </adf-empty-content>`
     })
 };

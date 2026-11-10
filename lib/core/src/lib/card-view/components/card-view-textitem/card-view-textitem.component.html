@@ -1,185 +1,200 @@
 @if (showProperty || isEditable) {
-    <div class="adf-card-textitem-field-container" [ngSwitch]="templateType">
-        <div *ngSwitchDefault>
-            <mat-form-field
-                class="adf-property-field adf-card-textitem-field"
-                [ngClass]="{
-                    'adf-property-read-only': isReadonlyProperty
-                }"
-                (dblclick)="copyToClipboard(property.displayValue)"
-                [attr.data-automation-id]="'card-textitem-field-' + property.key"
-                [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
-            >
-                <mat-label
-                    [attr.data-automation-id]="'card-textitem-label-' + property.key"
-                    class="adf-property-label"
-                    [ngClass]="{
-                        'adf-property-value-editable': editable,
-                        'adf-property-readonly-value': isReadonlyProperty || !editable
-                    }"
-                >
-                    {{ property.label | translate }}
-                </mat-label>
-
-                <input
-                    matInput
-                    *ngIf="!property.multiline"
-                    class="adf-property-value"
-                    [ngClass]="{
-                        'adf-property-value-editable': editable,
-                        'adf-property-readonly-value': isReadonlyProperty || !editable,
-                        'adf-property-value-has-error': isEditable && hasErrors,
-                        'adf-property-value-not-editable': !editable,
-                        'adf-property-value-has-icon-suffix': displayCopyToClipboardIcon && !isEditable
-                    }"
-                    title="{{ property.label | translate }}"
-                    [placeholder]="property.default"
-                    [attr.aria-label]="property.label | translate"
-                    [formControl]="textInput"
-                    [attr.data-automation-id]="'card-textitem-value-' + property.key"
-                    (keydown)="undoText($event)"
-                    (blur)="update()"
-                    [aria-describedby]="'adf-card-textitem-error-' + property.key"
-                />
-                <textarea
-                    matInput
-                    *ngIf="property.multiline"
-                    title="{{ property.label | translate }}"
-                    [cdkTextareaAutosize]="true"
-                    [cdkAutosizeMinRows]="1"
-                    [cdkAutosizeMaxRows]="5"
-                    class="adf-property-value"
-                    [ngClass]="{
-                        'adf-property-value-editable': editable,
-                        'adf-property-readonly-value': isReadonlyProperty || !editable,
-                    }"
-                    [placeholder]="property.default"
-                    [attr.aria-label]="property.label | translate"
-                    [formControl]="textInput"
-                    [attr.data-automation-id]="'card-textitem-value-' + property.key"
-                >
-                </textarea>
-                @if (displayCopyToClipboardIcon && !isEditable) {
-                    <button
-                        matSuffix
-                        type="button"
-                        class="adf-textitem-action adf-copy-to-clipboard-button"
-                        (click)="copyToClipboard(property.displayValue, $event)"
-                        [attr.aria-label]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
-                        [attr.data-automation-id]="'card-textitem-copy-to-clipboard-' + property.key"
+    <div class="adf-card-textitem-field-container">
+        @switch (templateType) {
+            @default {
+                <div>
+                    <mat-form-field
+                        class="adf-property-field adf-card-textitem-field"
+                        [ngClass]="{
+                            'adf-property-read-only': isReadonlyProperty
+                        }"
+                        (dblclick)="copyToClipboard(property.displayValue)"
+                        [attr.data-automation-id]="'card-textitem-field-' + property.key"
+                        [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
                     >
-                        <mat-icon
-                            adf-icon="content_copy"
-                            class="adf-copy-to-clipboard-icon"
-                            aria-hidden="true"
+                        <mat-label
+                            [attr.data-automation-id]="'card-textitem-label-' + property.key"
+                            class="adf-property-label"
+                            [ngClass]="{
+                                'adf-property-value-editable': editable,
+                                'adf-property-readonly-value': isReadonlyProperty || !editable
+                            }"
+                        >
+                            {{ property.label | translate }}
+                        </mat-label>
+
+                        @if (!property.multiline) {
+                            <input
+                                matInput
+                                class="adf-property-value"
+                                [ngClass]="{
+                                    'adf-property-value-editable': editable,
+                                    'adf-property-readonly-value': isReadonlyProperty || !editable,
+                                    'adf-property-value-has-error': isEditable && hasErrors,
+                                    'adf-property-value-not-editable': !editable,
+                                    'adf-property-value-has-icon-suffix': displayCopyToClipboardIcon && !isEditable
+                                }"
+                                title="{{ property.label | translate }}"
+                                [placeholder]="property.default"
+                                [attr.aria-label]="property.label | translate"
+                                [formControl]="textInput"
+                                [attr.data-automation-id]="'card-textitem-value-' + property.key"
+                                (keydown)="undoText($event)"
+                                (blur)="update()"
+                                [aria-describedby]="'adf-card-textitem-error-' + property.key"
+                            />
+                        } @else {
+                            <textarea
+                                matInput
+                                title="{{ property.label | translate }}"
+                                [cdkTextareaAutosize]="true"
+                                [cdkAutosizeMinRows]="1"
+                                [cdkAutosizeMaxRows]="5"
+                                class="adf-property-value"
+                                [ngClass]="{
+                                    'adf-property-value-editable': editable,
+                                    'adf-property-readonly-value': isReadonlyProperty || !editable,
+                                }"
+                                [placeholder]="property.default"
+                                [attr.aria-label]="property.label | translate"
+                                [formControl]="textInput"
+                                [attr.data-automation-id]="'card-textitem-value-' + property.key"
+                            >
+                            </textarea>
+                        }
+                        @if (displayCopyToClipboardIcon && !isEditable) {
+                            <button
+                                matSuffix
+                                type="button"
+                                class="adf-textitem-action adf-copy-to-clipboard-button"
+                                (click)="copyToClipboard(property.displayValue, $event)"
+                                [attr.aria-label]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+                                [attr.data-automation-id]="'card-textitem-copy-to-clipboard-' + property.key"
+                            >
+                                <mat-icon
+                                    adf-icon="content_copy"
+                                    class="adf-copy-to-clipboard-icon"
+                                    aria-hidden="true"
+                                />
+                            </button>
+                        }
+                    </mat-form-field>
+                </div>
+            }
+
+            @case ('chipsTemplate') {
+                <div
+                    class="adf-property-field adf-textitem-chip-list-container"
+                    [ngClass]="{ 'adf-property-read-only': isReadonlyProperty }"
+                >
+                    <mat-form-field
+                        class="adf-property-field adf-textitem-chip-list-input"
+                        [ngClass]="{ 'adf-property-read-only': isReadonlyProperty }"
+                    >
+                        <mat-label
+                            [attr.data-automation-id]="'card-textitem-label-' + property.key"
+                            class="adf-property-label"
+                            [ngClass]="{ 'adf-property-value-editable': editable }"
+                        >
+                            {{ property.label | translate }}
+                        </mat-label>
+                        <mat-chip-grid #chipElement class="adf-textitem-chip-list" [disabled]="isReadonlyProperty || !editable">
+                            @for (propertyValue of editedValue; track $index; let idx = $index) {
+                                <mat-chip-row [removable]="isEditable" (removed)="removeValueFromList(idx)">
+                                    {{ propertyValue }}
+                                    @if (isEditable) {
+                                        <mat-icon matChipRemove adf-icon="cancel" />
+                                    }
+                                </mat-chip-row>
+                            }
+                        </mat-chip-grid>
+                        <input
+                            matInput
+                            class="adf-property-value"
+                            [ngClass]="{
+                                'adf-property-value-editable': editable,
+                                'adf-property-readonly-value': isReadonlyProperty || !editable
+                            }"
+                            title="{{ property.label | translate }}"
+                            [placeholder]="editedValue ? '' : (property.default | translate)"
+                            [attr.aria-label]="property.label | translate"
+                            [matChipInputFor]="chipElement"
+                            [matChipInputAddOnBlur]="true"
+                            (matChipInputTokenEnd)="addValueToList($event)"
+                            [disabled]="isReadonlyProperty || !editable"
+                            [attr.data-automation-id]="'card-textitem-editchipinput-' + property.key"
                         />
-                    </button>
-                }
-            </mat-form-field>
-        </div>
-
-        <div
-            *ngSwitchCase="'chipsTemplate'"
-            class="adf-property-field adf-textitem-chip-list-container"
-            [ngClass]="{ 'adf-property-read-only': isReadonlyProperty }"
-        >
-            <mat-form-field
-                class="adf-property-field adf-textitem-chip-list-input"
-                [ngClass]="{ 'adf-property-read-only': isReadonlyProperty }"
-            >
-                <mat-label
-                    [attr.data-automation-id]="'card-textitem-label-' + property.key"
-                    class="adf-property-label"
-                    [ngClass]="{ 'adf-property-value-editable': editable }"
-                >
-                    {{ property.label | translate }}
-                </mat-label>
-                <mat-chip-grid #chipElement class="adf-textitem-chip-list" [disabled]="isReadonlyProperty || !editable">
-                    <mat-chip-row *ngFor="let propertyValue of editedValue; let idx = index" [removable]="isEditable" (removed)="removeValueFromList(idx)">
-                        {{ propertyValue }}
-                        <mat-icon *ngIf="isEditable" matChipRemove adf-icon="cancel" />
-                    </mat-chip-row>
-                </mat-chip-grid>
-                <input
-                    matInput
-                    class="adf-property-value"
-                    [ngClass]="{
-                        'adf-property-value-editable': editable,
-                        'adf-property-readonly-value': isReadonlyProperty || !editable
-                    }"
-                    title="{{ property.label | translate }}"
-                    [placeholder]="editedValue ? '' : (property.default | translate)"
-                    [attr.aria-label]="property.label | translate"
-                    [matChipInputFor]="chipElement"
-                    [matChipInputAddOnBlur]="true"
-                    (matChipInputTokenEnd)="addValueToList($event)"
-                    [disabled]="isReadonlyProperty || !editable"
-                    [attr.data-automation-id]="'card-textitem-editchipinput-' + property.key"
-                />
-            </mat-form-field>
-        </div>
-        <button
-            type="button"
-            *ngSwitchCase="'clickableTemplate'"
-            class="adf-textitem-clickable"
-            [ngClass]="{ 'adf-property-read-only': isReadonlyProperty }"
-            [attr.data-automation-id]="'card-textitem-toggle-' + property.key"
-            (click)="clicked($event)"
-        >
-            <mat-form-field class="adf-property-field adf-card-textitem-field">
-                <mat-label
-                    [attr.data-automation-id]="'card-textitem-label-' + property.key"
-                    class="adf-property-label"
-                    [ngClass]="{ 'adf-property-value-editable': editable }"
-                >
-                    {{ property.label | translate }}
-                </mat-label>
-                <input
-                    matInput
-                    [type]="property.inputType"
-                    class="adf-property-value"
-                    title="{{ property.label | translate }}"
-                    [ngClass]="{
-                        'adf-property-value-editable': editable,
-                        'adf-textitem-clickable-value': isClickable,
-                        'adf-property-readonly-value': isReadonlyProperty || !editable,
-                        'adf-property-value-has-error': isEditable && hasErrors,
-                        'adf-property-value-has-icon-suffix': showClickableIcon
-                    }"
-                    [placeholder]="property.default"
-                    aria-hidden="true"
-                    [attr.aria-label]="property.label | translate"
-                    [(ngModel)]="editedValue"
-                    (blur)="update()"
-                    (keydown.enter)="update()"
-                    [disabled]="isReadonlyProperty || !editable"
-                    tabindex="-1"
-                    [attr.data-automation-id]="'card-textitem-value-' + property.key"
-                    [aria-describedby]="'adf-card-textitem-error-' + property.key"
-                />
+                    </mat-form-field>
+                </div>
+            }
+            @case ('clickableTemplate') {
                 <button
-                    mat-icon-button
-                    matSuffix
-                    *ngIf="showClickableIcon"
-                    class="adf-textitem-action"
-                    [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                    [attr.data-automation-id]="'card-textitem-clickable-icon-' + property.key"
+                    type="button"
+                    class="adf-textitem-clickable"
+                    [ngClass]="{ 'adf-property-read-only': isReadonlyProperty }"
+                    [attr.data-automation-id]="'card-textitem-toggle-' + property.key"
+                    (click)="clicked($event)"
                 >
-                    <mat-icon class="adf-textitem-icon" [adf-icon]="property?.icon" />
+                    <mat-form-field class="adf-property-field adf-card-textitem-field">
+                        <mat-label
+                            [attr.data-automation-id]="'card-textitem-label-' + property.key"
+                            class="adf-property-label"
+                            [ngClass]="{ 'adf-property-value-editable': editable }"
+                        >
+                            {{ property.label | translate }}
+                        </mat-label>
+                        <input
+                            matInput
+                            [type]="property.inputType"
+                            class="adf-property-value"
+                            title="{{ property.label | translate }}"
+                            [ngClass]="{
+                                'adf-property-value-editable': editable,
+                                'adf-textitem-clickable-value': isClickable,
+                                'adf-property-readonly-value': isReadonlyProperty || !editable,
+                                'adf-property-value-has-error': isEditable && hasErrors,
+                                'adf-property-value-has-icon-suffix': showClickableIcon
+                            }"
+                            [placeholder]="property.default"
+                            aria-hidden="true"
+                            [attr.aria-label]="property.label | translate"
+                            [(ngModel)]="editedValue"
+                            (blur)="update()"
+                            (keydown.enter)="update()"
+                            [disabled]="isReadonlyProperty || !editable"
+                            tabindex="-1"
+                            [attr.data-automation-id]="'card-textitem-value-' + property.key"
+                            [aria-describedby]="'adf-card-textitem-error-' + property.key"
+                        />
+                        @if (showClickableIcon) {
+                            <button
+                                mat-icon-button
+                                matSuffix
+                                class="adf-textitem-action"
+                                [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+                                [attr.data-automation-id]="'card-textitem-clickable-icon-' + property.key"
+                            >
+                                <mat-icon class="adf-textitem-icon" [adf-icon]="property?.icon" />
+                            </button>
+                        }
+                    </mat-form-field>
                 </button>
-            </mat-form-field>
-        </button>
+            }
+        }
 
-    <mat-error
-        *ngIf="isEditable && hasErrors"
-        class="adf-textitem-error"
-        [attr.data-automation-id]="'card-textitem-error-' + property.key"
-        [id]="'adf-card-textitem-error-' + property.key"
-        role="alert"
-        aria-live="polite">
-        <ul>
-            <li *ngFor="let error of errors">{{ error.message | translate : error }}</li>
-        </ul>
-    </mat-error>
-</div>
+        @if (isEditable && hasErrors) {
+            <mat-error
+                class="adf-textitem-error"
+                [attr.data-automation-id]="'card-textitem-error-' + property.key"
+                [id]="'adf-card-textitem-error-' + property.key"
+                role="alert"
+                aria-live="polite">
+                <ul>
+                    @for (error of errors; track error) {
+                        <li>{{ error.message | translate : error }}</li>
+                    }
+                </ul>
+            </mat-error>
+        }
+    </div>
 }
