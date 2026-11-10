@@ -29,6 +29,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { UnitTestingUtils } from '@alfresco/adf-core';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('CategoriesManagementComponent', () => {
     let loader: HarnessLoader;
@@ -183,6 +184,26 @@ describe('CategoriesManagementComponent', () => {
     function getStatusText(): string {
         return unitTestingUtils.getByCSS('output').nativeElement.textContent.trim();
     }
+
+    describe('Translate', () => {
+        beforeEach(() => {
+            component.managementMode = CategoriesManagementMode.CRUD;
+            component.categories = [category3, category4];
+            fixture.detectChanges();
+
+            const translate = TestBed.inject(TranslateService);
+            translate.setTranslation('en', { CATEGORIES_MANAGEMENT: { DELETE_CATEGORY: 'Delete Category for {{ removeCategoryName }}' } }, true);
+            translate.use('en');
+            fixture.detectChanges();
+        });
+
+        it('should properly translate category to be removed', () => {
+            const removeButtons = getRemoveCategoryButtons();
+
+            expect(removeButtons[0].getAttribute('aria-label')).toBe(`Delete Category for ${category3.name}`);
+            expect(removeButtons[0].getAttribute('title')).toBe(`Delete Category for ${category3.name}`);
+        });
+    });
 
     describe('Shared tests', () => {
         beforeEach(() => {
